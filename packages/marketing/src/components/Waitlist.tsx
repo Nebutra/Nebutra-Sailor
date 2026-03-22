@@ -9,6 +9,11 @@ export interface WaitlistProps {
   buttonText?: string;
   placeholder?: string;
   socialProofCount?: number;
+  loadingText?: string;
+  successText?: string;
+  successMessage?: string;
+  socialProofPrefix?: string;
+  socialProofSuffix?: string;
 }
 
 export function Waitlist({
@@ -17,6 +22,11 @@ export function Waitlist({
   buttonText = "Join Waitlist",
   placeholder = "name@example.com",
   socialProofCount = 1205,
+  loadingText = "Joining...",
+  successText = "Joined!",
+  successMessage = "Thanks for joining! We'll be in touch soon.",
+  socialProofPrefix = "Join",
+  socialProofSuffix = "others on the list",
 }: WaitlistProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -60,15 +70,13 @@ export function Waitlist({
             disabled={status !== "idle"}
             className="flex w-full items-center justify-center rounded-lg border border-transparent bg-blue-600 px-5 py-3 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 disabled:opacity-75 sm:w-auto"
           >
-            {status === "loading" ? "Joining..." : status === "success" ? "Joined!" : buttonText}
+            {status === "loading" ? loadingText : status === "success" ? successText : buttonText}
           </button>
         </div>
       </form>
 
       {status === "success" && (
-        <p className="mt-3 text-sm text-green-600 dark:text-green-400">
-          Thanks for joining! We'll be in touch soon.
-        </p>
+        <p className="mt-3 text-sm text-green-600 dark:text-green-400">{successMessage}</p>
       )}
 
       <div className="mt-6 flex items-center justify-center gap-2 text-sm text-slate-500 dark:text-slate-400">
@@ -84,11 +92,11 @@ export function Waitlist({
           ))}
         </div>
         <p>
-          Join{" "}
+          {socialProofPrefix}{" "}
           <strong className="text-slate-900 dark:text-white">
             {socialProofCount.toLocaleString()}+
           </strong>{" "}
-          others on the list
+          {socialProofSuffix}
         </p>
       </div>
     </div>

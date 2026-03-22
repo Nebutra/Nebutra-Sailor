@@ -294,5 +294,67 @@
   "metadata": {
     "title": "Nebutra Intelligence | AI Native & SaaS Architecture",
     "description": "The next-generation engineering framework tailored for mainstream AI startups and enterprises. Designed utilizing stringent permission frameworks, it provides an immediate, fully functional commercial value platform."
+  },
+  "marketing": {
+    "pricing": {
+      "hobby": {
+        "name": "Hobby",
+        "price": "Free",
+        "description": "For side projects",
+        "features": ["1 Project", "Community Support", "Basic Analytics"],
+        "ctaText": "Start Free"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "$29",
+        "description": "For startups",
+        "isPopular": true,
+        "features": ["Unlimited Projects", "Priority Support", "Custom Domain", "Advanced AI"],
+        "ctaText": "Get Pro"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Custom",
+        "description": "For large teams",
+        "features": ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
+        "ctaText": "Contact Us"
+      }
+    },
+    "faq": {
+      "q1": {
+        "q": "Is this a subscription?",
+        "a": "Yes, our Pro plan is billed monthly. You can cancel at any time with no hidden fees."
+      },
+      "q2": {
+        "q": "Do you offer refunds?",
+        "a": "We offer a 14-day no-questions-asked money-back guarantee."
+      },
+      "q3": {
+        "q": "Can I use this for client work?",
+        "a": "Absolutely. The commercial license covers unlimited client projects."
+      }
+    },
+    "pricingHeader": {
+      "title": "Simple, transparent pricing",
+      "description": "No hidden fees. No surprises. Cancel anytime.",
+      "mostPopular": "Most Popular",
+      "perMonth": "/mo"
+    },
+    "faqHeader": {
+      "title": "Frequently Asked Questions",
+      "description": "Can't find the answer you're looking for? Reach out to our support team."
+    },
+    "waitlist": {
+      "title": "Get Early Access",
+      "description": "Join the waitlist to be notified when we launch. Be the first to try out the new features.",
+      "placeholder": "name@example.com",
+      "buttonText": "Join Waitlist",
+      "loadingText": "Joining...",
+      "successText": "Joined!",
+      "successMessage": "Thanks for joining! We'll be in touch soon.",
+      "socialProofPrefix": "Join",
+      "socialProofSuffix": "others on the list",
+      "emailAriaLabel": "Email address"
+    }
   }
 }

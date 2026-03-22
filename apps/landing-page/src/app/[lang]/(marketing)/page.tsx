@@ -69,6 +69,8 @@ export default async function LocalizedHomePage({ params }: { params: Promise<{ 
   const locale = lang as Locale;
   setRequestLocale(locale);
 
+  const tMarketing = await getTranslations({ locale, namespace: "marketing" });
+
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-black">
       <Navbar />
@@ -91,35 +93,34 @@ export default async function LocalizedHomePage({ params }: { params: Promise<{ 
           </div>
 
           <PricingTable
+            title={tMarketing("pricingHeader.title")}
+            description={tMarketing("pricingHeader.description")}
+            mostPopularText={tMarketing("pricingHeader.mostPopular")}
+            perMonthText={tMarketing("pricingHeader.perMonth")}
             plans={[
               {
-                name: "Hobby",
-                price: "Free",
-                description: "For side projects",
-                features: ["1 Project", "Community Support", "Basic Analytics"],
-                ctaText: "Start Free",
+                name: tMarketing("pricing.hobby.name"),
+                price: tMarketing("pricing.hobby.price"),
+                description: tMarketing("pricing.hobby.description"),
+                features: tMarketing.raw("pricing.hobby.features") as string[],
+                ctaText: tMarketing("pricing.hobby.ctaText"),
                 ctaUrl: "/signup",
               },
               {
-                name: "Pro",
-                price: "$29",
-                description: "For startups",
+                name: tMarketing("pricing.pro.name"),
+                price: tMarketing("pricing.pro.price"),
+                description: tMarketing("pricing.pro.description"),
                 isPopular: true,
-                features: [
-                  "Unlimited Projects",
-                  "Priority Support",
-                  "Custom Domain",
-                  "Advanced AI",
-                ],
-                ctaText: "Get Pro",
+                features: tMarketing.raw("pricing.pro.features") as string[],
+                ctaText: tMarketing("pricing.pro.ctaText"),
                 ctaUrl: "/signup",
               },
               {
-                name: "Enterprise",
-                price: "Custom",
-                description: "For large teams",
-                features: ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
-                ctaText: "Contact Us",
+                name: tMarketing("pricing.enterprise.name"),
+                price: tMarketing("pricing.enterprise.price"),
+                description: tMarketing("pricing.enterprise.description"),
+                features: tMarketing.raw("pricing.enterprise.features") as string[],
+                ctaText: tMarketing("pricing.enterprise.ctaText"),
                 ctaUrl: "/contact",
               },
             ]}
@@ -127,26 +128,38 @@ export default async function LocalizedHomePage({ params }: { params: Promise<{ 
 
           <div className="mt-32">
             <FAQ
+              title={tMarketing("faqHeader.title")}
+              description={tMarketing("faqHeader.description")}
               items={[
                 {
-                  question: "Is this a subscription?",
-                  answer:
-                    "Yes, our Pro plan is billed monthly. You can cancel at any time with no hidden fees.",
+                  question: tMarketing("faq.q1.q"),
+                  answer: tMarketing("faq.q1.a"),
                 },
                 {
-                  question: "Do you offer refunds?",
-                  answer: "We offer a 14-day no-questions-asked money-back guarantee.",
+                  question: tMarketing("faq.q2.q"),
+                  answer: tMarketing("faq.q2.a"),
                 },
                 {
-                  question: "Can I use this for client work?",
-                  answer: "Absolutely. The commercial license covers unlimited client projects.",
+                  question: tMarketing("faq.q3.q"),
+                  answer: tMarketing("faq.q3.a"),
                 },
               ]}
             />
           </div>
 
           <div className="mt-32 mb-12">
-            <Waitlist socialProofCount={2381} />
+            <Waitlist
+              title={tMarketing("waitlist.title")}
+              description={tMarketing("waitlist.description")}
+              placeholder={tMarketing("waitlist.placeholder")}
+              buttonText={tMarketing("waitlist.buttonText")}
+              loadingText={tMarketing("waitlist.loadingText")}
+              successText={tMarketing("waitlist.successText")}
+              successMessage={tMarketing("waitlist.successMessage")}
+              socialProofPrefix={tMarketing("waitlist.socialProofPrefix")}
+              socialProofSuffix={tMarketing("waitlist.socialProofSuffix")}
+              socialProofCount={2381}
+            />
           </div>
         </div>
       </section>

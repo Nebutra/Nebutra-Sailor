@@ -14,12 +14,16 @@ export interface PricingTableProps {
   title?: string;
   description?: string;
   plans: PricingPlan[];
+  mostPopularText?: string;
+  perMonthText?: string;
 }
 
 export function PricingTable({
   title = "Simple, transparent pricing",
   description = "No hidden fees. No surprises. Cancel anytime.",
   plans,
+  mostPopularText = "Most Popular",
+  perMonthText = "/mo",
 }: PricingTableProps) {
   return (
     <div className="mx-auto max-w-7xl font-sans">
@@ -43,8 +47,8 @@ export function PricingTable({
             }`}
           >
             {plan.isPopular && (
-              <div className="absolute -top-4 left-0 right-0 mx-auto w-32 rounded-full bg-blue-600 px-3 py-1 text-center text-sm font-semibold tracking-wide text-white shadow-sm">
-                Most Popular
+              <div className="absolute -top-4 left-0 right-0 mx-auto w-fit min-w-32 whitespace-nowrap px-4 rounded-full bg-blue-600 py-1 text-center text-sm font-semibold tracking-wide text-white shadow-sm">
+                {mostPopularText}
               </div>
             )}
             <div className="mb-6">
@@ -54,11 +58,14 @@ export function PricingTable({
 
             <div className="mb-6 flex items-baseline text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">
               {plan.price}
-              {plan.price !== "Custom" && plan.price !== "Free" && (
-                <span className="ml-1 text-lg sm:text-xl font-medium text-slate-500 dark:text-slate-400">
-                  /mo
-                </span>
-              )}
+              {plan.price !== "Custom" &&
+                plan.price !== "Free" &&
+                plan.price !== "定制" &&
+                plan.price !== "免费" && (
+                  <span className="ml-1 text-lg sm:text-xl font-medium text-slate-500 dark:text-slate-400">
+                    {perMonthText}
+                  </span>
+                )}
             </div>
 
             <ul className="mb-8 flex-1 space-y-4">
