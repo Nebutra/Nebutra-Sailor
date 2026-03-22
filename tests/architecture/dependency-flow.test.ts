@@ -23,6 +23,8 @@ const EXCLUDED_PACKAGES = new Set([
   "@nebutra/marketing",
   "@nebutra/sanity",
   "@nebutra/preset",
+  "@nebutra/i18n",
+  "@nebutra/email",
 ]);
 
 interface DependencyRule {
