@@ -375,13 +375,28 @@ Nebutra-Sailor/
 │   ├── landing-page/      # 营销官网 (nebutra.com)
 │   ├── web/               # SaaS 主控台 (app.nebutra.com)
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
-│   └── api-gateway/       # BFF 层 (api.nebutra.com)
+│   ├── api-gateway/       # BFF 层 (api.nebutra.com)
+│   ├── design-docs/       # 组件文档站 (Fumadocs)
+│   ├── docs/              # Mintlify 文档站
+│   ├── idp/               # 身份认证服务
+│   └── storybook/         # 组件 Playground
 ├── packages/
-│   ├── custom-ui/         # shadcn/ui + HeroUI/MagicUI 组件库
+│   ├── create-sailor/     # CLI 脚手架工具 (npx create-sailor)
+│   ├── i18n/              # next-intl 路由与多语言管理
+│   ├── marketing/         # 高转化 UI 套件 (Waitlist, Pricing, FAQ)
+│   ├── email/             # 事务邮件 (Magic Link, Resend)
+│   ├── ai-sdk/            # Vercel AI SDK 封装
 │   ├── ai-providers/      # 多供应商 AI SDK (OpenRouter, OpenAI 等)
+│   ├── billing/           # Stripe 计费、计划、用量计量
 │   ├── brand/             # 统一品牌资产与组件
 │   ├── design-system/     # SSOT: Primer + 字体系统 + 主题令牌
+│   ├── theme/             # 全局主题令牌 & CSS 变量
+│   ├── tokens/            # 语义化设计令牌定义
 │   ├── ui/                # Lobe UI + Lobe Icons + 设计系统
+│   ├── icons/             # 图标库 & Sprite Sheets
+│   ├── identity/          # 认证助手 & 租户身份
+│   ├── contracts/         # 共享 TypeScript 类型 & Zod Schemas
+│   ├── legal/             # Cookie 同意、隐私、GDPR/CCPA
 │   ├── db/                # Prisma 7 Schema 与客户端
 │   ├── supabase/          # Supabase 实时订阅、存储、Edge Functions
 │   ├── sanity/            # Sanity CMS 客户端与 Schema
@@ -394,6 +409,7 @@ Nebutra-Sailor/
 │   ├── mcp/               # Model Context Protocol（AI Agent）
 │   ├── config/            # 共享配置工具
 │   ├── errors/            # 标准化错误处理
+│   ├── logger/            # 结构化日志
 │   ├── feature-flags/     # 功能开关管理
 │   ├── alerting/          # 多渠道告警
 │   ├── audit/             # 合规审计日志
@@ -402,9 +418,12 @@ Nebutra-Sailor/
 │   └── analytics/         # Dub 链接追踪与转化分析
 ├── services/
 │   ├── ai/                # Python FastAPI - LLM、Embeddings
+│   ├── billing/           # 计费微服务
 │   ├── content/           # Python FastAPI - 内容、Feed
 │   ├── recsys/            # Python - 推荐引擎
 │   ├── ecommerce/         # Python - Shopify/Shopline 同步
+│   ├── event-ingest/      # 事件采集管道
+│   ├── third-party/       # 第三方集成
 │   └── web3/              # Python - 区块链索引器
 ├── infra/
 │   ├── cloudflare/        # CDN、WAF、R2 配置
@@ -415,6 +434,9 @@ Nebutra-Sailor/
 │   ├── inngest/           # TypeScript 工作流定义
 │   ├── n8n/               # 可视化工作流自动化
 │   ├── pusher/            # 实时通信 (Pusher/Soketi)
+│   ├── nginx/             # 反向代理配置
+│   ├── clickhouse/        # 分析数据库
+│   ├── database/          # 数据库迁移 & 种子数据
 │   └── observability/     # 日志、链路追踪、指标
 └── docs/                  # 架构文档
 ```
@@ -440,7 +462,7 @@ Nebutra-Sailor/
 <td><strong>公共包</strong></td>
 <td>
   <a href="packages/design-system/">Design System</a> · 
-  <a href="packages/custom-ui/">Custom UI</a> · 
+  <a href="packages/marketing/">Marketing</a> · 
   <a href="packages/db/">DB</a> ·
   <a href="packages/cache/">Cache</a> · 
   <a href="packages/rate-limit/">Rate Limit</a> · 

@@ -338,7 +338,7 @@ pnpm db:generate && pnpm dev
 ├── packages/
 │   ├── billing/           # Stripe 課金、プラン、使用量計測
 │   ├── brand/             # ブランドアセット、ガイドライン
-│   ├── custom-ui/         # マーケティング UI コンポーネント
+│   ├── marketing/         # 高コンバージョン UI (Waitlist, Pricing, FAQ)
 │   ├── design-system/     # デザイントークン、テーマ
 │   ├── legal/             # Cookie 同意、プライバシー、GDPR/CCPA
 │   └── ...                # その他多数

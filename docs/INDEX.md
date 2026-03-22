@@ -31,7 +31,7 @@ Complete navigation to all project documentation.
 | [cache](../packages/cache/README.md)                 | Redis caching strategies      |
 | [captcha](../packages/captcha/README.md)             | CAPTCHA verification          |
 | [config](../packages/config/README.md)               | Shared configuration          |
-| [custom-ui](../packages/custom-ui/README.md)         | Brand-specific UI components  |
+| [marketing](../packages/marketing/README.md)         | Conversion-optimized marketing UI  |
 | [db](../packages/db/README.md)                       | Prisma schema and client      |
 | [design-system](../packages/design-system/README.md) | Primer-based UI system        |
 | [errors](../packages/errors/README.md)               | Error handling                |

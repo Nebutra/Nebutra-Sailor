@@ -373,15 +373,28 @@ Nebutra-Sailor/
 │   ├── landing-page/      # Marketing site (nebutra.com)
 │   ├── web/               # Main SaaS dashboard (app.nebutra.com)
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
-│   └── api-gateway/       # BFF layer (api.nebutra.com)
+│   ├── api-gateway/       # BFF layer (api.nebutra.com)
+│   ├── design-docs/       # Component documentation (Fumadocs)
+│   ├── docs/              # Mintlify documentation site
+│   ├── idp/               # Identity provider service
+│   └── storybook/         # Component playground
 ├── packages/
-│   ├── custom-ui/         # Brand-specific & shadcn-style UI components
+│   ├── create-sailor/     # CLI scaffolding tool (npx create-sailor)
+│   ├── i18n/              # next-intl routing & locale management
+│   ├── marketing/         # Conversion-optimized UI (Waitlist, Pricing, FAQ)
+│   ├── email/             # Transactional email (Magic Link, Resend)
+│   ├── ai-sdk/            # Vercel AI SDK wrapper & helpers
 │   ├── ai-providers/      # Multi-provider AI SDK (OpenRouter, OpenAI, etc)
 │   ├── billing/           # Stripe billing, plans, usage metering
 │   ├── brand/             # Brand assets, guidelines & programmatic tokens
 │   ├── design-system/     # Design tokens, marketing themes, Primer base
-│   ├── legal/             # Cookie consent, privacy, GDPR/CCPA compliance
+│   ├── theme/             # Global theme tokens & CSS variables
+│   ├── tokens/            # Semantic design token definitions
 │   ├── ui/                # Lobe UI + Lobe Icons + Design System
+│   ├── icons/             # Icon library & sprite sheets
+│   ├── identity/          # Auth helpers & tenant identity
+│   ├── contracts/         # Shared TypeScript types & Zod schemas
+│   ├── legal/             # Cookie consent, privacy, GDPR/CCPA compliance
 │   ├── db/                # Prisma 7 schema & client
 │   ├── supabase/          # Supabase Realtime, Storage, Edge Functions
 │   ├── sanity/            # Sanity CMS client & schemas
@@ -394,6 +407,7 @@ Nebutra-Sailor/
 │   ├── mcp/               # Model Context Protocol for AI agents
 │   ├── config/            # Shared configuration utilities
 │   ├── errors/            # Standardized error handling
+│   ├── logger/            # Structured logging
 │   ├── feature-flags/     # Feature flag management
 │   ├── alerting/          # Multi-channel alerting
 │   ├── audit/             # Compliance audit logging
@@ -402,9 +416,12 @@ Nebutra-Sailor/
 │   └── analytics/         # Dub-powered link tracking & conversions
 ├── services/
 │   ├── ai/                # Python FastAPI - LLM, embeddings
+│   ├── billing/           # Billing microservice
 │   ├── content/           # Python FastAPI - posts, feed
 │   ├── recsys/            # Python - recommendation engine
 │   ├── ecommerce/         # Python - Shopify/Shopline sync
+│   ├── event-ingest/      # Event ingestion pipeline
+│   ├── third-party/       # Third-party integrations
 │   └── web3/              # Python - blockchain indexer
 ├── infra/
 │   ├── cloudflare/        # CDN, WAF, R2 configs
@@ -415,6 +432,9 @@ Nebutra-Sailor/
 │   ├── inngest/           # TypeScript workflow definitions
 │   ├── n8n/               # Visual workflow automation
 │   ├── pusher/            # Real-time communication (Pusher/Soketi)
+│   ├── nginx/             # Reverse proxy configs
+│   ├── clickhouse/        # Analytics database
+│   ├── database/          # Database migrations & seeds
 │   └── observability/     # Logging, tracing, metrics
 └── docs/                  # Architecture documentation
 ```
@@ -442,7 +462,7 @@ Each component has its own README with setup instructions and API documentation:
   <a href="packages/billing/">Billing</a> · 
   <a href="packages/legal/">Legal</a> · 
   <a href="packages/design-system/">Design System</a> · 
-  <a href="packages/custom-ui/">Marketing UI</a> · 
+  <a href="packages/marketing/">Marketing UI</a> · 
   <a href="packages/brand/">Brand</a> · 
   <a href="packages/db/">DB</a> · 
   <a href="packages/cache/">Cache</a> · 

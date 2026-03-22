@@ -401,23 +401,41 @@ Nebutra-Sailor/
 │   ├── landing-page/      # マーケティングサイト
 │   ├── web/               # メイン SaaS ダッシュボード
 │   ├── studio/            # Sanity CMS
-│   └── api-gateway/       # BFF レイヤー
+│   ├── api-gateway/       # BFF レイヤー
+│   ├── design-docs/       # コンポーネントドキュメント (Fumadocs)
+│   ├── docs/              # Mintlify ドキュメントサイト
+│   ├── idp/               # アイデンティティプロバイダー
+│   └── storybook/         # コンポーネント Playground
 ├── packages/
+│   ├── create-sailor/     # CLI スキャフォールド (npx create-sailor)
+│   ├── i18n/              # next-intl ルーティング & ロケール管理
+│   ├── marketing/         # 高コンバージョン UI (Waitlist, Pricing, FAQ)
+│   ├── email/             # トランザクションメール (Magic Link, Resend)
+│   ├── ai-sdk/            # Vercel AI SDK ラッパー
+│   ├── ai-providers/      # マルチプロバイダー AI SDK
 │   ├── billing/           # Stripe 課金、プラン、使用量計測
 │   ├── brand/             # ブランドアセット、ガイドライン
-│   ├── custom-ui/         # マーケティング UI コンポーネント
 │   ├── design-system/     # デザイントークン、テーマ
+│   ├── theme/             # グローバルテーマトークン & CSS 変数
+│   ├── ui/                # Lobe UI + Lobe Icons + デザインシステム
+│   ├── icons/             # アイコンライブラリ
+│   ├── identity/          # 認証ヘルパー & テナント ID
+│   ├── contracts/         # 共有 TypeScript 型 & Zod スキーマ
 │   ├── legal/             # Cookie 同意、プライバシー、GDPR/CCPA
 │   ├── db/                # Prisma 7 スキーマ & クライアント
 │   ├── cache/             # Redis キャッシュ戦略
 │   ├── rate-limit/        # マルチテナントレート制限
 │   ├── mcp/               # AI エージェント用 Model Context Protocol
+│   ├── logger/            # 構造化ロギング
 │   └── ...                # その他多数
 ├── services/
 │   ├── ai/                # Python FastAPI - LLM、Embeddings
+│   ├── billing/           # 課金マイクロサービス
 │   ├── content/           # Python FastAPI - 投稿、フィード
 │   ├── recsys/            # Python - レコメンドエンジン
-│   └── ...
+│   ├── ecommerce/         # Python - Shopify/Shopline 連携
+│   ├── event-ingest/      # イベント取り込みパイプライン
+│   └── web3/              # Python - ブロックチェーンインデクサー
 └── infra/                 # インフラ設定
 ```
 

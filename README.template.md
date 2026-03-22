@@ -339,7 +339,7 @@ pnpm db:generate && pnpm dev
 │   ├── studio/            # Sanity CMS
 │   └── api-gateway/       # BFF layer
 ├── packages/
-│   ├── custom-ui/         # Brand-specific & shadcn-style UI components
+│   ├── marketing/         # Conversion-optimized UI (Waitlist, Pricing, FAQ)
 │   ├── ai-providers/      # Multi-provider AI SDK (OpenRouter, OpenAI, etc)
 │   ├── billing/           # Stripe billing, plans, usage metering
 │   ├── brand/             # Brand assets, guidelines & programmatic tokens
