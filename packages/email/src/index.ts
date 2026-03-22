@@ -249,3 +249,35 @@ export async function sendInviteEmail(opts: {
     tags: [{ name: "type", value: "invite" }],
   });
 }
+
+/**
+ * Shipfast-style Magic Link Email for 1-click Authentication.
+ */
+export async function sendMagicLinkEmail(opts: {
+  to: string;
+  magicLinkUrl: string;
+}): Promise<SendResult> {
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Sign in to Nebutra</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      Click the button below to sign in securely. No password required.
+    </p>
+    <a href="${opts.magicLinkUrl}" style="display:inline-block;background:linear-gradient(135deg,#0033FE,#0BF1C3);color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:600;margin:0 0 24px;text-align:center;width:100%;max-width:280px;">
+      ✨ Sign In Automatically
+    </a>
+    <p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.4;">
+      If you did not request this email, you can safely ignore it.
+      This link expires in 15 minutes.
+    </p>
+    `,
+    "Click here to sign in to your Nebutra account",
+  );
+
+  return send({
+    to: opts.to,
+    subject: "Sign in to Nebutra ✨",
+    html,
+    tags: [{ name: "type", value: "magic_link" }],
+  });
+}

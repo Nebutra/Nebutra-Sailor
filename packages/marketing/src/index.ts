@@ -55,18 +55,27 @@
  * ```
  */
 
-export type { FeaturedInProps } from "./components";
+export type {
+  FAQItem,
+  FAQProps,
+  FeaturedInProps,
+  PricingPlan,
+  PricingTableProps,
+  WaitlistProps,
+} from "./components";
 // ============================================
 // Components
 // ============================================
 export {
   AnimatedNumber,
+  FAQ,
   FeaturedIn,
   // Launch Banners
   LaunchBanner,
   LaunchBannerFloating,
   LaunchBannerInline,
   LaunchBannerTop,
+  PricingTable,
   // Product Hunt
   ProductHuntBadge,
   ProductHuntEmbedBadge,
@@ -81,6 +90,8 @@ export {
   // Testimonials
   TestimonialsWall,
   TrustBadges,
+  // SaaS Conversion Kit
+  Waitlist,
 } from "./components";
 export type { ShareUrls } from "./config";
 // ============================================
@@ -136,7 +147,6 @@ export type {
   // Testimonials
   TestimonialSource,
   TestimonialsWallProps,
-  TrustBadge,
   TrustBadgesProps,
   // Attribution
   UTMParams,

@@ -1,0 +1,10 @@
+{
+  "Common": {
+    "hello": "Hello World",
+    "dashboard": "Dashboard"
+  },
+  "LocaleSwitcher": {
+    "en": "English",
+    "zh": "中文"
+  }
+}

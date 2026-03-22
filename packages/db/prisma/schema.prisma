@@ -1,12 +1,13 @@
 generator client {
   provider        = "prisma-client"
   output          = "../src/generated/prisma"
-  previewFeatures = ["postgresqlExtensions"]
+  previewFeatures = ["postgresqlExtensions", "multiSchema"]
 }
 
 datasource db {
   provider   = "postgresql"
   extensions = [vector, uuid_ossp(map: "uuid-ossp")]
+  schemas    = ["public", "ecommerce", "recsys", "web3"]
 }
 
 // ============================================
@@ -17,6 +18,7 @@ enum Plan {
   FREE
   PRO
   ENTERPRISE
+  @@schema("public")
 }
 
 enum Role {
@@ -24,12 +26,14 @@ enum Role {
   ADMIN
   MEMBER
   VIEWER
+  @@schema("public")
 }
 
 enum ContentStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
+  @@schema("public")
 }
 
 enum OrderStatus {
@@ -39,6 +43,7 @@ enum OrderStatus {
   DELIVERED
   CANCELLED
   REFUNDED
+  @@schema("public")
 }
 
 enum IntegrationType {
@@ -46,6 +51,7 @@ enum IntegrationType {
   SHOPLINE
   STRIPE
   CUSTOM
+  @@schema("public")
 }
 
 enum NftStatus {
@@ -54,6 +60,7 @@ enum NftStatus {
   LISTED
   SOLD
   BURNED
+  @@schema("public")
 }
 
 // ============================================
@@ -81,6 +88,7 @@ model Organization {
   oauthClients OAuthClient[]
 
   @@map("organizations")
+  @@schema("public")
 }
 
 // ── API Keys ──────────────────────────────────────────────────────────────────
@@ -104,6 +112,7 @@ model APIKey {
   @@index([keyHash])
   @@index([organizationId, revokedAt])
   @@map("api_keys")
+  @@schema("public")
 }
 
 model User {
@@ -123,6 +132,7 @@ model User {
   oauthAuthorizations OAuthAuthorization[]
 
   @@map("users")
+  @@schema("public")
 }
 
 model OrganizationMember {
@@ -137,6 +147,7 @@ model OrganizationMember {
 
   @@unique([organizationId, userId])
   @@map("organization_members")
+  @@schema("public")
 }
 
 // ============================================
@@ -167,6 +178,7 @@ model Content {
   @@index([organizationId, status])
   @@index([organizationId, publishedAt])
   @@map("contents")
+  @@schema("public")
 }
 
 model ContentTranslation {
@@ -182,6 +194,7 @@ model ContentTranslation {
 
   @@unique([contentId, locale])
   @@map("content_translations")
+  @@schema("public")
 }
 
 // ============================================
@@ -199,6 +212,7 @@ model ContentEmbedding {
 
   @@index([contentId])
   @@map("content_embeddings")
+  @@schema("public")
 }
 
 // ============================================
@@ -226,6 +240,7 @@ model Product {
   @@unique([organizationId, externalId])
   @@index([organizationId])
   @@map("products")
+  @@schema("public")
 }
 
 model Order {
@@ -251,6 +266,7 @@ model Order {
   @@index([organizationId, status])
   @@index([organizationId, userId])
   @@map("orders")
+  @@schema("public")
 }
 
 model OrderItem {
@@ -264,6 +280,7 @@ model OrderItem {
   product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
 
   @@map("order_items")
+  @@schema("public")
 }
 
 model Integration {
@@ -282,6 +299,7 @@ model Integration {
 
   @@unique([organizationId, type, name])
   @@map("integrations")
+  @@schema("public")
 }
 
 // ============================================
@@ -306,6 +324,7 @@ model Wallet {
   @@index([userId])
   @@index([userId, organizationId])
   @@map("wallets")
+  @@schema("public")
 }
 
 model Nft {
@@ -330,6 +349,7 @@ model Nft {
   @@index([walletId])
   @@index([organizationId, status])
   @@map("nfts")
+  @@schema("public")
 }
 
 // ============================================
@@ -354,6 +374,7 @@ model UserActivity {
   @@index([createdAt])
   @@index([userId, createdAt])
   @@map("user_activities")
+  @@schema("public")
 }
 
 // ============================================
@@ -374,6 +395,7 @@ model TenantUsage {
 
   @@unique([organizationId, month])
   @@map("tenant_usage")
+  @@schema("public")
 }
 
 // ============================================
@@ -386,6 +408,7 @@ enum AIProvider {
   GOOGLE
   SILICONFLOW
   CUSTOM
+  @@schema("public")
 }
 
 enum AIRequestType {
@@ -393,6 +416,7 @@ enum AIRequestType {
   EMBED
   TRANSLATE
   CHAT
+  @@schema("public")
 }
 
 model AIRequest {
@@ -415,6 +439,7 @@ model AIRequest {
   @@index([provider, model])
   @@index([organizationId, createdAt])
   @@map("ai_requests")
+  @@schema("public")
 }
 
 // ============================================
@@ -434,6 +459,7 @@ model UserPreference {
   @@unique([organizationId, userId, category])
   @@index([userId])
   @@map("user_preferences")
+  @@schema("public")
 }
 
 model Recommendation {
@@ -453,6 +479,7 @@ model Recommendation {
   @@index([itemType, itemId])
   @@index([expiresAt])
   @@map("recommendations")
+  @@schema("public")
 }
 
 // ============================================
@@ -463,6 +490,7 @@ enum FeatureFlagType {
   BOOLEAN
   PERCENTAGE
   JSON
+  @@schema("public")
 }
 
 model FeatureFlag {
@@ -479,6 +507,7 @@ model FeatureFlag {
   overrides FeatureFlagOverride[]
 
   @@map("feature_flags")
+  @@schema("public")
 }
 
 model FeatureFlagOverride {
@@ -493,6 +522,7 @@ model FeatureFlagOverride {
 
   @@unique([flagId, organizationId, userId])
   @@map("feature_flag_overrides")
+  @@schema("public")
 }
 
 // ============================================
@@ -507,6 +537,7 @@ enum SubscriptionStatus {
   TRIALING
   PAUSED
   INCOMPLETE
+  @@schema("public")
 }
 
 enum BillingInterval {
@@ -514,6 +545,7 @@ enum BillingInterval {
   YEARLY
   WEEKLY
   ONE_TIME
+  @@schema("public")
 }
 
 enum InvoiceStatus {
@@ -522,6 +554,7 @@ enum InvoiceStatus {
   PAID
   VOID
   UNCOLLECTIBLE
+  @@schema("public")
 }
 
 enum PaymentMethodType {
@@ -530,6 +563,7 @@ enum PaymentMethodType {
   ALIPAY
   WECHAT_PAY
   CRYPTO
+  @@schema("public")
 }
 
 enum CreditTransactionType {
@@ -539,6 +573,7 @@ enum CreditTransactionType {
   ADJUSTMENT
   EXPIRATION
   BONUS
+  @@schema("public")
 }
 
 enum UsageType {
@@ -548,6 +583,7 @@ enum UsageType {
   COMPUTE
   BANDWIDTH
   CUSTOM
+  @@schema("public")
 }
 
 enum UsageLedgerSource {
@@ -556,6 +592,7 @@ enum UsageLedgerSource {
   WEBHOOK
   SYSTEM
   BACKFILL
+  @@schema("public")
 }
 
 // ============================================
@@ -581,6 +618,7 @@ model FeatureDefinition {
 
   @@index([category])
   @@map("feature_definitions")
+  @@schema("public")
 }
 
 // Usage Limit Definitions - All possible usage metrics
@@ -602,6 +640,7 @@ model UsageLimitDefinition {
   customerLimits CustomerUsageLimit[]
 
   @@map("usage_limit_definitions")
+  @@schema("public")
 }
 
 // Price/Plan Configuration (Versioned)
@@ -649,6 +688,7 @@ model PricingPlan {
   @@unique([slug, version])
   @@index([plan, isActive])
   @@map("pricing_plans")
+  @@schema("public")
 }
 
 // Plan Features - Many-to-many with values
@@ -666,6 +706,7 @@ model PlanFeature {
 
   @@unique([planId, featureId])
   @@map("plan_features")
+  @@schema("public")
 }
 
 // Plan Usage Limits
@@ -683,6 +724,7 @@ model PlanUsageLimit {
 
   @@unique([planId, limitId])
   @@map("plan_usage_limits")
+  @@schema("public")
 }
 
 // ============================================
@@ -703,6 +745,7 @@ model CustomerPlanVersion {
 
   @@unique([organizationId])
   @@map("customer_plan_versions")
+  @@schema("public")
 }
 
 // Customer-specific feature overrides
@@ -720,6 +763,7 @@ model CustomerFeatureOverride {
   @@unique([organizationId, featureKey])
   @@index([featureKey])
   @@map("customer_feature_overrides")
+  @@schema("public")
 }
 
 // Customer-specific usage limit overrides
@@ -739,6 +783,7 @@ model CustomerUsageLimit {
 
   @@unique([organizationId, limitId])
   @@map("customer_usage_limits")
+  @@schema("public")
 }
 
 // Subscription Management
@@ -767,6 +812,7 @@ model Subscription {
   @@index([status])
   @@index([organizationId, status])
   @@map("subscriptions")
+  @@schema("public")
 }
 
 // Invoice Management
@@ -802,6 +848,7 @@ model Invoice {
   @@index([organizationId, status])
   @@index([organizationId, createdAt])
   @@map("invoices")
+  @@schema("public")
 }
 
 model InvoiceItem {
@@ -822,6 +869,7 @@ model InvoiceItem {
   pricingPlan PricingPlan? @relation(fields: [pricingPlanId], references: [id])
 
   @@map("invoice_items")
+  @@schema("public")
 }
 
 // Payment Records
@@ -849,6 +897,7 @@ model Payment {
   @@index([organizationId, status])
   @@index([organizationId, createdAt])
   @@map("payments")
+  @@schema("public")
 }
 
 // Payment Methods
@@ -871,6 +920,7 @@ model PaymentMethod {
 
   @@index([organizationId])
   @@map("payment_methods")
+  @@schema("public")
 }
 
 // Usage Tracking (detailed)
@@ -893,6 +943,7 @@ model UsageRecord {
   @@index([type])
   @@index([resource])
   @@map("usage_records")
+  @@schema("public")
 }
 
 // Immutable usage ledger (idempotent append-only records)
@@ -923,6 +974,7 @@ model UsageLedgerEntry {
   @@index([organizationId, type, occurredAt])
   @@index([eventId])
   @@map("usage_ledger_entries")
+  @@schema("public")
 }
 
 // Aggregated Usage (for billing)
@@ -940,6 +992,7 @@ model UsageAggregate {
 
   @@unique([organizationId, type, period])
   @@map("usage_aggregates")
+  @@schema("public")
 }
 
 // Credits System
@@ -953,6 +1006,7 @@ model CreditBalance {
   transactions CreditTransaction[]
 
   @@map("credit_balances")
+  @@schema("public")
 }
 
 model CreditTransaction {
@@ -973,6 +1027,7 @@ model CreditTransaction {
   @@index([type])
   @@index([createdAt])
   @@map("credit_transactions")
+  @@schema("public")
 }
 
 // Feature Entitlements
@@ -994,6 +1049,7 @@ model Entitlement {
   @@unique([organizationId, feature])
   @@index([feature])
   @@map("entitlements")
+  @@schema("public")
 }
 
 // Stripe Customer Mapping
@@ -1010,6 +1066,7 @@ model StripeCustomer {
   updatedAt      DateTime @updatedAt @map("updated_at")
 
   @@map("stripe_customers")
+  @@schema("public")
 }
 
 // Webhook Events (for idempotency)
@@ -1028,6 +1085,7 @@ model WebhookEvent {
   @@index([eventType])
   @@index([processedAt])
   @@map("webhook_events")
+  @@schema("public")
 }
 
 // ============================================
@@ -1043,6 +1101,7 @@ enum AuditAction {
   LOGOUT
   EXPORT
   IMPORT
+  @@schema("public")
 }
 
 model AuditLog {
@@ -1071,6 +1130,7 @@ model AuditLog {
   @@index([organizationId, createdAt])
   @@index([organizationId, userId])
   @@map("audit_logs")
+  @@schema("public")
 }
 
 // ============================================
@@ -1082,6 +1142,7 @@ enum ConsentType {
   IMPLICIT  // Continued use implies consent
   OPT_IN    // User opted in
   OPT_OUT   // User opted out
+  @@schema("public")
 }
 
 enum LegalDocumentType {
@@ -1093,6 +1154,7 @@ enum LegalDocumentType {
   DATA_PROCESSING
   SLA
   CUSTOM
+  @@schema("public")
 }
 
 // Legal Document Versions (tracked for compliance)
@@ -1122,6 +1184,7 @@ model LegalDocument {
   @@index([slug, isActive, effectiveAt])
   @@index([locale, isActive, effectiveAt])
   @@map("legal_documents")
+  @@schema("public")
 }
 
 // User Consent Records (audit trail for legal compliance)
@@ -1151,6 +1214,7 @@ model UserConsent {
   @@index([consentedAt])
   @@index([documentSlug, consentGiven, withdrawnAt])
   @@map("user_consents")
+  @@schema("public")
 }
 
 // Cookie Consent (GDPR/CCPA compliance)
@@ -1175,6 +1239,7 @@ model CookieConsent {
   @@index([consentedAt])
   @@index([userId, expiresAt])
   @@map("cookie_consents")
+  @@schema("public")
 }
 
 // Contact Form Submissions
@@ -1199,6 +1264,7 @@ model ContactSubmission {
   @@index([status])
   @@index([createdAt])
   @@map("contact_submissions")
+  @@schema("public")
 }
 
 // ============================================
@@ -1208,12 +1274,14 @@ model ContactSubmission {
 enum OAuthClientType {
   CONFIDENTIAL // Server-side apps (have a secret)
   PUBLIC       // SPAs, mobile apps, CLIs (no secret)
+  @@schema("public")
 }
 
 enum OAuthClientStatus {
   ACTIVE
   SUSPENDED
   REVOKED
+  @@schema("public")
 }
 
 // Third-party applications registered in Nebutra's ecosystem
@@ -1256,6 +1324,7 @@ model OAuthClient {
   @@index([organizationId])
   @@index([status])
   @@map("oauth_clients")
+  @@schema("public")
 }
 
 // User consent records — "User X granted App Y these scopes"
@@ -1273,6 +1342,7 @@ model OAuthAuthorization {
   @@unique([userId, clientId])
   @@index([userId])
   @@map("oauth_authorizations")
+  @@schema("public")
 }
 
 // Issued access tokens (for introspection & revocation)
@@ -1292,4 +1362,5 @@ model OAuthAccessToken {
   @@index([userId])
   @@index([expiresAt])
   @@map("oauth_access_tokens")
+  @@schema("public")
 }

@@ -2,6 +2,8 @@
  * @nebutra/marketing - Components
  */
 
+export type { FAQItem, FAQProps } from "./FAQ";
+export { FAQ } from "./FAQ";
 // Launch Banners
 export {
   LaunchBanner,
@@ -9,6 +11,8 @@ export {
   LaunchBannerInline,
   LaunchBannerTop,
 } from "./LaunchBanner";
+export type { PricingPlan, PricingTableProps } from "./PricingTable";
+export { PricingTable } from "./PricingTable";
 // Product Hunt
 export {
   ProductHuntBadge,
@@ -17,7 +21,6 @@ export {
   ProductHuntUpvoteBadge,
 } from "./ProductHuntBadge";
 export type { FeaturedInProps } from "./SocialProof";
-
 // Social Proof
 export {
   AnimatedNumber,
@@ -33,3 +36,6 @@ export {
   TestimonialCard,
   TestimonialsWall,
 } from "./TestimonialsWall";
+export type { WaitlistProps } from "./Waitlist";
+// SaaS Conversion Kit
+export { Waitlist } from "./Waitlist";

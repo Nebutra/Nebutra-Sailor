@@ -1,3 +1,4 @@
+import { FAQ, PricingTable, SocialProofBar, Waitlist } from "@nebutra/marketing";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import dynamic from "next/dynamic";
@@ -77,8 +78,79 @@ export default async function LocalizedHomePage({ params }: { params: Promise<{ 
       <FeatureCards />
       <WorkflowSection />
       <TestimonialsSection />
-      <PricingHintSection />
-      <FinalCTA />
+
+      {/* Shipfast Conversion Kit Injection */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-24">
+            <SocialProofBar
+              stats={{ users: 1024, rating: 4.9, productHuntUpvotes: 890 }}
+              variant="badges"
+              className="justify-center"
+            />
+          </div>
+
+          <PricingTable
+            plans={[
+              {
+                name: "Hobby",
+                price: "Free",
+                description: "For side projects",
+                features: ["1 Project", "Community Support", "Basic Analytics"],
+                ctaText: "Start Free",
+                ctaUrl: "/signup",
+              },
+              {
+                name: "Pro",
+                price: "$29",
+                description: "For startups",
+                isPopular: true,
+                features: [
+                  "Unlimited Projects",
+                  "Priority Support",
+                  "Custom Domain",
+                  "Advanced AI",
+                ],
+                ctaText: "Get Pro",
+                ctaUrl: "/signup",
+              },
+              {
+                name: "Enterprise",
+                price: "Custom",
+                description: "For large teams",
+                features: ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
+                ctaText: "Contact Us",
+                ctaUrl: "/contact",
+              },
+            ]}
+          />
+
+          <div className="mt-32">
+            <FAQ
+              items={[
+                {
+                  question: "Is this a subscription?",
+                  answer:
+                    "Yes, our Pro plan is billed monthly. You can cancel at any time with no hidden fees.",
+                },
+                {
+                  question: "Do you offer refunds?",
+                  answer: "We offer a 14-day no-questions-asked money-back guarantee.",
+                },
+                {
+                  question: "Can I use this for client work?",
+                  answer: "Absolutely. The commercial license covers unlimited client projects.",
+                },
+              ]}
+            />
+          </div>
+
+          <div className="mt-32 mb-12">
+            <Waitlist socialProofCount={2381} />
+          </div>
+        </div>
+      </section>
+
       <FooterMinimal />
     </main>
   );

@@ -5,6 +5,7 @@ import * as p from "@clack/prompts";
 import { Command } from "commander";
 import pc from "picocolors";
 import { type NebutraConfig, writeNebutraConfig } from "./utils/config.js";
+import { injectEnv } from "./utils/env.js";
 import { cloneTemplate } from "./utils/git.js";
 import { updatePackageJson } from "./utils/npm.js";
 import { pruneTemplate } from "./utils/prune.js";
@@ -53,6 +54,17 @@ async function main() {
   // Ask configuration questions
   const configOutput = await p.group(
     {
+      applicationType: () =>
+        p.select({
+          message: "What kind of application are you building?",
+          options: [
+            { value: "saas", label: "Standard B2B/B2C SaaS", hint: "Optimized, UI+DB" },
+            { value: "full", label: "Full Monorepo", hint: "Includes Python AI workflows & Web3" },
+            { value: "ecommerce", label: "E-Commerce Suite" },
+            { value: "web3", label: "Web3 DApp" },
+          ],
+          initialValue: "saas",
+        }),
       orm: () =>
         p.select({
           message: "Which ORM would you like to use?",
@@ -110,12 +122,43 @@ async function main() {
 
   const config = configOutput as NebutraConfig;
 
+  // Prompt for Environment Variables
+  const envPrompts = await p.group(
+    {
+      databaseUrl: () =>
+        p.text({
+          message: "Database URL (leave empty to skip):",
+          placeholder: "postgresql://postgres:postgres@localhost:5432/nebutra",
+          defaultValue: "postgresql://postgres:postgres@localhost:5432/nebutra",
+        }),
+      clerkPublishable: () =>
+        p.text({
+          message: "Clerk Publishable Key (leave empty to skip):",
+          placeholder: "pk_test_...",
+          defaultValue: "",
+        }),
+      clerkSecret: () =>
+        p.text({
+          message: "Clerk Secret Key (leave empty to skip):",
+          placeholder: "sk_test_...",
+          defaultValue: "",
+        }),
+    },
+    {
+      onCancel: () => {
+        p.cancel("Operation cancelled.");
+        process.exit(0);
+      },
+    },
+  );
+
   p.spinner().start(`Cloning Nebutra-Sailor template into ${targetDir}...`);
   try {
     await cloneTemplate(targetDir);
     await updatePackageJson(targetDir, projectName);
     await writeNebutraConfig(targetDir, config);
     await pruneTemplate(targetDir, config);
+    await injectEnv(targetDir, envPrompts);
     p.spinner().stop(pc.green(`Project ${projectName} successfully initialized!`));
 
     p.outro(pc.cyan(`Next steps:\n  cd ${targetDir}\n  pnpm install\n  pnpm dev`));

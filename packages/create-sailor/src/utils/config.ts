@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 export interface NebutraConfig {
+  applicationType: "saas" | "web3" | "ecommerce" | "full";
   orm: "prisma" | "drizzle" | "none";
   database: "postgresql" | "mysql" | "sqlite" | "none";
   payment: "stripe" | "lemonsqueezy" | "none";

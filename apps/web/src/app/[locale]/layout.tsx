@@ -4,11 +4,13 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { getNonce } from "@/lib/nonce";
 import { QueryProvider } from "./providers";
 import { ThemeShell } from "./providers/theme-provider";
-import "./globals.css";
+import "../globals.css";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -54,13 +56,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+  params: { locale },
+}: {
+  children: React.ReactNode;
+  params: { locale: string };
+}) {
   const nonce = await getNonce();
+  const messages = await getMessages();
 
   return (
     <ClerkProvider nonce={nonce}>
       <html
-        lang="en"
+        lang={locale}
         className={`${inter.variable} ${jetbrainsMono.variable} ${notoSansSC.variable}`}
         suppressHydrationWarning
       >
@@ -73,11 +82,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </a>
 
           <ThemeShell nonce={nonce}>
-            <DesignSystemProvider>
-              <QueryProvider>
-                <ErrorBoundary>{children}</ErrorBoundary>
-              </QueryProvider>
-            </DesignSystemProvider>
+            <NextIntlClientProvider messages={messages}>
+              <DesignSystemProvider>
+                <QueryProvider>
+                  <ErrorBoundary>{children}</ErrorBoundary>
+                </QueryProvider>
+              </DesignSystemProvider>
+            </NextIntlClientProvider>
           </ThemeShell>
           <SpeedInsights />
           <Analytics />

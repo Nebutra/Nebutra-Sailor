@@ -1,0 +1,52 @@
+# Nebutra-Sailor Lite Local Development Stack (Phase 1)
+# Run: docker-compose -f docker-compose.lite.yml up -d
+# This stripped-down stack is optimized for UI/Web developers who only need basic SaaS components, 
+# omitting heavy Python microservices, Web3, and ClickHouse.
+
+services:
+  # ============================================
+  # Infrastructure
+  # ============================================
+
+  # PostgreSQL (Supabase alternative for local dev)
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: nebutra-postgres-lite
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: nebutra
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data_lite:/var/lib/postgresql/data
+      - ./infra/supabase/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./infra/supabase/policies.sql:/docker-entrypoint-initdb.d/02-policies.sql
+      - ./infra/supabase/seed.sql:/docker-entrypoint-initdb.d/03-seed.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis (Upstash alternative for local dev)
+  redis:
+    image: redis:7-alpine
+    container_name: nebutra-redis-lite
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis_data_lite:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data_lite:
+  redis_data_lite:
+
+networks:
+  default:
+    name: nebutra-lite-network
