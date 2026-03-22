@@ -475,9 +475,7 @@ Nebutra-Sailor/
 <tr>
 <td><strong>设计文档</strong></td>
 <td>
-  <a href="docs/UI-GUIDELINES.md">UI 规范</a> · 
-  <a href="docs/TYPOGRAPHY.md">字体系统</a> · 
-  <a href="docs/COMPONENT-LIBRARY-POLICY.md">组件库策略</a>
+  <a href="apps/design-docs/">设计系统文档站</a> (Fumadocs)
 </td>
 </tr>
 <tr>

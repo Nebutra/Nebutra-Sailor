@@ -475,9 +475,7 @@ Each component has its own README with setup instructions and API documentation:
 <tr>
 <td><strong>Design Docs</strong></td>
 <td>
-  <a href="docs/UI-GUIDELINES.md">UI Guidelines</a> · 
-  <a href="docs/TYPOGRAPHY.md">Typography</a> · 
-  <a href="docs/COMPONENT-LIBRARY-POLICY.md">Component Policy</a>
+  <a href="apps/design-docs/">Design System Docs</a> (Fumadocs)
 </td>
 </tr>
 <tr>
