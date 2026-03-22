@@ -52,10 +52,10 @@ export function PricingTable({
               <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{plan.description}</p>
             </div>
 
-            <div className="mb-6 flex items-baseline text-5xl font-extrabold text-slate-900 dark:text-white">
+            <div className="mb-6 flex items-baseline text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">
               {plan.price}
               {plan.price !== "Custom" && plan.price !== "Free" && (
-                <span className="ml-1 text-xl font-medium text-slate-500 dark:text-slate-400">
+                <span className="ml-1 text-lg sm:text-xl font-medium text-slate-500 dark:text-slate-400">
                   /mo
                 </span>
               )}

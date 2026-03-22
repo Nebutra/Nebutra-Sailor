@@ -74,7 +74,7 @@ export function FeatureCards() {
                     {feature.description}
                   </p>
 
-                  <div className="feature-card-code mt-auto rounded-xl border border-neutral-7 bg-neutral-2 p-4 dark:border-white/10 dark:bg-black/40">
+                  <div className="feature-card-code mt-auto min-w-0 rounded-xl border border-neutral-7 bg-neutral-2 p-4 dark:border-white/10 dark:bg-black/40">
                     <pre className="overflow-x-auto font-mono text-[11px] leading-relaxed text-neutral-11 dark:text-white/75">
                       {feature.code.map((line, j) => (
                         <span key={j} className="block">

@@ -17,6 +17,9 @@ export default defineConfig({
   clean: true,
   external: ["react", "react-dom", "next"],
   treeshake: true,
+  banner: {
+    js: '"use client";',
+  },
   onSuccess: async () => {
     // Copy CSS tokens to dist/styles
     const srcPath = join(process.cwd(), "src/styles/tokens.css");
