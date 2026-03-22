@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "progress-4-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/progress-4-demo.tsx",
-      "content": "\"use client\";\n\nimport * as React from \"react\";\n\nimport { Progress } from \"@nebutra/ui/primitives\";\nexport function Progress4Demo() {\n  return (\n\n<div className=\"w-full\">\n  <Progress\n    value={75}\n    className=\"w-full [&>div]:bg-green-500\"\n  />\n</div>\n\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { Progress } from \"@nebutra/ui/primitives\";\nexport function Progress4Demo() {\n  return (\n    <div className=\"w-full\">\n      <Progress value={75} className=\"[&>div]:bg-green-500 w-full\" />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

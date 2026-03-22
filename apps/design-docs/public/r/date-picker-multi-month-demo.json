@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "date-picker-multi-month-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/date-picker-multi-month-demo.tsx",
-      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { DateRangePicker } from \"@nebutra/ui/primitives\";\n\nexport function DatePickerMultiMonthDemo() {\n  return (\n    <DateRangePicker label=\"住宿时间\" visibleMonths={2} />\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { DateRangePicker } from \"@nebutra/ui/primitives\";\n\nexport function DatePickerMultiMonthDemo() {\n  return <DateRangePicker label=\"住宿时间\" visibleMonths={2} />;\n}\n",
       "type": "registry:example"
     }
   ]

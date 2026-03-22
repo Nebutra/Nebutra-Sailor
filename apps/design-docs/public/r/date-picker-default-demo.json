@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "date-picker-default-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/date-picker-default-demo.tsx",
-      "content": "\"use client\";\n\nimport { DatePicker, parseDate } from \"@nebutra/ui/primitives\";\n\nexport default function DatePickerDefaultDemo() {\n    return (\n        <div className=\"flex justify-center items-center w-full max-w-sm\">\n            <DatePicker label=\"Date\" defaultValue={parseDate(\"2024-04-04\")} />\n        </div>\n    );\n}\n",
+      "content": "\"use client\";\n\nimport { DatePicker, parseDate } from \"@nebutra/ui/primitives\";\n\nexport default function DatePickerDefaultDemo() {\n  return (\n    <div className=\"max-w-sm flex w-full items-center justify-center\">\n      <DatePicker label=\"Date\" defaultValue={parseDate(\"2024-04-04\")} />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

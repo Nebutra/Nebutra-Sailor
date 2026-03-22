@@ -25,7 +25,6 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src --ext .ts,.tsx",
     "clean": "rm -rf dist"
   },
   "dependencies": {

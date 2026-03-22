@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "checkbox-group-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/checkbox-group-demo.tsx",
-      "content": "import { CheckboxGroup, Checkbox } from \"@nebutra/ui/primitives\";\n\nexport function CheckboxGroupDemo() {\n    return (\n        <CheckboxGroup label=\"Select features\">\n            <Checkbox>Analytics</Checkbox>\n            <Checkbox>API Access</Checkbox>\n            <Checkbox>SSO</Checkbox>\n        </CheckboxGroup>\n    );\n}\n",
+      "content": "import { Checkbox, CheckboxGroup } from \"@nebutra/ui/primitives\";\n\nexport function CheckboxGroupDemo() {\n  return (\n    <CheckboxGroup label=\"Select features\">\n      <Checkbox>Analytics</Checkbox>\n      <Checkbox>API Access</Checkbox>\n      <Checkbox>SSO</Checkbox>\n    </CheckboxGroup>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

@@ -6,7 +6,7 @@
     "dev": "next dev --port 3001",
     "build": "pnpm --filter @nebutra/brand sync && next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "biome check .",
     "typecheck": "tsc --noEmit",
     "analyze": "ANALYZE=true next build",
     "test": "vitest run",

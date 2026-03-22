@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "calendar-unavailable-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/calendar-unavailable-demo.tsx",
-      "content": "\"use client\";\n\nimport { Calendar, isWeekend } from \"@nebutra/ui/primitives\";\n\nexport default function CalendarUnavailableDemo() {\n    return (\n        <div className=\"flex justify-center items-center\">\n            <Calendar\n                isDateUnavailable={(date) => isWeekend(date, \"en-US\")}\n                className=\"rounded-xl shadow-sm border border-border\"\n            />\n        </div>\n    );\n}\n",
+      "content": "\"use client\";\n\nimport { Calendar, isWeekend } from \"@nebutra/ui/primitives\";\n\nexport default function CalendarUnavailableDemo() {\n  return (\n    <div className=\"flex items-center justify-center\">\n      <Calendar\n        isDateUnavailable={(date) => isWeekend(date, \"en-US\")}\n        className=\"rounded-xl border border-border shadow-sm\"\n      />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

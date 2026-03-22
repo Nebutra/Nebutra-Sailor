@@ -6,7 +6,7 @@
     "dev": "next dev --port 3000",
     "build": "pnpm --filter @nebutra/brand sync && next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "biome check .",
     "typecheck": "tsc --noEmit",
     "translate": "npx lingo.dev@latest run"
   },

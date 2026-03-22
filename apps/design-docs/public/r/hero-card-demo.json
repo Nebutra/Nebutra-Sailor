@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "hero-card-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/hero-card-demo.tsx",
-      "content": "\"use client\";\n\nimport { HeroCard, HeroCardHeader, HeroCardBody, HeroCardFooter } from \"@nebutra/ui/primitives\";\n\nexport function HeroCardDemo() {\n    return (\n        <HeroCard className=\"w-72\">\n            <HeroCardHeader>\n                <h4 className=\"font-semibold\">Card Title</h4>\n            </HeroCardHeader>\n            <HeroCardBody>\n                <p className=\"text-sm text-foreground/80\">\n                    Make beautiful websites regardless of your design experience.\n                </p>\n            </HeroCardBody>\n            <HeroCardFooter>\n                <button className=\"text-sm text-primary hover:underline\">\n                    Learn more →\n                </button>\n            </HeroCardFooter>\n        </HeroCard>\n    );\n}\n",
+      "content": "\"use client\";\n\nimport { HeroCard, HeroCardBody, HeroCardFooter, HeroCardHeader } from \"@nebutra/ui/primitives\";\n\nexport function HeroCardDemo() {\n  return (\n    <HeroCard className=\"w-72\">\n      <HeroCardHeader>\n        <h4 className=\"font-semibold\">Card Title</h4>\n      </HeroCardHeader>\n      <HeroCardBody>\n        <p className=\"text-sm text-foreground/80\">\n          Make beautiful websites regardless of your design experience.\n        </p>\n      </HeroCardBody>\n      <HeroCardFooter>\n        <button type=\"button\" className=\"text-sm text-primary hover:underline\">\n          Learn more →\n        </button>\n      </HeroCardFooter>\n    </HeroCard>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

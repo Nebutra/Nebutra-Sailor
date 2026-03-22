@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "calendar-6-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/calendar-6-demo.tsx",
-      "content": "\"use client\";\n\nimport * as React from \"react\";\n\nimport { RangeCalendar } from \"@nebutra/ui/primitives\";\nexport function Calendar6Demo() {\n  return (\n\n<RangeCalendar visibleMonths={2} className=\"rounded-xl shadow-sm border border-border p-4 max-w-full\" />\n\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { RangeCalendar } from \"@nebutra/ui/primitives\";\nexport function Calendar6Demo() {\n  return (\n    <RangeCalendar\n      visibleMonths={2}\n      className=\"p-4 max-w-full rounded-xl border border-border shadow-sm\"\n    />\n  );\n}\n",
       "type": "registry:example"
     }
   ]

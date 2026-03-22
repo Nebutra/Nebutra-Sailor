@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "snippet-status-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/snippet-status-demo.tsx",
-      "content": "import { SnippetStatus } from \"@nebutra/ui/primitives\";\n\nexport function SnippetStatusDemo() {\n    return (\n        <div className=\"w-full max-w-sm px-4 py-8\">\n            <SnippetStatus text=\"npm install @nebutra/ui\" />\n        </div>\n    )\n}\n",
+      "content": "import { SnippetStatus } from \"@nebutra/ui/primitives\";\n\nexport function SnippetStatusDemo() {\n  return (\n    <div className=\"max-w-sm px-4 py-8 w-full\">\n      <SnippetStatus text=\"npm install @nebutra/ui\" />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

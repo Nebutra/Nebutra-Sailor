@@ -2,12 +2,17 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "date-picker-range-min-max-demo",
   "type": "registry:example",
-  "dependencies": ["@internationalized/date", "@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@internationalized/date",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/date-picker-range-min-max-demo.tsx",
-      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { DateRangePicker } from \"@nebutra/ui/primitives\";\nimport { getLocalTimeZone, today } from \"@internationalized/date\";\n\nexport function DatePickerRangeMinMaxDemo() {\n  return (\n    <DateRangePicker\n      label=\"时段\"\n      minValue={today(getLocalTimeZone())}\n      maxValue={today(getLocalTimeZone()).add({ months: 3 })}\n    />\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { getLocalTimeZone, today } from \"@internationalized/date\";\nimport { DateRangePicker } from \"@nebutra/ui/primitives\";\n\nexport function DatePickerRangeMinMaxDemo() {\n  return (\n    <DateRangePicker\n      label=\"时段\"\n      minValue={today(getLocalTimeZone())}\n      maxValue={today(getLocalTimeZone()).add({ months: 3 })}\n    />\n  );\n}\n",
       "type": "registry:example"
     }
   ]

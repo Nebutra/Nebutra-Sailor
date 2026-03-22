@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "input-with-label-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/input-with-label-demo.tsx",
-      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { Label, Input } from \"@nebutra/ui/primitives\";\n\nexport function InputWithLabelDemo() {\n  return (\n    <div className=\"flex flex-col gap-1.5 w-full\">\n    <Label htmlFor=\"email\">\n      Email address\n    </Label>\n    <Input id=\"email\" type=\"email\" placeholder=\"contact@nebutra.com\" />\n  </div>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { Input, Label } from \"@nebutra/ui/primitives\";\n\nexport function InputWithLabelDemo() {\n  return (\n    <div className=\"gap-1.5 flex w-full flex-col\">\n      <Label htmlFor=\"email\">Email address</Label>\n      <Input id=\"email\" type=\"email\" placeholder=\"contact@nebutra.com\" />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

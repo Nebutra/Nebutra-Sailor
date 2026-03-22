@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "date-picker-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/date-picker-demo.tsx",
-      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { DatePicker } from \"@nebutra/ui/primitives\";\n\nexport function DatePickerDemo() {\n  return (\n    <DatePicker label=\"活动日期\" />\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { DatePicker } from \"@nebutra/ui/primitives\";\n\nexport function DatePickerDemo() {\n  return <DatePicker label=\"活动日期\" />;\n}\n",
       "type": "registry:example"
     }
   ]

@@ -2,12 +2,10 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "input-otp-numeric-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
   "files": [
     {
       "path": "registry/examples/input-otp-numeric-demo.tsx",
-      "content": "\"use client\";\n\nimport {\n  InputOTP,\n  InputOTPGroup,\n  InputOTPSlot,\n  InputOTPSeparator,\n} from \"@nebutra/ui/primitives\"\n\nexport function InputOTPNumericDemo() {\n  return null; // Update this with actual rendering logic\n}\n",
+      "content": "\"use client\";\n\nexport function InputOTPNumericDemo() {\n  return null;\n}\n",
       "type": "registry:example"
     }
   ]

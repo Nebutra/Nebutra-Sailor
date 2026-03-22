@@ -5,7 +5,7 @@
   "files": [
     {
       "path": "registry/examples/date-picker-variants-demo.tsx",
-      "content": "\"use client\";\n\nimport * as React from \"react\";\n\n// Temporary mock\nfunction MockDatePicker({ label, variant: _variant }: { label: React.ReactNode; variant?: string }) {\n  return <div className=\"border border-border px-3 py-2 rounded-md text-sm text-muted-foreground\">{label}</div>;\n}\n\nexport function DatePickerVariantsDemo() {\n  return (\n    <div className=\"flex gap-4 items-center flex-wrap\">\n      <MockDatePicker label=\"默认 (Default)\" />\n      <MockDatePicker label=\"带边框 (Bordered)\" variant=\"bordered\" />\n      <MockDatePicker label=\"带下划线 (Underlined)\" variant=\"underlined\" />\n      <MockDatePicker label=\"淡出风格 (Faded)\" variant=\"faded\" />\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport type * as React from \"react\";\n\n// Temporary mock\nfunction MockDatePicker({\n  label,\n  variant: _variant,\n}: {\n  label: React.ReactNode;\n  variant?: string;\n}) {\n  return (\n    <div className=\"px-3 py-2 text-sm rounded-md border border-border text-muted-foreground\">\n      {label}\n    </div>\n  );\n}\n\nexport function DatePickerVariantsDemo() {\n  return (\n    <div className=\"gap-4 flex flex-wrap items-center\">\n      <MockDatePicker label=\"默认 (Default)\" />\n      <MockDatePicker label=\"带边框 (Bordered)\" variant=\"bordered\" />\n      <MockDatePicker label=\"带下划线 (Underlined)\" variant=\"underlined\" />\n      <MockDatePicker label=\"淡出风格 (Faded)\" variant=\"faded\" />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

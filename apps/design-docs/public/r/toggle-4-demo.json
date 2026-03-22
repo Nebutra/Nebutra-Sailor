@@ -2,12 +2,16 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "toggle-4-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/toggle-4-demo.tsx",
-      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { Toggle } from \"@nebutra/ui/primitives\";\n\nexport function Toggle4Demo() {\n  return (\n    <Toggle size=\"normal\" aria-label=\"Toggle normal size\" />\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { Toggle } from \"@nebutra/ui/primitives\";\n\nexport function Toggle4Demo() {\n  return <Toggle size=\"normal\" aria-label=\"Toggle normal size\" />;\n}\n",
       "type": "registry:example"
     }
   ]

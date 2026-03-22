@@ -2,8 +2,13 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "badge-icon-demo",
   "type": "registry:example",
-  "dependencies": ["@nebutra/ui", "lucide-react"],
-  "registryDependencies": ["@nebutra/ui"],
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
   "files": [
     {
       "path": "registry/examples/badge-icon-demo.tsx",
