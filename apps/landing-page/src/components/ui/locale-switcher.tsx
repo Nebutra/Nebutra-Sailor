@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe } from "lucide-react";
+import { Globe } from "@nebutra/icons";
 import { useLocale } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "@/i18n/navigation";

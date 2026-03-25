@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "License compliance policy for the Nebutra-Sailor monorepo (AGPL-3.0).",
+  "projectLicense": "AGPL-3.0",
+  "allowed": [
+    {
+      "id": "MIT",
+      "reason": "Permissive — compatible with AGPL-3.0"
+    },
+    {
+      "id": "Apache-2.0",
+      "reason": "Permissive — compatible with AGPL-3.0 (one-way)"
+    },
+    {
+      "id": "BSD-2-Clause",
+      "reason": "Permissive — compatible with AGPL-3.0"
+    },
+    {
+      "id": "BSD-3-Clause",
+      "reason": "Permissive — compatible with AGPL-3.0"
+    },
+    {
+      "id": "ISC",
+      "reason": "Permissive — compatible with AGPL-3.0"
+    },
+    {
+      "id": "0BSD",
+      "reason": "Public-domain equivalent — compatible with everything"
+    },
+    {
+      "id": "Unlicense",
+      "reason": "Public-domain equivalent — compatible with everything"
+    },
+    {
+      "id": "CC0-1.0",
+      "reason": "Public-domain dedication — compatible with everything"
+    },
+    {
+      "id": "CC-BY-3.0",
+      "reason": "Attribution-only — compatible with AGPL-3.0"
+    },
+    {
+      "id": "CC-BY-4.0",
+      "reason": "Attribution-only — compatible with AGPL-3.0"
+    },
+    {
+      "id": "BlueOak-1.0.0",
+      "reason": "Permissive — compatible with AGPL-3.0"
+    },
+    {
+      "id": "Python-2.0",
+      "reason": "Permissive — compatible with AGPL-3.0"
+    }
+  ],
+  "forbidden": [
+    {
+      "id": "GPL-2.0",
+      "reason": "GPL-2.0-only is incompatible with AGPL-3.0 (no 'or later' upgrade path)"
+    },
+    {
+      "id": "GPL-3.0",
+      "reason": "GPL-3.0 combined work would restrict AGPL-3.0 network-use provisions"
+    },
+    {
+      "id": "SSPL-1.0",
+      "reason": "Server Side Public License is not OSI-approved and imposes service-level copyleft obligations"
+    },
+    {
+      "id": "EUPL-1.1",
+      "reason": "European Union Public License has complex compatibility matrix and reciprocal obligations"
+    },
+    {
+      "id": "EUPL-1.2",
+      "reason": "European Union Public License has complex compatibility matrix and reciprocal obligations"
+    },
+    {
+      "id": "AGPL-1.0",
+      "reason": "AGPL-1.0 is an older, incompatible version of the Affero GPL"
+    }
+  ],
+  "excludedPackages": ["@nebutra/*"],
+  "notes": "Our own @nebutra/* packages are AGPL-3.0 and excluded from the check. The CI job and local script both use license-checker-rspack via npx (not installed as a dependency)."
+}

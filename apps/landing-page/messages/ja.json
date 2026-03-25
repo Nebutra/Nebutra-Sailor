@@ -5,7 +5,12 @@
     "docs": "ドキュメント",
     "github": "GitHub",
     "signIn": "ログイン",
-    "getStarted": "無料開始"
+    "getStarted": "無料開始",
+    "about": "About Us",
+    "ideas": "アイデア",
+    "opc": "OPC コミュニティ",
+    "roadmap": "ロードマップ",
+    "resources": "リソース"
   },
   "hero": {
     "badge": "Nebutra Intelligence · Leading AI Infrastructure",
@@ -40,14 +45,41 @@
     "startBuilding": "Start Building"
   },
   "footer": {
+    "brandDescription": "数週間でSaaSを出荷。マルチテナント、課金、認証、AI——初日から本番対応。",
+    "columns": {
+      "product": "プロダクト",
+      "resources": "リソース",
+      "legal": "法的情報",
+      "community": "コミュニティ"
+    },
     "links": {
-      "product": "エコシステム",
-      "docs": "開発者向け",
-      "github": "ソースコード",
-      "discord": "コミュニティ"
+      "features": "機能",
+      "pricing": "料金プラン",
+      "about": "会社概要",
+      "showcase": "導入事例",
+      "blog": "ブログ",
+      "changelog": "更新履歴",
+      "roadmap": "ロードマップ",
+      "docs": "ドキュメント",
+      "ideas": "アイデア",
+      "opc": "OPC",
+      "privacy": "プライバシー",
+      "terms": "利用規約",
+      "cookies": "Cookie ポリシー",
+      "refund": "返金ポリシー",
+      "contact": "お問い合わせ",
+      "faq": "よくある質問",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 Nebutra Intelligence. 無断複写・転載を禁じます。",
-    "statusOnline": "全システム正常稼働中"
+    "statusOnline": "全システム正常稼働中",
+    "newsletterTitle": "最新情報を入手",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "購読",
+    "newsletterSuccess": "購読ありがとうございます！",
+    "newsletterError": "エラーが発生しました"
   },
   "logoStrip": {
     "tagline": "Engineered upon the premier technologies driving the modern web"

@@ -62,7 +62,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   ];
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       {/* Header */}
       <section className="text-center">
         <h1 className="text-4xl font-bold tracking-tight text-[var(--neutral-12)] dark:text-white">
@@ -93,7 +93,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
       </section>
 
       {/* Contact Form */}
-      <section className="rounded-[var(--radius-2xl)] border border-[var(--neutral-6)] p-8">
+      <section className="rounded-[var(--radius-2xl)] border border-[var(--neutral-6)] p-5 sm:p-8">
         <h2 className="text-2xl font-bold text-[var(--neutral-12)] dark:text-white mb-6">
           {t("contact.formTitle")}
         </h2>
@@ -101,19 +101,17 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
       </section>
 
       {/* Office Info */}
-      <section className="rounded-[var(--radius-2xl)] bg-[var(--neutral-2)] p-8">
+      <section className="rounded-[var(--radius-2xl)] bg-[var(--neutral-2)] p-5 sm:p-8">
         <h2 className="text-xl font-bold text-[var(--neutral-12)] dark:text-white mb-4">
           {t("contact.companyInfoTitle")}
         </h2>
         <div className="space-y-4 text-[var(--neutral-10)]">
           <div>
             <h3 className="font-semibold text-[var(--neutral-12)] dark:text-white">
-              无锡云毓智能科技有限公司
+              {t("contact.companyNameChinese")}
             </h3>
-            <p className="text-sm text-[var(--neutral-10)]">
-              Wuxi Nebutra Intelligent Technology Co., Ltd.
-            </p>
-            <p>无锡市，江苏省，中国</p>
+            <p className="text-sm text-[var(--neutral-10)]">{t("contact.companyNameEnglish")}</p>
+            <p>{t("contact.companyAddress")}</p>
           </div>
           <div>
             <h3 className="font-semibold text-[var(--neutral-12)] dark:text-white">

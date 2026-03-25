@@ -1,7 +1,7 @@
+import { ArrowLeft, Calendar } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { getPostBySlug, getPosts } from "@nebutra/sanity/queries";
 import { AnimateIn } from "@nebutra/ui/components";
-import { ArrowLeft, Calendar } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";

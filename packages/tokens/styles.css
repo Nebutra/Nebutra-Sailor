@@ -232,6 +232,13 @@
   /* #0033FE — same as primary */
   --info-foreground: 0 0% 100%;
 
+  /* Status colors — direct CSS color values for inline styles (e.g. SVG, charts, tags).
+     For Tailwind classes, use semantic tokens above: bg-destructive, bg-success, etc. */
+  --status-danger: #ef4444;
+  --status-warning: #f59e0b;
+  --status-success: #10b981;
+  --status-info: var(--brand-primary);
+
   /* Border, Input, Ring */
   --border: 240 5.9% 90%;
   /* precise neutral per Geist spec */
@@ -295,13 +302,20 @@
   --sidebar-border: 214 32% 91%;
   --sidebar-ring: 228 100% 50%;
 
+  /* Brand Aliases — canonical references for app-level code.
+     Use these instead of raw hex or scale steps. */
+  --brand-primary: var(--blue-9);
+  --brand-accent: var(--cyan-9);
+  --brand-tertiary: #8b5cf6;
+  /* purple — data viz, infrastructure tags, tertiary accent */
+
   /* Chart colors (for data visualization) */
   --chart-1: 228 100% 50%;
   /* nebutra-blue */
   --chart-2: 168 91% 49%;
   /* nebutra-cyan */
-  --chart-3: 228 100% 70%;
-  /* nebutra-blue-300 */
+  --chart-3: 263 70% 66%;
+  /* purple (--brand-tertiary) */
   --chart-4: 168 91% 70%;
   /* nebutra-cyan-300 */
   --chart-5: 228 100% 35%;
@@ -696,6 +710,11 @@
   --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  /* Brand aliases → Tailwind: bg-brand-primary, text-brand-accent, etc. */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-tertiary: var(--brand-tertiary);
 
   /* Chart colors */
   --color-chart-1: hsl(var(--chart-1));

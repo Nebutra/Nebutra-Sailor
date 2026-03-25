@@ -2,7 +2,9 @@ import bundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin("@nebutra/i18n/request");
+// next-intl v4 resolves this path via fs.existsSync (not Node module resolution),
+// so we must use a relative filesystem path, not a bare package specifier.
+const withNextIntl = createNextIntlPlugin("../../packages/i18n/src/request.ts");
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",

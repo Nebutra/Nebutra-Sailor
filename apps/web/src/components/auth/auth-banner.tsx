@@ -10,7 +10,7 @@ export function AuthBanner({ className }: AuthBannerProps) {
     <div
       className={cn(
         "relative hidden overflow-hidden lg:flex lg:flex-col",
-        "bg-[#0a0a0a]",
+        "bg-[color:var(--neutral-1)]",
         className,
       )}
     >
@@ -20,7 +20,7 @@ export function AuthBanner({ className }: AuthBannerProps) {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 100% 100%, rgba(0,51,254,0.35) 0%, rgba(11,241,195,0.18) 40%, transparent 70%)",
+            "radial-gradient(ellipse 80% 60% at 100% 100%, color-mix(in srgb, var(--brand-primary) 35%, transparent) 0%, color-mix(in srgb, var(--brand-accent) 18%, transparent) 40%, transparent 70%)",
         }}
       />
 
@@ -29,7 +29,8 @@ export function AuthBanner({ className }: AuthBannerProps) {
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-20"
         style={{
-          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
+          backgroundImage:
+            "radial-gradient(circle, color-mix(in srgb, var(--neutral-12) 60%, transparent) 1px, transparent 1px)",
           backgroundSize: "24px 24px",
         }}
       />

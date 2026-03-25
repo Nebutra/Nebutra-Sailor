@@ -42,6 +42,7 @@ function HeaderAuthControls() {
 
 import { ChevronRight, Menu, X } from "lucide-react";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
+import { usePermission } from "@/hooks/usePermission";
 import {
   buildBreadcrumbs,
   DASHBOARD_NAV_GROUPS,
@@ -66,37 +67,43 @@ function SidebarNav({
   mobile?: boolean;
   onNavigate?: () => void;
 }) {
+  const { can } = usePermission();
+  const isAdmin = can("admin:access");
+
   return (
     <nav className="space-y-1">
-      {DASHBOARD_NAV_GROUPS.map((group) => (
-        <div key={group.title} className="mb-4 space-y-1.5">
-          <p className="px-2 text-[11px] font-semibold tracking-[0.12em] text-neutral-10 uppercase dark:text-white/50">
-            {group.title}
-          </p>
-          {group.items.map((item) => {
-            const Icon = item.icon;
-            const active = isActiveRoute(pathname, item.href);
-            return (
-              <ViewTransitionLink
-                key={item.label}
-                href={item.href}
-                aria-current={active ? "page" : undefined}
-                onClick={() => {
-                  if (mobile) onNavigate?.();
-                }}
-                className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
-                  active
-                    ? "bg-blue-2 text-blue-11 dark:bg-white/10 dark:text-white"
-                    : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                {item.label}
-              </ViewTransitionLink>
-            );
-          })}
-        </div>
-      ))}
+      {DASHBOARD_NAV_GROUPS.map((group) => {
+        if (group.title === "Admin" && !isAdmin) return null;
+        return (
+          <div key={group.title} className="mb-4 space-y-1.5">
+            <p className="px-2 text-[11px] font-semibold tracking-[0.12em] text-neutral-10 uppercase dark:text-white/50">
+              {group.title}
+            </p>
+            {group.items.map((item) => {
+              const Icon = item.icon;
+              const active = isActiveRoute(pathname, item.href);
+              return (
+                <ViewTransitionLink
+                  key={item.label}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  onClick={() => {
+                    if (mobile) onNavigate?.();
+                  }}
+                  className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
+                    active
+                      ? "bg-blue-2 text-blue-11 dark:bg-white/10 dark:text-white"
+                      : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  {item.label}
+                </ViewTransitionLink>
+              );
+            })}
+          </div>
+        );
+      })}
     </nav>
   );
 }

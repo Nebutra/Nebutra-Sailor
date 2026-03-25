@@ -5,7 +5,12 @@
     "docs": "Documentación",
     "github": "GitHub",
     "signIn": "Iniciar Sesión",
-    "getStarted": "Comenzar"
+    "getStarted": "Comenzar",
+    "about": "About Us",
+    "ideas": "Ideas",
+    "opc": "Comunidad OPC",
+    "roadmap": "Hoja de Ruta",
+    "resources": "Recursos"
   },
   "hero": {
     "badge": "Nebutra Intelligence · Leading AI Infrastructure",
@@ -40,14 +45,41 @@
     "startBuilding": "Start Building"
   },
   "footer": {
+    "brandDescription": "Lance su SaaS en semanas, no meses. Multi-tenancy, facturación, autenticación e IA — listo para producción desde el primer día.",
+    "columns": {
+      "product": "Producto",
+      "resources": "Recursos",
+      "legal": "Legal",
+      "community": "Comunidad"
+    },
     "links": {
-      "product": "Ecosistema",
+      "features": "Características",
+      "pricing": "Precios",
+      "about": "Acerca de",
+      "showcase": "Escaparate",
+      "blog": "Blog",
+      "changelog": "Registro de cambios",
+      "roadmap": "Hoja de ruta",
       "docs": "Documentación",
-      "github": "Código Fuente",
-      "discord": "Comunidad"
+      "ideas": "Ideas",
+      "opc": "OPC",
+      "privacy": "Privacidad",
+      "terms": "Términos",
+      "cookies": "Cookies",
+      "refund": "Reembolso",
+      "contact": "Contacto",
+      "faq": "Preguntas frecuentes",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 Nebutra Intelligence. Todos los derechos reservados.",
-    "statusOnline": "Todos los sistemas operativos"
+    "statusOnline": "Todos los sistemas operativos",
+    "newsletterTitle": "Mantente al día",
+    "newsletterPlaceholder": "tu@ejemplo.com",
+    "newsletterSubscribe": "Suscribirse",
+    "newsletterSuccess": "¡Gracias por suscribirte!",
+    "newsletterError": "Algo salió mal"
   },
   "logoStrip": {
     "tagline": "Engineered upon the premier technologies driving the modern web"

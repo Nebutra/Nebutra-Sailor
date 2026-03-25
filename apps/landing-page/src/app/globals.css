@@ -8,6 +8,9 @@
 /* Tailwind CSS v4 */
 @import "tailwindcss";
 
+/* Typography plugin — enables prose classes for legal/content pages */
+@plugin "@tailwindcss/typography";
+
 /* Unified token system */
 @import "@nebutra/tokens/styles.css";
 
@@ -16,14 +19,9 @@
  */
 @custom-variant dark (&:is(.dark *));
 
-/* ==============================================
- * Nebutra Brand Color Aliases
- * ============================================== */
-:root {
-  /* Legacy aliases for backward compatibility */
-  --brand-primary: var(--nebutra-blue-500);
-  --brand-accent: var(--nebutra-cyan-500);
-}
+/* Brand aliases (--brand-primary, --brand-accent, --brand-tertiary)
+ * are defined in @nebutra/tokens/styles.css — the single source of truth.
+ * Do NOT redefine them here. */
 
 /* Custom overrides for landing page */
 @layer base {

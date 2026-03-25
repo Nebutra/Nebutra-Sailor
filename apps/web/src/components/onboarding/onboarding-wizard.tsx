@@ -5,8 +5,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ConnectIntegrationsStep } from "./connect-integrations-step";
 import { CreateWorkspaceStep } from "./create-workspace-step";
+import { InviteTeamStep } from "./invite-team-step";
+import { ProfileSetupStep } from "./profile-setup-step";
 
-const STEPS = [{ label: "Workspace" }, { label: "Integrations" }] as const;
+const STEPS = [
+  { label: "Workspace" },
+  { label: "Profile" },
+  { label: "Team" },
+  { label: "Integrations" },
+] as const;
 
 export function OnboardingWizard() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -66,7 +73,9 @@ export function OnboardingWizard() {
         {/* Step content */}
         <div className="rounded-[var(--radius-2xl)] border border-border bg-card p-8 shadow-sm">
           {currentStep === 0 && <CreateWorkspaceStep onComplete={() => setCurrentStep(1)} />}
-          {currentStep === 1 && <ConnectIntegrationsStep onComplete={() => router.push("/")} />}
+          {currentStep === 1 && <ProfileSetupStep onComplete={() => setCurrentStep(2)} />}
+          {currentStep === 2 && <InviteTeamStep onComplete={() => setCurrentStep(3)} />}
+          {currentStep === 3 && <ConnectIntegrationsStep onComplete={() => router.push("/")} />}
         </div>
 
         <p className="mt-4 text-center text-xs text-muted-foreground">

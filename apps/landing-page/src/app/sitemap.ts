@@ -10,6 +10,9 @@ const staticPaths = [
   { path: "/faq", changeFreq: "monthly" as const, priority: 0.4 },
   { path: "/about", changeFreq: "monthly" as const, priority: 0.5 },
   { path: "/contact", changeFreq: "monthly" as const, priority: 0.4 },
+  { path: "/showcase", changeFreq: "weekly" as const, priority: 0.6 },
+  { path: "/blog", changeFreq: "weekly" as const, priority: 0.7 },
+  { path: "/changelog", changeFreq: "weekly" as const, priority: 0.5 },
 ];
 
 function localizedUrl(base: string, locale: string, path: string): string {

@@ -13,7 +13,7 @@
   <br />
   <br />
   <h3>The Open-Source Enterprise SaaS Platform</h3>
-  <p><em>In uncertainty, we make entrepreneurial growth democratic, intelligent, and lightweight—ultimately measurable and traceable.</em></p>
+  <p><em>We make entrepreneurial growth democratic, intelligent, and lightweight—ultimately measurable and traceable.</em></p>
   <br />
   <p>
     <a href="https://nebutra.com"><strong>Website</strong></a> · 

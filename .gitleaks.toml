@@ -1,0 +1,16 @@
+# Gitleaks configuration
+# https://github.com/gitleaks/gitleaks
+
+title = "Nebutra-Sailor gitleaks config"
+
+[allowlist]
+  description = "Global allowlist"
+
+  paths = [
+    '''\.env\.example$''',
+    '''pnpm-lock\.yaml$''',
+    '''node_modules/''',
+    '''__tests__/fixtures/''',
+    '''test/fixtures/''',
+    '''tests/fixtures/''',
+  ]

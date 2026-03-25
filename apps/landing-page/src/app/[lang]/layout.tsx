@@ -167,29 +167,27 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale} className={`min-h-screen antialiased`} suppressHydrationWarning>
-      <body className="antialiased">
-        <a
-          href="#main-content"
-          className="sr-only fixed left-3 top-3 z-[100] rounded-[var(--radius-md)] bg-[color:var(--blue-9)] px-3 py-2 text-sm font-medium text-white focus:not-sr-only"
-        >
-          Skip to content
-        </a>
+    <>
+      <a
+        href="#main-content"
+        className="sr-only fixed left-3 top-3 z-[100] rounded-[var(--radius-md)] bg-[color:var(--blue-9)] px-3 py-2 text-sm font-medium text-white focus:not-sr-only"
+      >
+        Skip to content
+      </a>
 
-        <Script id="nebutra-jsonld" type="application/ld+json" strategy="beforeInteractive">
-          {toSafeJsonLd(jsonLd)}
-        </Script>
+      <Script id="nebutra-jsonld" type="application/ld+json" strategy="beforeInteractive">
+        {toSafeJsonLd(jsonLd)}
+      </Script>
 
-        <Providers>
-          <ErrorBoundary>
-            <NextIntlClientProvider locale={locale} messages={messages}>
-              {children}
-            </NextIntlClientProvider>
-          </ErrorBoundary>
-        </Providers>
-        <SpeedInsights />
-        <Analytics />
-      </body>
-    </html>
+      <Providers>
+        <ErrorBoundary>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </ErrorBoundary>
+      </Providers>
+      <SpeedInsights />
+      <Analytics />
+    </>
   );
 }

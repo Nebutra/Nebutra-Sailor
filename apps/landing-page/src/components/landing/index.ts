@@ -5,7 +5,6 @@
 // Micro Landing components (ML-1.x through ML-9.x)
 export { AIConstellationMarquee } from "./AIConstellationMarquee";
 export { AlternativeComparison } from "./AlternativeComparison";
-export { BuildCostCalculator } from "./BuildCostCalculator";
 export { CapabilityMatrixSection } from "./CapabilityMatrixSection";
 export { DeploymentStats } from "./DeploymentStats";
 // Legacy components (kept for backwards compat)
@@ -17,6 +16,7 @@ export { HeroSection } from "./HeroSection";
 export { LogoStrip } from "./LogoStrip";
 export { MonorepoFileTree } from "./MonorepoFileTree";
 export { Navbar } from "./Navbar";
+export { NewsletterForm } from "./NewsletterForm";
 export { PricingHintSection } from "./PricingHintSection";
 export { ProductDemoSection } from "./ProductDemoSection";
 export { TestimonialsSection } from "./TestimonialsSection";
@@ -35,7 +35,6 @@ export const LANDING_SECTIONS = [
   "TestimonialsSection",
   "MonorepoFileTree",
   "GlobalEdgeMap",
-  "BuildCostCalculator",
   "AlternativeComparison",
   "FinalCTA",
   "FooterMinimal",

@@ -1,5 +1,6 @@
 import type { Preview, StoryContext, StoryFn } from "@storybook/react";
 import "@nebutra/tokens/styles.css";
+import { a11yConfig } from "./a11y-config";
 
 const preview: Preview = {
   parameters: {
@@ -20,18 +21,7 @@ const preview: Preview = {
     docs: {
       theme: undefined,
     },
-    a11y: {
-      // Axe accessibility rules configuration
-      config: {
-        rules: [
-          {
-            // Allow color-contrast issues to be warnings, not failures
-            id: "color-contrast",
-            enabled: true,
-          },
-        ],
-      },
-    },
+    a11y: a11yConfig,
   },
 
   globalTypes: {

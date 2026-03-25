@@ -175,21 +175,11 @@ export const getAllLogoUrls = (theme: "light" | "dark" = "dark") =>
 // =============================================================================
 
 export const footerContent = {
-  brand: {
-    name: "Sailor",
-  },
-  links: [
-    { label: "Product", href: "/features" },
-    { label: "Docs", href: "https://docs.nebutra.com/sailor" },
-    { label: "GitHub", href: "https://github.com/Nebutra/Nebutra-Sailor" },
-    { label: "Discord", href: "https://discord.gg/nebutra" },
-  ],
   social: [
     { platform: "x", href: "https://x.com/nebutra" },
     { platform: "github", href: "https://github.com/nebutra" },
     { platform: "discord", href: "https://discord.gg/nebutra" },
   ],
-  copyright: "© 2024 Nebutra Intelligence",
   status: {
     label: "Online",
     href: "https://status.nebutra.com",

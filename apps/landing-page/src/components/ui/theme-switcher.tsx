@@ -1,5 +1,5 @@
 "use client";
-import { MonitorIcon, MoonStarIcon, SunIcon } from "lucide-react";
+import { Display as MonitorIcon, Moon as MoonStarIcon, Sun as SunIcon } from "@nebutra/icons";
 import { useTheme } from "next-themes";
 import type { JSX } from "react";
 import { useMount } from "@/hooks/useMount";
@@ -21,7 +21,7 @@ function ThemeOption({
     <button
       type="button"
       className={cn(
-        "relative flex size-8 cursor-pointer items-center justify-center rounded-full transition-all [&_svg]:size-4",
+        "relative flex size-10 cursor-pointer items-center justify-center rounded-full transition-all [&_svg]:size-4",
         isActive
           ? "text-[var(--neutral-12)]"
           : "text-[var(--neutral-9)] hover:text-[var(--neutral-12)]",
@@ -48,7 +48,7 @@ function ThemeSwitcher() {
   const isMounted = useMount();
   const currentTheme = theme ?? "system";
   if (!isMounted) {
-    return <div className="flex h-8 w-24" />;
+    return <div className="flex h-10 w-[7.5rem]" />;
   }
   return (
     <div

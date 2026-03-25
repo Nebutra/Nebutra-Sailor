@@ -1,9 +1,13 @@
 import {
+  Bot,
+  Building2,
   ChartSpline,
   CreditCard,
   FileText,
   LayoutDashboard,
   type LucideIcon,
+  Shield,
+  UserCog,
   Users,
 } from "lucide-react";
 
@@ -11,16 +15,20 @@ export interface DashboardNavItem {
   href: string;
   label: string;
   icon: LucideIcon;
-  group: "Product" | "Operations";
+  group: "Product" | "Operations" | "Admin";
 }
 
-export const DASHBOARD_NAV_ITEMS = [
+export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
   { href: "/", label: "Overview", icon: LayoutDashboard, group: "Product" },
   { href: "/analytics", label: "Analytics", icon: ChartSpline, group: "Product" },
+  { href: "/chat", label: "AI Chat", icon: Bot, group: "Product" },
   { href: "/billing", label: "Billing", icon: CreditCard, group: "Operations" },
   { href: "/tenants", label: "Tenants", icon: Users, group: "Operations" },
   { href: "/audit", label: "Audit", icon: FileText, group: "Operations" },
-] as const satisfies readonly DashboardNavItem[];
+  { href: "/admin", label: "Admin", icon: Shield, group: "Admin" },
+  { href: "/admin/users", label: "Users", icon: UserCog, group: "Admin" },
+  { href: "/admin/organizations", label: "Organizations", icon: Building2, group: "Admin" },
+];
 
 export const DASHBOARD_NAV_GROUPS = [
   {
@@ -31,7 +39,11 @@ export const DASHBOARD_NAV_GROUPS = [
     title: "Operations",
     items: DASHBOARD_NAV_ITEMS.filter((item) => item.group === "Operations"),
   },
-] as const;
+  {
+    title: "Admin",
+    items: DASHBOARD_NAV_ITEMS.filter((item) => item.group === "Admin"),
+  },
+];
 
 export const WORKSPACES = [
   { id: "starter", label: "Starter Workspace" },

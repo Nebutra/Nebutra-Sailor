@@ -7,10 +7,14 @@ on:
     paths:
       - "packages/ui/src/**"
       - "apps/storybook/**"
+      - "apps/landing-page/src/components/**"
+      - "apps/landing-page/src/app/**/page.tsx"
   pull_request:
     paths:
       - "packages/ui/src/**"
       - "apps/storybook/**"
+      - "apps/landing-page/src/components/**"
+      - "apps/landing-page/src/app/**/page.tsx"
 
 jobs:
   chromatic:
@@ -48,5 +52,5 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           storybookBuildDir: apps/storybook/dist
-          exitZeroOnChanges: true
+          exitZeroOnChanges: false
           autoAcceptChanges: main

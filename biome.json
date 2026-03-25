@@ -19,7 +19,8 @@
       "!**/.turbo",
       "!**/.vscode",
       "!**/*.html",
-      "!**/generated"
+      "!**/generated",
+      "!**/.source"
     ]
   },
   "formatter": {
@@ -46,21 +47,26 @@
         "noDangerouslySetInnerHtml": "off"
       },
       "style": {
-        "noNonNullAssertion": "off",
-        "useImportType": "warn",
+        "noNonNullAssertion": "warn",
+        "useImportType": "error",
         "useTemplate": "off"
       },
       "complexity": {
-        "noBannedTypes": "off",
+        "noBannedTypes": "warn",
         "noForEach": "off"
       },
       "suspicious": {
-        "noExplicitAny": "off",
+        "noExplicitAny": "warn",
         "noArrayIndexKey": "off",
         "noAssignInExpressions": "off",
-        "noImplicitAnyLet": "off",
+        "noImplicitAnyLet": "warn",
         "noEmptyInterface": "off",
-        "noConsole": "warn",
+        "noConsole": {
+          "level": "error",
+          "options": {
+            "allow": ["warn", "error", "assert"]
+          }
+        },
         "noGlobalIsNan": "warn",
         "noDuplicateJsxProps": "warn",
         "noDuplicateProperties": "warn",

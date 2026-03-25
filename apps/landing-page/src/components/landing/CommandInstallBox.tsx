@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy } from "lucide-react";
+import { Check, Copy } from "@nebutra/icons";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +32,7 @@ export function CommandInstallBox({
         className,
       )}
     >
-      <code className="flex-1 overflow-x-auto whitespace-nowrap px-5 py-3.5 font-mono text-sm text-[color:var(--neutral-12)] md:text-base dark:text-white">
+      <code className="flex-1 overflow-x-auto whitespace-nowrap px-4 py-3.5 font-mono text-xs text-[color:var(--neutral-12)] sm:px-5 sm:text-sm md:text-base dark:text-white">
         <span className="text-[color:var(--neutral-9)] dark:text-white/50">$</span> {command}
       </code>
       <button

@@ -8,9 +8,13 @@ pre-commit:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
       run: pnpm biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
       stage_fixed: true
+    typecheck:
+      run: pnpm turbo typecheck --affected
+      stage_fixed: false
+    secrets-scan:
+      run: gitleaks protect --staged --no-banner
 
-# Defer strict commitlint rules to CI (or uncomment below if you want local checking)
-# commit-msg:
-#   commands:
-#     commitlint:
-#       run: pnpm commitlint --edit {1}
+commit-msg:
+  commands:
+    conventional-commit:
+      run: 'grep -qE "^(feat|fix|refactor|docs|test|chore|perf|ci|build|style|revert)(\(.+\))?: .+" {1}'

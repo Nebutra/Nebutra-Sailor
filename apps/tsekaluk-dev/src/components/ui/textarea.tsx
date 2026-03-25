@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React, { useState } from "react";
-import { Error } from "@/components/ui/error";
+import { ErrorDisplay } from "@/components/ui/error";
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: string;
@@ -63,7 +63,9 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           ref={ref}
           {...props}
         />
-        {error && <Error size={sizeType === "large" ? "large" : "small"}>{error}</Error>}
+        {error && (
+          <ErrorDisplay size={sizeType === "large" ? "large" : "small"}>{error}</ErrorDisplay>
+        )}
       </div>
     );
   },

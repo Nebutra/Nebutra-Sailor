@@ -35,7 +35,12 @@ export type Scope =
   | "settings:read"
   | "settings:update"
   // Audit log
-  | "audit_log:read";
+  | "audit_log:read"
+  // Super admin
+  | "admin:access"
+  | "admin:manage_users"
+  | "admin:manage_orgs"
+  | "admin:impersonate";
 
 // ── Permission matrix ────────────────────────────────────────────────────────
 
@@ -58,6 +63,10 @@ const ROLE_PERMISSIONS: Record<Role, ReadonlySet<Scope>> = {
     "settings:read",
     "settings:update",
     "audit_log:read",
+    "admin:access",
+    "admin:manage_users",
+    "admin:manage_orgs",
+    "admin:impersonate",
   ]),
   member: new Set<Scope>([
     "billing:read",

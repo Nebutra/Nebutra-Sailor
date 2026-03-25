@@ -11,10 +11,14 @@ import { getLogoUrl, techStackLogos } from "@/lib/landing-content";
 export async function LogoStrip({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: "logoStrip" });
 
-  const logos = techStackLogos.slice(0, 8).map((logo) => ({
+  const allLogos = techStackLogos.slice(0, 8).map((logo) => ({
     name: logo.name,
     url: getLogoUrl(logo, "dark"),
   }));
+  // Place the first logo (Nebutra) in the center
+  const [first, ...rest] = allLogos;
+  const mid = Math.floor(rest.length / 2);
+  const logos = [...rest.slice(0, mid), first, ...rest.slice(mid)];
 
   return (
     <section className="w-full border-y border-[var(--neutral-6)] bg-white py-10 dark:border-white/5 dark:bg-black">
@@ -23,18 +27,21 @@ export async function LogoStrip({ locale }: { locale: Locale }) {
           {t("tagline")}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-          {logos.map((logo) => (
-            <Image
-              key={logo.name}
-              src={logo.url}
-              alt={logo.name}
-              width={0}
-              height={28}
-              className="h-7 w-auto opacity-50 grayscale transition-all duration-300 hover:opacity-80 hover:grayscale-0 invert dark:invert-0"
-              style={{ width: "auto" }}
-              unoptimized={false}
-            />
-          ))}
+          {logos.map((logo) => {
+            const isSmall = logo.name === first.name;
+            return (
+              <Image
+                key={logo.name}
+                src={logo.url}
+                alt={logo.name}
+                width={0}
+                height={isSmall ? 20 : 28}
+                className={`${isSmall ? "h-5" : "h-7"} w-auto opacity-50 grayscale transition-all duration-300 hover:opacity-80 hover:grayscale-0 invert dark:invert-0`}
+                style={{ width: "auto" }}
+                unoptimized={false}
+              />
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,6 +1,10 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { routing } from "@nebutra/i18n/routing";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import createIntlMiddleware from "next-intl/middleware";
+
+const intlMiddleware = createIntlMiddleware(routing);
 
 const isPublicRoute = createRouteMatcher([
   "/sign-in(.*)",
@@ -67,7 +71,11 @@ export const proxy = hasClerkKey
         await auth.protect();
       }
 
-      const response = NextResponse.next();
+      // Run next-intl locale detection/redirect
+      const intlResponse = intlMiddleware(req);
+
+      // Apply CSP nonce to the response
+      const response = intlResponse || NextResponse.next();
       return withNonce(req, response);
     })
   : (() => {
@@ -76,7 +84,11 @@ export const proxy = hasClerkKey
         if (!devWarned) {
           devWarned = true;
         }
-        const response = NextResponse.next();
+
+        // Run next-intl locale detection/redirect
+        const intlResponse = intlMiddleware(req);
+
+        const response = intlResponse || NextResponse.next();
         return withNonce(req, response);
       };
     })();

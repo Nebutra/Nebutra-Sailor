@@ -33,7 +33,7 @@ interface ErrorProps {
   children?: React.ReactNode;
 }
 
-export const Error = ({ error, label, size = "medium", children }: ErrorProps) => {
+export const ErrorDisplay = ({ error, label, size = "medium", children }: ErrorProps) => {
   return (
     <div
       className={`flex items-center gap-2 text-[var(--ds-red-900)] fill-[var(--ds-red-900)] font-sans

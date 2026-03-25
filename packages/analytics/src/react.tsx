@@ -81,7 +81,7 @@ export function AnalyticsProvider({
   const sendEvent = useCallback(
     async (eventType: string, data: Record<string, unknown>) => {
       if (!canTrack) {
-        if (debug) console.log("[Analytics] Tracking disabled, skipping:", eventType);
+        if (debug) console.warn("[Analytics] Tracking disabled, skipping:", eventType);
         return;
       }
 
@@ -98,7 +98,7 @@ export function AnalyticsProvider({
       };
 
       if (debug) {
-        console.log("[Analytics] Event:", payload);
+        console.warn("[Analytics] Event:", payload);
       }
 
       // Send to analytics endpoint

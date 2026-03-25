@@ -51,16 +51,16 @@ export function GrowthAreaChart({ series }: Props) {
       <AreaChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
         <defs>
           <linearGradient id="gradSignups" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#0033FE" stopOpacity={0.25} />
-            <stop offset="95%" stopColor="#0033FE" stopOpacity={0} />
+            <stop offset="5%" stopColor="var(--brand-primary)" stopOpacity={0.25} />
+            <stop offset="95%" stopColor="var(--brand-primary)" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="gradActivations" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#0BF1C3" stopOpacity={0.2} />
-            <stop offset="95%" stopColor="#0BF1C3" stopOpacity={0} />
+            <stop offset="5%" stopColor="var(--brand-accent)" stopOpacity={0.2} />
+            <stop offset="95%" stopColor="var(--brand-accent)" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="gradConversions" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.2} />
-            <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+            <stop offset="5%" stopColor="var(--brand-tertiary)" stopOpacity={0.2} />
+            <stop offset="95%" stopColor="var(--brand-tertiary)" stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="var(--neutral-6)" vertical={false} />
@@ -96,7 +96,7 @@ export function GrowthAreaChart({ series }: Props) {
         <Area
           type="monotone"
           dataKey="Signups"
-          stroke="#0033FE"
+          stroke="var(--brand-primary)"
           strokeWidth={2}
           fill="url(#gradSignups)"
           dot={false}
@@ -105,7 +105,7 @@ export function GrowthAreaChart({ series }: Props) {
         <Area
           type="monotone"
           dataKey="Activations"
-          stroke="#0BF1C3"
+          stroke="var(--brand-accent)"
           strokeWidth={2}
           fill="url(#gradActivations)"
           dot={false}
@@ -114,7 +114,7 @@ export function GrowthAreaChart({ series }: Props) {
         <Area
           type="monotone"
           dataKey="Conversions"
-          stroke="#8b5cf6"
+          stroke="var(--brand-tertiary)"
           strokeWidth={2}
           fill="url(#gradConversions)"
           dot={false}

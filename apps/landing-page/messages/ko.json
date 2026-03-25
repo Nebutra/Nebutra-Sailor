@@ -5,7 +5,12 @@
     "docs": "문서",
     "github": "GitHub",
     "signIn": "로그인",
-    "getStarted": "시작하기"
+    "getStarted": "시작하기",
+    "about": "About Us",
+    "ideas": "아이디어",
+    "opc": "OPC 커뮤니티",
+    "roadmap": "로드맵",
+    "resources": "리소스"
   },
   "hero": {
     "badge": "Nebutra Intelligence · Leading AI Infrastructure",
@@ -40,14 +45,41 @@
     "startBuilding": "Start Building"
   },
   "footer": {
+    "brandDescription": "몇 주 만에 SaaS를 출시하세요. 멀티테넌트, 결제, 인증, AI — 첫날부터 프로덕션 준비 완료.",
+    "columns": {
+      "product": "제품",
+      "resources": "리소스",
+      "legal": "법적 고지",
+      "community": "커뮤니티"
+    },
     "links": {
-      "product": "생태계",
-      "docs": "개발자 문서",
-      "github": "소스 코드",
-      "discord": "커뮤니티"
+      "features": "기능",
+      "pricing": "요금제",
+      "about": "회사 소개",
+      "showcase": "사례",
+      "blog": "블로그",
+      "changelog": "변경 기록",
+      "roadmap": "로드맵",
+      "docs": "문서",
+      "ideas": "아이디어",
+      "opc": "OPC",
+      "privacy": "개인정보처리방침",
+      "terms": "이용약관",
+      "cookies": "쿠키 정책",
+      "refund": "환불 정책",
+      "contact": "문의하기",
+      "faq": "자주 묻는 질문",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 Nebutra Intelligence. 모든 권리 보유.",
-    "statusOnline": "모든 시스템 정상 작동 중"
+    "statusOnline": "모든 시스템 정상 작동 중",
+    "newsletterTitle": "최신 소식 받기",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "구독",
+    "newsletterSuccess": "구독해 주셔서 감사합니다!",
+    "newsletterError": "문제가 발생했습니다"
   },
   "logoStrip": {
     "tagline": "Engineered upon the premier technologies driving the modern web"

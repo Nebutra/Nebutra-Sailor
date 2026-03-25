@@ -49,11 +49,6 @@ const MonorepoFileTree = dynamic(
   { loading: () => <div className="h-80" aria-hidden /> },
 );
 
-const BuildCostCalculator = dynamic(
-  () => import("@/components/landing").then((mod) => mod.BuildCostCalculator),
-  { loading: () => <div className="h-80" aria-hidden /> },
-);
-
 const AlternativeComparison = dynamic(
   () => import("@/components/landing").then((mod) => mod.AlternativeComparison),
   { loading: () => <div className="h-80" aria-hidden /> },
@@ -142,8 +137,14 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
         {/* Animated Terminal Component */}
         <div className="relative w-full max-w-4xl mx-auto mt-20 px-4 z-10">
-          <div className="rounded-xl border border-border/50 bg-background/50 backdrop-blur-2xl shadow-2xl overflow-hidden p-[1px]">
-            <Terminal className="min-h-[300px] border-none shadow-none rounded-xl">
+          <div className="rounded-xl border border-border/50 bg-background/50 backdrop-blur-2xl shadow-2xl overflow-hidden flex flex-col">
+            {/* macOS Window Controls */}
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-muted/20">
+              <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+              <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+              <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+            </div>
+            <Terminal className="min-h-[300px] border-none shadow-none rounded-none bg-transparent">
               <TypingAnimation>
                 &gt; pnpm create next-app --example nebutra-sailor my-empire
               </TypingAnimation>
@@ -356,11 +357,6 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
               </div>
             </Card>
           </div>
-
-          {/* ML-8.2: Build Cost Reality Check */}
-          <div className="mt-8 max-w-5xl mx-auto">
-            <BuildCostCalculator />
-          </div>
         </div>
       </section>
 
@@ -435,7 +431,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
           </Button>
 
           <p className="mt-8 text-sm text-muted-foreground font-medium">
-            Open source under MIT License. No credit card required.
+            Open source under AGPL-3.0 License. No credit card required.
           </p>
         </div>
       </section>

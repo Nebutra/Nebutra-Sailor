@@ -79,7 +79,7 @@ export function RevenueBarChart({ series }: Props) {
         />
         <Bar dataKey="Revenue" radius={[3, 3, 0, 0]}>
           {data.map((_, i) => (
-            <Cell key={i} fill={i === maxIdx ? "#0033FE" : "var(--neutral-5)"} />
+            <Cell key={i} fill={i === maxIdx ? "var(--brand-primary)" : "var(--neutral-5)"} />
           ))}
         </Bar>
       </BarChart>

@@ -1,6 +1,6 @@
 "use client";
 
-import { CreditCard, Server, Zap } from "lucide-react";
+import { CreditCard, Servers as Server, Lightning as Zap } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 

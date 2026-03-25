@@ -22,189 +22,178 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
 }
 
+/** Indices for iterating next-intl indexed objects */
+const MONTHLY_ITEMS = [0, 1, 2, 3] as const;
+const ANNUAL_ITEMS = [0, 1, 2, 3] as const;
+const SERVICE_ISSUE_ITEMS = [0, 1, 2] as const;
+const BILLING_ERROR_ITEMS = [0, 1, 2] as const;
+const EXCEPTIONAL_ITEMS = [0, 1, 2] as const;
+const NON_REFUNDABLE_ITEMS = [0, 1, 2, 3, 4] as const;
+const STEP1_ITEMS = [0, 1, 2, 3] as const;
+const STEP2_ITEMS = [0, 1, 2] as const;
+const STEP3_ITEMS = [0, 1, 2] as const;
+const UPGRADE_ITEMS = [0, 1, 2] as const;
+const DOWNGRADE_ITEMS = [0, 1, 2] as const;
+const FREE_TRIAL_ITEMS = [0, 1, 2] as const;
+const DISPUTE_STEPS = [0, 1, 2] as const;
+
 export default async function RefundPolicyPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const locale = lang as Locale;
   setRequestLocale(locale);
-  const t = await getTranslations({ locale, namespace: "legalPages" });
+  const t = await getTranslations({ locale, namespace: "legalPages.refund" });
 
   return (
     <article className="prose prose-gray dark:prose-invert max-w-none">
-      <h1>{t("refund.heading")}</h1>
+      <h1>{t("heading")}</h1>
 
       <p className="lead">
-        <strong>{t("refund.effectiveDate")}:</strong> January 1, 2025
+        <strong>{t("effectiveDate")}:</strong> {t("dates.effective")}
         <br />
-        <strong>{t("refund.lastUpdated")}:</strong> January 1, 2025
+        <strong>{t("lastUpdated")}:</strong> {t("dates.updated")}
       </p>
 
-      <p>
-        At Nebutra, we want you to be completely satisfied with our services. This Refund Policy
-        outlines the circumstances under which refunds are available and the process for requesting
-        them.
-      </p>
+      <p>{t("intro")}</p>
 
-      <h2>Subscription Plans</h2>
+      {/* Subscription Plans */}
+      <h2>{t("subscriptionPlans.title")}</h2>
 
-      <h3>Monthly Subscriptions</h3>
+      <h3>{t("subscriptionPlans.monthly.title")}</h3>
       <ul>
-        <li>
-          <strong>Cancellation:</strong> You may cancel your monthly subscription at any time
-        </li>
-        <li>
-          <strong>Pro-rata Refunds:</strong> We do not offer pro-rata refunds for partial months
-        </li>
-        <li>
-          <strong>Access:</strong> You retain access to paid features until the end of your billing
-          period
-        </li>
-        <li>
-          <strong>Automatic Renewal:</strong> Subscriptions automatically renew unless cancelled
-        </li>
+        {MONTHLY_ITEMS.map((i) => (
+          <li key={i}>
+            <strong>{t(`subscriptionPlans.monthly.items.${i}.label`)}:</strong>{" "}
+            {t(`subscriptionPlans.monthly.items.${i}.desc`)}
+          </li>
+        ))}
       </ul>
 
-      <h3>Annual Subscriptions</h3>
+      <h3>{t("subscriptionPlans.annual.title")}</h3>
       <ul>
-        <li>
-          <strong>14-Day Money-Back Guarantee:</strong> New annual subscribers may request a full
-          refund within 14 days of their initial purchase
-        </li>
-        <li>
-          <strong>After 14 Days:</strong> Refunds are generally not available after the 14-day
-          period
-        </li>
-        <li>
-          <strong>Cancellation:</strong> You may cancel at any time, but your subscription will
-          remain active until the end of the annual term
-        </li>
-        <li>
-          <strong>No Pro-rata Refunds:</strong> We do not offer partial refunds for unused months
-        </li>
+        {ANNUAL_ITEMS.map((i) => (
+          <li key={i}>
+            <strong>{t(`subscriptionPlans.annual.items.${i}.label`)}:</strong>{" "}
+            {t(`subscriptionPlans.annual.items.${i}.desc`)}
+          </li>
+        ))}
       </ul>
 
-      <h2>Eligible Refund Scenarios</h2>
-      <p>We will consider refund requests in the following circumstances:</p>
+      {/* Eligible Refund Scenarios */}
+      <h2>{t("eligibleScenarios.title")}</h2>
+      <p>{t("eligibleScenarios.intro")}</p>
 
-      <h3>1. Service Issues</h3>
+      <h3>{t("eligibleScenarios.serviceIssues.title")}</h3>
       <ul>
-        <li>Significant service outages affecting your ability to use core features</li>
-        <li>Technical issues that we are unable to resolve within a reasonable timeframe</li>
-        <li>Features significantly different from what was advertised</li>
+        {SERVICE_ISSUE_ITEMS.map((i) => (
+          <li key={i}>{t(`eligibleScenarios.serviceIssues.items.${i}`)}</li>
+        ))}
       </ul>
 
-      <h3>2. Billing Errors</h3>
+      <h3>{t("eligibleScenarios.billingErrors.title")}</h3>
       <ul>
-        <li>Duplicate charges</li>
-        <li>Incorrect billing amounts</li>
-        <li>Unauthorized charges (after verification)</li>
+        {BILLING_ERROR_ITEMS.map((i) => (
+          <li key={i}>{t(`eligibleScenarios.billingErrors.items.${i}`)}</li>
+        ))}
       </ul>
 
-      <h3>3. Exceptional Circumstances</h3>
+      <h3>{t("eligibleScenarios.exceptionalCircumstances.title")}</h3>
       <ul>
-        <li>Documented medical emergencies</li>
-        <li>Natural disasters affecting your business</li>
-        <li>Other circumstances evaluated on a case-by-case basis</li>
+        {EXCEPTIONAL_ITEMS.map((i) => (
+          <li key={i}>{t(`eligibleScenarios.exceptionalCircumstances.items.${i}`)}</li>
+        ))}
       </ul>
 
-      <h2>Non-Refundable Items</h2>
-      <p>The following are generally not eligible for refunds:</p>
+      {/* Non-Refundable Items */}
+      <h2>{t("nonRefundable.title")}</h2>
+      <p>{t("nonRefundable.intro")}</p>
       <ul>
-        <li>
-          <strong>Usage-based charges:</strong> API calls, AI token consumption, or storage used
-        </li>
-        <li>
-          <strong>Add-ons and extras:</strong> One-time purchases or add-on services
-        </li>
-        <li>
-          <strong>Enterprise contracts:</strong> Custom agreements have their own terms
-        </li>
-        <li>
-          <strong>Voluntary cancellations:</strong> After the refund eligibility period
-        </li>
-        <li>
-          <strong>Terms violations:</strong> Accounts terminated for policy violations
-        </li>
+        {NON_REFUNDABLE_ITEMS.map((i) => (
+          <li key={i}>
+            <strong>{t(`nonRefundable.items.${i}.label`)}:</strong>{" "}
+            {t(`nonRefundable.items.${i}.desc`)}
+          </li>
+        ))}
       </ul>
 
-      <h2>How to Request a Refund</h2>
+      {/* How to Request a Refund */}
+      <h2>{t("howToRequest.title")}</h2>
 
-      <h3>Step 1: Contact Support</h3>
-      <p>
-        Email us at <a href="mailto:billing@nebutra.com">billing@nebutra.com</a> with:
-      </p>
+      <h3>{t("howToRequest.step1.title")}</h3>
+      <p>{t("howToRequest.step1.intro")}</p>
       <ul>
-        <li>Your account email address</li>
-        <li>Subscription plan and billing period</li>
-        <li>Reason for refund request</li>
-        <li>Any relevant documentation</li>
+        {STEP1_ITEMS.map((i) => (
+          <li key={i}>{t(`howToRequest.step1.items.${i}`)}</li>
+        ))}
       </ul>
 
-      <h3>Step 2: Review Process</h3>
+      <h3>{t("howToRequest.step2.title")}</h3>
       <ul>
-        <li>We will review your request within 5 business days</li>
-        <li>We may ask for additional information</li>
-        <li>You will receive a written decision via email</li>
+        {STEP2_ITEMS.map((i) => (
+          <li key={i}>{t(`howToRequest.step2.items.${i}`)}</li>
+        ))}
       </ul>
 
-      <h3>Step 3: Refund Processing</h3>
-      <p>If approved:</p>
+      <h3>{t("howToRequest.step3.title")}</h3>
+      <p>{t("howToRequest.step3.intro")}</p>
       <ul>
-        <li>Refunds are processed to the original payment method</li>
-        <li>Credit card refunds typically appear within 5-10 business days</li>
-        <li>Bank processing times may vary</li>
+        {STEP3_ITEMS.map((i) => (
+          <li key={i}>{t(`howToRequest.step3.items.${i}`)}</li>
+        ))}
       </ul>
 
-      <h2>Plan Changes</h2>
+      {/* Plan Changes */}
+      <h2>{t("planChanges.title")}</h2>
 
-      <h3>Upgrades</h3>
+      <h3>{t("planChanges.upgrades.title")}</h3>
       <ul>
-        <li>Upgrades take effect immediately</li>
-        <li>You are charged the pro-rated difference for the remainder of your billing period</li>
-        <li>No refund is provided for the previous plan</li>
+        {UPGRADE_ITEMS.map((i) => (
+          <li key={i}>{t(`planChanges.upgrades.items.${i}`)}</li>
+        ))}
       </ul>
 
-      <h3>Downgrades</h3>
+      <h3>{t("planChanges.downgrades.title")}</h3>
       <ul>
-        <li>Downgrades take effect at the next billing period</li>
-        <li>You retain access to current features until then</li>
-        <li>No partial refunds for the current period</li>
+        {DOWNGRADE_ITEMS.map((i) => (
+          <li key={i}>{t(`planChanges.downgrades.items.${i}`)}</li>
+        ))}
       </ul>
 
-      <h2>Free Trial</h2>
+      {/* Free Trial */}
+      <h2>{t("freeTrial.title")}</h2>
       <ul>
-        <li>Free trials do not require payment information</li>
-        <li>No charges occur during the trial period</li>
-        <li>You will be notified before any charges begin</li>
+        {FREE_TRIAL_ITEMS.map((i) => (
+          <li key={i}>{t(`freeTrial.items.${i}`)}</li>
+        ))}
       </ul>
 
-      <h2>Dispute Resolution</h2>
-      <p>If you disagree with our refund decision:</p>
+      {/* Dispute Resolution */}
+      <h2>{t("disputeResolution.title")}</h2>
+      <p>{t("disputeResolution.intro")}</p>
       <ol>
-        <li>Reply to the decision email with additional information</li>
-        <li>Request escalation to a supervisor</li>
-        <li>
-          Contact us at <a href="mailto:legal@nebutra.com">legal@nebutra.com</a> for further review
-        </li>
+        {DISPUTE_STEPS.map((i) => (
+          <li key={i}>{t(`disputeResolution.steps.${i}`)}</li>
+        ))}
       </ol>
 
-      <h2>Contact Us</h2>
-      <p>For refund requests or questions about this policy:</p>
+      {/* Contact Us */}
+      <h2>{t("contactUs.title")}</h2>
+      <p>{t("contactUs.intro")}</p>
       <p>
-        <strong>Nebutra, Inc.</strong>
+        <strong>{t("contactUs.company")}</strong>
         <br />
-        Billing: <a href="mailto:billing@nebutra.com">billing@nebutra.com</a>
+        {t("contactUs.billingLabel")}: <a href="mailto:billing@nebutra.com">billing@nebutra.com</a>
         <br />
-        Support: <a href="mailto:support@nebutra.com">support@nebutra.com</a>
+        {t("contactUs.supportLabel")}: <a href="mailto:support@nebutra.com">support@nebutra.com</a>
         <br />
-        Legal: <a href="mailto:legal@nebutra.com">legal@nebutra.com</a>
+        {t("contactUs.legalLabel")}: <a href="mailto:legal@nebutra.com">legal@nebutra.com</a>
       </p>
-      <p>We aim to respond to all refund requests within 5 business days.</p>
+      <p>{t("contactUs.responseNote")}</p>
 
       <hr />
 
       <p>
-        This policy is part of our <Link href="/terms">Terms of Service</Link>. By using Nebutra,
-        you agree to these refund terms.
+        {t("contactUs.termsNote")} <Link href="/terms">{t("contactUs.termsLink")}</Link>.{" "}
+        {t("contactUs.termsAgreement")}
       </p>
     </article>
   );

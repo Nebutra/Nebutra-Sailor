@@ -57,7 +57,8 @@
     "preset:env": "tsx packages/preset/src/cli.ts",
     "generate:api-types": "tsx scripts/generate-api-types.ts",
     "size": "size-limit",
-    "size:why": "size-limit --why"
+    "size:why": "size-limit --why",
+    "license:check": "npx license-checker --production --failOn 'GPL-2.0;GPL-3.0;SSPL-1.0;EUPL-1.1;EUPL-1.2;AGPL-1.0' --excludePackages '@nebutra/*' --summary"
   },
   "keywords": [
     "saas",

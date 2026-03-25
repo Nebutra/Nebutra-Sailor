@@ -288,6 +288,66 @@ import { HeroNewComponent } from "@heroui/new-component";
 
 ---
 
+## Token Governance — Execution Rules
+
+### Brand color aliases (use these, not raw hex)
+
+| Token | Resolves to | Use for |
+|-------|-------------|---------|
+| `var(--brand-primary)` | `var(--blue-9)` → `#0033FE` | Primary brand, CTA, charts |
+| `var(--brand-accent)` | `var(--cyan-9)` → `#0BF1C3` | Accent, success highlight, charts |
+| `var(--brand-tertiary)` | `#8b5cf6` | Infrastructure, tertiary data viz |
+| `var(--brand-gradient)` | `135deg, blue→cyan` | Gradient backgrounds, text |
+
+### Status colors (for inline styles, SVG, charts)
+
+| Token | Hex | Use for |
+|-------|-----|---------|
+| `var(--status-danger)` | `#ef4444` | Breaking changes, errors |
+| `var(--status-warning)` | `#f59e0b` | Improvements, pending |
+| `var(--status-success)` | `#10b981` | Fixes, completed, foundation |
+| `var(--status-info)` | `var(--brand-primary)` | Informational |
+
+For Tailwind classes, use the semantic tokens: `bg-destructive`, `bg-success`, `bg-warning`.
+
+### CSS variable syntax in Tailwind — canonical form
+
+```tsx
+// ✅ Tailwind 12-step scale classes (registered in @theme)
+<div className="bg-neutral-3 text-neutral-12 border-neutral-7" />
+<div className="bg-blue-9 text-cyan-11" />
+
+// ✅ Semantic Tailwind classes
+<div className="bg-primary text-foreground border-border" />
+<div className="bg-destructive text-destructive-foreground" />
+
+// ✅ Brand aliases via Tailwind
+<div className="bg-brand-primary text-brand-accent" />
+
+// ✅ CSS variables in inline styles (SVG, recharts, dynamic values)
+<stop stopColor="var(--brand-primary)" />
+<Cell fill="var(--brand-accent)" />
+<div style={{ background: "var(--brand-gradient)" }} />
+
+// ✅ Arbitrary Tailwind with [color:var()] for non-scale tokens
+<div className="text-[color:var(--status-warning)]" />
+
+// ❌ NEVER hardcode brand hex — always use token aliases
+<stop stopColor="#0033FE" />       // → var(--brand-primary)
+<Cell fill="#0BF1C3" />            // → var(--brand-accent)
+<div className="bg-[#0a0a0a]" />  // → bg-neutral-1
+
+// ❌ NEVER hardcode status hex
+tagColor: "#ef4444"                // → var(--status-danger)
+tagColor: "#f59e0b"                // → var(--status-warning)
+```
+
+### Exception: `global-error.tsx`
+
+`global-error.tsx` renders **outside the root layout** (no CSS imports). Hardcoded hex values are allowed here because CSS variables are unavailable.
+
+---
+
 ## Token Architecture
 
 ```

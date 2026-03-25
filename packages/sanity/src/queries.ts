@@ -82,3 +82,42 @@ export const categoriesQuery = `*[_type == "category"] | order(title asc) {
 export async function getCategories() {
   return client.fetch(categoriesQuery);
 }
+
+// ============================================
+// Showcase
+// ============================================
+
+export const showcaseQuery = `*[_type == "showcase"] | order(featured desc, publishedAt desc) {
+  _id,
+  name,
+  slug,
+  url,
+  description,
+  logo,
+  screenshot,
+  category,
+  featured,
+  publishedAt
+}`;
+
+export async function getShowcaseProjects() {
+  return client.fetch(showcaseQuery);
+}
+
+// ============================================
+// Changelog
+// ============================================
+
+export const changelogQuery = `*[_type == "changelogEntry"] | order(publishedAt desc) {
+  _id,
+  version,
+  title,
+  publishedAt,
+  type,
+  summary,
+  body
+}`;
+
+export async function getChangelogEntries() {
+  return client.fetch(changelogQuery);
+}

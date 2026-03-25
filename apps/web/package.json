@@ -15,12 +15,14 @@
     "generate:api-types": "openapi-typescript ../api-gateway/openapi.json -o src/lib/api/types.generated.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^3.0.41",
+    "@ai-sdk/react": "^3.0.118",
     "@clerk/nextjs": "^7.0.1",
     "@nebutra/db": "workspace:*",
     "@nebutra/feature-flags": "workspace:*",
+    "@nebutra/i18n": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/tokens": "workspace:*",
-    "@nebutra/i18n": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "@sentry/nextjs": "^9.27.0",
     "@t3-oss/env-nextjs": "^0.13.10",
@@ -28,6 +30,7 @@
     "@tanstack/react-query-devtools": "^5.91.3",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
+    "ai": "^6.0.116",
     "lucide-react": "^0.577.0",
     "next": "^16.1.6",
     "next-intl": "^4.8.3",

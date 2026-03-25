@@ -64,6 +64,32 @@ jobs:
 
 
 
+  # ── License compliance ───────────────────────────────────────────────────
+  # Ensures no production dependency uses a copyleft license incompatible
+  # with the project's AGPL-3.0 license.  Runs on every push/PR.
+  license-check:
+    name: License Compliance
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check production dependency licenses
+        run: npx license-checker --production --failOn 'GPL-2.0;GPL-3.0;SSPL-1.0;EUPL-1.1;EUPL-1.2;AGPL-1.0' --excludePackages '@nebutra/*' --summary
+
   # ── Lint & type-check (affected packages only) ──────────────────────────
   lint-typecheck:
     name: Lint & Typecheck
@@ -294,6 +320,9 @@ jobs:
           pnpm --filter @nebutra/preset test:coverage
           pnpm --filter @nebutra/alerting test:coverage
           pnpm --filter @nebutra/rate-limit test:coverage
+          pnpm --filter @nebutra/billing test:coverage
+          pnpm --filter @nebutra/audit test:coverage
+          pnpm --filter @nebutra/identity test:coverage
         env:
           CI: true
 
@@ -396,6 +425,16 @@ jobs:
 
       - name: Audit dependencies (high severity)
         run: pnpm audit --prod --audit-level=high
+
+      - name: Generate SBOM
+        run: |
+          npx @cyclonedx/cyclonedx-npm --output-file sbom.cdx.json --omit dev
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-ci
+          path: sbom.cdx.json
+          retention-days: 30
 
   # ── Deploy jobs ──────────────────────────────────────────────────────────
   # Add a deploy job per app here, gated by detect-changes output.
@@ -555,6 +594,29 @@ jobs:
 
       - name: Validate spec with Redocly
         run: pnpm --filter @nebutra/api-gateway exec redocly lint openapi.json --format=stylish
+
+      - name: Check API backward compatibility
+        if: github.event_name == 'pull_request'
+        run: |
+          # Fetch the base branch spec
+          git fetch origin ${{ github.base_ref }} --depth=1
+          git show origin/${{ github.base_ref }}:apps/api-gateway/openapi.json > openapi-base.json 2>/dev/null || echo '{}' > openapi-base.json
+          # Compare specs for breaking changes using oasdiff
+          npx oasdiff breaking openapi-base.json apps/api-gateway/openapi.json --format text || {
+            echo "::warning::Breaking API changes detected. Ensure backward compatibility or document migration path."
+          }
+        continue-on-error: true
+
+      - name: Check spec is up to date
+        run: |
+          if [ -f apps/api-gateway/openapi.json ]; then
+            # Compare the freshly generated spec (still in cwd from generate:spec) with the committed one
+            cd apps/api-gateway
+            if ! git diff --quiet openapi.json 2>/dev/null; then
+              echo "::warning::OpenAPI spec is out of date. Run 'pnpm --filter @nebutra/api-gateway generate:spec' and commit."
+            fi
+          fi
+        continue-on-error: true
 
       - name: Generate typed API client
         run: pnpm --filter @nebutra/web generate:api-types

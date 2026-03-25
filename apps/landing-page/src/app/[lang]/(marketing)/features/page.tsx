@@ -1,9 +1,19 @@
+import {
+  BarChart as BarChart3,
+  Cpu,
+  Database,
+  Globe,
+  Key,
+  Layers,
+  Shield,
+  Workflow,
+  Lightning as Zap,
+} from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { BarChart3, Cpu, Database, Globe, Key, Layers, Shield, Workflow, Zap } from "lucide-react";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 
@@ -18,210 +28,103 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
+  const t = await getTranslations({ locale: lang as Locale, namespace: "featuresPage" });
   return {
-    title: "Features — Nebutra",
-    description: "Everything you need to build, scale, and monetise an AI-native SaaS product.",
+    title: `Features — Nebutra`,
+    description: t("hero.description"),
     alternates: { canonical: `/${lang}/features` },
   };
 }
 
-const FEATURE_SECTIONS = [
+const FEATURE_KEYS = [
   {
-    category: "AI & Intelligence",
+    categoryKey: "ai_category",
     icon: Cpu,
     color: "var(--blue-9)",
     features: [
-      {
-        title: "Multi-model chat completions",
-        description:
-          "Route requests to GPT-4o, Claude, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
-      },
-      {
-        title: "Semantic embeddings",
-        description:
-          "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      },
-      {
-        title: "AI usage metering",
-        description:
-          "Track token consumption per tenant per billing period. Set per-plan quotas and auto-notify on 80% / 100% burn.",
-      },
+      { titleKey: "ai_f1_title", descKey: "ai_f1_desc" },
+      { titleKey: "ai_f2_title", descKey: "ai_f2_desc" },
+      { titleKey: "ai_f3_title", descKey: "ai_f3_desc" },
     ],
   },
   {
-    category: "Multi-tenant Platform",
+    categoryKey: "multi_category",
     icon: Layers,
     color: "var(--cyan-9)",
     features: [
-      {
-        title: "Organisation-level isolation",
-        description:
-          "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      },
-      {
-        title: "Role-based access control",
-        description:
-          "OWNER, ADMIN, MEMBER, and VIEWER roles with 17 typed permission scopes. Fine-grained enough for enterprise, simple enough for indie teams.",
-      },
-      {
-        title: "Automatic tenant provisioning",
-        description:
-          "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      },
+      { titleKey: "multi_f1_title", descKey: "multi_f1_desc" },
+      { titleKey: "multi_f2_title", descKey: "multi_f2_desc" },
+      { titleKey: "multi_f3_title", descKey: "multi_f3_desc" },
     ],
   },
   {
-    category: "Developer Experience",
+    categoryKey: "dx_category",
     icon: Key,
     color: "var(--blue-9)",
     features: [
-      {
-        title: "Hashed API keys",
-        description:
-          "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      },
-      {
-        title: "Idempotency middleware",
-        description:
-          "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      },
-      {
-        title: "OpenAPI + Swagger UI",
-        description:
-          "Every route defined with @hono/zod-openapi generates a live OpenAPI 3.1 spec. Browse and test directly from /docs.",
-      },
+      { titleKey: "dx_f1_title", descKey: "dx_f1_desc" },
+      { titleKey: "dx_f2_title", descKey: "dx_f2_desc" },
+      { titleKey: "dx_f3_title", descKey: "dx_f3_desc" },
     ],
   },
   {
-    category: "Billing & Monetisation",
+    categoryKey: "billing_category",
     icon: BarChart3,
     color: "var(--cyan-9)",
     features: [
-      {
-        title: "Stripe Checkout + Portal",
-        description:
-          "One-click checkout sessions and self-serve billing portal. Trial periods, annual billing, and proration handled natively.",
-      },
-      {
-        title: "Usage-based quota enforcement",
-        description:
-          "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      },
-      {
-        title: "Webhook lifecycle sync",
-        description:
-          "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      },
+      { titleKey: "billing_f1_title", descKey: "billing_f1_desc" },
+      { titleKey: "billing_f2_title", descKey: "billing_f2_desc" },
+      { titleKey: "billing_f3_title", descKey: "billing_f3_desc" },
     ],
   },
   {
-    category: "Reliability",
+    categoryKey: "rel_category",
     icon: Zap,
     color: "var(--blue-9)",
     features: [
-      {
-        title: "Circuit breaker + retry",
-        description:
-          "Every Python microservice uses a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      },
-      {
-        title: "Dead letter queue",
-        description:
-          "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      },
-      {
-        title: "SLO burn-rate alerts",
-        description:
-          "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      },
+      { titleKey: "rel_f1_title", descKey: "rel_f1_desc" },
+      { titleKey: "rel_f2_title", descKey: "rel_f2_desc" },
+      { titleKey: "rel_f3_title", descKey: "rel_f3_desc" },
     ],
   },
   {
-    category: "Security",
+    categoryKey: "sec_category",
     icon: Shield,
     color: "var(--cyan-9)",
     features: [
-      {
-        title: "CSP nonce-based headers",
-        description:
-          "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
-      },
-      {
-        title: "ModSecurity WAF",
-        description:
-          "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      },
-      {
-        title: "SBOM + SLSA provenance",
-        description:
-          "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      },
+      { titleKey: "sec_f1_title", descKey: "sec_f1_desc" },
+      { titleKey: "sec_f2_title", descKey: "sec_f2_desc" },
+      { titleKey: "sec_f3_title", descKey: "sec_f3_desc" },
     ],
   },
   {
-    category: "Observability",
+    categoryKey: "obs_category",
     icon: Globe,
     color: "var(--blue-9)",
     features: [
-      {
-        title: "OpenTelemetry tracing",
-        description:
-          "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      },
-      {
-        title: "Grafana dashboards",
-        description:
-          "32-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      },
-      {
-        title: "Sentry error tracking",
-        description:
-          "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      },
+      { titleKey: "obs_f1_title", descKey: "obs_f1_desc" },
+      { titleKey: "obs_f2_title", descKey: "obs_f2_desc" },
+      { titleKey: "obs_f3_title", descKey: "obs_f3_desc" },
     ],
   },
   {
-    category: "Data & Analytics",
+    categoryKey: "data_category",
     icon: Database,
     color: "var(--cyan-9)",
     features: [
-      {
-        title: "ClickHouse OLAP warehouse",
-        description:
-          "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      },
-      {
-        title: "Funnel analytics",
-        description:
-          "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      },
-      {
-        title: "Kafka / event ingestion",
-        description:
-          "High-throughput event ingestion service decouples your application from your data warehouse. Schema validation at the edge.",
-      },
+      { titleKey: "data_f1_title", descKey: "data_f1_desc" },
+      { titleKey: "data_f2_title", descKey: "data_f2_desc" },
+      { titleKey: "data_f3_title", descKey: "data_f3_desc" },
     ],
   },
   {
-    category: "Infrastructure",
+    categoryKey: "infra_category",
     icon: Workflow,
     color: "var(--blue-9)",
     features: [
-      {
-        title: "GitOps with ArgoCD",
-        description:
-          "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      },
-      {
-        title: "PgBouncer connection pooling",
-        description:
-          "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      },
-      {
-        title: "Horizontal + vertical autoscaling",
-        description:
-          "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2.",
-      },
+      { titleKey: "infra_f1_title", descKey: "infra_f1_desc" },
+      { titleKey: "infra_f2_title", descKey: "infra_f2_desc" },
+      { titleKey: "infra_f3_title", descKey: "infra_f3_desc" },
     ],
   },
 ] as const;
@@ -233,60 +136,79 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   setRequestLocale(lang as Locale);
 
+  const t = await getTranslations({ locale: lang as Locale, namespace: "featuresPage" });
+
   return (
-    <main id="main-content" className="min-h-screen bg-white dark:bg-black">
+    <main
+      id="main-content"
+      className="min-h-screen bg-white dark:bg-black selection:bg-primary/30 relative overflow-hidden"
+    >
       <Navbar />
 
       {/* Hero */}
-      <section className="mx-auto max-w-4xl px-4 py-24 text-center sm:px-6 lg:px-8">
+      <section className="relative mx-auto max-w-5xl px-4 pt-32 pb-24 text-center sm:px-6 lg:px-8 mt-16">
+        {/* Glow effect */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
+
         <AnimateIn preset="emerge" inView>
-          <h1
-            className="text-4xl font-bold tracking-tight sm:text-5xl"
-            style={{
-              background: "var(--brand-gradient)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            Everything you need to ship a unicorn
+          <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary mb-8 tracking-wider uppercase backdrop-blur-md">
+            {t("hero.badge")}
+          </div>
+          <h1 className="text-5xl font-black tracking-tighter sm:text-7xl mb-8 leading-[1.1]">
+            {t("hero.headlinePrefix")}
+            <span
+              className="text-transparent bg-clip-text"
+              style={{
+                background: "var(--brand-gradient)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              {t("hero.headlineHighlight")}
+            </span>
           </h1>
-          <p className="mt-6 text-lg text-[var(--neutral-11)]">
-            Nebutra is a full-stack SaaS platform — AI, billing, multi-tenancy, observability, and
-            security baked in from day one.
+          <p className="mx-auto max-w-2xl text-lg text-[var(--neutral-11)] leading-relaxed font-medium">
+            {t("hero.description")}
           </p>
         </AnimateIn>
       </section>
 
       {/* Feature sections */}
-      <section className="mx-auto max-w-6xl px-4 pb-32 sm:px-6 lg:px-8">
-        <div className="space-y-24">
-          {FEATURE_SECTIONS.map((section) => (
-            <div key={section.category}>
+      <section className="relative z-10 mx-auto max-w-7xl px-4 pb-40 sm:px-6 lg:px-8">
+        <div className="space-y-32">
+          {FEATURE_KEYS.map((section) => (
+            <div key={section.categoryKey} className="relative">
               <AnimateIn preset="fadeUp" inView>
-                <div className="mb-10 flex items-center gap-3">
-                  <div className="rounded-lg p-2" style={{ background: "var(--neutral-2)" }}>
+                <div className="mb-12 flex flex-col items-center justify-center gap-5 text-center">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-background/50 border border-border/40 backdrop-blur-xl shadow-lg ring-1 ring-white/5">
                     <section.icon
-                      className="h-5 w-5"
+                      className="h-6 w-6"
                       style={{ color: section.color }}
                       aria-hidden
                     />
                   </div>
-                  <h2 className="text-xl font-semibold text-[var(--neutral-12)]">
-                    {section.category}
+                  <h2 className="text-3xl font-bold tracking-tight text-[var(--neutral-12)]">
+                    {t(`sections.${section.categoryKey}` as any)}
                   </h2>
                 </div>
               </AnimateIn>
 
-              <AnimateInGroup stagger="fast" className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              <AnimateInGroup
+                stagger="fast"
+                className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+              >
                 {section.features.map((feature) => (
-                  <AnimateIn key={feature.title} preset="fadeUp">
-                    <div className="rounded-xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 transition-shadow hover:shadow-md">
-                      <h3 className="text-sm font-semibold text-[var(--neutral-12)]">
-                        {feature.title}
+                  <AnimateIn key={feature.titleKey} preset="fadeUp" className="h-full">
+                    <div className="group relative h-full w-full overflow-hidden rounded-3xl border border-border/40 bg-background/40 backdrop-blur-2xl p-8 transition-all duration-500 hover:bg-muted/30 hover:border-border/80 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1">
+                      {/* Subtle gradient overlay on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
+
+                      <h3 className="relative z-10 text-lg font-bold tracking-tight text-[var(--neutral-12)]">
+                        {t(`sections.${feature.titleKey}` as any)}
                       </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-[var(--neutral-11)]">
-                        {feature.description}
+                      <p className="relative z-10 mt-3 text-sm leading-relaxed text-[var(--neutral-11)] font-medium group-hover:text-[var(--neutral-12)] transition-colors duration-300">
+                        {t(`sections.${feature.descKey}` as any)}
                       </p>
                     </div>
                   </AnimateIn>

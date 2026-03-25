@@ -1,0 +1,115 @@
+"use client";
+
+import { useOrganization, useUser } from "@clerk/nextjs";
+import { Button, Input } from "@nebutra/ui/components";
+import { Label } from "@nebutra/ui/primitives";
+import { Upload } from "lucide-react";
+import { useRef, useState } from "react";
+
+interface ProfileSetupStepProps {
+  onComplete: () => void;
+}
+
+export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
+  const { user } = useUser();
+  const { organization } = useOrganization();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
+  const [displayName, setDisplayName] = useState(
+    user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : "",
+  );
+  const [logoPreview, setLogoPreview] = useState<string | null>(organization?.imageUrl ?? null);
+
+  async function handleLogoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file || !organization) return;
+
+    const reader = new FileReader();
+    reader.onload = () => setLogoPreview(reader.result as string);
+    reader.readAsDataURL(file);
+
+    try {
+      await organization.setLogo({ file });
+    } catch {
+      // Logo upload failed silently — user can retry
+    }
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      if (user && displayName.trim()) {
+        const parts = displayName.trim().split(/\s+/);
+        await user.update({
+          firstName: parts[0] ?? "",
+          lastName: parts.slice(1).join(" ") || undefined,
+        });
+      }
+      onComplete();
+    } catch {
+      onComplete();
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div>
+        <h2 className="text-2xl font-semibold tracking-tight">Personalize your profile</h2>
+        <p className="mt-1 text-sm text-muted-foreground">Add a logo and set your display name.</p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        {/* Org logo upload */}
+        <div className="flex flex-col items-center gap-3">
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="group relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-muted-foreground/30 transition-colors hover:border-primary"
+          >
+            {logoPreview ? (
+              <img src={logoPreview} alt="Logo" className="h-full w-full object-cover" />
+            ) : (
+              <Upload className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-primary" />
+            )}
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleLogoChange}
+            className="hidden"
+          />
+          <p className="text-xs text-muted-foreground">Upload organization logo</p>
+        </div>
+
+        {/* Display name */}
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="display-name">Display name</Label>
+          <Input
+            id="display-name"
+            placeholder="Your full name"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
+        </div>
+
+        <Button htmlType="submit" className="w-full" disabled={loading}>
+          {loading ? "Saving…" : "Continue →"}
+        </Button>
+
+        <Button
+          htmlType="button"
+          variant="text"
+          className="w-full text-muted-foreground"
+          onClick={onComplete}
+        >
+          Skip for now
+        </Button>
+      </form>
+    </div>
+  );
+}

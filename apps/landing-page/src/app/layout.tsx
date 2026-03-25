@@ -47,5 +47,9 @@ export const metadata: Metadata = {
  * so that the locale is available from static params (required for cacheComponents).
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <html lang="en" className="min-h-screen antialiased" suppressHydrationWarning>
+      <body className="antialiased">{children}</body>
+    </html>
+  );
 }
