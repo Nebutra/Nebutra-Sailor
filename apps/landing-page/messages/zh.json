@@ -1,11 +1,11 @@
 {
   "nav": {
-    "features": "产品特性",
-    "pricing": "价格方案",
-    "docs": "技术文档",
-    "github": "GitHub",
-    "signIn": "后台登录",
-    "getStarted": "开始使用"
+    "features": "特性",
+    "pricing": "定价",
+    "docs": "开发文档",
+    "github": "开源社区",
+    "signIn": "登录控制台",
+    "getStarted": "免费部署"
   },
   "hero": {
     "badge": "Nebutra Intelligence · 领先的 AI Native 基础设施",
@@ -18,18 +18,18 @@
     "ctaViewGitHub": "获取开源仓库 →"
   },
   "features": {
-    "sectionTitle": "从原型验证到亿级并发，我们提供开箱即用的技术栈。",
+    "sectionTitle": "开箱即用的基础设施，从原型直到海量扩张。",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "将大型语言模型与 Agent 调度引擎深度工程化。赋能开发者跳过繁琐的底层封装，用结构化的 API 高效调用 AI 能力。"
+      "title": "AI 应用级基础设施",
+      "description": "内置且久经考验的大模型编排引擎。绕开底层死胡同，直接通过结构化的智能 API 开展业务。"
     },
     "item1": {
       "title": "开放产品社区 (OPC)",
-      "description": "未来的 AI 软件不再是孤立的信息孤岛。基于 OPC 理念设计的插件标准与开发者网络，帮助产品与社区生态同频共振。"
+      "description": "未来的 AI 产品需要生态系统，而非孤岛。提供标准化的插件骨架，将应用直接融入全球开发者网络。"
     },
     "item2": {
-      "title": "企业级 SaaS 商业化套件",
-      "description": "深度整合 Vercel、Supabase 与 Stripe。原生支持严密的行级数据安全、复杂的多租户隔离与灵活的全球订阅计费中心。"
+      "title": "全自动 SaaS 商业底座",
+      "description": "将 Vercel、Supabase 与 Stripe 的现代技术栈深度熔铸。完全内置开箱即用的访问控制以及订阅式计费。"
     }
   },
   "cta": {
@@ -41,13 +41,13 @@
   },
   "footer": {
     "links": {
-      "product": "产品矩阵",
+      "product": "生态架构",
       "docs": "开发者文档",
-      "github": "开源代码",
-      "discord": "开发者社区"
+      "github": "开源核心",
+      "discord": "全球社区"
     },
-    "copyright": "© 2026 无锡云毓智能有限公司 (Nebutra Intelligence). 保留所有权利。",
-    "statusOnline": "全系统运行正常"
+    "copyright": "© 2026 Nebutra Intelligence. 保留所有权利。",
+    "statusOnline": "所有子系统在线运行"
   },
   "logoStrip": {
     "tagline": "基于驱动现代互联网底层的顶尖技术构建"
@@ -360,6 +360,172 @@
       "socialProofPrefix": "与",
       "socialProofSuffix": "名先驱者共同见证",
       "emailAriaLabel": "邮箱地址"
+    }
+  },
+  "microLanding": {
+    "hero": {
+      "badge": "Nebutra Sailor 1.0 现已上线",
+      "headline": "以终端级速度构建 AI 原生帝国。",
+      "subheadline": "全球最先进的 Next.js SaaS 架构。深度集成 AI 推理、企业级计费与全自动控制中心。",
+      "initCmd": "初始化项目",
+      "docsCmd": "阅读系统文档"
+    },
+    "trust": {
+      "foundation": "世界级的 SaaS 基础设施",
+      "ecosystem": "已深度集成顶尖 AI 模型与智能体工具"
+    },
+    "architecture": {
+      "badge": "系统架构引擎",
+      "title": "毫不妥协，为海量规模而生。",
+      "description": "我们没有构建一个玩具模板。我们构建了一个极其坚固的 Monorepo 底座，旨在承受海量的网络流量与高强度的 AI 并发推理。",
+      "turborepo": {
+        "title": "Turborepo 微架构",
+        "desc": "在应用和数据库层之间执行严格的边界隔离，保证毫秒级的增量编译与模块化扩展。"
+      },
+      "edge": {
+        "title": "全球边缘网络",
+        "desc": "动态运行在 Vercel Edge 的中间件，实现极速的国际化路由与 A/B 测试分发。"
+      },
+      "database": {
+        "title": "数据持久化引擎",
+        "desc": "高性能的 Prisma ORM 无缝直连 Supabase PostgreSQL，轻松处理极其复杂的关系型数据层级。"
+      },
+      "auth": {
+        "title": "Fort Knox 级安全认证",
+        "desc": "深度集成 Clerk 进行企业级 B2B 身份验证。开箱即用的无密码登录与组织级细粒度访问控制。"
+      }
+    },
+    "pricing": {
+      "title": "极度透明的基础设施接入权限。",
+      "description": "对个人开发者开放。为商业级规模而授权。请选择符合您业务特征的层级。",
+      "standard": {
+        "badge": "社区版协议",
+        "price": "免费",
+        "period": "永久",
+        "desc": "专为独立开发者、一人公司以及开源学习极佳起点。",
+        "cta": "初始化开源仓库",
+        "f1": "完全开源的 Mono-repo 核心",
+        "f2": "社区支持矩阵",
+        "f3": "自由边缘部署支持",
+        "f4": "标准 Next.js 模板"
+      },
+      "enterprise": {
+        "badge": "商业许可协议",
+        "price": "定制",
+        "period": "订阅",
+        "desc": "为野心勃勃的独角兽企业及大规模 B2B SaaS 矩阵量身定制。",
+        "cta": "申请商业许可证",
+        "f1": "可执行商业闭环产品运营",
+        "f2": "全量私有设计系统 Token",
+        "f3": "最高优先级的架构师技术支持",
+        "f4": "企业级 Figma 全集",
+        "f5": "Vercel / Supabase 企业级部署基线"
+      }
+    },
+    "faq": {
+      "title": "系统级参数问答。",
+      "description": "深入了解内核架构技术细节。",
+      "q1": {
+        "q": "我究竟能获取什么？",
+        "a": "整个 Turborepo 架构的完整源码压缩包，包括 Next.js 前端、内部 UI 引擎仓库及一切部署指令。"
+      },
+      "q2": {
+        "q": "部署难度如何？",
+        "a": "极简！我们提供了 Vercel 与 Supabase 的一键部署模板，并且支持极客自定义的 Docker 化。"
+      },
+      "q3": {
+        "q": "后续代码架构更新策略？",
+        "a": "您将获取 Github 闭源库永久推送权限，解锁所有未来安全补丁与大模型接口预置。"
+      },
+      "q4": {
+        "q": "能够用于商业客户外包交付吗？",
+        "a": "当然。商业授权协议允许您在不限客户定制数量的前提下自由部署与交付外包。"
+      }
+    },
+    "cta": {
+      "title": "停止重复造轮子。立刻开始征服你的目标市场。",
+      "description": "加入世界上最高效的顶尖开发者矩阵，在数小时内部署高保真企业级生产阵地。",
+      "button": "立即拉取引擎基线"
+    },
+    "productDemo": {
+      "badge": "企业级基础设施引擎",
+      "title": "专为严肃的商业规模打造。",
+      "description": "租户分析、Stripe Webhooks 与多租户架构已全维预装。拒绝重复造轮子，专注核心业务。",
+      "analytics": {
+        "label": "租户遥测分析",
+        "desc": "实时用量追踪与活跃会话遥测，全局掌控您的整个 SaaS 商业生态。"
+      },
+      "billing": {
+        "label": "Stripe 计费总线",
+        "desc": "全自动的 Webhook 摄取、基于用量的计量计费，以及开箱即用的自动化账单生成。"
+      },
+      "workspaces": {
+        "label": "多租户隔离空间",
+        "desc": "零摩擦的入驻体验，基于 PostgreSQL RLS 的严苛数据隔离与基于角色的精确访问控制。"
+      }
+    },
+    "workflow": {
+      "badge": "标准的交付流水线",
+      "title": "无需架构重写，即可跨越原型直达规模化营收。",
+      "step1": {
+        "title": "系统脚手架构建",
+        "desc": "在数分钟内拉起具备多租户默认配置的企业级 Monorepo 形态。"
+      },
+      "step2": {
+        "title": "编排底层设施",
+        "desc": "通过高稳定性的强类型适配器连接身份验证、账单和底层 AI 提供商。"
+      },
+      "step3": {
+        "title": "投产发布",
+        "desc": "部署一个具备完善可观测性与深层操作护栏的生产基线。"
+      },
+      "step4": {
+        "title": "全球范围弹性扩缩",
+        "desc": "使用完全相同的架构在多个租户和区域间实现指数级增长，无需架构重构。"
+      }
+    },
+    "testimonials": {
+      "badge": "被顶尖技术团队所信赖",
+      "title": "核心团队利用 Sailor 极大压缩原型至生产环节的高风险周期。",
+      "t1": {
+        "quote": "Nebutra 削减了我们整整一半的交付时间。我们在未进行任何平台重写的情况下，成功交付了多租户计费系统。",
+        "author": "Sarah Chen",
+        "role": "TechStart AI, 首席技术官 (CTO)"
+      },
+      "t2": {
+        "quote": "这种底层架构可以直接从第一位极客客户扩展至严苛的跨国企业采购。它是一个完整闭环的工业产品，而绝非玩具级的初始模板。",
+        "author": "Marcus Johnson",
+        "role": "DataFlow, 首席架构师"
+      },
+      "t3": {
+        "quote": "随产品附带的操作默认值极为出色。可观测性、高级认证策略以及多维增长指标从项目立项的第一天就被深度集成在主干代码中。",
+        "author": "Emma Wilson",
+        "role": "CloudSync, 创始人"
+      }
+    },
+    "capability": {
+      "badge": "能力矩阵",
+      "title": "四大支柱，零妥协。",
+      "multiTenant": {
+        "title": "多租户隔离引擎",
+        "desc": "从第一天起就实现工作区隔离。",
+        "cta": "多租户文档"
+      },
+      "aiGateway": {
+        "title": "AI 提供商网关",
+        "desc": "一个接口，所有 AI 模型。",
+        "cta": "探索 AI 集成"
+      },
+      "rbac": {
+        "title": "Auth & RBAC 矩阵",
+        "desc": "企业级，开箱即用。",
+        "cta": "查看认证指南"
+      },
+      "billing": {
+        "title": "账单与收入引擎",
+        "desc": "Stripe 预配置，Webhook 已同步。",
+        "cta": "配置定价"
+      }
     }
   }
 }

@@ -1,56 +1,57 @@
+import { useTranslations } from "next-intl";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
-
-const TESTIMONIALS = [
-  {
-    quote:
-      "Nebutra cut our delivery time in half. We shipped multi-tenant billing and analytics without platform rewrites.",
-    author: "Sarah Chen",
-    role: "CTO, TechStart AI",
-  },
-  {
-    quote:
-      "The architecture scales from first customer to enterprise procurement. It feels like a product, not a starter toy.",
-    author: "Marcus Johnson",
-    role: "Lead Engineer, DataFlow",
-  },
-  {
-    quote:
-      "Operational defaults are excellent. Observability, auth, and growth metrics are all integrated from day one.",
-    author: "Emma Wilson",
-    role: "Founder, CloudSync",
-  },
-] as const;
+import { DeploymentStats } from "./DeploymentStats";
 
 export function TestimonialsSection() {
+  const t = useTranslations("microLanding.testimonials");
+
+  const TESTIMONIALS = [
+    {
+      quote: t("t1.quote"),
+      author: t("t1.author"),
+      role: t("t1.role"),
+    },
+    {
+      quote: t("t2.quote"),
+      author: t("t2.author"),
+      role: t("t2.role"),
+    },
+    {
+      quote: t("t3.quote"),
+      author: t("t3.author"),
+      role: t("t3.role"),
+    },
+  ] as const;
+
   return (
-    <section className="w-full bg-[color:var(--neutral-2)] py-24 md:py-32 dark:bg-black">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="w-full bg-muted/20 py-24 md:py-32">
+      <div className="mx-auto max-w-7xl px-4 md:px-6">
         <AnimateIn inView preset="emerge" className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold tracking-[0.14em] text-[color:var(--blue-11)] uppercase">
-            Trusted by operators
+          <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
+            {t("badge")}
           </p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-[color:var(--neutral-12)] md:text-5xl dark:text-white">
-            Teams use Sailor to move from prototype to production fast.
+          <h2 className="text-4xl font-black tracking-tight text-foreground md:text-5xl text-balance">
+            {t("title")}
           </h2>
         </AnimateIn>
 
-        <AnimateInGroup inView stagger="normal" className="mt-12 grid gap-5 md:grid-cols-3">
+        <AnimateInGroup inView stagger="normal" className="mt-16 grid gap-6 md:grid-cols-3">
           {TESTIMONIALS.map((item) => (
             <AnimateIn key={item.author} preset="fadeUp">
-              <article className="rounded-[var(--radius-2xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] p-6 dark:border-white/10 dark:bg-white/5">
-                <p className="text-sm leading-relaxed text-[color:var(--neutral-11)] dark:text-white/75">
+              <article className="group flex h-full flex-col rounded-3xl border border-border/50 bg-background/50 backdrop-blur-xl p-8 transition-all hover:bg-muted/40 hover:border-primary/20 shadow-xl shadow-primary/5">
+                <p className="flex-1 text-base leading-relaxed text-muted-foreground italic mb-8">
                   “{item.quote}”
                 </p>
-                <p className="mt-6 text-sm font-semibold text-[color:var(--neutral-12)] dark:text-white">
-                  {item.author}
-                </p>
-                <p className="text-xs text-[color:var(--neutral-10)] dark:text-white/60">
-                  {item.role}
-                </p>
+                <div>
+                  <p className="text-base font-bold text-foreground">{item.author}</p>
+                  <p className="text-sm text-muted-foreground/80 mt-1">{item.role}</p>
+                </div>
               </article>
             </AnimateIn>
           ))}
         </AnimateInGroup>
+
+        <DeploymentStats />
       </div>
     </section>
   );

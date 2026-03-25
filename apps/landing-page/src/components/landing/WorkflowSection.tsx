@@ -1,36 +1,38 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 
-const STEPS = [
-  {
-    title: "Scaffold",
-    description: "Bootstrap an enterprise-ready monorepo in minutes with multi-tenant defaults.",
-  },
-  {
-    title: "Wire Providers",
-    description: "Connect auth, billing, and AI providers through stable, typed adapters.",
-  },
-  {
-    title: "Ship",
-    description: "Deploy a production baseline with observability and operational guardrails.",
-  },
-  {
-    title: "Scale",
-    description: "Grow across tenants and regions using the same architecture without rewrites.",
-  },
-] as const;
-
 export function WorkflowSection() {
+  const t = useTranslations("microLanding.workflow");
+  const STEPS = [
+    {
+      title: t("step1.title"),
+      description: t("step1.desc"),
+    },
+    {
+      title: t("step2.title"),
+      description: t("step2.desc"),
+    },
+    {
+      title: t("step3.title"),
+      description: t("step3.desc"),
+    },
+    {
+      title: t("step4.title"),
+      description: t("step4.desc"),
+    },
+  ] as const;
+
   return (
-    <section id="workflow" className="w-full bg-neutral-2 py-24 md:py-32 dark:bg-black">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="workflow" className="w-full bg-background py-24 md:py-32">
+      <div className="mx-auto max-w-7xl px-4 md:px-6">
         <AnimateIn preset="emerge" inView className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold tracking-[0.14em] text-blue-11 uppercase">
-            Delivery workflow
+          <p className="text-sm font-bold tracking-[0.2em] text-primary uppercase mb-4">
+            {t("badge")}
           </p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-neutral-12 md:text-5xl dark:text-white">
-            Move from template to revenue without a platform rewrite.
+          <h2 className="text-4xl font-black tracking-tight text-foreground md:text-5xl text-balance">
+            {t("title")}
           </h2>
         </AnimateIn>
 
@@ -41,14 +43,14 @@ export function WorkflowSection() {
         >
           {STEPS.map((step, index) => (
             <AnimateIn key={step.title} preset="fadeUp" className="h-full">
-              <article className="flex h-full flex-col rounded-2xl border border-neutral-7 bg-neutral-1 p-6 shadow-sm dark:border-white/10 dark:bg-white/5">
-                <span className="text-xs font-semibold tracking-[0.12em] text-blue-11 uppercase">
-                  Step {index + 1}
-                </span>
-                <h3 className="mt-3 text-xl font-semibold text-neutral-12 dark:text-white">
-                  {step.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-neutral-11 dark:text-white/70">
+              <article className="group flex h-full flex-col rounded-3xl border border-border/50 bg-background/50 backdrop-blur-xl p-8 transition-all hover:bg-muted/40 hover:border-primary/20 shadow-xl shadow-primary/5">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+                    {index + 1}
+                  </div>
+                </div>
+                <h3 className="mb-3 text-2xl font-bold text-foreground">{step.title}</h3>
+                <p className="text-base leading-relaxed text-muted-foreground">
                   {step.description}
                 </p>
               </article>

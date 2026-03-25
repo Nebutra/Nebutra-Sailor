@@ -6,6 +6,15 @@
  * Lucide: generic UI icons
  */
 
+//  ── Foundation Infrastructure Icons ─────────────────────────────────────────
+export {
+  SiClerk as ClerkIcon,
+  SiNextdotjs as NextjsIcon,
+  SiPrisma as PrismaIcon,
+  SiStripe as StripeIcon,
+  SiSupabase as SupabaseIcon,
+  SiTailwindcss as TailwindIcon,
+} from "@icons-pack/react-simple-icons";
 // ── AI Model Providers (Lobe) ────────────────────────────────────────────────
 // ── Dev Tools & Platforms (Lobe) ─────────────────────────────────────────────
 export {
@@ -37,7 +46,6 @@ export {
   Smithery,
   Vercel,
 } from "@lobehub/icons";
-
 // ── Lucide UI icons ──────────────────────────────────────────────────────────
 export {
   Bot,

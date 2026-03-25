@@ -1,11 +1,11 @@
 {
   "nav": {
-    "features": "Features",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "기능",
+    "pricing": "가격 정책",
+    "docs": "문서",
     "github": "GitHub",
-    "signIn": "Sign In",
-    "getStarted": "Get Started"
+    "signIn": "로그인",
+    "getStarted": "시작하기"
   },
   "hero": {
     "badge": "Nebutra Intelligence · Leading AI Infrastructure",
@@ -18,18 +18,18 @@
     "ctaViewGitHub": "View on GitHub →"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "프로토타입에서 확장까지, 즉시 사용 가능한 인프라.",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "AI 애플리케이션 인프라",
+      "description": "엔터프라이즈급 에이전트 프레임워크가 내장되어 있습니다. 복잡한 추상화를 우회하고 즉시 개발을 시작하십시오."
     },
     "item1": {
-      "title": "Open Product Community (OPC)",
-      "description": "Future AI products require ecosystems, not silos. Designed with the OPC philosophy to provide standardized plugin structures connecting creators with developer networks."
+      "title": "오픈 프로덕트 커뮤니티",
+      "description": "미래의 AI 제품에는 단일 소프트웨어가 아닌 생태계가 필요합니다. 표준화된 플러그인 구조를 제공합니다."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "엔터프라이즈 SaaS 자동화",
+      "description": "Vercel, Supabase, Stripe를 긴밀하게 통합합니다. 행 수준 보안, 다중 테넌트 격리 및 구독 청구가 내장되어 있습니다."
     }
   },
   "cta": {
@@ -41,13 +41,13 @@
   },
   "footer": {
     "links": {
-      "product": "Ecosystem",
-      "docs": "Developer Docs",
-      "github": "Source Code",
-      "discord": "Community"
+      "product": "생태계",
+      "docs": "개발자 문서",
+      "github": "소스 코드",
+      "discord": "커뮤니티"
     },
-    "copyright": "© 2026 Nebutra Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational"
+    "copyright": "© 2026 Nebutra Intelligence. 모든 권리 보유.",
+    "statusOnline": "모든 시스템 정상 작동 중"
   },
   "logoStrip": {
     "tagline": "Engineered upon the premier technologies driving the modern web"
@@ -355,6 +355,172 @@
       "socialProofPrefix": "Join",
       "socialProofSuffix": "others on the list",
       "emailAriaLabel": "Email address"
+    }
+  },
+  "microLanding": {
+    "hero": {
+      "badge": "Nebutra 1.0 출시",
+      "headline": "터미널 속도로 AI 제국을 구축하십시오.",
+      "subheadline": "세계에서 가장 진보된 Next.js SaaS 아키텍처. 인텔리전스, 결제 및 자율 제어 센터 사전 통합.",
+      "initCmd": "프로젝트 초기화",
+      "docsCmd": "문서"
+    },
+    "trust": {
+      "foundation": "세계 최고 수준의 SaaS 기반",
+      "ecosystem": "주요 AI 모델 및 에이전트 도구와 통합"
+    },
+    "architecture": {
+      "badge": "시스템 기계",
+      "title": "타협 없음. 확장 완료.",
+      "description": "엄청난 트래픽을 견디도록 설계된 강력한 모노레포.",
+      "turborepo": {
+        "title": "Turborepo 마이크로",
+        "desc": "계층 간의 엄격한 경계 적용."
+      },
+      "edge": {
+        "title": "글로벌 엣지",
+        "desc": "Vercel Edge에서 실행되는 빠른 라우팅."
+      },
+      "database": {
+        "title": "데이터 지속성",
+        "desc": "최고의 Prisma ORM."
+      },
+      "auth": {
+        "title": "안전 인증",
+        "desc": "Clerk 딥 통합 권한 부여."
+      }
+    },
+    "pricing": {
+      "title": "인프라 라이선스",
+      "description": "개인을 위한 오픈 액세스 및 기업을 위한 라이선스.",
+      "standard": {
+        "badge": "무료 커뮤니티",
+        "price": "무료",
+        "period": "영구",
+        "desc": "1인 개발자.",
+        "cta": "저장소 시작",
+        "f1": "오픈 소스 시스템",
+        "f2": "포럼 지원",
+        "f3": "무료 배포",
+        "f4": "표준 설정"
+      },
+      "enterprise": {
+        "badge": "상용 라이선스",
+        "price": "맞춤형",
+        "period": "전용",
+        "desc": "확장 가능한 B2B SaaS.",
+        "cta": "라이선스 받기",
+        "f1": "상업적 제품 사용",
+        "f2": "프라이빗 디자인",
+        "f3": "우선 지원",
+        "f4": "Figma 원본",
+        "f5": "엔터프라이즈 가이드"
+      }
+    },
+    "faq": {
+      "title": "시스템 문의",
+      "description": "아키텍처 FAQ.",
+      "q1": {
+        "q": "무엇을 얻습니까?",
+        "a": "모든 소스 코드 포함 Turborepo."
+      },
+      "q2": {
+        "q": "배포?",
+        "a": "원클릭."
+      },
+      "q3": {
+        "q": "업데이트?",
+        "a": "Github 평생 액세스."
+      },
+      "q4": {
+        "q": "클라이언트 프로젝트?",
+        "a": "제한 없이 허용."
+      }
+    },
+    "cta": {
+      "title": "수익 창출을 시작하십시오.",
+      "description": "몇 시간 만에 고성능 SaaS를 출시하십시오.",
+      "button": "즉시 배포"
+    },
+    "productDemo": {
+      "badge": "운영자급 엔진",
+      "title": "본격적인 확장을 위한 기반.",
+      "description": "테넌트 분석, Stripe 웹훅 및 다중 테넌트 아키텍처가 사전 구성되어 있습니다. 바퀴를 다시 발명하지 마십시오.",
+      "analytics": {
+        "label": "테넌트 분석",
+        "desc": "전체 SaaS 생태계에서 추적되는 실시간 사용 지표 및 활성 세션 원격 측정."
+      },
+      "billing": {
+        "label": "Stripe 결제 인프라",
+        "desc": "완전 자율적인 웹훅 수집, 사용량 기반 종량제 청구 및 송장 생성이 기본 제공됩니다."
+      },
+      "workspaces": {
+        "label": "다중 테넌트 작업 공간",
+        "desc": "엄격한 행 수준 보안(RLS) 데이터 격리 및 역할 기반 액세스 제어(RBAC)를 통한 마찰 없는 온보딩."
+      }
+    },
+    "workflow": {
+      "badge": "전달 워크플로우",
+      "title": "플랫폼 재작성 없이 템플릿에서 수익 창출로.",
+      "step1": {
+        "title": "스캐폴드",
+        "desc": "다중 테넌트 기본값을 사용하여 몇 분 만에 엔터프라이즈급 모노레포를 부트스트랩합니다."
+      },
+      "step2": {
+        "title": "공급자 연결",
+        "desc": "안정적인 형식의 어댑터를 통해 인증, 결제 및 AI 공급자를 연결합니다."
+      },
+      "step3": {
+        "title": "배포",
+        "desc": "관찰 가능성과 운영 가드레일을 갖춘 운영 기준선을 배포합니다."
+      },
+      "step4": {
+        "title": "확장",
+        "desc": "재작성 없이 동일한 아키텍처를 사용하여 테넌트와 지역에 걸쳐 확장합니다."
+      }
+    },
+    "testimonials": {
+      "badge": "운영자의 신뢰",
+      "title": "팀은 Sailor를 사용하여 프로토타입에서 프로덕션으로 빠르게 이동합니다.",
+      "t1": {
+        "quote": "Nebutra는 배송 시간을 절반으로 줄였습니다. 우리는 플랫폼 재작성 없이 다중 테넌트 결제 및 분석을 제공했습니다.",
+        "author": "Sarah Chen",
+        "role": "CTO, TechStart AI"
+      },
+      "t2": {
+        "quote": "아키텍처는 첫 번째 고객으로부터 기업 조달로 확장됩니다. 시작용 장난감이 아니라 제품처럼 느껴집니다.",
+        "author": "Marcus Johnson",
+        "role": "수석 엔지니어, DataFlow"
+      },
+      "t3": {
+        "quote": "운영 기본값이 훌륭합니다. 가시성, 인증 및 성장 지표는 첫날부터 모두 통합되었습니다.",
+        "author": "Emma Wilson",
+        "role": "설립자, CloudSync"
+      }
+    },
+    "capability": {
+      "badge": "기능 매트릭스",
+      "title": "네 가지 기둥. 타협 없음.",
+      "multiTenant": {
+        "title": "멀티테넌트 격리 엔진",
+        "desc": "처음부터 워크스페이스 격리.",
+        "cta": "멀티테넌트 문서"
+      },
+      "aiGateway": {
+        "title": "AI 프로바이더 게이트웨이",
+        "desc": "하나의 인터페이스, 모든 AI 모델.",
+        "cta": "AI 통합 탐색"
+      },
+      "rbac": {
+        "title": "Auth & RBAC 매트릭스",
+        "desc": "엔터프라이즈급, 사전 구성됨.",
+        "cta": "인증 가이드 보기"
+      },
+      "billing": {
+        "title": "청구 및 수익 엔진",
+        "desc": "Stripe 사전 연결, Webhook 동기화됨.",
+        "cta": "가격 구성"
+      }
     }
   }
 }

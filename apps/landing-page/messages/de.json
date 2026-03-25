@@ -1,11 +1,11 @@
 {
   "nav": {
-    "features": "Features",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "docs": "Dokumentation",
     "github": "GitHub",
-    "signIn": "Sign In",
-    "getStarted": "Get Started"
+    "signIn": "Anmelden",
+    "getStarted": "Loslegen"
   },
   "hero": {
     "badge": "Nebutra Intelligence · Leading AI Infrastructure",
@@ -18,18 +18,18 @@
     "ctaViewGitHub": "View on GitHub →"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "Sofort einsatzbereite Infrastruktur, vom Prototyp bis zur Skalierung.",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "KI-Anwendungs-Infrastruktur",
+      "description": "Produktionserprobte Agenten und LLM-Orchestrierungs-Engines. Umgehen Sie komplexe Abstraktionen für pure Logik."
     },
     "item1": {
-      "title": "Open Product Community (OPC)",
-      "description": "Future AI products require ecosystems, not silos. Designed with the OPC philosophy to provide standardized plugin structures connecting creators with developer networks."
+      "title": "Offene Produkt-Community",
+      "description": "Zukünftige KI-Produkte benötigen Ökosysteme, keine Silos. Bereitstellung standardisierter Architektur Integrationen."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "Enterprise SaaS-Automatisierung",
+      "description": "Tiefe Integration von Vercel, Supabase und Stripe. Bietet sofortige Datensicherheit und globales Biling."
     }
   },
   "cta": {
@@ -41,13 +41,13 @@
   },
   "footer": {
     "links": {
-      "product": "Ecosystem",
-      "docs": "Developer Docs",
-      "github": "Source Code",
+      "product": "Ökosystem",
+      "docs": "Entwickler-Docs",
+      "github": "Quellcode",
       "discord": "Community"
     },
-    "copyright": "© 2026 Nebutra Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational"
+    "copyright": "© 2026 Nebutra Intelligence. Alle Rechte vorbehalten.",
+    "statusOnline": "Alle Systeme betriebsbereit"
   },
   "logoStrip": {
     "tagline": "Engineered upon the premier technologies driving the modern web"
@@ -355,6 +355,172 @@
       "socialProofPrefix": "Join",
       "socialProofSuffix": "others on the list",
       "emailAriaLabel": "Email address"
+    }
+  },
+  "microLanding": {
+    "hero": {
+      "badge": "Nebutra 1.0 ist online",
+      "headline": "Skalierbare KI-Systeme bauen.",
+      "subheadline": "Erweiterte Next.js Architektur. KI und Abrechnung vorinstalliert.",
+      "initCmd": "Initialisieren",
+      "docsCmd": "Dokumentation"
+    },
+    "trust": {
+      "foundation": "WELTKLASSE BASIS",
+      "ecosystem": "MIT KI-MODELLEN"
+    },
+    "architecture": {
+      "badge": "ARCHITEKTUR",
+      "title": "Skalierbar und Kompromisslos.",
+      "description": "Massive Traffic-Toleranz.",
+      "turborepo": {
+        "title": "Turborepo",
+        "desc": "Strenge Modulgrenzen."
+      },
+      "edge": {
+        "title": "Globales Edge",
+        "desc": "Dynamisches Routing."
+      },
+      "database": {
+        "title": "Datenbank",
+        "desc": "Beste SQL ORMs."
+      },
+      "auth": {
+        "title": "Sicherheit",
+        "desc": "Starke Clerk MFA."
+      }
+    },
+    "pricing": {
+      "title": "Transparente Kosten.",
+      "description": "Wählen Sie Ihr bevorzugtes Profil.",
+      "standard": {
+        "badge": "OPEN SOURCE",
+        "price": "Kostenlos",
+        "period": "immer",
+        "desc": "Solo-Entwickler.",
+        "cta": "Github Repo",
+        "f1": "Quellcode",
+        "f2": "Forum Support",
+        "f3": "Infrastruktur-Tools",
+        "f4": "Next.js 15"
+      },
+      "enterprise": {
+        "badge": "KOMMERZIELL",
+        "price": "Pro",
+        "period": "Lizenz",
+        "desc": "B2B Unternehmen",
+        "cta": "Kontakt",
+        "f1": "B2B Verkauf",
+        "f2": "Design Token",
+        "f3": "Priorität",
+        "f4": "Figma UI",
+        "f5": "Cloud Guides"
+      }
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Beste Kontrolle und Fragen.",
+      "q1": {
+        "q": "Was erhalte ich?",
+        "a": "Ganzen Code."
+      },
+      "q2": {
+        "q": "Einfaches Setup?",
+        "a": "Nur Vercel Ein-Klick."
+      },
+      "q3": {
+        "q": "Git Updates?",
+        "a": "Ja, immer kostenlos."
+      },
+      "q4": {
+        "q": "Für Agenturen?",
+        "a": "Unbegrenzt nutzbar."
+      }
+    },
+    "cta": {
+      "title": "Imperium bauen.",
+      "description": "Starten Sie noch heute voll durch.",
+      "button": "Sofort starten"
+    },
+    "productDemo": {
+      "badge": "Operator-Grade Engine",
+      "title": "Die Basis für ernsthaftes Wachstum.",
+      "description": "Mandantenanalysen, Stripe-Webhooks und Multi-Tenant-Architekturen sind vorinstalliert. Erfinden Sie das Rad nicht neu.",
+      "analytics": {
+        "label": "Mandantenanalysen",
+        "desc": "Echtzeit-Nutzungsmetriken und aktive Sitzungstelemetrie in Ihrem gesamten SaaS-Ökosystem."
+      },
+      "billing": {
+        "label": "Stripe-Abrechnungs",
+        "desc": "Vollautonome Webhook-Erfassung, nutzungsbasierte Abrechnung und sofort einsatzbereite Rechnungserstellung."
+      },
+      "workspaces": {
+        "label": "Multi-Tenant Workspaces",
+        "desc": "Reibungsloses Onboarding mit strenger Row-Level Security (RLS) und rollenbasierter Zugriffskontrolle."
+      }
+    },
+    "workflow": {
+      "badge": "Liefer-Workflow",
+      "title": "Wechseln Sie von der Vorlage zum Umsatz ohne Plattform-Rewrite.",
+      "step1": {
+        "title": "Einrichten",
+        "desc": "Bootstrappen Sie in wenigen Minuten ein Monorepo mit Multi-Tenant-Vorgaben für Unternehmen."
+      },
+      "step2": {
+        "title": "Anbieter verbinden",
+        "desc": "Verbinden Sie Auth-, Abrechnungs- und KI-Anbieter über stabile, typisierte Adapter."
+      },
+      "step3": {
+        "title": "Bereitstellen",
+        "desc": "Stellen Sie eine Produktionsbasis mit Beobachtbarkeit und operativen Leitplanken bereit."
+      },
+      "step4": {
+        "title": "Skalieren",
+        "desc": "Wachsen Sie über Mandanten und Regionen hinweg mit derselben Architektur, ohne Code-Redesign."
+      }
+    },
+    "testimonials": {
+      "badge": "Von Betreibern vertraut",
+      "title": "Teams verwenden Sailor, um von Prototyp zur Produktion zu wechseln.",
+      "t1": {
+        "quote": "Nebutra hat unsere Lieferzeit halbiert. Wir haben Multi-Tenant-Abrechnungen ohne Neuschreiben der Plattform ausgeliefert.",
+        "author": "Sarah Chen",
+        "role": "CTO, TechStart AI"
+      },
+      "t2": {
+        "quote": "Die Architektur skaliert vom ersten Kunden bis zum Unternehmen. Es fühlt sich an wie ein Produkt, nicht wie ein Spielzeug.",
+        "author": "Marcus Johnson",
+        "role": "Leitender Ingenieur, DataFlow"
+      },
+      "t3": {
+        "quote": "Die betrieblichen Standardwerte sind exzellent. Beobachtbarkeit, Auth und Wachstumsmetriken sind ab dem ersten Tag integriert.",
+        "author": "Emma Wilson",
+        "role": "Gründerin, CloudSync"
+      }
+    },
+    "capability": {
+      "badge": "FÄHIGKEITSMATRIX",
+      "title": "Vier Säulen. Keine Kompromisse.",
+      "multiTenant": {
+        "title": "Multi-Tenant-Isolierungs-Engine",
+        "desc": "Workspace-Isolierung von Anfang an.",
+        "cta": "Multi-Tenant-Dokumentation"
+      },
+      "aiGateway": {
+        "title": "KI-Anbieter-Gateway",
+        "desc": "Eine Schnittstelle, jedes KI-Modell.",
+        "cta": "KI-Integrationen erkunden"
+      },
+      "rbac": {
+        "title": "Auth & RBAC-Matrix",
+        "desc": "Enterprise-Grade, vorkonfiguriert.",
+        "cta": "Auth-Leitfaden ansehen"
+      },
+      "billing": {
+        "title": "Abrechnungs- & Umsatz-Engine",
+        "desc": "Stripe vorkonfiguriert, Webhooks synchronisiert.",
+        "cta": "Preise konfigurieren"
+      }
     }
   }
 }

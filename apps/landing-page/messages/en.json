@@ -356,5 +356,171 @@
       "socialProofSuffix": "others on the list",
       "emailAriaLabel": "Email address"
     }
+  },
+  "microLanding": {
+    "hero": {
+      "badge": "Nebutra Sailor 1.0 is now live",
+      "headline": "Build AI-Native Empires at Terminal Velocity.",
+      "subheadline": "The world's most advanced Next.js SaaS architecture. Pre-integrated with deep intelligence, enterprise billing, and autonomous command centers.",
+      "initCmd": "Initialize Project",
+      "docsCmd": "Read Documentation"
+    },
+    "trust": {
+      "foundation": "THE WORLD-CLASS SAAS FOUNDATION",
+      "ecosystem": "INTEGRATED WITH LEADING AI MODELS & AGENT TOOLS"
+    },
+    "architecture": {
+      "badge": "SYSTEM ARCHITECTURE",
+      "title": "Uncompromising. Scale-Ready.",
+      "description": "We didn't just build a template. We engineered a robust monorepo primitive designed to withstand massive influxes of traffic and high AI inference loads.",
+      "turborepo": {
+        "title": "Turborepo Micro-Architecture",
+        "desc": "Strict boundary enforcement between web applications, internal UI libraries, utility packages, and database layers. Guaranteeing instantaneous incremental builds and modular scale."
+      },
+      "edge": {
+        "title": "Global Edge Network",
+        "desc": "Middleware running dynamically at the Vercel Edge for split-second internationalization, auth validation, and A/B testing routing."
+      },
+      "database": {
+        "title": "Data Persistence Engine",
+        "desc": "High-performance Prisma ORM wired seamlessly to Supabase PostgreSQL, handling complex relational hierarchies effortlessly."
+      },
+      "auth": {
+        "title": "Fort Knox Authentication",
+        "desc": "Integrated with Clerk for enterprise-grade B2B/B2C authentication. Passwordless logins, MFA, organization-based access control, and complete data isolation right out of the box."
+      }
+    },
+    "pricing": {
+      "title": "Transparent infrastructure access.",
+      "description": "Open for individuals. Commercially licensed for scale. Choose the tier that matches your deployment profile.",
+      "standard": {
+        "badge": "COMMUNITY LICENSE",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Perfect for solo developers, solopreneurs, and open-source learning.",
+        "cta": "Initialize Repository",
+        "f1": "Open-source mono-repo core",
+        "f2": "Community forum support",
+        "f3": "Deploy anywhere",
+        "f4": "Standard Next.js setups"
+      },
+      "enterprise": {
+        "badge": "COMMERCIAL LICENSE",
+        "price": "Custom",
+        "period": "license",
+        "desc": "For ambitious startups and scalable B2B SaaS deployments.",
+        "cta": "Request License",
+        "f1": "Commercial Product Usage",
+        "f2": "Private Design System Tokens",
+        "f3": "Priority Architecture Support",
+        "f4": "Enterprise Figma Files",
+        "f5": "Vercel / Supabase deployment guides"
+      }
+    },
+    "faq": {
+      "title": "System Inquiries.",
+      "description": "Everything you need to know about the architecture.",
+      "q1": {
+        "q": "What exactly do I get?",
+        "a": "You get a zip file with the entire Turborepo codebase, including the Next.js apps, FastAPI Python backend, UI packages, infrastructure as code, and extensive documentation on how to deploy everything. It encompasses all UI components you see here."
+      },
+      "q2": {
+        "q": "Is it easy to deploy?",
+        "a": "Yes! We provide one-click deployment templates for Vercel, Supabase, and custom Docker Compose files if you prefer self-hosting on AWS/GCP."
+      },
+      "q3": {
+        "q": "What about updates?",
+        "a": "You get lifetime access to the Github repository for your purchased tier, unlocking all new modules, security patches, and AI model integrations forever."
+      },
+      "q4": {
+        "q": "Can I use it for client work?",
+        "a": "Absolutely. The Enterprise License permits usage across unlimited client projects and proprietary B2B deployments."
+      }
+    },
+    "cta": {
+      "title": "Stop building the foundation. Start building the empire.",
+      "description": "Join the hyper-productive developers launching high-fidelity SaaS applications in hours, not months.",
+      "button": "Deploy Immediately"
+    },
+    "productDemo": {
+      "badge": "Operator-Grade Engine",
+      "title": "The foundation for serious scale.",
+      "description": "Tenant analytics, Stripe webhooks, and multi-tenant architectures are pre-wired. Stop rebuilding the wheel.",
+      "analytics": {
+        "label": "Tenant Analytics",
+        "desc": "Real-time usage metrics and active session telemetry tracked across your entire SaaS ecosystem."
+      },
+      "billing": {
+        "label": "Stripe Billing Infrastructure",
+        "desc": "Fully autonomous webhook ingestion, usage-based metered billing, and invoice generation out of the box."
+      },
+      "workspaces": {
+        "label": "Multi-Tenant Workspaces",
+        "desc": "Zero-friction onboarding with strict Row-Level Security (RLS) data isolation and Role-Based Access Control."
+      }
+    },
+    "workflow": {
+      "badge": "Delivery workflow",
+      "title": "Move from template to revenue without a platform rewrite.",
+      "step1": {
+        "title": "Scaffold",
+        "desc": "Bootstrap an enterprise-ready monorepo in minutes with multi-tenant defaults."
+      },
+      "step2": {
+        "title": "Wire Providers",
+        "desc": "Connect auth, billing, and AI providers through stable, typed adapters."
+      },
+      "step3": {
+        "title": "Ship",
+        "desc": "Deploy a production baseline with observability and operational guardrails."
+      },
+      "step4": {
+        "title": "Scale",
+        "desc": "Grow across tenants and regions using the same architecture without rewrites."
+      }
+    },
+    "testimonials": {
+      "badge": "Trusted by operators",
+      "title": "Teams use Sailor to move from prototype to production fast.",
+      "t1": {
+        "quote": "Nebutra cut our delivery time in half. We shipped multi-tenant billing and analytics without platform rewrites.",
+        "author": "Sarah Chen",
+        "role": "CTO, TechStart AI"
+      },
+      "t2": {
+        "quote": "The architecture scales from first customer to enterprise procurement. It feels like a product, not a starter toy.",
+        "author": "Marcus Johnson",
+        "role": "Lead Engineer, DataFlow"
+      },
+      "t3": {
+        "quote": "Operational defaults are excellent. Observability, auth, and growth metrics are all integrated from day one.",
+        "author": "Emma Wilson",
+        "role": "Founder, CloudSync"
+      }
+    },
+    "capability": {
+      "badge": "CAPABILITY MATRIX",
+      "title": "Four pillars. Zero compromises.",
+      "multiTenant": {
+        "title": "Multi-Tenant Isolation Engine",
+        "desc": "Workspace isolation from day one.",
+        "cta": "Multi-tenant docs"
+      },
+      "aiGateway": {
+        "title": "AI Provider Gateway",
+        "desc": "One interface, every AI model.",
+        "cta": "Explore AI integrations"
+      },
+      "rbac": {
+        "title": "Auth & RBAC Matrix",
+        "desc": "Enterprise-grade, pre-configured.",
+        "cta": "View auth guide"
+      },
+      "billing": {
+        "title": "Billing & Revenue Engine",
+        "desc": "Stripe pre-wired, webhooks synced.",
+        "cta": "Configure pricing"
+      }
+    }
   }
 }

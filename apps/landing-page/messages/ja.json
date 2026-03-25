@@ -1,11 +1,11 @@
 {
   "nav": {
-    "features": "Features",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "機能",
+    "pricing": "料金",
+    "docs": "ドキュメント",
     "github": "GitHub",
-    "signIn": "Sign In",
-    "getStarted": "Get Started"
+    "signIn": "ログイン",
+    "getStarted": "無料開始"
   },
   "hero": {
     "badge": "Nebutra Intelligence · Leading AI Infrastructure",
@@ -18,18 +18,18 @@
     "ctaViewGitHub": "View on GitHub →"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "プロトタイプからスケールまでの即戦力インフラストラクチャ。",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "AIアプリケーション基盤",
+      "description": "自動化されたフレームワークとLLMエンジンを内蔵。複雑な抽象化をバイパスし、構造化AIと直接連携します。"
     },
     "item1": {
-      "title": "Open Product Community (OPC)",
-      "description": "Future AI products require ecosystems, not silos. Designed with the OPC philosophy to provide standardized plugin structures connecting creators with developer networks."
+      "title": "オープンプロダクトコミュニティ",
+      "description": "将来のAI製品にはサイロではなくエコシステムが必要です。クリエイターとネットワークを繋ぐ構造を提供します。"
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "エンタープライズSaaS自動化",
+      "description": "Vercel、Supabase、Stripeを深く統合。行レベルのセキュリティ、マルチテナント分離、グローバル課金を標準装備。"
     }
   },
   "cta": {
@@ -41,13 +41,13 @@
   },
   "footer": {
     "links": {
-      "product": "Ecosystem",
-      "docs": "Developer Docs",
-      "github": "Source Code",
-      "discord": "Community"
+      "product": "エコシステム",
+      "docs": "開発者向け",
+      "github": "ソースコード",
+      "discord": "コミュニティ"
     },
-    "copyright": "© 2026 Nebutra Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational"
+    "copyright": "© 2026 Nebutra Intelligence. 無断複写・転載を禁じます。",
+    "statusOnline": "全システム正常稼働中"
   },
   "logoStrip": {
     "tagline": "Engineered upon the premier technologies driving the modern web"
@@ -355,6 +355,172 @@
       "socialProofPrefix": "現在",
       "socialProofSuffix": "人以上がリストに参加しています",
       "emailAriaLabel": "メールアドレス"
+    }
+  },
+  "microLanding": {
+    "hero": {
+      "badge": "Nebutra Sailor 1.0 がリリース",
+      "headline": "ターミナル速度でAIネイティブ帝国を構築する",
+      "subheadline": "世界で最も高度なNext.js SaaSアーキテクチャ。企業課金、自律型コマンドセンターを事前統合。",
+      "initCmd": "プロジェクト初期化",
+      "docsCmd": "ドキュメント"
+    },
+    "trust": {
+      "foundation": "世界クラスのSaaS基盤",
+      "ecosystem": "主要なAIモデルツールと統合"
+    },
+    "architecture": {
+      "badge": "システムアーキテクチャ",
+      "title": "妥協なし。拡張の準備完了。",
+      "description": "私たちはただのテンプレートではなく、膨大なトラフィックと推論負荷に耐える堅牢なモノレポを構築しました。",
+      "turborepo": {
+        "title": "Turborepo",
+        "desc": "ライブラリ間の厳密な境界を強制します。"
+      },
+      "edge": {
+        "title": "グローバルエッジ",
+        "desc": "Vercel Edgeで動的に実行されるミドルウェア。"
+      },
+      "database": {
+        "title": "データ永続化",
+        "desc": "Prisma ORMがSupabase PostgreSQLとシームレスに連携。"
+      },
+      "auth": {
+        "title": "強固な認証",
+        "desc": "Clerkを使用した企業向け認証。役割ベース。"
+      }
+    },
+    "pricing": {
+      "title": "透明性の高いインフラ提供",
+      "description": "個人向けオープンアクセス。スケール向けの商用機能。",
+      "standard": {
+        "badge": "オープン版",
+        "price": "無料",
+        "period": "永続",
+        "desc": "ソロ開発者向け",
+        "cta": "リポジトリ取得",
+        "f1": "OSSコア",
+        "f2": "コミュニティサポート",
+        "f3": "無制限デプロイ",
+        "f4": "標準Next.js"
+      },
+      "enterprise": {
+        "badge": "商用ライセンス",
+        "price": "問合せ",
+        "period": "ライセンス",
+        "desc": "スケーラブルなB2B SaaS向け",
+        "cta": "ライセンスリクエスト",
+        "f1": "商用利用",
+        "f2": "プライベートデザインシステム",
+        "f3": "優先サポート",
+        "f4": "Figmaファイル",
+        "f5": "デプロイガイド"
+      }
+    },
+    "faq": {
+      "title": "システムFAQ",
+      "description": "技術詳細。",
+      "q1": {
+        "q": "何が提供されますか？",
+        "a": "全ソースコード。"
+      },
+      "q2": {
+        "q": "デプロイは簡単？",
+        "a": "はい、ワンクリックです。"
+      },
+      "q3": {
+        "q": "アップデートは？",
+        "a": "Githubへの生涯アクセス。"
+      },
+      "q4": {
+        "q": "クライアントワークは？",
+        "a": "商用で無制限の利用が可能。"
+      }
+    },
+    "cta": {
+      "title": "帝国構築を始めましょう",
+      "description": "数時間でSaaSを立ち上げる開発者の仲間入り。",
+      "button": "今すぐデプロイ"
+    },
+    "productDemo": {
+      "badge": "オペレーターグレード・エンジン",
+      "title": "本格的なスケールのための基盤。",
+      "description": "テナント分析、Stripe Webhook、マルチテナントアーキテクチャが事前構成されています。車輪の再発明はやめましょう。",
+      "analytics": {
+        "label": "テナント分析",
+        "desc": "SaaSエコシステム全体で追跡されるリアルタイムの使用状況メトリクスとアクティブなセッションテレメトリ。"
+      },
+      "billing": {
+        "label": "Stripe課金インフラストラクチャ",
+        "desc": "完全に自律的なWebhookインジェスト、従量課金、および請求書生成をすぐに利用できます。"
+      },
+      "workspaces": {
+        "label": "マルチテナント・ワークスペース",
+        "desc": "厳密な行レベルセキュリティ（RLS）データ分離と役割ベースのアクセス制御（RBAC）を備えた、摩擦ゼロのオンボーディング。"
+      }
+    },
+    "workflow": {
+      "badge": "デリバリーワークフロー",
+      "title": "プラットフォームを書き直すことなく、テンプレートから収益化へ。",
+      "step1": {
+        "title": "スキャフォールド",
+        "desc": "マルチテナントのデフォルトを備えたエンタープライズ対応のモノレポを数分でブートストラップします。"
+      },
+      "step2": {
+        "title": "プロバイダーの接続",
+        "desc": "安定した型付きアダプターを通じて、認証、請求、およびAIプロバイダーを接続します。"
+      },
+      "step3": {
+        "title": "デプロイ",
+        "desc": "可観測性と運用上のガードレールを備えた運用ベースラインをデプロイします。"
+      },
+      "step4": {
+        "title": "スケール",
+        "desc": "アーキテクチャを再構築することなく、同じアーキテクチャを使用してテナントと地域を超えて成長します。"
+      }
+    },
+    "testimonials": {
+      "badge": "オペレーターからの信頼",
+      "title": "チームはSailorを使用して、プロトタイプから本番環境へ迅速に移行しています。",
+      "t1": {
+        "quote": "Nebutraは私たちの納品時間を半分に短縮しました。プラットフォームを書き直すことなく、マルチテナントの請求と分析を出荷しました。",
+        "author": "Sarah Chen",
+        "role": "CTO、TechStart AI"
+      },
+      "t2": {
+        "quote": "アーキテクチャは最初の顧客から企業の調達まで拡張できます。スタータートイではなく、製品のように感じられます。",
+        "author": "Marcus Johnson",
+        "role": "リードエンジニア、DataFlow"
+      },
+      "t3": {
+        "quote": "運用上のデフォルトは優れています。可観測性、認証、成長メトリクスは、初日からすべて統合されています。",
+        "author": "Emma Wilson",
+        "role": "創業者、CloudSync"
+      }
+    },
+    "capability": {
+      "badge": "機能マトリックス",
+      "title": "四つの柱。妥協なし。",
+      "multiTenant": {
+        "title": "マルチテナント分離エンジン",
+        "desc": "最初からワークスペースを分離。",
+        "cta": "マルチテナントドキュメント"
+      },
+      "aiGateway": {
+        "title": "AIプロバイダーゲートウェイ",
+        "desc": "一つのインターフェース、あらゆるAIモデル。",
+        "cta": "AIインテグレーションを探索"
+      },
+      "rbac": {
+        "title": "Auth & RBACマトリックス",
+        "desc": "エンタープライズグレード、事前設定済み。",
+        "cta": "認証ガイドを見る"
+      },
+      "billing": {
+        "title": "請求・収益エンジン",
+        "desc": "Stripe事前設定済み、Webhookと同期済み。",
+        "cta": "料金を設定"
+      }
     }
   }
 }

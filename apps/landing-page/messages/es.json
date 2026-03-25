@@ -1,11 +1,11 @@
 {
   "nav": {
-    "features": "Features",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "Características",
+    "pricing": "Precios",
+    "docs": "Documentación",
     "github": "GitHub",
-    "signIn": "Sign In",
-    "getStarted": "Get Started"
+    "signIn": "Iniciar Sesión",
+    "getStarted": "Comenzar"
   },
   "hero": {
     "badge": "Nebutra Intelligence · Leading AI Infrastructure",
@@ -18,18 +18,18 @@
     "ctaViewGitHub": "View on GitHub →"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "Infraestructura lista para usar, desde prototipos hasta escalar.",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "Infraestructura para Aplicaciones IA",
+      "description": "Motores de orquestación de LLM. Evite abstracciones complejas e interactúe directamente con las de inteligencia."
     },
     "item1": {
-      "title": "Open Product Community (OPC)",
-      "description": "Future AI products require ecosystems, not silos. Designed with the OPC philosophy to provide standardized plugin structures connecting creators with developer networks."
+      "title": "Comunidad Abierta (OPC)",
+      "description": "Los futuros productos requieren ecosistemas, no silos. Proporciona estructuras de complementos estandarizados en la red."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "Automatización SaaS Empresarial",
+      "description": "Integra profundamente Vercel, Supabase y Stripe. Proporciona seguridad B2B y alojamiento a nivel corporativo."
     }
   },
   "cta": {
@@ -41,13 +41,13 @@
   },
   "footer": {
     "links": {
-      "product": "Ecosystem",
-      "docs": "Developer Docs",
-      "github": "Source Code",
-      "discord": "Community"
+      "product": "Ecosistema",
+      "docs": "Documentación",
+      "github": "Código Fuente",
+      "discord": "Comunidad"
     },
-    "copyright": "© 2026 Nebutra Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational"
+    "copyright": "© 2026 Nebutra Intelligence. Todos los derechos reservados.",
+    "statusOnline": "Todos los sistemas operativos"
   },
   "logoStrip": {
     "tagline": "Engineered upon the premier technologies driving the modern web"
@@ -355,6 +355,172 @@
       "socialProofPrefix": "Join",
       "socialProofSuffix": "others on the list",
       "emailAriaLabel": "Email address"
+    }
+  },
+  "microLanding": {
+    "hero": {
+      "badge": "Nebutra 1.0 activo",
+      "headline": "Construya imperios de IA.",
+      "subheadline": "Arquitectura Next.js SaaS. Integración de inteligencia artificial y facturación corporativa.",
+      "initCmd": "Iniciar Proyecto",
+      "docsCmd": "Documentos"
+    },
+    "trust": {
+      "foundation": "FUNDACIÓN SAAS",
+      "ecosystem": "INTEGRADO CON LÍDERES EN IA"
+    },
+    "architecture": {
+      "badge": "ARQUITECTURA",
+      "title": "Sin compromisos.",
+      "description": "Un monorepo robusto diseñado para soportar masivas afluencias de tráfico.",
+      "turborepo": {
+        "title": "Turborepo Micro",
+        "desc": "División estricta de aplicaciones."
+      },
+      "edge": {
+        "title": "Red Edge",
+        "desc": "Middleware dinámico rápido."
+      },
+      "database": {
+        "title": "Base de Datos",
+        "desc": "Prisma y Supabase integrados."
+      },
+      "auth": {
+        "title": "Autenticación Fuerte",
+        "desc": "Integración B2B Clerk."
+      }
+    },
+    "pricing": {
+      "title": "Acceso a Infraestructura",
+      "description": "Abierto para desarrolladores. Escalable para corporativos.",
+      "standard": {
+        "badge": "COMUNIDAD",
+        "price": "Gratis",
+        "period": "siempre",
+        "desc": "Desarrollo individual",
+        "cta": "Iniciar repo",
+        "f1": "Código Abierto",
+        "f2": "Soporte comunitario",
+        "f3": "Despliegue total",
+        "f4": "Next.js estándar"
+      },
+      "enterprise": {
+        "badge": "COMERCIAL",
+        "price": "Personal",
+        "period": "licencia",
+        "desc": "SaaS B2B escalable.",
+        "cta": "Pedir Licencia",
+        "f1": "Uso comercial",
+        "f2": "Sistema privado",
+        "f3": "Soporte Pro",
+        "f4": "Figma",
+        "f5": "Guías"
+      }
+    },
+    "faq": {
+      "title": "Preguntas",
+      "description": "Arquitectura.",
+      "q1": {
+        "q": "¿Qué obtengo?",
+        "a": "Todo el código."
+      },
+      "q2": {
+        "q": "¿Fácil despliegue?",
+        "a": "Un solo clic."
+      },
+      "q3": {
+        "q": "¿Actualizaciones?",
+        "a": "Github de por vida."
+      },
+      "q4": {
+        "q": "¿Clientes?",
+        "a": "Licencias proyectos ilimitados."
+      }
+    },
+    "cta": {
+      "title": "Inicie su imperio.",
+      "description": "Lance sistemas de alta calidad en horas.",
+      "button": "Desplegar ahora"
+    },
+    "productDemo": {
+      "badge": "Motor de grado operador",
+      "title": "La base para crecer en serio.",
+      "description": "Análisis de inquilinos, webhooks de Stripe y arquitecturas multiinquilino ya están preconfigurados. Deje de reinventar la rueda.",
+      "analytics": {
+        "label": "Análisis de inquilinos",
+        "desc": "Métricas de uso en tiempo real y telemetría de sesiones activas rastreadas en todo su ecosistema SaaS."
+      },
+      "billing": {
+        "label": "Facturación Stripe",
+        "desc": "Ingestión de webhooks totalmente autónoma, facturación medida por uso y generación de facturas."
+      },
+      "workspaces": {
+        "label": "Espacios de trabajo multiinquilino",
+        "desc": "Incorporación sin fricción con aislamiento de datos estricto (RLS) y control de acceso."
+      }
+    },
+    "workflow": {
+      "badge": "Flujo de entrega",
+      "title": "Pase de la plantilla a los ingresos sin reescribir la plataforma.",
+      "step1": {
+        "title": "Estructurar",
+        "desc": "Cree un monorepo corporativo en minutos con valores predeterminados para múltiples inquilinos."
+      },
+      "step2": {
+        "title": "Conectar proveedores",
+        "desc": "Conecte proveedores de autenticación, facturación e IA a través de adaptadores estables."
+      },
+      "step3": {
+        "title": "Desplegar",
+        "desc": "Despliegue una línea base de producción con observabilidad y barreras de seguridad operativas."
+      },
+      "step4": {
+        "title": "Escalar",
+        "desc": "Crezca a través de inquilinos y regiones utilizando la misma arquitectura sin reescrituras."
+      }
+    },
+    "testimonials": {
+      "badge": "Confiado por operadores",
+      "title": "Los equipos usan Sailor para pasar de prototipo a producción rápidamente.",
+      "t1": {
+        "quote": "Nebutra redujo nuestro tiempo de entrega a la mitad. Enviamos facturación multiinquilino sin reescribir la plataforma.",
+        "author": "Sarah Chen",
+        "role": "CTO, TechStart AI"
+      },
+      "t2": {
+        "quote": "La arquitectura crece desde el primer cliente hasta empresas. Se siente como un producto, no como un juguete.",
+        "author": "Marcus Johnson",
+        "role": "Ingeniero Principal, DataFlow"
+      },
+      "t3": {
+        "quote": "Los valores operativos predeterminados son excelentes. Autenticación y analíticas integradas desde el día uno.",
+        "author": "Emma Wilson",
+        "role": "Fundadora, CloudSync"
+      }
+    },
+    "capability": {
+      "badge": "MATRIZ DE CAPACIDADES",
+      "title": "Cuatro pilares. Cero compromisos.",
+      "multiTenant": {
+        "title": "Motor de Aislamiento Multi-Tenant",
+        "desc": "Aislamiento de espacios de trabajo desde el primer día.",
+        "cta": "Documentación multi-tenant"
+      },
+      "aiGateway": {
+        "title": "Puerta de Enlace de Proveedores IA",
+        "desc": "Una interfaz, todos los modelos de IA.",
+        "cta": "Explorar integraciones de IA"
+      },
+      "rbac": {
+        "title": "Matriz Auth & RBAC",
+        "desc": "Calidad empresarial, preconfigurado.",
+        "cta": "Ver guía de autenticación"
+      },
+      "billing": {
+        "title": "Motor de Facturación e Ingresos",
+        "desc": "Stripe preconfigurado, webhooks sincronizados.",
+        "cta": "Configurar precios"
+      }
     }
   }
 }

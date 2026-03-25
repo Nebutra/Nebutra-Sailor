@@ -35,6 +35,7 @@
     "@heroui/skeleton": "^2.2.18",
     "@heroui/slider": "^2.4.29",
     "@heroui/theme": "^2.4.26",
+    "@icons-pack/react-simple-icons": "^13.13.0",
     "@internationalized/date": "3.12.0",
     "@lobehub/fluent-emoji": "^4.1.0",
     "@lobehub/icons": "^5.0.1",
