@@ -114,8 +114,14 @@ export function AnimatedBeam({
     height: 0,
   });
 
-  // Generate random duration if not specified
-  const animationDuration = duration ?? Math.random() * 3 + 4;
+  // Generate random duration if not specified on the client to prevent SSR hydration mismatches
+  const [animationDuration, setAnimationDuration] = React.useState(duration ?? 4);
+
+  React.useEffect(() => {
+    if (duration === undefined) {
+      setAnimationDuration(Math.random() * 3 + 4);
+    }
+  }, [duration]);
 
   React.useEffect(() => {
     const updatePath = () => {
