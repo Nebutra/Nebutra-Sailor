@@ -1,7 +1,7 @@
 "use client";
 
 import { CreditCard, Layout, Message } from "@nebutra/icons";
-import { AnimatedGradientText } from "@nebutra/ui/primitives";
+
 import { cn } from "@nebutra/ui/utils";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
@@ -17,8 +17,23 @@ interface Tab {
 
 function ScreenshotPlaceholder() {
   return (
-    <div className="flex aspect-video items-center justify-center rounded-lg bg-gradient-to-br from-neutral-2 to-neutral-3">
-      <span className="text-lg text-neutral-8">Screenshot coming soon</span>
+    <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-neutral-1 dark:bg-zinc-950">
+      {/* Grid pattern */}
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:2rem_2rem]" />
+      {/* Brand glow */}
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-48 w-48 rounded-full bg-primary/10 blur-[80px]" />
+      {/* Faux dashboard wireframe */}
+      <div className="relative flex flex-col items-center gap-4 text-center px-8">
+        <div className="flex gap-3">
+          <div className="h-16 w-24 rounded-xl border border-border/30 bg-background/50 backdrop-blur-sm" />
+          <div className="h-16 w-24 rounded-xl border border-border/30 bg-background/50 backdrop-blur-sm" />
+          <div className="h-16 w-24 rounded-xl border border-primary/20 bg-primary/5 backdrop-blur-sm" />
+        </div>
+        <div className="h-24 w-72 rounded-xl border border-border/30 bg-background/50 backdrop-blur-sm" />
+        <p className="text-xs font-medium text-muted-foreground/60 tracking-wide uppercase">
+          Dashboard preview
+        </p>
+      </div>
     </div>
   );
 }
@@ -58,8 +73,8 @@ export function ProductShowcase() {
       <div className="mx-auto max-w-[1400px] px-6">
         <AnimateIn preset="emerge" inView>
           <div className="mb-12 flex flex-col items-center text-center">
-            <span className="mb-4 inline-flex items-center rounded-full border border-neutral-7 bg-neutral-2 px-4 py-1.5 text-sm font-medium">
-              <AnimatedGradientText>{t("badge")}</AnimatedGradientText>
+            <span className="mb-4 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-bold tracking-wide uppercase text-primary">
+              {t("badge")}
             </span>
 
             <h2 className="max-w-3xl text-3xl font-bold tracking-tight text-neutral-12 sm:text-4xl lg:text-5xl">

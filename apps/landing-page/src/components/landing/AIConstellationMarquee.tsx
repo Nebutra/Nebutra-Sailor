@@ -69,9 +69,9 @@ const AI_ICONS_ROW2: AiIcon[] = [
 function IconChip({ icon, name }: AiIcon) {
   const Component = icon.Color ?? icon;
   return (
-    <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-border/40 bg-background/60 backdrop-blur-sm hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 group select-none">
-      <Component size={18} className="h-[18px] w-[18px] shrink-0" />
-      <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors whitespace-nowrap">
+    <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-border/50 bg-background/80 backdrop-blur-sm hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 group select-none shadow-sm">
+      <Component size={20} className="h-5 w-5 shrink-0" />
+      <span className="text-sm font-semibold text-foreground/80 group-hover:text-foreground transition-colors whitespace-nowrap">
         {name}
       </span>
     </div>
@@ -88,7 +88,7 @@ export function AIConstellationMarquee() {
   return (
     <div className="w-full mt-14 overflow-hidden">
       <AnimateIn preset="emerge" inView>
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-8 text-center">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground mb-8 text-center">
           INTEGRATED WITH 22+ AI MODELS &amp; AGENT TOOLS
         </p>
       </AnimateIn>

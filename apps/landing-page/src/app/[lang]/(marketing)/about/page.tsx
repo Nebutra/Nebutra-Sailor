@@ -1,14 +1,7 @@
 import { LogomarkSVG } from "@nebutra/brand";
-import {
-  ArrowRight,
-  Buildings as Building,
-  CheckCircle,
-  Code as Code2,
-  Globe,
-  Shield,
-  Lightning as Zap,
-} from "@nebutra/icons";
-import { AnimatedGradientText, Button, Card } from "@nebutra/ui/primitives";
+import { ArrowRight } from "@nebutra/icons";
+import { Button } from "@nebutra/ui/primitives";
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
@@ -33,128 +26,203 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
   const t = await getTranslations({ locale: lang as Locale, namespace: "legalPages.about" });
 
-  const valuesIcons = [Code2, Zap, Globe, Shield, CheckCircle, Building];
+  const valueImages = [
+    "/images/about/agi.png",
+    "/images/about/security.png",
+    "/images/about/ergonomics.png",
+    "/images/about/scale.png",
+  ];
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen bg-background">
       <Navbar />
-      {/* 1. Header Section */}
-      <section className="relative pt-32 md:pt-40 pb-20 overflow-hidden flex flex-col items-center text-center">
-        <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-        <div className="absolute top-0 left-1/2 w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 blur-[120px] pointer-events-none opacity-20 z-0">
-          <div
-            className="aspect-[2/1] rounded-full"
-            style={{ background: "var(--brand-gradient)" }}
-          />
-        </div>
 
-        <div className="container relative z-10 mx-auto px-4 max-w-4xl">
-          <div className="flex justify-center mb-8">
-            <LogomarkSVG className="h-12 w-12 text-foreground drop-shadow-sm" />
-          </div>
-          <div className="flex justify-center mb-6">
-            <AnimatedGradientText className="px-5 py-2">
-              <span className="text-sm font-medium tracking-tight bg-clip-text">
+      {/* 1. Hero Section (Asymmetrical Text + Abstract Art) */}
+      <section className="pt-32 md:pt-48 pb-20 overflow-hidden">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+            {/* Text Content */}
+            <div className="flex-1 w-full text-left">
+              <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
                 {t("title").split("—")[0].trim()}
               </span>
-            </AnimatedGradientText>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-balance mb-6 bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
-            {t("heading")}
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground text-balance">
-            {t("subheading")}
-          </p>
-        </div>
-      </section>
-
-      {/* 2. Mission Section */}
-      <section className="py-20 md:py-28 bg-muted/30 border-y border-border/50 relative overflow-hidden">
-        <div className="container relative z-10 mx-auto px-4 max-w-5xl">
-          <h2 className="text-3xl md:text-5xl font-black mb-12 tracking-tight text-center">
-            {t("missionTitle")}
-          </h2>
-          <div className="space-y-6 md:space-y-8 text-[1.1rem] md:text-[1.2rem] text-muted-foreground/90 leading-[1.8] max-w-4xl mx-auto md:text-justify text-left">
-            <p>{t("missionP1")}</p>
-            <p>{t("missionP2")}</p>
-            <p>{t("missionP3")}</p>
-            <p className="font-medium text-foreground">{t("missionP4")}</p>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-balance mb-8">
+                {t("heading")}
+              </h1>
+              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-xl">
+                {t("subheading")}
+              </p>
+            </div>
+            {/* Image */}
+            <div className="flex-1 w-full">
+              <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden bg-muted/30 shadow-2xl">
+                <Image
+                  src="/images/about/hero.png"
+                  alt="Abstract Art"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700"
+                  priority
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Core Values Grid */}
-      <section className="py-24 relative">
+      {/* 2. Massive Mission Text & Office Photo */}
+      <section className="py-24 md:py-32">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center mb-16 md:mb-20">
+          <div className="max-w-4xl mx-auto text-center mb-16 md:mb-24">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-balance leading-[1.4] text-foreground">
+              {t("missionTitle")}:{" "}
+              <span className="text-muted-foreground font-normal">{t("missionP1")}</span>
+            </h2>
+          </div>
+
+          <div className="relative w-full aspect-video max-h-[700px] overflow-hidden rounded-[2.5rem] shadow-2xl group">
+            <Image
+              src="/images/about/office.png"
+              alt="Office Collaboration"
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 3. OpenAI Style Jobs Opportunity Block */}
+      <section className="py-20 bg-background border-y border-border/50">
+        <div className="container mx-auto px-4 max-w-3xl text-center">
+          <div className="inline-flex items-center justify-center mb-8">
+            <LogomarkSVG className="h-16 w-16 text-foreground" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6">{t("jobsTitle")}</h2>
+          <p className="text-lg md:text-xl text-muted-foreground mb-10 text-balance">
+            {t("jobsDescription")}
+          </p>
+          <Button
+            size="lg"
+            className="rounded-full px-8 font-semibold h-14 bg-foreground text-background hover:bg-foreground/90 hover:scale-105 transition-transform"
+          >
+            {t("jobsButton")} <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      </section>
+
+      {/* 4. Values Bento Grid (4 Columns) */}
+      <section className="py-32 bg-background relative">
+        <div className="container mx-auto px-4 max-w-[1400px]">
+          <div className="mb-20 text-center md:text-left">
             <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
               {t("valuesTitle")}
             </h2>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {[0, 1, 2, 3, 4, 5].map((i) => {
-              const Icon = valuesIcons[i] || CheckCircle;
 
-              // Dynamically split "中文 (English)" format to create visual hierarchy and prevent bad wrapping
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[0, 1, 2, 3].map((i) => {
               const titleRaw = t(`values.${i}.title` as any);
               const parts = titleRaw.split(" (");
               const zhText = parts[0];
               const enText = parts.length > 1 ? parts[1].replace(")", "") : "";
 
               return (
-                <Card
+                <div
                   key={i}
-                  className="relative p-8 border-border/40 bg-background/40 backdrop-blur-xl rounded-[2rem] transition-all duration-500 overflow-hidden group hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 hover:bg-background/80 hover:border-primary/40"
+                  className="group relative bg-muted/20 border border-border/50 rounded-3xl overflow-hidden hover:shadow-2xl hover:border-border transition-all duration-500 flex flex-col h-full"
                 >
-                  {/* Internal ambient sweep gradient on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out" />
-
-                  <div className="relative z-10">
-                    <div className="bg-primary/5 p-4 rounded-2xl w-fit mb-6 ring-1 ring-primary/20 group-hover:bg-primary/10 group-hover:ring-primary/40 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg group-hover:shadow-primary/20 origin-left">
-                      <Icon className="h-6 w-6 text-primary/80 group-hover:text-primary transition-colors" />
-                    </div>
-
-                    <div className="flex flex-col mb-4">
-                      <h3 className="text-xl md:text-2xl font-black tracking-tight text-foreground group-hover:text-primary transition-colors duration-300">
-                        {zhText}
-                      </h3>
-                      {enText && (
-                        <span className="mt-[0.35rem] text-[11px] font-mono text-primary/60 tracking-widest uppercase">
-                          {enText}
-                        </span>
-                      )}
-                    </div>
-
-                    <p className="text-[0.95rem] text-muted-foreground leading-[1.7] font-medium">
+                  {/* Top Image Slab */}
+                  <div className="relative aspect-square w-full bg-muted/30 overflow-hidden">
+                    <Image
+                      src={valueImages[i]}
+                      alt={zhText}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                  {/* Content Slab */}
+                  <div className="p-8 flex-1 flex flex-col justify-start">
+                    <h4 className="text-xl font-bold tracking-tight mb-2 text-foreground group-hover:text-primary transition-colors">
+                      {zhText}
+                    </h4>
+                    {enText && (
+                      <p className="text-[10px] font-mono tracking-widest uppercase text-primary/60 mb-4">
+                        {enText}
+                      </p>
+                    )}
+                    <p className="text-sm text-muted-foreground leading-relaxed mt-2">
                       {t(`values.${i}.description` as any)}
                     </p>
                   </div>
-                </Card>
+                </div>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* 4. CTA */}
-      <section className="py-24 bg-muted/20 border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
-          <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-6">
-            {t("ctaHeading")}
-          </h2>
-          <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto text-balance">
-            {t("ctaDescription")}
-          </p>
-          <div className="flex justify-center">
-            <Link href="/contact">
-              <Button
-                size="lg"
-                className="h-14 px-8 text-lg font-bold rounded-xl shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95"
-              >
-                {t("ctaButton")} <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+      {/* 5. Organization & Architecture Philosophy (50/50 Split) */}
+      <section className="py-24 md:py-32 overflow-hidden bg-muted/30 border-t border-border/50">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+            {/* Left: Text */}
+            <div className="flex-1 w-full text-left order-2 lg:order-1">
+              <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-8">
+                {t("companyInfoTitle")}
+              </h2>
+              <div className="space-y-6 text-[1.1rem] text-muted-foreground leading-relaxed max-w-xl">
+                <p>{t("missionP2")}</p>
+                <div className="pt-8 mt-8 border-t border-border/50 grid grid-cols-2 gap-8">
+                  <div>
+                    <h5 className="text-[11px] font-bold tracking-[0.2em] uppercase text-foreground mb-3">
+                      {t("companyInfo.legalName")}
+                    </h5>
+                    <p className="text-muted-foreground font-mono text-sm">WUXI NEBUTRA</p>
+                  </div>
+                  <div>
+                    <h5 className="text-[11px] font-bold tracking-[0.2em] uppercase text-foreground mb-3">
+                      {t("companyInfo.founded")}
+                    </h5>
+                    <p className="text-muted-foreground font-mono text-sm">EST. 2025</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Right: Landscape Image */}
+            <div className="flex-1 w-full order-1 lg:order-2">
+              <div className="relative aspect-square md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl">
+                <Image
+                  src="/images/about/landscape.png"
+                  alt="Organization Philosophy"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-1000"
+                />
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* 6. Massive Footer Join Us CTA */}
+      <section className="py-32 md:py-48 bg-background">
+        <div className="container mx-auto px-4 text-center max-w-4xl">
+          <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
+            <span className="text-sm font-bold tracking-widest uppercase text-primary">
+              {lang === "zh" ? "加入我们的愿景" : "Join Our Vision"}
+            </span>
+          </div>
+          <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-balance mb-12">
+            {lang === "zh"
+              ? "加入我们，共创科技未来"
+              : "Join us to co-create the technological future"}
+          </h2>
+          <Link href="/contact">
+            <Button
+              size="lg"
+              className="rounded-full h-16 w-56 text-lg font-bold shadow-xl border-border bg-foreground text-background hover:scale-105 transition-transform"
+            >
+              {t("ctaButton")}
+            </Button>
+          </Link>
         </div>
       </section>
 

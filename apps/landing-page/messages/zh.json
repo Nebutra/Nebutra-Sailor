@@ -187,30 +187,25 @@
       "valuesTitle": "核心技术价值观",
       "values": {
         "0": {
-          "title": "系统级工程化 (Engineering Focus)",
-          "description": "坚持以系统级的工程思维构建软件应用。只向市场输送经得起严苛测试的架构，拒绝脆弱的实验性 Demo。"
+          "title": "AGI 导向架构 (AGI Architecture)",
+          "description": "为自治智能时代构建，提供大语言模型与智能体全球化无缝交互的基础设施级支柱。"
         },
         "1": {
-          "title": "生产即用性 (Production Ready)",
-          "description": "没有任何妥协空间。我们在真实商业环境与高并发场景中淬炼每个系统组件，以保证企业级的持续供能。"
+          "title": "对齐与绝对安全 (Security Alignment)",
+          "description": "自第一行代码起，即默认强制执行行级数据访问控制（RLS）、全链路加密与不可磨灭的系统级审计。"
         },
         "2": {
-          "title": "开源驱动创新 (Open Source)",
-          "description": "透明创造信任。我们通过开源基础架构，并允许全网技术专家共同审查和迭代代码逻辑，以驱动架构进化。"
+          "title": "卓越的极客体验 (Vibe Ergonomics)",
+          "description": "研发效率是第一生产力。我们追求极低的 API 延迟、极尽优雅的代码接口以及高度结构化的技术指引手册。"
         },
         "3": {
-          "title": "不可侵犯的安全 (Enterprise Security)",
-          "description": "自建立底层架构的第一行代码起，即默认内置强制的行级别数据访问控制（RLS）、传输加密及全面审计日志。"
-        },
-        "4": {
-          "title": "开发者性能 (Developer Velocity)",
-          "description": "产品团队的研发效率是第一生产力。我们追求极低的 API 延迟、优雅的代码接口以及结构化的技术指引手册。"
-        },
-        "5": {
-          "title": "持续高速演进 (Continuous Delivery)",
-          "description": "执行敏捷迭代管理策略。通过频繁的测试和微小变更部署，响应社区的需求信号并实现高速的产品架构爬升。"
+          "title": "全球化无缝扩张 (Global Scale)",
+          "description": "拒绝任何妥协。在真实的、高并发的商业环境中淬炼每个组件，从上线第一天起即保证企业级持续稳定供能。"
         }
       },
+      "jobsTitle": "核心基础设施工程机会",
+      "jobsDescription": "我们正在急剧扩充核心基础设施团队。加入我们，共同铸就下一代 AI 原生企业级解决方案。",
+      "jobsButton": "查看开放职位",
       "companyInfoTitle": "组织与合规信息",
       "companyInfo": {
         "legalName": "法定实体名称",
