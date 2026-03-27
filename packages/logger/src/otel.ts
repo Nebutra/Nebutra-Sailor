@@ -41,15 +41,17 @@ export function initOtel(opts: { serviceName: string }): void {
     ),
   });
 
-  // OTLPMetricExporter and PeriodicExportingMetricReader may come from different
-  // @opentelemetry/sdk-metrics major versions. The runtime API is compatible;
-  // the type mismatch is a transient peer-dependency lag.
+  // OTLPMetricExporter / PeriodicExportingMetricReader may resolve to different
+  // @opentelemetry/sdk-metrics major versions (v1 vs v2) depending on the
+  // consumer's dependency tree. The runtime API is compatible — cast through
+  // `any` to bridge the type gap until all OTel packages align.
   // biome-ignore lint/suspicious/noExplicitAny: OTel version bridge
   const metricExporter = new OTLPMetricExporter() as any;
+  // biome-ignore lint/suspicious/noExplicitAny: OTel version bridge
   const metricReader = new PeriodicExportingMetricReader({
     exporter: metricExporter,
     exportIntervalMillis: isProduction ? 60_000 : 10_000,
-  });
+  }) as any;
 
   sdk = new NodeSDK({
     serviceName,
