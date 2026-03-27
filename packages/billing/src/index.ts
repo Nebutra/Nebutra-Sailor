@@ -46,6 +46,14 @@
  * ```
  */
 
+// China Payment (Alipay + WeChat Pay via aggregator)
+export {
+  createChinaPayOrder,
+  getChinaPayConfig,
+  initChinaPay,
+  queryChinaPayOrder,
+  verifyChinaPayWebhook,
+} from "./chinapay/index.js";
 // Plan Config (Database-driven)
 export {
   type CacheAdapter,
@@ -84,6 +92,24 @@ export {
   resetUsage,
   revokeEntitlement,
 } from "./entitlements/index.js";
+// LemonSqueezy
+export {
+  cancelLemonSubscription,
+  createLemonCheckout,
+  getLemonCustomerPortalUrl,
+  getLemonSqueezyConfig,
+  getLemonSubscription,
+  initLemonSqueezy,
+} from "./lemonsqueezy/index.js";
+// Polar
+export {
+  cancelPolarSubscription,
+  createPolarCheckout,
+  getPolar,
+  getPolarSubscription,
+  initPolar,
+  listPolarProducts,
+} from "./polar/index.js";
 // Stripe
 export {
   createBillingPortalSession,

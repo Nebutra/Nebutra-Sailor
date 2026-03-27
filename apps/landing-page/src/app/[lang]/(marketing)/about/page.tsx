@@ -9,14 +9,17 @@ import {
   Lightning as Zap,
 } from "@nebutra/icons";
 import { AnimatedGradientText, Button, Card } from "@nebutra/ui/primitives";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 
+import type { Locale } from "@/i18n/routing";
+
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  // @ts-expect-error - The locale is dynamically router-validated
-  const t = await getTranslations({ locale: lang, namespace: "legalPages.about" });
+  setRequestLocale(lang as Locale);
+
+  const t = await getTranslations({ locale: lang as Locale, namespace: "legalPages.about" });
 
   return {
     title: t("title"),
@@ -26,8 +29,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
 export default async function AboutPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  // @ts-expect-error - The locale is dynamically router-validated
-  const t = await getTranslations({ locale: lang, namespace: "legalPages.about" });
+  setRequestLocale(lang as Locale);
+
+  const t = await getTranslations({ locale: lang as Locale, namespace: "legalPages.about" });
 
   const valuesIcons = [Code2, Zap, Globe, Shield, CheckCircle, Building];
 
@@ -92,7 +96,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               const Icon = valuesIcons[i] || CheckCircle;
 
               // Dynamically split "中文 (English)" format to create visual hierarchy and prevent bad wrapping
-              const titleRaw = t(`values.${i}.title`);
+              const titleRaw = t(`values.${i}.title` as any);
               const parts = titleRaw.split(" (");
               const zhText = parts[0];
               const enText = parts.length > 1 ? parts[1].replace(")", "") : "";
@@ -122,7 +126,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                     </div>
 
                     <p className="text-[0.95rem] text-muted-foreground leading-[1.7] font-medium">
-                      {t(`values.${i}.description`)}
+                      {t(`values.${i}.description` as any)}
                     </p>
                   </div>
                 </Card>

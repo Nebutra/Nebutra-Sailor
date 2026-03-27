@@ -63,25 +63,29 @@ Use this pattern for:
 ```tsx
 import { Container } from "@nebutra/ui";
 
-// xl = max-w-7xl (1280px) — standard dashboard width
+// wide = max-w-[1400px] — Landing page 区块、Feature Bento
+<Container size="wide">…</Container>
+
+// xl = max-w-7xl (1280px) — Dashboard 标准宽度
 <Container size="xl">…</Container>
 
-// lg = max-w-5xl (1012px) — settings, forms
+// lg = max-w-5xl (1012px) — 设置、表单
 <Container size="lg">…</Container>
 
-// md = max-w-3xl — content-heavy single-column pages
+// md = max-w-3xl — 文本密集型单列页面
 <Container size="md">…</Container>
 ```
 
-Size reference:
+尺寸参考：
 
-| Size | Max-width | Use |
-|---|---|---|
-| `sm` | 544px | Narrow modals, confirmation dialogs |
-| `md` | 768px | Single-column content |
-| `lg` | 1012px | Settings, forms, docs |
-| `xl` | 1280px | Full dashboard pages |
-| `full` | 100% | Edge-to-edge tables, full bleed sections |
+| Size | Max-width | CSS Variable | 用途 |
+|---|---|---|---|
+| `sm` | 544px | — | 窄模态框、确认对话框 |
+| `md` | 768px | — | 单列内容 |
+| `lg` | 1012px | — | 设置、表单、文档 |
+| `xl` | 1280px | — | Dashboard 全页 |
+| `wide` | 1400px | `--container-wide` | Landing page 区块、Feature Bento、导航栏 |
+| `full` | 100% | — | 全宽表格、出血区块 |
 
 ### PageHeader
 

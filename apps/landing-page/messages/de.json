@@ -390,169 +390,387 @@
     }
   },
   "microLanding": {
-    "hero": {
-      "badge": "Nebutra 1.0 ist online",
-      "headline": "Skalierbare KI-Systeme bauen.",
-      "subheadline": "Erweiterte Next.js Architektur. KI und Abrechnung vorinstalliert.",
-      "initCmd": "Initialisieren",
-      "docsCmd": "Dokumentation"
-    },
-    "trust": {
-      "foundation": "WELTKLASSE BASIS",
-      "ecosystem": "MIT KI-MODELLEN"
-    },
     "architecture": {
-      "badge": "ARCHITEKTUR",
-      "title": "Skalierbar und Kompromisslos.",
-      "description": "Massive Traffic-Toleranz.",
-      "turborepo": {
-        "title": "Turborepo",
-        "desc": "Strenge Modulgrenzen."
-      },
-      "edge": {
-        "title": "Globales Edge",
-        "desc": "Dynamisches Routing."
-      },
+      "badge": "SYSTEM TOPOLOGY",
+      "title": "Transparent architecture, no black boxes.",
+      "description": "Nebutra Sailor is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
       "database": {
-        "title": "Datenbank",
-        "desc": "Beste SQL ORMs."
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
       },
       "auth": {
-        "title": "Sicherheit",
-        "desc": "Starke Clerk MFA."
+        "title": "Clerk Multi-Tenant / Custom Identity",
+        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
       }
     },
     "pricing": {
-      "title": "Transparente Kosten.",
-      "description": "Wählen Sie Ihr bevorzugtes Profil.",
+      "title": "Accelerate your development cycle.",
+      "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
       "standard": {
-        "badge": "OPEN SOURCE",
-        "price": "Kostenlos",
-        "period": "immer",
-        "desc": "Solo-Entwickler.",
-        "cta": "Github Repo",
-        "f1": "Quellcode",
-        "f2": "Forum Support",
-        "f3": "Infrastruktur-Tools",
-        "f4": "Next.js 15"
+        "badge": "SOLO FOUNDER",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Perfect for One-Person Companies (OPC) executing rapid MVP iterations under the AGPL license.",
+        "cta": "Clone Repository",
+        "f1": "Complete Next.js 16 SaaS core",
+        "f2": "Stripe & Clerk integrations",
+        "f3": "4-Layer Token Design System",
+        "f4": "AGPLv3 Open Source License"
       },
       "enterprise": {
-        "badge": "KOMMERZIELL",
-        "price": "Pro",
-        "period": "Lizenz",
-        "desc": "B2B Unternehmen",
-        "cta": "Kontakt",
-        "f1": "B2B Verkauf",
-        "f2": "Design Token",
-        "f3": "Priorität",
-        "f4": "Figma UI",
-        "f5": "Cloud Guides"
+        "badge": "PROPRIETARY",
+        "price": "$349",
+        "period": "lifetime",
+        "desc": "Acquire commercial rights to close-source your applications and protect intellectual property.",
+        "cta": "Purchase License",
+        "f1": "Everything in Solo Founder",
+        "f2": "MIT / Proprietary Commercial License",
+        "f3": "Advanced Architecture Tests",
+        "f4": "Private Discord Developer Community",
+        "f5": "1 Year Expert Technical Support"
       }
     },
     "faq": {
-      "title": "FAQ",
-      "description": "Beste Kontrolle und Fragen.",
+      "title": "Evaluating the stack.",
+      "description": "Detailed engineering answers to accelerate your architectural decisions.",
       "q1": {
-        "q": "Was erhalte ich?",
-        "a": "Ganzen Code."
+        "q": "Why Turborepo over a standard Next.js app?",
+        "a": "Turborepo isolates your UI components, database schemas, and shared utilities, allowing unparalleled scale when your SaaS outgrows a single frontend application."
       },
       "q2": {
-        "q": "Einfaches Setup?",
-        "a": "Nur Vercel Ein-Klick."
+        "q": "How is multi-tenancy handled?",
+        "a": "We use Clerk's B2B organizational structure deeply integrated with Prisma middleware to ensure strict row-level isolation between organizations."
       },
       "q3": {
-        "q": "Git Updates?",
-        "a": "Ja, immer kostenlos."
+        "q": "Can I swap Clerk for Supabase Auth?",
+        "a": "Absolutely. Our authentication layer is abstracted via @nebutra/identity, meaning you can hot-swap identity providers with minimal refactoring."
       },
       "q4": {
-        "q": "Für Agenturen?",
-        "a": "Unbegrenzt nutzbar."
+        "q": "Do I need to pay for updates?",
+        "a": "No, commercial licenses include lifetime access to the repository and all future updates and architectural improvements."
       }
     },
     "cta": {
-      "title": "Imperium bauen.",
-      "description": "Starten Sie noch heute voll durch.",
-      "button": "Sofort starten"
+      "title": "Stop configuring. Start building.",
+      "description": "Initialize your scalable SaaS architecture locally within 3 minutes using the Nebutra CLI.",
+      "button": "Deploy Architecture",
+      "license": "Supported on Node.js 22+ & pnpm"
     },
-    "productDemo": {
-      "badge": "Operator-Grade Engine",
-      "title": "Die Basis für ernsthaftes Wachstum.",
-      "description": "Mandantenanalysen, Stripe-Webhooks und Multi-Tenant-Architekturen sind vorinstalliert. Erfinden Sie das Rad nicht neu.",
-      "analytics": {
-        "label": "Mandantenanalysen",
-        "desc": "Echtzeit-Nutzungsmetriken und aktive Sitzungstelemetrie in Ihrem gesamten SaaS-Ökosystem."
+    "capability": {
+      "badge": "Enterprise Capabilities",
+      "title": "A fully typed, extensible core.",
+      "multiTenant": {
+        "title": "Native Row-Level Security",
+        "desc": "Every database query is strictly scoped by the current tenant context.",
+        "cta": "Read database philosophy"
+      },
+      "aiGateway": {
+        "title": "Universal AI Gateway",
+        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
+        "cta": "Explore the AI SDK handler"
+      },
+      "rbac": {
+        "title": "Granular Access Control",
+        "desc": "Define admin, member, and viewer roles with zero boilerplate.",
+        "cta": "View RBAC documentation"
       },
       "billing": {
-        "label": "Stripe-Abrechnungs",
-        "desc": "Vollautonome Webhook-Erfassung, nutzungsbasierte Abrechnung und sofort einsatzbereite Rechnungserstellung."
-      },
-      "workspaces": {
-        "label": "Multi-Tenant Workspaces",
-        "desc": "Reibungsloses Onboarding mit strenger Row-Level Security (RLS) und rollenbasierter Zugriffskontrolle."
+        "title": "Stripe Billing Infrastructure",
+        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
+        "cta": "See billing architecture"
       }
     },
     "workflow": {
-      "badge": "Liefer-Workflow",
-      "title": "Wechseln Sie von der Vorlage zum Umsatz ohne Plattform-Rewrite.",
+      "badge": "Velocity",
+      "title": "From zero to production in record time.",
       "step1": {
-        "title": "Einrichten",
-        "desc": "Bootstrappen Sie in wenigen Minuten ein Monorepo mit Multi-Tenant-Vorgaben für Unternehmen."
+        "title": "1. Clone",
+        "desc": "Instantly clone the Nebutra monorepo and run pnpm install."
       },
       "step2": {
-        "title": "Anbieter verbinden",
-        "desc": "Verbinden Sie Auth-, Abrechnungs- und KI-Anbieter über stabile, typisierte Adapter."
+        "title": "2. Configure",
+        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
       },
       "step3": {
-        "title": "Bereitstellen",
-        "desc": "Stellen Sie eine Produktionsbasis mit Beobachtbarkeit und operativen Leitplanken bereit."
+        "title": "3. Build",
+        "desc": "Focus entirely on your unique SaaS features and UI rather than boilerplate."
       },
       "step4": {
-        "title": "Skalieren",
-        "desc": "Wachsen Sie über Mandanten und Regionen hinweg mit derselben Architektur, ohne Code-Redesign."
+        "title": "4. Deploy",
+        "desc": "Push to Vercel and AWS for instant global distribution."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "mins",
+        "subtitle": "TIME TO MARKET",
+        "comparison": "99% faster than building an internal platform team.",
+        "phases": {
+          "scaffold": "Init",
+          "wire": "Core",
+          "ship": "Deploy",
+          "scale": "Scale",
+          "ongoing": "∞"
+        },
+        "cta": "Start your timer"
+      },
+      "presetHint": {
+        "badge": "Nebutra Voreinstellung",
+        "message": "SaaS-Architektur über @nebutra/preset initialisiert",
+        "detail": "14 Pakete nativ integriert."
       }
     },
     "testimonials": {
-      "badge": "Von Betreibern vertraut",
-      "title": "Teams verwenden Sailor, um von Prototyp zur Produktion zu wechseln.",
+      "badge": "Developers",
+      "title": "Trusted by engineers globally.",
       "t1": {
-        "quote": "Nebutra hat unsere Lieferzeit halbiert. Wir haben Multi-Tenant-Abrechnungen ohne Neuschreiben der Plattform ausgeliefert.",
+        "quote": "Nebutra saved us six months of platform engineering. We shipped our MVP on day 10.",
         "author": "Sarah Chen",
-        "role": "CTO, TechStart AI"
+        "role": "CTO, DataFlow"
       },
       "t2": {
-        "quote": "Die Architektur skaliert vom ersten Kunden bis zum Unternehmen. Es fühlt sich an wie ein Produkt, nicht wie ein Spielzeug.",
-        "author": "Marcus Johnson",
-        "role": "Leitender Ingenieur, DataFlow"
+        "quote": "The Turborepo setup is phenomenal. Testing, linting, and building are instantly cached.",
+        "author": "Marcus Dev",
+        "role": "Solo Founder"
       },
       "t3": {
-        "quote": "Die betrieblichen Standardwerte sind exzellent. Beobachtbarkeit, Auth und Wachstumsmetriken sind ab dem ersten Tag integriert.",
-        "author": "Emma Wilson",
-        "role": "Gründerin, CloudSync"
+        "quote": "Finally, a boilerplate that doesn't feel like a black box. The code quality is immaculate.",
+        "author": "Emma Founder",
+        "role": "Indie Hacker"
       }
     },
-    "capability": {
-      "badge": "FÄHIGKEITSMATRIX",
-      "title": "Vier Säulen. Keine Kompromisse.",
-      "multiTenant": {
-        "title": "Multi-Tenant-Isolierungs-Engine",
-        "desc": "Workspace-Isolierung von Anfang an.",
-        "cta": "Multi-Tenant-Dokumentation"
-      },
-      "aiGateway": {
-        "title": "KI-Anbieter-Gateway",
-        "desc": "Eine Schnittstelle, jedes KI-Modell.",
-        "cta": "KI-Integrationen erkunden"
-      },
-      "rbac": {
-        "title": "Auth & RBAC-Matrix",
-        "desc": "Enterprise-Grade, vorkonfiguriert.",
-        "cta": "Auth-Leitfaden ansehen"
+    "productDemo": {
+      "badge": "Interactive Demo",
+      "title": "Experience the real-time velocity.",
+      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "analytics": {
+        "label": "Live Telemetry",
+        "desc": "Stream production usage data straight into your terminal."
       },
       "billing": {
-        "title": "Abrechnungs- & Umsatz-Engine",
-        "desc": "Stripe vorkonfiguriert, Webhooks synchronisiert.",
-        "cta": "Preise konfigurieren"
+        "label": "Billing Events",
+        "desc": "Watch Stripe webhooks execute via local tunneling."
+      },
+      "workspaces": {
+        "label": "Workspace Init",
+        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+      }
+    },
+    "harness": {
+      "badge": "HARNESS ENGINEERING",
+      "headline": "Engineering that enforces itself.",
+      "subheadline": "Architecture tests, governance ratchets, and 15 CI workflows ensure code quality can only improve — never regress.",
+      "stat1Value": "15",
+      "stat1Label": "CI Workflows",
+      "stat2Value": "43",
+      "stat2Label": "Architecture Tests",
+      "stat3Value": "0",
+      "stat3Label": "Token Violations",
+      "card1Title": "Architecture Tests",
+      "card1Desc": "7 property-based tests with fast-check enforce dependency flow, token usage, WCAG contrast ratios, API version prefixes, and story coverage.",
+      "card2Title": "Governance Ratchets",
+      "card2Desc": "Token budgets that only tighten: zero raw color classes on landing page, oklch floor 120+, hex ceiling 40, motion imports whitelisted to 2 files.",
+      "card3Title": "CI Pipeline Depth",
+      "card3Desc": "CodeQL SAST, Gitleaks, cosign signing, SBOM/SLSA provenance, Lighthouse ≥0.95, OpenAPI backward compatibility, k6 load tests, Chromatic visual regression."
+    }
+  },
+  "blogShowcase": {
+    "badge": "AUS DEM BLOG",
+    "title": "Engineering-Einblicke",
+    "subtitle": "Tiefgehende Analysen zu SaaS-Architektur, KI-Infrastruktur und Produktions-Engineering.",
+    "readMore": "Weiterlesen"
+  },
+  "comparison": {
+    "badge": "SAILOR VERGLEICH",
+    "title": "Sailor vs. die Alternativen.",
+    "columns": {
+      "feature": "Funktion",
+      "sailor": "Nebutra Sailor",
+      "nextForge": "next-forge",
+      "supastarter": "Supastarter"
+    },
+    "features": {
+      "multiTenant": "Multi-Tenant",
+      "aiGateway": "KI-Integration",
+      "auth": "Authentifizierung",
+      "billing": "Abrechnung & Zahlungen",
+      "i18n": "Internationalisierung",
+      "frameworks": "Framework-Unterstützung",
+      "monorepo": "Monorepo-Umfang",
+      "api": "API-Framework",
+      "e2eTests": "E2E-Tests",
+      "archTests": "Architekturtests",
+      "designSystem": "Designsystem",
+      "bgJobs": "Hintergrundaufgaben",
+      "license": "Lizenz"
+    },
+    "values": {
+      "orgRbacIsolation": "Orgs + RBAC + Zeilenisolation",
+      "orgRolesSeat": "Orgs + Rollen + Sitzabrechnung",
+      "manualSetup": "Manuell einrichten",
+      "multiProviderGateway": "Multi-Provider-Gateway",
+      "vercelAiSdk": "Vercel AI SDK",
+      "clerkCustomIdp": "Clerk + eigener IDP",
+      "clerkOnly": "Clerk",
+      "betterAuth": "Better Auth (Self-Hosted)",
+      "stripeUsage": "5 Anbieter + Nutzungsabr.",
+      "stripeOnly": "Stripe",
+      "fiveProviders": "5 Zahlungsanbieter",
+      "sevenLangs": "7 Sprachen",
+      "nextjsOnly": "Nur Next.js",
+      "nextNuxtTanstack": "Next.js + Nuxt + TanStack",
+      "turboNineApps": "Turborepo · 9 Apps",
+      "turboSevenApps": "Turborepo · 7 Apps",
+      "turboFiveApps": "Turborepo · 5 Apps",
+      "honoOpenapi": "Hono + OpenAPI + oRPC + tRPC",
+      "trpc": "tRPC",
+      "honoOrpc": "Hono + oRPC",
+      "playwrightSharded": "Playwright · 4 Shards",
+      "playwrightGha": "Playwright + GH Actions",
+      "sevenPropertyBased": "7 Property-basierte Tests",
+      "fourLayerTokens": "4-Schicht-Token-Engine",
+      "shadcn": "shadcn/ui",
+      "radixShadcn": "Radix + shadcn/ui",
+      "inngest": "Inngest",
+      "triggerQstash": "trigger.dev + QStash",
+      "agpl": "AGPL-3.0 (kostenlos)",
+      "mit": "MIT (kostenlos)",
+      "paidFrom349": "Ab $349"
+    }
+  },
+  "agenticCapabilities": {
+    "badge": "AGENTISCHES ENGINEERING",
+    "title": "KI-Native Architektur",
+    "description": "Nebutra Sailor ist die erste SaaS-Grundlage, die für automatische Generierung durch LLM-Agenten optimiert ist.",
+    "features": [
+      {
+        "title": "Testgetriebene Topologie",
+        "desc": "Verhindert, dass KI durch strenge typisierte Prüfungen und Tests bestehenden Code beschädigt."
+      },
+      {
+        "title": "Autonome Workflows",
+        "desc": "So konzipiert, dass KI-Agenten die Infrastruktur navigieren und Funktionen autonom bereitstellen können."
+      },
+      {
+        "title": "Erweiterte Typsicherheit",
+        "desc": "Nutzt den strikten Modus von TypeScript 5.x, um sicheren und ausführbaren Code zu gewährleisten."
+      }
+    ],
+    "ctaText": "Architektur Erkunden",
+    "ctaLink": "/docs/ai-architecture"
+  },
+  "useCases": {
+    "badge": "EINSATZSZENARIEN",
+    "title": "One foundation. Infinite possibilities.",
+    "description": "Nebutra Sailor powers the next generation of SaaS products across global markets.",
+    "tabs": {
+      "opc": "AI & OPC Startup Ecosystem",
+      "ip": "Personal IP Matrix",
+      "multimodal": "Multimodal AI SaaS",
+      "enterprise": "Modern Enterprise (CN)",
+      "export": "Global Software Export",
+      "design": "Design System Engine",
+      "edam": "Enterprise Digital Assets"
+    },
+    "content": {
+      "opc": {
+        "title": "Leading AI-Native & One-Person Company (OPC) Ecosystem Hub",
+        "desc": "Future AI products require ecosystems, not silos. Designed with the OPC philosophy to provide standardized plugin structures connecting creators with developer networks.",
+        "features": {
+          "f1": "Plugin Architecture",
+          "f2": "Developer Portal",
+          "f3": "SDK Generation"
+        }
+      },
+      "ip": {
+        "title": "Personal IP Growth & Portfolio Matrix",
+        "desc": "Establish a world-class founder presence. High-conversion blog, portfolio, and profile templates optimized for personal brand monetization.",
+        "features": {
+          "f1": "MDX Blog Engine",
+          "f2": "Newsletter Integration",
+          "f3": "SEO Optimized"
+        }
+      },
+      "multimodal": {
+        "title": "Innovative Multimodal AI SaaS",
+        "desc": "Launch complete Chatbot, Text-to-Image, or Video generation SaaS with integrated Vercel AI SDK, streaming, and prompt gateways.",
+        "features": {
+          "f1": "Streaming UI",
+          "f2": "Model Routing",
+          "f3": "Usage Metering"
+        }
+      },
+      "enterprise": {
+        "title": "Modern Enterprise Context (CN)",
+        "desc": "Tailored for the domestic market with ultra-fast local CDN support, WeChat ecosystem integration readiness, and localized compliance.",
+        "features": {
+          "f1": "Local Compliance",
+          "f2": "High Performance",
+          "f3": "Mobile First"
+        }
+      },
+      "export": {
+        "title": "Global Software Export Landing Pages",
+        "desc": "Designed for cross-border SaaS. Built-in multi-currency Stripe checkout, next-intl i18n routing, and GDPR compliance.",
+        "features": {
+          "f1": "Global Payments",
+          "f2": "7 Languages Auto-routing",
+          "f3": "GDPR Ready"
+        }
+      },
+      "design": {
+        "title": "Leading Modern Component Library System",
+        "desc": "A beautiful, token-driven architecture using Radix + framer-motion. Perfect for teams building their own opinionated UI libraries.",
+        "features": {
+          "f1": "4-Layer Tokens",
+          "f2": "CSS Variables",
+          "f3": "Accessible"
+        }
+      },
+      "edam": {
+        "title": "Enterprise Digital Asset Management",
+        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "features": {
+          "f1": "Row-Level Security",
+          "f2": "Complex Queries",
+          "f3": "Role Management"
+        }
       }
     }
+  },
+  "agentic": {
+    "badge": "AGENTISCHES ENGINEERING",
+    "headline": "Für KI-Coding-Agenten gebaut.",
+    "subheadline": "Jede Datei, jede Regel, jeder Test ist so gestaltet, dass Claude Code, Cursor und Codex die gesamte Codebasis verstehen und autonom ausliefern können.",
+    "card1Title": "Strukturierter Kontext",
+    "card1Desc": "CLAUDE.md liefert Komponentenregeln, Token-Governance und Import-Grenzen — Agenten müssen nie raten.",
+    "card2Title": "Architektur-Leitplanken",
+    "card2Desc": "7 Eigenschaftstests erzwingen Abhängigkeitsflüsse, Token-Nutzung und WCAG-Kontrast — Agenten können Invarianten nicht brechen.",
+    "card3Title": "Autonomes Deployment",
+    "card3Desc": "Agenten lesen den Kontext, schreiben Code, führen Tests aus, bestehen CI — vom Prompt zur Produktion ohne manuellen Eingriff.",
+    "compTraditional": "KI rät → bricht Dinge → manuelle Korrekturen",
+    "compSailor": "KI liest Regeln → folgt Einschränkungen → CI validiert → liefert"
+  },
+  "designSystem": {
+    "badge": "DESIGN SYSTEM",
+    "headline": "4 Ebenen der Design-Governance.",
+    "subheadline": "Von Marken-Primitiven zu Runtime-Tokens, Multi-Theme-Engine und governierten Komponenten — nicht nur shadcn mit Tailwind.",
+    "flowBrand": "Marke",
+    "flowBrandDesc": "Farbprimitive, Verläufe, Bewegungssprache",
+    "flowTokens": "Tokens",
+    "flowTokensDesc": "CSS-Variablen, 12-Stufen-Skalen, Dark Mode",
+    "flowTheme": "Theme",
+    "flowThemeDesc": "oklch Multi-Theme, 6 Presets, color-mix()",
+    "flowUI": "UI",
+    "flowUIDesc": "Komponenten, Storybook, Chromatic",
+    "card1Title": "12-Stufen-Farbskalen",
+    "card1Desc": "Geist-ausgerichtete semantische Skala: Hintergründe (1-2), Zustände (3-5), Rahmen (6-8), Füllungen (9-10), Text (11-12).",
+    "card2Title": "oklch Multi-Theme",
+    "card2Desc": "6 Theme-Presets mit oklch und color-mix()-Ableitung. Display-P3 Wide-Gamut mit sRGB-Fallback.",
+    "card3Title": "Visuelle Regression",
+    "card3Desc": "Chromatic erkennt jede Pixeländerung. Storybook dokumentiert jede Komponente. Architekturtests erzwingen Story-Abdeckung.",
+    "card4Title": "Token-Governance",
+    "card4Desc": "Ratschen-Budgets: Hex-Obergrenze, oklch-Untergrenze, Rohfarb-Klassenlimits. Markendrift-Erkennung in CI.",
+    "card5Title": "Interaktive Dokumentation",
+    "card5Desc": "Fumadocs-basierte Design-Dokumentationsseite. Zweisprachige Komponenten-API-Docs, Token-Galerien und Layout-Pattern-Guides."
   }
 }

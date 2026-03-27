@@ -342,6 +342,26 @@ tagColor: "#ef4444"                // → var(--status-danger)
 tagColor: "#f59e0b"                // → var(--status-warning)
 ```
 
+### Layout container widths (use these, not arbitrary max-w values)
+
+| Token | CSS Variable | Tailwind | Use for |
+|-------|-------------|----------|---------|
+| `text` | `var(--container-text)` | `max-w-[var(--container-text)]` or `max-w-4xl` | Hero copy, CTA, FAQ — optimized for reading |
+| `content` | `var(--container-content)` | `max-w-[var(--container-content)]` or `max-w-6xl` | Pricing, architecture, blog |
+| `wide` | `var(--container-wide)` | `max-w-[1400px]` | Feature bento, testimonials, product demos, navbar |
+
+```tsx
+// ✅ Correct — use wide container for feature sections
+<div className="mx-auto max-w-[1400px] px-4 md:px-6">
+
+// ✅ Correct — use text container for reading-focused content
+<div className="mx-auto max-w-4xl px-4 text-center">
+
+// ❌ NEVER use max-w-5xl or max-w-7xl for feature sections — too narrow/inconsistent
+<div className="mx-auto max-w-5xl">  // → max-w-[1400px]
+<div className="mx-auto max-w-7xl">  // → max-w-[1400px]
+```
+
 ### Exception: `global-error.tsx`
 
 `global-error.tsx` renders **outside the root layout** (no CSS imports). Hardcoded hex values are allowed here because CSS variables are unavailable.

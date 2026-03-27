@@ -166,6 +166,102 @@ export function getRateLimiter(plan: string): TokenBucket {
   return rateLimiters.get(plan)!;
 }
 
+/**
+ * Redis-backed token bucket for distributed rate limiting.
+ * Uses @nebutra/cache for Upstash Redis state.
+ * Falls back gracefully — if Redis is unavailable, callers should
+ * use the in-memory TokenBucket instead.
+ */
+export class RedisTokenBucket {
+  constructor(
+    private config: TokenBucketConfig,
+    private redis: {
+      get: (key: string) => Promise<unknown>;
+      set: (key: string, value: unknown, opts?: { ex?: number }) => Promise<unknown>;
+    },
+  ) {}
+
+  get maxTokens(): number {
+    return this.config.maxTokens;
+  }
+
+  async consume(key: string, tokens: number = 1): Promise<RateLimitResult> {
+    const namespacedKey = buildKey(key);
+    const now = Date.now();
+
+    const raw = await this.redis.get(namespacedKey);
+    let bucket: { tokens: number; lastRefill: number };
+
+    if (raw && typeof raw === "object" && "tokens" in (raw as Record<string, unknown>)) {
+      bucket = raw as { tokens: number; lastRefill: number };
+    } else {
+      bucket = { tokens: this.config.maxTokens, lastRefill: now };
+    }
+
+    // Refill tokens based on time elapsed
+    const elapsed = now - bucket.lastRefill;
+    const refillAmount = Math.floor(
+      (elapsed / this.config.refillInterval) * this.config.refillRate,
+    );
+
+    if (refillAmount > 0) {
+      bucket = {
+        tokens: Math.min(this.config.maxTokens, bucket.tokens + refillAmount),
+        lastRefill: now,
+      };
+    }
+
+    // Check if we have enough tokens
+    if (bucket.tokens >= tokens) {
+      const updated = { tokens: bucket.tokens - tokens, lastRefill: bucket.lastRefill };
+      await this.redis.set(namespacedKey, updated, { ex: 3600 });
+      return {
+        allowed: true,
+        remaining: updated.tokens,
+        resetAt: now + this.config.refillInterval,
+      };
+    }
+
+    // Not enough tokens — persist current state and reject
+    await this.redis.set(namespacedKey, bucket, { ex: 3600 });
+
+    const tokensNeeded = tokens - bucket.tokens;
+    const waitTime = Math.ceil(
+      (tokensNeeded / this.config.refillRate) * this.config.refillInterval,
+    );
+
+    return {
+      allowed: false,
+      remaining: bucket.tokens,
+      resetAt: now + waitTime,
+      retryAfter: Math.ceil(waitTime / 1000),
+    };
+  }
+}
+
+/**
+ * Create a Redis-backed rate limiter for distributed environments.
+ * Requires @nebutra/cache Redis client (Upstash).
+ *
+ * @example
+ * ```ts
+ * import { getRedis } from "@nebutra/cache";
+ * import { createRedisRateLimiter, PLAN_LIMITS } from "@nebutra/rate-limit";
+ *
+ * const limiter = createRedisRateLimiter(PLAN_LIMITS.PRO, getRedis());
+ * const result = await limiter.consume(buildKey(orgId, userId));
+ * ```
+ */
+export function createRedisRateLimiter(
+  config: TokenBucketConfig,
+  redis: {
+    get: (key: string) => Promise<unknown>;
+    set: (key: string, value: unknown, opts?: { ex?: number }) => Promise<unknown>;
+  },
+): RedisTokenBucket {
+  return new RedisTokenBucket(config, redis);
+}
+
 // Purge stale per-tenant buckets every 30 minutes.
 // Buckets idle for >1 hour are removed; this prevents unbounded memory growth
 // in long-running Node processes with many unique tenant keys.

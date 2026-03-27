@@ -121,7 +121,7 @@ export function ProductDemoSection() {
       {/* Decorative Background Blur */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
 
-      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+      <div className="container mx-auto px-4 max-w-[1400px] relative z-10">
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-20 md:mb-28">
           <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 mb-8">

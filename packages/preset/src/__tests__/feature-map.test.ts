@@ -32,6 +32,7 @@ const mockConfig: ResolvedConfig = {
   theme: "neon",
   locales: ["en"],
   defaultLocale: "en",
+  apiProtocols: ["rest"],
 };
 
 describe("getFeatureEnvVars", () => {

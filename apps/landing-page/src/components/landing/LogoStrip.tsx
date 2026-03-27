@@ -1,32 +1,36 @@
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { getLogoUrl, techStackLogos } from "@/lib/landing-content";
 
 /**
- * LogoStrip - Static tech stack credibility strip (dark-only, server component)
- *
- * No marquee animation — static grid gives a more premium feel (à la Neon, Linear)
+ * LogoStrip - Centered static tech stack credibility strip
  */
 export async function LogoStrip({ locale }: { locale: Locale }) {
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "logoStrip" });
 
-  const allLogos = techStackLogos.slice(0, 8).map((logo) => ({
+  const allLogos = techStackLogos.slice(0, 12).map((logo) => ({
     name: logo.name,
     url: getLogoUrl(logo, "dark"),
   }));
-  // Place the first logo (Nebutra) in the center
   const [first, ...rest] = allLogos;
   const mid = Math.floor(rest.length / 2);
   const logos = [...rest.slice(0, mid), first, ...rest.slice(mid)];
 
   return (
-    <section className="w-full border-y border-[var(--neutral-6)] bg-white py-10 dark:border-white/5 dark:bg-black">
-      <div className="mx-auto max-w-5xl px-6">
-        <p className="mb-8 text-center text-xs uppercase tracking-widest text-[var(--neutral-9)] dark:text-white/30">
-          {t("tagline")}
+    <section className="relative z-10 w-full bg-transparent pb-8 pt-4 md:pb-12 md:pt-6">
+      <div className="mx-auto max-w-3xl px-4 flex flex-col items-center">
+        <p className="mb-6 text-center text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
+          {t.rich("tagline", {
+            dot: () => (
+              <span className="text-foreground/80 dark:text-zinc-300 mx-1.5 text-[8px] align-middle mb-0.5 inline-block">
+                •
+              </span>
+            ),
+          })}
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 opacity-70 grayscale hover:grayscale-0 transition-all duration-500 select-none">
           {logos.map((logo) => {
             const isSmall = logo.name === first.name;
             return (
@@ -35,10 +39,11 @@ export async function LogoStrip({ locale }: { locale: Locale }) {
                 src={logo.url}
                 alt={logo.name}
                 width={0}
-                height={isSmall ? 20 : 28}
-                className={`${isSmall ? "h-5" : "h-7"} w-auto opacity-50 grayscale transition-all duration-300 hover:opacity-80 hover:grayscale-0 invert dark:invert-0`}
+                height={isSmall ? 20 : 24}
+                className={`${isSmall ? "h-[18px]" : "h-[22px] md:h-6"} w-auto brightness-0 dark:brightness-200 dark:invert-0 transition-opacity hover:opacity-100 hover:scale-105`}
                 style={{ width: "auto" }}
                 unoptimized={false}
+                draggable={false}
               />
             );
           })}

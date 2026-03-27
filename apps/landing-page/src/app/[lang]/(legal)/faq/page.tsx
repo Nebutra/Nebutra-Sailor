@@ -30,10 +30,10 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
 
   const faqStructure = [
     { cat: 0 as const, questions: [0, 1, 2] as const },
-    { cat: 1 as const, questions: [0, 1, 2, 3, 4] as const },
-    { cat: 2 as const, questions: [0, 1, 2, 3] as const },
-    { cat: 3 as const, questions: [0, 1, 2, 3] as const },
-    { cat: 4 as const, questions: [0, 1, 2] as const },
+    { cat: 1 as const, questions: [0, 1, 2] as const },
+    { cat: 2 as const, questions: [0, 1, 2] as const },
+    { cat: 3 as const, questions: [0, 1, 2] as const },
+    { cat: 4 as const, questions: [0, 1] as const },
   ];
 
   return (

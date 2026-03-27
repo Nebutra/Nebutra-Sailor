@@ -35,9 +35,22 @@ vi.mock("@clerk/backend", () => ({
   verifyToken: vi.fn().mockRejectedValue(new Error("No JWT in tests")),
 }));
 
+vi.mock("@nebutra/logger", () => {
+  const logFns = {
+    warn: vi.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    child: vi.fn(),
+  };
+  logFns.child.mockReturnValue(logFns);
+  return { logger: logFns };
+});
+
 import { prisma } from "@nebutra/db";
 import { tenantContextMiddleware } from "@/middlewares/tenantContext.js";
 import { consentRoutes } from "../routes/legal/consent.js";
+import { s2sHeaders, TEST_SERVICE_SECRET } from "./helpers/s2s-token.js";
 
 const app = new OpenAPIHono();
 app.use("*", tenantContextMiddleware);
@@ -47,10 +60,7 @@ app.route("/", consentRoutes);
 // Helpers
 // ---------------------------------------------------------------------------
 
-const AUTH_HEADERS = {
-  "x-user-id": "user-123",
-  "x-organization-id": "org-456",
-};
+const AUTH_HEADERS = s2sHeaders({ userId: "user-123", orgId: "org-456" });
 
 function jsonRequest(
   method: string,
@@ -141,6 +151,7 @@ const mockCookieConsent = {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
 });
 
 // ===========================================================================

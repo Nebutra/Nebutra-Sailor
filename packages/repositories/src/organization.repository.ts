@@ -32,13 +32,13 @@ export class OrganizationRepository {
       orderBy: { createdAt: "desc" },
     });
 
-    const hasNextPage = items.length > take;
-    if (hasNextPage) items.pop();
+    const hasMore = items.length > take;
+    const trimmed = hasMore ? items.slice(0, take) : items;
 
     return {
-      items,
-      nextCursor: hasNextPage ? (items[items.length - 1]?.id ?? null) : null,
-      hasNextPage,
+      items: trimmed,
+      nextCursor: hasMore ? (trimmed[trimmed.length - 1]?.id ?? null) : null,
+      hasNextPage: hasMore,
     };
   }
 

@@ -42,6 +42,7 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "@nebutra/eslint-config": "workspace:*",
     "@next/bundle-analyzer": "^16.1.6",
     "@playwright/test": "^1.58.2",
     "@prisma/adapter-pg": "^7.4.2",

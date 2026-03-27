@@ -14,6 +14,7 @@ import {
 } from "@nebutra/billing";
 import { toApiError } from "@nebutra/errors";
 import { getUsageSnapshot } from "../../middlewares/usageMetering.js";
+import { billingServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
 
 export const billingRoutes = new OpenAPIHono();
 
@@ -49,15 +50,20 @@ billingRoutes.openapi(checkoutRoute, async (c) => {
   const { priceId, successUrl, cancelUrl, trialPeriodDays } = c.req.valid("json");
 
   try {
-    const session = await createCheckoutSession({
-      customerId: tenant?.organizationId ?? "",
-      priceId,
-      successUrl,
-      cancelUrl,
-      ...(trialPeriodDays !== undefined && { trialPeriodDays }),
-    });
+    const session = await billingServiceBreaker.call(() =>
+      createCheckoutSession({
+        customerId: tenant?.organizationId ?? "",
+        priceId,
+        successUrl,
+        cancelUrl,
+        ...(trialPeriodDays !== undefined && { trialPeriodDays }),
+      }),
+    );
     return c.json({ url: session.url, sessionId: session.id });
   } catch (err) {
+    if (err instanceof CircuitOpenError) {
+      return c.json({ error: "Billing service temporarily unavailable" }, 503);
+    }
     const apiError = toApiError(err);
     return c.json({ error: apiError.error.message }, 400);
   }
@@ -80,9 +86,14 @@ billingRoutes.openapi(portalRoute, async (c) => {
   const { returnUrl } = c.req.valid("json");
 
   try {
-    const session = await createBillingPortalSession(tenant?.organizationId ?? "", returnUrl);
+    const session = await billingServiceBreaker.call(() =>
+      createBillingPortalSession(tenant?.organizationId ?? "", returnUrl),
+    );
     return c.json({ url: session.url });
   } catch (err) {
+    if (err instanceof CircuitOpenError) {
+      return c.json({ error: "Billing service temporarily unavailable" }, 503);
+    }
     const apiError = toApiError(err);
     return c.json({ error: apiError.error.message }, 400);
   }
@@ -103,10 +114,15 @@ billingRoutes.openapi(subscriptionRoute, async (c) => {
   const tenant = c.get("tenant");
 
   try {
-    const sub = await getStripeSubscription(tenant?.organizationId ?? "");
+    const sub = await billingServiceBreaker.call(() =>
+      getStripeSubscription(tenant?.organizationId ?? ""),
+    );
     if (!sub) return c.json({ error: "No active subscription" }, 404);
     return c.json(sub);
   } catch (err) {
+    if (err instanceof CircuitOpenError) {
+      return c.json({ error: "Billing service temporarily unavailable" }, 503);
+    }
     const apiError = toApiError(err);
     return c.json({ error: apiError.error.message }, 400);
   }

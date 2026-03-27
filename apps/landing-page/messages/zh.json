@@ -13,14 +13,14 @@
     "getStarted": "免费部署"
   },
   "hero": {
-    "badge": "Nebutra Intelligence · 领先的 AI Native 基础设施",
-    "headline1": "构建生产级 AI 产品的",
-    "headline2": "全栈工程底座。",
-    "subheadline": "Nebutra Sailor 是为 AI 创客量身定制的 Next.js SaaS 框架。原生集成 Agent 编排、多模态组件与企业级商业化体系。用可靠的系统工程，将前沿的 AI 构想转化为可扩展的商业产品，而不仅仅是又一个技术演示。",
+    "badge": "Nebutra Intelligence · 领先的 AI SaaS 基础架构",
+    "headline1": "专为严肃创客打造的",
+    "headline2": "Next.js AI SaaS 框架。",
+    "subheadline": "基于 <highlight>生产就绪</highlight> 的底座与 <highlight>可扩展架构</highlight> 进行开发，为您节省数周样板代码编写时间并先于竞争对手发布。专为 <highlight>AI 编程智能体及开发者</highlight> 优化。",
     "copyLabel": "复制环境配置",
     "copiedLabel": "代码已复制",
-    "ctaGetStarted": "立即构建",
-    "ctaViewGitHub": "获取开源仓库 →"
+    "ctaGetAccess": "获取终身访问权限",
+    "ctaExploreDemo": "探索演示 Demo"
   },
   "features": {
     "sectionTitle": "开箱即用的基础设施，从原型直到海量扩张。",
@@ -45,34 +45,61 @@
     "startBuilding": "开始使用"
   },
   "comparison": {
-    "badge": "方案横向对比",
-    "title": "Sailor 与其余自建方案的差异",
+    "badge": "SAILOR 对比",
+    "title": "Sailor 与竞品对比",
     "columns": {
-      "feature": "特性",
-      "sailor": "Sailor",
-      "diy": "自行开发",
-      "other": "市面其他模板"
+      "feature": "功能",
+      "sailor": "Nebutra Sailor",
+      "nextForge": "next-forge",
+      "supastarter": "Supastarter"
     },
     "features": {
-      "isolation": "多租户数据隔离",
-      "aiGateway": "AI 模型统一网关",
-      "authRbac": "认证登录与 RBAC 鉴权",
-      "billing": "Stripe 订阅与全量计费",
-      "monorepo": "Turborepo 全栈微架构",
-      "setup": "初部署至生产耗时",
-      "license": "商业协议"
+      "multiTenant": "多租户",
+      "aiGateway": "AI 集成",
+      "auth": "身份认证",
+      "billing": "计费与支付",
+      "i18n": "国际化",
+      "frameworks": "框架支持",
+      "monorepo": "Monorepo 规模",
+      "api": "API 框架",
+      "e2eTests": "E2E 测试",
+      "archTests": "架构测试",
+      "designSystem": "设计系统",
+      "bgJobs": "后台任务",
+      "license": "授权许可"
     },
     "values": {
-      "months2": "约 2 个月",
-      "month1": "约 1 个月",
-      "weeks2": "约 2 周",
-      "months4": "约 4 个月",
-      "days": "按天计",
-      "min10": "不超过 10 分钟",
-      "partial": "部分支持",
-      "time": "隐性人力成本",
-      "paid": "第三方订阅费",
-      "free": "AGPL-3.0 / 零成本"
+      "orgRbacIsolation": "组织 + RBAC + 行级隔离",
+      "orgRolesSeat": "组织 + 角色 + 席位计费",
+      "manualSetup": "需手动搭建",
+      "multiProviderGateway": "多供应商网关",
+      "vercelAiSdk": "Vercel AI SDK",
+      "clerkCustomIdp": "Clerk + 自定义 IDP",
+      "clerkOnly": "Clerk",
+      "betterAuth": "Better Auth（自托管）",
+      "stripeUsage": "5 个供应商 + 用量计费",
+      "stripeOnly": "Stripe",
+      "fiveProviders": "5 个支付供应商",
+      "sevenLangs": "7 种语言",
+      "nextjsOnly": "仅 Next.js",
+      "nextNuxtTanstack": "Next.js + Nuxt + TanStack",
+      "turboNineApps": "Turborepo · 9 个应用",
+      "turboSevenApps": "Turborepo · 7 个应用",
+      "turboFiveApps": "Turborepo · 5 个应用",
+      "honoOpenapi": "Hono + OpenAPI + oRPC + tRPC",
+      "trpc": "tRPC",
+      "honoOrpc": "Hono + oRPC",
+      "playwrightSharded": "Playwright · 4 分片",
+      "playwrightGha": "Playwright + GH Actions",
+      "sevenPropertyBased": "7 个属性测试",
+      "fourLayerTokens": "4 层令牌引擎",
+      "shadcn": "shadcn/ui",
+      "radixShadcn": "Radix + shadcn/ui",
+      "inngest": "Inngest",
+      "triggerQstash": "trigger.dev + QStash",
+      "agpl": "AGPL-3.0（免费）",
+      "mit": "MIT（免费）",
+      "paidFrom349": "起步 $349"
     }
   },
   "footer": {
@@ -114,7 +141,7 @@
     "newsletterError": "出了些问题"
   },
   "logoStrip": {
-    "tagline": "基于驱动现代互联网底层的顶尖技术构建"
+    "tagline": "深受 <dot>•</dot> 1276 位开发者信赖。基于您热爱的技术栈构建。"
   },
   "monorepoTree": {
     "badge": "TURBOREPO 架构",
@@ -755,17 +782,32 @@
       "heading": "执行类订单争端处理框架",
       "effectiveDate": "正式强制实施日",
       "lastUpdated": "条文演化追踪时间",
-      "dates": { "effective": "2025年1月1日", "updated": "2025年1月1日" },
+      "dates": {
+        "effective": "2025年1月1日",
+        "updated": "2025年1月1日"
+      },
       "intro": "Nebutra 致力于确保您对我们服务的完全满意。本退款政策阐明了可申请退款的情形及相应的申请流程。",
       "subscriptionPlans": {
         "title": "订阅方案",
         "monthly": {
           "title": "月度订阅",
           "items": {
-            "0": { "label": "取消订阅", "desc": "您可随时取消月度订阅" },
-            "1": { "label": "按比例退款", "desc": "我们不提供未使用月份的按比例退款" },
-            "2": { "label": "服务访问", "desc": "您可在当前计费周期结束前持续使用付费功能" },
-            "3": { "label": "自动续费", "desc": "订阅将自动续费，除非您主动取消" }
+            "0": {
+              "label": "取消订阅",
+              "desc": "您可随时取消月度订阅"
+            },
+            "1": {
+              "label": "按比例退款",
+              "desc": "我们不提供未使用月份的按比例退款"
+            },
+            "2": {
+              "label": "服务访问",
+              "desc": "您可在当前计费周期结束前持续使用付费功能"
+            },
+            "3": {
+              "label": "自动续费",
+              "desc": "订阅将自动续费，除非您主动取消"
+            }
           }
         },
         "annual": {
@@ -775,9 +817,18 @@
               "label": "14天无理由退款保障",
               "desc": "新年度订阅用户可在首次购买后14天内申请全额退款"
             },
-            "1": { "label": "超过14天后", "desc": "14天保障期届满后，原则上不再受理退款申请" },
-            "2": { "label": "取消订阅", "desc": "您可随时取消，但订阅将在年度周期结束前保持有效" },
-            "3": { "label": "不提供按比例退款", "desc": "我们不提供未使用月份的部分退款" }
+            "1": {
+              "label": "超过14天后",
+              "desc": "14天保障期届满后，原则上不再受理退款申请"
+            },
+            "2": {
+              "label": "取消订阅",
+              "desc": "您可随时取消，但订阅将在年度周期结束前保持有效"
+            },
+            "3": {
+              "label": "不提供按比例退款",
+              "desc": "我们不提供未使用月份的部分退款"
+            }
           }
         }
       },
@@ -813,11 +864,26 @@
         "title": "不可退款项目",
         "intro": "以下项目通常不符合退款条件：",
         "items": {
-          "0": { "label": "按量计费费用", "desc": "API 调用、AI 令牌消耗或已使用的存储空间" },
-          "1": { "label": "附加功能及增值服务", "desc": "一次性购买或附加服务" },
-          "2": { "label": "企业合同", "desc": "定制合同适用其专属条款" },
-          "3": { "label": "主动取消订阅", "desc": "超过退款资格期限后的主动取消" },
-          "4": { "label": "违反使用条款", "desc": "因违反政策而被终止的账户" }
+          "0": {
+            "label": "按量计费费用",
+            "desc": "API 调用、AI 令牌消耗或已使用的存储空间"
+          },
+          "1": {
+            "label": "附加功能及增值服务",
+            "desc": "一次性购买或附加服务"
+          },
+          "2": {
+            "label": "企业合同",
+            "desc": "定制合同适用其专属条款"
+          },
+          "3": {
+            "label": "主动取消订阅",
+            "desc": "超过退款资格期限后的主动取消"
+          },
+          "4": {
+            "label": "违反使用条款",
+            "desc": "因违反政策而被终止的账户"
+          }
         }
       },
       "howToRequest": {
@@ -965,9 +1031,9 @@
           "items": {
             "0": "订阅费用按月或按年预先收取",
             "1": "所有费用不予退款，除非符合我们的",
-            "1RefundLink": "退款政策",
             "2": "您授权我们向您的支付方式收取相应费用",
-            "3": "我们使用 Stripe 进行安全支付处理"
+            "3": "我们使用 Stripe 进行安全支付处理",
+            "1RefundLink": "退款政策"
           }
         }
       },
@@ -1117,183 +1183,206 @@
     }
   },
   "microLanding": {
-    "hero": {
-      "badge": "Nebutra Sailor 1.0 现已上线",
-      "headline": "以终端级速度构建 AI 原生帝国。",
-      "subheadline": "全球最先进的 Next.js SaaS 架构。深度集成 AI 推理、企业级计费与全自动控制中心。",
-      "initCmd": "初始化项目",
-      "docsCmd": "阅读系统文档"
-    },
-    "trust": {
-      "foundation": "世界级的 SaaS 基础设施",
-      "ecosystem": "已深度集成顶尖 AI 模型与智能体工具"
-    },
     "architecture": {
-      "badge": "系统架构引擎",
-      "title": "毫不妥协，为海量规模而生。",
-      "description": "我们没有构建一个玩具模板。我们构建了一个极其坚固的 Monorepo 底座，旨在承受海量的网络流量与高强度的 AI 并发推理。",
-      "turborepo": {
-        "title": "Turborepo 微架构",
-        "desc": "在应用和数据库层之间执行严格的边界隔离，保证毫秒级的增量编译与模块化扩展。"
-      },
-      "edge": {
-        "title": "全球边缘网络",
-        "desc": "动态运行在 Vercel Edge 的中间件，实现极速的国际化路由与 A/B 测试分发。"
-      },
+      "badge": "系统拓扑架构",
+      "title": "透明架构，拒绝技术黑盒",
+      "description": "Nebutra Sailor 采用高度模块化的 Turborepo 结构进行工程设计，让您完全掌控整个软件生命周期。",
       "database": {
-        "title": "数据持久化引擎",
-        "desc": "高性能的 Prisma ORM 无缝直连 Supabase PostgreSQL，轻松处理极其复杂的关系型数据层级。"
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "原生内置行级安全 (RLS) 策略的完全强类型 ORM。"
       },
       "auth": {
-        "title": "Fort Knox 级安全认证",
-        "desc": "深度集成 Clerk 进行企业级 B2B 身份验证。开箱即用的无密码登录与组织级细粒度访问控制。"
+        "title": "Clerk 多租户 & 身份网关",
+        "desc": "支持 B2B 组织切换和细粒度 RBAC 的 SOC2 级认证网关。"
       }
     },
     "pricing": {
-      "title": "极度透明的基础设施接入权限。",
-      "description": "对个人开发者开放。为商业级规模而授权。请选择符合您业务特征的层级。",
-      "standard": {
-        "badge": "社区版协议",
+      "title": "一次买断。终身访问。",
+      "description": "告别续订焦虑。选择最适合您团队的并发方案，即刻开始构建。",
+      "socialProofText": "已有 <highlight>1276 名极客</highlight> 强力推荐",
+      "frameworkText": "核心引擎切换:",
+      "frameworkNext": "Next.js 16",
+      "frameworkNuxt": "Nuxt (开发中)",
+      "frameworkTanStack": "TanStack (内测)",
+      "solo": {
+        "badge": "SOLO / 一人企业 (OPC)",
         "price": "免费",
         "period": "永久",
-        "desc": "专为独立开发者、一人公司以及开源学习极佳起点。",
-        "cta": "初始化开源仓库",
-        "f1": "完全开源的 Mono-repo 核心",
-        "f2": "社区支持矩阵",
-        "f3": "自由边缘部署支持",
-        "f4": "标准 Next.js 模板"
+        "desc": "专为在 AGPL 协议下执行快速 MVP 迭代的独立开发者和一人公司 (OPC) 打造。",
+        "cta": "克隆代码库",
+        "f1": "完整的 Next.js 16 SaaS 核心",
+        "f2": "无限量的个人独立商用级应用接入授权",
+        "f3": "完整的全栈拓扑：多租户管控、计费引擎、行级安全及管理中板",
+        "f4": "强劲的增长飞轮：原生博客系统、SEO 预渲机制及转化跟踪",
+        "f5": "AGPLv3 开源协议限制"
       },
-      "enterprise": {
-        "badge": "商业许可协议",
-        "price": "定制",
-        "period": "订阅",
-        "desc": "为野心勃勃的独角兽企业及大规模 B2B SaaS 矩阵量身定制。",
-        "cta": "申请商业许可证",
-        "f1": "可执行商业闭环产品运营",
-        "f2": "全量私有设计系统 Token",
-        "f3": "最高优先级的架构师技术支持",
-        "f4": "企业级 Figma 全集",
-        "f5": "Vercel / Supabase 企业级部署基线"
+      "startup": {
+        "badge": "STARTUP / 敏捷初创",
+        "price": "$799",
+        "period": "终身授权",
+        "desc": "极客团队的云上超级基石。",
+        "cta": "购买 Startup 商业授权",
+        "f1": "多达 5 名团队成员的联合研制并发访问席位",
+        "f2": "团队主体无界限商用的企业级应用下放额度",
+        "f3": "30 分钟由核心作者亲自辅导的高阶部署集成审查会议",
+        "f4": "直通内网的高优先级工单处置渠道",
+        "f5": "包含 Solo 架构下的全额度能力特权"
+      },
+      "agency": {
+        "badge": "AGENCY / 商业工坊",
+        "price": "$1,499",
+        "period": "终身授权",
+        "desc": "软件出海与数字中台中枢工厂的不二之选。",
+        "cta": "购买 Agency 商业授权",
+        "f1": "满载配额！最多 10 席架构师研发权限同步分发",
+        "f2": "支持向乙方客户无限量出售产品闭源程序的再分发许可",
+        "f3": "30 分钟由核心作者亲自辅导的高阶部署集成审查会议",
+        "f4": "准许白标去 Logo 操作的深度视觉定制与二创潜能",
+        "f5": "继承 Startup 管线所构建的全部底座生态和技术特征",
+        "f6": "免排队登入最高保密级别的专属 Discord 私域技术攻坚频道"
       }
     },
     "faq": {
-      "title": "系统级参数问答。",
-      "description": "深入了解内核架构技术细节。",
+      "title": "架构选型与评估",
+      "description": "提供详细的工程级解答，以加速您的架构决策。",
       "q1": {
-        "q": "我究竟能获取什么？",
-        "a": "整个 Turborepo 架构的完整源码压缩包，包括 Next.js 前端、内部 UI 引擎仓库及一切部署指令。"
+        "q": "为什么选择 Turborepo 而不是标准的单体 Next.js？",
+        "a": "Turborepo 将您的 UI 组件、数据库 Schema 和共享工具库完全隔离，当 SaaS 规模超出单应用时，提供无与伦比的并行构建与扩展能力。"
       },
       "q2": {
-        "q": "部署难度如何？",
-        "a": "极简！我们提供了 Vercel 与 Supabase 的一键部署模板，并且支持极客自定义的 Docker 化。"
+        "q": "多租户 (Multi-tenancy) 是如何处理的？",
+        "a": "我们深度整合了 Clerk 的 B2B 组织架构与 Prisma 中间件，以确保在数据库层面实现严格的组织间行级隔离。"
       },
       "q3": {
-        "q": "后续代码架构更新策略？",
-        "a": "您将获取 Github 闭源库永久推送权限，解锁所有未来安全补丁与大模型接口预置。"
+        "q": "我可以将 Clerk 替换为 Supabase Auth 吗？",
+        "a": "当然可以。我们的认证层通过 @nebutra/identity 进行了高度抽象封装，这意味着您只需极少的重构即可完成身份提供商的热替换。"
       },
       "q4": {
-        "q": "能够用于商业客户外包交付吗？",
-        "a": "当然。商业授权协议允许您在不限客户定制数量的前提下自由部署与交付外包。"
+        "q": "我需要为后续的更新付费吗？",
+        "a": "完全不需要，商业授权包含对代码库的终身访问权限，并同步所有未来的架构升级与演进。"
       }
     },
     "cta": {
-      "title": "停止重复造轮子。立刻开始征服你的目标市场。",
-      "description": "加入世界上最高效的顶尖开发者矩阵，在数小时内部署高保真企业级生产阵地。",
-      "button": "立即拉取引擎基线"
+      "title": "停止折腾配置，立即开始构建",
+      "description": "使用 Nebutra CLI 在 3 分钟内即可在本地初始化您的高可用可扩展 SaaS 架构。",
+      "button": "部署云端架构",
+      "license": "全面支持 Node.js 22+ & pnpm"
     },
-    "productDemo": {
-      "badge": "企业级基础设施引擎",
-      "title": "专为严肃的商业规模打造。",
-      "description": "租户分析、Stripe Webhooks 与多租户架构已全维预装。拒绝重复造轮子，专注核心业务。",
-      "analytics": {
-        "label": "租户遥测分析",
-        "desc": "实时用量追踪与活跃会话遥测，全局掌控您的整个 SaaS 商业生态。"
+    "capability": {
+      "badge": "企业级能力",
+      "title": "完全强类型的可扩展核心",
+      "multiTenant": {
+        "title": "原生行级数据安全 (RLS)",
+        "desc": "每次数据库查询都在当前租户上下文中受到严格限制与隔离。",
+        "cta": "阅读数据库设计哲学"
+      },
+      "aiGateway": {
+        "title": "通用 AI 模型网关",
+        "desc": "无缝地将 Prompt 路由到 OpenAI、Anthropic 甚至本地开源大模型。",
+        "cta": "探索 AI SDK 适配器"
+      },
+      "rbac": {
+        "title": "细粒度权限控制 (RBAC)",
+        "desc": "零模板代码即可定义管理员、成员和查看者等细粒度角色与权限。",
+        "cta": "查看 RBAC 鉴权文档"
       },
       "billing": {
-        "label": "Stripe 计费总线",
-        "desc": "全自动的 Webhook 摄取、基于用量的计量计费，以及开箱即用的自动化账单生成。"
-      },
-      "workspaces": {
-        "label": "多租户隔离空间",
-        "desc": "零摩擦的入驻体验，基于 PostgreSQL RLS 的严苛数据隔离与基于角色的精确访问控制。"
+        "title": "多供应商计费基础设施",
+        "desc": "按量计费系统、订阅 Webhook 事件分发以及完全自助化的客户门户。",
+        "cta": "了解计费中间件架构"
       }
     },
     "workflow": {
-      "badge": "标准的交付流水线",
-      "title": "无需架构重写，即可跨越原型直达规模化营收。",
+      "badge": "研发效能",
+      "title": "以破纪录的速度从零走向生产",
+      "step1": {
+        "title": "1. 快速克隆",
+        "desc": "瞬间克隆全功能 Nebutra Monorepo，并运行 pnpm install 初始化工作空间。"
+      },
+      "step2": {
+        "title": "2. 交互式配置",
+        "desc": "几分钟内通过 CLI 引导完成 Prisma、Clerk 和 Stripe 的生产环境级配置。"
+      },
+      "step3": {
+        "title": "3. 专注构建",
+        "desc": "将全部精力集中在您 SaaS 独有的核心业务逻辑和 UI 交互上，彻底告别样板代码。"
+      },
+      "step4": {
+        "title": "4. 全球部署",
+        "desc": "一键提交至 Vercel 和 AWS 边缘节点，实现分钟级全球可用性分发。"
+      },
       "speedometer": {
         "number": "10",
         "unit": "分钟",
-        "subtitle": "直达生产环境准备就绪",
-        "comparison": "相比之下从零构建需 6 个月",
+        "subtitle": "上市时间",
+        "comparison": "比组建内部研发平台团队快 99%。",
         "phases": {
-          "scaffold": "脚手架",
-          "wire": "连线层",
-          "ship": "部署投产",
-          "scale": "弹性扩缩",
-          "ongoing": "持续"
+          "scaffold": "初始化",
+          "wire": "基建核",
+          "ship": "云部署",
+          "scale": "高扩展",
+          "ongoing": "∞"
         },
-        "cta": "开始计时"
+        "cta": "现在开始计时"
       },
-      "step1": {
-        "title": "系统脚手架构建",
-        "desc": "在数分钟内拉起具备多租户默认配置的企业级 Monorepo 形态。"
-      },
-      "step2": {
-        "title": "编排底层设施",
-        "desc": "通过高稳定性的强类型适配器连接身份验证、账单和底层 AI 提供商。"
-      },
-      "step3": {
-        "title": "投产发布",
-        "desc": "部署一个具备完善可观测性与深层操作护栏的生产基线。"
-      },
-      "step4": {
-        "title": "全球范围弹性扩缩",
-        "desc": "使用完全相同的架构在多个租户和区域间实现指数级增长，无需架构重构。"
+      "presetHint": {
+        "badge": "预设系统",
+        "message": "一份配置，全部功能。选择预设，即刻交付。",
+        "detail": "一次配置，自动生成一切——计费、认证、AI、国际化——全部来自单一预设文件。"
       }
     },
     "testimonials": {
-      "badge": "被顶尖技术团队所信赖",
-      "title": "核心团队利用 Sailor 极大压缩原型至生产环节的高风险周期。",
+      "badge": "开发者社区",
+      "title": "深受全球顶级工程师的信赖",
       "t1": {
-        "quote": "Nebutra 削减了我们整整一半的交付时间。我们在未进行任何平台重写的情况下，成功交付了多租户计费系统。",
+        "quote": "Nebutra 至少为我们节省了半年的平台工程搭建时间。我们在第 10 天就顺利交付了 MVP 核心版本。",
         "author": "Sarah Chen",
-        "role": "TechStart AI, 首席技术官 (CTO)"
+        "role": "DataFlow 联合创始人兼 CTO"
       },
       "t2": {
-        "quote": "这种底层架构可以直接从第一位极客客户扩展至严苛的跨国企业采购。它是一个完整闭环的工业产品，而绝非玩具级的初始模板。",
-        "author": "Marcus Johnson",
-        "role": "DataFlow, 首席架构师"
+        "quote": "这种企业级 Turborepo 脚手架简直太棒了。类型检查、Lint 与构建任务都可以瞬间完成缓存命中，开发体验极佳。",
+        "author": "Marcus Dev",
+        "role": "Solo Founder (独立创客)"
       },
       "t3": {
-        "quote": "随产品附带的操作默认值极为出色。可观测性、高级认证策略以及多维增长指标从项目立项的第一天就被深度集成在主干代码中。",
-        "author": "Emma Wilson",
-        "role": "CloudSync, 创始人"
+        "quote": "终于找到了一个不像是黑盒的架构级脚手盘。极高的代码整洁度与极佳的设计品味让我惊叹。",
+        "author": "Emma Founder",
+        "role": "Indie Hacker (独立开发者)"
       }
     },
-    "capability": {
-      "badge": "能力矩阵",
-      "title": "四大支柱，零妥协。",
-      "multiTenant": {
-        "title": "多租户隔离引擎",
-        "desc": "从第一天起就实现工作区隔离。",
-        "cta": "多租户文档"
-      },
-      "aiGateway": {
-        "title": "AI 提供商网关",
-        "desc": "一个接口，所有 AI 模型。",
-        "cta": "探索 AI 集成"
-      },
-      "rbac": {
-        "title": "Auth & RBAC 矩阵",
-        "desc": "企业级，开箱即用。",
-        "cta": "查看认证指南"
+    "productDemo": {
+      "badge": "交互式演示",
+      "title": "立即体验实时研发加速",
+      "description": "感受顶级的终端命令行工具、Stripe Webhook 本地隧道穿透能力，以及本地开发环境下的多租户数据库自动装配体验。",
+      "analytics": {
+        "label": "实时遥测",
+        "desc": "将生产环境中的全链路业务使用数据直接传输至您的终端仪表盘。"
       },
       "billing": {
-        "title": "账单与收入引擎",
-        "desc": "Stripe 预配置，Webhook 已同步。",
-        "cta": "配置定价"
+        "label": "计费事件分发",
+        "desc": "通过本地环境的即时隧道观察核心 Stripe Webhooks 的异步执行机制。"
+      },
+      "workspaces": {
+        "label": "工作空间隔离",
+        "desc": "利用 Prisma 瞬间装配与隔离全新的 B2B PostgreSQL Schema 架构。"
       }
+    },
+    "harness": {
+      "badge": "工程治理",
+      "headline": "自我约束的工程体系。",
+      "subheadline": "架构测试、治理棘轮和 15 条 CI 工作流确保代码质量只升不降。",
+      "stat1Value": "15",
+      "stat1Label": "CI 工作流",
+      "stat2Value": "43",
+      "stat2Label": "架构测试",
+      "stat3Value": "0",
+      "stat3Label": "令牌违规",
+      "card1Title": "架构测试",
+      "card1Desc": "7 个属性测试（fast-check）强制执行依赖流向、令牌使用、WCAG 对比度、API 版本前缀和 Story 覆盖率。",
+      "card2Title": "治理棘轮",
+      "card2Desc": "令牌预算只紧不松：Landing page 原始色彩类为零，oklch 下限 120+，hex 上限 40，动画导入白名单仅 2 个文件。",
+      "card3Title": "CI 管线深度",
+      "card3Desc": "CodeQL SAST、Gitleaks、cosign 签名、SBOM/SLSA 溯源、Lighthouse ≥0.95、OpenAPI 向后兼容、k6 负载测试、Chromatic 视觉回归。"
     }
   },
   "featuresPage": {
@@ -1323,11 +1412,11 @@
       "dx_f1_desc": "带有组织前缀 (例如 nbtr_live_…) 的密文标识加密散列。且仅在首次创建时明文展示一次——兼顾无摩擦的体验与严苛的安全性。",
       "dx_f2_title": "幂等性校验中间件",
       "dx_f2_desc": "通过携带 Idempotency-Key 头信息，让所有 POST 请求皆可被安全地进行重试。由 Redis 高速缓存背书支持，并完全遵循 IETF 草案规范。",
-      "dx_f3_title": "OpenAPI 与可交互接口文档",
-      "dx_f3_desc": "每个由 @hono/zod-openapi 约束的边界路由都会动态生成遵循 OpenAPI 3.1 协议的接口声明。并且可以直接通过 /docs 调试接口。",
+      "dx_f3_title": "多协议 API（REST + oRPC + tRPC）",
+      "dx_f3_desc": "REST/OpenAPI 面向公共 API，oRPC 面向类型安全的前端调用，tRPC 面向 T3 技术栈兼容。所有协议共享相同的 Zod 契约和中间件栈。通过 preset 配置按需启用。",
       "billing_category": "订阅与商业计费",
-      "billing_f1_title": "结账与 Stripe 自助门户",
-      "billing_f1_desc": "提供一键直达支付会话以及客制化的自助计费维护面板。原生支持试用期机制、年度合约折算以及灵活升降级的差额按比例分配 (Proration)。",
+      "billing_f1_title": "Stripe、LemonSqueezy、Polar 及中国支付",
+      "billing_f1_desc": "选择支付供应商：Stripe 面向全球企业，LemonSqueezy 面向独立开发者，Polar 面向开源项目，支付宝/微信支付面向中国市场。一键结账和自助账单门户。",
       "billing_f2_title": "用量计量与配额执法",
       "billing_f2_desc": "实时的 Redis 哨兵持续监听租户的接口调用与 Token 损耗。一旦突破硬性配额极限，系统将立刻在 API 边缘网关上将后续请求直接拦截阻断。",
       "billing_f3_title": "订阅生命周期 Webhook 联动",
@@ -1377,5 +1466,149 @@
       "roadmap": "我们的技术蓝图正在进行最后定案。交互式的 Changelog 大屏幕即将与 Nebutra 核心仓库实现同步更新。"
     },
     "returnBtn": "返回核心枢纽"
+  },
+  "blogShowcase": {
+    "badge": "博客精选",
+    "title": "工程洞察",
+    "subtitle": "深入探讨SaaS架构、AI基础设施和生产工程。",
+    "readMore": "阅读更多"
+  },
+  "agenticCapabilities": {
+    "badge": "极致工程学",
+    "title": "为 Vibe Business 时代而生。",
+    "description": "以深度的 Agentic Engineering 架构为支撑，跨越商业化最后 10% 的工程鸿沟。",
+    "items": {
+      "harness": {
+        "title": "Harness Engineering & 架构测试",
+        "desc": "100% 测试覆盖、基于属性的健壮拓扑结构。确保生产环境坚如磐石。"
+      },
+      "agentic": {
+        "title": "AI-Native & Agentic Coding",
+        "desc": "专为 LLM 自动生成与 Agentic 结对编程编排的系统级工作流。"
+      },
+      "vibe": {
+        "title": "Vibe Business & AI 网关",
+        "desc": "无缝的多供应商网关，让创始人在直觉中迭代应用，由我们处理极度复杂的基础设施。"
+      },
+      "design": {
+        "title": "设计系统的深度",
+        "desc": "四层代币引擎，反映出 Studio Dumbar 与 Framer 级别的卓越审美。纯粹的视觉完美。"
+      }
+    }
+  },
+  "useCases": {
+    "badge": "无限应用场景",
+    "title": "一个基座，无限可能。",
+    "description": "Nebutra Sailor 驱动全球市场的下一代 SaaS 产品。",
+    "tabs": {
+      "opc": "AI 与 OPC 创业生态",
+      "ip": "个人 IP 矩阵",
+      "multimodal": "多模态 AI SaaS",
+      "enterprise": "现代企业官网",
+      "export": "软件出海落地页",
+      "design": "现代组件库",
+      "edam": "企业资产数字化"
+    },
+    "content": {
+      "opc": {
+        "title": "领先的 AI 原生与 OPC 一人公司创业生态模板",
+        "desc": "未来的 AI 产品需要生态，而不是孤岛。专为 OPC (一人公司) 理念设计，赋予超级个体企业级基础设施与生态网络。",
+        "features": {
+          "f1": "插件化架构",
+          "f2": "开发者门户",
+          "f3": "一键 SDK"
+        }
+      },
+      "ip": {
+        "title": "个人 IP 增长与组合矩阵模板",
+        "desc": "建立世界级的创始人形象。专为个人品牌变现优化的高转化博客、作品集和个人主页模板。",
+        "features": {
+          "f1": "MDX 本地博客",
+          "f2": "邮件列表对接",
+          "f3": "深度 SEO 优化"
+        }
+      },
+      "multimodal": {
+        "title": "创新多模态 AI 应用 SaaS 模板",
+        "desc": "启动完整的 Chatbot、文生图或视频生成 SaaS，集成 Vercel AI SDK、流式传输和 Prompt 网关。",
+        "features": {
+          "f1": "流式渲染组件",
+          "f2": "高阶模型路由",
+          "f3": "AI 用量计费计费"
+        }
+      },
+      "enterprise": {
+        "title": "适合中国业务场景的现代企业官网",
+        "desc": "为本土市场量身定制，支持超本地化 CDN，微信生态系统集成准备以及深度本地化合规。",
+        "features": {
+          "f1": "境内化合规",
+          "f2": "极速响应性能",
+          "f3": "全量移动优先"
+        }
+      },
+      "export": {
+        "title": "适合软件出海场景的出海落地页",
+        "desc": "专为跨境 SaaS 设计。内置多币种 Stripe 结账、next-intl 多语言路由，以及完整的 GDPR 合规性。",
+        "features": {
+          "f1": "出海支付网关",
+          "f2": "7国语言自适应",
+          "f3": "GDPR 隐私准备"
+        }
+      },
+      "design": {
+        "title": "领先的现代组件库设计系统模板",
+        "desc": "使用 Radix + framer-motion 构建的美丽的基于 Token 的架构。完美适合构建自己的 UI 库的团队。",
+        "features": {
+          "f1": "四层设计代币",
+          "f2": "纯净 CSS 变量",
+          "f3": "深度无障碍访问"
+        }
+      },
+      "edam": {
+        "title": "领先的企业资产数字化管理模板",
+        "desc": "利用可扩展的 PostgreSQL 架构和细粒度的 RBAC 处理结构化数据湖和复杂的管理仪表盘。",
+        "features": {
+          "f1": "行级数据库安全",
+          "f2": "高阶复杂查询",
+          "f3": "细颗粒度读写"
+        }
+      }
+    }
+  },
+  "agentic": {
+    "badge": "AGENTIC 工程",
+    "headline": "为 AI 编码代理而生。",
+    "subheadline": "每个文件、每条规则、每个测试都经过设计，让 Claude Code、Cursor 和 Codex 能理解整个代码库并自主交付。",
+    "card1Title": "结构化上下文",
+    "card1Desc": "CLAUDE.md 提供组件规则、令牌治理和导入边界——代理无需猜测。",
+    "card2Title": "架构护栏",
+    "card2Desc": "7 个属性测试强制执行依赖流、令牌使用和 WCAG 对比度——代理无法破坏不变量。",
+    "card3Title": "自主交付",
+    "card3Desc": "代理读取上下文、编写代码、运行测试、通过 CI——从提示到生产无需人工干预。",
+    "compTraditional": "AI 猜测 → 破坏代码 → 手动修复",
+    "compSailor": "AI 读取规则 → 遵循约束 → CI 验证 → 交付"
+  },
+  "designSystem": {
+    "badge": "设计系统",
+    "headline": "4 层设计治理。",
+    "subheadline": "从品牌原语到运行时令牌到多主题引擎到治理组件——不只是 shadcn + Tailwind。",
+    "flowBrand": "品牌",
+    "flowBrandDesc": "色彩原语、渐变、动效语言",
+    "flowTokens": "令牌",
+    "flowTokensDesc": "CSS 变量、12 级色阶、暗黑模式",
+    "flowTheme": "主题",
+    "flowThemeDesc": "oklch 多主题、6 个预设、color-mix()",
+    "flowUI": "UI",
+    "flowUIDesc": "组件库、Storybook、Chromatic",
+    "card1Title": "12 级色阶",
+    "card1Desc": "Geist 对齐语义色阶：背景 (1-2)、状态 (3-5)、边框 (6-8)、填充 (9-10)、文本 (11-12)。",
+    "card2Title": "oklch 多主题",
+    "card2Desc": "6 个主题预设使用 oklch 色彩空间，color-mix() 派生悬停/激活态。Display-P3 广色域 + sRGB 回退。",
+    "card3Title": "视觉回归测试",
+    "card3Desc": "Chromatic 捕捉每个像素变化。Storybook 记录每个组件。架构测试强制 Story 覆盖率。",
+    "card4Title": "令牌治理",
+    "card4Desc": "棘轮预算：hex 上限、oklch 下限、原始色彩类限额。品牌漂移检测集成到 CI。",
+    "card5Title": "交互式文档",
+    "card5Desc": "基于 Fumadocs 的完整设计文档站，中英双语组件 API 文档、令牌展廊、布局模式指南和实时代码示例。"
   }
 }

@@ -4,6 +4,7 @@ export default defineConfig({
   entry: [
     "src/index.ts",
     "src/stripe/index.ts",
+    "src/polar/index.ts",
     "src/subscriptions/index.ts",
     "src/usage/index.ts",
     "src/credits/index.ts",

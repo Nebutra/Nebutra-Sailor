@@ -231,16 +231,17 @@ describe("UI/UX audit remediation invariants", () => {
     expect(aboutPage).toContain("export default");
   });
 
-  it("blocks direct framer-motion imports in app-level eslint configs", () => {
+  it("blocks direct framer-motion imports in shared eslint config", () => {
+    // Rules extracted to @nebutra/eslint-config; app configs import from it
+    const sharedEslint = readFromRepo("packages/eslint-config/next.mjs");
     const landingEslint = readFromRepo("apps/landing-page/eslint.config.mjs");
     const webEslint = readFromRepo("apps/web/eslint.config.mjs");
 
-    expect(landingEslint).toContain("no-restricted-imports");
-    expect(landingEslint).toContain("framer-motion");
-    expect(landingEslint).toContain("@nebutra/*/*/*");
-    expect(webEslint).toContain("no-restricted-imports");
-    expect(webEslint).toContain("framer-motion");
-    expect(webEslint).toContain("@nebutra/*/*/*");
+    expect(sharedEslint).toContain("no-restricted-imports");
+    expect(sharedEslint).toContain("framer-motion");
+    expect(sharedEslint).toContain("@nebutra/*/*/*");
+    expect(landingEslint).toContain("@nebutra/eslint-config");
+    expect(webEslint).toContain("@nebutra/eslint-config");
   });
 
   it("removes indigo accents and autofocus props from auth/onboarding surfaces", () => {

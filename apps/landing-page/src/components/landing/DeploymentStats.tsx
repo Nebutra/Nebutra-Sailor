@@ -11,12 +11,16 @@ import { AnimateIn, AnimateInGroup } from "./AnimateIn";
  * Social proof deployment velocity stats below testimonials.
  * Refactored to feature Geist icons, Glassmorphic cards, and full i18n support.
  */
-export function DeploymentStats() {
+interface DeploymentStatsProps {
+  stars?: number;
+}
+
+export function DeploymentStats({ stars }: DeploymentStatsProps) {
   const t = useTranslations("stats");
 
   const STATS = [
     {
-      value: "1,247",
+      value: stars?.toLocaleString() ?? "1,247",
       label: t("github"),
       icon: LogoGithub,
       href: "https://github.com/Nebutra/Nebutra-Sailor",
@@ -57,7 +61,7 @@ export function DeploymentStats() {
       <AnimateInGroup
         inView
         stagger="fast"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 max-w-7xl mx-auto"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 max-w-[1400px] mx-auto"
       >
         {STATS.map((stat, i) => (
           <AnimateIn key={stat.label} preset="fadeUp" delay={i * 0.08} inView>

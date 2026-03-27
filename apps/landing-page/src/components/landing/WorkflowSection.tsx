@@ -26,7 +26,7 @@ export function WorkflowSection() {
 
   return (
     <section id="workflow" className="w-full bg-background py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
+      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
         <AnimateIn preset="emerge" inView className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-bold tracking-[0.2em] text-primary uppercase mb-4">
             {t("badge")}

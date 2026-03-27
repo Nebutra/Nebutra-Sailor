@@ -1,82 +1,126 @@
 "use client";
 
 import { ArrowRight } from "@nebutra/icons";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { heroContent } from "@/lib/landing-content";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
-import { CommandInstallBox } from "./CommandInstallBox";
-import { HeroLottieVisual } from "./HeroLottieVisual";
 
 /**
- * HeroSection - Conversion-first hero with product visual.
+ * HeroSection - Conversion-first hero.
  */
 export function HeroSection() {
   const t = useTranslations("hero");
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-white dark:bg-black">
-      <div className="pointer-events-none absolute inset-0 bg-grid-overlay" />
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/3 h-[760px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[image:var(--brand-gradient-radial)] opacity-[0.22] blur-[140px]" />
+    <section className="relative w-full overflow-hidden bg-background pb-8 pt-24 lg:pt-32">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_80%,transparent_100%)]" />
+      <div className="pointer-events-none absolute inset-0 flex justify-center">
+        <div className="absolute top-0 h-[600px] w-[800px] rounded-[100%] bg-primary/5 dark:bg-primary/10 blur-[120px]" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl items-center px-6 pt-24 pb-16">
-        <div className="grid w-full items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-          <AnimateInGroup stagger="normal" className="space-y-8">
+      <div className="relative z-10 w-full px-4">
+        <div className="mx-auto flex max-w-5xl flex-col items-center justify-center text-center">
+          <AnimateInGroup
+            stagger="normal"
+            className="flex flex-col items-center justify-center space-y-6 md:space-y-7 w-full"
+          >
             <AnimateIn preset="fadeUp">
-              <span className="inline-flex items-center gap-2 rounded-full border border-blue-7 bg-blue-2 px-4 py-1.5 text-xs tracking-wide text-blue-11 dark:border-white/20 dark:bg-white/10 dark:text-white/80">
-                {t("badge")}
-              </span>
+              <div className="flex items-center justify-center gap-2 rounded-full border border-black/5 dark:border-white/10 bg-black/5 dark:bg-white/5 pl-2 pr-4 py-1 text-xs font-semibold text-foreground shadow-sm w-fit mx-auto cursor-default transition-all hover:bg-black/10 dark:hover:bg-white/10">
+                <span className="flex h-5 items-center justify-center rounded-full bg-black dark:bg-white px-2 text-[10px] text-white dark:text-black">
+                  Next.js
+                </span>
+                <span className="flex h-5 items-center justify-center text-[10px] opacity-70">
+                  {t("badge").split("·")[1]}
+                </span>
+              </div>
             </AnimateIn>
 
             <AnimateIn preset="emerge">
-              <h1 className="max-w-4xl text-[clamp(2.25rem,8vw,5.25rem)] leading-[1.05] font-bold tracking-tight text-neutral-12 dark:text-white">
-                {t("headline1")}
-                <br />
-                <span className="bg-[image:var(--brand-gradient)] bg-clip-text text-transparent">
-                  {t("headline2")}
-                </span>
+              <h1 className="mx-auto max-w-[900px] text-[clamp(2.75rem,8vw,5rem)] leading-none font-bold tracking-[-0.03em] text-zinc-900 dark:text-zinc-50">
+                {t("headline1")}{" "}
+                <span className="text-zinc-900 dark:text-zinc-50">{t("headline2")}</span>
               </h1>
             </AnimateIn>
 
             <AnimateIn preset="fadeUp">
-              <p className="max-w-2xl text-lg text-neutral-11 md:text-xl dark:text-white/70">
-                {t("subheadline")}
+              <p className="mx-auto max-w-[680px] text-[17px] md:text-[19px] text-zinc-500 dark:text-zinc-400 leading-normal font-medium px-4">
+                {t.rich("subheadline", {
+                  highlight: (chunks) => (
+                    <span
+                      style={{
+                        background: "var(--brand-gradient)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                      }}
+                      className="font-semibold"
+                    >
+                      {chunks}
+                    </span>
+                  ),
+                })}
               </p>
             </AnimateIn>
 
             <AnimateIn preset="fadeUp">
-              <div className="w-full max-w-xl">
-                <CommandInstallBox
-                  command={heroContent.command}
-                  copyLabel={t("copyLabel")}
-                  copiedLabel={t("copiedLabel")}
-                />
+              <div className="flex flex-col items-center gap-3 sm:flex-row mt-4">
+                <Link
+                  href="/pricing"
+                  className="group relative inline-flex items-center justify-center gap-2 rounded-full overflow-hidden px-8 py-3.5 text-[15px] font-semibold shadow-xl shadow-primary/10 transition-all hover:scale-[1.02] active:scale-95 bg-foreground text-background border border-foreground/10"
+                >
+                  <div className="absolute inset-0 bg-[var(--brand-gradient)] opacity-0 transition-opacity duration-300 pointer-events-none group-hover:opacity-10" />
+                  {t("ctaGetAccess")}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <a
+                  href="https://demo.nebutra.com"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-7 py-3 text-[15px] font-semibold text-zinc-700 dark:text-zinc-300 transition-all hover:bg-zinc-50 dark:hover:bg-zinc-800 active:scale-95 shadow-sm"
+                >
+                  <svg
+                    className="w-4 h-4 opacity-70"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                  {t("ctaExploreDemo")}
+                </a>
               </div>
             </AnimateIn>
 
             <AnimateIn preset="fadeUp">
-              <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-                <a
-                  href="https://docs.nebutra.com/sailor/getting-started"
-                  className="group inline-flex items-center gap-2 rounded-full bg-[image:var(--brand-gradient)] px-8 py-3.5 font-medium text-white shadow-brand-lg transition-transform hover:-translate-y-0.5"
-                >
-                  {t("ctaGetStarted")}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
-                <a
-                  href="https://github.com/Nebutra/Nebutra-Sailor"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
-                >
-                  {t("ctaViewGitHub")}
-                </a>
+              <div className="mt-14 mb-4 flex flex-col items-center gap-5">
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground/60 w-full text-center">
+                  TRUSTED BY SERIOUS FOUNDERS. BUILT WITH THE STACK YOU LOVE.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-[14px] font-bold text-muted-foreground/40 transition-all">
+                  <span className="hover:text-foreground transition-colors cursor-default">
+                    Next.js 16
+                  </span>
+                  <span className="hover:text-[#3178C6] transition-colors cursor-default">
+                    TypeScript
+                  </span>
+                  <span className="hover:text-[#38BDF8] transition-colors cursor-default">
+                    Tailwind v4
+                  </span>
+                  <span className="hover:text-[#5A67D8] transition-colors cursor-default">
+                    Prisma v7
+                  </span>
+                  <span className="hover:text-[#E36002] transition-colors cursor-default">
+                    Hono
+                  </span>
+                  <span className="hover:text-[#635BFF] transition-colors cursor-default">
+                    Stripe
+                  </span>
+                </div>
               </div>
             </AnimateIn>
           </AnimateInGroup>
-
-          <AnimateIn preset="scale" className="lg:justify-self-end">
-            <HeroLottieVisual />
-          </AnimateIn>
         </div>
       </div>
     </section>

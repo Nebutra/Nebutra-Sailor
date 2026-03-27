@@ -2,6 +2,7 @@
 
 // Config schema and types
 export {
+  ApiProtocolId,
   AppId,
   defineConfig,
   FeatureId,

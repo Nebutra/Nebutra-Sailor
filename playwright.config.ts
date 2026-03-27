@@ -18,10 +18,31 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
   ],
-  webServer: {
-    command: "pnpm --filter @nebutra/landing-page dev",
-    url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
+  webServer: [
+    {
+      command: "pnpm --filter @nebutra/landing-page dev",
+      url: "http://localhost:3000",
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+    },
+    {
+      command: "pnpm --filter @nebutra/api-gateway dev",
+      url: "http://localhost:3002/api/misc/health",
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+      env: {
+        PORT: "3002",
+        SKIP_ENV_VALIDATION: "true",
+      },
+    },
+    {
+      command: "pnpm --filter @nebutra/web dev --port 3001",
+      url: "http://localhost:3001",
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+      env: {
+        SKIP_ENV_VALIDATION: "true",
+      },
+    },
+  ],
 });

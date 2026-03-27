@@ -1,4 +1,4 @@
-import { eventBus } from "@nebutra/event-bus";
+import type { EventBus } from "@nebutra/event-bus";
 
 export interface SagaStep<TContext = unknown> {
   name: string;
@@ -17,11 +17,17 @@ export interface SagaResult<TContext = unknown> {
 /**
  * Saga Orchestrator for distributed transactions
  * Executes steps in order, compensates on failure
+ *
+ * Accepts an EventBus instance via constructor for testability —
+ * production code passes the real eventBus, tests can supply a stub.
  */
 export class SagaOrchestrator<TContext = unknown> {
   private steps: SagaStep<TContext>[] = [];
 
-  constructor(private name: string) {}
+  constructor(
+    private name: string,
+    private readonly eventBus: EventBus,
+  ) {}
 
   /**
    * Add a step to the saga
@@ -39,8 +45,8 @@ export class SagaOrchestrator<TContext = unknown> {
     let context = initialContext;
 
     // Emit saga started event
-    await eventBus.publish(
-      eventBus.createEvent("saga.started", {
+    await this.eventBus.publish(
+      this.eventBus.createEvent("saga.started", {
         saga: this.name,
         steps: this.steps.map((s) => s.name),
       }),
@@ -53,16 +59,16 @@ export class SagaOrchestrator<TContext = unknown> {
           context = await step.execute(context);
           completedSteps.push(step.name);
 
-          await eventBus.publish(
-            eventBus.createEvent("saga.step.completed", {
+          await this.eventBus.publish(
+            this.eventBus.createEvent("saga.step.completed", {
               saga: this.name,
               step: step.name,
             }),
           );
         } catch (error) {
           // Step failed, start compensation
-          await eventBus.publish(
-            eventBus.createEvent("saga.step.failed", {
+          await this.eventBus.publish(
+            this.eventBus.createEvent("saga.step.failed", {
               saga: this.name,
               step: step.name,
               error: error instanceof Error ? error.message : String(error),
@@ -83,8 +89,8 @@ export class SagaOrchestrator<TContext = unknown> {
       }
 
       // All steps completed
-      await eventBus.publish(
-        eventBus.createEvent("saga.completed", {
+      await this.eventBus.publish(
+        this.eventBus.createEvent("saga.completed", {
           saga: this.name,
           completedSteps,
         }),
@@ -109,8 +115,8 @@ export class SagaOrchestrator<TContext = unknown> {
    * Execute compensation steps in reverse order
    */
   private async compensate(context: TContext, completedSteps: string[]): Promise<void> {
-    await eventBus.publish(
-      eventBus.createEvent("saga.compensating", {
+    await this.eventBus.publish(
+      this.eventBus.createEvent("saga.compensating", {
         saga: this.name,
         steps: completedSteps,
       }),
@@ -124,15 +130,15 @@ export class SagaOrchestrator<TContext = unknown> {
       if (step?.compensate) {
         try {
           await step.compensate(context);
-          await eventBus.publish(
-            eventBus.createEvent("saga.compensation.completed", {
+          await this.eventBus.publish(
+            this.eventBus.createEvent("saga.compensation.completed", {
               saga: this.name,
               step: stepName,
             }),
           );
         } catch (error) {
-          await eventBus.publish(
-            eventBus.createEvent("saga.compensation.failed", {
+          await this.eventBus.publish(
+            this.eventBus.createEvent("saga.compensation.failed", {
               saga: this.name,
               step: stepName,
               error: error instanceof Error ? error.message : String(error),
@@ -147,6 +153,9 @@ export class SagaOrchestrator<TContext = unknown> {
 /**
  * Create a new saga
  */
-export function createSaga<TContext = unknown>(name: string): SagaOrchestrator<TContext> {
-  return new SagaOrchestrator<TContext>(name);
+export function createSaga<TContext = unknown>(
+  name: string,
+  eventBus: EventBus,
+): SagaOrchestrator<TContext> {
+  return new SagaOrchestrator<TContext>(name, eventBus);
 }

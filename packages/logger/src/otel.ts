@@ -1,9 +1,14 @@
+import { type Meter, metrics } from "@opentelemetry/api";
 import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
+import { OTLPMetricExporter } from "@opentelemetry/exporter-metrics-otlp-http";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
+import { PeriodicExportingMetricReader } from "@opentelemetry/sdk-metrics";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { ParentBasedSampler, TraceIdRatioBasedSampler } from "@opentelemetry/sdk-trace-node";
 
 let sdk: NodeSDK | null = null;
+let httpRequestCounter: ReturnType<Meter["createCounter"]> | null = null;
+let httpErrorCounter: ReturnType<Meter["createCounter"]> | null = null;
 
 /**
  * Initialize OpenTelemetry SDK.
@@ -36,10 +41,16 @@ export function initOtel(opts: { serviceName: string }): void {
     ),
   });
 
+  const metricReader = new PeriodicExportingMetricReader({
+    exporter: new OTLPMetricExporter(),
+    exportIntervalMillis: isProduction ? 60_000 : 10_000,
+  });
+
   sdk = new NodeSDK({
     serviceName,
     sampler,
     traceExporter: new OTLPTraceExporter(),
+    metricReader,
     instrumentations: [
       getNodeAutoInstrumentations({
         // fs instrumentation is extremely noisy — generates spans for every file read
@@ -50,8 +61,38 @@ export function initOtel(opts: { serviceName: string }): void {
 
   sdk.start();
 
-  // Flush pending spans before the process exits
+  // Create HTTP counters after SDK is started so the MeterProvider is registered
+  const meter = metrics.getMeter(serviceName);
+  httpRequestCounter = meter.createCounter("http.server.request.count", {
+    description: "Total number of HTTP requests received",
+  });
+  httpErrorCounter = meter.createCounter("http.server.error.count", {
+    description: "Total number of HTTP error responses (4xx/5xx)",
+  });
+
+  // Flush pending spans and metrics before the process exits
   process.on("SIGTERM", async () => {
     await sdk?.shutdown();
   });
+}
+
+/**
+ * Return a named OTel Meter. Falls back to a no-op meter when OTEL is disabled.
+ */
+export function getMeter(name: string): Meter {
+  return metrics.getMeter(name);
+}
+
+/**
+ * Increment the HTTP request counter. No-op when OTEL is disabled.
+ */
+export function recordHttpRequest(attributes?: Record<string, string>): void {
+  httpRequestCounter?.add(1, attributes);
+}
+
+/**
+ * Increment the HTTP error counter. No-op when OTEL is disabled.
+ */
+export function recordHttpError(attributes?: Record<string, string>): void {
+  httpErrorCounter?.add(1, attributes);
 }

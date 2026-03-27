@@ -37,15 +37,15 @@ Standard page containers constrain content to readable line lengths.
 <div className="mx-auto max-w-md">
 ```
 
-| Name | Max width | Usage |
-|------|-----------|-------|
-| `max-w-sm` | 384px | Narrow cards, modals |
-| `max-w-md` | 448px | Forms, dialogs |
-| `max-w-lg` | 512px | Wide modals |
-| `max-w-2xl` | 672px | Prose, documentation |
-| `max-w-4xl` | 896px | Feature sections |
-| `max-w-6xl` | 1152px | Dashboard layouts |
-| `max-w-7xl` | 1280px | Full product layouts |
+| Name | Max width | CSS Variable | Usage |
+|------|-----------|-------------|-------|
+| `max-w-sm` | 384px | — | Narrow cards, modals |
+| `max-w-md` | 448px | — | Forms, dialogs |
+| `max-w-lg` | 512px | — | Wide modals |
+| `max-w-2xl` | 672px | — | Prose, documentation |
+| `max-w-4xl` | 896px | `--container-text` | Text-focused sections (hero copy, CTA, FAQ) |
+| `max-w-6xl` | 1152px | `--container-content` | Dashboard layouts, pricing, architecture |
+| `max-w-[1400px]` | 1400px | `--container-wide` | Landing page sections, feature bento, navbar, testimonials |
 
 ---
 

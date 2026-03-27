@@ -24,6 +24,7 @@
     "@vercel/speed-insights": "^1.3.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cobe": "^0.6.5",
     "framer-motion": "^12.35.0",
     "lucide-react": "^0.577.0",
     "next": "^16.1.6",
@@ -36,6 +37,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@nebutra/eslint-config": "workspace:*",
     "@next/bundle-analyzer": "^16.1.6",
     "@tailwindcss/postcss": "^4.2.1",
     "@tailwindcss/typography": "0.0.0-insiders.3963dfe",

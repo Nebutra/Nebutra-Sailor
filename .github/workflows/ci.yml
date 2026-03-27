@@ -179,7 +179,7 @@ jobs:
         run: .venv/bin/ruff format --check .
 
       - name: Type check (mypy)
-        run: .venv/bin/mypy . --ignore-missing-imports --no-error-summary || true
+        run: .venv/bin/mypy . --ignore-missing-imports --no-error-summary
 
       - name: Security check (bandit)
         run: |
@@ -537,10 +537,18 @@ jobs:
             playwright-${{ runner.os }}-
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
       - name: Run E2E tests (shard ${{ matrix.shard }}/4)
         run: pnpm exec playwright test --shard=${{ matrix.shard }}/4
         env:
           CI: true
+          APP_BASE_URL: "http://localhost:3001"
+          API_BASE_URL: "http://localhost:3002"
+          SKIP_ENV_VALIDATION: "true"
+          DATABASE_URL: ${{ secrets.CI_DATABASE_URL || '' }}
+          CLERK_SECRET_KEY: ${{ secrets.CI_CLERK_SECRET_KEY || '' }}
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4

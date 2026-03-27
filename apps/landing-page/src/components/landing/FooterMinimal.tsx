@@ -107,7 +107,7 @@ export function FooterMinimal() {
         style={{ background: "var(--brand-gradient)" }}
       />
 
-      <div className="mx-auto max-w-7xl px-6 pt-16 pb-8">
+      <div className="mx-auto max-w-[1400px] px-6 pt-16 pb-8">
         {/* Main grid: Brand + Columns */}
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6 lg:gap-12">
           {/* Brand block — spans 2 cols on large */}

@@ -1,27 +1,12 @@
-import { Check } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { Building2, Check, Rocket, Sparkles, Star, User } from "lucide-react";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
+import { FooterMinimal, Navbar, PricingSection } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
-
-const TIERS = [
-  {
-    key: "standard",
-    ctaHref: "/sign-up",
-    highlighted: false,
-    featureKeys: ["f1", "f2", "f3", "f4"] as const,
-  },
-  {
-    key: "enterprise",
-    ctaHref: "/contact",
-    highlighted: true,
-    featureKeys: ["f1", "f2", "f3", "f4", "f5"] as const,
-  },
-] as const;
 
 export async function generateMetadata({
   params,
@@ -31,8 +16,8 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
 
-  const t = await getTranslations({ locale: lang, namespace: "metadata" });
-  const tp = await getTranslations({ locale: lang, namespace: "microLanding.pricing" });
+  const t = await getTranslations({ locale: lang as Locale, namespace: "metadata" });
+  const tp = await getTranslations({ locale: lang as Locale, namespace: "microLanding.pricing" });
   return {
     title: `${tp("title")} — ${t("title")}`,
     description: tp("description"),
@@ -51,10 +36,12 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
   const { lang } = await params;
   setRequestLocale(lang as Locale);
 
-  // @ts-expect-error — microLanding namespace not in generated type map
-  const pricing = await getTranslations({ locale: lang, namespace: "microLanding.pricing" });
-  // @ts-expect-error — microLanding namespace not in generated type map
-  const faq = await getTranslations({ locale: lang, namespace: "microLanding.faq" });
+  const pricing = await getTranslations({
+    locale: lang as Locale,
+    namespace: "microLanding.pricing",
+  });
+
+  const faq = await getTranslations({ locale: lang as Locale, namespace: "microLanding.faq" });
 
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-black">
@@ -76,87 +63,68 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
               {pricing("title")}
             </h1>
             <p className="mt-4 text-lg text-[var(--neutral-11)]">{pricing("description")}</p>
+
+            {/* Social Proof & Framework Switcher */}
+            <div className="mt-8 flex flex-col items-center justify-center gap-6">
+              {/* Avatar Group */}
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="flex -space-x-3">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div
+                      key={i}
+                      className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted dark:bg-zinc-800"
+                    >
+                      <User className="h-5 w-5 text-muted-foreground" />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-col items-center sm:items-start gap-1">
+                  <div className="flex text-amber-500">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star key={i} className="h-4 w-4 fill-current" />
+                    ))}
+                  </div>
+                  <p
+                    className="text-sm text-muted-foreground font-medium"
+                    dangerouslySetInnerHTML={{
+                      __html: pricing.markup("socialProofText", {
+                        highlight: (chunks) =>
+                          `<span class='text-foreground font-semibold'>${chunks}</span>`,
+                      }),
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Framework Switcher */}
+              <div className="mt-2 flex flex-col items-center gap-3">
+                <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                  {pricing("frameworkText")}
+                </p>
+                <div className="inline-flex items-center rounded-full border border-border/40 bg-muted/20 p-1 backdrop-blur-sm shadow-sm">
+                  <span className="flex items-center gap-2 rounded-full bg-background/90 dark:bg-zinc-800 px-4 py-1.5 text-sm font-medium text-foreground shadow-sm">
+                    {/* SVG inline for Next.js to avoid external loads */}
+                    <svg viewBox="0 0 180 180" width="16" height="16" className="dark:invert">
+                      <path d="M90 0C40.294 0 0 40.294 0 90s40.294 90 90 90 90-40.294 90-90S139.706 0 90 0zm43.376 137.986l-39.77-62.115v56.772h-12.793V49.076h11.967l40.16 62.72v-62.72h12.792v88.91zM90 166.402c-42.197 0-76.402-34.205-76.402-76.402S47.803 13.598 90 13.598 166.402 47.803 166.402 90s-34.205 76.402-76.402 76.402z" />
+                    </svg>
+                    {pricing("frameworkNext")}
+                  </span>
+                  <span className="flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground grayscale cursor-not-allowed">
+                    {pricing("frameworkNuxt")}
+                  </span>
+                  <span className="flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground opacity-50 cursor-not-allowed">
+                    {pricing("frameworkTanStack")}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </AnimateIn>
 
-        {/* Pricing cards — 2 tier grid */}
-        <AnimateInGroup
-          stagger="normal"
-          className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 max-w-4xl mx-auto"
-        >
-          {TIERS.map((tier) => (
-            <AnimateIn key={tier.key} preset="fadeUp">
-              <div
-                className={[
-                  "relative flex flex-col rounded-2xl border p-8 shadow-sm transition-shadow hover:shadow-md",
-                  tier.highlighted
-                    ? "border-transparent bg-[var(--neutral-1)]"
-                    : "border-[var(--neutral-7)] bg-[var(--neutral-1)]",
-                ].join(" ")}
-              >
-                {/* Gradient border for highlighted tier */}
-                {tier.highlighted && (
-                  <div
-                    className="absolute inset-0 -z-10 rounded-2xl p-[1px]"
-                    style={{ background: "var(--brand-gradient)" }}
-                    aria-hidden
-                  />
-                )}
-
-                {/* Badge */}
-                <span
-                  className={[
-                    "mb-6 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold",
-                    tier.highlighted
-                      ? "text-white"
-                      : "border border-[var(--neutral-7)] text-[var(--neutral-11)]",
-                  ].join(" ")}
-                  style={tier.highlighted ? { background: "var(--brand-gradient)" } : {}}
-                >
-                  {pricing(`${tier.key}.badge`)}
-                </span>
-
-                <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-bold text-[var(--neutral-12)]">
-                    {pricing(`${tier.key}.price`)}
-                  </span>
-                  <span className="text-sm text-[var(--neutral-11)]">
-                    / {pricing(`${tier.key}.period`)}
-                  </span>
-                </div>
-
-                <p className="mt-3 text-sm text-[var(--neutral-11)]">
-                  {pricing(`${tier.key}.desc`)}
-                </p>
-
-                <a
-                  href={tier.ctaHref}
-                  className={[
-                    "mt-8 block rounded-lg px-6 py-3 text-center text-sm font-semibold transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2",
-                    tier.highlighted
-                      ? "text-white"
-                      : "border border-[var(--neutral-7)] text-[var(--neutral-12)] hover:bg-[var(--neutral-2)]",
-                  ].join(" ")}
-                  style={tier.highlighted ? { background: "var(--brand-gradient)" } : {}}
-                >
-                  {pricing(`${tier.key}.cta`)}
-                </a>
-
-                <ul className="mt-8 space-y-3">
-                  {tier.featureKeys.map((fKey) => (
-                    <li
-                      key={fKey}
-                      className="flex items-start gap-3 text-sm text-[var(--neutral-11)]"
-                    >
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--blue-9)]" aria-hidden />
-                      {pricing(`${tier.key}.${fKey}`)}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </AnimateIn>
-          ))}
-        </AnimateInGroup>
+        {/* Pricing cards — 3 tier grid */}
+        <div className="mt-16">
+          <PricingSection />
+        </div>
 
         {/* FAQ section */}
         <div className="mt-24">
@@ -175,13 +143,13 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
               <AnimateIn key={qKey} preset="fadeUp">
                 <details className="group py-6">
                   <summary className="flex cursor-pointer items-center justify-between text-left font-medium text-[var(--neutral-12)]">
-                    {faq(`${qKey}.q`)}
+                    {faq(`${qKey}.q` as any)}
                     <span className="ml-4 shrink-0 text-[var(--neutral-11)] transition-transform group-open:rotate-45">
                       +
                     </span>
                   </summary>
                   <p className="mt-3 text-sm leading-relaxed text-[var(--neutral-11)]">
-                    {faq(`${qKey}.a`)}
+                    {faq(`${qKey}.a` as any)}
                   </p>
                 </details>
               </AnimateIn>

@@ -105,6 +105,21 @@ export const primitiveSpacing = {
 
 export type PrimitiveSpacing = keyof typeof primitiveSpacing;
 
+// ─── Layout Containers (px) — max-width standards ────────────────────────────
+// Use `text` for text-heavy sections (hero copy, CTA), `content` for general
+// sections, and `wide` for full-bleed feature bento grids.
+
+export const primitiveContainer = {
+  /** Text-focused: hero headlines, CTA copy, FAQ — optimized for reading */
+  text: 896, // ~56rem / max-w-4xl
+  /** Standard content sections: pricing, architecture, blog */
+  content: 1152, // ~72rem / max-w-6xl
+  /** Wide sections: feature bento, testimonials, product demos */
+  wide: 1400, // ~87.5rem — Vercel/Supabase standard
+} as const;
+
+export type PrimitiveContainer = keyof typeof primitiveContainer;
+
 // ─── Sizing Scale — component heights (px) ────────────────────────────────────
 
 export const primitiveSizing = {

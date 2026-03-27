@@ -38,6 +38,7 @@ vi.mock("@nebutra/logger", () => ({
 
 import { tenantContextMiddleware } from "@/middlewares/tenantContext.js";
 import { eventRoutes } from "../routes/events/ingest.js";
+import { s2sHeaders, TEST_SERVICE_SECRET } from "./helpers/s2s-token.js";
 
 // ---------------------------------------------------------------------------
 // Minimal wrapper app — mirrors how index.ts mounts eventRoutes
@@ -51,9 +52,7 @@ app.route("/", eventRoutes);
 // Helpers
 // ---------------------------------------------------------------------------
 
-const AUTH_HEADERS = {
-  "x-user-id": "user-123",
-};
+const AUTH_HEADERS = s2sHeaders({ userId: "user-123" });
 
 function jsonRequest(path: string, body?: unknown, extraHeaders?: Record<string, string>) {
   const opts: RequestInit = {
@@ -92,6 +91,7 @@ const validEvent = {
 
 beforeEach(() => {
   vi.restoreAllMocks();
+  process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
 });
 
 // ===========================================================================
@@ -111,7 +111,7 @@ describe("POST /ingest — authentication", () => {
     const res = await jsonRequest(
       "/ingest",
       { events: [validEvent] },
-      { "x-organization-id": "org-456" },
+      s2sHeaders({ orgId: "org-456" }),
     );
 
     expect(res.status).toBe(401);
@@ -238,7 +238,7 @@ describe("POST /ingest — upstream proxy", () => {
     await jsonRequest(
       "/ingest",
       { events: [validEvent] },
-      { ...AUTH_HEADERS, "x-organization-id": "org-789" },
+      s2sHeaders({ userId: "user-123", orgId: "org-789" }),
     );
 
     expect(fetchSpy).toHaveBeenCalledOnce();

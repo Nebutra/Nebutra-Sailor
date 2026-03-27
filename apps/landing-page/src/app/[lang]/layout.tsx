@@ -123,6 +123,7 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
 
+  setRequestLocale(lang as any);
   const t = await getTranslations({ locale: lang, namespace: "metadata" });
 
   // Build hreflang map: each locale → its canonical URL prefix

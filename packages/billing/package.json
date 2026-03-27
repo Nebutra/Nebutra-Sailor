@@ -15,6 +15,10 @@
       "import": "./dist/stripe/index.js",
       "types": "./dist/stripe/index.d.ts"
     },
+    "./polar": {
+      "import": "./dist/polar/index.js",
+      "types": "./dist/polar/index.d.ts"
+    },
     "./subscriptions": {
       "import": "./dist/subscriptions/index.js",
       "types": "./dist/subscriptions/index.d.ts"
@@ -30,6 +34,14 @@
     "./entitlements": {
       "import": "./dist/entitlements/index.js",
       "types": "./dist/entitlements/index.d.ts"
+    },
+    "./lemonsqueezy": {
+      "import": "./dist/lemonsqueezy/index.js",
+      "types": "./dist/lemonsqueezy/index.d.ts"
+    },
+    "./chinapay": {
+      "import": "./dist/chinapay/index.js",
+      "types": "./dist/chinapay/index.d.ts"
     }
   },
   "scripts": {
@@ -38,8 +50,10 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
+    "@lemonsqueezy/lemonsqueezy.js": "^4.0.0",
     "@nebutra/contracts": "workspace:*",
     "@nebutra/logger": "workspace:*",
+    "@polar-sh/sdk": "^0.46.7",
     "@prisma/client": "^7.4.2",
     "stripe": "^20.4.0",
     "zod": "^4.3.6"

@@ -1,0 +1,39 @@
+name: Dead Code Detection
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "packages/**"
+      - "apps/**"
+      - "knip.json"
+  schedule:
+    - cron: "0 4 * * 1" # Weekly Monday 04:00 UTC
+
+concurrency:
+  group: dead-code-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  knip:
+    name: Knip (unused exports & dependencies)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Knip
+        run: pnpm knip --reporter compact

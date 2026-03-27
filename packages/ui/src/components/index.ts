@@ -48,7 +48,6 @@ export {
   SideNav,
   Tag,
   TextArea,
-  ThemeProvider,
   Tooltip,
 } from "@lobehub/ui";
 // Spotlight (moved to @lobehub/ui/awesome in v5)

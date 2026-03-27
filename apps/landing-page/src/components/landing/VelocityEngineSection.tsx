@@ -33,7 +33,7 @@ export function VelocityEngineSection() {
       {/* Ambient background light */}
       <div className="absolute top-1/2 left-1/4 w-[800px] h-[800px] -translate-y-1/2 -translate-x-1/2 bg-primary/10 blur-[120px] rounded-full pointer-events-none opacity-50 dark:opacity-30 mix-blend-screen" />
 
-      <div className="mx-auto max-w-7xl px-4 md:px-6 relative z-10">
+      <div className="mx-auto max-w-[1400px] px-4 md:px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* ML-5.1: Time-to-Market Speedometer */}
           <AnimateIn preset="emerge" inView>
@@ -144,6 +144,19 @@ export function VelocityEngineSection() {
             </AnimateInGroup>
           </div>
         </div>
+
+        {/* Preset System hint */}
+        <AnimateIn preset="fadeUp" inView>
+          <div className="mt-16 mx-auto max-w-3xl rounded-2xl border border-primary/20 bg-primary/5 backdrop-blur-xl px-8 py-6 text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-2">
+              {t("presetHint.badge")}
+            </p>
+            <p className="text-base md:text-lg font-semibold text-foreground">
+              {t("presetHint.message")}
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">{t("presetHint.detail")}</p>
+          </div>
+        </AnimateIn>
       </div>
     </section>
   );

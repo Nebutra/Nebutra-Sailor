@@ -54,7 +54,7 @@ export function PricingPage() {
 | Prop | Type | Default | Description |
 |---|---|---|---|
 | `as` | `"section" \| "div" \| "article"` | `"section"` | HTML element to render as the outer wrapper |
-| `size` | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `"lg"` | Max-width constraint applied to the inner content wrapper |
+| `size` | `"sm" \| "md" \| "lg" \| "xl" \| "wide" \| "full"` | `"lg"` | Max-width constraint applied to the inner content wrapper |
 | `spacing` | `"sm" \| "md" \| "lg" \| "xl"` | `"md"` | Vertical padding applied to the outer wrapper |
 | `centered` | `boolean` | `true` | When `true`, the inner wrapper is horizontally centered via `mx-auto` |
 | `noPadding` | `boolean` | `false` | Removes the default horizontal `px-4 sm:px-6 lg:px-8` padding |
@@ -69,6 +69,7 @@ export function PricingPage() {
 | `md` | `max-w-5xl` (64rem) |
 | `lg` | `max-w-6xl` (72rem) |
 | `xl` | `max-w-7xl` (80rem) |
+| `wide` | `max-w-[1400px]` (87.5rem) — landing page sections, feature bento |
 | `full` | No max-width constraint |
 
 #### `spacing` values

@@ -1,21 +1,24 @@
 import { AnimatedGradientText } from "@nebutra/ui/primitives";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 
+import type { Locale } from "@/i18n/routing";
+
 export async function generateMetadata(props: { params: Promise<{ lang: string }> }) {
   const { lang } = await props.params;
-  // @ts-expect-error - The locale is dynamically router-validated
-  const t = await getTranslations({ locale: lang, namespace: "nav" });
+  setRequestLocale(lang as Locale);
+
+  const t = await getTranslations({ locale: lang as Locale, namespace: "nav" });
   return { title: `${t("roadmap")} - Nebutra` };
 }
 
 export default async function RoadmapPage(props: { params: Promise<{ lang: string }> }) {
   const { lang } = await props.params;
-  // @ts-expect-error - The locale is dynamically router-validated
-  const tNav = await getTranslations({ locale: lang, namespace: "nav" });
-  // @ts-expect-error
-  const t = await getTranslations({ locale: lang, namespace: "comingSoon" });
+  setRequestLocale(lang as Locale);
+
+  const t = await getTranslations({ locale: lang as Locale, namespace: "comingSoon" });
+  const tNav = await getTranslations({ locale: lang as Locale, namespace: "nav" });
 
   return (
     <>

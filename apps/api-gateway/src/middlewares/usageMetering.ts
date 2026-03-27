@@ -16,31 +16,28 @@
  *   - ClickHouse ETL pipeline  → long-term usage analytics
  */
 
+import { getRedis, type Redis } from "@nebutra/cache";
 import { logger } from "@nebutra/logger";
 import type { Context, Next } from "hono";
 
-// Redis client — Upstash REST API compatible
-// Falls back gracefully when REDIS_URL is not set (local dev).
-let redis: {
-  incr: (key: string) => Promise<number>;
-  expire: (key: string, seconds: number) => Promise<number>;
-  get: (key: string) => Promise<string | null>;
-} | null = null;
+// Cached Redis reference — `undefined` means not yet resolved,
+// `null` means credentials are missing (local dev no-op).
+let cachedRedis: Redis | null | undefined;
 
-async function getRedis() {
-  if (redis) return redis;
+/**
+ * Attempt to get Redis client, returning null if not configured.
+ * Wraps @nebutra/cache's getRedis() which throws on missing credentials.
+ * Result is cached so the singleton is resolved at most once.
+ */
+function getRedisOptional(): Redis | null {
+  if (cachedRedis !== undefined) return cachedRedis;
 
-  const url = process.env.REDIS_URL ?? process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-
-  if (!url || !token) {
-    return null; // no-op in local dev
+  try {
+    cachedRedis = getRedis();
+  } catch {
+    cachedRedis = null;
   }
-
-  // Lazy import — only loaded when Redis is configured
-  const { Redis } = await import("@upstash/redis");
-  redis = new Redis({ url, token });
-  return redis;
+  return cachedRedis;
 }
 
 // ── Billing period key ─────────────────────────────────────────────────────
@@ -95,7 +92,7 @@ export async function usageMeteringMiddleware(c: Context, next: Next) {
   // Best-effort: fire and forget
   void (async () => {
     try {
-      const r = await getRedis();
+      const r = getRedisOptional();
       if (!r) return;
 
       await r.incr(apiCallKey);
@@ -108,13 +105,8 @@ export async function usageMeteringMiddleware(c: Context, next: Next) {
         const tokenKey = `usage:${orgId}:${period}:ai_tokens`;
         const count = parseInt(tokensUsed, 10);
         if (!Number.isNaN(count) && count > 0) {
-          // Upstash Redis supports INCRBY via raw commands
-          const rawRedis = r as unknown as {
-            incrby: (key: string, n: number) => Promise<number>;
-            expire: (key: string, s: number) => Promise<number>;
-          };
-          await rawRedis.incrby(tokenKey, count);
-          await rawRedis.expire(tokenKey, TTL_SECONDS);
+          await r.incrby(tokenKey, count);
+          await r.expire(tokenKey, TTL_SECONDS);
         }
       }
     } catch (err) {
@@ -137,7 +129,7 @@ export async function getUsageSnapshot(orgId: string, period?: string): Promise<
   const p = period ?? billingPeriod();
 
   try {
-    const r = await getRedis();
+    const r = getRedisOptional();
     if (!r) {
       return { orgId, period: p, apiCalls: 0, aiTokens: 0 };
     }
@@ -150,8 +142,8 @@ export async function getUsageSnapshot(orgId: string, period?: string): Promise<
     return {
       orgId,
       period: p,
-      apiCalls: callsRaw ? parseInt(callsRaw, 10) : 0,
-      aiTokens: tokensRaw ? parseInt(tokensRaw, 10) : 0,
+      apiCalls: callsRaw ? Number(callsRaw) : 0,
+      aiTokens: tokensRaw ? Number(tokensRaw) : 0,
     };
   } catch (err) {
     logger.warn("Usage snapshot read failed", { orgId, err });

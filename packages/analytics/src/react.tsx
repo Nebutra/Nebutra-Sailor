@@ -66,7 +66,7 @@ export function AnalyticsProvider({
   });
 
   const userIdRef = useRef<string | null>(null);
-  const sessionIdRef = useRef<string>(generateSessionId());
+  const sessionIdRef = useRef<string | null>(null);
 
   // Check Do Not Track
   const doNotTrack =
@@ -83,6 +83,10 @@ export function AnalyticsProvider({
       if (!canTrack) {
         if (debug) console.warn("[Analytics] Tracking disabled, skipping:", eventType);
         return;
+      }
+
+      if (!sessionIdRef.current) {
+        sessionIdRef.current = generateSessionId();
       }
 
       const payload = {

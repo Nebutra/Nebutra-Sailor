@@ -72,7 +72,7 @@ export function Navbar() {
           : "bg-transparent",
       )}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2">
           <Logomark size={32} variant={isDark ? "inverse" : "color"} className="md:hidden" />
           <Logo variant="en" size={150} inverted={isDark} className="hidden md:block" />

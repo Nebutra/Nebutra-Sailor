@@ -70,7 +70,7 @@ export function CapabilityMatrixSection() {
       {/* Subtle Glows */}
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="mx-auto max-w-7xl px-4 md:px-6 relative z-10">
+      <div className="mx-auto max-w-[1400px] px-4 md:px-6 relative z-10">
         {/* Section header */}
         <AnimateIn preset="emerge" inView className="mx-auto max-w-3xl text-center mb-16 md:mb-24">
           <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 mb-6">
@@ -204,7 +204,7 @@ export function CapabilityMatrixSection() {
                       pathWidth={1.5}
                       pathOpacity={0.6}
                       gradientStartColor="var(--color-primary, #0033FE)"
-                      gradientStopColor="#0BF1C3"
+                      gradientStopColor="var(--brand-accent)"
                     />
                   ))}
                 </div>

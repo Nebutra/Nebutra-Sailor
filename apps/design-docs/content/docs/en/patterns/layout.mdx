@@ -63,6 +63,9 @@ Use this pattern for:
 ```tsx
 import { Container } from "@nebutra/ui";
 
+// wide = max-w-[1400px] — landing page sections, feature bento
+<Container size="wide">…</Container>
+
 // xl = max-w-7xl (1280px) — standard dashboard width
 <Container size="xl">…</Container>
 
@@ -75,13 +78,14 @@ import { Container } from "@nebutra/ui";
 
 Size reference:
 
-| Size | Max-width | Use |
-|---|---|---|
-| `sm` | 544px | Narrow modals, confirmation dialogs |
-| `md` | 768px | Single-column content |
-| `lg` | 1012px | Settings, forms, docs |
-| `xl` | 1280px | Full dashboard pages |
-| `full` | 100% | Edge-to-edge tables, full bleed sections |
+| Size | Max-width | CSS Variable | Use |
+|---|---|---|---|
+| `sm` | 544px | — | Narrow modals, confirmation dialogs |
+| `md` | 768px | — | Single-column content |
+| `lg` | 1012px | — | Settings, forms, docs |
+| `xl` | 1280px | — | Full dashboard pages |
+| `wide` | 1400px | `--container-wide` | Landing page sections, feature bento, navbar |
+| `full` | 100% | — | Edge-to-edge tables, full bleed sections |
 
 ### PageHeader
 

@@ -23,6 +23,11 @@ export function getFeatureEnvVars(config: ResolvedConfig): Record<string, string
   vars.NEBUTRA_LOCALES = config.locales.join(",");
   vars.NEBUTRA_DEFAULT_LOCALE = config.defaultLocale;
 
+  // API protocol flags
+  vars.NEBUTRA_API_PROTOCOLS = config.apiProtocols.join(",");
+  vars.ENABLE_ORPC = String(config.apiProtocols.includes("orpc"));
+  vars.ENABLE_TRPC = String(config.apiProtocols.includes("trpc"));
+
   return vars;
 }
 

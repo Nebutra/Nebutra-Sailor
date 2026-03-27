@@ -1,3 +1,4 @@
+import type { EventBus } from "@nebutra/event-bus";
 import { createSaga, type SagaStep } from "../orchestrator";
 
 export interface OrderContext {
@@ -74,8 +75,8 @@ const sendConfirmationEmail: SagaStep<OrderContext> = {
 /**
  * Create and return the order saga
  */
-export function createOrderSaga() {
-  return createSaga<OrderContext>("ecommerce_order")
+export function createOrderSaga(eventBus: EventBus) {
+  return createSaga<OrderContext>("ecommerce_order", eventBus)
     .addStep(reserveInventory)
     .addStep(chargePayment)
     .addStep(createOrderRecord)
@@ -87,7 +88,8 @@ export function createOrderSaga() {
  */
 export async function executeOrderSaga(
   order: Omit<OrderContext, "inventoryReserved" | "paymentId" | "orderRecordId" | "emailSent">,
+  eventBus: EventBus,
 ) {
-  const saga = createOrderSaga();
+  const saga = createOrderSaga(eventBus);
   return saga.execute(order as OrderContext);
 }

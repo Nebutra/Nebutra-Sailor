@@ -25,6 +25,8 @@ const UNVERSIONED_ROUTE_PREFIXES = new Set([
   "/api/system", // Status endpoints
   "/api/webhooks", // Webhook receivers (Stripe, Clerk)
   "/api/inngest", // Background job handler
+  "/api/rpc", // oRPC protocol mount (versioning handled by oRPC internally)
+  "/api/trpc", // tRPC protocol mount (versioning handled by tRPC internally)
   "/misc", // Legacy health check alias
   "/system", // Legacy status alias
   "/openapi.json", // OpenAPI spec document

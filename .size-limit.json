@@ -6,6 +6,12 @@
     "import": "*"
   },
   {
+    "name": "@nebutra/ui (Button tree-shake)",
+    "path": "packages/ui/src/primitives/index.ts",
+    "limit": "50 kB",
+    "import": "{ Button }"
+  },
+  {
     "name": "@nebutra/tokens (CSS variables)",
     "path": "packages/tokens/styles.css",
     "limit": "10 kB"

@@ -87,6 +87,13 @@
   );
 
   /* ===========================================
+     Layout Containers — max-width standards
+     =========================================== */
+  --container-text: 896px;
+  --container-content: 1152px;
+  --container-wide: 1400px;
+
+  /* ===========================================
      12-Step Functional Color Scales (Light Mode)
 
      Geist-style state-aware semantics:

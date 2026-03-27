@@ -205,6 +205,18 @@ app.route("/api/webhooks", clerkWebhookRoutes);
 // Inngest background job handler (GET for SDK handshake, POST/PUT for execution)
 app.on(["GET", "POST", "PUT"], "/api/inngest", (c) => inngestHandler(c));
 
+// tRPC protocol (opt-in via ENABLE_TRPC=true)
+if (process.env.ENABLE_TRPC === "true") {
+  const { trpcApp } = await import("./trpc/adapter.js");
+  app.route("/api/trpc", trpcApp);
+}
+
+// oRPC protocol (opt-in via ENABLE_ORPC=true)
+if (process.env.ENABLE_ORPC === "true") {
+  const { orpcApp } = await import("./orpc/adapter.js");
+  app.route("/api/rpc", orpcApp);
+}
+
 // OpenAPI spec document (auto-generated from createRoute definitions)
 app.doc("/openapi.json", {
   openapi: "3.0.3",
