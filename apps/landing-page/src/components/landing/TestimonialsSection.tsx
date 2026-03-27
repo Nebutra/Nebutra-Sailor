@@ -1,9 +1,9 @@
 "use client";
 
-import { DiceBearAvatar } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { AnimateIn, AnimateInGroup } from "./AnimateIn";
+import { AnimateIn } from "./AnimateIn";
 import { DeploymentStats } from "./DeploymentStats";
+import { UniqueTestimonial } from "./testimonials/UniqueTestimonial";
 
 interface TestimonialsSectionProps {
   stars?: number;
@@ -14,27 +14,30 @@ export function TestimonialsSection({ stars }: TestimonialsSectionProps) {
 
   const TESTIMONIALS = [
     {
+      id: 1,
       quote: t("t1.quote"),
       author: t("t1.author"),
       role: t("t1.role"),
       seed: "sarah-chen",
     },
     {
+      id: 2,
       quote: t("t2.quote"),
       author: t("t2.author"),
       role: t("t2.role"),
       seed: "marcus-dev",
     },
     {
+      id: 3,
       quote: t("t3.quote"),
       author: t("t3.author"),
       role: t("t3.role"),
       seed: "emma-founder",
     },
-  ] as const;
+  ];
 
   return (
-    <section className="w-full bg-muted/20 py-24 md:py-32">
+    <section className="w-full bg-muted/20 py-24 md:py-32 overflow-hidden border-t border-border/50">
       <div className="mx-auto max-w-[1400px] px-4 md:px-6">
         <AnimateIn inView preset="emerge" className="mx-auto max-w-3xl text-center">
           <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
@@ -45,31 +48,13 @@ export function TestimonialsSection({ stars }: TestimonialsSectionProps) {
           </h2>
         </AnimateIn>
 
-        <AnimateInGroup inView stagger="normal" className="mt-16 grid gap-6 md:grid-cols-3">
-          {TESTIMONIALS.map((item) => (
-            <AnimateIn key={item.author} preset="fadeUp">
-              <article className="group flex h-full flex-col rounded-3xl border border-border/50 bg-background/50 backdrop-blur-xl p-8 transition-all hover:bg-muted/40 hover:border-primary/20 shadow-xl shadow-primary/5">
-                <p className="flex-1 text-base leading-relaxed text-muted-foreground italic mb-8">
-                  &quot;{item.quote}&quot;
-                </p>
-                <div className="flex items-center gap-3">
-                  <DiceBearAvatar
-                    seed={item.seed}
-                    avatarStyle="notionists-neutral"
-                    size="sm"
-                    className="border border-border/50 flex-shrink-0"
-                  />
-                  <div className="min-w-0">
-                    <p className="text-base font-bold text-foreground truncate">{item.author}</p>
-                    <p className="text-sm text-muted-foreground/80 truncate">{item.role}</p>
-                  </div>
-                </div>
-              </article>
-            </AnimateIn>
-          ))}
-        </AnimateInGroup>
+        <section className="mt-12 bg-background/50 backdrop-blur-xl border border-border/50 rounded-3xl mx-auto max-w-5xl shadow-2xl p-4 md:p-8">
+          <UniqueTestimonial testimonials={TESTIMONIALS} />
+        </section>
 
-        <DeploymentStats stars={stars} />
+        <div className="mt-20">
+          <DeploymentStats stars={stars} />
+        </div>
       </div>
     </section>
   );

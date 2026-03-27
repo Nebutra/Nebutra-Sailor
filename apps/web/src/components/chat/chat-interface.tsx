@@ -56,7 +56,7 @@ export function ChatInterface() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, []);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

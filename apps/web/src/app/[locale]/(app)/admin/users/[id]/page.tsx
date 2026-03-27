@@ -1,7 +1,7 @@
 import { clerkClient } from "@clerk/nextjs/server";
 import { ArrowLeft, Envelope, ShieldCheck, UserSettings } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Card, ErrorState } from "@nebutra/ui/layout";
+import { Card } from "@nebutra/ui/layout";
 import { Ban } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";

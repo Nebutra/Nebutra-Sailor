@@ -47,7 +47,7 @@ export function rehypeComponent() {
 
             // Inject the raw source string as a property called `code` into the React component
             // For mdxJsxFlowElement, properties are in 'attributes' array
-            mdxNode.attributes!.push({
+            mdxNode.attributes?.push({
               type: "mdxJsxAttribute",
               name: "code",
               value: rawSource,

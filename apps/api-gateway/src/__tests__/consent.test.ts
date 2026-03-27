@@ -177,7 +177,7 @@ describe("POST /consent", () => {
     expect(body.consentId).toBe("consent-1");
     expect(body.documentSlug).toBe("terms-of-service");
     expect(body.documentVersion).toBe("2024-01");
-    const createCall = (prisma.userConsent.create as ReturnType<typeof vi.fn>).mock.calls[0]![0];
+    const createCall = (prisma.userConsent.create as ReturnType<typeof vi.fn>).mock.calls[0]?.[0];
     expect(createCall.data.userId).toBe("user-123");
     expect(createCall.data.organizationId).toBe("org-456");
   });
@@ -238,7 +238,7 @@ describe("POST /consent", () => {
     });
 
     expect(res.status).toBe(200);
-    const createCall = (prisma.userConsent.create as ReturnType<typeof vi.fn>).mock.calls[0]![0];
+    const createCall = (prisma.userConsent.create as ReturnType<typeof vi.fn>).mock.calls[0]?.[0];
     expect(createCall.data.consentType).toBe("EXPLICIT");
   });
 });

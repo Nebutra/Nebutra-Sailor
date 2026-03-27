@@ -100,7 +100,7 @@ function resolveTokens(): Map<string, string> {
 
   while ((match = propPattern.exec(css)) !== null) {
     const name = `--${match[1]}`;
-    const value = match[2]!.trim();
+    const value = match[2]?.trim();
     map.set(name, value);
   }
 

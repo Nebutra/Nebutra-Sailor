@@ -203,7 +203,7 @@ export function StarsCanvas({
         }
 
         ctx!.globalAlpha = this.alpha;
-        ctx!.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
+        ctx?.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
         this.timePassed += this.speed;
       }
     }

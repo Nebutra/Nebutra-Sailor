@@ -376,7 +376,7 @@ export function CosmicSpectrum({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [currentColors, isDarkTheme, subtitle]);
+  }, []);
 
   useEffect(() => {
     let cleanup: (() => void) | undefined;

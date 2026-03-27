@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface PricingPlan {
   name: string;
   price: string;

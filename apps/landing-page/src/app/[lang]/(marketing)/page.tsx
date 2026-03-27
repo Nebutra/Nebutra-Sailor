@@ -1,13 +1,4 @@
-import { LogomarkSVG } from "@nebutra/brand";
-import { ArrowRight, CheckCircle, Database, Shield } from "@nebutra/icons";
-import {
-  ClerkIcon,
-  NextjsIcon,
-  PrismaIcon,
-  StripeIcon,
-  SupabaseIcon,
-  TailwindIcon,
-} from "@nebutra/ui/icons";
+import { ArrowRight, Database, Shield } from "@nebutra/icons";
 import dynamic from "next/dynamic";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
@@ -19,7 +10,7 @@ import {
   Navbar,
   PricingSection,
 } from "@/components/landing";
-import { FALLBACK_POSTS } from "@/lib/blog-fallback";
+
 import { getGitHubStars } from "@/lib/github";
 
 const ProductShowcase = dynamic(
@@ -91,18 +82,12 @@ const DesignSystemSection = dynamic(
   { loading: () => <section className="h-96" aria-hidden /> },
 );
 
-const BlogShowcase = dynamic(() => import("@/components/landing").then((mod) => mod.BlogShowcase), {
-  loading: () => <section className="h-72" aria-hidden />,
-});
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  Badge,
   Button,
-  Card,
 } from "@nebutra/ui/primitives";
 
 import type { Locale } from "@/i18n/routing";
@@ -163,9 +148,6 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
         {/* 7. Testimonials */}
         <TestimonialsSection stars={stars} />
-
-        {/* 7.5 Blog Showcase */}
-        <BlogShowcase posts={FALLBACK_POSTS} />
 
         {/* 7.8 Design System */}
         <DesignSystemSection />

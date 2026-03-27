@@ -76,7 +76,7 @@ export function EndorsementDialog({ onSubmitted }: EndorsementDialogProps) {
   // Avatar priority: custom upload > OAuth image > DiceBear
   const profileImage =
     previewUrl ??
-    (isAuthenticated ? (session!.user!.image ?? null) : null) ??
+    (isAuthenticated ? (session?.user?.image ?? null) : null) ??
     dicebearUrl(displayName);
 
   // Clear pending close timer on unmount

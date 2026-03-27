@@ -87,7 +87,7 @@ test.describe("FooterMinimal", () => {
     for (let i = 0; i < count; i++) {
       const label = await socialLinks.nth(i).getAttribute("aria-label");
       // Labels should be descriptive (not just "x" or "github")
-      expect(label!.length).toBeGreaterThan(2);
+      expect(label?.length).toBeGreaterThan(2);
     }
   });
 
@@ -132,7 +132,7 @@ test.describe("FooterMinimal", () => {
     expect(ariaLabel, "Email input needs aria-label").toBeTruthy();
 
     const placeholder = await emailInput.getAttribute("placeholder");
-    expect(placeholder!.length).toBeGreaterThan(0);
+    expect(placeholder?.length).toBeGreaterThan(0);
   });
 
   test("newsletter email input has focus ring style", async ({ page }) => {

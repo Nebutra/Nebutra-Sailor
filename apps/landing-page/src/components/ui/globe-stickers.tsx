@@ -122,14 +122,14 @@ export function GlobeStickers({
       if (width === 0 || globe) return;
 
       globe = createGlobe(canvas, {
-        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-        width,
-        height: width,
+        devicePixelRatio: 2,
+        width: width * 2,
+        height: width * 2,
         phi: 0,
         theta: 0.2,
         dark: 0,
         diffuse: 1.5,
-        mapSamples: 16000,
+        mapSamples: Math.min(60000, 16000), // Ensures high density
         mapBrightness: 8,
         baseColor: [1, 1, 1],
         markerColor: [0.39, 0.4, 0.94], // primary mapped to RGB approx
@@ -142,6 +142,9 @@ export function GlobeStickers({
           state.theta = 0.2 + thetaOffsetRef.current + dragOffset.current.theta;
 
           const w = canvas.offsetWidth;
+          state.width = w * 2;
+          state.height = w * 2;
+
           markers.forEach((m, i) => {
             const coords = getMarkerCoordinates(
               m.location[0],
@@ -204,6 +207,7 @@ export function GlobeStickers({
         style={{
           width: "100%",
           height: "100%",
+          contain: "layout paint size",
           cursor: "grab",
           opacity: 0,
           transition: "opacity 1.2s ease",

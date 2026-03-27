@@ -100,7 +100,7 @@ export function findBestModel(
   // Filter by capabilities
   if (criteria.capabilities?.length) {
     candidates = candidates.filter((m) =>
-      criteria.capabilities!.every((cap) =>
+      criteria.capabilities?.every((cap) =>
         m.capabilities.includes(cap as ProviderModel["capabilities"][number]),
       ),
     );

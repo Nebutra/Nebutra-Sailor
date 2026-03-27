@@ -1,5 +1,5 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Building2, Check, Rocket, Sparkles, Star, User } from "lucide-react";
+import { Star, User } from "lucide-react";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import { hasLocale } from "next-intl";
@@ -123,7 +123,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
 
         {/* Pricing cards — 3 tier grid */}
         <div className="mt-16">
-          <PricingSection />
+          <PricingSection hideHeader />
         </div>
 
         {/* FAQ section */}

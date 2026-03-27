@@ -27,10 +27,10 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
   const t = await getTranslations({ locale: lang as Locale, namespace: "legalPages.about" });
 
   const valueImages = [
-    "/images/about/agi.png",
-    "/images/about/security.png",
-    "/images/about/ergonomics.png",
-    "/images/about/scale.png",
+    "/images/about/agi-premium.png",
+    "/images/about/security-premium.png",
+    "/images/about/ergonomics-premium.png",
+    "/images/about/scale-premium.png",
   ];
 
   return (
@@ -57,7 +57,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             <div className="flex-1 w-full">
               <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden bg-muted/30 shadow-2xl">
                 <Image
-                  src="/images/about/hero.png"
+                  src="/images/about/hero-premium.png"
                   alt="Abstract Art"
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-700"

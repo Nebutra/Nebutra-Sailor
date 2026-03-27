@@ -32,7 +32,6 @@ import {
   LayoutGrid,
   LineChart,
   Lock,
-  LucideIcon,
   Mail,
   Megaphone,
   MonitorDot,

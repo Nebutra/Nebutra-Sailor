@@ -69,11 +69,25 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
       </section>
 
       {/* Main Feature Bento Grid */}
-      <section className="relative z-10 mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-        <AnimateInGroup stagger="normal" className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {LARGE_FEATURES.map((section) => (
-            <FeatureBentoCard key={section.categoryKey} {...section} t={t} />
-          ))}
+      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
+        <AnimateInGroup stagger="normal" className="grid grid-cols-1 md:grid-cols-6 gap-6">
+          {LARGE_FEATURES.map((section, idx) => {
+            return (
+              <div
+                key={section.categoryKey}
+                className={`
+                  ${idx === 0 ? "md:col-span-4" : ""}
+                  ${idx === 1 ? "md:col-span-2" : ""}
+                  ${idx === 2 ? "md:col-span-2" : ""}
+                  ${idx === 3 ? "md:col-span-4" : ""}
+                  ${idx === 4 ? "md:col-span-3" : ""}
+                  ${idx === 5 ? "md:col-span-3" : ""}
+                `}
+              >
+                <FeatureBentoCard {...section} t={t} />
+              </div>
+            );
+          })}
         </AnimateInGroup>
       </section>
 

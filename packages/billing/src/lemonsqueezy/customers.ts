@@ -1,6 +1,5 @@
 import {
   type Checkout,
-  type Customer,
   cancelSubscription as lsCancelSubscription,
   createCheckout as lsCreateCheckout,
   getCustomer as lsGetCustomer,

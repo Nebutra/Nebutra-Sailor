@@ -47,7 +47,7 @@ async function send(opts: {
     throw new Error(`Email send failed: ${error.message}`);
   }
 
-  return { id: data!.id };
+  return { id: data?.id };
 }
 
 // ── Templates ──────────────────────────────────────────────────────────────

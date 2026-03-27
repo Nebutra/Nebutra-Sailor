@@ -2,7 +2,7 @@ import { CheckCircle } from "@nebutra/icons";
 import { Badge, Button, Card } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 
-export function PricingSection() {
+export function PricingSection({ hideHeader = false }: { hideHeader?: boolean } = {}) {
   const t = useTranslations("microLanding.pricing");
 
   const TIERS = [
@@ -32,12 +32,14 @@ export function PricingSection() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-[400px] bg-primary/20 blur-[150px] pointer-events-none rounded-full" />
 
       <div className="container relative mx-auto px-4 max-w-[1400px]">
-        <div className="text-center mb-16 md:mb-24">
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">{t("title")}</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
-            {t("description")}
-          </p>
-        </div>
+        {!hideHeader && (
+          <div className="text-center mb-16 md:mb-24">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">{t("title")}</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
+              {t("description")}
+            </p>
+          </div>
+        )}
 
         <div className="grid md:grid-cols-3 gap-8 max-w-[1200px] mx-auto items-stretch">
           {TIERS.map((tier) => (

@@ -3,21 +3,13 @@
 import { motion } from "framer-motion";
 import {
   Activity,
-  Banknote,
   ChevronRight,
-  CircleDollarSign,
-  Coins,
-  CreditCard,
-  Euro,
   Image as ImageIcon,
-  Landmark,
   LayoutTemplate,
   MessageSquare,
-  ReceiptText,
   Sparkles,
   Terminal,
   Users,
-  Wallet,
 } from "lucide-react";
 import { GlobeStickers } from "@/components/ui/globe-stickers";
 

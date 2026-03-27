@@ -1,24 +1,132 @@
-import { Cpu, Shield, User } from "lucide-react";
+import {
+  BarChart3,
+  CheckCircle2,
+  Cpu,
+  Database,
+  Fingerprint,
+  Shield,
+  Terminal,
+} from "lucide-react";
 
 export function MultiTenantMockup() {
   return (
-    <div className="w-64 bg-background border border-border/50 shadow-xl rounded-xl overflow-hidden flex flex-col transform rotate-2 hover:rotate-0 transition-all duration-500">
-      <div className="p-3 border-b border-border/50 bg-muted/30 flex justify-between items-center">
-        <span className="text-xs font-semibold text-foreground">Team Members</span>
-        <div className="h-4 w-12 bg-primary/20 rounded-md"></div>
+    <div className="w-full max-w-[340px] bg-background dark:bg-[#0A0A0A] border border-border/60 dark:border-white/10 shadow-2xl rounded-t-[1.5rem] border-b-0 overflow-hidden font-mono text-[11px] leading-relaxed relative top-4 group-hover:top-2 transition-all duration-700">
+      <div className="flex items-center gap-1.5 px-4 py-3 bg-muted/30 dark:bg-white/5 border-b border-border/60 dark:border-white/5">
+        <div className="h-2.5 w-2.5 rounded-full bg-border dark:bg-zinc-700"></div>
+        <div className="h-2.5 w-2.5 rounded-full bg-border dark:bg-zinc-700"></div>
+        <div className="h-2.5 w-2.5 rounded-full bg-border dark:bg-zinc-700"></div>
+        <span className="ml-3 text-muted-foreground dark:text-zinc-500 text-[10px] uppercase font-bold tracking-widest">
+          query.ts
+        </span>
       </div>
-      <div className="p-3 space-y-3">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full bg-muted border border-border shrink-0 overflow-hidden flex items-center justify-center">
-              <User className="h-4 w-4 text-muted-foreground" />
-            </div>
-            <div className="flex-1 space-y-1.5">
-              <div className="h-2 w-16 bg-muted-foreground/40 rounded-full"></div>
-              <div className="h-1.5 w-24 bg-muted/70 rounded-full"></div>
-            </div>
-            <div className="h-5 w-12 border border-border/50 rounded-full flex items-center justify-center">
-              <div className="h-1.5 w-6 bg-muted-foreground/30 rounded-full"></div>
+      <div className="p-6 text-foreground dark:text-zinc-300">
+        <div className="text-muted-foreground dark:text-zinc-500 mb-3">
+          // Enterprise-grade RLS enforced transparently
+        </div>
+        <div>
+          <span className="text-primary dark:text-cyan-400">const</span> data{" "}
+          <span className="text-primary dark:text-cyan-400">=</span>{" "}
+          <span className="text-purple-600 dark:text-indigo-400">await</span> prisma.post.findMany(
+          {`{`}
+        </div>
+        <div className="pl-4 mt-1">where: {`{`}</div>
+        {/* Glow highlight for tenant enforcement */}
+        <div className="pl-8 text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-500/10 border-l-[3px] border-emerald-500 py-1 px-2 my-1">
+          tenantId: ctx.tenant.id
+        </div>
+        <div className="pl-4">{`}`}</div>
+        <div className="mt-1">{`});`}</div>
+      </div>
+    </div>
+  );
+}
+
+export function AIMockup() {
+  return (
+    <div className="relative w-full max-w-[340px] h-[180px] flex items-center justify-between px-2">
+      {/* Vercel-style clean nodes */}
+      <div className="z-10 h-12 w-12 rounded-2xl bg-background dark:bg-[#0A0A0B] border border-border/60 dark:border-white/10 flex items-center justify-center shadow-sm">
+        <Cpu className="h-5 w-5 text-foreground dark:text-zinc-200" />
+      </div>
+
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <svg className="w-full h-full" overflow="visible">
+          {/* Vercel uses extremely crisp, ultra-thin solid lines instead of thick dashed ones */}
+          <path
+            d="M 60 90 C 130 90, 150 40, 220 40"
+            fill="none"
+            stroke="currentColor"
+            className="text-border dark:text-white/10"
+            strokeWidth="1"
+          />
+          <path
+            d="M 60 90 C 130 90, 150 90, 220 90"
+            fill="none"
+            stroke="currentColor"
+            className="text-primary/50 dark:text-white/30"
+            strokeWidth="1.5"
+          />
+          <path
+            d="M 60 90 C 130 90, 150 140, 220 140"
+            fill="none"
+            stroke="currentColor"
+            className="text-border dark:text-white/10"
+            strokeWidth="1"
+          />
+        </svg>
+      </div>
+
+      <div className="z-10 flex flex-col gap-4">
+        {["OpenAI", "Anthropic", "DeepSeek"].map((provider, i) => (
+          <div
+            key={provider}
+            className={`h-8 px-4 rounded-full border flex items-center justify-center text-[11px] font-bold tracking-wide transition-all duration-300 ${i === 1 ? "bg-primary dark:bg-white border-primary dark:border-white text-primary-foreground dark:text-black shadow-md" : "bg-background dark:bg-[#0A0A0A] border-border/60 dark:border-white/10 text-muted-foreground dark:text-zinc-400 hover:bg-muted/50 dark:hover:bg-white/5"}`}
+          >
+            {provider}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function SecurityMockup() {
+  return (
+    <div className="w-full max-w-[320px] bg-background dark:bg-[#0A0A0A] border border-border/60 dark:border-white/10 shadow-2xl rounded-t-[1.5rem] border-b-0 overflow-hidden font-mono relative top-6 group-hover:top-4 transition-all duration-700">
+      <div className="flex items-center gap-2 px-5 py-4 border-b border-border/60 dark:border-white/5 text-[10px] uppercase tracking-widest text-muted-foreground dark:text-zinc-500 font-bold bg-muted/20 dark:bg-white/[0.02]">
+        <Fingerprint className="w-3.5 h-3.5" />
+        Permission Matrix
+      </div>
+      <div className="divide-y divide-border/50 dark:divide-white/5 text-[11px]">
+        {[
+          { name: "posts:write", a: true, u: false },
+          { name: "billing:read", a: true, u: false },
+          { name: "profile:edit", a: true, u: true },
+        ].map((row, i) => (
+          <div
+            key={i}
+            className="flex items-center justify-between px-5 py-4 hover:bg-muted/30 dark:hover:bg-white/5 transition-colors"
+          >
+            <div className="text-foreground dark:text-zinc-300 font-medium">{row.name}</div>
+            <div className="flex gap-6 pr-2">
+              <div className="flex flex-col items-center gap-1.5">
+                <span className="text-[9px] text-muted-foreground/50 dark:text-zinc-600">
+                  Admin
+                </span>
+                {row.a ? (
+                  <CheckCircle2 className="h-3.5 w-3.5 text-foreground dark:text-white" />
+                ) : (
+                  <div className="h-3.5 w-3.5 border border-border/50 dark:border-white/10 rounded-full" />
+                )}
+              </div>
+              <div className="flex flex-col items-center gap-1.5">
+                <span className="text-[9px] text-muted-foreground/50 dark:text-zinc-600">User</span>
+                {row.u ? (
+                  <CheckCircle2 className="h-3.5 w-3.5 text-foreground dark:text-white" />
+                ) : (
+                  <div className="h-3.5 w-3.5 border border-border/50 dark:border-white/10 rounded-full" />
+                )}
+              </div>
             </div>
           </div>
         ))}
@@ -29,34 +137,24 @@ export function MultiTenantMockup() {
 
 export function BillingMockup() {
   return (
-    <div className="w-72 bg-background border border-border/50 shadow-xl rounded-2xl p-4 flex gap-3 transform -rotate-1 hover:rotate-0 transition-all duration-500">
-      <div className="flex-1 border border-border/40 rounded-xl p-4 flex flex-col items-center">
-        <span className="text-[10px] font-semibold text-muted-foreground mb-1 uppercase tracking-wider">
-          Solo
-        </span>
-        <span className="text-xl font-black border-b border-border/50 pb-2 w-full text-center text-foreground">
-          Free
-        </span>
-        <div className="w-full space-y-2 mt-4 flex flex-col items-center">
-          <div className="h-1.5 w-10 bg-primary/40 rounded-full" />
-          <div className="h-1.5 w-8 bg-muted-foreground/30 rounded-full" />
+    <div className="w-full max-w-[320px] bg-background dark:bg-[#0A0A0A] border border-border/60 dark:border-white/10 shadow-2xl rounded-t-[1.5rem] border-b-0 overflow-hidden relative top-4 group-hover:top-2 transition-all duration-700">
+      <div className="p-6 pb-8 border-b border-border/60 dark:border-white/5 bg-gradient-to-b from-emerald-500/5 to-transparent">
+        <div className="text-[11px] text-muted-foreground dark:text-zinc-500 font-semibold mb-1 uppercase tracking-wider">
+          Monthly Recurring Revenue
+        </div>
+        <div className="text-4xl font-black text-foreground dark:text-white tracking-tighter">
+          $12,400
+          <span className="text-sm text-emerald-600 dark:text-emerald-400 font-bold ml-2 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 align-middle">
+            +12%
+          </span>
         </div>
       </div>
-      <div className="flex-1 border border-primary/50 bg-primary/5 rounded-xl p-4 flex flex-col items-center shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-1 bg-primary rounded-bl-lg"></div>
-        <span className="text-[10px] font-bold text-primary mb-1 uppercase tracking-wider">
-          Startup
-        </span>
-        <span className="text-xl font-black border-b border-primary/20 pb-2 w-full text-center text-foreground">
-          $799
-        </span>
-        <div className="w-full space-y-2 mt-4 flex flex-col items-center">
-          <div className="h-1.5 w-10 bg-primary/40 rounded-full" />
-          <div className="h-1.5 w-12 bg-primary/40 rounded-full" />
-          <div className="h-1.5 w-8 bg-primary/40 rounded-full" />
+      <div className="p-6">
+        <div className="text-[11px] text-muted-foreground dark:text-zinc-500 font-semibold mb-1 uppercase tracking-wider">
+          Active Subscribers
         </div>
-        <div className="mt-5 h-6 w-full bg-primary rounded-lg flex items-center justify-center">
-          <span className="text-[8px] font-bold text-primary-foreground uppercase">Active</span>
+        <div className="text-2xl font-black text-foreground dark:text-white tracking-tighter">
+          847
         </div>
       </div>
     </div>
@@ -65,90 +163,35 @@ export function BillingMockup() {
 
 export function DXMockup() {
   return (
-    <div className="w-80 bg-[#0d1117] border border-border/50 shadow-2xl rounded-xl overflow-hidden transform rotate-1 hover:rotate-0 transition-all duration-500">
-      <div className="flex items-center gap-1.5 px-3 py-2 bg-[#161b22] border-b border-[#30363d]">
-        <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]"></div>
-        <div className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]"></div>
-        <div className="h-2.5 w-2.5 rounded-full bg-[#27c93f]"></div>
+    <div className="w-full max-w-[360px] bg-background dark:bg-[#0A0A0A] border border-border/60 dark:border-white/10 shadow-2xl rounded-t-[1.5rem] border-b-0 overflow-hidden font-mono text-[11px] leading-relaxed relative top-4 group-hover:top-2 transition-all duration-700">
+      <div className="flex items-center gap-4 px-5 py-3 bg-muted/30 dark:bg-white/5 border-b border-border/60 dark:border-white/5">
+        <Terminal className="w-3.5 h-3.5 text-muted-foreground dark:text-zinc-500" />
+        <span className="text-muted-foreground dark:text-zinc-500 text-[10px] uppercase font-bold tracking-widest">
+          Router.ts
+        </span>
       </div>
-      <div className="p-5 font-mono text-[11px] leading-relaxed text-[#c9d1d9]">
+      <div className="p-6 text-foreground dark:text-zinc-300">
+        <span className="text-primary dark:text-blue-400">import</span> {`{ Hono }`}{" "}
+        <span className="text-primary dark:text-blue-400">from</span>{" "}
+        <span className="text-emerald-600 dark:text-emerald-300">'hono'</span>;
+        <div className="mt-4 text-muted-foreground dark:text-zinc-600">
+          // Fully typed edge-ready RPC
+        </div>
         <div>
-          <span className="text-[#ff7b72]">import</span> {`{ Hono }`}{" "}
-          <span className="text-[#ff7b72]">from</span>{" "}
-          <span className="text-[#a5d6ff]">'hono'</span>;
+          <span className="text-primary dark:text-blue-400">const</span> app ={" "}
+          <span className="text-primary dark:text-blue-400">new</span>{" "}
+          <span className="text-purple-600 dark:text-purple-300">Hono</span>().
+          <span className="text-amber-600 dark:text-amber-200">get</span>(
         </div>
-        <div className="mt-2">
-          <span className="text-[#ff7b72]">const</span> app ={" "}
-          <span className="text-[#ff7b72]">new</span> <span className="text-[#d2a8ff]">Hono</span>
-          ();
+        <div className="pl-4 pt-1">
+          <span className="text-emerald-600 dark:text-emerald-300">'/'</span>, (c){" "}
+          <span className="text-primary dark:text-blue-400">=&gt;</span> c.json({`{ ok: `}
+          <span className="text-primary dark:text-blue-400">true</span> {`}`})
         </div>
-        <div className="mt-3">
-          app.<span className="text-[#d2a8ff]">get</span>(
-          <span className="text-[#a5d6ff]">'/api/health'</span>, (c){" "}
-          <span className="text-[#ff7b72]">=&gt;</span> {`{`}
-        </div>
-        <div className="pl-4">
-          <span className="text-[#ff7b72]">return</span> c.
-          <span className="text-[#d2a8ff]">json</span>({`{ status: `}
-          <span className="text-[#a5d6ff]">'ok'</span> {`}`});
-        </div>
-        <div>{`});`}</div>
-      </div>
-    </div>
-  );
-}
-
-export function SecurityMockup() {
-  return (
-    <div className="w-72 bg-background border border-border/50 shadow-xl rounded-xl overflow-hidden transform -rotate-2 hover:rotate-0 transition-all duration-500">
-      <div className="p-3 bg-muted/50 border-b border-border/50 flex items-center justify-between">
-        <span className="text-xs font-bold font-mono text-foreground">WAF Firewall Logs</span>
-        <Shield className="h-4 w-4 text-emerald-500" />
-      </div>
-      <div className="divide-y divide-border/30 text-[10px] font-mono">
-        <div className="p-2.5 flex items-center gap-3">
-          <span className="text-red-500 font-bold bg-red-500/10 px-1.5 py-0.5 rounded">
-            BLOCKED
-          </span>
-          <span className="text-foreground truncate flex-1">SQL Injection Attempt</span>
-        </div>
-        <div className="p-2.5 flex items-center gap-3">
-          <span className="text-emerald-500 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded">
-            ALLOWED
-          </span>
-          <span className="text-foreground truncate flex-1">GET /api/v1/users</span>
-        </div>
-        <div className="p-2.5 flex items-center gap-3">
-          <span className="text-amber-500 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded">
-            THROTTLE
-          </span>
-          <span className="text-foreground truncate flex-1">Rate Limit Exceeded</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export function AIMockup() {
-  return (
-    <div className="w-64 bg-background border border-border/50 shadow-xl rounded-xl overflow-hidden flex flex-col transform rotate-1 hover:rotate-0 transition-all duration-500 h-40">
-      <div className="flex-1 p-3 space-y-4 overflow-hidden text-[11px]">
-        <div className="flex gap-2 w-full">
-          <div className="h-6 w-6 rounded-full bg-primary/20 shrink-0 flex items-center justify-center">
-            <User className="h-3 w-3 text-primary" />
-          </div>
-          <div className="bg-muted px-3 py-2 rounded-xl rounded-tl-sm max-w-[85%] text-muted-foreground leading-relaxed">
-            Generate a secure API endpoint.
-          </div>
-        </div>
-        <div className="flex gap-2 w-full justify-end">
-          <div className="bg-primary/10 border border-primary/20 px-3 py-2 rounded-xl rounded-tr-sm max-w-[85%] text-foreground">
-            <div className="h-2 w-32 bg-primary/30 rounded-full mb-1.5"></div>
-            <div className="h-2 w-24 bg-primary/20 rounded-full"></div>
-          </div>
-          <div className="h-6 w-6 rounded-full bg-primary shrink-0 flex items-center justify-center shadow-md">
-            <Cpu className="h-3 w-3 text-primary-foreground" />
-          </div>
+        <div>)</div>
+        <div className="mt-4">
+          <span className="text-primary dark:text-blue-400">export type</span> AppRouter ={" "}
+          <span className="text-primary dark:text-blue-400">typeof</span> app;
         </div>
       </div>
     </div>
@@ -157,31 +200,19 @@ export function AIMockup() {
 
 export function DataMockup() {
   return (
-    <div className="w-72 bg-background border border-border/50 shadow-xl rounded-xl p-5 flex flex-col transform -rotate-1 hover:rotate-0 transition-all duration-500 h-44">
-      <div className="flex justify-between items-end mb-6">
-        <div>
-          <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider mb-1">
-            Active Users
-          </div>
-          <div className="text-3xl font-black text-foreground">12.4k</div>
-        </div>
-        <div className="text-xs text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full font-bold">
-          +24%
-        </div>
-      </div>
-      <div className="flex-1 flex items-end justify-between gap-1.5 mt-auto h-full">
-        {[40, 60, 30, 80, 50, 90, 70, 100].map((h, i) => (
+    <div className="w-full max-w-[320px] h-[200px] flex items-end justify-between gap-1 mt-auto relative top-2">
+      {[30, 50, 40, 70, 50, 90, 60, 100].map((h, i) => (
+        <div
+          key={i}
+          className="w-full bg-muted/20 dark:bg-white/5 rounded-t-sm relative group/bar overflow-hidden"
+          style={{ height: "100%" }}
+        >
           <div
-            key={i}
-            className="w-full h-full bg-primary/10 rounded-t-sm relative group overflow-hidden"
-          >
-            <div
-              className="absolute bottom-0 w-full bg-primary rounded-t-sm transition-all duration-700 ease-out group-hover:brightness-125"
-              style={{ height: `${h}%` }}
-            ></div>
-          </div>
-        ))}
-      </div>
+            className={`absolute bottom-0 w-full rounded-t-sm transition-all duration-700 ${i === 7 ? "bg-primary dark:bg-white" : "bg-primary/40 dark:bg-zinc-700"}`}
+            style={{ height: `${h}%` }}
+          ></div>
+        </div>
+      ))}
     </div>
   );
 }

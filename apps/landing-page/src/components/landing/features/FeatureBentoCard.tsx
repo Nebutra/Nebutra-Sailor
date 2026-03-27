@@ -1,6 +1,5 @@
 import { AnimateIn } from "@nebutra/ui/components";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { Link } from "@/i18n/navigation";
+import { ArrowRight } from "lucide-react";
 
 interface FeatureBentoCardProps {
   categoryKey: string;
@@ -21,50 +20,33 @@ export function FeatureBentoCard({
 }: FeatureBentoCardProps) {
   return (
     <AnimateIn preset="fadeUp" className="h-full">
-      <div className="group relative flex flex-col h-full w-full overflow-hidden rounded-[2.5rem] border border-border/50 bg-background/50 backdrop-blur-md transition-all duration-500 hover:border-border/80 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1">
-        {/* Subtle Gradient Hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none z-0" />
+      <div className="group relative flex flex-col h-full w-full overflow-hidden rounded-[2rem] border border-border/60 dark:border-white/10 bg-background dark:bg-[#0A0A0B] transition-all duration-500 hover:border-foreground/20 dark:hover:border-white/20 hover:shadow-2xl dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        {/* Subtle Ambient Background */}
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(#0000001a_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff1a_1px,transparent_1px)] [background-size:24px_24px] opacity-20 dark:opacity-5 pointer-events-none" />
 
-        {/* Synthetic Mockup Top Half */}
-        <div className="h-64 sm:h-72 w-full bg-muted/30 border-b border-border/50 overflow-hidden relative flex items-center justify-center p-6 z-10">
-          <Mockup />
+        {/* Top Text Area - Vercel Style Minimal */}
+        <div className="px-8 pt-10 sm:px-10 flex-none z-10 relative">
+          <h2 className="text-[26px] sm:text-[32px] font-black tracking-tight text-foreground dark:text-white leading-tight">
+            {t(`sections.${categoryKey}`)}
+          </h2>
+          <p className="mt-4 text-[15px] sm:text-base text-muted-foreground dark:text-zinc-400 font-medium leading-relaxed max-w-sm">
+            {t(`sections.${features[0].descKey}`)}
+          </p>
+
+          <div className="mt-8 flex items-center gap-3">
+            <div className="h-8 w-8 rounded-full border border-border/50 dark:border-white/10 flex items-center justify-center text-muted-foreground group-hover:text-foreground group-hover:border-foreground dark:group-hover:text-white dark:group-hover:border-white transition-colors cursor-pointer bg-background/50 backdrop-blur-sm">
+              <ArrowRight className="h-4 w-4" />
+            </div>
+            <span className="text-sm font-semibold text-muted-foreground group-hover:text-foreground dark:group-hover:text-white transition-colors">
+              Explore feature
+            </span>
+          </div>
         </div>
 
-        {/* Content Bottom Half */}
-        <div className="p-8 sm:p-10 flex-grow flex flex-col z-10 bg-background/80">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="p-3 rounded-xl bg-background border border-border/50 shadow-sm shrink-0">
-              <Icon className="h-6 w-6" style={{ color }} />
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              {t(`sections.${categoryKey}`)}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5 mt-4">
-            {features.map((f) => (
-              <div key={f.titleKey} className="flex gap-3 items-start">
-                <CheckCircle2 className="h-4 w-4 mt-1 text-primary shrink-0 drop-shadow-sm" />
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm font-bold text-foreground">
-                    {t(`sections.${f.titleKey}`)}
-                  </span>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    {t(`sections.${f.descKey}`)}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Footer / CTA / Tech Strip */}
-          <div className="mt-10 pt-6 border-t border-border/40 mt-auto flex items-center justify-between">
-            <Link
-              href="/docs"
-              className="text-sm font-bold text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5"
-            >
-              Explore documentation <ArrowRight className="h-4 w-4" />
-            </Link>
+        {/* Bottom Graphic Area - Vercel Bleed */}
+        <div className="flex-1 w-full relative flex items-end justify-center px-6 sm:px-10 mt-6 overflow-hidden z-10">
+          <div className="relative w-full flex justify-center">
+            <Mockup />
           </div>
         </div>
       </div>

@@ -1609,5 +1609,11 @@
     "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
     "card5Title": "Interactive Documentation",
     "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "desc": "The page you are looking for might have been removed or is temporarily unavailable.",
+    "home": "Return Home",
+    "docs": "Read Documentation"
   }
 }

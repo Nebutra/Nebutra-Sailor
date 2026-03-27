@@ -3,7 +3,6 @@ import {
   Cpu,
   CreditCard,
   Database,
-  Key,
   Layers,
   Shield,
   TerminalSquare,
