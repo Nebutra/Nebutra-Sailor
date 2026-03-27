@@ -79,7 +79,7 @@ jobs:
           echo "out_dir=$OUT_DIR" >> "$GITHUB_OUTPUT"
 
       - name: Upload Lighthouse Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: lighthouse-dashboard-${{ github.run_id }}
           path: ${{ steps.run_compare.outputs.out_dir }}
