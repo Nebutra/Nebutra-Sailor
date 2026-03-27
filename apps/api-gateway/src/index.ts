@@ -217,6 +217,12 @@ if (process.env.ENABLE_ORPC === "true") {
   app.route("/api/rpc", orpcApp);
 }
 
+// SMS auth (enabled when SMS provider is configured)
+if (process.env.ALIYUN_SMS_ACCESS_KEY_ID || process.env.TENCENT_SMS_SECRET_ID) {
+  const { smsAuthRoutes } = await import("./routes/auth/sms.js");
+  app.route("/api/v1/auth/sms", smsAuthRoutes);
+}
+
 // OpenAPI spec document (auto-generated from createRoute definitions)
 app.doc("/openapi.json", {
   openapi: "3.0.3",

@@ -30,6 +30,7 @@
     "@nebutra/health": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/rate-limit": "workspace:*",
+    "@nebutra/sms": "workspace:*",
     "@nebutra/repositories": "workspace:*",
     "@opentelemetry/api": "^1.9.0",
     "@orpc/server": "^1.13.13",
