@@ -42,12 +42,47 @@ export function AIGatewayCard() {
       ctaHref="/docs/ai-integrations"
       icon={<Sparkles />}
     >
-      {/* Vercel Bleed AnimatedBeam Canvas */}
+      {/* Vercel Bleed AnimatedBeam Canvas — expanded vertical space */}
       <div
         ref={containerRef}
-        className="w-full max-w-[380px] mt-auto relative flex flex-col items-center justify-center gap-12 py-8"
+        className="w-full max-w-[380px] mt-auto relative flex flex-col items-center justify-center gap-8 py-8"
       >
-        <div className="w-full flex items-center justify-between z-10 px-4">
+        {/* Code Window Mockup */}
+        <div className="w-full max-w-[340px] bg-background dark:bg-[#080809] border border-border/50 dark:border-white/10 rounded-xl overflow-hidden shadow-2xl z-20 transition-transform hover:scale-[1.02] duration-500">
+          <div className="flex items-center px-4 py-2.5 bg-muted/30 dark:bg-white/[0.02] border-b border-border/50 dark:border-white/5">
+            <div className="flex gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700" />
+              <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700" />
+              <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700" />
+            </div>
+            <span className="ml-3 text-muted-foreground dark:text-zinc-500 text-[10px] uppercase font-bold tracking-widest">
+              endpoint.ts
+            </span>
+          </div>
+          <div className="p-5 font-mono text-[12px] leading-relaxed text-foreground dark:text-zinc-300">
+            <div>
+              <span className="text-primary dark:text-blue-400">import</span> {`{ createEdgeRouter }`} <span className="text-primary dark:text-blue-400">from</span> <span className="text-emerald-600 dark:text-emerald-300">'@nebutra/ai'</span>;
+            </div>
+            <div className="mt-3 text-muted-foreground dark:text-zinc-600 font-medium">
+              // Auto-fallback & latency routing
+            </div>
+            <div>
+              <span className="text-primary dark:text-blue-400">export const</span> POST = <span className="text-purple-600 dark:text-purple-400">createEdgeRouter</span>({`{`}
+            </div>
+            <div className="pl-4">
+              strategy: <span className="text-emerald-600 dark:text-emerald-300">'lowest-latency'</span>,
+            </div>
+            <div className="pl-4">
+              models: [<span className="text-emerald-600 dark:text-emerald-300">'gpt-4'</span>, <span className="text-emerald-600 dark:text-emerald-300">'claude-3'</span>],
+            </div>
+            <div className="pl-4">
+              stream: <span className="text-primary dark:text-blue-400">true</span>
+            </div>
+            <div>{`});`}</div>
+          </div>
+        </div>
+
+        <div className="w-full flex items-center justify-between z-10 px-4 mt-2">
           {/* Source Node */}
           <div
             ref={appRef}

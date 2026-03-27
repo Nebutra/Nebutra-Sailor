@@ -51,7 +51,7 @@ export function CapabilityCard({
       </div>
 
       {/* Bottom Graphic Area - Vercel Bleed */}
-      <div className="flex-1 w-full relative flex items-end justify-center px-6 sm:px-10 mt-6 overflow-hidden z-10">
+      <div className="flex-1 w-full relative flex items-end justify-center px-6 sm:px-10 mt-4 overflow-hidden z-10">
         <div className="relative w-full flex justify-center h-full items-end">{children}</div>
       </div>
     </article>
