@@ -10,11 +10,7 @@ const DEFAULT_CONFIG: Required<SmsConfig> = {
 
 interface RedisLike {
   get: (key: string) => Promise<string | null>;
-  set: (
-    key: string,
-    value: string,
-    opts?: { ex?: number },
-  ) => Promise<unknown>;
+  set: (key: string, value: string, opts?: { ex?: number }) => Promise<unknown>;
   del: (key: string) => Promise<unknown>;
 }
 
@@ -33,9 +29,7 @@ export function initSmsVerification(opts: {
 }
 
 function generateCode(length: number): string {
-  return Array.from({ length }, () => Math.floor(Math.random() * 10)).join(
-    "",
-  );
+  return Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
 }
 
 function codeKey(phone: string): string {

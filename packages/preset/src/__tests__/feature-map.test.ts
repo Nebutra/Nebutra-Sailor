@@ -33,6 +33,7 @@ const mockConfig: ResolvedConfig = {
   locales: ["en"],
   defaultLocale: "en",
   apiProtocols: ["rest"],
+  authProvider: "clerk",
 };
 
 describe("getFeatureEnvVars", () => {

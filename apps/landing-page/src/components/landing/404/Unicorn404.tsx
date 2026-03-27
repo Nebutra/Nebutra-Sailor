@@ -1,8 +1,8 @@
 "use client";
 
-import { AnimateIn } from "../AnimateIn";
 import { ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
+import { AnimateIn } from "../AnimateIn";
 
 interface Unicorn404Props {
   title: string;

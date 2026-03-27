@@ -1,5 +1,5 @@
-import { AnimateIn } from "../AnimateIn";
 import { ArrowRight } from "lucide-react";
+import { AnimateIn } from "../AnimateIn";
 
 interface FeatureBentoCardProps {
   categoryKey: string;

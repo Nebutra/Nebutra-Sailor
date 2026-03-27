@@ -66,7 +66,8 @@ export function BillingCard() {
               className="absolute inset-0"
               style={{
                 clipPath: `polygon(${sparklineClip})`,
-                background: "linear-gradient(to bottom, var(--brand-accent, #0BF1C3) 0%, transparent 100%)",
+                background:
+                  "linear-gradient(to bottom, var(--brand-accent, #0BF1C3) 0%, transparent 100%)",
                 opacity: 0.15,
               }}
             />

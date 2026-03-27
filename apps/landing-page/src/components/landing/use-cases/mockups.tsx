@@ -1,11 +1,11 @@
 "use client";
 
 export {
-  OPCMockup,
-  IPMockup,
-  MultimodalMockup,
-  EnterpriseMockup,
-  ExportMockup,
   DesignMockup,
   EDAMMockup,
+  EnterpriseMockup,
+  ExportMockup,
+  IPMockup,
+  MultimodalMockup,
+  OPCMockup,
 } from "./mockups/index";

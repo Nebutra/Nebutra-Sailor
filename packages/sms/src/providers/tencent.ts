@@ -1,5 +1,5 @@
+import { createHash, createHmac } from "node:crypto";
 import { logger } from "@nebutra/logger";
-import { createHmac, createHash } from "node:crypto";
 import type { SmsProvider } from "../types.js";
 
 export interface TencentSmsConfig {
@@ -10,9 +10,7 @@ export interface TencentSmsConfig {
   templateId: string;
 }
 
-export function createTencentProvider(
-  config?: TencentSmsConfig,
-): SmsProvider {
+export function createTencentProvider(config?: TencentSmsConfig): SmsProvider {
   const cfg = config ?? {
     secretId: process.env.TENCENT_SMS_SECRET_ID ?? "",
     secretKey: process.env.TENCENT_SMS_SECRET_KEY ?? "",
@@ -25,9 +23,7 @@ export function createTencentProvider(
     name: "tencent",
     async send(phone: string, code: string): Promise<boolean> {
       if (!cfg.secretId || !cfg.secretKey) {
-        logger.warn(
-          "Tencent SMS credentials not configured, skipping send",
-        );
+        logger.warn("Tencent SMS credentials not configured, skipping send");
         return false;
       }
 
@@ -55,23 +51,13 @@ export function createTencentProvider(
         hashedPayload,
       ].join("\n");
       const credentialScope = `${date}/sms/tc3_request`;
-      const hashedCanonical = createHash("sha256")
-        .update(canonicalRequest)
-        .digest("hex");
+      const hashedCanonical = createHash("sha256").update(canonicalRequest).digest("hex");
       const stringToSign = `TC3-HMAC-SHA256\n${timestamp}\n${credentialScope}\n${hashedCanonical}`;
 
-      const secretDate = createHmac("sha256", `TC3${cfg.secretKey}`)
-        .update(date)
-        .digest();
-      const secretService = createHmac("sha256", secretDate)
-        .update("sms")
-        .digest();
-      const secretSigning = createHmac("sha256", secretService)
-        .update("tc3_request")
-        .digest();
-      const signature = createHmac("sha256", secretSigning)
-        .update(stringToSign)
-        .digest("hex");
+      const secretDate = createHmac("sha256", `TC3${cfg.secretKey}`).update(date).digest();
+      const secretService = createHmac("sha256", secretDate).update("sms").digest();
+      const secretSigning = createHmac("sha256", secretService).update("tc3_request").digest();
+      const signature = createHmac("sha256", secretSigning).update(stringToSign).digest("hex");
 
       const authorization = `TC3-HMAC-SHA256 Credential=${cfg.secretId}/${credentialScope}, SignedHeaders=content-type;host, Signature=${signature}`;
 
@@ -98,11 +84,9 @@ export function createTencentProvider(
         logger.warn("Tencent SMS failed", { status });
         return false;
       } catch (error) {
-        logger.error(
-          "Tencent SMS request failed",
-          error instanceof Error ? error : undefined,
-          { provider: "tencent" },
-        );
+        logger.error("Tencent SMS request failed", error instanceof Error ? error : undefined, {
+          provider: "tencent",
+        });
         return false;
       }
     },

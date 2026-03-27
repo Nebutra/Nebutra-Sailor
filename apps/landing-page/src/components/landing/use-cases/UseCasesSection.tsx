@@ -1,9 +1,9 @@
 "use client";
 
-import { AnimateIn } from "../AnimateIn";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { AnimateIn } from "../AnimateIn";
 import { USE_CASES_DATA } from "./use-cases-data";
 
 export function UseCasesSection() {

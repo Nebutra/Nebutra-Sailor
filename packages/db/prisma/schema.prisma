@@ -1364,3 +1364,76 @@ model OAuthAccessToken {
   @@map("oauth_access_tokens")
   @@schema("public")
 }
+
+// ============================================
+// Self-hosted Auth (Better Auth / NextAuth)
+// ============================================
+// These tables are only populated when using a self-hosted auth provider.
+// When using Clerk, user data lives in Clerk's infrastructure.
+
+model AuthUser {
+  id            String        @id @default(cuid())
+  email         String?       @unique
+  phone         String?       @unique
+  emailVerified Boolean       @default(false) @map("email_verified")
+  phoneVerified Boolean       @default(false) @map("phone_verified")
+  name          String?
+  image         String?
+  passwordHash  String?       @map("password_hash")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  accounts      AuthAccount[]
+  sessions      AuthSession[]
+
+  @@map("auth_users")
+  @@schema("public")
+}
+
+model AuthAccount {
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String   @map("provider_account_id")
+  refreshToken      String?  @map("refresh_token")
+  accessToken       String?  @map("access_token")
+  expiresAt         Int?     @map("expires_at")
+  tokenType         String?  @map("token_type")
+  scope             String?
+  idToken           String?  @map("id_token")
+  createdAt         DateTime @default(now()) @map("created_at")
+  user              AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("auth_accounts")
+  @@schema("public")
+}
+
+model AuthSession {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  createdAt DateTime @default(now()) @map("created_at")
+  user      AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("auth_sessions")
+  @@schema("public")
+}
+
+model AuthVerification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime @map("expires_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@unique([identifier, value])
+  @@map("auth_verifications")
+  @@schema("public")
+}

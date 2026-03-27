@@ -10,7 +10,10 @@ const convos = [
   { title: "Logo concepts", time: "Yesterday" },
 ];
 const messages = [
-  { role: "user" as const, text: "Generate a cybernetic landscape with volumetric lighting and neon accents" },
+  {
+    role: "user" as const,
+    text: "Generate a cybernetic landscape with volumetric lighting and neon accents",
+  },
   { role: "ai" as const, text: "Here is your generated image:", hasImage: true },
   { role: "user" as const, text: "Can you make the sky more purple and add floating particles?" },
 ];
@@ -28,16 +31,23 @@ export function MultimodalMockup() {
         <div className="px-3 py-2 border-b border-border flex items-center gap-2 shrink-0">
           <Sparkles className="h-4 w-4 text-primary" />
           <span className="text-xs font-semibold text-foreground">Multimodal AI</span>
-          <span className="text-[10px] font-mono bg-muted px-1.5 py-0.5 rounded text-muted-foreground">GPT-5.4</span>
+          <span className="text-[10px] font-mono bg-muted px-1.5 py-0.5 rounded text-muted-foreground">
+            GPT-5.4
+          </span>
           <div className="ml-auto h-5 w-5 rounded-full bg-muted" />
         </div>
         {/* Body */}
         <div className="flex flex-1 min-h-0">
           {/* Sidebar */}
           <div className="w-40 border-r border-border p-2 shrink-0 space-y-0.5">
-            <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider px-2 py-1">Conversations</div>
+            <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider px-2 py-1">
+              Conversations
+            </div>
             {convos.map((c, i) => (
-              <div key={c.title} className={`px-2 py-1.5 rounded text-[11px] ${i === 0 ? "bg-muted font-medium text-foreground" : "text-muted-foreground"}`}>
+              <div
+                key={c.title}
+                className={`px-2 py-1.5 rounded text-[11px] ${i === 0 ? "bg-muted font-medium text-foreground" : "text-muted-foreground"}`}
+              >
                 <div className="truncate">{c.title}</div>
                 <div className="text-[9px] font-mono text-muted-foreground">{c.time}</div>
               </div>
@@ -53,8 +63,12 @@ export function MultimodalMockup() {
                       <Sparkles className="h-3 w-3 text-primary-foreground" />
                     </div>
                   )}
-                  <div className={`max-w-[75%] space-y-1.5 ${m.role === "user" ? "items-end" : ""}`}>
-                    <div className={`px-3 py-2 rounded-xl text-xs text-foreground ${m.role === "user" ? "bg-muted/60 border border-border rounded-tr-sm" : "bg-primary/5 border border-primary/20 rounded-tl-sm"}`}>
+                  <div
+                    className={`max-w-[75%] space-y-1.5 ${m.role === "user" ? "items-end" : ""}`}
+                  >
+                    <div
+                      className={`px-3 py-2 rounded-xl text-xs text-foreground ${m.role === "user" ? "bg-muted/60 border border-border rounded-tr-sm" : "bg-primary/5 border border-primary/20 rounded-tl-sm"}`}
+                    >
                       {m.text}
                     </div>
                     {m.hasImage && (

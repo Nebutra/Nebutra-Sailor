@@ -1,10 +1,10 @@
 "use client";
 
 import { Cpu, Layers, Shield } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 import { Card } from "@nebutra/ui/primitives";
 import { Zap } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 
 export function AgenticCapabilitiesSection() {
   const t = useTranslations("agenticCapabilities");

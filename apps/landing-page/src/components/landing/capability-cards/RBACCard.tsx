@@ -1,7 +1,7 @@
 "use client";
 
 import { Shield } from "@nebutra/icons";
-import { DiceBearAvatar } from "@nebutra/ui/primitives";
+import { Avatar, AvatarFallback, AvatarImage } from "@nebutra/ui/primitives";
 import { CheckCircle2, Fingerprint } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { CapabilityCard } from "./CapabilityCard";
@@ -15,9 +15,24 @@ const PERMISSIONS = [
 ];
 
 const ROLES = [
-  { name: "Admin", seed: "admin-core-cx", ring: "ring-primary/40 dark:ring-cyan-500/50 shadow-[0_0_10px_rgba(0,194,255,0.2)]" },
-  { name: "Member", seed: "member-core-ox", ring: "ring-amber-500/40 dark:ring-amber-400/50" },
-  { name: "Guest", seed: "guest-core-zx", ring: "ring-zinc-400/40 dark:ring-zinc-500/50" },
+  {
+    name: "Admin",
+    src: "https://github.com/shadcn.png",
+    fallback: "CN",
+    ring: "ring-primary/40 dark:ring-cyan-500/50 shadow-[0_0_10px_rgba(0,194,255,0.2)]",
+  },
+  {
+    name: "Member",
+    src: "https://github.com/leerob.png",
+    fallback: "LR",
+    ring: "ring-amber-500/40 dark:ring-amber-400/50",
+  },
+  {
+    name: "Guest",
+    src: "https://github.com/tannerlinsley.png",
+    fallback: "TL",
+    ring: "ring-zinc-400/40 dark:ring-zinc-500/50",
+  },
 ] as const;
 
 export function RBACCard() {
@@ -51,13 +66,15 @@ export function RBACCard() {
               {ROLES.map((role) => (
                 <th key={role.name} className="py-3 px-2 text-center">
                   <div className="flex flex-col items-center gap-2 pointer-events-none">
-                    <div className={`relative flex items-center justify-center rounded-full ring-2 ${role.ring} p-[1.5px] bg-background dark:bg-zinc-900`}>
-                      <DiceBearAvatar
-                        seed={role.seed}
-                        avatarStyle="notionists-neutral"
-                        size="sm"
-                        className="w-[20px] h-[20px] rounded-full bg-muted/50"
-                      />
+                    <div
+                      className={`relative flex items-center justify-center rounded-full ring-2 ${role.ring} p-[1.5px] bg-background dark:bg-zinc-900 overflow-hidden`}
+                    >
+                      <Avatar size="xs" className="w-[20px] h-[20px] rounded-full">
+                        <AvatarImage src={role.src} alt={role.name} className="object-cover" />
+                        <AvatarFallback className="text-[8px] bg-muted/50 text-muted-foreground">
+                          {role.fallback}
+                        </AvatarFallback>
+                      </Avatar>
                     </div>
                     <span className="text-[10px] font-bold text-muted-foreground/80 dark:text-zinc-500 uppercase tracking-widest">
                       {role.name}

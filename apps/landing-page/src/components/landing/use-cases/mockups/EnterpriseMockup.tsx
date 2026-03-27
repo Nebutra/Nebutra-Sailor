@@ -23,7 +23,9 @@ export function EnterpriseMockup() {
         <div className="px-4 py-2 border-b border-border flex items-center gap-4 shrink-0">
           <div className="h-5 w-5 rounded bg-primary" />
           <div className="flex gap-3 text-[11px] text-muted-foreground">
-            {navLinks.map((l) => (<span key={l}>{l}</span>))}
+            {navLinks.map((l) => (
+              <span key={l}>{l}</span>
+            ))}
           </div>
           <div className="ml-auto flex items-center gap-2">
             <span className="text-[11px] text-muted-foreground">Sign in</span>
@@ -35,7 +37,9 @@ export function EnterpriseMockup() {
         {/* Hero */}
         <div className="px-8 pt-8 pb-6 text-center border-b border-border">
           <div className="text-base font-bold text-foreground leading-tight">
-            Build the future of<br />enterprise software
+            Build the future of
+            <br />
+            enterprise software
           </div>
           <div className="text-[11px] text-muted-foreground mt-2 max-w-xs mx-auto">
             Scalable infrastructure for modern teams. Ship faster with confidence.

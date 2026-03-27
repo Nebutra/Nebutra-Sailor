@@ -61,19 +61,24 @@ export function AIGatewayCard() {
           </div>
           <div className="p-5 font-mono text-[12px] leading-relaxed text-foreground dark:text-zinc-300">
             <div>
-              <span className="text-primary dark:text-blue-400">import</span> {`{ createEdgeRouter }`} <span className="text-primary dark:text-blue-400">from</span> <span className="text-emerald-600 dark:text-emerald-300">'@nebutra/ai'</span>;
+              <span className="text-primary dark:text-blue-400">import</span>{" "}
+              {`{ createEdgeRouter }`} <span className="text-primary dark:text-blue-400">from</span>{" "}
+              <span className="text-emerald-600 dark:text-emerald-300">'@nebutra/ai'</span>;
             </div>
             <div className="mt-3 text-muted-foreground dark:text-zinc-600 font-medium">
               // Auto-fallback & latency routing
             </div>
             <div>
-              <span className="text-primary dark:text-blue-400">export const</span> POST = <span className="text-purple-600 dark:text-purple-400">createEdgeRouter</span>({`{`}
+              <span className="text-primary dark:text-blue-400">export const</span> POST ={" "}
+              <span className="text-purple-600 dark:text-purple-400">createEdgeRouter</span>({`{`}
             </div>
             <div className="pl-4">
-              strategy: <span className="text-emerald-600 dark:text-emerald-300">'lowest-latency'</span>,
+              strategy:{" "}
+              <span className="text-emerald-600 dark:text-emerald-300">'lowest-latency'</span>,
             </div>
             <div className="pl-4">
-              models: [<span className="text-emerald-600 dark:text-emerald-300">'gpt-4'</span>, <span className="text-emerald-600 dark:text-emerald-300">'claude-3'</span>],
+              models: [<span className="text-emerald-600 dark:text-emerald-300">'gpt-4'</span>,{" "}
+              <span className="text-emerald-600 dark:text-emerald-300">'claude-3'</span>],
             </div>
             <div className="pl-4">
               stream: <span className="text-primary dark:text-blue-400">true</span>

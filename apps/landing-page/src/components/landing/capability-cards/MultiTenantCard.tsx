@@ -31,7 +31,12 @@ function getLineClass(type: string, text: string): string {
   if (type === "comment") {
     return "text-muted-foreground dark:text-zinc-500";
   }
-  if (text.includes("await") || text.includes("const") || text.includes("export") || text.includes("async")) {
+  if (
+    text.includes("await") ||
+    text.includes("const") ||
+    text.includes("export") ||
+    text.includes("async")
+  ) {
     return "text-primary dark:text-cyan-400";
   }
   if (text.includes("'@nebutra/rls'")) {
@@ -87,9 +92,7 @@ export function MultiTenantCard() {
                 <span className="w-10 shrink-0 text-right pr-3 select-none text-[11px] text-muted-foreground/40 dark:text-zinc-600">
                   {line.num}
                 </span>
-                <span className={getLineClass(line.type, line.text)}>
-                  {line.text || "\u00a0"}
-                </span>
+                <span className={getLineClass(line.type, line.text)}>{line.text || "\u00a0"}</span>
               </div>
             ))}
           </pre>

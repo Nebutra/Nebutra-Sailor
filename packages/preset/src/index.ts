@@ -4,6 +4,7 @@
 export {
   ApiProtocolId,
   AppId,
+  AuthProviderId,
   defineConfig,
   FeatureId,
   type NebutraConfig,

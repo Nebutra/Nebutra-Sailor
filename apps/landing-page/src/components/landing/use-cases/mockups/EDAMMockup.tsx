@@ -39,7 +39,10 @@ export function EDAMMockup() {
         <div className="px-4 py-2 border-b border-border flex items-center gap-2 shrink-0">
           <div className="flex gap-1.5">
             {filters.map((f, i) => (
-              <span key={f} className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${i === 0 ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
+              <span
+                key={f}
+                className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${i === 0 ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}
+              >
                 {f}
               </span>
             ))}
@@ -52,8 +55,13 @@ export function EDAMMockup() {
         <div className="flex-1 p-3 overflow-hidden">
           <div className="grid grid-cols-3 gap-2 h-full">
             {assets.map((a) => (
-              <div key={a.name} className="rounded-lg border border-border bg-background p-2 flex flex-col gap-1.5">
-                <div className={`flex-1 min-h-0 rounded ${a.color} flex items-center justify-center`}>
+              <div
+                key={a.name}
+                className="rounded-lg border border-border bg-background p-2 flex flex-col gap-1.5"
+              >
+                <div
+                  className={`flex-1 min-h-0 rounded ${a.color} flex items-center justify-center`}
+                >
                   {a.name.endsWith(".pdf") ? (
                     <File className="h-5 w-5 text-muted-foreground/40" />
                   ) : (
@@ -62,7 +70,9 @@ export function EDAMMockup() {
                 </div>
                 <div>
                   <div className="text-[10px] font-medium text-foreground truncate">{a.name}</div>
-                  <div className="text-[9px] text-muted-foreground font-mono">{a.size} · {a.date}</div>
+                  <div className="text-[9px] text-muted-foreground font-mono">
+                    {a.size} · {a.date}
+                  </div>
                 </div>
               </div>
             ))}

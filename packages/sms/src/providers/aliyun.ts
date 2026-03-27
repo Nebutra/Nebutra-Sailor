@@ -1,5 +1,5 @@
-import { logger } from "@nebutra/logger";
 import { createHmac } from "node:crypto";
+import { logger } from "@nebutra/logger";
 import type { SmsProvider } from "../types.js";
 
 export interface AliyunSmsConfig {
@@ -41,14 +41,9 @@ export function createAliyunProvider(config?: AliyunSmsConfig): SmsProvider {
       });
 
       // Sort and sign per Alibaba Cloud signature spec
-      const sorted = [...params.entries()].sort(([a], [b]) =>
-        a.localeCompare(b),
-      );
+      const sorted = [...params.entries()].sort(([a], [b]) => a.localeCompare(b));
       const canonicalized = sorted
-        .map(
-          ([k, v]) =>
-            `${encodeURIComponent(k)}=${encodeURIComponent(v)}`,
-        )
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
         .join("&");
       const stringToSign = `GET&${encodeURIComponent("/")}&${encodeURIComponent(canonicalized)}`;
       const signature = createHmac("sha1", `${cfg.accessKeySecret}&`)
@@ -57,9 +52,7 @@ export function createAliyunProvider(config?: AliyunSmsConfig): SmsProvider {
       params.set("Signature", signature);
 
       try {
-        const res = await fetch(
-          `https://dysmsapi.aliyuncs.com/?${params.toString()}`,
-        );
+        const res = await fetch(`https://dysmsapi.aliyuncs.com/?${params.toString()}`);
         const data = (await res.json()) as {
           Code?: string;
           Message?: string;
@@ -71,11 +64,9 @@ export function createAliyunProvider(config?: AliyunSmsConfig): SmsProvider {
         });
         return false;
       } catch (error) {
-        logger.error(
-          "Aliyun SMS request failed",
-          error instanceof Error ? error : undefined,
-          { provider: "aliyun" },
-        );
+        logger.error("Aliyun SMS request failed", error instanceof Error ? error : undefined, {
+          provider: "aliyun",
+        });
         return false;
       }
     },

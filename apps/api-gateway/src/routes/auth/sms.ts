@@ -51,8 +51,7 @@ const verifyCodeRoute = createRoute({
   path: "/verify",
   tags: ["Auth"],
   summary: "Verify SMS code",
-  description:
-    "Verify the SMS code previously sent to the phone number.",
+  description: "Verify the SMS code previously sent to the phone number.",
   request: {
     body: {
       content: {

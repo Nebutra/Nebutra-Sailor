@@ -56,6 +56,8 @@ export const ThemeId = z.enum([
 
 export const ApiProtocolId = z.enum(["rest", "orpc", "trpc"]);
 
+export const AuthProviderId = z.enum(["clerk", "better-auth", "nextauth"]);
+
 // ─── Config Schema ───
 
 export const NebutraConfigSchema = z.object({
@@ -66,6 +68,7 @@ export const NebutraConfigSchema = z.object({
   locales: z.array(z.string()).default(["en"]),
   defaultLocale: z.string().default("en"),
   apiProtocols: z.array(ApiProtocolId).default(["rest"]),
+  authProvider: AuthProviderId.default("clerk"),
 });
 
 export type NebutraConfig = z.infer<typeof NebutraConfigSchema>;
@@ -90,6 +93,7 @@ export interface ResolvedConfig {
   locales: string[];
   defaultLocale: string;
   apiProtocols: z.infer<typeof ApiProtocolId>[];
+  authProvider: z.infer<typeof AuthProviderId>;
 }
 
 // ─── Public API ───
@@ -107,5 +111,6 @@ export function resolveConfig(config: NebutraConfig): ResolvedConfig {
     locales: config.locales,
     defaultLocale: config.defaultLocale,
     apiProtocols: config.apiProtocols,
+    authProvider: config.authProvider,
   };
 }
