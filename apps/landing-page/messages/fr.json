@@ -333,7 +333,11 @@
         "name": "Hobby",
         "price": "Free",
         "description": "For side projects",
-        "features": ["1 Project", "Community Support", "Basic Analytics"],
+        "features": [
+          "1 Project",
+          "Community Support",
+          "Basic Analytics"
+        ],
         "ctaText": "Start Free"
       },
       "pro": {
@@ -341,14 +345,24 @@
         "price": "$29",
         "description": "For startups",
         "isPopular": true,
-        "features": ["Unlimited Projects", "Priority Support", "Custom Domain", "Advanced AI"],
+        "features": [
+          "Unlimited Projects",
+          "Priority Support",
+          "Custom Domain",
+          "Advanced AI"
+        ],
         "ctaText": "Get Pro"
       },
       "enterprise": {
         "name": "Enterprise",
         "price": "Custom",
         "description": "For large teams",
-        "features": ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
+        "features": [
+          "SSO",
+          "Dedicated Slack Channel",
+          "SLA 99.9%",
+          "White-label"
+        ],
         "ctaText": "Contact Us"
       }
     },
@@ -454,7 +468,7 @@
       "title": "Stop configuring. Start building.",
       "description": "Initialize your scalable SaaS architecture locally within 3 minutes using the Nebutra CLI.",
       "button": "Deploy Architecture",
-      "license": "Supported on Node.js 22+ & pnpm"
+      "license": "Open source sous AGPL-3.0. Pas de carte bancaire requise."
     },
     "capability": {
       "badge": "Enterprise Capabilities",
@@ -609,7 +623,7 @@
       "manualSetup": "Config. manuelle",
       "multiProviderGateway": "Passerelle multi-fournisseur",
       "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk + IDP personnalisé",
+      "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
       "clerkOnly": "Clerk",
       "betterAuth": "Better Auth (auto-hébergé)",
       "stripeUsage": "5 fournisseurs + comptage",

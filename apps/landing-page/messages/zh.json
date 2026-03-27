@@ -74,7 +74,7 @@
       "manualSetup": "需手动搭建",
       "multiProviderGateway": "多供应商网关",
       "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk + 自定义 IDP",
+      "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
       "clerkOnly": "Clerk",
       "betterAuth": "Better Auth（自托管）",
       "stripeUsage": "5 个供应商 + 用量计费",
@@ -1116,7 +1116,11 @@
         "name": "探索版",
         "price": "免费",
         "description": "适合个人创客与侧边项目测试",
-        "features": ["单项目授权", "社区论坛支持", "基础运行数据分析"],
+        "features": [
+          "单项目授权",
+          "社区论坛支持",
+          "基础运行数据分析"
+        ],
         "ctaText": "免费接入"
       },
       "pro": {
@@ -1124,7 +1128,12 @@
         "price": "$29",
         "description": "适合快速扩张的初创与极客团队",
         "isPopular": true,
-        "features": ["无限制项目数", "工单优先响应", "自定义域名绑定", "高级 AI 能力调用"],
+        "features": [
+          "无限制项目数",
+          "工单优先响应",
+          "自定义域名绑定",
+          "高级 AI 能力调用"
+        ],
         "ctaText": "升级专业版"
       },
       "enterprise": {
@@ -1261,7 +1270,7 @@
       "title": "停止折腾配置，立即开始构建",
       "description": "使用 Nebutra CLI 在 3 分钟内即可在本地初始化您的高可用可扩展 SaaS 架构。",
       "button": "部署云端架构",
-      "license": "全面支持 Node.js 22+ & pnpm"
+      "license": "基于 AGPL-3.0 开源协议。无需信用卡。"
     },
     "capability": {
       "badge": "企业级能力",
@@ -1398,8 +1407,8 @@
       "multi_category": "多租户管控中枢",
       "multi_f1_title": "租户级数据隔离墙",
       "multi_f1_desc": "基于 Postgres 的行级安全控制 (RLS) 确保租户之间的数据物理隔离——在数据库最底层强制执行，超越应用层限制。",
-      "multi_f2_title": "RBAC 细粒度鉴权",
-      "multi_f2_desc": "内置 OWNER、ADMIN、MEMBER 与 VIEWER 角色及 17 种强类型权限范围。对企业级业务足够精细，对极客团队又足够克制。",
+      "multi_f2_title": "多供应商认证（Clerk / Better Auth / NextAuth）",
+      "multi_f2_desc": "通过 preset 配置切换认证供应商。Clerk 用于托管，Better Auth 或 NextAuth 用于自部署。中国市场支持阿里云/腾讯云手机号短信登录。",
       "multi_f3_title": "自动化租户编排",
       "multi_f3_desc": "当新企业机构通过 Clerk 注册入驻，系统会自动分配首组 API 密钥并下发定制化欢迎函——剔除所有手工步骤。",
       "dx_category": "开发者使用体验",

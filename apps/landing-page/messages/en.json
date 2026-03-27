@@ -74,7 +74,7 @@
       "manualSetup": "Manual setup",
       "multiProviderGateway": "Multi-provider gateway",
       "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk + custom IDP",
+      "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
       "clerkOnly": "Clerk",
       "betterAuth": "Better Auth (self-hosted)",
       "stripeUsage": "5 providers + usage metering",
@@ -1116,7 +1116,11 @@
         "name": "Hobby",
         "price": "Free",
         "description": "For side projects",
-        "features": ["1 Project", "Community Support", "Basic Analytics"],
+        "features": [
+          "1 Project",
+          "Community Support",
+          "Basic Analytics"
+        ],
         "ctaText": "Start Free"
       },
       "pro": {
@@ -1124,14 +1128,24 @@
         "price": "$29",
         "description": "For startups",
         "isPopular": true,
-        "features": ["Unlimited Projects", "Priority Support", "Custom Domain", "Advanced AI"],
+        "features": [
+          "Unlimited Projects",
+          "Priority Support",
+          "Custom Domain",
+          "Advanced AI"
+        ],
         "ctaText": "Get Pro"
       },
       "enterprise": {
         "name": "Enterprise",
         "price": "Custom",
         "description": "For large teams",
-        "features": ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
+        "features": [
+          "SSO",
+          "Dedicated Slack Channel",
+          "SLA 99.9%",
+          "White-label"
+        ],
         "ctaText": "Contact Us"
       }
     },
@@ -1256,7 +1270,7 @@
       "title": "Stop configuring. Start building.",
       "description": "Initialize your scalable SaaS architecture locally within 3 minutes using the Nebutra CLI.",
       "button": "Deploy Architecture",
-      "license": "Supported on Node.js 22+ & pnpm"
+      "license": "Open source under AGPL-3.0 license. No credit card required."
     },
     "capability": {
       "badge": "Enterprise Capabilities",
@@ -1393,8 +1407,8 @@
       "multi_category": "Multi-tenant Platform",
       "multi_f1_title": "Organisation-level isolation",
       "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Role-based access control",
-      "multi_f2_desc": "OWNER, ADMIN, MEMBER, and VIEWER roles with 17 typed permission scopes. Fine-grained enough for enterprise, simple enough for indie teams.",
+      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth)",
+      "multi_f2_desc": "Switch auth providers via preset config. Clerk for managed, Better Auth or NextAuth for self-hosted. Phone + SMS login for China market via Aliyun/Tencent Cloud.",
       "multi_f3_title": "Automatic tenant provisioning",
       "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
       "dx_category": "Developer Experience",

@@ -168,8 +168,13 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
               <p className="text-muted-foreground text-xl">{t("faq.description")}</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              {/* ML-9.1: FAQ Accordion */}
+            {/* Comparison table — full width above FAQ */}
+            <div className="mb-12">
+              <AlternativeComparison />
+            </div>
+
+            {/* FAQ Accordion — full width below */}
+            <div className="max-w-3xl mx-auto">
               <Accordion className="w-full bg-background rounded-3xl border border-border/50 shadow-sm p-4 md:p-8">
                 <AccordionItem value="item-1" className="border-b border-border/50 text-lg">
                   <AccordionTrigger className="py-6 font-semibold">
@@ -204,9 +209,6 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-
-              {/* ML-9.2: Alternative Comparison */}
-              <AlternativeComparison />
             </div>
           </div>
         </section>

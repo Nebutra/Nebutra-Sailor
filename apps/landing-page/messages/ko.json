@@ -333,7 +333,11 @@
         "name": "Hobby",
         "price": "Free",
         "description": "For side projects",
-        "features": ["1 Project", "Community Support", "Basic Analytics"],
+        "features": [
+          "1 Project",
+          "Community Support",
+          "Basic Analytics"
+        ],
         "ctaText": "Start Free"
       },
       "pro": {
@@ -341,14 +345,24 @@
         "price": "$29",
         "description": "For startups",
         "isPopular": true,
-        "features": ["Unlimited Projects", "Priority Support", "Custom Domain", "Advanced AI"],
+        "features": [
+          "Unlimited Projects",
+          "Priority Support",
+          "Custom Domain",
+          "Advanced AI"
+        ],
         "ctaText": "Get Pro"
       },
       "enterprise": {
         "name": "Enterprise",
         "price": "Custom",
         "description": "For large teams",
-        "features": ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
+        "features": [
+          "SSO",
+          "Dedicated Slack Channel",
+          "SLA 99.9%",
+          "White-label"
+        ],
         "ctaText": "Contact Us"
       }
     },
@@ -454,7 +468,7 @@
       "title": "Stop configuring. Start building.",
       "description": "Initialize your scalable SaaS architecture locally within 3 minutes using the Nebutra CLI.",
       "button": "Deploy Architecture",
-      "license": "Supported on Node.js 22+ & pnpm"
+      "license": "AGPL-3.0 오픈소스 라이선스. 신용카드 불필요."
     },
     "capability": {
       "badge": "Enterprise Capabilities",
@@ -609,7 +623,7 @@
       "manualSetup": "수동 설정",
       "multiProviderGateway": "멀티 프로바이더 GW",
       "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk + 커스텀 IDP",
+      "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
       "clerkOnly": "Clerk",
       "betterAuth": "Better Auth (셀프호스팅)",
       "stripeUsage": "5개 제공업체 + 사용량 과금",
