@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimateIn } from "@nebutra/ui/components";
+import { AnimateIn } from "../AnimateIn";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -35,9 +35,9 @@ export function UseCasesSection() {
         </div>
 
         {/* Elite Interactive Split Layout */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 max-w-7xl mx-auto relative z-20">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 max-w-[1400px] mx-auto relative z-20">
           {/* Left Column: Interactive Command-Palette style Tabs */}
-          <div className="w-full lg:w-5/12 flex flex-col gap-3 relative order-2 lg:order-1">
+          <div className="w-full lg:w-4/12 flex flex-col gap-3 relative order-2 lg:order-1">
             {USE_CASES_DATA.map((uc, i) => {
               const Icon = uc.icon;
               const isActive = activeTab === i;
@@ -114,8 +114,8 @@ export function UseCasesSection() {
           </div>
 
           {/* Right Column: Sticky Mockup Viewport */}
-          <div className="w-full lg:w-7/12 relative order-1 lg:order-2">
-            <div className="sticky top-32 w-full aspect-square lg:aspect-auto lg:h-[700px] rounded-[3rem] bg-background border border-border/80 shadow-2xl overflow-hidden flex items-center justify-center p-8 lg:p-12 group">
+          <div className="w-full lg:w-8/12 relative order-1 lg:order-2">
+            <div className="sticky top-32 w-full aspect-square lg:aspect-auto lg:h-[700px] rounded-[3rem] bg-background border border-border/80 shadow-2xl overflow-hidden flex items-center justify-center p-6 lg:p-8 group">
               {/* Internal Glass glare reflection */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_2px_at_center,var(--neutral-5)_1px,transparent_1px)] bg-[length:24px_24px] opacity-30 dark:opacity-20 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
               <div className="absolute inset-x-0 -top-px h-px w-full bg-gradient-to-r from-transparent via-foreground/10 to-transparent opacity-50" />

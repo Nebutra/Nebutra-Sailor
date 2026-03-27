@@ -1,4 +1,4 @@
-import { AnimateIn } from "@nebutra/ui/components";
+import { AnimateIn } from "../AnimateIn";
 
 interface FeatureSmallCardProps {
   icon: React.ComponentType<{ className?: string }>;

@@ -1,7 +1,7 @@
 "use client";
 
 import { Cpu, Layers, Shield } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 import { Card } from "@nebutra/ui/primitives";
 import { Zap } from "lucide-react";
 import { useTranslations } from "next-intl";

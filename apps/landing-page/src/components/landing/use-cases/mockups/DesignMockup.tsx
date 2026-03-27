@@ -1,71 +1,73 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Eye } from "lucide-react";
 
-const palette = [
-  "bg-primary",
-  "bg-primary/60",
-  "bg-muted-foreground",
-  "bg-muted",
-  "bg-border",
+const components = ["Button", "Input", "Card", "Dialog", "Badge", "Tabs"];
+const variants = [
+  { name: "Primary", cls: "bg-primary text-primary-foreground" },
+  { name: "Outline", cls: "bg-background text-foreground border border-border" },
+  { name: "Ghost", cls: "bg-transparent text-muted-foreground" },
 ];
-
-const typeSizes = [
-  { label: "H1", size: "text-lg", weight: "font-bold" },
-  { label: "Body", size: "text-xs", weight: "font-normal" },
-  { label: "Caption", size: "text-[10px]", weight: "font-normal" },
+const props = [
+  { prop: "variant", type: '"primary" | "outline" | "ghost"', def: '"primary"' },
+  { prop: "size", type: '"sm" | "md" | "lg"', def: '"md"' },
+  { prop: "disabled", type: "boolean", def: "false" },
+  { prop: "loading", type: "boolean", def: "false" },
 ];
 
 export function DesignMockup() {
   return (
-    <div className="w-full h-full flex items-center justify-center px-4">
+    <div className="w-full h-full flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-xs bg-background border border-border rounded-2xl overflow-hidden shadow-lg"
+        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-xl overflow-hidden shadow-sm flex flex-col"
       >
-        {/* Header */}
-        <div className="px-5 py-3 border-b border-border">
+        {/* Top bar */}
+        <div className="px-4 py-2 border-b border-border flex items-center gap-2 shrink-0">
+          <div className="h-5 w-5 rounded bg-primary" />
           <span className="text-xs font-semibold text-foreground">Design System</span>
-          <span className="text-[10px] text-muted-foreground ml-2">v2.4.0</span>
-        </div>
-
-        <div className="p-5 space-y-5">
-          {/* Buttons */}
-          <div>
-            <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2">Buttons</div>
-            <div className="flex gap-2">
-              <div className="bg-primary text-primary-foreground text-[10px] font-medium px-3 py-1.5 rounded-lg">Primary</div>
-              <div className="bg-muted text-foreground text-[10px] font-medium px-3 py-1.5 rounded-lg border border-border">Secondary</div>
-              <div className="bg-muted/50 text-muted-foreground/50 text-[10px] font-medium px-3 py-1.5 rounded-lg border border-border/50">Disabled</div>
-            </div>
+          <span className="text-[10px] font-mono bg-muted px-1.5 py-0.5 rounded text-muted-foreground">v2.4.0</span>
+          <div className="ml-auto flex items-center gap-2">
+            <Eye className="h-3.5 w-3.5 text-muted-foreground" />
+            <div className="h-5 w-5 rounded-full bg-muted" />
           </div>
-
-          {/* Color palette */}
-          <div>
-            <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2">Palette</div>
-            <div className="flex gap-1.5">
-              {palette.map((c, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2 + i * 0.06 }}
-                  className={`h-7 w-7 rounded-lg ${c}`}
-                />
+        </div>
+        {/* Body */}
+        <div className="flex flex-1 min-h-0">
+          {/* Sidebar */}
+          <div className="w-36 border-r border-border p-2 shrink-0 space-y-0.5">
+            <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider px-2 py-1">Components</div>
+            {components.map((c, i) => (
+              <div key={c} className={`text-[11px] px-2 py-1 rounded ${i === 0 ? "bg-primary/10 text-foreground font-medium" : "text-muted-foreground"}`}>
+                {c}
+              </div>
+            ))}
+          </div>
+          {/* Main */}
+          <div className="flex-1 p-4 flex flex-col min-w-0 overflow-hidden">
+            <div className="text-[11px] font-semibold text-foreground">Button</div>
+            <div className="text-[10px] text-muted-foreground mt-0.5">Interactive element for triggering actions</div>
+            {/* Preview */}
+            <div className="mt-3 p-4 rounded-lg border border-border bg-muted/20 flex items-center justify-center gap-3">
+              {variants.map((v) => (
+                <div key={v.name} className={`text-[10px] font-medium px-3 py-1.5 rounded-lg ${v.cls}`}>
+                  {v.name}
+                </div>
               ))}
             </div>
-          </div>
-
-          {/* Typography */}
-          <div>
-            <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2">Typography</div>
-            <div className="space-y-1.5">
-              {typeSizes.map((t) => (
-                <div key={t.label} className="flex items-baseline gap-3">
-                  <span className="text-[9px] text-muted-foreground font-mono w-8">{t.label}</span>
-                  <span className={`${t.size} ${t.weight} text-foreground`}>The quick brown fox</span>
+            {/* Props table */}
+            <div className="mt-3 border border-border rounded-lg overflow-hidden text-[10px]">
+              <div className="grid grid-cols-3 bg-muted/40 px-3 py-1.5 font-semibold text-muted-foreground border-b border-border">
+                <span>Prop</span><span>Type</span><span>Default</span>
+              </div>
+              {props.map((p) => (
+                <div key={p.prop} className="grid grid-cols-3 px-3 py-1 border-b border-border last:border-0 text-foreground">
+                  <span className="font-mono text-primary">{p.prop}</span>
+                  <span className="font-mono text-muted-foreground">{p.type}</span>
+                  <span className="font-mono">{p.def}</span>
                 </div>
               ))}
             </div>

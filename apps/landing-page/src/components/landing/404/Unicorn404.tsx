@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimateIn } from "@nebutra/ui/components";
+import { AnimateIn } from "../AnimateIn";
 import { ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 

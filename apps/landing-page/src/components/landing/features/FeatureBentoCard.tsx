@@ -1,4 +1,4 @@
-import { AnimateIn } from "@nebutra/ui/components";
+import { AnimateIn } from "../AnimateIn";
 import { ArrowRight } from "lucide-react";
 
 interface FeatureBentoCardProps {
