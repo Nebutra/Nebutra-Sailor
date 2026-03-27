@@ -83,7 +83,7 @@ jobs:
     steps:
       # ── Checkout ─────────────────────────────────────────────────────────────
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           # Check out the SHA that was actually built and pushed so the kustomize
           # overlays we apply match the images we just pushed.
