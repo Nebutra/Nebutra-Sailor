@@ -128,7 +128,10 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
   return (
     <Suspense>
-      <main id="main-content" className="flex flex-col min-h-screen bg-background">
+      <main
+        id="main-content"
+        className="flex flex-col min-h-screen bg-background overflow-x-hidden"
+      >
         <Navbar />
         {/* 1. Hero Section */}
         <HeroSection />
