@@ -41,8 +41,13 @@ export function initOtel(opts: { serviceName: string }): void {
     ),
   });
 
+  // OTLPMetricExporter and PeriodicExportingMetricReader may come from different
+  // @opentelemetry/sdk-metrics major versions. The runtime API is compatible;
+  // the type mismatch is a transient peer-dependency lag.
+  // biome-ignore lint/suspicious/noExplicitAny: OTel version bridge
+  const metricExporter = new OTLPMetricExporter() as any;
   const metricReader = new PeriodicExportingMetricReader({
-    exporter: new OTLPMetricExporter(),
+    exporter: metricExporter,
     exportIntervalMillis: isProduction ? 60_000 : 10_000,
   });
 
