@@ -151,13 +151,14 @@ function DefaultErrorFallback({
     case "minimal":
       return (
         <div className="text-center py-4 text-sm text-slate-500 dark:text-slate-400">
-          <span>加载失败</span>
+          <span>Failed to load</span>
           {showRetry && (
             <button
+              type="button"
               onClick={resetError}
               className="ml-2 text-blue-600 dark:text-blue-400 hover:underline"
             >
-              重试
+              Retry
             </button>
           )}
         </div>
@@ -167,13 +168,14 @@ function DefaultErrorFallback({
       return (
         <span className="inline-flex items-center gap-1 text-sm text-red-600 dark:text-red-400">
           <AlertCircle className="size-3" />
-          <span>出错了</span>
+          <span>Error</span>
           {showRetry && (
             <button
+              type="button"
               onClick={resetError}
               className="text-blue-600 dark:text-blue-400 hover:underline"
             >
-              重试
+              Retry
             </button>
           )}
         </span>
@@ -196,13 +198,12 @@ function DefaultErrorFallback({
           {showRetry && (
             <Button size="sm" variant="outline" onClick={resetError}>
               <RefreshCw className="size-3 mr-1" />
-              重试
+              Retry
             </Button>
           )}
         </div>
       );
 
-    case "default":
     default:
       return (
         <div className="flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg">
@@ -225,7 +226,7 @@ function DefaultErrorFallback({
           {showRetry && (
             <Button variant="default" onClick={resetError}>
               <RefreshCw className="size-4 mr-2" />
-              重试
+              Retry
             </Button>
           )}
         </div>

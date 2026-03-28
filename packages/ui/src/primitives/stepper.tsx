@@ -196,8 +196,7 @@ export function Stepper({
                   "relative flex items-center justify-center rounded-full border-2 transition-all",
                   config.icon,
                   status === "completed" && "border-primary bg-primary text-white",
-                  status === "current" &&
-                    "border-primary bg-white text-primary dark:bg-slate-900",
+                  status === "current" && "border-primary bg-white text-primary dark:bg-slate-900",
                   status === "pending" &&
                     "border-slate-300 bg-white text-slate-400 dark:border-slate-600 dark:bg-slate-900",
                   status === "error" && "border-red-500 bg-red-500 text-white",

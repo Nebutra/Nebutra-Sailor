@@ -128,7 +128,7 @@ describe("tenantContextMiddleware", () => {
 
   describe("S2S HMAC (x-service-token)", () => {
     it("populates tenant context when x-service-token HMAC is valid", async () => {
-      const secret = process.env.SERVICE_SECRET!;
+      const secret = process.env.SERVICE_SECRET ?? "";
       const userId = "user-s2s-123";
       const orgId = "org-s2s-456";
       const role = "org:admin";
@@ -324,7 +324,8 @@ describe("rateLimitMiddleware", () => {
     expect(has429).toBe(true);
 
     // Verify 429 response has correct structure
-    const rejected = results.find((r) => r.status === 429)!;
+    const rejected = results.find((r) => r.status === 429);
+    if (!rejected) throw new Error("Expected a 429 response");
     const body = await rejected.json();
     expect(body.error).toBe("Too Many Requests");
     expect(rejected.headers.get("Retry-After")).toBeDefined();
@@ -332,7 +333,7 @@ describe("rateLimitMiddleware", () => {
 
   it("different plans have different rate limits", async () => {
     // PRO plan gets 1000 max tokens (vs FREE's 100)
-    const secret = process.env.SERVICE_SECRET!;
+    const secret = process.env.SERVICE_SECRET ?? "";
     const token = computeServiceToken(secret, "user-pro", "org-pro", "org:member", "PRO");
 
     const app = createRateLimitApp();
