@@ -21,7 +21,7 @@ export function MultiTenantMockup() {
       </div>
       <div className="p-6 text-foreground dark:text-zinc-300">
         <div className="text-muted-foreground dark:text-zinc-500 mb-3">
-          // Enterprise-grade RLS enforced transparently
+          {"// Enterprise-grade RLS enforced transparently"}
         </div>
         <div>
           <span className="text-primary dark:text-cyan-400">const</span> data{" "}
@@ -175,7 +175,7 @@ export function DXMockup() {
         <span className="text-primary dark:text-blue-400">from</span>{" "}
         <span className="text-emerald-600 dark:text-emerald-300">'hono'</span>;
         <div className="mt-4 text-muted-foreground dark:text-zinc-600">
-          // Fully typed edge-ready RPC
+          {"// Fully typed edge-ready RPC"}
         </div>
         <div>
           <span className="text-primary dark:text-blue-400">const</span> app ={" "}

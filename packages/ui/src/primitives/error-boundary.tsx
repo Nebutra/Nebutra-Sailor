@@ -3,12 +3,12 @@
 /**
  * Generic Error Boundary Component
  *
- * 可复用的错误边界组件，用于包裹可能出错的子组件
- * 提供:
- * - 错误捕获和展示
- * - 自动错误上报
- * - 重试功能
- * - 可定制的 fallback UI
+ * Reusable error boundary component for catching and displaying errors.
+ * Provides:
+ * - Error catching and display
+ * - Automatic error reporting
+ * - Retry functionality
+ * - Customizable fallback UI
  */
 
 import { AlertCircle, RefreshCw } from "lucide-react";
@@ -22,7 +22,7 @@ import { Button } from "./button";
 
 export interface ErrorBoundaryProps {
   children: ReactNode;
-  /** 自定义错误 fallback UI */
+  /** Custom error fallback UI */
   fallback?: ReactNode | ((props: ErrorFallbackProps) => ReactNode);
   /** 组件名称，用于错误上报 */
   componentName?: string;
@@ -299,7 +299,7 @@ export function TableErrorBoundary({
 }
 
 /**
- * 面板/抽屉组件专用错误边界
+ * Panel/抽屉组件专用错误边界
  */
 export function PanelErrorBoundary({
   children,
@@ -309,14 +309,14 @@ export function PanelErrorBoundary({
   panelName?: string;
 }): React.ReactElement {
   return (
-    <ErrorBoundary componentName={panelName || "面板"} variant="default">
+    <ErrorBoundary componentName={panelName || "Panel"} variant="default">
       {children}
     </ErrorBoundary>
   );
 }
 
 /**
- * 卡片组件专用错误边界
+ * Card组件专用错误边界
  */
 export function CardErrorBoundary({
   children,
@@ -326,7 +326,7 @@ export function CardErrorBoundary({
   cardName?: string;
 }): React.ReactElement {
   return (
-    <ErrorBoundary componentName={cardName || "卡片"} variant="compact">
+    <ErrorBoundary componentName={cardName || "Card"} variant="compact">
       {children}
     </ErrorBoundary>
   );

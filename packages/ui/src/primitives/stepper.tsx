@@ -7,7 +7,7 @@ import { cn } from "../utils/cn";
 import { Button } from "./button";
 
 // ============================================
-// 类型定义
+// Types
 // ============================================
 
 export type StepStatus = "pending" | "current" | "completed" | "error";
@@ -119,19 +119,19 @@ export function StepperProvider({
 }
 
 // ============================================
-// Stepper 组件
+// Stepper Component
 // ============================================
 
 export interface StepperProps {
-  /** 方向 */
+  /** orientation */
   orientation?: "horizontal" | "vertical";
   /** 大小 */
   size?: "sm" | "md" | "lg";
   /** 是否可点击切换 */
   clickable?: boolean;
-  /** 是否显示连接线 */
+  /** 是否显示Connector */
   showConnector?: boolean;
-  /** 自定义类名 */
+  /** Custom className */
   className?: string;
 }
 
@@ -187,7 +187,7 @@ export function Stepper({
                 orientation === "horizontal" ? "flex-row items-center" : "flex-col items-center",
               )}
             >
-              {/* 步骤图标 */}
+              {/* Step icon */}
               <button
                 type="button"
                 onClick={() => clickable && goToStep(index)}
@@ -195,9 +195,9 @@ export function Stepper({
                 className={cn(
                   "relative flex items-center justify-center rounded-full border-2 transition-all",
                   config.icon,
-                  status === "completed" && "border-orange-500 bg-orange-500 text-white",
+                  status === "completed" && "border-primary bg-primary text-white",
                   status === "current" &&
-                    "border-orange-500 bg-white text-orange-500 dark:bg-slate-900",
+                    "border-primary bg-white text-primary dark:bg-slate-900",
                   status === "pending" &&
                     "border-slate-300 bg-white text-slate-400 dark:border-slate-600 dark:bg-slate-900",
                   status === "error" && "border-red-500 bg-red-500 text-white",
@@ -211,32 +211,32 @@ export function Stepper({
                 )}
               </button>
 
-              {/* 连接线 */}
+              {/* Connector */}
               {showConnector && !isLast && (
                 <div
                   className={cn(
                     "transition-colors",
                     orientation === "horizontal" ? cn(config.connector, "mx-2") : "my-2 h-8 w-0.5",
-                    index < currentStep ? "bg-orange-500" : "bg-slate-200 dark:bg-slate-700",
+                    index < currentStep ? "bg-primary" : "bg-slate-200 dark:bg-slate-700",
                   )}
                 />
               )}
             </div>
 
-            {/* 步骤文本 */}
+            {/* Step text */}
             <div className={cn("mt-2", orientation === "vertical" && "ml-3 mt-0")}>
               <p
                 className={cn(
                   "font-medium",
                   config.text,
-                  status === "completed" && "text-orange-600 dark:text-orange-400",
+                  status === "completed" && "text-primary/90 dark:text-orange-400",
                   status === "current" && "text-slate-900 dark:text-slate-100",
                   status === "pending" && "text-slate-400 dark:text-slate-500",
                 )}
               >
                 {step.title}
                 {step.optional && (
-                  <span className="ml-1 text-xs text-muted-foreground">(可选)</span>
+                  <span className="ml-1 text-xs text-muted-foreground">(Optional)</span>
                 )}
               </p>
               {step.description && (
@@ -259,12 +259,12 @@ export interface StepperContentProps {
   step: number;
   /** 子内容 */
   children: React.ReactNode;
-  /** 自定义类名 */
+  /** Custom className */
   className?: string;
 }
 
 /**
- * 步骤内容容器
+ * Step content container
  */
 export function StepperContent({ step, children, className }: StepperContentProps) {
   const { currentStep } = useStepperContext();
@@ -293,7 +293,7 @@ export interface StepperNavigationProps {
   loading?: boolean;
   /** 是否禁用下一步 */
   disableNext?: boolean;
-  /** 自定义类名 */
+  /** Custom className */
   className?: string;
 }
 
@@ -348,7 +348,7 @@ export interface UseStepperOptions {
 }
 
 /**
- * 步骤管理 Hook
+ * Step management hook
  */
 export function useStepper({ steps, initialStep = 0, onComplete }: UseStepperOptions) {
   const [currentStep, setCurrentStep] = useState(initialStep);
@@ -403,9 +403,9 @@ export interface ProgressStepperProps {
   currentStep: number;
   /** 总步骤数 */
   totalSteps: number;
-  /** 步骤标签 */
+  /** 步骤Labels */
   labels?: string[];
-  /** 自定义类名 */
+  /** Custom className */
   className?: string;
 }
 
@@ -425,23 +425,23 @@ export function ProgressStepper({
       {/* 进度条 */}
       <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
         <div
-          className="h-full rounded-full bg-orange-500 transition-all duration-300"
+          className="h-full rounded-full bg-primary transition-all duration-300"
           style={{ width: `${progress}%` }}
         />
       </div>
 
-      {/* 标签 */}
+      {/* Labels */}
       {labels && labels.length > 0 && (
         <div className="flex justify-between text-xs text-muted-foreground">
           {labels.map((label, index) => (
-            <span key={index} className={cn(index <= currentStep && "text-orange-600 font-medium")}>
+            <span key={index} className={cn(index <= currentStep && "text-primary/90 font-medium")}>
               {label}
             </span>
           ))}
         </div>
       )}
 
-      {/* 步骤计数 */}
+      {/* Step count */}
       <p className="text-center text-sm text-muted-foreground">
         步骤 {currentStep + 1} / {totalSteps}
       </p>

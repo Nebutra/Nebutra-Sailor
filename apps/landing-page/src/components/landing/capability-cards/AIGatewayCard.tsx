@@ -66,7 +66,7 @@ export function AIGatewayCard() {
               <span className="text-emerald-600 dark:text-emerald-300">'@nebutra/ai'</span>;
             </div>
             <div className="mt-3 text-muted-foreground dark:text-zinc-600 font-medium">
-              // Auto-fallback & latency routing
+              {"// Auto-fallback & latency routing"}
             </div>
             <div>
               <span className="text-primary dark:text-blue-400">export const</span> POST ={" "}

@@ -23,10 +23,11 @@
 
 import { Check, Code, Copy, Hash, Link } from "lucide-react";
 import * as React from "react";
+// Toast feedback handled by consumer
+import { toast } from "sonner";
 import { cn } from "../utils/cn";
 import { Button } from "./button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
-// Toast feedback handled by consumer
 
 // ============================================================================
 // Types
@@ -82,7 +83,7 @@ export function CopyButton({
       setCopied(true);
 
       if (showToast) {
-        apiToast.success(successMessage);
+        toast.success(successMessage);
       }
 
       onCopied?.(value);
@@ -91,7 +92,7 @@ export function CopyButton({
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       console.error("Failed to copy:", error);
-      apiToast.error("Failed to copy to clipboard");
+      toast.error("Failed to copy to clipboard");
     }
   };
 
@@ -255,14 +256,14 @@ export function useCopyToClipboard(
         setCopied(true);
 
         if (showToast) {
-          apiToast.success(successMessage);
+          toast.success(successMessage);
         }
 
         setTimeout(() => setCopied(false), timeout);
         return true;
       } catch (error) {
         console.error("Failed to copy:", error);
-        apiToast.error("Failed to copy to clipboard");
+        toast.error("Failed to copy to clipboard");
         return false;
       }
     },

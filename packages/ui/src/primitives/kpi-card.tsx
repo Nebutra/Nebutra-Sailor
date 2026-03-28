@@ -48,7 +48,7 @@ export function KpiCard({ title, value, icon, trend, description, className }: K
                     <span className="text-sm font-medium text-red-600">{trend.value}%</span>
                   </>
                 )}
-                <span className="text-sm text-slate-500 dark:text-slate-400">vs 上周</span>
+                <span className="text-sm text-slate-500 dark:text-slate-400">vs last week</span>
               </div>
             )}
 

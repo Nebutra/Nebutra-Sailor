@@ -84,7 +84,7 @@ export * from "./canvas-reveal-effect";
 export * from "./card";
 export * from "./card-spotlight";
 export * from "./carousel";
-export * from "./change-password-form";
+// export * from "./change-password-form";
 export * from "./chart";
 export {
   Checkbox,
