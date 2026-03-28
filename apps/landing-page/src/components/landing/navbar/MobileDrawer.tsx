@@ -54,10 +54,7 @@ export function MobileDrawer() {
                                 className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
                                 {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
                               >
-                                {child.icon && (
-                                  //@ts-expect-error - dynamic icon rendering
-                                  <child.icon className="h-4 w-4 opacity-70" />
-                                )}
+                                {child.icon && <child.icon className="h-4 w-4 opacity-70" />}
                                 {t(child.labelKey as any)}
                               </Component>
                             );
@@ -79,10 +76,7 @@ export function MobileDrawer() {
                       className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
                       {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
                     >
-                      {Icon && (
-                        //@ts-expect-error
-                        <Icon className="h-5 w-5" />
-                      )}
+                      {Icon && <Icon className="h-5 w-5" />}
                       {t(link.labelKey as any)}
                     </Component>
                   );

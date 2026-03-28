@@ -32,7 +32,6 @@ export function DesktopNav() {
                           {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
                         >
                           {child.icon ? (
-                            //@ts-expect-error - dynamic icon rendering
                             <child.icon className="h-4 w-4 text-muted-foreground/60 group-hover/child:text-foreground transition-colors" />
                           ) : null}
                           {t(child.labelKey as any)}
