@@ -4,6 +4,7 @@ import { useOrganization, useUser } from "@clerk/nextjs";
 import { Button, Input } from "@nebutra/ui/components";
 import { Label } from "@nebutra/ui/primitives";
 import { Upload } from "lucide-react";
+import Image from "next/image";
 import { useRef, useState } from "react";
 
 interface ProfileSetupStepProps {
@@ -71,7 +72,13 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
             className="group relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-muted-foreground/30 transition-colors hover:border-primary"
           >
             {logoPreview ? (
-              <img src={logoPreview} alt="Logo" className="h-full w-full object-cover" />
+              <Image
+                src={logoPreview}
+                alt="Logo"
+                fill
+                className="object-cover"
+                unoptimized={logoPreview.startsWith("data:")}
+              />
             ) : (
               <Upload className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-primary" />
             )}

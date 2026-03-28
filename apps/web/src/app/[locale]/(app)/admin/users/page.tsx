@@ -3,6 +3,7 @@ import { AnimateIn } from "@nebutra/ui/components";
 import { Card, EmptyState } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { Suspense } from "react";
+import { ExternalAvatar } from "@/components/ui/external-avatar";
 
 interface Props {
   searchParams: Promise<{ page?: string; q?: string }>;
@@ -83,13 +84,13 @@ async function UsersListContent({ searchParams }: Props) {
                 className="grid grid-cols-12 items-center border-b border-neutral-7 px-4 py-3 text-sm last:border-b-0 dark:border-white/10"
               >
                 <div className="col-span-4 flex items-center gap-3">
-                  {user.imageUrl ? (
-                    <img src={user.imageUrl} alt="" className="h-8 w-8 rounded-full" />
-                  ) : (
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-3 text-xs font-medium text-neutral-11 dark:bg-white/10 dark:text-white/70">
-                      {(user.firstName?.[0] ?? "?").toUpperCase()}
-                    </div>
-                  )}
+                  <ExternalAvatar
+                    src={user.imageUrl}
+                    alt={user.firstName ?? "User"}
+                    size={32}
+                    className="h-8 w-8"
+                    fallbackInitial={(user.firstName?.[0] ?? "?").toUpperCase()}
+                  />
                   <div className="min-w-0">
                     <p className="truncate font-medium text-neutral-12 dark:text-white">
                       {user.firstName} {user.lastName}
@@ -127,13 +128,13 @@ async function UsersListContent({ searchParams }: Props) {
                 className="block rounded-lg border border-neutral-7 bg-neutral-2 p-3 transition-colors hover:bg-neutral-3 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
               >
                 <div className="flex items-center gap-3">
-                  {user.imageUrl ? (
-                    <img src={user.imageUrl} alt="" className="h-8 w-8 rounded-full" />
-                  ) : (
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-3 text-xs font-medium text-neutral-11 dark:bg-white/10 dark:text-white/70">
-                      {(user.firstName?.[0] ?? "?").toUpperCase()}
-                    </div>
-                  )}
+                  <ExternalAvatar
+                    src={user.imageUrl}
+                    alt={user.firstName ?? "User"}
+                    size={32}
+                    className="h-8 w-8"
+                    fallbackInitial={(user.firstName?.[0] ?? "?").toUpperCase()}
+                  />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium text-neutral-12 dark:text-white">
                       {user.firstName} {user.lastName}

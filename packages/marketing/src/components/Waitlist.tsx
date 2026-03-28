@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type React from "react";
 import { useState } from "react";
 
@@ -83,11 +84,13 @@ export function Waitlist({
         <div className="flex -space-x-2">
           {/* Fake avatars for FOMO */}
           {[...Array(4)].map((_, i) => (
-            <img
+            <Image
               key={i}
               className="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-900"
               src={`https://api.dicebear.com/7.x/notionists/svg?seed=${i}&backgroundColor=e2e8f0`}
               alt="Avatar"
+              width={32}
+              height={32}
             />
           ))}
         </div>

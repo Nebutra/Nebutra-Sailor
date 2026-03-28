@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight } from "@nebutra/icons";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { BlogPost } from "@/lib/blog-fallback";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
@@ -47,10 +48,11 @@ export function BlogShowcase({ posts }: BlogShowcaseProps) {
                 {/* Thumbnail */}
                 {post.imageUrl ? (
                   <div className="relative h-48 w-full overflow-hidden bg-[var(--neutral-3)]">
-                    <img
+                    <Image
                       src={post.imageUrl}
                       alt={post.title}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                 ) : (

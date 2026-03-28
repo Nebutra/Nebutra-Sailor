@@ -4,6 +4,7 @@ import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card } from "@nebutra/ui/layout";
 import { Building2 } from "lucide-react";
 import { Suspense } from "react";
+import { ExternalAvatar } from "@/components/ui/external-avatar";
 
 async function AdminOverviewContent() {
   const client = await clerkClient();
@@ -54,17 +55,17 @@ async function AdminOverviewContent() {
           <div className="divide-y divide-neutral-7 dark:divide-white/10">
             {recentUsers.data.map((user) => (
               <div key={user.id} className="flex items-center gap-4 px-4 py-3">
-                {user.imageUrl ? (
-                  <img src={user.imageUrl} alt="" className="h-8 w-8 rounded-full" />
-                ) : (
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-3 text-xs font-medium text-neutral-11 dark:bg-white/10 dark:text-white/70">
-                    {(
-                      user.firstName?.[0] ??
-                      user.emailAddresses[0]?.emailAddress[0] ??
-                      "?"
-                    ).toUpperCase()}
-                  </div>
-                )}
+                <ExternalAvatar
+                  src={user.imageUrl}
+                  alt={user.firstName ?? "User"}
+                  size={32}
+                  className="h-8 w-8"
+                  fallbackInitial={(
+                    user.firstName?.[0] ??
+                    user.emailAddresses[0]?.emailAddress[0] ??
+                    "?"
+                  ).toUpperCase()}
+                />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-neutral-12 dark:text-white">
                     {user.firstName} {user.lastName}

@@ -70,6 +70,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "svgl.app", pathname: "/library/**" },
       { protocol: "https", hostname: "cdn.simpleicons.org" },
+      // DiceBear avatars used in Waitlist social proof
+      { protocol: "https", hostname: "api.dicebear.com" },
     ],
   },
 };

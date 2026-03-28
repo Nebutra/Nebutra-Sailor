@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { cn } from "../utils/cn";
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -40,16 +40,31 @@ function LetterGlitch({
   const context = useRef<CanvasRenderingContext2D | null>(null);
   const lastGlitchTime = useRef(Date.now());
 
-  const lettersAndSymbols = Array.from(characters);
   const fontSize = 16;
   const charWidth = 10;
   const charHeight = 20;
 
-  const getRandomChar = () =>
-    lettersAndSymbols[Math.floor(Math.random() * lettersAndSymbols.length)];
-  const getRandomColor = () => glitchColors[Math.floor(Math.random() * glitchColors.length)];
+  // Store props in refs so callbacks always see current values without re-triggering effects
+  const glitchColorsRef = useRef(glitchColors);
+  glitchColorsRef.current = glitchColors;
+  const glitchSpeedRef = useRef(glitchSpeed);
+  glitchSpeedRef.current = glitchSpeed;
+  const smoothRef = useRef(smooth);
+  smoothRef.current = smooth;
+  const charactersRef = useRef(characters);
+  charactersRef.current = characters;
 
-  const hexToRgb = (hex: string) => {
+  const getRandomChar = useCallback(() => {
+    const syms = Array.from(charactersRef.current);
+    return syms[Math.floor(Math.random() * syms.length)];
+  }, []);
+
+  const getRandomColor = useCallback(() => {
+    const colors = glitchColorsRef.current;
+    return colors[Math.floor(Math.random() * colors.length)];
+  }, []);
+
+  const hexToRgb = useCallback((hex: string) => {
     const shorthand = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthand, (_m, r, g, b) => r + r + g + g + b + b);
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -60,31 +75,51 @@ function LetterGlitch({
           b: parseInt(result[3] ?? "0", 16),
         }
       : null;
-  };
+  }, []);
 
-  const interpolateColor = (
-    s: { r: number; g: number; b: number },
-    e: { r: number; g: number; b: number },
-    f: number,
-  ) =>
-    `rgb(${Math.round(s.r + (e.r - s.r) * f)}, ${Math.round(s.g + (e.g - s.g) * f)}, ${Math.round(s.b + (e.b - s.b) * f)})`;
+  const interpolateColor = useCallback(
+    (s: { r: number; g: number; b: number }, e: { r: number; g: number; b: number }, f: number) =>
+      `rgb(${Math.round(s.r + (e.r - s.r) * f)}, ${Math.round(s.g + (e.g - s.g) * f)}, ${Math.round(s.b + (e.b - s.b) * f)})`,
+    [],
+  );
 
-  const calculateGrid = (w: number, h: number) => ({
-    columns: Math.ceil(w / charWidth),
-    rows: Math.ceil(h / charHeight),
-  });
+  const calculateGrid = useCallback(
+    (w: number, h: number) => ({
+      columns: Math.ceil(w / charWidth),
+      rows: Math.ceil(h / charHeight),
+    }),
+    [],
+  );
 
-  const initializeLetters = (columns: number, rows: number) => {
-    grid.current = { columns, rows };
-    letters.current = Array.from({ length: columns * rows }, () => ({
-      char: getRandomChar() || " ",
-      color: getRandomColor() || "#000",
-      targetColor: getRandomColor() || "#000",
-      colorProgress: 1,
-    }));
-  };
+  const initializeLetters = useCallback(
+    (columns: number, rows: number) => {
+      grid.current = { columns, rows };
+      letters.current = Array.from({ length: columns * rows }, () => ({
+        char: getRandomChar() || " ",
+        color: getRandomColor() || "#000",
+        targetColor: getRandomColor() || "#000",
+        colorProgress: 1,
+      }));
+    },
+    [getRandomChar, getRandomColor],
+  );
 
-  const resizeCanvas = () => {
+  const drawLetters = useCallback(() => {
+    if (!context.current || !canvasRef.current) return;
+    const ctx = context.current;
+    const { width, height } = canvasRef.current.getBoundingClientRect();
+    ctx.clearRect(0, 0, width, height);
+    ctx.font = `${fontSize}px monospace`;
+    ctx.textBaseline = "top";
+    letters.current.forEach((letter, i) => {
+      const x = (i % grid.current.columns) * charWidth;
+      const y = Math.floor(i / grid.current.columns) * charHeight;
+      ctx.fillStyle = letter.color;
+      ctx.fillText(letter.char, x, y);
+    });
+  }, []);
+
+  const resizeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const parent = canvas.parentElement;
@@ -99,40 +134,25 @@ function LetterGlitch({
     const { columns, rows } = calculateGrid(rect.width, rect.height);
     initializeLetters(columns, rows);
     drawLetters();
-  };
+  }, [calculateGrid, initializeLetters, drawLetters]);
 
-  const drawLetters = () => {
-    if (!context.current || !canvasRef.current) return;
-    const ctx = context.current;
-    const { width, height } = canvasRef.current.getBoundingClientRect();
-    ctx.clearRect(0, 0, width, height);
-    ctx.font = `${fontSize}px monospace`;
-    ctx.textBaseline = "top";
-    letters.current.forEach((letter, i) => {
-      const x = (i % grid.current.columns) * charWidth;
-      const y = Math.floor(i / grid.current.columns) * charHeight;
-      ctx.fillStyle = letter.color;
-      ctx.fillText(letter.char, x, y);
-    });
-  };
-
-  const updateLetters = () => {
+  const updateLetters = useCallback(() => {
     const updateCount = Math.max(1, Math.floor(letters.current.length * 0.05));
     for (let i = 0; i < updateCount; i++) {
       const idx = Math.floor(Math.random() * letters.current.length);
       if (!letters.current[idx]) continue;
       letters.current[idx].char = getRandomChar() || " ";
       letters.current[idx].targetColor = getRandomColor() || "#000";
-      if (!smooth) {
+      if (!smoothRef.current) {
         letters.current[idx].color = letters.current[idx].targetColor;
         letters.current[idx].colorProgress = 1;
       } else {
         letters.current[idx].colorProgress = 0;
       }
     }
-  };
+  }, [getRandomChar, getRandomColor]);
 
-  const handleSmooth = () => {
+  const handleSmooth = useCallback(() => {
     let redraw = false;
     letters.current.forEach((l) => {
       if (l.colorProgress < 1) {
@@ -147,18 +167,18 @@ function LetterGlitch({
       }
     });
     if (redraw) drawLetters();
-  };
+  }, [hexToRgb, interpolateColor, drawLetters]);
 
-  const animate = () => {
+  const animate = useCallback(() => {
     const now = Date.now();
-    if (now - lastGlitchTime.current >= glitchSpeed) {
+    if (now - lastGlitchTime.current >= glitchSpeedRef.current) {
       updateLetters();
       drawLetters();
       lastGlitchTime.current = now;
     }
-    if (smooth) handleSmooth();
+    if (smoothRef.current) handleSmooth();
     animationRef.current = requestAnimationFrame(animate);
-  };
+  }, [updateLetters, drawLetters, handleSmooth]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

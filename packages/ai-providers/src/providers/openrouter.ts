@@ -693,15 +693,19 @@ export class OpenRouterProvider extends BaseAIProvider {
         message: {
           role: "assistant" as const,
           content: c.message.content,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          toolCalls: c.message.tool_calls?.map((tc: any) => ({
-            id: tc.id,
-            type: "function" as const,
-            function: {
-              name: tc.function.name,
-              arguments: tc.function.arguments,
-            },
-          })),
+          toolCalls: c.message.tool_calls
+            ?.filter(
+              (tc): tc is OpenAI.Chat.Completions.ChatCompletionMessageFunctionToolCall =>
+                tc.type === "function",
+            )
+            .map((tc) => ({
+              id: tc.id,
+              type: "function" as const,
+              function: {
+                name: tc.function.name,
+                arguments: tc.function.arguments,
+              },
+            })),
           // OpenRouter may return reasoning for models like o1/DeepSeek-R1
           reasoningContent: (c.message as { reasoning?: string }).reasoning,
         },
@@ -730,8 +734,7 @@ export class OpenRouterProvider extends BaseAIProvider {
         delta: {
           role: c.delta.role as "assistant" | undefined,
           content: c.delta.content ?? undefined,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          toolCalls: c.delta.tool_calls?.map((tc: any) => ({
+          toolCalls: c.delta.tool_calls?.map((tc) => ({
             id: tc.id || "",
             type: "function" as const,
             function: {

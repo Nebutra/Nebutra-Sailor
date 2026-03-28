@@ -1,7 +1,7 @@
 "use client";
 
 import { type MotionProps, motion } from "framer-motion";
-import { type JSX, useEffect, useState } from "react";
+import { type JSX, useCallback, useEffect, useRef, useState } from "react";
 
 /**
  * Default character set for scramble animation
@@ -75,12 +75,16 @@ export function TextScramble({
 }: TextScrambleProps) {
   const MotionComponent = motion.create(Component as keyof JSX.IntrinsicElements);
   const [displayText, setDisplayText] = useState(children);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const isAnimatingRef = useRef(false);
   const text = children;
 
-  const scramble = async () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
+  // Store callback props in refs for stable access
+  const onScrambleCompleteRef = useRef(onScrambleComplete);
+  onScrambleCompleteRef.current = onScrambleComplete;
+
+  const scramble = useCallback(() => {
+    if (isAnimatingRef.current) return;
+    isAnimatingRef.current = true;
 
     const steps = duration / speed;
     let step = 0;
@@ -108,11 +112,11 @@ export function TextScramble({
       if (step > steps) {
         clearInterval(interval);
         setDisplayText(text);
-        setIsAnimating(false);
-        onScrambleComplete?.();
+        isAnimatingRef.current = false;
+        onScrambleCompleteRef.current?.();
       }
     }, speed * 1000);
-  };
+  }, [duration, speed, text, characterSet]);
 
   useEffect(() => {
     if (!trigger) return;

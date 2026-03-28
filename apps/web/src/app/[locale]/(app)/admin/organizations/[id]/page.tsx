@@ -6,6 +6,7 @@ import { Building2 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { ExternalAvatar } from "@/components/ui/external-avatar";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -44,13 +45,13 @@ async function OrgDetailContent({ params }: Props) {
         <AnimateIn preset="fadeUp" className="lg:col-span-1">
           <Card className="p-6">
             <div className="flex flex-col items-center text-center">
-              {org.imageUrl ? (
-                <img src={org.imageUrl} alt="" className="h-20 w-20 rounded-xl" />
-              ) : (
-                <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-neutral-3 text-2xl font-semibold text-neutral-11 dark:bg-white/10 dark:text-white/70">
-                  <Building2 className="h-8 w-8" />
-                </div>
-              )}
+              <ExternalAvatar
+                src={org.imageUrl}
+                alt={org.name}
+                size={80}
+                className="h-20 w-20 rounded-xl"
+                fallbackInitial={org.name[0]?.toUpperCase()}
+              />
               <h2 className="mt-4 text-lg font-semibold text-neutral-12 dark:text-white">
                 {org.name}
               </h2>
@@ -113,13 +114,13 @@ async function OrgDetailContent({ params }: Props) {
                       className="flex items-center justify-between px-4 py-3"
                     >
                       <div className="flex items-center gap-3">
-                        {user?.imageUrl ? (
-                          <img src={user.imageUrl} alt="" className="h-8 w-8 rounded-full" />
-                        ) : (
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-3 text-xs font-medium text-neutral-11 dark:bg-white/10 dark:text-white/70">
-                            {(user?.firstName?.[0] ?? "?").toUpperCase()}
-                          </div>
-                        )}
+                        <ExternalAvatar
+                          src={user?.imageUrl}
+                          alt={user?.firstName ?? "Member"}
+                          size={32}
+                          className="h-8 w-8"
+                          fallbackInitial={(user?.firstName?.[0] ?? "?").toUpperCase()}
+                        />
                         <div className="min-w-0">
                           <Link
                             href={`/admin/users/${user?.userId}`}

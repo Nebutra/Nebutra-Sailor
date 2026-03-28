@@ -93,14 +93,20 @@ const DEFAULT_CONFIG: GlobeConfig = {
  * ```
  */
 export function Globe({ className, config, rotationSpeed = 0.005, ...props }: GlobeProps) {
-  const mergedConfig = { ...DEFAULT_CONFIG, ...config };
-  let phi = mergedConfig.phi || 0;
-  let width = 0;
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
+  const phiRef = useRef((config?.phi ?? DEFAULT_CONFIG.phi) || 0);
+  const widthRef = useRef(0);
   const [r, setR] = useState(0);
+
+  // Store config and rotationSpeed in refs so onRender always sees latest values
+  const configRef = useRef(config);
+  configRef.current = config;
+  const rotationSpeedRef = useRef(rotationSpeed);
+  rotationSpeedRef.current = rotationSpeed;
+  const rRef = useRef(r);
+  rRef.current = r;
 
   const updatePointerInteraction = (value: number | null) => {
     pointerInteracting.current = value;
@@ -117,30 +123,28 @@ export function Globe({ className, config, rotationSpeed = 0.005, ...props }: Gl
     }
   };
 
-  const onRender = useCallback(
-    (state: Record<string, unknown>) => {
-      if (pointerInteracting.current === null) phi += rotationSpeed;
-      state.phi = phi + r;
-      state.width = width * 2;
-      state.height = width * 2;
-    },
-    [r, rotationSpeed, phi, width],
-  );
+  const onRender = useCallback((state: Record<string, unknown>) => {
+    if (pointerInteracting.current === null) phiRef.current += rotationSpeedRef.current;
+    state.phi = phiRef.current + rRef.current;
+    state.width = widthRef.current * 2;
+    state.height = widthRef.current * 2;
+  }, []);
 
-  const onResize = () => {
+  const onResize = useCallback(() => {
     if (canvasRef.current) {
-      width = canvasRef.current.offsetWidth;
+      widthRef.current = canvasRef.current.offsetWidth;
     }
-  };
+  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", onResize);
     onResize();
 
+    const mergedConfig = { ...DEFAULT_CONFIG, ...configRef.current };
     const cobeConfig = {
       ...mergedConfig,
-      width: width * 2,
-      height: width * 2,
+      width: widthRef.current * 2,
+      height: widthRef.current * 2,
       onRender,
     } as COBEOptions;
 
@@ -158,7 +162,7 @@ export function Globe({ className, config, rotationSpeed = 0.005, ...props }: Gl
       globe.destroy();
       window.removeEventListener("resize", onResize);
     };
-  }, [mergedConfig, onRender, onResize, width]);
+  }, [onRender, onResize]);
 
   return (
     <div

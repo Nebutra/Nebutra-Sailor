@@ -57,8 +57,14 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       // Clerk user profile avatars
+      { protocol: "https", hostname: "**.clerk.com" },
       { protocol: "https", hostname: "img.clerk.com" },
       { protocol: "https", hostname: "images.clerk.com" },
+      // OAuth provider avatars
+      { protocol: "https", hostname: "**.googleusercontent.com" },
+      { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "**.gravatar.com" },
+      { protocol: "https", hostname: "ui-avatars.com" },
       // Nebutra CDN
       { protocol: "https", hostname: "cdn.nebutra.com" },
     ],
