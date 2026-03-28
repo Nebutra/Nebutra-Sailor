@@ -64,7 +64,8 @@ interface EmotionButtonProps {
 }
 
 function EmotionButton({ emotion, selected, onClick }: EmotionButtonProps) {
-  const entry = emotions.find((e) => e.value === emotion) ?? emotions[0];
+  const entry = emotions.find((e) => e.value === emotion);
+  if (!entry) return null;
   return (
     <button
       type="button"
