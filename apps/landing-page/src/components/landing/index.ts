@@ -9,7 +9,7 @@ export { AIConstellationMarquee } from "./AIConstellationMarquee";
 export { AlternativeComparison } from "./AlternativeComparison";
 export { BlogShowcase, type BlogShowcaseProps } from "./BlogShowcase";
 export { CapabilityMatrixSection } from "./CapabilityMatrixSection";
-export { DeploymentStats } from "./DeploymentStats";
+
 export { DesignSystemSection } from "./DesignSystemSection";
 // Legacy components (kept for backwards compat)
 export { FeatureCards } from "./FeatureCards";

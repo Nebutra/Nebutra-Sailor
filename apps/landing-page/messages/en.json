@@ -1116,11 +1116,7 @@
         "name": "Hobby",
         "price": "Free",
         "description": "For side projects",
-        "features": [
-          "1 Project",
-          "Community Support",
-          "Basic Analytics"
-        ],
+        "features": ["1 Project", "Community Support", "Basic Analytics"],
         "ctaText": "Start Free"
       },
       "pro": {
@@ -1128,24 +1124,14 @@
         "price": "$29",
         "description": "For startups",
         "isPopular": true,
-        "features": [
-          "Unlimited Projects",
-          "Priority Support",
-          "Custom Domain",
-          "Advanced AI"
-        ],
+        "features": ["Unlimited Projects", "Priority Support", "Custom Domain", "Advanced AI"],
         "ctaText": "Get Pro"
       },
       "enterprise": {
         "name": "Enterprise",
         "price": "Custom",
         "description": "For large teams",
-        "features": [
-          "SSO",
-          "Dedicated Slack Channel",
-          "SLA 99.9%",
-          "White-label"
-        ],
+        "features": ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
         "ctaText": "Contact Us"
       }
     },

@@ -268,3 +268,11 @@ export * from "./wave-animation";
 export * from "./waves-bg";
 export * from "./word-fade-in";
 export * from "./x-post-card";
+
+// Dashboard patterns (migrated from production)
+export * from "./bulk-action-bar";
+export * from "./error-boundary";
+export * from "./kpi-card";
+export * from "./metric-card";
+export * from "./pagination-control";
+export * from "./stepper";

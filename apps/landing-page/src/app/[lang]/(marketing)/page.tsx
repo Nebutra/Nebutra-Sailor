@@ -11,8 +11,6 @@ import {
   PricingSection,
 } from "@/components/landing";
 
-import { getGitHubStars } from "@/lib/github";
-
 const ProductShowcase = dynamic(
   () => import("@/components/landing").then((mod) => mod.ProductShowcase),
   { loading: () => <section className="h-96" aria-hidden /> },
@@ -109,7 +107,6 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
   const locale = lang as Locale;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "microLanding" });
-  const stars = await getGitHubStars();
 
   return (
     <Suspense>
@@ -147,7 +144,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
         <HarnessEngineeringSection />
 
         {/* 7. Testimonials */}
-        <TestimonialsSection stars={stars} />
+        <TestimonialsSection />
 
         {/* 7.8 Design System */}
         <DesignSystemSection />

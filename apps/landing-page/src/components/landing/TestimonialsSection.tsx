@@ -2,14 +2,10 @@
 
 import { useTranslations } from "next-intl";
 import { AnimateIn } from "./AnimateIn";
-import { DeploymentStats } from "./DeploymentStats";
+
 import { UniqueTestimonial } from "./testimonials/UniqueTestimonial";
 
-interface TestimonialsSectionProps {
-  stars?: number;
-}
-
-export function TestimonialsSection({ stars }: TestimonialsSectionProps) {
+export function TestimonialsSection() {
   const t = useTranslations("microLanding.testimonials");
 
   const TESTIMONIALS = [
@@ -51,10 +47,6 @@ export function TestimonialsSection({ stars }: TestimonialsSectionProps) {
         <section className="mt-12 bg-background/50 backdrop-blur-xl border border-border/50 rounded-3xl mx-auto max-w-5xl shadow-2xl p-4 md:p-8">
           <UniqueTestimonial testimonials={TESTIMONIALS} />
         </section>
-
-        <div className="mt-20">
-          <DeploymentStats stars={stars} />
-        </div>
       </div>
     </section>
   );

@@ -56,7 +56,7 @@ export function HeroMockupWindow() {
 
         <div className="relative z-10 flex flex-col md:flex-row h-[520px] w-full">
           {/* Left Sidebar — fixed height, vertical scroll inside */}
-          <div className="w-full md:w-[300px] border-b md:border-b-0 md:border-r border-border/30 bg-muted/30 dark:bg-zinc-950/50 flex flex-col overflow-hidden">
+          <div className="w-full md:w-[420px] shrink-0 border-b md:border-b-0 md:border-r border-border/30 bg-muted/30 dark:bg-zinc-950/50 flex flex-col overflow-hidden">
             <MonorepoFileTree variant="minimal" />
           </div>
 

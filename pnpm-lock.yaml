@@ -519,6 +519,9 @@ importers:
       react:
         specifier: 19.2.4
         version: 19.2.4
+      react-activity-calendar:
+        specifier: ^3.1.1
+        version: 3.1.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-dom:
         specifier: 19.2.4
         version: 19.2.4(react@19.2.4)
@@ -15849,6 +15852,11 @@ packages:
     peerDependencies:
       react: ^16.13.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  react-activity-calendar@3.1.1:
+    resolution: {integrity: sha512-YvHNS4anlW3Xy0fxOU2ZTWrJkOt0ALxX8IfgDRg6jr/vgYsbh//4djf2c7CPhYNROh+5oYZzR0EJaPbrFUj2tA==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
 
   react-ascii-text@0.0.4:
     resolution: {integrity: sha512-eELnCyECQpMvvpmk1i+qFcjtTRyQg8tcp0VbdAvCKv54H/+B8NlbhcRnO+YzTzmWewhprAqdqShM33uHlu7OwA==}
@@ -36464,6 +36472,14 @@ snapshots:
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
+
+  react-activity-calendar@3.1.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+    dependencies:
+      '@floating-ui/react': 0.27.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      date-fns: 4.1.0
+      react: 19.2.4
+    transitivePeerDependencies:
+      - react-dom
 
   react-ascii-text@0.0.4(react@19.2.4):
     dependencies:
