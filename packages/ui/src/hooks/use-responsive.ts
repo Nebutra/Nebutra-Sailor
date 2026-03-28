@@ -7,12 +7,16 @@ const BREAKPOINTS = {
   XL: 1200,
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: responsive styles are untyped by design
 export const useResponsive = (styles: any) => {
-  const [responsiveStyles, setResponsiveStyles] = useState();
+  // biome-ignore lint/suspicious/noExplicitAny: responsive styles are untyped
+  const [responsiveStyles, setResponsiveStyles] = useState<any>();
 
   useEffect(() => {
+    // biome-ignore lint/suspicious/noExplicitAny: responsive styles
     const getResponsive = (styles: any) => {
-      let current: unknown;
+      // biome-ignore lint/suspicious/noImplicitAnyLet: resolved dynamically
+      let current;
       if (typeof styles === "object") {
         if (styles.sm && window.innerWidth >= BREAKPOINTS.SM) {
           current = styles.sm;
