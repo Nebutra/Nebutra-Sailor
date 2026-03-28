@@ -102,7 +102,7 @@ describe("sendAlert", () => {
 
     const received = ch.calls[0];
     expect(received.timestamp).toBeDefined();
-    expect(new Date(received.timestamp!).toISOString()).toBe(received.timestamp);
+    expect(new Date(received.timestamp ?? "").toISOString()).toBe(received.timestamp);
   });
 });
 

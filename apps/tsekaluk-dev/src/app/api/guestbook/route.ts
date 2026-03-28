@@ -69,7 +69,7 @@ async function notifyAdmin(entry: {
               entry.company || entry.title
                 ? ` (${[entry.title, entry.company]
                     .filter(Boolean)
-                    .map((s) => escapeHtml(s!))
+                    .map((s) => escapeHtml(String(s)))
                     .join(" @ ")})`
                 : ""
             }</td>

@@ -38,5 +38,5 @@ export function getActiveApps(config: ResolvedConfig): string[] {
 }
 
 export function getActivePackages(config: ResolvedConfig): string[] {
-  return getActiveApps(config).map((app) => APP_PACKAGE_MAP[app]!);
+  return getActiveApps(config).map((app) => APP_PACKAGE_MAP[app] ?? app);
 }
