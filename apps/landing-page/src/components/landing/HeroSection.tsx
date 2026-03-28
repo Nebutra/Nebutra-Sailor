@@ -92,34 +92,6 @@ export function HeroSection() {
                 </a>
               </div>
             </AnimateIn>
-
-            <AnimateIn preset="fadeUp">
-              <div className="mt-14 mb-4 flex flex-col items-center gap-5">
-                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground/60 w-full text-center">
-                  TRUSTED BY SERIOUS FOUNDERS. BUILT WITH THE STACK YOU LOVE.
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-[14px] font-bold text-muted-foreground/40 transition-all">
-                  <span className="hover:text-foreground transition-colors cursor-default">
-                    Next.js 16
-                  </span>
-                  <span className="hover:text-[#3178C6] transition-colors cursor-default">
-                    TypeScript
-                  </span>
-                  <span className="hover:text-[#38BDF8] transition-colors cursor-default">
-                    Tailwind v4
-                  </span>
-                  <span className="hover:text-[#5A67D8] transition-colors cursor-default">
-                    Prisma v7
-                  </span>
-                  <span className="hover:text-[#E36002] transition-colors cursor-default">
-                    Hono
-                  </span>
-                  <span className="hover:text-[#635BFF] transition-colors cursor-default">
-                    Stripe
-                  </span>
-                </div>
-              </div>
-            </AnimateIn>
           </AnimateInGroup>
         </div>
       </div>
