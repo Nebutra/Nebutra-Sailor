@@ -271,36 +271,36 @@ export function CookieBanner({
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {/* Necessary - Always enabled */}
               <CookieCategoryToggle
-                category={cookieCategories.find((c) => c.id === "necessary")!}
+                category={cookieCategories.find((c) => c.id === "necessary") as CookieCategory}
                 enabled={true}
                 disabled={true}
-                label={translations.necessary!}
+                label={translations.necessary ?? "Necessary"}
               />
 
               {/* Optional categories */}
               <CookieCategoryToggle
-                category={cookieCategories.find((c) => c.id === "functional")!}
+                category={cookieCategories.find((c) => c.id === "functional") as CookieCategory}
                 enabled={preferences.functional}
                 onToggle={() => toggleCategory("functional")}
-                label={translations.functional!}
+                label={translations.functional ?? "Functional"}
               />
               <CookieCategoryToggle
-                category={cookieCategories.find((c) => c.id === "analytics")!}
+                category={cookieCategories.find((c) => c.id === "analytics") as CookieCategory}
                 enabled={preferences.analytics}
                 onToggle={() => toggleCategory("analytics")}
-                label={translations.analytics!}
+                label={translations.analytics ?? "Analytics"}
               />
               <CookieCategoryToggle
-                category={cookieCategories.find((c) => c.id === "marketing")!}
+                category={cookieCategories.find((c) => c.id === "marketing") as CookieCategory}
                 enabled={preferences.marketing}
                 onToggle={() => toggleCategory("marketing")}
-                label={translations.marketing!}
+                label={translations.marketing ?? "Marketing"}
               />
               <CookieCategoryToggle
-                category={cookieCategories.find((c) => c.id === "thirdParty")!}
+                category={cookieCategories.find((c) => c.id === "thirdParty") as CookieCategory}
                 enabled={preferences.thirdParty}
                 onToggle={() => toggleCategory("thirdParty")}
-                label={translations.thirdParty!}
+                label={translations.thirdParty ?? "Third Party"}
               />
             </div>
 

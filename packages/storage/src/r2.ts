@@ -21,9 +21,9 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 // ============================================
 
 const config = {
-  accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
-  accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-  secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+  accountId: process.env.CLOUDFLARE_ACCOUNT_ID ?? "",
+  accessKeyId: process.env.R2_ACCESS_KEY_ID ?? "",
+  secretAccessKey: process.env.R2_SECRET_ACCESS_KEY ?? "",
   buckets: {
     assets: process.env.R2_BUCKET_ASSETS || "nebutra-assets",
     uploads: process.env.R2_BUCKET_UPLOADS || "nebutra-uploads",
@@ -186,7 +186,7 @@ export async function list(
     }),
   );
 
-  return response.Contents?.map((item) => item.Key!) || [];
+  return response.Contents?.map((item) => item.Key ?? "").filter(Boolean) ?? [];
 }
 
 /**
