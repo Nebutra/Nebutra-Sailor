@@ -144,7 +144,8 @@ export function Globe({ className, config, rotationSpeed = 0.005, ...props }: Gl
       onRender,
     } as COBEOptions;
 
-    const globe = createGlobe(canvasRef.current!, cobeConfig);
+    if (!canvasRef.current) return;
+    const globe = createGlobe(canvasRef.current, cobeConfig);
 
     const timer = setTimeout(() => {
       if (canvasRef.current) {
