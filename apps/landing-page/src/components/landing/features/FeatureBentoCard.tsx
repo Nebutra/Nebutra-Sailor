@@ -12,8 +12,8 @@ interface FeatureBentoCardProps {
 
 export function FeatureBentoCard({
   categoryKey,
-  icon: Icon,
-  color,
+  icon: _Icon,
+  color: _color,
   mockup: Mockup,
   features,
   t,

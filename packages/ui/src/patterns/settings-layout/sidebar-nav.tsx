@@ -15,7 +15,6 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
 
 export function SettingsSidebarNav({ className, items, ...props }: SidebarNavProps) {
   const pathname = usePathname();
-  const { locale } = useI18n();
 
   return (
     <nav
