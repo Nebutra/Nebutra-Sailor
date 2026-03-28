@@ -192,7 +192,7 @@ export function createNextAuthProvider(_config: AuthConfig): AuthProvider {
      *
      * Auth.js uses route handlers at `/api/auth/*` for sign-in, callbacks, etc.
      */
-    middleware(): (req: Request) => Promise<Response | void> {
+    middleware(): (req: Request) => Promise<Response | undefined> {
       throw new Error(NOT_IMPLEMENTED_MSG);
     },
 

@@ -333,7 +333,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     middleware() {
       // Return an async handler that delegates to Better Auth's request handler.
       // The handler processes /api/auth/* routes (sign-in, sign-up, callback, etc.).
-      return async (req: Request): Promise<Response | void> => {
+      return async (req: Request): Promise<Response | undefined> => {
         const auth = await getAuth();
         return auth.handler(req);
       };

@@ -285,7 +285,7 @@ export function useArrowNavigation({
 
       if (items.length === 0) return;
 
-      const currentIndex = items.findIndex((item) => item === document.activeElement);
+      const currentIndex = items.indexOf(document.activeElement as HTMLElement);
       let nextIndex: number | null = null;
 
       const isVertical = orientation === "vertical" || orientation === "both";

@@ -77,10 +77,7 @@ export function ChangePasswordForm() {
             name="currentPassword"
             render={({ field, fieldState }) => (
               <FormItem className="grid gap-2">
-                <Label
-                  htmlFor="currentPassword"
-                  className="text-sm font-semibold text-foreground"
-                >
+                <Label htmlFor="currentPassword" className="text-sm font-semibold text-foreground">
                   {t("settings.profile.password.fields.current.label")}
                 </Label>
                 <Input
@@ -102,10 +99,7 @@ export function ChangePasswordForm() {
             name="newPassword"
             render={({ field, fieldState }) => (
               <FormItem className="grid gap-2">
-                <Label
-                  htmlFor="newPassword"
-                  className="text-sm font-semibold text-foreground"
-                >
+                <Label htmlFor="newPassword" className="text-sm font-semibold text-foreground">
                   {t("settings.profile.password.fields.new.label")}
                 </Label>
                 <Input
@@ -135,10 +129,7 @@ export function ChangePasswordForm() {
             name="confirmPassword"
             render={({ field, fieldState }) => (
               <FormItem className="grid gap-2">
-                <Label
-                  htmlFor="confirmPassword"
-                  className="text-sm font-semibold text-foreground"
-                >
+                <Label htmlFor="confirmPassword" className="text-sm font-semibold text-foreground">
                   {t("settings.profile.password.fields.confirm.label")}
                 </Label>
                 <Input

@@ -15,7 +15,7 @@ import type { AuthConfig } from "./types.js";
  */
 export async function createAuthMiddleware(
   config: AuthConfig,
-): Promise<(req: Request) => Promise<Response | void>> {
+): Promise<(req: Request) => Promise<Response | undefined>> {
   switch (config.provider) {
     case "clerk":
       throw new Error(

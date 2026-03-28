@@ -1,12 +1,4 @@
-import {
-  BarChart3,
-  CheckCircle2,
-  Cpu,
-  Database,
-  Fingerprint,
-  Shield,
-  Terminal,
-} from "lucide-react";
+import { CheckCircle2, Cpu, Fingerprint, Terminal } from "lucide-react";
 
 export function MultiTenantMockup() {
   return (

@@ -52,7 +52,7 @@ export function DataTableFacetedFilter({
     for (const opt of options) {
       if (opt.group) {
         if (!groupMap.has(opt.group)) groupMap.set(opt.group, []);
-        groupMap.get(opt.group)!.push(opt);
+        groupMap.get(opt.group)?.push(opt);
       } else {
         un.push(opt);
       }

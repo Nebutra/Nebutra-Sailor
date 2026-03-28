@@ -127,7 +127,7 @@ export interface AuthProvider {
   // ── Middleware & Webhooks ──
 
   /** Return a request handler suitable for use as middleware (e.g. in proxy.ts). */
-  middleware(): (req: Request) => Promise<Response | void>;
+  middleware(): (req: Request) => Promise<Response | undefined>;
 
   /** Handle an incoming webhook from the auth provider. */
   handleWebhook(request: Request): Promise<void>;

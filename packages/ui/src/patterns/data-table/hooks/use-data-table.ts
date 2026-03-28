@@ -190,7 +190,7 @@ export function useDataTable<TData>(props: DataTableProps<TData>) {
 
   useEffect(() => {
     updateScrollIndicators();
-  }, [filteredData.length, updateScrollIndicators]);
+  }, [updateScrollIndicators]);
 
   const table = useReactTable({
     data: filteredData,
@@ -215,19 +215,18 @@ export function useDataTable<TData>(props: DataTableProps<TData>) {
 
   const cellSelection = useCellSelection({ table, t, enabled: enableCellSelection });
 
-  const derivedPresets =
-    columnPresets && columnPresets.length
-      ? columnPresets
-      : [
-          {
-            label: t("common.table.coreFields"),
-            columns: table
-              .getAllLeafColumns()
-              .slice(0, 10)
-              .map((column) => column.id),
-          },
-          { label: t("common.table.allFields"), columns: [] },
-        ];
+  const derivedPresets = columnPresets?.length
+    ? columnPresets
+    : [
+        {
+          label: t("common.table.coreFields"),
+          columns: table
+            .getAllLeafColumns()
+            .slice(0, 10)
+            .map((column) => column.id),
+        },
+        { label: t("common.table.allFields"), columns: [] },
+      ];
 
   const shouldVirtualize = enableVirtualization && filteredData.length > virtualizeThreshold;
   const shouldMeasureRows = shouldVirtualize && enableRowMeasurement;

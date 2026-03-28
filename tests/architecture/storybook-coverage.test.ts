@@ -27,7 +27,7 @@ function loadGovernancePolicy(): GovernancePolicy {
 function findStoryFile(componentName: string, primitivesRoot: string): string | null {
   const pattern = resolve(ROOT, primitivesRoot, `${componentName}.stories.tsx`);
   const matches = globSync(pattern);
-  return matches.length > 0 ? matches[0]! : null;
+  return matches[0] ?? null;
 }
 
 describe("Storybook Coverage: Tier-1 Components", () => {

@@ -186,7 +186,7 @@ export function createClerkAuth(_config: AuthConfig): AuthProvider {
      * This abstraction intentionally throws because Clerk middleware must be
      * configured at the framework level, not through this provider layer.
      */
-    middleware(): (req: Request) => Promise<Response | void> {
+    middleware(): (req: Request) => Promise<Response | undefined> {
       throw new Error(
         "Clerk auth: use clerkMiddleware() from @clerk/nextjs/server directly. " +
           "Clerk middleware must be configured at the framework level (middleware.ts / proxy.ts). " +
