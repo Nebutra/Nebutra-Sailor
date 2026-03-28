@@ -42,9 +42,9 @@ function hexToRgb(hex: string): Rgb {
   let b: number;
 
   if (cleaned.length === 3 || cleaned.length === 4) {
-    r = parseInt(cleaned[0]! + cleaned[0]!, 16);
-    g = parseInt(cleaned[1]! + cleaned[1]!, 16);
-    b = parseInt(cleaned[2]! + cleaned[2]!, 16);
+    r = parseInt((cleaned[0] ?? "0") + (cleaned[0] ?? "0"), 16);
+    g = parseInt((cleaned[1] ?? "0") + (cleaned[1] ?? "0"), 16);
+    b = parseInt((cleaned[2] ?? "0") + (cleaned[2] ?? "0"), 16);
   } else if (cleaned.length === 6 || cleaned.length === 8) {
     r = parseInt(cleaned.slice(0, 2), 16);
     g = parseInt(cleaned.slice(2, 4), 16);
@@ -65,7 +65,7 @@ function relativeLuminance(r: number, g: number, b: number): number {
     const srgb = c / 255;
     return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
   });
-  return 0.2126 * rs! + 0.7152 * gs! + 0.0722 * bs!;
+  return 0.2126 * (rs ?? 0) + 0.7152 * (gs ?? 0) + 0.0722 * (bs ?? 0);
 }
 
 /**
@@ -119,7 +119,7 @@ function resolveHex(tokens: Map<string, string>, name: string): string {
   while (value.startsWith("var(") && depth < 5) {
     const inner = value.match(/var\((--[\w-]+)\)/);
     if (!inner) break;
-    const resolved = tokens.get(inner[1]!);
+    const resolved = tokens.get(inner[1] ?? "");
     if (!resolved) break;
     value = resolved;
     depth++;

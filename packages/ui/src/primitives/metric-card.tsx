@@ -84,10 +84,7 @@ export function MetricCard({
 
       {/* Value */}
       <div className="flex items-baseline gap-2">
-        <p
-          className={cn("font-semibold tabular-nums tracking-tight", sizeClasses[size].value)}
-         
-        >
+        <p className={cn("font-semibold tabular-nums tracking-tight", sizeClasses[size].value)}>
           {typeof value === "number" ? value.toLocaleString() : value}
         </p>
 
