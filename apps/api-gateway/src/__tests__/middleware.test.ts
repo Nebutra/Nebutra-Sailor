@@ -217,7 +217,7 @@ describe("tenantContextMiddleware", () => {
       expect(body.role).toBe("org:member");
 
       expect(mockVerifyToken).toHaveBeenCalledWith("valid-jwt-token", {
-        secretKey: process.env.CLERK_SECRET_KEY,
+        secretKey: process.env.CLERK_SECRET_KEY ?? "",
       });
     });
 
