@@ -126,7 +126,7 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
   if (token) {
     try {
       const payload = await verifyToken(token, {
-        secretKey: process.env.CLERK_SECRET_KEY!,
+        secretKey: process.env.CLERK_SECRET_KEY ?? "",
       });
 
       const userId = payload.sub;

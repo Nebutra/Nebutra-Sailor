@@ -102,10 +102,14 @@ export const inMemoryStorage: AuditStorage = {
       results = results.filter((e) => e.targetId === filter.targetId);
     }
     if (filter.startDate) {
-      results = results.filter((e) => e.timestamp && e.timestamp >= filter.startDate!);
+      results = results.filter(
+        (e) => e.timestamp && filter.startDate && e.timestamp >= filter.startDate,
+      );
     }
     if (filter.endDate) {
-      results = results.filter((e) => e.timestamp && e.timestamp <= filter.endDate!);
+      results = results.filter(
+        (e) => e.timestamp && filter.endDate && e.timestamp <= filter.endDate,
+      );
     }
 
     // Sort by timestamp descending
