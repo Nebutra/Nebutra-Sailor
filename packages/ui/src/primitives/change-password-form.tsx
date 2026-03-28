@@ -59,12 +59,12 @@ export function ChangePasswordForm() {
   };
 
   return (
-    <section className="rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
-      <div className="border-b border-slate-200 px-6 py-4 dark:border-slate-700">
-        <h2 className="text-base font-semibold text-slate-900 dark:text-slate-50">
+    <section className="rounded-md border border-border bg-background">
+      <div className="border-b border-border px-6 py-4">
+        <h2 className="text-base font-semibold text-foreground">
           {t("settings.profile.password.title")}
         </h2>
-        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           {t("settings.profile.password.description")}
         </p>
       </div>
@@ -79,7 +79,7 @@ export function ChangePasswordForm() {
               <FormItem className="grid gap-2">
                 <Label
                   htmlFor="currentPassword"
-                  className="text-sm font-semibold text-slate-900 dark:text-slate-50"
+                  className="text-sm font-semibold text-foreground"
                 >
                   {t("settings.profile.password.fields.current.label")}
                 </Label>
@@ -104,7 +104,7 @@ export function ChangePasswordForm() {
               <FormItem className="grid gap-2">
                 <Label
                   htmlFor="newPassword"
-                  className="text-sm font-semibold text-slate-900 dark:text-slate-50"
+                  className="text-sm font-semibold text-foreground"
                 >
                   {t("settings.profile.password.fields.new.label")}
                 </Label>
@@ -137,7 +137,7 @@ export function ChangePasswordForm() {
               <FormItem className="grid gap-2">
                 <Label
                   htmlFor="confirmPassword"
-                  className="text-sm font-semibold text-slate-900 dark:text-slate-50"
+                  className="text-sm font-semibold text-foreground"
                 >
                   {t("settings.profile.password.fields.confirm.label")}
                 </Label>
@@ -155,7 +155,7 @@ export function ChangePasswordForm() {
           />
 
           {/* Action Button */}
-          <div className="flex items-center justify-end gap-2 border-t border-slate-200 pt-5 dark:border-slate-700">
+          <div className="flex items-center justify-end gap-2 border-t border-border pt-5">
             <Button
               type="submit"
               disabled={isLoading}
