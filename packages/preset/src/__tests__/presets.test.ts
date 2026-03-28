@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { AppId, FeatureId, PresetId, ThemeId } from "../config";
+import { AppId, FeatureId, type PresetDefinition, PresetId, ThemeId } from "../config";
 import { getPreset, presets } from "../presets";
 
 describe("presets", () => {
@@ -37,7 +37,7 @@ describe("presets", () => {
   });
 
   it("full preset enables all apps and features", () => {
-    const full = presets.full!;
+    const full = presets.full as PresetDefinition;
     for (const appId of allAppIds) {
       expect(full.apps[appId]).toBe(true);
     }
@@ -62,7 +62,7 @@ describe("presets", () => {
 
   describe("scenario mapping", () => {
     it("ai-saas enables web, landing-page, api-gateway; disables blog", () => {
-      const p = presets["ai-saas"]!;
+      const p = presets["ai-saas"] as PresetDefinition;
       expect(p.apps.web).toBe(true);
       expect(p.apps["landing-page"]).toBe(true);
       expect(p.apps["api-gateway"]).toBe(true);
@@ -71,7 +71,7 @@ describe("presets", () => {
     });
 
     it("marketing enables landing-page, blog, studio; disables web", () => {
-      const p = presets.marketing!;
+      const p = presets.marketing as PresetDefinition;
       expect(p.apps["landing-page"]).toBe(true);
       expect(p.apps.blog).toBe(true);
       expect(p.apps.studio).toBe(true);
@@ -80,7 +80,7 @@ describe("presets", () => {
     });
 
     it("dashboard enables web, admin, api-gateway; enables sso", () => {
-      const p = presets.dashboard!;
+      const p = presets.dashboard as PresetDefinition;
       expect(p.apps.web).toBe(true);
       expect(p.apps.admin).toBe(true);
       expect(p.apps["api-gateway"]).toBe(true);

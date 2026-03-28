@@ -116,7 +116,7 @@ export function useScrollDwell(
       setDwellProgress(progress);
 
       if (progress >= 1) {
-        clearInterval(progressIntervalRef.current!);
+        if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
       }
     }, 50);
 
