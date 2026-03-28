@@ -15,9 +15,9 @@ export function InteractiveDocsCard() {
       </div>
 
       {/* Docs Mockup */}
-      <div className="relative z-10 mt-auto flex h-[200px] w-full mt-4 rounded-xl border border-border/50 bg-background/50 shadow-sm overflow-hidden group">
+      <div className="relative z-10 flex-1 flex w-full rounded-xl border border-border/50 bg-background/50 shadow-sm overflow-hidden group">
         {/* Sidebar */}
-        <div className="w-1/3 border-r border-border/50 bg-muted/30 p-3 hidden sm:flex flex-col gap-2">
+        <div className="w-1/3 min-w-[120px] max-w-[160px] border-r border-border/50 bg-muted/30 p-4 hidden sm:flex flex-col gap-3">
           <div className="h-2 w-16 bg-muted-foreground/30 rounded-full mb-2" />
           <div className="h-2.5 w-full bg-primary/20 rounded-sm relative overflow-hidden">
             <div className="absolute inset-y-0 left-0 w-1 bg-primary rounded-l-sm" />
@@ -35,21 +35,21 @@ export function InteractiveDocsCard() {
           <div className="h-2 w-5/6 bg-muted rounded-full" />
 
           {/* Code Block Mockup */}
-          <div className="mt-2 rounded-lg bg-zinc-950 p-3 w-[110%] sm:w-full shadow-inner border border-zinc-800 font-mono transition-transform ease-out group-hover:-translate-y-1">
+          <div className="mt-2 rounded-lg bg-background p-3 w-[110%] sm:w-full shadow-sm border border-border/60 font-mono transition-transform ease-out group-hover:-translate-y-1">
             <div className="flex items-center justify-between mb-2">
-              <div className="flex gap-1.5">
-                <div className="h-2 w-2 rounded-full bg-red-500/80" />
-                <div className="h-2 w-2 rounded-full bg-yellow-500/80" />
-                <div className="h-2 w-2 rounded-full bg-green-500/80" />
+              <div className="flex gap-1.5 opacity-60">
+                <div className="h-2.5 w-2.5 rounded-full border border-border bg-muted-foreground/20" />
+                <div className="h-2.5 w-2.5 rounded-full border border-border bg-muted-foreground/20" />
+                <div className="h-2.5 w-2.5 rounded-full border border-border bg-muted-foreground/20" />
               </div>
-              <TerminalSquare className="w-3 h-3 text-zinc-500" />
+              <TerminalSquare className="w-3 h-3 text-muted-foreground" />
             </div>
-            <div className="text-[10px] text-zinc-300 leading-relaxed font-light mt-1 opacity-90">
-              <span className="text-pink-400">export const</span>{" "}
-              <span className="text-blue-200">Button</span> ={" "}
-              <span className="text-yellow-200">cva</span>(<br />
-              &nbsp;&nbsp;<span className="text-green-300">"inline-flex font-medium"</span>,<br />
-              &nbsp;&nbsp;&#123; variants: &#123; <span className="text-blue-300">size</span>: ...
+            <div className="text-[10px] text-foreground leading-relaxed font-medium mt-1">
+              <span className="text-fuchsia-600 dark:text-fuchsia-400">export const</span>{" "}
+              <span className="text-blue-600 dark:text-blue-400">Button</span> ={" "}
+              <span className="text-amber-600 dark:text-amber-400">cva</span>(<br />
+              &nbsp;&nbsp;<span className="text-emerald-600 dark:text-emerald-400">"inline-flex font-medium"</span>,<br />
+              &nbsp;&nbsp;&#123; variants: &#123; <span className="text-blue-500 dark:text-blue-300">size</span>: ...
               &#125; &#125;
               <br />
               );

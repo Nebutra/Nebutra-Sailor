@@ -19,26 +19,26 @@ export function ThemeSelectorCard() {
       {/* Theme Selector UI Mockup */}
       <div className="relative z-10 mt-auto flex h-[180px] w-full rounded-xl border border-border/50 bg-background shadow-sm overflow-hidden p-3 gap-3 group">
         {/* Code snippet side */}
-        <div className="w-[45%] h-full rounded-lg bg-zinc-950 p-3 lg:p-4 font-mono text-[9px] sm:text-[10px] leading-relaxed overflow-hidden hidden sm:block relative transition-transform duration-500 group-hover:bg-zinc-900 border border-zinc-900 shadow-inner">
-          <span className="text-blue-400">const</span>{" "}
-          <span className="text-zinc-300">themes = &#123;</span>
+        <div className="w-[45%] h-full rounded-lg bg-background p-3 lg:p-4 font-mono text-[9px] sm:text-[10px] leading-relaxed overflow-hidden hidden sm:block relative transition-colors duration-500 group-hover:bg-muted/30 border border-border/60 shadow-sm">
+          <span className="text-blue-600 dark:text-blue-400">const</span>{" "}
+          <span className="text-foreground">themes = &#123;</span>
           <br />
-          &nbsp;&nbsp;<span className="text-emerald-300">emerald</span>
-          <span className="text-zinc-300">: &#123;</span>
+          &nbsp;&nbsp;<span className="text-emerald-600 dark:text-emerald-400">emerald</span>
+          <span className="text-foreground">: &#123;</span>
           <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-300">"--primary"</span>:{" "}
-          <span className="text-green-300">"oklch(0.65 0.15 150)"</span>,<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-300">"--muted"</span>:{" "}
-          <span className="text-green-300">"color-mix(...)"</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-600 dark:text-purple-400">"--primary"</span>:{" "}
+          <span className="text-emerald-600 dark:text-emerald-400">"oklch(0.65 0.15 150)"</span>,<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-600 dark:text-purple-400">"--muted"</span>:{" "}
+          <span className="text-emerald-600 dark:text-emerald-400">"color-mix(...)"</span>
           <br />
-          &nbsp;&nbsp;<span className="text-zinc-300">&#125;,</span>
+          &nbsp;&nbsp;<span className="text-foreground">&#125;,</span>
           <br />
-          &nbsp;&nbsp;<span className="text-violet-300">violet</span>
-          <span className="text-zinc-300">: &#123; ... &#125;</span>
+          &nbsp;&nbsp;<span className="text-violet-600 dark:text-violet-400">violet</span>
+          <span className="text-foreground">: &#123; ... &#125;</span>
           <br />
-          <span className="text-zinc-300">&#125;;</span>
+          <span className="text-foreground">&#125;;</span>
           {/* Soft highlight gradient from bottom right */}
-          <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-emerald-500/20 blur-xl rounded-full" />
+          <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-emerald-500/10 blur-xl rounded-full" />
         </div>
 
         {/* Preview UI side */}

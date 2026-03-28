@@ -10,7 +10,14 @@ export const metadata: Metadata = {
   keywords: [...seoContent.keywords],
   authors: [{ name: "Nebutra" }],
   creator: "Nebutra",
-  metadataBase: new URL("https://nebutra.com"),
+  publisher: "Nebutra Intelligence",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com"),
+  alternates: {
+    canonical: "/",
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION ?? undefined,
+  },
   openGraph: {
     type: "website",
     url: "https://nebutra.com",
