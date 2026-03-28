@@ -9,15 +9,13 @@
 
 /* Tailwind CSS v4 - must be imported first */
 @import "tailwindcss";
-
-/* Scan @nebutra/ui source for Tailwind classes (dist/ is gitignored, scanner won't see it otherwise) */
-@source "../../../../packages/ui/src";
-
 /* Single token source */
 @import "@nebutra/tokens/styles.css";
-
-/* Typography SSOT - must be imported first to define --font-* variables */
+/* Typography SSOT — defines --font-* variables */
 @import "@nebutra/ui/typography/fonts.css";
+
+/* Scan @nebutra/ui source for Tailwind classes */
+@source "../../../../packages/ui/src";
 
 @custom-variant dark (&:is(.dark *));
 

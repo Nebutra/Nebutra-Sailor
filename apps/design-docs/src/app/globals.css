@@ -4,6 +4,7 @@
 @import "fumadocs-python/preset.css";
 @import "@fumadocs/story/css/preset.css";
 @import "fumadocs-openapi/css/preset.css";
+@import "@nebutra/tokens/styles.css";
 
 /* 
  * Inlined `fumadocs-ui/components/image-zoom.css` 
@@ -84,8 +85,6 @@
     transition-duration: 0.01ms;
   }
 }
-
-@import "@nebutra/tokens/styles.css";
 
 @theme inline {
   --color-context-card-border: var(--context-card-border);

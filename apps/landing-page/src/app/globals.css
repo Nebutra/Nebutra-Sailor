@@ -7,14 +7,12 @@
 
 /* Tailwind CSS v4 */
 @import "tailwindcss";
+/* Unified token system */
+@import "@nebutra/tokens/styles.css";
+@import "tw-animate-css";
 
 /* Typography plugin — enables prose classes for legal/content pages */
 @plugin "@tailwindcss/typography";
-
-/* Unified token system */
-@import "@nebutra/tokens/styles.css";
-
-@import "tw-animate-css";
 /*---break---
  */
 @custom-variant dark (&:is(.dark *));
