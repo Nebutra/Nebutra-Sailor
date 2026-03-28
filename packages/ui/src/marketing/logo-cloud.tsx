@@ -70,12 +70,10 @@ export function LogoCloudSlider({
           <Image
             alt={logo.alt}
             className="pointer-events-none h-4 select-none dark:brightness-0 dark:invert md:h-5"
-            height={logo.height || "auto"}
             key={`logo-${logo.alt}`}
             src={logo.src}
-            width={logo.width || "auto"}
-            width={400}
-            height={400}
+            width={logo.width || 400}
+            height={logo.height || 400}
           />
         ))}
       </InfiniteSlider>

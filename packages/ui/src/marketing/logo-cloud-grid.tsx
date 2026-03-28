@@ -160,11 +160,9 @@ function LogoCard({ logo, className, children, ...props }: LogoCardProps) {
       <Image
         alt={logo.alt}
         className="pointer-events-none h-4 select-none md:h-5 dark:brightness-0 dark:invert"
-        height={logo.height || 20}
         src={logo.src}
-        width={logo.width || "auto"}
-        width={400}
-        height={400}
+        width={logo.width || 400}
+        height={logo.height || 400}
       />
       {children}
     </div>

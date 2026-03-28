@@ -109,10 +109,8 @@ export function CustomersSection({
                 className="mx-auto h-auto w-fit dark:invert"
                 src={logo.src}
                 alt={logo.alt}
-                height={logo.height}
-                width="auto"
-                width={400}
-                height={400}
+                width={logo.width || 400}
+                height={logo.height || 400}
               />
             </div>
           ))}
