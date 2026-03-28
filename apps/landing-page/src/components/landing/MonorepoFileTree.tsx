@@ -356,7 +356,7 @@ function renderNodes(nodes: FileNode[], level = 0, parentPath: boolean[] = []): 
         </TreeNodeTrigger>
         {hasChildren && (
           <TreeNodeContent hasChildren={hasChildren}>
-            {renderNodes(node.children!, level + 1, [...parentPath, isLast])}
+            {renderNodes(node.children ?? [], level + 1, [...parentPath, isLast])}
           </TreeNodeContent>
         )}
       </TreeNode>

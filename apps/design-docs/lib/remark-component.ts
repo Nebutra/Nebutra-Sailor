@@ -21,7 +21,7 @@ function getFileMap(root: string): Record<string, string> {
   } catch {
     _fileMap = {};
   }
-  return _fileMap!;
+  return _fileMap ?? {};
 }
 
 /**

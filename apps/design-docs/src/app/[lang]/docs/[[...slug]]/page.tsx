@@ -48,7 +48,7 @@ export default async function Page({ params }: PageProps) {
                 page.data as {
                   status: "stable" | "beta" | "deprecated" | "experimental";
                 }
-              ).status!
+              ).status ?? "stable"
             }
           />
         </div>
