@@ -16,6 +16,7 @@
     "./patterns": "./src/patterns/index.ts",
     "./typography": "./src/typography/index.ts",
     "./typography/fonts.css": "./src/typography/fonts.css",
+    "./hooks": "./src/hooks/index.ts",
     "./utils": "./src/utils/index.ts",
     "./tailwind.preset": "./src/tailwind.preset.ts"
   },
@@ -68,6 +69,7 @@
     "react-use-measure": "^2.1.7",
     "recharts": "^3.7.0",
     "rough-notation": "^0.5.1",
+    "sonner": "^2.0.7",
     "svg-dotted-map": "^2.1.0",
     "tailwind-merge": "^3.5.0",
     "usehooks-ts": "^3.1.1",

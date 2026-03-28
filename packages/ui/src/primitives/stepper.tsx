@@ -1,7 +1,7 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, useMemo } from "react";
 import { Check, Loader2 } from "lucide-react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import { cn } from "../utils/cn";
 import { Button } from "./button";
@@ -39,9 +39,9 @@ const StepperContext = createContext<StepperContextValue | null>(null);
 const STEPPER_FALLBACK: StepperContextValue = {
   steps: [],
   currentStep: 0,
-  goToStep: () => { },
-  nextStep: () => { },
-  prevStep: () => { },
+  goToStep: () => {},
+  nextStep: () => {},
+  prevStep: () => {},
   isFirstStep: true,
   isLastStep: true,
   getStepStatus: () => "pending" as StepStatus,
@@ -81,7 +81,7 @@ export function StepperProvider({
         onStepChange?.(step);
       }
     },
-    [steps.length, onStepChange]
+    [steps.length, onStepChange],
   );
 
   const nextStep = useCallback(() => {
@@ -98,7 +98,7 @@ export function StepperProvider({
       if (index === currentStep) return "current";
       return "pending";
     },
-    [currentStep]
+    [currentStep],
   );
 
   const value = useMemo(
@@ -112,12 +112,10 @@ export function StepperProvider({
       isLastStep: currentStep === steps.length - 1,
       getStepStatus,
     }),
-    [steps, currentStep, goToStep, nextStep, prevStep, getStepStatus]
+    [steps, currentStep, goToStep, nextStep, prevStep, getStepStatus],
   );
 
-  return (
-    <StepperContext.Provider value={value}>{children}</StepperContext.Provider>
-  );
+  return <StepperContext.Provider value={value}>{children}</StepperContext.Provider>;
 }
 
 // ============================================
@@ -167,10 +165,8 @@ export function Stepper({
     <div
       className={cn(
         "flex",
-        orientation === "horizontal"
-          ? "flex-row items-start"
-          : "flex-col items-start",
-        className
+        orientation === "horizontal" ? "flex-row items-start" : "flex-col items-start",
+        className,
       )}
     >
       {steps.map((step, index) => {
@@ -182,17 +178,13 @@ export function Stepper({
             key={step.id}
             className={cn(
               "flex",
-              orientation === "horizontal"
-                ? "flex-col items-center"
-                : "flex-row items-start"
+              orientation === "horizontal" ? "flex-col items-center" : "flex-row items-start",
             )}
           >
             <div
               className={cn(
                 "flex",
-                orientation === "horizontal"
-                  ? "flex-row items-center"
-                  : "flex-col items-center"
+                orientation === "horizontal" ? "flex-row items-center" : "flex-col items-center",
               )}
             >
               {/* 步骤图标 */}
@@ -204,18 +196,18 @@ export function Stepper({
                   "relative flex items-center justify-center rounded-full border-2 transition-all",
                   config.icon,
                   status === "completed" && "border-orange-500 bg-orange-500 text-white",
-                  status === "current" && "border-orange-500 bg-white text-orange-500 dark:bg-slate-900",
-                  status === "pending" && "border-slate-300 bg-white text-slate-400 dark:border-slate-600 dark:bg-slate-900",
+                  status === "current" &&
+                    "border-orange-500 bg-white text-orange-500 dark:bg-slate-900",
+                  status === "pending" &&
+                    "border-slate-300 bg-white text-slate-400 dark:border-slate-600 dark:bg-slate-900",
                   status === "error" && "border-red-500 bg-red-500 text-white",
-                  clickable && "cursor-pointer hover:scale-105"
+                  clickable && "cursor-pointer hover:scale-105",
                 )}
               >
                 {status === "completed" ? (
                   <Check className="h-4 w-4" />
                 ) : (
-                  <span className={cn("font-medium", config.text)}>
-                    {index + 1}
-                  </span>
+                  <span className={cn("font-medium", config.text)}>{index + 1}</span>
                 )}
               </button>
 
@@ -224,44 +216,31 @@ export function Stepper({
                 <div
                   className={cn(
                     "transition-colors",
-                    orientation === "horizontal"
-                      ? cn(config.connector, "mx-2")
-                      : "my-2 h-8 w-0.5",
-                    index < currentStep
-                      ? "bg-orange-500"
-                      : "bg-slate-200 dark:bg-slate-700"
+                    orientation === "horizontal" ? cn(config.connector, "mx-2") : "my-2 h-8 w-0.5",
+                    index < currentStep ? "bg-orange-500" : "bg-slate-200 dark:bg-slate-700",
                   )}
                 />
               )}
             </div>
 
             {/* 步骤文本 */}
-            <div
-              className={cn(
-                "mt-2",
-                orientation === "vertical" && "ml-3 mt-0"
-              )}
-            >
+            <div className={cn("mt-2", orientation === "vertical" && "ml-3 mt-0")}>
               <p
                 className={cn(
                   "font-medium",
                   config.text,
                   status === "completed" && "text-orange-600 dark:text-orange-400",
                   status === "current" && "text-slate-900 dark:text-slate-100",
-                  status === "pending" && "text-slate-400 dark:text-slate-500"
+                  status === "pending" && "text-slate-400 dark:text-slate-500",
                 )}
               >
                 {step.title}
                 {step.optional && (
-                  <span className="ml-1 text-xs text-muted-foreground">
-                    (可选)
-                  </span>
+                  <span className="ml-1 text-xs text-muted-foreground">(可选)</span>
                 )}
               </p>
               {step.description && (
-                <p className="mt-0.5 text-xs text-muted-foreground">
-                  {step.description}
-                </p>
+                <p className="mt-0.5 text-xs text-muted-foreground">{step.description}</p>
               )}
             </div>
           </div>
@@ -287,11 +266,7 @@ export interface StepperContentProps {
 /**
  * 步骤内容容器
  */
-export function StepperContent({
-  step,
-  children,
-  className,
-}: StepperContentProps) {
+export function StepperContent({ step, children, className }: StepperContentProps) {
   const { currentStep } = useStepperContext();
 
   if (step !== currentStep) {
@@ -338,12 +313,7 @@ export function StepperNavigation({
 
   return (
     <div className={cn("flex items-center justify-between pt-4", className)}>
-      <Button
-        type="button"
-        variant="outline"
-        onClick={prevStep}
-        disabled={isFirstStep || loading}
-      >
+      <Button type="button" variant="outline" onClick={prevStep} disabled={isFirstStep || loading}>
         {prevLabel || "Previous"}
       </Button>
 
@@ -358,11 +328,7 @@ export function StepperNavigation({
           {finishLabel || "Finish"}
         </Button>
       ) : (
-        <Button
-          type="button"
-          onClick={nextStep}
-          disabled={loading || disableNext}
-        >
+        <Button type="button" onClick={nextStep} disabled={loading || disableNext}>
           {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {nextLabel || "Next"}
         </Button>
@@ -384,11 +350,7 @@ export interface UseStepperOptions {
 /**
  * 步骤管理 Hook
  */
-export function useStepper({
-  steps,
-  initialStep = 0,
-  onComplete,
-}: UseStepperOptions) {
+export function useStepper({ steps, initialStep = 0, onComplete }: UseStepperOptions) {
   const [currentStep, setCurrentStep] = useState(initialStep);
 
   const goToStep = useCallback(
@@ -397,7 +359,7 @@ export function useStepper({
         setCurrentStep(step);
       }
     },
-    [steps.length]
+    [steps.length],
   );
 
   const nextStep = useCallback(() => {
@@ -472,12 +434,7 @@ export function ProgressStepper({
       {labels && labels.length > 0 && (
         <div className="flex justify-between text-xs text-muted-foreground">
           {labels.map((label, index) => (
-            <span
-              key={index}
-              className={cn(
-                index <= currentStep && "text-orange-600 font-medium"
-              )}
-            >
+            <span key={index} className={cn(index <= currentStep && "text-orange-600 font-medium")}>
               {label}
             </span>
           ))}

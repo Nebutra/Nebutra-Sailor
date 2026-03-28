@@ -69,6 +69,8 @@ export * from "./box";
 export * from "./breadcrumb";
 export * from "./browser-mockup";
 export * from "./bubble-text";
+// Dashboard patterns (migrated from production)
+export * from "./bulk-action-bar";
 export {
   Button,
   ButtonLink,
@@ -82,6 +84,7 @@ export * from "./canvas-reveal-effect";
 export * from "./card";
 export * from "./card-spotlight";
 export * from "./carousel";
+export * from "./change-password-form";
 export * from "./chart";
 export {
   Checkbox,
@@ -107,8 +110,10 @@ export {
 export * from "./command";
 export * from "./command-menu";
 export * from "./confetti";
+export * from "./confirm-dialog";
 export * from "./context-card";
 export * from "./context-menu";
+export * from "./copy-button";
 export * from "./date-input";
 export * from "./date-picker";
 export * from "./description";
@@ -135,6 +140,7 @@ export * from "./dropdown-menu";
 export * from "./empty-state";
 export * from "./enable-2fa-card";
 export * from "./entity";
+export * from "./error-boundary";
 export * from "./error-message";
 export * from "./expandable-tabs";
 export * from "./expanding-textarea";
@@ -174,6 +180,7 @@ export * from "./interactive-card";
 export * from "./interactive-frosted-glass-card";
 export * from "./iphone-mockup";
 export * from "./kbd";
+export * from "./kpi-card";
 export { Label, type LabelProps, labelVariants } from "./label";
 export * from "./layout";
 export * from "./light-rays";
@@ -185,12 +192,14 @@ export * from "./magic-card";
 export * from "./material";
 export * from "./menubar";
 export * from "./mesh-gradient-bg";
+export * from "./metric-card";
 export * from "./multiple-selector";
 export * from "./navigation-menu";
 export * from "./neuro-noise-bg";
 export * from "./noise-pattern-card";
 export * from "./notification-message-list";
 export * from "./pagination";
+export * from "./pagination-control";
 export * from "./popover";
 export * from "./pricing-card";
 export * from "./progress";
@@ -228,6 +237,7 @@ export * from "./spinner";
 export * from "./stack";
 export * from "./stars-canvas";
 export * from "./status-badge";
+export * from "./stepper";
 export { Switch, type SwitchProps } from "./switch";
 export * from "./table";
 export {
@@ -268,11 +278,3 @@ export * from "./wave-animation";
 export * from "./waves-bg";
 export * from "./word-fade-in";
 export * from "./x-post-card";
-
-// Dashboard patterns (migrated from production)
-export * from "./bulk-action-bar";
-export * from "./error-boundary";
-export * from "./kpi-card";
-export * from "./metric-card";
-export * from "./pagination-control";
-export * from "./stepper";

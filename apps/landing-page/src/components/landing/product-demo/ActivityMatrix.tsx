@@ -1,6 +1,6 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { ActivityCalendar, type Activity } from "react-activity-calendar";
+import { type Activity, ActivityCalendar } from "react-activity-calendar";
 
 export function ActivityMatrix() {
   const { theme } = useTheme();
@@ -10,18 +10,18 @@ export function ActivityMatrix() {
     // Generate deterministic heatmap data for the last year
     const mockData: Activity[] = [];
     const today = new Date();
-    
+
     for (let i = 365; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
-      
+
       const dateStr = date.toISOString().split("T")[0];
       if (!dateStr) continue;
 
       // Deterministic fake wave pattern for data visualization
       const isHigh = Math.sin(i / 3) + Math.sin(i / 13) > 0.5;
       const isIdle = Math.sin(i * 17 + 5) > 0.6;
-      
+
       let level = 0;
       if (isHigh && !isIdle) level = 4;
       else if (isHigh) level = 3;
@@ -29,15 +29,15 @@ export function ActivityMatrix() {
       else level = 1;
 
       // Force level to be 0|1|2|3|4 based on deterministic pattern
-      const finalLevel = (i % 7 === 0 || i % 11 === 0) ? 0 : level;
-      
+      const finalLevel = i % 7 === 0 || i % 11 === 0 ? 0 : level;
+
       mockData.push({
         date: dateStr,
         count: finalLevel * 10,
         level: finalLevel as 0 | 1 | 2 | 3 | 4,
       });
     }
-    
+
     setData(mockData);
   }, []);
 
@@ -57,7 +57,7 @@ export function ActivityMatrix() {
           </span>
         </div>
       </div>
-      
+
       <div className="w-full relative z-10 overflow-x-auto pb-4 scrollbar-hide">
         <div className="min-w-max">
           {data.length > 0 ? (

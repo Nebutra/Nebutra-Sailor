@@ -11,9 +11,10 @@
  * - 可定制的 fallback UI
  */
 
-import React, { Component, ErrorInfo, ReactNode } from "react";
-import { Button } from "./button";
 import { AlertCircle, RefreshCw } from "lucide-react";
+import type React from "react";
+import { Component, type ErrorInfo, type ReactNode } from "react";
+import { Button } from "./button";
 
 // ============================================================================
 // Types
@@ -238,7 +239,7 @@ function DefaultErrorFallback({
 
 export function withErrorBoundary<P extends object>(
   WrappedComponent: React.ComponentType<P>,
-  options: Omit<ErrorBoundaryProps, "children"> = {}
+  options: Omit<ErrorBoundaryProps, "children"> = {},
 ): React.FC<P> {
   const displayName = WrappedComponent.displayName || WrappedComponent.name || "Component";
 
@@ -308,10 +309,7 @@ export function PanelErrorBoundary({
   panelName?: string;
 }): React.ReactElement {
   return (
-    <ErrorBoundary
-      componentName={panelName || "面板"}
-      variant="default"
-    >
+    <ErrorBoundary componentName={panelName || "面板"} variant="default">
       {children}
     </ErrorBoundary>
   );
@@ -328,13 +326,8 @@ export function CardErrorBoundary({
   cardName?: string;
 }): React.ReactElement {
   return (
-    <ErrorBoundary
-      componentName={cardName || "卡片"}
-      variant="compact"
-    >
+    <ErrorBoundary componentName={cardName || "卡片"} variant="compact">
       {children}
     </ErrorBoundary>
   );
 }
-
-

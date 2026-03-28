@@ -18,16 +18,12 @@
  * ```
  */
 
+import { CheckCircle2, type LucideIcon, X } from "lucide-react";
 import * as React from "react";
-import { X, CheckCircle2, type LucideIcon } from "lucide-react";
 import { cn } from "../utils/cn";
 import { Button } from "./button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "./tooltip";
 import { Separator } from "./separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 
 // ============================================================================
 // Types
@@ -101,12 +97,12 @@ export function BulkActionBar({
 
   const handleActionClick = async (action: BulkAction, index: number) => {
     const actionId = action.id || `action-${index}`;
-    
+
     try {
-      setLoadingActions(prev => new Set(prev).add(actionId));
+      setLoadingActions((prev) => new Set(prev).add(actionId));
       await action.onClick();
     } finally {
-      setLoadingActions(prev => {
+      setLoadingActions((prev) => {
         const next = new Set(prev);
         next.delete(actionId);
         return next;
@@ -142,7 +138,7 @@ export function BulkActionBar({
         fixed && position === "bottom" && "fixed bottom-4 left-1/2 -translate-x-1/2",
         fixed && position === "top" && "fixed top-4 left-1/2 -translate-x-1/2",
         !fixed && "relative",
-        className
+        className,
       )}
     >
       {/* Selection status */}
@@ -151,11 +147,7 @@ export function BulkActionBar({
         <span className="font-medium text-foreground">
           <span className="text-primary">{selectedCount}</span> {itemName} selected
         </span>
-        {totalCount !== undefined && (
-          <span className="text-muted-foreground">
-            / {totalCount}
-          </span>
-        )}
+        {totalCount !== undefined && <span className="text-muted-foreground">/ {totalCount}</span>}
       </div>
 
       <Separator orientation="vertical" className="h-5" />
@@ -163,21 +155,11 @@ export function BulkActionBar({
       {/* Select all / Clear */}
       <div className="flex items-center gap-1">
         {onSelectAll && !isAllSelected && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onSelectAll}
-            className="h-7 px-2 text-xs"
-          >
+          <Button variant="ghost" size="sm" onClick={onSelectAll} className="h-7 px-2 text-xs">
             Select all
           </Button>
         )}
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onClearSelection}
-          className="h-7 px-2 text-xs"
-        >
+        <Button variant="ghost" size="sm" onClick={onClearSelection} className="h-7 px-2 text-xs">
           Clear selection
         </Button>
       </div>
@@ -258,11 +240,7 @@ export function FloatingBulkActionBar({
 
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center p-4">
-      <BulkActionBar
-        {...props}
-        fixed={false}
-        className={cn("pointer-events-auto", className)}
-      />
+      <BulkActionBar {...props} fixed={false} className={cn("pointer-events-auto", className)} />
     </div>
   );
 }
@@ -292,12 +270,10 @@ export function CompactBulkActionBar({
     <div
       className={cn(
         "flex items-center gap-2 rounded-md bg-primary/10 px-3 py-1.5 text-sm",
-        className
+        className,
       )}
     >
-      <span className="font-medium">
-        {selectedCount} selected
-      </span>
+      <span className="font-medium">{selectedCount} selected</span>
       <Separator orientation="vertical" className="h-4" />
       {actions.slice(0, 3).map((action, index) => {
         const Icon = action.icon;
@@ -356,30 +332,33 @@ export function useBulkSelection<T>({
   const [selectedIds, setSelectedIds] = React.useState<Set<string>>(new Set());
 
   const selectedItems = React.useMemo(
-    () => items.filter(item => selectedIds.has(getItemId(item))),
-    [items, selectedIds, getItemId]
+    () => items.filter((item) => selectedIds.has(getItemId(item))),
+    [items, selectedIds, getItemId],
   );
 
   const isSelected = React.useCallback(
     (item: T) => selectedIds.has(getItemId(item)),
-    [selectedIds, getItemId]
+    [selectedIds, getItemId],
   );
 
   const isAllSelected = items.length > 0 && selectedIds.size === items.length;
   const isPartiallySelected = selectedIds.size > 0 && selectedIds.size < items.length;
 
-  const toggleSelection = React.useCallback((item: T) => {
-    const id = getItemId(item);
-    setSelectedIds(prev => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
-  }, [getItemId]);
+  const toggleSelection = React.useCallback(
+    (item: T) => {
+      const id = getItemId(item);
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) {
+          next.delete(id);
+        } else {
+          next.add(id);
+        }
+        return next;
+      });
+    },
+    [getItemId],
+  );
 
   const selectAll = React.useCallback(() => {
     setSelectedIds(new Set(items.map(getItemId)));
@@ -389,9 +368,12 @@ export function useBulkSelection<T>({
     setSelectedIds(new Set());
   }, []);
 
-  const selectItems = React.useCallback((itemsToSelect: T[]) => {
-    setSelectedIds(new Set(itemsToSelect.map(getItemId)));
-  }, [getItemId]);
+  const selectItems = React.useCallback(
+    (itemsToSelect: T[]) => {
+      setSelectedIds(new Set(itemsToSelect.map(getItemId)));
+    },
+    [getItemId],
+  );
 
   return {
     selectedIds,
