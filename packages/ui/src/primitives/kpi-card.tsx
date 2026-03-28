@@ -21,7 +21,7 @@ export function KpiCard({ title, value, icon, trend, description, className }: K
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className="mt-2 text-3xl font-bold text-foreground" data-demo-skeleton-value="1">
+            <p className="mt-2 text-3xl font-bold text-foreground">
               {typeof value === "number" ? value.toLocaleString() : value}
             </p>
 

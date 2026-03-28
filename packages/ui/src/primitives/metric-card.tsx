@@ -86,7 +86,7 @@ export function MetricCard({
       <div className="flex items-baseline gap-2">
         <p
           className={cn("font-semibold tabular-nums tracking-tight", sizeClasses[size].value)}
-          data-demo-skeleton-value="1"
+         
         >
           {typeof value === "number" ? value.toLocaleString() : value}
         </p>
@@ -164,7 +164,7 @@ export function StatItem({ label, value, color = "neutral", className }: StatIte
     <div className={cn("flex items-center gap-2", className)}>
       <span className={cn("size-2 rounded-full shrink-0", colorClasses[color])} />
       <span className="text-sm text-muted-foreground">{label}</span>
-      <span className="text-sm font-medium tabular-nums" data-demo-skeleton-value="1">
+      <span className="text-sm font-medium tabular-nums">
         {typeof value === "number" ? value.toLocaleString() : value}
       </span>
     </div>
