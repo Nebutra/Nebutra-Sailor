@@ -56,7 +56,9 @@ export function TokenGovernanceCard() {
               <div className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse" />
             </div>
             <span className="text-foreground font-semibold">verify contrast (WCAG)</span>
-            <span className="ml-auto text-muted-foreground font-bold animate-pulse hidden sm:inline-block border border-border/50 bg-muted/30 px-1.5 rounded-sm">11s</span>
+            <span className="ml-auto text-muted-foreground font-bold animate-pulse hidden sm:inline-block border border-border/50 bg-muted/30 px-1.5 rounded-sm">
+              11s
+            </span>
           </div>
 
           <div className="flex items-center gap-3 relative z-10 mt-1">

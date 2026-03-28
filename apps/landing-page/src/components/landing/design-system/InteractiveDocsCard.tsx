@@ -48,9 +48,13 @@ export function InteractiveDocsCard() {
               <span className="text-fuchsia-600 dark:text-fuchsia-400">export const</span>{" "}
               <span className="text-blue-600 dark:text-blue-400">Button</span> ={" "}
               <span className="text-amber-600 dark:text-amber-400">cva</span>(<br />
-              &nbsp;&nbsp;<span className="text-emerald-600 dark:text-emerald-400">"inline-flex font-medium"</span>,<br />
-              &nbsp;&nbsp;&#123; variants: &#123; <span className="text-blue-500 dark:text-blue-300">size</span>: ...
-              &#125; &#125;
+              &nbsp;&nbsp;
+              <span className="text-emerald-600 dark:text-emerald-400">
+                "inline-flex font-medium"
+              </span>
+              ,<br />
+              &nbsp;&nbsp;&#123; variants: &#123;{" "}
+              <span className="text-blue-500 dark:text-blue-300">size</span>: ... &#125; &#125;
               <br />
               );
             </div>

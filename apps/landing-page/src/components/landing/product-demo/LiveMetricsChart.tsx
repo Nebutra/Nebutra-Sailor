@@ -1,0 +1,112 @@
+"use client";
+
+import NumberFlow from "@number-flow/react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
+/** Spline curve builder */
+function generatePath(points: number[], width: number, height: number, max: number) {
+  if (points.length === 0) return "";
+  const stepX = width / (points.length - 1);
+  const scaleY = height / max;
+
+  let pathData = `M 0 ${height - points[0] * scaleY}`;
+
+  for (let i = 0; i < points.length - 1; i++) {
+    const x0 = i * stepX;
+    const y0 = height - points[i] * scaleY;
+    const x1 = (i + 1) * stepX;
+    const y1 = height - points[i + 1] * scaleY;
+
+    const mx = (x0 + x1) / 2;
+    pathData += ` C ${mx} ${y0}, ${mx} ${y1}, ${x1} ${y1}`;
+  }
+  return pathData;
+}
+
+export function LiveMetricsChart() {
+  const [data, setData] = useState<number[]>(Array.from({ length: 20 }, () => 100));
+  const [value, setValue] = useState(1280);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setData((prev) => {
+        const nextValue = Math.min(
+          Math.max(prev[prev.length - 1] + (Math.random() * 40 - 15), 50),
+          180,
+        );
+        const newData = [...prev.slice(1), nextValue];
+        setValue(Math.floor(nextValue * 12.3)); // arbitrary scaling for realism
+        return newData;
+      });
+    }, 1500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const width = 300;
+  const height = 80;
+  const path = generatePath(data, width, height, 200);
+
+  return (
+    <div className="relative w-full rounded-xl border border-border/40 bg-background/50 dark:bg-zinc-950/50 p-4 shadow-elevation-high backdrop-blur-md overflow-hidden">
+      {/* Background Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+
+      <div className="relative z-10 flex items-center justify-between mb-4">
+        <div>
+          <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/80 mb-1">
+            Realtime Traffic
+          </h4>
+          <div className="flex items-center gap-1.5">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+              Live
+            </span>
+          </div>
+        </div>
+        <div className="text-right">
+          <div className="text-2xl font-black text-foreground font-mono tracking-tighter">
+            <NumberFlow value={value} trend={(prev, curr) => (curr > prev ? 1 : -1)} />
+          </div>
+          <p className="text-[10px] text-muted-foreground">Requests / sec</p>
+        </div>
+      </div>
+
+      <div className="relative h-[80px] w-full mt-2">
+        <svg
+          viewBox={`0 0 ${width} ${height}`}
+          className="w-full h-full preserve-3d overflow-visible"
+        >
+          <defs>
+            <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0.0" />
+            </linearGradient>
+          </defs>
+          <motion.path
+            d={`${path} L ${width} ${height} L 0 ${height} Z`}
+            fill="url(#chartGlow)"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          />
+          <motion.path
+            d={path}
+            fill="none"
+            stroke="var(--color-primary)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            style={{ filter: "drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" }}
+          />
+        </svg>
+      </div>
+    </div>
+  );
+}

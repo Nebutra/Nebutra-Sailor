@@ -42,7 +42,9 @@ export function ShipVisual() {
           <span className="flex items-center gap-2">
             <span className="text-primary opacity-80">⚡</span> Edge: 38 regions
           </span>
-          <span className="text-muted-foreground/80 text-xs font-semibold bg-muted/50 px-1.5 py-0.5 rounded border border-border/50">~50ms TTFB</span>
+          <span className="text-muted-foreground/80 text-xs font-semibold bg-muted/50 px-1.5 py-0.5 rounded border border-border/50">
+            ~50ms TTFB
+          </span>
         </div>
       </div>
     </div>

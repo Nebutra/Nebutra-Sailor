@@ -9,319 +9,11 @@ import {
   TreeProvider,
   TreeView,
 } from "@nebutra/ui/primitives";
-import {
-  Activity,
-  AlertTriangle,
-  Bell,
-  BookOpen,
-  Bot,
-  Box,
-  Cloud,
-  CreditCard,
-  Database,
-  FileCode2,
-  FileJson,
-  FileTerminal,
-  FileText,
-  FolderOpen,
-  Globe,
-  HeartPulse,
-  Image as ImageIcon,
-  Key,
-  Languages,
-  LayoutGrid,
-  LineChart,
-  Lock,
-  Mail,
-  Megaphone,
-  MonitorDot,
-  Paintbrush,
-  Palette,
-  PenTool,
-  Scale,
-  Server,
-  Settings,
-  Shield,
-  Sparkles,
-  Timer,
-  ToyBrick,
-  Workflow,
-  Zap,
-} from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
+import { type FileNode, TREE_DATA } from "@/lib/constants/landing-data";
 import { AnimateIn } from "./AnimateIn";
-
-interface FileNode {
-  id: string;
-  label: string;
-  description?: string;
-  tag?: string;
-  icon?: ReactNode;
-  children?: FileNode[];
-}
-
-const TREE_DATA: FileNode[] = [
-  {
-    id: "apps",
-    label: "apps",
-    icon: <FolderOpen className="h-[15px] w-[15px] text-blue-500 fill-blue-500/20" />,
-    description: "- Application packages (web app, docs, marketing)",
-    children: [
-      {
-        id: "landing",
-        label: "landing-page",
-        description: "- Public marketing site (next-intl, 7 locales)",
-        icon: <Megaphone className="h-4 w-4 text-orange-500" />,
-      },
-      {
-        id: "web",
-        label: "web",
-        description: "- Authenticated SaaS dashboard (Clerk auth)",
-        icon: <Globe className="h-4 w-4 text-blue-500" />,
-      },
-      {
-        id: "api",
-        label: "api-gateway",
-        description: "- Backend APIs (Hono + OpenAPI + Zod)",
-        icon: <Server className="h-4 w-4 text-amber-500" />,
-      },
-      {
-        id: "storybook",
-        label: "storybook",
-        description: "- Component library documentation",
-        icon: <BookOpen className="h-4 w-4 text-pink-500" />,
-      },
-      {
-        id: "design-docs",
-        label: "design-docs",
-        description: "- Internal design documentation (Fumadocs)",
-        icon: <Paintbrush className="h-4 w-4 text-teal-400" />,
-      },
-      {
-        id: "studio",
-        label: "studio",
-        description: "- Sanity Studio CMS v5",
-        icon: <PenTool className="h-4 w-4 text-red-500" />,
-      },
-      {
-        id: "docs",
-        label: "docs",
-        description: "- Public product documentation (Mintlify)",
-        icon: <FileText className="h-4 w-4 text-blue-400" />,
-      },
-      {
-        id: "idp",
-        label: "idp",
-        description: "- Identity Provider application",
-        icon: <Key className="h-4 w-4 text-purple-500" />,
-      },
-    ],
-  },
-  {
-    id: "packages",
-    label: "packages",
-    icon: <Box className="h-[15px] w-[15px] text-emerald-500 fill-emerald-500/20" />,
-    description: "- Shared packages and libraries used across the monorepo",
-    children: [
-      {
-        id: "ai-sdk",
-        label: "ai-sdk",
-        description: "- Vercel AI SDK wrapper (OpenAI, OpenRouter)",
-        icon: <Bot className="h-4 w-4 text-emerald-400" />,
-      },
-      {
-        id: "api",
-        label: "api",
-        description: "- API definitions and routing",
-        icon: <FileCode2 className="h-4 w-4 text-blue-500" />,
-      },
-      {
-        id: "auth",
-        label: "identity",
-        description: "- Auth abstraction layer (Clerk adapter)",
-        icon: <Shield className="h-4 w-4 text-green-500" />,
-      },
-      {
-        id: "db",
-        label: "database",
-        description: "- Database schema and client setup (Prisma v7)",
-        icon: <Database className="h-4 w-4 text-indigo-500" />,
-      },
-      {
-        id: "i18n",
-        label: "i18n",
-        description: "- Translations and localization setup",
-        icon: <Languages className="h-4 w-4 text-teal-500" />,
-      },
-      {
-        id: "logger",
-        label: "logs",
-        description: "- Structured logging providers (Sentry)",
-        icon: <FileText className="h-4 w-4 text-amber-600" />,
-      },
-      {
-        id: "mail",
-        label: "email",
-        description: "- transactional emails (Resend)",
-        icon: <Mail className="h-4 w-4 text-red-500" />,
-      },
-      {
-        id: "payments",
-        label: "billing",
-        description: "- Payment providers and subscriptions (Stripe)",
-        icon: <CreditCard className="h-4 w-4 text-green-600" />,
-      },
-      {
-        id: "storage",
-        label: "storage",
-        description: "- S3-compatible file storage",
-        icon: <Cloud className="h-4 w-4 text-cyan-500" />,
-      },
-      {
-        id: "ui",
-        label: "ui",
-        description: "- Shared Component library (Radix + framer-motion)",
-        icon: <LayoutGrid className="h-4 w-4 text-purple-500" />,
-      },
-      {
-        id: "tokens",
-        label: "tokens",
-        description: "- Runtime CSS variables single source",
-        icon: <Palette className="h-4 w-4 text-orange-400" />,
-      },
-      {
-        id: "brand",
-        label: "brand",
-        description: "- Brand primitives (colors, gradients)",
-        icon: <Sparkles className="h-4 w-4 text-pink-400" />,
-      },
-      {
-        id: "icons",
-        label: "icons",
-        description: "- Geist icons as TSX components",
-        icon: <ImageIcon className="h-4 w-4 text-violet-400" />,
-      },
-      {
-        id: "preset",
-        label: "preset",
-        description: "- Feature-based SaaS starter config",
-        icon: <Settings className="h-4 w-4 text-slate-500" />,
-      },
-      {
-        id: "analytics",
-        label: "analytics",
-        description: "- PostHog + Dub.co analytics",
-        icon: <LineChart className="h-4 w-4 text-rose-500" />,
-      },
-      {
-        id: "audit",
-        label: "audit",
-        description: "- Audit logging (actor/tenant scoping)",
-        icon: <Activity className="h-4 w-4 text-indigo-400" />,
-      },
-      {
-        id: "event-bus",
-        label: "event-bus",
-        description: "- Inngest background jobs",
-        icon: <Workflow className="h-4 w-4 text-fuchsia-500" />,
-      },
-      {
-        id: "cache",
-        label: "cache",
-        description: "- Redis caching adapter",
-        icon: <Zap className="h-4 w-4 text-yellow-500" />,
-      },
-      {
-        id: "rate-limit",
-        label: "rate-limit",
-        description: "- Token bucket rate limiting",
-        icon: <Timer className="h-4 w-4 text-slate-400" />,
-      },
-      {
-        id: "alerting",
-        label: "alerting",
-        description: "- Email + Slack alert system",
-        icon: <Bell className="h-4 w-4 text-red-400" />,
-      },
-      {
-        id: "errors",
-        label: "errors",
-        description: "- Typed error definitions",
-        icon: <AlertTriangle className="h-4 w-4 text-orange-500" />,
-      },
-      {
-        id: "health",
-        label: "health",
-        description: "- Health check probes",
-        icon: <HeartPulse className="h-4 w-4 text-rose-400" />,
-      },
-      {
-        id: "contracts",
-        label: "contracts",
-        description: "- API contract definitions",
-        icon: <FileCode2 className="h-4 w-4 text-cyan-600" />,
-      },
-      {
-        id: "config",
-        label: "config",
-        description: "- Environment variable validation",
-        icon: <Settings className="h-4 w-4 text-gray-500" />,
-      },
-      {
-        id: "legal",
-        label: "legal",
-        description: "- Legal content + GDPR consent",
-        icon: <Scale className="h-4 w-4 text-slate-600" />,
-      },
-      {
-        id: "marketing",
-        label: "marketing",
-        description: "- Marketing components",
-        icon: <Megaphone className="h-4 w-4 text-orange-600" />,
-      },
-      {
-        id: "sanity",
-        label: "sanity",
-        description: "- Sanity CMS queries",
-        icon: <MonitorDot className="h-4 w-4 text-red-600" />,
-      },
-      {
-        id: "oauth-server",
-        label: "oauth-server",
-        description: "- OAuth 2.0 provider",
-        icon: <Lock className="h-4 w-4 text-slate-700" />,
-      },
-      {
-        id: "mcp",
-        label: "mcp",
-        description: "- Model Context Protocol server",
-        icon: <ToyBrick className="h-4 w-4 text-yellow-600" />,
-      },
-    ],
-  },
-  {
-    id: "tooling",
-    label: "tooling",
-    icon: <FolderOpen className="h-[15px] w-[15px] text-zinc-400 fill-zinc-400/20" />,
-    description: "- Development tooling and configuration",
-    children: [
-      {
-        id: "agents",
-        label: "AGENTS.md",
-        description: "- Guidelines and conventions for AI",
-        icon: <FileTerminal className="h-4 w-4 text-green-500" />,
-      },
-      {
-        id: "turbo",
-        label: "turbo.json",
-        description: "- Pipeline config",
-        icon: <FileJson className="h-4 w-4 text-pink-500" />,
-      },
-    ],
-  },
-];
 
 function renderNodes(nodes: FileNode[], level = 0, parentPath: boolean[] = []): React.ReactNode {
   return nodes.map((node, index) => {
@@ -364,47 +56,55 @@ function renderNodes(nodes: FileNode[], level = 0, parentPath: boolean[] = []): 
   });
 }
 
+function BaseTree({ variant = "default" }: { variant: "default" | "minimal" }) {
+  return (
+    <div
+      className={`p-4 sm:p-5 flex-1 overflow-auto w-full relative z-10 scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20 scrollbar-track-transparent ${variant === "minimal" ? "p-3" : ""}`}
+    >
+      <TreeProvider
+        defaultExpandedIds={["apps", "packages", "tooling"]}
+        showLines
+        showIcons={false}
+        selectable={false}
+        animateExpand
+        indent={16}
+        className={`font-mono ${variant === "minimal" ? "text-black/10 dark:text-white/10" : "text-black/20 dark:text-white/20"}`}
+      >
+        <TreeView>{renderNodes(TREE_DATA)}</TreeView>
+      </TreeProvider>
+    </div>
+  );
+}
+
 /**
- * MonorepoFileTree — ML-7.1
- *
- * Interactive Turborepo file tree showing all 8 apps and 29 packages with authentic Lucide icons.
+ * MinimalMonorepoTree - Used specifically inside HeroMockupWindow.tsx
  */
-export function MonorepoFileTree({ variant = "default" }: { variant?: "default" | "minimal" }) {
+export function MinimalMonorepoTree() {
+  return (
+    <div className="flex-1 overflow-hidden flex flex-col w-full h-full relative group/tree">
+      {/* Subtle hover gradient indicator for scrollability */}
+      <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-background dark:from-zinc-950 to-transparent z-20 pointer-events-none opacity-80 group-hover/tree:opacity-10 transition-opacity" />
+
+      <BaseTree variant="minimal" />
+
+      <div className="mt-8 mb-4 flex w-full justify-center opacity-0 group-hover/tree:opacity-100 transition-opacity duration-300">
+        <p className="text-[11px] text-muted-foreground/60 font-sans px-4 py-1.5 rounded-full border border-border/50 bg-background/50 shadow-sm cursor-default">
+          Hover or scroll to explore project structure
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * MonorepoFileTree
+ * Interactive Turborepo file tree showing all apps and packages with authentic Lucide icons.
+ */
+export function MonorepoFileTree() {
   const t = useTranslations("monorepoTree");
 
-  // Minimal variant used specifically inside HeroMockupWindow.tsx
-  if (variant === "minimal") {
-    return (
-      <div className="flex-1 overflow-hidden flex flex-col w-full h-full relative group/tree">
-        {/* Subtle hover gradient indicator for scrollability */}
-        <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-background dark:from-zinc-950 to-transparent z-20 pointer-events-none opacity-80 group-hover/tree:opacity-10 transition-opacity" />
-
-        <div className="p-3 flex-1 overflow-auto w-full relative z-10 scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20 scrollbar-track-transparent">
-          <TreeProvider
-            defaultExpandedIds={["apps", "packages", "tooling"]}
-            showLines
-            showIcons={false} // We provide native icons instead of UI primitive icons
-            selectable={false}
-            animateExpand
-            indent={16}
-            className="font-mono text-black/10 dark:text-white/10"
-          >
-            <TreeView>{renderNodes(TREE_DATA)}</TreeView>
-          </TreeProvider>
-
-          <div className="mt-8 mb-4 flex w-full justify-center opacity-0 group-hover/tree:opacity-100 transition-opacity duration-300">
-            <p className="text-[11px] text-muted-foreground/60 font-sans px-4 py-1.5 rounded-full border border-border/50 bg-background/50 shadow-sm cursor-default">
-              Hover or scroll to explore project structure
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Default variant
   return (
-    <article className="group relative flex h-full flex-col rounded-[2.5rem] border border-border/40 bg-background/60 dark:bg-zinc-950/60 p-8 md:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.06)] dark:shadow-2xl overflow-hidden backdrop-blur-2xl transition-all hover:border-primary/40">
+    <article className="group relative flex h-full flex-col rounded-[2.5rem] border border-border/40 bg-[var(--color-glass-panel,rgba(255,255,255,0.6))] dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.6))] p-8 md:p-10 shadow-elevation-high dark:shadow-2xl overflow-hidden backdrop-blur-2xl transition-all hover:border-primary/40">
       {/* Top accent line */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -439,22 +139,9 @@ export function MonorepoFileTree({ variant = "default" }: { variant?: "default" 
             </div>
           </div>
 
-          {/* Subtle hover gradient indicator for scrollability */}
           <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-background dark:from-zinc-950 to-transparent z-20 pointer-events-none opacity-80" />
 
-          <div className="p-4 sm:p-5 flex-1 overflow-auto w-full relative z-10 scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20 scrollbar-track-transparent">
-            <TreeProvider
-              defaultExpandedIds={["apps", "packages", "tooling"]}
-              showLines
-              showIcons={false}
-              selectable={false}
-              animateExpand
-              indent={16}
-              className="font-mono text-black/20 dark:text-white/20"
-            >
-              <TreeView>{renderNodes(TREE_DATA)}</TreeView>
-            </TreeProvider>
-          </div>
+          <BaseTree variant="default" />
         </div>
 
         <Link
@@ -470,5 +157,3 @@ export function MonorepoFileTree({ variant = "default" }: { variant?: "default" 
     </article>
   );
 }
-
-MonorepoFileTree.displayName = "MonorepoFileTree";

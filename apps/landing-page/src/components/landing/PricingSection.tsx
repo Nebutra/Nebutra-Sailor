@@ -1,9 +1,33 @@
 import { CheckCircle } from "@nebutra/icons";
 import { Badge, Button, Card } from "@nebutra/ui/primitives";
-import { useTranslations } from "next-intl";
+import { headers } from "next/headers";
+import { getLocale, getTranslations } from "next-intl/server";
+import { getExchangeRate } from "@/lib/pricing/exchange-rates";
 
-export function PricingSection({ hideHeader = false }: { hideHeader?: boolean } = {}) {
-  const t = useTranslations("microLanding.pricing");
+export async function PricingSection({
+  hideHeader = false,
+  currency,
+}: {
+  hideHeader?: boolean;
+  currency?: string;
+} = {}) {
+  const t = await getTranslations("microLanding.pricing");
+  const locale = await getLocale();
+
+  let resolvedCurrency = currency;
+  if (!resolvedCurrency) {
+    const { headers } = await import("next/headers");
+    const headersList = await headers();
+    resolvedCurrency = headersList.get("x-user-currency") || "USD";
+  }
+
+  const exchangeRate = await getExchangeRate(resolvedCurrency);
+
+  const formatter = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: resolvedCurrency,
+    maximumFractionDigits: 0,
+  });
 
   const TIERS = [
     {
@@ -11,18 +35,21 @@ export function PricingSection({ hideHeader = false }: { hideHeader?: boolean } 
       ctaHref: "https://github.com/nebutra-sailor",
       highlighted: false,
       featureKeys: ["f1", "f2", "f3", "f4", "f5"] as const,
+      dynamicPrice: t("solo.price"), // Usually "Free"
     },
     {
       key: "startup",
       ctaHref: "/sign-up",
       highlighted: true,
       featureKeys: ["f1", "f2", "f3", "f4", "f5"] as const,
+      dynamicPrice: formatter.format(799 * exchangeRate),
     },
     {
       key: "agency",
       ctaHref: "/contact",
       highlighted: false,
       featureKeys: ["f1", "f2", "f3", "f4", "f5", "f6"] as const,
+      dynamicPrice: formatter.format(1499 * exchangeRate),
     },
   ] as const;
 
@@ -69,9 +96,7 @@ export function PricingSection({ hideHeader = false }: { hideHeader?: boolean } 
               </Badge>
 
               <div className="mb-6 flex items-baseline">
-                <span className="text-4xl font-black tracking-tight">
-                  {t(`${tier.key}.price` as any)}
-                </span>
+                <span className="text-4xl font-black tracking-tight">{tier.dynamicPrice}</span>
                 <span className="text-muted-foreground font-medium ml-2">
                   / {t(`${tier.key}.period` as any)}
                 </span>

@@ -27,7 +27,9 @@ export function VrtCard() {
         <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-lg mx-auto">
           {/* Left side (Base / Raw) */}
           <div className="absolute inset-y-0 left-0 w-1/2 flex items-center justify-center bg-background border-r border-border/50 overflow-hidden group-hover:w-[40%] transition-all duration-700 ease-in-out z-10 flex-col gap-2">
-            <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">V1.0</span>
+            <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">
+              V1.0
+            </span>
             <button className="px-4 py-2 bg-muted/50 border-2 border-dashed border-red-500/30 text-muted-foreground rounded-sm text-xs font-mono opacity-80 pointer-events-none scale-95 whitespace-nowrap">
               {"<Button />"}
             </button>
@@ -41,8 +43,10 @@ export function VrtCard() {
 
           {/* Right side (Head / Polished) */}
           <div className="absolute inset-y-0 right-0 w-1/2 flex items-center justify-center bg-background/50 group-hover:w-[60%] transition-all duration-700 ease-in-out z-20 flex-col gap-2">
-            <span className="text-[10px] uppercase tracking-widest text-emerald-500 font-bold flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> V1.1</span>
-            
+            <span className="text-[10px] uppercase tracking-widest text-emerald-500 font-bold flex items-center gap-1">
+              <CheckCircle2 className="w-3 h-3" /> V1.1
+            </span>
+
             {/* Diff Highlight Overlay */}
             <div className="relative">
               <div className="absolute -inset-1.5 border border-emerald-500/40 bg-emerald-500/5 rounded-xl border-dashed animate-pulse" />

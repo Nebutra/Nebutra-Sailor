@@ -18,9 +18,11 @@ export function WireVisual() {
     <div className="w-full max-w-[380px] rounded-2xl border border-border/80 bg-background/90 backdrop-blur-xl shadow-2xl shadow-primary/5 p-6 relative overflow-hidden">
       {/* Decorative top border using primary token */}
       <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary via-primary/50 to-primary opacity-80" />
-      
+
       <div className="mb-4 flex items-center justify-between pb-4 border-b border-border/50">
-        <h4 className="font-semibold text-foreground tracking-tight text-sm">Automated CLI Config</h4>
+        <h4 className="font-semibold text-foreground tracking-tight text-sm">
+          Automated CLI Config
+        </h4>
         <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
           Live

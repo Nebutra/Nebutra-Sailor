@@ -62,6 +62,21 @@ services:
       timeout: 5s
       retries: 10
 
+  # Bull Board — BullMQ job dashboard (optional)
+  bull-board:
+    image: venatum/bull-board:latest
+    container_name: nebutra-bull-board
+    ports:
+      - "127.0.0.1:3200:3000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - BULL_PREFIX=nebutra:queue
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles: ["queue", "core"]
+
   # ============================================
   # Python Microservices
   # ============================================

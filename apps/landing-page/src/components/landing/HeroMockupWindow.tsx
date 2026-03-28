@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimateIn } from "./AnimateIn";
-import { MonorepoFileTree } from "./MonorepoFileTree";
+import { MinimalMonorepoTree } from "./MonorepoFileTree";
 
 const CODE_SNIPPET = `import { Hono } from "hono";
 import { streamText } from "ai";
@@ -57,7 +57,7 @@ export function HeroMockupWindow() {
         <div className="relative z-10 flex flex-col md:flex-row h-[520px] w-full">
           {/* Left Sidebar — fixed height, vertical scroll inside */}
           <div className="w-full md:w-[420px] shrink-0 border-b md:border-b-0 md:border-r border-border/30 bg-muted/30 dark:bg-zinc-950/50 flex flex-col overflow-hidden">
-            <MonorepoFileTree variant="minimal" />
+            <MinimalMonorepoTree />
           </div>
 
           {/* Right Editor */}

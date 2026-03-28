@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { AnalyticsTerminal } from "./product-demo/AnalyticsTerminal";
@@ -62,10 +63,27 @@ export function ProductDemoSection() {
                   className={`group relative flex items-start text-left py-6 transition-all duration-500 outline-none w-full ${isActive ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
                 >
                   {/* Step Node */}
-                  <div
-                    className={`relative shrink-0 w-14 h-14 rounded-full flex items-center justify-center font-mono text-sm font-bold z-10 transition-all duration-500 mr-6 hidden md:flex ${isActive ? "bg-foreground text-background shadow-[0_0_30px_rgba(0,0,0,0.1)] dark:shadow-[0_0_30px_rgba(255,255,255,0.2)] scale-110 border-4 border-background dark:border-[#0A0A0B]" : "bg-muted text-muted-foreground ring-1 ring-border/50 group-hover:bg-muted/80"}`}
-                  >
-                    0{index + 1}
+                  <div className="relative shrink-0 w-14 h-14 hidden md:flex items-center justify-center mr-6 z-10 transition-transform duration-300">
+                    {/* The active pill animation */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeDemoTab"
+                        className="absolute inset-0 rounded-full bg-foreground shadow-elevation-high dark:shadow-[0_0_30px_rgba(255,255,255,0.2)] border-2 border-background dark:border-[#0A0A0B]"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                    {/* The static inactive background */}
+                    {!isActive && (
+                      <div className="absolute inset-0 rounded-full bg-muted ring-1 ring-border/50 group-hover:bg-muted/80 transition-colors" />
+                    )}
+
+                    <span
+                      className={`relative z-20 font-mono text-sm font-bold transition-colors delay-75 ${
+                        isActive ? "text-background" : "text-muted-foreground"
+                      }`}
+                    >
+                      0{index + 1}
+                    </span>
                   </div>
 
                   {/* Content Fragment */}

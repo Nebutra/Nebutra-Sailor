@@ -7,7 +7,6 @@
 export function ScaffoldVisual() {
   return (
     <div className="w-full max-w-[400px] rounded-2xl border border-border/80 bg-background/50 backdrop-blur-md overflow-hidden shadow-2xl shadow-primary/5 font-mono text-sm">
-      
       {/* MacOS Terminal Header */}
       <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-muted/30">
         <div className="flex gap-1.5 opacity-80">
@@ -15,7 +14,9 @@ export function ScaffoldVisual() {
           <span className="h-2.5 w-2.5 rounded-full border border-border bg-muted-foreground/20" />
           <span className="h-2.5 w-2.5 rounded-full border border-border bg-muted-foreground/20" />
         </div>
-        <div className="mx-auto text-[10px] text-muted-foreground font-sans tracking-wide">bash - setup</div>
+        <div className="mx-auto text-[10px] text-muted-foreground font-sans tracking-wide">
+          bash - setup
+        </div>
       </div>
 
       {/* Terminal Body */}

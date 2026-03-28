@@ -27,6 +27,7 @@ packages/
   theme/          CSS-only multi-theme engine (data-theme attribute, 6 oklch themes)
   icons/          541 Geist icons as tree-shakable TSX components
   preset/         Feature-based SaaS starter config system
+  queue/          Provider-agnostic message queue — QStash (serverless) + BullMQ (self-hosted Redis)
 ```
 
 ---
@@ -262,6 +263,75 @@ To change the brand colors:
 Or use the palette generator:
 ```bash
 node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
+```
+
+---
+
+## Message Queue (`@nebutra/queue`)
+
+Provider-agnostic message queue supporting **Upstash QStash** (serverless) and **BullMQ** (self-hosted Redis). Customers choose their backend; application code stays the same.
+
+### Provider auto-detection
+
+| Priority | Condition | Provider |
+|----------|-----------|----------|
+| 1 | `QUEUE_PROVIDER` env var | As specified |
+| 2 | `QSTASH_TOKEN` exists | `qstash` |
+| 3 | `REDIS_URL` exists | `bullmq` |
+| 4 | Fallback | `memory` (dev/test only) |
+
+### Usage (TypeScript — Node.js)
+
+```ts
+import { getQueue, createJob } from "@nebutra/queue";
+
+// Auto-detects provider from env
+const queue = await getQueue();
+
+// Enqueue a job
+await queue.enqueue(
+  createJob("email", "send", { to: "user@example.com" }, { tenantId: "org_123" })
+);
+
+// Register a handler (BullMQ: starts a Worker; QStash: use webhook route)
+queue.registerHandler("email", "send", async (job) => {
+  await sendEmail(job.data.to);
+});
+```
+
+### QStash webhook route (Hono / api-gateway)
+
+```ts
+import { createQStashWebhookHandler } from "@nebutra/queue";
+
+app.post("/api/queue/:queue/:type", async (c) => {
+  const handler = createQStashWebhookHandler();
+  return handler(c.req.raw);
+});
+```
+
+### Usage (Python — microservices)
+
+```python
+from _shared.queue import get_queue, create_job
+
+queue = await get_queue()
+await queue.enqueue(create_job("report", "generate", {"tenant_id": "org_123"}))
+
+@queue.handler("report", "generate")
+async def handle_report(job):
+    await generate_report(job.data["tenant_id"])
+```
+
+### Environment variables
+
+```env
+QUEUE_PROVIDER=""                    # "qstash" | "bullmq" | "memory" (auto-detect if empty)
+QSTASH_TOKEN=""                      # Upstash QStash REST token
+QSTASH_CURRENT_SIGNING_KEY=""        # Webhook signature verification
+QSTASH_NEXT_SIGNING_KEY=""           # Key rotation support
+QSTASH_CALLBACK_BASE_URL=""          # e.g. https://api.nebutra.com
+# BullMQ reuses REDIS_URL — no extra config
 ```
 
 ---

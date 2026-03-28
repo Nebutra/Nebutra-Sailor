@@ -26,9 +26,12 @@ export function ThemeSelectorCard() {
           &nbsp;&nbsp;<span className="text-emerald-600 dark:text-emerald-400">emerald</span>
           <span className="text-foreground">: &#123;</span>
           <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-600 dark:text-purple-400">"--primary"</span>:{" "}
-          <span className="text-emerald-600 dark:text-emerald-400">"oklch(0.65 0.15 150)"</span>,<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-600 dark:text-purple-400">"--muted"</span>:{" "}
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <span className="text-purple-600 dark:text-purple-400">"--primary"</span>:{" "}
+          <span className="text-emerald-600 dark:text-emerald-400">"oklch(0.65 0.15 150)"</span>,
+          <br />
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <span className="text-purple-600 dark:text-purple-400">"--muted"</span>:{" "}
           <span className="text-emerald-600 dark:text-emerald-400">"color-mix(...)"</span>
           <br />
           &nbsp;&nbsp;<span className="text-foreground">&#125;,</span>

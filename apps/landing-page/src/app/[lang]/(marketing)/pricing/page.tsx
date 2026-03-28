@@ -1,9 +1,9 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Star, User } from "lucide-react";
 import type { Metadata } from "next";
-import { cacheLife } from "next/cache";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import { FooterMinimal, Navbar, PricingSection } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
@@ -30,9 +30,6 @@ export function generateStaticParams() {
 }
 
 export default async function PricingPage({ params }: { params: Promise<{ lang: string }> }) {
-  "use cache";
-  cacheLife("hours");
-
   const { lang } = await params;
   setRequestLocale(lang as Locale);
 
@@ -123,7 +120,9 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
 
         {/* Pricing cards — 3 tier grid */}
         <div className="mt-16">
-          <PricingSection hideHeader />
+          <Suspense fallback={<div className="h-96" aria-hidden />}>
+            <PricingSection hideHeader />
+          </Suspense>
         </div>
 
         {/* FAQ section */}

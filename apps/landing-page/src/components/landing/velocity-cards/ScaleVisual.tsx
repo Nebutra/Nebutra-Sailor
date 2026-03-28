@@ -1,13 +1,18 @@
 "use client";
 
-import { Infinity, ShieldCheck, Zap, GitBranch } from "lucide-react";
+import { GitBranch, Infinity, ShieldCheck, Zap } from "lucide-react";
 
 /**
  * High-fidelity Scale indicators visual showing post-launch growth infrastructure.
  * Fully aligned with semantic CSS tokens.
  */
 const METRICS = [
-  { label: "Tenants", value: <Infinity className="w-8 h-8" />, desc: "Isolations", icon: ShieldCheck },
+  {
+    label: "Tenants",
+    value: <Infinity className="w-8 h-8" />,
+    desc: "Isolations",
+    icon: ShieldCheck,
+  },
   { label: "API", value: "oRPC", desc: "Type-safe", icon: Zap },
   { label: "CI/CD", value: "15", desc: "Pipelines", icon: GitBranch },
 ];
@@ -24,11 +29,11 @@ export function ScaleVisual() {
           >
             {/* Semantic Hover Glow */}
             <div className="absolute -inset-4 bg-primary/5 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 pointer-events-none" />
-            
+
             <div className="mb-3 p-2 rounded-xl border border-border/50 bg-muted/40 text-primary relative z-10 group-hover:bg-primary/10 group-hover:border-primary/20 transition-colors duration-300">
               <Icon className="w-4 h-4" />
             </div>
-            
+
             <span className="text-xl md:text-2xl font-black text-foreground mb-1 relative z-10 tracking-tight flex items-center justify-center h-8">
               {m.value}
             </span>
