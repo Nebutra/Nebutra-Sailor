@@ -24,7 +24,7 @@ export const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
     const currentValue = value !== undefined ? value : internalValue;
 
     useEffect(() => {
-      let theme;
+      let theme: string;
       if (typeof window === "undefined") {
         theme = "system";
       } else {

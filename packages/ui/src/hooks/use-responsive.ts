@@ -12,7 +12,7 @@ export const useResponsive = (styles: any) => {
 
   useEffect(() => {
     const getResponsive = (styles: any) => {
-      let current;
+      let current: unknown;
       if (typeof styles === "object") {
         if (styles.sm && window.innerWidth >= BREAKPOINTS.SM) {
           current = styles.sm;
