@@ -150,7 +150,7 @@ function DefaultErrorFallback({
   switch (variant) {
     case "minimal":
       return (
-        <div className="text-center py-4 text-sm text-slate-500 dark:text-slate-400">
+        <div className="text-center py-4 text-sm text-muted-foreground">
           <span>Failed to load</span>
           {showRetry && (
             <button
@@ -206,21 +206,19 @@ function DefaultErrorFallback({
 
     default:
       return (
-        <div className="flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg">
+        <div className="flex flex-col items-center justify-center p-6 bg-muted/50 border border-border rounded-lg">
           <div className="size-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4">
             <AlertCircle className="size-6 text-red-600 dark:text-red-400" />
           </div>
-          <h3 className="text-base font-medium text-slate-900 dark:text-slate-100 mb-1">
+          <h3 className="text-base font-medium text-foreground mb-1">
             {componentName ? `${componentName} 出错了` : "组件出错了"}
           </h3>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 text-center">
+          <p className="text-sm text-muted-foreground mb-4 text-center">
             此部分暂时无法加载，请稍后重试
           </p>
           {process.env.NODE_ENV === "development" && (
-            <div className="w-full max-w-md p-2 bg-slate-100 dark:bg-slate-800 rounded mb-4">
-              <p className="text-xs font-mono text-slate-600 dark:text-slate-400 break-all">
-                {error.message}
-              </p>
+            <div className="w-full max-w-md p-2 bg-muted rounded mb-4">
+              <p className="text-xs font-mono text-muted-foreground break-all">{error.message}</p>
             </div>
           )}
           {showRetry && (
@@ -273,7 +271,7 @@ export function TableErrorBoundary({
       componentName={tableName || "表格"}
       variant="compact"
       fallback={({ error, resetError }) => (
-        <div className="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+        <div className="border border-border rounded-lg overflow-hidden">
           <div className="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/20">
             <div className="flex items-center gap-2">
               <AlertCircle className="size-4 text-red-600 dark:text-red-400" />
@@ -287,7 +285,7 @@ export function TableErrorBoundary({
             </Button>
           </div>
           {process.env.NODE_ENV === "development" && (
-            <div className="p-3 bg-slate-50 dark:bg-slate-800 text-xs font-mono text-slate-600 dark:text-slate-400">
+            <div className="p-3 bg-muted text-xs font-mono text-muted-foreground">
               {error.message}
             </div>
           )}

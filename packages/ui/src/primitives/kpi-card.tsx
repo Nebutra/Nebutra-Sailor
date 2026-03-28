@@ -20,11 +20,8 @@ export function KpiCard({ title, value, icon, trend, description, className }: K
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <p className="text-sm font-medium text-slate-600 dark:text-slate-400">{title}</p>
-            <p
-              className="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100"
-              data-demo-skeleton-value="1"
-            >
+            <p className="text-sm font-medium text-muted-foreground">{title}</p>
+            <p className="mt-2 text-3xl font-bold text-foreground" data-demo-skeleton-value="1">
               {typeof value === "number" ? value.toLocaleString() : value}
             </p>
 
@@ -39,8 +36,8 @@ export function KpiCard({ title, value, icon, trend, description, className }: K
                   </>
                 ) : trend.value === 0 ? (
                   <>
-                    <Minus className="size-4 text-slate-400" />
-                    <span className="text-sm font-medium text-slate-400">0%</span>
+                    <Minus className="size-4 text-muted-foreground" />
+                    <span className="text-sm font-medium text-muted-foreground">0%</span>
                   </>
                 ) : (
                   <>
@@ -48,16 +45,14 @@ export function KpiCard({ title, value, icon, trend, description, className }: K
                     <span className="text-sm font-medium text-red-600">{trend.value}%</span>
                   </>
                 )}
-                <span className="text-sm text-slate-500 dark:text-slate-400">vs last week</span>
+                <span className="text-sm text-muted-foreground">vs last week</span>
               </div>
             )}
 
-            {description && (
-              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{description}</p>
-            )}
+            {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
           </div>
 
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-muted">
             {icon}
           </div>
         </div>
