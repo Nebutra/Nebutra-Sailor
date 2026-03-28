@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { AnalyticsTerminal } from "./product-demo/AnalyticsTerminal";
 import { BillingTerminal } from "./product-demo/BillingTerminal";
+
 import { FauxTerminal } from "./product-demo/FauxTerminal";
 import { PRODUCT_DEMO_TABS, type ProductDemoTabId } from "./product-demo/product-demo-data";
 import { WorkspacesTerminal } from "./product-demo/WorkspacesTerminal";
@@ -105,7 +106,7 @@ export function ProductDemoSection() {
           </div>
 
           {/* Right: Premium Faux-Terminal Render */}
-          <div className="lg:col-span-7 w-full h-[450px] md:h-[500px]">
+          <div className="lg:col-span-7 w-full h-[450px] md:h-[500px] relative">
             <FauxTerminal>{renderActiveTerminal()}</FauxTerminal>
           </div>
         </div>
