@@ -204,6 +204,7 @@ describe("UI/UX audit remediation invariants", () => {
 
     expect(warehouse).toContain("param_tenant_id");
     expect(warehouse).toContain("WHERE tenant_id = {tenant_id:String}");
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: intentionally checking for unsafe SQL template
     expect(warehouse).not.toContain("WHERE tenant_id = '${tenantId}'");
   });
 

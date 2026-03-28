@@ -29,6 +29,7 @@
   cursor: zoom-in;
 }
 
+/* biome-ignore lint/suspicious/noDuplicateProperties: progressive enhancement vw → dvw */
 [data-rmiz-modal][open] {
   width: 100vw;
   width: 100dvw;
