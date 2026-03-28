@@ -160,7 +160,7 @@ export function ChangePasswordForm() {
               type="submit"
               disabled={isLoading}
               size="sm"
-              className="bg-orange-500 hover:bg-orange-600 text-white"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               {isLoading
                 ? t("settings.profile.password.actions.saving")

@@ -228,7 +228,7 @@ export function Stepper({
                 className={cn(
                   "font-medium",
                   config.text,
-                  status === "completed" && "text-primary/90 dark:text-orange-400",
+                  status === "completed" && "text-primary",
                   status === "current" && "text-slate-900 dark:text-slate-100",
                   status === "pending" && "text-slate-400 dark:text-slate-500",
                 )}

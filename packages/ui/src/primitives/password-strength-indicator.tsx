@@ -42,8 +42,8 @@ const STRENGTH_CONFIG: Record<
   },
   1: {
     label: "weak",
-    color: "text-orange-600 dark:text-orange-400",
-    bgColor: "bg-orange-500",
+    color: "text-amber-600 dark:text-amber-400",
+    bgColor: "bg-amber-500",
     icon: <AlertCircle className="h-3.5 w-3.5" />,
   },
   2: {
