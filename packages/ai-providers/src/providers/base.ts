@@ -68,7 +68,7 @@ export abstract class BaseAIProvider {
     _request: ChatCompletionRequest,
   ): AsyncGenerator<ChatCompletionChunk, void, unknown> {
     throw new Error(`Streaming not supported by ${this.name}`);
-    // This is just to make TypeScript happy with the generator signature
+    // biome-ignore lint/correctness/noUnreachable: required for TS generator type inference
     yield undefined as never;
   }
 

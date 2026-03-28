@@ -96,8 +96,8 @@ export function ExpandableTabs({
             : "text-muted-foreground hover:bg-muted hover:text-foreground",
         );
 
-        // biome-ignore lint/correctness/useJsxKeyInIterable: key is on the parent <button>
         const tabContent = (
+          // biome-ignore lint/correctness/useJsxKeyInIterable: key is on the parent <button>
           <motion.span
             variants={buttonVariants}
             initial={false}
