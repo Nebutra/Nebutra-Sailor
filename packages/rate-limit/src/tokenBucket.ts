@@ -163,7 +163,7 @@ export function getRateLimiter(plan: string): TokenBucket {
   if (!rateLimiters.has(plan)) {
     rateLimiters.set(plan, createRateLimiter(plan));
   }
-  return rateLimiters.get(plan)!;
+  return rateLimiters.get(plan) as TokenBucket;
 }
 
 /**

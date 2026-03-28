@@ -109,7 +109,10 @@ export function findBestModel(
   // Filter by context window
   if (criteria.minContextWindow) {
     candidates = candidates.filter(
-      (m) => m.contextWindow && m.contextWindow >= criteria.minContextWindow!,
+      (m) =>
+        m.contextWindow &&
+        criteria.minContextWindow &&
+        m.contextWindow >= criteria.minContextWindow,
     );
   }
 

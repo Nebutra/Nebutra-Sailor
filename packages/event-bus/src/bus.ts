@@ -32,7 +32,7 @@ export class EventBus {
       this.handlers.set(eventType, new Set());
     }
 
-    const handlers = this.handlers.get(eventType)!;
+    const handlers = this.handlers.get(eventType) ?? new Set<EventHandler>();
     handlers.add(handler as EventHandler);
 
     // Return unsubscribe function
