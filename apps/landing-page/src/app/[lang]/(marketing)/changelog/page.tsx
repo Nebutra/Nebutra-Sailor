@@ -159,25 +159,31 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           date: entry.publishedAt?.split("T")[0] ?? "",
           excerpt: entry.summary ?? entry.title,
           // Unsplash premium placeholder
-          image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
+          image:
+            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
           content: (
             <ul>
-              {entry.summary?.split("\n").filter(Boolean).map((bullet, i) => (
-                <li key={i}>{bullet}</li>
-              ))}
+              {entry.summary
+                ?.split("\n")
+                .filter(Boolean)
+                .map((bullet, i) => (
+                  <li key={i}>{bullet}</li>
+                ))}
             </ul>
           ),
-          contributors: ["https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1200"],
+          contributors: [
+            "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1200",
+          ],
         } as Release;
       })
     : STATIC_RELEASES.map((r) => {
         return {
           title: `v${r.version}: ${r.tag} Update`,
           date: r.date,
-          excerpt: r.highlights[0] ?? "Significant stability & feature updates.",
-          image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+          image:
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
           contributors: [
-            "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200"
+            "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
           ],
           content: (
             <div className="prose prose-sm dark:prose-invert max-w-none">
@@ -194,7 +200,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-black">
       <Navbar />
-      
+
       <InteractiveChangelog releases={mappedReleases} />
 
       <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
