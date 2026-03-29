@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthContext } from "./context.js";
+import { useAuthContext } from "./context";
 
 /**
  * Hook to get the authenticated user.

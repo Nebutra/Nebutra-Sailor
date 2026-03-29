@@ -21,7 +21,7 @@ import type {
   Organization,
   Session,
   User,
-} from "../types.js";
+} from "../types";
 
 // ─── Helpers ───
 

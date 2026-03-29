@@ -23,6 +23,7 @@ import { rateLimitMiddleware } from "./middlewares/rateLimit.js";
 import { tenantContextMiddleware } from "./middlewares/tenantContext.js";
 import { usageMeteringMiddleware } from "./middlewares/usageMetering.js";
 import { adminRoutes } from "./routes/admin/index.js";
+import { agentRoutes } from "./routes/agents/index.js";
 import { aiRoutes } from "./routes/ai/index.js";
 import { billingRoutes } from "./routes/billing/index.js";
 import { eventRoutes } from "./routes/events/index.js";
@@ -192,6 +193,7 @@ app.route("/system", statusRoutes);
 // the skip list so they receive full rate limiting.
 app.route("/api/v1/legal", consentRoutes);
 app.route("/api/v1/events", eventRoutes);
+app.route("/api/v1/agents", agentRoutes);
 app.route("/api/v1/ai", aiRoutes);
 app.route("/api/v1/billing", billingRoutes);
 

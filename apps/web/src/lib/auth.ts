@@ -16,8 +16,7 @@ async function getAuthInstance() {
 
   const provider = (process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth") as
     | "clerk"
-    | "better-auth"
-    | "nextauth";
+    | "better-auth";
 
   authInstance = await createAuth({ provider });
   return authInstance;
@@ -34,7 +33,7 @@ export async function getAuth() {
   return {
     userId: session?.userId ?? null,
     orgId: session?.organizationId ?? null,
-    sessionClaims: { org_plan: "FREE" }, // Placeholder for backward compatibility
+    sessionClaims: { org_plan: "FREE", org_role: "org:admin" }, // Placeholder for backward compatibility
     isSignedIn: !!session?.userId,
   };
 }

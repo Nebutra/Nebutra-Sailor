@@ -1,7 +1,6 @@
 "use client";
 
 import { Check, ImagePlus, Loader2, MessageSquarePlus } from "lucide-react";
-import { useSession } from "next-auth/react";
 import { useEffect, useId, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -19,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { useCharacterLimit } from "@/hooks/use-character-limit";
 import { useImageUpload } from "@/hooks/use-image-upload";
+import { useSession } from "@/lib/auth-client";
 
 const RELATIONSHIPS = [
   { value: "friend", label: "Friend", labelZh: "朋友" },
@@ -41,7 +41,8 @@ interface EndorsementDialogProps {
 
 export function EndorsementDialog({ onSubmitted }: EndorsementDialogProps) {
   const id = useId();
-  const { data: session } = useSession();
+  const { data: sessionData } = useSession();
+  const session = sessionData;
   const { track } = useAnalytics();
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);

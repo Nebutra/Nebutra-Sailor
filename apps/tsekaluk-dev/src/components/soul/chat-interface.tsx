@@ -3,10 +3,10 @@
 import { AnimateIn } from "@nebutra/ui/components";
 import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, LogIn, Send } from "lucide-react";
-import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAnalytics } from "@/hooks/use-analytics";
+import { signIn, useSession } from "@/lib/auth-client";
 
 interface Message {
   role: "user" | "assistant";
@@ -60,7 +60,7 @@ function TypingDots() {
 
 export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
   const t = useTranslations("soul");
-  const { data: session, status } = useSession();
+  const { data: session, isPending } = useSession();
   const { track } = useAnalytics();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -181,7 +181,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
 
   const starters = [t("starter1"), t("starter2"), t("starter3")];
 
-  if (status === "loading") {
+  if (isPending) {
     return (
       <div className="flex h-full items-center justify-center">
         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -224,7 +224,9 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
             <p className="text-xs text-muted-foreground">{t("auth_required")}</p>
             <button
               type="button"
-              onClick={() => signIn()}
+              onClick={() =>
+                signIn.social({ provider: "github", callbackURL: window.location.pathname })
+              }
               className="flex items-center gap-2 rounded-full bg-gray-900 px-6 py-2.5 text-body-14 text-white transition-all duration-200 hover:bg-gray-800 hover:scale-[1.03] active:scale-[0.97] dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 will-change-transform"
             >
               <LogIn className="h-4 w-4" />

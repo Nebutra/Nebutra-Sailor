@@ -80,6 +80,11 @@ const DesignSystemSection = dynamic(
   { loading: () => <section className="h-96" aria-hidden /> },
 );
 
+const SEOGEOSection = dynamic(
+  () => import("@/components/landing").then((mod) => mod.SEOGEOSection),
+  { loading: () => <section className="h-96" aria-hidden /> },
+);
+
 import {
   Accordion,
   AccordionContent,
@@ -148,6 +153,9 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
         {/* 7.8 Design System */}
         <DesignSystemSection />
+
+        {/* 8. SEO & GEO — Discovery & Growth Engine */}
+        <SEOGEOSection />
 
         <AgenticCapabilitiesSection />
         <UseCasesSection />

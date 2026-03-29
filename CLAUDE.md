@@ -28,6 +28,14 @@ packages/
   icons/          541 Geist icons as tree-shakable TSX components
   preset/         Feature-based SaaS starter config system
   queue/          Provider-agnostic message queue — QStash (serverless) + BullMQ (self-hosted Redis)
+  search/         Full-text search — Meilisearch (self-hosted) + Typesense + Algolia (managed)
+  notifications/  Multi-channel notification center — Novu (managed) + direct dispatchers
+  permissions/    RBAC/ABAC permissions engine — CASL (in-process) + OpenFGA (Zanzibar)
+  webhooks/       Outbound webhook management — Svix (managed) + custom (self-hosted)
+  metering/       Usage metering pipeline — ClickHouse real-time aggregation for billing
+  uploads/        Large file uploads — S3/R2 multipart + Tus resumable + presigned URLs
+  vault/          Application-layer secrets — envelope encryption (AWS KMS + local HKDF)
+  tenant/         Multi-tenancy context — AsyncLocalStorage + RLS + schema isolation
 ```
 
 ---
@@ -332,6 +340,153 @@ QSTASH_CURRENT_SIGNING_KEY=""        # Webhook signature verification
 QSTASH_NEXT_SIGNING_KEY=""           # Key rotation support
 QSTASH_CALLBACK_BASE_URL=""          # e.g. https://api.nebutra.com
 # BullMQ reuses REDIS_URL — no extra config
+```
+
+---
+
+## Full-Text Search (`@nebutra/search`)
+
+Provider-agnostic search supporting **Meilisearch**, **Typesense**, and **Algolia**.
+
+| Priority | Condition | Provider |
+|----------|-----------|----------|
+| 1 | `SEARCH_PROVIDER` env var | As specified |
+| 2 | `MEILISEARCH_URL` exists | `meilisearch` |
+| 3 | `TYPESENSE_URL` exists | `typesense` |
+| 4 | `ALGOLIA_APP_ID` exists | `algolia` |
+
+```ts
+import { getSearch } from "@nebutra/search";
+
+const search = await getSearch();
+await search.indexDocument("products", { id: "1", name: "Widget", tenantId: "org_123" });
+const results = await search.search("products", { query: "widget", tenantId: "org_123" });
+```
+
+---
+
+## Notifications (`@nebutra/notifications`)
+
+Multi-channel notification system: `in_app`, `email`, `push`, `sms`, `chat`.
+
+```ts
+import { getNotificationProvider, type NotificationPayload } from "@nebutra/notifications";
+
+const notifications = await getNotificationProvider();
+await notifications.send({
+  id: crypto.randomUUID(),
+  type: "invoice.paid",
+  recipientId: "user_123",
+  tenantId: "org_123",
+  channels: ["in_app", "email"],
+  data: { amount: 99.99, invoiceId: "inv_456" },
+});
+```
+
+---
+
+## Permissions (`@nebutra/permissions`)
+
+RBAC/ABAC with **CASL** (in-process) or **OpenFGA** (Zanzibar-style).
+
+```ts
+// API middleware (Hono)
+import { requirePermission } from "@nebutra/permissions";
+app.delete("/api/projects/:id", requirePermission("delete", "Project"), handler);
+
+// React UI gates
+import { Can } from "@nebutra/permissions/react";
+<Can action="edit" resource="Document" subject={doc}>
+  <EditButton />
+</Can>
+```
+
+---
+
+## Webhooks (`@nebutra/webhooks`)
+
+Outbound webhook management with **Svix** (managed) or custom delivery.
+
+```ts
+import { getWebhooks } from "@nebutra/webhooks";
+
+const webhooks = await getWebhooks();
+await webhooks.sendEvent({
+  id: crypto.randomUUID(),
+  eventType: "invoice.paid",
+  payload: { invoiceId: "inv_123", amount: 99.99 },
+  timestamp: new Date().toISOString(),
+  tenantId: "org_123",
+});
+```
+
+---
+
+## Metering (`@nebutra/metering`)
+
+Usage metering pipeline for consumption-based billing via **ClickHouse**.
+
+```ts
+import { getMetering, createUsageEvent, COMMON_METERS } from "@nebutra/metering";
+
+const metering = await getMetering();
+await metering.ingest(createUsageEvent(COMMON_METERS.API_CALLS.id, "org_123", 1, { endpoint: "/api/chat" }));
+const quota = await metering.getQuota("org_123", "api_calls");
+// → { limit: 10000, used: 4521, remaining: 5479, percentage: 0.4521 }
+```
+
+---
+
+## Uploads (`@nebutra/uploads`)
+
+Large file uploads with **S3/R2 multipart**, **Tus resumable**, and **presigned URLs**.
+
+```ts
+import { getUploadProvider } from "@nebutra/uploads";
+
+const uploads = await getUploadProvider();
+
+// Small file — presigned URL
+const { url, headers } = await uploads.createPresignedUpload({
+  bucket: "nebutra-uploads", key: "docs/report.pdf", contentType: "application/pdf", tenantId: "org_123",
+});
+
+// Large file — multipart
+const mp = await uploads.createMultipartUpload({ bucket: "nebutra-uploads", key: "videos/demo.mp4" }, 10);
+```
+
+---
+
+## Vault (`@nebutra/vault`)
+
+Application-layer envelope encryption for customer secrets.
+
+```ts
+import { getVault } from "@nebutra/vault";
+
+const vault = await getVault();
+const encrypted = await vault.encrypt("sk-live-abc123", { tenantId: "org_123", name: "OpenAI Key" });
+const plaintext = await vault.decrypt(encrypted);
+```
+
+---
+
+## Multi-Tenancy (`@nebutra/tenant`)
+
+Request-scoped tenant context via AsyncLocalStorage + database isolation.
+
+```ts
+// Hono middleware
+import { tenantMiddleware } from "@nebutra/tenant/middleware";
+app.use("*", tenantMiddleware({ resolvers: [fromHeader("x-tenant-id")] }));
+
+// Access anywhere in the call stack
+import { getCurrentTenant } from "@nebutra/tenant";
+const tenant = getCurrentTenant(); // → { tenantId: "org_123", plan: "pro", ... }
+
+// Prisma with RLS
+import { withRls } from "@nebutra/tenant";
+const db = withRls(prisma, tenant.tenantId);
 ```
 
 ---

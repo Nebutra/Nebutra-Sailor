@@ -99,7 +99,11 @@ export const ModelName = {
   ContactSubmission: 'ContactSubmission',
   OAuthClient: 'OAuthClient',
   OAuthAuthorization: 'OAuthAuthorization',
-  OAuthAccessToken: 'OAuthAccessToken'
+  OAuthAccessToken: 'OAuthAccessToken',
+  AuthUser: 'AuthUser',
+  AuthAccount: 'AuthAccount',
+  AuthSession: 'AuthSession',
+  AuthVerification: 'AuthVerification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -938,6 +942,64 @@ export const OAuthAccessTokenScalarFieldEnum = {
 } as const
 
 export type OAuthAccessTokenScalarFieldEnum = (typeof OAuthAccessTokenScalarFieldEnum)[keyof typeof OAuthAccessTokenScalarFieldEnum]
+
+
+export const AuthUserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  phone: 'phone',
+  emailVerified: 'emailVerified',
+  phoneVerified: 'phoneVerified',
+  name: 'name',
+  image: 'image',
+  passwordHash: 'passwordHash',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuthUserScalarFieldEnum = (typeof AuthUserScalarFieldEnum)[keyof typeof AuthUserScalarFieldEnum]
+
+
+export const AuthAccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  refreshToken: 'refreshToken',
+  accessToken: 'accessToken',
+  expiresAt: 'expiresAt',
+  tokenType: 'tokenType',
+  scope: 'scope',
+  idToken: 'idToken',
+  createdAt: 'createdAt'
+} as const
+
+export type AuthAccountScalarFieldEnum = (typeof AuthAccountScalarFieldEnum)[keyof typeof AuthAccountScalarFieldEnum]
+
+
+export const AuthSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  token: 'token',
+  expiresAt: 'expiresAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt'
+} as const
+
+export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
+
+
+export const AuthVerificationScalarFieldEnum = {
+  id: 'id',
+  identifier: 'identifier',
+  value: 'value',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AuthVerificationScalarFieldEnum = (typeof AuthVerificationScalarFieldEnum)[keyof typeof AuthVerificationScalarFieldEnum]
 
 
 export const SortOrder = {

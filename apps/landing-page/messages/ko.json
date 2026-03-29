@@ -669,7 +669,8 @@
       "enterprise": "Modern Enterprise (CN)",
       "export": "Global Software Export",
       "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "edam": "Enterprise Digital Assets",
+      "seoGeo": "SEO & GEO 엔진"
     },
     "content": {
       "opc": {
@@ -734,6 +735,14 @@
           "f2": "Complex Queries",
           "f3": "Role Management"
         }
+      },
+      "seoGeo": {
+        "title": "SEO & GEO 성장 엔진",
+        "desc": "전통적 검색을 넘어서. 내장 SEO 기반과 생성 엔진 최적화로 Google과 ChatGPT, Perplexity, Gemini 등 AI 검색 엔진에서 동시에 발견됩니다.",
+        "features": {
+          "f1": "Lighthouse 99+ 점수",
+          "f2": "AI 검색 인덱싱"
+        }
       }
     }
   },
@@ -772,5 +781,35 @@
     "card4Desc": "래칫 예산: hex 상한, oklch 하한, 원시 색상 클래스 제한. CI에서 브랜드 드리프트 감지.",
     "card5Title": "인터랙티브 문서",
     "card5Desc": "Fumadocs 기반 디자인 문서 사이트. 이중 언어 컴포넌트 API 문서, 토큰 갤러리, 레이아웃 패턴 가이드."
+  },
+  "seoGeo": {
+    "badge": "SEO & GEO",
+    "headline": "사람에게 발견되다. AI에게 인용되다.",
+    "subheadline": "모든 페이지에 프로덕션급 SEO와 생성 엔진 최적화가 내장되어 있습니다. Google, Perplexity, ChatGPT Search, Bing Copilot에 바로 노출됩니다.",
+    "stat1Value": "100",
+    "stat1Label": "Lighthouse SEO",
+    "stat2Value": "99",
+    "stat2Label": "성능",
+    "stat3Value": "7",
+    "stat3Label": "언어",
+    "stat4Value": "6+",
+    "stat4Label": "스키마 타입",
+    "seoLabel": "검색 엔진 최적화",
+    "geoLabel": "생성 엔진 최적화",
+    "card1Title": "자동화된 메타 & 구조화된 데이터",
+    "card1Desc": "JSON-LD 스키마, Open Graph, Twitter Cards, 정규 URL, XML 사이트맵을 콘텐츠 모델에서 자동 생성. 수동 설정 없음.",
+    "card2Title": "AI 최적화 콘텐츠 아키텍처",
+    "card2Desc": "시맨틱 HTML5, FAQ 스키마, HowTo 마크업 및 AI 검색 엔진이 답변 생성 시 선호하는 인용 가능 형식.",
+    "card3Title": "다국어 SEO (hreflang)",
+    "card3Desc": "next-intl은 로케일 기반 라우팅을 사용하여 7개 언어에 대한 hreflang 대체 항목을 자동 생성합니다. 각 언어는 자체 사이트맵 항목을 가집니다.",
+    "card4Title": "Core Web Vitals 우선",
+    "card4Desc": "서버 컴포넌트, 동적 임포트, 이미지 최적화 및 엣지 캐싱으로 99+ Lighthouse 점수 달성. 모바일에서 LCP 1.2초 이하.",
+    "card5Title": "AI 인용 신호",
+    "card5Desc": "구조화된 데이터, 권위 있는 콘텐츠 패턴 및 E-E-A-T 신호. Perplexity, ChatGPT Search 및 Google SGE가 인용 소스를 결정할 때 사용.",
+    "card6Title": "글로벌 엣지 배포",
+    "card6Desc": "ISR + 300+ Vercel PoP상의 엣지 미들웨어. 지역별 타겟팅 콘텐츠, 다중 통화 가격 책정 및 엣지에서의 로케일 인식 라우팅.",
+    "compTraditionalLabel": "전통적 SEO",
+    "compTraditional": "수동 메타 태그 → 느린 크롤링 → AI 검색에서 보이지 않음",
+    "compSailor": "자동화된 스키마 → 즉시 인덱싱 → AI 엔진에서 인용 → 글로벌 도달"
   }
 }

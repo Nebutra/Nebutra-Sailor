@@ -1,0 +1,193 @@
+================================================================================
+                    NEBUTRA-SAILOR CLERK COUPLING AUDIT
+                               EXECUTIVE SUMMARY
+================================================================================
+
+AUDIT DATE: March 29, 2026
+SCOPE: READ-ONLY research task
+STATUS: Complete
+
+================================================================================
+CRITICAL FINDINGS
+================================================================================
+
+1. CLERK TIGHT COUPLING
+   - 31+ files in apps/web directly import @clerk/nextjs
+   - API gateway uses @clerk/backend for JWT verification
+   - No functional abstraction despite @nebutra/auth package existing
+   - Hard to migrate to different auth provider without major refactoring
+
+2. @NEBUTRA/AUTH PACKAGE STATUS
+   - INCOMPLETE abstraction (Phase 1 only)
+   - Clerk provider: Documentation bridge, not functional (returns null/throws)
+   - Client hooks: Stubs only (no implementation)
+   - Better Auth provider: WORKING (can verify as reference)
+   - NextAuth provider: Stub (not implemented)
+   - NOTE: Package has zero Clerk dependencies (design correct, but unused)
+
+3. WEB APP ARCHITECTURE
+   Root -> ClerkProvider -> NextIntlProvider -> DesignSystemProvider -> QueryProvider
+   
+   Auth data flow:
+   proxy.ts (clerkMiddleware) 
+     -> auth() to get session
+     -> getToken() to get JWT
+     -> API calls with Bearer token
+     -> tenantContextMiddleware verifies token
+     -> Database synced via Clerk webhooks
+
+4. ENVIRONMENT REQUIREMENTS (Production)
+   - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY (web app)
+   - CLERK_SECRET_KEY (web app + api-gateway)
+   - CLERK_WEBHOOK_SECRET (api-gateway)
+   - CSP hardcoded for clerk.accounts.dev domains
+
+5. CLERK-SPECIFIC FEATURES IN USE
+   - Organizations (multi-tenant)
+   - Roles (org:owner, org:admin, org:member, org:viewer)
+   - Custom session claims (org_plan)
+   - OAuth (Google + GitHub)
+   - Email verification
+   - Webhooks (via Svix)
+
+================================================================================
+COUPLING BY COMPONENT
+================================================================================
+
+MIDDLEWARE (proxy.ts)
+  - clerkMiddleware() guards all requests
+  - CSP hardcoded for Clerk domains
+  - Fallback to noop proxy if no publishable key (dev mode only)
+  - Refactor difficulty: HIGH (affects every request)
+
+SESSION/USER RESOLUTION (lib/auth.ts)
+  - auth() from @clerk/nextjs/server
+  - currentUser() from @clerk/nextjs/server
+  - Stores org_plan from sessionClaims
+  - Refactor difficulty: MEDIUM (localized to lib/)
+
+JWT EXTRACTION (lib/api.ts, lib/api/client.ts, hooks/use-api.ts)
+  - auth().getToken() from @clerk/nextjs or @clerk/nextjs/server
+  - Injected into API requests as Bearer token
+  - Used by both server and client components
+  - Refactor difficulty: MEDIUM (token generation only)
+
+SIGN-IN/SIGN-UP (components/auth/)
+  - useSignIn() hook with signIn.create(), signIn.password(), signIn.finalize()
+  - useSignUp() hook with signUp.create(), signUp.password(), signUp.verifications.*()
+  - Email verification via sendEmailCode()/verifyEmailCode()
+  - SSO via .sso() method (oauth_google, oauth_github)
+  - Refactor difficulty: HIGH (complex state machine)
+
+UI COMPONENTS (multiple locations)
+  - SignInButton, SignUpButton, UserButton (design-system-shell)
+  - OrganizationList (select-org page)
+  - All use Clerk appearance config
+  - Refactor difficulty: LOW (can replace with custom components)
+
+PERMISSIONS (hooks/usePermission.ts)
+  - useOrganization() to get membership
+  - membership.role mapped to internal role enum
+  - Permission logic depends on Clerk org roles
+  - Refactor difficulty: HIGH (auth claims tied to Clerk)
+
+API GATEWAY (api-gateway/)
+  - verifyToken() from @clerk/backend for JWT verification
+  - Extracts userId (payload.sub), organizationId (payload.org_id), role (payload.org_role)
+  - Webhook handler for Clerk events via Svix
+  - Database synced: User, Organization, OrganizationMember
+  - Role mapping: org:owner→OWNER, org:admin→ADMIN, org:member→MEMBER, org:viewer→VIEWER
+  - Refactor difficulty: HIGH (on critical path for every API call)
+
+ADMIN PAGES (app/(app)/admin/*)
+  - clerkClient() backend SDK for listing users/organizations
+  - Refactor difficulty: MEDIUM (backend only, not critical path)
+
+================================================================================
+FILES REQUIRING REFACTORING (31 total)
+================================================================================
+
+CRITICAL PATH (blocks other work):
+  1. apps/web/src/proxy.ts
+  2. apps/web/src/lib/auth.ts
+  3. apps/api-gateway/src/middlewares/tenantContext.ts
+
+HIGH PRIORITY (core UX):
+  4. apps/web/src/app/[locale]/layout.tsx
+  5. apps/web/src/components/auth/sign-in-form.tsx
+  6. apps/web/src/components/auth/sign-up-form.tsx
+  7. apps/web/src/hooks/usePermission.ts
+  8. apps/api-gateway/src/routes/webhooks/clerk.ts
+
+MEDIUM PRIORITY:
+  9. apps/web/src/app/[locale]/providers/design-system-shell.tsx
+  10. apps/web/src/hooks/use-api.ts
+  11. apps/web/src/app/[locale]/(app)/admin/* (8 files)
+
+LOW PRIORITY:
+  12. apps/web/src/lib/api.ts
+  13. apps/web/src/lib/api/client.ts
+  14. apps/web/src/app/[locale]/select-org/page.tsx
+  15. Feature flag and route handler files (5 files)
+
+FULL LIST: See CLERK_AUDIT_REPORT.md section 2 for complete file listing
+
+================================================================================
+REFACTORING PHASES
+================================================================================
+
+PHASE 1: Abstract Web App (Medium effort)
+  1. Implement @nebutra/auth/client hooks as provider wrappers
+  2. Create NebutraAuthProvider factory for runtime provider selection
+  3. Replace Clerk UI components with custom implementations
+
+PHASE 2: Migrate API Gateway (High effort)
+  1. Update tenantContextMiddleware for provider-agnostic JWT verification
+  2. Create webhook dispatcher routing to provider-specific handlers
+  3. Implement Better Auth + NextAuth webhook handlers
+
+PHASE 3: Full Multi-Provider Support (High effort)
+  1. Implement Better Auth client hooks
+  2. Implement NextAuth client hooks
+  3. Add environment-based provider selection with fallback
+
+================================================================================
+RECOMMENDATIONS
+================================================================================
+
+IMMEDIATE (Before any refactoring):
+  - Document current Clerk configuration and environment variables
+  - Ensure Clerk webhook endpoint is documented and stable
+  - Create integration tests for auth flows before refactoring
+  - Set up feature flags for provider switching (dev mode)
+
+FOR MIGRATION PLANNING:
+  - Estimate effort: 40-60 developer-days for full multi-provider support
+  - Critical path: proxy.ts → auth.ts → API gateway (2 weeks minimum)
+  - Testing: All auth flows (sign-in, sign-up, org selection, permissions)
+  - Rollback plan: Keep Clerk in production, test other providers in dev/staging
+
+FOR IMMEDIATE USE:
+  - @nebutra/auth is suitable for API client/server code only
+  - Web app needs wrapper components and hooks for abstraction
+  - API gateway needs provider-agnostic JWT verification layer
+
+================================================================================
+DELIVERABLES
+================================================================================
+
+1. CLERK_AUDIT_REPORT.md (20 KB)
+   - Full detailed audit with code examples
+   - Complete file-by-file breakdown
+   - Data flow diagrams
+   - Environment variables
+   - Refactoring roadmap
+
+2. AUDIT SUMMARY (this file)
+   - Executive overview
+   - Critical findings
+   - Component coupling analysis
+   - Files requiring refactoring
+   - Recommendations
+
+================================================================================

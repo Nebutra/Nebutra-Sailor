@@ -34,7 +34,7 @@ function getCurrencyForCountry(countryCode: string): string {
   return map[countryCode.toUpperCase()] || "USD";
 }
 
-export default function middleware(request: NextRequest): NextResponse {
+export default function proxy(request: NextRequest): NextResponse {
   // 1. Detect Country and Currency
   let country = request.headers.get("x-vercel-ip-country");
 
@@ -58,7 +58,7 @@ export default function middleware(request: NextRequest): NextResponse {
   // 3. Process with next-intl
   const response = intlMiddleware(request) as NextResponse;
 
-  // Add security headers (from old proxy.ts)
+  // Add security headers
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");

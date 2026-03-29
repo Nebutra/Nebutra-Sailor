@@ -1,5 +1,5 @@
 import { AlertTriangle, Clock, Shield, Smartphone } from "lucide-react";
-import { getAuth } from "@/lib/auth.js";
+import { getAuth } from "@/lib/auth";
 
 export const metadata = {
   title: "Security — Settings",

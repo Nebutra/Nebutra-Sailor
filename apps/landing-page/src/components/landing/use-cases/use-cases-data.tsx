@@ -1,4 +1,14 @@
-import { Folder, Globe, ImageIcon, Layout, LayoutGrid, Terminal, Users } from "lucide-react";
+import {
+  Folder,
+  Globe,
+  ImageIcon,
+  Layout,
+  LayoutGrid,
+  Search,
+  Terminal,
+  Users,
+} from "lucide-react";
+import { SEOGEOMockup } from "../seo-geo/SEOGEOMockup";
 import {
   DesignMockup,
   EDAMMockup,
@@ -17,4 +27,5 @@ export const USE_CASES_DATA = [
   { key: "export", icon: LayoutGrid, mockup: ExportMockup },
   { key: "design", icon: Layout, mockup: DesignMockup },
   { key: "edam", icon: Folder, mockup: EDAMMockup },
+  { key: "seoGeo", icon: Search, mockup: SEOGEOMockup },
 ] as const;

@@ -1,7 +1,7 @@
 /**
  * @nebutra/auth — Provider-agnostic auth abstraction layer.
  *
- * Unified interface for Clerk, Better Auth, and NextAuth.
+ * Unified interface for Clerk and Better Auth.
  *
  * For server-side use:
  * ```ts
@@ -26,9 +26,9 @@
  */
 
 // Middleware factory
-export { createAuthMiddleware } from "./middleware.js";
+export { createAuthMiddleware } from "./middleware";
 // Server-side factory
-export { createAuth } from "./server.js";
+export { createAuth } from "./server";
 
 // Canonical types (shared across all layers)
 export type {
@@ -41,4 +41,4 @@ export type {
   Session,
   SignInMethod,
   User,
-} from "./types.js";
+} from "./types";

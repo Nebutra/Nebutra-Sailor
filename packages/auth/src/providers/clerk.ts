@@ -6,7 +6,7 @@
  * AuthProvider interface as a **guidance layer** — each method documents the
  * correct Clerk-native API to call.
  *
- * Unlike self-hosted providers (Better Auth, NextAuth), Clerk manages user
+ * Unlike self-hosted providers (Better Auth), Clerk manages user
  * data in its own infrastructure. The methods below return `null` / `[]` by
  * default and log guidance about which Clerk API to use instead.
  *
@@ -25,7 +25,7 @@ import type {
   Organization,
   Session,
   User,
-} from "../types.js";
+} from "../types";
 
 /**
  * Create a Clerk auth provider instance.

@@ -669,7 +669,8 @@
       "enterprise": "Modern Enterprise (CN)",
       "export": "Global Software Export",
       "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "edam": "Enterprise Digital Assets",
+      "seoGeo": "Moteur SEO & GEO"
     },
     "content": {
       "opc": {
@@ -734,6 +735,14 @@
           "f2": "Complex Queries",
           "f3": "Role Management"
         }
+      },
+      "seoGeo": {
+        "title": "Moteur de Croissance SEO & GEO",
+        "desc": "Au-delà du SEO traditionnel. SEO intégré plus Optimisation pour Moteurs Génératifs pour que votre produit soit découvert par Google et par les moteurs IA comme ChatGPT, Perplexity et Gemini.",
+        "features": {
+          "f1": "Lighthouse 99+ Points",
+          "f2": "Indexé par l'IA"
+        }
       }
     }
   },
@@ -772,5 +781,35 @@
     "card4Desc": "Budgets cliquet : plafond hex, plancher oklch, limites de classes couleur brutes. Détection de dérive de marque en CI.",
     "card5Title": "Documentation interactive",
     "card5Desc": "Site de documentation de design avec Fumadocs. Documentation API bilingue des composants, galeries de tokens et guides de patterns."
+  },
+  "seoGeo": {
+    "badge": "SEO & GEO",
+    "headline": "Trouvé par les humains. Cité par l'IA.",
+    "subheadline": "Chaque page est livrée avec un SEO de niveau production et une Optimisation pour Moteurs Génératifs. Votre produit apparaît dans Google, Perplexity, ChatGPT Search et Bing Copilot — prêt à l'emploi.",
+    "stat1Value": "100",
+    "stat1Label": "Lighthouse SEO",
+    "stat2Value": "99",
+    "stat2Label": "Performance",
+    "stat3Value": "7",
+    "stat3Label": "Langues",
+    "stat4Value": "6+",
+    "stat4Label": "Types de Schema",
+    "seoLabel": "Optimisation pour Moteurs de Recherche",
+    "geoLabel": "Optimisation pour Moteurs Génératifs",
+    "card1Title": "Méta Automatisée & Données Structurées",
+    "card1Desc": "Schema JSON-LD, Open Graph, Twitter Cards, URLs canoniques et sitemaps XML générés depuis votre modèle de contenu. Zéro configuration manuelle.",
+    "card2Title": "Architecture Contenu Optimisée pour l'IA",
+    "card2Desc": "HTML5 sémantique, schema FAQ, balisage HowTo et formatage prêt pour la citation que les moteurs IA préfèrent lors de la génération de réponses.",
+    "card3Title": "SEO Multilingue (hreflang)",
+    "card3Desc": "next-intl génère automatiquement les alternates hreflang pour 7 langues avec routage préfixé par locale. Chaque langue obtient ses propres entrées sitemap.",
+    "card4Title": "Core Web Vitals en Premier",
+    "card4Desc": "Composants serveur, imports dynamiques, optimisation d'images et caching edge délivrent des scores Lighthouse 99+. LCP inférieur à 1.2s sur mobile.",
+    "card5Title": "Signaux de Citation par l'IA",
+    "card5Desc": "Données structurées, patterns de contenu autoritaires et signaux E-E-A-T que Perplexity, ChatGPT Search et Google SGE utilisent pour décider des sources à citer.",
+    "card6Title": "Distribution Edge Mondiale",
+    "card6Desc": "ISR + middleware edge sur 300+ PoPs Vercel. Contenu ciblé géographiquement, tarification multi-devises et routage conscient de la locale en edge.",
+    "compTraditionalLabel": "SEO Traditionnel",
+    "compTraditional": "Tags meta manuels → crawling lent → invisible pour recherche IA",
+    "compSailor": "Schema automatisé → indexation instantanée → cité par moteurs IA → portée mondiale"
   }
 }

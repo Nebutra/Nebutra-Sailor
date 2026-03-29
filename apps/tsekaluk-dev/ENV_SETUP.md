@@ -8,19 +8,19 @@ cp .env.example .env.local
 
 ---
 
-## NEXTAUTH_SECRET
+## AUTH_SECRET
 
-用于加密 JWT 和 session cookie 的密钥。
+用于加密 session cookie 的密钥（Better Auth）。
 
 ```bash
 openssl rand -base64 32
 ```
 
-将输出结果粘贴到 `NEXTAUTH_SECRET=` 后面即可。
+将输出结果粘贴到 `AUTH_SECRET=` 后面即可。
 
-## NEXTAUTH_URL
+## BETTER_AUTH_URL
 
-生产环境设为 `https://tsekaluk.dev`，本地开发设为 `http://localhost:3000`。
+Better Auth 的 base URL。生产环境设为 `https://tsekaluk.dev`，本地开发设为 `http://localhost:3002`。
 
 ---
 
@@ -48,7 +48,7 @@ Soul 对话功能使用 Claude Haiku 模型。
 5. 页面上的 **Client ID** 即为 `GITHUB_ID`
 6. 点击 **Generate a new client secret**，生成的值即为 `GITHUB_SECRET`
 
-> 本地开发时 callback URL 改为 `http://localhost:3000/api/auth/callback/github`
+> 本地开发时 callback URL 改为 `http://localhost:3002/api/auth/callback/github`
 
 ---
 
@@ -72,7 +72,7 @@ Soul 对话功能使用 Claude Haiku 模型。
 8. 点击 **Create**
 9. 弹窗中的 **Client ID** 即为 `GOOGLE_ID`，**Client secret** 即为 `GOOGLE_SECRET`
 
-> 本地开发时额外添加 redirect URI: `http://localhost:3000/api/auth/callback/google`
+> 本地开发时额外添加 redirect URI: `http://localhost:3002/api/auth/callback/google`
 
 ---
 
@@ -89,7 +89,7 @@ Soul 对话功能使用 Claude Haiku 模型。
 5. 提交后获得 **Client ID** 和 **Client Secret**
 6. 分别填入 `LINUXDO_ID` 和 `LINUXDO_SECRET`
 
-> 本地开发时回调地址改为 `http://localhost:3000/api/auth/callback/linuxdo`
+> 本地开发时回调地址改为 `http://localhost:3002/api/auth/callback/linuxdo`
 
 ---
 

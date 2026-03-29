@@ -4,8 +4,8 @@
  * @nebutra/auth/client — Provider-agnostic auth hooks for React.
  *
  * Re-exports hooks and types from the react subpackage. These hooks are
- * built on a unified AuthContext that normalizes state across Clerk,
- * Better Auth, and NextAuth providers.
+ * built on a unified AuthContext that normalizes state across Clerk
+ * and Better Auth providers.
  *
  * @example
  * ```tsx
@@ -22,9 +22,9 @@
  */
 
 // Re-export context for advanced use cases
-export { type AuthContextValue, useAuthContext } from "./react/context.js";
+export { type AuthContextValue, useAuthContext } from "./react/context";
 // Re-export auth hooks from react subpackage
-export { useAuth, useOrganization, useSession, useUser } from "./react/hooks.js";
+export { useAuth, useOrganization, useSession, useUser } from "./react/hooks";
 
 // Re-export sign-in method type for convenience
-export type { SignInMethod } from "./types.js";
+export type { SignInMethod } from "./types";

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, type ReactNode, useContext } from "react";
-import type { AuthProviderId } from "../types.js";
+import type { AuthProviderId } from "../types";
 
 /**
  * Auth context value shape — shared across all providers.

@@ -17,7 +17,7 @@
  * ```
  */
 
-import type { AuthConfig } from "./types.js";
+import type { AuthConfig } from "./types";
 
 /**
  * Create a provider-specific auth middleware handler.
@@ -26,7 +26,7 @@ import type { AuthConfig } from "./types.js";
  * For Clerk, consider using clerkMiddleware() directly from @clerk/nextjs/server
  * in your middleware.ts file for best compatibility.
  *
- * For Better Auth and NextAuth, this factory returns a handler suitable for
+ * For Better Auth, this factory returns a handler suitable for
  * Next.js middleware or edge functions.
  */
 export async function createAuthMiddleware(
@@ -54,24 +54,8 @@ export async function createAuthMiddleware(
 
     case "better-auth": {
       // Better Auth: delegate to the provider's middleware handler
-      const auth = await (await import("./server.js")).createAuth(config);
+      const auth = await (await import("./server")).createAuth(config);
       return auth.middleware();
-    }
-
-    case "nextauth": {
-      // NextAuth: attempt to dynamically load Auth.js handlers
-      try {
-        // For NextAuth/Auth.js v5, middleware should use route handlers at /api/auth/*
-        // This factory returns a pass-through handler since Auth.js uses route handlers
-        console.warn(
-          "NextAuth middleware: Auth.js v5 uses route handlers at /api/auth/*. " +
-            "Set up route.ts file in apps/api-gateway/src/app/api/auth/[...nextauth]/route.ts " +
-            "with NextAuth handlers.",
-        );
-        return async () => undefined;
-      } catch {
-        return async () => undefined;
-      }
     }
 
     default:

@@ -2,7 +2,7 @@
   "name": "@nebutra/auth",
   "version": "0.1.0",
   "private": true,
-  "description": "Provider-agnostic auth abstraction layer (Clerk, Better Auth, NextAuth)",
+  "description": "Provider-agnostic auth abstraction layer (Clerk, Better Auth)",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -26,14 +26,10 @@
   },
   "peerDependencies": {
     "react": "^19.0.0",
-    "@clerk/nextjs": ">=6.0.0",
-    "next-auth": ">=5.0.0-beta.0"
+    "@clerk/nextjs": ">=6.0.0"
   },
   "peerDependenciesMeta": {
     "@clerk/nextjs": {
-      "optional": true
-    },
-    "next-auth": {
       "optional": true
     }
   }

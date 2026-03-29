@@ -286,3 +286,23 @@ export type OAuthAuthorization = Prisma.OAuthAuthorizationModel
  * 
  */
 export type OAuthAccessToken = Prisma.OAuthAccessTokenModel
+/**
+ * Model AuthUser
+ * 
+ */
+export type AuthUser = Prisma.AuthUserModel
+/**
+ * Model AuthAccount
+ * 
+ */
+export type AuthAccount = Prisma.AuthAccountModel
+/**
+ * Model AuthSession
+ * 
+ */
+export type AuthSession = Prisma.AuthSessionModel
+/**
+ * Model AuthVerification
+ * 
+ */
+export type AuthVerification = Prisma.AuthVerificationModel

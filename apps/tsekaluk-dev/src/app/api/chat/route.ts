@@ -1,6 +1,7 @@
 import { configure, streamText } from "@nebutra/ai-sdk";
 import type { ModelMessage } from "ai";
 import { Langfuse } from "langfuse";
+import { headers } from "next/headers";
 import { auth } from "@/auth";
 import { createRateLimiter, getClientIp } from "@/lib/rate-limit";
 
@@ -102,7 +103,7 @@ export async function POST(req: Request) {
   const langfuse = getLangfuse();
 
   try {
-    const session = await auth();
+    const session = await auth.api.getSession({ headers: await headers() });
     if (!session?.user) {
       return Response.json({ error: "Authentication required" }, { status: 401 });
     }

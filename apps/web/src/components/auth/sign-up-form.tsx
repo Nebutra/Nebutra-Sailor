@@ -5,7 +5,7 @@ import { Label, Separator } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { OAuthButtons } from "./oauth-buttons.js";
+import { OAuthButtons } from "./oauth-buttons";
 
 type Phase = "details" | "verify";
 

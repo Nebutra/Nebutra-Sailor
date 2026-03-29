@@ -1,6 +1,30 @@
-import { copyFileSync, existsSync, mkdirSync } from "node:fs";
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from "node:fs";
 import { join } from "node:path";
 import { defineConfig } from "tsup";
+
+/**
+ * Prepend "use client" directive to all JS output files AFTER build.
+ * This avoids rollup's "Module level directives cause errors when bundled" warning
+ * that occurs when using tsup's `banner` option.
+ */
+function prependUseClient(distDir: string) {
+  const directive = '"use client";\n';
+  for (const file of readdirSync(distDir, { recursive: true }) as string[]) {
+    if (!file.endsWith(".js")) continue;
+    const filePath = join(distDir, file);
+    const content = readFileSync(filePath, "utf-8");
+    if (!content.startsWith('"use client"')) {
+      writeFileSync(filePath, directive + content);
+    }
+  }
+}
 
 export default defineConfig({
   entry: {
@@ -17,17 +41,19 @@ export default defineConfig({
   clean: true,
   external: ["react", "react-dom", "next"],
   treeshake: true,
-  banner: {
-    js: '"use client";',
-  },
   onSuccess: async () => {
-    // Copy CSS tokens to dist/styles
-    const srcPath = join(process.cwd(), "src/styles/tokens.css");
-    const distDir = join(process.cwd(), "dist/styles");
-    const distPath = join(distDir, "tokens.css");
+    const dist = join(process.cwd(), "dist");
 
-    if (!existsSync(distDir)) {
-      mkdirSync(distDir, { recursive: true });
+    // 1. Prepend "use client" to all JS outputs (replaces banner approach)
+    prependUseClient(dist);
+
+    // 2. Copy CSS tokens to dist/styles
+    const srcPath = join(process.cwd(), "src/styles/tokens.css");
+    const stylesDir = join(dist, "styles");
+    const distPath = join(stylesDir, "tokens.css");
+
+    if (!existsSync(stylesDir)) {
+      mkdirSync(stylesDir, { recursive: true });
     }
 
     if (existsSync(srcPath)) {

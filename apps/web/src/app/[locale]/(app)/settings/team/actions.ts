@@ -1,9 +1,9 @@
 "use server";
 
 import { z } from "zod";
-import { getAuth } from "@/lib/auth.js";
-import { db } from "@/lib/db.js";
-import { hasPermission, resolveRole } from "@/lib/permissions.js";
+import { getAuth } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { hasPermission, resolveRole } from "@/lib/permissions";
 
 export type InviteState =
   | { status: "idle" }

@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
+import { headers } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
-import { auth } from "@/auth"; // Updated path based on auth.ts location
+import { auth } from "@/auth";
 
 // 这里的 Secret 必须和 Discourse 后台设置的 "discourse connect secret" 保持严格一致
 const DISCOURSE_SSO_SECRET = process.env.DISCOURSE_SSO_SECRET || "your_super_secret_key";
@@ -26,8 +27,8 @@ export async function GET(req: NextRequest) {
     return new NextResponse("Invalid signature", { status: 403 });
   }
 
-  // 3. 获取当前用户会话（基于 NextAuth v5）
-  const session = await auth();
+  // 3. 获取当前用户会话（基于 Better Auth）
+  const session = await auth.api.getSession({ headers: await headers() });
 
   // 4. 如果没登录，重定向到咱们的主站登录页，并把 sso payload 带上以便登完跳回来
   if (!session?.user) {
@@ -49,7 +50,7 @@ export async function GET(req: NextRequest) {
   // 6. 构造我们要发回给 Discourse 的用户数据 Payload
   const returnPayloadData = new URLSearchParams({
     nonce: nonce,
-    external_id: session.user.id || "", // 这里务必传用户的唯一 ID
+    external_id: session.user.id || "",
     email: session.user.email || "",
     username: session.user.name?.replace(/\s+/g, "_") || `user_${session.user.id}`,
     name: session.user.name || "",

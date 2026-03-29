@@ -3,7 +3,7 @@
  *
  * Routes incoming webhooks to the appropriate provider handler based on
  * the AUTH_PROVIDER environment variable. This allows switching between
- * Clerk, Better Auth, and NextAuth without changing route configuration.
+ * Clerk and Better Auth without changing route configuration.
  */
 
 import { OpenAPIHono } from "@hono/zod-openapi";
@@ -31,11 +31,6 @@ export async function createAuthWebhookRoutes(): Promise<OpenAPIHono> {
     const { createBetterAuthWebhookRoutes } = await import("./better-auth-webhooks.js");
     const betterAuthRoutes = createBetterAuthWebhookRoutes();
     app.route("/", betterAuthRoutes);
-  } else if (provider === "nextauth") {
-    // NextAuth uses events API as well
-    const { createNextAuthWebhookRoutes } = await import("./nextauth-webhooks.js");
-    const nextAuthRoutes = createNextAuthWebhookRoutes();
-    app.route("/", nextAuthRoutes);
   }
 
   return app;

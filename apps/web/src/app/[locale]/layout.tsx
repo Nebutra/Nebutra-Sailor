@@ -70,8 +70,7 @@ export default async function RootLayout({
   // Detect auth provider from environment
   const authProvider = (process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth") as
     | "clerk"
-    | "better-auth"
-    | "nextauth";
+    | "better-auth";
 
   // Prepare provider config based on selected provider
   const authProviderConfig: Record<string, unknown> = {};

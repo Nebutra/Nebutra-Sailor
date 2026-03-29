@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getAuth } from "@/lib/auth.js";
+import { getAuth } from "@/lib/auth";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
 
 export async function GET(request: NextRequest) {

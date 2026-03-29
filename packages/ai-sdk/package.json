@@ -21,6 +21,10 @@
     "./provider": {
       "types": "./dist/provider.d.ts",
       "import": "./dist/provider.js"
+    },
+    "./agents": {
+      "types": "./dist/agents/index.d.ts",
+      "import": "./dist/agents/index.js"
     }
   },
   "scripts": {
@@ -44,7 +48,8 @@
     "ai": "^6.0.116",
     "tsup": "catalog:",
     "typescript": "catalog:",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "@nebutra/logger": "workspace:*"
   },
   "peerDependencies": {
     "ai": "^6.0.0"

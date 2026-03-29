@@ -6,7 +6,7 @@ export const env = createEnv({
     NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 
     // Auth provider selection (affects which keys are required)
-    NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["clerk", "better-auth", "nextauth"]).default("better-auth"),
+    NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["clerk", "better-auth"]).default("better-auth"),
 
     // Clerk server secret — only required if using Clerk provider
     CLERK_SECRET_KEY: z.string().min(1).optional(),
@@ -30,7 +30,7 @@ export const env = createEnv({
     NEXT_PUBLIC_STUDIO_URL: z.string().url().default("http://localhost:3003"),
 
     // Auth provider selection
-    NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["clerk", "better-auth", "nextauth"]).default("better-auth"),
+    NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["clerk", "better-auth"]).default("better-auth"),
 
     // Clerk auth — only required if using Clerk provider
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1).optional(),

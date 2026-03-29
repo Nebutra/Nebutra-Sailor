@@ -15,6 +15,7 @@
     "nebutra-mcp": "./dist/server/contextServer.js"
   },
   "scripts": {
+    "prepare": "mkdir -p dist/server && test -f dist/server/contextServer.js || echo '#!/usr/bin/env node' > dist/server/contextServer.js",
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit"

@@ -56,7 +56,7 @@ export const ThemeId = z.enum([
 
 export const ApiProtocolId = z.enum(["rest", "orpc", "trpc"]);
 
-export const AuthProviderId = z.enum(["clerk", "better-auth", "nextauth"]);
+export const AuthProviderId = z.enum(["clerk", "better-auth"]);
 
 // ─── Config Schema ───
 

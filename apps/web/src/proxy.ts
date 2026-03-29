@@ -139,6 +139,14 @@ export async function proxy(req: NextRequest) {
   // For non-Clerk providers or Clerk import failure, use simple locale + CSP handler
   // The AuthProvider in layout.tsx handles session management for non-Clerk providers
 
+  // Skip intl locale detection for API routes — they don't need locale processing
+  // and next-intl rewrites them into /en/api/... which causes 404s.
+  const { pathname } = req.nextUrl;
+  if (pathname.startsWith("/api/")) {
+    const response = NextResponse.next();
+    return withNonce(req, response);
+  }
+
   // Run next-intl locale detection/redirect
   const intlResponse = intlMiddleware(req);
 
@@ -149,8 +157,9 @@ export async function proxy(req: NextRequest) {
 export default proxy;
 
 export const config = {
+  // Exclude API routes from the proxy/middleware so they resolve directly to
+  // app/api/ route handlers without any locale or CSP processing.
   matcher: [
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    "/(api|trpc)(.*)",
+    "/((?!_next|api|trpc|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
   ],
 };

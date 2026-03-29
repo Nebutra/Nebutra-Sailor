@@ -26,6 +26,7 @@ export { PricingHintSection } from "./PricingHintSection";
 export { PricingSection } from "./PricingSection";
 export { ProductDemoSection } from "./ProductDemoSection";
 export { ProductShowcase } from "./ProductShowcase";
+export { SEOGEOSection } from "./seo-geo";
 export { TestimonialsSection } from "./TestimonialsSection";
 export { UseCasesSection } from "./use-cases";
 export { VelocityEngineSection } from "./VelocityEngineSection";

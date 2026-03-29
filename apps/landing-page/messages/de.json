@@ -669,7 +669,8 @@
       "enterprise": "Modern Enterprise (CN)",
       "export": "Global Software Export",
       "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "edam": "Enterprise Digital Assets",
+      "seoGeo": "SEO & GEO Engine"
     },
     "content": {
       "opc": {
@@ -734,6 +735,14 @@
           "f2": "Complex Queries",
           "f3": "Role Management"
         }
+      },
+      "seoGeo": {
+        "title": "SEO & GEO Wachstumsmotor",
+        "desc": "Über traditionelles SEO hinaus. Eingebaute SEO-Grundlagen plus Generative Engine Optimization, damit Ihr Produkt sowohl von Google als auch von KI-Suchmaschinen wie ChatGPT, Perplexity und Gemini gefunden wird.",
+        "features": {
+          "f1": "Lighthouse 99+ Punkte",
+          "f2": "KI-Suche indexiert"
+        }
       }
     }
   },
@@ -772,5 +781,35 @@
     "card4Desc": "Ratschen-Budgets: Hex-Obergrenze, oklch-Untergrenze, Rohfarb-Klassenlimits. Markendrift-Erkennung in CI.",
     "card5Title": "Interaktive Dokumentation",
     "card5Desc": "Fumadocs-basierte Design-Dokumentationsseite. Zweisprachige Komponenten-API-Docs, Token-Galerien und Layout-Pattern-Guides."
+  },
+  "seoGeo": {
+    "badge": "SEO & GEO",
+    "headline": "Von Menschen gefunden. Von KI zitiert.",
+    "subheadline": "Jede Seite wird mit SEO in Produktionsqualität und Generative Engine Optimization ausgeliefert. Ihr Produkt wird in Google, Perplexity, ChatGPT Search und Bing Copilot angezeigt — direkt einsatzbereit.",
+    "stat1Value": "100",
+    "stat1Label": "Lighthouse SEO",
+    "stat2Value": "99",
+    "stat2Label": "Leistung",
+    "stat3Value": "7",
+    "stat3Label": "Sprachen",
+    "stat4Value": "6+",
+    "stat4Label": "Schema-Typen",
+    "seoLabel": "Suchmaschinenoptimierung",
+    "geoLabel": "Generative Engine Optimization",
+    "card1Title": "Automatisierte Meta & strukturierte Daten",
+    "card1Desc": "JSON-LD Schema, Open Graph, Twitter Cards, kanonische URLs und XML-Sitemaps, die aus Ihrem Content-Modell generiert werden. Keine manuelle Konfiguration.",
+    "card2Title": "KI-optimierte Content-Architektur",
+    "card2Desc": "Semantisches HTML5, FAQ-Schema, HowTo-Markup und zitierungsbereites Format, das KI-Suchmaschinen beim Generieren von Antworten bevorzugen.",
+    "card3Title": "Mehrsprachiges SEO (hreflang)",
+    "card3Desc": "next-intl generiert automatisch hreflang-Alternativen für 7 Sprachen mit lokalem Routing. Jede Sprache erhält ihre eigenen Sitemap-Einträge.",
+    "card4Title": "Core Web Vitals First",
+    "card4Desc": "Server-Komponenten, dynamische Imports, Bildoptimierung und Edge-Caching liefern 99+ Lighthouse-Scores. LCP unter 1,2s auf Mobilgeräten.",
+    "card5Title": "KI-Zitationssignale",
+    "card5Desc": "Strukturierte Daten, vertrauenswürdige Content-Muster und E-E-A-T-Signale, die Perplexity, ChatGPT Search und Google SGE nutzen, um zu entscheiden, welche Quellen zitiert werden.",
+    "card6Title": "Globale Edge-Verteilung",
+    "card6Desc": "ISR + Edge-Middleware auf 300+ Vercel PoPs. Geographisch zielgerichtete Inhalte, Multi-Währungs-Preisgestaltung und Locale-bewusstes Routing am Edge.",
+    "compTraditionalLabel": "Traditionelles SEO",
+    "compTraditional": "Manuelle Meta-Tags → langsames Crawling → unsichtbar für KI-Suche",
+    "compSailor": "Automatisiertes Schema → sofortige Indexierung → von KI-Engines zitiert → globale Reichweite"
   }
 }

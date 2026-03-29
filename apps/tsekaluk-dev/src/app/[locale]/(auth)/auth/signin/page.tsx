@@ -3,18 +3,18 @@
 import { Command, LogoGithub, LogoGoogle } from "@nebutra/icons";
 import { motion, type Variants } from "framer-motion";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link } from "@/i18n/navigation";
+import { signIn } from "@/lib/auth-client";
 
 export default function SignInPage() {
   const t = useTranslations("auth.signin");
   const [loadingProvider, setLoadingProvider] = useState<string | null>(null);
 
-  const handleSignIn = (provider: string) => {
+  const handleSignIn = (provider: "github" | "google" | "linuxdo") => {
     setLoadingProvider(provider);
-    signIn(provider, { callbackUrl: "/" });
+    signIn.social({ provider, callbackURL: "/" });
   };
 
   const containerVariants: Variants = {

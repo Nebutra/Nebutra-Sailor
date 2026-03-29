@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode, useCallback, useEffect, useState } from "react";
-import { AuthContextProvider, type AuthContextValue } from "../context.js";
+import { AuthContextProvider, type AuthContextValue } from "../context";
 
 /**
  * Clerk provider wrapper for React.

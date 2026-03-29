@@ -1506,61 +1506,56 @@
       "enterprise": "Modern Enterprise (CN)",
       "export": "Global Software Export",
       "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "edam": "Enterprise Digital Assets",
+      "seoGeo": "SEO & GEO Engine"
     },
     "content": {
       "opc": {
-        "title": "Leading AI-Native & One-Person Company (OPC) Ecosystem Hub",
-        "desc": "Future AI products require ecosystems, not silos. Designed with the OPC philosophy to provide standardized plugin structures connecting creators with developer networks.",
+        "title": "Leading AI-Native & OPC Ecosystem Hub",
+        "desc": "Future AI products require ecosystems, not silos. Designed with the One-Person Company philosophy — standardized plugin architecture, developer portals, and SDK generation connecting solo founders with enterprise-grade networks.",
         "features": {
-          "f1": "Plugin Architecture",
-          "f2": "Developer Portal",
-          "f3": "SDK Generation"
+          "f1": "Plugin Architecture & Marketplace",
+          "f2": "Auto-Generated Developer Portal"
         }
       },
       "ip": {
         "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence. High-conversion blog, portfolio, and profile templates optimized for personal brand monetization.",
+        "desc": "Establish a world-class founder presence with high-conversion MDX blog, portfolio, and profile pages. Built-in newsletter, analytics, and SEO ensure your personal brand compounds.",
         "features": {
-          "f1": "MDX Blog Engine",
-          "f2": "Newsletter Integration",
-          "f3": "SEO Optimized"
+          "f1": "MDX Blog + Newsletter Engine",
+          "f2": "SEO & Social Graph Optimized"
         }
       },
       "multimodal": {
         "title": "Innovative Multimodal AI SaaS",
-        "desc": "Launch complete Chatbot, Text-to-Image, or Video generation SaaS with integrated Vercel AI SDK, streaming, and prompt gateways.",
+        "desc": "Ship Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, and Text-to-Video SaaS products with UX-leading streaming UI, intelligent model routing, and usage metering.",
         "features": {
-          "f1": "Streaming UI",
-          "f2": "Model Routing",
-          "f3": "Usage Metering"
+          "f1": "Multi-Agent Streaming UI",
+          "f2": "Model Router + Usage Metering"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Context (CN)",
-        "desc": "Tailored for the domestic market with ultra-fast local CDN support, WeChat ecosystem integration readiness, and localized compliance.",
+        "title": "Modern Enterprise Website (CN)",
+        "desc": "Tailored for China business scenarios — ultra-fast domestic CDN, WeChat ecosystem integration, mobile-first responsive design, and localized compliance out of the box.",
         "features": {
-          "f1": "Local Compliance",
-          "f2": "High Performance",
-          "f3": "Mobile First"
+          "f1": "Local CDN + Compliance",
+          "f2": "WeChat Ecosystem Ready"
         }
       },
       "export": {
         "title": "Global Software Export Landing Pages",
-        "desc": "Designed for cross-border SaaS. Built-in multi-currency Stripe checkout, next-intl i18n routing, and GDPR compliance.",
+        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
         "features": {
-          "f1": "Global Payments",
-          "f2": "7 Languages Auto-routing",
-          "f3": "GDPR Ready"
+          "f1": "Multi-Currency Global Payments",
+          "f2": "7 Languages + GDPR Ready"
         }
       },
       "design": {
-        "title": "Leading Modern Component Library System",
-        "desc": "A beautiful, token-driven architecture using Radix + framer-motion. Perfect for teams building their own opinionated UI libraries.",
+        "title": "Leading Design System & Component Library",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + framer-motion with oklch multi-theme, Storybook docs, and visual regression testing.",
         "features": {
-          "f1": "4-Layer Tokens",
-          "f2": "CSS Variables",
-          "f3": "Accessible"
+          "f1": "4-Layer Token Governance",
+          "f2": "oklch Multi-Theme + Storybook"
         }
       },
       "edam": {
@@ -1570,6 +1565,14 @@
           "f1": "Row-Level Security",
           "f2": "Complex Queries",
           "f3": "Role Management"
+        }
+      },
+      "seoGeo": {
+        "title": "SEO & GEO Growth Engine",
+        "desc": "Beyond traditional search. Built-in SEO fundamentals plus Generative Engine Optimization to ensure your product is discoverable by both Google and AI search engines like ChatGPT, Perplexity, and Gemini.",
+        "features": {
+          "f1": "Lighthouse 99+ Scores",
+          "f2": "AI Search Indexed"
         }
       }
     }
@@ -1609,6 +1612,36 @@
     "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
     "card5Title": "Interactive Documentation",
     "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+  },
+  "seoGeo": {
+    "badge": "SEO & GEO",
+    "headline": "Found by humans. Cited by AI.",
+    "subheadline": "Every page ships with production-grade SEO and Generative Engine Optimization. Your product appears in Google, Perplexity, ChatGPT Search, and Bing Copilot — out of the box.",
+    "stat1Value": "100",
+    "stat1Label": "Lighthouse SEO",
+    "stat2Value": "99",
+    "stat2Label": "Performance",
+    "stat3Value": "7",
+    "stat3Label": "Languages",
+    "stat4Value": "6+",
+    "stat4Label": "Schema Types",
+    "seoLabel": "Search Engine Optimization",
+    "geoLabel": "Generative Engine Optimization",
+    "card1Title": "Automated Meta & Structured Data",
+    "card1Desc": "JSON-LD schema, Open Graph, Twitter Cards, canonical URLs, and XML sitemaps generated from your content model. Zero manual configuration.",
+    "card2Title": "AI-Optimized Content Architecture",
+    "card2Desc": "Semantic HTML5, FAQ schema, HowTo markup, and citation-ready formatting that AI search engines prefer when generating answers.",
+    "card3Title": "Multi-Language SEO (hreflang)",
+    "card3Desc": "next-intl auto-generates hreflang alternates for 7 languages with locale-prefixed routing. Each language gets its own sitemap entries.",
+    "card4Title": "Core Web Vitals First",
+    "card4Desc": "Server components, dynamic imports, image optimization, and edge caching deliver 99+ Lighthouse scores. LCP under 1.2s on mobile.",
+    "card5Title": "AI Citation Signals",
+    "card5Desc": "Structured data, authoritative content patterns, and E-E-A-T signals that Perplexity, ChatGPT Search, and Google SGE use to decide which sources to cite.",
+    "card6Title": "Global Edge Distribution",
+    "card6Desc": "ISR + edge middleware on 300+ Vercel PoPs. Geo-targeted content, multi-currency pricing, and locale-aware routing at the edge.",
+    "compTraditionalLabel": "Traditional SEO",
+    "compTraditional": "Manual meta tags → slow crawling → invisible to AI search",
+    "compSailor": "Automated schema → instant indexing → cited by AI engines → global reach"
   },
   "notFound": {
     "title": "Page Not Found",

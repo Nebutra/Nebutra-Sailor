@@ -1,4 +1,4 @@
-import { getUser, requireOrg } from "@/lib/auth.js";
+import { getUser, requireOrg } from "@/lib/auth";
 
 export const metadata = { title: "Settings" };
 

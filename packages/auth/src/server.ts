@@ -10,7 +10,7 @@
  * ```
  */
 
-import type { AuthConfig, AuthProvider } from "./types.js";
+import type { AuthConfig, AuthProvider } from "./types";
 
 /**
  * Dynamically import and instantiate the selected auth provider.
@@ -21,11 +21,9 @@ import type { AuthConfig, AuthProvider } from "./types.js";
 export async function createAuth(config: AuthConfig): Promise<AuthProvider> {
   switch (config.provider) {
     case "clerk":
-      return (await import("./providers/clerk.js")).createClerkAuth(config);
+      return (await import("./providers/clerk")).createClerkAuth(config);
     case "better-auth":
-      return (await import("./providers/better-auth.js")).createBetterAuthProvider(config);
-    case "nextauth":
-      return (await import("./providers/nextauth.js")).createNextAuthProvider(config);
+      return (await import("./providers/better-auth")).createBetterAuthProvider(config);
     default:
       throw new Error(`Unknown auth provider: ${String((config as AuthConfig).provider)}`);
   }

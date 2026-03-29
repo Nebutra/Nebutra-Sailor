@@ -6,7 +6,6 @@ const clerkSchema = z.object({
   CLERK_SECRET_KEY: z.string().min(1),
   CLERK_WEBHOOK_SECRET: z.string().optional(),
   BETTER_AUTH_SECRET: z.string().optional(),
-  NEXTAUTH_SECRET: z.string().optional(),
 });
 
 const betterAuthSchema = z.object({
@@ -14,18 +13,9 @@ const betterAuthSchema = z.object({
   CLERK_SECRET_KEY: z.string().optional(),
   CLERK_WEBHOOK_SECRET: z.string().optional(),
   BETTER_AUTH_SECRET: z.string().min(1),
-  NEXTAUTH_SECRET: z.string().optional(),
 });
 
-const nextAuthSchema = z.object({
-  AUTH_PROVIDER: z.literal("nextauth"),
-  CLERK_SECRET_KEY: z.string().optional(),
-  CLERK_WEBHOOK_SECRET: z.string().optional(),
-  BETTER_AUTH_SECRET: z.string().optional(),
-  NEXTAUTH_SECRET: z.string().min(1),
-});
-
-const authConfigUnion = z.union([clerkSchema, betterAuthSchema, nextAuthSchema]);
+const authConfigUnion = z.union([clerkSchema, betterAuthSchema]);
 
 const baseSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
@@ -99,12 +89,11 @@ export type Env = z.infer<typeof envSchema>;
  * 1. AUTH_PROVIDER env var (explicit override)
  * 2. CLERK_SECRET_KEY present → "clerk" (backward compatibility)
  * 3. BETTER_AUTH_SECRET present → "better-auth"
- * 4. NEXTAUTH_SECRET present → "nextauth"
- * 5. Default to "better-auth" if none are present
+ * 4. Default to "better-auth" if none are present
  */
-export function getAuthProvider(): "clerk" | "better-auth" | "nextauth" {
+export function getAuthProvider(): "clerk" | "better-auth" {
   const explicit = process.env.AUTH_PROVIDER;
-  if (explicit === "clerk" || explicit === "better-auth" || explicit === "nextauth") {
+  if (explicit === "clerk" || explicit === "better-auth") {
     return explicit;
   }
 
@@ -115,10 +104,6 @@ export function getAuthProvider(): "clerk" | "better-auth" | "nextauth" {
 
   if (process.env.BETTER_AUTH_SECRET) {
     return "better-auth";
-  }
-
-  if (process.env.NEXTAUTH_SECRET) {
-    return "nextauth";
   }
 
   // Default fallback (dev mode)

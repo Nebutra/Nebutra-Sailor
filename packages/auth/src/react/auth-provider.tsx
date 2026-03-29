@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode, useEffect, useState } from "react";
-import type { AuthProviderId } from "../types.js";
+import type { AuthProviderId } from "../types";
 
 /**
  * Props for the root AuthProvider component.
@@ -21,7 +21,7 @@ export interface AuthProviderProps {
  * Root auth provider component — automatically selects the right provider wrapper.
  *
  * This component detects the configured provider and dynamically renders the
- * appropriate provider wrapper (Clerk, Better Auth, or NextAuth). Provider-specific
+ * appropriate provider wrapper (Clerk or Better Auth). Provider-specific
  * dependencies are imported lazily, so unused providers never get bundled.
  *
  * @example
@@ -59,11 +59,6 @@ export function AuthProvider({ provider, children, config }: AuthProviderProps) 
     return <BetterAuthProviderLazy apiUrl={apiUrl}>{children}</BetterAuthProviderLazy>;
   }
 
-  if (provider === "nextauth") {
-    const basePath = (config?.basePath as string) || "/api/auth";
-    return <NextAuthProviderLazy basePath={basePath}>{children}</NextAuthProviderLazy>;
-  }
-
   console.error(`Unknown auth provider: ${String(provider)}`);
   return <>{children}</>;
 }
@@ -84,7 +79,7 @@ function ClerkProviderLazy({
   const [ClerkProvider, setClerkProvider] = useState<React.ComponentType<any> | null>(null);
 
   useEffect(() => {
-    import("./providers/clerk-provider.js").then((mod) => {
+    import("./providers/clerk-provider").then((mod) => {
       setClerkProvider(() => mod.ClerkProvider);
     });
   }, []);
@@ -107,28 +102,11 @@ function BetterAuthProviderLazy({ apiUrl, children }: { apiUrl?: string; childre
   );
 
   useEffect(() => {
-    import("./providers/better-auth-provider.js").then((mod) => {
+    import("./providers/better-auth-provider").then((mod) => {
       setBetterAuthProvider(() => mod.BetterAuthProvider);
     });
   }, []);
 
   if (!BetterAuthProvider) return <>{children}</>;
   return <BetterAuthProvider apiUrl={apiUrl}>{children}</BetterAuthProvider>;
-}
-
-/**
- * Lazy-loaded NextAuth provider wrapper.
- * Only imported when provider === "nextauth".
- */
-function NextAuthProviderLazy({ basePath, children }: { basePath?: string; children: ReactNode }) {
-  const [NextAuthProvider, setNextAuthProvider] = useState<React.ComponentType<any> | null>(null);
-
-  useEffect(() => {
-    import("./providers/nextauth-provider.js").then((mod) => {
-      setNextAuthProvider(() => mod.NextAuthProvider);
-    });
-  }, []);
-
-  if (!NextAuthProvider) return <>{children}</>;
-  return <NextAuthProvider basePath={basePath}>{children}</NextAuthProvider>;
 }

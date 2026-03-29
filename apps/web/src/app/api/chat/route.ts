@@ -1,6 +1,6 @@
 import { streamText } from "@nebutra/ai-sdk";
 import { convertToModelMessages } from "ai";
-import { getAuth } from "@/lib/auth.js";
+import { getAuth } from "@/lib/auth";
 
 const AI_CONFIGURED =
   !!process.env.OPENROUTER_API_KEY ||

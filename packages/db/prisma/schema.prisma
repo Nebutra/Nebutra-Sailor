@@ -1366,7 +1366,7 @@ model OAuthAccessToken {
 }
 
 // ============================================
-// Self-hosted Auth (Better Auth / NextAuth)
+// Self-hosted Auth (Better Auth)
 // ============================================
 // These tables are only populated when using a self-hosted auth provider.
 // When using Clerk, user data lives in Clerk's infrastructure.

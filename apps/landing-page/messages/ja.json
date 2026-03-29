@@ -669,7 +669,8 @@
       "enterprise": "Modern Enterprise (CN)",
       "export": "Global Software Export",
       "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "edam": "Enterprise Digital Assets",
+      "seoGeo": "SEO & GEO エンジン"
     },
     "content": {
       "opc": {
@@ -734,6 +735,14 @@
           "f2": "Complex Queries",
           "f3": "Role Management"
         }
+      },
+      "seoGeo": {
+        "title": "SEO & GEO 成長エンジン",
+        "desc": "従来の検索を超えて。組み込みのSEO基盤とジェネレーティブエンジン最適化により、GoogleとChatGPT、Perplexity、GeminiなどのAI検索エンジンの両方で発見されます。",
+        "features": {
+          "f1": "Lighthouse 99+ スコア",
+          "f2": "AI検索インデックス済み"
+        }
       }
     }
   },
@@ -772,5 +781,35 @@
     "card4Desc": "ラチェット予算：hex上限、oklch下限、生カラークラス制限。CIでブランドドリフト検出。",
     "card5Title": "インタラクティブドキュメント",
     "card5Desc": "Fumadocs ベースの設計ドキュメントサイト。2言語対応のコンポーネント API ドキュメント、トークンギャラリー、レイアウトパターンガイド。"
+  },
+  "seoGeo": {
+    "badge": "SEO & GEO",
+    "headline": "人に見つかる。AIに引用される。",
+    "subheadline": "すべてのページにプロダクション品質のSEOとジェネレーティブエンジン最適化を搭載。Google、Perplexity、ChatGPT Search、Bing Copilotに即座に表示されます。",
+    "stat1Value": "100",
+    "stat1Label": "Lighthouse SEO",
+    "stat2Value": "99",
+    "stat2Label": "パフォーマンス",
+    "stat3Value": "7",
+    "stat3Label": "言語",
+    "stat4Value": "6+",
+    "stat4Label": "Schemaタイプ",
+    "seoLabel": "検索エンジン最適化",
+    "geoLabel": "ジェネレーティブエンジン最適化",
+    "card1Title": "自動化メタ & 構造化データ",
+    "card1Desc": "JSON-LD schema、Open Graph、Twitter Cards、canonical URL、XML sitemapをコンテンツモデルから自動生成。設定不要。",
+    "card2Title": "AI最適化コンテンツアーキテクチャ",
+    "card2Desc": "セマンティックHTML5、FAQ schema、HowToマークアップ、AI検索エンジンが回答生成に好む引用対応フォーマット。",
+    "card3Title": "多言語SEO (hreflang)",
+    "card3Desc": "next-intlが7言語のhreflang代替言語を自動生成。各言語で独自のサイトマップエントリ。",
+    "card4Title": "Core Web Vitals ファースト",
+    "card4Desc": "サーバーコンポーネント、動的インポート、画像最適化、エッジキャッシングで99+のLighthouseスコア。モバイルでLCP 1.2秒以下。",
+    "card5Title": "AI引用シグナル",
+    "card5Desc": "構造化データ、権威的コンテンツパターン、E-E-A-Tシグナル。Perplexity、ChatGPT Search、Google SGEが引用元決定に使用。",
+    "card6Title": "グローバルエッジ配信",
+    "card6Desc": "ISR + 300+ Vercel PoP上のエッジミドルウェア。地理別ターゲティングコンテンツ、複数通貨対応、エッジでのロケール認識ルーティング。",
+    "compTraditionalLabel": "従来のSEO",
+    "compTraditional": "手動のmetaタグ → 遅いクロール → AI検索に不可視",
+    "compSailor": "自動化schema → 即時インデックス → AIエンジンに引用 → グローバルリーチ"
   }
 }

@@ -63,8 +63,7 @@ export async function getTypedApi() {
   const { createAuth } = await import("@nebutra/auth/server");
   const provider = (process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth") as
     | "clerk"
-    | "better-auth"
-    | "nextauth";
+    | "better-auth";
 
   const auth = await createAuth({ provider });
   const session = await auth.getSession();

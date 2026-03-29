@@ -1,19 +1,22 @@
 "use client";
 
-import { UserButton, useAuth } from "@nebutra/auth/components";
+import { useAuth } from "@nebutra/auth/client";
+import { UserButton } from "@nebutra/auth/components";
 import { usePathname } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
 
 function HeaderAuthControls() {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, user, signOut } = useAuth();
 
   return (
     <div className="hidden items-center gap-2 sm:flex">
       {isSignedIn ? (
         <UserButton
-          appearance={{
-            elements: { avatarBox: "h-9 w-9" },
+          user={user ? { name: user.name, email: user.email, imageUrl: user.imageUrl } : null}
+          onSignOut={async () => {
+            await signOut();
+            window.location.href = "/sign-in";
           }}
         />
       ) : (

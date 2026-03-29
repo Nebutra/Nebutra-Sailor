@@ -37,7 +37,7 @@ import type {
   Organization,
   Session,
   User,
-} from "../types.js";
+} from "../types";
 
 const NOT_IMPLEMENTED_MSG =
   "NextAuth provider is not yet implemented. " +

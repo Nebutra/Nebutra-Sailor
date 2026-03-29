@@ -149,6 +149,10 @@ export async function embedMany(values: string[], options: EmbedOptions = {}) {
 
 // Re-export core AI SDK types for downstream consumption
 export type { GenerateTextResult, ModelMessage, StreamTextResult } from "ai";
+// ---------------------------------------------------------------------------
+// Agent infrastructure
+// ---------------------------------------------------------------------------
+export * from "./agents/index.js";
 export {
   type NebutraAIConfig,
   NebutraAIConfigSchema,

@@ -2,8 +2,8 @@ import { AnimateIn } from "@nebutra/ui/components";
 import { Card, EmptyState } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { Suspense } from "react";
-import { ExternalAvatar } from "@/components/ui/external-avatar.js";
-import { db } from "@/lib/db.js";
+import { ExternalAvatar } from "@/components/ui/external-avatar";
+import { db } from "@/lib/db";
 
 interface Props {
   searchParams: Promise<{ page?: string; q?: string }>;

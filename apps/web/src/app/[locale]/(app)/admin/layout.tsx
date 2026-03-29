@@ -2,8 +2,8 @@ import { PageHeader } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
-import { getAuth } from "@/lib/auth.js";
-import { hasPermission, resolveRole } from "@/lib/permissions.js";
+import { getAuth } from "@/lib/auth";
+import { hasPermission, resolveRole } from "@/lib/permissions";
 
 const ADMIN_NAV = [
   { href: "/admin", label: "Overview" },

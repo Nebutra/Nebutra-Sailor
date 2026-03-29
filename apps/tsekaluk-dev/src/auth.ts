@@ -1,73 +1,55 @@
-import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
+import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { genericOAuth } from "better-auth/plugins";
+import { prisma } from "@/lib/prisma";
 
-interface LinuxDoProfile {
-  id: number;
-  username: string;
-  name: string | null;
-  avatar_url: string;
-  active: boolean;
-  trust_level: number;
-  silenced: boolean;
-}
-
-function LinuxDo(config: { clientId?: string; clientSecret?: string }) {
-  return {
-    id: "linuxdo",
-    name: "Linux DO",
-    type: "oauth" as const,
-    clientId: config.clientId,
-    clientSecret: config.clientSecret,
-    authorization: {
-      url: "https://connect.linux.do/oauth2/authorize",
-      params: { response_type: "code" },
+export const auth = betterAuth({
+  secret: process.env.AUTH_SECRET,
+  baseURL: process.env.BETTER_AUTH_URL ?? process.env.NEXT_PUBLIC_SITE_URL,
+  database: prisma
+    ? prismaAdapter(prisma, {
+        provider: "postgresql",
+      })
+    : undefined!,
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // 5 minutes
     },
-    token: "https://connect.linux.do/oauth2/token",
-    userinfo: "https://connect.linux.do/api/user",
-    profile(profile: LinuxDoProfile) {
-      return {
-        id: String(profile.id),
-        name: profile.name ?? profile.username,
-        email: null,
-        image: profile.avatar_url,
-      };
+  },
+  socialProviders: {
+    github: {
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
     },
-  };
-}
-
-export const { auth, handlers, signIn, signOut } = NextAuth({
-  providers: [
-    GitHub({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
-    Google({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
-    }),
-    LinuxDo({
-      clientId: process.env.LINUXDO_ID,
-      clientSecret: process.env.LINUXDO_SECRET,
+    google: {
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
+    },
+  },
+  plugins: [
+    genericOAuth({
+      config: [
+        {
+          providerId: "linuxdo",
+          discoveryUrl: undefined,
+          authorizationUrl: "https://connect.linux.do/oauth2/authorize",
+          tokenUrl: "https://connect.linux.do/oauth2/token",
+          userinfoUrl: "https://connect.linux.do/api/user",
+          clientId: process.env.LINUXDO_ID!,
+          clientSecret: process.env.LINUXDO_SECRET!,
+          scopes: [],
+          mapProfileToUser: (profile) => ({
+            name: (profile.name as string | null) ?? (profile.username as string) ?? "User",
+            image: profile.avatar_url as string | undefined,
+            // Linux DO does not expose email
+          }),
+        },
+      ],
     }),
   ],
-  session: { strategy: "jwt" },
   pages: {
     signIn: "/auth/signin",
     error: "/auth/error",
-  },
-  callbacks: {
-    session({ session, token }) {
-      if (token.sub) {
-        return {
-          ...session,
-          user: {
-            ...session.user,
-            id: token.sub,
-          },
-        };
-      }
-      return session;
-    },
   },
 });

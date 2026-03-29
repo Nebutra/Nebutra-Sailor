@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { Resend } from "resend";
 import { z } from "zod";
 import { auth } from "@/auth";
@@ -99,7 +100,7 @@ export async function GET(req: Request) {
     const all = searchParams.get("all");
 
     if (all === "true") {
-      const session = await auth();
+      const session = await auth.api.getSession({ headers: await headers() });
       if (!session?.user || !isAdmin(session.user.email)) {
         return Response.json({ success: false, error: "Admin access required" }, { status: 403 });
       }
@@ -153,7 +154,7 @@ export async function POST(req: Request) {
       return Response.json({ success: false, error: "Payload too large" }, { status: 413 });
     }
 
-    const session = await auth();
+    const session = await auth.api.getSession({ headers: await headers() });
 
     const body = await req.json();
     const parsed = guestbookPostSchema.safeParse(body);
@@ -208,7 +209,7 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   if (!prisma) return DB_UNAVAILABLE;
   try {
-    const session = await auth();
+    const session = await auth.api.getSession({ headers: await headers() });
 
     if (!session?.user) {
       return Response.json({ success: false, error: "Authentication required" }, { status: 401 });
@@ -248,7 +249,7 @@ export async function PATCH(req: Request) {
 export async function DELETE(req: Request) {
   if (!prisma) return DB_UNAVAILABLE;
   try {
-    const session = await auth();
+    const session = await auth.api.getSession({ headers: await headers() });
 
     if (!session?.user) {
       return Response.json({ success: false, error: "Authentication required" }, { status: 401 });

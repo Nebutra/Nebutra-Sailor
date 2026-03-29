@@ -9,7 +9,7 @@
  * - GET  /api/auth/session — current session
  * - POST /api/auth/sign-in/social — OAuth redirects
  *
- * When using Clerk or NextAuth, this route is a no-op passthrough.
+ * When using Clerk, this route is a no-op passthrough.
  */
 
 import type { AuthProvider } from "@nebutra/auth";
@@ -22,7 +22,7 @@ let authInstance: AuthProvider | null = null;
 
 async function getAuth(): Promise<AuthProvider> {
   if (!authInstance) {
-    authInstance = await createAuth({ provider: provider as "better-auth" | "clerk" | "nextauth" });
+    authInstance = await createAuth({ provider: provider as "better-auth" | "clerk" });
   }
   return authInstance;
 }

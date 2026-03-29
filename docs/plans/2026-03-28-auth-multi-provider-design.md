@@ -1,7 +1,9 @@
 # Auth Multi-Provider Architecture — Design Document
 
 **Date:** 2026-03-28
-**Goal:** Make Clerk, Better Auth, and NextAuth (Auth.js) all work as switchable auth providers via a single preset config, with full front-end + back-end + database integration.
+**Goal:** Make Clerk and Better Auth work as switchable auth providers via a single preset config, with full front-end + back-end + database integration.
+
+> **Note (2026-03-29):** NextAuth/Auth.js support was removed. The project now supports only Clerk (managed) and Better Auth (self-hosted). All NextAuth references in this doc are historical.
 
 ---
 

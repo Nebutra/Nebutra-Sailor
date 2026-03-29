@@ -1502,61 +1502,56 @@
       "enterprise": "现代企业官网",
       "export": "软件出海落地页",
       "design": "现代组件库",
-      "edam": "企业资产数字化"
+      "edam": "企业资产数字化",
+      "seoGeo": "SEO & GEO 引擎"
     },
     "content": {
       "opc": {
-        "title": "领先的 AI 原生与 OPC 一人公司创业生态模板",
-        "desc": "未来的 AI 产品需要生态，而不是孤岛。专为 OPC (一人公司) 理念设计，赋予超级个体企业级基础设施与生态网络。",
+        "title": "领先的 AI 原生与 OPC 一人公司创业生态",
+        "desc": "未来的 AI 产品需要生态，而不是孤岛。专为 OPC 理念设计——标准化插件架构、开发者门户和 SDK 自动生成，连接超级个体与企业级生态网络。",
         "features": {
-          "f1": "插件化架构",
-          "f2": "开发者门户",
-          "f3": "一键 SDK"
+          "f1": "插件架构与市场",
+          "f2": "自动生成开发者门户"
         }
       },
       "ip": {
-        "title": "个人 IP 增长与组合矩阵模板",
-        "desc": "建立世界级的创始人形象。专为个人品牌变现优化的高转化博客、作品集和个人主页模板。",
+        "title": "个人 IP 增长与组合矩阵",
+        "desc": "建立世界级的创始人形象——高转化 MDX 博客、作品集和个人主页。内置邮件列表、数据分析和 SEO，让你的个人品牌持续复利增长。",
         "features": {
-          "f1": "MDX 本地博客",
-          "f2": "邮件列表对接",
-          "f3": "深度 SEO 优化"
+          "f1": "MDX 博客 + 邮件列表引擎",
+          "f2": "SEO 与社交图谱优化"
         }
       },
       "multimodal": {
-        "title": "创新多模态 AI 应用 SaaS 模板",
-        "desc": "启动完整的 Chatbot、文生图或视频生成 SaaS，集成 Vercel AI SDK、流式传输和 Prompt 网关。",
+        "title": "创新多模态 AI 应用 SaaS",
+        "desc": "交付 Multi-Agent 编排、Chatbot、文生图、图生文、文生视频等 SaaS 产品，具备 UX 领先的流式 UI、智能模型路由和用量计量。",
         "features": {
-          "f1": "流式渲染组件",
-          "f2": "高阶模型路由",
-          "f3": "AI 用量计费计费"
+          "f1": "Multi-Agent 流式 UI",
+          "f2": "模型路由 + 用量计量"
         }
       },
       "enterprise": {
         "title": "适合中国业务场景的现代企业官网",
-        "desc": "为本土市场量身定制，支持超本地化 CDN，微信生态系统集成准备以及深度本地化合规。",
+        "desc": "为中国市场量身定制——超速境内 CDN、微信生态对接、移动优先响应式设计，以及开箱即用的本地化合规。",
         "features": {
-          "f1": "境内化合规",
-          "f2": "极速响应性能",
-          "f3": "全量移动优先"
+          "f1": "境内 CDN + 合规",
+          "f2": "微信生态已就绪"
         }
       },
       "export": {
-        "title": "适合软件出海场景的出海落地页",
-        "desc": "专为跨境 SaaS 设计。内置多币种 Stripe 结账、next-intl 多语言路由，以及完整的 GDPR 合规性。",
+        "title": "适合软件出海场景的落地页",
+        "desc": "专为 SaaS 出海打造。多币种 Stripe 结账、next-intl 7 国语言自动路由、GDPR/CCPA 合规以及地域定向内容。",
         "features": {
-          "f1": "出海支付网关",
-          "f2": "7国语言自适应",
-          "f3": "GDPR 隐私准备"
+          "f1": "多币种全球支付",
+          "f2": "7 国语言 + GDPR 就绪"
         }
       },
       "design": {
-        "title": "领先的现代组件库设计系统模板",
-        "desc": "使用 Radix + framer-motion 构建的美丽的基于 Token 的架构。完美适合构建自己的 UI 库的团队。",
+        "title": "领先的设计系统与现代组件库",
+        "desc": "四层 Token 驱动架构：品牌 → 令牌 → 主题 → UI。基于 Radix + framer-motion 构建，配合 oklch 多主题、Storybook 文档和视觉回归测试。",
         "features": {
-          "f1": "四层设计代币",
-          "f2": "纯净 CSS 变量",
-          "f3": "深度无障碍访问"
+          "f1": "四层令牌治理",
+          "f2": "oklch 多主题 + Storybook"
         }
       },
       "edam": {
@@ -1566,6 +1561,14 @@
           "f1": "行级数据库安全",
           "f2": "高阶复杂查询",
           "f3": "细颗粒度读写"
+        }
+      },
+      "seoGeo": {
+        "title": "SEO & GEO 增长引擎",
+        "desc": "超越传统搜索。内置 SEO 基础设施与生成式引擎优化 (GEO)，让你的产品同时被 Google 和 ChatGPT、Perplexity、Gemini 等 AI 搜索引擎发现和引用。",
+        "features": {
+          "f1": "Lighthouse 99+ 分数",
+          "f2": "AI 搜索引擎已索引"
         }
       }
     }
@@ -1605,6 +1608,36 @@
     "card4Desc": "棘轮预算：hex 上限、oklch 下限、原始色彩类限额。品牌漂移检测集成到 CI。",
     "card5Title": "交互式文档",
     "card5Desc": "基于 Fumadocs 的完整设计文档站，中英双语组件 API 文档、令牌展廊、布局模式指南和实时代码示例。"
+  },
+  "seoGeo": {
+    "badge": "SEO & GEO",
+    "headline": "被人类搜索到。被 AI 引用。",
+    "subheadline": "每一个页面都内置生产级 SEO 和生成式引擎优化 (GEO)。你的产品开箱即被 Google、Perplexity、ChatGPT Search 和 Bing Copilot 收录。",
+    "stat1Value": "100",
+    "stat1Label": "Lighthouse SEO",
+    "stat2Value": "99",
+    "stat2Label": "性能得分",
+    "stat3Value": "7",
+    "stat3Label": "语言支持",
+    "stat4Value": "6+",
+    "stat4Label": "Schema 类型",
+    "seoLabel": "搜索引擎优化 (SEO)",
+    "geoLabel": "生成式引擎优化 (GEO)",
+    "card1Title": "自动化元数据与结构化数据",
+    "card1Desc": "JSON-LD schema、Open Graph、Twitter Cards、canonical URL 和 XML sitemap 从内容模型自动生成。零手动配置。",
+    "card2Title": "AI 优化内容架构",
+    "card2Desc": "语义化 HTML5、FAQ schema、HowTo 标记以及 AI 搜索引擎在生成回答时偏好的可引用格式。",
+    "card3Title": "多语言 SEO (hreflang)",
+    "card3Desc": "next-intl 自动为 7 种语言生成 hreflang 替代链接，配合语言前缀路由。每种语言独立 sitemap 条目。",
+    "card4Title": "Core Web Vitals 优先",
+    "card4Desc": "服务端组件、动态导入、图片优化和边缘缓存交付 99+ Lighthouse 分数。移动端 LCP 低于 1.2 秒。",
+    "card5Title": "AI 引用信号",
+    "card5Desc": "结构化数据、权威内容模式和 E-E-A-T 信号，这是 Perplexity、ChatGPT Search 和 Google SGE 决定引用哪些来源的关键因素。",
+    "card6Title": "全球边缘分发",
+    "card6Desc": "ISR + 边缘中间件部署在 300+ Vercel PoP 节点。地理定向内容、多币种定价和语言感知路由在边缘完成。",
+    "compTraditionalLabel": "传统 SEO",
+    "compTraditional": "手动 meta 标签 → 缓慢爬取 → AI 搜索不可见",
+    "compSailor": "自动化 schema → 即时索引 → 被 AI 引擎引用 → 全球覆盖"
   },
   "notFound": {
     "title": "页面未找到",

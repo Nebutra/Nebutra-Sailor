@@ -3,7 +3,7 @@
  *
  * Exports auth hooks (useAuth, useUser, useSession, useOrganization) that read
  * from a unified AuthContext, plus provider wrappers for Clerk, Better Auth,
- * and NextAuth. Provider-specific dependencies are loaded lazily.
+ * Provider-specific dependencies are loaded lazily.
  *
  * @example
  * ```tsx
@@ -32,12 +32,11 @@
  */
 
 // Factory provider
-export { AuthProvider, type AuthProviderProps } from "./auth-provider.js";
+export { AuthProvider, type AuthProviderProps } from "./auth-provider";
 // Auth context
-export { AuthContextProvider, type AuthContextValue, useAuthContext } from "./context.js";
+export { AuthContextProvider, type AuthContextValue, useAuthContext } from "./context";
 // React hooks
-export { useAuth, useOrganization, useSession, useUser } from "./hooks.js";
+export { useAuth, useOrganization, useSession, useUser } from "./hooks";
 // Provider-specific wrappers (for manual composition if needed)
-export { BetterAuthProvider } from "./providers/better-auth-provider.js";
-export { ClerkProvider } from "./providers/clerk-provider.js";
-export { NextAuthProvider } from "./providers/nextauth-provider.js";
+export { BetterAuthProvider } from "./providers/better-auth-provider";
+export { ClerkProvider } from "./providers/clerk-provider";

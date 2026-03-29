@@ -10,7 +10,7 @@
 
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
 import { type NextRequest, NextResponse } from "next/server";
-import { getAuth } from "@/lib/auth.js";
+import { getAuth } from "@/lib/auth";
 
 export async function GET(_req: NextRequest) {
   const { userId, orgId } = await getAuth();

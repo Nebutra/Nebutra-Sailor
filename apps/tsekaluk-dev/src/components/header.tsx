@@ -4,18 +4,18 @@ import { TextShimmer } from "@nebutra/ui/primitives";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Search, X } from "lucide-react";
 import Image from "next/image";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useCommandPalette } from "@/components/providers/command-palette-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Link } from "@/i18n/navigation";
+import { signIn, signOut, useSession } from "@/lib/auth-client";
 
 function AuthIndicator() {
-  const { data: session, status } = useSession();
+  const { data: session, isPending } = useSession();
 
-  if (status === "loading") {
+  if (isPending) {
     return null;
   }
 
@@ -50,7 +50,7 @@ function AuthIndicator() {
   return (
     <button
       type="button"
-      onClick={() => signIn()}
+      onClick={() => signIn.social({ provider: "github", callbackURL: "/" })}
       className="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
     >
       Sign in

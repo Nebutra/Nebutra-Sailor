@@ -3,8 +3,8 @@ import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card } from "@nebutra/ui/layout";
 import { Building2 } from "lucide-react";
 import { Suspense } from "react";
-import { ExternalAvatar } from "@/components/ui/external-avatar.js";
-import { db } from "@/lib/db.js";
+import { ExternalAvatar } from "@/components/ui/external-avatar";
+import { db } from "@/lib/db";
 
 async function AdminOverviewContent() {
   const [totalUsers, totalOrgs, recentUsers] = await Promise.all([
