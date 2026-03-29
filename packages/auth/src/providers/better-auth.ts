@@ -127,9 +127,21 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         // PrismaClient is expected to be available globally or passed via config
         // For now we dynamically import from @nebutra/db
         prismaClient as Parameters<typeof prismaAdapter>[0],
-        { provider: "postgresql" },
+        {
+          provider: "postgresql",
+          // Map Better Auth's default model names to our Prisma schema model names.
+          // Our Prisma schema uses AuthUser/AuthAccount/AuthSession/AuthVerification
+          // (mapped to auth_users/auth_accounts/auth_sessions/auth_verifications tables).
+          usePlural: false,
+        },
       ),
       plugins,
+      // Map Better Auth's internal model names to our custom Prisma model names
+      // so the Prisma adapter queries the correct tables.
+      user: { modelName: "AuthUser" },
+      session: { modelName: "AuthSession" },
+      account: { modelName: "AuthAccount" },
+      verification: { modelName: "AuthVerification" },
       ...(config.options as Record<string, unknown> | undefined),
     });
 

@@ -37,24 +37,29 @@ export function SignUpForm() {
     setError("");
 
     try {
-      const response = await fetch("/api/auth/sign-up", {
+      const response = await fetch("/api/auth/sign-up/email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName,
-          lastName,
+          name: `${firstName} ${lastName}`.trim(),
           email,
           password,
         }),
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        setError(data.error ?? "Sign up failed");
+        const data = await response.json().catch(() => ({}));
+        setError(
+          (data as Record<string, string>).error ??
+            (data as Record<string, Record<string, string>>).message ??
+            "Sign up failed",
+        );
         return;
       }
 
-      setPhase("verify");
+      // Better Auth auto-signs in after registration — skip email verification
+      // and go directly to onboarding
+      router.push("/onboarding");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
     } finally {
