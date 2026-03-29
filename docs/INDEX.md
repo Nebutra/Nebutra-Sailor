@@ -87,3 +87,4 @@ Complete navigation to all project documentation.
 | ----------------------------------- | -------------------- |
 | [DOMAINS](./DOMAINS.md)             | Domain configuration |
 | [changelog](../changelog/README.md) | Version history      |
+| [Alibaba Cloud ECS](./阿里云ECS部署指南.md) | ECS deployment guide |
