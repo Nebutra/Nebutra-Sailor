@@ -34,6 +34,7 @@
     "brand:verify-tokens": "tsx scripts/verify-brand-token-sync.ts",
     "ui:validate-policy": "tsx scripts/validate-ui-governance-policy.ts",
     "ui:verify-governance": "pnpm ui:validate-policy && tsx scripts/verify-ui-governance.ts",
+    "docs:cli": "tsx scripts/generate-cli-docs.ts",
     "prepare": "lefthook install",
     "release": "changeset publish",
     "version:packages": "changeset version",
