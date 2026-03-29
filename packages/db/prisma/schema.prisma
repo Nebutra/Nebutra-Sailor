@@ -1390,21 +1390,22 @@ model AuthUser {
 }
 
 model AuthAccount {
-  id                String   @id @default(cuid())
-  userId            String   @map("user_id")
-  type              String
-  provider          String
-  providerAccountId String   @map("provider_account_id")
-  refreshToken      String?  @map("refresh_token")
-  accessToken       String?  @map("access_token")
-  expiresAt         Int?     @map("expires_at")
-  tokenType         String?  @map("token_type")
-  scope             String?
-  idToken           String?  @map("id_token")
-  createdAt         DateTime @default(now()) @map("created_at")
-  user              AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                    String    @id @default(cuid())
+  userId                String    @map("user_id")
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at")
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at")
+  scope                 String?
+  idToken               String?   @map("id_token")
+  password              String?
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+  user                  AuthUser  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
+  @@unique([providerId, accountId])
   @@index([userId])
   @@map("auth_accounts")
   @@schema("public")
@@ -1418,6 +1419,7 @@ model AuthSession {
   ipAddress String?  @map("ip_address")
   userAgent String?  @map("user_agent")
   createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
   user      AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
@@ -1432,6 +1434,7 @@ model AuthVerification {
   value      String
   expiresAt  DateTime @map("expires_at")
   createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
   @@unique([identifier, value])
   @@map("auth_verifications")
