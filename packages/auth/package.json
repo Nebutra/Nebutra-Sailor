@@ -27,7 +27,7 @@
   "peerDependencies": {
     "react": "^19.0.0",
     "@clerk/nextjs": ">=6.0.0",
-    "next-auth": ">=5.0.0"
+    "next-auth": ">=5.0.0-beta.0"
   },
   "peerDependenciesMeta": {
     "@clerk/nextjs": {
