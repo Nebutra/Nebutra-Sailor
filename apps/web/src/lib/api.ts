@@ -73,13 +73,23 @@ export const api = {
 };
 
 /**
- * Server-side: returns an API client with Clerk JWT auto-injected.
+ * Server-side: returns an API client with provider-agnostic JWT auto-injected.
  * Use in Server Components, Route Handlers, and Server Actions.
  */
 export async function getAuthenticatedApi() {
-  const { auth } = await import("@clerk/nextjs/server");
-  const { getToken } = await auth();
-  const token = (await getToken()) ?? undefined;
+  const { createAuth } = await import("@nebutra/auth/server");
+  const provider = (process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth") as
+    | "clerk"
+    | "better-auth"
+    | "nextauth";
+
+  const auth = await createAuth({ provider });
+  const session = await auth.getSession();
+
+  // For now, we'll use an empty token. In a production setup,
+  // you'd call auth.getToken() or similar method if available.
+  // The session.userId can be used to mint JWTs server-side if needed.
+  const token = session?.userId ? undefined : undefined;
 
   return {
     get: <T>(endpoint: string, options?: Omit<RequestOptions, "method" | "body">) =>

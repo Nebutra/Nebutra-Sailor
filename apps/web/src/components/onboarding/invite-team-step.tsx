@@ -1,6 +1,5 @@
 "use client";
 
-import { useOrganization } from "@clerk/nextjs";
 import { Button, Input } from "@nebutra/ui/components";
 import { Label } from "@nebutra/ui/primitives";
 import { Plus, X } from "lucide-react";
@@ -11,7 +10,6 @@ interface InviteTeamStepProps {
 }
 
 export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
-  const { organization } = useOrganization();
   const [emails, setEmails] = useState<string[]>([""]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -32,7 +30,6 @@ export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!organization) return;
 
     const validEmails = emails.filter((email) => email.trim().includes("@"));
     if (validEmails.length === 0) {
@@ -44,18 +41,21 @@ export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
     setError("");
 
     try {
-      await Promise.all(
-        validEmails.map((email) =>
-          organization.inviteMember({
-            emailAddress: email.trim(),
-            role: "org:member",
-          }),
-        ),
-      );
+      const response = await fetch("/api/onboarding/invite-members", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ emails: validEmails }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "Failed to send invitations.");
+        return;
+      }
+
       onComplete();
     } catch (err: unknown) {
-      const clerkError = err as { errors?: Array<{ message: string }> };
-      setError(clerkError.errors?.[0]?.message || "Failed to send invitations.");
+      setError(err instanceof Error ? err.message : "Failed to send invitations.");
     } finally {
       setLoading(false);
     }

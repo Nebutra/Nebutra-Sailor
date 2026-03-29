@@ -1,9 +1,9 @@
-import { auth } from "@clerk/nextjs/server";
 import { PageHeader } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
-import { hasPermission, resolveRole } from "@/lib/permissions";
+import { getAuth } from "@/lib/auth.js";
+import { hasPermission, resolveRole } from "@/lib/permissions.js";
 
 const ADMIN_NAV = [
   { href: "/admin", label: "Overview" },
@@ -12,10 +12,10 @@ const ADMIN_NAV = [
 ];
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
-  const { sessionClaims } = await auth();
-  const role = resolveRole(sessionClaims?.org_role as string | undefined);
+  const auth = await getAuth();
+  const role = resolveRole(auth.sessionClaims?.org_role as string | undefined);
 
-  if (!hasPermission(role, "admin:access")) {
+  if (!auth.isSignedIn || !hasPermission(role, "admin:access")) {
     redirect("/");
   }
 

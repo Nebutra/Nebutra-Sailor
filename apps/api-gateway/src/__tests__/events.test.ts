@@ -22,9 +22,12 @@ vi.mock("@/config/env.js", () => ({
   },
 }));
 
-// Mock @clerk/backend so verifyToken never makes real network calls.
-vi.mock("@clerk/backend", () => ({
-  verifyToken: vi.fn().mockRejectedValue(new Error("no JWT in tests")),
+// Mock @nebutra/auth/server so JWT verification never makes real network calls.
+vi.mock("@nebutra/auth/server", () => ({
+  createAuth: vi.fn().mockResolvedValue({
+    provider: "better-auth",
+    getSession: vi.fn().mockResolvedValue(null),
+  }),
 }));
 
 // Mock @nebutra/logger to suppress log output during tests.

@@ -1,2 +1,4 @@
-export { clerkWebhookRoutes } from "./clerk.js";
+// Provider-agnostic auth webhook router (delegates to Clerk/Better Auth/NextAuth)
+export { authWebhookRoutesPromise, getAuthWebhookRoutes } from "./auth-webhooks.js";
+// Stripe webhook routes
 export { stripeWebhookRoutes } from "./stripe.js";

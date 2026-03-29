@@ -29,7 +29,7 @@ import { eventRoutes } from "./routes/events/index.js";
 import { consentRoutes } from "./routes/legal/consent.js";
 import { healthRoutes } from "./routes/misc/health.js";
 import { statusRoutes } from "./routes/system/status.js";
-import { clerkWebhookRoutes, stripeWebhookRoutes } from "./routes/webhooks/index.js";
+import { getAuthWebhookRoutes, stripeWebhookRoutes } from "./routes/webhooks/index.js";
 
 initOtel({ serviceName: "api-gateway" });
 initSentry();
@@ -200,7 +200,9 @@ app.route("/api/v1/admin", adminRoutes);
 
 // Webhook routes (raw body — bypass rate limiting)
 app.route("/api/webhooks", stripeWebhookRoutes);
-app.route("/api/webhooks", clerkWebhookRoutes);
+// Auth webhook routes (provider-agnostic) — initialized during startup
+const authWebhookRoutes = await getAuthWebhookRoutes();
+app.route("/api/webhooks", authWebhookRoutes);
 
 // Inngest background job handler (GET for SDK handshake, POST/PUT for execution)
 app.on(["GET", "POST", "PUT"], "/api/inngest", (c) => inngestHandler(c));

@@ -1,9 +1,9 @@
 "use client";
 
-import { useOrganizationList } from "@clerk/nextjs";
 import { Button, Input } from "@nebutra/ui/components";
 import { Label } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 interface CreateWorkspaceStepProps {
@@ -20,7 +20,7 @@ function slugify(name: string): string {
 }
 
 export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
-  const { createOrganization, setActive } = useOrganizationList();
+  const router = useRouter();
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [slugEdited, setSlugEdited] = useState(false);
@@ -43,18 +43,32 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!createOrganization || !setActive) return;
 
     setLoading(true);
     setError("");
 
     try {
-      const org = await createOrganization({ name, slug });
-      await setActive({ organization: org.id });
+      const response = await fetch("/api/onboarding/create-workspace", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, slug }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "Failed to create workspace.");
+        return;
+      }
+
+      const result = await response.json();
+      // Set the organization context before completing
+      if (result.organizationId) {
+        router.refresh();
+      }
+
       onComplete();
     } catch (err: unknown) {
-      const clerkError = err as { errors?: Array<{ message: string }> };
-      setError(clerkError.errors?.[0]?.message || "Failed to create workspace.");
+      setError(err instanceof Error ? err.message : "Failed to create workspace.");
     } finally {
       setLoading(false);
     }

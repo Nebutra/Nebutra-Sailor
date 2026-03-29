@@ -1,11 +1,11 @@
 "use client";
 
-import { useAuth } from "@clerk/nextjs";
+import { useAuth } from "@nebutra/auth/client";
 import { useCallback, useMemo } from "react";
 import { api } from "@/lib/api";
 
 /**
- * Client-side hook: returns an API client with Clerk JWT auto-injected.
+ * Client-side hook: returns an API client with provider-agnostic JWT auto-injected.
  * Use in Client Components.
  */
 export function useApi() {

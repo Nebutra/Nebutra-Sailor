@@ -8,12 +8,12 @@
  * never leaks to the client.
  */
 
-import { auth } from "@clerk/nextjs/server";
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
 import { type NextRequest, NextResponse } from "next/server";
+import { getAuth } from "@/lib/auth.js";
 
 export async function GET(_req: NextRequest) {
-  const { userId, orgId } = await auth();
+  const { userId, orgId } = await getAuth();
 
   const plan = "PRO"; // TODO: fetch from DB/session claims
 

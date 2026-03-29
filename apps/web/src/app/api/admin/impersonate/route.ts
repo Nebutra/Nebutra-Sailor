@@ -1,12 +1,13 @@
-import { auth, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { hasPermission, resolveRole } from "@/lib/permissions";
+import { getAuth } from "@/lib/auth.js";
+import { db } from "@/lib/db.js";
+import { hasPermission, resolveRole } from "@/lib/permissions.js";
 
 export async function POST(req: Request) {
-  const { sessionClaims } = await auth();
-  const role = resolveRole(sessionClaims?.org_role as string | undefined);
+  const auth = await getAuth();
+  const role = resolveRole(auth.sessionClaims?.org_role as string | undefined);
 
-  if (!hasPermission(role, "admin:impersonate")) {
+  if (!auth.isSignedIn || !hasPermission(role, "admin:impersonate")) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -18,19 +19,22 @@ export async function POST(req: Request) {
   }
 
   try {
-    const client = await clerkClient();
-    const actor = await client.users.getUser(userId);
+    const user = await db.user.findUnique({
+      where: { id: userId },
+      select: { id: true },
+    });
 
-    if (!actor) {
+    if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Clerk impersonation is handled client-side via the Clerk dashboard
-    // or via the Clerk Backend API with actor tokens.
-    // For now, redirect to the Clerk dashboard impersonation URL.
-    const clerkDashboardUrl = `https://dashboard.clerk.com/apps/${process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.split("_")[1] ?? "app"}/instances/default/users/${userId}`;
-
-    return NextResponse.redirect(clerkDashboardUrl);
+    // Create an impersonation session token and return redirect
+    // Implementation depends on your auth provider - this is provider-agnostic
+    // For now, return a 501 Not Implemented
+    return NextResponse.json(
+      { error: "Impersonation not implemented for this auth provider" },
+      { status: 501 },
+    );
   } catch {
     return NextResponse.json({ error: "Failed to impersonate user" }, { status: 500 });
   }

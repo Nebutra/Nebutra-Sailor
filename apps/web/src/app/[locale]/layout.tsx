@@ -1,4 +1,4 @@
-import { ClerkProvider } from "@clerk/nextjs";
+import { AuthProvider } from "@nebutra/auth/react";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -67,8 +67,20 @@ export default async function RootLayout({
   const nonce = await getNonce();
   const messages = await getMessages();
 
+  // Detect auth provider from environment
+  const authProvider = (process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth") as
+    | "clerk"
+    | "better-auth"
+    | "nextauth";
+
+  // Prepare provider config based on selected provider
+  const authProviderConfig: Record<string, unknown> = {};
+  if (authProvider === "clerk") {
+    authProviderConfig.publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  }
+
   return (
-    <ClerkProvider nonce={nonce}>
+    <AuthProvider provider={authProvider} config={authProviderConfig}>
       <html
         lang={locale}
         className={`${inter.variable} ${jetbrainsMono.variable} ${notoSansSC.variable}`}
@@ -95,6 +107,6 @@ export default async function RootLayout({
           <Analytics />
         </body>
       </html>
-    </ClerkProvider>
+    </AuthProvider>
   );
 }

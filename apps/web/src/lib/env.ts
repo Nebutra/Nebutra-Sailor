@@ -5,8 +5,11 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 
-    // Clerk server secret — required for protected API routes and server actions
-    CLERK_SECRET_KEY: z.string().min(1),
+    // Auth provider selection (affects which keys are required)
+    NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["clerk", "better-auth", "nextauth"]).default("better-auth"),
+
+    // Clerk server secret — only required if using Clerk provider
+    CLERK_SECRET_KEY: z.string().min(1).optional(),
 
     // Database — used by server components and server actions calling Prisma
     DATABASE_URL: z.string().url(),
@@ -26,8 +29,11 @@ export const env = createEnv({
     NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3002"),
     NEXT_PUBLIC_STUDIO_URL: z.string().url().default("http://localhost:3003"),
 
-    // Clerk auth — required; authentication will silently fail without this key
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+    // Auth provider selection
+    NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["clerk", "better-auth", "nextauth"]).default("better-auth"),
+
+    // Clerk auth — only required if using Clerk provider
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1).optional(),
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string().default("/sign-in"),
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string().default("/sign-up"),
 
@@ -48,6 +54,7 @@ export const env = createEnv({
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     NEXT_PUBLIC_STUDIO_URL: process.env.NEXT_PUBLIC_STUDIO_URL,
+    NEXT_PUBLIC_AUTH_PROVIDER: process.env.NEXT_PUBLIC_AUTH_PROVIDER,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,

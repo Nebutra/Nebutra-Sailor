@@ -1,6 +1,6 @@
-import { auth } from "@clerk/nextjs/server";
 import { streamText } from "@nebutra/ai-sdk";
 import { convertToModelMessages } from "ai";
+import { getAuth } from "@/lib/auth.js";
 
 const AI_CONFIGURED =
   !!process.env.OPENROUTER_API_KEY ||
@@ -8,8 +8,8 @@ const AI_CONFIGURED =
   !!process.env.SILICONFLOW_API_KEY;
 
 export async function POST(req: Request) {
-  const { userId } = await auth();
-  if (!userId) {
+  const auth = await getAuth();
+  if (!auth.userId) {
     return new Response("Unauthorized", { status: 401 });
   }
 

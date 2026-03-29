@@ -1,6 +1,5 @@
 "use client";
 
-import { useSignIn, useSignUp } from "@clerk/nextjs";
 import { Button } from "@nebutra/ui/components";
 import { useState } from "react";
 
@@ -40,21 +39,13 @@ function GitHubIcon() {
 }
 
 export function OAuthButtons({ mode }: OAuthButtonsProps) {
-  const { signIn } = useSignIn();
-  const { signUp } = useSignUp();
   const [loadingProvider, setLoadingProvider] = useState<string | null>(null);
 
-  async function handleOAuth(strategy: "oauth_google" | "oauth_github") {
-    const provider = mode === "signIn" ? signIn : signUp;
-    if (!provider) return;
-
-    setLoadingProvider(strategy);
+  async function handleOAuth(provider: "google" | "github") {
+    setLoadingProvider(provider);
     try {
-      await provider.sso({
-        strategy,
-        redirectUrl: "/sso-callback",
-        redirectCallbackUrl: mode === "signIn" ? "/" : "/onboarding",
-      });
+      const callbackUrl = mode === "signIn" ? "/" : "/onboarding";
+      window.location.href = `/api/auth/oauth/${provider}?callback=${encodeURIComponent(callbackUrl)}`;
     } catch {
       setLoadingProvider(null);
     }
@@ -67,20 +58,20 @@ export function OAuthButtons({ mode }: OAuthButtonsProps) {
         variant="outlined"
         className="w-full justify-center gap-2"
         disabled={loadingProvider !== null}
-        onClick={() => handleOAuth("oauth_google")}
+        onClick={() => handleOAuth("google")}
       >
         <GoogleIcon />
-        {loadingProvider === "oauth_google" ? "Redirecting…" : "Continue with Google"}
+        {loadingProvider === "google" ? "Redirecting…" : "Continue with Google"}
       </Button>
       <Button
         htmlType="button"
         variant="outlined"
         className="w-full justify-center gap-2"
         disabled={loadingProvider !== null}
-        onClick={() => handleOAuth("oauth_github")}
+        onClick={() => handleOAuth("github")}
       >
         <GitHubIcon />
-        {loadingProvider === "oauth_github" ? "Redirecting…" : "Continue with GitHub"}
+        {loadingProvider === "github" ? "Redirecting…" : "Continue with GitHub"}
       </Button>
     </div>
   );

@@ -1,8 +1,9 @@
 "use server";
 
-import { auth, clerkClient } from "@clerk/nextjs/server";
 import { z } from "zod";
-import { hasPermission, resolveRole } from "@/lib/permissions";
+import { getAuth } from "@/lib/auth.js";
+import { db } from "@/lib/db.js";
+import { hasPermission, resolveRole } from "@/lib/permissions.js";
 
 export type InviteState =
   | { status: "idle" }
@@ -12,20 +13,20 @@ export type InviteState =
 const inviteSchema = z.object({
   email: z.string().email(),
   orgId: z.string().min(1),
-  role: z.enum(["org:admin", "org:member"]).default("org:member"),
+  role: z.enum(["admin", "member"]).default("member"),
 });
 
 export async function inviteTeamMember(
   _prev: InviteState,
   formData: FormData,
 ): Promise<InviteState> {
-  const { orgId: sessionOrgId, sessionClaims } = await auth();
+  const authState = await getAuth();
 
-  if (!sessionOrgId) {
+  if (!authState.orgId) {
     return { status: "error", message: "You must be in an organization to invite members." };
   }
 
-  const role = resolveRole(sessionClaims?.org_role as string | undefined);
+  const role = resolveRole(authState.sessionClaims?.org_role as string | undefined);
   if (!hasPermission(role, "team:invite")) {
     return { status: "error", message: "You don't have permission to invite members." };
   }
@@ -43,22 +44,44 @@ export async function inviteTeamMember(
   const { email, orgId, role: inviteeRole } = parsed.data;
 
   // Verify the orgId matches the session org (prevents cross-org invite)
-  if (orgId !== sessionOrgId) {
+  if (orgId !== authState.orgId) {
     return { status: "error", message: "Organization mismatch." };
   }
 
   try {
-    const client = await clerkClient();
-    await client.organizations.createOrganizationInvitation({
-      organizationId: orgId,
-      emailAddress: email,
-      role: inviteeRole,
-      redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}/accept-invite`,
+    // Find user by email
+    const user = await db.user.findUnique({ where: { email } });
+
+    if (!user) {
+      return {
+        status: "error",
+        message: "User not found. They may need to create an account first.",
+      };
+    }
+
+    // Check if user is already a member
+    const existingMembership = await db.membership.findUnique({
+      where: {
+        userId_organizationId: { userId: user.id, organizationId: orgId },
+      },
+    });
+
+    if (existingMembership) {
+      return { status: "error", message: "User is already a member of this organization." };
+    }
+
+    // Create membership
+    await db.membership.create({
+      data: {
+        userId: user.id,
+        organizationId: orgId,
+        role: inviteeRole,
+      },
     });
 
     return { status: "success" };
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Failed to send invitation.";
+    const message = err instanceof Error ? err.message : "Failed to add member to organization.";
     return { status: "error", message };
   }
 }

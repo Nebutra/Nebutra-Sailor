@@ -1,16 +1,13 @@
 "use client";
 
-import { useSignIn } from "@clerk/nextjs";
 import { Button, Input } from "@nebutra/ui/components";
 import { Label, Separator } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { extractClerkErrorMessage } from "@/lib/clerk-errors";
-import { OAuthButtons } from "./oauth-buttons";
+import { OAuthButtons } from "./oauth-buttons.js";
 
 export function SignInForm() {
-  const { signIn, fetchStatus } = useSignIn();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -18,33 +15,28 @@ export function SignInForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const isReady = fetchStatus === "idle";
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!isReady || !signIn) return;
 
     setLoading(true);
     setError("");
 
     try {
-      await signIn.create({ identifier: email });
-
-      const { error: pwError } = await signIn.password({
-        password,
-        identifier: email,
+      const response = await fetch("/api/auth/sign-in", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
       });
-      if (pwError) {
-        setError(pwError.message ?? "Sign in failed");
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error ?? "Sign in failed");
         return;
       }
 
-      if (signIn.status === "complete") {
-        await signIn.finalize();
-        router.push("/");
-      }
+      router.push("/");
     } catch (err: unknown) {
-      setError(extractClerkErrorMessage(err));
+      setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -104,7 +96,7 @@ export function SignInForm() {
 
         {error && <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>}
 
-        <Button htmlType="submit" className="w-full" disabled={loading || !isReady}>
+        <Button htmlType="submit" className="w-full" disabled={loading}>
           {loading ? "Signing in…" : "Log in"}
         </Button>
       </form>

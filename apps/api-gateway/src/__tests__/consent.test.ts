@@ -31,8 +31,11 @@ vi.mock("@nebutra/db", () => ({
   Prisma: {},
 }));
 
-vi.mock("@clerk/backend", () => ({
-  verifyToken: vi.fn().mockRejectedValue(new Error("No JWT in tests")),
+vi.mock("@nebutra/auth/server", () => ({
+  createAuth: vi.fn().mockResolvedValue({
+    provider: "better-auth",
+    getSession: vi.fn().mockResolvedValue(null),
+  }),
 }));
 
 vi.mock("@nebutra/logger", () => {

@@ -1,9 +1,6 @@
-import { auth } from "@clerk/nextjs/server";
 import { type NextRequest, NextResponse } from "next/server";
+import { getAuth } from "@/lib/auth.js";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
-
-const hasClerkKeys =
-  !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && !!process.env.CLERK_SECRET_KEY;
 
 export async function GET(request: NextRequest) {
   let tenantId =
@@ -11,8 +8,8 @@ export async function GET(request: NextRequest) {
     request.headers.get("x-organization-id") ||
     undefined;
 
-  if (!tenantId && hasClerkKeys) {
-    const authState = await auth();
+  if (!tenantId) {
+    const authState = await getAuth();
     tenantId = authState.orgId || undefined;
   }
 

@@ -1,7 +1,8 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { verifyToken } from "@clerk/backend";
+import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 import type { Context, Next } from "hono";
+import { getAuthProvider } from "../config/env.js";
 
 export interface TenantContext {
   userId?: string;
@@ -15,6 +16,22 @@ declare module "hono" {
   interface ContextVariableMap {
     tenant: TenantContext;
   }
+}
+
+// ── Singleton auth provider ────────────────────────────────────────────────
+
+let authProvider: Awaited<ReturnType<typeof createAuth>> | null = null;
+
+/**
+ * Lazy-init the auth provider singleton.
+ * Called once per request if a Bearer token is present.
+ */
+async function getAuthProviderInstance(): Promise<Awaited<ReturnType<typeof createAuth>>> {
+  if (!authProvider) {
+    const provider = getAuthProvider();
+    authProvider = await createAuth({ provider });
+  }
+  return authProvider;
 }
 
 // ── S2S HMAC verification ──────────────────────────────────────────────────
@@ -64,10 +81,17 @@ function verifyServiceToken(
 }
 
 /**
- * Extract and verify Clerk JWT from Authorization header, then populate tenant context.
- * If no token is present or verification fails the request is treated as unauthenticated
- * (no userId / organizationId). Downstream `requireAuth` / `requireOrganization` guards
- * are responsible for rejecting requests that need authentication.
+ * Extract and verify JWT from Authorization header using provider-agnostic auth,
+ * then populate tenant context.
+ *
+ * Flow:
+ * 1. Check for S2S service token — verify HMAC before trusting headers
+ * 2. Check for Bearer token — use auth provider to verify/decode
+ * 3. No token — unauthenticated (tenant has no userId)
+ *
+ * If verification fails, the request is treated as unauthenticated.
+ * Downstream `requireAuth` / `requireOrganization` guards are responsible
+ * for rejecting requests that need authentication.
  */
 export async function tenantContextMiddleware(c: Context, next: Next) {
   // Extract client IP (handle proxies)
@@ -125,17 +149,21 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
 
   if (token) {
     try {
-      const payload = await verifyToken(token, {
-        secretKey: process.env.CLERK_SECRET_KEY ?? "",
+      // Use provider-agnostic auth to verify the token
+      const auth = await getAuthProviderInstance();
+
+      // Construct a Request object from Hono context for the auth provider
+      const request = new Request(c.req.url, {
+        headers: new Headers(c.req.raw.headers),
       });
 
-      const userId = payload.sub;
-      const organizationId = typeof payload.org_id === "string" ? payload.org_id : undefined;
-      const role = typeof payload.org_role === "string" ? payload.org_role : undefined;
+      const session = await auth.getSession(request);
 
-      if (userId) tenant.userId = userId;
-      if (organizationId) tenant.organizationId = organizationId;
-      if (role) tenant.role = role;
+      if (session) {
+        if (session.userId) tenant.userId = session.userId;
+        if (session.organizationId) tenant.organizationId = session.organizationId;
+        if (session.role) tenant.role = session.role;
+      }
     } catch (error) {
       // Log the error but treat the request as unauthenticated — do not throw.
       logger.warn("JWT verification failed, treating as unauthenticated", {

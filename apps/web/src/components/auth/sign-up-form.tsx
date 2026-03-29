@@ -1,18 +1,15 @@
 "use client";
 
-import { useSignUp } from "@clerk/nextjs";
 import { Button, Input } from "@nebutra/ui/components";
 import { Label, Separator } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { extractClerkErrorMessage } from "@/lib/clerk-errors";
-import { OAuthButtons } from "./oauth-buttons";
+import { OAuthButtons } from "./oauth-buttons.js";
 
 type Phase = "details" | "verify";
 
 export function SignUpForm() {
-  const { signUp, fetchStatus } = useSignUp();
   const router = useRouter();
 
   const [phase, setPhase] = useState<Phase>("details");
@@ -27,8 +24,6 @@ export function SignUpForm() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Lobehub v5 Input uses antd's InputRef, not HTMLInputElement
   const codeInputRef = useRef<any>(null);
 
-  const isReady = fetchStatus === "idle";
-
   useEffect(() => {
     if (phase === "verify") {
       codeInputRef.current?.focus?.();
@@ -37,32 +32,31 @@ export function SignUpForm() {
 
   async function handleDetailsSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!isReady || !signUp) return;
 
     setLoading(true);
     setError("");
 
     try {
-      await signUp.create({
-        firstName,
-        lastName,
-        emailAddress: email,
+      const response = await fetch("/api/auth/sign-up", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+        }),
       });
 
-      const { error: pwError } = await signUp.password({
-        password,
-        emailAddress: email,
-      });
-      if (pwError) {
-        setError(pwError.message ?? "Sign up failed");
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error ?? "Sign up failed");
         return;
       }
 
-      await signUp.verifications.sendEmailCode();
-
       setPhase("verify");
     } catch (err: unknown) {
-      setError(extractClerkErrorMessage(err));
+      setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -70,39 +64,49 @@ export function SignUpForm() {
 
   async function handleVerify(e: React.FormEvent) {
     e.preventDefault();
-    if (!isReady || !signUp) return;
 
     setLoading(true);
     setError("");
 
     try {
-      const { error: verifyError } = await signUp.verifications.verifyEmailCode({
-        code,
+      const response = await fetch("/api/auth/verify-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          code,
+        }),
       });
 
-      if (verifyError) {
-        setError(verifyError.message ?? "Invalid code. Please try again.");
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error ?? "Invalid code. Please try again.");
         return;
       }
 
-      if (signUp.status === "complete") {
-        await signUp.finalize();
-        router.push("/onboarding");
-      }
+      router.push("/onboarding");
     } catch (err: unknown) {
-      setError(extractClerkErrorMessage(err, "Invalid code. Please try again."));
+      setError(err instanceof Error ? err.message : "Invalid code. Please try again.");
     } finally {
       setLoading(false);
     }
   }
 
   async function handleResendCode() {
-    if (!isReady || !signUp || resending) return;
+    if (resending) return;
 
     setError("");
     setResending(true);
     try {
-      await signUp.verifications.sendEmailCode();
+      const response = await fetch("/api/auth/resend-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        setError("Failed to resend code. Please try again.");
+      }
     } catch {
       setError("Failed to resend code. Please try again.");
     } finally {
@@ -233,7 +237,7 @@ export function SignUpForm() {
 
         {error && <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>}
 
-        <Button htmlType="submit" className="w-full" disabled={loading || !isReady}>
+        <Button htmlType="submit" className="w-full" disabled={loading}>
           {loading ? "Creating account…" : "Create account"}
         </Button>
       </form>

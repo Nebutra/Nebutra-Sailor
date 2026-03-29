@@ -1,10 +1,10 @@
 "use server";
 
 import { createHash, randomBytes } from "node:crypto";
-import { auth } from "@clerk/nextjs/server";
-import { prisma as db } from "@nebutra/db";
 import { z } from "zod";
-import { hasPermission, resolveRole } from "@/lib/permissions";
+import { getAuth } from "@/lib/auth.js";
+import { db } from "@/lib/db.js";
+import { hasPermission, resolveRole } from "@/lib/permissions.js";
 
 export type CreateKeyState =
   | { status: "idle" }
@@ -39,10 +39,10 @@ export async function createApiKey(
   _prev: CreateKeyState,
   formData: FormData,
 ): Promise<CreateKeyState> {
-  const { orgId: sessionOrgId, sessionClaims } = await auth();
-  if (!sessionOrgId) return { status: "error", message: "Not authenticated." };
+  const authState = await getAuth();
+  if (!authState.orgId) return { status: "error", message: "Not authenticated." };
 
-  const role = resolveRole(sessionClaims?.org_role as string | undefined);
+  const role = resolveRole(authState.sessionClaims?.org_role as string | undefined);
   if (!hasPermission(role, "api_key:create")) {
     return { status: "error", message: "Insufficient permissions." };
   }
@@ -54,7 +54,7 @@ export async function createApiKey(
   if (!parsed.success) return { status: "error", message: "Invalid input." };
 
   const { name, orgId } = parsed.data;
-  if (orgId !== sessionOrgId) return { status: "error", message: "Organization mismatch." };
+  if (orgId !== authState.orgId) return { status: "error", message: "Organization mismatch." };
 
   const { raw, hash, prefix } = generateApiKey();
 
@@ -80,10 +80,10 @@ export async function revokeApiKey(
   _prev: RevokeKeyState,
   formData: FormData,
 ): Promise<RevokeKeyState> {
-  const { orgId: sessionOrgId, sessionClaims } = await auth();
-  if (!sessionOrgId) return { status: "error", message: "Not authenticated." };
+  const authState = await getAuth();
+  if (!authState.orgId) return { status: "error", message: "Not authenticated." };
 
-  const role = resolveRole(sessionClaims?.org_role as string | undefined);
+  const role = resolveRole(authState.sessionClaims?.org_role as string | undefined);
   if (!hasPermission(role, "api_key:delete")) {
     return { status: "error", message: "Insufficient permissions." };
   }
@@ -95,7 +95,7 @@ export async function revokeApiKey(
   if (!parsed.success) return { status: "error", message: "Invalid input." };
 
   const { keyId, orgId } = parsed.data;
-  if (orgId !== sessionOrgId) return { status: "error", message: "Organization mismatch." };
+  if (orgId !== authState.orgId) return { status: "error", message: "Organization mismatch." };
 
   try {
     await db.aPIKey.updateMany({

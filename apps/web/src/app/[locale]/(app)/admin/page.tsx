@@ -1,26 +1,28 @@
-import { clerkClient } from "@clerk/nextjs/server";
 import { Shield, UserSettings, Users } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card } from "@nebutra/ui/layout";
 import { Building2 } from "lucide-react";
 import { Suspense } from "react";
-import { ExternalAvatar } from "@/components/ui/external-avatar";
+import { ExternalAvatar } from "@/components/ui/external-avatar.js";
+import { db } from "@/lib/db.js";
 
 async function AdminOverviewContent() {
-  const client = await clerkClient();
-
-  const [usersResponse, orgsResponse] = await Promise.all([
-    client.users.getUserList({ limit: 1 }),
-    client.organizations.getOrganizationList({ limit: 1 }),
+  const [totalUsers, totalOrgs, recentUsers] = await Promise.all([
+    db.user.count(),
+    db.organization.count(),
+    db.user.findMany({
+      take: 5,
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        image: true,
+        createdAt: true,
+        lastActiveAt: true,
+      },
+    }),
   ]);
-
-  const totalUsers = usersResponse.totalCount;
-  const totalOrgs = orgsResponse.totalCount;
-
-  const recentUsers = await client.users.getUserList({
-    limit: 5,
-    orderBy: "-created_at",
-  });
 
   const stats = [
     { label: "Total Users", value: totalUsers, icon: Users },
@@ -53,25 +55,21 @@ async function AdminOverviewContent() {
             <h3 className="text-sm font-medium text-neutral-12 dark:text-white">Recent Signups</h3>
           </div>
           <div className="divide-y divide-neutral-7 dark:divide-white/10">
-            {recentUsers.data.map((user) => (
+            {recentUsers.map((user) => (
               <div key={user.id} className="flex items-center gap-4 px-4 py-3">
                 <ExternalAvatar
-                  src={user.imageUrl}
-                  alt={user.firstName ?? "User"}
+                  src={user.image}
+                  alt={user.name ?? "User"}
                   size={32}
                   className="h-8 w-8"
-                  fallbackInitial={(
-                    user.firstName?.[0] ??
-                    user.emailAddresses[0]?.emailAddress[0] ??
-                    "?"
-                  ).toUpperCase()}
+                  fallbackInitial={(user.name?.[0] ?? user.email?.[0] ?? "?").toUpperCase()}
                 />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-neutral-12 dark:text-white">
-                    {user.firstName} {user.lastName}
+                    {user.name}
                   </p>
                   <p className="truncate text-xs text-neutral-10 dark:text-white/60">
-                    {user.emailAddresses[0]?.emailAddress}
+                    {user.email}
                   </p>
                 </div>
                 <time className="text-xs text-neutral-10 dark:text-white/60">

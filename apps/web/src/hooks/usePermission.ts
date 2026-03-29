@@ -1,6 +1,6 @@
 "use client";
 
-import { useOrganization } from "@clerk/nextjs";
+import { useOrganization } from "@nebutra/auth/client";
 import {
   hasAllPermissions,
   hasAnyPermission,
@@ -13,7 +13,7 @@ import {
 interface UsePermissionReturn {
   /** The resolved role for the current org member. */
   role: Role;
-  /** True while Clerk is still loading membership data. */
+  /** True while auth provider is still loading membership data. */
   isLoading: boolean;
   /** Check a single scope. */
   can: (scope: Scope) => boolean;
@@ -24,7 +24,8 @@ interface UsePermissionReturn {
 }
 
 /**
- * Client-side hook for permission checks based on the current Clerk org role.
+ * Client-side hook for permission checks based on the current org role.
+ * Uses provider-agnostic auth from @nebutra/auth.
  *
  * Usage:
  *   const { can, role } = usePermission();

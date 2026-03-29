@@ -1,4 +1,3 @@
-import { clerkClient } from "@clerk/nextjs/server";
 import { ArrowLeft, Users } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card } from "@nebutra/ui/layout";
@@ -6,7 +5,8 @@ import { Building2 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { ExternalAvatar } from "@/components/ui/external-avatar";
+import { ExternalAvatar } from "@/components/ui/external-avatar.js";
+import { db } from "@/lib/db.js";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -14,19 +14,21 @@ interface Props {
 
 async function OrgDetailContent({ params }: Props) {
   const { id } = await params;
-  const client = await clerkClient();
 
-  let org: Awaited<ReturnType<typeof client.organizations.getOrganization>>;
-  try {
-    org = await client.organizations.getOrganization({ organizationId: id });
-  } catch {
+  const org = await db.organization.findUnique({
+    where: { id },
+    include: {
+      memberships: {
+        include: { user: true },
+        take: 50,
+      },
+      _count: { select: { memberships: true } },
+    },
+  });
+
+  if (!org) {
     notFound();
   }
-
-  const members = await client.organizations.getOrganizationMembershipList({
-    organizationId: id,
-    limit: 50,
-  });
 
   return (
     <>
@@ -46,7 +48,7 @@ async function OrgDetailContent({ params }: Props) {
           <Card className="p-6">
             <div className="flex flex-col items-center text-center">
               <ExternalAvatar
-                src={org.imageUrl}
+                src={org.image}
                 alt={org.name}
                 size={80}
                 className="h-20 w-20 rounded-xl"
@@ -78,13 +80,7 @@ async function OrgDetailContent({ params }: Props) {
               <div>
                 <dt className="text-xs text-neutral-10 dark:text-white/60">Members</dt>
                 <dd className="mt-0.5 text-sm text-neutral-12 dark:text-white">
-                  {members.totalCount}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs text-neutral-10 dark:text-white/60">Max Members</dt>
-                <dd className="mt-0.5 text-sm text-neutral-12 dark:text-white">
-                  {org.maxAllowedMemberships ?? "Unlimited"}
+                  {org._count.memberships}
                 </dd>
               </div>
             </dl>
@@ -97,17 +93,17 @@ async function OrgDetailContent({ params }: Props) {
             <div className="flex items-center gap-2 border-b border-neutral-7 bg-neutral-2 px-4 py-3 dark:border-white/10 dark:bg-white/5">
               <Users className="h-4 w-4 text-neutral-11 dark:text-white/70" />
               <h3 className="text-sm font-medium text-neutral-12 dark:text-white">
-                Members ({members.totalCount})
+                Members ({org._count.memberships})
               </h3>
             </div>
-            {members.data.length === 0 ? (
+            {org.memberships.length === 0 ? (
               <div className="p-4 text-center text-sm text-neutral-11 dark:text-white/70">
                 No members in this organization.
               </div>
             ) : (
               <div className="divide-y divide-neutral-7 dark:divide-white/10">
-                {members.data.map((membership) => {
-                  const user = membership.publicUserData;
+                {org.memberships.map((membership) => {
+                  const user = membership.user;
                   return (
                     <div
                       key={membership.id}
@@ -115,32 +111,32 @@ async function OrgDetailContent({ params }: Props) {
                     >
                       <div className="flex items-center gap-3">
                         <ExternalAvatar
-                          src={user?.imageUrl}
-                          alt={user?.firstName ?? "Member"}
+                          src={user?.image}
+                          alt={user?.name ?? "Member"}
                           size={32}
                           className="h-8 w-8"
-                          fallbackInitial={(user?.firstName?.[0] ?? "?").toUpperCase()}
+                          fallbackInitial={(user?.name?.[0] ?? "?").toUpperCase()}
                         />
                         <div className="min-w-0">
                           <Link
-                            href={`/admin/users/${user?.userId}`}
+                            href={`/admin/users/${user?.id}`}
                             className="truncate text-sm font-medium text-neutral-12 hover:text-blue-10 dark:text-white dark:hover:text-cyan-9"
                           >
-                            {user?.firstName} {user?.lastName}
+                            {user?.name}
                           </Link>
                           <p className="truncate text-xs text-neutral-10 dark:text-white/60">
-                            {user?.identifier}
+                            {user?.email}
                           </p>
                         </div>
                       </div>
                       <span
                         className={`rounded-full px-2.5 py-1 text-xs font-medium ${
-                          membership.role === "org:admin"
+                          membership.role === "admin"
                             ? "bg-blue-3 text-blue-11 dark:bg-blue-9/20 dark:text-blue-9"
                             : "bg-neutral-3 text-neutral-11 dark:bg-white/10 dark:text-white/70"
                         }`}
                       >
-                        {membership.role.replace("org:", "")}
+                        {membership.role}
                       </span>
                     </div>
                   );

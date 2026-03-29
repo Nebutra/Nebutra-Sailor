@@ -1,12 +1,13 @@
-import { auth, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { hasPermission, resolveRole } from "@/lib/permissions";
+import { getAuth } from "@/lib/auth.js";
+import { db } from "@/lib/db.js";
+import { hasPermission, resolveRole } from "@/lib/permissions.js";
 
 export async function POST(req: Request) {
-  const { sessionClaims, userId: currentUserId } = await auth();
-  const role = resolveRole(sessionClaims?.org_role as string | undefined);
+  const auth = await getAuth();
+  const role = resolveRole(auth.sessionClaims?.org_role as string | undefined);
 
-  if (!hasPermission(role, "admin:manage_users")) {
+  if (!auth.isSignedIn || !hasPermission(role, "admin:manage_users")) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -18,18 +19,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "userId and action (ban|unban) required" }, { status: 400 });
   }
 
-  if (userId === currentUserId) {
+  if (userId === auth.userId) {
     return NextResponse.json({ error: "Cannot ban yourself" }, { status: 400 });
   }
 
   try {
-    const client = await clerkClient();
-
-    if (action === "ban") {
-      await client.users.banUser(userId);
-    } else {
-      await client.users.unbanUser(userId);
-    }
+    await db.user.update({
+      where: { id: userId },
+      data: { banned: action === "ban" },
+    });
 
     // Redirect back to user detail page
     return NextResponse.redirect(new URL(`/admin/users/${userId}`, req.url));

@@ -15,9 +15,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 // factories execute (vi.mock is hoisted above all imports by Vitest).
 // ---------------------------------------------------------------------------
 
-const { mockVerifyToken, mockRedisGet, mockRedisSet, mockRedisDel, mockRedisPing, mockQueryRaw } =
+const { mockCreateAuth, mockRedisGet, mockRedisSet, mockRedisDel, mockRedisPing, mockQueryRaw } =
   vi.hoisted(() => ({
-    mockVerifyToken: vi.fn(),
+    mockCreateAuth: vi.fn(),
     mockRedisGet: vi.fn(),
     mockRedisSet: vi.fn(),
     mockRedisDel: vi.fn(),
@@ -25,8 +25,8 @@ const { mockVerifyToken, mockRedisGet, mockRedisSet, mockRedisDel, mockRedisPing
     mockQueryRaw: vi.fn(),
   }));
 
-vi.mock("@clerk/backend", () => ({
-  verifyToken: (...args: unknown[]) => mockVerifyToken(...args),
+vi.mock("@nebutra/auth/server", () => ({
+  createAuth: (...args: unknown[]) => mockCreateAuth(...args),
 }));
 
 vi.mock("@nebutra/cache", () => ({
@@ -96,7 +96,11 @@ function computeServiceToken(
 
 beforeEach(() => {
   vi.clearAllMocks();
-  mockVerifyToken.mockRejectedValue(new Error("No JWT in tests"));
+  // Mock auth provider that returns null session (unauthenticated)
+  mockCreateAuth.mockResolvedValue({
+    provider: "better-auth",
+    getSession: vi.fn().mockResolvedValue(null),
+  });
   mockRedisGet.mockResolvedValue(null);
   mockRedisSet.mockResolvedValue("OK");
   mockRedisDel.mockResolvedValue(1);
@@ -195,11 +199,15 @@ describe("tenantContextMiddleware", () => {
   });
 
   describe("Bearer JWT", () => {
-    it("populates tenant from JWT claims when token verifies", async () => {
-      mockVerifyToken.mockResolvedValueOnce({
-        sub: "user-jwt-789",
-        org_id: "org-jwt-101",
-        org_role: "org:member",
+    it("populates tenant from session when token verifies", async () => {
+      mockCreateAuth.mockResolvedValueOnce({
+        provider: "better-auth",
+        getSession: vi.fn().mockResolvedValueOnce({
+          userId: "user-jwt-789",
+          organizationId: "org-jwt-101",
+          role: "org:member",
+          expiresAt: new Date(Date.now() + 3600000),
+        }),
       });
 
       const app = createTenantApp();
@@ -215,14 +223,13 @@ describe("tenantContextMiddleware", () => {
       expect(body.userId).toBe("user-jwt-789");
       expect(body.organizationId).toBe("org-jwt-101");
       expect(body.role).toBe("org:member");
-
-      expect(mockVerifyToken).toHaveBeenCalledWith("valid-jwt-token", {
-        secretKey: process.env.CLERK_SECRET_KEY ?? "",
-      });
     });
 
     it("treats request as unauthenticated when JWT verification fails", async () => {
-      mockVerifyToken.mockRejectedValueOnce(new Error("Token expired"));
+      mockCreateAuth.mockResolvedValueOnce({
+        provider: "better-auth",
+        getSession: vi.fn().mockRejectedValueOnce(new Error("Token expired")),
+      });
 
       const app = createTenantApp();
       const res = await app.request("/test", {

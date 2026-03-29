@@ -1,9 +1,9 @@
-import { clerkClient } from "@clerk/nextjs/server";
 import { AnimateIn } from "@nebutra/ui/components";
 import { Card, EmptyState } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { Suspense } from "react";
-import { ExternalAvatar } from "@/components/ui/external-avatar";
+import { ExternalAvatar } from "@/components/ui/external-avatar.js";
+import { db } from "@/lib/db.js";
 
 interface Props {
   searchParams: Promise<{ page?: string; q?: string }>;
@@ -16,15 +16,26 @@ async function UsersListContent({ searchParams }: Props) {
   const page = Math.max(1, Number(pageStr) || 1);
   const offset = (page - 1) * PAGE_SIZE;
 
-  const client = await clerkClient();
-  const response = await client.users.getUserList({
-    limit: PAGE_SIZE,
-    offset,
-    orderBy: "-created_at",
-    ...(q ? { query: q } : {}),
-  });
+  const [users, totalCount] = await Promise.all([
+    db.user.findMany({
+      take: PAGE_SIZE,
+      skip: offset,
+      orderBy: { createdAt: "desc" },
+      ...(q ? { where: { email: { contains: q, mode: "insensitive" } } } : {}),
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        image: true,
+        createdAt: true,
+        lastActiveAt: true,
+      },
+    }),
+    db.user.count({
+      ...(q ? { where: { email: { contains: q, mode: "insensitive" } } } : {}),
+    }),
+  ]);
 
-  const { data: users, totalCount } = response;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
   if (users.length === 0) {
@@ -85,21 +96,21 @@ async function UsersListContent({ searchParams }: Props) {
               >
                 <div className="col-span-4 flex items-center gap-3">
                   <ExternalAvatar
-                    src={user.imageUrl}
-                    alt={user.firstName ?? "User"}
+                    src={user.image}
+                    alt={user.name ?? "User"}
                     size={32}
                     className="h-8 w-8"
-                    fallbackInitial={(user.firstName?.[0] ?? "?").toUpperCase()}
+                    fallbackInitial={(user.name?.[0] ?? "?").toUpperCase()}
                   />
                   <div className="min-w-0">
                     <p className="truncate font-medium text-neutral-12 dark:text-white">
-                      {user.firstName} {user.lastName}
+                      {user.name}
                     </p>
                     <p className="truncate text-xs text-neutral-10 dark:text-white/60">{user.id}</p>
                   </div>
                 </div>
                 <div className="col-span-3 truncate text-neutral-11 dark:text-white/70">
-                  {user.emailAddresses[0]?.emailAddress}
+                  {user.email}
                 </div>
                 <div className="col-span-2 text-neutral-11 dark:text-white/70">
                   {new Date(user.createdAt).toLocaleDateString()}
@@ -129,18 +140,18 @@ async function UsersListContent({ searchParams }: Props) {
               >
                 <div className="flex items-center gap-3">
                   <ExternalAvatar
-                    src={user.imageUrl}
-                    alt={user.firstName ?? "User"}
+                    src={user.image}
+                    alt={user.name ?? "User"}
                     size={32}
                     className="h-8 w-8"
-                    fallbackInitial={(user.firstName?.[0] ?? "?").toUpperCase()}
+                    fallbackInitial={(user.name?.[0] ?? "?").toUpperCase()}
                   />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium text-neutral-12 dark:text-white">
-                      {user.firstName} {user.lastName}
+                      {user.name}
                     </p>
                     <p className="truncate text-xs text-neutral-10 dark:text-white/60">
-                      {user.emailAddresses[0]?.emailAddress}
+                      {user.email}
                     </p>
                   </div>
                 </div>

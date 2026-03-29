@@ -9,12 +9,15 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // ---------------------------------------------------------------------------
-// Mock @clerk/backend so verifyToken is never invoked during tests.
+// Mock @nebutra/auth/server so JWT verification is never invoked during tests.
 // All test cases use header-based context (no JWT), so the mock never needs
 // to return a real payload — it just needs to not throw on import.
 // ---------------------------------------------------------------------------
-vi.mock("@clerk/backend", () => ({
-  verifyToken: vi.fn().mockRejectedValue(new Error("No token in tests")),
+vi.mock("@nebutra/auth/server", () => ({
+  createAuth: vi.fn().mockResolvedValue({
+    provider: "better-auth",
+    getSession: vi.fn().mockResolvedValue(null),
+  }),
 }));
 
 // Mock @nebutra/logger to suppress log output during tests

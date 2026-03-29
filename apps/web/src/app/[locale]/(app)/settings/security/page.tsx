@@ -1,16 +1,15 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
 import { AlertTriangle, Clock, Shield, Smartphone } from "lucide-react";
+import { getAuth } from "@/lib/auth.js";
 
 export const metadata = {
   title: "Security — Settings",
 };
 
 export default async function SecuritySettingsPage() {
-  const { sessionId } = await auth();
-  const user = await currentUser();
+  const authState = await getAuth();
 
-  const hasMfa = user?.twoFactorEnabled ?? false;
-  const email = user?.primaryEmailAddress?.emailAddress ?? "";
+  const hasMfa = false; // MFA status would depend on provider-specific implementation
+  const email = authState.user?.email ?? "";
 
   return (
     <div className="space-y-8">
@@ -54,14 +53,14 @@ export default async function SecuritySettingsPage() {
 
         {!hasMfa && (
           <div className="mt-4">
-            <a
-              href="https://accounts.clerk.dev/user/security"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-2 text-sm font-medium inline-flex items-center rounded-md border border-[var(--neutral-7)] text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 focus:outline-none"
+            <button
+              type="button"
+              disabled
+              className="px-3 py-2 text-sm font-medium inline-flex items-center rounded-md border border-[var(--neutral-7)] text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+              title="2FA configuration depends on your authentication provider"
             >
               Enable 2FA
-            </a>
+            </button>
           </div>
         )}
       </section>
@@ -78,11 +77,6 @@ export default async function SecuritySettingsPage() {
               You are currently signed in as{" "}
               <span className="font-medium text-[var(--neutral-12)]">{email}</span>.
             </p>
-            {sessionId && (
-              <p className="mt-1 text-xs font-mono text-[var(--neutral-11)]">
-                Session: {sessionId.slice(0, 16)}…
-              </p>
-            )}
           </div>
         </div>
       </section>
@@ -96,18 +90,8 @@ export default async function SecuritySettingsPage() {
           <div className="flex-1">
             <h3 className="text-sm font-medium text-[var(--neutral-12)]">Password</h3>
             <p className="mt-1 text-sm text-[var(--neutral-11)]">
-              Update your password or manage linked social accounts.
+              Password management is handled by your authentication provider.
             </p>
-            <div className="mt-4">
-              <a
-                href="https://accounts.clerk.dev/user/security"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3 py-2 text-sm font-medium inline-flex items-center rounded-md border border-[var(--neutral-7)] text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 focus:outline-none"
-              >
-                Manage in Clerk
-              </a>
-            </div>
           </div>
         </div>
       </section>
@@ -120,14 +104,14 @@ export default async function SecuritySettingsPage() {
           account will be removed.
         </p>
         <div className="mt-4">
-          <a
-            href="https://accounts.clerk.dev/user"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="border-red-300 px-3 py-2 text-sm font-medium hover:bg-red-100 focus:ring-red-500 inline-flex items-center rounded-md border text-red-700 transition-colors focus:ring-2 focus:ring-offset-1 focus:outline-none"
+          <button
+            type="button"
+            disabled
+            className="border-red-300 px-3 py-2 text-sm font-medium hover:bg-red-100 focus:ring-red-500 inline-flex items-center rounded-md border text-red-700 transition-colors focus:ring-2 focus:ring-offset-1 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+            title="Account deletion must be performed through your authentication provider"
           >
             Delete account
-          </a>
+          </button>
         </div>
       </section>
     </div>

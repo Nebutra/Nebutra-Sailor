@@ -1,11 +1,10 @@
-import { currentUser } from "@clerk/nextjs/server";
-import { requireOrg } from "@/lib/auth";
+import { getUser, requireOrg } from "@/lib/auth.js";
 
 export const metadata = { title: "Settings" };
 
 export default async function SettingsPage() {
   await requireOrg();
-  const user = await currentUser();
+  const user = await getUser();
 
   return (
     <div className="space-y-8">
@@ -14,13 +13,11 @@ export default async function SettingsPage() {
         <dl className="space-y-3 text-sm">
           <div className="flex justify-between">
             <dt className="text-[var(--neutral-11)]">Name</dt>
-            <dd className="font-medium text-[var(--neutral-12)]">{user?.fullName ?? "—"}</dd>
+            <dd className="font-medium text-[var(--neutral-12)]">{user?.name ?? "—"}</dd>
           </div>
           <div className="flex justify-between">
             <dt className="text-[var(--neutral-11)]">Email</dt>
-            <dd className="font-medium text-[var(--neutral-12)]">
-              {user?.primaryEmailAddress?.emailAddress ?? "—"}
-            </dd>
+            <dd className="font-medium text-[var(--neutral-12)]">{user?.email ?? "—"}</dd>
           </div>
         </dl>
       </section>

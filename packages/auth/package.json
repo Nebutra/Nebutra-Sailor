@@ -11,6 +11,7 @@
     "./client": "./src/client.ts",
     "./server": "./src/server.ts",
     "./middleware": "./src/middleware.ts",
+    "./react": "./src/react/index.ts",
     "./components": "./src/components/index.ts"
   },
   "scripts": {
@@ -24,6 +25,16 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "react": "^19.0.0"
+    "react": "^19.0.0",
+    "@clerk/nextjs": ">=6.0.0",
+    "next-auth": ">=5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@clerk/nextjs": {
+      "optional": true
+    },
+    "next-auth": {
+      "optional": true
+    }
   }
 }

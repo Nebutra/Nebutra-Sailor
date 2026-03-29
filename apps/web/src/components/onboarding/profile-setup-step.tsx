@@ -1,6 +1,5 @@
 "use client";
 
-import { useOrganization, useUser } from "@clerk/nextjs";
 import { Button, Input } from "@nebutra/ui/components";
 import { Label } from "@nebutra/ui/primitives";
 import { Upload } from "lucide-react";
@@ -12,25 +11,26 @@ interface ProfileSetupStepProps {
 }
 
 export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
-  const { user } = useUser();
-  const { organization } = useOrganization();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
-  const [displayName, setDisplayName] = useState(
-    user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : "",
-  );
-  const [logoPreview, setLogoPreview] = useState<string | null>(organization?.imageUrl ?? null);
+  const [displayName, setDisplayName] = useState("");
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
 
   async function handleLogoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    if (!file || !organization) return;
+    if (!file) return;
 
     const reader = new FileReader();
     reader.onload = () => setLogoPreview(reader.result as string);
     reader.readAsDataURL(file);
 
     try {
-      await organization.setLogo({ file });
+      const formData = new FormData();
+      formData.append("logo", file);
+      await fetch("/api/onboarding/upload-logo", {
+        method: "POST",
+        body: formData,
+      });
     } catch {
       // Logo upload failed silently — user can retry
     }
@@ -41,12 +41,20 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
     setLoading(true);
 
     try {
-      if (user && displayName.trim()) {
+      if (displayName.trim()) {
         const parts = displayName.trim().split(/\s+/);
-        await user.update({
-          firstName: parts[0] ?? "",
-          lastName: parts.slice(1).join(" ") || undefined,
+        const response = await fetch("/api/onboarding/update-profile", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firstName: parts[0] ?? "",
+            lastName: parts.slice(1).join(" ") || "",
+          }),
         });
+
+        if (!response.ok) {
+          // Profile update failed, but still continue
+        }
       }
       onComplete();
     } catch {

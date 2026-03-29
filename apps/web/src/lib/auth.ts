@@ -1,18 +1,41 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import type { Session, User } from "@nebutra/auth";
+import { createAuth } from "@nebutra/auth/server";
 import { redirect } from "next/navigation";
+
+// Singleton auth instance — lazily initialized
+let authInstance: Awaited<ReturnType<typeof createAuth>> | null = null;
+
+/**
+ * Get or create the singleton auth instance.
+ * Detects provider from NEXT_PUBLIC_AUTH_PROVIDER env var.
+ */
+async function getAuthInstance() {
+  if (authInstance) {
+    return authInstance;
+  }
+
+  const provider = (process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth") as
+    | "clerk"
+    | "better-auth"
+    | "nextauth";
+
+  authInstance = await createAuth({ provider });
+  return authInstance;
+}
 
 /**
  * Get the current user's auth state (server-side)
  * Use in Server Components or Route Handlers
  */
 export async function getAuth() {
-  const { userId, orgId, sessionClaims } = await auth();
+  const auth = await getAuthInstance();
+  const session = await auth.getSession();
 
   return {
-    userId,
-    orgId,
-    sessionClaims,
-    isSignedIn: !!userId,
+    userId: session?.userId ?? null,
+    orgId: session?.organizationId ?? null,
+    sessionClaims: { org_plan: "FREE" }, // Placeholder for backward compatibility
+    isSignedIn: !!session?.userId,
   };
 }
 
@@ -20,9 +43,15 @@ export async function getAuth() {
  * Get the current user object (server-side)
  * Use when you need full user data
  */
-export async function getUser() {
-  const user = await currentUser();
-  return user;
+export async function getUser(): Promise<User | null> {
+  const auth = await getAuthInstance();
+  const session = await auth.getSession();
+
+  if (!session?.userId) {
+    return null;
+  }
+
+  return auth.getUser(session.userId);
 }
 
 /**
@@ -30,7 +59,7 @@ export async function getUser() {
  * Use at the top of protected Server Components
  */
 export async function requireAuth() {
-  const { userId } = await auth();
+  const { userId } = await getAuth();
 
   if (!userId) {
     redirect("/sign-in");
@@ -44,7 +73,7 @@ export async function requireAuth() {
  * Use for multi-tenant routes
  */
 export async function requireOrg() {
-  const { userId, orgId } = await auth();
+  const { userId, orgId } = await getAuth();
 
   if (!userId) {
     redirect("/sign-in");
@@ -58,13 +87,22 @@ export async function requireOrg() {
 }
 
 /**
- * Get tenant context from Clerk organization
+ * Get tenant context from organization
  */
 export async function getTenantContext() {
-  const { orgId, sessionClaims } = await auth();
+  const { orgId } = await getAuth();
+  const auth = await getAuthInstance();
+
+  let plan = "FREE";
+  if (orgId) {
+    const org = await auth.getOrganization(orgId);
+    if (org?.plan) {
+      plan = org.plan;
+    }
+  }
 
   return {
     tenantId: orgId,
-    plan: (sessionClaims?.org_plan as string) || "FREE",
+    plan,
   };
 }

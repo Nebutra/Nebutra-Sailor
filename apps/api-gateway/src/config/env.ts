@@ -1,6 +1,33 @@
 import { z } from "zod";
 
-const envSchema = z.object({
+// Auth provider discriminated union — validates that the appropriate secret is set for the selected provider
+const clerkSchema = z.object({
+  AUTH_PROVIDER: z.literal("clerk").optional(),
+  CLERK_SECRET_KEY: z.string().min(1),
+  CLERK_WEBHOOK_SECRET: z.string().optional(),
+  BETTER_AUTH_SECRET: z.string().optional(),
+  NEXTAUTH_SECRET: z.string().optional(),
+});
+
+const betterAuthSchema = z.object({
+  AUTH_PROVIDER: z.literal("better-auth"),
+  CLERK_SECRET_KEY: z.string().optional(),
+  CLERK_WEBHOOK_SECRET: z.string().optional(),
+  BETTER_AUTH_SECRET: z.string().min(1),
+  NEXTAUTH_SECRET: z.string().optional(),
+});
+
+const nextAuthSchema = z.object({
+  AUTH_PROVIDER: z.literal("nextauth"),
+  CLERK_SECRET_KEY: z.string().optional(),
+  CLERK_WEBHOOK_SECRET: z.string().optional(),
+  BETTER_AUTH_SECRET: z.string().optional(),
+  NEXTAUTH_SECRET: z.string().min(1),
+});
+
+const authConfigUnion = z.union([clerkSchema, betterAuthSchema, nextAuthSchema]);
+
+const baseSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   PORT: z.string().default("3002"),
 
@@ -10,10 +37,6 @@ const envSchema = z.object({
   // Redis
   UPSTASH_REDIS_URL: z.string().optional(),
   UPSTASH_REDIS_TOKEN: z.string().optional(),
-
-  // Clerk
-  CLERK_SECRET_KEY: z.string().min(1),
-  CLERK_WEBHOOK_SECRET: z.string().optional(),
 
   // Stripe
   STRIPE_SECRET_KEY: z.string().optional(),
@@ -58,6 +81,8 @@ const envSchema = z.object({
   DOMAIN_STUDIO: z.string().url().optional(),
 });
 
+const envSchema = baseSchema.merge(authConfigUnion);
+
 // Production domain constants (overridable via environment variables)
 export const DOMAINS = {
   landing: process.env.DOMAIN_LANDING ?? "https://nebutra.com",
@@ -67,6 +92,38 @@ export const DOMAINS = {
 } as const;
 
 export type Env = z.infer<typeof envSchema>;
+
+/**
+ * Determine the active auth provider from environment variables.
+ * Priority:
+ * 1. AUTH_PROVIDER env var (explicit override)
+ * 2. CLERK_SECRET_KEY present → "clerk" (backward compatibility)
+ * 3. BETTER_AUTH_SECRET present → "better-auth"
+ * 4. NEXTAUTH_SECRET present → "nextauth"
+ * 5. Default to "better-auth" if none are present
+ */
+export function getAuthProvider(): "clerk" | "better-auth" | "nextauth" {
+  const explicit = process.env.AUTH_PROVIDER;
+  if (explicit === "clerk" || explicit === "better-auth" || explicit === "nextauth") {
+    return explicit;
+  }
+
+  // Backward compatibility: if CLERK_SECRET_KEY is set, assume Clerk
+  if (process.env.CLERK_SECRET_KEY) {
+    return "clerk";
+  }
+
+  if (process.env.BETTER_AUTH_SECRET) {
+    return "better-auth";
+  }
+
+  if (process.env.NEXTAUTH_SECRET) {
+    return "nextauth";
+  }
+
+  // Default fallback (dev mode)
+  return "better-auth";
+}
 
 export function validateEnv(): Env {
   const result = envSchema.safeParse(process.env);

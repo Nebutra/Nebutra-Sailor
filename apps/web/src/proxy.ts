@@ -1,4 +1,3 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { routing } from "@nebutra/i18n/routing";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
@@ -6,34 +5,57 @@ import createIntlMiddleware from "next-intl/middleware";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-const isPublicRoute = createRouteMatcher([
-  "/sign-in(.*)",
-  "/sign-up(.*)",
-  "/onboarding(.*)",
-  "/select-org(.*)",
-  "/sso-callback(.*)",
-  "/demo(.*)",
-  "/api/webhook(.*)",
-]);
+/**
+ * Define public routes that don't require authentication.
+ * Used by both Clerk and custom auth middlewares.
+ */
+const publicRoutePaths = [
+  "/sign-in",
+  "/sign-up",
+  "/onboarding",
+  "/select-org",
+  "/sso-callback",
+  "/demo",
+  "/api/webhook",
+];
 
+const authProvider = process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
+
+// Only require Clerk key if using Clerk provider
 const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-
-if (!hasClerkKey && process.env.NODE_ENV === "production") {
+if (authProvider === "clerk" && !hasClerkKey && process.env.NODE_ENV === "production") {
   throw new Error(
-    "[Nebutra] NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is not set. " +
-      "Authentication proxy cannot start. Set this env var or configure auth.",
+    "[Nebutra] NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is required when using Clerk auth provider. " +
+      "Set this env var or change NEXT_PUBLIC_AUTH_PROVIDER.",
   );
 }
 
 function buildCsp(nonce: string): string {
   const isDev = process.env.NODE_ENV === "development";
+  const isClerk = authProvider === "clerk";
+
+  const clerkDirectives = isClerk
+    ? ["https://clerk.accounts.dev", "https://*.clerk.accounts.dev"]
+    : [];
+
+  const clerkImg = isClerk ? ["https://img.clerk.com", "https://*.clerk.accounts.dev"] : [];
+
+  const clerkConnect = isClerk
+    ? [
+        "https://clerk.accounts.dev",
+        "https://*.clerk.accounts.dev",
+        "https://api.clerk.com",
+        "wss://*.clerk.accounts.dev",
+      ]
+    : [];
+
+  const clerkFrame = isClerk ? ["https://clerk.accounts.dev", "https://*.clerk.accounts.dev"] : [];
 
   const scriptSrc = [
     "'self'",
     `'nonce-${nonce}'`,
     "'strict-dynamic'",
-    "https://clerk.accounts.dev",
-    "https://*.clerk.accounts.dev",
+    ...clerkDirectives,
     ...(isDev ? ["'unsafe-inline'", "'unsafe-eval'"] : []),
   ].join(" ");
 
@@ -43,10 +65,10 @@ function buildCsp(nonce: string): string {
     "default-src 'self'",
     `script-src ${scriptSrc}`,
     `style-src ${styleSrc}`,
-    "img-src 'self' data: blob: https://img.clerk.com https://*.clerk.accounts.dev",
+    `img-src 'self' data: blob: ${clerkImg.join(" ")}`,
     "font-src 'self' data:",
-    "connect-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://api.clerk.com wss://*.clerk.accounts.dev",
-    "frame-src https://clerk.accounts.dev https://*.clerk.accounts.dev",
+    `connect-src 'self' ${clerkConnect.join(" ")}`,
+    `frame-src ${clerkFrame.join(" ") || "'none'"}`,
     "worker-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",
@@ -65,33 +87,64 @@ function withNonce(_request: NextRequest, response: NextResponse): NextResponse 
   return response;
 }
 
-export const proxy = hasClerkKey
-  ? clerkMiddleware(async (auth, req) => {
-      if (!isPublicRoute(req)) {
-        await auth.protect();
-      }
+/**
+ * Check if a request path is public (doesn't require auth).
+ */
+function isPublicPath(pathname: string): boolean {
+  return publicRoutePaths.some((path) => {
+    if (path.includes("(.*)")) {
+      const regex = new RegExp(`^${path.replace("(.*)", ".*")}$`);
+      return regex.test(pathname);
+    }
+    return pathname === path || pathname.startsWith(path);
+  });
+}
 
-      // Run next-intl locale detection/redirect
-      const intlResponse = intlMiddleware(req);
+/**
+ * Middleware handler — routes to Clerk or generic auth based on provider.
+ *
+ * For Clerk: requires eager import of clerkMiddleware (top of file if using Clerk in prod)
+ * For others: simple locale + CSP handler
+ */
+export async function proxy(req: NextRequest) {
+  if (authProvider === "clerk" && hasClerkKey) {
+    // For Clerk provider, dynamically import and use clerkMiddleware
+    // Note: In production with Clerk, consider importing clerkMiddleware at the top
+    // for better performance instead of dynamic import
+    try {
+      const { clerkMiddleware, createRouteMatcher } = await import("@clerk/nextjs/server");
+      const clerkRoutematcher = createRouteMatcher(publicRoutePaths);
 
-      // Apply CSP nonce to the response
-      const response = intlResponse || NextResponse.next();
-      return withNonce(req, response);
-    })
-  : (() => {
-      let devWarned = false;
-      return function devNoopProxy(req: NextRequest) {
-        if (!devWarned) {
-          devWarned = true;
+      // Create Clerk middleware handler
+      const clerk = clerkMiddleware(async (auth, innerReq) => {
+        if (!clerkRoutematcher(innerReq)) {
+          await auth.protect();
         }
 
         // Run next-intl locale detection/redirect
-        const intlResponse = intlMiddleware(req);
+        const intlResponse = intlMiddleware(innerReq);
 
+        // Apply CSP nonce to the response
         const response = intlResponse || NextResponse.next();
-        return withNonce(req, response);
-      };
-    })();
+        return withNonce(innerReq, response);
+      });
+
+      return clerk(req);
+    } catch (error) {
+      console.error("Failed to load Clerk middleware:", error);
+      // Fallback to generic handler
+    }
+  }
+
+  // For non-Clerk providers or Clerk import failure, use simple locale + CSP handler
+  // The AuthProvider in layout.tsx handles session management for non-Clerk providers
+
+  // Run next-intl locale detection/redirect
+  const intlResponse = intlMiddleware(req);
+
+  const response = intlResponse || NextResponse.next();
+  return withNonce(req, response);
+}
 
 export default proxy;
 

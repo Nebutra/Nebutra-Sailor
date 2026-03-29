@@ -1,6 +1,6 @@
 "use client";
 
-import { SignInButton, SignUpButton, UserButton, useAuth } from "@clerk/nextjs";
+import { UserButton, useAuth } from "@nebutra/auth/components";
 import { usePathname } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
@@ -18,22 +18,18 @@ function HeaderAuthControls() {
         />
       ) : (
         <div className="flex gap-2">
-          <SignInButton mode="modal">
-            <button
-              type="button"
-              className="rounded-md px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 dark:text-white/70 dark:hover:bg-white/10"
-            >
-              Sign In
-            </button>
-          </SignInButton>
-          <SignUpButton mode="modal">
-            <button
-              type="button"
-              className="rounded-md bg-[image:var(--brand-gradient)] px-3 py-1.5 text-sm font-medium text-white"
-            >
-              Sign Up
-            </button>
-          </SignUpButton>
+          <a
+            href="/sign-in"
+            className="rounded-md px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 dark:text-white/70 dark:hover:bg-white/10"
+          >
+            Sign In
+          </a>
+          <a
+            href="/sign-up"
+            className="rounded-md bg-[image:var(--brand-gradient)] px-3 py-1.5 text-sm font-medium text-white"
+          >
+            Sign Up
+          </a>
         </div>
       )}
     </div>
@@ -55,7 +51,7 @@ import {
 
 interface Props {
   children: React.ReactNode;
-  hasClerkKey: boolean;
+  hasClerkKey?: boolean;
 }
 
 function SidebarNav({
@@ -267,7 +263,7 @@ export function DesignSystemShell({ children, hasClerkKey }: Props) {
                 ))}
               </div>
 
-              {hasClerkKey && <HeaderAuthControls />}
+              <HeaderAuthControls />
             </div>
           </header>
 
