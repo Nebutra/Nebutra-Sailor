@@ -1,8 +1,10 @@
 "use client";
 
 import { ArrowRight } from "@nebutra/icons";
+import { useTheme } from "@nebutra/tokens";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import * as React from "react";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 
 /**
@@ -10,13 +12,31 @@ import { AnimateIn, AnimateInGroup } from "./AnimateIn";
  */
 export function HeroSection() {
   const t = useTranslations("hero");
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <section className="relative w-full overflow-hidden bg-background pb-8 pt-24 lg:pt-32">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_80%,transparent_100%)]" />
-      <div className="pointer-events-none absolute inset-0 flex justify-center">
-        <div className="absolute top-0 h-[600px] w-[800px] rounded-[100%] bg-primary/5 dark:bg-primary/10 blur-[120px]" />
-      </div>
+      {mounted && (
+        <div className="spline-container absolute top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-60 dark:opacity-50">
+          <iframe
+            src={
+              resolvedTheme === "dark"
+                ? "https://my.spline.design/retrofuturismbganimation-Lb3VtL1bNaYUnirKNzn0FvaW/"
+                : "https://my.spline.design/orbit-XDLATgFZPQX6SO6dgJGqPwHD/"
+            }
+            frameBorder="0"
+            width="100%"
+            height="100%"
+            id="aura-spline"
+            title="Hero Background"
+          />
+        </div>
+      )}
 
       <div className="relative z-10 w-full px-4">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-center text-center">

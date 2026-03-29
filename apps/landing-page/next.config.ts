@@ -35,7 +35,7 @@ const securityHeaders = [
   {
     key: "Content-Security-Policy",
     value:
-      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://svgl.app https://cdn.simpleicons.org https://github.com https://avatars.githubusercontent.com; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';",
+      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://svgl.app https://cdn.simpleicons.org https://github.com https://images.unsplash.com https://avatars.githubusercontent.com; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';",
   },
 ];
 
@@ -70,6 +70,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "svgl.app", pathname: "/library/**" },
       { protocol: "https", hostname: "cdn.simpleicons.org" },
+      { protocol: "https", hostname: "images.unsplash.com" },
       // DiceBear avatars used in Waitlist social proof
       { protocol: "https", hostname: "api.dicebear.com" },
     ],

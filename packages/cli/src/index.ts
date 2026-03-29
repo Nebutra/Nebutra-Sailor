@@ -2,11 +2,24 @@
 
 import { Command } from "commander";
 import { addCommand } from "./commands/add.js";
-import { initCommand } from "./commands/init.js";
-import { registerCreateCommand } from "./commands/create.js";
-import { registerMcpCommand } from "./commands/mcp-server.js";
+import { registerAiCommand } from "./commands/ai.js";
+import { registerAuthCommand } from "./commands/auth.js";
+import { registerBillingCommand } from "./commands/billing.js";
+import { registerBrandCommand } from "./commands/brand.js";
 import { registerCompletionsCommand } from "./commands/completions.js";
+import { registerCreateCommand } from "./commands/create.js";
+import { registerDbCommand } from "./commands/db.js";
+import { registerDevCommand } from "./commands/dev.js";
+import { registerEnvCommand } from "./commands/env.js";
+import { registerGenerateCommand } from "./commands/generate.js";
+import { registerI18nCommand } from "./commands/i18n.js";
+import { registerInfraCommand } from "./commands/infra.js";
+import { initCommand } from "./commands/init.js";
+import { registerMcpCommand } from "./commands/mcp-server.js";
+import { registerPresetCommand } from "./commands/preset.js";
 import { registerSchemaCommand } from "./commands/schema.js";
+import { registerStatsCommand } from "./commands/stats.js";
+import { registerTestCommand } from "./commands/test.js";
 import { maybeNotifyUpdate } from "./utils/update-notifier.js";
 
 const VERSION = "0.1.0";
@@ -22,7 +35,9 @@ async function main() {
 
   program
     .name("nebutra")
-    .description("Nebutra — unified CLI for project scaffolding, component management, and AI integration")
+    .description(
+      "Nebutra — unified CLI for project scaffolding, component management, and AI integration",
+    )
     .version(VERSION)
     // Existing options
     .option("--verbose", "Enable verbose output")
@@ -70,6 +85,19 @@ async function main() {
   registerCreateCommand(program);
   registerMcpCommand(program);
   registerSchemaCommand(program);
+  registerBrandCommand(program);
+  registerI18nCommand(program);
+  registerInfraCommand(program);
+  registerEnvCommand(program);
+  registerAiCommand(program);
+  registerAuthCommand(program);
+  registerBillingCommand(program);
+  registerStatsCommand(program);
+  registerDbCommand(program);
+  registerGenerateCommand(program);
+  registerPresetCommand(program);
+  registerDevCommand(program);
+  registerTestCommand(program);
 
   // ─── Utility commands ────────────────────────────────────
 
@@ -104,21 +132,33 @@ Examples:
   $ nebutra init                          Initialize a new project
   $ nebutra add button card --yes         Add components non-interactively
   $ nebutra create ./my-app               Scaffold a new project
-  $ nebutra schema --all                  Show full CLI schema (for Agents)
-  $ nebutra init --dry-run --format json  Preview init without changes
+  $ nebutra dev --preset=ai-saas          Start dev for AI SaaS preset
+  $ nebutra db migrate                    Run pending database migrations
+  $ nebutra generate app blog             Scaffold a new app
+  $ nebutra generate component hero       Scaffold a UI component + story
+  $ nebutra brand palette --primary=#7C3AED  Generate color palette
+  $ nebutra preset list --format json     List available presets
+  $ nebutra infra up --lite               Start PostgreSQL + Redis
+  $ nebutra env validate                  Check required env vars
+  $ nebutra test e2e                      Run Playwright E2E tests
+  $ nebutra ai models                     List configured AI providers
+  $ nebutra billing status                Check payment provider config
+  $ nebutra i18n status                   Show translation coverage
+  $ nebutra stats                         Monorepo overview
+  $ nebutra schema --all                  Full CLI schema (for Agents)
 
 Exit Codes:
-  0   Success
-  1   General error
-  2   Invalid arguments
-  3   Resource not found
-  10  Dry-run completed (no changes made)
+  0   Success          2   Invalid arguments
+  1   General error    3   Resource not found
+  4   Permission denied   5   Conflict/exists
+  6   Network error (retryable)   10  Dry-run OK
 
 Environment:
-  NEBUTRA_LOG_LEVEL       Set log level (debug|info|warn|error)
-  NEBUTRA_OUTPUT_FORMAT   Default output format (json|table|plain)
+  NEBUTRA_LOG_LEVEL       Log level (debug|info|warn|error)
+  NEBUTRA_OUTPUT_FORMAT   Output format (json|table|plain)
   NO_COLOR                Disable colored output
-`
+  CI                      Auto-enable non-interactive mode
+`,
   );
 
   await program.parseAsync(process.argv);

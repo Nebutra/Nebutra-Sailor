@@ -1,8 +1,8 @@
+import { appendFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { readFileSync, writeFileSync, appendFileSync, existsSync } from "node:fs";
-import pc from "picocolors";
 import * as p from "@clack/prompts";
+import pc from "picocolors";
 
 // All known subcommands and their flags
 const KNOWN_COMMANDS = [
@@ -13,6 +13,22 @@ const KNOWN_COMMANDS = [
   "completions",
   "doctor",
   "schema",
+  "db",
+  "brand",
+  "i18n",
+  "infra",
+  "env",
+  "generate",
+  "preset",
+  "dev",
+  "build",
+  "lint",
+  "typecheck",
+  "test",
+  "ai",
+  "auth",
+  "billing",
+  "stats",
 ];
 
 const KNOWN_FLAGS = [
@@ -21,6 +37,14 @@ const KNOWN_FLAGS = [
   "--21st",
   "--v0",
   "--stdio",
+  "--format",
+  "--yes",
+  "--no-interactive",
+  "--no-color",
+  "--verbose",
+  "--quiet",
+  "--dry-run",
+  "--if-not-exists",
 ];
 
 /**
@@ -44,16 +68,16 @@ _nebutra_completions() {
 
   if [[ \${cur} == -* ]]; then
     # Complete flags
-    COMPREPLY=( \$(compgen -W "\${flags}" -- \${cur}) )
+    COMPREPLY=( $(compgen -W "\${flags}" -- \${cur}) )
   elif [[ \${COMP_CWORD} -eq 1 ]]; then
     # Complete subcommands at position 1
-    COMPREPLY=( \$(compgen -W "\${subcommands}" -- \${cur}) )
+    COMPREPLY=( $(compgen -W "\${subcommands}" -- \${cur}) )
   elif [[ "\${prev}" == "add" ]]; then
     # add command takes component names
-    COMPREPLY=( \$(compgen -W "--21st --v0" -- \${cur}) )
+    COMPREPLY=( $(compgen -W "--21st --v0" -- \${cur}) )
   elif [[ "\${prev}" == "completions" ]]; then
     # completions command takes shell type
-    COMPREPLY=( \$(compgen -W "bash zsh fish install" -- \${cur}) )
+    COMPREPLY=( $(compgen -W "bash zsh fish install" -- \${cur}) )
   fi
 
   return 0
@@ -183,9 +207,7 @@ function printCompletion(shell: string): void {
 
   const generator = completionMap[shell.toLowerCase()];
   if (!generator) {
-    console.error(
-      pc.red(`Error: Unknown shell '${shell}'. Supported: bash, zsh, fish`),
-    );
+    console.error(pc.red(`Error: Unknown shell '${shell}'. Supported: bash, zsh, fish`));
     process.exit(1);
   }
 
@@ -242,10 +264,7 @@ async function installCompletions(): Promise<void> {
       fs.mkdirSync(completionDir, { recursive: true });
 
       // Write completion file
-      const completionFile = join(
-        completionDir,
-        shellName === "fish" ? "nebutra.fish" : "nebutra",
-      );
+      const completionFile = join(completionDir, shellName === "fish" ? "nebutra.fish" : "nebutra");
       const completion =
         shellName === "bash"
           ? generateBashCompletion()
@@ -254,19 +273,12 @@ async function installCompletions(): Promise<void> {
             : generateFishCompletion();
 
       writeFileSync(completionFile, completion);
-      spinner.stop(
-        pc.green(
-          `Completion script installed to ${completionFile}`,
-        ),
-      );
+      spinner.stop(pc.green(`Completion script installed to ${completionFile}`));
     }
 
     // Add sourcing to shell config if needed (except fish)
     if (configFile && installCommand && shellName !== "fish") {
-      if (
-        !existsSync(configFile) ||
-        !readFileSync(configFile, "utf8").includes("nebutra")
-      ) {
+      if (!existsSync(configFile) || !readFileSync(configFile, "utf8").includes("nebutra")) {
         const sourceCommand =
           shellName === "bash"
             ? "\n# nebutra completions\n[[ -f ~/.bash_completion.d/nebutra ]] && source ~/.bash_completion.d/nebutra"
@@ -277,19 +289,13 @@ async function installCompletions(): Promise<void> {
       }
     }
 
-    p.log.info(
-      pc.cyan("Completions installed! Restart your shell or run:"),
-    );
+    p.log.info(pc.cyan("Completions installed! Restart your shell or run:"));
     p.log.info(pc.dim(`  source "${shellName === "bash" ? "~/.bashrc" : "~/.zshrc"}"`));
 
     p.outro(pc.green("Installation complete!"));
   } catch (error: unknown) {
     spinner.stop();
-    p.log.error(
-      pc.red(
-        "Error installing completions. You can manually add them by running:",
-      ),
-    );
+    p.log.error(pc.red("Error installing completions. You can manually add them by running:"));
     p.log.info(pc.cyan(`  nebutra completions ${shellName} >> ~/.${shellName}rc`));
 
     if (error instanceof Error) {

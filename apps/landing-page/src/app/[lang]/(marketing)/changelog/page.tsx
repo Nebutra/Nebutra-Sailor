@@ -155,9 +155,8 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
   const mappedReleases: Release[] = useCms
     ? cmsEntries.map((entry) => {
         return {
-          version: entry.version,
+          title: `v${entry.version}: ${entry.title}`,
           date: entry.publishedAt?.split("T")[0] ?? "",
-          title: entry.title,
           excerpt: entry.summary ?? entry.title,
           // Unsplash premium placeholder
           image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
@@ -169,25 +168,28 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
             </ul>
           ),
           contributors: ["https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1200"],
-        };
+        } as Release;
       })
-    : STATIC_RELEASES.map(r => ({
-        version: r.version,
-        title: `v${r.version} ${r.tag} Update`,
-        date: r.date,
-        excerpt: r.highlights[0] ?? "Significant stability & feature updates.",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
-        contributors: [
-          "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200"
-        ],
-        content: (
-          <ul className="list-disc pl-4 space-y-2 mt-4">
-            {r.highlights.map((h, i) => (
-              <li key={i}>{h}</li>
-            ))}
-          </ul>
-        ),
-      }));
+    : STATIC_RELEASES.map((r) => {
+        return {
+          title: `v${r.version}: ${r.tag} Update`,
+          date: r.date,
+          excerpt: r.highlights[0] ?? "Significant stability & feature updates.",
+          image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+          contributors: [
+            "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200"
+          ],
+          content: (
+            <div className="prose prose-sm dark:prose-invert max-w-none">
+              <ul className="list-disc pl-4 space-y-2 mt-4">
+                {r.highlights.map((h, i) => (
+                  <li key={i}>{h}</li>
+                ))}
+              </ul>
+            </div>
+          ),
+        } as Release;
+      });
 
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-black">
