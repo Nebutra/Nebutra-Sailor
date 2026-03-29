@@ -2,7 +2,7 @@
 
 > **Auto-generated from CLI source code** — Do not edit manually.
 >
-> Generated: 2026-03-29T15:31:21.559Z
+> Generated: 2026-03-29T15:49:31.698Z
 
 This reference documents all commands available in the Nebutra CLI ecosystem.
 
@@ -27,15 +27,31 @@ Nebutra Package & Component Manager
 nebutra [command] [options]
 ```
 
+**Options:**
+
+| Option | Description | Default |
+|--------|-------------|----------|
+| `--format <type>` | Output format: json, table, plain | — |
+| `--yes, --no-interactive` | Skip all interactive prompts (Agent mode) | — |
+| `--no-color` | Disable colored output | — |
+| `--verbose` | Enable verbose output | — |
+| `--quiet` | Suppress non-essential output | — |
 ### `init`
 
 Initialize a Nebutra project and create nebutra.config.json
 
 **Usage:**
 ```bash
-nebutra init
+nebutra init [options]
 ```
 
+**Options:**
+
+| Option | Description | Default |
+|--------|-------------|----------|
+| `--dry-run` | Preview changes without writing files (exits with code 10) | — |
+| `--yes` | Skip all interactive prompts (Agent mode) | — |
+| `--if-not-exists` | Skip initialization if nebutra.config.json already exists | — |
 
 **Examples:**
 
@@ -43,6 +59,16 @@ nebutra init
 nebutra init
 ```
 Initialize Nebutra configuration in the current directory
+
+```bash
+nebutra init --dry-run
+```
+Preview initialization changes without writing files
+
+```bash
+nebutra init --yes --if-not-exists
+```
+Initialize without prompts, skip if already configured
 
 ### `add`
 
@@ -64,6 +90,9 @@ nebutra add [components...] [options]
 |--------|-------------|----------|
 | `--21st <id>` | Fetch and install a component from 21st.dev registry | — |
 | `--v0 <url>` | Fetch and install a component from v0.dev by URL | — |
+| `--dry-run` | Preview what would be installed without making changes (exit code 10) | — |
+| `--yes` | Skip all interactive prompts and use defaults (Agent mode) | — |
+| `--if-not-exists` | Skip installation if component already exists | — |
 
 **Examples:**
 
@@ -78,9 +107,14 @@ nebutra add --21st button-01
 Add a component from 21st.dev (shadcn-style registry)
 
 ```bash
-nebutra add --v0 "https://v0.dev/r/..."
+nebutra add --v0 "https://v0.dev/r/..." --dry-run
 ```
-Add a component from v0.dev by its full URL
+Preview adding a component from v0.dev without making changes
+
+```bash
+nebutra add button --yes --if-not-exists
+```
+Add button component without prompts, skip if already exists
 
 ### `create`
 
@@ -88,7 +122,7 @@ Scaffold a new Nebutra-Sailor project
 
 **Usage:**
 ```bash
-nebutra create [dir]
+nebutra create [dir] [options]
 ```
 
 **Arguments:**
@@ -96,6 +130,12 @@ nebutra create [dir]
 | Argument | Description | Required |
 |----------|-------------|----------|
 | `dir` | Target directory for the new project (optional, will prompt if not provided) | No |
+**Options:**
+
+| Option | Description | Default |
+|--------|-------------|----------|
+| `--dry-run` | Preview project scaffolding without creating files (exit code 10) | — |
+| `--yes` | Skip all interactive prompts (Agent mode) | — |
 
 **Examples:**
 
@@ -108,6 +148,11 @@ Create a new Nebutra-Sailor project in the my-saas-app directory with interactiv
 nebutra create
 ```
 Create a new project with prompts for directory and configuration
+
+```bash
+nebutra create my-app --dry-run
+```
+Preview project scaffolding without creating files
 
 ### `mcp`
 
@@ -123,6 +168,7 @@ nebutra mcp [options]
 | Option | Description | Default |
 |--------|-------------|----------|
 | `--stdio` | Use stdio transport for communication (default: enabled) | enabled |
+| `--verbose` | Enable verbose logging for MCP server | — |
 
 **Examples:**
 
@@ -130,6 +176,60 @@ nebutra mcp [options]
 nebutra mcp
 ```
 Start the MCP server for AI-powered project context integration
+
+```bash
+nebutra mcp --verbose
+```
+Start the MCP server with detailed logging output
+
+### `schema`
+
+Show command schema and argument documentation (Agent-friendly JSON output)
+
+**Usage:**
+```bash
+nebutra schema [command] [options]
+```
+
+**Arguments:**
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `command` | Command name to show schema for (e.g., init, add, create) | No |
+**Options:**
+
+| Option | Description | Default |
+|--------|-------------|----------|
+| `--all` | Show full schema for all commands as JSON | disabled |
+| `--list` | List all available command names | disabled |
+| `--exit-codes` | Show exit codes reference | disabled |
+
+**Examples:**
+
+```bash
+nebutra schema --all
+```
+Show complete JSON of all commands, args, options, value domains
+
+```bash
+nebutra schema init
+```
+Show schema for init command (arguments, options, defaults, examples)
+
+```bash
+nebutra schema add
+```
+Show schema for add command with enum values
+
+```bash
+nebutra schema --list
+```
+List just the command names (quick discovery)
+
+```bash
+nebutra schema --exit-codes
+```
+Show exit codes reference for all possible exit codes
 
 ---
 

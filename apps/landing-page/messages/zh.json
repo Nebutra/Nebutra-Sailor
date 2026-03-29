@@ -1116,7 +1116,11 @@
         "name": "探索版",
         "price": "免费",
         "description": "适合个人创客与侧边项目测试",
-        "features": ["单项目授权", "社区论坛支持", "基础运行数据分析"],
+        "features": [
+          "单项目授权",
+          "社区论坛支持",
+          "基础运行数据分析"
+        ],
         "ctaText": "免费接入"
       },
       "pro": {
@@ -1124,7 +1128,12 @@
         "price": "$29",
         "description": "适合快速扩张的初创与极客团队",
         "isPopular": true,
-        "features": ["无限制项目数", "工单优先响应", "自定义域名绑定", "高级 AI 能力调用"],
+        "features": [
+          "无限制项目数",
+          "工单优先响应",
+          "自定义域名绑定",
+          "高级 AI 能力调用"
+        ],
         "ctaText": "升级专业版"
       },
       "enterprise": {
@@ -1382,10 +1391,10 @@
   },
   "featuresPage": {
     "hero": {
-      "badge": "平台核心能力",
-      "headlinePrefix": "交付独角兽产品的",
-      "headlineHighlight": "一切所需。",
-      "description": "Nebutra 是一款全栈 SaaS 平台——AI、计费、多租户、可观测性以及安全机制自项目初曦便已深度集成，停止重复发明轮子。"
+      "badge": "平台能力",
+      "headlinePrefix": "构建独角兽所需的",
+      "headlineHighlight": "一切就绪。",
+      "description": "Nebutra 是全栈 SaaS 平台——AI、计费、多租户、可观测性和安全性从第一天起就内置其中。停止重复造轮子。"
     },
     "sections": {
       "ai_category": "AI 与智能体引擎",
@@ -1454,13 +1463,22 @@
     }
   },
   "comingSoon": {
-    "badge": "🚧 施工建设中",
+    "badge": "🚧 建设中",
     "description": {
       "ideas": "我们正在为您打造极具极客精神的全新体验模块，它将随 Nebutra-Sailor 的下一次核心架构更新同步上线。",
       "opc": "专属 OPC 开发者们的终极中枢正在构建中。请留意开源社区发版矩阵以获取正式挂载通知。",
       "roadmap": "我们的技术蓝图正在进行最后定案。交互式的 Changelog 大屏幕即将与 Nebutra 核心仓库实现同步更新。"
     },
-    "returnBtn": "返回核心枢纽"
+    "returnBtn": "返回首页"
+  },
+  "showcase": {
+    "badge": "实际效果",
+    "headline": "为生产环境打造，而非仅限演示。",
+    "tabs": {
+      "dashboard": "Dashboard",
+      "billing": "Billing",
+      "ai-chat": "AI Chat"
+    }
   },
   "blogShowcase": {
     "badge": "博客精选",
@@ -1641,8 +1659,8 @@
   },
   "notFound": {
     "title": "页面未找到",
-    "desc": "您访问的链接可能已被移除或地址输入有误。这不属于系统预期范围。",
-    "home": "返回主屏幕",
-    "docs": "查阅开发文档"
+    "desc": "您查找的页面可能已被移除或暂时不可用。",
+    "home": "返回首页",
+    "docs": "阅读文档"
   }
 }

@@ -12,6 +12,7 @@ const KNOWN_COMMANDS = [
   "mcp",
   "completions",
   "doctor",
+  "schema",
 ];
 
 const KNOWN_FLAGS = [
@@ -77,6 +78,7 @@ _nebutra() {
     "mcp:Start the Nebutra MCP server for Cursor/Windsurf"
     "completions:Generate shell completions"
     "doctor:Check your Nebutra project setup"
+    "schema:Show command schema and argument documentation (for Agents)"
   )
 
   local -a global_flags=(
@@ -93,6 +95,12 @@ _nebutra() {
     "--stdio[Use stdio transport (default)]"
   )
 
+  local -a schema_flags=(
+    "--all[Show full schema for all commands]"
+    "--list[List all available command names]"
+    "--exit-codes[Show exit codes reference]"
+  )
+
   if (( CURRENT == 2 )); then
     # Complete subcommand
     _describe "command" commands
@@ -106,6 +114,9 @@ _nebutra() {
         ;;
       mcp)
         _arguments "*:options:($global_flags $mcp_flags)"
+        ;;
+      schema)
+        _arguments "*:options:($global_flags $schema_flags)"
         ;;
       *)
         _arguments "*:options:($global_flags)"
@@ -134,6 +145,7 @@ complete -c nebutra -n "__fish_use_subcommand_only" -f -a "create" -d "Scaffold 
 complete -c nebutra -n "__fish_use_subcommand_only" -f -a "mcp" -d "Start the Nebutra MCP server"
 complete -c nebutra -n "__fish_use_subcommand_only" -f -a "completions" -d "Generate shell completions"
 complete -c nebutra -n "__fish_use_subcommand_only" -f -a "doctor" -d "Check your Nebutra project setup"
+complete -c nebutra -n "__fish_use_subcommand_only" -f -a "schema" -d "Show command schema (for Agents)"
 
 # Flags
 complete -c nebutra -f -a "--help" -d "Show help message"
@@ -151,6 +163,11 @@ complete -c nebutra -n "__fish_seen_subcommand_from completions" -f -a "bash" -d
 complete -c nebutra -n "__fish_seen_subcommand_from completions" -f -a "zsh" -d "Generate zsh completions"
 complete -c nebutra -n "__fish_seen_subcommand_from completions" -f -a "fish" -d "Generate fish completions"
 complete -c nebutra -n "__fish_seen_subcommand_from completions" -f -a "install" -d "Auto-install completions to shell config"
+
+# schema command flags
+complete -c nebutra -n "__fish_seen_subcommand_from schema" -f -a "--all" -d "Show full schema for all commands"
+complete -c nebutra -n "__fish_seen_subcommand_from schema" -f -a "--list" -d "List all available command names"
+complete -c nebutra -n "__fish_seen_subcommand_from schema" -f -a "--exit-codes" -d "Show exit codes reference"
 `;
 }
 

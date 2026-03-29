@@ -11,6 +11,7 @@ export { BlogShowcase, type BlogShowcaseProps } from "./BlogShowcase";
 export { CapabilityMatrixSection } from "./CapabilityMatrixSection";
 
 export { DesignSystemSection } from "./DesignSystemSection";
+export { InteractiveChangelog } from "./InteractiveChangelog";
 // Legacy components (kept for backwards compat)
 export { FeatureCards } from "./FeatureCards";
 export { FinalCTA } from "./FinalCTA";

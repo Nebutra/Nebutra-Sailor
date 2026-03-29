@@ -20,7 +20,9 @@
     "copyLabel": "Copy Command",
     "copiedLabel": "Copied",
     "ctaGetStarted": "Start Building",
-    "ctaViewGitHub": "View on GitHub →"
+    "ctaViewGitHub": "View on GitHub →",
+    "ctaGetAccess": "Get lifetime access",
+    "ctaExploreDemo": "Explore demo"
   },
   "features": {
     "sectionTitle": "プロトタイプからスケールまでの即戦力インフラストラクチャ。",
@@ -43,6 +45,64 @@
     "copyLabel": "Copy Command",
     "copiedLabel": "Copied",
     "startBuilding": "Start Building"
+  },
+  "comparison": {
+    "badge": "SAILOR 比較",
+    "title": "Sailor と競合製品の比較",
+    "columns": {
+      "feature": "機能",
+      "sailor": "Nebutra Sailor",
+      "nextForge": "next-forge",
+      "supastarter": "Supastarter"
+    },
+    "features": {
+      "multiTenant": "マルチテナント",
+      "aiGateway": "AI統合",
+      "auth": "認証",
+      "billing": "課金・決済",
+      "i18n": "国際化",
+      "frameworks": "フレームワーク対応",
+      "monorepo": "Monorepo規模",
+      "api": "APIフレームワーク",
+      "e2eTests": "E2Eテスト",
+      "archTests": "アーキテクチャテスト",
+      "designSystem": "デザインシステム",
+      "bgJobs": "バックグラウンドジョブ",
+      "license": "ライセンス"
+    },
+    "values": {
+      "orgRbacIsolation": "組織 + RBAC + 行レベル分離",
+      "orgRolesSeat": "組織 + ロール + シート課金",
+      "manualSetup": "手動構築",
+      "multiProviderGateway": "マルチプロバイダーGW",
+      "vercelAiSdk": "Vercel AI SDK",
+      "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
+      "clerkOnly": "Clerk",
+      "betterAuth": "Better Auth（セルフホスト）",
+      "stripeUsage": "5プロバイダー + 従量課金",
+      "stripeOnly": "Stripe",
+      "fiveProviders": "5つの決済プロバイダー",
+      "sevenLangs": "7言語",
+      "nextjsOnly": "Next.jsのみ",
+      "nextNuxtTanstack": "Next.js + Nuxt + TanStack",
+      "turboNineApps": "Turborepo · 9アプリ",
+      "turboSevenApps": "Turborepo · 7アプリ",
+      "turboFiveApps": "Turborepo · 5アプリ",
+      "honoOpenapi": "Hono + OpenAPI + oRPC + tRPC",
+      "trpc": "tRPC",
+      "honoOrpc": "Hono + oRPC",
+      "playwrightSharded": "Playwright · 4シャード",
+      "playwrightGha": "Playwright + GH Actions",
+      "sevenPropertyBased": "7つのプロパティテスト",
+      "fourLayerTokens": "4層トークンエンジン",
+      "shadcn": "shadcn/ui",
+      "radixShadcn": "Radix + shadcn/ui",
+      "inngest": "Inngest",
+      "triggerQstash": "trigger.dev + QStash",
+      "agpl": "AGPL-3.0（無料）",
+      "mit": "MIT（無料）",
+      "paidFrom349": "$349から"
+    }
   },
   "footer": {
     "brandDescription": "数週間でSaaSを出荷。マルチテナント、課金、認証、AI——初日から本番対応。",
@@ -71,7 +131,8 @@
       "faq": "よくある質問",
       "github": "GitHub",
       "discord": "Discord",
-      "twitter": "X (Twitter)"
+      "twitter": "X (Twitter)",
+      "product": "Product"
     },
     "copyright": "© 2026 Nebutra Intelligence. 無断複写・転載を禁じます。",
     "statusOnline": "全システム正常稼働中",
@@ -83,6 +144,23 @@
   },
   "logoStrip": {
     "tagline": "Engineered upon the premier technologies driving the modern web"
+  },
+  "monorepoTree": {
+    "badge": "TURBOREPO STRUCTURE",
+    "title": "6 apps. 5 packages. One monorepo.",
+    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
+    "cta": "Explore the monorepo architecture"
+  },
+  "stats": {
+    "title": "By The Numbers",
+    "github": "GitHub Stars",
+    "discord": "Discord Members",
+    "setup": "Avg Setup Time",
+    "packages": "Monorepo Packages",
+    "ctaStar": "Star →",
+    "ctaJoin": "Join →",
+    "ctaStart": "Start →",
+    "ctaExplore": "Explore →"
   },
   "legal": {
     "nav": {
@@ -333,7 +411,11 @@
         "name": "ホビー版",
         "price": "無料",
         "description": "個人プロジェクトとテスト向け",
-        "features": ["1プロジェクト", "コミュニティサポート", "基本分析"],
+        "features": [
+          "1プロジェクト",
+          "コミュニティサポート",
+          "基本分析"
+        ],
         "ctaText": "無料で始める"
       },
       "pro": {
@@ -341,14 +423,24 @@
         "price": "$29",
         "description": "急速に拡大するスタートアップに最適",
         "isPopular": true,
-        "features": ["無制限のプロジェクト", "優先サポート", "カスタムドメイン", "高度なAI機能"],
+        "features": [
+          "無制限のプロジェクト",
+          "優先サポート",
+          "カスタムドメイン",
+          "高度なAI機能"
+        ],
         "ctaText": "プロ版にアップグレード"
       },
       "enterprise": {
         "name": "エンタープライズ版",
         "price": "別途見積",
         "description": "大規模なチームと高トラフィック向け",
-        "features": ["SSO連携", "専用Slackチャンネル", "99.9%のSLA保証", "完全ホワイトラベル対応"],
+        "features": [
+          "SSO連携",
+          "専用Slackチャンネル",
+          "99.9%のSLA保証",
+          "完全ホワイトラベル対応"
+        ],
         "ctaText": "お問い合わせ"
       }
     },
@@ -428,6 +520,48 @@
         "f3": "Advanced Architecture Tests",
         "f4": "Private Discord Developer Community",
         "f5": "1 Year Expert Technical Support"
+      },
+      "socialProofText": "trusted by <highlight>1276 developers</highlight>",
+      "frameworkText": "Choose your framework:",
+      "frameworkNext": "Next.js",
+      "frameworkNuxt": "Nuxt",
+      "frameworkTanStack": "TanStack (Soon)",
+      "solo": {
+        "badge": "SOLO",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Perfect for One-Person Companies (OPC) executing rapid MVP iterations under the AGPL license.",
+        "cta": "Clone Repository",
+        "f1": "Complete Next.js 16 SaaS core",
+        "f2": "Unlimited Personal Projects (Commercial use allowed)",
+        "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Admin UI, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "AGPLv3 Open Source License"
+      },
+      "startup": {
+        "badge": "STARTUP",
+        "price": "$799",
+        "period": "lifetime",
+        "desc": "Build faster as a team.",
+        "cta": "Get Nebutra for Startups",
+        "f1": "Up to 5 Developer Seats",
+        "f2": "Unlimited Team Projects",
+        "f3": "30-min Architecture Consult (Onboarding Call)",
+        "f4": "Priority Support",
+        "f5": "Everything in Solo"
+      },
+      "agency": {
+        "badge": "AGENCY",
+        "price": "$1,499",
+        "period": "lifetime",
+        "desc": "The ultimate SaaS factory.",
+        "cta": "Get Nebutra for Agencies",
+        "f1": "Up to 10 Developer Seats",
+        "f2": "Unlimited Client Projects",
+        "f3": "30-min Architecture Consult (Onboarding Call)",
+        "f4": "White-label potential",
+        "f5": "Everything in Startup",
+        "f6": "Private Discord support channel"
       }
     },
     "faq": {
@@ -573,69 +707,102 @@
       "card3Desc": "CodeQL SAST, Gitleaks, cosign signing, SBOM/SLSA provenance, Lighthouse ≥0.95, OpenAPI backward compatibility, k6 load tests, Chromatic visual regression."
     }
   },
+  "featuresPage": {
+    "hero": {
+      "badge": "プラットフォーム機能",
+      "headlinePrefix": "ユニコーンを出荷するために",
+      "headlineHighlight": "必要なすべて。",
+      "description": "Nebutra はフルスタック SaaS プラットフォームです。AI、課金、マルチテナンシー、オブザーバビリティ、セキュリティが初日から組み込まれています。車輪の再発明はもう不要です。"
+    },
+    "sections": {
+      "ai_category": "AI & Intelligence",
+      "ai_f1_title": "Multi-model chat completions",
+      "ai_f1_desc": "Route requests to GPT-5.4, Claude Opus 4, Gemini 3.1, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
+      "ai_f2_title": "Semantic embeddings",
+      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
+      "ai_f3_title": "AI usage metering",
+      "ai_f3_desc": "Track token consumption per tenant per billing period. Set per-plan quotas and auto-notify on 80% / 100% burn.",
+      "multi_category": "Multi-tenant Platform",
+      "multi_f1_title": "Organisation-level isolation",
+      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
+      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth)",
+      "multi_f2_desc": "Switch auth providers via preset config. Clerk for managed, Better Auth or NextAuth for self-hosted. Phone + SMS login for China market via Aliyun/Tencent Cloud.",
+      "multi_f3_title": "Automatic tenant provisioning",
+      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
+      "dx_category": "Developer Experience",
+      "dx_f1_title": "Hashed API keys",
+      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
+      "dx_f2_title": "Idempotency middleware",
+      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
+      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
+      "billing_category": "Billing & Monetisation",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
+      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
+      "billing_f2_title": "Usage-based quota enforcement",
+      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
+      "billing_f3_title": "Webhook lifecycle sync",
+      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
+      "rel_category": "Reliability",
+      "rel_f1_title": "Circuit breaker + retry",
+      "rel_f1_desc": "Every Python microservice uses a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
+      "rel_f2_title": "Dead letter queue",
+      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
+      "rel_f3_title": "SLO burn-rate alerts",
+      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
+      "sec_category": "Security",
+      "sec_f1_title": "CSP nonce-based headers",
+      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
+      "sec_f2_title": "ModSecurity WAF",
+      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
+      "sec_f3_title": "SBOM + SLSA provenance",
+      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
+      "obs_category": "Observability",
+      "obs_f1_title": "OpenTelemetry tracing",
+      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
+      "obs_f2_title": "Grafana dashboards",
+      "obs_f2_desc": "32-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
+      "obs_f3_title": "Sentry error tracking",
+      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
+      "data_category": "Data & Analytics",
+      "data_f1_title": "ClickHouse OLAP warehouse",
+      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
+      "data_f2_title": "Funnel analytics",
+      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
+      "data_f3_title": "Kafka / event ingestion",
+      "data_f3_desc": "High-throughput event ingestion service decouples your application from your data warehouse. Schema validation at the edge.",
+      "infra_category": "Infrastructure",
+      "infra_f1_title": "GitOps with ArgoCD",
+      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
+      "infra_f2_title": "PgBouncer connection pooling",
+      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
+      "infra_f3_title": "Horizontal + vertical autoscaling",
+      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 準備中",
+    "description": {
+      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
+      "opc": "The hub for the ultimate OPC developers is being built. Subscribe to our release channels to be notified of the upcoming launch.",
+      "roadmap": "Our technical blueprint is being formalized. The interactive changelog dashboard will sync with the Nebutra core repository soon."
+    },
+    "returnBtn": "ホームに戻る"
+  },
+  "showcase": {
+    "badge": "実際の動作",
+    "headline": "デモではなく、本番環境のために構築。",
+    "tabs": {
+      "dashboard": "Dashboard",
+      "billing": "Billing",
+      "ai-chat": "AI Chat"
+    }
+  },
   "blogShowcase": {
     "badge": "ブログより",
     "title": "エンジニアリングインサイト",
     "subtitle": "SaaSアーキテクチャ、AIインフラ、プロダクションエンジニアリングの深掘り。",
     "readMore": "続きを読む"
-  },
-  "comparison": {
-    "badge": "SAILOR 比較",
-    "title": "Sailor と競合製品の比較",
-    "columns": {
-      "feature": "機能",
-      "sailor": "Nebutra Sailor",
-      "nextForge": "next-forge",
-      "supastarter": "Supastarter"
-    },
-    "features": {
-      "multiTenant": "マルチテナント",
-      "aiGateway": "AI統合",
-      "auth": "認証",
-      "billing": "課金・決済",
-      "i18n": "国際化",
-      "frameworks": "フレームワーク対応",
-      "monorepo": "Monorepo規模",
-      "api": "APIフレームワーク",
-      "e2eTests": "E2Eテスト",
-      "archTests": "アーキテクチャテスト",
-      "designSystem": "デザインシステム",
-      "bgJobs": "バックグラウンドジョブ",
-      "license": "ライセンス"
-    },
-    "values": {
-      "orgRbacIsolation": "組織 + RBAC + 行レベル分離",
-      "orgRolesSeat": "組織 + ロール + シート課金",
-      "manualSetup": "手動構築",
-      "multiProviderGateway": "マルチプロバイダーGW",
-      "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
-      "clerkOnly": "Clerk",
-      "betterAuth": "Better Auth（セルフホスト）",
-      "stripeUsage": "5プロバイダー + 従量課金",
-      "stripeOnly": "Stripe",
-      "fiveProviders": "5つの決済プロバイダー",
-      "sevenLangs": "7言語",
-      "nextjsOnly": "Next.jsのみ",
-      "nextNuxtTanstack": "Next.js + Nuxt + TanStack",
-      "turboNineApps": "Turborepo · 9アプリ",
-      "turboSevenApps": "Turborepo · 7アプリ",
-      "turboFiveApps": "Turborepo · 5アプリ",
-      "honoOpenapi": "Hono + OpenAPI + oRPC + tRPC",
-      "trpc": "tRPC",
-      "honoOrpc": "Hono + oRPC",
-      "playwrightSharded": "Playwright · 4シャード",
-      "playwrightGha": "Playwright + GH Actions",
-      "sevenPropertyBased": "7つのプロパティテスト",
-      "fourLayerTokens": "4層トークンエンジン",
-      "shadcn": "shadcn/ui",
-      "radixShadcn": "Radix + shadcn/ui",
-      "inngest": "Inngest",
-      "triggerQstash": "trigger.dev + QStash",
-      "agpl": "AGPL-3.0（無料）",
-      "mit": "MIT（無料）",
-      "paidFrom349": "$349から"
-    }
   },
   "agenticCapabilities": {
     "badge": "エージェンティック・エンジニアリング",
@@ -656,7 +823,25 @@
       }
     ],
     "ctaText": "AIアーキテクチャを見る",
-    "ctaLink": "/docs/ai-architecture"
+    "ctaLink": "/docs/ai-architecture",
+    "items": {
+      "harness": {
+        "title": "Harness Engineering & Architecture Tests",
+        "desc": "100% test-covered, property-based robust topologies. Never break production again."
+      },
+      "agentic": {
+        "title": "AI-Native & Agentic Coding",
+        "desc": "System workflows orchestrated specifically for LLM auto-generation and agentic pair-programming."
+      },
+      "vibe": {
+        "title": "Vibe Business & AI Gateway",
+        "desc": "A seamless, multi-provider gateway allowing founders to iterate based on vibes while we handle the complex infrastructure."
+      },
+      "design": {
+        "title": "Design System Depth",
+        "desc": "4-layer token engine reflecting Studio Dumbar and Framer excellence. Pure visual perfection."
+      }
+    }
   },
   "useCases": {
     "badge": "デプロイメントシナリオ",
@@ -811,5 +996,11 @@
     "compTraditionalLabel": "従来のSEO",
     "compTraditional": "手動のmetaタグ → 遅いクロール → AI検索に不可視",
     "compSailor": "自動化schema → 即時インデックス → AIエンジンに引用 → グローバルリーチ"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "desc": "お探しのページは削除されたか、一時的に利用できません。",
+    "home": "ホームに戻る",
+    "docs": "ドキュメントを読む"
   }
 }

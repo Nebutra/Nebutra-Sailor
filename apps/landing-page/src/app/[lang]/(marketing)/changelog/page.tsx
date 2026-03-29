@@ -5,6 +5,7 @@ import { cacheLife } from "next/cache";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { InteractiveChangelog, type Release } from "@/components/landing/InteractiveChangelog";
 import { type Locale, routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -151,106 +152,52 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
   const cmsEntries: CmsEntry[] = await getChangelogEntries();
   const useCms = cmsEntries.length > 0;
 
-  const releases = useCms
+  const mappedReleases: Release[] = useCms
     ? cmsEntries.map((entry) => {
-        const type = entry.type ?? "feature";
         return {
           version: entry.version,
           date: entry.publishedAt?.split("T")[0] ?? "",
-          tag: type.charAt(0).toUpperCase() + type.slice(1),
-          tagColor: TAG_COLORS[type] ?? "var(--blue-9)",
-          highlights: entry.summary ? entry.summary.split("\n").filter(Boolean) : [entry.title],
+          title: entry.title,
+          excerpt: entry.summary ?? entry.title,
+          // Unsplash premium placeholder
+          image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
+          content: (
+            <ul>
+              {entry.summary?.split("\n").filter(Boolean).map((bullet, i) => (
+                <li key={i}>{bullet}</li>
+              ))}
+            </ul>
+          ),
+          contributors: ["https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1200"],
         };
       })
-    : STATIC_RELEASES;
+    : STATIC_RELEASES.map(r => ({
+        version: r.version,
+        title: `v${r.version} ${r.tag} Update`,
+        date: r.date,
+        excerpt: r.highlights[0] ?? "Significant stability & feature updates.",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+        contributors: [
+          "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200"
+        ],
+        content: (
+          <ul className="list-disc pl-4 space-y-2 mt-4">
+            {r.highlights.map((h, i) => (
+              <li key={i}>{h}</li>
+            ))}
+          </ul>
+        ),
+      }));
 
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-black">
       <Navbar />
+      
+      <InteractiveChangelog releases={mappedReleases} />
 
-      <section className="mx-auto max-w-3xl px-4 py-24 sm:px-6 lg:px-8">
-        {/* Header */}
-        <AnimateIn preset="emerge" inView>
-          <div className="mb-16">
-            <h1
-              className="text-4xl font-bold tracking-tight"
-              style={{
-                background: "var(--brand-gradient)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Changelog
-            </h1>
-            <p className="mt-4 text-[var(--neutral-11)]">
-              Every release, shipped with obsessive attention to detail.
-            </p>
-          </div>
-        </AnimateIn>
-
-        {/* Timeline */}
-        <div className="relative">
-          <div
-            className="absolute left-[11px] top-2 h-full w-0.5"
-            style={{ background: "var(--neutral-7)" }}
-            aria-hidden
-          />
-
-          <ol className="space-y-12">
-            {releases.map((release) => (
-              <AnimateIn key={release.version} preset="fadeUp" inView>
-                <li className="relative pl-8">
-                  <div
-                    className="absolute left-0 top-1.5 h-[22px] w-[22px] rounded-full border-2 border-white dark:border-black"
-                    style={{ background: "var(--brand-gradient)" }}
-                    aria-hidden
-                  />
-
-                  <div className="flex flex-wrap items-baseline gap-3">
-                    <h2 className="text-lg font-bold text-[var(--neutral-12)]">
-                      v{release.version}
-                    </h2>
-                    <span
-                      className="rounded-full px-2 py-0.5 text-xs font-semibold text-white"
-                      style={{ background: release.tagColor }}
-                    >
-                      {release.tag}
-                    </span>
-                    {release.date && (
-                      <time dateTime={release.date} className="text-sm text-[var(--neutral-11)]">
-                        {new Date(release.date).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </time>
-                    )}
-                  </div>
-
-                  <ul className="mt-4 space-y-2">
-                    {release.highlights.map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-start gap-2 text-sm text-[var(--neutral-11)]"
-                      >
-                        <span
-                          className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
-                          style={{ background: "var(--blue-9)" }}
-                          aria-hidden
-                        />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              </AnimateIn>
-            ))}
-          </ol>
-        </div>
-
+      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <AnimateIn preset="fade" inView>
-          <p className="mt-16 text-center text-sm text-[var(--neutral-11)]">
+          <p className="text-center text-sm text-[var(--neutral-11)]">
             Subscribe to release notes via{" "}
             <a
               href="/api/changelog.rss"
