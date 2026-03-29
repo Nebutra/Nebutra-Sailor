@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "@nebutra/tokens";
 import { AnimateIn } from "@nebutra/ui/components";
 import {
   Button,
@@ -14,10 +15,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@nebutra/ui/primitives";
-import { Dithering, MeshGradient } from "@paper-design/shaders-react";
 import { Copy, ExternalLink, GitPullRequest, Maximize2 } from "lucide-react";
 import Image from "next/image";
-import type * as React from "react";
+import * as React from "react";
 import { toast } from "sonner";
 
 export interface Release {
@@ -34,32 +34,50 @@ export interface InteractiveChangelogProps {
 }
 
 export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) => {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const getVersionSlug = (title: string) => {
-    return title.split(":")[0].replace(/[^a-zA-Z0-9.-]/g, "").toLowerCase() || "latest";
+    return (
+      title
+        .split(":")[0]
+        .replace(/[^a-zA-Z0-9.-]/g, "")
+        .toLowerCase() || "latest"
+    );
   };
 
   const handleCopyLink = (title: string) => {
     if (typeof navigator !== "undefined") {
       const slug = getVersionSlug(title);
-      navigator.clipboard.writeText(
-        `${window.location.origin}${window.location.pathname}#${slug}`,
-      );
+      navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#${slug}`);
       toast.success("Link copied to clipboard!");
     }
   };
 
   return (
     <section className="relative w-full overflow-hidden bg-white dark:bg-black">
-      {/* shader header full-width */}
-      <div className="relative w-full overflow-hidden">
-        <MeshGradient
-          colors={["#5b00ff", "#00ffa3", "#ff9a00", "#ea00ff"]}
-          swirl={0.55}
-          distortion={0.85}
-          speed={0.1}
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-        />
-        <Dithering style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
+      {/* spline hero full-width */}
+      <div className="relative w-full overflow-hidden min-h-[300px]">
+        {mounted && (
+          <div className="spline-container absolute top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-80 dark:opacity-60">
+            <iframe
+              src={
+                resolvedTheme === "light"
+                  ? "https://my.spline.design/orbit-XDLATgFZPQX6SO6dgJGqPwHD/"
+                  : "https://my.spline.design/retrofuturismbganimation-Lb3VtL1bNaYUnirKNzn0FvaW/"
+              }
+              frameBorder="0"
+              width="100%"
+              height="100%"
+              id="aura-spline"
+              title="Changelog Background"
+            />
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/30 w-full" />
 
         <div className="relative container mx-auto px-4 py-12 text-left">
@@ -110,9 +128,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                         <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent to-black/50 opacity-100" />
                       </div>
                     </DialogTrigger>
-                    <p className="text-muted-foreground text-sm font-medium">
-                      {item.excerpt}
-                    </p>
+                    <p className="text-muted-foreground text-sm font-medium">{item.excerpt}</p>
 
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1">
@@ -170,11 +186,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <Button variant="ghost" size="icon" asChild>
-                                <a
-                                  href={`#${slug}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
+                                <a href={`#${slug}`} target="_blank" rel="noopener noreferrer">
                                   <ExternalLink className="size-4" />
                                 </a>
                               </Button>
@@ -186,7 +198,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                         </TooltipProvider>
                       </div>
                     </div>
-                </div>
+                  </div>
 
                   {/* Dividing line connecting items */}
                   <div className="absolute bottom-0 left-0 right-0 h-px w-[200vw] -translate-x-1/2 bg-border" />
@@ -196,9 +208,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
               <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-prose">
                 <DialogHeader>
                   <DialogTitle className="text-left">{item.title}</DialogTitle>
-                  <DialogDescription className="text-left">
-                    {item.excerpt}
-                  </DialogDescription>
+                  <DialogDescription className="text-left">{item.excerpt}</DialogDescription>
                 </DialogHeader>
                 <Image
                   src={

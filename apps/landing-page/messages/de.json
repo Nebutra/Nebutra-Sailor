@@ -76,7 +76,7 @@
       "manualSetup": "Manuell einrichten",
       "multiProviderGateway": "Multi-Provider-Gateway",
       "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
+      "clerkCustomIdp": "Clerk / Better Auth",
       "clerkOnly": "Clerk",
       "betterAuth": "Better Auth (Self-Hosted)",
       "stripeUsage": "5 Anbieter + Nutzungsabr.",
@@ -411,11 +411,7 @@
         "name": "Hobby",
         "price": "Free",
         "description": "For side projects",
-        "features": [
-          "1 Project",
-          "Community Support",
-          "Basic Analytics"
-        ],
+        "features": ["1 Project", "Community Support", "Basic Analytics"],
         "ctaText": "Start Free"
       },
       "pro": {
@@ -423,24 +419,14 @@
         "price": "$29",
         "description": "For startups",
         "isPopular": true,
-        "features": [
-          "Unlimited Projects",
-          "Priority Support",
-          "Custom Domain",
-          "Advanced AI"
-        ],
+        "features": ["Unlimited Projects", "Priority Support", "Custom Domain", "Advanced AI"],
         "ctaText": "Get Pro"
       },
       "enterprise": {
         "name": "Enterprise",
         "price": "Custom",
         "description": "For large teams",
-        "features": [
-          "SSO",
-          "Dedicated Slack Channel",
-          "SLA 99.9%",
-          "White-label"
-        ],
+        "features": ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
         "ctaText": "Contact Us"
       }
     },
@@ -725,8 +711,8 @@
       "multi_category": "Multi-tenant Platform",
       "multi_f1_title": "Organisation-level isolation",
       "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth)",
-      "multi_f2_desc": "Switch auth providers via preset config. Clerk for managed, Better Auth or NextAuth for self-hosted. Phone + SMS login for China market via Aliyun/Tencent Cloud.",
+      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth)",
+      "multi_f2_desc": "Switch auth providers via preset config. Clerk for managed, Better Auth for self-hosted. Phone + SMS login for China market via Aliyun/Tencent Cloud.",
       "multi_f3_title": "Automatic tenant provisioning",
       "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
       "dx_category": "Developer Experience",
