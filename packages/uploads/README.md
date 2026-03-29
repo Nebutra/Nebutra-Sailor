@@ -1,3 +1,5 @@
+> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+
 # @nebutra/uploads
 
 Large file upload service for the Nebutra-Sailor monorepo. Handles all upload scenarios with support for multiple storage backends.

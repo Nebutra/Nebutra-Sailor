@@ -74,6 +74,7 @@ export class AgentOrchestrator {
 
   /**
    * Execute a multi-agent pipeline where each step's output feeds the next.
+   * @experimental — API may change. Use `chat()` for production workloads.
    */
   async pipeline(
     steps: readonly PipelineStep[],
@@ -122,6 +123,7 @@ export class AgentOrchestrator {
   /**
    * Broadcast a message to ALL registered agents in parallel.
    * Returns an array of responses (one per agent).
+   * @experimental — API may change. Use `chat()` for production workloads.
    */
   async broadcast(message: string, context: AgentContext): Promise<readonly AgentResponse[]> {
     await this.assertQuota(context.tenantId);

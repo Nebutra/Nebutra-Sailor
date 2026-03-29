@@ -1,3 +1,5 @@
+> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+
 # @nebutra/queue
 
 Provider-agnostic message queue with support for **Upstash QStash** (serverless) and **BullMQ** (self-hosted Redis).

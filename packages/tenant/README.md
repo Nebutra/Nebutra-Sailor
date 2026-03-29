@@ -1,3 +1,5 @@
+> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+
 # @nebutra/tenant
 
 Multi-tenancy context and isolation for the Nebutra platform.

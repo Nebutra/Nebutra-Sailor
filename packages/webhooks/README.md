@@ -1,3 +1,5 @@
+> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+
 # @nebutra/webhooks
 
 Provider-agnostic webhook outbound management system for Nebutra. Supports **Svix** (managed) and **custom** (self-hosted) webhook delivery.

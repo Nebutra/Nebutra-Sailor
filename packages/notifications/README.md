@@ -1,3 +1,5 @@
+> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+
 # @nebutra/notifications
 
 Provider-agnostic notification center for the Nebutra platform. Supports multiple channels (in-app, email, push, SMS, chat) and multiple backends (Novu or self-hosted).

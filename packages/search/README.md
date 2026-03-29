@@ -1,3 +1,5 @@
+> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+
 # @nebutra/search
 
 Provider-agnostic full-text search package for Nebutra-Sailor. Supports **Meilisearch**, **Typesense**, and **Algolia** backends with the same API.
