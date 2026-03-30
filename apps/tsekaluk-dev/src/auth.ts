@@ -6,6 +6,12 @@ import { prisma } from "@/lib/prisma";
 export const auth = betterAuth({
   secret: process.env.AUTH_SECRET,
   baseURL: process.env.BETTER_AUTH_URL ?? process.env.NEXT_PUBLIC_SITE_URL,
+  trustedOrigins: [
+    process.env.BETTER_AUTH_URL,
+    process.env.NEXT_PUBLIC_SITE_URL,
+    "https://www.tsekaluk.dev",
+    "https://tsekaluk.dev",
+  ].filter((v): v is string => Boolean(v)),
   database: prisma
     ? prismaAdapter(prisma, {
         provider: "postgresql",

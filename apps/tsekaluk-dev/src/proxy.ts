@@ -8,6 +8,6 @@ export const config = {
     // Match root and locale-prefixed paths, skip Next.js internals and static files
     "/",
     "/(en|zh|ja)/:path*",
-    "/((?!_next|_vercel|api|.*\\..*).*)",
+    "/((?!_next|_vercel|api|og|.*\\..*).*)",
   ],
 };
