@@ -146,24 +146,31 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
   return (
     <section className="relative w-full overflow-hidden bg-[var(--neutral-1)] dark:bg-black">
       {/* spline hero full-width */}
-      <div className="relative w-full overflow-hidden min-h-[300px]">
-        {mounted && (
-          <div className="spline-container absolute top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-80 dark:opacity-60">
-            <iframe
-              src={
-                resolvedTheme === "light"
+      <div className="relative w-full overflow-hidden min-h-[300px] bg-neutral-950">
+        {/* Always render the iframe — theme src swaps after mount via mounted flag.
+            opacity-0 on SSR avoids a brief wrong-theme flash; transitions to full
+            opacity once mounted so there's no layout shift or white-screen gap. */}
+        <div
+          className={`spline-container absolute top-0 left-0 w-full h-full -z-10 pointer-events-none transition-opacity duration-700 ${
+            mounted ? "opacity-80 dark:opacity-60" : "opacity-0"
+          }`}
+        >
+          <iframe
+            src={
+              mounted
+                ? resolvedTheme === "light"
                   ? "https://my.spline.design/orbit-XDLATgFZPQX6SO6dgJGqPwHD/"
                   : "https://my.spline.design/retrofuturismbganimation-Lb3VtL1bNaYUnirKNzn0FvaW/"
-              }
-              frameBorder="0"
-              width="100%"
-              height="100%"
-              id="aura-spline"
-              title="Changelog Background"
-            />
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/30 w-full" />
+                : "https://my.spline.design/retrofuturismbganimation-Lb3VtL1bNaYUnirKNzn0FvaW/"
+            }
+            frameBorder="0"
+            width="100%"
+            height="100%"
+            id="aura-spline"
+            title="Changelog Background"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50 w-full" />
 
         <div className="relative container mx-auto px-4 py-12 text-left">
           <div className="flex flex-col gap-3">
