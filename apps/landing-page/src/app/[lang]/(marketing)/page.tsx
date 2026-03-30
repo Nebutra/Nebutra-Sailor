@@ -54,7 +54,7 @@ const AlternativeComparison = dynamic(
 
 const AgenticCapabilitiesSection = dynamic(
   () =>
-    import("@/components/landing/AgenticCapabilitiesSection").then(
+    import("@/components/landing/agentic-capabilities").then(
       (mod) => mod.AgenticCapabilitiesSection,
     ),
   { loading: () => <section className="h-96" aria-hidden /> },

@@ -2,16 +2,15 @@
  * Landing Page Section Components
  */
 
-// Micro Landing components (ML-1.x through ML-9.x)
-export { AgenticCapabilitiesSection } from "./AgenticCapabilitiesSection";
-export { AgenticEngineeringSection } from "./AgenticEngineeringSection";
 export { AIConstellationMarquee } from "./AIConstellationMarquee";
 export { AlternativeComparison } from "./AlternativeComparison";
+// Micro Landing components (ML-1.x through ML-9.x)
+export { AgenticCapabilitiesSection } from "./agentic-capabilities";
+export { AgenticEngineeringSection } from "./agentic-engineering";
 export { BlogShowcase, type BlogShowcaseProps } from "./BlogShowcase";
 export { CapabilityMatrixSection } from "./CapabilityMatrixSection";
 
 export { DesignSystemSection } from "./DesignSystemSection";
-export { InteractiveChangelog } from "./InteractiveChangelog";
 // Legacy components (kept for backwards compat)
 export { FeatureCards } from "./FeatureCards";
 export { FinalCTA } from "./FinalCTA";
@@ -19,6 +18,7 @@ export { FooterMinimal } from "./FooterMinimal";
 export { GlobalEdgeMap } from "./GlobalEdgeMap";
 export { HarnessEngineeringSection } from "./HarnessEngineeringSection";
 export { HeroSection } from "./HeroSection";
+export { InteractiveChangelog } from "./InteractiveChangelog";
 export { LogoStrip } from "./LogoStrip";
 export { MonorepoFileTree } from "./MonorepoFileTree";
 export { Navbar } from "./Navbar";
