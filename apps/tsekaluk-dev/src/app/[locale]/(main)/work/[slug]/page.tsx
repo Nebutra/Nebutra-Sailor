@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { MermaidDiagram } from "@/components/mermaid-diagram";
 import { TechBadge } from "@/components/tech-badge";
 import { Link as LocaleLink } from "@/i18n/navigation";
@@ -21,6 +21,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string; locale: string }>;
 }): Promise<Metadata> {
   const { slug, locale } = await params;
+  setRequestLocale(locale);
   const localizedProjects = await getLocalizedProjects(locale);
   const project = localizedProjects.find((p) => p.slug === slug);
   if (!project) return {};
@@ -55,6 +56,7 @@ export default async function ProjectDetailPage({
   params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug, locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "pages.work" });
   const localizedProjects = await getLocalizedProjects(locale);
   const project = localizedProjects.find((p) => p.slug === slug);

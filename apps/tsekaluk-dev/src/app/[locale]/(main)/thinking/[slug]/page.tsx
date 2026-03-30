@@ -2,7 +2,7 @@ import { AnimateIn } from "@nebutra/ui/components";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type BlogFrontmatter, blog, getReadingTime } from "@/lib/articles";
 import { articleJsonLd } from "@/lib/json-ld";
@@ -19,6 +19,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string; locale: string }>;
 }): Promise<Metadata> {
   const { slug, locale } = await params;
+  setRequestLocale(locale);
   const page = blog.getPage([slug]);
   if (!page) return {};
 
@@ -55,6 +56,7 @@ export default async function ArticlePage({
   params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug, locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "nav" });
   const page = blog.getPage([slug]);
   if (!page) notFound();
