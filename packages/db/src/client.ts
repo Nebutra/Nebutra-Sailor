@@ -51,10 +51,26 @@ function createPrismaClient(): PrismaClient {
   });
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+// Lazy singleton — the client is NOT created on import, only on first property
+// access. This prevents build-time errors in Next.js when DATABASE_URL is not
+// available (e.g. during `next build` on CI/Vercel before env vars are injected
+// into the running process).
+let _client: PrismaClient | undefined;
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+function getClient(): PrismaClient {
+  if (!_client) {
+    _client = globalForPrisma.prisma ?? createPrismaClient();
+    if (process.env.NODE_ENV !== "production") {
+      globalForPrisma.prisma = _client;
+    }
+  }
+  return _client;
 }
+
+export const prisma: PrismaClient = new Proxy({} as PrismaClient, {
+  get(_target, prop: string | symbol) {
+    return Reflect.get(getClient(), prop);
+  },
+});
 
 export type { PrismaClient };
