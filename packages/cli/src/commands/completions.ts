@@ -29,6 +29,14 @@ const KNOWN_COMMANDS = [
   "auth",
   "billing",
   "stats",
+  // Platform & ecosystem
+  "admin",
+  "community",
+  "growth",
+  "ecosystem",
+  "services",
+  "search",
+  "secrets",
 ];
 
 const KNOWN_FLAGS = [

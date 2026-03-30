@@ -220,7 +220,12 @@
       },
       "ctaHeading": "Require deeper technical evaluation?",
       "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaButton": "Establish Contact",
+      "missionP3": "Relying on this powerful core foundation, the company has formed three main business loops: First, providing enterprise-grade agile underlying foundation solutions, facilitating private deployments of full-stack business hubs and AI engines for commercial clients. Second, launching cross-digital ecosystem Vibe Business co-incubations, empowering outstanding founders to rapidly validate commercial intuitions in overseas markets and co-incubating the next generation of \"unicorn\" projects with high human-efficiency leverage. Finally, delivering deep digital customization services, intimately combining underlying technology with business workflows to empower vertical industries and government/enterprise sectors in their digital restructuring.",
+      "missionP4": "\"Aggregating in the cloud, birthing intelligence.\" Nebutra Intelligence firmly believes that in this age of acceleration, the ability to rapidly deploy architecture and the execution power of commercial error-correction form the only true moat. Every launch is growth in action; with continuously innovating infrastructure, we strive to be the most reliable technical partner for every explorer setting sail into the commercial sea of stars.",
+      "jobsTitle": "Core Engineering Opportunities",
+      "jobsDescription": "We're expanding our core infrastructure team. Join us to co-create the next generation of AI-native enterprise solutions.",
+      "jobsButton": "View Open Positions"
     },
     "contact": {
       "title": "Technical & Commercial Inquiry — Nebutra Intelligence",
@@ -277,14 +282,210 @@
         "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
       },
       "companyInfoTitle": "Operational Telemetry",
-      "socialMedia": "Primary Network Links"
+      "socialMedia": "Primary Network Links",
+      "companyNameChinese": "无锡云毓智能科技有限公司",
+      "companyNameEnglish": "Wuxi Nebutra Intelligent Technology Co., Ltd.",
+      "companyAddress": "Wuxi, Jiangsu Province, China"
     },
     "cookies": {
       "title": "Data Retention Protocols — Nebutra",
       "description": "Elucidating the platform's execution of necessary technical storage mechanics to maintain session states and platform analytics.",
       "heading": "Technical Tracking Mechanics",
       "effectiveDate": "Mandatory Enforcement Date",
-      "lastUpdated": "Latest Technical Revision"
+      "lastUpdated": "Latest Technical Revision",
+      "dates": {
+        "effective": "January 1, 2025",
+        "updated": "January 1, 2025"
+      },
+      "intro": "This Cookie Policy explains how Nebutra Co., Ltd. (\"Nebutra,\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "whatAreCookies": {
+        "title": "What Are Cookies?",
+        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+      },
+      "howWeUse": {
+        "title": "How We Use Cookies",
+        "intro": "We use cookies to:",
+        "items": {
+          "0": {
+            "label": "Enable Essential Features",
+            "desc": "Provide core functionality like user authentication and security"
+          },
+          "1": {
+            "label": "Remember Preferences",
+            "desc": "Store your language, theme, and other settings"
+          },
+          "2": {
+            "label": "Improve Performance",
+            "desc": "Understand how visitors interact with our services"
+          },
+          "3": {
+            "label": "Personalize Experience",
+            "desc": "Deliver relevant content and recommendations"
+          },
+          "4": {
+            "label": "Measure Marketing",
+            "desc": "Track the effectiveness of our marketing campaigns"
+          }
+        }
+      },
+      "typesTitle": "Types of Cookies We Use",
+      "tableHeaders": {
+        "cookie": "Cookie",
+        "provider": "Provider",
+        "purpose": "Purpose",
+        "duration": "Duration"
+      },
+      "necessary": {
+        "title": "Strictly Necessary Cookies",
+        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "Nebutra",
+            "purpose": "User authentication session",
+            "duration": "Session"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Authentication token",
+            "duration": "7 days"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "Nebutra",
+            "purpose": "Stores cookie consent preferences",
+            "duration": "1 year"
+          }
+        }
+      },
+      "functional": {
+        "title": "Functional Cookies",
+        "description": "These cookies enable personalized features and remember your preferences.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "Nebutra",
+            "purpose": "Stores language preference",
+            "duration": "1 year"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "Nebutra",
+            "purpose": "Stores theme preference",
+            "duration": "1 year"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Analytics Cookies",
+        "description": "These cookies help us understand how visitors interact with our website.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Distinguishes unique users",
+            "duration": "2 years"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Product analytics",
+            "duration": "1 year"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Marketing Cookies",
+        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Tracks visits for Facebook ads",
+            "duration": "3 months"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Conversion tracking",
+            "duration": "3 months"
+          }
+        }
+      },
+      "managingTitle": "Managing Your Cookie Preferences",
+      "consentBanner": {
+        "title": "Cookie Consent Banner",
+        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "items": {
+          "0": {
+            "label": "Accept All",
+            "desc": "Enable all cookie categories"
+          },
+          "1": {
+            "label": "Reject All",
+            "desc": "Disable all optional cookies (necessary cookies remain)"
+          },
+          "2": {
+            "label": "Customize",
+            "desc": "Choose specific cookie categories to enable"
+          }
+        },
+        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+      },
+      "browserSettings": {
+        "title": "Browser Settings",
+        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Settings > Privacy and security > Cookies"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Settings > Privacy & Security > Cookies"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Preferences > Privacy > Cookies"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Settings > Privacy, search, and services > Cookies"
+          }
+        },
+        "note": "Blocking certain cookies may impact website functionality."
+      },
+      "similarTech": {
+        "title": "Similar Technologies",
+        "intro": "In addition to cookies, we may use:",
+        "items": {
+          "0": {
+            "label": "Local Storage",
+            "desc": "To store preferences and cache data locally"
+          },
+          "1": {
+            "label": "Session Storage",
+            "desc": "For temporary data during your browsing session"
+          },
+          "2": {
+            "label": "Pixel Tags",
+            "desc": "Small images to track email opens and website visits"
+          }
+        },
+        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+      },
+      "updates": {
+        "title": "Updates to This Policy",
+        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+      },
+      "contactUs": {
+        "title": "Contact Us",
+        "intro": "If you have questions about our use of cookies, please contact us:",
+        "company": "Nebutra Co., Ltd.",
+        "privacyNote": "For more information about how we collect and process your data, please see our",
+        "privacyLink": "Privacy Policy"
+      }
     },
     "faq": {
       "title": "Engineering Guidance & FAQ — Nebutra",
@@ -384,21 +585,535 @@
       "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
       "heading": "Information Protection Directives",
       "effectiveDate": "Enforcement Epoch",
-      "lastUpdated": "Latest Structural Revision"
+      "lastUpdated": "Latest Structural Revision",
+      "dates": {
+        "effective": "January 1, 2025",
+        "updated": "January 1, 2025"
+      },
+      "intro": "At Nebutra (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "infoWeCollect": {
+        "title": "1. Information We Collect",
+        "youProvide": {
+          "title": "1.1 Information You Provide",
+          "intro": "We collect information you directly provide to us, including:",
+          "items": {
+            "0": {
+              "label": "Account Information",
+              "desc": "Name, email address, password, and organization details when you create an account."
+            },
+            "1": {
+              "label": "Profile Information",
+              "desc": "Profile picture, job title, company name, and other optional information."
+            },
+            "2": {
+              "label": "Payment Information",
+              "desc": "Billing address and payment method details (processed securely through Stripe)."
+            },
+            "3": {
+              "label": "Communications",
+              "desc": "Messages, feedback, and other communications you send to us."
+            },
+            "4": {
+              "label": "Content",
+              "desc": "Any content you create, upload, or store using our Services."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Information Collected Automatically",
+          "intro": "When you use our Services, we automatically collect certain information:",
+          "items": {
+            "0": {
+              "label": "Device Information",
+              "desc": "Device type, operating system, browser type, and unique device identifiers."
+            },
+            "1": {
+              "label": "Usage Information",
+              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+            },
+            "2": {
+              "label": "Log Data",
+              "desc": "IP address, access times, referring URLs, and system activity logs."
+            },
+            "3": {
+              "label": "Location Information",
+              "desc": "General location based on IP address (we do not collect precise geolocation)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. How We Use Your Information",
+        "intro": "We use the information we collect to:",
+        "items": {
+          "0": {
+            "label": "Provide Services",
+            "desc": "Operate, maintain, and improve our Services."
+          },
+          "1": {
+            "label": "Process Transactions",
+            "desc": "Handle payments, billing, and related operations."
+          },
+          "2": {
+            "label": "Communicate",
+            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+          },
+          "3": {
+            "label": "Personalize",
+            "desc": "Customize your experience and provide relevant recommendations."
+          },
+          "4": {
+            "label": "Analyze",
+            "desc": "Understand usage patterns and improve our Services."
+          },
+          "5": {
+            "label": "Protect",
+            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. How We Share Your Information",
+        "intro": "We may share your information in the following circumstances:",
+        "serviceProviders": {
+          "title": "3.1 Service Providers",
+          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "items": {
+            "0": {
+              "label": "Infrastructure",
+              "desc": "Cloud hosting (Vercel, Supabase), database services"
+            },
+            "1": {
+              "label": "Payment Processing",
+              "desc": "Stripe for secure payment handling"
+            },
+            "2": {
+              "label": "Authentication",
+              "desc": "Clerk for identity management"
+            },
+            "3": {
+              "label": "Analytics",
+              "desc": "PostHog, Vercel Analytics for usage insights"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Business Transfers",
+          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+        },
+        "legalRequirements": {
+          "title": "3.3 Legal Requirements",
+          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+        }
+      },
+      "yourRights": {
+        "title": "4. Your Rights and Choices",
+        "accessPortability": {
+          "title": "4.1 Access and Portability",
+          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+        },
+        "correction": {
+          "title": "4.2 Correction",
+          "content": "You can update your account information at any time through the dashboard."
+        },
+        "deletion": {
+          "title": "4.3 Deletion",
+          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+        },
+        "marketing": {
+          "title": "4.4 Marketing Communications",
+          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Data Security",
+        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "items": {
+          "0": "Encryption of data in transit (TLS) and at rest",
+          "1": "Regular security assessments and penetration testing",
+          "2": "Access controls and authentication requirements",
+          "3": "Monitoring and logging of system activity"
+        }
+      },
+      "ccpa": {
+        "title": "6. California Privacy Rights (CCPA)",
+        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "items": {
+          "0": {
+            "label": "Right to Know",
+            "desc": "Request disclosure of information we collect, use, and share."
+          },
+          "1": {
+            "label": "Right to Delete",
+            "desc": "Request deletion of your personal information."
+          },
+          "2": {
+            "label": "Right to Opt-Out",
+            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+          },
+          "3": {
+            "label": "Right to Non-Discrimination",
+            "desc": "We will not discriminate against you for exercising your rights."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. European Privacy Rights (GDPR)",
+        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "items": {
+          "0": {
+            "label": "Legal Basis",
+            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+          },
+          "1": {
+            "label": "Rights",
+            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Contact Us",
+        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "company": "Nebutra Co., Ltd."
+      }
     },
     "refund": {
       "title": "Transaction Anomaly Protocols — Nebutra",
       "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
       "heading": "Dispute Execution Framework",
       "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch"
+      "lastUpdated": "Revision Tracing Epoch",
+      "dates": {
+        "effective": "January 1, 2025",
+        "updated": "January 1, 2025"
+      },
+      "intro": "At Nebutra, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "subscriptionPlans": {
+        "title": "Subscription Plans",
+        "monthly": {
+          "title": "Monthly Subscriptions",
+          "items": {
+            "0": {
+              "label": "Cancellation",
+              "desc": "You may cancel your monthly subscription at any time"
+            },
+            "1": {
+              "label": "Pro-rata Refunds",
+              "desc": "We do not offer pro-rata refunds for partial months"
+            },
+            "2": {
+              "label": "Access",
+              "desc": "You retain access to paid features until the end of your billing period"
+            },
+            "3": {
+              "label": "Automatic Renewal",
+              "desc": "Subscriptions automatically renew unless cancelled"
+            }
+          }
+        },
+        "annual": {
+          "title": "Annual Subscriptions",
+          "items": {
+            "0": {
+              "label": "14-Day Money-Back Guarantee",
+              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+            },
+            "1": {
+              "label": "After 14 Days",
+              "desc": "Refunds are generally not available after the 14-day period"
+            },
+            "2": {
+              "label": "Cancellation",
+              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+            },
+            "3": {
+              "label": "No Pro-rata Refunds",
+              "desc": "We do not offer partial refunds for unused months"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Eligible Refund Scenarios",
+        "intro": "We will consider refund requests in the following circumstances:",
+        "serviceIssues": {
+          "title": "1. Service Issues",
+          "items": {
+            "0": "Significant service outages affecting your ability to use core features",
+            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
+            "2": "Features significantly different from what was advertised"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Billing Errors",
+          "items": {
+            "0": "Duplicate charges",
+            "1": "Incorrect billing amounts",
+            "2": "Unauthorized charges (after verification)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Exceptional Circumstances",
+          "items": {
+            "0": "Documented medical emergencies",
+            "1": "Natural disasters affecting your business",
+            "2": "Other circumstances evaluated on a case-by-case basis"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Non-Refundable Items",
+        "intro": "The following are generally not eligible for refunds:",
+        "items": {
+          "0": {
+            "label": "Usage-based charges",
+            "desc": "API calls, AI token consumption, or storage used"
+          },
+          "1": {
+            "label": "Add-ons and extras",
+            "desc": "One-time purchases or add-on services"
+          },
+          "2": {
+            "label": "Enterprise contracts",
+            "desc": "Custom agreements have their own terms"
+          },
+          "3": {
+            "label": "Voluntary cancellations",
+            "desc": "After the refund eligibility period"
+          },
+          "4": {
+            "label": "Terms violations",
+            "desc": "Accounts terminated for policy violations"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "How to Request a Refund",
+        "step1": {
+          "title": "Step 1: Contact Support",
+          "intro": "Email us at billing@nebutra.com with:",
+          "items": {
+            "0": "Your account email address",
+            "1": "Subscription plan and billing period",
+            "2": "Reason for refund request",
+            "3": "Any relevant documentation"
+          }
+        },
+        "step2": {
+          "title": "Step 2: Review Process",
+          "items": {
+            "0": "We will review your request within 5 business days",
+            "1": "We may ask for additional information",
+            "2": "You will receive a written decision via email"
+          }
+        },
+        "step3": {
+          "title": "Step 3: Refund Processing",
+          "intro": "If approved:",
+          "items": {
+            "0": "Refunds are processed to the original payment method",
+            "1": "Credit card refunds typically appear within 5-10 business days",
+            "2": "Bank processing times may vary"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Plan Changes",
+        "upgrades": {
+          "title": "Upgrades",
+          "items": {
+            "0": "Upgrades take effect immediately",
+            "1": "You are charged the pro-rated difference for the remainder of your billing period",
+            "2": "No refund is provided for the previous plan"
+          }
+        },
+        "downgrades": {
+          "title": "Downgrades",
+          "items": {
+            "0": "Downgrades take effect at the next billing period",
+            "1": "You retain access to current features until then",
+            "2": "No partial refunds for the current period"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Free Trial",
+        "items": {
+          "0": "Free trials do not require payment information",
+          "1": "No charges occur during the trial period",
+          "2": "You will be notified before any charges begin"
+        }
+      },
+      "disputeResolution": {
+        "title": "Dispute Resolution",
+        "intro": "If you disagree with our refund decision:",
+        "steps": {
+          "0": "Reply to the decision email with additional information",
+          "1": "Request escalation to a supervisor",
+          "2": "Contact us at legal@nebutra.com for further review"
+        }
+      },
+      "contactUs": {
+        "title": "Contact Us",
+        "intro": "For refund requests or questions about this policy:",
+        "company": "Nebutra Co., Ltd.",
+        "billingLabel": "Billing",
+        "supportLabel": "Support",
+        "legalLabel": "Legal",
+        "responseNote": "We aim to respond to all refund requests within 5 business days.",
+        "termsNote": "This policy is part of our",
+        "termsLink": "Terms of Service",
+        "termsAgreement": "By using Nebutra, you agree to these refund terms."
+      }
     },
     "terms": {
       "title": "Platform Interaction Treaty — Nebutra",
       "description": "The exact defining technical guidelines outlining the required engagement behaviors between the software framework provider and executing agents.",
       "heading": "Software Supply License Mechanics (Terms)",
       "effectiveDate": "Execution Enforcement Date",
-      "lastUpdated": "Final Network Update"
+      "lastUpdated": "Final Network Update",
+      "dates": {
+        "effective": "January 1, 2025",
+        "updated": "January 1, 2025"
+      },
+      "intro1": "Welcome to Nebutra! These Terms of Service (\"Terms\") govern your access to and use of Nebutra's website, applications, APIs, and services (collectively, the \"Services\") provided by Nebutra Co., Ltd. (\"Nebutra,\" \"Company,\" \"we,\" \"us,\" or \"our\").",
+      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
+      "intro2PrivacyLink": "Privacy Policy",
+      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "acceptance": {
+        "title": "1. Acceptance of Terms",
+        "eligibility": {
+          "title": "1.1 Eligibility",
+          "intro": "To use our Services, you must:",
+          "items": {
+            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
+            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
+            "2": "Not be prohibited from using our Services under applicable law"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Organization Accounts",
+          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+        }
+      },
+      "services": {
+        "title": "2. Description of Services",
+        "intro": "Nebutra provides a SaaS platform that includes:",
+        "items": {
+          "0": "AI-powered features and content generation",
+          "1": "Content management and community tools",
+          "2": "Recommendation systems",
+          "3": "E-commerce integrations",
+          "4": "Web3 capabilities",
+          "5": "Analytics and reporting"
+        }
+      },
+      "account": {
+        "title": "3. Account Registration",
+        "creation": {
+          "title": "3.1 Account Creation",
+          "intro": "To access certain features, you must create an account. You agree to:",
+          "items": {
+            "0": "Provide accurate and complete information",
+            "1": "Maintain the security of your account credentials",
+            "2": "Promptly update your information if it changes",
+            "3": "Accept responsibility for all activities under your account"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Subscription and Billing",
+        "pricing": {
+          "title": "4.1 Pricing",
+          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+        },
+        "payment": {
+          "title": "4.2 Payment",
+          "items": {
+            "0": "Subscriptions are billed in advance on a monthly or annual basis",
+            "1": "All fees are non-refundable except as stated in our",
+            "2": "You authorize us to charge your payment method for applicable fees",
+            "3": "We use Stripe for secure payment processing",
+            "1RefundLink": "Refund Policy"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Acceptable Use",
+        "prohibited": {
+          "title": "5.1 Prohibited Activities",
+          "intro": "You agree NOT to:",
+          "items": {
+            "0": "Violate any applicable laws, regulations, or third-party rights",
+            "1": "Use the Services to transmit malware, spam, or harmful content",
+            "2": "Attempt to gain unauthorized access to our systems",
+            "3": "Interfere with or disrupt the integrity or performance of our Services",
+            "4": "Use automated tools to scrape, copy, or extract data without permission",
+            "5": "Reverse engineer, decompile, or disassemble our Services",
+            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Intellectual Property",
+        "ours": {
+          "title": "6.1 Our Intellectual Property",
+          "content": "Nebutra and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+        },
+        "yours": {
+          "title": "6.2 Your Content",
+          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+        }
+      },
+      "warranties": {
+        "title": "7. Disclaimer of Warranties",
+        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+      },
+      "liability": {
+        "title": "8. Limitation of Liability",
+        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
+        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+      },
+      "termination": {
+        "title": "9. Termination",
+        "byYou": {
+          "title": "9.1 By You",
+          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+        },
+        "byUs": {
+          "title": "9.2 By Us",
+          "intro": "We may suspend or terminate your account if you:",
+          "items": {
+            "0": "Violate these Terms",
+            "1": "Engage in fraudulent or illegal activity",
+            "2": "Fail to pay applicable fees",
+            "3": "Create risk or legal exposure for us"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Dispute Resolution",
+        "informal": {
+          "title": "10.1 Informal Resolution",
+          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+        },
+        "governingLaw": {
+          "title": "10.2 Governing Law",
+          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+        }
+      },
+      "contactUs": {
+        "title": "11. Contact Us",
+        "intro": "If you have questions about these Terms, please contact us:",
+        "company": "Nebutra Co., Ltd.",
+        "emailLabel": "Email",
+        "supportLabel": "Support"
+      },
+      "acknowledgement": "By using Nebutra, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
     }
   },
   "metadata": {

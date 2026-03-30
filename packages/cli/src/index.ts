@@ -2,22 +2,29 @@
 
 import { Command } from "commander";
 import { addCommand } from "./commands/add.js";
+import { registerAdminCommand } from "./commands/admin.js";
 import { registerAiCommand } from "./commands/ai.js";
 import { registerAuthCommand } from "./commands/auth.js";
 import { registerBillingCommand } from "./commands/billing.js";
 import { registerBrandCommand } from "./commands/brand.js";
+import { registerCommunityCommand } from "./commands/community.js";
 import { registerCompletionsCommand } from "./commands/completions.js";
 import { registerCreateCommand } from "./commands/create.js";
 import { registerDbCommand } from "./commands/db.js";
 import { registerDevCommand } from "./commands/dev.js";
+import { registerEcosystemCommand } from "./commands/ecosystem.js";
 import { registerEnvCommand } from "./commands/env.js";
 import { registerGenerateCommand } from "./commands/generate.js";
+import { registerGrowthCommand } from "./commands/growth.js";
 import { registerI18nCommand } from "./commands/i18n.js";
 import { registerInfraCommand } from "./commands/infra.js";
 import { initCommand } from "./commands/init.js";
 import { registerMcpCommand } from "./commands/mcp-server.js";
 import { registerPresetCommand } from "./commands/preset.js";
 import { registerSchemaCommand } from "./commands/schema.js";
+import { registerSearchCommand } from "./commands/search-mgmt.js";
+import { registerSecretsCommand } from "./commands/secrets.js";
+import { registerServicesCommand } from "./commands/services.js";
 import { registerStatsCommand } from "./commands/stats.js";
 import { registerTestCommand } from "./commands/test.js";
 import { maybeNotifyUpdate } from "./utils/update-notifier.js";
@@ -99,6 +106,15 @@ async function main() {
   registerDevCommand(program);
   registerTestCommand(program);
 
+  // ─── Platform & ecosystem commands ──────────────────────
+  registerAdminCommand(program);
+  registerCommunityCommand(program);
+  registerGrowthCommand(program);
+  registerEcosystemCommand(program);
+  registerServicesCommand(program);
+  registerSearchCommand(program);
+  registerSecretsCommand(program);
+
   // ─── Utility commands ────────────────────────────────────
 
   registerCompletionsCommand(program);
@@ -135,17 +151,28 @@ Examples:
   $ nebutra dev --preset=ai-saas          Start dev for AI SaaS preset
   $ nebutra db migrate                    Run pending database migrations
   $ nebutra generate app blog             Scaffold a new app
-  $ nebutra generate component hero       Scaffold a UI component + story
   $ nebutra brand palette --primary=#7C3AED  Generate color palette
   $ nebutra preset list --format json     List available presets
   $ nebutra infra up --lite               Start PostgreSQL + Redis
-  $ nebutra env validate                  Check required env vars
   $ nebutra test e2e                      Run Playwright E2E tests
-  $ nebutra ai models                     List configured AI providers
-  $ nebutra billing status                Check payment provider config
-  $ nebutra i18n status                   Show translation coverage
   $ nebutra stats                         Monorepo overview
   $ nebutra schema --all                  Full CLI schema (for Agents)
+
+  Platform & Ecosystem:
+  $ nebutra admin tenants                 List all tenants
+  $ nebutra admin health                  Platform-wide health check
+  $ nebutra community health --period 30d Community health score
+  $ nebutra community showcase list       Browse project showcase
+  $ nebutra growth dashboard              Growth metrics overview
+  $ nebutra growth funnel --segment paid  Conversion funnel by segment
+  $ nebutra growth pulse --focus retention AI growth insights
+  $ nebutra ecosystem status              Ecosystem overview dashboard
+  $ nebutra ecosystem publish --tag latest Publish to template marketplace
+  $ nebutra ecosystem ideas list          Browse ideas marketplace
+  $ nebutra ecosystem opc register        Join OPC member network
+  $ nebutra services status               Microservice health overview
+  $ nebutra search reindex products       Reindex search index
+  $ nebutra secrets list --tenant org_123 List encrypted secrets
 
 Exit Codes:
   0   Success          2   Invalid arguments
