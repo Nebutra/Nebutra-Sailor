@@ -49,7 +49,12 @@ target
 
 # Brand assets (synced from packages/brand)
 apps/*/public/brand
+apps/*/public/brand-compliant
 apps/*/public/favicon.ico
+# tsekaluk-dev is deployed standalone on Vercel (turbo --filter skips root build:sync)
+# so brand assets must be committed directly
+!apps/tsekaluk-dev/public/brand
+!apps/tsekaluk-dev/public/brand-compliant
 
 # White-label customization (fork users)
 brand.config.ts
