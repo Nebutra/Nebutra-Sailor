@@ -32,6 +32,7 @@ export type AuthSessionMinAggregateOutputType = {
   ipAddress: string | null
   userAgent: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type AuthSessionMaxAggregateOutputType = {
@@ -42,6 +43,7 @@ export type AuthSessionMaxAggregateOutputType = {
   ipAddress: string | null
   userAgent: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type AuthSessionCountAggregateOutputType = {
@@ -52,6 +54,7 @@ export type AuthSessionCountAggregateOutputType = {
   ipAddress: number
   userAgent: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -64,6 +67,7 @@ export type AuthSessionMinAggregateInputType = {
   ipAddress?: true
   userAgent?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type AuthSessionMaxAggregateInputType = {
@@ -74,6 +78,7 @@ export type AuthSessionMaxAggregateInputType = {
   ipAddress?: true
   userAgent?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type AuthSessionCountAggregateInputType = {
@@ -84,6 +89,7 @@ export type AuthSessionCountAggregateInputType = {
   ipAddress?: true
   userAgent?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -167,6 +173,7 @@ export type AuthSessionGroupByOutputType = {
   ipAddress: string | null
   userAgent: string | null
   createdAt: Date
+  updatedAt: Date
   _count: AuthSessionCountAggregateOutputType | null
   _min: AuthSessionMinAggregateOutputType | null
   _max: AuthSessionMaxAggregateOutputType | null
@@ -198,6 +205,7 @@ export type AuthSessionWhereInput = {
   ipAddress?: Prisma.StringNullableFilter<"AuthSession"> | string | null
   userAgent?: Prisma.StringNullableFilter<"AuthSession"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AuthSession"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AuthSession"> | Date | string
   user?: Prisma.XOR<Prisma.AuthUserScalarRelationFilter, Prisma.AuthUserWhereInput>
 }
 
@@ -209,6 +217,7 @@ export type AuthSessionOrderByWithRelationInput = {
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   userAgent?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   user?: Prisma.AuthUserOrderByWithRelationInput
 }
 
@@ -223,6 +232,7 @@ export type AuthSessionWhereUniqueInput = Prisma.AtLeast<{
   ipAddress?: Prisma.StringNullableFilter<"AuthSession"> | string | null
   userAgent?: Prisma.StringNullableFilter<"AuthSession"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AuthSession"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AuthSession"> | Date | string
   user?: Prisma.XOR<Prisma.AuthUserScalarRelationFilter, Prisma.AuthUserWhereInput>
 }, "id" | "token">
 
@@ -234,6 +244,7 @@ export type AuthSessionOrderByWithAggregationInput = {
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   userAgent?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.AuthSessionCountOrderByAggregateInput
   _max?: Prisma.AuthSessionMaxOrderByAggregateInput
   _min?: Prisma.AuthSessionMinOrderByAggregateInput
@@ -250,6 +261,7 @@ export type AuthSessionScalarWhereWithAggregatesInput = {
   ipAddress?: Prisma.StringNullableWithAggregatesFilter<"AuthSession"> | string | null
   userAgent?: Prisma.StringNullableWithAggregatesFilter<"AuthSession"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AuthSession"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AuthSession"> | Date | string
 }
 
 export type AuthSessionCreateInput = {
@@ -259,6 +271,7 @@ export type AuthSessionCreateInput = {
   ipAddress?: string | null
   userAgent?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   user: Prisma.AuthUserCreateNestedOneWithoutSessionsInput
 }
 
@@ -270,6 +283,7 @@ export type AuthSessionUncheckedCreateInput = {
   ipAddress?: string | null
   userAgent?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AuthSessionUpdateInput = {
@@ -279,6 +293,7 @@ export type AuthSessionUpdateInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.AuthUserUpdateOneRequiredWithoutSessionsNestedInput
 }
 
@@ -290,6 +305,7 @@ export type AuthSessionUncheckedUpdateInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AuthSessionCreateManyInput = {
@@ -300,6 +316,7 @@ export type AuthSessionCreateManyInput = {
   ipAddress?: string | null
   userAgent?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AuthSessionUpdateManyMutationInput = {
@@ -309,6 +326,7 @@ export type AuthSessionUpdateManyMutationInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AuthSessionUncheckedUpdateManyInput = {
@@ -319,6 +337,7 @@ export type AuthSessionUncheckedUpdateManyInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AuthSessionListRelationFilter = {
@@ -339,6 +358,7 @@ export type AuthSessionCountOrderByAggregateInput = {
   ipAddress?: Prisma.SortOrder
   userAgent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AuthSessionMaxOrderByAggregateInput = {
@@ -349,6 +369,7 @@ export type AuthSessionMaxOrderByAggregateInput = {
   ipAddress?: Prisma.SortOrder
   userAgent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AuthSessionMinOrderByAggregateInput = {
@@ -359,6 +380,7 @@ export type AuthSessionMinOrderByAggregateInput = {
   ipAddress?: Prisma.SortOrder
   userAgent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AuthSessionCreateNestedManyWithoutUserInput = {
@@ -410,6 +432,7 @@ export type AuthSessionCreateWithoutUserInput = {
   ipAddress?: string | null
   userAgent?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AuthSessionUncheckedCreateWithoutUserInput = {
@@ -419,6 +442,7 @@ export type AuthSessionUncheckedCreateWithoutUserInput = {
   ipAddress?: string | null
   userAgent?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AuthSessionCreateOrConnectWithoutUserInput = {
@@ -458,6 +482,7 @@ export type AuthSessionScalarWhereInput = {
   ipAddress?: Prisma.StringNullableFilter<"AuthSession"> | string | null
   userAgent?: Prisma.StringNullableFilter<"AuthSession"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AuthSession"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AuthSession"> | Date | string
 }
 
 export type AuthSessionCreateManyUserInput = {
@@ -467,6 +492,7 @@ export type AuthSessionCreateManyUserInput = {
   ipAddress?: string | null
   userAgent?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AuthSessionUpdateWithoutUserInput = {
@@ -476,6 +502,7 @@ export type AuthSessionUpdateWithoutUserInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AuthSessionUncheckedUpdateWithoutUserInput = {
@@ -485,6 +512,7 @@ export type AuthSessionUncheckedUpdateWithoutUserInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AuthSessionUncheckedUpdateManyWithoutUserInput = {
@@ -494,6 +522,7 @@ export type AuthSessionUncheckedUpdateManyWithoutUserInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -506,6 +535,7 @@ export type AuthSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   ipAddress?: boolean
   userAgent?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   user?: boolean | Prisma.AuthUserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["authSession"]>
 
@@ -517,6 +547,7 @@ export type AuthSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   ipAddress?: boolean
   userAgent?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   user?: boolean | Prisma.AuthUserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["authSession"]>
 
@@ -528,6 +559,7 @@ export type AuthSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   ipAddress?: boolean
   userAgent?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   user?: boolean | Prisma.AuthUserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["authSession"]>
 
@@ -539,9 +571,10 @@ export type AuthSessionSelectScalar = {
   ipAddress?: boolean
   userAgent?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type AuthSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "token" | "expiresAt" | "ipAddress" | "userAgent" | "createdAt", ExtArgs["result"]["authSession"]>
+export type AuthSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "token" | "expiresAt" | "ipAddress" | "userAgent" | "createdAt" | "updatedAt", ExtArgs["result"]["authSession"]>
 export type AuthSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.AuthUserDefaultArgs<ExtArgs>
 }
@@ -565,6 +598,7 @@ export type $AuthSessionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     ipAddress: string | null
     userAgent: string | null
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["authSession"]>
   composites: {}
 }
@@ -996,6 +1030,7 @@ export interface AuthSessionFieldRefs {
   readonly ipAddress: Prisma.FieldRef<"AuthSession", 'String'>
   readonly userAgent: Prisma.FieldRef<"AuthSession", 'String'>
   readonly createdAt: Prisma.FieldRef<"AuthSession", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"AuthSession", 'DateTime'>
 }
     
 

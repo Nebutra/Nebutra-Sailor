@@ -1,9 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@nebutra/db";
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const db = prisma as any; // New models (License, CommunityProfile) require `pnpm --filter @nebutra/db db:generate`
-
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -50,7 +46,7 @@ export async function POST(req: NextRequest) {
     const data = parsed.data;
 
     // Look up user by Clerk ID
-    const user = await db.user.findUnique({ where: { clerkId: userId } });
+    const user = await prisma.user.findUnique({ where: { clerkId: userId } });
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
@@ -60,7 +56,7 @@ export async function POST(req: NextRequest) {
     const licenseType = isFree ? "FREE" : "COMMERCIAL";
 
     // Upsert community profile
-    await db.communityProfile.upsert({
+    await prisma.communityProfile.upsert({
       where: { userId: user.id },
       create: {
         userId: user.id,
@@ -88,7 +84,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Create license
-    const license = await db.license.create({
+    const license = await prisma.license.create({
       data: {
         userId: user.id,
         tier: data.tier,
@@ -125,7 +121,7 @@ export async function GET() {
       return NextResponse.json({ hasLicense: false, tier: null });
     }
 
-    const user = await db.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { clerkId: userId },
       include: {
         licenses: {

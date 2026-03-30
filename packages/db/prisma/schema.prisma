@@ -1452,11 +1452,15 @@ enum LicenseTier {
   OPC
   STARTUP
   ENTERPRISE
+
+  @@schema("public")
 }
 
 enum LicenseType {
   FREE
   COMMERCIAL
+
+  @@schema("public")
 }
 
 model CommunityProfile {

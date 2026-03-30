@@ -6,7 +6,8 @@ import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { hasLocale, setRequestLocale } from "next-intl/server";
+import { hasLocale } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 
@@ -261,7 +262,6 @@ export async function generateMetadata({
     return {
       title,
       description,
-      canonical: `${baseUrl}${canonicalUrl}`,
       openGraph: {
         title,
         description,
@@ -291,7 +291,6 @@ export async function generateMetadata({
     return {
       title,
       description,
-      canonical: `${baseUrl}${canonicalUrl}`,
       openGraph: {
         title,
         description,

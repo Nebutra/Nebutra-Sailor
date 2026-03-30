@@ -103,7 +103,9 @@ export const ModelName = {
   AuthUser: 'AuthUser',
   AuthAccount: 'AuthAccount',
   AuthSession: 'AuthSession',
-  AuthVerification: 'AuthVerification'
+  AuthVerification: 'AuthVerification',
+  CommunityProfile: 'CommunityProfile',
+  License: 'License'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -963,16 +965,17 @@ export type AuthUserScalarFieldEnum = (typeof AuthUserScalarFieldEnum)[keyof typ
 export const AuthAccountScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  type: 'type',
-  provider: 'provider',
-  providerAccountId: 'providerAccountId',
-  refreshToken: 'refreshToken',
+  accountId: 'accountId',
+  providerId: 'providerId',
   accessToken: 'accessToken',
-  expiresAt: 'expiresAt',
-  tokenType: 'tokenType',
+  refreshToken: 'refreshToken',
+  accessTokenExpiresAt: 'accessTokenExpiresAt',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
   scope: 'scope',
   idToken: 'idToken',
-  createdAt: 'createdAt'
+  password: 'password',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AuthAccountScalarFieldEnum = (typeof AuthAccountScalarFieldEnum)[keyof typeof AuthAccountScalarFieldEnum]
@@ -985,7 +988,8 @@ export const AuthSessionScalarFieldEnum = {
   expiresAt: 'expiresAt',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
@@ -996,10 +1000,55 @@ export const AuthVerificationScalarFieldEnum = {
   identifier: 'identifier',
   value: 'value',
   expiresAt: 'expiresAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AuthVerificationScalarFieldEnum = (typeof AuthVerificationScalarFieldEnum)[keyof typeof AuthVerificationScalarFieldEnum]
+
+
+export const CommunityProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  displayName: 'displayName',
+  role: 'role',
+  company: 'company',
+  teamSize: 'teamSize',
+  industry: 'industry',
+  useCase: 'useCase',
+  buildingWhat: 'buildingWhat',
+  referralSource: 'referralSource',
+  showcaseUrl: 'showcaseUrl',
+  githubHandle: 'githubHandle',
+  twitterHandle: 'twitterHandle',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CommunityProfileScalarFieldEnum = (typeof CommunityProfileScalarFieldEnum)[keyof typeof CommunityProfileScalarFieldEnum]
+
+
+export const LicenseScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tier: 'tier',
+  type: 'type',
+  licenseKey: 'licenseKey',
+  acceptedAt: 'acceptedAt',
+  acceptedIp: 'acceptedIp',
+  acceptedVersion: 'acceptedVersion',
+  stripeCustomerId: 'stripeCustomerId',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  stripePriceId: 'stripePriceId',
+  expiresAt: 'expiresAt',
+  isActive: 'isActive',
+  projectName: 'projectName',
+  projectUrl: 'projectUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LicenseScalarFieldEnum = (typeof LicenseScalarFieldEnum)[keyof typeof LicenseScalarFieldEnum]
 
 
 export const SortOrder = {

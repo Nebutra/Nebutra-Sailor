@@ -345,7 +345,8 @@ async function revalidateChangelogPages(): Promise<void> {
     revalidatePath("/changelog");
 
     // Revalidate using tag-based revalidation for more granular control
-    revalidateTag("changelog");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (revalidateTag as (tag: string) => void)("changelog");
   } catch (_e) {
     // revalidatePath/revalidateTag throw if called outside of a route handler context
     // In production, they're safe; in test environments, they may error

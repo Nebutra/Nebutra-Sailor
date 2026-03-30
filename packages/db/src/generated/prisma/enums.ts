@@ -233,3 +233,21 @@ export const OAuthClientStatus = {
 } as const
 
 export type OAuthClientStatus = (typeof OAuthClientStatus)[keyof typeof OAuthClientStatus]
+
+
+export const LicenseTier = {
+  INDIVIDUAL: 'INDIVIDUAL',
+  OPC: 'OPC',
+  STARTUP: 'STARTUP',
+  ENTERPRISE: 'ENTERPRISE'
+} as const
+
+export type LicenseTier = (typeof LicenseTier)[keyof typeof LicenseTier]
+
+
+export const LicenseType = {
+  FREE: 'FREE',
+  COMMERCIAL: 'COMMERCIAL'
+} as const
+
+export type LicenseType = (typeof LicenseType)[keyof typeof LicenseType]

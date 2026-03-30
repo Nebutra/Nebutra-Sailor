@@ -1,4 +1,4 @@
-import { CheckCircle, Github } from "@nebutra/icons";
+import { CheckCircle, LogoGithub as Github } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Badge, Button, Card } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";

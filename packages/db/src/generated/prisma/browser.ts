@@ -282,3 +282,13 @@ export type AuthSession = Prisma.AuthSessionModel
  * 
  */
 export type AuthVerification = Prisma.AuthVerificationModel
+/**
+ * Model CommunityProfile
+ * 
+ */
+export type CommunityProfile = Prisma.CommunityProfileModel
+/**
+ * Model License
+ * 
+ */
+export type License = Prisma.LicenseModel

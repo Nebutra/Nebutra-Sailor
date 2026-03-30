@@ -30,6 +30,7 @@ export type AuthVerificationMinAggregateOutputType = {
   value: string | null
   expiresAt: Date | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type AuthVerificationMaxAggregateOutputType = {
@@ -38,6 +39,7 @@ export type AuthVerificationMaxAggregateOutputType = {
   value: string | null
   expiresAt: Date | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type AuthVerificationCountAggregateOutputType = {
@@ -46,6 +48,7 @@ export type AuthVerificationCountAggregateOutputType = {
   value: number
   expiresAt: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -56,6 +59,7 @@ export type AuthVerificationMinAggregateInputType = {
   value?: true
   expiresAt?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type AuthVerificationMaxAggregateInputType = {
@@ -64,6 +68,7 @@ export type AuthVerificationMaxAggregateInputType = {
   value?: true
   expiresAt?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type AuthVerificationCountAggregateInputType = {
@@ -72,6 +77,7 @@ export type AuthVerificationCountAggregateInputType = {
   value?: true
   expiresAt?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -153,6 +159,7 @@ export type AuthVerificationGroupByOutputType = {
   value: string
   expiresAt: Date
   createdAt: Date
+  updatedAt: Date
   _count: AuthVerificationCountAggregateOutputType | null
   _min: AuthVerificationMinAggregateOutputType | null
   _max: AuthVerificationMaxAggregateOutputType | null
@@ -182,6 +189,7 @@ export type AuthVerificationWhereInput = {
   value?: Prisma.StringFilter<"AuthVerification"> | string
   expiresAt?: Prisma.DateTimeFilter<"AuthVerification"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"AuthVerification"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AuthVerification"> | Date | string
 }
 
 export type AuthVerificationOrderByWithRelationInput = {
@@ -190,6 +198,7 @@ export type AuthVerificationOrderByWithRelationInput = {
   value?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AuthVerificationWhereUniqueInput = Prisma.AtLeast<{
@@ -202,6 +211,7 @@ export type AuthVerificationWhereUniqueInput = Prisma.AtLeast<{
   value?: Prisma.StringFilter<"AuthVerification"> | string
   expiresAt?: Prisma.DateTimeFilter<"AuthVerification"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"AuthVerification"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AuthVerification"> | Date | string
 }, "id" | "identifier_value">
 
 export type AuthVerificationOrderByWithAggregationInput = {
@@ -210,6 +220,7 @@ export type AuthVerificationOrderByWithAggregationInput = {
   value?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.AuthVerificationCountOrderByAggregateInput
   _max?: Prisma.AuthVerificationMaxOrderByAggregateInput
   _min?: Prisma.AuthVerificationMinOrderByAggregateInput
@@ -224,6 +235,7 @@ export type AuthVerificationScalarWhereWithAggregatesInput = {
   value?: Prisma.StringWithAggregatesFilter<"AuthVerification"> | string
   expiresAt?: Prisma.DateTimeWithAggregatesFilter<"AuthVerification"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AuthVerification"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AuthVerification"> | Date | string
 }
 
 export type AuthVerificationCreateInput = {
@@ -232,6 +244,7 @@ export type AuthVerificationCreateInput = {
   value: string
   expiresAt: Date | string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AuthVerificationUncheckedCreateInput = {
@@ -240,6 +253,7 @@ export type AuthVerificationUncheckedCreateInput = {
   value: string
   expiresAt: Date | string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AuthVerificationUpdateInput = {
@@ -248,6 +262,7 @@ export type AuthVerificationUpdateInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AuthVerificationUncheckedUpdateInput = {
@@ -256,6 +271,7 @@ export type AuthVerificationUncheckedUpdateInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AuthVerificationCreateManyInput = {
@@ -264,6 +280,7 @@ export type AuthVerificationCreateManyInput = {
   value: string
   expiresAt: Date | string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AuthVerificationUpdateManyMutationInput = {
@@ -272,6 +289,7 @@ export type AuthVerificationUpdateManyMutationInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AuthVerificationUncheckedUpdateManyInput = {
@@ -280,6 +298,7 @@ export type AuthVerificationUncheckedUpdateManyInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AuthVerificationIdentifierValueCompoundUniqueInput = {
@@ -293,6 +312,7 @@ export type AuthVerificationCountOrderByAggregateInput = {
   value?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AuthVerificationMaxOrderByAggregateInput = {
@@ -301,6 +321,7 @@ export type AuthVerificationMaxOrderByAggregateInput = {
   value?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AuthVerificationMinOrderByAggregateInput = {
@@ -309,6 +330,7 @@ export type AuthVerificationMinOrderByAggregateInput = {
   value?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 
@@ -319,6 +341,7 @@ export type AuthVerificationSelect<ExtArgs extends runtime.Types.Extensions.Inte
   value?: boolean
   expiresAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["authVerification"]>
 
 export type AuthVerificationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -327,6 +350,7 @@ export type AuthVerificationSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   value?: boolean
   expiresAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["authVerification"]>
 
 export type AuthVerificationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -335,6 +359,7 @@ export type AuthVerificationSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   value?: boolean
   expiresAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["authVerification"]>
 
 export type AuthVerificationSelectScalar = {
@@ -343,9 +368,10 @@ export type AuthVerificationSelectScalar = {
   value?: boolean
   expiresAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type AuthVerificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "identifier" | "value" | "expiresAt" | "createdAt", ExtArgs["result"]["authVerification"]>
+export type AuthVerificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "identifier" | "value" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["authVerification"]>
 
 export type $AuthVerificationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AuthVerification"
@@ -356,6 +382,7 @@ export type $AuthVerificationPayload<ExtArgs extends runtime.Types.Extensions.In
     value: string
     expiresAt: Date
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["authVerification"]>
   composites: {}
 }
@@ -784,6 +811,7 @@ export interface AuthVerificationFieldRefs {
   readonly value: Prisma.FieldRef<"AuthVerification", 'String'>
   readonly expiresAt: Prisma.FieldRef<"AuthVerification", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"AuthVerification", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"AuthVerification", 'DateTime'>
 }
     
 

@@ -1,8 +1,5 @@
 import { getChangelogEntries } from "@nebutra/sanity/queries";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 3600; // 1 hour
-
 // Static fallback data used when Sanity CMS has no entries
 const STATIC_RELEASES = [
   {
