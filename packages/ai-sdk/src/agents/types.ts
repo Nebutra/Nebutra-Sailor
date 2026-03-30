@@ -72,3 +72,51 @@ export interface TokenUsage {
   totalTokens: number;
   estimatedCost: number;
 }
+
+export interface AgentResponse {
+  readonly messages: readonly AgentMessage[];
+  readonly usage: TokenUsage;
+  readonly finishReason: string;
+  readonly agentId: string;
+}
+
+export interface OrchestratorConfig {
+  readonly agents: readonly AgentConfig[];
+  readonly defaultAgentId?: string;
+}
+
+export interface AgentUsageEvent {
+  readonly tenantId: string;
+  readonly userId: string;
+  readonly agentId: string;
+  readonly model: string;
+  readonly promptTokens: number;
+  readonly completionTokens: number;
+  readonly totalTokens: number;
+  readonly durationMs: number;
+  readonly timestamp: Date;
+}
+
+export interface AgentResponse {
+  readonly messages: readonly AgentMessage[];
+  readonly usage: TokenUsage;
+  readonly finishReason: string;
+  readonly agentId: string;
+}
+
+export interface OrchestratorConfig {
+  readonly agents: readonly AgentConfig[];
+  readonly defaultAgentId?: string;
+}
+
+export interface AgentUsageEvent {
+  readonly tenantId: string;
+  readonly userId: string;
+  readonly agentId: string;
+  readonly model: string;
+  readonly promptTokens: number;
+  readonly completionTokens: number;
+  readonly totalTokens: number;
+  readonly durationMs: number;
+  readonly timestamp: Date;
+}
