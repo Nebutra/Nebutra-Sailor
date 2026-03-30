@@ -1,5 +1,5 @@
 import { Redis } from "@upstash/redis";
-import { createLock } from "./lockCache";
+import { createLock } from "./lockCache.js";
 
 let redis: Redis | null = null;
 

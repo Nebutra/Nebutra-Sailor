@@ -1,6 +1,6 @@
 import { context, trace } from "@opentelemetry/api";
 import pino from "pino";
-import type { Logger, Meta } from "./types";
+import type { Logger, Meta } from "./types.js";
 
 const isDev = process.env.NODE_ENV === "development";
 const isTest = process.env.NODE_ENV === "test";
@@ -66,23 +66,23 @@ function getTraceId(): string | undefined {
 
 function makeLogger(base: pino.Logger): Logger {
   return {
-    debug(msg, meta) {
+    debug(msg: string, meta?: Meta) {
       const traceId = getTraceId();
       base.debug({ ...meta, ...(traceId ? { traceId } : {}) }, msg);
     },
-    info(msg, meta) {
+    info(msg: string, meta?: Meta) {
       const traceId = getTraceId();
       base.info({ ...meta, ...(traceId ? { traceId } : {}) }, msg);
     },
-    warn(msg, meta) {
+    warn(msg: string, meta?: Meta) {
       const traceId = getTraceId();
       base.warn({ ...meta, ...(traceId ? { traceId } : {}) }, msg);
     },
-    error(msg, error, meta) {
+    error(msg: string, error?: unknown, meta?: Meta) {
       const traceId = getTraceId();
       base.error({ ...serializeError(error), ...meta, ...(traceId ? { traceId } : {}) }, msg);
     },
-    child(bindings) {
+    child(bindings: Meta) {
       return makeLogger(base.child(bindings));
     },
   };
