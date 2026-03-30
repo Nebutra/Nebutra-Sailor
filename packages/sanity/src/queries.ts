@@ -118,6 +118,26 @@ export const changelogQuery = `*[_type == "changelogEntry"] | order(publishedAt 
   body
 }`;
 
+export const changelogByVersionQuery = `*[_type == "changelogEntry" && version == $version][0] {
+  _id,
+  version,
+  title,
+  publishedAt,
+  type,
+  summary,
+  body
+}`;
+
+export const changelogTypesQuery = `array::unique(*[_type == "changelogEntry"].type)`;
+
 export async function getChangelogEntries() {
   return client.fetch(changelogQuery);
+}
+
+export async function getChangelogByVersion(version: string) {
+  return client.fetch(changelogByVersionQuery, { version });
+}
+
+export async function getChangelogTypes() {
+  return client.fetch(changelogTypesQuery);
 }

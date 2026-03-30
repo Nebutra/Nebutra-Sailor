@@ -22,7 +22,13 @@ export async function generateMetadata({
   return {
     title: "Changelog — Nebutra",
     description: "Every release, shipped with obsessive attention to detail.",
-    alternates: { canonical: `/${lang}/changelog` },
+    alternates: {
+      canonical: `/${lang}/changelog`,
+      types: {
+        "application/rss+xml": "/api/changelog/rss",
+        "application/atom+xml": "/api/changelog/atom",
+      },
+    },
   };
 }
 
@@ -132,6 +138,71 @@ const STATIC_RELEASES = [
   },
 ] as const;
 
+/**
+ * Simple Portable Text renderer — handles block and image types
+ * Supports basic Sanity Portable Text structure without external dependencies
+ */
+function PortableTextRenderer({ blocks }: { blocks: any[] }) {
+  if (!blocks || blocks.length === 0) return null;
+
+  return (
+    <div className="prose prose-sm dark:prose-invert max-w-none space-y-4">
+      {blocks.map((block, idx) => {
+        if (block._type === "block") {
+          // Handle text blocks with styling
+          const text = block.children?.map((child: any) => child.text).join("") || "";
+          if (block.style === "h2") {
+            return (
+              <h2 key={idx} className="text-lg font-semibold mt-6 mb-3">
+                {text}
+              </h2>
+            );
+          }
+          if (block.style === "h3") {
+            return (
+              <h3 key={idx} className="text-base font-semibold mt-4 mb-2">
+                {text}
+              </h3>
+            );
+          }
+          if (block.listItem === "bullet") {
+            return (
+              <li key={idx} className="list-disc ml-4">
+                {text}
+              </li>
+            );
+          }
+          if (block.listItem === "number") {
+            return (
+              <li key={idx} className="list-decimal ml-4">
+                {text}
+              </li>
+            );
+          }
+          return (
+            <p key={idx} className="text-sm leading-relaxed">
+              {text}
+            </p>
+          );
+        }
+
+        if (block._type === "image" && block.asset?.url) {
+          return (
+            <img
+              key={idx}
+              src={block.asset.url}
+              alt={block.alt || "Changelog image"}
+              className="rounded-lg max-w-full h-auto mt-4 mb-4"
+            />
+          );
+        }
+
+        return null;
+      })}
+    </div>
+  );
+}
+
 interface CmsEntry {
   _id: string;
   version: string;
@@ -139,6 +210,7 @@ interface CmsEntry {
   publishedAt: string;
   type?: string;
   summary?: string;
+  body?: any[]; // Sanity Portable Text blocks
 }
 
 export default async function ChangelogPage({ params }: { params: Promise<{ lang: string }> }) {
@@ -154,37 +226,46 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
 
   const mappedReleases: Release[] = useCms
     ? cmsEntries.map((entry) => {
+        // Extract first image from body for preview, or use default
+        const firstBodyImage = entry.body?.find((b) => b._type === "image")?.asset?.url;
+
         return {
           title: `v${entry.version}: ${entry.title}`,
+          version: entry.version,
           date: entry.publishedAt?.split("T")[0] ?? "",
+          tag: entry.type || "feature",
+          tagColor: TAG_COLORS[entry.type || "feature"] || TAG_COLORS.feature,
           excerpt: entry.summary ?? entry.title,
-          // Unsplash premium placeholder
           image:
-            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
-          content: (
-            <ul>
-              {entry.summary
-                ?.split("\n")
-                .filter(Boolean)
-                .map((bullet, i) => (
-                  <li key={i}>{bullet}</li>
-                ))}
-            </ul>
+            firstBodyImage ||
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+          content: entry.body ? (
+            <PortableTextRenderer blocks={entry.body} />
+          ) : (
+            <div className="prose prose-sm dark:prose-invert max-w-none">
+              <ul className="list-disc pl-4 space-y-2 mt-4">
+                {entry.summary
+                  ?.split("\n")
+                  .filter(Boolean)
+                  .map((bullet, i) => (
+                    <li key={i}>{bullet}</li>
+                  ))}
+              </ul>
+            </div>
           ),
-          contributors: [
-            "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1200",
-          ],
+          contributors: [],
         } as Release;
       })
     : STATIC_RELEASES.map((r) => {
         return {
           title: `v${r.version}: ${r.tag} Update`,
+          version: r.version,
           date: r.date,
+          tag: r.tag.toLowerCase(),
+          tagColor: r.tagColor,
+          excerpt: r.highlights.join(" · "),
           image:
             "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
-          contributors: [
-            "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
-          ],
           content: (
             <div className="prose prose-sm dark:prose-invert max-w-none">
               <ul className="list-disc pl-4 space-y-2 mt-4">
@@ -194,6 +275,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
               </ul>
             </div>
           ),
+          contributors: [],
         } as Release;
       });
 
@@ -208,10 +290,17 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           <p className="text-center text-sm text-[var(--neutral-11)]">
             Subscribe to release notes via{" "}
             <a
-              href="/api/changelog.rss"
+              href="/api/changelog/rss"
               className="font-medium text-[var(--blue-9)] underline-offset-4 hover:underline"
             >
               RSS
+            </a>{" "}
+            or{" "}
+            <a
+              href="/api/changelog/atom"
+              className="font-medium text-[var(--blue-9)] underline-offset-4 hover:underline"
+            >
+              Atom
             </a>{" "}
             or follow{" "}
             <a

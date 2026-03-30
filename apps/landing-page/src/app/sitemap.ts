@@ -36,7 +36,8 @@ function localizedUrl(base: string, locale: string, path: string): string {
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
 
-  return staticPaths.flatMap((page) => {
+  // Generate entries for all static pages across all locales
+  const staticEntries = staticPaths.flatMap((page) => {
     const languages = Object.fromEntries(
       routing.locales.map((l) => [l, localizedUrl(baseUrl, l, page.path)]),
     );
@@ -49,4 +50,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages },
     }));
   });
+
+  // Individual changelog version URLs
+  const changelogVersions = [
+    "0.10.0",
+    "0.9.1",
+    "0.9.0",
+    "0.8.0",
+    "0.7.0",
+    "0.6.0",
+    "0.5.0",
+    "0.4.0",
+  ];
+  const changelogEntries = changelogVersions.flatMap((version) => {
+    return routing.locales.map((locale) => ({
+      url: localizedUrl(baseUrl, locale, `/changelog/${version}`),
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    }));
+  });
+
+  return [...staticEntries, ...changelogEntries];
 }

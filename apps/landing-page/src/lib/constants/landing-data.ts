@@ -1,5 +1,6 @@
 import {
   BookOpen as BookOpenNebutra,
+  GitPullRequest,
   LogoGithub,
   Route,
   Sparkles as SparklesNebutra,
@@ -375,6 +376,7 @@ export const NAV_LINKS = [
     children: [
       { labelKey: "ideas", href: "/ideas", icon: SparklesNebutra },
       { labelKey: "opc", href: "/opc", icon: Users },
+      { labelKey: "changelog", href: "/changelog", icon: GitPullRequest },
       { labelKey: "roadmap", href: "/roadmap", icon: Route },
       { labelKey: "docs", href: "https://docs.nebutra.com", icon: BookOpenNebutra },
     ],

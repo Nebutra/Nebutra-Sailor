@@ -75,6 +75,7 @@ export {
   type AnimateInProps,
 } from "./animate-in";
 export * from "./ascii-text";
+export * from "./changelog-widget";
 // Phase 10: Missing root exports
 export * from "./onboarding-checklist";
 export * from "./team-chat";
