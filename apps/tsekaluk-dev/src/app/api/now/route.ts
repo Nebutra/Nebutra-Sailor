@@ -57,7 +57,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   if (!prisma) return DB_UNAVAILABLE;
   try {
-    const session = await auth();
+    const session = await auth.api.getSession({ headers: req.headers });
     if (!session?.user || !isAdmin(session.user.email)) {
       return Response.json({ success: false, error: "Admin access required" }, { status: 403 });
     }
@@ -86,7 +86,7 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   if (!prisma) return DB_UNAVAILABLE;
   try {
-    const session = await auth();
+    const session = await auth.api.getSession({ headers: req.headers });
     if (!session?.user || !isAdmin(session.user.email)) {
       return Response.json({ success: false, error: "Admin access required" }, { status: 403 });
     }

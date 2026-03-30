@@ -35,7 +35,7 @@ export const auth = betterAuth({
           discoveryUrl: undefined,
           authorizationUrl: "https://connect.linux.do/oauth2/authorize",
           tokenUrl: "https://connect.linux.do/oauth2/token",
-          userinfoUrl: "https://connect.linux.do/api/user",
+          userInfoUrl: "https://connect.linux.do/api/user",
           clientId: process.env.LINUXDO_ID!,
           clientSecret: process.env.LINUXDO_SECRET!,
           scopes: [],

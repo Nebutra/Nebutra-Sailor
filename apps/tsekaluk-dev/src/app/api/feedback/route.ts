@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { Resend } from "resend";
 import { z } from "zod";
 import { auth } from "@/auth";
@@ -37,7 +38,7 @@ const DB_UNAVAILABLE = Response.json(
 export async function GET() {
   if (!prisma) return DB_UNAVAILABLE;
   try {
-    const session = await auth();
+    const session = await auth.api.getSession({ headers: await headers() });
     if (!session?.user || !isAdmin(session.user.email)) {
       return Response.json({ success: false, error: "Admin access required" }, { status: 403 });
     }
