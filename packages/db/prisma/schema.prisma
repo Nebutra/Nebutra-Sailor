@@ -130,6 +130,8 @@ model User {
   activities         UserActivity[]
   wallets            Wallet[]
   oauthAuthorizations OAuthAuthorization[]
+  communityProfile   CommunityProfile?
+  licenses           License[]
 
   @@map("users")
   @@schema("public")
@@ -1438,5 +1440,86 @@ model AuthVerification {
 
   @@unique([identifier, value])
   @@map("auth_verifications")
+  @@schema("public")
+}
+
+// ============================================
+// License & Community
+// ============================================
+
+enum LicenseTier {
+  INDIVIDUAL
+  OPC
+  STARTUP
+  ENTERPRISE
+}
+
+enum LicenseType {
+  FREE
+  COMMERCIAL
+}
+
+model CommunityProfile {
+  id            String    @id @default(cuid())
+  userId        String    @unique @map("user_id")
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Professional context
+  displayName   String?   @map("display_name")
+  role          String    // "solo_developer" | "founder" | "cto" | "developer" | "other"
+  company       String?
+  teamSize      String?   @map("team_size")  // "1" | "2-5" | "6-20" | "21-50" | "50+"
+  industry      String?
+
+  // What they're building
+  useCase       String?   @map("use_case")  // "saas" | "ai_tool" | "marketplace" | "internal_tool" | "agency" | "other"
+  buildingWhat  String?   @map("building_what") @db.Text  // free-text description
+
+  // Acquisition
+  referralSource String?  @map("referral_source")  // "twitter" | "github" | "product_hunt" | "friend" | "search" | "other"
+
+  // Community engagement
+  showcaseUrl   String?   @map("showcase_url")
+  githubHandle  String?   @map("github_handle")
+  twitterHandle String?   @map("twitter_handle")
+
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@map("community_profiles")
+  @@schema("public")
+}
+
+model License {
+  id              String      @id @default(cuid())
+  userId          String      @map("user_id")
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tier            LicenseTier
+  type            LicenseType
+  licenseKey      String      @unique @default(cuid()) @map("license_key")
+
+  // Acceptance
+  acceptedAt      DateTime    @default(now()) @map("accepted_at")
+  acceptedIp      String?     @map("accepted_ip")
+  acceptedVersion String      @default("1.0") @map("accepted_version")  // License version accepted
+
+  // Stripe (for paid tiers)
+  stripeCustomerId    String?    @map("stripe_customer_id")
+  stripeSubscriptionId String?   @map("stripe_subscription_id")
+  stripePriceId       String?    @map("stripe_price_id")
+
+  // Validity
+  expiresAt       DateTime?   @map("expires_at")  // null = perpetual (individual/OPC)
+  isActive        Boolean     @default(true) @map("is_active")
+
+  // Metadata
+  projectName     String?     @map("project_name")  // What project they're using it for
+  projectUrl      String?     @map("project_url")
+
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  @@map("licenses")
   @@schema("public")
 }

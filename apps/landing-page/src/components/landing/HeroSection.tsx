@@ -84,7 +84,7 @@ export function HeroSection() {
             <AnimateIn preset="fadeUp">
               <div className="flex flex-col items-center gap-3 sm:flex-row mt-4">
                 <Link
-                  href="/pricing"
+                  href="/get-license"
                   className="group relative inline-flex items-center justify-center gap-2 rounded-full overflow-hidden px-8 py-3.5 text-[15px] font-semibold shadow-xl shadow-primary/10 transition-all hover:scale-[1.02] active:scale-95 bg-foreground text-background border border-foreground/10"
                 >
                   <div className="absolute inset-0 bg-[var(--brand-gradient)] opacity-0 transition-opacity duration-300 pointer-events-none group-hover:opacity-10" />

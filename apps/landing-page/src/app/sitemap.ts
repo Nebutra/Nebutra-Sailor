@@ -7,6 +7,8 @@ const staticPaths = [
   { path: "/features", changeFreq: "weekly" as const, priority: 0.9 },
   { path: "/pricing", changeFreq: "weekly" as const, priority: 0.9 },
   { path: "/about", changeFreq: "monthly" as const, priority: 0.7 },
+  { path: "/get-license", changeFreq: "weekly" as const, priority: 0.9 },
+  { path: "/licensing", changeFreq: "monthly" as const, priority: 0.7 },
 
   // Content pages
   { path: "/blog", changeFreq: "weekly" as const, priority: 0.8 },

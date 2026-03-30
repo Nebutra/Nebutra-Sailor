@@ -19,7 +19,7 @@
     "subheadline": "Build on a <highlight>production-ready</highlight> foundation with <highlight>scalable architecture</highlight> and save weeks on boilerplate and ship before competitors. Optimized for <highlight>AI coding agents & developers</highlight>.",
     "copyLabel": "Copy Command",
     "copiedLabel": "Copied",
-    "ctaGetAccess": "Get lifetime access",
+    "ctaGetAccess": "Get Your Free License",
     "ctaExploreDemo": "Explore demo"
   },
   "features": {
@@ -126,6 +126,7 @@
       "terms": "Terms",
       "cookies": "Cookies",
       "refund": "Refund",
+      "licensing": "Licensing",
       "contact": "Contact",
       "faq": "FAQ",
       "github": "GitHub",

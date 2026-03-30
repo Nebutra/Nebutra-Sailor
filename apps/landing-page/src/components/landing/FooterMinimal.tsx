@@ -63,6 +63,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
       { labelKey: "terms", href: "/terms" },
       { labelKey: "cookies", href: "/cookies" },
       { labelKey: "refund", href: "/refund" },
+      { labelKey: "licensing", href: "/licensing" },
       { labelKey: "contact", href: "/contact" },
       { labelKey: "faq", href: "/faq" },
     ],

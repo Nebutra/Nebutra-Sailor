@@ -32,7 +32,7 @@ export async function PricingSection({
   const TIERS = [
     {
       key: "solo",
-      ctaHref: "https://github.com/nebutra-sailor",
+      ctaHref: "/get-license",
       highlighted: false,
       featureKeys: ["f1", "f2", "f3", "f4", "f5"] as const,
       dynamicPrice: t("solo.price"), // Usually "Free"
