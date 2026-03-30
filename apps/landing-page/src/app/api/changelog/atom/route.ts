@@ -117,7 +117,9 @@ function buildAtomXml(entries: (ChangelogEntry | (typeof STATIC_RELEASES)[0])[])
   const entries_xml = entries
     .map((entry) => {
       const version = entry.version;
-      const pubDate = new Date(entry.publishedAt || entry.date).toISOString();
+      const pubDate = new Date(
+        "publishedAt" in entry ? (entry.publishedAt ?? "") : entry.date,
+      ).toISOString();
       const type = entry.type || "Update";
       const highlights =
         "highlights" in entry

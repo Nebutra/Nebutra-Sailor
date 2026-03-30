@@ -1,5 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
-import { db } from "@nebutra/db";
+import { prisma } from "@nebutra/db";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const db = prisma as any; // New models (License, CommunityProfile) require `pnpm --filter @nebutra/db db:generate`
+
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 

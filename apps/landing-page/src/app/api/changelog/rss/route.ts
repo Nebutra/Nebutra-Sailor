@@ -121,7 +121,9 @@ function buildRssXml(entries: (ChangelogEntry | (typeof STATIC_RELEASES)[0])[]):
   const items = entries
     .map((entry) => {
       const version = entry.version;
-      const pubDate = formatRfc2822(entry.publishedAt || entry.date);
+      const pubDate = formatRfc2822(
+        "publishedAt" in entry ? (entry.publishedAt ?? "") : entry.date,
+      );
       const type = entry.type || "Update";
       const highlights =
         "highlights" in entry
