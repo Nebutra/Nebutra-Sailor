@@ -74,7 +74,7 @@ export class QStashProvider implements QueueProvider {
         ...(job.options?.idempotencyKey !== undefined
           ? { deduplicationId: job.options.idempotencyKey }
           : {}),
-        ...(job.options?.delaySec ? { delay: `${job.options.delaySec}s` as `${number}s` } : {}),
+        ...(job.options?.delaySec ? { delay: job.options.delaySec } : {}),
         retries: job.options?.maxRetries ?? 3,
         ...(job.options?.cron ? { cron: job.options.cron } : {}),
         headers: {
