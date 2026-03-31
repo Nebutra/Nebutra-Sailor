@@ -44,5 +44,11 @@ export default defineConfig({
         SKIP_ENV_VALIDATION: "true",
       },
     },
+    {
+      command: "pnpm --filter @nebutra/community dev",
+      url: "http://localhost:3003",
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+    },
   ],
 });
