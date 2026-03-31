@@ -105,7 +105,11 @@ export const ModelName = {
   AuthSession: 'AuthSession',
   AuthVerification: 'AuthVerification',
   CommunityProfile: 'CommunityProfile',
-  License: 'License'
+  License: 'License',
+  SleptonsaMemberProfile: 'SleptonsaMemberProfile',
+  SleptonsProduct: 'SleptonsProduct',
+  SleptonsUpvote: 'SleptonsUpvote',
+  SleptonsConnection: 'SleptonsConnection'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1049,6 +1053,69 @@ export const LicenseScalarFieldEnum = {
 } as const
 
 export type LicenseScalarFieldEnum = (typeof LicenseScalarFieldEnum)[keyof typeof LicenseScalarFieldEnum]
+
+
+export const SleptonsaMemberProfileScalarFieldEnum = {
+  id: 'id',
+  member_number: 'member_number',
+  user_id: 'user_id',
+  license_id: 'license_id',
+  slug: 'slug',
+  display_name: 'display_name',
+  bio: 'bio',
+  avatar_url: 'avatar_url',
+  product_name: 'product_name',
+  product_url: 'product_url',
+  product_tagline: 'product_tagline',
+  tech_stack: 'tech_stack',
+  looking_for: 'looking_for',
+  tier: 'tier',
+  is_public: 'is_public',
+  github_handle: 'github_handle',
+  github_data: 'github_data',
+  github_refreshed_at: 'github_refreshed_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SleptonsaMemberProfileScalarFieldEnum = (typeof SleptonsaMemberProfileScalarFieldEnum)[keyof typeof SleptonsaMemberProfileScalarFieldEnum]
+
+
+export const SleptonsProductScalarFieldEnum = {
+  id: 'id',
+  member_id: 'member_id',
+  name: 'name',
+  tagline: 'tagline',
+  description: 'description',
+  url: 'url',
+  github_url: 'github_url',
+  thumbnail_url: 'thumbnail_url',
+  stage: 'stage',
+  is_featured: 'is_featured',
+  featured_at: 'featured_at',
+  featured_week: 'featured_week',
+  created_at: 'created_at'
+} as const
+
+export type SleptonsProductScalarFieldEnum = (typeof SleptonsProductScalarFieldEnum)[keyof typeof SleptonsProductScalarFieldEnum]
+
+
+export const SleptonsUpvoteScalarFieldEnum = {
+  member_id: 'member_id',
+  product_id: 'product_id',
+  created_at: 'created_at'
+} as const
+
+export type SleptonsUpvoteScalarFieldEnum = (typeof SleptonsUpvoteScalarFieldEnum)[keyof typeof SleptonsUpvoteScalarFieldEnum]
+
+
+export const SleptonsConnectionScalarFieldEnum = {
+  follower_id: 'follower_id',
+  following_id: 'following_id',
+  created_at: 'created_at'
+} as const
+
+export type SleptonsConnectionScalarFieldEnum = (typeof SleptonsConnectionScalarFieldEnum)[keyof typeof SleptonsConnectionScalarFieldEnum]
 
 
 export const SortOrder = {

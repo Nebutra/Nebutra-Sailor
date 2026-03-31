@@ -70,6 +70,26 @@ export const NftStatus = {
 export type NftStatus = (typeof NftStatus)[keyof typeof NftStatus]
 
 
+export const SleptonsTier = {
+  V0: 'V0',
+  V1: 'V1',
+  V2: 'V2',
+  V_INFINITY: 'V_INFINITY'
+} as const
+
+export type SleptonsTier = (typeof SleptonsTier)[keyof typeof SleptonsTier]
+
+
+export const ProductStage = {
+  IDEA: 'IDEA',
+  BUILDING: 'BUILDING',
+  LAUNCHED: 'LAUNCHED',
+  SCALING: 'SCALING'
+} as const
+
+export type ProductStage = (typeof ProductStage)[keyof typeof ProductStage]
+
+
 export const AIProvider = {
   OPENAI: 'OPENAI',
   ANTHROPIC: 'ANTHROPIC',

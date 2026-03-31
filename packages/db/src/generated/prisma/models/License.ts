@@ -278,6 +278,7 @@ export type LicenseWhereInput = {
   projectUrl?: Prisma.StringNullableFilter<"License"> | string | null
   createdAt?: Prisma.DateTimeFilter<"License"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"License"> | Date | string
+  sleptonsProfile?: Prisma.XOR<Prisma.SleptonsaMemberProfileNullableScalarRelationFilter, Prisma.SleptonsaMemberProfileWhereInput> | null
 }
 
 export type LicenseOrderByWithRelationInput = {
@@ -298,6 +299,7 @@ export type LicenseOrderByWithRelationInput = {
   projectUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  sleptonsProfile?: Prisma.SleptonsaMemberProfileOrderByWithRelationInput
 }
 
 export type LicenseWhereUniqueInput = Prisma.AtLeast<{
@@ -321,6 +323,7 @@ export type LicenseWhereUniqueInput = Prisma.AtLeast<{
   projectUrl?: Prisma.StringNullableFilter<"License"> | string | null
   createdAt?: Prisma.DateTimeFilter<"License"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"License"> | Date | string
+  sleptonsProfile?: Prisma.XOR<Prisma.SleptonsaMemberProfileNullableScalarRelationFilter, Prisma.SleptonsaMemberProfileWhereInput> | null
 }, "id" | "licenseKey">
 
 export type LicenseOrderByWithAggregationInput = {
@@ -387,6 +390,7 @@ export type LicenseCreateInput = {
   projectUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  sleptonsProfile?: Prisma.SleptonsaMemberProfileCreateNestedOneWithoutLicenseInput
 }
 
 export type LicenseUncheckedCreateInput = {
@@ -407,6 +411,7 @@ export type LicenseUncheckedCreateInput = {
   projectUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  sleptonsProfile?: Prisma.SleptonsaMemberProfileUncheckedCreateNestedOneWithoutLicenseInput
 }
 
 export type LicenseUpdateInput = {
@@ -427,6 +432,7 @@ export type LicenseUpdateInput = {
   projectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sleptonsProfile?: Prisma.SleptonsaMemberProfileUpdateOneWithoutLicenseNestedInput
 }
 
 export type LicenseUncheckedUpdateInput = {
@@ -447,6 +453,7 @@ export type LicenseUncheckedUpdateInput = {
   projectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sleptonsProfile?: Prisma.SleptonsaMemberProfileUncheckedUpdateOneWithoutLicenseNestedInput
 }
 
 export type LicenseCreateManyInput = {
@@ -569,12 +576,127 @@ export type LicenseMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type LicenseScalarRelationFilter = {
+  is?: Prisma.LicenseWhereInput
+  isNot?: Prisma.LicenseWhereInput
+}
+
 export type EnumLicenseTierFieldUpdateOperationsInput = {
   set?: $Enums.LicenseTier
 }
 
 export type EnumLicenseTypeFieldUpdateOperationsInput = {
   set?: $Enums.LicenseType
+}
+
+export type LicenseCreateNestedOneWithoutSleptonsProfileInput = {
+  create?: Prisma.XOR<Prisma.LicenseCreateWithoutSleptonsProfileInput, Prisma.LicenseUncheckedCreateWithoutSleptonsProfileInput>
+  connectOrCreate?: Prisma.LicenseCreateOrConnectWithoutSleptonsProfileInput
+  connect?: Prisma.LicenseWhereUniqueInput
+}
+
+export type LicenseUpdateOneRequiredWithoutSleptonsProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.LicenseCreateWithoutSleptonsProfileInput, Prisma.LicenseUncheckedCreateWithoutSleptonsProfileInput>
+  connectOrCreate?: Prisma.LicenseCreateOrConnectWithoutSleptonsProfileInput
+  upsert?: Prisma.LicenseUpsertWithoutSleptonsProfileInput
+  connect?: Prisma.LicenseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LicenseUpdateToOneWithWhereWithoutSleptonsProfileInput, Prisma.LicenseUpdateWithoutSleptonsProfileInput>, Prisma.LicenseUncheckedUpdateWithoutSleptonsProfileInput>
+}
+
+export type LicenseCreateWithoutSleptonsProfileInput = {
+  id?: string
+  userId: string
+  tier: $Enums.LicenseTier
+  type: $Enums.LicenseType
+  licenseKey?: string
+  acceptedAt?: Date | string
+  acceptedIp?: string | null
+  acceptedVersion?: string
+  stripeCustomerId?: string | null
+  stripeSubscriptionId?: string | null
+  stripePriceId?: string | null
+  expiresAt?: Date | string | null
+  isActive?: boolean
+  projectName?: string | null
+  projectUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LicenseUncheckedCreateWithoutSleptonsProfileInput = {
+  id?: string
+  userId: string
+  tier: $Enums.LicenseTier
+  type: $Enums.LicenseType
+  licenseKey?: string
+  acceptedAt?: Date | string
+  acceptedIp?: string | null
+  acceptedVersion?: string
+  stripeCustomerId?: string | null
+  stripeSubscriptionId?: string | null
+  stripePriceId?: string | null
+  expiresAt?: Date | string | null
+  isActive?: boolean
+  projectName?: string | null
+  projectUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LicenseCreateOrConnectWithoutSleptonsProfileInput = {
+  where: Prisma.LicenseWhereUniqueInput
+  create: Prisma.XOR<Prisma.LicenseCreateWithoutSleptonsProfileInput, Prisma.LicenseUncheckedCreateWithoutSleptonsProfileInput>
+}
+
+export type LicenseUpsertWithoutSleptonsProfileInput = {
+  update: Prisma.XOR<Prisma.LicenseUpdateWithoutSleptonsProfileInput, Prisma.LicenseUncheckedUpdateWithoutSleptonsProfileInput>
+  create: Prisma.XOR<Prisma.LicenseCreateWithoutSleptonsProfileInput, Prisma.LicenseUncheckedCreateWithoutSleptonsProfileInput>
+  where?: Prisma.LicenseWhereInput
+}
+
+export type LicenseUpdateToOneWithWhereWithoutSleptonsProfileInput = {
+  where?: Prisma.LicenseWhereInput
+  data: Prisma.XOR<Prisma.LicenseUpdateWithoutSleptonsProfileInput, Prisma.LicenseUncheckedUpdateWithoutSleptonsProfileInput>
+}
+
+export type LicenseUpdateWithoutSleptonsProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  tier?: Prisma.EnumLicenseTierFieldUpdateOperationsInput | $Enums.LicenseTier
+  type?: Prisma.EnumLicenseTypeFieldUpdateOperationsInput | $Enums.LicenseType
+  licenseKey?: Prisma.StringFieldUpdateOperationsInput | string
+  acceptedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  acceptedIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedVersion?: Prisma.StringFieldUpdateOperationsInput | string
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePriceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  projectName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LicenseUncheckedUpdateWithoutSleptonsProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  tier?: Prisma.EnumLicenseTierFieldUpdateOperationsInput | $Enums.LicenseTier
+  type?: Prisma.EnumLicenseTypeFieldUpdateOperationsInput | $Enums.LicenseType
+  licenseKey?: Prisma.StringFieldUpdateOperationsInput | string
+  acceptedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  acceptedIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedVersion?: Prisma.StringFieldUpdateOperationsInput | string
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePriceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  projectName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -597,6 +719,7 @@ export type LicenseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   projectUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  sleptonsProfile?: boolean | Prisma.License$sleptonsProfileArgs<ExtArgs>
 }, ExtArgs["result"]["license"]>
 
 export type LicenseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -660,10 +783,17 @@ export type LicenseSelectScalar = {
 }
 
 export type LicenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "tier" | "type" | "licenseKey" | "acceptedAt" | "acceptedIp" | "acceptedVersion" | "stripeCustomerId" | "stripeSubscriptionId" | "stripePriceId" | "expiresAt" | "isActive" | "projectName" | "projectUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["license"]>
+export type LicenseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  sleptonsProfile?: boolean | Prisma.License$sleptonsProfileArgs<ExtArgs>
+}
+export type LicenseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type LicenseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $LicensePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "License"
-  objects: {}
+  objects: {
+    sleptonsProfile: Prisma.$SleptonsaMemberProfilePayload<ExtArgs> | null
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
@@ -1076,6 +1206,7 @@ readonly fields: LicenseFieldRefs;
  */
 export interface Prisma__LicenseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  sleptonsProfile<T extends Prisma.License$sleptonsProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.License$sleptonsProfileArgs<ExtArgs>>): Prisma.Prisma__SleptonsaMemberProfileClient<runtime.Types.Result.GetResult<Prisma.$SleptonsaMemberProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1139,6 +1270,10 @@ export type LicenseFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.LicenseOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LicenseInclude<ExtArgs> | null
+  /**
    * Filter, which License to fetch.
    */
   where: Prisma.LicenseWhereUniqueInput
@@ -1157,6 +1292,10 @@ export type LicenseFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.LicenseOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LicenseInclude<ExtArgs> | null
+  /**
    * Filter, which License to fetch.
    */
   where: Prisma.LicenseWhereUniqueInput
@@ -1174,6 +1313,10 @@ export type LicenseFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the License
    */
   omit?: Prisma.LicenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LicenseInclude<ExtArgs> | null
   /**
    * Filter, which License to fetch.
    */
@@ -1223,6 +1366,10 @@ export type LicenseFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.LicenseOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LicenseInclude<ExtArgs> | null
+  /**
    * Filter, which License to fetch.
    */
   where?: Prisma.LicenseWhereInput
@@ -1271,6 +1418,10 @@ export type LicenseFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.LicenseOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LicenseInclude<ExtArgs> | null
+  /**
    * Filter, which Licenses to fetch.
    */
   where?: Prisma.LicenseWhereInput
@@ -1313,6 +1464,10 @@ export type LicenseCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the License
    */
   omit?: Prisma.LicenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LicenseInclude<ExtArgs> | null
   /**
    * The data needed to create a License.
    */
@@ -1361,6 +1516,10 @@ export type LicenseUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the License
    */
   omit?: Prisma.LicenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LicenseInclude<ExtArgs> | null
   /**
    * The data needed to update a License.
    */
@@ -1428,6 +1587,10 @@ export type LicenseUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.LicenseOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LicenseInclude<ExtArgs> | null
+  /**
    * The filter to search for the License to update in case it exists.
    */
   where: Prisma.LicenseWhereUniqueInput
@@ -1454,6 +1617,10 @@ export type LicenseDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.LicenseOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LicenseInclude<ExtArgs> | null
+  /**
    * Filter which License to delete.
    */
   where: Prisma.LicenseWhereUniqueInput
@@ -1474,6 +1641,25 @@ export type LicenseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * License.sleptonsProfile
+ */
+export type License$sleptonsProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SleptonsaMemberProfile
+   */
+  select?: Prisma.SleptonsaMemberProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SleptonsaMemberProfile
+   */
+  omit?: Prisma.SleptonsaMemberProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SleptonsaMemberProfileInclude<ExtArgs> | null
+  where?: Prisma.SleptonsaMemberProfileWhereInput
+}
+
+/**
  * License without action
  */
 export type LicenseDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1485,4 +1671,8 @@ export type LicenseDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the License
    */
   omit?: Prisma.LicenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LicenseInclude<ExtArgs> | null
 }

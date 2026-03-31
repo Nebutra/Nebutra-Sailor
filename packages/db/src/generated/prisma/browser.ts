@@ -292,3 +292,23 @@ export type CommunityProfile = Prisma.CommunityProfileModel
  * 
  */
 export type License = Prisma.LicenseModel
+/**
+ * Model SleptonsaMemberProfile
+ * 
+ */
+export type SleptonsaMemberProfile = Prisma.SleptonsaMemberProfileModel
+/**
+ * Model SleptonsProduct
+ * 
+ */
+export type SleptonsProduct = Prisma.SleptonsProductModel
+/**
+ * Model SleptonsUpvote
+ * 
+ */
+export type SleptonsUpvote = Prisma.SleptonsUpvoteModel
+/**
+ * Model SleptonsConnection
+ * 
+ */
+export type SleptonsConnection = Prisma.SleptonsConnectionModel

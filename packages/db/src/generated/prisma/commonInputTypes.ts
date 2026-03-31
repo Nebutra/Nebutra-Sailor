@@ -830,6 +830,40 @@ export type EnumLicenseTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumLicenseTypeFilter<$PrismaModel>
 }
 
+export type EnumSleptonsTierFilter<$PrismaModel = never> = {
+  equals?: $Enums.SleptonsTier | Prisma.EnumSleptonsTierFieldRefInput<$PrismaModel>
+  in?: $Enums.SleptonsTier[] | Prisma.ListEnumSleptonsTierFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SleptonsTier[] | Prisma.ListEnumSleptonsTierFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSleptonsTierFilter<$PrismaModel> | $Enums.SleptonsTier
+}
+
+export type EnumSleptonsTierWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SleptonsTier | Prisma.EnumSleptonsTierFieldRefInput<$PrismaModel>
+  in?: $Enums.SleptonsTier[] | Prisma.ListEnumSleptonsTierFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SleptonsTier[] | Prisma.ListEnumSleptonsTierFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSleptonsTierWithAggregatesFilter<$PrismaModel> | $Enums.SleptonsTier
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSleptonsTierFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSleptonsTierFilter<$PrismaModel>
+}
+
+export type EnumProductStageFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProductStage | Prisma.EnumProductStageFieldRefInput<$PrismaModel>
+  in?: $Enums.ProductStage[] | Prisma.ListEnumProductStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProductStage[] | Prisma.ListEnumProductStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProductStageFilter<$PrismaModel> | $Enums.ProductStage
+}
+
+export type EnumProductStageWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProductStage | Prisma.EnumProductStageFieldRefInput<$PrismaModel>
+  in?: $Enums.ProductStage[] | Prisma.ListEnumProductStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProductStage[] | Prisma.ListEnumProductStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProductStageWithAggregatesFilter<$PrismaModel> | $Enums.ProductStage
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumProductStageFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumProductStageFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1592,6 +1626,40 @@ export type NestedEnumLicenseTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumLicenseTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumLicenseTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumSleptonsTierFilter<$PrismaModel = never> = {
+  equals?: $Enums.SleptonsTier | Prisma.EnumSleptonsTierFieldRefInput<$PrismaModel>
+  in?: $Enums.SleptonsTier[] | Prisma.ListEnumSleptonsTierFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SleptonsTier[] | Prisma.ListEnumSleptonsTierFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSleptonsTierFilter<$PrismaModel> | $Enums.SleptonsTier
+}
+
+export type NestedEnumSleptonsTierWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SleptonsTier | Prisma.EnumSleptonsTierFieldRefInput<$PrismaModel>
+  in?: $Enums.SleptonsTier[] | Prisma.ListEnumSleptonsTierFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SleptonsTier[] | Prisma.ListEnumSleptonsTierFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSleptonsTierWithAggregatesFilter<$PrismaModel> | $Enums.SleptonsTier
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSleptonsTierFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSleptonsTierFilter<$PrismaModel>
+}
+
+export type NestedEnumProductStageFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProductStage | Prisma.EnumProductStageFieldRefInput<$PrismaModel>
+  in?: $Enums.ProductStage[] | Prisma.ListEnumProductStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProductStage[] | Prisma.ListEnumProductStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProductStageFilter<$PrismaModel> | $Enums.ProductStage
+}
+
+export type NestedEnumProductStageWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProductStage | Prisma.EnumProductStageFieldRefInput<$PrismaModel>
+  in?: $Enums.ProductStage[] | Prisma.ListEnumProductStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProductStage[] | Prisma.ListEnumProductStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProductStageWithAggregatesFilter<$PrismaModel> | $Enums.ProductStage
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumProductStageFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumProductStageFilter<$PrismaModel>
 }
 
 

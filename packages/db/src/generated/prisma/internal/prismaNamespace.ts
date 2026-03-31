@@ -438,7 +438,11 @@ export const ModelName = {
   AuthSession: 'AuthSession',
   AuthVerification: 'AuthVerification',
   CommunityProfile: 'CommunityProfile',
-  License: 'License'
+  License: 'License',
+  SleptonsaMemberProfile: 'SleptonsaMemberProfile',
+  SleptonsProduct: 'SleptonsProduct',
+  SleptonsUpvote: 'SleptonsUpvote',
+  SleptonsConnection: 'SleptonsConnection'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -454,7 +458,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "aPIKey" | "user" | "organizationMember" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "wallet" | "nft" | "userActivity" | "tenantUsage" | "aIRequest" | "userPreference" | "recommendation" | "featureFlag" | "featureFlagOverride" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageRecord" | "usageLedgerEntry" | "usageAggregate" | "creditBalance" | "creditTransaction" | "entitlement" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license"
+    modelProps: "organization" | "aPIKey" | "user" | "organizationMember" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "wallet" | "nft" | "userActivity" | "tenantUsage" | "aIRequest" | "userPreference" | "recommendation" | "featureFlag" | "featureFlagOverride" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageRecord" | "usageLedgerEntry" | "usageAggregate" | "creditBalance" | "creditTransaction" | "entitlement" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4512,6 +4516,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SleptonsaMemberProfile: {
+      payload: Prisma.$SleptonsaMemberProfilePayload<ExtArgs>
+      fields: Prisma.SleptonsaMemberProfileFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SleptonsaMemberProfileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SleptonsaMemberProfileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload>
+        }
+        findFirst: {
+          args: Prisma.SleptonsaMemberProfileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SleptonsaMemberProfileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload>
+        }
+        findMany: {
+          args: Prisma.SleptonsaMemberProfileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload>[]
+        }
+        create: {
+          args: Prisma.SleptonsaMemberProfileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload>
+        }
+        createMany: {
+          args: Prisma.SleptonsaMemberProfileCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SleptonsaMemberProfileCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload>[]
+        }
+        delete: {
+          args: Prisma.SleptonsaMemberProfileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload>
+        }
+        update: {
+          args: Prisma.SleptonsaMemberProfileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload>
+        }
+        deleteMany: {
+          args: Prisma.SleptonsaMemberProfileDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SleptonsaMemberProfileUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SleptonsaMemberProfileUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload>[]
+        }
+        upsert: {
+          args: Prisma.SleptonsaMemberProfileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsaMemberProfilePayload>
+        }
+        aggregate: {
+          args: Prisma.SleptonsaMemberProfileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSleptonsaMemberProfile>
+        }
+        groupBy: {
+          args: Prisma.SleptonsaMemberProfileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SleptonsaMemberProfileGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SleptonsaMemberProfileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SleptonsaMemberProfileCountAggregateOutputType> | number
+        }
+      }
+    }
+    SleptonsProduct: {
+      payload: Prisma.$SleptonsProductPayload<ExtArgs>
+      fields: Prisma.SleptonsProductFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SleptonsProductFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SleptonsProductFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload>
+        }
+        findFirst: {
+          args: Prisma.SleptonsProductFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SleptonsProductFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload>
+        }
+        findMany: {
+          args: Prisma.SleptonsProductFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload>[]
+        }
+        create: {
+          args: Prisma.SleptonsProductCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload>
+        }
+        createMany: {
+          args: Prisma.SleptonsProductCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SleptonsProductCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload>[]
+        }
+        delete: {
+          args: Prisma.SleptonsProductDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload>
+        }
+        update: {
+          args: Prisma.SleptonsProductUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload>
+        }
+        deleteMany: {
+          args: Prisma.SleptonsProductDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SleptonsProductUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SleptonsProductUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload>[]
+        }
+        upsert: {
+          args: Prisma.SleptonsProductUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsProductPayload>
+        }
+        aggregate: {
+          args: Prisma.SleptonsProductAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSleptonsProduct>
+        }
+        groupBy: {
+          args: Prisma.SleptonsProductGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SleptonsProductGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SleptonsProductCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SleptonsProductCountAggregateOutputType> | number
+        }
+      }
+    }
+    SleptonsUpvote: {
+      payload: Prisma.$SleptonsUpvotePayload<ExtArgs>
+      fields: Prisma.SleptonsUpvoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SleptonsUpvoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SleptonsUpvoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload>
+        }
+        findFirst: {
+          args: Prisma.SleptonsUpvoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SleptonsUpvoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload>
+        }
+        findMany: {
+          args: Prisma.SleptonsUpvoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload>[]
+        }
+        create: {
+          args: Prisma.SleptonsUpvoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload>
+        }
+        createMany: {
+          args: Prisma.SleptonsUpvoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SleptonsUpvoteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload>[]
+        }
+        delete: {
+          args: Prisma.SleptonsUpvoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload>
+        }
+        update: {
+          args: Prisma.SleptonsUpvoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload>
+        }
+        deleteMany: {
+          args: Prisma.SleptonsUpvoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SleptonsUpvoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SleptonsUpvoteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload>[]
+        }
+        upsert: {
+          args: Prisma.SleptonsUpvoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsUpvotePayload>
+        }
+        aggregate: {
+          args: Prisma.SleptonsUpvoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSleptonsUpvote>
+        }
+        groupBy: {
+          args: Prisma.SleptonsUpvoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SleptonsUpvoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SleptonsUpvoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SleptonsUpvoteCountAggregateOutputType> | number
+        }
+      }
+    }
+    SleptonsConnection: {
+      payload: Prisma.$SleptonsConnectionPayload<ExtArgs>
+      fields: Prisma.SleptonsConnectionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SleptonsConnectionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SleptonsConnectionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload>
+        }
+        findFirst: {
+          args: Prisma.SleptonsConnectionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SleptonsConnectionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload>
+        }
+        findMany: {
+          args: Prisma.SleptonsConnectionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload>[]
+        }
+        create: {
+          args: Prisma.SleptonsConnectionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload>
+        }
+        createMany: {
+          args: Prisma.SleptonsConnectionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SleptonsConnectionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload>[]
+        }
+        delete: {
+          args: Prisma.SleptonsConnectionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload>
+        }
+        update: {
+          args: Prisma.SleptonsConnectionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload>
+        }
+        deleteMany: {
+          args: Prisma.SleptonsConnectionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SleptonsConnectionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SleptonsConnectionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload>[]
+        }
+        upsert: {
+          args: Prisma.SleptonsConnectionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsConnectionPayload>
+        }
+        aggregate: {
+          args: Prisma.SleptonsConnectionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSleptonsConnection>
+        }
+        groupBy: {
+          args: Prisma.SleptonsConnectionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SleptonsConnectionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SleptonsConnectionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SleptonsConnectionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -5478,6 +5778,69 @@ export const LicenseScalarFieldEnum = {
 export type LicenseScalarFieldEnum = (typeof LicenseScalarFieldEnum)[keyof typeof LicenseScalarFieldEnum]
 
 
+export const SleptonsaMemberProfileScalarFieldEnum = {
+  id: 'id',
+  member_number: 'member_number',
+  user_id: 'user_id',
+  license_id: 'license_id',
+  slug: 'slug',
+  display_name: 'display_name',
+  bio: 'bio',
+  avatar_url: 'avatar_url',
+  product_name: 'product_name',
+  product_url: 'product_url',
+  product_tagline: 'product_tagline',
+  tech_stack: 'tech_stack',
+  looking_for: 'looking_for',
+  tier: 'tier',
+  is_public: 'is_public',
+  github_handle: 'github_handle',
+  github_data: 'github_data',
+  github_refreshed_at: 'github_refreshed_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SleptonsaMemberProfileScalarFieldEnum = (typeof SleptonsaMemberProfileScalarFieldEnum)[keyof typeof SleptonsaMemberProfileScalarFieldEnum]
+
+
+export const SleptonsProductScalarFieldEnum = {
+  id: 'id',
+  member_id: 'member_id',
+  name: 'name',
+  tagline: 'tagline',
+  description: 'description',
+  url: 'url',
+  github_url: 'github_url',
+  thumbnail_url: 'thumbnail_url',
+  stage: 'stage',
+  is_featured: 'is_featured',
+  featured_at: 'featured_at',
+  featured_week: 'featured_week',
+  created_at: 'created_at'
+} as const
+
+export type SleptonsProductScalarFieldEnum = (typeof SleptonsProductScalarFieldEnum)[keyof typeof SleptonsProductScalarFieldEnum]
+
+
+export const SleptonsUpvoteScalarFieldEnum = {
+  member_id: 'member_id',
+  product_id: 'product_id',
+  created_at: 'created_at'
+} as const
+
+export type SleptonsUpvoteScalarFieldEnum = (typeof SleptonsUpvoteScalarFieldEnum)[keyof typeof SleptonsUpvoteScalarFieldEnum]
+
+
+export const SleptonsConnectionScalarFieldEnum = {
+  follower_id: 'follower_id',
+  following_id: 'following_id',
+  created_at: 'created_at'
+} as const
+
+export type SleptonsConnectionScalarFieldEnum = (typeof SleptonsConnectionScalarFieldEnum)[keyof typeof SleptonsConnectionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -5958,6 +6321,34 @@ export type EnumLicenseTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
 export type ListEnumLicenseTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LicenseType[]'>
     
 
+
+/**
+ * Reference to a field of type 'SleptonsTier'
+ */
+export type EnumSleptonsTierFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SleptonsTier'>
+    
+
+
+/**
+ * Reference to a field of type 'SleptonsTier[]'
+ */
+export type ListEnumSleptonsTierFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SleptonsTier[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ProductStage'
+ */
+export type EnumProductStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductStage'>
+    
+
+
+/**
+ * Reference to a field of type 'ProductStage[]'
+ */
+export type ListEnumProductStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductStage[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -6108,6 +6499,10 @@ export type GlobalOmitConfig = {
   authVerification?: Prisma.AuthVerificationOmit
   communityProfile?: Prisma.CommunityProfileOmit
   license?: Prisma.LicenseOmit
+  sleptonsaMemberProfile?: Prisma.SleptonsaMemberProfileOmit
+  sleptonsProduct?: Prisma.SleptonsProductOmit
+  sleptonsUpvote?: Prisma.SleptonsUpvoteOmit
+  sleptonsConnection?: Prisma.SleptonsConnectionOmit
 }
 
 /* Types for Logging */
