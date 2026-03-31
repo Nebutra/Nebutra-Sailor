@@ -17,8 +17,7 @@ const DropdownMenuTrigger = React.forwardRef<HTMLButtonElement, DropdownMenuTrig
     return (
       <BaseMenu.Trigger
         ref={ref}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        render={renderElement as any}
+        render={renderElement as React.ComponentProps<typeof BaseMenu.Trigger>["render"]}
         {...(renderElement ? props : { ...props, children })}
       />
     );

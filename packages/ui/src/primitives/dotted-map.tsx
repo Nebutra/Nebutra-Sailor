@@ -76,8 +76,7 @@ export function DottedMap({
     mapSamples,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const processedMarkers = addMarkers(markers as any);
+  const processedMarkers = addMarkers(markers as Parameters<typeof addMarkers>[0]);
 
   // Compute stagger helpers in a single, simple pass
   const { xStep, yToRowIndex } = React.useMemo(() => {
