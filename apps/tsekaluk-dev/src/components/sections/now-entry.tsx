@@ -1,7 +1,6 @@
 import { logger } from "@nebutra/logger";
 import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
-import { NowEntryView } from "./now-entry-view";
 
 interface NowData {
   date: string;
@@ -58,11 +57,21 @@ export async function NowEntry({ preview = false }: { preview?: boolean }) {
   }
 
   return (
-    <NowEntryView
-      data={data}
-      preview={preview}
-      sections={sections}
-      lastUpdatedLabel={t("last_updated")}
-    />
+    <div className="space-y-6">
+      <div className="text-sm text-gray-500">{t("last_updated")}: {data.date}</div>
+      {sections
+        .filter((section) => !preview || section.previewOnly)
+        .map((section) => (
+          <div key={section.key} className="space-y-2">
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100">{section.label}</h3>
+            <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
+              {data[section.key].map((item, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: static list
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+    </div>
   );
 }

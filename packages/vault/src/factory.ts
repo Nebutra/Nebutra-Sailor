@@ -71,10 +71,11 @@ export async function createVault(config?: VaultConfig): Promise<VaultProvider> 
       const { AWSKMSProvider } = await import("./providers/aws-kms.js");
       const kmsConfig = config as Exclude<VaultConfig, { provider: "local" }> | undefined;
       return new AWSKMSProvider({
-        keyId: kmsConfig?.keyId,
-        region: kmsConfig?.region,
-        credentials: kmsConfig?.credentials as any,
-        keyVersion: kmsConfig?.keyVersion,
+        provider: "aws-kms",
+        ...(kmsConfig?.keyId !== undefined ? { keyId: kmsConfig.keyId } : {}),
+        ...(kmsConfig?.region !== undefined ? { region: kmsConfig.region } : {}),
+        ...(kmsConfig?.credentials !== undefined ? { credentials: kmsConfig.credentials } : {}),
+        ...(kmsConfig?.keyVersion !== undefined ? { keyVersion: kmsConfig.keyVersion } : {}),
       });
     }
 
@@ -82,9 +83,10 @@ export async function createVault(config?: VaultConfig): Promise<VaultProvider> 
       const { LocalProvider } = await import("./providers/local.js");
       const localConfig = config as Exclude<VaultConfig, { provider: "aws-kms" }> | undefined;
       return new LocalProvider({
-        masterKey: localConfig?.masterKey,
-        salt: localConfig?.salt,
-        keyVersion: localConfig?.keyVersion,
+        provider: "local",
+        ...(localConfig?.masterKey !== undefined ? { masterKey: localConfig.masterKey } : {}),
+        ...(localConfig?.salt !== undefined ? { salt: localConfig.salt } : {}),
+        ...(localConfig?.keyVersion !== undefined ? { keyVersion: localConfig.keyVersion } : {}),
       });
     }
 

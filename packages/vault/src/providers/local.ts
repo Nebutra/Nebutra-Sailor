@@ -83,7 +83,7 @@ export class LocalProvider implements VaultProvider {
         dekAuthTag: toBase64(dekEncryptResult.authTag),
         keyVersion: this.keyVersion,
         algorithm: "aes-256-gcm",
-        tenantId: options?.tenantId,
+        ...(options?.tenantId !== undefined ? { tenantId: options.tenantId } : {}),
         metadata: options?.metadata as any,
         createdAt: new Date().toISOString(),
       };
@@ -173,7 +173,7 @@ export class LocalProvider implements VaultProvider {
       // Re-encrypt with new DEK
       const reencrypted = await this.encrypt(plaintext, {
         id: encrypted.id,
-        tenantId: encrypted.tenantId,
+        ...(encrypted.tenantId !== undefined ? { tenantId: encrypted.tenantId } : {}),
         metadata: encrypted.metadata,
       });
 

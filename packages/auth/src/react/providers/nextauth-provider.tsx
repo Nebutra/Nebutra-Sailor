@@ -42,7 +42,9 @@ export function NextAuthProvider({
 
     const loadNextAuth = async () => {
       try {
-        // Attempt to load next-auth/react
+        // Attempt to load next-auth/react (optional peer dependency)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error next-auth/react is an optional peer dependency
         const nextAuthReact = (await import("next-auth/react")) as Record<string, unknown>;
 
         const SessionProvider = nextAuthReact.SessionProvider as
@@ -138,6 +140,8 @@ export function NextAuthProvider({
           },
           signOut: async () => {
             try {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-expect-error next-auth/react is an optional peer dependency
               const { signOut } = await import("next-auth/react");
               await signOut({ redirect: false });
             } catch (error) {

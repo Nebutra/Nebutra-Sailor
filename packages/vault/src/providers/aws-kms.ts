@@ -2,7 +2,6 @@ import { randomUUID } from "node:crypto";
 import {
   DecryptCommand,
   GenerateDataKeyCommand,
-  type GenerateDataKeyCommandOutput,
   KMSClient,
 } from "@aws-sdk/client-kms";
 import { logger } from "@nebutra/logger";
@@ -90,7 +89,7 @@ export class AWSKMSProvider implements VaultProvider {
         authTag: toBase64(encryptResult.authTag),
         keyVersion: this.keyVersion,
         algorithm: "aes-256-gcm",
-        tenantId: options?.tenantId,
+        ...(options?.tenantId !== undefined ? { tenantId: options.tenantId } : {}),
         metadata: options?.metadata as any,
         createdAt: new Date().toISOString(),
       };
@@ -162,7 +161,7 @@ export class AWSKMSProvider implements VaultProvider {
       // Re-encrypt with new DEK
       const reencrypted = await this.encrypt(plaintext, {
         id: encrypted.id,
-        tenantId: encrypted.tenantId,
+        ...(encrypted.tenantId !== undefined ? { tenantId: encrypted.tenantId } : {}),
         metadata: encrypted.metadata,
       });
 

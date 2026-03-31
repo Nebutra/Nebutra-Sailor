@@ -22,7 +22,7 @@ export function aesEncrypt(plaintext: string | Buffer, key: Buffer): AesEncryptR
   }
 
   const iv = randomBytes(IV_LENGTH);
-  const cipher = createCipheriv(ALGORITHM, key, iv);
+  const cipher = createCipheriv(ALGORITHM, key, iv, { authTagLength: AUTH_TAG_LENGTH });
 
   const plainBuf = typeof plaintext === "string" ? Buffer.from(plaintext, "utf-8") : plaintext;
   let ciphertext = cipher.update(plainBuf);
@@ -81,7 +81,7 @@ export function deriveKey(
         if (err) {
           reject(err);
         } else {
-          resolve(derivedKey);
+          resolve(Buffer.from(derivedKey));
         }
       },
     );
