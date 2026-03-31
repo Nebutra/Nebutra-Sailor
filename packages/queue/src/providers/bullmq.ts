@@ -91,9 +91,9 @@ export class BullMQProvider implements QueueProvider {
     try {
       const bullJob = await queue.add(job.type, job, {
         jobId: job.id,
-        delay: job.options?.delaySec ? job.options.delaySec * 1000 : undefined,
+        ...(job.options?.delaySec ? { delay: job.options.delaySec * 1000 } : {}),
         attempts: job.options?.maxRetries ?? 3,
-        priority: job.options?.priority,
+        ...(job.options?.priority !== undefined ? { priority: job.options.priority } : {}),
         ...(job.options?.cron ? { repeat: { pattern: job.options.cron } } : {}),
       });
 
@@ -136,9 +136,9 @@ export class BullMQProvider implements QueueProvider {
         data: job,
         opts: {
           jobId: job.id,
-          delay: job.options?.delaySec ? job.options.delaySec * 1000 : undefined,
+          ...(job.options?.delaySec ? { delay: job.options.delaySec * 1000 } : {}),
           attempts: job.options?.maxRetries ?? 3,
-          priority: job.options?.priority,
+          ...(job.options?.priority !== undefined ? { priority: job.options.priority } : {}),
         },
       }));
 
@@ -256,10 +256,10 @@ export class BullMQProvider implements QueueProvider {
       status: statusMap[state] ?? "pending",
       attempts: bullJob.attemptsMade,
       maxRetries: bullJob.opts.attempts ?? 3,
-      failedReason: bullJob.failedReason ?? undefined,
+      ...(bullJob.failedReason ? { failedReason: bullJob.failedReason } : {}),
       createdAt: new Date(bullJob.timestamp).toISOString(),
-      processedAt: bullJob.processedOn ? new Date(bullJob.processedOn).toISOString() : undefined,
-      completedAt: bullJob.finishedOn ? new Date(bullJob.finishedOn).toISOString() : undefined,
+      ...(bullJob.processedOn ? { processedAt: new Date(bullJob.processedOn).toISOString() } : {}),
+      ...(bullJob.finishedOn ? { completedAt: new Date(bullJob.finishedOn).toISOString() } : {}),
     };
   }
 

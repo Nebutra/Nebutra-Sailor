@@ -64,9 +64,13 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
           process.env.QSTASH_CALLBACK_BASE_URL ??
           process.env.API_GATEWAY_URL ??
           "http://localhost:3002",
-        token: qstashConfig?.token,
-        currentSigningKey: qstashConfig?.currentSigningKey,
-        nextSigningKey: qstashConfig?.nextSigningKey,
+        ...(qstashConfig?.token !== undefined ? { token: qstashConfig.token } : {}),
+        ...(qstashConfig?.currentSigningKey !== undefined
+          ? { currentSigningKey: qstashConfig.currentSigningKey }
+          : {}),
+        ...(qstashConfig?.nextSigningKey !== undefined
+          ? { nextSigningKey: qstashConfig.nextSigningKey }
+          : {}),
       });
     }
 
@@ -76,9 +80,9 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
         | Exclude<QueueConfig, { provider: "qstash" | "memory" }>
         | undefined;
       return new BullMQProvider({
-        redisUrl: bullConfig?.redisUrl,
-        concurrency: bullConfig?.concurrency,
-        prefix: bullConfig?.prefix,
+        ...(bullConfig?.redisUrl !== undefined ? { redisUrl: bullConfig.redisUrl } : {}),
+        ...(bullConfig?.concurrency !== undefined ? { concurrency: bullConfig.concurrency } : {}),
+        ...(bullConfig?.prefix !== undefined ? { prefix: bullConfig.prefix } : {}),
       });
     }
 

@@ -92,10 +92,10 @@ export class MemoryProvider implements QueueProvider {
       status: stored.status,
       attempts: stored.attempts,
       maxRetries: stored.payload.options?.maxRetries ?? 3,
-      failedReason: stored.failedReason,
+      ...(stored.failedReason !== undefined ? { failedReason: stored.failedReason } : {}),
       createdAt: stored.payload.createdAt,
-      processedAt: stored.processedAt,
-      completedAt: stored.completedAt,
+      ...(stored.processedAt !== undefined ? { processedAt: stored.processedAt } : {}),
+      ...(stored.completedAt !== undefined ? { completedAt: stored.completedAt } : {}),
     };
   }
 

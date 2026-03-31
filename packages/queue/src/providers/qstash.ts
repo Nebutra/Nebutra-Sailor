@@ -71,8 +71,10 @@ export class QStashProvider implements QueueProvider {
       const response = await this.client.publishJSON({
         url: destination,
         body: job,
-        deduplicationId: job.options?.idempotencyKey,
-        delay: job.options?.delaySec ? `${job.options.delaySec}s` : undefined,
+        ...(job.options?.idempotencyKey !== undefined
+          ? { deduplicationId: job.options.idempotencyKey }
+          : {}),
+        ...(job.options?.delaySec ? { delay: `${job.options.delaySec}s` as `${number}s` } : {}),
         retries: job.options?.maxRetries ?? 3,
         ...(job.options?.cron ? { cron: job.options.cron } : {}),
         headers: {
@@ -83,14 +85,16 @@ export class QStashProvider implements QueueProvider {
         },
       });
 
+      const messageId = "messageId" in response ? response.messageId : job.id;
+
       logger.info("[queue:qstash] Job enqueued", {
         jobId: job.id,
-        messageId: response.messageId,
+        messageId,
         destination,
       });
 
       return {
-        jobId: response.messageId,
+        jobId: messageId,
         accepted: true,
         provider: "qstash",
       };
@@ -116,7 +120,9 @@ export class QStashProvider implements QueueProvider {
           "x-nebutra-job-id": job.id,
           ...(job.options?.tenantId ? { "x-nebutra-tenant-id": job.options.tenantId } : {}),
         },
-        deduplicationId: job.options?.idempotencyKey,
+        ...(job.options?.idempotencyKey !== undefined
+          ? { deduplicationId: job.options.idempotencyKey }
+          : {}),
         retries: job.options?.maxRetries ?? 3,
       }));
 
@@ -124,8 +130,8 @@ export class QStashProvider implements QueueProvider {
 
       logger.info("[queue:qstash] Batch enqueued", { count: jobs.length });
 
-      return responses.map((r, i) => ({
-        jobId: r.messageId,
+      return responses.map((r, idx) => ({
+        jobId: "messageId" in r ? r.messageId : (jobs[idx]?.id ?? ""),
         accepted: true,
         provider: "qstash" as const,
       }));
