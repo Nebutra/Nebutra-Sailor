@@ -2,7 +2,7 @@
 
 import { TextShimmer } from "@nebutra/ui/primitives";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Search, X } from "lucide-react";
+import { LayoutDashboard, LogOut, Menu, Search, X } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import * as React from "react";
@@ -14,6 +14,19 @@ import { signIn, signOut, useSession } from "@/lib/auth-client";
 
 function AuthIndicator() {
   const { data: session, isPending } = useSession();
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  // Close dropdown on outside click
+  React.useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   if (isPending) {
     return null;
@@ -22,28 +35,68 @@ function AuthIndicator() {
   if (session?.user) {
     const initial = session.user.name?.charAt(0).toUpperCase() ?? "?";
     return (
-      <button
-        type="button"
-        onClick={() => signOut()}
-        className="gap-1.5 text-sm flex items-center text-muted-foreground transition-colors hover:text-foreground"
-        aria-label="Sign out"
-        title={`Signed in as ${session.user.name ?? session.user.email}`}
-      >
-        {session.user.image ? (
-          <Image
-            src={session.user.image}
-            alt=""
-            width={24}
-            height={24}
-            className="rounded-full"
-            unoptimized
-          />
-        ) : (
-          <span className="h-6 w-6 text-xs font-medium flex items-center justify-center rounded-full bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200">
-            {initial}
-          </span>
-        )}
-      </button>
+      <div ref={ref} className="relative">
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="gap-1.5 text-sm flex items-center text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 rounded-full"
+          aria-label="Account menu"
+          aria-expanded={open}
+          title={`Signed in as ${session.user.name ?? session.user.email}`}
+        >
+          {session.user.image ? (
+            <Image
+              src={session.user.image}
+              alt=""
+              width={24}
+              height={24}
+              className="rounded-full"
+              unoptimized
+            />
+          ) : (
+            <span className="h-6 w-6 text-xs font-medium flex items-center justify-center rounded-full bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+              {initial}
+            </span>
+          )}
+        </button>
+
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: -4 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -4 }}
+              transition={{ duration: 0.12 }}
+              className="right-0 top-8 z-50 min-w-[160px] absolute overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900"
+            >
+              <div className="border-b border-gray-100 px-3 py-2 dark:border-gray-800">
+                <p className="text-xs font-medium text-gray-900 dark:text-white truncate max-w-[140px]">
+                  {session.user.name ?? "Signed in"}
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[140px]">
+                  {session.user.email}
+                </p>
+              </div>
+              <Link
+                href="/admin"
+                onClick={() => setOpen(false)}
+                className="gap-2 w-full px-3 py-2 text-sm flex items-center text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
+              >
+                <LayoutDashboard className="h-3.5 w-3.5" />
+                Admin Panel
+              </Link>
+              <button
+                type="button"
+                onClick={() => { setOpen(false); signOut(); }}
+                className="gap-2 w-full px-3 py-2 text-sm flex items-center text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                Sign out
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     );
   }
 
