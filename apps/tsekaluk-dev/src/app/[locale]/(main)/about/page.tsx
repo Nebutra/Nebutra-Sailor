@@ -3,6 +3,7 @@ import { Mail } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { AboutAnchorNav } from "@/components/about-anchor-nav";
 import { CountUp } from "@/components/count-up";
 import { ResumeDownloadButton } from "@/components/resume-download-button";
 import { personJsonLd } from "@/lib/json-ld";
@@ -160,6 +161,16 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
   const GAMES = ["Minecraft · Deer_Sama", "Detroit: Become Human", "Kingdom Rush", "美丽水世界"];
 
+  const NAV_SECTIONS = [
+    { id: "personality", label: t("personality_label") },
+    { id: "journey", label: t("journey_label") },
+    { id: "awards", label: t("awards_label") },
+    { id: "credentials", label: t("credentials_label") },
+    { id: "beliefs", label: t("beliefs_label") },
+    { id: "life", label: t("life_label") },
+    { id: "contact", label: t("contact_anchor_label") },
+  ];
+
   return (
     <section className="mx-auto max-w-4xl px-8 py-24 md:py-32">
       <script
@@ -177,6 +188,9 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           <span className="text-gray-400 dark:text-gray-500">{t("headline_muted")}</span>
         </h1>
       </AnimateIn>
+
+      {/* Anchor Nav */}
+      <AboutAnchorNav sections={NAV_SECTIONS} />
 
       {/* Photo + Bio */}
       <AnimateIn preset="fadeUp" delay={0.1} className="mb-32 grid gap-12 md:grid-cols-[280px_1fr]">
@@ -225,6 +239,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </AnimateIn>
 
       {/* Personality */}
+      <span id="personality" className="block scroll-mt-24" aria-hidden="true" />
       <AnimateIn preset="fadeUp" className="mb-32">
         <h2 className="mb-12 text-sm font-mono tracking-widest text-gray-500 dark:text-gray-400 uppercase">
           {t("personality_label")}
@@ -292,6 +307,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </AnimateIn>
 
       {/* Timeline */}
+      <span id="journey" className="block scroll-mt-24" aria-hidden="true" />
       <AnimateIn preset="fadeUp" className="mb-32">
         <h2 className="mb-12 text-sm font-mono tracking-widest text-gray-500 dark:text-gray-400 uppercase">
           {t("journey_label")}
@@ -314,6 +330,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </AnimateIn>
 
       {/* Awards */}
+      <span id="awards" className="block scroll-mt-24" aria-hidden="true" />
       <AnimateIn preset="fadeUp" className="mb-32">
         <div className="mb-12 flex items-baseline gap-4">
           <h2 className="text-sm font-mono tracking-widest text-gray-500 dark:text-gray-400 uppercase">
@@ -347,6 +364,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </AnimateIn>
 
       {/* Credentials */}
+      <span id="credentials" className="block scroll-mt-24" aria-hidden="true" />
       <AnimateIn preset="fadeUp" className="mb-32">
         <h2 className="mb-12 text-sm font-mono tracking-widest text-gray-500 dark:text-gray-400 uppercase">
           {t("credentials_label")}
@@ -363,6 +381,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </AnimateIn>
 
       {/* Beliefs */}
+      <span id="beliefs" className="block scroll-mt-24" aria-hidden="true" />
       <AnimateIn preset="fadeUp" className="mb-32">
         <h2 className="mb-12 text-sm font-mono tracking-widest text-gray-500 dark:text-gray-400 uppercase">
           {t("beliefs_label")}
@@ -384,6 +403,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </AnimateIn>
 
       {/* Life */}
+      <span id="life" className="block scroll-mt-24" aria-hidden="true" />
       <AnimateIn preset="fadeUp" className="mb-32">
         <h2 className="mb-12 text-sm font-mono tracking-widest text-gray-500 dark:text-gray-400 uppercase">
           {t("life_label")}
@@ -417,6 +437,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </AnimateIn>
 
       {/* Contact */}
+      <span id="contact" className="block scroll-mt-24" aria-hidden="true" />
       <AnimateIn preset="fadeUp" className="pt-24 border-t border-gray-100 dark:border-gray-800/50">
         <div className="text-center md:text-left md:flex md:items-center md:justify-between">
           <h2 className="text-2xl font-light tracking-tight text-foreground md:text-4xl mb-8 md:mb-0">
