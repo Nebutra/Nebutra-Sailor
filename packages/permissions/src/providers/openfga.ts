@@ -168,7 +168,12 @@ export class OpenFGAProvider implements PermissionProvider {
     }
   }
 
-  can(context: PermissionContext, action: Action, resource: Resource, subject?: unknown): boolean {
+  can(
+    _context: PermissionContext,
+    _action: Action,
+    _resource: Resource,
+    _subject?: unknown,
+  ): boolean {
     logger.warn(
       "OpenFGAProvider.can() is synchronous wrapper - use checkAsync() for actual checks",
     );
@@ -202,7 +207,7 @@ export class OpenFGAProvider implements PermissionProvider {
     return this.check(context.userId, action, `${resource}:${objectId}`);
   }
 
-  buildAbilityFor(context: PermissionContext): unknown {
+  buildAbilityFor(_context: PermissionContext): unknown {
     return this;
   }
 }

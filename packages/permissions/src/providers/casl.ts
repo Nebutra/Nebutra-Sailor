@@ -64,7 +64,7 @@ export class CASLProvider implements PermissionProvider {
 
   can(context: PermissionContext, action: Action, resource: Resource, subject?: unknown): boolean {
     const ability = this.buildAbilityFor(context);
-    return ability.can(action, resource, subject);
+    return ability.can(action, resource, subject as string | undefined);
   }
 
   cannot(
@@ -74,7 +74,7 @@ export class CASLProvider implements PermissionProvider {
     subject?: unknown,
   ): boolean {
     const ability = this.buildAbilityFor(context);
-    return ability.cannot(action, resource, subject);
+    return ability.cannot(action, resource, subject as string | undefined);
   }
 
   private collectRulesForContext(context: PermissionContext): PermissionRule[] {
@@ -106,7 +106,8 @@ export class CASLProvider implements PermissionProvider {
     for (const action of actions) {
       for (const resource of resources) {
         if (conditions) {
-          method.apply(builder, [action, resource, conditions]);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          method.apply(builder, [action, resource, conditions as any]);
         } else {
           method.apply(builder, [action, resource]);
         }
@@ -177,5 +178,6 @@ export function getPrismaQuery(
   action: Action,
   resource: Resource,
 ): PrismaQuery {
-  return accessibleBy(ability, action)[resource] || {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (accessibleBy(ability as any, action) as any)[resource] || {};
 }

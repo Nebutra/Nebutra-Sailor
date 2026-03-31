@@ -1,11 +1,16 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { createContext, useContext, useMemo } from "react";
-import type { Action, PermissionContext, PermissionProvider, Resource } from "./types.js";
+import type {
+  Action,
+  PermissionProvider as IPermissionProvider,
+  PermissionContext,
+  Resource,
+} from "./types.js";
 
 interface PermissionContextValue {
-  provider: PermissionProvider;
+  provider: IPermissionProvider;
   context: PermissionContext;
 }
 
@@ -13,7 +18,7 @@ const PermissionContextReact = createContext<PermissionContextValue | null>(null
 
 export interface PermissionProviderProps {
   children: ReactNode;
-  provider: PermissionProvider;
+  provider: IPermissionProvider;
   context: PermissionContext;
 }
 
@@ -21,7 +26,7 @@ export function PermissionProvider({
   children,
   provider,
   context,
-}: PermissionProviderProps): JSX.Element {
+}: PermissionProviderProps): ReactElement {
   const value: PermissionContextValue = useMemo(() => ({ provider, context }), [provider, context]);
 
   return (
@@ -63,11 +68,11 @@ export function Can({
   subject,
   children,
   fallback,
-}: CanProps): JSX.Element | null {
+}: CanProps): ReactElement | null {
   const allowed = usePermission(action, resource, subject);
 
   if (!allowed) {
-    return fallback ? <>{fallback}</> : null;
+    return fallback ? (fallback as ReactElement) : null;
   }
 
   return <>{children}</>;
@@ -87,11 +92,11 @@ export function Cannot({
   subject,
   children,
   fallback,
-}: CannotProps): JSX.Element | null {
+}: CannotProps): ReactElement | null {
   const allowed = usePermission(action, resource, subject);
 
   if (allowed) {
-    return fallback ? <>{fallback}</> : null;
+    return fallback ? (fallback as ReactElement) : null;
   }
 
   return <>{children}</>;
