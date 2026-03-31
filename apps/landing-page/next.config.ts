@@ -55,6 +55,7 @@ const nextConfig: NextConfig = {
     "@nebutra/tokens",
     "@nebutra/marketing",
     "@nebutra/sanity",
+    "@nebutra/logger",
   ],
   reactCompiler: true,
 

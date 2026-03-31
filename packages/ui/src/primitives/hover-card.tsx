@@ -30,8 +30,8 @@ const HoverCard = ({
   }, [closeDelay]);
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: hover state wrapper — interactive trigger lives inside HoverCardTrigger
     <div
-      role="presentation"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="inline-block relative"
