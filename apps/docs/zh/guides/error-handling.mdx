@@ -1,0 +1,95 @@
+---
+title: 错误处理
+description: Nebutra 的错误封装格式、错误码和重试策略。
+---
+
+## 错误封装格式
+
+Nebutra API 的所有错误响应使用统一的 JSON 封装：
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "RESOURCE_NOT_FOUND",
+    "message": "项目 proj_123 未找到。",
+    "details": { "resource": "Project", "id": "proj_123" },
+    "request_id": "req_2a8bXXXXXXXXX"
+  }
+}
+```
+
+向支持团队报告问题时，请务必记录 `request_id`。
+
+## HTTP 状态码
+
+| 状态码 | 含义 |
+|--------|------|
+| `200` | 成功 |
+| `400` | 请求错误——参数无效 |
+| `401` | 未授权——令牌缺失或无效 |
+| `403` | 禁止访问——令牌有效但权限不足 |
+| `404` | 未找到 |
+| `422` | 不可处理的实体——验证错误 |
+| `429` | 超过限流/配额 |
+| `500` | 内部服务器错误 |
+
+## 错误码参考
+
+| 错误码 | HTTP | 描述 |
+|--------|------|------|
+| `INVALID_REQUEST` | 400 | 请求体或参数格式错误 |
+| `VALIDATION_ERROR` | 422 | 一个或多个字段验证失败 |
+| `UNAUTHORIZED` | 401 | 无有效认证令牌 |
+| `TOKEN_EXPIRED` | 401 | JWT 已过期——刷新后重试 |
+| `FORBIDDEN` | 403 | 操作所需权限不足 |
+| `RESOURCE_NOT_FOUND` | 404 | 请求的资源不存在 |
+| `RATE_LIMIT_EXCEEDED` | 429 | 时间窗口内请求过多 |
+| `QUOTA_EXCEEDED` | 429 | 月度使用配额已耗尽 |
+| `INTERNAL_ERROR` | 500 | 意外的服务器错误 |
+
+## SDK 错误处理
+
+```typescript
+import { NebutraError, NotFoundError, ValidationError, RateLimitError } from "@nebutra/sdk";
+
+try {
+  await nebutra.projects.get("proj_123");
+} catch (error) {
+  if (error instanceof NotFoundError) {
+    return notFound();
+  }
+  if (error instanceof ValidationError) {
+    return { errors: error.fields };
+  }
+  if (error instanceof RateLimitError) {
+    await sleep(error.retryAfter * 1000);
+  }
+  if (error instanceof NebutraError) {
+    console.error(`[${error.code}] ${error.message} (请求 ID: ${error.requestId})`);
+    throw error;
+  }
+}
+```
+
+## 幂等性
+
+对于可能需要重试的变更请求，传递幂等性密钥：
+
+```typescript
+await nebutra.invoices.create(
+  { amount: 9900, currency: "usd" },
+  { idempotencyKey: `invoice-${Date.now()}-${crypto.randomUUID()}` }
+);
+```
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="限流" icon="gauge" href="/zh/guides/rate-limits">
+    如何处理 429 限流响应。
+  </Card>
+  <Card title="API 错误参考" icon="code" href="/zh/api-reference/errors">
+    完整的错误码参考。
+  </Card>
+</CardGroup>

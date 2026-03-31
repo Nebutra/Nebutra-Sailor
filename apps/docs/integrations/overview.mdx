@@ -1,6 +1,75 @@
 ---
 title: Integrations
-description: Connect Nebutra with your stack.
+description: Connect Nebutra with the tools your team already uses.
 ---
 
-# Integrations
+## Available integrations
+
+<CardGroup cols={3}>
+  <Card title="Vercel" icon="triangle" href="/integrations/vercel">
+    Deploy to Vercel with zero config. Auto-provisioned environment variables.
+  </Card>
+  <Card title="Stripe" icon="credit-card" href="/integrations/stripe">
+    Billing, subscriptions, and payment webhooks pre-wired.
+  </Card>
+  <Card title="Slack" icon="slack" href="/integrations/slack">
+    Send notifications and alerts to Slack channels.
+  </Card>
+  <Card title="GitHub" icon="github" href="/integrations/github">
+    Trigger workflows on GitHub events. Sync issues and PRs.
+  </Card>
+  <Card title="Linear" icon="pencil" href="/integrations/linear">
+    Create and sync Linear issues from Nebutra events.
+  </Card>
+  <Card title="Resend" icon="envelope">
+    Transactional email — already configured. Templates in Sanity.
+  </Card>
+  <Card title="Sanity" icon="database">
+    Content management for blog, changelog, and email templates.
+  </Card>
+  <Card title="Sentry" icon="bug">
+    Error tracking with tenant context, pre-configured.
+  </Card>
+  <Card title="Supabase" icon="server">
+    PostgreSQL + pgvector. RLS policies pre-configured for multi-tenancy.
+  </Card>
+</CardGroup>
+
+## Built-in vs configurable
+
+Some integrations are pre-wired and active by default. Others require API keys to activate.
+
+| Integration | Status | Notes |
+|-------------|--------|-------|
+| Vercel | Built-in | Zero-config deployment |
+| Resend | Active when `RESEND_API_KEY` is set | Email templates ready |
+| Stripe | Active when `STRIPE_SECRET_KEY` is set | Webhooks pre-configured |
+| Sentry | Active when `SENTRY_DSN` is set | Tenant context auto-tagged |
+| Sanity | Active when `SANITY_API_TOKEN` is set | Studio at studio.nebutra.com |
+| Slack | Requires OAuth setup | Via Settings → Integrations |
+| GitHub | Requires OAuth setup | Via Settings → Integrations |
+| Linear | Requires API key | Via Settings → Integrations |
+| Supabase | Active when `DATABASE_URL` is set | RLS pre-configured |
+
+## Adding a new integration
+
+To add a custom integration for your own product, implement the `Integration` interface:
+
+```typescript
+import { defineIntegration } from "@nebutra/integrations";
+
+export const myIntegration = defineIntegration({
+  id: "my-service",
+  name: "My Service",
+  events: ["project.created", "invoice.paid"],
+  onEvent: async (event, config) => {
+    await fetch(`${config.webhookUrl}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(event),
+    });
+  },
+});
+```
+
+Register it in `apps/web/src/integrations/registry.ts`.

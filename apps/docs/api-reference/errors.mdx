@@ -1,6 +1,99 @@
 ---
-title: Errors
-description: Error codes and their meanings.
+title: Error Reference
+description: Complete reference for all Nebutra API error codes, HTTP statuses, and their meanings.
 ---
 
-# Errors
+## Error envelope
+
+All errors follow this JSON structure:
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "RESOURCE_NOT_FOUND",
+    "message": "Human-readable description of what went wrong.",
+    "details": { ... },
+    "request_id": "req_2a8bXXXXXXXXX"
+  }
+}
+```
+
+Always include the `request_id` when contacting support.
+
+## Error codes
+
+### 4xx — Client errors
+
+| Code | HTTP | Description | How to fix |
+|------|------|-------------|------------|
+| `INVALID_REQUEST` | 400 | Request body or query params are malformed | Check the request format against the API reference |
+| `VALIDATION_ERROR` | 422 | One or more fields failed validation | See `details.fields` for field-level errors |
+| `UNAUTHORIZED` | 401 | No valid authentication token | Add `Authorization: Bearer <token>` header |
+| `TOKEN_EXPIRED` | 401 | JWT has expired | Refresh the token and retry |
+| `INVALID_API_KEY` | 401 | API key is invalid or revoked | Check your API key in Settings → API Keys |
+| `FORBIDDEN` | 403 | Valid token, but insufficient scope | Check the required scope in the API reference |
+| `RESOURCE_NOT_FOUND` | 404 | Resource does not exist | Verify the resource ID |
+| `DUPLICATE_RESOURCE` | 409 | A resource with this unique key already exists | Use the existing resource or change the key |
+| `IDEMPOTENCY_CONFLICT` | 409 | Same idempotency key, different request body | Use a new idempotency key for different requests |
+| `PRECONDITION_FAILED` | 412 | Resource is in an incompatible state | Check the resource status before retrying |
+| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests in the time window | Retry after `retry-after` seconds |
+| `QUOTA_EXCEEDED` | 429 | Monthly usage quota exhausted | Upgrade your plan or wait for the monthly reset |
+
+### 5xx — Server errors
+
+| Code | HTTP | Description | How to fix |
+|------|------|-------------|------------|
+| `INTERNAL_ERROR` | 500 | Unexpected server error | Retry with exponential backoff; contact support if persistent |
+| `SERVICE_UNAVAILABLE` | 503 | Dependency temporarily unavailable | Check [status.nebutra.com](https://status.nebutra.com); retry after a short wait |
+| `UPSTREAM_ERROR` | 502 | An upstream service returned an error | Retry; file a report if persistent |
+
+## Validation error format
+
+When `code` is `VALIDATION_ERROR`, the `details` object contains field-level errors:
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Validation failed for 2 fields.",
+    "details": {
+      "fields": [
+        {
+          "field": "email",
+          "message": "Must be a valid email address",
+          "received": "not-an-email"
+        },
+        {
+          "field": "name",
+          "message": "Required, minimum 2 characters",
+          "received": ""
+        }
+      ]
+    }
+  }
+}
+```
+
+## Retry guidance
+
+| HTTP Status | Retry? | Strategy |
+|-------------|--------|----------|
+| 400, 422 | No | Fix the request |
+| 401 | Yes (once) | Refresh the token |
+| 403 | No | Check permissions |
+| 404 | No | Verify the resource ID |
+| 409 | No | Handle the conflict |
+| 429 | Yes | Wait for `retry-after`, then exponential backoff |
+| 500 | Yes | Exponential backoff (1s, 2s, 4s, 8s) |
+| 503 | Yes | Exponential backoff, check status page |
+
+## Support
+
+If you encounter an error you can't resolve:
+
+1. Copy the `request_id` from the error response
+2. Check [status.nebutra.com](https://status.nebutra.com) for known incidents
+3. Open an issue on [GitHub](https://github.com/nebutra) with the request ID and context
+4. Email [founders@nebutra.com](mailto:founders@nebutra.com) for enterprise support

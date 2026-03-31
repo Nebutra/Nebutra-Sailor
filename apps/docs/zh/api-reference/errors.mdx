@@ -1,0 +1,48 @@
+---
+title: 错误参考
+description: Nebutra API 所有错误码、HTTP 状态及其含义的完整参考。
+---
+
+## 错误码参考
+
+### 4xx — 客户端错误
+
+| 错误码 | HTTP | 描述 | 解决方法 |
+|--------|------|------|---------|
+| `INVALID_REQUEST` | 400 | 请求体或查询参数格式错误 | 对照 API 参考检查请求格式 |
+| `VALIDATION_ERROR` | 422 | 一个或多个字段验证失败 | 查看 `details.fields` 获取字段级错误 |
+| `UNAUTHORIZED` | 401 | 无有效认证令牌 | 添加 `Authorization: Bearer <token>` 头 |
+| `TOKEN_EXPIRED` | 401 | JWT 已过期 | 刷新令牌后重试 |
+| `INVALID_API_KEY` | 401 | API 密钥无效或已撤销 | 在设置 → API 密钥中检查你的 API 密钥 |
+| `FORBIDDEN` | 403 | 令牌有效但权限范围不足 | 在 API 参考中检查所需权限范围 |
+| `RESOURCE_NOT_FOUND` | 404 | 资源不存在 | 验证资源 ID |
+| `DUPLICATE_RESOURCE` | 409 | 具有此唯一键的资源已存在 | 使用现有资源或更改键值 |
+| `RATE_LIMIT_EXCEEDED` | 429 | 时间窗口内请求过多 | 等待 `retry-after` 秒后重试 |
+| `QUOTA_EXCEEDED` | 429 | 月度使用配额已耗尽 | 升级套餐或等待月度重置 |
+
+### 5xx — 服务器错误
+
+| 错误码 | HTTP | 描述 | 解决方法 |
+|--------|------|------|---------|
+| `INTERNAL_ERROR` | 500 | 意外的服务器错误 | 指数退避重试；如持续出现请联系支持 |
+| `SERVICE_UNAVAILABLE` | 503 | 依赖服务暂时不可用 | 查看 [status.nebutra.com](https://status.nebutra.com) |
+
+## 重试指南
+
+| HTTP 状态 | 重试？ | 策略 |
+|----------|--------|------|
+| 400、422 | 否 | 修复请求 |
+| 401 | 是（一次） | 刷新令牌 |
+| 403 | 否 | 检查权限 |
+| 429 | 是 | 等待 `retry-after`，然后指数退避 |
+| 500 | 是 | 指数退避（1s、2s、4s、8s） |
+| 503 | 是 | 指数退避，查看状态页面 |
+
+## 获取支持
+
+如遇到无法解决的错误：
+
+1. 复制错误响应中的 `request_id`
+2. 查看 [status.nebutra.com](https://status.nebutra.com) 了解已知事件
+3. 在 [GitHub](https://github.com/nebutra) 上提交 Issue，附上请求 ID 和上下文
+4. 发送邮件至 [founders@nebutra.com](mailto:founders@nebutra.com) 获取企业支持

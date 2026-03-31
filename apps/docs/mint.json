@@ -1,29 +1,38 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Nebutra Docs",
+  "name": "Nebutra",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373"
+    "primary": "#0033FE",
+    "light": "#0BF1C3",
+    "dark": "#0033FE",
+    "anchors": {
+      "from": "#0033FE",
+      "to": "#0BF1C3"
+    }
   },
+  "versions": ["English", "中文"],
   "topbarLinks": [
     {
-      "name": "Design System",
-      "url": "https://ui.nebutra.com"
+      "name": "Community",
+      "url": "https://sleptons.nebutra.com"
     },
     {
       "name": "Status",
       "url": "https://status.nebutra.com"
+    },
+    {
+      "name": "GitHub",
+      "url": "https://github.com/nebutra"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://app.nebutra.com"
+    "name": "Get OPC License",
+    "url": "https://nebutra.com/en/get-license"
   },
   "tabs": [
     {
@@ -39,17 +48,47 @@
       "url": "changelog"
     }
   ],
+  "anchors": [
+    {
+      "name": "Roadmap",
+      "icon": "map",
+      "url": "https://nebutra.com/en/roadmap"
+    },
+    {
+      "name": "Blog",
+      "icon": "newspaper",
+      "url": "https://nebutra.com/en/blog"
+    },
+    {
+      "name": "Discord",
+      "icon": "discord",
+      "url": "https://discord.gg/nebutra"
+    }
+  ],
   "navigation": [
     {
       "group": "",
-      "pages": ["introduction", "changelog"]
+      "version": "English",
+      "pages": ["introduction"]
     },
     {
-      "group": "Quickstart",
+      "group": "Get Started",
+      "version": "English",
       "pages": ["quickstart/nextjs", "quickstart/react", "quickstart/node", "quickstart/python"]
     },
     {
+      "group": "Core Concepts",
+      "version": "English",
+      "pages": [
+        "concepts/architecture",
+        "concepts/tenants",
+        "concepts/permissions",
+        "concepts/billing-model"
+      ]
+    },
+    {
       "group": "Guides",
+      "version": "English",
       "pages": [
         "guides/authentication",
         "guides/multi-tenancy",
@@ -59,35 +98,100 @@
       ]
     },
     {
-      "group": "Concepts",
-      "pages": [
-        "concepts/architecture",
-        "concepts/tenants",
-        "concepts/permissions",
-        "concepts/billing-model"
-      ]
-    },
-    {
       "group": "Integrations",
+      "version": "English",
       "pages": [
         "integrations/overview",
         "integrations/vercel",
         "integrations/stripe",
-        "integrations/slack"
+        "integrations/slack",
+        "integrations/github",
+        "integrations/linear"
       ]
     },
     {
       "group": "API Reference",
+      "version": "English",
       "pages": ["api-reference/overview", "api-reference/authentication", "api-reference/errors"]
     },
     {
       "group": "SDKs",
+      "version": "English",
       "pages": ["sdks/javascript", "sdks/python"]
+    },
+    {
+      "group": "",
+      "version": "中文",
+      "pages": ["zh/introduction"]
+    },
+    {
+      "group": "快速开始",
+      "version": "中文",
+      "pages": [
+        "zh/quickstart/nextjs",
+        "zh/quickstart/react",
+        "zh/quickstart/node",
+        "zh/quickstart/python"
+      ]
+    },
+    {
+      "group": "核心概念",
+      "version": "中文",
+      "pages": [
+        "zh/concepts/architecture",
+        "zh/concepts/tenants",
+        "zh/concepts/permissions",
+        "zh/concepts/billing-model"
+      ]
+    },
+    {
+      "group": "开发指南",
+      "version": "中文",
+      "pages": [
+        "zh/guides/authentication",
+        "zh/guides/multi-tenancy",
+        "zh/guides/webhooks",
+        "zh/guides/rate-limits",
+        "zh/guides/error-handling"
+      ]
+    },
+    {
+      "group": "集成",
+      "version": "中文",
+      "pages": [
+        "zh/integrations/overview",
+        "zh/integrations/vercel",
+        "zh/integrations/stripe",
+        "zh/integrations/slack"
+      ]
+    },
+    {
+      "group": "API 参考",
+      "version": "中文",
+      "pages": [
+        "zh/api-reference/overview",
+        "zh/api-reference/authentication",
+        "zh/api-reference/errors"
+      ]
+    },
+    {
+      "group": "SDK",
+      "version": "中文",
+      "pages": ["zh/sdks/javascript", "zh/sdks/python"]
     }
   ],
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
+  },
+  "search": {
+    "prompt": "Search Nebutra docs..."
+  },
   "footerSocials": {
     "github": "https://github.com/nebutra",
-    "twitter": "https://twitter.com/nebutra"
+    "twitter": "https://twitter.com/nebutra_ai",
+    "discord": "https://discord.gg/nebutra"
   },
   "openapi": "api-reference/openapi.yaml"
 }

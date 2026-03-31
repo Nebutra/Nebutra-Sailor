@@ -1,20 +1,20 @@
 ---
-title: Next.js Quickstart
-description: Integrate Nebutra with your Next.js 16 App Router project in under 5 minutes.
+title: Next.js 快速开始
+description: 在 5 分钟内将 Nebutra 集成到你的 Next.js 16 App Router 项目中。
 ---
 
-## Prerequisites
+## 前提条件
 
 - Node.js 22+
-- A Nebutra account with an [OPC license](https://nebutra.com/en/get-license) (free)
-- An existing Next.js 16 project, or create one:
+- 拥有 [OPC 许可证](https://nebutra.com/en/get-license) 的 Nebutra 账户（免费）
+- 已有 Next.js 16 项目，或创建一个新项目：
 
 ```bash
 npx create-next-app@latest my-app --typescript --tailwind --app
 cd my-app
 ```
 
-## Step 1: Install the SDK
+## 第一步：安装 SDK
 
 <CodeGroup>
 
@@ -26,32 +26,28 @@ npm install @nebutra/sdk
 pnpm add @nebutra/sdk
 ```
 
-```bash yarn
-yarn add @nebutra/sdk
-```
-
 </CodeGroup>
 
-## Step 2: Configure environment variables
+## 第二步：配置环境变量
 
-Create a `.env.local` file at your project root:
+在项目根目录创建 `.env.local` 文件：
 
 ```bash .env.local
-# From your Nebutra dashboard → Settings → API Keys
+# 在 Nebutra 仪表板 → 设置 → API 密钥 中获取
 NEBUTRA_API_KEY=nbk_live_xxxxxxxxxxxxxxxxxxxx
 NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
 
-# Public key — safe to expose to the browser
+# 公开密钥——可以安全地暴露给浏览器
 NEXT_PUBLIC_NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
 ```
 
 <Warning>
-  Never commit `.env.local` to source control. Add it to `.gitignore`.
+  永远不要将 `.env.local` 提交到版本控制。请将其添加到 `.gitignore`。
 </Warning>
 
-## Step 3: Initialize the client
+## 第三步：初始化客户端
 
-Create a shared Nebutra client:
+创建一个共享的 Nebutra 客户端：
 
 ```typescript lib/nebutra.ts
 import { createClient } from "@nebutra/sdk";
@@ -62,9 +58,9 @@ export const nebutra = createClient({
 });
 ```
 
-## Step 4: Protect a route with authentication
+## 第四步：通过认证保护路由
 
-Add auth to a Server Component using the Nebutra proxy (Next.js 16+ uses `proxy.ts` instead of `middleware.ts`):
+使用 Nebutra 代理为 Server Component 添加认证（Next.js 16+ 使用 `proxy.ts` 替代 `middleware.ts`）：
 
 ```typescript proxy.ts
 import { withNebutraAuth } from "@nebutra/sdk/next";
@@ -78,7 +74,7 @@ export const config = {
 };
 ```
 
-## Step 5: Read the current user in a Server Component
+## 第五步：在 Server Component 中读取当前用户
 
 ```typescript app/dashboard/page.tsx
 import { getAuth } from "@nebutra/sdk/next/server";
@@ -92,15 +88,15 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <h1>Welcome, {user.firstName}</h1>
-      <p>Organization: {org.name}</p>
-      <p>Plan: {org.plan}</p>
+      <h1>欢迎，{user.firstName}</h1>
+      <p>组织：{org.name}</p>
+      <p>套餐：{org.plan}</p>
     </div>
   );
 }
 ```
 
-## Step 6: Make your first API call
+## 第六步：发起第一次 API 调用
 
 ```typescript app/api/projects/route.ts
 import { NextResponse } from "next/server";
@@ -119,7 +115,7 @@ export async function GET() {
 }
 ```
 
-## Step 7: Check permissions before an action
+## 第七步：在操作前检查权限
 
 ```typescript app/actions/delete-project.ts
 "use server";
@@ -127,26 +123,26 @@ import { requirePermission } from "@nebutra/sdk/next/server";
 import { nebutra } from "@/lib/nebutra";
 
 export async function deleteProject(projectId: string) {
-  // Throws 403 if user lacks the `project:delete` scope
+  // 如果用户缺少 `project:delete` 范围，则抛出 403
   await requirePermission("project:delete");
 
   await nebutra.projects.delete(projectId);
 }
 ```
 
-## You're ready
+## 准备就绪
 
 <CardGroup cols={2}>
-  <Card title="Core Concepts" icon="layers" href="/concepts/architecture">
-    Understand multi-tenancy and the permission model.
+  <Card title="核心概念" icon="layers" href="/zh/concepts/architecture">
+    了解多租户和权限模型。
   </Card>
-  <Card title="Authentication Guide" icon="shield-check" href="/guides/authentication">
-    Deep dive into auth flows and session management.
+  <Card title="认证指南" icon="shield-check" href="/zh/guides/authentication">
+    深入了解认证流程和会话管理。
   </Card>
-  <Card title="Webhooks" icon="webhook" href="/guides/webhooks">
-    Listen to real-time events from your Nebutra tenant.
+  <Card title="Webhooks" icon="webhook" href="/zh/guides/webhooks">
+    监听来自 Nebutra 租户的实时事件。
   </Card>
-  <Card title="API Reference" icon="code" href="/api-reference/overview">
-    Full REST API documentation.
+  <Card title="API 参考" icon="code" href="/zh/api-reference/overview">
+    完整的 REST API 文档。
   </Card>
 </CardGroup>

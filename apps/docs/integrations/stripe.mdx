@@ -1,6 +1,102 @@
 ---
 title: Stripe
-description: Billing with Stripe.
+description: Configure Stripe for billing, subscriptions, and the customer billing portal.
 ---
 
-# Stripe
+## Prerequisites
+
+- A [Stripe account](https://stripe.com)
+- Stripe CLI installed: `npm install -g stripe`
+
+## Step 1: Set environment variables
+
+```bash
+STRIPE_SECRET_KEY=sk_live_xxxxxxxxxxxxxxxxxxxx
+STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
+```
+
+Use `sk_test_` keys during development.
+
+## Step 2: Create products in Stripe
+
+Nebutra's billing model maps to three Stripe products:
+
+```bash
+# Create products
+stripe products create --name="Nebutra FREE" --description="Free tier"
+stripe products create --name="Nebutra PRO" --description="$29/month"
+stripe products create --name="Nebutra ENTERPRISE" --description="Custom pricing"
+
+# Create prices
+stripe prices create \
+  --product=prod_xxx \
+  --unit-amount=2900 \
+  --currency=usd \
+  --recurring[interval]=month
+```
+
+## Step 3: Configure webhook endpoint
+
+In your Stripe Dashboard: **Developers → Webhooks → Add endpoint**
+
+- URL: `https://api.nebutra.com/api/webhooks/stripe`
+- Events to listen for:
+  - `checkout.session.completed`
+  - `customer.subscription.updated`
+  - `customer.subscription.deleted`
+  - `invoice.paid`
+  - `invoice.payment_failed`
+
+### Test webhooks locally
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+## Step 4: Webhook handler
+
+The Stripe webhook handler is pre-built in the monorepo:
+
+```typescript apps/web/src/app/api/webhooks/stripe/route.ts
+import { handleStripeWebhook } from "@nebutra/billing/stripe";
+
+export async function POST(req: Request) {
+  return handleStripeWebhook(req);
+}
+```
+
+## Step 5: Billing portal
+
+Customers can manage their subscription via the Stripe customer portal:
+
+```typescript
+const session = await stripe.billingPortal.sessions.create({
+  customer: org.stripeCustomerId,
+  return_url: `${process.env.WEB_URL}/settings/billing`,
+});
+
+redirect(session.url);
+```
+
+This is pre-wired in **Settings → Billing → Manage Subscription**.
+
+## Stripe test cards
+
+| Card number | Scenario |
+|-------------|----------|
+| `4242 4242 4242 4242` | Successful payment |
+| `4000 0000 0000 9995` | Insufficient funds |
+| `4000 0025 0000 3155` | 3D Secure authentication |
+
+Use any future expiry date and any 3-digit CVC.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Billing Model" icon="credit-card" href="/concepts/billing-model">
+    Plans, quotas, and metering.
+  </Card>
+  <Card title="Webhooks Guide" icon="webhook" href="/guides/webhooks">
+    Full webhook setup and signature verification.
+  </Card>
+</CardGroup>

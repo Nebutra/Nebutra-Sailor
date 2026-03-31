@@ -1,6 +1,141 @@
 ---
 title: Error Handling
-description: Handle errors gracefully.
+description: Nebutra's error envelope format, error codes, and retry strategies.
 ---
 
-# Error Handling
+## Error envelope
+
+All error responses from the Nebutra API use a consistent JSON envelope:
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "RESOURCE_NOT_FOUND",
+    "message": "Project proj_123 not found.",
+    "details": {
+      "resource": "Project",
+      "id": "proj_123"
+    },
+    "request_id": "req_2a8bXXXXXXXXX"
+  }
+}
+```
+
+Always log the `request_id` when reporting issues to support — it enables us to trace the exact request in our logs.
+
+## HTTP status codes
+
+| Status | Meaning |
+|--------|---------|
+| `200` | Success |
+| `201` | Created |
+| `204` | No content (e.g. DELETE) |
+| `400` | Bad request — invalid parameters |
+| `401` | Unauthorized — missing or invalid token |
+| `403` | Forbidden — token valid, but insufficient permissions |
+| `404` | Not found |
+| `409` | Conflict — duplicate resource or state conflict |
+| `422` | Unprocessable entity — validation error |
+| `429` | Rate limit exceeded |
+| `500` | Internal server error |
+| `503` | Service unavailable — dependency unhealthy |
+
+## Error codes
+
+| Code | HTTP | Description |
+|------|------|-------------|
+| `INVALID_REQUEST` | 400 | Request body or parameters are malformed |
+| `VALIDATION_ERROR` | 422 | One or more fields failed validation |
+| `UNAUTHORIZED` | 401 | No valid authentication token |
+| `TOKEN_EXPIRED` | 401 | JWT has expired — refresh and retry |
+| `FORBIDDEN` | 403 | Insufficient scope for this action |
+| `RESOURCE_NOT_FOUND` | 404 | The requested resource does not exist |
+| `DUPLICATE_RESOURCE` | 409 | A resource with this key already exists |
+| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests in the time window |
+| `QUOTA_EXCEEDED` | 429 | Monthly usage quota exhausted |
+| `INTERNAL_ERROR` | 500 | Unexpected server error — contact support |
+| `SERVICE_UNAVAILABLE` | 503 | Dependency (DB, cache) temporarily unavailable |
+
+## Validation errors
+
+Validation errors include field-level details:
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Validation failed for 2 fields.",
+    "details": {
+      "fields": [
+        { "field": "email", "message": "Must be a valid email address" },
+        { "field": "name", "message": "Required, must be at least 2 characters" }
+      ]
+    }
+  }
+}
+```
+
+## Error handling in the SDK
+
+The SDK throws typed errors:
+
+```typescript
+import { NebutraError, NotFoundError, ValidationError } from "@nebutra/sdk";
+
+try {
+  const project = await nebutra.projects.get("proj_123");
+} catch (error) {
+  if (error instanceof NotFoundError) {
+    // Project doesn't exist — show 404 UI
+    return notFound();
+  }
+
+  if (error instanceof ValidationError) {
+    // Show field errors to user
+    return { errors: error.fields };
+  }
+
+  if (error instanceof NebutraError) {
+    // Generic Nebutra error
+    console.error(`[${error.code}] ${error.message} (request: ${error.requestId})`);
+    throw error;
+  }
+
+  throw error; // Re-throw unexpected errors
+}
+```
+
+## Idempotency
+
+For mutation requests (`POST`, `PUT`, `DELETE`) that could be retried, pass an idempotency key:
+
+```typescript
+await nebutra.invoices.create(
+  { amount: 9900, currency: "usd", orgId: "org_123" },
+  { idempotencyKey: `invoice-${Date.now()}-${crypto.randomUUID()}` }
+);
+```
+
+The same request with the same idempotency key within 24 hours will return the original response instead of creating a duplicate resource.
+
+## Error monitoring
+
+Nebutra ships with Sentry integration for server-side error tracking. Errors are automatically tagged with:
+
+- `tenant_id` — which org triggered the error
+- `user_id` — which user made the request
+- `request_id` — correlated with API logs
+- `route` — which endpoint was called
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Rate Limits" icon="gauge" href="/guides/rate-limits">
+    How to handle 429 rate limit responses.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/errors">
+    Full error code reference.
+  </Card>
+</CardGroup>

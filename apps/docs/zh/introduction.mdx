@@ -1,0 +1,88 @@
+---
+title: 产品介绍
+description: Nebutra 是 AI 原生 SaaS 基础设施层——无需从头构建认证、计费、RBAC 和 AI 路由，直接上线生产级多租户应用。
+---
+
+# 欢迎使用 Nebutra
+
+<Info>
+  **OPC 免费许可证现已开放。** 加入 Sleptons 社区，获取对即将上线功能的早期访问权限。
+  [立即获取免费许可证 →](https://nebutra.com/en/get-license)
+</Info>
+
+Nebutra 是专为 AI 原生产品打造的生产就绪 SaaS 脚手架。它将现代 B2B SaaS 所需的一切整合到单一 monorepo 中——多租户认证、基于角色的访问控制、计费、事务性邮件、AI 服务代理、功能标志和可观测性。
+
+不要把前 6 个月浪费在构建基础设施上。从第一天起就专注于真正重要的事：你的产品。
+
+## 包含哪些内容
+
+<CardGroup cols={2}>
+  <Card title="5 分钟快速开始" icon="bolt" href="/zh/quickstart/nextjs">
+    使用 Next.js、Node.js、React 或 Python，5 分钟内完成第一个集成。
+  </Card>
+  <Card title="核心概念" icon="layers" href="/zh/concepts/architecture">
+    了解架构——多租户、RBAC、计费模型和 AI 层。
+  </Card>
+  <Card title="开发指南" icon="book-open" href="/zh/guides/authentication">
+    认证、Webhooks、限流和错误处理的分步指南。
+  </Card>
+  <Card title="API 参考" icon="code" href="/zh/api-reference/overview">
+    附带请求/响应示例的完整 REST API 文档。
+  </Card>
+  <Card title="SDK" icon="cube" href="/zh/sdks/javascript">
+    JavaScript / TypeScript 和 Python 官方客户端库。
+  </Card>
+  <Card title="集成" icon="plug" href="/zh/integrations/overview">
+    与 Vercel、Stripe、Slack、GitHub 和 Linear 的一流集成。
+  </Card>
+</CardGroup>
+
+## Nebutra 开箱即用的功能
+
+<AccordionGroup>
+  <Accordion title="多租户认证" icon="shield-check">
+    基于 Clerk（或 Better Auth）的多租户认证，含组织成员角色管理。通过单个环境变量切换认证提供商。包含组织创建流程、成员邀请和会话管理。
+  </Accordion>
+  <Accordion title="基于角色的访问控制（RBAC）" icon="lock">
+    4 个内置角色（`OWNER`、`ADMIN`、`MEMBER`、`VIEWER`）覆盖 17 个类型化权限范围。无需修改业务逻辑即可扩展权限矩阵。CASL 在进程内实现毫秒级检查，OpenFGA 支持 Zanzibar 级策略评估。
+  </Accordion>
+  <Accordion title="计费与订阅" icon="credit-card">
+    Stripe 驱动的计费系统，预置 FREE、PRO 和 ENTERPRISE 三个套餐。通过 ClickHouse 聚合实现基于消耗的计量。在 API 网关层强制执行使用配额——无需修改应用代码。
+  </Accordion>
+  <Accordion title="AI 服务代理" icon="brain">
+    预构建的 `/api/v1/ai/chat`、`/embeddings` 和 `/models` 路由。经过认证、限流，并按租户范围隔离。无需修改前端即可接入任意模型提供商。
+  </Accordion>
+  <Accordion title="事务性邮件" icon="envelope">
+    基于 Resend 的邮件系统，附带欢迎邮件、API 密钥创建、配额预警和团队邀请等开箱即用模板。可在几分钟内自定义的 React Email 组件。
+  </Accordion>
+  <Accordion title="功能标志" icon="flag">
+    支持 SSR 的功能标志 Hook，含租户上下文。无需部署即可向特定组织套餐或个别租户发布功能。
+  </Accordion>
+  <Accordion title="可观测性" icon="chart-bar">
+    30 天漏斗和收入图表。含租户上下文的 Sentry 错误追踪。通过 `@nebutra/logger` 结构化日志记录。在 Vercel 上零配置。
+  </Accordion>
+</AccordionGroup>
+
+## 平台架构
+
+Nebutra 是一个包含 33 个 packages 和 7 个应用的 [Turborepo](https://turbo.build) monorepo。API 网关基于 [Hono](https://hono.dev) 和 OpenAPI 构建。前端应用使用 Next.js 16 和 Tailwind v4。
+
+| 应用 | 描述 |
+|-----|------|
+| `landing-page` | `nebutra.com` 公开营销网站 |
+| `web` | `app.nebutra.com` 认证后的 SaaS 仪表板 |
+| `api-gateway` | `api.nebutra.com` Hono REST API |
+| `studio` | `studio.nebutra.com` Sanity CMS |
+| `storybook` | `ui.nebutra.com` 组件库文档 |
+| `design-docs` | 内部设计系统文档 |
+| `docs` | 本文档站点 |
+
+## 版本
+
+Nebutra 遵循[语义化版本](https://semver.org/lang/zh-CN/)规范。当前稳定版为 `v1.0`（Launch 阶段）。查看[更新日志](/changelog)了解发布历史，查看[路线图](https://nebutra.com/en/roadmap)了解即将发布的版本。
+
+## 获取支持
+
+- **社区**: [Sleptons Discord](https://discord.gg/nebutra) — 来自 OPC 成员的实时帮助
+- **问题反馈**: [GitHub Issues](https://github.com/nebutra/nebutra-sailor/issues) — Bug 报告和功能请求
+- **邮件**: [founders@nebutra.com](mailto:founders@nebutra.com) — 企业和合作咨询

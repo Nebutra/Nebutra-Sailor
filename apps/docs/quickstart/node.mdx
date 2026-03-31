@@ -1,6 +1,113 @@
 ---
-title: Node.js
-description: Use Nebutra in a Node.js backend.
+title: Node.js Quickstart
+description: Use the Nebutra SDK in a Node.js backend or serverless function in under 5 minutes.
 ---
 
-# Node.js
+## Prerequisites
+
+- Node.js 22+
+- A Nebutra account with an [OPC license](https://nebutra.com/en/get-license) (free)
+
+## Step 1: Install the SDK
+
+<CodeGroup>
+
+```bash npm
+npm install @nebutra/sdk
+```
+
+```bash pnpm
+pnpm add @nebutra/sdk
+```
+
+</CodeGroup>
+
+## Step 2: Configure environment variables
+
+```bash .env
+NEBUTRA_API_KEY=nbk_live_xxxxxxxxxxxxxxxxxxxx
+NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
+```
+
+## Step 3: Initialize the client
+
+```typescript src/lib/nebutra.ts
+import { createClient } from "@nebutra/sdk";
+
+export const nebutra = createClient({
+  apiKey: process.env.NEBUTRA_API_KEY!,
+  orgId: process.env.NEBUTRA_ORG_ID!,
+});
+```
+
+## Step 4: Verify a request token
+
+If you're building an API that receives requests from Nebutra-authenticated users:
+
+```typescript src/middleware/auth.ts
+import { verifyToken } from "@nebutra/sdk/server";
+
+export async function authMiddleware(req: Request) {
+  const token = req.headers.get("authorization")?.replace("Bearer ", "");
+  if (!token) throw new Error("Unauthorized");
+
+  const { userId, orgId, scopes } = await verifyToken(token, {
+    apiKey: process.env.NEBUTRA_API_KEY!,
+  });
+
+  return { userId, orgId, scopes };
+}
+```
+
+## Step 5: Send a webhook event
+
+```typescript src/events.ts
+import { nebutra } from "./lib/nebutra";
+
+await nebutra.webhooks.send({
+  eventType: "invoice.paid",
+  payload: {
+    invoiceId: "inv_123",
+    amount: 9900, // cents
+    currency: "usd",
+  },
+  tenantId: "org_123",
+});
+```
+
+## Step 6: Check a user's permission
+
+```typescript src/handlers/delete-resource.ts
+import { nebutra } from "./lib/nebutra";
+
+export async function deleteResource(userId: string, resourceId: string) {
+  const allowed = await nebutra.permissions.check({
+    userId,
+    action: "delete",
+    resource: "Project",
+  });
+
+  if (!allowed) {
+    throw new Error("Forbidden: missing project:delete scope");
+  }
+
+  // proceed with deletion
+}
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Webhooks Guide" icon="webhook" href="/guides/webhooks">
+    Full webhook setup, event types, and signature verification.
+  </Card>
+  <Card title="Rate Limits" icon="gauge" href="/guides/rate-limits">
+    Understand quotas and how to handle 429 responses.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/overview">
+    Complete REST API documentation.
+  </Card>
+  <Card title="JavaScript SDK" icon="js" href="/sdks/javascript">
+    Full SDK reference.
+  </Card>
+</CardGroup>
