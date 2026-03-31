@@ -10,7 +10,9 @@ export interface AgentCardData {
   codeSnippet: React.ReactNode;
 }
 
-const Arrow = () => <span className="text-white/40 mx-1.5 font-black">{"->"}</span>;
+const Arrow = () => (
+  <span className="text-foreground/30 dark:text-white/40 mx-1.5 font-black">{"->"}</span>
+);
 
 export const AGENT_CARDS: AgentCardData[] = [
   {
@@ -22,7 +24,9 @@ export const AGENT_CARDS: AgentCardData[] = [
       <>
         <span className="text-[var(--status-warning)]">CLAUDE.md</span>
         <Arrow />
-        <span className="text-white/80">Component rules, token governance, import boundaries</span>
+        <span className="text-foreground/70 dark:text-white/80">
+          Component rules, token governance, import boundaries
+        </span>
       </>
     ),
   },
@@ -35,7 +39,9 @@ export const AGENT_CARDS: AgentCardData[] = [
       <>
         <span className="text-[var(--brand-tertiary)] font-semibold">7 architecture tests</span>
         <Arrow />
-        <span className="text-white/80">dependency flow, token usage, contrast ratio</span>
+        <span className="text-foreground/70 dark:text-white/80">
+          dependency flow, token usage, contrast ratio
+        </span>
       </>
     ),
   },
@@ -48,9 +54,9 @@ export const AGENT_CARDS: AgentCardData[] = [
       <>
         <span className="text-[var(--status-success)]">Agent reads context</span>
         <Arrow />
-        <span className="text-white/80">writes code</span>
+        <span className="text-foreground/70 dark:text-white/80">writes code</span>
         <Arrow />
-        <span className="text-white/80">tests pass</span>
+        <span className="text-foreground/70 dark:text-white/80">tests pass</span>
         <Arrow />
         <span className="text-[var(--brand-primary)] animate-pulse shadow-[0_0_10px_var(--brand-primary)]">
           ship
