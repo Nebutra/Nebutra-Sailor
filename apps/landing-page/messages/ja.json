@@ -1506,45 +1506,6 @@
     "subtitle": "SaaSアーキテクチャ、AIインフラ、プロダクションエンジニアリングの深掘り。",
     "readMore": "続きを読む"
   },
-  "agenticCapabilities": {
-    "badge": "エージェンティック・エンジニアリング",
-    "title": "AIネイティブアーキテクチャ",
-    "description": "Nebutra Sailorは、LLMエージェントによるペアプログラミングとシステム生成のために最適化された、最初のSaaS基盤です。",
-    "features": [
-      {
-        "title": "テスト駆動型トポロジー",
-        "desc": "プロパティベースのテストと厳格な型付けにより、AIが破壊的な変更を加えることなく安全にリファクタリングできる環境を提供します。"
-      },
-      {
-        "title": "自律的ワークフロー",
-        "desc": "AIエージェントがインフラをナビゲートし、コンポーネントを接続し、自律的に機能を提供できるように設計されています。"
-      },
-      {
-        "title": "高度な型安全性",
-        "desc": "TypeScript 5.xの厳格な型推論を利用して、プロンプトの意図が安全で実行可能なコードに変換されることを保証します。"
-      }
-    ],
-    "ctaText": "AIアーキテクチャを見る",
-    "ctaLink": "/docs/ai-architecture",
-    "items": {
-      "harness": {
-        "title": "Harness Engineering & Architecture Tests",
-        "desc": "100% test-covered, property-based robust topologies. Never break production again."
-      },
-      "agentic": {
-        "title": "AI-Native & Agentic Coding",
-        "desc": "System workflows orchestrated specifically for LLM auto-generation and agentic pair-programming."
-      },
-      "vibe": {
-        "title": "Vibe Business & AI Gateway",
-        "desc": "A seamless, multi-provider gateway allowing founders to iterate based on vibes while we handle the complex infrastructure."
-      },
-      "design": {
-        "title": "Design System Depth",
-        "desc": "4-layer token engine reflecting Studio Dumbar and Framer excellence. Pure visual perfection."
-      }
-    }
-  },
   "useCases": {
     "badge": "デプロイメントシナリオ",
     "title": "One foundation. Infinite possibilities.",

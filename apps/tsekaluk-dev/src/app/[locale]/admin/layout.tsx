@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { Link } from "@/i18n/navigation";
 import { AdminNav } from "./admin-nav";
 
 export const metadata: Metadata = {
@@ -44,13 +44,38 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <aside className="w-56 dark:border-gray-800 bg-white dark:bg-gray-950 flex shrink-0 flex-col border-r border-gray-100">
-        <div className="px-5 py-6 dark:border-gray-800 border-b border-gray-100">
-          <Link href="/admin" className="font-serif text-xl text-gray-900 dark:text-white italic">
-            Admin
+      <aside className="w-56 dark:border-gray-800 bg-white dark:bg-gray-950 flex shrink-0 flex-col border-r border-gray-100 justify-between">
+        <div>
+          <div className="px-5 py-6 dark:border-gray-800 border-b border-gray-100">
+            <Link href="/admin" className="font-serif text-xl text-gray-900 dark:text-white italic">
+              Admin
+            </Link>
+          </div>
+          <AdminNav />
+        </div>
+
+        <div className="p-4 border-t border-gray-100 dark:border-gray-800">
+          <Link
+            href="/"
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="shrink-0"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+            Back to Home
           </Link>
         </div>
-        <AdminNav />
       </aside>
 
       {/* Main content */}

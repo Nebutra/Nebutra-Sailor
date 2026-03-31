@@ -1506,45 +1506,6 @@
     "subtitle": "Analisis profundos sobre arquitectura SaaS, infraestructura de IA e ingenieria de produccion.",
     "readMore": "Leer mas"
   },
-  "agenticCapabilities": {
-    "badge": "INGENIERÍA AGÉNTICA",
-    "title": "Arquitectura Nativa de IA",
-    "description": "Nebutra Sailor es la primera base SaaS optimizada para generación automática y programación en pareja por agentes LLM.",
-    "features": [
-      {
-        "title": "Topología basada en pruebas",
-        "desc": "Evita que la IA rompa características existentes utilizando pruebas basadas en propiedades y un tipado estricto."
-      },
-      {
-        "title": "Flujos de trabajo autónomos",
-        "desc": "Diseñado para que los agentes de IA naveguen por tu infraestructura y entreguen características de forma autónoma."
-      },
-      {
-        "title": "Seguridad de tipos avanzada",
-        "desc": "Aprovecha el modo estricto de TypeScript 5.x para garantizar que los prompts se traduzcan en código seguro."
-      }
-    ],
-    "ctaText": "Explorar Arquitectura",
-    "ctaLink": "/docs/ai-architecture",
-    "items": {
-      "harness": {
-        "title": "Harness Engineering & Architecture Tests",
-        "desc": "100% test-covered, property-based robust topologies. Never break production again."
-      },
-      "agentic": {
-        "title": "AI-Native & Agentic Coding",
-        "desc": "System workflows orchestrated specifically for LLM auto-generation and agentic pair-programming."
-      },
-      "vibe": {
-        "title": "Vibe Business & AI Gateway",
-        "desc": "A seamless, multi-provider gateway allowing founders to iterate based on vibes while we handle the complex infrastructure."
-      },
-      "design": {
-        "title": "Design System Depth",
-        "desc": "4-layer token engine reflecting Studio Dumbar and Framer excellence. Pure visual perfection."
-      }
-    }
-  },
   "useCases": {
     "badge": "ESCENARIOS DE DESPLIEGUE",
     "title": "One foundation. Infinite possibilities.",

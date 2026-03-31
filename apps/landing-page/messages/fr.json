@@ -1506,45 +1506,6 @@
     "subtitle": "Analyses approfondies de l'architecture SaaS, de l'infrastructure IA et de l'ingenierie de production.",
     "readMore": "Lire la suite"
   },
-  "agenticCapabilities": {
-    "badge": "INGÉNIERIE AGENTIQUE",
-    "title": "Architecture Native IA",
-    "description": "Nebutra Sailor est la première base SaaS optimisée pour la génération assistée par IA et la programmation en binôme LLM.",
-    "features": [
-      {
-        "title": "Topologie Pilotée par les Tests",
-        "desc": "Empêche l'IA de casser le code existant grâce à des tests rigoureux et un typage strict."
-      },
-      {
-        "title": "Workflows Autonomes",
-        "desc": "Conçu pour que les agents IA naviguent dans votre infrastructure et déploient des fonctionnalités de manière autonome."
-      },
-      {
-        "title": "Sécurité de Type Avancée",
-        "desc": "Exploite le mode strict de TypeScript 5.x pour garantir que chaque prompt se traduit par un code exécutable sécurisé."
-      }
-    ],
-    "ctaText": "Explorer l'Architecture",
-    "ctaLink": "/docs/ai-architecture",
-    "items": {
-      "harness": {
-        "title": "Harness Engineering & Architecture Tests",
-        "desc": "100% test-covered, property-based robust topologies. Never break production again."
-      },
-      "agentic": {
-        "title": "AI-Native & Agentic Coding",
-        "desc": "System workflows orchestrated specifically for LLM auto-generation and agentic pair-programming."
-      },
-      "vibe": {
-        "title": "Vibe Business & AI Gateway",
-        "desc": "A seamless, multi-provider gateway allowing founders to iterate based on vibes while we handle the complex infrastructure."
-      },
-      "design": {
-        "title": "Design System Depth",
-        "desc": "4-layer token engine reflecting Studio Dumbar and Framer excellence. Pure visual perfection."
-      }
-    }
-  },
   "useCases": {
     "badge": "SCÉNARIOS DE DÉPLOIEMENT",
     "title": "One foundation. Infinite possibilities.",

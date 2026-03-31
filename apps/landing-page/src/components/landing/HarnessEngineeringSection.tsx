@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { MatrixLogOcean } from "@/components/ui/mockups/MatrixLogOcean";
 import { MiniPipeline } from "@/components/ui/mockups/MiniPipeline";
 import { ProgressRatchet } from "@/components/ui/mockups/ProgressRatchet";
 import { TerminalMockup } from "@/components/ui/mockups/TerminalMockup";
@@ -12,6 +13,7 @@ export function HarnessEngineeringSection() {
 
   return (
     <section id="harness" className="w-full bg-background py-24 md:py-32 relative overflow-hidden">
+      <MatrixLogOcean />
       {/* Ambient glow */}
       <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 
@@ -50,8 +52,8 @@ export function HarnessEngineeringSection() {
         {/* 3-column feature grid */}
         <AnimateInGroup inView stagger="normal" className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {HARNESS_CARDS.map((card) => (
-            <AnimateIn key={card.titleKey} preset="fadeUp">
-              <article className="group flex h-full flex-col rounded-[2.5rem] border border-border/50 bg-[var(--color-glass-panel,rgba(255,255,255,0.6))] dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.4))] backdrop-blur-2xl p-8 md:p-10 transition-all duration-500 shadow-elevation-high dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:border-primary/30">
+            <AnimateIn key={card.titleKey} preset="fadeUp" className="h-full">
+              <article className="group flex h-full flex-col rounded-[2.5rem] border border-border/40 bg-background/40 dark:bg-zinc-950/40 backdrop-blur-xl p-8 md:p-10 transition-all duration-500 shadow-elevation-high hover:border-primary/30">
                 {/* Icon + Title */}
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">

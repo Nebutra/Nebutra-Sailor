@@ -53,7 +53,6 @@ export function Footer() {
     { label: t("nav_thinking"), url: "/thinking" },
     { label: t("nav_now"), url: "/now" },
     { label: t("nav_about"), url: "/about" },
-    { label: t("nav_soul"), url: "/soul" },
     { label: t("nav_links"), url: "/links" },
   ];
 

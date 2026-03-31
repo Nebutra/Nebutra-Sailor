@@ -86,7 +86,10 @@ function AuthIndicator() {
               </Link>
               <button
                 type="button"
-                onClick={() => { setOpen(false); signOut(); }}
+                onClick={() => {
+                  setOpen(false);
+                  signOut();
+                }}
                 className="gap-2 w-full px-3 py-2 text-sm flex items-center text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
               >
                 <LogOut className="h-3.5 w-3.5" />
@@ -148,7 +151,6 @@ export function Header() {
     { label: t("now"), href: "/now" },
     { label: t("about"), href: "/about" },
     { label: t("links"), href: "/links" },
-    { label: t("soul"), href: "/soul" },
     { label: t("uses"), href: "/uses" },
     { label: t("guestbook"), href: "/guestbook" },
   ] as const;

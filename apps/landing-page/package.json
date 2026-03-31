@@ -11,6 +11,7 @@
     "translate": "npx lingo.dev@latest run"
   },
   "dependencies": {
+    "@chenglou/pretext": "^0.0.3",
     "@lottiefiles/dotlottie-react": "^0.18.3",
     "@nebutra/brand": "workspace:*",
     "@nebutra/icons": "workspace:*",

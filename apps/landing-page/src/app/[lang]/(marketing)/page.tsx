@@ -52,14 +52,6 @@ const AlternativeComparison = dynamic(
   { loading: () => <div className="h-80" aria-hidden /> },
 );
 
-const AgenticCapabilitiesSection = dynamic(
-  () =>
-    import("@/components/landing/agentic-capabilities").then(
-      (mod) => mod.AgenticCapabilitiesSection,
-    ),
-  { loading: () => <section className="h-96" aria-hidden /> },
-);
-
 const UseCasesSection = dynamic(
   () => import("@/components/landing/use-cases/UseCasesSection").then((mod) => mod.UseCasesSection),
   { loading: () => <section className="h-96" aria-hidden /> },
@@ -137,7 +129,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
         {/* 3. Product Showcase */}
         <ProductShowcase />
 
-        {/* 4. Capability Matrix + Agentic Capabilities */}
+        {/* 4. Capability Matrix */}
         <CapabilityMatrixSection />
         <AgenticEngineeringSection />
 
@@ -157,10 +149,12 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
         {/* 8. SEO & GEO — Discovery & Growth Engine */}
         <SEOGEOSection />
 
-        <AgenticCapabilitiesSection />
         <UseCasesSection />
 
         {/* Architecture section removed — content covered by CapabilityMatrix (RBAC, multi-tenant) */}
+
+        {/* 8.5 Alternative Comparison — builds confidence before pricing */}
+        <AlternativeComparison />
 
         {/* 4. High-Contrast Pricing Investment Section */}
         <PricingSection />
@@ -173,12 +167,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
               <p className="text-muted-foreground text-xl">{t("faq.description")}</p>
             </div>
 
-            {/* Comparison table — full width above FAQ */}
-            <div className="mb-12">
-              <AlternativeComparison />
-            </div>
-
-            {/* FAQ Accordion — full width below */}
+            {/* FAQ Accordion — full width */}
             <div className="max-w-3xl mx-auto">
               <Accordion className="w-full bg-background rounded-3xl border border-border/50 shadow-sm p-4 md:p-8">
                 <AccordionItem value="item-1" className="border-b border-border/50 text-lg">

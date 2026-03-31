@@ -1478,29 +1478,6 @@
     "subtitle": "深入探讨SaaS架构、AI基础设施和生产工程。",
     "readMore": "阅读更多"
   },
-  "agenticCapabilities": {
-    "badge": "极致工程学",
-    "title": "为 Vibe Business 时代而生。",
-    "description": "以深度的 Agentic Engineering 架构为支撑，跨越商业化最后 10% 的工程鸿沟。",
-    "items": {
-      "harness": {
-        "title": "Harness Engineering & 架构测试",
-        "desc": "100% 测试覆盖、基于属性的健壮拓扑结构。确保生产环境坚如磐石。"
-      },
-      "agentic": {
-        "title": "AI-Native & Agentic Coding",
-        "desc": "专为 LLM 自动生成与 Agentic 结对编程编排的系统级工作流。"
-      },
-      "vibe": {
-        "title": "Vibe Business & AI 网关",
-        "desc": "无缝的多供应商网关，让创始人在直觉中迭代应用，由我们处理极度复杂的基础设施。"
-      },
-      "design": {
-        "title": "设计系统的深度",
-        "desc": "四层代币引擎，反映出 Studio Dumbar 与 Framer 级别的卓越审美。纯粹的视觉完美。"
-      }
-    }
-  },
   "useCases": {
     "badge": "无限应用场景",
     "title": "一个基座，无限可能。",

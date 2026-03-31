@@ -69,7 +69,7 @@ export function AgenticEngineeringSection() {
                   {t(card.descKey)}
                 </p>
 
-                <TerminalSnippet>{card.codeSnippet}</TerminalSnippet>
+                <TerminalSnippet tokens={card.tokens} />
               </AnimateIn>
             );
           })}

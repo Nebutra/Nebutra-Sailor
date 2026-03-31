@@ -714,11 +714,17 @@ export function LicenseWizard() {
               {/* Action buttons */}
               <div className="flex flex-col gap-3 w-full max-w-md">
                 <a
+                  href="https://app.nebutra.com/dashboard"
+                  className="rounded-lg px-6 py-3 font-semibold text-white text-center transition-opacity hover:opacity-90"
+                  style={{ background: "var(--brand-gradient)" }}
+                >
+                  Go to Console →
+                </a>
+                <a
                   href="https://github.com/nebutra-sailor"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg px-6 py-3 font-semibold text-white text-center transition-opacity"
-                  style={{ background: "var(--brand-gradient)" }}
+                  className="rounded-lg border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] text-center transition-colors hover:bg-[var(--neutral-2)]"
                 >
                   Access the Template
                 </a>
@@ -729,12 +735,6 @@ export function LicenseWizard() {
                   className="rounded-lg border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] text-center transition-colors hover:bg-[var(--neutral-2)]"
                 >
                   Join Discord
-                </a>
-                <a
-                  href="/changelog"
-                  className="rounded-lg border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] text-center transition-colors hover:bg-[var(--neutral-2)]"
-                >
-                  View Changelog
                 </a>
               </div>
             </div>

@@ -5,7 +5,6 @@
 export { AIConstellationMarquee } from "./AIConstellationMarquee";
 export { AlternativeComparison } from "./AlternativeComparison";
 // Micro Landing components (ML-1.x through ML-9.x)
-export { AgenticCapabilitiesSection } from "./agentic-capabilities";
 export { AgenticEngineeringSection } from "./agentic-engineering";
 export { BlogShowcase, type BlogShowcaseProps } from "./BlogShowcase";
 export { CapabilityMatrixSection } from "./CapabilityMatrixSection";

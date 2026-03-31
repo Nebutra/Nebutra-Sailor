@@ -4,7 +4,6 @@ import { ConstellationSection } from "@/components/sections/constellation-sectio
 import { FocusSection } from "@/components/sections/focus-section";
 import { Hero } from "@/components/sections/hero";
 import { NowPreview } from "@/components/sections/now-preview";
-import { PricingSection } from "@/components/sections/pricing-section";
 import { ProcessSection } from "@/components/sections/process-section";
 import { SelectedWorks } from "@/components/sections/selected-works";
 import { TechMarquee } from "@/components/sections/tech-marquee";
@@ -21,7 +20,12 @@ const meta: Record<string, { title: string; description: string }> = {
   },
   zh: {
     title: "Tseka Luk — AI 原生构建者",
-    description: "斗星集团 CEO，AI 原生构建者。构建智能系统，而非仅仅是产品。",
+    description: "斗星集团 CEO，AI 原生構建者。构建智能系统，而非仅仅是产品。",
+  },
+  ja: {
+    title: "Tseka Luk — AI-Nativeビルダー",
+    description:
+      "Nebutra Intelligence CEO、AI-Nativeビルダー。プロダクトだけでなくインテリジェントなシステムを構築しています。",
   },
 };
 
@@ -41,7 +45,7 @@ export async function generateMetadata({
       description,
       url: `${BASE_URL}/${locale}`,
       siteName: "Tseka Luk",
-      locale: locale === "zh" ? "zh_CN" : "en_US",
+      locale: locale === "zh" ? "zh_CN" : locale === "ja" ? "ja_JP" : "en_US",
       type: "website",
       images: [
         `/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(description)}`,
@@ -49,7 +53,7 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
-      languages: { en: `${BASE_URL}/en`, zh: `${BASE_URL}/zh` },
+      languages: { en: `${BASE_URL}/en`, zh: `${BASE_URL}/zh`, ja: `${BASE_URL}/ja` },
     },
   };
 }
@@ -87,7 +91,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <ProcessSection />
       <SelectedWorks projects={localizedProjects} />
       <ConstellationSection />
-      <PricingSection />
       <NowPreview />
     </>
   );

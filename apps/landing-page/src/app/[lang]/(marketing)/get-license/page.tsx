@@ -1,4 +1,6 @@
+import { auth } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
@@ -18,6 +20,12 @@ export default async function GetLicensePage({ params }: { params: Promise<{ lan
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return null;
   setRequestLocale(lang as Locale);
+
+  // Require Clerk auth — redirect to sign-in if not logged in
+  const { userId } = await auth();
+  if (!userId) {
+    redirect(`/${lang}/sign-in?redirect_url=/${lang}/get-license`);
+  }
 
   return (
     <main className="min-h-screen bg-[var(--neutral-1)]">
