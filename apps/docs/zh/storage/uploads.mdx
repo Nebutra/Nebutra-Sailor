@@ -248,9 +248,26 @@ await uploads.completeMultipartUpload(
 
 ## Tus 断点续传
 
-<Warning>
-TODO: 待 `@nebutra/uploads` Tus 适配器最终确定后，补充 Tus 断点续传集成文档。API 接口将遵循 [tus-js-client](https://github.com/tus/tus-js-client) 规范。
-</Warning>
+<Note>
+  `@nebutra/uploads` 的 Tus 适配器正在开发中，将遵循 [tus-js-client](https://github.com/tus/tus-js-client) 接口规范，并集成到 `UploadProvider` 抽象层中。
+</Note>
+
+在适配器正式发布之前，对于超过 100 MB 的文件请使用上方的**分片上传**方案。如需立即支持断点续传，可直接调用 S3/R2 分片上传 API：
+
+```typescript
+// 持久化 uploadId 和 ETags，以便浏览器刷新后恢复上传
+const { uploadId, key } = await uploads.createMultipartUpload(
+  { bucket: "nebutra-uploads", key: "videos/demo.mp4" },
+  10  // 分片数量
+);
+
+// 将 uploadId 存储在 localStorage 或 sessionStorage 中
+localStorage.setItem("pendingUpload", JSON.stringify({ uploadId, key, etags: [] }));
+
+// 恢复时，从存储中加载并使用收集到的 ETags 调用 completeMultipartUpload
+```
+
+可关注 [更新日志](/zh/changelog) 或 `packages/uploads/` 目录中的 `tus.ts` 适配器文件以跟踪进度。
 
 ## 服务端文件校验
 

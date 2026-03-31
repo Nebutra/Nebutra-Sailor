@@ -4,7 +4,7 @@ description: Add, remove, and reorder onboarding steps. Customize welcome copy, 
 ---
 
 <Warning>
-  TODO: The onboarding flow is partially implemented. The **Welcome** and **Create organization** steps are complete and production-ready. The **Invite team** and **Configure** steps are stubs — they render placeholder UI but do not yet persist state or trigger downstream actions.
+  **Partial implementation:** The **Welcome** and **Create organization** steps are complete and production-ready. The **Invite team** and **Configure** steps currently render UI but do not persist state or trigger downstream actions — they redirect to the dashboard on submit. These steps are safe to ship as-is if those features are not yet needed in your product.
 </Warning>
 
 The onboarding wizard lives in `apps/web/src/app/(onboarding)/`. It is a multi-step flow driven by server actions and URL search params, so it works without client-side state management.
@@ -220,7 +220,7 @@ Edit the headline, subheading, and feature bullets directly. The page uses stand
 ## Customizing illustrations
 
 <Warning>
-  TODO: The illustration system is not yet finalized. Currently the welcome step uses an SVG inline in `page.tsx`. A proper illustration slot with swappable assets is planned.
+  The welcome step currently uses an inline SVG in `apps/web/src/app/(onboarding)/welcome/page.tsx`. To swap it out, replace the `<svg>` element with your own asset or an `<Image>` component from `next/image`. A formal illustration slot with a centralized asset registry is planned but not yet available.
 </Warning>
 
 In the meantime, replace the inline SVG in `apps/web/src/app/(onboarding)/welcome/page.tsx` with your own:

@@ -818,7 +818,18 @@ consentRoutes.openapi(contactFormRoute, async (c) => {
       },
     });
 
-    // TODO: Send notification email via Resend
+    // Send notification email via Resend asynchronously to not block UI
+    import("@nebutra/email")
+      .then(({ sendContactFormReceivedEmail }) => {
+        return sendContactFormReceivedEmail({
+          to: data.email,
+          name: data.name,
+          subject: data.subject,
+        });
+      })
+      .catch((err) => {
+        log.error("Failed to enqueue contact form email", { error: err, email: data.email });
+      });
 
     return c.json(
       {

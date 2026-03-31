@@ -4,7 +4,7 @@ description: 添加、删除和重新排序引导步骤。自定义欢迎文案�
 ---
 
 <Warning>
-  TODO: 引导流程部分尚未完全实现。**欢迎**和**创建组织**步骤已完成并可投入生产使用。**邀请团队**和**配置**步骤仍为存根——它们渲染占位 UI，但尚未持久化状态或触发下游操作。
+  **部分实现：** **欢迎**和**创建组织**步骤已完成并可投入生产。**邀请团队**和**配置**步骤目前仅渲染 UI，不会持久化状态或触发下游操作——提交后直接跳转到仪表板。如果你的产品暂时不需要这些功能，可以直接上线。
 </Warning>
 
 引导向导位于 `apps/web/src/app/(onboarding)/`。它是一个由服务端操作和 URL 搜索参数驱动的多步骤流程，因此无需客户端状态管理即可工作。
@@ -220,7 +220,7 @@ apps/web/src/app/(onboarding)/welcome/page.tsx
 ## 自定义插图
 
 <Warning>
-  TODO: 插图系统尚未最终确定。目前欢迎步骤在 `page.tsx` 中使用内联 SVG。支持可替换资源的适当插图插槽正在规划中。
+  欢迎步骤目前在 `apps/web/src/app/(onboarding)/welcome/page.tsx` 中使用内联 SVG。要替换插图，将 `<svg>` 元素换成你自己的资源或 `next/image` 的 `<Image>` 组件即可。集中式资源注册表的正式插图插槽已在规划中，但尚未实现。
 </Warning>
 
 在此期间，请将 `apps/web/src/app/(onboarding)/welcome/page.tsx` 中的内联 SVG 替换为您自己的资源：

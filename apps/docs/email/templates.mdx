@@ -255,12 +255,26 @@ Templates are React Email components — edit them like any other React componen
     ```
   </Step>
 
-  <Step title="Add TypeScript types for the data payload">
-    Add the new template's data type to the `EmailTemplateData` discriminated union so `email.send()` is fully type-safe.
+  <Step title="Export the typed sender function">
+    Each template in `@nebutra/email` is a named, typed export function. Add your new function to `packages/email/src/index.ts`:
 
-    <Warning>
-    TODO: Document the exact location of the `EmailTemplateData` union type once the `@nebutra/email` type system is finalized.
-    </Warning>
+    ```typescript
+    export async function sendMyFeatureEmail(opts: {
+      to: string;
+      firstName: string;
+      // your template-specific fields
+    }): Promise<SendResult> {
+      const html = baseLayout(`...`);
+      return send({ to: opts.to, subject: "...", html, tags: [{ name: "type", value: "my_feature" }] });
+    }
+    ```
+
+    Import it directly by name — no union dispatch needed:
+
+    ```typescript
+    import { sendMyFeatureEmail } from "@nebutra/email";
+    await sendMyFeatureEmail({ to: user.email, firstName: user.firstName });
+    ```
   </Step>
 
   <Step title="Preview and test">

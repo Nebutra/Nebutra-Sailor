@@ -17,9 +17,8 @@ async function AdminOverviewContent() {
         id: true,
         email: true,
         name: true,
-        image: true,
+        avatarUrl: true,
         createdAt: true,
-        lastActiveAt: true,
       },
     }),
   ]);
@@ -58,7 +57,7 @@ async function AdminOverviewContent() {
             {recentUsers.map((user) => (
               <div key={user.id} className="flex items-center gap-4 px-4 py-3">
                 <ExternalAvatar
-                  src={user.image}
+                  src={user.avatarUrl}
                   alt={user.name ?? "User"}
                   size={32}
                   className="h-8 w-8"

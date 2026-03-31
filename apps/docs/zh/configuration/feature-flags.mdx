@@ -69,9 +69,56 @@ Nebutra-Sailor 使用基于环境变量的功能开关，无需修改代码或�
 
 上述基于环境变量的开关在**构建时**（用于 Next.js 静态生成）和**进程启动时**进行评估。对于需要在不重新部署的情况下更改的开关，请使用 Vercel Edge Config。
 
-<Warning>
-  TODO：待编写 Edge Config 集成文档以支持运行时功能开关更新。集成已存在，但文档尚待完善。
-</Warning>
+Edge Config 在边缘节点提供亚毫秒级读取延迟，非常适合无需重新部署即可变更的功能开关。
+
+### 配置步骤
+
+1. 在 Vercel 控制台创建 Edge Config 存储（Storage → Edge Config → Create）。
+2. 将其关联到你的项目，并运行 `vercel env pull` 在本地获取 `EDGE_CONFIG`。
+3. 安装客户端：
+
+```bash
+pnpm add @vercel/edge-config
+```
+
+### 写入开关（服务端或部署 Hook）
+
+```typescript
+// scripts/update-flags.ts — 通过 CI 或 Vercel 部署 Hook 执行
+import { createClient } from "@vercel/edge-config";
+
+const edgeConfig = createClient(process.env.EDGE_CONFIG!);
+await edgeConfig.set("featureFlags", {
+  FEATURE_AI_CHAT: true,
+  FEATURE_BETA_DASHBOARD: false,
+});
+```
+
+### 在边缘读取开关（middleware / `proxy.ts`）
+
+```typescript
+import { get } from "@vercel/edge-config";
+
+export async function middleware() {
+  const flags = await get<Record<string, boolean>>("featureFlags");
+  const aiChatEnabled = flags?.FEATURE_AI_CHAT ?? false;
+  // 根据 aiChatEnabled 进行条件重写/重定向
+}
+```
+
+### 在 Server Component 中读取开关
+
+```typescript
+import { get } from "@vercel/edge-config";
+
+export default async function Page() {
+  const flags = await get<Record<string, boolean>>("featureFlags") ?? {};
+  if (!flags.FEATURE_BETA_DASHBOARD) notFound();
+  return <BetaDashboard />;
+}
+```
+
+Edge Config 每次请求会缓存读取结果，单次渲染中多次调用 `get()` 无额外开销。
 
 ## 按租户功能开关（计划中）
 
@@ -83,9 +130,9 @@ Nebutra-Sailor 的未来版本将支持与客户订阅计划绑定的按租户�
 | Pro 版 | + `FEATURE_AI_CHAT`、`FEATURE_ANALYTICS` |
 | Enterprise 版 | + `FEATURE_AI_EMBEDDINGS`、`FEATURE_TEAMS` |
 
-<Warning>
-  TODO：按租户功能开关在路线图中，但尚未实现。当前系统在基础设施层面全局应用开关。
-</Warning>
+<Note>
+  按租户功能开关**已在 Roadmap 中**，尚未实现。当前系统在基础设施层面全局应用开关。在按租户开关上线前，可通过 `@nebutra/permissions` RBAC 系统进行近似的按计划功能限制——在权限策略中检查 `tenant.plan`，并对该计划不包含的功能返回 `403`。
+</Note>
 
 ## 相关文档
 

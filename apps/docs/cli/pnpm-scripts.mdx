@@ -19,7 +19,7 @@ pnpm --filter apps/web dev
 | Script | Description |
 |--------|-------------|
 | `pnpm dev` | Start all apps simultaneously |
-| `pnpm dev:dashboard` | Web app (3000) + API gateway (3001) |
+| `pnpm dev:dashboard` | Web (3000) + Admin (3002) + API gateway (3001) |
 | `pnpm dev:marketing` | Landing page (3002) + Sanity Studio (3333) |
 | `pnpm dev:ai-saas` | All 6 AI SaaS apps |
 | `pnpm dev:overseas` | International locale apps (4 apps) |
@@ -65,9 +65,7 @@ pnpm --filter apps/web dev
 | `pnpm db:generate` | Regenerate Prisma client |
 | `pnpm db:migrate` | Run pending migrations |
 | `pnpm db:push` | Push schema without migration |
-| `pnpm db:seed` | Seed test data |
 | `pnpm db:studio` | Launch Prisma Studio GUI |
-| `pnpm db:reset` | ⚠️ Reset entire database |
 
 ## Infrastructure
 
@@ -98,20 +96,12 @@ node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
 |--------|-------------|
 | `pnpm generate:api-types` | Regenerate TypeScript types from OpenAPI spec |
 | `pnpm docs:cli` | Auto-generate CLI reference documentation |
-| `pnpm export:openapi` | Export OpenAPI schema to `api-reference/openapi.yaml` |
 
 ## Preset & Configuration
 
 | Script | Description |
 |--------|-------------|
 | `pnpm preset:env` | Configure active preset via interactive CLI |
-
-## Internationalization
-
-| Script | Description |
-|--------|-------------|
-| `pnpm i18n:sync` | Sync translation files across locales |
-| `pnpm i18n:missing` | List missing translation keys |
 
 ## Release & Versioning
 
@@ -139,8 +129,8 @@ pnpm release            # Publish to npm
 | Script | Description |
 |--------|-------------|
 | `pnpm license:check` | Audit production dependency licenses |
-| `pnpm ui:governance` | Validate UI token governance policy |
-| `pnpm ui:governance:verify` | Strict governance verification |
+| `pnpm ui:validate-policy` | Validate UI token governance policy |
+| `pnpm ui:verify-governance` | Strict governance verification |
 
 ## Useful combos
 
@@ -148,9 +138,7 @@ pnpm release            # Publish to npm
 # Fresh start (full reset)
 pnpm infra:down
 pnpm infra:up
-pnpm db:reset
 pnpm db:migrate
-pnpm db:seed
 
 # Before a commit
 pnpm typecheck && pnpm lint && pnpm test

@@ -18,8 +18,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@nebutra/logger": "workspace:*",
-    "@nebutra/cache": "workspace:*"
+    "@nebutra/billing": "workspace:*",
+    "@nebutra/cache": "workspace:*",
+    "@nebutra/logger": "workspace:*"
   },
   "peerDependencies": {
     "ai": "^6.0.0"

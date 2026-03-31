@@ -18,11 +18,11 @@ async function OrgDetailContent({ params }: Props) {
   const org = await db.organization.findUnique({
     where: { id },
     include: {
-      memberships: {
+      members: {
         include: { user: true },
         take: 50,
       },
-      _count: { select: { memberships: true } },
+      _count: { select: { members: true } },
     },
   });
 
@@ -48,7 +48,7 @@ async function OrgDetailContent({ params }: Props) {
           <Card className="p-6">
             <div className="flex flex-col items-center text-center">
               <ExternalAvatar
-                src={org.image}
+                src={undefined}
                 alt={org.name}
                 size={80}
                 className="h-20 w-20 rounded-xl"
@@ -80,7 +80,7 @@ async function OrgDetailContent({ params }: Props) {
               <div>
                 <dt className="text-xs text-neutral-10 dark:text-white/60">Members</dt>
                 <dd className="mt-0.5 text-sm text-neutral-12 dark:text-white">
-                  {org._count.memberships}
+                  {org._count.members}
                 </dd>
               </div>
             </dl>
@@ -93,16 +93,16 @@ async function OrgDetailContent({ params }: Props) {
             <div className="flex items-center gap-2 border-b border-neutral-7 bg-neutral-2 px-4 py-3 dark:border-white/10 dark:bg-white/5">
               <Users className="h-4 w-4 text-neutral-11 dark:text-white/70" />
               <h3 className="text-sm font-medium text-neutral-12 dark:text-white">
-                Members ({org._count.memberships})
+                Members ({org._count.members})
               </h3>
             </div>
-            {org.memberships.length === 0 ? (
+            {org.members.length === 0 ? (
               <div className="p-4 text-center text-sm text-neutral-11 dark:text-white/70">
                 No members in this organization.
               </div>
             ) : (
               <div className="divide-y divide-neutral-7 dark:divide-white/10">
-                {org.memberships.map((membership) => {
+                {org.members.map((membership) => {
                   const user = membership.user;
                   return (
                     <div
@@ -111,7 +111,7 @@ async function OrgDetailContent({ params }: Props) {
                     >
                       <div className="flex items-center gap-3">
                         <ExternalAvatar
-                          src={user?.image}
+                          src={user?.avatarUrl}
                           alt={user?.name ?? "Member"}
                           size={32}
                           className="h-8 w-8"
@@ -131,7 +131,7 @@ async function OrgDetailContent({ params }: Props) {
                       </div>
                       <span
                         className={`rounded-full px-2.5 py-1 text-xs font-medium ${
-                          membership.role === "admin"
+                          membership.role === "ADMIN" || membership.role === "OWNER"
                             ? "bg-blue-3 text-blue-11 dark:bg-blue-9/20 dark:text-blue-9"
                             : "bg-neutral-3 text-neutral-11 dark:bg-white/10 dark:text-white/70"
                         }`}

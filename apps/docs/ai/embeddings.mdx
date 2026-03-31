@@ -254,9 +254,23 @@ CREATE INDEX ON embeddings USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX ON embeddings USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 ```
 
-<Warning>
-TODO: Document the recommended index type and parameters for Nebutra's managed database tier once benchmarks are complete.
-</Warning>
+<Note>
+  **Recommended index configuration for Nebutra's managed tiers (Neon / Supabase):**
+
+  ```sql
+  -- HNSW (recommended for ≤5M rows — best query speed, ~2% build overhead)
+  CREATE INDEX CONCURRENTLY ON embeddings
+    USING hnsw (embedding vector_cosine_ops)
+    WITH (m = 16, ef_construction = 64);
+
+  -- IVFFlat (better for >5M rows — faster build, tune lists ≈ sqrt(row_count))
+  CREATE INDEX CONCURRENTLY ON embeddings
+    USING ivfflat (embedding vector_cosine_ops)
+    WITH (lists = 200);
+  ```
+
+  Set `SET hnsw.ef_search = 100` at query time to balance recall vs. speed. On Neon free tier, keep `m ≤ 16` to stay within the shared memory limit.
+</Note>
 
 ## Model dimensions reference
 

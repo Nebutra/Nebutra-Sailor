@@ -5,8 +5,7 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 
-    // Auth provider selection (affects which keys are required)
-    NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["clerk", "better-auth"]).default("better-auth"),
+    // Auth provider selection (client side definition handles both)
 
     // Clerk server secret — only required if using Clerk provider
     CLERK_SECRET_KEY: z.string().min(1).optional(),

@@ -69,9 +69,56 @@ Some flags require additional environment variables to be functional:
 
 The environment-variable flags above are evaluated at **build time** (for Next.js static generation) and at **process startup**. For flags that need to change without a redeployment, use Vercel Edge Config.
 
-<Warning>
-  TODO: Document the Edge Config integration for runtime feature flag updates. The integration exists but the documentation is pending.
-</Warning>
+Edge Config gives you sub-millisecond read latency at the edge — ideal for feature flags that need to change without a redeploy.
+
+### Setup
+
+1. Create an Edge Config store in the Vercel dashboard (Storage → Edge Config → Create).
+2. Link it to your project and run `vercel env pull` to get `EDGE_CONFIG` locally.
+3. Install the client:
+
+```bash
+pnpm add @vercel/edge-config
+```
+
+### Writing flags (server-side or deploy hook)
+
+```typescript
+// scripts/update-flags.ts — run via CI or a Vercel deploy hook
+import { createClient } from "@vercel/edge-config";
+
+const edgeConfig = createClient(process.env.EDGE_CONFIG!);
+await edgeConfig.set("featureFlags", {
+  FEATURE_AI_CHAT: true,
+  FEATURE_BETA_DASHBOARD: false,
+});
+```
+
+### Reading flags at the edge (middleware / `proxy.ts`)
+
+```typescript
+import { get } from "@vercel/edge-config";
+
+export async function middleware() {
+  const flags = await get<Record<string, boolean>>("featureFlags");
+  const aiChatEnabled = flags?.FEATURE_AI_CHAT ?? false;
+  // use aiChatEnabled to conditionally rewrite/redirect
+}
+```
+
+### Reading flags in Server Components
+
+```typescript
+import { get } from "@vercel/edge-config";
+
+export default async function Page() {
+  const flags = await get<Record<string, boolean>>("featureFlags") ?? {};
+  if (!flags.FEATURE_BETA_DASHBOARD) notFound();
+  return <BetaDashboard />;
+}
+```
+
+Edge Config reads are cached per-request, so calling `get()` multiple times in a single render is free.
 
 ## Per-tenant feature flags (planned)
 
@@ -83,9 +130,9 @@ Future versions of Nebutra-Sailor will support per-tenant feature flags tied to 
 | Pro | + `FEATURE_AI_CHAT`, `FEATURE_ANALYTICS` |
 | Enterprise | + `FEATURE_AI_EMBEDDINGS`, `FEATURE_TEAMS` |
 
-<Warning>
-  TODO: Per-tenant feature flags are on the roadmap but are not yet implemented. The current system applies flags globally at the infrastructure level.
-</Warning>
+<Note>
+  Per-tenant feature flags are **on the roadmap** and not yet implemented. The current system applies flags globally. Until per-tenant flags ship, you can approximate per-plan feature gating using the `@nebutra/permissions` RBAC system — check `tenant.plan` in your permission policies and return `403` for features the plan doesn't include.
+</Note>
 
 ## Related
 

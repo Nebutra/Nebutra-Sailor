@@ -32,8 +32,8 @@ async function DashboardContent() {
 
   if (hasClerkKey) {
     const [authState, user] = await Promise.all([getAuth(), getUser()]);
-    userName = user?.firstName || "User";
-    orgName = (authState.sessionClaims?.org_name as string) || "";
+    userName = user?.name?.split(" ")[0] || "User";
+    orgName = ((authState.sessionClaims as Record<string, unknown>)?.org_name as string) || "";
     tenantId = authState.orgId || tenantId;
   }
 

@@ -18,7 +18,7 @@ async function UserDetailContent({ params }: Props) {
   const user = await db.user.findUnique({
     where: { id },
     include: {
-      memberships: {
+      organizations: {
         include: { organization: true },
       },
     },
@@ -27,8 +27,6 @@ async function UserDetailContent({ params }: Props) {
   if (!user) {
     notFound();
   }
-
-  const isBanned = user.banned ?? false;
 
   return (
     <>
@@ -48,7 +46,7 @@ async function UserDetailContent({ params }: Props) {
           <Card className="p-6">
             <div className="flex flex-col items-center text-center">
               <ExternalAvatar
-                src={user.image}
+                src={user.avatarUrl}
                 alt={user.name ?? "User"}
                 size={80}
                 className="h-20 w-20"
@@ -59,13 +57,6 @@ async function UserDetailContent({ params }: Props) {
               </h2>
               <p className="mt-1 text-sm text-neutral-11 dark:text-white/70">{user.email}</p>
 
-              {isBanned && (
-                <span className="mt-3 inline-flex items-center gap-1 rounded-full bg-red-3 px-2.5 py-1 text-xs font-medium text-red-11 dark:bg-red-9/20 dark:text-red-9">
-                  <Ban className="h-3 w-3" />
-                  Banned
-                </span>
-              )}
-
               <div className="mt-6 w-full space-y-2">
                 <form action={`/api/admin/impersonate`} method="POST">
                   <input type="hidden" name="userId" value={user.id} />
@@ -75,31 +66,6 @@ async function UserDetailContent({ params }: Props) {
                   >
                     <UserSettings className="h-4 w-4" />
                     Impersonate
-                  </button>
-                </form>
-
-                <form action={`/api/admin/ban`} method="POST">
-                  <input type="hidden" name="userId" value={user.id} />
-                  <input type="hidden" name="action" value={isBanned ? "unban" : "ban"} />
-                  <button
-                    type="submit"
-                    className={`flex w-full items-center justify-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 ${
-                      isBanned
-                        ? "border-cyan-7 text-cyan-11 hover:bg-cyan-2 dark:border-cyan-9/30 dark:text-cyan-9 dark:hover:bg-cyan-9/10"
-                        : "border-red-7 text-red-11 hover:bg-red-2 dark:border-red-9/30 dark:text-red-9 dark:hover:bg-red-9/10"
-                    }`}
-                  >
-                    {isBanned ? (
-                      <>
-                        <ShieldCheck className="h-4 w-4" />
-                        Unban User
-                      </>
-                    ) : (
-                      <>
-                        <Ban className="h-4 w-4" />
-                        Ban User
-                      </>
-                    )}
                   </button>
                 </form>
               </div>
@@ -125,12 +91,7 @@ async function UserDetailContent({ params }: Props) {
                   {new Date(user.createdAt).toLocaleString()}
                 </dd>
               </div>
-              <div className="grid grid-cols-3 gap-4">
-                <dt className="text-sm text-neutral-11 dark:text-white/70">Last Active</dt>
-                <dd className="col-span-2 text-sm text-neutral-12 dark:text-white">
-                  {user.lastActiveAt ? new Date(user.lastActiveAt).toLocaleString() : "Never"}
-                </dd>
-              </div>
+
               <div className="grid grid-cols-3 gap-4">
                 <dt className="text-sm text-neutral-11 dark:text-white/70">Email</dt>
                 <dd className="col-span-2 flex items-center gap-2 text-sm text-neutral-12 dark:text-white">
@@ -145,20 +106,20 @@ async function UserDetailContent({ params }: Props) {
           <Card className="mt-6 overflow-hidden p-0">
             <div className="border-b border-neutral-7 bg-neutral-2 px-4 py-3 dark:border-white/10 dark:bg-white/5">
               <h3 className="text-sm font-medium text-neutral-12 dark:text-white">
-                Organizations ({user.memberships.length})
+                Organizations ({user.organizations.length})
               </h3>
             </div>
-            {user.memberships.length === 0 ? (
+            {user.organizations.length === 0 ? (
               <div className="p-4 text-center text-sm text-neutral-11 dark:text-white/70">
                 Not a member of any organization.
               </div>
             ) : (
               <div className="divide-y divide-neutral-7 dark:divide-white/10">
-                {user.memberships.map((membership) => (
+                {user.organizations.map((membership) => (
                   <div key={membership.id} className="flex items-center justify-between px-4 py-3">
                     <div className="flex items-center gap-3">
                       <ExternalAvatar
-                        src={membership.organization.image}
+                        src={undefined}
                         alt={membership.organization.name}
                         size={32}
                         className="h-8 w-8 rounded-md"

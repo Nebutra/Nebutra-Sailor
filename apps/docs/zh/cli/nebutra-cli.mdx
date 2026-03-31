@@ -187,8 +187,11 @@ nebutra env show --format json
 品牌管理与调色板生成。
 
 ```bash
-nebutra brand palette --primary=#7C3AED --secondary=#F59E0B
-nebutra brand sync
+nebutra brand init                                              # 初始化品牌配置
+nebutra brand apply                                             # 将品牌应用到所有包
+nebutra brand palette --primary=#7C3AED --secondary=#F59E0B   # 生成调色板
+nebutra brand sync                                              # 跨包同步品牌资产
+nebutra brand verify                                            # 验证品牌一致性
 ```
 
 ---
@@ -198,9 +201,10 @@ nebutra brand sync
 国际化工具。
 
 ```bash
-nebutra i18n sync         # 同步翻译文件
-nebutra i18n missing      # 列出缺失的翻译键
-nebutra i18n validate     # 验证所有语言文件
+nebutra i18n sync              # 跨语言同步翻译文件
+nebutra i18n validate          # 验证所有语言文件
+nebutra i18n add zh-TW         # 添加新语言
+nebutra i18n status            # 查看每个语言的翻译覆盖率
 ```
 
 ---
@@ -212,8 +216,11 @@ SaaS 配置预设管理。
 ```bash
 nebutra preset list                   # 列出可用预设
 nebutra preset list --format json
+nebutra preset show ai-saas           # 显示预设详情
 nebutra preset apply ai-saas          # 应用预设
-nebutra preset diff                   # 显示当前与目标预设差异
+nebutra preset env                    # 显示当前预设的环境变量
+nebutra preset features               # 显示当前预设的功能列表
+nebutra preset diff ai-saas growth    # 对比两个预设的差异
 ```
 
 ---
@@ -236,11 +243,15 @@ nebutra dev --preset=marketing        # 仅启动落地页 + Studio
 运行测试。
 
 ```bash
-nebutra test                          # 运行所有测试
-nebutra test unit                     # Vitest 单元测试
+nebutra test                          # 运行所有单元测试（Vitest）
 nebutra test e2e                      # Playwright E2E 测试
+nebutra test e2e --ui                 # 带 Playwright UI 界面的 E2E 测试
+nebutra test e2e --ci                 # CI 模式 E2E 测试（无头）
 nebutra test arch                     # 架构合规测试
 nebutra test --coverage               # 含覆盖率报告
+nebutra test size                     # 检查包体积是否超预算
+nebutra test size --why               # 详细包体积组成分析
+nebutra test --app web                # 仅运行指定应用的测试
 ```
 
 ---
@@ -251,8 +262,9 @@ nebutra test --coverage               # 含覆盖率报告
 
 ```bash
 nebutra auth status                   # 当前认证服务商和配置
-nebutra auth switch clerk             # 切换到 Clerk
-nebutra auth switch better-auth       # 切换到 Better Auth
+nebutra auth setup clerk              # 配置 Clerk 认证服务商
+nebutra auth setup better-auth        # 配置 Better Auth
+nebutra auth keys                     # 管理认证服务商 API 密钥
 ```
 
 ---
@@ -263,8 +275,11 @@ nebutra auth switch better-auth       # 切换到 Better Auth
 
 ```bash
 nebutra billing status                # 当前计费配置
-nebutra billing plans list            # 列出已配置的计划
-nebutra billing sync                  # 同步计划到 Stripe
+nebutra billing setup stripe          # 配置 Stripe 计费服务
+nebutra billing setup lemonsqueezy    # 配置 LemonSqueezy 计费服务
+nebutra billing setup polar           # 配置 Polar 计费服务
+nebutra billing setup chinapay        # 配置 ChinaPay 计费服务
+nebutra billing webhooks              # 管理计费 Webhook 端点
 ```
 
 ---
@@ -274,9 +289,10 @@ nebutra billing sync                  # 同步计划到 Stripe
 AI 服务商与 SDK 配置。
 
 ```bash
-nebutra ai status                     # 当前 AI 配置
-nebutra ai providers list             # 可用服务商列表
-nebutra ai switch openai              # 切换默认服务商
+nebutra ai models                     # 列出可用 AI 模型
+nebutra ai agents                     # 管理 AI Agent 配置
+nebutra ai test "hello world"         # 测试当前 AI 服务商
+nebutra ai config                     # 查看/编辑 AI 配置
 ```
 
 ---
@@ -287,8 +303,11 @@ nebutra ai switch openai              # 切换默认服务商
 
 ```bash
 nebutra secrets list --tenant org_123
-nebutra secrets set --tenant org_123 --key OPENAI_KEY --value sk-...
-nebutra secrets delete --tenant org_123 --key OPENAI_KEY
+nebutra secrets set openai_key --tenant org_123 --value sk-...
+nebutra secrets get openai_key --tenant org_123
+nebutra secrets rotate openai_key --tenant org_123
+nebutra secrets audit --tenant org_123
+nebutra secrets verify --tenant org_123
 ```
 
 ---
@@ -299,7 +318,10 @@ nebutra secrets delete --tenant org_123 --key OPENAI_KEY
 
 ```bash
 nebutra services status               # 所有服务健康概览
-nebutra services list                 # 列出已注册服务
+nebutra services health               # 详细健康检查
+nebutra services logs api-gateway     # 流式输出指定服务日志
+nebutra services restart api-gateway  # 重启指定服务
+nebutra services scale api-gateway 3  # 将服务扩展到 N 个实例
 ```
 
 ---
@@ -310,8 +332,11 @@ nebutra services list                 # 列出已注册服务
 
 ```bash
 nebutra search status                 # 搜索服务商状态
+nebutra search indexes                # 列出所有搜索索引
 nebutra search reindex products       # 重建指定索引
-nebutra search reindex --all          # 重建所有索引
+nebutra search reindex --force --yes  # 重建所有索引（无需确认）
+nebutra search query products "widget" # 执行测试查询
+nebutra search stats                  # 索引统计信息
 ```
 
 ---
@@ -338,6 +363,10 @@ nebutra community health --period 30d # 最近 30 天
 nebutra community showcase list       # 浏览项目展示
 ```
 
+<Warning>
+  `community` 命令尚未完全实现。接口已定义，但当前版本输出内容可能有限。
+</Warning>
+
 ---
 
 ### `nebutra growth`
@@ -352,6 +381,10 @@ nebutra growth pulse                  # AI 驱动的增长洞察
 nebutra growth pulse --focus retention
 ```
 
+<Warning>
+  `growth` 命令尚未完全实现。接口已定义，但当前版本输出内容可能有限。
+</Warning>
+
 ---
 
 ### `nebutra ecosystem`
@@ -365,6 +398,10 @@ nebutra ecosystem ideas list          # 浏览创意市场
 nebutra ecosystem opc register        # 加入 OPC 会员网络
 ```
 
+<Warning>
+  `ecosystem` 命令尚未完全实现。接口已定义，但当前版本输出内容可能有限。
+</Warning>
+
 ---
 
 ### `nebutra schema`
@@ -373,8 +410,9 @@ nebutra ecosystem opc register        # 加入 OPC 会员网络
 
 ```bash
 nebutra schema                        # 人类可读格式
-nebutra schema --all                  # 完整 Schema（供 Agent 使用）
-nebutra schema --format json          # JSON 格式输出
+nebutra schema --all                  # 完整 Schema（供 Agent 使用，JSON 输出）
+nebutra schema --list                 # 列出所有命令
+nebutra schema --exit-codes           # 列出所有退出码及说明
 ```
 
 ---
@@ -418,11 +456,10 @@ nebutra doctor
 
 ### `nebutra mcp`
 
-MCP 服务器集成管理。
+为 AI 编码工具（Cursor、Windsurf、Claude Code）启动 MCP（模型上下文协议）上下文服务器。
 
 ```bash
-nebutra mcp status                    # MCP 服务器状态
-nebutra mcp start                     # 启动 MCP 上下文服务器
+nebutra mcp                           # 启动 MCP 上下文服务器
 ```
 
 ---

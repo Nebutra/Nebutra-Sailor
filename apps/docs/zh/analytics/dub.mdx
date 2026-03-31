@@ -168,9 +168,9 @@ const links = await Promise.all(
 - **活动分析** — 按标签/活动汇总的指标
 - **热门链接** — 按点击量排名
 
-<Warning>
-TODO：Dub.co 分析尚未整合到 Nebutra 管理面板的 `/admin/analytics` 中。目前需要直接访问 Dub.co 仪表盘。管理面板集成计划在未来版本中实现。
-</Warning>
+<Note>
+  Dub.co 链接分析目前可通过 **Dub.co 控制台** [app.dub.co](https://app.dub.co) 查看。内嵌到 `/admin/analytics` 管理面板的功能已在 Roadmap 中。在此之前，可使用下方的 `retrieveLinkStats()` 工具函数，以编程方式将数据指标嵌入自定义管理视图。
+</Note>
 
 ## 通过 API 获取链接统计数据
 

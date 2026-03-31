@@ -129,6 +129,50 @@ export async function sendWelcomeEmail(opts: {
 }
 
 /**
+ * Order confirmation email sent when an order successfully completes.
+ */
+export async function sendOrderConfirmationEmail(opts: {
+  to: string;
+  orderId: string;
+  totalAmount: number;
+  items: Array<{ productId: string; quantity: number | string }>;
+}): Promise<SendResult> {
+  const itemsHtml = opts.items
+    .map(
+      (item) =>
+        `<tr>
+          <td style="padding:12px 0;border-bottom:1px solid #e2e8f0;color:#0f172a;font-size:15px;">${item.productId}</td>
+          <td style="padding:12px 0;border-bottom:1px solid #e2e8f0;color:#475569;font-size:15px;text-align:right;">x${item.quantity}</td>
+        </tr>`,
+    )
+    .join("");
+
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Order Confirmed!</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      Thank you for your order <strong>#${opts.orderId}</strong>. We've received your payment of 
+      <strong>$${(opts.totalAmount / 100).toFixed(2)}</strong> and your order is now being processed.
+    </p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;border-collapse:collapse;">
+      ${itemsHtml}
+    </table>
+    <a href="https://app.nebutra.ai/orders/${opts.orderId}" style="display:inline-block;background:linear-gradient(135deg,#0033FE,#0BF1C3);color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
+      View Order Details →
+    </a>
+    `,
+    `Order #${opts.orderId} Confirmed`,
+  );
+
+  return send({
+    to: opts.to,
+    subject: `Order #${opts.orderId} Confirmed`,
+    html,
+    tags: [{ name: "type", value: "order_confirmation" }],
+  });
+}
+
+/**
  * Email sent when a new API key is created (shows the key one time).
  */
 export async function sendApiKeyCreatedEmail(opts: {
@@ -279,5 +323,38 @@ export async function sendMagicLinkEmail(opts: {
     subject: "Sign in to Nebutra ✨",
     html,
     tags: [{ name: "type", value: "magic_link" }],
+  });
+}
+
+/**
+ * Contact Form Receipt (Sent to the User)
+ */
+export async function sendContactFormReceivedEmail(opts: {
+  to: string;
+  name: string;
+  subject: string;
+}): Promise<SendResult> {
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Message Received</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      Hi ${opts.name},
+    </p>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      Thank you for contacting us regarding "<strong>${opts.subject}</strong>". 
+      We've received your request and our team will get back to you within 1-2 business days.
+    </p>
+    <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">
+      Best regards,<br/>The Nebutra Team
+    </p>
+    `,
+    "We have received your message",
+  );
+
+  return send({
+    to: opts.to,
+    subject: "We've received your message - Nebutra",
+    html,
+    tags: [{ name: "type", value: "contact_receipt" }],
   });
 }

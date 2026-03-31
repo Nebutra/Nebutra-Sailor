@@ -210,11 +210,18 @@ app.get("/", async (c) => {
 app.post("/", async (c) => {
   const body = await c.req.json();
 
-  // TODO: Add validation with Zod
-  // const schema = z.object({
-  //   name: z.string(),
-  // });
-  // const validated = schema.parse(body);
+  // Validate input with Zod
+  const schema = z.object({
+    name: z.string().min(2),
+    description: z.string().optional(),
+  });
+  
+  const result = schema.safeParse(body);
+  if (!result.success) {
+    return c.json({ error: "Validation failed", details: result.error.format() }, 400);
+  }
+
+  const validated = result.data;
 
   return c.json(
     {

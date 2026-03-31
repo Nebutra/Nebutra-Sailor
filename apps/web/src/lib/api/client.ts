@@ -60,22 +60,30 @@ export const browserApiClient = createClient<paths>({
  * const { data, error } = await api.GET("/api/v1/ai/models");
  */
 export async function getTypedApi() {
-  const { createAuth } = await import("@nebutra/auth/server");
   const provider = (process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth") as
     | "clerk"
     | "better-auth";
 
-  const auth = await createAuth({ provider });
-  const session = await auth.getSession();
-
   const client = createClient<paths>({ baseUrl: API_BASE_URL });
+  let token: string | null = null;
 
-  // If session exists, we would inject token here.
-  // For now, we pass if session exists to show the auth state.
-  // In production, you'd call a method to get/mint a JWT from the session.
-  if (session?.userId) {
-    // TODO: Implement token injection for typed API client
-    // This depends on the auth provider's token generation capabilities
+  if (provider === "clerk") {
+    // Dynamically import clerk so we don't break strict environments
+    const { auth } = await import("@clerk/nextjs/server");
+    const session = await auth();
+    if (session?.userId) {
+      token = await session.getToken();
+    }
+  } else {
+    // For better-auth, sessions generally rely on cookies which Next.js `fetch` passes natively.
+    // Ensure the auth layer has been initialized if needed.
+    const { createAuth } = await import("@nebutra/auth/server");
+    const auth = await createAuth({ provider });
+    await auth.getSession(); // Warm up or validate the session
+  }
+
+  if (token) {
+    client.use(createAuthMiddleware(token));
   }
 
   return client;

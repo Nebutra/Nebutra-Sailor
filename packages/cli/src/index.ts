@@ -124,9 +124,54 @@ async function main() {
     .description("Check your Nebutra project setup for common issues")
     .action(async () => {
       const { logger } = await import("./utils/logger.js");
+      const { findMonorepoRoot } = await import("./utils/delegate.js");
+      const fs = await import("node:fs");
+      const path = await import("node:path");
+
       logger.info("Running project health check...");
-      // TODO: implement doctor checks (deps, config, env, etc.)
-      logger.warn("Doctor command is not yet implemented.");
+      let hasErrors = false;
+      const root = findMonorepoRoot();
+
+      // Check Node version
+      const nodeVersion = process.version;
+      const majorVersion = parseInt(nodeVersion.replace("v", "").split(".")[0], 10);
+      if (majorVersion < 22) {
+        logger.error(`Node.js >= 22 required, found ${nodeVersion}`);
+        hasErrors = true;
+      } else {
+        logger.success(`Node.js version OK (${nodeVersion})`);
+      }
+
+      // Check nebutra.config.json
+      if (fs.existsSync(path.join(root, "nebutra.config.json"))) {
+        logger.success("nebutra.config.json found");
+      } else {
+        logger.warn("nebutra.config.json missing. Try running 'nebutra init'");
+      }
+
+      // Check package.json
+      if (fs.existsSync(path.join(root, "package.json"))) {
+        logger.success("package.json found");
+      } else {
+        logger.error("No package.json found in root directory");
+        hasErrors = true;
+      }
+
+      // Check .env files
+      const hasEnv =
+        fs.existsSync(path.join(root, ".env")) || fs.existsSync(path.join(root, ".env.local"));
+      if (hasEnv) {
+        logger.success("Environment variables configured");
+      } else {
+        logger.warn("No .env or .env.local found. Some features may not work properly.");
+      }
+
+      if (hasErrors) {
+        logger.error("Doctor found critical issues that require your attention.");
+        process.exit(1);
+      } else {
+        logger.success("Doctor is happy. Your project looks healthy!");
+      }
     });
 
   // ─── Parse & run ─────────────────────────────────────────

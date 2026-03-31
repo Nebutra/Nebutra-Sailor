@@ -10,7 +10,7 @@ Neon 和 Supabase 都是 PostgreSQL。`pnpm db:migrate` 生成的迁移在任一
 </Note>
 
 <Warning>
-**不支持**基于 MySQL 的提供商（PlanetScale、Railway MySQL）。Nebutra 依赖 pgvector 和原生 PostgreSQL RLS — 两者都需要 PostgreSQL。TODO：记录自托管 PostgreSQL 设置文档。
+**不支持**基于 MySQL 的提供商（PlanetScale、Railway MySQL）。Nebutra 依赖 pgvector 和原生 PostgreSQL RLS — 两者都需要 PostgreSQL。
 </Warning>
 
 <Tabs>
@@ -176,9 +176,57 @@ Neon 和 Supabase 都是 PostgreSQL。`pnpm db:migrate` 生成的迁移在任一
     连接池（PgBouncer、Supavisor）将许多应用程序连接多路复用到少量真实的 PostgreSQL 连接上。它们不支持迁移期间使用的 DDL 语句（如 `CREATE TABLE` 或 `ALTER TABLE`）。`DIRECT_URL` 绕过连接池，使 Prisma 能够安全地运行迁移。
   </Accordion>
   <Accordion title="支持自托管 PostgreSQL 吗？">
-    支持，但需要额外设置。您需要确保安装了 pgvector，配置连接池（推荐 PgBouncer），并为迁移提供直接 URL。目前没有针对自托管 PostgreSQL 的自动化设置脚本。
+    是的，但需要额外配置。你需要确保已安装 pgvector，配置连接池（推荐 PgBouncer），并为迁移提供直连 URL。
 
-    <Warning>TODO：记录包含 pgvector 安装和 PgBouncer 配置的自托管 PostgreSQL 设置指南。</Warning>
+    **1. 安装 pgvector**
+
+    ```bash
+    # Ubuntu / Debian
+    sudo apt install postgresql-16-pgvector
+
+    # macOS (Homebrew)
+    brew install pgvector
+
+    # 在数据库中启用扩展
+    psql -d your_db -c "CREATE EXTENSION IF NOT EXISTS vector;"
+    ```
+
+    **2. 安装并配置 PgBouncer**
+
+    ```ini
+    # /etc/pgbouncer/pgbouncer.ini
+    [databases]
+    nebutra = host=localhost port=5432 dbname=nebutra
+
+    [pgbouncer]
+    listen_addr = 127.0.0.1
+    listen_port = 6432
+    auth_type = scram-sha-256
+    pool_mode = transaction       # Prisma 要求 transaction 模式
+    max_client_conn = 500
+    default_pool_size = 20
+    server_reset_query = DISCARD ALL
+    ```
+
+    **3. 设置环境变量**
+
+    ```bash
+    # 连接池连接（用于应用查询）
+    DATABASE_URL="postgresql://user:pass@localhost:6432/nebutra?pgbouncer=true&connect_timeout=10"
+
+    # 直连（用于迁移——绕过 PgBouncer）
+    DIRECT_URL="postgresql://user:pass@localhost:5432/nebutra"
+    ```
+
+    **4. 更新 `prisma/schema.prisma`**
+
+    ```prisma
+    datasource db {
+      provider  = "postgresql"
+      url       = env("DATABASE_URL")
+      directUrl = env("DIRECT_URL")
+    }
+    ```
   </Accordion>
   <Accordion title="免费套餐的连接数限制如何？">
     Neon 和 Supabase 的免费套餐都有连接数限制（通常为 100-200 个总连接）。在免费套餐上连接池是必不可少的 — 在无服务器部署中永远不要将 `DATABASE_URL` 设置为直接连接字符串，因为每次函数调用都会消耗一个连接。

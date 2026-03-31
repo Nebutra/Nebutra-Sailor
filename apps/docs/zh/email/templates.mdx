@@ -257,12 +257,26 @@ await email.send({
     ```
   </Step>
 
-  <Step title="为数据载荷添加 TypeScript 类型">
-    将新模板的数据类型添加到 `EmailTemplateData` 联合类型中，使 `email.send()` 完全类型安全。
+  <Step title="导出类型化发送函数">
+    `@nebutra/email` 中的每个模板都是一个具名的类型化导出函数。将新函数添加到 `packages/email/src/index.ts`：
 
-    <Warning>
-    TODO: 待 `@nebutra/email` 类型系统最终确定后，补充 `EmailTemplateData` 联合类型的确切位置说明。
-    </Warning>
+    ```typescript
+    export async function sendMyFeatureEmail(opts: {
+      to: string;
+      firstName: string;
+      // 你的模板专属字段
+    }): Promise<SendResult> {
+      const html = baseLayout(`...`);
+      return send({ to: opts.to, subject: "...", html, tags: [{ name: "type", value: "my_feature" }] });
+    }
+    ```
+
+    按名称直接导入——无需联合类型分发：
+
+    ```typescript
+    import { sendMyFeatureEmail } from "@nebutra/email";
+    await sendMyFeatureEmail({ to: user.email, firstName: user.firstName });
+    ```
   </Step>
 
   <Step title="预览和测试">

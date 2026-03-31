@@ -170,9 +170,41 @@ pnpm dev 2>&1 | jq 'select(.level == "error")'
 
 如果你的部署平台支持日志流（Vercel Log Drains、Railway、Render），可以配置将 stdout JSON 发送到日志聚合服务。
 
-<Warning>
-TODO：集中式日志聚合（Datadog、Grafana Loki、AWS CloudWatch）尚未在 Nebutra 中配置。目前，`warn` 和 `error` 日志可在 Sentry 面包屑中查看，而 `info` 和 `debug` 日志只能通过平台的 stdout/日志流获取。完整的日志聚合集成计划在未来版本中实现。
-</Warning>
+Nebutra 将结构化 JSON 日志输出到 stdout。使用你的部署平台的日志 Drain 将其传送到集中式服务。
+
+### Vercel Log Drains
+
+在 **Vercel Dashboard → Project → Settings → Log Drains** 中配置。支持的目标：
+
+| 目标 | 格式 | 适用场景 |
+|------|------|----------|
+| Datadog | JSON | 已使用 Datadog APM |
+| Grafana Loki | JSON | 自托管或 Grafana Cloud |
+| HTTP 端点 | JSON | 自定义接入（Axiom、Better Stack 等） |
+
+### Datadog 快速接入
+
+1. 从 Vercel Marketplace 安装 Vercel + Datadog 集成。
+2. 在 Vercel 项目环境变量中添加 `DATADOG_API_KEY`。
+3. 集成会自动创建 Log Drain，将所有 stdout JSON 转发到 Datadog Logs。
+
+```typescript
+// 日志在 Datadog 中会带有以下默认属性：
+// service: "nebutra", env: "production", version: <VERCEL_GIT_COMMIT_SHA>
+import { logger } from "@nebutra/logger";
+logger.info("order.created", { orderId, tenantId });
+```
+
+### 当前日志覆盖情况
+
+| 日志级别 | 可查看位置 |
+|---------|-----------|
+| `error` | Sentry 面包屑 + Log Drain |
+| `warn` | Sentry 面包屑 + Log Drain |
+| `info` | 仅 Log Drain |
+| `debug` | 仅 Log Drain（生产环境默认不输出） |
+
+在特定环境中临时设置 `NEBUTRA_LOG_LEVEL=debug` 可捕获详细日志，而不影响生产环境。
 
 ## 子日志记录器
 

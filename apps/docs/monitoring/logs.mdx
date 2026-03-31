@@ -170,9 +170,57 @@ pnpm dev 2>&1 | jq 'select(.level == "error")'
 
 If your deployment platform supports log streaming (Vercel Log Drains, Railway, Render), configure it to ship stdout JSON to a log aggregation service.
 
-<Warning>
-TODO: Centralised log aggregation (Datadog, Grafana Loki, AWS CloudWatch) is not yet configured in Nebutra. Currently, `warn` and `error` logs are available in Sentry breadcrumbs. `info` and `debug` logs are only available via platform stdout/log drain. A full log aggregation integration is planned for a future release.
-</Warning>
+Nebutra emits structured JSON logs to stdout. Use your deployment platform's log drain to ship them to a centralised service.
+
+### Vercel Log Drains
+
+Configure in **Vercel Dashboard → Project → Settings → Log Drains**. Supported sinks:
+
+| Sink | Format | Use when |
+|------|--------|----------|
+| Datadog | JSON | You already use Datadog APM |
+| Grafana Loki | JSON | Self-hosted or Grafana Cloud |
+| HTTP endpoint | JSON | Custom ingest (Axiom, Better Stack, etc.) |
+
+### Datadog quick-start
+
+1. Install the Vercel + Datadog integration from the Vercel Marketplace.
+2. Add `DATADOG_API_KEY` to your Vercel project environment variables.
+3. The integration automatically creates a log drain that forwards all stdout JSON to Datadog Logs.
+
+```typescript
+// logs appear in Datadog with these default attributes:
+// service: "nebutra", env: "production", version: <VERCEL_GIT_COMMIT_SHA>
+import { logger } from "@nebutra/logger";
+logger.info("order.created", { orderId, tenantId });
+```
+
+### Grafana Loki (self-hosted)
+
+Set up [promtail](https://grafana.com/docs/loki/latest/send-data/promtail/) or use the Grafana Cloud Logs drain:
+
+```yaml
+# promtail config snippet
+scrape_configs:
+  - job_name: nebutra
+    static_configs:
+      - targets: [localhost]
+        labels:
+          app: nebutra
+          env: production
+          __path__: /var/log/nebutra/*.log
+```
+
+### Current coverage
+
+| Log level | Where it appears |
+|-----------|-----------------|
+| `error` | Sentry breadcrumbs + log drain |
+| `warn` | Sentry breadcrumbs + log drain |
+| `info` | Log drain only |
+| `debug` | Log drain only (not emitted in production by default) |
+
+Set `NEBUTRA_LOG_LEVEL=debug` temporarily in a specific environment to capture verbose output without affecting production.
 
 ## Child Loggers
 

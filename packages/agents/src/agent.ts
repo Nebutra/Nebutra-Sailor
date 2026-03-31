@@ -72,7 +72,8 @@ export class BaseAgent {
       await saveMemory(context.tenantId, context.conversationId, response.messages);
     }
 
-    this.emitUsage(usage);
+    // Await usage emission so billing deduction is tracked before returning
+    await this.emitUsage(usage);
 
     return response;
   }
@@ -90,7 +91,27 @@ export class BaseAgent {
   /**
    * Emit a usage event for downstream billing / metering.
    */
-  private emitUsage(_event: AgentUsageEvent): void {
-    // TODO: Integrate with @nebutra/metering when available
+  private async emitUsage(event: AgentUsageEvent): Promise<void> {
+    try {
+      const { deductCredits } = await import("@nebutra/billing/credits");
+
+      // Basic credit consumption: 1 credit per 10k total tokens
+      const totalTokens = event.totalTokens || 0;
+      if (totalTokens === 0) return;
+
+      const creditCost = Math.max(1, Math.ceil(totalTokens / 10000));
+
+      deductCredits({
+        organizationId: event.tenantId,
+        amount: creditCost,
+        description: `Agent execution: ${event.model}`,
+      });
+    } catch (err) {
+      logger.error("Failed to emit usage or deduct credits for agent execution", {
+        tenantId: event.tenantId,
+        agentId: event.agentId,
+        error: err,
+      });
+    }
   }
 }

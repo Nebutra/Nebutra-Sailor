@@ -187,8 +187,11 @@ nebutra env show --format json
 Brand management and palette generation.
 
 ```bash
-nebutra brand palette --primary=#7C3AED --secondary=#F59E0B
-nebutra brand sync
+nebutra brand init                                              # Initialize brand configuration
+nebutra brand apply                                             # Apply brand to all packages
+nebutra brand palette --primary=#7C3AED --secondary=#F59E0B   # Generate palette
+nebutra brand sync                                              # Sync brand assets across packages
+nebutra brand verify                                            # Validate brand consistency
 ```
 
 ---
@@ -198,9 +201,10 @@ nebutra brand sync
 Internationalization utilities.
 
 ```bash
-nebutra i18n sync         # Sync translation files
-nebutra i18n missing      # List missing translation keys
-nebutra i18n validate     # Validate all locale files
+nebutra i18n sync              # Sync translation files across locales
+nebutra i18n validate          # Validate all locale files
+nebutra i18n add zh-TW         # Add a new locale
+nebutra i18n status            # Show translation coverage per locale
 ```
 
 ---
@@ -212,8 +216,11 @@ SaaS configuration preset management.
 ```bash
 nebutra preset list                   # List available presets
 nebutra preset list --format json
+nebutra preset show ai-saas           # Show preset details
 nebutra preset apply ai-saas          # Apply a preset
-nebutra preset diff                   # Show current vs target preset diff
+nebutra preset env                    # Show env vars for current preset
+nebutra preset features               # Show features for current preset
+nebutra preset diff ai-saas growth    # Diff two presets
 ```
 
 ---
@@ -236,11 +243,15 @@ nebutra dev --preset=marketing        # Landing page + Studio
 Run tests.
 
 ```bash
-nebutra test                          # Run all tests
-nebutra test unit                     # Vitest unit tests
+nebutra test                          # Run all unit tests (Vitest)
 nebutra test e2e                      # Playwright E2E tests
+nebutra test e2e --ui                 # E2E tests with Playwright UI mode
+nebutra test e2e --ci                 # E2E tests in CI mode (headless)
 nebutra test arch                     # Architecture conformance tests
 nebutra test --coverage               # With coverage report
+nebutra test size                     # Check bundle size against budget
+nebutra test size --why               # Detailed bundle composition analysis
+nebutra test --app web                # Run tests for a specific app
 ```
 
 ---
@@ -251,8 +262,9 @@ Authentication configuration.
 
 ```bash
 nebutra auth status                   # Current auth provider and config
-nebutra auth switch clerk             # Switch to Clerk provider
-nebutra auth switch better-auth       # Switch to Better Auth
+nebutra auth setup clerk              # Configure Clerk provider
+nebutra auth setup better-auth        # Configure Better Auth
+nebutra auth keys                     # Manage auth provider API keys
 ```
 
 ---
@@ -263,8 +275,11 @@ Billing and subscription management.
 
 ```bash
 nebutra billing status                # Current billing config
-nebutra billing plans list            # List configured plans
-nebutra billing sync                  # Sync plans to Stripe
+nebutra billing setup stripe          # Configure Stripe billing
+nebutra billing setup lemonsqueezy    # Configure LemonSqueezy billing
+nebutra billing setup polar           # Configure Polar billing
+nebutra billing setup chinapay        # Configure ChinaPay billing
+nebutra billing webhooks              # Manage billing webhook endpoints
 ```
 
 ---
@@ -274,9 +289,10 @@ nebutra billing sync                  # Sync plans to Stripe
 AI provider and SDK configuration.
 
 ```bash
-nebutra ai status                     # Current AI config
-nebutra ai providers list             # Available providers
-nebutra ai switch openai              # Switch default provider
+nebutra ai models                     # List available AI models
+nebutra ai agents                     # Manage AI agent configurations
+nebutra ai test "hello world"         # Test current AI provider
+nebutra ai config                     # Show/edit AI configuration
 ```
 
 ---
@@ -287,8 +303,11 @@ Application-layer encrypted secrets (via `@nebutra/vault`).
 
 ```bash
 nebutra secrets list --tenant org_123
-nebutra secrets set --tenant org_123 --key OPENAI_KEY --value sk-...
-nebutra secrets delete --tenant org_123 --key OPENAI_KEY
+nebutra secrets set openai_key --tenant org_123 --value sk-...
+nebutra secrets get openai_key --tenant org_123
+nebutra secrets rotate openai_key --tenant org_123
+nebutra secrets audit --tenant org_123
+nebutra secrets verify --tenant org_123
 ```
 
 ---
@@ -299,7 +318,10 @@ Microservice health and status.
 
 ```bash
 nebutra services status               # Health overview of all services
-nebutra services list                 # List registered services
+nebutra services health               # Detailed health check
+nebutra services logs api-gateway     # Stream logs for a service
+nebutra services restart api-gateway  # Restart a service
+nebutra services scale api-gateway 3  # Scale service to N instances
 ```
 
 ---
@@ -310,8 +332,11 @@ Full-text search index management (Meilisearch / Typesense / Algolia).
 
 ```bash
 nebutra search status                 # Search provider status
+nebutra search indexes                # List all search indexes
 nebutra search reindex products       # Reindex a specific index
-nebutra search reindex --all          # Reindex all indexes
+nebutra search reindex --force --yes  # Reindex all indexes (no prompt)
+nebutra search query products "widget" # Run a test query
+nebutra search stats                  # Index statistics
 ```
 
 ---
@@ -338,6 +363,10 @@ nebutra community health --period 30d # Last 30 days
 nebutra community showcase list       # Browse project showcase
 ```
 
+<Warning>
+  The `community` commands are not yet fully implemented. The interface is defined but output may be limited in the current release.
+</Warning>
+
 ---
 
 ### `nebutra growth`
@@ -352,6 +381,10 @@ nebutra growth pulse                  # AI-powered growth insights
 nebutra growth pulse --focus retention
 ```
 
+<Warning>
+  The `growth` commands are not yet fully implemented. The interface is defined but output may be limited in the current release.
+</Warning>
+
 ---
 
 ### `nebutra ecosystem`
@@ -365,6 +398,10 @@ nebutra ecosystem ideas list          # Browse ideas marketplace
 nebutra ecosystem opc register        # Join OPC member network
 ```
 
+<Warning>
+  The `ecosystem` commands are not yet fully implemented. The interface is defined but output may be limited in the current release.
+</Warning>
+
 ---
 
 ### `nebutra schema`
@@ -373,8 +410,9 @@ Output the full CLI schema as JSON (useful for AI tools and tooling integrations
 
 ```bash
 nebutra schema                        # Human-readable schema
-nebutra schema --all                  # Full schema for Agents
-nebutra schema --format json          # JSON schema output
+nebutra schema --all                  # Full schema for Agents (JSON output)
+nebutra schema --list                 # List all commands
+nebutra schema --exit-codes           # List all exit codes with descriptions
 ```
 
 ---
@@ -418,11 +456,10 @@ nebutra doctor
 
 ### `nebutra mcp`
 
-MCP server integration management. See [MCP documentation](/cli/mcp) for details.
+Start the MCP (Model Context Protocol) context server for AI coding tools (Cursor, Windsurf, Claude Code).
 
 ```bash
-nebutra mcp status                    # MCP server status
-nebutra mcp start                     # Start the MCP context server
+nebutra mcp                           # Start the MCP context server
 ```
 
 ---

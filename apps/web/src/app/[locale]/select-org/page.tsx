@@ -41,7 +41,7 @@ export default function SelectOrgPage() {
 
   async function handleSelectOrganization(orgId: string) {
     try {
-      await setActive({ organization: orgId });
+      await setActive(orgId);
       router.push("/");
     } catch {
       // Handle error

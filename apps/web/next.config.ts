@@ -41,15 +41,6 @@ const nextConfig: NextConfig = {
   // Keep Prisma and bcryptjs out of the client bundle — they are Node-only.
   serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg", "bcryptjs"],
 
-  // Temporarily skip TypeScript errors during build while migrating auth providers.
-  // TODO: Remove once all admin pages are updated for the new auth/Prisma types.
-  typescript: { ignoreBuildErrors: true },
-
-  // TODO: Re-enable once all pages add proper <Suspense> boundaries for dynamic data.
-  // Multiple pages (auth, home, onboarding, demo) access dynamic data (Clerk auth,
-  // searchParams, Date.now()) without Suspense wrappers that cacheComponents requires.
-  // cacheComponents: true,
-
   // Workspace packages: src/-exporting packages need this for SWC to process
   // TypeScript; dist/-exporting packages need it for "use client" detection.
   transpilePackages: ["@nebutra/ui", "@nebutra/tokens", "@nebutra/auth"],

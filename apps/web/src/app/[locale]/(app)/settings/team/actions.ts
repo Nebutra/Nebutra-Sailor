@@ -60,9 +60,9 @@ export async function inviteTeamMember(
     }
 
     // Check if user is already a member
-    const existingMembership = await db.membership.findUnique({
+    const existingMembership = await db.organizationMember.findUnique({
       where: {
-        userId_organizationId: { userId: user.id, organizationId: orgId },
+        organizationId_userId: { userId: user.id, organizationId: orgId },
       },
     });
 
@@ -71,11 +71,11 @@ export async function inviteTeamMember(
     }
 
     // Create membership
-    await db.membership.create({
+    await db.organizationMember.create({
       data: {
         userId: user.id,
         organizationId: orgId,
-        role: inviteeRole,
+        role: inviteeRole.toUpperCase() as "ADMIN" | "MEMBER",
       },
     });
 

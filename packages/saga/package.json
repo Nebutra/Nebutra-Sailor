@@ -12,6 +12,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/billing": "workspace:*",
+    "@nebutra/email": "workspace:*",
     "@nebutra/event-bus": "workspace:*"
   },
   "devDependencies": {

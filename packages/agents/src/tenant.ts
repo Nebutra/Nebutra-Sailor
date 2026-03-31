@@ -32,8 +32,21 @@ export function createAgentContext(
  * Integrate with @nebutra/billing entitlements for production usage.
  */
 export async function checkAgentQuota(
-  _tenantId: string,
+  tenantId: string,
 ): Promise<{ allowed: boolean; remaining: number }> {
-  // TODO: integrate with @nebutra/billing entitlements
-  return { allowed: true, remaining: -1 };
+  try {
+    const { getCreditBalance } = await import("@nebutra/billing/credits");
+    const balance = getCreditBalance(tenantId);
+
+    // Simple quota check: tenant must have positive credits
+    // In production, we might check plan-specific monthly limits beforehand
+    if (balance.balance > 0) {
+      return { allowed: true, remaining: balance.balance };
+    }
+
+    return { allowed: false, remaining: 0 };
+  } catch (err) {
+    // Failsafe open if billing is unconfigured
+    return { allowed: true, remaining: -1 };
+  }
 }

@@ -1,34 +1,36 @@
-/**
- * Features - Product Features Section
- *
- * Showcase product features with icons, descriptions, and optional CTAs.
- *
- * @see docs/MARKETING-INFRASTRUCTURE.md#features
- *
- * ## Features (TODO)
- * - [ ] Section title + subtitle
- * - [ ] Feature cards with icon/image
- * - [ ] Feature title + description
- * - [ ] Optional badges ("New", "Beta")
- * - [ ] Optional link to detail page
- * - [ ] Hover effects / micro-interactions
- *
- * ## Layouts (TODO)
- * - [ ] grid: 2/3/4 column grid
- * - [ ] bento: asymmetric bento box layout
- * - [ ] alternating: image-left / image-right rows
- * - [ ] tabs: tabbed feature showcase
- *
- * ## Animation (TODO)
- * - [ ] Staggered entrance on scroll
- * - [ ] Hover lift effect
- * - [ ] Icon animation on hover
- * - [ ] prefers-reduced-motion support
- */
-
 "use client";
 
+import { cva } from "class-variance-authority";
+import * as React from "react";
+import { AnimateIn, AnimateInGroup } from "../primitives/animate-in";
+import { cn } from "../utils/cn";
 import type { FeaturesProps } from "./types";
+
+const featuresVariants = cva("w-full mx-auto", {
+  variants: {
+    layout: {
+      grid: "grid gap-6 md:gap-8",
+      bento: "grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6",
+      alternating: "flex flex-col gap-16 md:gap-24",
+      tabs: "grid gap-6",
+    },
+    columns: {
+      2: "md:grid-cols-2",
+      3: "md:grid-cols-3",
+      4: "md:grid-cols-4",
+    },
+    density: {
+      compact: "py-8",
+      normal: "py-16 md:py-24",
+      spacious: "py-24 md:py-32",
+    },
+  },
+  defaultVariants: {
+    layout: "grid",
+    columns: 3,
+    density: "normal",
+  },
+});
 
 export function Features({
   locale: _locale = "en",
@@ -43,38 +45,110 @@ export function Features({
   density = "normal",
 }: FeaturesProps) {
   return (
-    <section id={id} className={className} data-density={density}>
-      {/* TODO: Section Header */}
-      <div data-slot="header">
-        {title && <h2 data-slot="title">{title}</h2>}
-        {subtitle && <p data-slot="subtitle">{subtitle}</p>}
-      </div>
-
-      {/* TODO: Features Grid/Layout */}
-      <div data-slot="features" data-layout={layout} data-columns={columns}>
-        {features.map((feature) => (
-          <div key={feature.id} data-slot="feature-card">
-            {/* TODO: Use FeatureCard component */}
-            {showIcons && feature.icon && (
-              <div data-slot="icon">
-                {/* TODO: Render icon from design-system */}
-                {feature.icon}
-              </div>
+    <section
+      id={id}
+      className={cn(className, "w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")}
+      data-density={density}
+    >
+      {(title || subtitle) && (
+        <AnimateIn preset="fadeUp">
+          <div className="flex flex-col items-center text-center space-y-4 mb-12 md:mb-16">
+            {title && (
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-[var(--neutral-12)]">
+                {title}
+              </h2>
             )}
-            {feature.image && <div data-slot="image">{/* TODO: Optimized image */}</div>}
-            <h3 data-slot="feature-title">
-              {feature.title}
-              {feature.badge && <span data-badge>{feature.badge}</span>}
-            </h3>
-            <p data-slot="feature-description">{feature.description}</p>
-            {feature.href && (
-              <a href={feature.href} data-slot="feature-link">
-                Learn more →
-              </a>
-            )}
+            {subtitle && <p className="text-lg text-[var(--neutral-11)] max-w-2xl">{subtitle}</p>}
           </div>
-        ))}
-      </div>
+        </AnimateIn>
+      )}
+
+      <AnimateInGroup stagger="normal">
+        <div
+          className={cn(
+            featuresVariants({ layout, columns: layout === "grid" ? columns : undefined, density }),
+          )}
+        >
+          {features.map((feature, index) => {
+            // Bento logic: make the first item span 2 columns if in bento mode
+            const isBentoLarge = layout === "bento" && index === 0;
+
+            return (
+              <AnimateIn key={feature.id} preset="fadeUp">
+                <div
+                  className={cn(
+                    "group relative flex flex-col justify-between overflow-hidden rounded-3xl bg-[var(--neutral-2)] p-6 sm:p-8 border border-[var(--neutral-6)] transition-all hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)]",
+                    layout === "alternating" ? "md:flex-row md:items-center md:gap-12" : "h-full",
+                    layout === "alternating" && index % 2 === 1 ? "md:flex-row-reverse" : "",
+                    isBentoLarge ? "md:col-span-2 md:row-span-2 bg-[var(--neutral-3)]" : "",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "flex flex-col flex-1",
+                      layout === "alternating" ? "md:w-1/2" : "",
+                    )}
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      {showIcons && feature.icon && (
+                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--neutral-4)] text-[var(--neutral-12)] border border-[var(--neutral-6)]">
+                          {/* Fallback to text if icon string, ideally mapped to icons component */}
+                          <span className="text-sm font-semibold">
+                            {feature.icon.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+                      {feature.badge && (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[var(--neutral-12)] text-[var(--neutral-1)] shadow-sm">
+                          {feature.badge}
+                        </span>
+                      )}
+                    </div>
+
+                    <h3 className="text-xl font-semibold text-[var(--neutral-12)] mb-2 group-hover:text-[var(--neutral-12)] transition-colors">
+                      {feature.title}
+                    </h3>
+
+                    <p className="text-[var(--neutral-11)] leading-relaxed mb-6">
+                      {feature.description}
+                    </p>
+
+                    {feature.href && (
+                      <div className="mt-auto pt-4">
+                        <a
+                          href={feature.href}
+                          className="inline-flex items-center text-sm font-medium text-[var(--neutral-12)] hover:text-[var(--neutral-11)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-7)] rounded-md"
+                        >
+                          Learn more
+                          <span className="ml-1 transition-transform group-hover:translate-x-1">
+                            →
+                          </span>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+
+                  {feature.image && (
+                    <div
+                      className={cn(
+                        "relative rounded-2xl overflow-hidden bg-[var(--neutral-4)] border border-[var(--neutral-6)]",
+                        layout === "alternating"
+                          ? "md:w-1/2 mt-8 md:mt-0 aspect-video"
+                          : "mt-8 aspect-[4/3]",
+                      )}
+                    >
+                      {/* Placeholder for actual optimized image */}
+                      <div className="absolute inset-0 flex items-center justify-center text-[var(--neutral-8)] text-sm">
+                        [Image: {feature.image}]
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </AnimateIn>
+            );
+          })}
+        </div>
+      </AnimateInGroup>
     </section>
   );
 }

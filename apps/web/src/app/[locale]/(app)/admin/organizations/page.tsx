@@ -23,7 +23,7 @@ async function OrgsListContent({ searchParams }: Props) {
       orderBy: { createdAt: "desc" },
       ...(q ? { where: { name: { contains: q, mode: "insensitive" } } } : {}),
       include: {
-        _count: { select: { memberships: true } },
+        _count: { select: { members: true } },
       },
     }),
     db.organization.count({
@@ -91,7 +91,7 @@ async function OrgsListContent({ searchParams }: Props) {
               >
                 <div className="col-span-4 flex items-center gap-3">
                   <ExternalAvatar
-                    src={org.image}
+                    src={undefined}
                     alt={org.name}
                     size={32}
                     className="h-8 w-8 rounded-md"
@@ -105,7 +105,7 @@ async function OrgsListContent({ searchParams }: Props) {
                   </div>
                 </div>
                 <div className="col-span-2 text-neutral-11 dark:text-white/70">
-                  {org._count.memberships ?? "—"}
+                  {org._count.members ?? "—"}
                 </div>
                 <div className="col-span-2 truncate font-mono text-xs text-neutral-11 dark:text-white/70">
                   {org.slug}
@@ -135,7 +135,7 @@ async function OrgsListContent({ searchParams }: Props) {
               >
                 <div className="flex items-center gap-3">
                   <ExternalAvatar
-                    src={org.image}
+                    src={undefined}
                     alt={org.name}
                     size={32}
                     className="h-8 w-8 rounded-md"
@@ -146,8 +146,12 @@ async function OrgsListContent({ searchParams }: Props) {
                       {org.name}
                     </p>
                     <p className="truncate text-xs text-neutral-10 dark:text-white/60">
-                      {org._count.memberships ?? 0} member
-                      {(org._count.memberships ?? 0) !== 1 ? "s" : ""}
+                      <span className="text-neutral-10 dark:text-white/60">
+                        {org._count.members}
+                      </span>
+                      <span className="text-neutral-10 dark:text-white/60">
+                        {org._count.members === 1 ? " member" : " members"}
+                      </span>
                     </p>
                   </div>
                 </div>

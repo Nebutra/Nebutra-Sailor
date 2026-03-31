@@ -1,5 +1,5 @@
 import { routing } from "@nebutra/i18n/routing";
-import type { NextRequest } from "next/server";
+import type { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 
@@ -106,7 +106,7 @@ function isPublicPath(pathname: string): boolean {
  * For Clerk: requires eager import of clerkMiddleware (top of file if using Clerk in prod)
  * For others: simple locale + CSP handler
  */
-export async function proxy(req: NextRequest) {
+export async function proxy(req: NextRequest, event: NextFetchEvent) {
   if (authProvider === "clerk" && hasClerkKey) {
     // For Clerk provider, dynamically import and use clerkMiddleware
     // Note: In production with Clerk, consider importing clerkMiddleware at the top
@@ -129,7 +129,7 @@ export async function proxy(req: NextRequest) {
         return withNonce(innerReq, response);
       });
 
-      return clerk(req);
+      return clerk(req, event);
     } catch (error) {
       console.error("Failed to load Clerk middleware:", error);
       // Fallback to generic handler

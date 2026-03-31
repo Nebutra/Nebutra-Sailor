@@ -26,9 +26,8 @@ async function UsersListContent({ searchParams }: Props) {
         id: true,
         email: true,
         name: true,
-        image: true,
+        avatarUrl: true,
         createdAt: true,
-        lastActiveAt: true,
       },
     }),
     db.user.count({
@@ -85,8 +84,7 @@ async function UsersListContent({ searchParams }: Props) {
             <div className="grid grid-cols-12 border-b border-neutral-7 bg-neutral-2 px-4 py-3 text-xs font-medium uppercase tracking-wide text-neutral-11 dark:border-white/10 dark:bg-white/5 dark:text-white/60">
               <div className="col-span-4">User</div>
               <div className="col-span-3">Email</div>
-              <div className="col-span-2">Created</div>
-              <div className="col-span-2">Last Active</div>
+              <div className="col-span-4">Created</div>
               <div className="col-span-1" />
             </div>
             {users.map((user) => (
@@ -96,7 +94,7 @@ async function UsersListContent({ searchParams }: Props) {
               >
                 <div className="col-span-4 flex items-center gap-3">
                   <ExternalAvatar
-                    src={user.image}
+                    src={user.avatarUrl}
                     alt={user.name ?? "User"}
                     size={32}
                     className="h-8 w-8"
@@ -112,11 +110,8 @@ async function UsersListContent({ searchParams }: Props) {
                 <div className="col-span-3 truncate text-neutral-11 dark:text-white/70">
                   {user.email}
                 </div>
-                <div className="col-span-2 text-neutral-11 dark:text-white/70">
+                <div className="col-span-4 text-neutral-11 dark:text-white/70">
                   {new Date(user.createdAt).toLocaleDateString()}
-                </div>
-                <div className="col-span-2 text-neutral-11 dark:text-white/70">
-                  {user.lastActiveAt ? new Date(user.lastActiveAt).toLocaleDateString() : "Never"}
                 </div>
                 <div className="col-span-1 text-right">
                   <Link
@@ -140,7 +135,7 @@ async function UsersListContent({ searchParams }: Props) {
               >
                 <div className="flex items-center gap-3">
                   <ExternalAvatar
-                    src={user.image}
+                    src={user.avatarUrl}
                     alt={user.name ?? "User"}
                     size={32}
                     className="h-8 w-8"

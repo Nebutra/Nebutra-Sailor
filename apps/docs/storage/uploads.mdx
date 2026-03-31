@@ -248,9 +248,26 @@ Each part must be at least 5 MB (except the last part). The minimum recommended 
 
 ## Tus resumable upload
 
-<Warning>
-TODO: Document the Tus resumable upload integration once the `@nebutra/uploads` Tus adapter is finalized. The API surface will follow the [tus-js-client](https://github.com/tus/tus-js-client) interface.
-</Warning>
+<Note>
+  The `@nebutra/uploads` Tus adapter is under development. The integration will follow the [tus-js-client](https://github.com/tus/tus-js-client) interface with the `UploadProvider` abstraction.
+</Note>
+
+Until the adapter ships, use the **multipart upload** approach (see above) for files over 100 MB. For files that need resume-on-failure today, call the S3/R2 multipart API directly:
+
+```typescript
+// Persist the uploadId + ETags so the upload can resume after a browser refresh
+const { uploadId, key } = await uploads.createMultipartUpload(
+  { bucket: "nebutra-uploads", key: "videos/demo.mp4" },
+  10  // number of parts
+);
+
+// Store uploadId in localStorage or sessionStorage
+localStorage.setItem("pendingUpload", JSON.stringify({ uploadId, key, etags: [] }));
+
+// On resume, load from storage and call completeMultipartUpload with collected ETags
+```
+
+Track the Tus integration in the [changelog](/changelog) or watch the `packages/uploads/` directory for the `tus.ts` adapter file.
 
 ## Server-side file validation
 

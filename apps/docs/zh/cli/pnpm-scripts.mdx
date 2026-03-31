@@ -19,7 +19,7 @@ pnpm --filter apps/web dev
 | 脚本 | 说明 |
 |------|------|
 | `pnpm dev` | 同时启动所有应用 |
-| `pnpm dev:dashboard` | Web 应用（3000 端口）+ API 网关（3001 端口） |
+| `pnpm dev:dashboard` | Web（3000）+ Admin（3002）+ API 网关（3001） |
 | `pnpm dev:marketing` | 落地页（3002 端口）+ Sanity Studio（3333 端口） |
 | `pnpm dev:ai-saas` | 全部 6 个 AI SaaS 应用 |
 | `pnpm dev:overseas` | 国际化语言应用（4 个应用） |
@@ -65,9 +65,7 @@ pnpm --filter apps/web dev
 | `pnpm db:generate` | 重新生成 Prisma 客户端 |
 | `pnpm db:migrate` | 运行待执行迁移 |
 | `pnpm db:push` | 直接推送 schema（不生成迁移） |
-| `pnpm db:seed` | 填充测试数据 |
 | `pnpm db:studio` | 启动 Prisma Studio GUI |
-| `pnpm db:reset` | ⚠️ 重置整个数据库 |
 
 ## 基础设施
 
@@ -98,20 +96,12 @@ node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
 |------|------|
 | `pnpm generate:api-types` | 从 OpenAPI 规范重新生成 TypeScript 类型 |
 | `pnpm docs:cli` | 自动生成 CLI 参考文档 |
-| `pnpm export:openapi` | 导出 OpenAPI Schema 到 `api-reference/openapi.yaml` |
 
 ## 预设与配置
 
 | 脚本 | 说明 |
 |------|------|
 | `pnpm preset:env` | 通过交互式 CLI 配置当前激活的预设 |
-
-## 国际化
-
-| 脚本 | 说明 |
-|------|------|
-| `pnpm i18n:sync` | 跨语言同步翻译文件 |
-| `pnpm i18n:missing` | 列出缺失的翻译键 |
 
 ## 发布与版本管理
 
@@ -139,8 +129,8 @@ pnpm release            # 发布到 npm
 | 脚本 | 说明 |
 |------|------|
 | `pnpm license:check` | 审计生产依赖许可证 |
-| `pnpm ui:governance` | 验证 UI Token 治理策略 |
-| `pnpm ui:governance:verify` | 严格治理验证 |
+| `pnpm ui:validate-policy` | 验证 UI Token 治理策略 |
+| `pnpm ui:verify-governance` | 严格治理验证 |
 
 ## 常用命令组合
 
@@ -148,9 +138,7 @@ pnpm release            # 发布到 npm
 # 完全重置（全新开始）
 pnpm infra:down
 pnpm infra:up
-pnpm db:reset
 pnpm db:migrate
-pnpm db:seed
 
 # 提交前检查
 pnpm typecheck && pnpm lint && pnpm test

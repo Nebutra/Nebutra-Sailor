@@ -148,9 +148,44 @@ Google 支持最多 50,000 个 URL 或 50 MB（未压缩）的网站地图。若
 1. 将其拆分为多个网站地图（如 `sitemap-static.xml`、`sitemap-blog.xml`）。
 2. 在 `/sitemap.xml` 创建引用子网站地图的网站地图索引文件。
 
-<Warning>
-  TODO：当总 URL 数量超过 10,000 时（预计所有博客文章翻译发布后），需要编写网站地图索引生成的文档。
-</Warning>
+当需要网站地图索引时，使用 Next.js 内置的 `generateSitemaps()` 导出，将路由拆分到多个 `sitemap.ts` 文件：
+
+```typescript
+// app/sitemap.ts  ← 成为 /sitemap.xml 的索引
+import type { MetadataRoute } from "next";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  // 仅包含静态和短生命周期页面
+  return [
+    { url: "https://nebutra.com", lastModified: new Date() },
+    { url: "https://nebutra.com/pricing", lastModified: new Date() },
+  ];
+}
+```
+
+```typescript
+// app/blog/sitemap.ts  ← /blog/sitemap.xml
+import type { MetadataRoute } from "next";
+import { getAllPostSlugs } from "@/lib/blog";
+
+export async function generateSitemaps() {
+  // 每批最多 5,000 个 URL
+  const slugs = await getAllPostSlugs();
+  const batches = Math.ceil(slugs.length / 5000);
+  return Array.from({ length: batches }, (_, i) => ({ id: i }));
+}
+
+export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
+  const slugs = await getAllPostSlugs();
+  const page = slugs.slice(id * 5000, (id + 1) * 5000);
+  return page.map((slug) => ({
+    url: `https://nebutra.com/blog/${slug}`,
+    lastModified: new Date(),
+  }));
+}
+```
+
+Next.js 会自动在 `/sitemap.xml` 生成一个网站地图索引，引用 `/blog/sitemap/0.xml`、`/blog/sitemap/1.xml` 等子地图。请在 Google Search Console 中注册索引 URL。
 
 ## 相关文档
 

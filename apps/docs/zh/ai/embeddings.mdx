@@ -254,9 +254,23 @@ CREATE INDEX ON embeddings USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX ON embeddings USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 ```
 
-<Warning>
-TODO：Nebutra 托管数据库层的推荐索引类型和参数，待基准测试完成后补充。
-</Warning>
+<Note>
+  **Nebutra 托管层（Neon / Supabase）推荐索引配置：**
+
+  ```sql
+  -- HNSW（推荐用于 ≤500 万行——最佳查询速度，约 2% 构建开销）
+  CREATE INDEX CONCURRENTLY ON embeddings
+    USING hnsw (embedding vector_cosine_ops)
+    WITH (m = 16, ef_construction = 64);
+
+  -- IVFFlat（适用于 >500 万行——构建更快，lists ≈ sqrt(行数)）
+  CREATE INDEX CONCURRENTLY ON embeddings
+    USING ivfflat (embedding vector_cosine_ops)
+    WITH (lists = 200);
+  ```
+
+  查询时设置 `SET hnsw.ef_search = 100` 以平衡召回率与速度。在 Neon 免费层上，保持 `m ≤ 16` 以符合共享内存限制。
+</Note>
 
 ## 模型维度参考
 

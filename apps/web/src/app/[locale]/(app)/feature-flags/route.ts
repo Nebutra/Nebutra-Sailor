@@ -10,19 +10,18 @@
 
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
 import { type NextRequest, NextResponse } from "next/server";
-import { getAuth } from "@/lib/auth";
+import { getAuth, getTenantContext } from "@/lib/auth";
 
 export async function GET(_req: NextRequest) {
-  const { userId, orgId } = await getAuth();
-
-  const plan = "PRO"; // TODO: fetch from DB/session claims
+  const { tenantId, plan } = await getTenantContext();
+  const { userId } = await getAuth();
 
   const flagEntries = await Promise.all(
     Object.entries(FLAGS).map(async ([key, flag]) => {
       const enabled = await isFeatureEnabled(flag, {
         userId: userId ?? undefined,
-        tenantId: orgId ?? undefined,
-        plan: plan.toLowerCase() as "free" | "pro" | "enterprise",
+        tenantId: tenantId ?? undefined,
+        plan: (plan?.toLowerCase() || "free") as "free" | "pro" | "enterprise",
       });
       return [key, enabled] as const;
     }),

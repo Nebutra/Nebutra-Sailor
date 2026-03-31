@@ -128,9 +128,15 @@ Confirm `@nebutra/logger` output is flowing to your log aggregator (Axiom, Datad
 
 **Analytics configured**
 
-<Warning>
-  TODO: Document the specific analytics environment variables and verification steps once the `@nebutra/analytics` provider is finalized.
-</Warning>
+`@nebutra/analytics` (powered by Dub.co) requires the following environment variables:
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DUB_API_KEY` | Yes | API key from [app.dub.co/settings/tokens](https://app.dub.co/settings/tokens) |
+| `DUB_WORKSPACE_ID` | Recommended | Your Dub.co workspace ID (avoids per-request lookups) |
+| `DUB_DEFAULT_DOMAIN` | No | Default short-link domain, defaults to `dub.sh` |
+
+Verify by running `nebutra analytics status` (once CLI analytics command is available) or by calling `analytics.getWorkspaceStats()` from a test script.
 
 **GDPR / privacy policy live**
 

@@ -4,7 +4,9 @@
  * Model configurations and recommended defaults
  */
 
+import { ANTHROPIC_MODELS } from "../providers/anthropic.js";
 import type { ProviderModel } from "../providers/base.js";
+import { GOOGLE_MODELS } from "../providers/google.js";
 import { OPENAI_MODELS } from "../providers/openai.js";
 import { OPENROUTER_MODELS } from "../providers/openrouter.js";
 import { SILICONFLOW_MODELS } from "../providers/siliconflow.js";
@@ -24,11 +26,11 @@ export const DEFAULT_MODELS: Record<ProviderName, { chat: string; embedding: str
     embedding: "text-embedding-3-small",
   },
   anthropic: {
-    chat: "claude-4.6-sonnet-20260217",
+    chat: "claude-3-5-sonnet-20241022",
     embedding: "text-embedding-3-small", // Anthropic doesn't have embeddings, fallback
   },
   google: {
-    chat: "gemini-3.1-flash",
+    chat: "gemini-1.5-flash",
     embedding: "text-embedding-004",
   },
   openrouter: {
@@ -44,8 +46,8 @@ export const DEFAULT_MODELS: Record<ProviderName, { chat: string; embedding: str
 const MODEL_REGISTRY: Record<ProviderName, ProviderModel[]> = {
   siliconflow: SILICONFLOW_MODELS,
   openai: OPENAI_MODELS,
-  anthropic: [], // TODO: Add Anthropic models
-  google: [], // TODO: Add Google models
+  anthropic: ANTHROPIC_MODELS,
+  google: GOOGLE_MODELS,
   openrouter: OPENROUTER_MODELS,
 };
 

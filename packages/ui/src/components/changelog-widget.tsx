@@ -49,7 +49,7 @@ export function ChangelogWidget({
   const handleClose = React.useCallback(() => {
     setIsOpen(false);
     if (recentEntries.length > 0) {
-      setLastSeenVersion(recentEntries[0]?.version);
+      setLastSeenVersion(recentEntries[0]?.version ?? null);
     }
   }, [recentEntries]);
 

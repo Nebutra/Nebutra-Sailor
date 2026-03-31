@@ -34,6 +34,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/billing": "workspace:*",
     "dub": "^0.71.5",
     "posthog-js": "^1.360.1"
   },

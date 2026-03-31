@@ -1,5 +1,5 @@
 import { AlertTriangle, Clock, Shield, Smartphone } from "lucide-react";
-import { getAuth } from "@/lib/auth";
+import { getAuth, getUser } from "@/lib/auth";
 
 export const metadata = {
   title: "Security — Settings",
@@ -7,9 +7,10 @@ export const metadata = {
 
 export default async function SecuritySettingsPage() {
   const authState = await getAuth();
+  const user = await getUser();
 
   const hasMfa = false; // MFA status would depend on provider-specific implementation
-  const email = authState.user?.email ?? "";
+  const email = user?.email ?? "";
 
   return (
     <div className="space-y-8">
