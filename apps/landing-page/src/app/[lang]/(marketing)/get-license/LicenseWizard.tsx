@@ -607,13 +607,18 @@ export function LicenseWizard() {
                 <div className="space-y-4">
                   {/* Looking for — seeds Sleptons matching */}
                   <div>
-                    <label className="mb-3 block text-sm font-semibold text-[var(--neutral-12)]">
+                    <p className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
                       What do you need most right now? (optional)
-                    </label>
+                    </p>
                     <div className="grid grid-cols-2 gap-2">
                       {LOOKING_FOR_OPTIONS.map((opt) => (
-                        <label key={opt.value} className="flex cursor-pointer items-center gap-2">
+                        <label
+                          key={opt.value}
+                          htmlFor={`looking-for-${opt.value}`}
+                          className="flex cursor-pointer items-center gap-2"
+                        >
                           <input
+                            id={`looking-for-${opt.value}`}
                             type="checkbox"
                             value={opt.value}
                             checked={step3.lookingFor.includes(opt.value)}
