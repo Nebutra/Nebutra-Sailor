@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, RefreshCw, Save } from "lucide-react";
+import { Plus, RefreshCw, Save, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 interface NowEntry {
@@ -35,6 +35,7 @@ export default function AdminNowPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [date, setDate] = useState("");
@@ -115,6 +116,37 @@ export default function AdminNowPage() {
     }
   }
 
+  async function handleDelete() {
+    if (!confirm("Are you sure you want to delete this entry?")) {
+      return;
+    }
+
+    setDeleting(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/now", {
+        method: "DELETE",
+        signal: AbortSignal.timeout(15_000),
+      });
+
+      const json = await res.json();
+      if (!json.success) throw new Error(json.error ?? "Delete failed");
+
+      setEntry(null);
+      setDate(new Date().toISOString().slice(0, 10));
+      setFields({
+        building: "",
+        shipped: "",
+        thinking: "",
+        reading: "",
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Delete failed.");
+    } finally {
+      setDeleting(false);
+    }
+  }
+
   return (
     <div>
       <div className="mb-8 flex items-start justify-between">
@@ -172,7 +204,7 @@ export default function AdminNowPage() {
           </div>
         ))}
 
-        {/* Save */}
+        {/* Save & Delete */}
         <div className="flex items-center gap-3 pt-2">
           <button
             type="button"
@@ -189,6 +221,21 @@ export default function AdminNowPage() {
             )}
             {saving ? "Saving..." : entry ? "Save changes" : "Create entry"}
           </button>
+          {entry && (
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={deleting}
+              className="inline-flex items-center gap-2 rounded-full bg-red-100 dark:bg-red-900/30 px-4 py-2.5 text-sm font-medium text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50"
+            >
+              {deleting ? (
+                <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Trash2 className="h-3.5 w-3.5" />
+              )}
+              {deleting ? "Deleting..." : "Delete"}
+            </button>
+          )}
           {saved && <span className="text-sm text-green-600 dark:text-green-400">Saved!</span>}
         </div>
       </div>

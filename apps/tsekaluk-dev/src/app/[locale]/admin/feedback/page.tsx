@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageSquare, RefreshCw } from "lucide-react";
+import { MessageSquare, RefreshCw, Trash2 } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
@@ -47,6 +47,28 @@ export default function AdminFeedbackPage() {
       setLoading(false);
     }
   }, []);
+
+  const handleDelete = useCallback(
+    async (id: string) => {
+      if (!confirm("Are you sure you want to delete this feedback?")) {
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/feedback?id=${encodeURIComponent(id)}`, {
+          method: "DELETE",
+          signal: AbortSignal.timeout(15_000),
+        });
+        const json = await res.json();
+        if (!json.success) throw new Error(json.error ?? "Failed to delete");
+        setEntries((prev) => prev.filter((e) => e.id !== id));
+      } catch (err) {
+        const errorMsg = err instanceof Error ? err.message : "Failed to delete feedback.";
+        setError(errorMsg);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     fetchEntries();
@@ -138,12 +160,22 @@ export default function AdminFeedbackPage() {
                       <p className="text-sm text-gray-400 dark:text-gray-600 italic">No message.</p>
                     )}
                   </div>
-                  <span className="shrink-0 font-mono text-xs text-gray-400 dark:text-gray-600">
-                    {new Date(entry.createdAt).toLocaleDateString(locale, {
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </span>
+                  <div className="shrink-0 flex items-center gap-3">
+                    <span className="font-mono text-xs text-gray-400 dark:text-gray-600">
+                      {new Date(entry.createdAt).toLocaleDateString(locale, {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(entry.id)}
+                      aria-label="Delete feedback"
+                      className="inline-flex items-center justify-center rounded-md p-1.5 text-gray-500 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             );

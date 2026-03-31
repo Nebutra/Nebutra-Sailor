@@ -112,3 +112,45 @@ export async function PATCH(req: Request) {
     return Response.json({ success: false, error: "Internal server error" }, { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  if (!prisma) return DB_UNAVAILABLE;
+  try {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session?.user || !isAdmin(session.user.email)) {
+      return Response.json({ success: false, error: "Admin access required" }, { status: 403 });
+    }
+
+    // Get id from query params or request body
+    let id: string | null = null;
+    const url = new URL(req.url);
+    const idParam = url.searchParams.get("id");
+
+    if (idParam) {
+      id = idParam;
+    } else if (req.body) {
+      const contentLength = parseInt(req.headers.get("content-length") ?? "0", 10);
+      if (contentLength > 64 * 1024) {
+        return Response.json({ success: false, error: "Payload too large" }, { status: 413 });
+      }
+      const body = await req.json();
+      id = body.id;
+    }
+
+    // If no id provided, delete the latest entry
+    if (!id) {
+      const latest = await prisma.nowEntry.findFirst({
+        orderBy: { createdAt: "desc" },
+      });
+      if (!latest) {
+        return Response.json({ success: false, error: "No entry to delete" }, { status: 404 });
+      }
+      id = latest.id;
+    }
+
+    await prisma.nowEntry.delete({ where: { id } });
+    return Response.json({ success: true });
+  } catch (_err) {
+    return Response.json({ success: false, error: "Internal server error" }, { status: 500 });
+  }
+}

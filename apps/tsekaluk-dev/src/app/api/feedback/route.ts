@@ -124,3 +124,24 @@ export async function POST(req: Request) {
     return Response.json({ success: false, error: "Failed to send feedback" }, { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  if (!prisma) return DB_UNAVAILABLE;
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session?.user || !isAdmin(session.user.email)) {
+      return Response.json({ success: false, error: "Admin access required" }, { status: 403 });
+    }
+
+    const url = new URL(req.url);
+    const id = url.searchParams.get("id");
+    if (!id) {
+      return Response.json({ success: false, error: "Missing id parameter" }, { status: 400 });
+    }
+
+    await prisma.feedback.delete({ where: { id } });
+    return Response.json({ success: true });
+  } catch (_err) {
+    return Response.json({ success: false, error: "Failed to delete feedback" }, { status: 500 });
+  }
+}
