@@ -18,13 +18,14 @@ const APP_URL = env.NEXT_PUBLIC_APP_URL;
 /**
  * Navbar - Fixed navigation with brand logo and theme toggle
  */
-export function Navbar() {
+export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean }) {
   const t = useTranslations("nav");
   const { resolvedTheme } = useTheme();
   const isMounted = useMount();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const isDark = !isMounted || resolvedTheme !== "light";
+  const isForcedDark = forceDarkTheme && !isScrolled && resolvedTheme === "light";
+  const isDark = !isMounted || resolvedTheme !== "light" || isForcedDark;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,6 +42,7 @@ export function Navbar() {
         isScrolled
           ? "border-b border-transparent bg-white/85 backdrop-blur-md dark:border-transparent dark:bg-black/80 shadow-sm"
           : "bg-transparent",
+        isForcedDark ? "dark" : "",
       )}
     >
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6">

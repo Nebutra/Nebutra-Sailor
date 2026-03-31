@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { prisma } from "@nebutra/db";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -16,6 +16,7 @@ const CreateLicenseSchema = z.object({
     .optional(),
   githubHandle: z.string().optional(),
   twitterHandle: z.string().optional(),
+  lookingFor: z.array(z.string()).default([]),
 
   // License
   tier: z.enum(["INDIVIDUAL", "OPC", "STARTUP", "ENTERPRISE"]),
@@ -25,6 +26,16 @@ const CreateLicenseSchema = z.object({
   // Agreement
   acceptedTerms: z.literal(true),
 });
+
+function generateSlug(displayName: string, memberNumber: number): string {
+  const base = displayName
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .slice(0, 40);
+  return `${base}-${memberNumber}`;
+}
 
 // POST /api/license — Create a license after community profile collection
 export async function POST(req: NextRequest) {
@@ -91,6 +102,35 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    // Auto-create Sleptons community profile
+    const clerk = await clerkClient();
+    const clerkUser = await clerk.users.getUser(userId);
+    const displayName =
+      clerkUser.fullName ??
+      clerkUser.username ??
+      clerkUser.emailAddresses[0]?.emailAddress?.split("@")[0] ??
+      "Founder";
+
+    const sleptonsProfile = await prisma.sleptonsaMemberProfile.create({
+      data: {
+        user_id: userId,
+        license_id: license.id,
+        slug: `${userId}-${Date.now()}`, // temp slug; updated below
+        display_name: displayName,
+        avatar_url: clerkUser.imageUrl ?? null,
+        looking_for: data.lookingFor,
+        github_handle: data.githubHandle ?? null,
+        tech_stack: [],
+      },
+    });
+
+    // Update slug with sequential member number
+    const finalSlug = generateSlug(displayName, sleptonsProfile.member_number);
+    await prisma.sleptonsaMemberProfile.update({
+      where: { id: sleptonsProfile.id },
+      data: { slug: finalSlug },
+    });
+
     return NextResponse.json({
       success: true,
       license: {
@@ -99,6 +139,10 @@ export async function POST(req: NextRequest) {
         tier: license.tier,
         type: license.type,
         expiresAt: license.expiresAt,
+      },
+      community: {
+        memberNumber: sleptonsProfile.member_number,
+        slug: finalSlug,
       },
     });
   } catch (error) {
