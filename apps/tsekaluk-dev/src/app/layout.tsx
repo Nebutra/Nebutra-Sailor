@@ -56,7 +56,7 @@ const jetbrainsMono = JetBrains_Mono({
  * Use: large English/Japanese display headings, section callouts, decorative numbers
  */
 const delaGothic = Dela_Gothic_One({
-  subsets: ["latin", "japanese"],
+  subsets: ["latin"],
   weight: "400",
   variable: "--font-dela-gothic",
   display: "swap",
