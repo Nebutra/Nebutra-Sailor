@@ -1,0 +1,180 @@
+---
+title: 搜索引擎优化概览
+description: Nebutra-Sailor 内置的 SEO 功能——Next.js App Router 元数据、OG 图片生成、结构化数据和 i18n hreflang 支持。
+---
+
+## 内置功能
+
+Nebutra-Sailor 开箱即提供完整的 SEO 基础设施。您无需安装第三方 SEO 库——一切都基于 Next.js 16 App Router 元数据系统构建。
+
+| 功能 | 状态 | 位置 |
+|------|------|------|
+| 静态元数据 | 内置 | 页面文件中的 `export const metadata` |
+| 动态元数据 | 内置 | 页面文件中的 `generateMetadata()` |
+| OG 图片生成 | 内置 | `@vercel/og`，通过 `opengraph-image.tsx` 约定 |
+| robots.txt | 内置 | `apps/landing-page/src/app/robots.ts` |
+| XML 网站地图 | 内置 | `apps/landing-page/src/app/sitemap.ts` |
+| 规范 URL | 内置 | 通过 `metadata.alternates.canonical` 设置 |
+| 结构化数据（JSON-LD）| 内置 | 通过 layout 中的 `<script type="application/ld+json">` 注入 |
+| i18n hreflang | 内置 | `next-intl` + `metadata.alternates.languages` |
+| 博客 SEO | 内置 | Sanity 内容，自动生成 OG 图片 |
+
+## Next.js App Router 元数据 API
+
+Next.js 16 提供了两种从 `page.tsx` 或 `layout.tsx` 文件导出元数据的方式：
+
+### 静态元数据
+
+对于标题和描述固定的页面，导出 `metadata` 对象：
+
+```typescript apps/landing-page/src/app/[lang]/page.tsx
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Nebutra — AI 原生 SaaS 平台",
+  description: "使用 Nebutra 更快地构建和发布 AI 驱动的 SaaS 产品。",
+};
+```
+
+### 动态元数据
+
+对于依赖路由参数的页面（如博客文章 slug），使用 `generateMetadata`：
+
+```typescript apps/landing-page/src/app/[lang]/blog/[slug]/page.tsx
+import type { Metadata } from "next";
+import { getPost } from "@/lib/sanity";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; lang: string }>;
+}): Promise<Metadata> {
+  const { slug, lang } = await params;
+  const post = await getPost(slug, lang);
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      images: [post.ogImage],
+    },
+  };
+}
+```
+
+## OG 图片生成
+
+Nebutra 使用 Vercel 的 `@vercel/og` 库在边缘生成 Open Graph 图片。OG 图片通过 Next.js 文件系统约定定义：
+
+```
+apps/landing-page/src/app/[lang]/blog/[slug]/opengraph-image.tsx
+```
+
+`opengraph-image.tsx` 文件导出一个 `ImageResponse`，使用 Satori 渲染器将 React 组件渲染为 PNG 图片。
+
+```typescript opengraph-image.tsx（模式）
+import { ImageResponse } from "next/og";
+
+export const runtime = "edge";
+export const size = { width: 1200, height: 630 };
+export const contentType = "image/png";
+
+export default async function OgImage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  // 获取文章标题等信息
+  return new ImageResponse(
+    <div style={{ display: "flex", /* 布局样式 */ }}>
+      {/* 内容 */}
+    </div>,
+    { ...size }
+  );
+}
+```
+
+<Note>
+  `runtime = "edge"` 导出是 `@vercel/og` 的必要条件。若缺少它，OG 图片生成将在 Node.js 运行时上运行，速度会显著降低。
+</Note>
+
+## 结构化数据（JSON-LD）
+
+结构化数据通过 `<script>` 标签注入到 `apps/landing-page/src/app/[lang]/layout.tsx` 中。根 layout 包含 Organization 和 Website schema。各个页面（如博客文章）可以使用相同模式注入额外的 schema。
+
+```typescript layout.tsx（模式）
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Nebutra",
+    url: "https://nebutra.com",
+  };
+
+  return (
+    <html>
+      <body>
+        <script
+          type="application/ld+json"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: 结构化数据是安全的静态 JSON
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+## 通过 hreflang 实现 i18n SEO
+
+落地页通过 `next-intl` 支持 7 种语言。每个页面自动生成 `alternates.languages` 元数据，以便搜索引擎理解不同 URL 之间的语言关系。
+
+```typescript apps/landing-page/src/app/[lang]/page.tsx
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return {
+    alternates: {
+      canonical: `https://nebutra.com/${lang}`,
+      languages: {
+        "en": "https://nebutra.com/en",
+        "zh": "https://nebutra.com/zh",
+        "ja": "https://nebutra.com/ja",
+        // ... 其他语言
+      },
+    },
+  };
+}
+```
+
+搜索引擎使用这些 `hreflang` 注释向用户提供正确的语言版本。
+
+## 博客 SEO 与 Sanity
+
+当 `FEATURE_BLOG=true` 时，博客文章从 Sanity CMS 获取。每篇文章文档包含：
+- 用于 `<title>` 和 `<meta name="description">` 的 `title` 和 `excerpt` 字段
+- 用于 OG 图片 `<meta>` 标签的 `ogImage` 资产引用
+- 用于 `article:published_time` 的 `publishedAt` 字段
+
+Sanity 驱动的博客文章会自动包含 `Article` 结构化数据。
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="元标签" icon="tags" href="/zh/seo/meta-tags">
+    静态和动态元数据示例、模板模式，以及页面级与 layout 级元数据的区别。
+  </Card>
+  <Card title="网站地图" icon="map" href="/zh/seo/sitemap">
+    XML 网站地图生成及向 Google Search Console 提交。
+  </Card>
+  <Card title="功能开关" icon="toggle-on" href="/zh/configuration/feature-flags">
+    启用博客和更新日志功能。
+  </Card>
+  <Card title="部署" icon="rocket" href="/zh/deployment/overview">
+    生产部署的 SEO 注意事项。
+  </Card>
+</CardGroup>

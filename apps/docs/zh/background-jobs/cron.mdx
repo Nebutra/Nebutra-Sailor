@@ -1,0 +1,249 @@
+---
+title: 定时任务
+description: 使用 Inngest Cron 函数或 Vercel Cron 调度周期性后台任务——包含安全重运行的幂等性模式。
+---
+
+## 概述
+
+Nebutra 支持两种定期任务调度方式：
+
+- **Inngest Cron** — 推荐用于需要步骤函数、重试和可观测性的任务
+- **Vercel Cron** — 简单的 HTTP 触发调度，适合轻量任务或触发 Inngest 事件
+
+## Inngest Cron 函数
+
+直接在 Inngest 函数上使用标准 Cron 语法定义调度：
+
+```typescript
+import { inngest } from "@nebutra/event-bus";
+
+export const weeklyUsageReport = inngest.createFunction(
+  { id: "weekly-usage-report", retries: 2 },
+  { cron: "0 9 * * MON" },   // 每周一 09:00 UTC
+  async ({ step }) => {
+    const tenants = await step.run("fetch-active-tenants", async () => {
+      return db.tenant.findMany({ where: { status: "active" } });
+    });
+
+    // 扇出：并行为每个租户生成报表
+    await step.run("generate-reports", async () => {
+      return Promise.all(
+        tenants.map((tenant) =>
+          generateUsageReport(tenant.id, "weekly")
+        )
+      );
+    });
+  }
+);
+```
+
+### Cron 语法参考
+
+```
+┌─────────── 分钟（0–59）
+│ ┌───────── 小时（0–23）
+│ │ ┌─────── 日（1–31）
+│ │ │ ┌───── 月（1–12）
+│ │ │ │ ┌─── 星期几（0–6，0 = 周日）
+│ │ │ │ │
+* * * * *
+```
+
+常用调度表达式：
+
+| 表达式 | 含义 |
+|--------|------|
+| `0 9 * * MON` | 每周一 09:00 UTC |
+| `0 0 1 * *` | 每月 1 日午夜 |
+| `0 * * * *` | 每小时整点 |
+| `*/15 * * * *` | 每 15 分钟 |
+| `0 9 * * 1-5` | 工作日 09:00 UTC |
+
+<Warning>
+所有 Inngest Cron 时间均为 **UTC**。如果用户期望在特定本地时间执行任务，请在调度前转换时区。
+</Warning>
+
+## Vercel Cron
+
+对于只需要定时触发某个接口的简单任务，可在 `vercel.json` 中配置 Vercel Cron：
+
+```json
+{
+  "crons": [
+    {
+      "path": "/api/v1/cron/quota-reset",
+      "schedule": "0 0 1 * *"
+    },
+    {
+      "path": "/api/v1/cron/cleanup-expired-sessions",
+      "schedule": "0 3 * * *"
+    }
+  ]
+}
+```
+
+Vercel Cron 运行器通过带认证的 GET 请求调用你的接口。使用 `Authorization` 请求头验证请求来自 Vercel：
+
+```typescript
+// apps/api-gateway/src/routes/cron.ts
+import { Hono } from "hono";
+
+const cron = new Hono();
+
+cron.get("/quota-reset", async (c) => {
+  const authHeader = c.req.header("Authorization");
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return c.json({ error: "Unauthorized" }, 401);
+  }
+
+  // 触发 Inngest 事件而不是内联执行繁重任务
+  await inngest.send({ name: "quota/monthly-reset", data: {} });
+
+  return c.json({ ok: true });
+});
+```
+
+在 Vercel 环境变量中将 `CRON_SECRET` 设置为随机密钥。
+
+<Note>
+建议从 Cron 接口触发 Inngest 事件，而不是内联执行繁重任务。这样可以免费获得重试、步骤隔离和可观测性。
+</Note>
+
+## 常见定时任务
+
+### 每月配额重置
+
+```typescript
+export const monthlyQuotaReset = inngest.createFunction(
+  { id: "monthly-quota-reset", retries: 3 },
+  { cron: "0 0 1 * *" },   // 每月 1 日午夜 UTC
+  async ({ step }) => {
+    await step.run("reset-all-quotas", async () => {
+      return db.tenantQuota.updateMany({
+        data: { usedTokens: 0, usedApiCalls: 0 },
+      });
+    });
+  }
+);
+```
+
+### 每日清理过期数据
+
+```typescript
+export const dailyCleanup = inngest.createFunction(
+  { id: "daily-cleanup", retries: 2 },
+  { cron: "0 3 * * *" },   // 每日 UTC 03:00
+  async ({ step }) => {
+    await step.run("delete-expired-sessions", async () => {
+      return db.session.deleteMany({
+        where: { expiresAt: { lt: new Date() } },
+      });
+    });
+
+    await step.run("delete-expired-exports", async () => {
+      const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // 7 天前
+      return db.export.deleteMany({
+        where: { createdAt: { lt: cutoff }, status: "completed" },
+      });
+    });
+  }
+);
+```
+
+### 每周用量报表
+
+```typescript
+export const weeklyReport = inngest.createFunction(
+  { id: "weekly-report-dispatch", retries: 2 },
+  { cron: "0 9 * * MON" },
+  async ({ step }) => {
+    const tenants = await step.run("get-pro-tenants", async () => {
+      return db.tenant.findMany({ where: { plan: { in: ["PRO", "ENTERPRISE"] } } });
+    });
+
+    // 每个租户发送一个事件——各自独立处理
+    await step.run("emit-report-events", async () => {
+      return inngest.send(
+        tenants.map((t) => ({
+          name: "report/weekly-requested",
+          data: { tenantId: t.id },
+        }))
+      );
+    });
+  }
+);
+```
+
+## 幂等性
+
+在极端情况下（时钟偏差、部署重试），定时任务可能会运行多次。始终将定时任务处理器编写为**幂等的**——运行两次与运行一次产生相同结果。
+
+### 使用 upsert 而非 insert
+
+```typescript
+// ❌ 非幂等——重新运行时会创建重复记录
+await db.report.create({ data: { tenantId, period: "2025-03", ... } });
+
+// ✅ 幂等——第二次运行更新已有行
+await db.report.upsert({
+  where: { tenantId_period: { tenantId, period: "2025-03" } },
+  create: { tenantId, period: "2025-03", ... },
+  update: { updatedAt: new Date() },
+});
+```
+
+### 使用唯一执行 ID 加锁
+
+```typescript
+export const monthlyReset = inngest.createFunction(
+  { id: "monthly-quota-reset" },
+  { cron: "0 0 1 * *" },
+  async ({ event, step }) => {
+    const lockKey = `quota-reset:${new Date().toISOString().slice(0, 7)}`; // 例如 "quota-reset:2025-03"
+
+    await step.run("acquire-lock-and-reset", async () => {
+      const existing = await db.jobLock.findUnique({ where: { key: lockKey } });
+      if (existing) return { skipped: true };  // 本月已执行
+
+      await db.jobLock.create({ data: { key: lockKey, createdAt: new Date() } });
+      await resetAllQuotas();
+    });
+  }
+);
+```
+
+<Warning>
+避免将繁重任务的调度频率设置得太高（每 15 分钟以内）。高频定时任务可能耗尽 Inngest 套餐的运行配额，并在大规模场景下产生意外费用。
+</Warning>
+
+## 本地测试定时任务
+
+使用 Inngest Dev Server 按需触发定时函数，无需等待调度时间：
+
+```bash
+# 启动 Dev Server
+npx inngest-cli@latest dev -u http://localhost:3001/api/v1/inngest
+```
+
+然后打开 `http://localhost:8288`，导航到你的函数并点击 **Trigger**。也可以通过 CLI 发送手动触发：
+
+```bash
+npx inngest-cli@latest trigger --event "inngest/scheduled.timer" --function "weekly-usage-report"
+```
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="Inngest" icon="bolt" href="/zh/background-jobs/inngest">
+    完整的 Inngest 函数参考——步骤、重试、扇出。
+  </Card>
+  <Card title="队列" icon="list" href="/zh/background-jobs/queues">
+    使用 QStash 和 BullMQ 的高吞吐量任务队列。
+  </Card>
+  <Card title="后台任务概述" icon="layers" href="/zh/background-jobs/overview">
+    Inngest 与队列的适用场景对比。
+  </Card>
+  <Card title="计费模型" icon="chart-bar" href="/zh/concepts/billing-model">
+    定时任务操作所涉及的配额追踪。
+  </Card>
+</CardGroup>

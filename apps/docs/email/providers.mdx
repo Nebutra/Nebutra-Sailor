@@ -1,0 +1,136 @@
+---
+title: Email Providers
+description: Configure Resend as your transactional email provider and verify your sending domain for @nebutra/email.
+---
+
+`@nebutra/email` uses **Resend** as its primary delivery provider. Resend has native support for React Email templates, detailed delivery logs, and a developer-friendly API.
+
+<Note>
+Custom SMTP and alternative providers (SendGrid, Postmark, Mailgun) are planned for a future release. Track progress in the roadmap.
+</Note>
+
+<Warning>
+TODO: Document alternative provider support once the `@nebutra/email` multi-provider adapter is implemented.
+</Warning>
+
+## Resend setup
+
+<Steps>
+  <Step title="Create a Resend account">
+    Sign up at [resend.com](https://resend.com). The free tier allows up to 3,000 emails/month and 100/day — sufficient for development and early-stage production.
+  </Step>
+
+  <Step title="Add and verify your sending domain">
+    Go to **Resend dashboard → Domains → Add Domain**.
+
+    Enter your domain (e.g. `mail.nebutra.com`) and Resend will provide DNS records to add:
+
+    | Type | Name | Value |
+    |------|------|-------|
+    | MX | `mail.nebutra.com` | `feedback-smtp.us-east-1.amazonses.com` |
+    | TXT | `mail.nebutra.com` | `v=spf1 include:amazonses.com ~all` |
+    | TXT | `resend._domainkey.mail.nebutra.com` | DKIM public key |
+
+    Add these records in your DNS provider (Cloudflare, Route 53, etc.) and click **Verify** in the Resend dashboard. Propagation typically takes a few minutes.
+
+    <Tip>
+      Use a subdomain (e.g. `mail.nebutra.com`) rather than your root domain. This isolates email reputation from your main domain and makes it easier to manage SPF/DKIM records.
+    </Tip>
+  </Step>
+
+  <Step title="Create an API key">
+    Go to **Resend dashboard → API Keys → Create API Key**.
+
+    - **Name:** `nebutra-production` (or `nebutra-staging`)
+    - **Permission:** Sending access
+    - **Domain:** restrict to your verified domain
+
+    Copy the key — it will only be shown once.
+  </Step>
+
+  <Step title="Set environment variables">
+    Add the following to your Vercel project environment variables (or `.env.local` for development):
+
+    ```env
+    RESEND_API_KEY=re_...
+    EMAIL_FROM=Nebutra <noreply@mail.nebutra.com>
+    ```
+
+    Replace `noreply@mail.nebutra.com` with an address on your verified domain.
+  </Step>
+
+  <Step title="Test the integration">
+    Run the local preview server to verify templates render correctly before sending a live email:
+
+    ```bash
+    pnpm --filter @nebutra/email dev
+    ```
+
+    Then send a test email using Resend's test API key (starts with `re_test_`). See [Testing](/email/testing) for details.
+  </Step>
+</Steps>
+
+## Resend test API key
+
+Resend provides a test API key (`re_test_...`) that accepts API calls without delivering emails to real inboxes. Emails sent with the test key appear in the Resend dashboard under **Logs** with a `test` badge.
+
+```env
+# .env.local — development only
+RESEND_API_KEY=re_test_...
+EMAIL_FROM=Nebutra <noreply@mail.nebutra.com>
+```
+
+<Warning>
+Never use the test API key in production. Test emails are not delivered to recipients.
+</Warning>
+
+## Domain verification troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---------|-------------|-----|
+| Domain shows "Unverified" after 10 minutes | DNS records not yet propagated | Wait up to 48 hours; check with `dig TXT mail.nebutra.com` |
+| Emails land in spam | Missing DMARC record | Add `TXT _dmarc.mail.nebutra.com "v=DMARC1; p=none; rua=mailto:dmarc@nebutra.com"` |
+| `550 5.7.26` bounce | SPF record missing or incorrect | Ensure `include:amazonses.com` is in your SPF record |
+| DKIM verification fails | Multiple DKIM records for same selector | Remove duplicate `resend._domainkey` TXT records |
+
+## Resend event webhooks
+
+Resend can POST delivery events (delivered, bounced, complained) to your application. Register a webhook endpoint in the Resend dashboard:
+
+```typescript
+// app/api/webhooks/resend/route.ts
+import { Webhook } from "svix";
+
+export async function POST(request: Request) {
+  const payload = await request.text();
+  const headers = Object.fromEntries(request.headers);
+
+  const wh = new Webhook(process.env.RESEND_WEBHOOK_SECRET!);
+  const event = wh.verify(payload, headers) as ResendWebhookEvent;
+
+  if (event.type === "email.bounced") {
+    // Mark address as bounced in your database
+    await db.user.update({
+      where: { email: event.data.to },
+      data: { emailBounced: true },
+    });
+  }
+
+  return new Response(null, { status: 200 });
+}
+```
+
+<CardGroup cols={2}>
+  <Card title="Email Overview" icon="mail" href="/email/overview">
+    Architecture and list of built-in templates
+  </Card>
+  <Card title="Templates" icon="layout-template" href="/email/templates">
+    Template data fields and customization guide
+  </Card>
+  <Card title="Testing" icon="flask" href="/email/testing">
+    Local preview server and test mode
+  </Card>
+  <Card title="Environment Variables" icon="key" href="/guides/environment-variables">
+    Managing secrets across environments
+  </Card>
+</CardGroup>

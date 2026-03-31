@@ -1,0 +1,177 @@
+---
+title: 人工智能概述
+description: Nebutra 内置的 AI 功能——基于 OpenAI 和 OpenRouter 的聊天补全、嵌入向量和语义搜索。
+---
+
+## 包含的功能
+
+Nebutra 通过 `@nebutra/ai-sdk` 开箱即用地提供 AI 功能。该包是 [Vercel AI SDK](https://sdk.vercel.ai/) 的轻量封装，自动集成了租户上下文、限流和用量计量。
+
+每个租户可使用以下功能：
+
+| 功能 | 描述 | 功能标志 |
+|------|------|----------|
+| **聊天补全** | 流式和非流式 LLM 响应 | `ai.chat` |
+| **嵌入向量** | 用于语义搜索和 RAG 的向量表示 | `ai.embeddings` |
+| **图像分析** | 支持视觉能力的模型（GPT-4o） | `ai.chat` |
+| **模型选择** | 每租户模型覆盖（企业版） | `ai.model_selection` |
+
+## 架构
+
+请求经过 API 网关，在代理到底层模型供应商之前自动完成鉴权、限流和计量：
+
+```
+客户端应用
+    │
+    ▼
+POST /api/v1/ai/chat          (API 网关 — Hono)
+    │
+    ├─ 鉴权检查（API Key）
+    ├─ 功能标志检查（ai.chat）
+    ├─ 限流（按租户，@nebutra/rate-limit）
+    │
+    ▼
+@nebutra/ai-sdk               (Vercel AI SDK v6 封装)
+    │
+    ├─ OpenAI  （默认）
+    └─ OpenRouter  （多模型：Claude、Llama、Mistral……）
+    │
+    ▼
+响应 / SSE 流
+    │
+    ▼
+@nebutra/metering             （消耗的 Token → 计费）
+    │
+    ▼
+pgvector（仅嵌入向量）         （PostgreSQL 向量存储）
+```
+
+## 支持的模型
+
+<Tabs>
+  <Tab title="OpenAI（默认）">
+
+| 模型 | 上下文窗口 | 适用场景 |
+|------|-----------|----------|
+| `gpt-4o` | 128 k | 复杂推理、视觉、编程 |
+| `gpt-4o-mini` | 128 k | 快速、低成本任务 |
+| `text-embedding-3-small` | — | 嵌入向量（1536 维） |
+| `text-embedding-3-large` | — | 高精度嵌入向量（3072 维） |
+
+  </Tab>
+  <Tab title="OpenRouter（多模型）">
+
+| 模型 | 供应商 | 备注 |
+|------|--------|------|
+| `anthropic/claude-3.5-sonnet` | Anthropic | 推理能力最强 |
+| `meta-llama/llama-3.1-70b-instruct` | Meta | 开源，速度快 |
+| `mistralai/mistral-large` | Mistral | 多语言能力强 |
+| `google/gemini-pro-1.5` | Google | 超长上下文（100 万 Token） |
+
+将完整的模型标识符传入 `streamText` / `generateText`。完整模型列表请参阅 [OpenRouter 模型页面](https://openrouter.ai/models)。
+
+  </Tab>
+</Tabs>
+
+## 功能标志
+
+AI 功能默认关闭，需要按租户启用。标志在 API 网关发起任何模型调用之前检查——如果标志关闭，不会消耗任何 Token。
+
+```typescript
+// 以编程方式为租户启用 AI
+import { setFeatureFlag } from "@nebutra/preset";
+
+await setFeatureFlag("org_123", "ai.chat", true);
+await setFeatureFlag("org_123", "ai.embeddings", true);
+```
+
+也可以在控制台的 **组织 → 功能** 中切换标志。
+
+## 环境变量
+
+将以下变量添加到 `.env`（或 Vercel 环境变量）：
+
+```bash
+# 必填：至少提供一个供应商密钥
+OPENAI_API_KEY=""
+
+# 可选：通过 OpenRouter 启用多模型路由
+OPENROUTER_API_KEY=""
+
+# 未在请求中指定模型时使用的默认模型
+AI_DEFAULT_MODEL="gpt-4o-mini"
+
+# 可选：覆盖默认嵌入模型
+AI_EMBEDDING_MODEL="text-embedding-3-small"
+```
+
+<Warning>
+切勿将 `OPENAI_API_KEY` 或 `OPENROUTER_API_KEY` 暴露给客户端。所有模型调用必须通过 API 网关进行。
+</Warning>
+
+## 用量与配额
+
+Token 消耗通过 `@nebutra/metering` 自动计量，并计入租户的 API 配额。可以通过代码或控制台查看当前用量：
+
+```typescript
+import { getMetering, COMMON_METERS } from "@nebutra/metering";
+
+const metering = await getMetering();
+const quota = await metering.getQuota("org_123", "ai_tokens");
+// → { limit: 5000000, used: 1243000, remaining: 3757000, percentage: 0.249 }
+```
+
+各套餐配额限制：
+
+| 套餐 | 每月 AI Token 数 |
+|------|----------------|
+| FREE | 100,000 |
+| PRO | 5,000,000 |
+| ENTERPRISE | 自定义 |
+
+## 快速使用示例
+
+```typescript
+import { streamText, generateText, embed } from "@nebutra/ai-sdk";
+
+// 流式聊天（SSE）
+const result = await streamText({
+  model: "gpt-4o",
+  messages: [
+    { role: "system", content: "你是一个有帮助的助手。" },
+    { role: "user", content: userMessage },
+  ],
+  tenantId,
+});
+
+// 非流式
+const { text } = await generateText({
+  model: "gpt-4o-mini",
+  prompt: "总结以下内容：" + content,
+  tenantId,
+});
+
+// 嵌入向量
+const { embedding } = await embed({
+  model: "text-embedding-3-small",
+  value: "需要嵌入的文本",
+  tenantId,
+});
+```
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="聊天" icon="message-bot" href="/zh/ai/chatbot">
+    使用聊天补全 API 构建聊天机器人。
+  </Card>
+  <Card title="流式传输" icon="bolt" href="/zh/ai/streaming">
+    通过 SSE 实现实时流式响应。
+  </Card>
+  <Card title="嵌入向量" icon="vector-square" href="/zh/ai/embeddings">
+    使用 pgvector 进行语义搜索和 RAG。
+  </Card>
+  <Card title="计费模型" icon="chart-bar" href="/zh/concepts/billing-model">
+    AI Token 用量如何计入配额。
+  </Card>
+</CardGroup>

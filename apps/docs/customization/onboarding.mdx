@@ -1,0 +1,266 @@
+---
+title: Onboarding Flow
+description: Add, remove, and reorder onboarding steps. Customize welcome copy, skip logic per plan, and configure illustrations.
+---
+
+<Warning>
+  TODO: The onboarding flow is partially implemented. The **Welcome** and **Create organization** steps are complete and production-ready. The **Invite team** and **Configure** steps are stubs — they render placeholder UI but do not yet persist state or trigger downstream actions.
+</Warning>
+
+The onboarding wizard lives in `apps/web/src/app/(onboarding)/`. It is a multi-step flow driven by server actions and URL search params, so it works without client-side state management.
+
+## Default flow
+
+```
+Welcome → Create organization → Invite team → Configure → Done
+```
+
+Each step maps to a directory under `(onboarding)`:
+
+```
+apps/web/src/app/(onboarding)/
+  layout.tsx                  ← wizard chrome (progress bar, skip link)
+  welcome/
+    page.tsx                  ← ✅ Complete
+  create-org/
+    page.tsx                  ← ✅ Complete
+    actions.ts                ← server action: createOrganization()
+  invite-team/
+    page.tsx                  ← ⚠️  Stub
+  configure/
+    page.tsx                  ← ⚠️  Stub
+  done/
+    page.tsx                  ← ✅ Complete
+```
+
+## Step tracking
+
+The current step is stored in the URL as a search param and validated server-side. Users cannot jump ahead to a step they have not unlocked.
+
+```
+/onboarding/welcome
+/onboarding/create-org
+/onboarding/invite-team?skip=false
+/onboarding/configure
+/onboarding/done
+```
+
+The layout component reads the current pathname to render the progress indicator. Each step's server action redirects to the next step's URL on success.
+
+```typescript
+// Example server action pattern
+// apps/web/src/app/(onboarding)/create-org/actions.ts
+"use server";
+import { redirect } from "next/navigation";
+import { requireAuth } from "@/lib/auth";
+
+export async function createOrganization(formData: FormData) {
+  const session = await requireAuth();
+  const name = formData.get("name") as string;
+
+  // ... create org logic
+
+  redirect("/onboarding/invite-team");
+}
+```
+
+## Adding a new step
+
+<Steps>
+  <Step title="Create the step directory and page">
+    ```bash
+    mkdir -p apps/web/src/app/\(onboarding\)/my-step
+    ```
+
+    ```typescript
+    // apps/web/src/app/(onboarding)/my-step/page.tsx
+    import { requireAuth } from "@/lib/auth";
+    import { MyStepForm } from "./_components/my-step-form";
+
+    export default async function MyStepPage() {
+      await requireAuth();
+
+      return (
+        <div className="mx-auto max-w-lg space-y-6">
+          <div className="space-y-2 text-center">
+            <h1 className="text-2xl font-bold text-[var(--neutral-12)]">
+              Step title
+            </h1>
+            <p className="text-[var(--neutral-11)]">
+              Helpful description of what this step does.
+            </p>
+          </div>
+          <MyStepForm />
+        </div>
+      );
+    }
+    ```
+  </Step>
+  <Step title="Register the step in the step manifest">
+    ```typescript
+    // apps/web/src/app/(onboarding)/steps.ts
+    export const ONBOARDING_STEPS = [
+      { key: "welcome",      href: "/onboarding/welcome",      label: "Welcome" },
+      { key: "create-org",   href: "/onboarding/create-org",   label: "Organization" },
+      { key: "my-step",      href: "/onboarding/my-step",      label: "My Step" },   // ← add here
+      { key: "invite-team",  href: "/onboarding/invite-team",  label: "Team" },
+      { key: "configure",    href: "/onboarding/configure",    label: "Configure" },
+      { key: "done",         href: "/onboarding/done",         label: "Done" },
+    ] as const;
+    ```
+    The layout uses this manifest to render the progress bar and validate step transitions.
+  </Step>
+  <Step title="Update the previous step's server action to redirect here">
+    Find the server action that currently redirects to the step that comes after your new step, and change its `redirect()` target:
+
+    ```typescript
+    // Before
+    redirect("/onboarding/invite-team");
+
+    // After (your new step is inserted before invite-team)
+    redirect("/onboarding/my-step");
+    ```
+  </Step>
+  <Step title="Update your step's server action to redirect to the next step">
+    ```typescript
+    // apps/web/src/app/(onboarding)/my-step/actions.ts
+    "use server";
+    import { redirect } from "next/navigation";
+
+    export async function completeMyStep(formData: FormData) {
+      // ... persist data
+      redirect("/onboarding/invite-team");
+    }
+    ```
+  </Step>
+</Steps>
+
+## Removing a step
+
+<Steps>
+  <Step title="Remove the step from the manifest">
+    Delete its entry from `ONBOARDING_STEPS` in `apps/web/src/app/(onboarding)/steps.ts`.
+  </Step>
+  <Step title="Update the redirect chain">
+    Find the step that previously redirected to the removed step, and update its `redirect()` to point to the step after the removed one.
+  </Step>
+  <Step title="Delete the directory (optional)">
+    ```bash
+    rm -rf apps/web/src/app/\(onboarding\)/my-step
+    ```
+  </Step>
+</Steps>
+
+## Skip logic per plan
+
+Enterprise users are often pre-configured and should skip steps like billing setup. Implement skip logic in the server action of the step that precedes the skippable step:
+
+```typescript
+// apps/web/src/app/(onboarding)/create-org/actions.ts
+"use server";
+import { redirect } from "next/navigation";
+import { getTenantContext } from "@/lib/auth";
+
+export async function createOrganization(formData: FormData) {
+  const { plan } = await getTenantContext();
+
+  // ... create org logic
+
+  // Enterprise orgs are provisioned with billing pre-configured — skip that step
+  if (plan === "enterprise") {
+    redirect("/onboarding/invite-team");
+  } else {
+    redirect("/onboarding/configure");
+  }
+}
+```
+
+You can also expose a skip link in the step's page UI for optional steps:
+
+```tsx
+import Link from "next/link";
+
+// In your step's page component
+<Link
+  href="/onboarding/invite-team"
+  className="text-sm text-[var(--neutral-11)] hover:text-[var(--neutral-12)] underline"
+>
+  Skip for now
+</Link>
+```
+
+## Customizing welcome copy
+
+The welcome step's content is in a single file:
+
+```
+apps/web/src/app/(onboarding)/welcome/page.tsx
+```
+
+Edit the headline, subheading, and feature bullets directly. The page uses standard Tailwind + token classes — no special config needed.
+
+```tsx
+// apps/web/src/app/(onboarding)/welcome/page.tsx
+<h1
+  className="text-4xl font-bold"
+  style={{
+    background: "var(--brand-gradient)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+  }}
+>
+  Welcome to Acme        {/* ← change this */}
+</h1>
+<p className="mt-3 text-lg text-[var(--neutral-11)]">
+  Your all-in-one platform for…   {/* ← and this */}
+</p>
+```
+
+## Customizing illustrations
+
+<Warning>
+  TODO: The illustration system is not yet finalized. Currently the welcome step uses an SVG inline in `page.tsx`. A proper illustration slot with swappable assets is planned.
+</Warning>
+
+In the meantime, replace the inline SVG in `apps/web/src/app/(onboarding)/welcome/page.tsx` with your own:
+
+```tsx
+// Replace the existing <IllustrationPlaceholder /> with your asset
+import Image from "next/image";
+
+<Image
+  src="/illustrations/welcome.svg"   // place in apps/web/public/illustrations/
+  alt="Welcome to Nebutra"
+  width={480}
+  height={320}
+  priority
+/>
+```
+
+## Layout: progress bar and navigation chrome
+
+The wizard chrome (progress bar, back link, skip link) is in the layout:
+
+```
+apps/web/src/app/(onboarding)/layout.tsx
+```
+
+The progress bar derives its state from the `ONBOARDING_STEPS` manifest and the current pathname. Modifying the manifest is sufficient to update the progress bar automatically.
+
+---
+
+<CardGroup cols={2}>
+  <Card title="Customization Overview" icon="sliders" href="/customization/overview">
+    Back to the full customization map
+  </Card>
+  <Card title="Dashboard" icon="layout-dashboard" href="/customization/dashboard">
+    Add pages and customize navigation
+  </Card>
+  <Card title="Theming" icon="paintbrush" href="/customization/theming">
+    Brand colors and theme presets
+  </Card>
+  <Card title="Build a Feature" icon="hammer" href="/recipes/build-a-feature">
+    End-to-end implementation recipe
+  </Card>
+</CardGroup>

@@ -1,0 +1,272 @@
+---
+title: 流式传输
+description: 通过 Server-Sent Events 实现实时 AI 响应——服务端配置、客户端消费、Next.js App Router 集成和中止处理。
+---
+
+## 流式传输的工作原理
+
+当 `stream: true`（默认值）时，API 网关返回 **Server-Sent Events（SSE）** 响应，而不是等待模型完整输出。客户端在文本生成的同时即可收到文本片段，从而实现实时打字机效果的 UI。
+
+```
+客户端                    API 网关                  OpenAI
+  │                          │                        │
+  ├─ POST /api/v1/ai/chat ──►│                        │
+  │                          ├── streamText() ────────►│
+  │                          │◄── 片段 1 ──────────────┤
+  │◄─── data: 片段 1 ────────┤                        │
+  │                          │◄── 片段 2 ──────────────┤
+  │◄─── data: 片段 2 ────────┤                        │
+  │                          │◄── [DONE] ──────────────┤
+  │◄─── data: [DONE] ────────┤                        │
+```
+
+## 服务端：`streamText` 的工作方式
+
+`@nebutra/ai-sdk` 中的 `streamText` 函数返回一个 `ReadableStream`，API 网关将其直接管道传输到 SSE 响应中：
+
+```typescript
+import { streamText } from "@nebutra/ai-sdk";
+import { getCurrentTenant } from "@nebutra/tenant";
+import { stream } from "hono/streaming";
+
+// 在 Hono 路由处理器中
+app.post("/api/v1/ai/chat", async (c) => {
+  const { messages, model, systemPrompt } = await c.req.json();
+  const { tenantId } = getCurrentTenant();
+
+  const result = await streamText({
+    model: model ?? process.env.AI_DEFAULT_MODEL ?? "gpt-4o-mini",
+    messages,
+    system: systemPrompt,
+    tenantId,
+  });
+
+  return stream(c, async (s) => {
+    for await (const chunk of result.textStream) {
+      await s.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
+    }
+    await s.write("data: [DONE]\n\n");
+  });
+});
+```
+
+SSE 响应包含以下响应头：
+
+```
+Content-Type: text/event-stream
+Cache-Control: no-cache
+Connection: keep-alive
+X-Accel-Buffering: no
+```
+
+## SSE 事件格式
+
+每个片段都是标准的 SSE 事件：
+
+```
+data: {"choices":[{"delta":{"role":"assistant"},"index":0,"finish_reason":null}]}
+
+data: {"choices":[{"delta":{"content":"你好"},"index":0,"finish_reason":null}]}
+
+data: {"choices":[{"delta":{"content":"，有什么"},"index":0,"finish_reason":null}]}
+
+data: {"choices":[{"delta":{},"index":0,"finish_reason":"stop"}]}
+
+data: [DONE]
+```
+
+最后一个事件始终是 `data: [DONE]`——客户端必须检查此事件以判断流是否结束。
+
+## 客户端：使用 `fetch` 消费
+
+在原生 JavaScript 或任何框架中，使用 `ReadableStream` reader 消费 SSE 响应：
+
+```typescript
+async function streamChat(messages: Message[], apiKey: string) {
+  const response = await fetch("/api/v1/ai/chat", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ messages, stream: true }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`聊天请求失败：${response.status}`);
+  }
+
+  const reader = response.body!.getReader();
+  const decoder = new TextDecoder();
+  let fullText = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    const chunk = decoder.decode(value, { stream: true });
+    const lines = chunk.split("\n\n").filter(Boolean);
+
+    for (const line of lines) {
+      if (line === "data: [DONE]") return fullText;
+      if (!line.startsWith("data: ")) continue;
+
+      const json = JSON.parse(line.slice(6));
+      const content = json.choices?.[0]?.delta?.content ?? "";
+      fullText += content;
+
+      // 在此更新 UI，例如 setState
+      onChunk(content);
+    }
+  }
+
+  return fullText;
+}
+```
+
+## 客户端：使用 `EventSource` 消费
+
+对于不需要发送请求体的简单单向流，`EventSource` 是另一种选择：
+
+<Warning>
+`EventSource` 仅支持 GET 请求，无法发送 JSON 请求体。对于需要 POST 请求体的聊天接口，请使用 `fetch` + `ReadableStream` 方式。
+</Warning>
+
+## Next.js App Router：`useChat` Hook
+
+Vercel AI SDK 的 `useChat` Hook 可直接与 Nebutra 的流式接口集成。将 `api` 指向 Nebutra API 网关：
+
+```typescript
+"use client";
+
+import { useChat } from "ai/react";
+
+export function ChatWidget() {
+  const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =
+    useChat({
+      api: "/api/v1/ai/chat",        // 通过 Next.js 路由代理
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+      },
+      onError: (error) => {
+        console.error("聊天错误：", error);
+      },
+    });
+
+  return (
+    <div>
+      <div>
+        {messages.map((m) => (
+          <div key={m.id}>
+            <strong>{m.role}：</strong> {m.content}
+          </div>
+        ))}
+        {isLoading && <span>思考中……</span>}
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <input value={input} onChange={handleInputChange} placeholder="随便问点什么……" />
+        <button type="submit" disabled={isLoading}>发送</button>
+        {isLoading && (
+          <button type="button" onClick={stop}>停止</button>
+        )}
+      </form>
+    </div>
+  );
+}
+```
+
+<Note>
+生产环境中不要将原始 API Key 暴露在 `NEXT_PUBLIC_*` 变量中。建议创建一个 Next.js Route Handler 在服务端代理请求，并从服务端专用环境变量中注入 API Key。
+</Note>
+
+### Next.js Route Handler 代理
+
+```typescript
+// app/api/chat/route.ts
+import { NextRequest } from "next/server";
+
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+
+  const upstream = await fetch(
+    `${process.env.API_GATEWAY_URL}/api/v1/ai/chat`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.NEBUTRA_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
+
+  // 将 SSE 流直接透传给客户端
+  return new Response(upstream.body, {
+    headers: {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+    },
+  });
+}
+```
+
+然后将 `useChat` 的 `api` 指向 `/api/chat`。
+
+## 流中途的错误处理
+
+如果模型供应商在流已经开始后返回错误，网关会在关闭流之前发出一个错误事件：
+
+```
+data: {"error":{"code":"upstream_error","message":"OpenAI 返回 503"}}
+
+data: [DONE]
+```
+
+在 reader 中处理此情况：
+
+```typescript
+const json = JSON.parse(line.slice(6));
+if (json.error) {
+  throw new Error(json.error.message);
+}
+```
+
+## 中止流
+
+使用 `AbortController` 取消正在进行的请求。网关检测到客户端断开连接后会关闭上游连接。
+
+```typescript
+const controller = new AbortController();
+
+const response = await fetch("/api/v1/ai/chat", {
+  method: "POST",
+  headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+  body: JSON.stringify({ messages }),
+  signal: controller.signal,  // 挂载 signal
+});
+
+// 通过按钮点击或组件卸载触发取消
+function cancelStream() {
+  controller.abort();
+}
+```
+
+使用 `useChat` 时，调用 Hook 返回的 `stop()` 函数——它在内部处理中止逻辑。
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="聊天机器人" icon="message-bot" href="/zh/ai/chatbot">
+    完整的聊天机器人配置，包括系统提示和对话历史。
+  </Card>
+  <Card title="嵌入向量" icon="vector-square" href="/zh/ai/embeddings">
+    用于语义搜索的非流式向量嵌入。
+  </Card>
+  <Card title="AI 概述" icon="sparkles" href="/zh/ai/overview">
+    支持的模型、功能标志和配额。
+  </Card>
+  <Card title="API 参考" icon="code" href="/api-reference/ai/chat">
+    聊天接口的完整 OpenAPI 规范。
+  </Card>
+</CardGroup>

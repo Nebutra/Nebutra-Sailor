@@ -87,6 +87,29 @@
       ]
     },
     {
+      "group": "Development",
+      "version": "English",
+      "pages": [
+        "development/overview",
+        "development/project-structure",
+        "development/local-dev",
+        "development/editor-setup",
+        "development/updating"
+      ]
+    },
+    {
+      "group": "Database",
+      "version": "English",
+      "pages": [
+        "database/overview",
+        "database/use-client",
+        "database/schema-migrations",
+        "database/rls",
+        "database/providers",
+        "database/studio"
+      ]
+    },
+    {
       "group": "Guides",
       "version": "English",
       "pages": [
@@ -97,6 +120,106 @@
         "guides/rate-limits",
         "guides/error-handling"
       ]
+    },
+    {
+      "group": "Payments",
+      "version": "English",
+      "pages": [
+        "payments/overview",
+        "payments/manage-plans",
+        "payments/subscriptions",
+        "payments/paywall",
+        "payments/webhooks"
+      ]
+    },
+    {
+      "group": "Storage",
+      "version": "English",
+      "pages": [
+        "storage/overview",
+        "storage/uploads",
+        "storage/providers",
+        "storage/accessing-files"
+      ]
+    },
+    {
+      "group": "Email",
+      "version": "English",
+      "pages": ["email/overview", "email/providers", "email/templates", "email/testing"]
+    },
+    {
+      "group": "AI",
+      "version": "English",
+      "pages": ["ai/overview", "ai/chatbot", "ai/streaming", "ai/embeddings"]
+    },
+    {
+      "group": "Background Jobs",
+      "version": "English",
+      "pages": [
+        "background-jobs/overview",
+        "background-jobs/inngest",
+        "background-jobs/queues",
+        "background-jobs/cron"
+      ]
+    },
+    {
+      "group": "Analytics",
+      "version": "English",
+      "pages": ["analytics/overview", "analytics/posthog", "analytics/dub"]
+    },
+    {
+      "group": "Monitoring",
+      "version": "English",
+      "pages": ["monitoring/overview", "monitoring/sentry", "monitoring/logs"]
+    },
+    {
+      "group": "Deployment",
+      "version": "English",
+      "pages": [
+        "deployment/overview",
+        "deployment/vercel",
+        "deployment/docker",
+        "deployment/production-checklist"
+      ]
+    },
+    {
+      "group": "Configuration",
+      "version": "English",
+      "pages": [
+        "configuration/overview",
+        "configuration/environment-variables",
+        "configuration/feature-flags"
+      ]
+    },
+    {
+      "group": "Testing",
+      "version": "English",
+      "pages": ["testing/overview"]
+    },
+    {
+      "group": "Customization",
+      "version": "English",
+      "pages": [
+        "customization/overview",
+        "customization/theming",
+        "customization/dashboard",
+        "customization/onboarding"
+      ]
+    },
+    {
+      "group": "SEO",
+      "version": "English",
+      "pages": ["seo/overview", "seo/meta-tags", "seo/sitemap"]
+    },
+    {
+      "group": "Recipes",
+      "version": "English",
+      "pages": ["recipes/overview", "recipes/build-a-feature"]
+    },
+    {
+      "group": "Troubleshooting",
+      "version": "English",
+      "pages": ["troubleshooting/overview", "troubleshooting/common-errors"]
     },
     {
       "group": "Integrations",
@@ -146,6 +269,29 @@
       ]
     },
     {
+      "group": "开发环境",
+      "version": "中文",
+      "pages": [
+        "zh/development/overview",
+        "zh/development/project-structure",
+        "zh/development/local-dev",
+        "zh/development/editor-setup",
+        "zh/development/updating"
+      ]
+    },
+    {
+      "group": "数据库",
+      "version": "中文",
+      "pages": [
+        "zh/database/overview",
+        "zh/database/use-client",
+        "zh/database/schema-migrations",
+        "zh/database/rls",
+        "zh/database/providers",
+        "zh/database/studio"
+      ]
+    },
+    {
       "group": "开发指南",
       "version": "中文",
       "pages": [
@@ -156,6 +302,106 @@
         "zh/guides/rate-limits",
         "zh/guides/error-handling"
       ]
+    },
+    {
+      "group": "支付",
+      "version": "中文",
+      "pages": [
+        "zh/payments/overview",
+        "zh/payments/manage-plans",
+        "zh/payments/subscriptions",
+        "zh/payments/paywall",
+        "zh/payments/webhooks"
+      ]
+    },
+    {
+      "group": "文件存储",
+      "version": "中文",
+      "pages": [
+        "zh/storage/overview",
+        "zh/storage/uploads",
+        "zh/storage/providers",
+        "zh/storage/accessing-files"
+      ]
+    },
+    {
+      "group": "邮件",
+      "version": "中文",
+      "pages": ["zh/email/overview", "zh/email/providers", "zh/email/templates", "zh/email/testing"]
+    },
+    {
+      "group": "人工智能",
+      "version": "中文",
+      "pages": ["zh/ai/overview", "zh/ai/chatbot", "zh/ai/streaming", "zh/ai/embeddings"]
+    },
+    {
+      "group": "后台任务",
+      "version": "中文",
+      "pages": [
+        "zh/background-jobs/overview",
+        "zh/background-jobs/inngest",
+        "zh/background-jobs/queues",
+        "zh/background-jobs/cron"
+      ]
+    },
+    {
+      "group": "数据分析",
+      "version": "中文",
+      "pages": ["zh/analytics/overview", "zh/analytics/posthog", "zh/analytics/dub"]
+    },
+    {
+      "group": "监控",
+      "version": "中文",
+      "pages": ["zh/monitoring/overview", "zh/monitoring/sentry", "zh/monitoring/logs"]
+    },
+    {
+      "group": "部署",
+      "version": "中文",
+      "pages": [
+        "zh/deployment/overview",
+        "zh/deployment/vercel",
+        "zh/deployment/docker",
+        "zh/deployment/production-checklist"
+      ]
+    },
+    {
+      "group": "配置",
+      "version": "中文",
+      "pages": [
+        "zh/configuration/overview",
+        "zh/configuration/environment-variables",
+        "zh/configuration/feature-flags"
+      ]
+    },
+    {
+      "group": "测试",
+      "version": "中文",
+      "pages": ["zh/testing/overview"]
+    },
+    {
+      "group": "定制化",
+      "version": "中文",
+      "pages": [
+        "zh/customization/overview",
+        "zh/customization/theming",
+        "zh/customization/dashboard",
+        "zh/customization/onboarding"
+      ]
+    },
+    {
+      "group": "SEO 优化",
+      "version": "中文",
+      "pages": ["zh/seo/overview", "zh/seo/meta-tags", "zh/seo/sitemap"]
+    },
+    {
+      "group": "实战指南",
+      "version": "中文",
+      "pages": ["zh/recipes/overview", "zh/recipes/build-a-feature"]
+    },
+    {
+      "group": "故障排除",
+      "version": "中文",
+      "pages": ["zh/troubleshooting/overview", "zh/troubleshooting/common-errors"]
     },
     {
       "group": "集成",

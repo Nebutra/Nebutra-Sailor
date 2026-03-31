@@ -1,0 +1,121 @@
+---
+title: Configuration Overview
+description: How Nebutra-Sailor manages runtime configuration — validation at startup, three categories of variables, and where to set them per environment.
+---
+
+## How configuration works
+
+Nebutra-Sailor validates every environment variable at application startup through the `@nebutra/config` package. If a **required** variable is missing or malformed, the process exits immediately with a clear error message that names the offending variable — there is no silent fallback.
+
+```
+Error: [config] Missing required environment variable: DATABASE_URL
+  at validateConfig (packages/config/src/index.ts:42)
+```
+
+This fail-fast pattern means broken deployments surface in seconds rather than producing runtime errors hours later in production.
+
+The validation source of truth lives at `packages/config/src/index.ts`. Every app imports from this package, so config changes propagate to all apps automatically.
+
+## Three categories of variables
+
+<Tabs>
+  <Tab title="Required">
+    The application **will not start** without these variables. They cover core infrastructure: the database connection, authentication provider, payment processor, and transactional email.
+
+    See [Environment Variables](/configuration/environment-variables) for the complete list.
+  </Tab>
+  <Tab title="Optional">
+    These variables have sensible defaults that work for local development. In production you should override them with real service credentials.
+
+    Examples include storage provider selection, AI model keys, Redis URL, and analytics tokens.
+  </Tab>
+  <Tab title="Feature flags">
+    Boolean toggles (e.g., `FEATURE_AI_CHAT=true`) that enable or disable entire product features without a code change. Each flag defaults to `false` if not set.
+
+    See [Feature Flags](/configuration/feature-flags) for the complete list.
+  </Tab>
+</Tabs>
+
+## Where to set variables
+
+<Steps>
+  <Step title="Local development — .env.local">
+    Create a `.env.local` file in the repo root (or per-app). This file is gitignored by default.
+
+    ```bash
+    cp .env.example .env.local
+    # Fill in your values
+    ```
+
+    <Warning>
+      Never commit `.env`, `.env.local`, or any file containing real secrets to git. The repo `.gitignore` excludes these files, but double-check before every commit.
+    </Warning>
+  </Step>
+  <Step title="Preview deployments — Vercel dashboard">
+    Open your Vercel project → **Settings** → **Environment Variables**. Set variables for the **Preview** environment. Vercel injects them automatically into every preview deployment.
+  </Step>
+  <Step title="Production — Vercel dashboard">
+    Same location as above, but select the **Production** environment. Production variables are isolated from preview and development environments.
+
+    <Tip>
+      Use Vercel's environment inheritance: set a variable once on **All Environments**, then override only the value that differs per environment. This minimises duplication.
+    </Tip>
+  </Step>
+  <Step title="Self-hosted / Docker">
+    Pass variables through your Docker Compose env file or Kubernetes Secret:
+
+    ```yaml docker-compose.yml
+    services:
+      web:
+        env_file:
+          - .env.production
+    ```
+
+    Or inject them directly:
+
+    ```bash
+    docker run --env-file .env.production nebutra/web:latest
+    ```
+  </Step>
+</Steps>
+
+## Generating secrets
+
+For secrets that require a cryptographically random value (e.g., `CLERK_WEBHOOK_SECRET`, signing keys):
+
+```bash
+openssl rand -base64 32
+```
+
+Never reuse the same secret across environments.
+
+## Vercel environment inheritance
+
+Vercel evaluates environment variables in this priority order:
+
+1. **Production** — only on `main` branch deployments
+2. **Preview** — on all branch deployments that are not `main`
+3. **Development** — when running `vercel dev` locally
+
+A variable defined on **All Environments** applies to all three unless a more specific environment overrides it.
+
+<Info>
+  Variables prefixed with `NEXT_PUBLIC_` are embedded into the client bundle at build time. They are visible to end users. Never put secrets in `NEXT_PUBLIC_` variables.
+</Info>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Environment Variables" icon="key" href="/configuration/environment-variables">
+    Full reference table of every variable name, its requirement level, default value, and purpose.
+  </Card>
+  <Card title="Feature Flags" icon="toggle-on" href="/configuration/feature-flags">
+    Enable and disable product features per environment without a code change.
+  </Card>
+  <Card title="Deployment" icon="rocket" href="/deployment/overview">
+    How to deploy Nebutra-Sailor to Vercel, Railway, and self-hosted Docker.
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/troubleshooting/overview">
+    Common startup errors and how to resolve them.
+  </Card>
+</CardGroup>

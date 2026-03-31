@@ -1,0 +1,284 @@
+---
+title: Embeddings
+description: Generate vector embeddings for semantic search and RAG — pgvector storage, similarity queries, and batch processing.
+---
+
+## What are embeddings?
+
+Embeddings are numerical vector representations of text. Two pieces of text with similar meaning will have vectors that are close together in vector space, enabling:
+
+- **Semantic search** — find documents by meaning, not just keywords
+- **RAG (Retrieval-Augmented Generation)** — inject relevant context into LLM prompts
+- **Duplicate detection** — find near-identical content
+- **Recommendation** — suggest similar items based on content
+
+Nebutra stores embeddings in PostgreSQL using the **pgvector** extension, so they live alongside your relational data with no additional infrastructure.
+
+## Setup
+
+<Steps>
+  <Step title="Set environment variables">
+    ```bash
+    OPENAI_API_KEY=""
+
+    # Optional: override default embedding model
+    AI_EMBEDDING_MODEL="text-embedding-3-small"
+    ```
+  </Step>
+
+  <Step title="Enable the feature flag">
+    ```typescript
+    import { setFeatureFlag } from "@nebutra/preset";
+
+    await setFeatureFlag("org_123", "ai.embeddings", true);
+    ```
+  </Step>
+
+  <Step title="Run the pgvector migration">
+    The Nebutra database schema already includes an `embeddings` table with a `vector` column. If you are setting up from scratch, ensure pgvector is enabled:
+
+    ```sql
+    CREATE EXTENSION IF NOT EXISTS vector;
+    ```
+
+    Then run the Prisma migration:
+
+    ```bash
+    pnpm --filter @nebutra/db migrate deploy
+    ```
+  </Step>
+</Steps>
+
+## Generating embeddings
+
+### Via the API endpoint
+
+`POST /api/v1/ai/embeddings`
+
+```bash
+curl -X POST https://api.yourdomain.com/api/v1/ai/embeddings \
+  -H "Authorization: Bearer nbk_live_org123_xxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "input": "How do I reset my password?",
+    "model": "text-embedding-3-small"
+  }'
+```
+
+Response:
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "object": "embedding",
+      "index": 0,
+      "embedding": [0.0023064255, -0.009327292, ...]
+    }
+  ],
+  "model": "text-embedding-3-small",
+  "usage": {
+    "prompt_tokens": 8,
+    "total_tokens": 8
+  }
+}
+```
+
+### Via `@nebutra/ai-sdk` (server-side)
+
+```typescript
+import { embed } from "@nebutra/ai-sdk";
+
+const { embedding } = await embed({
+  model: "text-embedding-3-small",
+  value: "How do I reset my password?",
+  tenantId,
+});
+
+// embedding is a Float32Array / number[]
+console.log(embedding.length); // 1536
+```
+
+## Storing embeddings in pgvector
+
+After generating an embedding, store it alongside the source content:
+
+```typescript
+import { embed } from "@nebutra/ai-sdk";
+import { prisma } from "@/lib/db";
+
+async function indexDocument(content: string, tenantId: string) {
+  const { embedding } = await embed({
+    model: "text-embedding-3-small",
+    value: content,
+    tenantId,
+  });
+
+  await prisma.embedding.create({
+    data: {
+      content,
+      embedding,      // pgvector stores this as a vector column
+      tenantId,
+      createdAt: new Date(),
+    },
+  });
+}
+```
+
+<Warning>
+The embedding dimension must match when querying. If you index with `text-embedding-3-small` (1536 dims), you must query with the same model. Switching models requires re-indexing all documents.
+</Warning>
+
+## Similarity search
+
+Find the most semantically similar documents to a query:
+
+```typescript
+import { embed } from "@nebutra/ai-sdk";
+import { prisma } from "@/lib/db";
+
+async function semanticSearch(query: string, tenantId: string, topK = 5) {
+  // 1. Embed the query
+  const { embedding } = await embed({
+    model: "text-embedding-3-small",
+    value: query,
+    tenantId,
+  });
+
+  // 2. Search using cosine similarity (<=> operator in pgvector)
+  const results = await prisma.$queryRaw<Array<{ id: string; content: string; similarity: number }>>`
+    SELECT id, content, 1 - (embedding <=> ${embedding}::vector) AS similarity
+    FROM embeddings
+    WHERE tenant_id = ${tenantId}
+    ORDER BY embedding <=> ${embedding}::vector
+    LIMIT ${topK}
+  `;
+
+  return results;
+}
+```
+
+### pgvector distance operators
+
+| Operator | Distance metric | Use for |
+|----------|----------------|---------|
+| `<=>` | Cosine distance | Text similarity (recommended) |
+| `<->` | Euclidean (L2) | Geometry, image features |
+| `<#>` | Inner product (negative) | Normalized vectors |
+
+For most text use cases, cosine distance (`<=>`) gives the best results.
+
+## Batch embedding
+
+Embed multiple texts in a single API call to reduce latency and token overhead:
+
+```typescript
+import { embedMany } from "@nebutra/ai-sdk";
+
+const texts = [
+  "How do I reset my password?",
+  "Where can I update my billing info?",
+  "How do I invite team members?",
+];
+
+const { embeddings } = await embedMany({
+  model: "text-embedding-3-small",
+  values: texts,
+  tenantId,
+});
+
+// embeddings is an array, one vector per input text
+for (let i = 0; i < texts.length; i++) {
+  await prisma.embedding.create({
+    data: { content: texts[i], embedding: embeddings[i], tenantId },
+  });
+}
+```
+
+<Note>
+Batch embedding is significantly more efficient than calling `embed()` in a loop. Use `embedMany()` whenever indexing more than one document at a time.
+</Note>
+
+## RAG pattern
+
+Use embeddings to retrieve relevant context before calling the chat API:
+
+```typescript
+import { embed, generateText } from "@nebutra/ai-sdk";
+
+async function ragQuery(userQuestion: string, tenantId: string) {
+  // 1. Retrieve relevant documents
+  const { embedding } = await embed({
+    model: "text-embedding-3-small",
+    value: userQuestion,
+    tenantId,
+  });
+
+  const docs = await prisma.$queryRaw<Array<{ content: string }>>`
+    SELECT content
+    FROM embeddings
+    WHERE tenant_id = ${tenantId}
+    ORDER BY embedding <=> ${embedding}::vector
+    LIMIT 3
+  `;
+
+  // 2. Build context string
+  const context = docs.map((d) => d.content).join("\n\n---\n\n");
+
+  // 3. Generate answer with context injected
+  const { text } = await generateText({
+    model: "gpt-4o-mini",
+    prompt: `Answer the question using ONLY the context below.
+
+Context:
+${context}
+
+Question: ${userQuestion}`,
+    tenantId,
+  });
+
+  return text;
+}
+```
+
+## Creating a vector index
+
+For large embedding tables, add an IVFFlat or HNSW index to speed up similarity searches:
+
+```sql
+-- HNSW index (recommended for most cases — fast build, excellent recall)
+CREATE INDEX ON embeddings USING hnsw (embedding vector_cosine_ops);
+
+-- IVFFlat index (good for very large datasets, tune lists to sqrt(row count))
+CREATE INDEX ON embeddings USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+```
+
+<Warning>
+TODO: Document the recommended index type and parameters for Nebutra's managed database tier once benchmarks are complete.
+</Warning>
+
+## Model dimensions reference
+
+| Model | Dimensions | Relative cost | Notes |
+|-------|-----------|---------------|-------|
+| `text-embedding-3-small` | 1536 | Low | Default, good balance |
+| `text-embedding-3-large` | 3072 | Medium | Higher accuracy |
+| `text-embedding-ada-002` | 1536 | Low | Legacy, use 3-small instead |
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="AI Overview" icon="sparkles" href="/ai/overview">
+    Supported models, feature flags, and token quotas.
+  </Card>
+  <Card title="Chatbot" icon="message-bot" href="/ai/chatbot">
+    Use embeddings with RAG to ground chatbot responses.
+  </Card>
+  <Card title="Database" icon="database" href="/database/overview">
+    pgvector setup and Prisma schema reference.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/ai/embeddings">
+    Full OpenAPI spec for the embeddings endpoint.
+  </Card>
+</CardGroup>

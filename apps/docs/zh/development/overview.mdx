@@ -1,0 +1,113 @@
+---
+title: 开发环境概览
+description: Nebutra-Sailor 单体仓库简介 — 每个应用的功能介绍、工作区组织结构，以及如何开始贡献代码。
+---
+
+## 什么是 Nebutra-Sailor？
+
+Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形式提供完整的 AI 原生 SaaS 产品。它包含 7 个可独立部署的应用和 20+ 个共享包，从头到尾均有完整类型定义，共享同一套设计系统、API 契约和运行时 Token 系统。
+
+该仓库是 `nebutra.com`、`app.nebutra.com` 和 `api.nebutra.com` 上运行的所有内容的唯一真实来源。
+
+## 应用一览
+
+| 应用 | 端口 | 用途 | 框架 |
+|-----|------|------|------|
+| `apps/web` | 3000 | 已认证的 SaaS 控制台 | Next.js 16 + Clerk |
+| `apps/api-gateway` | 3001 | REST API — 认证、RBAC、计费、AI 代理 | Hono + OpenAPI |
+| `apps/landing-page` | 3002 | 公开营销网站（7 种语言） | Next.js 16 + next-intl |
+| `apps/design-docs` | 3004 | 内部设计系统文档 | Next.js 16 + Fumadocs |
+| `apps/storybook` | 6006 | 组件库演示平台 | Storybook 8.x |
+| `apps/studio` | 3333 | 内容管理 | Sanity Studio v5 |
+| `apps/docs` | — | 公开产品文档（本站） | Mintlify |
+
+## 前置条件
+
+在运行单体仓库之前，您需要在本机安装以下工具。
+
+| 工具 | 最低版本 | 用途 |
+|------|----------|------|
+| Node.js | 22.x | 所有应用和工具链的运行时 |
+| pnpm | 10.32+ | Workspace 包管理器 |
+| Docker | 24+ | 本地 PostgreSQL、Redis 和 ClickHouse |
+| Git | 2.40+ | 源代码管理 |
+
+<Note>
+  本仓库使用 pnpm workspaces。运行 `npm install` 或 `yarn install` 会产生错误结果，不受支持。
+</Note>
+
+## 快速开始
+
+<Steps>
+  <Step title="克隆仓库">
+    ```bash
+    git clone https://github.com/nebutra/nebutra-sailor.git
+    cd nebutra-sailor
+    ```
+  </Step>
+  <Step title="安装依赖">
+    ```bash
+    pnpm install
+    ```
+  </Step>
+  <Step title="启动基础设施服务">
+    ```bash
+    pnpm infra:up
+    ```
+    此命令通过 Docker Compose 启动 PostgreSQL 16、Redis 7 和 ClickHouse 24。
+  </Step>
+  <Step title="配置环境变量">
+    复制示例环境变量文件并填写您的密钥：
+    ```bash
+    cp apps/web/.env.example apps/web/.env.local
+    cp apps/api-gateway/.env.example apps/api-gateway/.env.local
+    cp apps/landing-page/.env.example apps/landing-page/.env.local
+    ```
+  </Step>
+  <Step title="初始化数据库">
+    ```bash
+    pnpm db:generate   # 生成 Prisma 客户端
+    pnpm db:migrate    # 执行所有待执行的迁移
+    pnpm db:seed       # 填充开发测试数据
+    ```
+  </Step>
+  <Step title="启动开发服务器">
+    ```bash
+    pnpm dev           # 并行启动所有应用
+    ```
+    或者仅启动您需要的部分：
+    ```bash
+    pnpm dev:dashboard   # web (3000) + api-gateway (3001)
+    pnpm dev:marketing   # landing-page (3002) + studio (3333)
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  如需了解完整的环境变量说明、常见问题和端口分配，请参阅[本地开发](/zh/development/local-dev)指南。
+</Tip>
+
+## 关键约定
+
+- **包管理器：** pnpm 10.32+，使用 workspaces。请始终在仓库根目录运行 `pnpm`。
+- **Linter + 格式化：** Biome（替代 ESLint + Prettier）。运行 `pnpm lint:fix` 自动修复。
+- **类型检查：** `pnpm typecheck` 通过 Turbo 在所有包中运行 `tsc --noEmit`。
+- **测试：** 单元测试使用 Vitest，E2E 测试使用 Playwright。运行 `pnpm test` 和 `pnpm e2e`。
+- **构建系统：** Turborepo，支持 Vercel Remote Cache。任务定义在 `turbo.json` 中。
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="项目结构" icon="folder-tree" href="/zh/development/project-structure">
+    目录树注释说明和文件命名约定。
+  </Card>
+  <Card title="本地开发" icon="laptop" href="/zh/development/local-dev">
+    包含所有环境变量文档的详细配置指南。
+  </Card>
+  <Card title="编辑器配置" icon="pen-tool" href="/zh/development/editor-setup">
+    推荐的 VS Code 扩展和 Biome 配置。
+  </Card>
+  <Card title="更新升级" icon="arrows-rotate" href="/zh/development/updating">
+    如何拉取上游更改并重新运行代码生成器。
+  </Card>
+</CardGroup>

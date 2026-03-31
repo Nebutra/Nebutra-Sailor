@@ -1,0 +1,272 @@
+---
+title: Streaming
+description: Real-time AI responses via Server-Sent Events — server setup, client consumption, Next.js App Router integration, and abort handling.
+---
+
+## How streaming works
+
+When `stream: true` is set (the default), the API gateway returns a **Server-Sent Events (SSE)** response instead of waiting for the full model output. The client receives text chunks as they are generated, enabling real-time typewriter-style UIs.
+
+```
+Client                    API Gateway              OpenAI
+  │                            │                     │
+  ├──── POST /api/v1/ai/chat ──►│                     │
+  │                            ├── streamText() ─────►│
+  │                            │◄── chunk 1 ──────────┤
+  │◄─── data: chunk 1 ─────────┤                     │
+  │                            │◄── chunk 2 ──────────┤
+  │◄─── data: chunk 2 ─────────┤                     │
+  │                            │◄── [DONE] ───────────┤
+  │◄─── data: [DONE] ──────────┤                     │
+```
+
+## Server: how `streamText` works
+
+The `streamText` function from `@nebutra/ai-sdk` returns a `ReadableStream` that the Hono API gateway pipes directly into the SSE response:
+
+```typescript
+import { streamText } from "@nebutra/ai-sdk";
+import { getCurrentTenant } from "@nebutra/tenant";
+import { stream } from "hono/streaming";
+
+// Inside the Hono route handler
+app.post("/api/v1/ai/chat", async (c) => {
+  const { messages, model, systemPrompt } = await c.req.json();
+  const { tenantId } = getCurrentTenant();
+
+  const result = await streamText({
+    model: model ?? process.env.AI_DEFAULT_MODEL ?? "gpt-4o-mini",
+    messages,
+    system: systemPrompt,
+    tenantId,
+  });
+
+  return stream(c, async (s) => {
+    for await (const chunk of result.textStream) {
+      await s.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
+    }
+    await s.write("data: [DONE]\n\n");
+  });
+});
+```
+
+The SSE response includes these headers:
+
+```
+Content-Type: text/event-stream
+Cache-Control: no-cache
+Connection: keep-alive
+X-Accel-Buffering: no
+```
+
+## SSE event format
+
+Each chunk is a standard SSE event:
+
+```
+data: {"choices":[{"delta":{"role":"assistant"},"index":0,"finish_reason":null}]}
+
+data: {"choices":[{"delta":{"content":"Hello"},"index":0,"finish_reason":null}]}
+
+data: {"choices":[{"delta":{"content":" there"},"index":0,"finish_reason":null}]}
+
+data: {"choices":[{"delta":{},"index":0,"finish_reason":"stop"}]}
+
+data: [DONE]
+```
+
+The final event is always `data: [DONE]` — your client must check for this to know the stream is complete.
+
+## Client: consuming with `fetch`
+
+Use a `ReadableStream` reader to consume the SSE response in vanilla JavaScript or any framework:
+
+```typescript
+async function streamChat(messages: Message[], apiKey: string) {
+  const response = await fetch("/api/v1/ai/chat", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ messages, stream: true }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Chat request failed: ${response.status}`);
+  }
+
+  const reader = response.body!.getReader();
+  const decoder = new TextDecoder();
+  let fullText = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    const chunk = decoder.decode(value, { stream: true });
+    const lines = chunk.split("\n\n").filter(Boolean);
+
+    for (const line of lines) {
+      if (line === "data: [DONE]") return fullText;
+      if (!line.startsWith("data: ")) continue;
+
+      const json = JSON.parse(line.slice(6));
+      const content = json.choices?.[0]?.delta?.content ?? "";
+      fullText += content;
+
+      // Update UI here, e.g. set state
+      onChunk(content);
+    }
+  }
+
+  return fullText;
+}
+```
+
+## Client: consuming with `EventSource`
+
+For simpler one-shot streams where you don't need to send a request body, `EventSource` is an alternative:
+
+<Warning>
+`EventSource` only supports GET requests and cannot send a JSON body. Use the `fetch` + `ReadableStream` approach for chat endpoints that require a POST body.
+</Warning>
+
+## Next.js App Router: `useChat` hook
+
+The Vercel AI SDK's `useChat` hook integrates directly with Nebutra's streaming endpoint. Set `api` to point at the Nebutra API gateway:
+
+```typescript
+"use client";
+
+import { useChat } from "ai/react";
+
+export function ChatWidget() {
+  const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =
+    useChat({
+      api: "/api/v1/ai/chat",        // proxied through your Next.js route
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+      },
+      onError: (error) => {
+        console.error("Chat error:", error);
+      },
+    });
+
+  return (
+    <div>
+      <div>
+        {messages.map((m) => (
+          <div key={m.id}>
+            <strong>{m.role}:</strong> {m.content}
+          </div>
+        ))}
+        {isLoading && <span>Thinking…</span>}
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <input value={input} onChange={handleInputChange} placeholder="Ask anything…" />
+        <button type="submit" disabled={isLoading}>Send</button>
+        {isLoading && (
+          <button type="button" onClick={stop}>Stop</button>
+        )}
+      </form>
+    </div>
+  );
+}
+```
+
+<Note>
+Do not expose raw API keys in `NEXT_PUBLIC_*` variables in production. Instead, create a Next.js Route Handler that proxies requests server-side and attaches the API key from a server-only environment variable.
+</Note>
+
+### Next.js Route Handler proxy
+
+```typescript
+// app/api/chat/route.ts
+import { NextRequest } from "next/server";
+
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+
+  const upstream = await fetch(
+    `${process.env.API_GATEWAY_URL}/api/v1/ai/chat`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.NEBUTRA_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
+
+  // Pass the SSE stream straight through to the client
+  return new Response(upstream.body, {
+    headers: {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+    },
+  });
+}
+```
+
+Then point `useChat` at `/api/chat` instead.
+
+## Error handling mid-stream
+
+If the model provider returns an error after the stream has already started, the gateway emits an error event before closing:
+
+```
+data: {"error":{"code":"upstream_error","message":"OpenAI returned 503"}}
+
+data: [DONE]
+```
+
+Handle this in your reader:
+
+```typescript
+const json = JSON.parse(line.slice(6));
+if (json.error) {
+  throw new Error(json.error.message);
+}
+```
+
+## Aborting a stream
+
+Use `AbortController` to cancel an in-flight request. The gateway closes the upstream connection when it detects the client has disconnected.
+
+```typescript
+const controller = new AbortController();
+
+const response = await fetch("/api/v1/ai/chat", {
+  method: "POST",
+  headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+  body: JSON.stringify({ messages }),
+  signal: controller.signal,  // attach the signal
+});
+
+// Cancel from a button click or component unmount
+function cancelStream() {
+  controller.abort();
+}
+```
+
+With `useChat`, call the `stop()` function returned by the hook — it handles abort internally.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Chatbot" icon="message-bot" href="/ai/chatbot">
+    Full chatbot setup including system prompts and conversation history.
+  </Card>
+  <Card title="Embeddings" icon="vector-square" href="/ai/embeddings">
+    Non-streaming vector embeddings for semantic search.
+  </Card>
+  <Card title="AI Overview" icon="sparkles" href="/ai/overview">
+    Supported models, feature flags, and quotas.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/ai/chat">
+    Full OpenAPI spec for the chat endpoint.
+  </Card>
+</CardGroup>

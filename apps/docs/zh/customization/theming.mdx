@@ -1,0 +1,312 @@
+---
+title: 主题配置
+description: 更改品牌颜色，配置明暗模式，切换多主题预设，以及创建自定义 oklch 主题。
+---
+
+Nebutra-Sailor 的主题系统由三个独立的层级组合而成：
+
+| 层级 | 包 | 职责 |
+|------|----|------|
+| **运行时 Token** | `@nebutra/tokens` | CSS 变量——颜色、间距、字体排版 |
+| **明暗模式** | `@nebutra/tokens`（next-themes） | `ThemeProvider` + `useTheme` |
+| **多主题预设** | `@nebutra/theme` | 6 个 oklch 预设，通过 `data-theme` 属性应用 |
+
+## 编辑 CSS 变量
+
+所有设计 token 存储在单一文件中，可直接编辑：
+
+```
+packages/tokens/styles.css
+```
+
+### 关键 Token 参考
+
+<Tabs>
+  <Tab title="品牌色">
+    ```css
+    :root {
+      --brand-primary:   var(--blue-9);    /* 主要 CTA、链接、图表 */
+      --brand-accent:    var(--cyan-9);    /* 强调色、成功高亮 */
+      --brand-tertiary:  #8b5cf6;          /* 基础设施、第三层数据可视化 */
+      --brand-gradient:  135deg, var(--blue-9) 0%, var(--cyan-9) 100%;
+    }
+    ```
+  </Tab>
+  <Tab title="中性色阶">
+    ```css
+    :root {
+      --neutral-1:  #ffffff;   /* 应用背景 */
+      --neutral-2:  #f8fafc;   /* 微妙背景 */
+      --neutral-7:  #d1d5db;   /* 默认边框 */
+      --neutral-11: #374151;   /* 次要文本 */
+      --neutral-12: #0a0a0a;   /* 主要文本 */
+    }
+    ```
+  </Tab>
+  <Tab title="状态颜色">
+    ```css
+    :root {
+      --status-danger:  #ef4444;              /* 错误、重大变更 */
+      --status-warning: #f59e0b;              /* 改进项、待处理 */
+      --status-success: #10b981;              /* 修复、已完成 */
+      --status-info:    var(--brand-primary); /* 信息提示 */
+    }
+    ```
+  </Tab>
+  <Tab title="蓝色与青色色阶">
+    ```css
+    :root {
+      /* 12 阶 Radix 风格蓝色色阶 */
+      --blue-1:  #eff6ff;
+      --blue-9:  #0033FE;   /* ← 品牌主色 */
+      --blue-12: #0a1628;
+
+      /* 12 阶青色色阶 */
+      --cyan-1:  #ecfeff;
+      --cyan-9:  #0BF1C3;   /* ← 品牌强调色 */
+      --cyan-12: #031f19;
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## 使用调色板生成器重新品牌化
+
+更改整个品牌调色板最快的方式是使用生成器脚本。它会重写 `packages/tokens/styles.css` 中的所有 token 别名：
+
+<Steps>
+  <Step title="运行调色板生成器">
+    ```bash
+    node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
+    ```
+    为 `--primary`（主品牌色）和 `--secondary`（强调色）传入任意有效的十六进制颜色值。
+  </Step>
+  <Step title="重启开发服务器">
+    ```bash
+    pnpm --filter @nebutra/landing-page dev
+    # 或
+    pnpm --filter @nebutra/web dev
+    ```
+    热重载并不总能处理 `styles.css` 的变更；完整重启更为稳妥。
+  </Step>
+  <Step title="在 Storybook 中验证">
+    ```bash
+    pnpm --filter @nebutra/storybook dev
+    ```
+    导航至 **Design Tokens** → **Brand Colors**，确认新调色板在所有色阶中均正确渲染。
+  </Step>
+</Steps>
+
+### 手动重新品牌化示例
+
+如果您更倾向于手动编辑 token：
+
+```css
+/* packages/tokens/styles.css */
+:root {
+  --brand-primary:   #7C3AED;   /* 紫色 */
+  --brand-accent:    #F59E0B;   /* 琥珀色 */
+  --brand-gradient:  135deg, #7C3AED 0%, #F59E0B 100%;
+
+  /* 同时更新源色阶 */
+  --blue-9:  #7C3AED;
+  --cyan-9:  #F59E0B;
+}
+```
+
+<Warning>
+  编辑中性色阶时，务必同时更新明色模式（`:root`）和暗色模式（`.dark` / `[data-theme]`）两个代码块。跳过暗色模式代码块会导致深色模式下的对比度问题。
+</Warning>
+
+## 明暗模式
+
+明暗模式由 `@nebutra/tokens` 重新导出的 `next-themes` 管理。
+
+### 配置
+
+`ThemeProvider` 已在 `apps/web/src/app/layout.tsx` 和 `apps/landing-page/src/app/layout.tsx` 中配置完毕，无需额外设置。
+
+```tsx
+// apps/web/src/app/layout.tsx
+import { ThemeProvider } from "@nebutra/tokens";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="zh" suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### 以编程方式切换主题
+
+```tsx
+"use client";
+import { useTheme } from "@nebutra/tokens";
+
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      aria-label="切换深色模式"
+      className="rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]"
+    >
+      {theme === "dark" ? "浅色" : "深色"}
+    </button>
+  );
+}
+```
+
+### 已解析的主题
+
+当用户未明确选择主题时，`useTheme` 返回 `"system"`。使用 `resolvedTheme` 获取实际计算值：
+
+```tsx
+const { resolvedTheme } = useTheme();
+// → "light" | "dark"
+```
+
+## 多主题预设
+
+`@nebutra/theme` 提供 6 个基于 oklch（感知均匀色彩空间）构建的即用主题预设。每个预设通过 `<html>` 上的 `data-theme` 属性应用完整的 token 覆盖。
+
+| 预设 | 风格特点 |
+|------|---------|
+| `default` | 蓝/青——Nebutra 品牌色 |
+| `neon` | 深色背景上的高对比电光强调色 |
+| `gradient` | 渐变丰富，中色调鲜艳 |
+| `dark-dense` | 信息密度高，色调低饱和 |
+| `minimal` | 接近单色，留白充足 |
+| `vibrant` | 高饱和，活泼，面向消费者 |
+
+### 切换预设
+
+```tsx
+// 静态方式——在 layout 中设置
+<html data-theme="neon">
+
+// 动态方式——用户偏好存储在 cookie 或 localStorage 中
+"use client";
+import { useState } from "react";
+
+const PRESETS = ["default", "neon", "gradient", "dark-dense", "minimal", "vibrant"] as const;
+
+export function ThemePresetSelector() {
+  const [preset, setPreset] = useState<string>("default");
+
+  function applyPreset(name: string) {
+    document.documentElement.setAttribute("data-theme", name);
+    setPreset(name);
+  }
+
+  return (
+    <div className="flex gap-2">
+      {PRESETS.map((name) => (
+        <button
+          key={name}
+          type="button"
+          onClick={() => applyPreset(name)}
+          className={`rounded px-3 py-1 text-sm ${preset === name ? "bg-[var(--brand-primary)] text-white" : "bg-neutral-2"}`}
+        >
+          {name}
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+## 创建自定义主题预设
+
+<Steps>
+  <Step title="打开主题文件">
+    ```
+    packages/theme/themes.css
+    ```
+  </Step>
+  <Step title="添加新的 data-theme 代码块">
+    复制一个现有的预设代码块并修改 oklch 值。主题名称必须为小写短横线命名。
+
+    ```css
+    /* packages/theme/themes.css */
+    [data-theme="forest"] {
+      --brand-primary:   oklch(45% 0.18 145);   /* 森林绿 */
+      --brand-accent:    oklch(75% 0.15 80);    /* 暖金色 */
+      --brand-gradient:  135deg,
+        oklch(45% 0.18 145) 0%,
+        oklch(75% 0.15 80) 100%;
+
+      --neutral-1:  oklch(99% 0.005 145);
+      --neutral-12: oklch(12% 0.02 145);
+    }
+    ```
+  </Step>
+  <Step title="应用并验证">
+    ```tsx
+    <html data-theme="forest">
+    ```
+
+    打开 Storybook 并检查 **Design Tokens** 版块，验证对比度比率符合 WCAG AA 标准。
+  </Step>
+</Steps>
+
+<Note>
+  oklch 值的格式为 `oklch(亮度% 色度 色相)`。可使用 [oklch.com](https://oklch.com) 等工具选取感知均匀的颜色。
+</Note>
+
+## 字体排版
+
+字体通过 `next/font` 加载并注入为 CSS 变量，无外部字体请求。
+
+```css
+/* packages/tokens/styles.css */
+:root {
+  --font-geist-sans: "Geist", system-ui, sans-serif;   /* UI 文本 */
+  --font-geist-mono: "Geist Mono", monospace;           /* 代码、指标 */
+}
+```
+
+如需更换字体族，请更新 `apps/web/src/app/layout.tsx` 和 `apps/landing-page/src/app/layout.tsx` 中的 `next/font` 配置，然后同步更新 `packages/tokens/styles.css` 中的 CSS 变量备用字体。
+
+## Storybook Design Tokens 参考
+
+Storybook 的 **Design Tokens** 版块会直观渲染每个 token：
+
+```bash
+pnpm --filter @nebutra/storybook dev
+# → http://localhost:6006 → Design Tokens
+```
+
+可用版块：
+- 品牌颜色（蓝色 + 青色 12 阶色阶）
+- 语义调色板（中性色阶）
+- 品牌渐变
+- 状态颜色
+- 字体排版比例
+- 动效预设
+- 阴影/层级系统
+
+---
+
+<CardGroup cols={2}>
+  <Card title="定制概览" icon="sliders" href="/zh/customization/overview">
+    返回完整定制地图
+  </Card>
+  <Card title="仪表板" icon="layout-dashboard" href="/zh/customization/dashboard">
+    添加页面和自定义导航
+  </Card>
+  <Card title="引导流程" icon="route" href="/zh/customization/onboarding">
+    自定义新用户引导流程
+  </Card>
+  <Card title="Design Tokens（Storybook）" icon="palette" href="http://localhost:6006">
+    Token 视觉参考
+  </Card>
+</CardGroup>

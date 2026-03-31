@@ -1,0 +1,231 @@
+---
+title: Using the Database Client
+description: How to query PostgreSQL via the Prisma v7 client in server components, API routes, and multi-tenant contexts.
+---
+
+Nebutra exports a single, pre-configured Prisma client from `@nebutra/db`. Always import from this package — never instantiate `PrismaClient` directly in application code.
+
+```typescript packages/db/src/index.ts
+import { PrismaClient } from "@prisma/client";
+import { withAccelerate } from "@prisma/extension-accelerate";
+
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+
+export const db =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+  }).$extends(withAccelerate());
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+```
+
+## Server Component queries
+
+Fetch data directly in React Server Components. No API layer is needed for internal data access.
+
+```typescript apps/web/src/app/dashboard/projects/page.tsx
+import { db } from "@nebutra/db";
+
+export default async function ProjectsPage() {
+  const projects = await db.project.findMany({
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+      _count: { select: { members: true } },
+    },
+  });
+
+  return <ProjectList projects={projects} />;
+}
+```
+
+<Note>
+Server Components run on the server, so database access is safe. Never import `@nebutra/db` in Client Components (`"use client"` files) — the database credentials would be exposed to the browser.
+</Note>
+
+## Multi-tenant queries
+
+In a multi-tenant context, wrap the `db` client with `withRls` before querying. This activates PostgreSQL Row-Level Security and ensures queries are automatically scoped to the current tenant.
+
+```typescript apps/web/src/app/dashboard/projects/page.tsx
+import { db } from "@nebutra/db";
+import { getCurrentTenant, withRls } from "@nebutra/tenant";
+
+export default async function ProjectsPage() {
+  const tenant = getCurrentTenant();
+  const tenantDb = withRls(db, tenant.tenantId);
+
+  // Only returns projects belonging to the current tenant
+  const projects = await tenantDb.project.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
+  return <ProjectList projects={projects} />;
+}
+```
+
+<Warning>
+Always use `withRls(db, tenantId)` for any query that touches tenant-owned data. Querying without RLS will return data across ALL tenants.
+</Warning>
+
+## Client-side data fetching
+
+Client Components must never import `@nebutra/db`. Fetch data through your API routes instead:
+
+```typescript apps/web/src/hooks/use-projects.ts
+"use client";
+
+import { useEffect, useState } from "react";
+
+export function useProjects() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((res) => res.json())
+      .then((data) => {
+        setProjects(data.data);
+        setLoading(false);
+      });
+  }, []);
+
+  return { projects, loading };
+}
+```
+
+```typescript apps/web/src/app/api/projects/route.ts
+import { db } from "@nebutra/db";
+import { getCurrentTenant, withRls } from "@nebutra/tenant";
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  const tenant = getCurrentTenant();
+  const tenantDb = withRls(db, tenant.tenantId);
+
+  const projects = await tenantDb.project.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
+  return NextResponse.json({ success: true, data: projects });
+}
+```
+
+## Transactions
+
+Use Prisma interactive transactions when multiple writes must succeed or fail together:
+
+```typescript apps/api-gateway/src/routes/organizations.ts
+import { db } from "@nebutra/db";
+
+async function createOrganizationWithOwner(name: string, userId: string) {
+  return db.$transaction(async (tx) => {
+    const org = await tx.organization.create({
+      data: { name },
+    });
+
+    await tx.membership.create({
+      data: {
+        organizationId: org.id,
+        userId,
+        role: "OWNER",
+      },
+    });
+
+    await tx.auditLog.create({
+      data: {
+        organizationId: org.id,
+        action: "organization.created",
+        actorId: userId,
+      },
+    });
+
+    return org;
+  });
+}
+```
+
+## Error handling
+
+Prisma throws typed errors. Handle them explicitly to return meaningful responses:
+
+```typescript apps/api-gateway/src/lib/db-errors.ts
+import { Prisma } from "@prisma/client";
+
+export function handlePrismaError(error: unknown): never {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    switch (error.code) {
+      case "P2002":
+        // Unique constraint violation
+        throw new Error(`A record with this value already exists. Field: ${error.meta?.target}`);
+      case "P2025":
+        // Record not found
+        throw new Error("The requested record does not exist.");
+      case "P2003":
+        // Foreign key constraint failed
+        throw new Error("This operation references a record that does not exist.");
+      default:
+        throw new Error(`Database error: ${error.code}`);
+    }
+  }
+
+  if (error instanceof Prisma.PrismaClientValidationError) {
+    throw new Error("Invalid data provided to the database query.");
+  }
+
+  throw error;
+}
+```
+
+Common Prisma error codes:
+
+| Code | Meaning |
+|------|---------|
+| `P2002` | Unique constraint violation |
+| `P2003` | Foreign key constraint failed |
+| `P2025` | Record not found (`findUniqueOrThrow`, `update`, `delete`) |
+| `P2016` | Query interpretation error |
+| `P1001` | Cannot reach database server |
+| `P1002` | Database server timeout |
+
+## Typed queries
+
+Prisma v7 generates full TypeScript types for every model and query. Use the generated types directly:
+
+```typescript apps/web/src/types/project.ts
+import type { Prisma } from "@prisma/client";
+
+// Infer the return type of a specific query shape
+type ProjectWithCount = Prisma.ProjectGetPayload<{
+  include: {
+    _count: { select: { members: true } };
+  };
+}>;
+
+// Use in component props
+interface ProjectCardProps {
+  project: ProjectWithCount;
+}
+```
+
+<Tip>
+Use `Prisma.XxxGetPayload` to derive precise types from your query's `select` or `include` shape. This avoids maintaining manual interface definitions that can drift from the schema.
+</Tip>
+
+<CardGroup cols={2}>
+  <Card title="Row-Level Security" icon="shield" href="/database/rls">
+    How withRls enforces tenant isolation
+  </Card>
+  <Card title="Schema & Migrations" icon="database" href="/database/schema-migrations">
+    Editing models and running migrations
+  </Card>
+  <Card title="Multi-Tenancy" icon="building" href="/concepts/tenants">
+    Tenant context and AsyncLocalStorage
+  </Card>
+  <Card title="Prisma Studio" icon="table" href="/database/studio">
+    Browse and edit records visually
+  </Card>
+</CardGroup>

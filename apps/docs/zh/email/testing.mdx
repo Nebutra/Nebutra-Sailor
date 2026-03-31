@@ -1,0 +1,196 @@
+---
+title: 邮件测试
+description: 在本地预览邮件模板，使用 Resend 测试模式，以及为 @nebutra/email 编写 Vitest 渲染测试。
+---
+
+在邮件到达真实收件箱之前，应在三个层面进行测试：本地视觉预览、使用测试 API 密钥的安全投递，以及自动化渲染单元测试。
+
+<Warning>
+在测试或 CI 环境中绝不要向真实收件箱发送邮件。请使用预览服务器或 Resend 的测试 API 密钥。
+</Warning>
+
+## 本地预览服务器
+
+React Email 提供基于浏览器的预览，编辑模板时实时热重载。
+
+<Steps>
+  <Step title="启动预览服务器">
+    ```bash
+    pnpm --filter @nebutra/email dev
+    ```
+
+    预览服务器在 **http://localhost:3100** 启动。
+  </Step>
+
+  <Step title="浏览并检查模板">
+    左侧边栏列出所有已注册的模板。点击模板即可预览。
+
+    - **桌面/移动切换** — 检查响应式布局
+    - **HTML / 纯文本标签** — 验证两种渲染格式
+    - **源码视图** — 检查生成的 HTML
+  </Step>
+
+  <Step title="传入测试数据">
+    模板使用每个模板文件中定义的 `defaultProps` 进行默认数据渲染。如需使用自定义数据预览，编辑 `defaultProps` 导出：
+
+    ```typescript
+    // packages/email/src/templates/welcome.tsx
+
+    WelcomeEmail.defaultProps = {
+      userName: "张三",
+      orgName: "Acme Corp",
+      dashboardUrl: "https://app.nebutra.com/dashboard",
+    } satisfies WelcomeEmailProps;
+    ```
+  </Step>
+</Steps>
+
+## Resend 测试模式
+
+Resend 的测试 API 密钥（`re_test_...`）可接受 API 调用并在控制台记录日志，但不向真实收件箱投递。
+
+<Steps>
+  <Step title="获取测试 API 密钥">
+    在 Resend 控制台中，前往 **API 密钥 → 创建 API 密钥**，选择**测试**模式。密钥将以 `re_test_` 开头。
+  </Step>
+
+  <Step title="在本地环境设置测试密钥">
+    ```env
+    # .env.local — 不要提交此文件
+    RESEND_API_KEY=re_test_...
+    EMAIL_FROM=Nebutra <noreply@mail.nebutra.com>
+    ```
+  </Step>
+
+  <Step title="发送测试邮件">
+    使用你正常的应用流程触发邮件发送。邮件将出现在 Resend 控制台**日志**中并带有 `test` 标识，不会真正投递。
+
+    ```typescript
+    // 快速测试脚本 — 用 tsx 运行
+    // scripts/test-email.ts
+    import { getEmailProvider } from "@nebutra/email";
+
+    const email = await getEmailProvider();
+
+    await email.send({
+      to: "delivered@resend.dev", // Resend 提供的专用测试地址
+      template: "welcome",
+      data: {
+        userName: "测试用户",
+        orgName: "测试组织",
+        dashboardUrl: "https://app.nebutra.com/dashboard",
+      },
+    });
+
+    process.stdout.write("测试邮件已发送 — 请在 Resend 控制台查看\n");
+    ```
+
+    ```bash
+    npx tsx scripts/test-email.ts
+    ```
+
+    <Tip>
+      `delivered@resend.dev` 是 Resend 提供的测试地址，始终返回投递成功状态。
+    </Tip>
+  </Step>
+</Steps>
+
+## Vitest 渲染测试
+
+编写单元测试，验证模板能够无错误渲染并包含预期内容。
+
+<Steps>
+  <Step title="安装测试依赖">
+    ```bash
+    pnpm --filter @nebutra/email add -D vitest @vitejs/plugin-react @react-email/render
+    ```
+  </Step>
+
+  <Step title="编写渲染测试">
+    ```typescript
+    // packages/email/src/templates/welcome.test.tsx
+    import { render } from "@react-email/render";
+    import { describe, expect, it } from "vitest";
+    import { WelcomeEmail } from "./welcome";
+
+    describe("WelcomeEmail", () => {
+      const props = {
+        userName: "张三",
+        orgName: "Acme Corp",
+        dashboardUrl: "https://app.nebutra.com/dashboard",
+      };
+
+      it("渲染时不抛出异常", () => {
+        expect(() => render(<WelcomeEmail {...props} />)).not.toThrow();
+      });
+
+      it("包含用户名称", () => {
+        const html = render(<WelcomeEmail {...props} />);
+        expect(html).toContain("张三");
+      });
+
+      it("包含组织名称", () => {
+        const html = render(<WelcomeEmail {...props} />);
+        expect(html).toContain("Acme Corp");
+      });
+
+      it("包含控制台 URL", () => {
+        const html = render(<WelcomeEmail {...props} />);
+        expect(html).toContain("https://app.nebutra.com/dashboard");
+      });
+
+      it("渲染纯文本版本", () => {
+        const text = render(<WelcomeEmail {...props} />, { plainText: true });
+        expect(text).toContain("张三");
+        expect(text.length).toBeGreaterThan(0);
+      });
+    });
+    ```
+  </Step>
+
+  <Step title="运行测试">
+    ```bash
+    pnpm --filter @nebutra/email test
+    ```
+  </Step>
+</Steps>
+
+## 在 CI 中测试
+
+将邮件渲染测试加入 CI 流水线，在模板回归到达生产环境之前及时发现问题。CI 中不会发生真实的邮件投递 — 测试只是将模板渲染为 HTML 字符串。
+
+```yaml
+# .github/workflows/ci.yml（片段）
+- name: 测试邮件模板
+  run: pnpm --filter @nebutra/email test --run
+```
+
+<Note>
+CI 中不要设置 `RESEND_API_KEY`。模板渲染测试直接使用 `@react-email/render`，不调用 Resend API。
+</Note>
+
+## 上线前检查清单
+
+在第一次生产部署前，手动验证每个模板：
+
+- [ ] 所有六个模板渲染无错误（`pnpm --filter @nebutra/email test`）
+- [ ] 每个模板在预览服务器的桌面端和移动端视图下均显示正常
+- [ ] 在 Resend 中完成发件域名验证
+- [ ] `EMAIL_FROM` 地址与已验证域名匹配
+- [ ] 生产环境的 `RESEND_API_KEY` 使用生产密钥（非 `re_test_...`）
+- [ ] 每个模板至少在 Staging 环境完成过一次真实投递测试
+
+<CardGroup cols={2}>
+  <Card title="模板" icon="layout-template" href="/email/templates">
+    六个模板与必填数据字段
+  </Card>
+  <Card title="提供商" icon="server" href="/email/providers">
+    Resend 配置和域名验证
+  </Card>
+  <Card title="邮件概览" icon="mail" href="/email/overview">
+    架构与模板列表
+  </Card>
+  <Card title="指南" icon="book" href="/guides">
+    通用开发指南
+  </Card>
+</CardGroup>

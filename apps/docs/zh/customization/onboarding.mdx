@@ -1,0 +1,266 @@
+---
+title: 引导流程
+description: 添加、删除和重新排序引导步骤。自定义欢迎文案、各套餐的跳过逻辑，以及配置插图。
+---
+
+<Warning>
+  TODO: 引导流程部分尚未完全实现。**欢迎**和**创建组织**步骤已完成并可投入生产使用。**邀请团队**和**配置**步骤仍为存根——它们渲染占位 UI，但尚未持久化状态或触发下游操作。
+</Warning>
+
+引导向导位于 `apps/web/src/app/(onboarding)/`。它是一个由服务端操作和 URL 搜索参数驱动的多步骤流程，因此无需客户端状态管理即可工作。
+
+## 默认流程
+
+```
+欢迎 → 创建组织 → 邀请团队 → 配置 → 完成
+```
+
+每个步骤对应 `(onboarding)` 下的一个目录：
+
+```
+apps/web/src/app/(onboarding)/
+  layout.tsx                  ← 向导外壳（进度条、跳过链接）
+  welcome/
+    page.tsx                  ← ✅ 已完成
+  create-org/
+    page.tsx                  ← ✅ 已完成
+    actions.ts                ← 服务端操作：createOrganization()
+  invite-team/
+    page.tsx                  ← ⚠️  存根
+  configure/
+    page.tsx                  ← ⚠️  存根
+  done/
+    page.tsx                  ← ✅ 已完成
+```
+
+## 步骤追踪
+
+当前步骤作为搜索参数存储在 URL 中，并在服务端进行验证。用户无法跳转到尚未解锁的步骤。
+
+```
+/onboarding/welcome
+/onboarding/create-org
+/onboarding/invite-team?skip=false
+/onboarding/configure
+/onboarding/done
+```
+
+布局组件读取当前路径名来渲染进度指示器。每个步骤的服务端操作在成功时重定向到下一步骤的 URL。
+
+```typescript
+// 服务端操作模式示例
+// apps/web/src/app/(onboarding)/create-org/actions.ts
+"use server";
+import { redirect } from "next/navigation";
+import { requireAuth } from "@/lib/auth";
+
+export async function createOrganization(formData: FormData) {
+  const session = await requireAuth();
+  const name = formData.get("name") as string;
+
+  // ... 创建组织的逻辑
+
+  redirect("/onboarding/invite-team");
+}
+```
+
+## 添加新步骤
+
+<Steps>
+  <Step title="创建步骤目录和页面">
+    ```bash
+    mkdir -p apps/web/src/app/\(onboarding\)/my-step
+    ```
+
+    ```typescript
+    // apps/web/src/app/(onboarding)/my-step/page.tsx
+    import { requireAuth } from "@/lib/auth";
+    import { MyStepForm } from "./_components/my-step-form";
+
+    export default async function MyStepPage() {
+      await requireAuth();
+
+      return (
+        <div className="mx-auto max-w-lg space-y-6">
+          <div className="space-y-2 text-center">
+            <h1 className="text-2xl font-bold text-[var(--neutral-12)]">
+              步骤标题
+            </h1>
+            <p className="text-[var(--neutral-11)]">
+              关于此步骤功能的简要说明。
+            </p>
+          </div>
+          <MyStepForm />
+        </div>
+      );
+    }
+    ```
+  </Step>
+  <Step title="在步骤清单中注册该步骤">
+    ```typescript
+    // apps/web/src/app/(onboarding)/steps.ts
+    export const ONBOARDING_STEPS = [
+      { key: "welcome",      href: "/onboarding/welcome",      label: "欢迎" },
+      { key: "create-org",   href: "/onboarding/create-org",   label: "组织" },
+      { key: "my-step",      href: "/onboarding/my-step",      label: "我的步骤" },   // ← 在此添加
+      { key: "invite-team",  href: "/onboarding/invite-team",  label: "团队" },
+      { key: "configure",    href: "/onboarding/configure",    label: "配置" },
+      { key: "done",         href: "/onboarding/done",         label: "完成" },
+    ] as const;
+    ```
+    布局使用此清单渲染进度条并验证步骤转换。
+  </Step>
+  <Step title="更新上一步骤的服务端操作，使其重定向到此处">
+    找到当前重定向到您新步骤之后步骤的服务端操作，并更改其 `redirect()` 目标：
+
+    ```typescript
+    // 修改前
+    redirect("/onboarding/invite-team");
+
+    // 修改后（新步骤插入在 invite-team 之前）
+    redirect("/onboarding/my-step");
+    ```
+  </Step>
+  <Step title="更新您步骤的服务端操作，使其重定向到下一步骤">
+    ```typescript
+    // apps/web/src/app/(onboarding)/my-step/actions.ts
+    "use server";
+    import { redirect } from "next/navigation";
+
+    export async function completeMyStep(formData: FormData) {
+      // ... 持久化数据
+      redirect("/onboarding/invite-team");
+    }
+    ```
+  </Step>
+</Steps>
+
+## 删除步骤
+
+<Steps>
+  <Step title="从清单中删除该步骤">
+    在 `apps/web/src/app/(onboarding)/steps.ts` 的 `ONBOARDING_STEPS` 中删除其条目。
+  </Step>
+  <Step title="更新重定向链">
+    找到之前重定向到已删除步骤的步骤，将其 `redirect()` 更新为指向已删除步骤之后的步骤。
+  </Step>
+  <Step title="删除目录（可选）">
+    ```bash
+    rm -rf apps/web/src/app/\(onboarding\)/my-step
+    ```
+  </Step>
+</Steps>
+
+## 按套餐配置跳过逻辑
+
+企业用户通常已预先配置好，应跳过账单设置等步骤。在可跳过步骤之前的步骤服务端操作中实现跳过逻辑：
+
+```typescript
+// apps/web/src/app/(onboarding)/create-org/actions.ts
+"use server";
+import { redirect } from "next/navigation";
+import { getTenantContext } from "@/lib/auth";
+
+export async function createOrganization(formData: FormData) {
+  const { plan } = await getTenantContext();
+
+  // ... 创建组织的逻辑
+
+  // 企业版组织已预先配置好账单——跳过该步骤
+  if (plan === "enterprise") {
+    redirect("/onboarding/invite-team");
+  } else {
+    redirect("/onboarding/configure");
+  }
+}
+```
+
+您也可以在步骤的页面 UI 中为可选步骤提供跳过链接：
+
+```tsx
+import Link from "next/link";
+
+// 在步骤页面组件内
+<Link
+  href="/onboarding/invite-team"
+  className="text-sm text-[var(--neutral-11)] hover:text-[var(--neutral-12)] underline"
+>
+  暂时跳过
+</Link>
+```
+
+## 自定义欢迎文案
+
+欢迎步骤的内容位于单个文件中：
+
+```
+apps/web/src/app/(onboarding)/welcome/page.tsx
+```
+
+可直接编辑标题、副标题和功能要点。该页面使用标准 Tailwind + Token 类，无需特殊配置。
+
+```tsx
+// apps/web/src/app/(onboarding)/welcome/page.tsx
+<h1
+  className="text-4xl font-bold"
+  style={{
+    background: "var(--brand-gradient)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+  }}
+>
+  欢迎使用 Acme        {/* ← 修改这里 */}
+</h1>
+<p className="mt-3 text-lg text-[var(--neutral-11)]">
+  您的一体化平台，用于…   {/* ← 以及这里 */}
+</p>
+```
+
+## 自定义插图
+
+<Warning>
+  TODO: 插图系统尚未最终确定。目前欢迎步骤在 `page.tsx` 中使用内联 SVG。支持可替换资源的适当插图插槽正在规划中。
+</Warning>
+
+在此期间，请将 `apps/web/src/app/(onboarding)/welcome/page.tsx` 中的内联 SVG 替换为您自己的资源：
+
+```tsx
+// 将现有的 <IllustrationPlaceholder /> 替换为您的资源
+import Image from "next/image";
+
+<Image
+  src="/illustrations/welcome.svg"   // 放置于 apps/web/public/illustrations/
+  alt="欢迎使用 Nebutra"
+  width={480}
+  height={320}
+  priority
+/>
+```
+
+## 布局：进度条与导航外壳
+
+向导外壳（进度条、返回链接、跳过链接）位于 layout 中：
+
+```
+apps/web/src/app/(onboarding)/layout.tsx
+```
+
+进度条从 `ONBOARDING_STEPS` 清单和当前路径名派生其状态。修改清单足以自动更新进度条，无需额外操作。
+
+---
+
+<CardGroup cols={2}>
+  <Card title="定制概览" icon="sliders" href="/zh/customization/overview">
+    返回完整定制地图
+  </Card>
+  <Card title="仪表板" icon="layout-dashboard" href="/zh/customization/dashboard">
+    添加页面和自定义导航
+  </Card>
+  <Card title="主题配置" icon="paintbrush" href="/zh/customization/theming">
+    品牌颜色与主题预设
+  </Card>
+  <Card title="功能开发实战" icon="hammer" href="/zh/recipes/build-a-feature">
+    端到端实现配方
+  </Card>
+</CardGroup>

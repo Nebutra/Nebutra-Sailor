@@ -1,0 +1,170 @@
+---
+title: Vercel Deployment
+description: Deploy Nebutra-Sailor to Vercel — one project per app, Turborepo remote cache, GitHub auto-deploy, preview deployments, and custom domains.
+---
+
+## Overview
+
+Nebutra-Sailor deploys as **three separate Vercel projects** — one for each public-facing app. This gives each app its own deployment lifecycle, environment variables, custom domain, and build logs.
+
+| Vercel project | App | Recommended domain |
+|---------------|-----|-------------------|
+| `nebutra-web` | `apps/web` | `app.yourdomain.com` |
+| `nebutra-landing` | `apps/landing-page` | `yourdomain.com` |
+| `nebutra-api` | `apps/api-gateway` | `api.yourdomain.com` |
+
+## Prerequisites
+
+- A [Vercel account](https://vercel.com)
+- Vercel CLI installed: `npm install -g vercel`
+- The Vercel CLI authenticated: `vercel login`
+
+## Step-by-step: first deployment
+
+<Steps>
+  <Step title="Install the Vercel CLI">
+    ```bash
+    npm install -g vercel
+    vercel login
+    ```
+  </Step>
+  <Step title="Link each app to a Vercel project">
+    Run `vercel link` inside each app directory. This creates a `.vercel/project.json` file that maps the local directory to the Vercel project.
+
+    ```bash
+    cd apps/web
+    vercel link
+
+    cd ../landing-page
+    vercel link
+
+    cd ../api-gateway
+    vercel link
+    ```
+  </Step>
+  <Step title="Configure environment variables">
+    Set all required environment variables for each project. You can do this in the Vercel dashboard or via the CLI:
+
+    ```bash
+    # Example: set a secret for the web app
+    vercel env add CLERK_SECRET_KEY production --scope=nebutra-web
+    ```
+
+    Repeat for every variable listed in the [environment variables reference](/development/local-dev#environment-variables). Make sure to set variables for the `production` environment at minimum.
+  </Step>
+  <Step title="Run database migrations">
+    Before the first deploy, run migrations against your production database:
+
+    ```bash
+    DATABASE_URL=<your-production-db-url> pnpm db:migrate
+    ```
+
+    <Warning>
+      Always run migrations **before** deploying the new app version, not after. The app will fail to start if the schema is out of date.
+    </Warning>
+  </Step>
+  <Step title="Deploy to production">
+    <Tabs>
+      <Tab title="CLI">
+        ```bash
+        cd apps/web && vercel --prod
+        cd ../landing-page && vercel --prod
+        cd ../api-gateway && vercel --prod
+        ```
+      </Tab>
+      <Tab title="GitHub (recommended)">
+        Connect each Vercel project to the GitHub repository. Vercel will automatically deploy on every push to `main`. See [GitHub integration](#github-integration) below.
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## `vercel.json` configuration
+
+Each app includes a `vercel.json` that configures build commands, output directories, and headers. Do not delete these files.
+
+Key settings in `apps/api-gateway/vercel.json`:
+
+```json
+{
+  "buildCommand": "pnpm turbo run build --filter=apps/api-gateway",
+  "outputDirectory": "dist",
+  "functions": {
+    "src/index.ts": {
+      "maxDuration": 30
+    }
+  }
+}
+```
+
+<Note>
+  Cron jobs are also defined in `vercel.json`. Check the file in each app if you need to configure scheduled functions.
+</Note>
+
+## Turborepo remote cache
+
+Enable Vercel Remote Cache to share build artifacts across local machines, CI, and Vercel deployments. This can cut build times by 50–90% for unchanged packages.
+
+<Steps>
+  <Step title="Authenticate the Turbo CLI with Vercel">
+    ```bash
+    npx turbo login
+    ```
+  </Step>
+  <Step title="Link the repo to your Vercel team">
+    ```bash
+    npx turbo link
+    ```
+  </Step>
+  <Step title="Enable remote caching in CI">
+    Add your Vercel team's `TURBO_TOKEN` and `TURBO_TEAM` as GitHub Actions secrets, then add to your workflow:
+    ```yaml
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+    ```
+  </Step>
+</Steps>
+
+## GitHub integration
+
+The recommended workflow is to connect each Vercel project to the GitHub repository through the Vercel dashboard. Once connected:
+
+- **Push to `main`** → automatic production deployment
+- **Open a Pull Request** → automatic preview deployment with a unique URL
+- **Preview URL is posted** as a GitHub PR comment for easy review
+
+The `deploy.yml` GitHub Actions workflow (`.github/workflows/deploy.yml`) additionally runs `pnpm db:migrate` before triggering each Vercel deploy, ensuring migrations always precede the app rollout.
+
+## Preview deployments
+
+Every pull request automatically gets a preview deployment. Preview environments use the `preview` environment variable scope in Vercel — set separate values there if you want previews to point at a staging database.
+
+<Tip>
+  Use Vercel's [Preview URL sharing](https://vercel.com/docs/deployments/preview-deployments) to share a live preview with your team before merging.
+</Tip>
+
+## Custom domains
+
+<Steps>
+  <Step title="Add the domain in the Vercel dashboard">
+    Navigate to your project → **Settings → Domains** → add your custom domain.
+  </Step>
+  <Step title="Configure DNS">
+    Add a `CNAME` record pointing to `cname.vercel-dns.com`, or an `A` record pointing to `76.76.21.21` for apex domains.
+  </Step>
+  <Step title="Wait for SSL provisioning">
+    Vercel provisions a Let's Encrypt TLS certificate automatically. This typically takes under 2 minutes.
+  </Step>
+</Steps>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Docker Deployment" icon="docker" href="/deployment/docker">
+    Self-hosted alternative for data residency requirements.
+  </Card>
+  <Card title="Production Checklist" icon="circle-check" href="/deployment/production-checklist">
+    Verify everything before going live.
+  </Card>
+</CardGroup>

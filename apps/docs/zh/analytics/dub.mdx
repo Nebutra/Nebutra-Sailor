@@ -1,0 +1,205 @@
+---
+title: "Dub.co"
+description: "使用 Dub.co 创建品牌短链接、管理 UTM 参数，并追踪营销活动表现。"
+---
+
+Dub.co 是 Nebutra 的链接管理和营销分析层。它负责用户到达产品**之前**发生的一切：品牌短链接、UTM 追踪和点击分析。
+
+## Dub.co 提供的功能
+
+- **品牌短链接** — `links.nebutra.com/welcome`、`links.nebutra.com/upgrade-pro`
+- **UTM 管理** — 每个链接上的来源、媒介、活动、关键词和内容参数
+- **点击分析** — 每个链接的点击量、独立访客、来源、设备和国家
+- **活动分组** — 按活动对链接进行分组以获取汇总报告
+- **二维码** — 为每个短链接自动生成
+
+## 配置步骤
+
+<Steps>
+  <Step title="创建 Dub.co 账户">
+    在 [dub.co](https://dub.co) 注册并为你的 Nebutra 项目创建一个工作区。
+  </Step>
+  <Step title="添加自定义域名">
+    在 Dub.co 工作区设置中，添加你的品牌链接域名（例如 `links.nebutra.com`）。按照 Dub.co 的 DNS 说明配置 CNAME 记录。
+  </Step>
+  <Step title="生成 API 密钥">
+    前往**工作区设置** → **API 密钥** → **创建 API 密钥**。复制该密钥——它以 `dub_` 开头。
+  </Step>
+  <Step title="设置环境变量">
+    将密钥添加到服务端环境（切勿在客户端暴露）：
+
+    ```bash
+    DUB_API_KEY=dub_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    ```
+  </Step>
+  <Step title="验证连接">
+    在本地脚本或 API Gateway REPL 中运行以下代码片段，确认认证成功：
+
+    ```typescript
+    import { dub } from "@nebutra/analytics";
+
+    const workspaces = await dub.workspaces.list();
+    console.log(workspaces);
+    ```
+
+    如无错误并返回你的工作区，则连接正常。
+  </Step>
+</Steps>
+
+## 创建可追踪链接
+
+使用 `@nebutra/analytics` 中的 `dub` 客户端以编程方式创建链接：
+
+```typescript
+import { dub } from "@nebutra/analytics";
+
+// 欢迎邮件链接
+const welcomeLink = await dub.links.create({
+  url: "https://app.nebutra.com/dashboard",
+  domain: "links.nebutra.com",
+  slug: "welcome",
+  utm_source: "email",
+  utm_medium: "transactional",
+  utm_campaign: "onboarding",
+});
+
+// 应用内升级提示横幅链接
+const upgradeLink = await dub.links.create({
+  url: "https://app.nebutra.com/settings/billing",
+  domain: "links.nebutra.com",
+  utm_source: "app",
+  utm_medium: "banner",
+  utm_campaign: "upgrade-pro",
+  utm_content: "quota-warning-banner",
+});
+
+console.log(welcomeLink.shortLink); // → https://links.nebutra.com/welcome
+```
+
+## UTM 参数规范
+
+Nebutra 在所有活动中使用统一的 UTM 分类体系。遵守这些规范，可以确保 PostHog 的流量归因保持准确：
+
+| 参数 | 取值 | 示例 |
+|------|------|------|
+| `utm_source` | 流量来源 | `email`、`app`、`twitter`、`linkedin`、`google` |
+| `utm_medium` | 渠道类型 | `transactional`、`newsletter`、`cpc`、`banner`、`social` |
+| `utm_campaign` | 活动标识（kebab-case） | `onboarding`、`upgrade-pro`、`launch-v2` |
+| `utm_content` | 具体元素（可选） | `cta-button`、`quota-warning-banner`、`hero-headline` |
+| `utm_term` | 付费搜索关键词（可选） | `saas-analytics-tool` |
+
+<Note>
+所有 UTM 参数值均使用小写 kebab-case。大小写混用会在 PostHog 中产生重复的归因条目。
+</Note>
+
+## 常见链接模式
+
+### 事务性邮件
+
+每封事务性邮件的 CTA 都应使用可追踪链接：
+
+```typescript
+import { dub } from "@nebutra/analytics";
+
+async function sendWelcomeEmail(user: User) {
+  const ctaLink = await dub.links.create({
+    url: `https://app.nebutra.com/onboarding?userId=${user.id}`,
+    domain: "links.nebutra.com",
+    utm_source: "email",
+    utm_medium: "transactional",
+    utm_campaign: "onboarding",
+    utm_content: "welcome-email-cta",
+  });
+
+  await sendEmail({
+    to: user.email,
+    subject: "欢迎使用 Nebutra",
+    cta: { label: "立即开始", href: ctaLink.shortLink },
+  });
+}
+```
+
+### 应用内推荐链接
+
+```typescript
+import { dub } from "@nebutra/analytics";
+
+async function generateReferralLink(userId: string, orgSlug: string) {
+  return dub.links.create({
+    url: `https://nebutra.com/?ref=${orgSlug}`,
+    domain: "links.nebutra.com",
+    utm_source: "referral",
+    utm_medium: "in-app",
+    utm_campaign: "user-referral",
+    utm_content: userId,
+    // 在 Dub.co 仪表盘中用于分组的标签
+    tags: ["referral", `user-${userId}`],
+  });
+}
+```
+
+### 营销活动
+
+对于付费活动，可通过 Dub.co 仪表盘或 API 批量创建链接并分配活动标签：
+
+```typescript
+const variants = ["headline-a", "headline-b", "headline-c"];
+
+const links = await Promise.all(
+  variants.map((variant) =>
+    dub.links.create({
+      url: "https://nebutra.com/landing/paid",
+      domain: "links.nebutra.com",
+      utm_source: "google",
+      utm_medium: "cpc",
+      utm_campaign: "q1-acquisition",
+      utm_content: variant,
+      tags: ["paid", "q1-acquisition"],
+    })
+  )
+);
+```
+
+## 查看分析数据
+
+链接分析数据可在 Dub.co 仪表盘 [app.dub.co](https://app.dub.co) 中查看：
+
+- **链接分析** — 每个链接的随时间变化的点击量、来源、国家和设备
+- **活动分析** — 按标签/活动汇总的指标
+- **热门链接** — 按点击量排名
+
+<Warning>
+TODO：Dub.co 分析尚未整合到 Nebutra 管理面板的 `/admin/analytics` 中。目前需要直接访问 Dub.co 仪表盘。管理面板集成计划在未来版本中实现。
+</Warning>
+
+## 通过 API 获取链接统计数据
+
+```typescript
+import { dub } from "@nebutra/analytics";
+
+const stats = await dub.analytics.retrieve({
+  linkId: welcomeLink.id,
+  interval: "30d",
+  groupBy: "referrer",
+});
+
+// stats.clicks → 总点击量
+// stats.groupedData → 按来源的分类数据
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="分析概览" icon="chart-line" href="/zh/analytics/overview">
+    查看完整的分析架构和所有内置追踪事件。
+  </Card>
+  <Card title="PostHog" icon="chart-mixed" href="/zh/analytics/posthog">
+    配置产品分析、功能开关和会话录制。
+  </Card>
+  <Card title="邮件" icon="envelope" href="/zh/email/overview">
+    发送带有 Dub.co 可追踪 CTA 的事务性邮件。
+  </Card>
+  <Card title="SEO 与营销" icon="magnifying-glass" href="/zh/seo/overview">
+    管理落地页 SEO 和营销元数据。
+  </Card>
+</CardGroup>

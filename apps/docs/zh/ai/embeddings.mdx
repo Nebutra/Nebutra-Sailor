@@ -1,0 +1,284 @@
+---
+title: 嵌入向量
+description: 生成用于语义搜索和 RAG 的向量嵌入——pgvector 存储、相似度查询和批量处理。
+---
+
+## 什么是嵌入向量？
+
+嵌入向量是文本的数值向量表示。语义相近的两段文本，其向量在向量空间中的距离也更近，从而支持：
+
+- **语义搜索** — 按含义而非关键词查找文档
+- **RAG（检索增强生成）** — 将相关上下文注入 LLM 提示词
+- **重复检测** — 查找近似重复的内容
+- **推荐系统** — 基于内容相似度推荐相关条目
+
+Nebutra 使用 **pgvector** 扩展将嵌入向量存储在 PostgreSQL 中，使其与关系型数据共存，无需额外基础设施。
+
+## 配置步骤
+
+<Steps>
+  <Step title="设置环境变量">
+    ```bash
+    OPENAI_API_KEY=""
+
+    # 可选：覆盖默认嵌入模型
+    AI_EMBEDDING_MODEL="text-embedding-3-small"
+    ```
+  </Step>
+
+  <Step title="启用功能标志">
+    ```typescript
+    import { setFeatureFlag } from "@nebutra/preset";
+
+    await setFeatureFlag("org_123", "ai.embeddings", true);
+    ```
+  </Step>
+
+  <Step title="运行 pgvector 迁移">
+    Nebutra 数据库 Schema 已包含带有 `vector` 列的 `embeddings` 表。如果是全新部署，请确保启用 pgvector：
+
+    ```sql
+    CREATE EXTENSION IF NOT EXISTS vector;
+    ```
+
+    然后运行 Prisma 迁移：
+
+    ```bash
+    pnpm --filter @nebutra/db migrate deploy
+    ```
+  </Step>
+</Steps>
+
+## 生成嵌入向量
+
+### 通过 API 接口
+
+`POST /api/v1/ai/embeddings`
+
+```bash
+curl -X POST https://api.yourdomain.com/api/v1/ai/embeddings \
+  -H "Authorization: Bearer nbk_live_org123_xxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "input": "如何重置我的密码？",
+    "model": "text-embedding-3-small"
+  }'
+```
+
+响应：
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "object": "embedding",
+      "index": 0,
+      "embedding": [0.0023064255, -0.009327292, ...]
+    }
+  ],
+  "model": "text-embedding-3-small",
+  "usage": {
+    "prompt_tokens": 8,
+    "total_tokens": 8
+  }
+}
+```
+
+### 通过 `@nebutra/ai-sdk`（服务端）
+
+```typescript
+import { embed } from "@nebutra/ai-sdk";
+
+const { embedding } = await embed({
+  model: "text-embedding-3-small",
+  value: "如何重置我的密码？",
+  tenantId,
+});
+
+// embedding 是 Float32Array / number[]
+console.log(embedding.length); // 1536
+```
+
+## 在 pgvector 中存储嵌入向量
+
+生成嵌入向量后，将其与源内容一起存储：
+
+```typescript
+import { embed } from "@nebutra/ai-sdk";
+import { prisma } from "@/lib/db";
+
+async function indexDocument(content: string, tenantId: string) {
+  const { embedding } = await embed({
+    model: "text-embedding-3-small",
+    value: content,
+    tenantId,
+  });
+
+  await prisma.embedding.create({
+    data: {
+      content,
+      embedding,      // pgvector 将其存储为 vector 列
+      tenantId,
+      createdAt: new Date(),
+    },
+  });
+}
+```
+
+<Warning>
+查询时嵌入维度必须与索引时一致。如果使用 `text-embedding-3-small`（1536 维）建立索引，查询时也必须使用同一模型。切换模型需要重新索引所有文档。
+</Warning>
+
+## 相似度搜索
+
+找到与查询语义最相近的文档：
+
+```typescript
+import { embed } from "@nebutra/ai-sdk";
+import { prisma } from "@/lib/db";
+
+async function semanticSearch(query: string, tenantId: string, topK = 5) {
+  // 1. 对查询进行嵌入
+  const { embedding } = await embed({
+    model: "text-embedding-3-small",
+    value: query,
+    tenantId,
+  });
+
+  // 2. 使用余弦相似度搜索（pgvector 的 <=> 运算符）
+  const results = await prisma.$queryRaw<Array<{ id: string; content: string; similarity: number }>>`
+    SELECT id, content, 1 - (embedding <=> ${embedding}::vector) AS similarity
+    FROM embeddings
+    WHERE tenant_id = ${tenantId}
+    ORDER BY embedding <=> ${embedding}::vector
+    LIMIT ${topK}
+  `;
+
+  return results;
+}
+```
+
+### pgvector 距离运算符
+
+| 运算符 | 距离度量 | 适用场景 |
+|--------|---------|----------|
+| `<=>` | 余弦距离 | 文本相似度（推荐） |
+| `<->` | 欧几里得距离（L2） | 几何、图像特征 |
+| `<#>` | 内积（取反） | 归一化向量 |
+
+大多数文本场景下，余弦距离（`<=>`）效果最佳。
+
+## 批量嵌入
+
+在单次 API 调用中对多段文本进行嵌入，降低延迟和 Token 开销：
+
+```typescript
+import { embedMany } from "@nebutra/ai-sdk";
+
+const texts = [
+  "如何重置我的密码？",
+  "在哪里更新账单信息？",
+  "如何邀请团队成员？",
+];
+
+const { embeddings } = await embedMany({
+  model: "text-embedding-3-small",
+  values: texts,
+  tenantId,
+});
+
+// embeddings 是一个数组，每个输入文本对应一个向量
+for (let i = 0; i < texts.length; i++) {
+  await prisma.embedding.create({
+    data: { content: texts[i], embedding: embeddings[i], tenantId },
+  });
+}
+```
+
+<Note>
+批量嵌入比循环调用 `embed()` 效率高得多。索引多个文档时，始终使用 `embedMany()`。
+</Note>
+
+## RAG 模式
+
+在调用聊天 API 之前，使用嵌入向量检索相关上下文：
+
+```typescript
+import { embed, generateText } from "@nebutra/ai-sdk";
+
+async function ragQuery(userQuestion: string, tenantId: string) {
+  // 1. 检索相关文档
+  const { embedding } = await embed({
+    model: "text-embedding-3-small",
+    value: userQuestion,
+    tenantId,
+  });
+
+  const docs = await prisma.$queryRaw<Array<{ content: string }>>`
+    SELECT content
+    FROM embeddings
+    WHERE tenant_id = ${tenantId}
+    ORDER BY embedding <=> ${embedding}::vector
+    LIMIT 3
+  `;
+
+  // 2. 构建上下文字符串
+  const context = docs.map((d) => d.content).join("\n\n---\n\n");
+
+  // 3. 注入上下文后生成答案
+  const { text } = await generateText({
+    model: "gpt-4o-mini",
+    prompt: `仅使用以下上下文回答问题。
+
+上下文：
+${context}
+
+问题：${userQuestion}`,
+    tenantId,
+  });
+
+  return text;
+}
+```
+
+## 创建向量索引
+
+对于大型嵌入向量表，添加 IVFFlat 或 HNSW 索引可加速相似度搜索：
+
+```sql
+-- HNSW 索引（大多数场景推荐——构建快，召回率高）
+CREATE INDEX ON embeddings USING hnsw (embedding vector_cosine_ops);
+
+-- IVFFlat 索引（适合超大数据集，lists 建议设为行数的平方根）
+CREATE INDEX ON embeddings USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+```
+
+<Warning>
+TODO：Nebutra 托管数据库层的推荐索引类型和参数，待基准测试完成后补充。
+</Warning>
+
+## 模型维度参考
+
+| 模型 | 维度 | 相对成本 | 备注 |
+|------|-----|---------|------|
+| `text-embedding-3-small` | 1536 | 低 | 默认，性价比高 |
+| `text-embedding-3-large` | 3072 | 中 | 精度更高 |
+| `text-embedding-ada-002` | 1536 | 低 | 旧版，建议改用 3-small |
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="AI 概述" icon="sparkles" href="/zh/ai/overview">
+    支持的模型、功能标志和 Token 配额。
+  </Card>
+  <Card title="聊天机器人" icon="message-bot" href="/zh/ai/chatbot">
+    使用 RAG 为聊天机器人提供有依据的回答。
+  </Card>
+  <Card title="数据库" icon="database" href="/zh/database/overview">
+    pgvector 配置和 Prisma Schema 参考。
+  </Card>
+  <Card title="API 参考" icon="code" href="/api-reference/ai/embeddings">
+    嵌入向量接口的完整 OpenAPI 规范。
+  </Card>
+</CardGroup>

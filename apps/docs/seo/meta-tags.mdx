@@ -1,0 +1,209 @@
+---
+title: Meta Tags
+description: How to set static and dynamic metadata in Nebutra-Sailor — title templates, Open Graph, Twitter cards, canonical URLs, robots directives, and per-page vs layout-level metadata.
+---
+
+## How metadata works in Next.js 16
+
+In the Next.js App Router, metadata is exported from `page.tsx` or `layout.tsx` files. Next.js merges metadata from the nearest `layout.tsx` with metadata from the current `page.tsx`, with page-level metadata taking priority on any shared field.
+
+There are two export forms:
+
+| Form | When to use |
+|------|-------------|
+| `export const metadata` | Static titles and descriptions that do not depend on route params or external data |
+| `export async function generateMetadata()` | Dynamic titles that depend on route params, database queries, or CMS content |
+
+## Title template
+
+Define a title template in your root or segment layout so that every page gets a consistent suffix:
+
+```typescript apps/landing-page/src/app/[lang]/layout.tsx
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Nebutra",
+    default: "Nebutra — AI-native SaaS Platform",
+  },
+  description:
+    "Build and ship AI-powered SaaS products faster with Nebutra.",
+};
+```
+
+Child pages export only `title: "Pricing"` and the rendered `<title>` becomes `Pricing | Nebutra`.
+
+## Static metadata example
+
+```typescript apps/landing-page/src/app/[lang]/pricing/page.tsx
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Pricing",
+  description:
+    "Simple, transparent pricing. Start free, upgrade when you grow.",
+  openGraph: {
+    title: "Pricing — Nebutra",
+    description: "Simple, transparent pricing.",
+    url: "https://nebutra.com/en/pricing",
+    siteName: "Nebutra",
+    images: [
+      {
+        url: "https://nebutra.com/og/pricing.png",
+        width: 1200,
+        height: 630,
+        alt: "Nebutra Pricing",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pricing — Nebutra",
+    description: "Simple, transparent pricing.",
+    images: ["https://nebutra.com/og/pricing.png"],
+  },
+};
+```
+
+## Dynamic metadata with generateMetadata
+
+Use `generateMetadata` for pages that fetch content at request time, such as blog posts:
+
+```typescript apps/landing-page/src/app/[lang]/blog/[slug]/page.tsx
+import type { Metadata } from "next";
+import { getPost } from "@/lib/sanity";
+import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; lang: string }>;
+}): Promise<Metadata> {
+  const { slug, lang } = await params;
+  const post = await getPost(slug, lang);
+
+  if (!post) return {};
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      publishedTime: post.publishedAt,
+      authors: [post.author.name],
+      images: [
+        {
+          url: post.ogImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [post.ogImage],
+    },
+    alternates: {
+      canonical: `https://nebutra.com/${lang}/blog/${slug}`,
+    },
+  };
+}
+```
+
+<Note>
+  `params` is a `Promise` in Next.js 16. Always `await` it before reading values. Skipping the await returns `undefined` and causes a runtime error.
+</Note>
+
+## Canonical URLs
+
+Set `alternates.canonical` on every page that has a definitive URL. This prevents duplicate-content penalties when the same content is accessible at multiple paths (e.g., with and without locale prefix).
+
+```typescript
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://nebutra.com/en/pricing",
+    languages: {
+      en: "https://nebutra.com/en/pricing",
+      zh: "https://nebutra.com/zh/pricing",
+      ja: "https://nebutra.com/ja/pricing",
+    },
+  },
+};
+```
+
+The `languages` map generates `<link rel="alternate" hreflang="...">` tags for each locale, which search engines use to serve the correct language version.
+
+## Robots directives
+
+Control crawler access per page using the `robots` metadata field:
+
+```typescript
+// Default — index and follow
+export const metadata: Metadata = {
+  robots: { index: true, follow: true },
+};
+
+// Prevent indexing (e.g., admin pages, draft previews)
+export const metadata: Metadata = {
+  robots: { index: false, follow: false, noarchive: true },
+};
+```
+
+The root `robots.ts` file sets site-wide defaults. Page-level `robots` metadata overrides the defaults for that page only.
+
+## Metadata fields reference
+
+| Field | Type | Purpose |
+|-------|------|---------|
+| `title` | `string \| TemplateString` | Page title. Use `template` in layout, plain string in pages. |
+| `description` | `string` | Meta description. Aim for 120–160 characters. |
+| `openGraph.title` | `string` | OG title — can differ from `<title>`. |
+| `openGraph.description` | `string` | OG description. |
+| `openGraph.images` | `OGImage[]` | Array of image objects with `url`, `width`, `height`, `alt`. |
+| `openGraph.type` | `string` | `website` for pages, `article` for blog posts. |
+| `openGraph.publishedTime` | `string` | ISO 8601 date. Only for `type: "article"`. |
+| `twitter.card` | `string` | `summary_large_image` for posts with a hero image. |
+| `twitter.images` | `string[]` | Twitter card image URLs. |
+| `alternates.canonical` | `string` | Absolute canonical URL. |
+| `alternates.languages` | `Record<string, string>` | hreflang map for i18n pages. |
+| `robots` | `Robots` | Crawler directives: `index`, `follow`, `noarchive`, etc. |
+
+## Per-page vs layout-level metadata
+
+| Concern | Where to set it |
+|---------|-----------------|
+| Default title template | Root `layout.tsx` |
+| Site-wide description fallback | Root `layout.tsx` |
+| Site-wide OG `siteName` | Root `layout.tsx` |
+| Page-specific title and description | `page.tsx` |
+| Dynamic OG images | `page.tsx` via `generateMetadata` |
+| Canonical URL | `page.tsx` |
+| hreflang | `page.tsx` |
+
+<Tip>
+  Never set `openGraph.images` in a layout — layout-level OG images are inherited by every page in that segment, which produces incorrect social previews for pages that have their own OG images.
+</Tip>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="SEO Overview" icon="magnifying-glass" href="/seo/overview">
+    Full overview of built-in SEO features and OG image generation.
+  </Card>
+  <Card title="Sitemap" icon="map" href="/seo/sitemap">
+    XML sitemap generation and Search Console submission.
+  </Card>
+  <Card title="Feature Flags" icon="toggle-on" href="/configuration/feature-flags">
+    Enabling the blog (required for article metadata) and changelog.
+  </Card>
+  <Card title="Deployment" icon="rocket" href="/deployment/overview">
+    Domain configuration and canonical URL setup in production.
+  </Card>
+</CardGroup>

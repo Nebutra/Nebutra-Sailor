@@ -1,0 +1,294 @@
+---
+title: 邮件模板
+description: Nebutra 六个内置邮件模板 — 必填数据字段、自定义方式和新增模板步骤。
+---
+
+邮件模板位于 `packages/email/src/templates/`。每个模板都是一个 React Email 组件，接受类型化的 `data` 属性，并渲染为 HTML 和纯文本两种格式。
+
+## 模板参考
+
+### `welcome`
+
+新用户账户创建后发送。
+
+**文件：** `packages/email/src/templates/welcome.tsx`
+
+```typescript
+await email.send({
+  to: user.email,
+  template: "welcome",
+  data: {
+    userName: string,       // 显示名称，如 "张三"
+    orgName: string,        // 组织名称，如 "Acme Corp"
+    dashboardUrl: string,   // 用户控制台的完整 URL
+  },
+});
+```
+
+---
+
+### `api-key-created`
+
+为组织生成 API 密钥后发送。
+
+**文件：** `packages/email/src/templates/api-key-created.tsx`
+
+```typescript
+await email.send({
+  to: adminEmail,
+  template: "api-key-created",
+  data: {
+    userName: string,       // 创建密钥的用户名称
+    orgName: string,        // 组织名称
+    keyName: string,        // 密钥的可读名称，如 "生产密钥"
+    keyPrefix: string,      // 密钥前 8 位用于标识，如 "sk_live_"
+    createdAt: string,      // ISO 8601 时间戳
+    manageUrl: string,      // API 密钥设置页面的 URL
+  },
+});
+```
+
+---
+
+### `quota-warning`
+
+计量使用量达到计划限额的 80% 时发送。
+
+**文件：** `packages/email/src/templates/quota-warning.tsx`
+
+```typescript
+await email.send({
+  to: adminEmails,          // string | string[]
+  template: "quota-warning",
+  data: {
+    orgName: string,        // 组织名称
+    metric: string,         // 指标 ID，如 "api_calls"、"storage_gb"
+    used: number,           // 当前使用量
+    limit: number,          // 计划限额
+    percentage: number,     // 使用百分比（0–100）
+    upgradeUrl: string,     // 账单/升级页面的 URL
+  },
+});
+```
+
+---
+
+### `quota-exceeded`
+
+计量使用量超过计划限额的 100% 时发送。
+
+**文件：** `packages/email/src/templates/quota-exceeded.tsx`
+
+```typescript
+await email.send({
+  to: adminEmails,          // string | string[]
+  template: "quota-exceeded",
+  data: {
+    orgName: string,
+    metric: string,
+    used: number,
+    limit: number,
+    upgradeUrl: string,
+  },
+});
+```
+
+---
+
+### `team-invite`
+
+用户被邀请加入组织时发送。
+
+**文件：** `packages/email/src/templates/team-invite.tsx`
+
+```typescript
+await email.send({
+  to: invitee.email,
+  template: "team-invite",
+  data: {
+    inviteeName: string,    // 被邀请人的姓名，不知道时用邮箱代替
+    inviterName: string,    // 发出邀请的人的姓名
+    orgName: string,        // 被邀请人加入的组织名称
+    inviteUrl: string,      // 一次性邀请确认 URL
+    expiresAt: string,      // ISO 8601 过期时间戳
+  },
+});
+```
+
+---
+
+### `password-reset`
+
+用户请求重置密码时发送。
+
+**文件：** `packages/email/src/templates/password-reset.tsx`
+
+```typescript
+await email.send({
+  to: user.email,
+  template: "password-reset",
+  data: {
+    userName: string,           // 用户显示名称
+    resetUrl: string,           // 带令牌的密码重置 URL
+    expiresInMinutes: number,   // 链接有效时长，如 60
+    ipAddress: string,          // 请求的 IP 地址（安全信息）
+  },
+});
+```
+
+## 自定义模板
+
+模板是 React Email 组件 — 像普通 React 组件一样编辑它们。
+
+<Steps>
+  <Step title="找到模板文件">
+    模板位于 `packages/email/src/templates/`。例如，编辑欢迎邮件：
+
+    ```
+    packages/email/src/templates/welcome.tsx
+    ```
+  </Step>
+
+  <Step title="编辑组件">
+    React Email 通过 `@react-email/components` 提供布局原语：
+
+    ```tsx
+    import {
+      Body,
+      Button,
+      Container,
+      Head,
+      Heading,
+      Html,
+      Preview,
+      Section,
+      Text,
+    } from "@react-email/components";
+
+    interface WelcomeEmailProps {
+      userName: string;
+      orgName: string;
+      dashboardUrl: string;
+    }
+
+    export function WelcomeEmail({ userName, orgName, dashboardUrl }: WelcomeEmailProps) {
+      return (
+        <Html>
+          <Head />
+          <Preview>欢迎使用 Nebutra，{userName}！</Preview>
+          <Body style={{ fontFamily: "sans-serif", backgroundColor: "#f8fafc" }}>
+            <Container style={{ maxWidth: "600px", margin: "0 auto" }}>
+              <Heading>欢迎加入 {orgName}</Heading>
+              <Text>您好 {userName}，您的账户已准备就绪。</Text>
+              <Section>
+                <Button href={dashboardUrl}>打开控制台</Button>
+              </Section>
+            </Container>
+          </Body>
+        </Html>
+      );
+    }
+    ```
+  </Step>
+
+  <Step title="预览修改效果">
+    启动预览服务器，在浏览器中实时查看变化：
+
+    ```bash
+    pnpm --filter @nebutra/email dev
+    # 在 http://localhost:3100 打开
+    ```
+  </Step>
+</Steps>
+
+## 新增模板
+
+<Steps>
+  <Step title="创建模板组件">
+    在 `packages/email/src/templates/` 中新建文件：
+
+    ```tsx
+    // packages/email/src/templates/invoice-paid.tsx
+    import { Body, Button, Container, Html, Text } from "@react-email/components";
+
+    export interface InvoicePaidEmailProps {
+      userName: string;
+      orgName: string;
+      invoiceId: string;
+      amount: string;     // 格式化后的金额，如 "¥99.00"
+      invoiceUrl: string;
+    }
+
+    export function InvoicePaidEmail(props: InvoicePaidEmailProps) {
+      return (
+        <Html>
+          <Body>
+            <Container>
+              <Text>
+                您好 {props.userName}，发票 {props.invoiceId} 共 {props.amount} 已支付成功。
+              </Text>
+              <Button href={props.invoiceUrl}>查看发票</Button>
+            </Container>
+          </Body>
+        </Html>
+      );
+    }
+    ```
+  </Step>
+
+  <Step title="注册模板">
+    从模板注册表导出新模板：
+
+    ```typescript
+    // packages/email/src/templates/index.ts
+    export { InvoicePaidEmail, type InvoicePaidEmailProps } from "./invoice-paid";
+    ```
+
+    然后在模板映射中注册：
+
+    ```typescript
+    // packages/email/src/provider.ts
+    import { InvoicePaidEmail } from "./templates/invoice-paid";
+
+    const templates = {
+      // ... 已有模板
+      "invoice-paid": InvoicePaidEmail,
+    } as const;
+    ```
+  </Step>
+
+  <Step title="为数据载荷添加 TypeScript 类型">
+    将新模板的数据类型添加到 `EmailTemplateData` 联合类型中，使 `email.send()` 完全类型安全。
+
+    <Warning>
+    TODO: 待 `@nebutra/email` 类型系统最终确定后，补充 `EmailTemplateData` 联合类型的确切位置说明。
+    </Warning>
+  </Step>
+
+  <Step title="预览和测试">
+    ```bash
+    pnpm --filter @nebutra/email dev
+    ```
+
+    在预览侧边栏中找到新模板，验证其在桌面端和移动端视口下均能正确渲染。
+  </Step>
+</Steps>
+
+<Warning>
+部署生产环境前务必测试所有模板。损坏的模板会导致 `email.send()` 在运行时抛出异常。推荐的测试方法请参阅[测试](/email/testing)。
+</Warning>
+
+<CardGroup cols={2}>
+  <Card title="邮件概览" icon="mail" href="/email/overview">
+    完整模板列表与架构说明
+  </Card>
+  <Card title="测试" icon="flask" href="/email/testing">
+    预览服务器、测试模式和渲染测试
+  </Card>
+  <Card title="提供商" icon="server" href="/email/providers">
+    Resend 配置和域名验证
+  </Card>
+  <Card title="计量" icon="gauge" href="/concepts/metering">
+    配额阈值如何触发警告邮件
+  </Card>
+</CardGroup>
