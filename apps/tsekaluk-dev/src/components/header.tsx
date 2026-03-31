@@ -1,6 +1,5 @@
 "use client";
 
-import { TextShimmer } from "@nebutra/ui/primitives";
 import { AnimatePresence, motion } from "framer-motion";
 import { LayoutDashboard, LogOut, Menu, Search, X } from "lucide-react";
 import Image from "next/image";
@@ -120,9 +119,16 @@ function DesktopNavItem({ href, label }: { href: string; label: string }) {
       className="group text-sm relative text-muted-foreground transition-colors hover:text-foreground"
     >
       {isThinking ? (
-        <TextShimmer as="span" duration={2}>
+        <span
+          style={{
+            background: "linear-gradient(90deg, var(--color-accent-dark), var(--color-accent))",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
           {label}
-        </TextShimmer>
+        </span>
       ) : (
         label
       )}
