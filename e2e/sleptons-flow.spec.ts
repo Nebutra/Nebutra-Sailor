@@ -6,8 +6,8 @@ const LANDING_URL = "http://localhost:3000";
 test.describe("Sleptons Community Gallery", () => {
   test("gallery page loads and shows member count", async ({ page }) => {
     await page.goto(COMMUNITY_URL);
-    await expect(page.getByText("SLEPTONS")).toBeVisible();
-    await expect(page.getByText(/founders/)).toBeVisible();
+    await expect(page.getByRole("heading", { name: "SLEPTONS", level: 1 })).toBeVisible();
+    await expect(page.getByText(/\d+ founders/)).toBeVisible();
   });
 
   test("gallery grid renders member cards or empty state", async ({ page }) => {
@@ -28,7 +28,7 @@ test.describe("Welcome Overlay", () => {
     });
 
     await page.goto(`${COMMUNITY_URL}?welcome=true`);
-    await expect(page.getByText("SLEPTONS")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "SLEPTONS", level: 1 })).toBeVisible();
     await expect(page.getByText(/Member #42/)).toBeVisible({ timeout: 5000 });
     await expect(page.getByText(/Welcome to Sleptons/)).toBeVisible();
   });

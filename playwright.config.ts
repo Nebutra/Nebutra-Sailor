@@ -27,12 +27,18 @@ export default defineConfig({
     },
     {
       command: "pnpm --filter @nebutra/api-gateway dev",
-      url: "http://localhost:3002/api/misc/health",
+      url: "http://localhost:3002",
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
       env: {
         PORT: "3002",
         SKIP_ENV_VALIDATION: "true",
+        RESEND_API_KEY: "re_placeholder",
+        DATABASE_URL: "postgresql://localhost/dev_placeholder",
+        CLERK_SECRET_KEY: "sk_test_placeholder",
+        BETTER_AUTH_SECRET: "placeholder",
+        UPSTASH_REDIS_REST_URL: "https://placeholder.upstash.io",
+        UPSTASH_REDIS_REST_TOKEN: "placeholder_token",
       },
     },
     {
@@ -42,6 +48,12 @@ export default defineConfig({
       timeout: 120_000,
       env: {
         SKIP_ENV_VALIDATION: "true",
+        BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET ?? "placeholder_secret_32_chars_long_xx",
+        CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? "sk_test_placeholder",
+        DATABASE_URL: process.env.DATABASE_URL ?? "postgresql://localhost/dev_placeholder",
+        UPSTASH_REDIS_REST_URL:
+          process.env.UPSTASH_REDIS_REST_URL ?? "https://placeholder.upstash.io",
+        UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN ?? "placeholder_token",
       },
     },
     {
