@@ -15,15 +15,23 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 // factories execute (vi.mock is hoisted above all imports by Vitest).
 // ---------------------------------------------------------------------------
 
-const { mockCreateAuth, mockRedisGet, mockRedisSet, mockRedisDel, mockRedisPing, mockQueryRaw } =
-  vi.hoisted(() => ({
-    mockCreateAuth: vi.fn(),
-    mockRedisGet: vi.fn(),
-    mockRedisSet: vi.fn(),
-    mockRedisDel: vi.fn(),
-    mockRedisPing: vi.fn(),
-    mockQueryRaw: vi.fn(),
-  }));
+const {
+  mockCreateAuth,
+  mockRedisGet,
+  mockRedisSet,
+  mockRedisDel,
+  mockRedisPing,
+  mockQueryRaw,
+  mockVerifyToken,
+} = vi.hoisted(() => ({
+  mockCreateAuth: vi.fn(),
+  mockRedisGet: vi.fn(),
+  mockRedisSet: vi.fn(),
+  mockRedisDel: vi.fn(),
+  mockRedisPing: vi.fn(),
+  mockQueryRaw: vi.fn(),
+  mockVerifyToken: vi.fn(),
+}));
 
 vi.mock("@nebutra/auth/server", () => ({
   createAuth: (...args: unknown[]) => mockCreateAuth(...args),

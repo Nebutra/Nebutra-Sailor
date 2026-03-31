@@ -9,7 +9,7 @@ const AlertDialog = BaseAlertDialog.Root;
 const AlertDialogPortal = BaseAlertDialog.Portal;
 
 const AlertDialogTrigger = React.forwardRef<
-  React.ElementRef<typeof BaseAlertDialog.Trigger>,
+  HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Trigger> & { asChild?: boolean }
 >(({ asChild, children, ...props }, ref) => {
   if (asChild && React.isValidElement(children)) {

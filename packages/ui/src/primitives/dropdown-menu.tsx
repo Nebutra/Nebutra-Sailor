@@ -11,20 +11,19 @@ type DropdownMenuTriggerProps = React.ComponentProps<typeof BaseMenu.Trigger> & 
   asChild?: boolean;
 };
 
-const DropdownMenuTrigger = React.forwardRef<
-  React.ElementRef<typeof BaseMenu.Trigger>,
-  DropdownMenuTriggerProps
->(({ asChild, children, render, ...props }, ref) => {
-  const renderElement = asChild && React.isValidElement(children) ? children : render;
-  return (
-    <BaseMenu.Trigger
-      ref={ref}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      render={renderElement as any}
-      {...(renderElement ? props : { ...props, children })}
-    />
-  );
-});
+const DropdownMenuTrigger = React.forwardRef<HTMLButtonElement, DropdownMenuTriggerProps>(
+  ({ asChild, children, render, ...props }, ref) => {
+    const renderElement = asChild && React.isValidElement(children) ? children : render;
+    return (
+      <BaseMenu.Trigger
+        ref={ref}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        render={renderElement as any}
+        {...(renderElement ? props : { ...props, children })}
+      />
+    );
+  },
+);
 DropdownMenuTrigger.displayName = "DropdownMenuTrigger";
 
 const DropdownMenuGroup = BaseMenu.Group;

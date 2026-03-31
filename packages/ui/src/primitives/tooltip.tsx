@@ -36,7 +36,7 @@ const Tooltip = ({
 };
 
 const TooltipTrigger = React.forwardRef<
-  React.ElementRef<typeof BaseTooltip.Trigger>,
+  HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof BaseTooltip.Trigger> & { asChild?: boolean }
 >(({ asChild, children, ...props }, ref) => {
   if (asChild && React.isValidElement(children)) {

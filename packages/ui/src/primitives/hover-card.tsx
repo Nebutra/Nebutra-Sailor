@@ -51,9 +51,9 @@ const HoverCard = ({
 const HoverCardTrigger: React.ForwardRefExoticComponent<
   React.ComponentPropsWithoutRef<typeof BasePopover.Trigger> & {
     asChild?: boolean;
-  } & React.RefAttributes<React.ElementRef<typeof BasePopover.Trigger>>
+  } & React.RefAttributes<HTMLButtonElement>
 > = React.forwardRef<
-  React.ElementRef<typeof BasePopover.Trigger>,
+  HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof BasePopover.Trigger> & { asChild?: boolean }
 >(({ asChild, children, ...props }, ref) => {
   if (asChild && React.isValidElement(children)) {

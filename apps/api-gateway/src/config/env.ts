@@ -71,7 +71,7 @@ const baseSchema = z.object({
   DOMAIN_STUDIO: z.string().url().optional(),
 });
 
-const envSchema = baseSchema.merge(authConfigUnion);
+const envSchema = z.intersection(baseSchema, authConfigUnion);
 
 // Production domain constants (overridable via environment variables)
 export const DOMAINS = {

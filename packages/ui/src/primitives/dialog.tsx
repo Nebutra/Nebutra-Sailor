@@ -10,7 +10,7 @@ const Dialog = BaseDialog.Root;
 const DialogPortal = BaseDialog.Portal;
 
 const DialogTrigger = React.forwardRef<
-  React.ElementRef<typeof BaseDialog.Trigger>,
+  HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof BaseDialog.Trigger> & { asChild?: boolean }
 >(({ asChild, children, ...props }, ref) => {
   if (asChild && React.isValidElement(children)) {
@@ -31,7 +31,7 @@ const DialogTrigger = React.forwardRef<
 DialogTrigger.displayName = "DialogTrigger";
 
 const DialogClose = React.forwardRef<
-  React.ElementRef<typeof BaseDialog.Close>,
+  HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof BaseDialog.Close> & { asChild?: boolean }
 >(({ asChild, children, ...props }, ref) => {
   if (asChild && React.isValidElement(children)) {

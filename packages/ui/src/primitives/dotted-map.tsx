@@ -76,7 +76,8 @@ export function DottedMap({
     mapSamples,
   });
 
-  const processedMarkers = addMarkers(markers);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const processedMarkers = addMarkers(markers as any);
 
   // Compute stagger helpers in a single, simple pass
   const { xStep, yToRowIndex } = React.useMemo(() => {
@@ -130,7 +131,7 @@ export function DottedMap({
           <circle
             cx={marker.x + offsetX}
             cy={marker.y}
-            r={marker.size ?? dotRadius}
+            r={(marker.size as number | undefined) ?? dotRadius}
             fill={markerColor}
             key={`marker-${marker.x}-${marker.y}-${index}`}
           />

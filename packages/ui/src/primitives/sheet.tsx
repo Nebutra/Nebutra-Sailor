@@ -9,7 +9,7 @@ import { cn } from "../utils/cn";
 
 const Sheet = BaseDialog.Root;
 const SheetTrigger = React.forwardRef<
-  React.ElementRef<typeof BaseDialog.Trigger>,
+  HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof BaseDialog.Trigger> & { asChild?: boolean }
 >(({ asChild, children, ...props }, ref) => {
   if (asChild && React.isValidElement(children)) {
@@ -30,7 +30,7 @@ const SheetTrigger = React.forwardRef<
 SheetTrigger.displayName = "SheetTrigger";
 
 const SheetClose = React.forwardRef<
-  React.ElementRef<typeof BaseDialog.Close>,
+  HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof BaseDialog.Close> & { asChild?: boolean }
 >(({ asChild, children, ...props }, ref) => {
   if (asChild && React.isValidElement(children)) {
