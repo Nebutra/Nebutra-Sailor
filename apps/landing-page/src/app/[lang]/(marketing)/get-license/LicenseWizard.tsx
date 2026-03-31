@@ -21,7 +21,19 @@ interface WizardStep3 {
   githubHandle: string;
   twitterHandle: string;
   referralSource: "twitter" | "github" | "product_hunt" | "friend" | "search" | "other" | null;
+  lookingFor: string[];
 }
+
+const LOOKING_FOR_OPTIONS = [
+  { value: "co-founder", label: "Co-founder" },
+  { value: "designer", label: "Designer" },
+  { value: "engineer", label: "Engineer" },
+  { value: "early-users", label: "Early users" },
+  { value: "angel-investor", label: "Angel investor" },
+  { value: "industry-advisor", label: "Industry advisor" },
+  { value: "sales-ops", label: "Sales / Ops" },
+  { value: "nothing-solo", label: "Nothing — solo is the plan" },
+] as const;
 
 interface WizardStep4 {
   licenseKey: string;
@@ -158,6 +170,7 @@ export function LicenseWizard() {
     githubHandle: "",
     twitterHandle: "",
     referralSource: null,
+    lookingFor: [],
   });
   const [step4, setStep4] = useState<WizardStep4>({ licenseKey: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -223,6 +236,7 @@ export function LicenseWizard() {
           githubHandle: step3.githubHandle || undefined,
           twitterHandle: step3.twitterHandle || undefined,
           referralSource: step3.referralSource,
+          lookingFor: step3.lookingFor,
           acceptedTerms: true,
         }),
       });
@@ -233,8 +247,19 @@ export function LicenseWizard() {
         throw new Error(data.error || "Failed to create license");
       }
 
+      // Store member number for Sleptons welcome overlay
+      if (data.community?.memberNumber) {
+        localStorage.setItem("sleptons_member_number", String(data.community.memberNumber));
+      }
+
       setStep4({ licenseKey: data.license.licenseKey });
       setCurrentStep(4);
+
+      // Redirect to Sleptons community after a short delay
+      const communityUrl = process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002";
+      setTimeout(() => {
+        window.location.href = `${communityUrl}?welcome=true`;
+      }, 2500);
     } catch (error) {
       setSubmitError(
         error instanceof Error ? error.message : "An error occurred. Please try again.",
@@ -580,6 +605,34 @@ export function LicenseWizard() {
               {/* Contact fields */}
               {step3.tier !== "ENTERPRISE" && (
                 <div className="space-y-4">
+                  {/* Looking for — seeds Sleptons matching */}
+                  <div>
+                    <label className="mb-3 block text-sm font-semibold text-[var(--neutral-12)]">
+                      What do you need most right now? (optional)
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {LOOKING_FOR_OPTIONS.map((opt) => (
+                        <label key={opt.value} className="flex cursor-pointer items-center gap-2">
+                          <input
+                            type="checkbox"
+                            value={opt.value}
+                            checked={step3.lookingFor.includes(opt.value)}
+                            onChange={(e) => {
+                              setStep3((prev) => ({
+                                ...prev,
+                                lookingFor: e.target.checked
+                                  ? [...prev.lookingFor, opt.value]
+                                  : prev.lookingFor.filter((v) => v !== opt.value),
+                              }));
+                            }}
+                            className="h-4 w-4 rounded"
+                          />
+                          <span className="text-sm text-[var(--neutral-12)]">{opt.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
                   <div>
                     <label className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]">
                       GitHub username (optional)
@@ -681,12 +734,15 @@ export function LicenseWizard() {
 
               <div>
                 <h1 className="mb-3 text-3xl font-bold text-[var(--neutral-12)]">
-                  Welcome to Nebutra!
+                  Welcome to Sleptons!
                 </h1>
                 <p className="text-lg text-[var(--neutral-11)]">
                   {step3.tier === "INDIVIDUAL" || step3.tier === "OPC"
-                    ? "Your free license is active. You're part of the OPC revolution."
+                    ? "Your free license is active. Your Sleptons profile is live."
                     : "Your commercial license is ready. Let's build something remarkable."}
+                </p>
+                <p className="mt-2 text-sm text-[var(--neutral-11)]">
+                  Redirecting you to Sleptons community…
                 </p>
               </div>
 
@@ -712,29 +768,19 @@ export function LicenseWizard() {
               </div>
 
               {/* Action buttons */}
-              <div className="flex flex-col gap-3 w-full max-w-md">
+              <div className="flex w-full max-w-md flex-col gap-3">
                 <a
-                  href="https://app.nebutra.com/dashboard"
-                  className="rounded-lg px-6 py-3 font-semibold text-white text-center transition-opacity hover:opacity-90"
+                  href={`${process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002"}?welcome=true`}
+                  className="rounded-lg px-6 py-3 text-center font-semibold text-white transition-opacity hover:opacity-90"
                   style={{ background: "var(--brand-gradient)" }}
                 >
-                  Go to Console →
+                  Explore Sleptons Community →
                 </a>
                 <a
-                  href="https://github.com/nebutra-sailor"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-lg border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] text-center transition-colors hover:bg-[var(--neutral-2)]"
+                  href="https://app.nebutra.com/dashboard"
+                  className="rounded-lg border border-[var(--neutral-7)] px-6 py-3 text-center font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                 >
-                  Access the Template
-                </a>
-                <a
-                  href="https://discord.nebutra.dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-lg border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] text-center transition-colors hover:bg-[var(--neutral-2)]"
-                >
-                  Join Discord
+                  Go to Console
                 </a>
               </div>
             </div>
