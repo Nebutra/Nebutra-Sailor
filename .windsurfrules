@@ -1,0 +1,230 @@
+# Nebutra-Sailor — Windsurf / Cascade Rules
+
+## Project Identity
+
+**Nebutra-Sailor** is an enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms.
+
+Stack: Next.js 16 (App Router, Turbopack) · Hono · Prisma v7 · Clerk · Tailwind v4 · TypeScript 5.9 · Biome · Vitest · Playwright · Turborepo · pnpm 10.32+
+
+## Repository Map
+
+```
+apps/
+  landing-page/     Next.js 16 public marketing site (7 locales, next-intl)
+  web/              Next.js 16 authenticated SaaS dashboard (Clerk + RBAC)
+  api-gateway/      Hono + OpenAPI backend (10-layer middleware stack)
+  storybook/        Storybook 8.x component gallery
+  studio/           Sanity Studio v5 CMS
+  docs/             Mintlify product documentation
+
+packages/
+  ui/               PRIMARY components — Radix + HeroUI + Lobe UI + framer-motion
+  tokens/           CSS variables — ★ SINGLE SOURCE OF TRUTH for all colors
+  brand/            Brand primitives (colors, gradients, motion language VI)
+  theme/            Multi-theme CSS (6 oklch presets: neon, gradient, dark-dense...)
+  icons/            541 Geist icons as tree-shakable TSX
+  db/               Prisma v7 + PostgreSQL (pgvector, RLS, multi-schema)
+  billing/          Stripe subscriptions, usage credits, metering
+  identity/         Auth abstraction layer (Clerk adapter active)
+  email/            Resend transactional email templates
+  ai-sdk/           Vercel AI SDK wrapper (OpenAI, OpenRouter, streaming)
+  permissions/      RBAC/ABAC — CASL (in-process) + OpenFGA (Zanzibar)
+  webhooks/         Outbound webhook management — Svix
+  metering/         Usage metering pipeline — ClickHouse real-time
+  uploads/          S3/R2 multipart + Tus resumable + presigned URLs
+  vault/            Envelope encryption (AWS KMS + local HKDF)
+  tenant/           Multi-tenancy — AsyncLocalStorage + RLS + schema isolation
+  queue/            Message queue — QStash (serverless) + BullMQ (Redis)
+  search/           Full-text search — Meilisearch + Typesense + Algolia
+  notifications/    Multi-channel — Novu + direct dispatchers
+  logger/           Structured logging (Sentry integration)
+  errors/           Typed error definitions
+  audit/            Audit log (37 action types, actor/tenant scoping)
+  analytics/        PostHog + Dub.co
+  event-bus/        Inngest background jobs
+  cache/            Redis caching adapter
+  rate-limit/       Token bucket rate limiting
+  mcp/              Model Context Protocol server
+```
+
+## Import Rules — Always Follow These
+
+```typescript
+// Components
+import { Button, Input, Card, Badge, Separator } from "@nebutra/ui/components";
+import { PageHeader, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+
+// Icons
+import { Search, Settings, Bell } from "@nebutra/icons";      // Geist (preferred)
+import { ChevronRight, MoreHorizontal } from "lucide-react";  // generic icons
+
+// Theme
+import { ThemeProvider, useTheme } from "@nebutra/tokens";
+import { NebutraThemeProvider } from "@nebutra/ui";
+
+// Utility
+import { cn } from "@nebutra/ui/utils";
+import { cva, type VariantProps } from "class-variance-authority";
+
+// Database
+import { db } from "@nebutra/db";
+
+// Auth
+import { getAuth, requireAuth, requireOrg, getTenantContext } from "@/lib/auth";
+
+// Logging — NEVER console.log
+import { logger } from "@nebutra/logger";
+```
+
+## Styling: Token-First, Always
+
+### Color Scale (Tailwind classes — registered via @nebutra/tokens)
+```
+bg-neutral-{1-12}   text-neutral-{1-12}   border-neutral-{1-12}
+bg-blue-{1-12}      text-blue-{1-12}      (brand primary)
+bg-cyan-{1-12}      text-cyan-{1-12}      (brand accent)
+```
+
+### Semantic aliases
+```
+bg-primary          text-foreground       border-border
+bg-destructive      bg-muted             text-muted-foreground
+bg-card             text-card-foreground
+```
+
+### Brand tokens (inline style / SVG / charts only)
+```css
+var(--brand-primary)   /* #0033FE — blue, CTA, charts */
+var(--brand-accent)    /* #0BF1C3 — cyan, highlight */
+var(--brand-gradient)  /* 135deg blue→cyan */
+var(--status-danger)   /* #ef4444 */
+var(--status-warning)  /* #f59e0b */
+var(--status-success)  /* #10b981 */
+```
+
+### Container widths
+```
+max-w-4xl        → reading content (hero copy, FAQ)
+max-w-6xl        → standard content (pricing, blog)
+max-w-[1400px]   → wide sections (features, dashboard, navbar)
+```
+
+### NEVER
+- Hardcode hex brand colors: `#0033FE`, `#0BF1C3`
+- Hardcode status hex: `#ef4444`, `#f59e0b`, `#10b981`
+- Use `max-w-5xl` or `max-w-7xl` for feature sections
+
+## Animations — AnimateIn Only
+
+```tsx
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+
+// Single entrance
+<AnimateIn preset="emerge">          // blur+rise (default)
+<AnimateIn preset="flow">            // slide from left
+<AnimateIn preset="fade">
+<AnimateIn preset="fadeUp">
+<AnimateIn preset="scale">
+
+// Scroll-triggered (landing page)
+<AnimateIn preset="emerge" inView>
+
+// Staggered list
+<AnimateInGroup stagger="normal" className="grid grid-cols-3 gap-6">
+  {items.map(item => <AnimateIn key={item.id} preset="fadeUp"><Card /></AnimateIn>)}
+</AnimateInGroup>
+```
+
+**NEVER** use `motion.div` with hardcoded `initial`/`animate` values.
+
+## Next.js 16 Patterns
+
+```
+proxy.ts (NOT middleware.ts)   — request interception, runs Node.js runtime
+Server Components               — default; 'use client' only for browser APIs
+Server Actions ('use server')   — for all mutations
+Route Handlers                  — only for public APIs, webhooks, file uploads
+async cookies() / headers()     — all request APIs are now async
+'use cache'                     — Cache Components for ISR-like behavior
+```
+
+## API Gateway Patterns (Hono)
+
+```typescript
+// apps/api-gateway/src/routes/<domain>.ts
+import { Hono } from "hono";
+import { zValidator } from "@hono/zod-validator";
+import { requirePermission } from "@nebutra/permissions";
+import { getCurrentTenant } from "@nebutra/tenant";
+import { NebutraError } from "@nebutra/errors";
+
+const app = new Hono();
+
+app.get("/api/v1/resource",
+  requirePermission("read", "Resource"),
+  async (c) => {
+    const tenant = getCurrentTenant();
+    const data = await db.resource.findMany({ where: { tenantId: tenant.tenantId } });
+    return c.json({ data });
+  }
+);
+```
+
+## Permissions Reference
+
+Scopes: `read`, `create`, `update`, `delete`, `manage`, `export`
+Resources: `Project`, `Member`, `ApiKey`, `Billing`, `Webhook`, `Integration`, `Analytics`
+
+Roles (descending authority): `OWNER` → `ADMIN` → `MEMBER` → `VIEWER`
+
+```tsx
+// Hono middleware
+app.delete("/api/v1/projects/:id", requirePermission("delete", "Project"), handler);
+
+// React gate
+import { Can } from "@nebutra/permissions/react";
+<Can action="delete" resource="Project" subject={project}>
+  <DeleteButton />
+</Can>
+```
+
+## Testing Requirements
+
+| Type | Framework | Location | Threshold |
+|------|-----------|----------|-----------|
+| Unit | Vitest | `packages/*/src/**/*.test.ts` | 80% lines/fns |
+| Architecture | Vitest + fast-check | `packages/*/src/**/*.arch.ts` | must pass |
+| E2E | Playwright | `e2e/*.spec.ts` | critical flows |
+
+Every new React component **must** have a corresponding Storybook story.
+
+## Dev Commands
+
+```bash
+pnpm dev                     # all apps
+pnpm dev:dashboard           # web + api-gateway only
+pnpm dev:marketing           # landing-page + studio
+pnpm typecheck               # TypeScript (turbo)
+pnpm lint && pnpm lint:fix   # Biome linting
+pnpm test                    # Vitest
+pnpm e2e                     # Playwright
+pnpm build                   # production build
+pnpm db:generate             # Prisma client regeneration
+pnpm db:migrate              # run migrations
+pnpm infra:up                # start Docker infra (PG + Redis + CH)
+pnpm infra:lite              # PostgreSQL only
+```
+
+## Hard Rules (Never Break)
+
+1. **No `console.log`** — use `@nebutra/logger`
+2. **No hardcoded secrets** — use env vars, validated by `@nebutra/config`
+3. **No `@primer/react`** — it has been removed
+4. **No hex brand colors** — use CSS variable tokens
+5. **No raw `motion.div`** — use `AnimateIn`
+6. **No component without Storybook story**
+7. **No `middleware.ts`** — use `proxy.ts` (Next.js 16)
+8. **No direct `prisma` client** — import `db` from `@nebutra/db`
+9. **Biome, not ESLint** — never suggest ESLint configuration
+10. **Immutability** — spread objects, never mutate in place

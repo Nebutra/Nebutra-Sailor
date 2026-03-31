@@ -1,0 +1,209 @@
+---
+description: Nebutra-Sailor monorepo project rules for Cursor AI
+globs: ["**/*.ts", "**/*.tsx", "**/*.mdx"]
+alwaysApply: true
+---
+
+# Nebutra-Sailor — Cursor Rules
+
+## Project Overview
+
+**Nebutra-Sailor** is an enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms.
+
+- **Runtime**: Node.js 22+, pnpm 10.32+
+- **Framework**: Next.js 16 (App Router, React 19, Turbopack)
+- **Styling**: Tailwind CSS v4 + CSS variables from `@nebutra/tokens`
+- **Language**: TypeScript 5.9 (strict mode)
+- **Linter**: Biome (NOT ESLint)
+- **Testing**: Vitest (unit) + Playwright (E2E)
+- **License**: AGPL-3.0
+
+## Repository Structure
+
+```
+apps/
+  landing-page/   Next.js 16 — marketing site (next-intl, 7 locales)
+  web/            Next.js 16 — authenticated SaaS dashboard (Clerk auth)
+  api-gateway/    Hono + OpenAPI — backend APIs (Zod, middleware stack)
+  storybook/      Storybook 8.x — component documentation
+  design-docs/    Next.js 16 + Fumadocs — internal docs
+  studio/         Sanity Studio v5 — CMS
+  docs/           Mintlify — public product docs
+
+packages/
+  ui/             PRIMARY component library — Radix + HeroUI + Lobe UI
+  tokens/         Runtime CSS variables — SINGLE SOURCE OF TRUTH for theming
+  brand/          Brand primitives (colors, gradients, motion)
+  theme/          Multi-theme CSS (6 oklch presets)
+  icons/          541 Geist icons as tree-shakable TSX
+  db/             Prisma v7 + PostgreSQL
+  billing/        Stripe integration
+  identity/       Auth abstraction (Clerk adapter)
+  email/          Resend transactional email
+  ai-sdk/         Vercel AI SDK wrapper
+  permissions/    RBAC/ABAC — CASL + OpenFGA
+  webhooks/       Outbound webhooks — Svix
+  metering/       Usage metering — ClickHouse
+  logger/         Structured logging (Sentry)
+  errors/         Typed error definitions
+  audit/          Audit log (37 action types)
+```
+
+## CRITICAL Import Rules
+
+```tsx
+// ✅ UI components
+import { Button, Input, Card } from "@nebutra/ui/components";
+
+// ✅ Layout wrappers
+import { PageHeader, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";
+
+// ✅ Icons — Geist preferred, Lucide for generic
+import { Search, Settings } from "@nebutra/icons";
+import { ChevronRight } from "lucide-react";
+
+// ✅ Theme
+import { ThemeProvider, useTheme } from "@nebutra/tokens";
+
+// ✅ Utilities
+import { cn } from "@nebutra/ui/utils";
+
+// ❌ NEVER import from @primer/react (removed)
+// ❌ NEVER add new HeroUI imports unless Radix has NO equivalent
+// ❌ NEVER import JS color tokens from @nebutra/ui/theme
+```
+
+## Styling Rules
+
+```tsx
+// ✅ Semantic CSS variables (Tailwind token classes)
+<div className="bg-neutral-1 text-neutral-12 border-neutral-7" />
+
+// ✅ Brand colors
+<div className="bg-blue-9 text-cyan-11" />
+
+// ✅ Brand gradient
+<h1 style={{ background: "var(--brand-gradient)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }} />
+
+// ✅ Status colors
+<div className="text-[color:var(--status-warning)]" />
+
+// ❌ NEVER hardcode hex values
+<div style={{ color: "#0033FE" }} />  // → use var(--brand-primary)
+<div className="bg-[#f8fafc]" />     // → use bg-neutral-2
+
+// Container widths
+// text content: max-w-4xl
+// feature sections: max-w-[1400px]
+// NEVER: max-w-5xl, max-w-7xl
+```
+
+## Animation Rules
+
+```tsx
+// ✅ Always use AnimateIn for entrance animations
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+
+<AnimateIn preset="emerge"><YourComponent /></AnimateIn>
+<AnimateIn preset="emerge" inView><Section /></AnimateIn>
+
+// Staggered list
+<AnimateInGroup stagger="normal">
+  {items.map(item => <AnimateIn key={item.id} preset="fadeUp"><Card /></AnimateIn>)}
+</AnimateInGroup>
+
+// Presets: emerge, flow, fade, fadeUp, scale
+// ❌ NEVER: raw motion.div with hardcoded initial/animate values
+```
+
+## Component Variants
+
+```tsx
+// ✅ Use CVA for all component variants
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@nebutra/ui/utils";
+
+const variants = cva("base", {
+  variants: { size: { sm: "p-4", md: "p-6", lg: "p-8" } },
+  defaultVariants: { size: "md" },
+});
+```
+
+## Next.js 16 Rules
+
+- Default to **Server Components** — only add `'use client'` for interactivity
+- Use `proxy.ts` NOT `middleware.ts` (renamed in Next.js 16)
+- All request APIs are async: `await cookies()`, `await headers()`, `await params`
+- Use `Cache Components` (`'use cache'`) instead of PPR
+- Use Server Actions (`'use server'`) for mutations
+- Data fetching on client: use TanStack Query + typed API client
+
+## API Gateway (Hono)
+
+```ts
+// Route files in: apps/api-gateway/src/routes/
+// Middleware stack: trace → CORS → compression → security → rate-limit →
+//                  idempotency → metering → audit → versioning → tenant
+
+// Permissions middleware
+import { requirePermission } from "@nebutra/permissions";
+app.post("/api/v1/resource", requirePermission("create", "Resource"), handler);
+
+// Tenant context
+import { getCurrentTenant } from "@nebutra/tenant";
+const tenant = getCurrentTenant(); // { tenantId, plan, ... }
+```
+
+## Authentication
+
+```ts
+// apps/web/src/lib/auth.ts helpers
+import { getAuth, requireAuth, requireOrg, getTenantContext } from "@/lib/auth";
+
+// Server Component
+const { userId, orgId } = await getAuth();
+
+// Protected page — redirects to /sign-in if not authed
+await requireAuth();
+
+// Org check — redirects to /select-org if no org
+await requireOrg();
+```
+
+## Testing Requirements
+
+- Minimum **80% coverage** (lines/functions), 70% branches
+- Unit tests with Vitest: `packages/*/src/**/*.test.ts`
+- E2E with Playwright: `e2e/*.spec.ts`
+- Architecture tests: `pnpm test:arch`
+- Every new component **MUST** have a Storybook story
+
+## What NEVER to Do
+
+```tsx
+// ❌ NEVER: @primer/react
+// ❌ NEVER: console.log in production (use @nebutra/logger)
+// ❌ NEVER: hardcoded secrets (use env vars)
+// ❌ NEVER: hardcoded hex brand colors (use CSS vars)
+// ❌ NEVER: raw motion.div with hardcoded values
+// ❌ NEVER: new component without Storybook story
+// ❌ NEVER: mutations via Route Handlers (use Server Actions)
+// ❌ NEVER: middleware.ts (use proxy.ts in Next.js 16)
+```
+
+## Dev Commands
+
+```bash
+pnpm dev                    # all apps
+pnpm dev:dashboard          # web + api-gateway
+pnpm dev:marketing          # landing-page + studio
+pnpm typecheck              # TypeScript check
+pnpm lint                   # Biome lint
+pnpm lint:fix               # auto-fix
+pnpm test                   # Vitest unit tests
+pnpm e2e                    # Playwright E2E
+pnpm db:generate            # Prisma client
+pnpm db:studio              # Prisma Studio
+pnpm infra:up               # Docker infrastructure
+pnpm build                  # production build
+```

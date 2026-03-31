@@ -90,6 +90,7 @@
       "group": "Guides",
       "version": "English",
       "pages": [
+        "guides/vibe-coding",
         "guides/authentication",
         "guides/multi-tenancy",
         "guides/webhooks",
@@ -148,6 +149,7 @@
       "group": "开发指南",
       "version": "中文",
       "pages": [
+        "zh/guides/vibe-coding",
         "zh/guides/authentication",
         "zh/guides/multi-tenancy",
         "zh/guides/webhooks",
