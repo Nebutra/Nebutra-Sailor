@@ -34,7 +34,7 @@ export class SvixProvider implements WebhookProvider {
     }
 
     this.client = new Svix(apiKey, {
-      serverUrl: options.serverUrl,
+      ...(options.serverUrl !== undefined ? { serverUrl: options.serverUrl } : {}),
     });
 
     logger.info("[webhooks:svix] Provider initialized");
@@ -89,7 +89,7 @@ export class SvixProvider implements WebhookProvider {
     // Filter events: if empty array, subscribe to all (*)
     const eventTypes = endpoint.eventTypes?.length ? endpoint.eventTypes : ["*"];
 
-    const svixEndpoint = await this.client.messageEndpoint.create(appId, {
+    const svixEndpoint = await this.client.endpoint.create(appId, {
       url: endpoint.url,
       eventTypes,
       description: `Tenant: ${tenantId}`,
@@ -115,8 +115,8 @@ export class SvixProvider implements WebhookProvider {
   }
 
   async updateEndpoint(
-    endpointId: string,
-    updates: Partial<Omit<WebhookEndpoint, "id" | "secret" | "tenantId" | "createdAt">>,
+    _endpointId: string,
+    _updates: Partial<Omit<WebhookEndpoint, "id" | "secret" | "tenantId" | "createdAt">>,
   ): Promise<WebhookEndpoint> {
     // Note: Svix API requires appId to update an endpoint
     // In a real implementation, you'd need to track appId per endpointId in your DB
@@ -125,7 +125,7 @@ export class SvixProvider implements WebhookProvider {
     );
   }
 
-  async deleteEndpoint(endpointId: string): Promise<void> {
+  async deleteEndpoint(_endpointId: string): Promise<void> {
     throw new Error(
       "[webhooks:svix] deleteEndpoint requires tenant context. Use SvixProvider with pre-configured app mapping.",
     );
@@ -134,9 +134,9 @@ export class SvixProvider implements WebhookProvider {
   async listEndpoints(tenantId: string): Promise<WebhookEndpoint[]> {
     const appId = await this.getOrCreateApplication(tenantId);
 
-    const endpoints = await this.client.messageEndpoint.list(appId);
+    const endpoints = await this.client.endpoint.list(appId);
 
-    return endpoints.data.map((ep) => ({
+    return endpoints.data.map((ep: any) => ({
       id: ep.id,
       url: ep.url,
       tenantId,
@@ -163,19 +163,19 @@ export class SvixProvider implements WebhookProvider {
     return message.id;
   }
 
-  async getDeliveryAttempts(messageId: string): Promise<WebhookDeliveryAttempt[]> {
+  async getDeliveryAttempts(_messageId: string): Promise<WebhookDeliveryAttempt[]> {
     throw new Error(
       "[webhooks:svix] getDeliveryAttempts requires app context. Use SvixProvider with pre-configured app mapping.",
     );
   }
 
-  async retryMessage(messageId: string, endpointId: string): Promise<void> {
+  async retryMessage(_messageId: string, _endpointId: string): Promise<void> {
     throw new Error(
       "[webhooks:svix] retryMessage requires app context. Use SvixProvider with pre-configured app mapping.",
     );
   }
 
-  async rotateSecret(endpointId: string): Promise<string> {
+  async rotateSecret(_endpointId: string): Promise<string> {
     throw new Error(
       "[webhooks:svix] rotateSecret requires app context. Use SvixProvider with pre-configured app mapping.",
     );
@@ -192,7 +192,7 @@ export class SvixProvider implements WebhookProvider {
         return false;
       }
 
-      const [, timestamp, sig] = parts;
+      const [, timestamp, sig] = parts as [string, string, string];
 
       // Use our signing module for verification
       return verifyPayload(payload, sig, secret, timestamp);

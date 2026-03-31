@@ -101,11 +101,8 @@ export function parseWebhookSignatureHeader(headerValue: string): {
     return null;
   }
 
-  return {
-    secret: tokens[0],
-    timestamp: tokens[1],
-    signature: tokens[2],
-  };
+  const [secret, timestamp, signature] = tokens as [string, string, string];
+  return { secret, timestamp, signature };
 }
 
 /**

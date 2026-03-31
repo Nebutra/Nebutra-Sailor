@@ -242,7 +242,7 @@ export class CustomProvider implements WebhookProvider {
       // Schedule retry if attempts remaining
       if (attemptNumber < this.maxRetries - 1) {
         const backoffSec =
-          BACKOFF_SCHEDULE[attemptNumber] || BACKOFF_SCHEDULE[BACKOFF_SCHEDULE.length - 1];
+          BACKOFF_SCHEDULE[attemptNumber] ?? BACKOFF_SCHEDULE[BACKOFF_SCHEDULE.length - 1] ?? 21600;
         const nextRetryAt = new Date(Date.now() + backoffSec * 1000);
         attempt.nextRetryAt = nextRetryAt.toISOString();
 
@@ -319,7 +319,7 @@ export class CustomProvider implements WebhookProvider {
         return false;
       }
 
-      const [, timestamp, sig] = parts;
+      const [, timestamp, sig] = parts as [string, string, string];
       return verifyPayload(payload, sig, secret, timestamp);
     } catch {
       return false;

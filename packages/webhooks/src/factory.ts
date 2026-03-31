@@ -57,8 +57,10 @@ export async function createWebhooks(config?: WebhookConfig): Promise<WebhookPro
       const { SvixProvider } = await import("./providers/svix.js");
       const svixConfig = config as Exclude<WebhookConfig, { provider: "custom" }> | undefined;
       return new SvixProvider({
-        apiKey: svixConfig?.apiKey,
-        serverUrl: (svixConfig as any)?.serverUrl,
+        ...(svixConfig?.apiKey !== undefined ? { apiKey: svixConfig.apiKey } : {}),
+        ...((svixConfig as any)?.serverUrl !== undefined
+          ? { serverUrl: (svixConfig as any).serverUrl }
+          : {}),
       });
     }
 

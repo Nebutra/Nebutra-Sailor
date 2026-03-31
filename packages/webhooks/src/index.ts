@@ -39,7 +39,6 @@ export {
   WebhookDeliveryAttemptSchema,
   type WebhookEndpoint,
   WebhookEndpointSchema,
-  type WebhookEventType,
   WebhookEventType,
   type WebhookMessage,
   WebhookMessageSchema,
