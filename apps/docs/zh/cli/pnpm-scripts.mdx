@@ -1,0 +1,201 @@
+---
+title: pnpm 脚本参考
+description: Nebutra-Sailor 中所有 Turborepo 编排 pnpm 脚本的完整参考。
+---
+
+所有脚本均由 [Turborepo](https://turbo.build/repo) 编排，除特别说明外，均从 monorepo 根目录运行。
+
+```bash
+# 从 monorepo 根目录运行任意脚本
+pnpm <script>
+
+# 为特定包运行脚本
+pnpm --filter @nebutra/ui typecheck
+pnpm --filter apps/web dev
+```
+
+## 开发
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm dev` | 同时启动所有应用 |
+| `pnpm dev:dashboard` | Web 应用（3000 端口）+ API 网关（3001 端口） |
+| `pnpm dev:marketing` | 落地页（3002 端口）+ Sanity Studio（3333 端口） |
+| `pnpm dev:ai-saas` | 全部 6 个 AI SaaS 应用 |
+| `pnpm dev:overseas` | 国际化语言应用（4 个应用） |
+| `pnpm dev:growth` | 增长类应用（3 个应用） |
+| `pnpm dev:creative` | 创意套件应用（2 个应用） |
+| `pnpm dev:blog` | 博客应用（2 个应用） |
+| `pnpm dev:community` | 社区平台应用（3 个应用） |
+| `pnpm dev:solo` | 独立开发者套件（4 个应用） |
+| `pnpm dev:design` | 设计工具（2 个应用） |
+
+## 构建
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm build` | 所有应用的生产构建 |
+| `pnpm build:ai-saas` | 构建 AI SaaS 预设（6 个应用） |
+| `pnpm build:marketing` | 构建营销预设（3 个应用） |
+| `pnpm build:dashboard` | 构建仪表板预设（3 个应用） |
+
+## 代码质量
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm typecheck` | TypeScript 类型检查（turbo，全部包） |
+| `pnpm lint` | Biome lint（全部包） |
+| `pnpm lint:fix` | 自动修复 lint 问题 |
+| `pnpm format` | Biome 格式化（全部包） |
+
+## 测试
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm test` | 运行所有 Vitest 单元测试 |
+| `pnpm test:watch` | 监听模式 |
+| `pnpm test:coverage` | 含覆盖率报告（80% 阈值） |
+| `pnpm test:arch` | 架构合规测试 |
+| `pnpm e2e` | Playwright E2E 测试 |
+
+## 数据库
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm db:generate` | 重新生成 Prisma 客户端 |
+| `pnpm db:migrate` | 运行待执行迁移 |
+| `pnpm db:push` | 直接推送 schema（不生成迁移） |
+| `pnpm db:seed` | 填充测试数据 |
+| `pnpm db:studio` | 启动 Prisma Studio GUI |
+| `pnpm db:reset` | ⚠️ 重置整个数据库 |
+
+## 基础设施
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm infra:up` | 启动完整 Docker 服务栈（PG + Redis + ClickHouse + Meilisearch） |
+| `pnpm infra:lite` | 启动精简栈（仅 PostgreSQL——最快启动） |
+| `pnpm infra:down` | 停止所有服务 |
+| `pnpm check-env` | 验证环境变量 |
+
+## 品牌与设计
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm brand:sync` | 跨包同步品牌资产 |
+| `pnpm brand:init` | 初始化品牌配置 |
+| `pnpm brand:apply` | 将品牌更改应用到所有包 |
+| `pnpm brand:palette` | 交互式调色板生成器 |
+
+```bash
+# 生成自定义调色板
+node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
+```
+
+## API 与类型
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm generate:api-types` | 从 OpenAPI 规范重新生成 TypeScript 类型 |
+| `pnpm docs:cli` | 自动生成 CLI 参考文档 |
+| `pnpm export:openapi` | 导出 OpenAPI Schema 到 `api-reference/openapi.yaml` |
+
+## 预设与配置
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm preset:env` | 通过交互式 CLI 配置当前激活的预设 |
+
+## 国际化
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm i18n:sync` | 跨语言同步翻译文件 |
+| `pnpm i18n:missing` | 列出缺失的翻译键 |
+
+## 发布与版本管理
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm version:packages` | 基于 changesets 更新包版本号 |
+| `pnpm release` | 发布包到 npm 注册中心 |
+
+```bash
+# 标准发布流程
+pnpm version:packages   # 根据 changesets 更新版本号
+git push --follow-tags
+pnpm release            # 发布到 npm
+```
+
+## 包体积分析
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm size` | 检查包体积是否超出预算 |
+| `pnpm size:why` | 详细的包体积组成分析 |
+
+## 治理与合规
+
+| 脚本 | 说明 |
+|------|------|
+| `pnpm license:check` | 审计生产依赖许可证 |
+| `pnpm ui:governance` | 验证 UI Token 治理策略 |
+| `pnpm ui:governance:verify` | 严格治理验证 |
+
+## 常用命令组合
+
+```bash
+# 完全重置（全新开始）
+pnpm infra:down
+pnpm infra:up
+pnpm db:reset
+pnpm db:migrate
+pnpm db:seed
+
+# 提交前检查
+pnpm typecheck && pnpm lint && pnpm test
+
+# 拉取代码后
+pnpm install
+pnpm db:generate
+pnpm db:migrate
+
+# Storybook 开发
+pnpm --filter @nebutra/storybook dev
+
+# 生产就绪检查
+pnpm build && pnpm test && pnpm e2e
+```
+
+## Filter 语法
+
+使用 `--filter` 定向到特定应用或包：
+
+```bash
+# 按包名
+pnpm --filter @nebutra/ui typecheck
+pnpm --filter @nebutra/billing test
+
+# 按应用名（不含 @）
+pnpm --filter landing-page dev
+pnpm --filter web build
+
+# 多个过滤器
+pnpm --filter @nebutra/ui --filter @nebutra/tokens build
+
+# 在所有包中运行脚本
+pnpm -r typecheck
+```
+
+## Turborepo 缓存
+
+Turborepo 会在本地（可选远程）缓存任务输出。缓存命中时显示 `cache hit, replaying output`。
+
+```bash
+# 强制重新执行，绕过缓存
+pnpm build --force
+
+# 远程缓存（需要 Vercel 账号）
+pnpm dlx turbo login
+pnpm dlx turbo link
+```

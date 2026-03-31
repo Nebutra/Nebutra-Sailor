@@ -244,6 +244,11 @@
       "pages": ["sdks/javascript", "sdks/python"]
     },
     {
+      "group": "CLI",
+      "version": "English",
+      "pages": ["cli/overview", "cli/create-sailor", "cli/nebutra-cli", "cli/pnpm-scripts"]
+    },
+    {
       "group": "",
       "version": "中文",
       "pages": ["zh/introduction"]
@@ -426,6 +431,16 @@
       "group": "SDK",
       "version": "中文",
       "pages": ["zh/sdks/javascript", "zh/sdks/python"]
+    },
+    {
+      "group": "CLI 工具",
+      "version": "中文",
+      "pages": [
+        "zh/cli/overview",
+        "zh/cli/create-sailor",
+        "zh/cli/nebutra-cli",
+        "zh/cli/pnpm-scripts"
+      ]
     }
   ],
   "feedback": {

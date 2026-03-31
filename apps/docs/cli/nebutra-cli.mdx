@@ -1,0 +1,457 @@
+---
+title: nebutra CLI
+description: The unified Nebutra command-line tool — scaffold, manage infra, run migrations, and more.
+---
+
+The `nebutra` CLI is your primary tool for day-to-day development inside a Nebutra-Sailor monorepo.
+
+## Installation
+
+```bash
+# Inside the monorepo — no install needed
+pnpm exec nebutra --help
+
+# Global install
+npm install -g nebutra
+```
+
+## Command reference
+
+### `nebutra init`
+
+Initialize a Nebutra project and create `nebutra.config.json`.
+
+```bash
+nebutra init
+nebutra init --dry-run          # Preview without writing files (exit code 10)
+nebutra init --if-not-exists    # Skip if config already exists
+```
+
+---
+
+### `nebutra add`
+
+Add a component or feature to your project. Supports 21st.dev and v0.dev registries.
+
+```bash
+nebutra add button card                   # Add from @nebutra/ui
+nebutra add --21st pricing-table          # Fetch from 21st.dev
+nebutra add --v0 https://v0.dev/r/abc123  # Fetch from v0.dev
+nebutra add button --dry-run              # Preview without installing
+nebutra add button --yes                  # Skip prompts (Agent mode)
+nebutra add button --if-not-exists        # Skip if already installed
+```
+
+---
+
+### `nebutra generate` (alias: `gen`)
+
+Scaffold new apps, packages, API routes, and UI components.
+
+<Tabs>
+  <Tab title="app">
+    Scaffold a new Next.js 16 app with Tailwind v4:
+
+    ```bash
+    nebutra generate app my-blog
+    nebutra gen app my-blog --dry-run
+    ```
+
+    Creates `apps/my-blog/` with `package.json`, `tsconfig.json`, layout, page, and globals.
+  </Tab>
+  <Tab title="package">
+    Scaffold a new `@nebutra/<name>` package:
+
+    ```bash
+    nebutra generate package notifications
+    nebutra gen package notifications --dry-run
+    ```
+
+    Creates `packages/notifications/` with `package.json`, `tsconfig.json`, and `src/index.ts`.
+  </Tab>
+  <Tab title="route">
+    Scaffold a Hono API route in `apps/api-gateway`:
+
+    ```bash
+    nebutra generate route projects
+    nebutra gen route projects/members
+    ```
+
+    Creates `apps/api-gateway/src/routes/projects.ts` with GET and POST handlers.
+  </Tab>
+  <Tab title="component">
+    Scaffold a UI component with a Storybook story:
+
+    ```bash
+    nebutra generate component PricingCard
+    nebutra gen component PricingCard --variants "primary,outlined" --sizes "sm,md,lg"
+    ```
+
+    Creates `packages/ui/src/components/pricing-card.tsx` + `.stories.tsx`.
+  </Tab>
+</Tabs>
+
+---
+
+### `nebutra db`
+
+Database management via Prisma.
+
+| Subcommand | Description |
+|------------|-------------|
+| `db generate` | Regenerate Prisma client |
+| `db migrate` | Run all pending migrations |
+| `db migrate create <name>` | Create a new named migration |
+| `db push` | Push schema to database (no migration file) |
+| `db seed` | Populate test data |
+| `db studio` | Launch Prisma Studio GUI |
+| `db reset --yes` | ⚠️ Reset entire database |
+| `db status` | Show migration status |
+
+```bash
+nebutra db generate
+nebutra db migrate
+nebutra db migrate create add-user-table
+nebutra db push
+nebutra db seed
+nebutra db studio
+nebutra db reset --yes     # DANGEROUS — requires --yes
+nebutra db status --format json
+```
+
+**Flags:** `--dry-run`, `--yes`, `--format <json|plain>`
+
+---
+
+### `nebutra infra`
+
+Docker Compose infrastructure management (PostgreSQL, Redis, Meilisearch, ClickHouse, etc.).
+
+| Subcommand | Description |
+|------------|-------------|
+| `infra up` | Start the full Docker stack |
+| `infra up --lite` | Start lite stack (PostgreSQL + Redis only) |
+| `infra up --profile search` | Start with Meilisearch profile |
+| `infra down` | Stop all services |
+| `infra status` | Show service status table |
+| `infra logs [service]` | Show last 50 log lines |
+| `infra reset --yes` | ⚠️ Remove all containers and volumes |
+
+```bash
+nebutra infra up
+nebutra infra up --lite
+nebutra infra up --profile search
+nebutra infra down
+nebutra infra status
+nebutra infra status --format json
+nebutra infra logs
+nebutra infra logs postgres
+nebutra infra reset --yes    # DANGEROUS
+```
+
+**Flags:** `--dry-run`, `--yes`, `--lite`, `--profile <name>`, `--format <json|plain>`
+
+---
+
+### `nebutra env`
+
+Environment variable management.
+
+| Subcommand | Description |
+|------------|-------------|
+| `env validate` | Check all required vars from `.env.example` are set |
+| `env template` | Generate `.env.local` interactively from `.env.example` |
+| `env template --yes` | Generate with defaults (non-interactive) |
+| `env diff` | Compare `.env.local` vs `.env.example` |
+| `env show` | Display current vars (secrets are masked) |
+
+```bash
+nebutra env validate
+nebutra env template
+nebutra env template --yes
+nebutra env diff
+nebutra env show
+nebutra env show --format json
+```
+
+<Note>
+  Variables with `KEY`, `TOKEN`, `SECRET`, or `PASSWORD` in their name are automatically masked in `env show` output.
+</Note>
+
+**Flags:** `--dry-run`, `--yes`, `--format <json|plain>`
+
+---
+
+### `nebutra brand`
+
+Brand management and palette generation.
+
+```bash
+nebutra brand palette --primary=#7C3AED --secondary=#F59E0B
+nebutra brand sync
+```
+
+---
+
+### `nebutra i18n`
+
+Internationalization utilities.
+
+```bash
+nebutra i18n sync         # Sync translation files
+nebutra i18n missing      # List missing translation keys
+nebutra i18n validate     # Validate all locale files
+```
+
+---
+
+### `nebutra preset`
+
+SaaS configuration preset management.
+
+```bash
+nebutra preset list                   # List available presets
+nebutra preset list --format json
+nebutra preset apply ai-saas          # Apply a preset
+nebutra preset diff                   # Show current vs target preset diff
+```
+
+---
+
+### `nebutra dev`
+
+Start development servers with preset filtering.
+
+```bash
+nebutra dev                           # Start all apps
+nebutra dev --preset=ai-saas          # Start AI SaaS preset apps only
+nebutra dev --preset=dashboard        # Web + API gateway only
+nebutra dev --preset=marketing        # Landing page + Studio
+```
+
+---
+
+### `nebutra test`
+
+Run tests.
+
+```bash
+nebutra test                          # Run all tests
+nebutra test unit                     # Vitest unit tests
+nebutra test e2e                      # Playwright E2E tests
+nebutra test arch                     # Architecture conformance tests
+nebutra test --coverage               # With coverage report
+```
+
+---
+
+### `nebutra auth`
+
+Authentication configuration.
+
+```bash
+nebutra auth status                   # Current auth provider and config
+nebutra auth switch clerk             # Switch to Clerk provider
+nebutra auth switch better-auth       # Switch to Better Auth
+```
+
+---
+
+### `nebutra billing`
+
+Billing and subscription management.
+
+```bash
+nebutra billing status                # Current billing config
+nebutra billing plans list            # List configured plans
+nebutra billing sync                  # Sync plans to Stripe
+```
+
+---
+
+### `nebutra ai`
+
+AI provider and SDK configuration.
+
+```bash
+nebutra ai status                     # Current AI config
+nebutra ai providers list             # Available providers
+nebutra ai switch openai              # Switch default provider
+```
+
+---
+
+### `nebutra secrets`
+
+Application-layer encrypted secrets (via `@nebutra/vault`).
+
+```bash
+nebutra secrets list --tenant org_123
+nebutra secrets set --tenant org_123 --key OPENAI_KEY --value sk-...
+nebutra secrets delete --tenant org_123 --key OPENAI_KEY
+```
+
+---
+
+### `nebutra services`
+
+Microservice health and status.
+
+```bash
+nebutra services status               # Health overview of all services
+nebutra services list                 # List registered services
+```
+
+---
+
+### `nebutra search`
+
+Full-text search index management (Meilisearch / Typesense / Algolia).
+
+```bash
+nebutra search status                 # Search provider status
+nebutra search reindex products       # Reindex a specific index
+nebutra search reindex --all          # Reindex all indexes
+```
+
+---
+
+### `nebutra admin`
+
+Platform administration.
+
+```bash
+nebutra admin tenants                 # List all tenants
+nebutra admin tenants --format json
+nebutra admin health                  # Platform-wide health check
+```
+
+---
+
+### `nebutra community`
+
+Community health and showcase.
+
+```bash
+nebutra community health              # Community health score
+nebutra community health --period 30d # Last 30 days
+nebutra community showcase list       # Browse project showcase
+```
+
+---
+
+### `nebutra growth`
+
+Growth metrics and analytics.
+
+```bash
+nebutra growth dashboard              # Growth overview
+nebutra growth funnel                 # Conversion funnel
+nebutra growth funnel --segment paid  # Filter by segment
+nebutra growth pulse                  # AI-powered growth insights
+nebutra growth pulse --focus retention
+```
+
+---
+
+### `nebutra ecosystem`
+
+Ecosystem and template marketplace.
+
+```bash
+nebutra ecosystem status              # Ecosystem dashboard
+nebutra ecosystem publish --tag latest  # Publish template
+nebutra ecosystem ideas list          # Browse ideas marketplace
+nebutra ecosystem opc register        # Join OPC member network
+```
+
+---
+
+### `nebutra schema`
+
+Output the full CLI schema as JSON (useful for AI tools and tooling integrations).
+
+```bash
+nebutra schema                        # Human-readable schema
+nebutra schema --all                  # Full schema for Agents
+nebutra schema --format json          # JSON schema output
+```
+
+---
+
+### `nebutra stats`
+
+Monorepo overview and statistics.
+
+```bash
+nebutra stats                         # Package count, app count, etc.
+nebutra stats --format json
+```
+
+---
+
+### `nebutra completions`
+
+Install shell completions for bash, zsh, or fish.
+
+```bash
+nebutra completions bash              # Install bash completions
+nebutra completions zsh               # Install zsh completions
+nebutra completions fish              # Install fish completions
+```
+
+---
+
+### `nebutra doctor`
+
+Check your project setup for common issues.
+
+```bash
+nebutra doctor
+```
+
+<Warning>
+  The `doctor` command is not yet fully implemented. Basic checks run, but comprehensive diagnostics are coming in a future release.
+</Warning>
+
+---
+
+### `nebutra mcp`
+
+MCP server integration management. See [MCP documentation](/cli/mcp) for details.
+
+```bash
+nebutra mcp status                    # MCP server status
+nebutra mcp start                     # Start the MCP context server
+```
+
+---
+
+## Agent mode
+
+All commands support `--yes` for non-interactive execution in CI/CD pipelines, agent environments, and scripting:
+
+```bash
+# Safe for CI/CD and AI agents
+nebutra init --yes
+nebutra add button card --yes
+nebutra env template --yes
+nebutra db migrate --yes
+nebutra generate app analytics --yes
+```
+
+When running in a non-TTY environment (piped output, CI), `--yes` is automatically implied.
+
+## Dry-run mode
+
+Use `--dry-run` to preview changes without side effects. Returns exit code `10` when dry-run completes successfully:
+
+```bash
+nebutra init --dry-run
+nebutra add button --dry-run
+nebutra generate app my-blog --dry-run
+nebutra db migrate --dry-run
+nebutra infra up --dry-run
+```
+
+Dry-run output is always JSON-structured for easy parsing by agents.
