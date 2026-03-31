@@ -130,8 +130,6 @@ model User {
   activities         UserActivity[]
   wallets            Wallet[]
   oauthAuthorizations OAuthAuthorization[]
-  communityProfile   CommunityProfile?
-  licenses           License[]
 
   @@map("users")
   @@schema("public")
@@ -1465,8 +1463,7 @@ enum LicenseType {
 
 model CommunityProfile {
   id            String    @id @default(cuid())
-  userId        String    @unique @map("user_id")
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String    @unique @map("user_id")  // Clerk user ID
 
   // Professional context
   displayName   String?   @map("display_name")
@@ -1496,8 +1493,7 @@ model CommunityProfile {
 
 model License {
   id              String      @id @default(cuid())
-  userId          String      @map("user_id")
-  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String      @map("user_id")  // Clerk user ID
 
   tier            LicenseTier
   type            LicenseType

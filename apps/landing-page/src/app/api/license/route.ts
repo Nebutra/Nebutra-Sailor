@@ -45,21 +45,15 @@ export async function POST(req: NextRequest) {
 
     const data = parsed.data;
 
-    // Look up user by Clerk ID
-    const user = await prisma.user.findUnique({ where: { clerkId: userId } });
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
     // Determine license type
     const isFree = data.tier === "INDIVIDUAL" || data.tier === "OPC";
     const licenseType = isFree ? "FREE" : "COMMERCIAL";
 
-    // Upsert community profile
+    // Upsert community profile (keyed by Clerk userId)
     await prisma.communityProfile.upsert({
-      where: { userId: user.id },
+      where: { userId },
       create: {
-        userId: user.id,
+        userId,
         role: data.role,
         company: data.company,
         teamSize: data.teamSize,
@@ -83,10 +77,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Create license
+    // Create license (keyed by Clerk userId)
     const license = await prisma.license.create({
       data: {
-        userId: user.id,
+        userId,
         tier: data.tier,
         type: licenseType,
         acceptedIp: req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? undefined,
@@ -113,7 +107,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// GET /api/license/check — Check if current user has an active license
+// GET /api/license — Check if current user has an active license
 export async function GET() {
   try {
     const { userId } = await auth();
@@ -121,23 +115,18 @@ export async function GET() {
       return NextResponse.json({ hasLicense: false, tier: null });
     }
 
-    const user = await prisma.user.findUnique({
-      where: { clerkId: userId },
-      include: {
-        licenses: {
-          where: { isActive: true },
-          orderBy: { createdAt: "desc" },
-          take: 1,
-        },
-        communityProfile: true,
-      },
-    });
+    const [license, communityProfile] = await Promise.all([
+      prisma.license.findFirst({
+        where: { userId, isActive: true },
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.communityProfile.findUnique({ where: { userId } }),
+    ]);
 
-    if (!user || user.licenses.length === 0) {
+    if (!license) {
       return NextResponse.json({ hasLicense: false, tier: null });
     }
 
-    const license = user.licenses[0];
     const isExpired = license.expiresAt && license.expiresAt < new Date();
 
     return NextResponse.json({
@@ -146,7 +135,7 @@ export async function GET() {
       type: license.type,
       licenseKey: license.licenseKey,
       expiresAt: license.expiresAt,
-      hasCommunityProfile: !!user.communityProfile,
+      hasCommunityProfile: !!communityProfile,
     });
   } catch (error) {
     console.error("[GET /api/license]", error);

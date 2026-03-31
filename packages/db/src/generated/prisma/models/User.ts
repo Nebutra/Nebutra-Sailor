@@ -204,8 +204,6 @@ export type UserWhereInput = {
   activities?: Prisma.UserActivityListRelationFilter
   wallets?: Prisma.WalletListRelationFilter
   oauthAuthorizations?: Prisma.OAuthAuthorizationListRelationFilter
-  communityProfile?: Prisma.XOR<Prisma.CommunityProfileNullableScalarRelationFilter, Prisma.CommunityProfileWhereInput> | null
-  licenses?: Prisma.LicenseListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -222,8 +220,6 @@ export type UserOrderByWithRelationInput = {
   activities?: Prisma.UserActivityOrderByRelationAggregateInput
   wallets?: Prisma.WalletOrderByRelationAggregateInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationOrderByRelationAggregateInput
-  communityProfile?: Prisma.CommunityProfileOrderByWithRelationInput
-  licenses?: Prisma.LicenseOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -243,8 +239,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   activities?: Prisma.UserActivityListRelationFilter
   wallets?: Prisma.WalletListRelationFilter
   oauthAuthorizations?: Prisma.OAuthAuthorizationListRelationFilter
-  communityProfile?: Prisma.XOR<Prisma.CommunityProfileNullableScalarRelationFilter, Prisma.CommunityProfileWhereInput> | null
-  licenses?: Prisma.LicenseListRelationFilter
 }, "id" | "clerkId" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -287,8 +281,6 @@ export type UserCreateInput = {
   activities?: Prisma.UserActivityCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -305,8 +297,6 @@ export type UserUncheckedCreateInput = {
   activities?: Prisma.UserActivityUncheckedCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileUncheckedCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -323,8 +313,6 @@ export type UserUpdateInput = {
   activities?: Prisma.UserActivityUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -341,8 +329,6 @@ export type UserUncheckedUpdateInput = {
   activities?: Prisma.UserActivityUncheckedUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUncheckedUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -494,34 +480,6 @@ export type UserUpdateOneRequiredWithoutOauthAuthorizationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOauthAuthorizationsInput, Prisma.UserUpdateWithoutOauthAuthorizationsInput>, Prisma.UserUncheckedUpdateWithoutOauthAuthorizationsInput>
 }
 
-export type UserCreateNestedOneWithoutCommunityProfileInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCommunityProfileInput, Prisma.UserUncheckedCreateWithoutCommunityProfileInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCommunityProfileInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutCommunityProfileNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCommunityProfileInput, Prisma.UserUncheckedCreateWithoutCommunityProfileInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCommunityProfileInput
-  upsert?: Prisma.UserUpsertWithoutCommunityProfileInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCommunityProfileInput, Prisma.UserUpdateWithoutCommunityProfileInput>, Prisma.UserUncheckedUpdateWithoutCommunityProfileInput>
-}
-
-export type UserCreateNestedOneWithoutLicensesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutLicensesInput, Prisma.UserUncheckedCreateWithoutLicensesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLicensesInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutLicensesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutLicensesInput, Prisma.UserUncheckedCreateWithoutLicensesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLicensesInput
-  upsert?: Prisma.UserUpsertWithoutLicensesInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLicensesInput, Prisma.UserUpdateWithoutLicensesInput>, Prisma.UserUncheckedUpdateWithoutLicensesInput>
-}
-
 export type UserCreateWithoutOrganizationsInput = {
   id?: string
   clerkId: string
@@ -535,8 +493,6 @@ export type UserCreateWithoutOrganizationsInput = {
   activities?: Prisma.UserActivityCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrganizationsInput = {
@@ -552,8 +508,6 @@ export type UserUncheckedCreateWithoutOrganizationsInput = {
   activities?: Prisma.UserActivityUncheckedCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileUncheckedCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrganizationsInput = {
@@ -585,8 +539,6 @@ export type UserUpdateWithoutOrganizationsInput = {
   activities?: Prisma.UserActivityUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizationsInput = {
@@ -602,8 +554,6 @@ export type UserUncheckedUpdateWithoutOrganizationsInput = {
   activities?: Prisma.UserActivityUncheckedUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUncheckedUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutContentsInput = {
@@ -619,8 +569,6 @@ export type UserCreateWithoutContentsInput = {
   activities?: Prisma.UserActivityCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutContentsInput = {
@@ -636,8 +584,6 @@ export type UserUncheckedCreateWithoutContentsInput = {
   activities?: Prisma.UserActivityUncheckedCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileUncheckedCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutContentsInput = {
@@ -669,8 +615,6 @@ export type UserUpdateWithoutContentsInput = {
   activities?: Prisma.UserActivityUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutContentsInput = {
@@ -686,8 +630,6 @@ export type UserUncheckedUpdateWithoutContentsInput = {
   activities?: Prisma.UserActivityUncheckedUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUncheckedUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrdersInput = {
@@ -703,8 +645,6 @@ export type UserCreateWithoutOrdersInput = {
   activities?: Prisma.UserActivityCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrdersInput = {
@@ -720,8 +660,6 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   activities?: Prisma.UserActivityUncheckedCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileUncheckedCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrdersInput = {
@@ -753,8 +691,6 @@ export type UserUpdateWithoutOrdersInput = {
   activities?: Prisma.UserActivityUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -770,8 +706,6 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   activities?: Prisma.UserActivityUncheckedUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUncheckedUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWalletsInput = {
@@ -787,8 +721,6 @@ export type UserCreateWithoutWalletsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   activities?: Prisma.UserActivityCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWalletsInput = {
@@ -804,8 +736,6 @@ export type UserUncheckedCreateWithoutWalletsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   activities?: Prisma.UserActivityUncheckedCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileUncheckedCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWalletsInput = {
@@ -837,8 +767,6 @@ export type UserUpdateWithoutWalletsInput = {
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   activities?: Prisma.UserActivityUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWalletsInput = {
@@ -854,8 +782,6 @@ export type UserUncheckedUpdateWithoutWalletsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   activities?: Prisma.UserActivityUncheckedUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUncheckedUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutActivitiesInput = {
@@ -871,8 +797,6 @@ export type UserCreateWithoutActivitiesInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -888,8 +812,6 @@ export type UserUncheckedCreateWithoutActivitiesInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileUncheckedCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutActivitiesInput = {
@@ -921,8 +843,6 @@ export type UserUpdateWithoutActivitiesInput = {
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -938,8 +858,6 @@ export type UserUncheckedUpdateWithoutActivitiesInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUncheckedUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOauthAuthorizationsInput = {
@@ -955,8 +873,6 @@ export type UserCreateWithoutOauthAuthorizationsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   activities?: Prisma.UserActivityCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOauthAuthorizationsInput = {
@@ -972,8 +888,6 @@ export type UserUncheckedCreateWithoutOauthAuthorizationsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   activities?: Prisma.UserActivityUncheckedCreateNestedManyWithoutUserInput
   wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileUncheckedCreateNestedOneWithoutUserInput
-  licenses?: Prisma.LicenseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOauthAuthorizationsInput = {
@@ -1005,8 +919,6 @@ export type UserUpdateWithoutOauthAuthorizationsInput = {
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   activities?: Prisma.UserActivityUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOauthAuthorizationsInput = {
@@ -1022,176 +934,6 @@ export type UserUncheckedUpdateWithoutOauthAuthorizationsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   activities?: Prisma.UserActivityUncheckedUpdateManyWithoutUserNestedInput
   wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUncheckedUpdateOneWithoutUserNestedInput
-  licenses?: Prisma.LicenseUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutCommunityProfileInput = {
-  id?: string
-  clerkId: string
-  email: string
-  name?: string | null
-  avatarUrl?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
-  contents?: Prisma.ContentCreateNestedManyWithoutAuthorInput
-  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
-  activities?: Prisma.UserActivityCreateNestedManyWithoutUserInput
-  wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
-  oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
-  licenses?: Prisma.LicenseCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutCommunityProfileInput = {
-  id?: string
-  clerkId: string
-  email: string
-  name?: string | null
-  avatarUrl?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutAuthorInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
-  activities?: Prisma.UserActivityUncheckedCreateNestedManyWithoutUserInput
-  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
-  oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
-  licenses?: Prisma.LicenseUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutCommunityProfileInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCommunityProfileInput, Prisma.UserUncheckedCreateWithoutCommunityProfileInput>
-}
-
-export type UserUpsertWithoutCommunityProfileInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutCommunityProfileInput, Prisma.UserUncheckedUpdateWithoutCommunityProfileInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutCommunityProfileInput, Prisma.UserUncheckedCreateWithoutCommunityProfileInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutCommunityProfileInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutCommunityProfileInput, Prisma.UserUncheckedUpdateWithoutCommunityProfileInput>
-}
-
-export type UserUpdateWithoutCommunityProfileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
-  contents?: Prisma.ContentUpdateManyWithoutAuthorNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
-  activities?: Prisma.UserActivityUpdateManyWithoutUserNestedInput
-  wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
-  oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
-  licenses?: Prisma.LicenseUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutCommunityProfileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutAuthorNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
-  activities?: Prisma.UserActivityUncheckedUpdateManyWithoutUserNestedInput
-  wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
-  oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
-  licenses?: Prisma.LicenseUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutLicensesInput = {
-  id?: string
-  clerkId: string
-  email: string
-  name?: string | null
-  avatarUrl?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
-  contents?: Prisma.ContentCreateNestedManyWithoutAuthorInput
-  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
-  activities?: Prisma.UserActivityCreateNestedManyWithoutUserInput
-  wallets?: Prisma.WalletCreateNestedManyWithoutUserInput
-  oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileCreateNestedOneWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutLicensesInput = {
-  id?: string
-  clerkId: string
-  email: string
-  name?: string | null
-  avatarUrl?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutAuthorInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
-  activities?: Prisma.UserActivityUncheckedCreateNestedManyWithoutUserInput
-  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutUserInput
-  oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
-  communityProfile?: Prisma.CommunityProfileUncheckedCreateNestedOneWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutLicensesInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutLicensesInput, Prisma.UserUncheckedCreateWithoutLicensesInput>
-}
-
-export type UserUpsertWithoutLicensesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutLicensesInput, Prisma.UserUncheckedUpdateWithoutLicensesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutLicensesInput, Prisma.UserUncheckedCreateWithoutLicensesInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutLicensesInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutLicensesInput, Prisma.UserUncheckedUpdateWithoutLicensesInput>
-}
-
-export type UserUpdateWithoutLicensesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
-  contents?: Prisma.ContentUpdateManyWithoutAuthorNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
-  activities?: Prisma.UserActivityUpdateManyWithoutUserNestedInput
-  wallets?: Prisma.WalletUpdateManyWithoutUserNestedInput
-  oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUpdateOneWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutLicensesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutAuthorNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
-  activities?: Prisma.UserActivityUncheckedUpdateManyWithoutUserNestedInput
-  wallets?: Prisma.WalletUncheckedUpdateManyWithoutUserNestedInput
-  oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
-  communityProfile?: Prisma.CommunityProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -1206,7 +948,6 @@ export type UserCountOutputType = {
   activities: number
   wallets: number
   oauthAuthorizations: number
-  licenses: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1216,7 +957,6 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   activities?: boolean | UserCountOutputTypeCountActivitiesArgs
   wallets?: boolean | UserCountOutputTypeCountWalletsArgs
   oauthAuthorizations?: boolean | UserCountOutputTypeCountOauthAuthorizationsArgs
-  licenses?: boolean | UserCountOutputTypeCountLicensesArgs
 }
 
 /**
@@ -1271,13 +1011,6 @@ export type UserCountOutputTypeCountOauthAuthorizationsArgs<ExtArgs extends runt
   where?: Prisma.OAuthAuthorizationWhereInput
 }
 
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountLicensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LicenseWhereInput
-}
-
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1293,8 +1026,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   activities?: boolean | Prisma.User$activitiesArgs<ExtArgs>
   wallets?: boolean | Prisma.User$walletsArgs<ExtArgs>
   oauthAuthorizations?: boolean | Prisma.User$oauthAuthorizationsArgs<ExtArgs>
-  communityProfile?: boolean | Prisma.User$communityProfileArgs<ExtArgs>
-  licenses?: boolean | Prisma.User$licensesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1336,8 +1067,6 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   activities?: boolean | Prisma.User$activitiesArgs<ExtArgs>
   wallets?: boolean | Prisma.User$walletsArgs<ExtArgs>
   oauthAuthorizations?: boolean | Prisma.User$oauthAuthorizationsArgs<ExtArgs>
-  communityProfile?: boolean | Prisma.User$communityProfileArgs<ExtArgs>
-  licenses?: boolean | Prisma.User$licensesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1352,8 +1081,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     activities: Prisma.$UserActivityPayload<ExtArgs>[]
     wallets: Prisma.$WalletPayload<ExtArgs>[]
     oauthAuthorizations: Prisma.$OAuthAuthorizationPayload<ExtArgs>[]
-    communityProfile: Prisma.$CommunityProfilePayload<ExtArgs> | null
-    licenses: Prisma.$LicensePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1763,8 +1490,6 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   activities<T extends Prisma.User$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   wallets<T extends Prisma.User$walletsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$walletsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   oauthAuthorizations<T extends Prisma.User$oauthAuthorizationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$oauthAuthorizationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OAuthAuthorizationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  communityProfile<T extends Prisma.User$communityProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$communityProfileArgs<ExtArgs>>): Prisma.Prisma__CommunityProfileClient<runtime.Types.Result.GetResult<Prisma.$CommunityProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  licenses<T extends Prisma.User$licensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$licensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LicensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2330,49 +2055,6 @@ export type User$oauthAuthorizationsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.OAuthAuthorizationScalarFieldEnum | Prisma.OAuthAuthorizationScalarFieldEnum[]
-}
-
-/**
- * User.communityProfile
- */
-export type User$communityProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CommunityProfile
-   */
-  select?: Prisma.CommunityProfileSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CommunityProfile
-   */
-  omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
-  where?: Prisma.CommunityProfileWhereInput
-}
-
-/**
- * User.licenses
- */
-export type User$licensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the License
-   */
-  select?: Prisma.LicenseSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the License
-   */
-  omit?: Prisma.LicenseOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LicenseInclude<ExtArgs> | null
-  where?: Prisma.LicenseWhereInput
-  orderBy?: Prisma.LicenseOrderByWithRelationInput | Prisma.LicenseOrderByWithRelationInput[]
-  cursor?: Prisma.LicenseWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LicenseScalarFieldEnum | Prisma.LicenseScalarFieldEnum[]
 }
 
 /**

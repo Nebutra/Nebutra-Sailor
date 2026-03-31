@@ -262,7 +262,6 @@ export type CommunityProfileWhereInput = {
   twitterHandle?: Prisma.StringNullableFilter<"CommunityProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CommunityProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CommunityProfile"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type CommunityProfileOrderByWithRelationInput = {
@@ -281,7 +280,6 @@ export type CommunityProfileOrderByWithRelationInput = {
   twitterHandle?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type CommunityProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -303,7 +301,6 @@ export type CommunityProfileWhereUniqueInput = Prisma.AtLeast<{
   twitterHandle?: Prisma.StringNullableFilter<"CommunityProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CommunityProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CommunityProfile"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId">
 
 export type CommunityProfileOrderByWithAggregationInput = {
@@ -350,6 +347,7 @@ export type CommunityProfileScalarWhereWithAggregatesInput = {
 
 export type CommunityProfileCreateInput = {
   id?: string
+  userId: string
   displayName?: string | null
   role: string
   company?: string | null
@@ -363,7 +361,6 @@ export type CommunityProfileCreateInput = {
   twitterHandle?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutCommunityProfileInput
 }
 
 export type CommunityProfileUncheckedCreateInput = {
@@ -386,6 +383,7 @@ export type CommunityProfileUncheckedCreateInput = {
 
 export type CommunityProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -399,7 +397,6 @@ export type CommunityProfileUpdateInput = {
   twitterHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutCommunityProfileNestedInput
 }
 
 export type CommunityProfileUncheckedUpdateInput = {
@@ -440,6 +437,7 @@ export type CommunityProfileCreateManyInput = {
 
 export type CommunityProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -471,11 +469,6 @@ export type CommunityProfileUncheckedUpdateManyInput = {
   twitterHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CommunityProfileNullableScalarRelationFilter = {
-  is?: Prisma.CommunityProfileWhereInput | null
-  isNot?: Prisma.CommunityProfileWhereInput | null
 }
 
 export type CommunityProfileCountOrderByAggregateInput = {
@@ -532,122 +525,6 @@ export type CommunityProfileMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type CommunityProfileCreateNestedOneWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.CommunityProfileCreateWithoutUserInput, Prisma.CommunityProfileUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.CommunityProfileCreateOrConnectWithoutUserInput
-  connect?: Prisma.CommunityProfileWhereUniqueInput
-}
-
-export type CommunityProfileUncheckedCreateNestedOneWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.CommunityProfileCreateWithoutUserInput, Prisma.CommunityProfileUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.CommunityProfileCreateOrConnectWithoutUserInput
-  connect?: Prisma.CommunityProfileWhereUniqueInput
-}
-
-export type CommunityProfileUpdateOneWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.CommunityProfileCreateWithoutUserInput, Prisma.CommunityProfileUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.CommunityProfileCreateOrConnectWithoutUserInput
-  upsert?: Prisma.CommunityProfileUpsertWithoutUserInput
-  disconnect?: Prisma.CommunityProfileWhereInput | boolean
-  delete?: Prisma.CommunityProfileWhereInput | boolean
-  connect?: Prisma.CommunityProfileWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CommunityProfileUpdateToOneWithWhereWithoutUserInput, Prisma.CommunityProfileUpdateWithoutUserInput>, Prisma.CommunityProfileUncheckedUpdateWithoutUserInput>
-}
-
-export type CommunityProfileUncheckedUpdateOneWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.CommunityProfileCreateWithoutUserInput, Prisma.CommunityProfileUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.CommunityProfileCreateOrConnectWithoutUserInput
-  upsert?: Prisma.CommunityProfileUpsertWithoutUserInput
-  disconnect?: Prisma.CommunityProfileWhereInput | boolean
-  delete?: Prisma.CommunityProfileWhereInput | boolean
-  connect?: Prisma.CommunityProfileWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CommunityProfileUpdateToOneWithWhereWithoutUserInput, Prisma.CommunityProfileUpdateWithoutUserInput>, Prisma.CommunityProfileUncheckedUpdateWithoutUserInput>
-}
-
-export type CommunityProfileCreateWithoutUserInput = {
-  id?: string
-  displayName?: string | null
-  role: string
-  company?: string | null
-  teamSize?: string | null
-  industry?: string | null
-  useCase?: string | null
-  buildingWhat?: string | null
-  referralSource?: string | null
-  showcaseUrl?: string | null
-  githubHandle?: string | null
-  twitterHandle?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type CommunityProfileUncheckedCreateWithoutUserInput = {
-  id?: string
-  displayName?: string | null
-  role: string
-  company?: string | null
-  teamSize?: string | null
-  industry?: string | null
-  useCase?: string | null
-  buildingWhat?: string | null
-  referralSource?: string | null
-  showcaseUrl?: string | null
-  githubHandle?: string | null
-  twitterHandle?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type CommunityProfileCreateOrConnectWithoutUserInput = {
-  where: Prisma.CommunityProfileWhereUniqueInput
-  create: Prisma.XOR<Prisma.CommunityProfileCreateWithoutUserInput, Prisma.CommunityProfileUncheckedCreateWithoutUserInput>
-}
-
-export type CommunityProfileUpsertWithoutUserInput = {
-  update: Prisma.XOR<Prisma.CommunityProfileUpdateWithoutUserInput, Prisma.CommunityProfileUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.CommunityProfileCreateWithoutUserInput, Prisma.CommunityProfileUncheckedCreateWithoutUserInput>
-  where?: Prisma.CommunityProfileWhereInput
-}
-
-export type CommunityProfileUpdateToOneWithWhereWithoutUserInput = {
-  where?: Prisma.CommunityProfileWhereInput
-  data: Prisma.XOR<Prisma.CommunityProfileUpdateWithoutUserInput, Prisma.CommunityProfileUncheckedUpdateWithoutUserInput>
-}
-
-export type CommunityProfileUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.StringFieldUpdateOperationsInput | string
-  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  buildingWhat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referralSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  showcaseUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  githubHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twitterHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CommunityProfileUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.StringFieldUpdateOperationsInput | string
-  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  buildingWhat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referralSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  showcaseUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  githubHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twitterHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
 
 
 export type CommunityProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -666,7 +543,6 @@ export type CommunityProfileSelect<ExtArgs extends runtime.Types.Extensions.Inte
   twitterHandle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["communityProfile"]>
 
 export type CommunityProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -685,7 +561,6 @@ export type CommunityProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   twitterHandle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["communityProfile"]>
 
 export type CommunityProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -704,7 +579,6 @@ export type CommunityProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   twitterHandle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["communityProfile"]>
 
 export type CommunityProfileSelectScalar = {
@@ -726,21 +600,10 @@ export type CommunityProfileSelectScalar = {
 }
 
 export type CommunityProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "displayName" | "role" | "company" | "teamSize" | "industry" | "useCase" | "buildingWhat" | "referralSource" | "showcaseUrl" | "githubHandle" | "twitterHandle" | "createdAt" | "updatedAt", ExtArgs["result"]["communityProfile"]>
-export type CommunityProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-}
-export type CommunityProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-}
-export type CommunityProfileIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-}
 
 export type $CommunityProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CommunityProfile"
-  objects: {
-    user: Prisma.$UserPayload<ExtArgs>
-  }
+  objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
@@ -1151,7 +1014,6 @@ readonly fields: CommunityProfileFieldRefs;
  */
 export interface Prisma__CommunityProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1213,10 +1075,6 @@ export type CommunityProfileFindUniqueArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
-  /**
    * Filter, which CommunityProfile to fetch.
    */
   where: Prisma.CommunityProfileWhereUniqueInput
@@ -1235,10 +1093,6 @@ export type CommunityProfileFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.
    */
   omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
-  /**
    * Filter, which CommunityProfile to fetch.
    */
   where: Prisma.CommunityProfileWhereUniqueInput
@@ -1256,10 +1110,6 @@ export type CommunityProfileFindFirstArgs<ExtArgs extends runtime.Types.Extensio
    * Omit specific fields from the CommunityProfile
    */
   omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
   /**
    * Filter, which CommunityProfile to fetch.
    */
@@ -1309,10 +1159,6 @@ export type CommunityProfileFindFirstOrThrowArgs<ExtArgs extends runtime.Types.E
    */
   omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
-  /**
    * Filter, which CommunityProfile to fetch.
    */
   where?: Prisma.CommunityProfileWhereInput
@@ -1361,10 +1207,6 @@ export type CommunityProfileFindManyArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
-  /**
    * Filter, which CommunityProfiles to fetch.
    */
   where?: Prisma.CommunityProfileWhereInput
@@ -1408,10 +1250,6 @@ export type CommunityProfileCreateArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
-  /**
    * The data needed to create a CommunityProfile.
    */
   data: Prisma.XOR<Prisma.CommunityProfileCreateInput, Prisma.CommunityProfileUncheckedCreateInput>
@@ -1445,10 +1283,6 @@ export type CommunityProfileCreateManyAndReturnArgs<ExtArgs extends runtime.Type
    */
   data: Prisma.CommunityProfileCreateManyInput | Prisma.CommunityProfileCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1463,10 +1297,6 @@ export type CommunityProfileUpdateArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the CommunityProfile
    */
   omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
   /**
    * The data needed to update a CommunityProfile.
    */
@@ -1519,10 +1349,6 @@ export type CommunityProfileUpdateManyAndReturnArgs<ExtArgs extends runtime.Type
    * Limit how many CommunityProfiles to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1537,10 +1363,6 @@ export type CommunityProfileUpsertArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the CommunityProfile
    */
   omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
   /**
    * The filter to search for the CommunityProfile to update in case it exists.
    */
@@ -1567,10 +1389,6 @@ export type CommunityProfileDeleteArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the CommunityProfile
    */
   omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
   /**
    * Filter which CommunityProfile to delete.
    */
@@ -1603,8 +1421,4 @@ export type CommunityProfileDefaultArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the CommunityProfile
    */
   omit?: Prisma.CommunityProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommunityProfileInclude<ExtArgs> | null
 }
