@@ -115,6 +115,16 @@
     },
     "patchedDependencies": {
       "@clerk/nextjs@7.0.1": "patches/@clerk__nextjs@7.0.1.patch"
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@sentry/cli",
+      "esbuild",
+      "msgpackr-extract"
+    ],
+    "allowedDeprecatedVersions": {
+      "@novu/node": "*",
+      "svg-dotted-map": "*"
     }
   },
   "devDependencies": {

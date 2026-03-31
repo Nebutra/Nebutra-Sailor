@@ -2,8 +2,10 @@ import { AuthProvider } from "@nebutra/auth/react";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
+import { Noto_Sans_SC } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -12,17 +14,9 @@ import { QueryProvider } from "./providers";
 import { ThemeShell } from "./providers/theme-provider";
 import "../globals.css";
 
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  variable: "--font-sans",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-mono",
-});
+// GeistSans → --font-geist-sans (variable font, 100–900)
+// GeistMono → --font-geist-mono (variable font, 100–900)
+// Referenced in packages/ui/src/typography/fonts.css via var(--font-geist-sans/mono)
 
 const notoSansSC = Noto_Sans_SC({
   weight: ["300", "400", "500", "600", "700"],
@@ -82,7 +76,7 @@ export default async function RootLayout({
     <AuthProvider provider={authProvider} config={authProviderConfig}>
       <html
         lang={locale}
-        className={`${inter.variable} ${jetbrainsMono.variable} ${notoSansSC.variable}`}
+        className={`${GeistSans.variable} ${GeistMono.variable} ${notoSansSC.variable}`}
         suppressHydrationWarning
       >
         <body className="antialiased">

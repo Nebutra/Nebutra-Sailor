@@ -1,19 +1,15 @@
 /**
  * Font CSS Variables — SSOT for typography across Nebutra packages.
- *
- * Import this file to get:
- * - Font CSS custom properties (--font-sans, --font-mono, --font-cjk, etc.)
- * - Font smoothing & rendering defaults
- *
- * Fonts:
- * - Inter: Primary UI and body text (OFL license)
- * - JetBrains Mono: Code and monospace (OFL license)
- * - Noto Sans SC: Chinese (CJK) fallback (OFL license)
+ * "Precision Stack" — Geist × Geist Mono × Noto Sans SC
  *
  * Font loading strategy (Next.js apps):
- * Use next/font/google in each app's layout.tsx — no CDN round-trip, self-hosted,
- * preloaded. Set variable: '--font-sans' / '--font-mono' and apply className to <html>.
- * The CSS variables defined below serve as fallback font stacks when next/font is unavailable.
+ * Each app's layout.tsx loads fonts via next/font or geist/font:
+ *   GeistSans  → injects --font-geist-sans  (variable font, 100–900)
+ *   GeistMono  → injects --font-geist-mono  (variable font, 100–900)
+ *   Noto_Sans_SC → injects --font-cn        (CJK, loaded per-app)
+ *
+ * The CSS custom properties below reference those injected variables and
+ * fall back gracefully when next/font is unavailable (e.g., Storybook, tests).
  */
 
 /* ============================================
@@ -21,25 +17,24 @@
    ============================================ */
 
 :root {
-  /* Primary font stack - UI and body text */
+  /* Primary font stack — Geist Sans (geometric precision, variable) */
   --font-primary:
-    "Inter", "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    var(--font-geist-sans), "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
     sans-serif;
 
-  /* Heading font stack — intentionally matches primary for current design; customize here for brand differentiation */
+  /* Heading font stack — matches primary for Precision Stack */
   --font-heading:
-    "Inter", "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    var(--font-geist-sans), "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
     sans-serif;
 
-  /* Monospace font stack - code and technical content */
+  /* Monospace — Geist Mono */
   --font-mono:
-    "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", monospace;
+    var(--font-geist-mono), "Geist Mono", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* CJK font stack - Chinese/Japanese/Korean */
+  /* CJK — Noto Sans SC (injected via next/font as --font-cn) */
   --font-cjk:
-    "Noto Sans SC", "Noto Sans CJK SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
-    sans-serif;
+    var(--font-cn), "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 
   /* Aliases for Tailwind/shadcn compatibility */
   --font-sans: var(--font-primary);
@@ -64,9 +59,7 @@ html {
    ============================================ */
 
 body {
-  font-family:
-    "Inter", "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
+  font-family: var(--font-sans);
   font-size: 1rem;
   line-height: 1.5;
   font-weight: 400;
@@ -79,9 +72,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family:
-    "Inter", "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.25;
 }
@@ -91,9 +82,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family:
-    "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", monospace;
+  font-family: var(--font-mono);
 }
 
 /* ============================================
@@ -111,52 +100,11 @@ samp {
 }
 
 /* ============================================
-   CJK Support (Optional)
+   CJK Support
    ============================================ */
 
 :lang(zh),
 :lang(ja),
 :lang(ko) {
-  font-family: var(--font-cn, var(--font-cjk));
+  font-family: var(--font-cjk);
 }
-
-/* ============================================
-   Self-Hosted Fonts (Alternative)
-   ============================================
-
-If you prefer to self-host fonts for performance,
-replace the @import statements above with @font-face declarations:
-
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/Inter-Regular.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('/fonts/Inter-Medium.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/fonts/Inter-SemiBold.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/Inter-Bold.woff2') format('woff2');
-}
-
-*/

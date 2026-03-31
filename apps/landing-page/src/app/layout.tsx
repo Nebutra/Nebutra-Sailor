@@ -1,6 +1,17 @@
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
+import { Noto_Sans_SC } from "next/font/google";
 import { seoContent } from "@/lib/landing-content";
 import "./globals.css";
+
+// GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
+// Noto Sans SC → --font-cn (CJK unicode-range cascade via fonts.css)
+const notoSansSC = Noto_Sans_SC({
+  weight: ["300", "400", "500", "700"],
+  display: "swap",
+  variable: "--font-cn",
+});
 
 /**
  * Root layout metadata — locale-independent defaults only.
@@ -55,7 +66,11 @@ export const metadata: Metadata = {
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="min-h-screen antialiased" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${GeistMono.variable} ${notoSansSC.variable} min-h-screen antialiased`}
+      suppressHydrationWarning
+    >
       <body className="antialiased">{children}</body>
     </html>
   );

@@ -196,12 +196,9 @@ export function createDocumentValidationRules(options?: { maxSize?: number }): V
  * Log validation error
  */
 export function logValidationError(error: ValidationError, filename: string): void {
-  logger.warn(
-    {
-      code: error.code,
-      filename,
-      details: error.details,
-    },
-    `Upload validation failed: ${error.message}`,
-  );
+  logger.warn(`Upload validation failed: ${error.message}`, {
+    code: error.code,
+    filename,
+    details: error.details,
+  });
 }

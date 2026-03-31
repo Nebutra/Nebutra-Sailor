@@ -185,12 +185,12 @@ export function Turnstile({
       "expired-callback": handleExpire,
       theme,
       size,
-      action,
-      cData,
-      tabindex: tabIndex,
+      ...(action !== undefined ? { action } : {}),
+      ...(cData !== undefined ? { cData } : {}),
+      ...(tabIndex !== undefined ? { tabindex: tabIndex } : {}),
       retry,
       appearance,
-      language,
+      ...(language !== undefined ? { language } : {}),
     });
 
     // Cleanup on unmount
@@ -215,25 +215,6 @@ export function Turnstile({
     appearance,
     language,
   ]);
-
-  /**
-   * Reset the widget
-   */
-  const _reset = useCallback(() => {
-    if (widgetIdRef.current && window.turnstile) {
-      window.turnstile.reset(widgetIdRef.current);
-    }
-  }, []);
-
-  /**
-   * Get the current response token
-   */
-  const _getResponse = useCallback((): string | undefined => {
-    if (widgetIdRef.current && window.turnstile) {
-      return window.turnstile.getResponse(widgetIdRef.current);
-    }
-    return undefined;
-  }, []);
 
   return (
     <div

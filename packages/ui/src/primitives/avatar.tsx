@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar as BaseAvatar } from "@base-ui-components/react/avatar";
+import { Avatar as BaseAvatar } from "@base-ui/react/avatar";
 import * as React from "react";
 import { cn } from "../utils/cn";
 

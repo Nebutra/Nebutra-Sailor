@@ -1,8 +1,6 @@
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
-import pc from "picocolors";
 import { prismaRun } from "../utils/delegate.js";
-import { logger } from "../utils/logger.js";
 import { debug, status } from "../utils/output.js";
 
 interface DbCommandOptions {
@@ -222,69 +220,75 @@ export function registerDbCommand(program: Command): void {
     .option("--dry-run", "Show what would be run without executing")
     .option("--yes", "Skip confirmations (especially for reset)")
     .option("--format <type>", "Output format: json, plain", "plain")
-    .action(async (verb: string, args: string[], options: DbCommandOptions) => {
-      const globalOptions = options.optsWithGlobals?.();
-      const mergedOptions: DbCommandOptions = {
-        dryRun: options.dryRun || globalOptions?.dryRun,
-        yes: options.yes || globalOptions?.yes,
-        format: (options.format || globalOptions?.format) as "json" | "plain",
-      };
+    .action(
+      async (
+        verb: string,
+        args: string[],
+        options: DbCommandOptions & { optsWithGlobals?: () => DbCommandOptions },
+      ) => {
+        const globalOptions = options.optsWithGlobals?.();
+        const mergedOptions: DbCommandOptions = {
+          dryRun: options.dryRun || globalOptions?.dryRun,
+          yes: options.yes || globalOptions?.yes,
+          format: (options.format || globalOptions?.format) as "json" | "plain",
+        };
 
-      try {
-        switch (verb) {
-          case "generate":
-            await handleGenerate(mergedOptions);
-            break;
+        try {
+          switch (verb) {
+            case "generate":
+              await handleGenerate(mergedOptions);
+              break;
 
-          case "migrate":
-            if (args.length > 0) {
-              // `nebutra db migrate create <name>`
-              if (args[0] === "create" && args[1]) {
-                await handleMigrate(args[1], mergedOptions);
+            case "migrate":
+              if (args.length > 0) {
+                // `nebutra db migrate create <name>`
+                if (args[0] === "create" && args[1]) {
+                  await handleMigrate(args[1], mergedOptions);
+                } else {
+                  // `nebutra db migrate <name>` shorthand
+                  await handleMigrate(args[0], mergedOptions);
+                }
               } else {
-                // `nebutra db migrate <name>` shorthand
-                await handleMigrate(args[0], mergedOptions);
+                // `nebutra db migrate` — run all pending
+                await handleMigrate(undefined, mergedOptions);
               }
-            } else {
-              // `nebutra db migrate` — run all pending
-              await handleMigrate(undefined, mergedOptions);
-            }
-            break;
+              break;
 
-          case "push":
-            await handlePush(mergedOptions);
-            break;
+            case "push":
+              await handlePush(mergedOptions);
+              break;
 
-          case "seed":
-            await handleSeed(mergedOptions);
-            break;
+            case "seed":
+              await handleSeed(mergedOptions);
+              break;
 
-          case "studio":
-            await handleStudio(mergedOptions);
-            break;
+            case "studio":
+              await handleStudio(mergedOptions);
+              break;
 
-          case "reset":
-            await handleReset(mergedOptions);
-            break;
+            case "reset":
+              await handleReset(mergedOptions);
+              break;
 
-          case "status":
-            await handleStatus(mergedOptions);
-            break;
+            case "status":
+              await handleStatus(mergedOptions);
+              break;
 
-          default:
-            status(
-              `Unknown db subcommand: ${verb}. Valid commands: generate, migrate, migrate create, push, seed, studio, reset, status`,
-              "error",
-            );
-            process.exit(1);
+            default:
+              status(
+                `Unknown db subcommand: ${verb}. Valid commands: generate, migrate, migrate create, push, seed, studio, reset, status`,
+                "error",
+              );
+              process.exit(1);
+          }
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          status(`Database command failed: ${message}`, "error");
+          debug("Full error", { error });
+          process.exit(1);
         }
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        status(`Database command failed: ${message}`, "error");
-        debug("Full error", { error });
-        process.exit(1);
-      }
-    });
+      },
+    );
 
   // Add help text
   dbCommand.addHelpText(

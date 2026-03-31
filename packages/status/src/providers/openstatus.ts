@@ -54,9 +54,9 @@ export class OpenStatusProvider implements StatusProvider {
       id: String(m.id),
       name: String(m.name),
       status: mapOpenStatusState(String(m.status ?? "")),
-      latency: typeof m.latency === "number" ? m.latency : undefined,
-      uptime: typeof m.uptime === "number" ? m.uptime : undefined,
-      lastChecked: typeof m.lastCheck === "string" ? m.lastCheck : undefined,
+      ...(typeof m.latency === "number" ? { latency: m.latency } : {}),
+      ...(typeof m.uptime === "number" ? { uptime: m.uptime } : {}),
+      ...(typeof m.lastCheck === "string" ? { lastChecked: m.lastCheck } : {}),
     }));
 
     const activeIncidents: IncidentStatus[] = rawIncidents
@@ -68,7 +68,7 @@ export class OpenStatusProvider implements StatusProvider {
         impact: i.impact as IncidentStatus["impact"],
         createdAt: String(i.createdAt ?? ""),
         updatedAt: String(i.updatedAt ?? ""),
-        resolvedAt: typeof i.resolvedAt === "string" ? i.resolvedAt : undefined,
+        ...(typeof i.resolvedAt === "string" ? { resolvedAt: i.resolvedAt } : {}),
       }));
 
     const uptime =

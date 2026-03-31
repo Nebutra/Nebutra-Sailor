@@ -1,6 +1,6 @@
 ---
 title: "Typography"
-description: "Complete Nebutra typography system — Geist Display, Poppins, vivo Sans, JetBrains Mono, type scale, CJK rhythm, and code examples."
+description: "Nebutra Precision Stack — Geist Sans, Geist Mono, Noto Sans SC. Variable fonts, CJK cascade, and type scale."
 ---
 
 <Callout>
@@ -15,100 +15,122 @@ Nebutra uses a four-tier type hierarchy. Each tier has a specific role and must 
 
 ---
 
-## Geist Sans — Display Typeface
+## Font System — "Precision Stack"
 
-Geist Sans is the display typeface for all high-impact text. It is a variable font supporting weights 100 through 900, enabling precise optical sizing.
+The Nebutra design system uses three fonts. Geist handles all text roles through weight and size variation alone — no separate display typeface is needed.
 
-### When to Use
-
-- Hero headlines and page titles
-- Section headings on marketing/landing pages
-- Large numeric displays (metrics, dashboards, pricing)
-- Brand-forward UI labels
-
-### Weights
-
-| Weight | Value | Use Case |
-|--------|-------|----------|
-| Thin | 100 | Oversized decorative display text |
-| ExtraLight | 200 | Large ambient headlines |
-| Light | 300 | Subtitle/tagline at hero scale |
-| Regular | 400 | Large body on marketing pages |
-| Medium | 500 | Section titles, card headings |
-| SemiBold | 600 | Primary headings (H2, H3) |
-| Bold | 700 | Hero headlines (H1) |
-| ExtraBold | 800 | Extra emphasis on hero text |
-| Black | 900 | Maximum impact display text |
-
-### Code
-
-```css
-font-family: "Geist", sans-serif;
-font-weight: 700;
-font-variation-settings: "wght" 700;
-```
-
-```tsx
-<h1 className="font-display font-bold text-heading-72">
-  Enterprise SaaS Platform
-</h1>
-```
+| Font | Role | Variable | License |
+|------|------|----------|---------|
+| **Geist Sans** | UI, body, headings, display | `--font-geist-sans` | SIL OFL (Vercel) |
+| **Geist Mono** | Code, data, tokens, IDs | `--font-geist-mono` | SIL OFL (Vercel) |
+| **Noto Sans SC** | Chinese (CJK) UI text | `--font-cn` | SIL OFL (Google) |
 
 ---
 
-## Poppins — English Body Typeface
+## Geist Sans — Primary Typeface
 
-Poppins is the primary body typeface for all English text across the platform. Its geometric construction pairs cleanly with Geist Sans.
+Geist Sans is the single typeface for all Nebutra UI text — from hero headlines to body copy. It is a variable font supporting weights 100 through 900, enabling precise control across every scale without switching fonts.
 
-### When to Use
+**Design rationale:** Geist was designed by Vercel for high-density developer products. Its geometric precision and optical sizing match the Vercel / Linear / Cursor aesthetic that Nebutra targets.
 
-- Body copy and paragraphs
-- Navigation labels and menu items
-- Button text and form labels
-- Descriptions, captions, and metadata
-- All general-purpose English UI text
-
-### Weights
+### Roles by Weight
 
 | Weight | Value | Use Case |
 |--------|-------|----------|
+| Thin | 100 | Oversized decorative display at 96px+ |
+| ExtraLight | 200 | Large ambient headlines |
+| Light | 300 | Subtitle / tagline at hero scale |
 | Regular | 400 | Body copy, descriptions, paragraph text |
-| Medium | 500 | Labels, navigation items, captions, secondary headings |
-| SemiBold | 600 | Subheadings, button labels, emphasis text |
-| Bold | 700 | Main headings in app UI (not hero), strong emphasis |
+| Medium | 500 | Labels, navigation items, captions |
+| SemiBold | 600 | Subheadings, button labels (H3–H4) |
+| Bold | 700 | Hero headlines (H1–H2), strong emphasis |
+| ExtraBold | 800 | Extra emphasis on hero text |
+| Black | 900 | Maximum impact display text |
 
-<Warning>
-  Do not use Poppins for hero/display text. Use Geist Sans for headlines and high-impact text.
-  Do not use weights below 400 or above 700 for Poppins — only 400, 500, 600, and 700 are brand-approved.
-</Warning>
+### Letter Spacing
+
+Tighten tracking at large sizes — Geist's proportions require it:
+
+| Scale | Tracking |
+|-------|----------|
+| Display (72px+) | `-0.04em` |
+| Heading (40–64px) | `-0.03em` |
+| Subheading (24–36px) | `-0.02em` |
+| Body (14–20px) | `0em` |
 
 ### Code
 
 ```css
-font-family: "Poppins", sans-serif;
+/* Display heading */
+font-family: var(--font-sans);
+font-weight: 700;
+letter-spacing: -0.03em;
+
+/* Body text */
+font-family: var(--font-sans);
 font-weight: 400;
+letter-spacing: 0;
 ```
 
 ```tsx
+{/* Hero headline */}
+<h1 className="font-sans font-bold text-heading-72 tracking-tight">
+  Enterprise SaaS Platform
+</h1>
+
+{/* Body copy */}
 <p className="font-sans font-normal text-copy-16">
   Nebutra transforms raw data into intelligent cloud-native outcomes.
 </p>
 
-<span className="font-sans font-medium text-copy-14">
-  Navigation Label
+{/* Navigation label */}
+<span className="font-sans font-medium text-ui-14">
+  Dashboard
 </span>
 ```
 
 ---
 
-## vivo Sans — Chinese Body Typeface
+## Geist Mono — Code Typeface
 
-vivo Sans is the primary typeface for all Chinese (CJK) UI text. It provides excellent screen rendering at small sizes and harmonizes with Poppins for mixed-language interfaces.
+Geist Mono is the monospace typeface for all code, terminal output, and technical data. It is the monospace counterpart to Geist Sans, sharing the same geometric DNA.
+
+### When to Use
+
+- Code blocks and inline code
+- Terminal / CLI output
+- API endpoint displays
+- Technical data values (IDs, hashes, tokens, API keys)
+- Configuration examples and environment variables
+
+### Code
+
+```css
+font-family: var(--font-mono);
+font-weight: 400;
+font-feature-settings: "calt" 1, "liga" 1;
+```
+
+```tsx
+<code className="font-mono text-copy-14">
+  const apiKey = process.env.NEBUTRA_API_KEY
+</code>
+
+<pre className="font-mono text-copy-14 bg-neutral-950 text-cyan-400 p-4 rounded-lg">
+  <code>npm install @nebutra/ui</code>
+</pre>
+```
+
+---
+
+## Noto Sans SC — Chinese Typeface
+
+Noto Sans SC is the CJK typeface for all Chinese UI text. Applied via the `font-cn` Tailwind class or the `--font-cn` CSS variable.
 
 ### When to Use
 
 - All Chinese body text and UI labels
-- Mixed Latin + Chinese content (apply via `font-cn` class)
+- Mixed Latin + Chinese content
 - Chinese marketing copy
 - CJK data labels and descriptions
 
@@ -116,16 +138,14 @@ vivo Sans is the primary typeface for all Chinese (CJK) UI text. It provides exc
 
 | Weight | Value | Use Case |
 |--------|-------|----------|
-| Light | 300 | Subtle decorative Chinese text |
 | Regular | 400 | Chinese body copy |
 | Medium | 500 | Chinese labels, navigation |
-| DemiBold | 600 | Chinese subheadings |
 | Bold | 700 | Chinese headings |
 
 ### Code
 
 ```css
-font-family: "vivo Sans", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+font-family: var(--font-cn);
 font-weight: 400;
 ```
 
@@ -137,75 +157,55 @@ font-weight: 400;
 
 ---
 
-## JetBrains Mono — Code Typeface
-
-JetBrains Mono is the monospace typeface for all code, terminal output, and technical data displays. Fira Code serves as the fallback.
-
-### When to Use
-
-- Code blocks and inline code
-- Terminal/CLI output
-- API endpoint displays
-- Technical data values (IDs, hashes, tokens)
-- Configuration examples
-
-### Code
-
-```css
-font-family: "JetBrains Mono", "Fira Code", ui-monospace, Consolas, monospace;
-font-weight: 400;
-```
-
-```tsx
-<code className="font-mono text-copy-14">
-  const apiKey = process.env.NEBUTRA_API_KEY
-</code>
-```
-
----
-
 ## Font Stacks
 
 ### CSS Custom Properties
 
 ```css
 :root {
-  /* Primary — display and hero text */
-  --font-display: "Geist", "Poppins", "vivo Sans", "PingFang SC",
-                   "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  /* Primary UI — Geist Sans (all Latin text) */
+  --font-sans: var(--font-geist-sans), "Geist", -apple-system,
+               BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 
-  /* Body — English UI text */
-  --font-sans: "Poppins", "vivo Sans", "PingFang SC",
-               "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  /* Code — Geist Mono */
+  --font-mono: var(--font-geist-mono), "Geist Mono", "Fira Code",
+               ui-monospace, SFMono-Regular, Consolas, monospace;
 
-  /* Body — Chinese UI text */
-  --font-cn: "vivo Sans", "PingFang SC", "Microsoft YaHei",
-             "Noto Sans SC", sans-serif;
-
-  /* Code — monospace */
-  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace,
-               Consolas, "Liberation Mono", "Courier New", monospace;
-
-  /* Universal stack (global fallback) */
-  --font-stack: "Geist", "Poppins", "vivo Sans", "PingFang SC",
-                "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  /* Chinese — Noto Sans SC (injected via next/font as --font-cn) */
+  --font-cjk: var(--font-cn), "Noto Sans SC", "PingFang SC",
+              "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 ```
 
 ### Tailwind Utility Classes
 
 ```tsx
-// Display / hero headlines
-<h1 className="font-display">Enterprise SaaS Platform</h1>
+{/* All UI text (Latin) */}
+<h1 className="font-sans">Enterprise SaaS Platform</h1>
 
-// English body text
-<p className="font-sans">Body copy in English</p>
-
-// Chinese body text
+{/* Chinese text */}
 <p className="font-cn">中文正文内容</p>
 
-// Code / monospace
+{/* Code / monospace */}
 <code className="font-mono">const x = 1</code>
+```
+
+### Next.js Font Loading
+
+```tsx
+// app/layout.tsx
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import { Noto_Sans_SC } from "next/font/google";
+
+const notoSansSC = Noto_Sans_SC({
+  weight: ["400", "500", "700"],
+  display: "swap",
+  variable: "--font-cn",
+});
+
+// Apply to <html>:
+// className={`${GeistSans.variable} ${GeistMono.variable} ${notoSansSC.variable}`}
 ```
 
 ---
@@ -238,19 +238,19 @@ Mixed Latin + Chinese content requires special handling to maintain visual rhyth
 
 ### The `font-cn` Class
 
-Apply `font-cn` to any container that displays Chinese text. This switches the font stack to vivo Sans and adjusts the following:
+Apply `font-cn` to any container that displays Chinese text. This switches the font stack to Noto Sans SC and adjusts:
 
 - **Line height** increases from 1.5 to 1.75 (CJK characters need more vertical space)
 - **Letter spacing** resets to 0 (CJK does not use letter-spacing)
 - **Word spacing** is managed automatically by the browser for CJK
 
 ```tsx
-// Pure Chinese content
+{/* Pure Chinese content */}
 <p className="font-cn text-copy-16">
   无锡云毓智能科技有限公司致力于企业级SaaS平台建设
 </p>
 
-// Mixed Latin + Chinese
+{/* Mixed Latin + Chinese */}
 <div className="font-cn">
   <p>Nebutra (云毓智能) 是一个企业级 SaaS 平台</p>
 </div>
@@ -263,7 +263,7 @@ CJK glyphs are optically larger than Latin characters at the same font size. App
 ```css
 /* Mixed content adjustment */
 .font-cn {
-  font-family: var(--font-cn);
+  font-family: var(--font-cjk);
   line-height: 1.75;
   font-size-adjust: 0.52;
 }
@@ -283,7 +283,7 @@ CJK glyphs are optically larger than Latin characters at the same font size. App
 
 ```tsx
 <section className="text-center">
-  <h1 className="font-display font-bold text-heading-72 tracking-tight">
+  <h1 className="font-sans font-bold text-heading-72 tracking-tight">
     Enterprise SaaS Platform
   </h1>
   <p className="font-sans font-normal text-copy-20 text-neutral-400 mt-6">
@@ -296,7 +296,7 @@ CJK glyphs are optically larger than Latin characters at the same font size. App
 
 ```tsx
 <header>
-  <h2 className="font-sans font-bold text-heading-24">
+  <h2 className="font-sans font-semibold text-heading-24">
     Analytics Overview
   </h2>
   <p className="font-sans text-copy-14 text-neutral-500">
@@ -330,24 +330,22 @@ CJK glyphs are optically larger than Latin characters at the same font size. App
 
 ## Do / Don't
 
-**Do** use Geist Sans for all hero and display text above 24px.
+**Do** use Geist Sans for all Latin text — both display headlines and body copy.
 
-**Do** use Poppins for all English UI body text.
+**Do** control hierarchy through weight (400 body → 700 headline) and size — not font switching.
 
-**Do** use vivo Sans (via `font-cn`) for all Chinese text.
+**Do** use Noto Sans SC (via `font-cn`) for all Chinese text.
 
 **Do** apply `font-cn` to containers with CJK content to activate proper line-height.
 
-**Do** use JetBrains Mono for all code and technical data.
+**Do** use Geist Mono for all code and technical data.
 
-**Don't** use Poppins for hero headlines — use Geist Sans.
+**Do** tighten letter-spacing at display sizes (`-0.03em` to `-0.04em`).
 
-**Don't** use Geist Sans for body copy — use Poppins.
+**Don't** use non-brand fonts (Inter, Poppins, Roboto, Arial, SF Pro) in Nebutra products.
 
-**Don't** use non-brand fonts (Inter, Roboto, Arial, SF Pro) in Nebutra products.
+**Don't** use a separate "display" font family — Geist Sans handles all scales through weight variation.
 
-**Don't** use Poppins weights outside 400-700.
-
-**Don't** set letter-spacing on body text — tracking adjustments belong only to headings, buttons, and overlines.
+**Don't** set letter-spacing on body text — tracking adjustments belong only to headings and display text.
 
 **Don't** mix `font-sans` and `font-cn` on the same element — choose one based on the content language.

@@ -1,8 +1,8 @@
 import { spawn } from "node:child_process";
-import { resolve, dirname } from "node:path";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import pc from "picocolors";
 import * as p from "@clack/prompts";
+import pc from "picocolors";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -25,9 +25,7 @@ function resolveCreateSailorBinary(): string {
     try {
       const path = strategy();
       return path;
-    } catch {
-      continue;
-    }
+    } catch {}
   }
 
   // Fallback: try to find via 'which' or assume it's in PATH
@@ -39,7 +37,7 @@ interface SpawnError extends Error {
   signal?: string;
 }
 
-function isSpawnError(error: unknown): error is SpawnError {
+function _isSpawnError(error: unknown): error is SpawnError {
   return error instanceof Error && "code" in error;
 }
 
@@ -64,11 +62,7 @@ export function registerCreateCommand(program: any) {
         }
 
         const spinner = p.spinner();
-        spinner.start(
-          pc.cyan(
-            `Launching create-sailor${dir ? ` in ${dir}` : ""}...`,
-          ),
-        );
+        spinner.start(pc.cyan(`Launching create-sailor${dir ? ` in ${dir}` : ""}...`));
 
         const child = spawn(process.execPath, [createSailorBin, ...args], {
           stdio: "inherit",
@@ -89,28 +83,20 @@ export function registerCreateCommand(program: any) {
 
         child.on("error", (err: SpawnError) => {
           spinner.stop();
-          console.error(
-            pc.red(`\nFailed to launch create-sailor: ${err.message}`),
-          );
+          console.error(pc.red(`\nFailed to launch create-sailor: ${err.message}`));
 
           if (err.code === "ENOENT") {
             console.error(
-              pc.yellow(
-                "\nTip: Ensure create-sailor is installed or available in your PATH.",
-              ),
+              pc.yellow("\nTip: Ensure create-sailor is installed or available in your PATH."),
             );
-            console.error(
-              pc.cyan("  Install globally: npm install -g create-sailor"),
-            );
+            console.error(pc.cyan("  Install globally: npm install -g create-sailor"));
           }
 
           process.exit(1);
         });
       } catch (error: unknown) {
         p.log.error(
-          pc.red(
-            "Error: Unable to start create-sailor. Ensure it is properly installed.",
-          ),
+          pc.red("Error: Unable to start create-sailor. Ensure it is properly installed."),
         );
 
         if (error instanceof Error) {

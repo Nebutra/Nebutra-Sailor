@@ -30,6 +30,7 @@ export class NovuProvider implements NotificationProvider {
       );
     }
 
+    // @ts-expect-error Novu SDK config type may vary by version
     this.novu = new Novu(apiKey, {
       ...(config.baseUrl && { baseUrl: config.baseUrl }),
     });
@@ -68,7 +69,7 @@ export class NovuProvider implements NotificationProvider {
       const channelResults = payload.channels.map((channel) => ({
         channel,
         sent: true,
-        messageId: response.transactionId,
+        messageId: (response as any).transactionId,
       }));
 
       return {
@@ -163,7 +164,7 @@ export class NovuProvider implements NotificationProvider {
         {} as Record<string, { enabled: boolean; disabledCategories: string[] }>,
       );
 
-      await this.novu.subscribers.setPreferences(userId, preferencesMap);
+      await (this.novu.subscribers as any).setPreferences(userId, preferencesMap);
 
       logger.info("[notifications:novu] Preferences updated successfully", { userId });
     } catch (error) {
@@ -189,7 +190,7 @@ export class NovuProvider implements NotificationProvider {
       });
 
       // Mark message as read in Novu
-      await this.novu.messages.markAs(notificationId, {
+      await (this.novu.messages as any).markAs(notificationId, {
         status: "read",
         subscriberId: userId,
       });
@@ -222,7 +223,7 @@ export class NovuProvider implements NotificationProvider {
       const offset = options?.offset ?? 0;
 
       // Fetch subscriber messages (in-app notifications) from Novu
-      const messages = await this.novu.messages.get(userId, {
+      const messages = await (this.novu.messages as any).get(userId, {
         limit,
         offset,
       });
@@ -240,10 +241,12 @@ export class NovuProvider implements NotificationProvider {
         updatedAt: msg.updatedAt || new Date().toISOString(),
       }));
 
-      const unreadCount = notifications.filter((n) => !n.read).length;
+      const unreadCount = notifications.filter((n: any) => !n.read).length;
 
       return {
-        notifications: options?.unreadOnly ? notifications.filter((n) => !n.read) : notifications,
+        notifications: options?.unreadOnly
+          ? notifications.filter((n: any) => !n.read)
+          : notifications,
         total: messages.totalCount || notifications.length,
         unreadCount,
       };

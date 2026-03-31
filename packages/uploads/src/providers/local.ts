@@ -3,10 +3,10 @@
  * For development and testing
  */
 
+import { randomUUID } from "node:crypto";
+import { mkdir, rm, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import { logger } from "@nebutra/logger";
-import { randomUUID } from "crypto";
-import { mkdir, rm, writeFile } from "fs/promises";
-import { join } from "path";
 import type {
   CompletePart,
   LocalProviderConfig,
@@ -30,10 +30,10 @@ export class LocalUploadProvider implements UploadProvider {
     };
     this.pendingUploads = new Map();
 
-    logger.info(
-      { uploadDir: this.config.uploadDir, httpBaseUrl: this.config.httpBaseUrl },
-      "Local upload provider initialized",
-    );
+    logger.info("Local upload provider initialized", {
+      uploadDir: this.config.uploadDir,
+      httpBaseUrl: this.config.httpBaseUrl,
+    });
   }
 
   /**
@@ -58,7 +58,7 @@ export class LocalUploadProvider implements UploadProvider {
 
     const expiresIn = 3600; // 1 hour
 
-    logger.debug({ key, bucket: target.bucket }, "Local presigned upload URL generated");
+    logger.debug("Local presigned upload URL generated", { key, bucket: target.bucket });
 
     return {
       url: `${this.config.httpBaseUrl}/upload?bucket=${encodeURIComponent(target.bucket)}&key=${encodeURIComponent(key)}`,
@@ -93,10 +93,12 @@ export class LocalUploadProvider implements UploadProvider {
       presignedUrl: `${this.config.httpBaseUrl}/upload/multipart?bucket=${encodeURIComponent(target.bucket)}&uploadId=${encodeURIComponent(uploadId)}&partNumber=${i + 1}`,
     }));
 
-    logger.info(
-      { key, bucket: target.bucket, uploadId, partCount },
-      "Local multipart upload initiated",
-    );
+    logger.info("Local multipart upload initiated", {
+      key,
+      bucket: target.bucket,
+      uploadId,
+      partCount,
+    });
 
     return {
       uploadId,
@@ -113,7 +115,7 @@ export class LocalUploadProvider implements UploadProvider {
   async completeMultipartUpload(
     uploadId: string,
     key: string,
-    parts: CompletePart[],
+    _parts: CompletePart[],
   ): Promise<UploadComplete> {
     const upload = this.pendingUploads.get(uploadId);
 
@@ -140,7 +142,7 @@ export class LocalUploadProvider implements UploadProvider {
 
     this.pendingUploads.delete(uploadId);
 
-    logger.info({ key, uploadId, size: combined.length }, "Local multipart upload completed");
+    logger.info("Local multipart upload completed", { key, uploadId, size: combined.length });
 
     return {
       key,
@@ -158,15 +160,13 @@ export class LocalUploadProvider implements UploadProvider {
   async abortMultipartUpload(uploadId: string, _key: string): Promise<void> {
     this.pendingUploads.delete(uploadId);
 
-    logger.info({ uploadId }, "Local multipart upload aborted");
+    logger.info("Local multipart upload aborted", { uploadId });
   }
 
   /**
    * Get Tus protocol endpoint configuration
    */
   async getTusEndpoint(target: UploadTarget): Promise<TusUploadConfig> {
-    const key = this.buildKey(target);
-
     await this.ensureDir(target.bucket);
 
     return {
@@ -188,9 +188,9 @@ export class LocalUploadProvider implements UploadProvider {
 
     try {
       await rm(filePath, { force: true });
-      logger.debug({ key }, "Local file deleted");
+      logger.debug("Local file deleted", { key });
     } catch (error) {
-      logger.warn({ key, error }, "Failed to delete local file");
+      logger.warn("Failed to delete local file", { key, error });
     }
   }
 
@@ -210,7 +210,7 @@ export class LocalUploadProvider implements UploadProvider {
     try {
       await mkdir(fullPath, { recursive: true });
     } catch (error) {
-      logger.warn({ path: fullPath, error }, "Failed to create directory");
+      logger.warn("Failed to create directory", { path: fullPath, error });
     }
   }
 
@@ -221,7 +221,7 @@ export class LocalUploadProvider implements UploadProvider {
     // Simple hash implementation
     let hash = 0;
     for (let i = 0; i < buffer.length; i++) {
-      hash = (hash << 5) - hash + buffer[i];
+      hash = (hash << 5) - hash + (buffer[i] ?? 0);
       hash = hash & hash; // Convert to 32bit integer
     }
     return `"${Math.abs(hash).toString(16)}"`;

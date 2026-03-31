@@ -39,7 +39,7 @@ export class InternalStatusProvider implements StatusProvider {
         id: name,
         name: name.charAt(0).toUpperCase() + name.slice(1),
         status: (check.status === "pass" ? "operational" : "degraded") as StatusState,
-        latency: typeof check.latency_ms === "number" ? check.latency_ms : undefined,
+        ...(typeof check.latency_ms === "number" ? { latency: check.latency_ms } : {}),
         lastChecked: new Date().toISOString(),
       }));
 

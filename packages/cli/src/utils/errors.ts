@@ -198,7 +198,7 @@ export function argError(message: string, suggestion?: string): never {
       message,
       suggestion: suggestion ?? "Run `nebutra --help` for usage information",
       exitCode: ExitCode.INVALID_ARGS,
-    })
+    }),
   );
 }
 
@@ -216,7 +216,7 @@ export function configError(message: string, suggestion?: string): never {
       message,
       suggestion: suggestion ?? "Check your nebutra configuration file and try again",
       exitCode: ExitCode.CONFIG_ERROR,
-    })
+    }),
   );
 }
 
@@ -237,7 +237,7 @@ export function notFoundError(message: string, suggestion?: string): never {
       message,
       suggestion: suggestion ?? "Check the resource path and try again",
       exitCode: ExitCode.NOT_FOUND,
-    })
+    }),
   );
 }
 
@@ -258,7 +258,7 @@ export function conflictError(message: string, suggestion?: string): never {
       message,
       suggestion: suggestion ?? "Use `--overwrite` to replace the existing resource",
       exitCode: ExitCode.CONFLICT,
-    })
+    }),
   );
 }
 
@@ -279,7 +279,7 @@ export function permissionError(message: string, suggestion?: string): never {
       message,
       suggestion: suggestion ?? "Check your authentication credentials",
       exitCode: ExitCode.PERMISSION_DENIED,
-    })
+    }),
   );
 }
 
@@ -301,7 +301,7 @@ export function networkError(message: string, suggestion?: string): never {
       suggestion: suggestion ?? "Check your internet connection and try again",
       retryable: true,
       exitCode: ExitCode.NETWORK_ERROR,
-    })
+    }),
   );
 }
 
@@ -320,7 +320,7 @@ export function timeoutError(message: string, suggestion?: string): never {
       suggestion: suggestion ?? "Try again or use `--timeout 60` to increase the timeout",
       retryable: true,
       exitCode: ExitCode.TIMEOUT,
-    })
+    }),
   );
 }
 
@@ -337,7 +337,7 @@ export function cancelledError(message?: string): never {
       error: "cancelled",
       message: message ?? "Operation was cancelled",
       exitCode: ExitCode.CANCELLED,
-    })
+    }),
   );
 }
 
@@ -358,7 +358,7 @@ export function incompatibleError(message: string, suggestion?: string): never {
       message,
       suggestion: suggestion ?? "Update your dependencies or environment",
       exitCode: ExitCode.INCOMPATIBLE,
-    })
+    }),
   );
 }
 
@@ -380,7 +380,7 @@ export function resourceExhaustedError(message: string, suggestion?: string): ne
       suggestion: suggestion ?? "Free up system resources and try again",
       retryable: true,
       exitCode: ExitCode.RESOURCE_EXHAUSTED,
-    })
+    }),
   );
 }
 
@@ -401,7 +401,7 @@ export function fatalError(
     suggestion?: string;
     context?: Record<string, unknown>;
     cause?: Error;
-  }
+  },
 ): never {
   exitWithError(
     createCliError({
@@ -411,6 +411,6 @@ export function fatalError(
       exitCode,
       context: opts?.context,
       cause: opts?.cause,
-    })
+    }),
   );
 }

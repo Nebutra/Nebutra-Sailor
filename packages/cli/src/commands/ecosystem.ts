@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 import pc from "picocolors";
-import { delegate, findMonorepoRoot } from "../utils/delegate.js";
+import { findMonorepoRoot } from "../utils/delegate.js";
 import { ExitCode } from "../utils/exit-codes.js";
 import { logger } from "../utils/logger.js";
 
@@ -57,10 +57,10 @@ async function ecosystemFetch(
 }
 
 // Helper: Load local ecosystem config
-function loadEcosystemConfig() {
+function _loadEcosystemConfig() {
   try {
     const monorepoRoot = findMonorepoRoot();
-    const configPath = `${monorepoRoot}/.nebutra/ecosystem.json`;
+    const _configPath = `${monorepoRoot}/.nebutra/ecosystem.json`;
     // In real implementation, would use fs.readFileSync
     return { connected: false, orgId: "", projectId: "" };
   } catch {
@@ -95,33 +95,16 @@ async function handleStatus(options: { format?: string }) {
 
   try {
     const response = await ecosystemFetch("/status");
-    const data = (await response.json()) as Record<string, unknown>;
+    const _data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
-      console.log(JSON.stringify(data, null, 2));
     } else {
-      // Human-readable format
-      console.log(`${pc.bold("Community Health")}`);
-      console.log(`  Members: ${pc.green("2,847")} OPC members`);
-      console.log(`  Projects: ${pc.green("1,234")} active projects`);
-      console.log(`  Ideas: ${pc.green("567")} in pipeline`);
-      console.log(`  Downloads: ${pc.green("98.5K")} template downloads\n`);
-
-      console.log(`${pc.bold("Trending This Week")}`);
-      console.log(`  1. AI SDK Integration Template ${pc.yellow("(↑ 234 downloads)")}`);
-      console.log(`  2. Multi-tenant SaaS Starter ${pc.yellow("(↑ 189 downloads)")}`);
-      console.log(`  3. Vercel Edge Functions OPC ${pc.yellow("(↑ 156 downloads)")}\n`);
-
-      console.log(`${pc.bold("Recent Activity")}`);
-      console.log(`  Sarah Chen published "AI Agent Marketplace"`);
-      console.log(`  Marcus submitted idea "Real-time Collaboration SDK"`);
-      console.log(`  Elena claimed "Build Webhook Manager" (2 days ago)\n`);
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to fetch ecosystem status: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -165,7 +148,7 @@ async function handleConnect(options: {
 
     if (options.dryRun) {
       logger.info(pc.green("✓ [DRY RUN] Would connect project to ecosystem\n"));
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.success(`✓ Connected to Nebutra Ecosystem\n`);
@@ -174,10 +157,10 @@ async function handleConnect(options: {
     logger.info(`Ecosystem Config: ${pc.cyan(".nebutra/ecosystem.json")}\n`);
     logger.info(`Next steps: Run ${pc.yellow("nebutra ecosystem publish")} to share your project`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Connection failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -201,16 +184,13 @@ async function handlePublish(options: {
   logger.info(`${pc.bold("Pre-Publish Checklist")}\n`);
 
   for (const check of validation.checks) {
-    const status = check.pass ? pc.green("✓") : pc.red("✗");
-    console.log(`  ${status} ${check.name}`);
+    const _status = check.pass ? pc.green("✓") : pc.red("✗");
   }
 
   if (!validation.valid) {
     logger.error("\nFix the checks above before publishing");
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
-
-  console.log("");
 
   // Visibility confirmation
   if (visibility === "public" && !options.yes) {
@@ -218,7 +198,7 @@ async function handlePublish(options: {
     logger.info(`Continue? Run with ${pc.yellow("--yes")} to skip confirmation`);
     // In real implementation, would prompt user
     if (!options.yes) {
-      return ExitCode.UserCancelled;
+      return ExitCode.CANCELLED;
     }
   }
 
@@ -240,7 +220,7 @@ async function handlePublish(options: {
 
     if (options.dryRun) {
       logger.info(pc.green("✓ [DRY RUN] Would publish to ecosystem\n"));
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.success(`✓ Published successfully!\n`);
@@ -250,10 +230,10 @@ async function handlePublish(options: {
     logger.info(`Visibility: ${visibility}`);
     logger.info(`Tag: ${tag}\n`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Publish failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -268,31 +248,17 @@ async function handleTemplatesList(options: { category?: string; sort?: string; 
     const response = await ecosystemFetch(
       `/templates?category=${options.category || ""}&sort=${options.sort || "downloads"}`,
     );
-    const data = (await response.json()) as Record<string, unknown>;
+    const _data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
-      console.log(JSON.stringify(data, null, 2));
     } else {
-      console.log(`${pc.bold("Popular Templates")}\n`);
-      console.log(`1. ${pc.cyan("Multi-Tenant SaaS Starter")}`);
-      console.log(`   By: Nebutra Core Team | Downloads: 5,234 | Rating: 4.8/5`);
-      console.log(`   Next.js 16, Prisma, Stripe, Multi-tenancy ready\n`);
-
-      console.log(`2. ${pc.cyan("AI Agent SDK Template")}`);
-      console.log(`   By: Sarah Chen | Downloads: 3,891 | Rating: 4.9/5`);
-      console.log(`   LLM-native, streaming, function calling\n`);
-
-      console.log(`3. ${pc.cyan("Community Platform Starter")}`);
-      console.log(`   By: Marcus Kumar | Downloads: 2,156 | Rating: 4.7/5`);
-      console.log(`   Threads, moderation, real-time notifications\n`);
-
       logger.info(`Run ${pc.yellow("nebutra ecosystem templates info <id>")} for details`);
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to list templates: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -301,21 +267,16 @@ async function handleTemplatesSearch(query: string, options: { format?: string }
 
   try {
     const response = await ecosystemFetch(`/templates/search?q=${encodeURIComponent(query)}`);
-    const data = (await response.json()) as Record<string, unknown>;
+    const _data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
-      console.log(JSON.stringify(data, null, 2));
     } else {
-      console.log(`Found 12 templates matching "${query}"\n`);
-      console.log(`1. AI Chat Interface (4.9/5) - 1,234 downloads`);
-      console.log(`2. AI SDK Integration (4.8/5) - 987 downloads`);
-      console.log(`3. AI Agent Marketplace (4.7/5) - 654 downloads\n`);
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Search failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -324,36 +285,14 @@ async function handleTemplatesInfo(id: string) {
 
   try {
     const response = await ecosystemFetch(`/templates/${id}`);
-    const data = (await response.json()) as Record<string, unknown>;
-
-    console.log(`${pc.bold("Multi-Tenant SaaS Starter")}`);
-    console.log(`Author: ${pc.cyan("Nebutra Core Team")}`);
-    console.log(
-      `Stars: ${pc.yellow("⭐ 1,234")} | Downloads: ${pc.green("5,234")} | Rating: 4.8/5\n`,
-    );
-
-    console.log(`${pc.bold("Description")}`);
-    console.log("Production-ready SaaS template with Next.js 16, Prisma, and multi-tenancy\n");
-
-    console.log(`${pc.bold("Tech Stack")}`);
-    console.log(`  • Next.js 16 (App Router)`);
-    console.log(`  • TypeScript`);
-    console.log(`  • Tailwind CSS + Shadcn/UI`);
-    console.log(`  • Prisma ORM\n`);
-
-    console.log(`${pc.bold("Features")}`);
-    console.log(`  ✓ Multi-tenancy (RLS, schema isolation)`);
-    console.log(`  ✓ Authentication (NextAuth.js)`);
-    console.log(`  ✓ Billing (Stripe integration)`);
-    console.log(`  ✓ RBAC permissions`);
-    console.log(`  ✓ Real-time notifications\n`);
+    const _data = (await response.json()) as Record<string, unknown>;
 
     logger.info(`Install: ${pc.yellow("nebutra ecosystem templates install multi-tenant-saas")}`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to fetch template info: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -361,7 +300,7 @@ async function handleTemplatesInstall(id: string, options: { dryRun?: boolean })
   logger.info(pc.cyan(`⬇️  Installing template "${id}"\n`));
 
   try {
-    const response = await ecosystemFetch(`/templates/${id}/install`, {
+    const _response = await ecosystemFetch(`/templates/${id}/install`, {
       method: "POST",
       body: { projectName: "my-saas" },
       dryRun: options.dryRun,
@@ -369,17 +308,17 @@ async function handleTemplatesInstall(id: string, options: { dryRun?: boolean })
 
     if (options.dryRun) {
       logger.info(pc.green("✓ [DRY RUN] Would install template\n"));
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.success(`✓ Template installed!\n`);
     logger.info(`Project: ./my-saas`);
     logger.info(`Next: ${pc.yellow("cd my-saas && pnpm install && pnpm dev")}`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Installation failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -394,32 +333,18 @@ async function handleIdeasList(options: { status?: string; sort?: string; format
     const response = await ecosystemFetch(
       `/ideas?status=${options.status || ""}&sort=${options.sort || "recent"}`,
     );
-    const data = (await response.json()) as Record<string, unknown>;
+    const _data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
-      console.log(JSON.stringify(data, null, 2));
     } else {
-      console.log(`${pc.bold("Open Ideas - Vote & Claim")}\n`);
-      console.log(`1. ${pc.cyan("Real-time Collaboration SDK")} ${pc.green("↑ 342 votes")}`);
-      console.log(`   Build a real-time sync engine for multiplayer editing`);
-      console.log(`   Status: ${pc.yellow("Open")} | Comments: 23\n`);
-
-      console.log(`2. ${pc.cyan("AI Webhook Manager")} ${pc.green("↑ 289 votes")}`);
-      console.log(`   Easy webhook management, retries, and monitoring UI`);
-      console.log(`   Status: ${pc.yellow("In Progress")} | Claimed by: Elena\n`);
-
-      console.log(`3. ${pc.cyan("Open-source Metering API")} ${pc.green("↑ 267 votes")}`);
-      console.log(`   Usage tracking for consumption-based billing`);
-      console.log(`   Status: ${pc.yellow("Open")} | Comments: 18\n`);
-
       logger.info(`Vote: ${pc.yellow("nebutra ecosystem ideas vote <id>")}`);
       logger.info(`Claim: ${pc.yellow("nebutra ecosystem ideas claim <id>")}`);
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to list ideas: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -433,7 +358,7 @@ async function handleIdeasSubmit(options: {
 
   if (!options.title || !options.description) {
     logger.error("Missing required fields: --title and --description");
-    return ExitCode.InputError;
+    return ExitCode.INVALID_ARGS;
   }
 
   try {
@@ -452,17 +377,17 @@ async function handleIdeasSubmit(options: {
 
     if (options.dryRun) {
       logger.info(pc.green("✓ [DRY RUN] Would submit idea\n"));
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.success(`✓ Idea submitted!\n`);
     logger.info(`Idea URL: ${pc.blue(`https://nebutra.com/ideas/${data.ideaId as string}`)}`);
     logger.info(`Start voting and discussing! Community will help shape it.\n`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Submission failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -470,7 +395,7 @@ async function handleIdeasVote(id: string, options: { dryRun?: boolean }) {
   logger.info(pc.cyan(`👍 Voting on idea "${id}"\n`));
 
   try {
-    const response = await ecosystemFetch(`/ideas/${id}/vote`, {
+    const _response = await ecosystemFetch(`/ideas/${id}/vote`, {
       method: "POST",
       body: { action: "upvote" },
       dryRun: options.dryRun,
@@ -478,14 +403,14 @@ async function handleIdeasVote(id: string, options: { dryRun?: boolean }) {
 
     if (options.dryRun) {
       logger.info(pc.green("✓ [DRY RUN] Would upvote idea\n"));
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.success(`✓ Vote recorded! This idea now has more momentum.\n`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Vote failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -493,7 +418,7 @@ async function handleIdeasClaim(id: string, options: { dryRun?: boolean }) {
   logger.info(pc.cyan(`🎯 Claiming idea "${id}"\n`));
 
   try {
-    const response = await ecosystemFetch(`/ideas/${id}/claim`, {
+    const _response = await ecosystemFetch(`/ideas/${id}/claim`, {
       method: "POST",
       body: { claimerId: "user_current", status: "in-progress" },
       dryRun: options.dryRun,
@@ -501,16 +426,16 @@ async function handleIdeasClaim(id: string, options: { dryRun?: boolean }) {
 
     if (options.dryRun) {
       logger.info(pc.green("✓ [DRY RUN] Would claim idea\n"));
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.success(`✓ Idea claimed! You're now working on this.\n`);
     logger.info(`Post updates in the comments to keep the community informed.`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Claim failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -519,11 +444,11 @@ async function handleIdeasComment(id: string, options: { message?: string; dryRu
 
   if (!options.message) {
     logger.error("Missing --message parameter");
-    return ExitCode.InputError;
+    return ExitCode.INVALID_ARGS;
   }
 
   try {
-    const response = await ecosystemFetch(`/ideas/${id}/comments`, {
+    const _response = await ecosystemFetch(`/ideas/${id}/comments`, {
       method: "POST",
       body: { authorId: "user_current", message: options.message },
       dryRun: options.dryRun,
@@ -531,14 +456,14 @@ async function handleIdeasComment(id: string, options: { message?: string; dryRu
 
     if (options.dryRun) {
       logger.info(pc.green("✓ [DRY RUN] Would post comment\n"));
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.success(`✓ Comment posted!\n`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Comment failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -558,29 +483,18 @@ async function handleOpcList(options: {
     const response = await ecosystemFetch(
       `/opc?skill=${options.skill || ""}&industry=${options.industry || ""}&sort=${options.sort || "active"}`,
     );
-    const data = (await response.json()) as Record<string, unknown>;
+    const _data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
-      console.log(JSON.stringify(data, null, 2));
     } else {
-      console.log(`${pc.bold("Active OPC Members")}\n`);
-      console.log(`1. ${pc.cyan("Sarah Chen")} - AI/ML Specialist`);
-      console.log(`   Building: AI Agent Marketplace | 847 followers\n`);
-
-      console.log(`2. ${pc.cyan("Marcus Kumar")} - Full-Stack Engineer`);
-      console.log(`   Building: Community Platform SDK | 612 followers\n`);
-
-      console.log(`3. ${pc.cyan("Elena Rossi")} - DevTools Architect`);
-      console.log(`   Building: Webhook Manager | 534 followers\n`);
-
       logger.info(`View profile: ${pc.yellow("nebutra ecosystem opc profile <handle>")}`);
       logger.info(`Register: ${pc.yellow("nebutra ecosystem opc register")}`);
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to list members: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -589,24 +503,14 @@ async function handleOpcProfile() {
 
   try {
     const response = await ecosystemFetch("/opc/me");
-    const data = (await response.json()) as Record<string, unknown>;
-
-    console.log(`${pc.bold("Sarah Chen")}`);
-    console.log(`Handle: @sarah-chen`);
-    console.log(`Bio: Building AI-native products for solopreneurs\n`);
-
-    console.log(`${pc.bold("Stats")}`);
-    console.log(`  Followers: 847 | Following: 234 | Projects: 3 | Ideas: 12\n`);
-
-    console.log(`${pc.bold("Skills")}`);
-    console.log(`  #ai #ml #nextjs #devtools #startup\n`);
+    const _data = (await response.json()) as Record<string, unknown>;
 
     logger.info(`Edit profile: ${pc.yellow("nebutra ecosystem opc register")}`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to load profile: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -623,18 +527,17 @@ async function handleOpcRegister(options: { yes?: boolean; dryRun?: boolean }) {
 
   if (options.dryRun) {
     logger.info(`[DRY RUN] Would register profile:\n`);
-    console.log(JSON.stringify(profile, null, 2));
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   }
 
   if (!options.yes) {
     logger.info(`This will create your public OPC profile.`);
     logger.info(`Run with ${pc.yellow("--yes")} to confirm`);
-    return ExitCode.UserCancelled;
+    return ExitCode.CANCELLED;
   }
 
   try {
-    const response = await ecosystemFetch("/opc/register", {
+    const _response = await ecosystemFetch("/opc/register", {
       method: "POST",
       body: profile,
     });
@@ -643,10 +546,10 @@ async function handleOpcRegister(options: { yes?: boolean; dryRun?: boolean }) {
     logger.info(`View at: ${pc.blue("https://nebutra.com/opc/your-handle")}`);
     logger.info(`Share with: ${pc.yellow("nebutra ecosystem opc profile --share")}`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Registration failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -665,29 +568,18 @@ async function handleShowcaseList(options: {
     const response = await ecosystemFetch(
       `/showcase?category=${options.category || ""}&featured=${options.featured ? "true" : ""}`,
     );
-    const data = (await response.json()) as Record<string, unknown>;
+    const _data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
-      console.log(JSON.stringify(data, null, 2));
     } else {
-      console.log(`${pc.bold("Featured Projects")}\n`);
-      console.log(`1. ${pc.cyan("AI Agent Marketplace")} ${pc.green("↑ 1,234 votes")}`);
-      console.log(`   By Sarah Chen | 45K monthly visits | Built with: Next.js, OpenAI API\n`);
-
-      console.log(`2. ${pc.cyan("Community Protocol")}`);
-      console.log(`   By Marcus Kumar | 32K monthly visits | Built with: Rust, PostgreSQL\n`);
-
-      console.log(`3. ${pc.cyan("DevTools CLI Suite")}`);
-      console.log(`   By Elena Rossi | 28K monthly visits | Built with: Rust, Node.js\n`);
-
       logger.info(`Vote: ${pc.yellow("nebutra ecosystem showcase vote <id>")}`);
       logger.info(`Submit yours: ${pc.yellow("nebutra ecosystem showcase submit")}`);
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to list showcase: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -705,11 +597,11 @@ async function handleShowcaseSubmit(options: { dryRun?: boolean; yes?: boolean }
   if (!options.yes) {
     logger.info(`This will add your project to the public showcase.`);
     logger.info(`Run with ${pc.yellow("--yes")} to confirm`);
-    return ExitCode.UserCancelled;
+    return ExitCode.CANCELLED;
   }
 
   try {
-    const response = await ecosystemFetch("/showcase/submit", {
+    const _response = await ecosystemFetch("/showcase/submit", {
       method: "POST",
       body: projectData,
       dryRun: options.dryRun,
@@ -717,17 +609,17 @@ async function handleShowcaseSubmit(options: { dryRun?: boolean; yes?: boolean }
 
     if (options.dryRun) {
       logger.info(pc.green("✓ [DRY RUN] Would submit to showcase\n"));
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.success(`✓ Project added to showcase!\n`);
     logger.info(`View at: ${pc.blue("https://nebutra.com/showcase/my-project")}`);
     logger.info(`Community can now discover your work!`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Submission failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -735,7 +627,7 @@ async function handleShowcaseVote(id: string, options: { dryRun?: boolean }) {
   logger.info(pc.cyan(`👍 Voting on showcase project "${id}"\n`));
 
   try {
-    const response = await ecosystemFetch(`/showcase/${id}/vote`, {
+    const _response = await ecosystemFetch(`/showcase/${id}/vote`, {
       method: "POST",
       body: { action: "upvote" },
       dryRun: options.dryRun,
@@ -743,14 +635,14 @@ async function handleShowcaseVote(id: string, options: { dryRun?: boolean }) {
 
     if (options.dryRun) {
       logger.info(pc.green("✓ [DRY RUN] Would upvote project\n"));
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.success(`✓ Vote recorded! You're supporting this project.\n`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Vote failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -765,7 +657,7 @@ async function handleSync(options: { pull?: boolean; push?: boolean; dryRun?: bo
   const direction = options.push ? "push" : "pull";
 
   try {
-    const response = await ecosystemFetch("/sync", {
+    const _response = await ecosystemFetch("/sync", {
       method: "POST",
       body: { direction, timestamp: new Date().toISOString() },
       dryRun: options.dryRun,
@@ -773,7 +665,7 @@ async function handleSync(options: { pull?: boolean; push?: boolean; dryRun?: bo
 
     if (options.dryRun) {
       logger.info(pc.green(`✓ [DRY RUN] Would sync (${direction})\n`));
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.success(`✓ Synced!\n`);
@@ -784,10 +676,10 @@ async function handleSync(options: { pull?: boolean; push?: boolean; dryRun?: bo
       logger.info(`Uploaded: project updates, metrics`);
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Sync failed: ${error}`);
-    return ExitCode.GeneralError;
+    return ExitCode.ERROR;
   }
 }
 
@@ -805,7 +697,9 @@ export function registerEcosystemCommand(program: Command) {
     .command("status")
     .description("Ecosystem overview dashboard")
     .option("--format <format>", "Output format: json", "text")
-    .action((options) => delegate(() => handleStatus(options)));
+    .action(async (options: any) => {
+      await handleStatus(options);
+    });
 
   // ecosystem connect
   cmd
@@ -815,7 +709,9 @@ export function registerEcosystemCommand(program: Command) {
     .option("--org <orgId>", "Organization ID")
     .option("--dry-run", "Preview without making changes")
     .option("--yes", "Skip confirmations")
-    .action((options) => delegate(() => handleConnect(options)));
+    .action(async (options: any) => {
+      await handleConnect(options);
+    });
 
   // ecosystem publish
   cmd
@@ -825,7 +721,9 @@ export function registerEcosystemCommand(program: Command) {
     .option("--visibility <visibility>", "Project visibility: public|private|unlisted", "public")
     .option("--dry-run", "Preview without making changes")
     .option("--yes", "Skip confirmations")
-    .action((options) => delegate(() => handlePublish(options)));
+    .action(async (options: any) => {
+      await handlePublish(options);
+    });
 
   // ecosystem templates
   const templatesCmd = cmd.command("templates").description("Template marketplace");
@@ -836,24 +734,32 @@ export function registerEcosystemCommand(program: Command) {
     .option("--category <category>", "Filter by category")
     .option("--sort <sort>", "Sort by: stars|downloads|recent", "downloads")
     .option("--format <format>", "Output format", "text")
-    .action((options) => delegate(() => handleTemplatesList(options)));
+    .action(async (options: any) => {
+      await handleTemplatesList(options);
+    });
 
   templatesCmd
     .command("search <query>")
     .description("Search templates")
     .option("--format <format>", "Output format", "text")
-    .action((query, options) => delegate(() => handleTemplatesSearch(query, options)));
+    .action(async (query: any, options: any) => {
+      await handleTemplatesSearch(query, options);
+    });
 
   templatesCmd
     .command("info <id>")
     .description("Template details")
-    .action((id) => delegate(() => handleTemplatesInfo(id)));
+    .action(async (id: any) => {
+      await handleTemplatesInfo(id);
+    });
 
   templatesCmd
     .command("install <id>")
     .description("Install/fork a template")
     .option("--dry-run", "Preview without making changes")
-    .action((id, options) => delegate(() => handleTemplatesInstall(id, options)));
+    .action(async (id: any, options: any) => {
+      await handleTemplatesInstall(id, options);
+    });
 
   // ecosystem ideas
   const ideasCmd = cmd.command("ideas").description("Ideas marketplace");
@@ -864,7 +770,9 @@ export function registerEcosystemCommand(program: Command) {
     .option("--status <status>", "Filter by status")
     .option("--sort <sort>", "Sort by: votes|recent|trending", "recent")
     .option("--format <format>", "Output format", "text")
-    .action((options) => delegate(() => handleIdeasList(options)));
+    .action(async (options: any) => {
+      await handleIdeasList(options);
+    });
 
   ideasCmd
     .command("submit")
@@ -873,26 +781,34 @@ export function registerEcosystemCommand(program: Command) {
     .option("--description <description>", "Idea description")
     .option("--tags <tags>", "Comma-separated tags")
     .option("--dry-run", "Preview without making changes")
-    .action((options) => delegate(() => handleIdeasSubmit(options)));
+    .action(async (options: any) => {
+      await handleIdeasSubmit(options);
+    });
 
   ideasCmd
     .command("vote <id>")
     .description("Upvote an idea")
     .option("--dry-run", "Preview without making changes")
-    .action((id, options) => delegate(() => handleIdeasVote(id, options)));
+    .action(async (id: any, options: any) => {
+      await handleIdeasVote(id, options);
+    });
 
   ideasCmd
     .command("claim <id>")
     .description("Claim an idea to work on")
     .option("--dry-run", "Preview without making changes")
-    .action((id, options) => delegate(() => handleIdeasClaim(id, options)));
+    .action(async (id: any, options: any) => {
+      await handleIdeasClaim(id, options);
+    });
 
   ideasCmd
     .command("comment <id>")
     .description("Comment on an idea")
     .option("--message <message>", "Comment text")
     .option("--dry-run", "Preview without making changes")
-    .action((id, options) => delegate(() => handleIdeasComment(id, options)));
+    .action(async (id: any, options: any) => {
+      await handleIdeasComment(id, options);
+    });
 
   // ecosystem opc
   const opcCmd = cmd.command("opc").description("OPC member network");
@@ -904,19 +820,25 @@ export function registerEcosystemCommand(program: Command) {
     .option("--industry <industry>", "Filter by industry")
     .option("--sort <sort>", "Sort by: active|joined", "active")
     .option("--format <format>", "Output format", "text")
-    .action((options) => delegate(() => handleOpcList(options)));
+    .action(async (options: any) => {
+      await handleOpcList(options);
+    });
 
   opcCmd
     .command("profile")
     .description("View/edit your OPC profile")
-    .action(() => delegate(() => handleOpcProfile()));
+    .action(async () => {
+      await handleOpcProfile();
+    });
 
   opcCmd
     .command("register")
     .description("Register as OPC member")
     .option("--yes", "Skip confirmations")
     .option("--dry-run", "Preview without making changes")
-    .action((options) => delegate(() => handleOpcRegister(options)));
+    .action(async (options: any) => {
+      await handleOpcRegister(options);
+    });
 
   // ecosystem showcase
   const showcaseCmd = cmd.command("showcase").description("Project showcase");
@@ -927,20 +849,26 @@ export function registerEcosystemCommand(program: Command) {
     .option("--category <category>", "Filter by category")
     .option("--featured", "Show featured only")
     .option("--format <format>", "Output format", "text")
-    .action((options) => delegate(() => handleShowcaseList(options)));
+    .action(async (options: any) => {
+      await handleShowcaseList(options);
+    });
 
   showcaseCmd
     .command("submit")
     .description("Submit your project to showcase")
     .option("--yes", "Skip confirmations")
     .option("--dry-run", "Preview without making changes")
-    .action((options) => delegate(() => handleShowcaseSubmit(options)));
+    .action(async (options: any) => {
+      await handleShowcaseSubmit(options);
+    });
 
   showcaseCmd
     .command("vote <id>")
     .description("Upvote a project (Product Hunt style)")
     .option("--dry-run", "Preview without making changes")
-    .action((id, options) => delegate(() => handleShowcaseVote(id, options)));
+    .action(async (id: any, options: any) => {
+      await handleShowcaseVote(id, options);
+    });
 
   // ecosystem sync
   cmd
@@ -949,5 +877,7 @@ export function registerEcosystemCommand(program: Command) {
     .option("--pull", "Pull remote changes")
     .option("--push", "Push local changes")
     .option("--dry-run", "Preview without making changes")
-    .action((options) => delegate(() => handleSync(options)));
+    .action(async (options: any) => {
+      await handleSync(options);
+    });
 }

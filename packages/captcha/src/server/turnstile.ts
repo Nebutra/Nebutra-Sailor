@@ -74,7 +74,7 @@ export async function verifyTurnstile(options: VerifyOptions): Promise<Turnstile
  */
 export async function isTurnstileValid(token: string, ip?: string): Promise<boolean> {
   try {
-    const result = await verifyTurnstile({ token, ip });
+    const result = await verifyTurnstile({ token, ...(ip !== undefined ? { ip } : {}) });
     return result.success;
   } catch {
     return false;

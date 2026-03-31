@@ -1,11 +1,8 @@
-import { readFileSync } from "node:fs";
 import { stdin as processStdin } from "node:process";
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { delegate, findMonorepoRoot } from "../utils/delegate.js";
 import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
 import { debug, output, status } from "../utils/output.js";
 
 interface SecretsCommandOptions {
@@ -110,7 +107,7 @@ async function handleList(options: SecretsCommandOptions): Promise<void> {
 async function handleSet(key: string, options: SecretsCommandOptions): Promise<void> {
   if (!key) {
     status("Secret key is required: nebutra secrets set <key>", "error");
-    process.exit(ExitCode.INVALID_ARGUMENT);
+    process.exit(ExitCode.INVALID_ARGS);
   }
 
   let value: string;
@@ -122,15 +119,15 @@ async function handleSet(key: string, options: SecretsCommandOptions): Promise<v
     status("Enter secret value (will not echo). Press Ctrl+D when done:", "info");
     try {
       value = await readStdinSecure();
-    } catch (error) {
+    } catch (_error) {
       status("Failed to read secret from stdin", "error");
-      process.exit(ExitCode.IO_ERROR);
+      process.exit(ExitCode.ERROR);
     }
   }
 
   if (!value) {
     status("Secret value cannot be empty", "error");
-    process.exit(ExitCode.INVALID_ARGUMENT);
+    process.exit(ExitCode.INVALID_ARGS);
   }
 
   status(`Setting secret ${pc.cyan(key)}...`, "info");
@@ -156,7 +153,7 @@ async function handleSet(key: string, options: SecretsCommandOptions): Promise<v
 async function handleGet(key: string, options: SecretsCommandOptions): Promise<void> {
   if (!key) {
     status("Secret key is required: nebutra secrets get <key>", "error");
-    process.exit(ExitCode.INVALID_ARGUMENT);
+    process.exit(ExitCode.INVALID_ARGS);
   }
 
   status(`Retrieving secret ${pc.cyan(key)}...`, "info");
@@ -189,7 +186,7 @@ async function handleGet(key: string, options: SecretsCommandOptions): Promise<v
 async function handleRotate(key: string, options: SecretsCommandOptions): Promise<void> {
   if (!key) {
     status("Secret key is required: nebutra secrets rotate <key>", "error");
-    process.exit(ExitCode.INVALID_ARGUMENT);
+    process.exit(ExitCode.INVALID_ARGS);
   }
 
   const isInteractive = process.stdin.isTTY === true && process.stdout.isTTY === true;
@@ -208,7 +205,7 @@ async function handleRotate(key: string, options: SecretsCommandOptions): Promis
 
   if (!options.yes && !options.dryRun && !isInteractive) {
     status("Key rotation requires --yes confirmation", "error");
-    process.exit(ExitCode.INVALID_ARGUMENT);
+    process.exit(ExitCode.INVALID_ARGS);
   }
 
   status(`Rotating encryption key for ${pc.cyan(key)}...`, "info");
@@ -360,72 +357,78 @@ export function registerSecretsCommand(program: Command): void {
     .option("--value <text>", "Secret value (prefer stdin for security)")
     .option("--since <date>", "Audit log start date (ISO 8601)")
     .option("--limit <n>", "Maximum audit log entries (default: 50)")
-    .action(async (verb: string, args: string[], options: SecretsCommandOptions) => {
-      const globalOptions = options.optsWithGlobals?.();
-      const mergedOptions: SecretsCommandOptions = {
-        dryRun: options.dryRun || globalOptions?.dryRun,
-        yes: options.yes || globalOptions?.yes,
-        format: (options.format || globalOptions?.format) as "json" | "plain" | "table",
-        tenant: options.tenant || globalOptions?.tenant,
-        unmask: options.unmask || false,
-        description: options.description,
-        value: options.value,
-        since: options.since,
-        limit: options.limit ? parseInt(options.limit, 10) : 50,
-      };
+    .action(
+      async (
+        verb: string,
+        args: string[],
+        options: SecretsCommandOptions & { optsWithGlobals?: () => SecretsCommandOptions },
+      ) => {
+        const globalOptions = options.optsWithGlobals?.();
+        const mergedOptions: SecretsCommandOptions = {
+          dryRun: options.dryRun || globalOptions?.dryRun,
+          yes: options.yes || globalOptions?.yes,
+          format: (options.format || globalOptions?.format) as "json" | "plain" | "table",
+          tenant: options.tenant || globalOptions?.tenant,
+          unmask: options.unmask || false,
+          description: options.description,
+          value: options.value,
+          since: options.since,
+          limit: options.limit ?? 50,
+        };
 
-      try {
-        switch (verb) {
-          case "list":
-            await handleList(mergedOptions);
-            break;
+        try {
+          switch (verb) {
+            case "list":
+              await handleList(mergedOptions);
+              break;
 
-          case "set":
-            if (args.length === 0) {
-              status("set requires a secret key: nebutra secrets set <key>", "error");
-              process.exit(ExitCode.INVALID_ARGUMENT);
-            }
-            await handleSet(args[0], mergedOptions);
-            break;
+            case "set":
+              if (args.length === 0) {
+                status("set requires a secret key: nebutra secrets set <key>", "error");
+                process.exit(ExitCode.INVALID_ARGS);
+              }
+              await handleSet(args[0], mergedOptions);
+              break;
 
-          case "get":
-            if (args.length === 0) {
-              status("get requires a secret key: nebutra secrets get <key>", "error");
-              process.exit(ExitCode.INVALID_ARGUMENT);
-            }
-            await handleGet(args[0], mergedOptions);
-            break;
+            case "get":
+              if (args.length === 0) {
+                status("get requires a secret key: nebutra secrets get <key>", "error");
+                process.exit(ExitCode.INVALID_ARGS);
+              }
+              await handleGet(args[0], mergedOptions);
+              break;
 
-          case "rotate":
-            if (args.length === 0) {
-              status("rotate requires a secret key: nebutra secrets rotate <key>", "error");
-              process.exit(ExitCode.INVALID_ARGUMENT);
-            }
-            await handleRotate(args[0], mergedOptions);
-            break;
+            case "rotate":
+              if (args.length === 0) {
+                status("rotate requires a secret key: nebutra secrets rotate <key>", "error");
+                process.exit(ExitCode.INVALID_ARGS);
+              }
+              await handleRotate(args[0], mergedOptions);
+              break;
 
-          case "audit":
-            await handleAudit(mergedOptions);
-            break;
+            case "audit":
+              await handleAudit(mergedOptions);
+              break;
 
-          case "verify":
-            await handleVerify(mergedOptions);
-            break;
+            case "verify":
+              await handleVerify(mergedOptions);
+              break;
 
-          default:
-            status(
-              `Unknown secrets subcommand: ${verb}. Valid commands: list, set, get, rotate, audit, verify`,
-              "error",
-            );
-            process.exit(ExitCode.UNKNOWN_COMMAND);
+            default:
+              status(
+                `Unknown secrets subcommand: ${verb}. Valid commands: list, set, get, rotate, audit, verify`,
+                "error",
+              );
+              process.exit(ExitCode.ERROR);
+          }
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          status(`Secrets command failed: ${message}`, "error");
+          debug("Full error", { error });
+          process.exit(ExitCode.ERROR);
         }
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        status(`Secrets command failed: ${message}`, "error");
-        debug("Full error", { error });
-        process.exit(ExitCode.COMMAND_FAILED);
-      }
-    });
+      },
+    );
 
   // Add help text
   secretsCommand.addHelpText(

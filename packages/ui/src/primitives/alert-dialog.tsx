@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertDialog as BaseAlertDialog } from "@base-ui-components/react/alert-dialog";
+import { AlertDialog as BaseAlertDialog } from "@base-ui/react/alert-dialog";
 import * as React from "react";
 import { cn } from "../utils/cn";
 import { buttonVariants } from "./button";

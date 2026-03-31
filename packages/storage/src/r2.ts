@@ -95,7 +95,10 @@ export async function upload(
   const url =
     options.bucket === "assets"
       ? `${config.publicUrl}/${key}`
-      : await getSignedDownloadUrl(key, { bucket: options.bucket });
+      : await getSignedDownloadUrl(
+          key,
+          options.bucket !== undefined ? { bucket: options.bucket } : {},
+        );
 
   return {
     key,

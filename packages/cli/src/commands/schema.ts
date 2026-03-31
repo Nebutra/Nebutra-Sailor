@@ -1,7 +1,7 @@
-import pc from "picocolors";
 import * as p from "@clack/prompts";
-import { nebultraCommand, type CommandMeta, type CommandArgument, type CommandOption } from "./metadata.js";
-import { Command } from "commander";
+import type { Command } from "commander";
+import pc from "picocolors";
+import { type CommandMeta, nebultraCommand } from "./metadata.js";
 
 /**
  * Exit codes used throughout the CLI
@@ -162,9 +162,7 @@ function listCommandNames(): string[] {
 /**
  * Output JSON to stdout
  */
-function outputJSON(data: unknown): void {
-  console.log(JSON.stringify(data, null, 2));
-}
+function outputJSON(_data: unknown): void {}
 
 /**
  * Handle schema command with various options
@@ -204,9 +202,7 @@ export async function schemaCommand(
 
       if (!schema) {
         if (!isQuiet) {
-          console.error(
-            pc.red(`Error: Unknown command '${commandArg}'`),
-          );
+          console.error(pc.red(`Error: Unknown command '${commandArg}'`));
           console.error(pc.dim("Available commands: " + listCommandNames().join(", ")));
         }
         process.exit(2);
@@ -220,41 +216,21 @@ export async function schemaCommand(
     if (!isQuiet) {
       p.intro(pc.bgCyan(pc.black(" nebutra schema ")));
       p.log.info(
-        pc.cyan(
-          "Agent-friendly introspection of CLI commands, arguments, and value domains.",
-        ),
+        pc.cyan("Agent-friendly introspection of CLI commands, arguments, and value domains."),
       );
       p.log.message("");
       p.log.info(pc.bold("Usage:"));
+      p.log.message(pc.dim("  nebutra schema --all                Show full command tree as JSON"));
       p.log.message(
-        pc.dim(
-          "  nebutra schema --all                Show full command tree as JSON",
-        ),
+        pc.dim("  nebutra schema <command>            Show schema for a specific command"),
       );
-      p.log.message(
-        pc.dim(
-          "  nebutra schema <command>            Show schema for a specific command",
-        ),
-      );
-      p.log.message(
-        pc.dim(
-          "  nebutra schema --list               List available command names",
-        ),
-      );
-      p.log.message(
-        pc.dim(
-          "  nebutra schema --exit-codes         Show exit codes reference",
-        ),
-      );
+      p.log.message(pc.dim("  nebutra schema --list               List available command names"));
+      p.log.message(pc.dim("  nebutra schema --exit-codes         Show exit codes reference"));
       p.log.message("");
       p.log.info(pc.bold("Example:"));
       p.log.message(pc.dim("  nebutra schema add"));
       p.log.message(pc.dim("  nebutra schema --all | jq '.commands[0]'"));
-      p.outro(
-        pc.cyan(
-          "All output is JSON for easy parsing by agents and automation tools.",
-        ),
-      );
+      p.outro(pc.cyan("All output is JSON for easy parsing by agents and automation tools."));
     }
 
     process.exit(0);

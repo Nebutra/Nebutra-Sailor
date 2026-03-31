@@ -24,7 +24,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@base-ui-components/react": "1.0.0-rc.0",
+    "@base-ui/react": "^1.3.0",
     "@heroui/calendar": "^2.2.31",
     "@heroui/card": "^2.2.27",
     "@heroui/checkbox": "^2.3.31",
@@ -70,7 +70,7 @@
     "recharts": "^3.7.0",
     "rough-notation": "^0.5.1",
     "sonner": "^2.0.7",
-    "svg-dotted-map": "^2.1.0",
+    "piri": "^1.3.2",
     "tailwind-merge": "^3.5.0",
     "usehooks-ts": "^3.1.1",
     "vaul": "^1.1.2"

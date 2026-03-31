@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 import { LicenseWizard } from "./LicenseWizard";
@@ -16,21 +17,27 @@ export const metadata: Metadata = {
   description: "Join the Nebutra community. Get your free license in 2 minutes.",
 };
 
+async function RequireAuth({ lang, children }: { lang: string; children: React.ReactNode }) {
+  const { userId } = await auth();
+  if (!userId) {
+    redirect(`/${lang}/sign-in?redirect_url=/${lang}/get-license`);
+  }
+  return <>{children}</>;
+}
+
 export default async function GetLicensePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return null;
   setRequestLocale(lang as Locale);
 
-  // Require Clerk auth — redirect to sign-in if not logged in
-  const { userId } = await auth();
-  if (!userId) {
-    redirect(`/${lang}/sign-in?redirect_url=/${lang}/get-license`);
-  }
-
   return (
     <main className="min-h-screen bg-[var(--neutral-1)]">
       <Navbar />
-      <LicenseWizard />
+      <Suspense fallback={null}>
+        <RequireAuth lang={lang}>
+          <LicenseWizard />
+        </RequireAuth>
+      </Suspense>
       <FooterMinimal />
     </main>
   );

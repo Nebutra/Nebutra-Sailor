@@ -125,7 +125,11 @@ export function StatusWidget({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const config = buildConfig({ pageSlug, provider, pageId });
+  const config = buildConfig({
+    ...(pageSlug !== undefined ? { pageSlug } : {}),
+    ...(provider !== undefined ? { provider } : {}),
+    ...(pageId !== undefined ? { pageId } : {}),
+  });
 
   useEffect(() => {
     if (!config) {
@@ -175,7 +179,15 @@ export function StatusWidget({
   }
 
   const style = STATUS_STYLES[data.status];
-  const externalUrl = deriveStatusPageUrl({ pageSlug, provider, pageId, statusPageUrl }, data);
+  const externalUrl = deriveStatusPageUrl(
+    {
+      ...(pageSlug !== undefined ? { pageSlug } : {}),
+      ...(provider !== undefined ? { provider } : {}),
+      ...(pageId !== undefined ? { pageId } : {}),
+      ...(statusPageUrl !== undefined ? { statusPageUrl } : {}),
+    },
+    data,
+  );
 
   return (
     <div className={`overflow-hidden rounded-lg border ${style.border} ${className}`}>

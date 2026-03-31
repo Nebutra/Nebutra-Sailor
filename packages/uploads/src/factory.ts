@@ -51,7 +51,7 @@ function autoDetectProvider(config?: ProviderConfig): UploadProvider {
   // Priority 1: Check explicit UPLOAD_PROVIDER
   const explicitProvider = process.env.UPLOAD_PROVIDER as UploadProviderType | undefined;
   if (explicitProvider) {
-    logger.info({ provider: explicitProvider }, "Using explicit upload provider");
+    logger.info("Using explicit upload provider", { provider: explicitProvider });
     return createUploadProviderByType(explicitProvider, config);
   }
 
@@ -62,8 +62,8 @@ function autoDetectProvider(config?: ProviderConfig): UploadProvider {
       accessKeyId: process.env.R2_ACCESS_KEY_ID || "",
       secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || "",
       region: "auto",
-      endpoint: process.env.R2_ENDPOINT,
-      publicUrl: process.env.R2_PUBLIC_URL,
+      ...(process.env.R2_ENDPOINT !== undefined ? { endpoint: process.env.R2_ENDPOINT } : {}),
+      ...(process.env.R2_PUBLIC_URL !== undefined ? { publicUrl: process.env.R2_PUBLIC_URL } : {}),
     });
   }
 
@@ -75,13 +75,13 @@ function autoDetectProvider(config?: ProviderConfig): UploadProvider {
 
   // Priority 4: Check for custom S3 endpoint (Minio, etc.)
   if (process.env.S3_ENDPOINT) {
-    logger.info({ endpoint: process.env.S3_ENDPOINT }, "Using custom S3 endpoint");
+    logger.info("Using custom S3 endpoint", { endpoint: process.env.S3_ENDPOINT });
     return new S3UploadProvider({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID || process.env.S3_ACCESS_KEY_ID || "",
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || process.env.S3_SECRET_ACCESS_KEY || "",
       region: process.env.AWS_REGION || "us-east-1",
-      endpoint: process.env.S3_ENDPOINT,
-      publicUrl: process.env.S3_PUBLIC_URL,
+      ...(process.env.S3_ENDPOINT !== undefined ? { endpoint: process.env.S3_ENDPOINT } : {}),
+      ...(process.env.S3_PUBLIC_URL !== undefined ? { publicUrl: process.env.S3_PUBLIC_URL } : {}),
     });
   }
 
@@ -108,7 +108,7 @@ export async function getUploadProvider(config?: ProviderConfig): Promise<Upload
 export function resetUploadProvider(): void {
   if (instance) {
     instance.close().catch((error) => {
-      logger.warn({ error }, "Failed to close upload provider");
+      logger.warn("Failed to close upload provider", { error });
     });
   }
   instance = null;

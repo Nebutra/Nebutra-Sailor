@@ -3,6 +3,7 @@
  * Supports both AWS S3 and Cloudflare R2 (S3-compatible)
  */
 
+import { randomUUID } from "node:crypto";
 import {
   AbortMultipartUploadCommand,
   CompleteMultipartUploadCommand,
@@ -10,13 +11,12 @@ import {
   DeleteObjectCommand,
   GetObjectCommand,
   PutObjectCommand,
-  type PutObjectCommandInput,
   S3Client,
   type CompletedPart as S3CompletedPart,
+  UploadPartCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { logger } from "@nebutra/logger";
-import { randomUUID } from "crypto";
 import type {
   CompletePart,
   MultipartUpload,
@@ -30,7 +30,14 @@ import type {
 
 export class S3UploadProvider implements UploadProvider {
   private client: S3Client;
-  private config: Required<S3ProviderConfig>;
+  private config: {
+    accessKeyId: string;
+    secretAccessKey: string;
+    region: string;
+    endpoint: string | undefined;
+    publicUrl: string;
+    forcePathStyle: boolean;
+  };
   private uploadTracking: Map<string, { bucket: string; key: string }>;
 
   constructor(config: S3ProviderConfig) {
@@ -40,13 +47,13 @@ export class S3UploadProvider implements UploadProvider {
       secretAccessKey: config.secretAccessKey,
       region: config.region,
       endpoint: config.endpoint,
-      publicUrl: config.publicUrl || "https://cdn.example.com",
-      forcePathStyle: config.forcePathStyle || false,
+      publicUrl: config.publicUrl ?? "https://cdn.example.com",
+      forcePathStyle: config.forcePathStyle ?? false,
     };
 
     this.client = new S3Client({
       region: this.config.region,
-      ...(this.config.endpoint && { endpoint: this.config.endpoint }),
+      ...(this.config.endpoint !== undefined ? { endpoint: this.config.endpoint } : {}),
       credentials: {
         accessKeyId: this.config.accessKeyId,
         secretAccessKey: this.config.secretAccessKey,
@@ -54,7 +61,7 @@ export class S3UploadProvider implements UploadProvider {
       forcePathStyle: this.config.forcePathStyle,
     });
 
-    logger.info({ provider: "s3", region: this.config.region }, "S3 upload provider initialized");
+    logger.info("S3 upload provider initialized", { provider: "s3", region: this.config.region });
   }
 
   /**
@@ -80,12 +87,12 @@ export class S3UploadProvider implements UploadProvider {
       Key: key,
       ContentType: target.contentType,
       Metadata: target.metadata,
-      ...(target.acl && { ACL: target.acl }),
+      ...(target.acl !== undefined ? { ACL: target.acl } : {}),
     });
 
     const url = await getSignedUrl(this.client, command, { expiresIn });
 
-    logger.debug({ key, bucket: target.bucket }, "Presigned upload URL generated");
+    logger.debug("Presigned upload URL generated", { key, bucket: target.bucket });
 
     return {
       url,
@@ -109,7 +116,7 @@ export class S3UploadProvider implements UploadProvider {
       Key: key,
       ContentType: target.contentType,
       Metadata: target.metadata,
-      ...(target.acl && { ACL: target.acl }),
+      ...(target.acl !== undefined ? { ACL: target.acl } : {}),
     });
 
     const response = await this.client.send(createCmd);
@@ -125,16 +132,18 @@ export class S3UploadProvider implements UploadProvider {
     });
 
     // Generate presigned URLs for each part
+    const uploadId = response.UploadId;
     const parts = await Promise.all(
       Array.from({ length: partCount }, async (_, i) => {
         const partNumber = i + 1;
-        const uploadUrl = new PutObjectCommand({
+        const uploadPartCmd = new UploadPartCommand({
           Bucket: target.bucket,
           Key: key,
           PartNumber: partNumber,
+          UploadId: uploadId,
         });
 
-        const presignedUrl = await getSignedUrl(this.client, uploadUrl, {
+        const presignedUrl = await getSignedUrl(this.client, uploadPartCmd, {
           expiresIn: 3600,
         });
 
@@ -145,15 +154,17 @@ export class S3UploadProvider implements UploadProvider {
       }),
     );
 
-    const completeUrl = await this.generateCompleteUrl(target.bucket, key, response.UploadId);
+    const completeUrl = await this.generateCompleteUrl(target.bucket, key, uploadId);
 
-    logger.info(
-      { key, bucket: target.bucket, uploadId: response.UploadId, partCount },
-      "Multipart upload initiated",
-    );
+    logger.info("Multipart upload initiated", {
+      key,
+      bucket: target.bucket,
+      uploadId,
+      partCount,
+    });
 
     return {
-      uploadId: response.UploadId,
+      uploadId,
       key,
       bucket: target.bucket,
       parts,
@@ -206,9 +217,9 @@ export class S3UploadProvider implements UploadProvider {
 
     const response = await this.client.send(command);
 
-    const url = this.generateDownloadUrl(bucket, key);
+    const url = this.generateDownloadUrl(key);
 
-    logger.info({ key, bucket, uploadId, etag: response.ETag }, "Multipart upload completed");
+    logger.info("Multipart upload completed", { key, bucket, uploadId, etag: response.ETag });
 
     return {
       key,
@@ -216,7 +227,7 @@ export class S3UploadProvider implements UploadProvider {
       url,
       size: 0, // S3 doesn't provide size in complete response
       contentType: "application/octet-stream",
-      etag: response.ETag,
+      ...(response.ETag !== undefined ? { etag: response.ETag } : {}),
     };
   }
 
@@ -225,7 +236,7 @@ export class S3UploadProvider implements UploadProvider {
    */
   async abortMultipartUpload(uploadId: string, key: string): Promise<void> {
     const uploadInfo = this.uploadTracking.get(uploadId);
-    const bucket = uploadInfo?.bucket || "unknown";
+    const bucket = uploadInfo?.bucket ?? "unknown";
 
     const command = new AbortMultipartUploadCommand({
       Bucket: bucket,
@@ -236,7 +247,7 @@ export class S3UploadProvider implements UploadProvider {
     await this.client.send(command);
     this.uploadTracking.delete(uploadId);
 
-    logger.info({ key, bucket, uploadId }, "Multipart upload aborted");
+    logger.info("Multipart upload aborted", { key, bucket, uploadId });
   }
 
   /**
@@ -259,7 +270,7 @@ export class S3UploadProvider implements UploadProvider {
     }
 
     return {
-      endpoint: `${this.config.endpoint || "https://s3.amazonaws.com"}/${target.bucket}/${key}?uploadId=${response.UploadId}`,
+      endpoint: `${this.config.endpoint ?? "https://s3.amazonaws.com"}/${target.bucket}/${key}?uploadId=${response.UploadId}`,
       chunkSize: 5 * 1024 * 1024, // 5MB chunks
       retryDelays: [0, 1000, 3000, 5000],
       metadata: {
@@ -281,7 +292,7 @@ export class S3UploadProvider implements UploadProvider {
 
     await this.client.send(command);
 
-    logger.debug({ key, bucket }, "File deleted from S3");
+    logger.debug("File deleted from S3", { key, bucket });
   }
 
   /**
@@ -299,7 +310,7 @@ export class S3UploadProvider implements UploadProvider {
   /**
    * Generate public CDN URL for assets
    */
-  private generateDownloadUrl(bucket: string, key: string): string {
+  private generateDownloadUrl(key: string): string {
     return `${this.config.publicUrl}/${key}`;
   }
 
@@ -317,12 +328,15 @@ export class S3UploadProvider implements UploadProvider {
  * Create S3 provider from environment variables
  */
 export function createS3Provider(): S3UploadProvider {
+  const endpoint = process.env.S3_ENDPOINT;
+  const publicUrl = process.env.S3_PUBLIC_URL ?? process.env.R2_PUBLIC_URL;
+
   const config: S3ProviderConfig = {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || process.env.R2_ACCESS_KEY_ID || "",
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || process.env.R2_SECRET_ACCESS_KEY || "",
-    region: process.env.AWS_REGION || "auto",
-    endpoint: process.env.S3_ENDPOINT,
-    publicUrl: process.env.S3_PUBLIC_URL || process.env.R2_PUBLIC_URL,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? process.env.R2_ACCESS_KEY_ID ?? "",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? process.env.R2_SECRET_ACCESS_KEY ?? "",
+    region: process.env.AWS_REGION ?? "auto",
+    ...(endpoint !== undefined ? { endpoint } : {}),
+    ...(publicUrl !== undefined ? { publicUrl } : {}),
     forcePathStyle: process.env.S3_FORCE_PATH_STYLE === "true",
   };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Tooltip as BaseTooltip } from "@base-ui-components/react/tooltip";
+import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import * as React from "react";
 import { cn } from "../utils/cn";

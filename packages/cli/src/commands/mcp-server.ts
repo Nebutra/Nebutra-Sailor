@@ -1,8 +1,8 @@
 import { spawn } from "node:child_process";
-import { resolve, dirname } from "node:path";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import pc from "picocolors";
 import * as p from "@clack/prompts";
+import pc from "picocolors";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -15,10 +15,7 @@ function resolveMcpServerBinary(): string {
   const strategies = [
     // Strategy 1: Monorepo sibling (pnpm/yarn workspace)
     () => {
-      const siblingPath = resolve(
-        __dirname,
-        "../../../mcp/dist/server/contextServer.js",
-      );
+      const siblingPath = resolve(__dirname, "../../../mcp/dist/server/contextServer.js");
       return siblingPath;
     },
   ];
@@ -27,9 +24,7 @@ function resolveMcpServerBinary(): string {
     try {
       const path = strategy();
       return path;
-    } catch {
-      continue;
-    }
+    } catch {}
   }
 
   // Fallback: try to find via PATH
@@ -41,7 +36,7 @@ interface SpawnError extends Error {
   signal?: string;
 }
 
-function isSpawnError(error: unknown): error is SpawnError {
+function _isSpawnError(error: unknown): error is SpawnError {
   return error instanceof Error && "code" in error;
 }
 
@@ -56,11 +51,7 @@ export function registerMcpCommand(program: any) {
       try {
         const mcpServerBin = resolveMcpServerBinary();
 
-        p.log.info(
-          pc.cyan(
-            "Starting Nebutra MCP server for Cursor/Windsurf integration...",
-          ),
-        );
+        p.log.info(pc.cyan("Starting Nebutra MCP server for Cursor/Windsurf integration..."));
         p.log.info(pc.dim("Press Ctrl+C to stop the server.\n"));
 
         const child = spawn(process.execPath, [mcpServerBin], {
@@ -79,19 +70,13 @@ export function registerMcpCommand(program: any) {
         });
 
         child.on("error", (err: SpawnError) => {
-          console.error(
-            pc.red(`\nFailed to start MCP server: ${err.message}`),
-          );
+          console.error(pc.red(`\nFailed to start MCP server: ${err.message}`));
 
           if (err.code === "ENOENT") {
             console.error(
-              pc.yellow(
-                "\nTip: Ensure @nebutra/mcp is installed or available in your PATH.",
-              ),
+              pc.yellow("\nTip: Ensure @nebutra/mcp is installed or available in your PATH."),
             );
-            console.error(
-              pc.cyan("  Install globally: npm install -g @nebutra/mcp"),
-            );
+            console.error(pc.cyan("  Install globally: npm install -g @nebutra/mcp"));
           }
 
           process.exit(1);
@@ -109,9 +94,7 @@ export function registerMcpCommand(program: any) {
         });
       } catch (error: unknown) {
         p.log.error(
-          pc.red(
-            "Error: Unable to start MCP server. Ensure @nebutra/mcp is properly installed.",
-          ),
+          pc.red("Error: Unable to start MCP server. Ensure @nebutra/mcp is properly installed."),
         );
 
         if (error instanceof Error) {

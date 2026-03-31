@@ -3,10 +3,29 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* CJK fonts — scoped to Chinese/Japanese/Korean unicode ranges only */
+/* ─── Local font declarations ──────────────────────────────────────────────── */
+
+/* Alibaba PuHuiTi — Chinese sans-serif UI (unicode-range scoped) */
 @font-face {
   font-family: "AlibabaCJK";
   src: url("../fonts/AlibabaPuHuiTi-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+  unicode-range:
+    U+4E00-9FFF, U+3400-4DBF, U+F900-FAFF, U+2F800-2FA1F, U+3000-303F, U+FF00-FFEF, U+2E80-2EFF,
+    U+FE30-FE4F, U+2000-206F;
+}
+
+/*
+ * 霞鹜文楷GB (LXGW WenKai GB) — Chinese warm literary serif
+ * License: SIL OFL 1.1 (free commercial use)
+ * Use: Long-form Chinese reading, article body, editorial serif
+ * Character: warm stroke, humanist, beloved by Chinese design community
+ */
+@font-face {
+  font-family: "LXGWWenKai";
+  src: url("../fonts/LXGWWenKaiGB-Regular.ttf") format("truetype");
+  font-weight: 400;
   font-display: swap;
   unicode-range:
     U+4E00-9FFF, U+3400-4DBF, U+F900-FAFF, U+2F800-2FA1F, U+3000-303F, U+FF00-FFEF, U+2E80-2EFF,
@@ -14,12 +33,71 @@
 }
 
 @font-face {
-  font-family: "SourceHanSerifCJK";
-  src: url("../fonts/SourceHanSerifCN-Regular.ttf") format("truetype");
+  font-family: "LXGWWenKai";
+  src: url("../fonts/LXGWWenKaiGB-Bold.ttf") format("truetype");
+  font-weight: 700;
   font-display: swap;
   unicode-range:
     U+4E00-9FFF, U+3400-4DBF, U+F900-FAFF, U+2F800-2FA1F, U+3000-303F, U+FF00-FFEF, U+2E80-2EFF,
     U+FE30-FE4F, U+2000-206F;
+}
+
+/*
+ * 得意黑 (Smiley Sans) — Chinese geometric display
+ * License: SIL OFL 1.1 (free commercial use)
+ * Use: Hero headings, large Chinese display text, section titles
+ * Character: warm geometric black, beloved by Chinese tech/design community
+ */
+@font-face {
+  font-family: "SmileySans";
+  src: url("../fonts/SmileySans.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+4E00-9FFF, U+3400-4DBF, U+F900-FAFF, U+2F800-2FA1F, U+3000-303F, U+FF00-FFEF, U+2E80-2EFF,
+    U+0020-007E;
+}
+
+/*
+ * 阿里妈妈数黑体 (Alimama Digital Sans) — AI/digital context display
+ * License: Alibaba open source (free commercial use)
+ * Use: Numbers, data labels, tech product hero text
+ * Character: designed for screens and digital products, sharp and modern
+ */
+@font-face {
+  font-family: "AlimamaDigital";
+  src: url("../fonts/AlimamaDigitalSans.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+4E00-9FFF, U+3400-4DBF, U+F900-FAFF, U+2F800-2FA1F, U+3000-303F, U+FF00-FFEF, U+2E80-2EFF,
+    U+0030-0039, U+0020-007E;
+}
+
+/*
+ * Ark Pixel — Pixel/bitmap decorative font
+ * License: SIL OFL 1.1 (free commercial use)
+ * Use: Decorative tech elements, loading states, pixel-art accents, sprite-style UI
+ * Character: 12px grid, supports Latin + CJK, retro-future hacker aesthetic
+ */
+@font-face {
+  font-family: "ArkPixel";
+  src: url("../fonts/ArkPixel-latin.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+  unicode-range: U+0020-007E, U+00A0-00FF;
+}
+
+@font-face {
+  font-family: "ArkPixel";
+  src: url("../fonts/ArkPixel-zh.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+  unicode-range: U+4E00-9FFF, U+3400-4DBF, U+3000-303F, U+FF00-FFEF;
 }
 
 :root {
@@ -30,8 +108,40 @@
   --color-accent-muted: hsl(82 92% 80%);
   --color-accent-shadow: hsla(82 84% 56% / 0.15);
   --page-bg: var(--neutral-2, #fafafa);
-  --font-sans: var(--font-inter), "AlibabaCJK", system-ui, sans-serif;
-  --font-serif: var(--font-playfair), "SourceHanSerifCJK", serif;
+
+  /*
+   * Font System: "Tseka Editorial Stack"
+   *
+   * --font-sans-var  → injected by Instrument_Sans (next/font)
+   * --font-playfair  → injected by Playfair_Display (next/font)
+   * --font-mono-var  → injected by JetBrains_Mono (next/font)
+   * "AlibabaCJK"     → local @font-face, unicode-range scoped (CJK only)
+   * "SourceHanSerifCJK" → local @font-face, unicode-range scoped (CJK only)
+   *
+   * Cascade logic: Latin chars → Instrument Sans / Playfair / JetBrains Mono
+   *                CJK chars   → AlibabaPuHuiTi / SourceHanSerifCN (unicode-range)
+   */
+  /*
+   * Font stack cascade:
+   *   Latin  → Instrument Sans / Playfair / JetBrains Mono
+   *   CJK    → AlibabaPuHuiTi (sans) / SourceHanSerifCN (serif)  [unicode-range]
+   *   Display → SmileySans / AlimamaDigital (explicit class/selector)
+   *   Pixel  → ArkPixel (explicit class/selector)
+   */
+  --font-sans: var(--font-sans-var), "AlibabaCJK", system-ui, sans-serif;
+  --font-serif: var(--font-playfair), "LXGWWenKai", serif;
+  --font-mono: var(--font-mono-var), "Fira Code", Consolas, "Courier New", monospace;
+  --font-display-cn: "SmileySans", "AlibabaCJK", sans-serif;
+  --font-display-digit: "AlimamaDigital", "SmileySans", sans-serif;
+  --font-pixel: "ArkPixel", monospace;
+  /* Dela Gothic One injected via next/font as --font-dela-gothic */
+  --font-display-en: var(--font-dela-gothic, "Impact"), system-ui, sans-serif;
+
+  /* Type scale — letter spacing */
+  --tracking-display: -0.04em;
+  --tracking-heading: -0.02em;
+  --tracking-body: 0em;
+  --tracking-mono: 0em;
 }
 
 .dark,
@@ -51,6 +161,36 @@ body {
 
 .font-serif {
   font-family: var(--font-serif);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  letter-spacing: var(--tracking-mono);
+}
+
+/* 得意黑 — 中文 Hero 标题 / 大号中文展示 */
+.font-display-cn {
+  font-family: var(--font-display-cn);
+  letter-spacing: var(--tracking-display);
+}
+
+/* 阿里妈妈数黑体 — 数字 / 数据 / AI 产品文案 */
+.font-display-digit {
+  font-family: var(--font-display-digit);
+  font-feature-settings: "tnum";
+  letter-spacing: var(--tracking-heading);
+}
+
+/* Dela Gothic One — 英文/日文超宽黑展示 */
+.font-display-en {
+  font-family: var(--font-display-en);
+}
+
+/* 方舟像素字体 — 装饰性像素元素 */
+.font-pixel {
+  font-family: var(--font-pixel);
+  image-rendering: pixelated;
+  letter-spacing: 0.05em;
 }
 
 a:focus-visible,

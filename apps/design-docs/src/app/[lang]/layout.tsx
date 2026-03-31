@@ -1,22 +1,15 @@
 import { I18nProvider } from "fumadocs-ui/contexts/i18n";
 import { RootProvider } from "fumadocs-ui/provider/next";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
+import { Noto_Sans_SC } from "next/font/google";
 import type { ReactNode } from "react";
 import { i18n } from "@/lib/i18n";
 import "../globals.css";
 
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  variable: "--font-sans",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-mono",
-});
+// GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
+// Matches the Precision Stack used across apps/web and apps/landing-page
 
 const notoSansSC = Noto_Sans_SC({
   weight: ["400", "500", "700"],
@@ -41,7 +34,7 @@ export default async function RootLayout({
   return (
     <html
       lang={lang}
-      className={`${inter.variable} ${jetbrainsMono.variable} ${notoSansSC.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${notoSansSC.variable}`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>

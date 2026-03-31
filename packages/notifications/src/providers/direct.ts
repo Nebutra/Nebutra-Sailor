@@ -1,5 +1,6 @@
 import { logger } from "@nebutra/logger";
 import type {
+  ChannelResult,
   ChatDispatcher,
   DirectProviderConfig,
   EmailDispatcher,
@@ -7,6 +8,7 @@ import type {
   InAppFeedResult,
   InAppNotification,
   InAppNotificationStore,
+  NotificationChannel,
   NotificationPayload,
   NotificationPreference,
   NotificationProvider,
@@ -27,10 +29,10 @@ import type {
 export class DirectProvider implements NotificationProvider {
   readonly name: NotificationProviderType = "direct";
   private inAppStore: InAppNotificationStore;
-  private emailDispatcher?: EmailDispatcher;
-  private pushDispatcher?: PushDispatcher;
-  private smsDispatcher?: SMSDispatcher;
-  private chatDispatcher?: ChatDispatcher;
+  private emailDispatcher: EmailDispatcher | undefined;
+  private pushDispatcher: PushDispatcher | undefined;
+  private smsDispatcher: SMSDispatcher | undefined;
+  private chatDispatcher: ChatDispatcher | undefined;
   private preferenceStore: PreferenceStore;
 
   constructor(config: DirectProviderConfig) {
@@ -84,7 +86,7 @@ export class DirectProvider implements NotificationProvider {
       accepted: allAccepted,
       provider: this.name,
       channelResults,
-      errors: errors.length > 0 ? errors : undefined,
+      ...(errors.length > 0 ? { errors } : {}),
     };
   }
 
@@ -202,12 +204,12 @@ export class DirectProvider implements NotificationProvider {
    * Dispatch to a single channel based on type.
    */
   private async dispatchToChannel(
-    channel: string,
+    channel: NotificationChannel,
     payload: NotificationPayload,
     notificationId: string,
     enabledChannels: Set<string>,
-  ): Promise<{ channel: string; sent: boolean; error?: string; messageId?: string }> {
-    const base = { channel };
+  ): Promise<ChannelResult> {
+    const base = { channel } as ChannelResult;
 
     // Check if channel is enabled
     if (!enabledChannels.has(channel)) {
@@ -215,7 +217,7 @@ export class DirectProvider implements NotificationProvider {
         channel,
         userId: payload.recipientId,
       });
-      return { ...base, sent: false, error: "Channel disabled by user" };
+      return { ...base, sent: false, error: "Channel disabled by user" } as ChannelResult;
     }
 
     try {
@@ -239,21 +241,24 @@ export class DirectProvider implements NotificationProvider {
         channel,
         error: errorMessage,
       });
-      return { ...base, sent: false, error: errorMessage };
+      return { ...base, sent: false, error: errorMessage } as ChannelResult;
     }
   }
 
   private async dispatchInApp(
     base: any,
     payload: NotificationPayload,
-    notificationId: string,
+    _notificationId: string,
   ): Promise<any> {
-    const title = payload.overrides?.in_app?.title || payload.data.title || payload.type;
-    const body = payload.overrides?.in_app?.body || payload.data.body || "";
+    const title =
+      payload.overrides?.in_app?.title ??
+      (payload.data.title as string | undefined) ??
+      payload.type;
+    const body = payload.overrides?.in_app?.body ?? (payload.data.body as string | undefined) ?? "";
 
     const notification = await this.inAppStore.create({
       userId: payload.recipientId,
-      tenantId: payload.tenantId,
+      ...(payload.tenantId !== undefined ? { tenantId: payload.tenantId } : {}),
       type: payload.type,
       title,
       body,
@@ -271,15 +276,19 @@ export class DirectProvider implements NotificationProvider {
   private async dispatchEmail(
     base: any,
     payload: NotificationPayload,
-    notificationId: string,
+    _notificationId: string,
   ): Promise<any> {
     if (!this.emailDispatcher) {
       return { ...base, sent: false, error: "Email dispatcher not configured" };
     }
 
-    const subject = payload.overrides?.email?.subject || payload.data.subject || payload.type;
-    const body = payload.overrides?.email?.body || payload.data.body || "";
-    const to = (payload.data.email as string) || payload.data.to || "";
+    const subject =
+      payload.overrides?.email?.subject ??
+      (payload.data.subject as string | undefined) ??
+      payload.type;
+    const body = payload.overrides?.email?.body ?? (payload.data.body as string | undefined) ?? "";
+    const to =
+      (payload.data.email as string | undefined) ?? (payload.data.to as string | undefined) ?? "";
 
     if (!to) {
       return { ...base, sent: false, error: "No email address provided" };
@@ -297,14 +306,15 @@ export class DirectProvider implements NotificationProvider {
   private async dispatchPush(
     base: any,
     payload: NotificationPayload,
-    notificationId: string,
+    _notificationId: string,
   ): Promise<any> {
     if (!this.pushDispatcher) {
       return { ...base, sent: false, error: "Push dispatcher not configured" };
     }
 
-    const title = payload.overrides?.push?.title || payload.data.title || payload.type;
-    const body = payload.overrides?.push?.body || payload.data.body || "";
+    const title =
+      payload.overrides?.push?.title ?? (payload.data.title as string | undefined) ?? payload.type;
+    const body = payload.overrides?.push?.body ?? (payload.data.body as string | undefined) ?? "";
 
     const result = await this.pushDispatcher.send(
       payload.recipientId,
@@ -323,15 +333,17 @@ export class DirectProvider implements NotificationProvider {
   private async dispatchSMS(
     base: any,
     payload: NotificationPayload,
-    notificationId: string,
+    _notificationId: string,
   ): Promise<any> {
     if (!this.smsDispatcher) {
       return { ...base, sent: false, error: "SMS dispatcher not configured" };
     }
 
     const phoneNumber =
-      (payload.data.phone as string) || (payload.data.phoneNumber as string) || "";
-    const body = payload.overrides?.sms?.body || payload.data.body || "";
+      (payload.data.phone as string | undefined) ??
+      (payload.data.phoneNumber as string | undefined) ??
+      "";
+    const body = payload.overrides?.sms?.body ?? (payload.data.body as string | undefined) ?? "";
 
     if (!phoneNumber) {
       return { ...base, sent: false, error: "No phone number provided" };
@@ -349,14 +361,15 @@ export class DirectProvider implements NotificationProvider {
   private async dispatchChat(
     base: any,
     payload: NotificationPayload,
-    notificationId: string,
+    _notificationId: string,
   ): Promise<any> {
     if (!this.chatDispatcher) {
       return { ...base, sent: false, error: "Chat dispatcher not configured" };
     }
 
-    const webhookUrl = (payload.data.webhookUrl as string) || "";
-    const text = payload.overrides?.chat?.text || payload.data.text || payload.type;
+    const webhookUrl = (payload.data.webhookUrl as string | undefined) ?? "";
+    const text =
+      payload.overrides?.chat?.text ?? (payload.data.text as string | undefined) ?? payload.type;
 
     if (!webhookUrl) {
       return { ...base, sent: false, error: "No webhook URL provided" };
@@ -399,7 +412,7 @@ class InMemoryInAppStore implements InAppNotificationStore {
       this.notifications.set(key, []);
     }
 
-    this.notifications.get(key)!.push(full);
+    this.notifications.get(key)?.push(full);
     return full;
   }
 

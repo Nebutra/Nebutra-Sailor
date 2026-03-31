@@ -1,8 +1,8 @@
-import { spawn } from "child_process";
-import { mkdir, rm } from "fs/promises";
-import { tmpdir } from "os";
-import { join } from "path";
-import { randomBytes } from "crypto";
+import { spawn } from "node:child_process";
+import { randomBytes } from "node:crypto";
+import { mkdir, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 /**
  * Spawns the CLI as a child process and captures stdout/stderr
@@ -73,7 +73,7 @@ export function mockStdin(inputs: string[]): {
   let inputIndex = 0;
 
   return {
-    write: (input: string) => {
+    write: (_input: string) => {
       if (inputIndex < inputs.length) {
         inputIndex++;
       }

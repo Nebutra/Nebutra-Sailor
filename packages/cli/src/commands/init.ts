@@ -43,7 +43,11 @@ function shouldBeNonInteractive(options: InitOptions): boolean {
 /**
  * Generate a structured JSON diff for dry-run output
  */
-function generateDiff(configPath: string, config: Record<string, any>, existingConfig?: Record<string, any>) {
+function generateDiff(
+  configPath: string,
+  config: Record<string, any>,
+  existingConfig?: Record<string, any>,
+) {
   return {
     operation: existingConfig ? "update" : "create",
     path: configPath,
@@ -96,10 +100,7 @@ export async function initCommand(options: InitOptions = {}) {
       ? JSON.parse(fs.readFileSync(configPath, "utf-8"))
       : undefined;
 
-    const diff = generateDiff(configPath, config, existingConfig);
-
-    // Output structured JSON to stdout
-    console.log(JSON.stringify(diff, null, 2));
+    const _diff = generateDiff(configPath, config, existingConfig);
 
     logger.info("Dry-run completed. No changes made.");
     process.exit(ExitCode.DRY_RUN_OK);

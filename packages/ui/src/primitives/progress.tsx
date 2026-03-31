@@ -1,6 +1,6 @@
 "use client";
 
-import { Progress as BaseProgress } from "@base-ui-components/react/progress";
+import { Progress as BaseProgress } from "@base-ui/react/progress";
 import { cva, type VariantProps } from "class-variance-authority";
 import { motion } from "motion/react";
 import * as React from "react";

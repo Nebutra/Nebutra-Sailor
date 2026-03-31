@@ -83,8 +83,8 @@ export function captchaMiddleware(options: CaptchaMiddlewareOptions = {}): Middl
     // Verify token
     const result = await verifyTurnstile({
       token,
-      ip,
-      expectedAction,
+      ...(ip !== undefined ? { ip } : {}),
+      ...(expectedAction !== undefined ? { expectedAction } : {}),
     });
 
     if (!result.success) {

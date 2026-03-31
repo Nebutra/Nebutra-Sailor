@@ -1,5 +1,5 @@
+import { createMap } from "piri";
 import * as React from "react";
-import { createMap } from "svg-dotted-map";
 
 import { cn } from "../utils/cn";
 

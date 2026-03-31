@@ -216,10 +216,11 @@ export function featureFlagMiddleware(
       | { userId?: string; organizationId?: string; plan?: string }
       | undefined;
 
+    const plan = tenant?.plan as FeatureFlagContext["plan"] | undefined;
     const context: FeatureFlagContext = {
-      userId: tenant?.userId,
-      tenantId: tenant?.organizationId,
-      plan: tenant?.plan as FeatureFlagContext["plan"],
+      ...(tenant?.userId !== undefined ? { userId: tenant.userId } : {}),
+      ...(tenant?.organizationId !== undefined ? { tenantId: tenant.organizationId } : {}),
+      ...(plan !== undefined ? { plan } : {}),
     };
 
     const enabled = await isFeatureEnabled(flag, context);

@@ -12,7 +12,7 @@
  * - Output is a contract: stable format, machine-parseable
  */
 
-import { stdout, stderr } from "node:process";
+import { stderr, stdout } from "node:process";
 import picocolors from "picocolors";
 
 /**
@@ -127,7 +127,7 @@ export function isInteractive(): boolean {
  */
 export function formatTable(
   rows: Record<string, unknown>[],
-  columns?: (keyof Record<string, unknown>)[]
+  columns?: (keyof Record<string, unknown>)[],
 ): string {
   if (rows.length === 0) {
     return "";
@@ -147,19 +147,13 @@ export function formatTable(
   }
 
   // Format header
-  const header = cols
-    .map((col) => String(col).padEnd(widths[String(col)]))
-    .join(" | ");
-  const divider = cols
-    .map((col) => "-".repeat(widths[String(col)]))
-    .join("-+-");
+  const header = cols.map((col) => String(col).padEnd(widths[String(col)])).join(" | ");
+  const divider = cols.map((col) => "-".repeat(widths[String(col)])).join("-+-");
 
   // Format rows
   const formatted: string[] = [header, divider];
   for (const row of rows) {
-    const line = cols
-      .map((col) => String(row[col] ?? "").padEnd(widths[String(col)]))
-      .join(" | ");
+    const line = cols.map((col) => String(row[col] ?? "").padEnd(widths[String(col)])).join(" | ");
     formatted.push(line);
   }
 
@@ -262,7 +256,6 @@ export function output(data: unknown, options?: OutputOptions): void {
     case "table":
       formatted = formatAsTable(data);
       break;
-    case "plain":
     default:
       formatted = formatAsPlain(data);
       break;
@@ -287,7 +280,10 @@ export function output(data: unknown, options?: OutputOptions): void {
  *
  * // Agent sees clean stdout, status messages on stderr
  */
-export function status(message: string, level: "info" | "success" | "warn" | "error" = "info"): void {
+export function status(
+  message: string,
+  level: "info" | "success" | "warn" | "error" = "info",
+): void {
   let prefix: string;
 
   switch (level) {
@@ -300,7 +296,6 @@ export function status(message: string, level: "info" | "success" | "warn" | "er
     case "success":
       prefix = picocolors.green("✓");
       break;
-    case "info":
     default:
       prefix = picocolors.blue("ℹ");
       break;
@@ -339,10 +334,7 @@ export function debug(message: string, context?: Record<string, unknown>): void 
  *   size: "2.5 KB",
  * });
  */
-export function successBanner(
-  title: string,
-  details?: Record<string, string | number>
-): void {
+export function successBanner(title: string, details?: Record<string, string | number>): void {
   stderr.write("\n");
   stderr.write(picocolors.green(`✓ ${title}\n`));
 
@@ -365,10 +357,7 @@ export function successBanner(
  *   retry: "nebutra add Button --retry",
  * });
  */
-export function errorBanner(
-  title: string,
-  details?: Record<string, string | number>
-): void {
+export function errorBanner(title: string, details?: Record<string, string | number>): void {
   stderr.write("\n");
   stderr.write(picocolors.red(`✖ ${title}\n`));
 

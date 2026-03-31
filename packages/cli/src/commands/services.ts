@@ -3,7 +3,6 @@ import type { Command } from "commander";
 import pc from "picocolors";
 import { delegate, findMonorepoRoot } from "../utils/delegate.js";
 import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
 import { debug, output, status } from "../utils/output.js";
 
 interface ServiceCommandOptions {
@@ -78,7 +77,7 @@ async function handleStatus(options: ServiceCommandOptions): Promise<void> {
   if (result.exitCode !== 0) {
     status("Failed to fetch service status", "error");
     debug("Docker error", { stderr: result.stderr });
-    process.exit(ExitCode.DOCKER_ERROR);
+    process.exit(ExitCode.ERROR);
   }
 
   try {
@@ -111,7 +110,7 @@ async function handleStatus(options: ServiceCommandOptions): Promise<void> {
   } catch (error) {
     status("Failed to parse service status", "error");
     debug("Parse error", { error: String(error) });
-    process.exit(ExitCode.PARSE_ERROR);
+    process.exit(ExitCode.ERROR);
   }
 }
 
@@ -147,7 +146,7 @@ async function handleLogs(service: string, options: ServiceCommandOptions): Prom
 
   if (result.exitCode !== 0) {
     status(`Failed to stream logs for ${service}`, "error");
-    process.exit(ExitCode.DOCKER_ERROR);
+    process.exit(ExitCode.ERROR);
   }
 }
 
@@ -194,7 +193,7 @@ async function handleRestart(service: string, options: ServiceCommandOptions): P
   } else {
     status(`Failed to restart service ${service}`, "error");
     debug("Docker error", { stderr: result.stderr });
-    process.exit(ExitCode.DOCKER_ERROR);
+    process.exit(ExitCode.ERROR);
   }
 }
 
@@ -298,9 +297,9 @@ async function handleScale(
 ): Promise<void> {
   const numReplicas = parseInt(replicas, 10);
 
-  if (isNaN(numReplicas) || numReplicas < 0) {
+  if (Number.isNaN(numReplicas) || numReplicas < 0) {
     status("Invalid replica count (must be a non-negative number)", "error");
-    process.exit(ExitCode.INVALID_ARGUMENT);
+    process.exit(ExitCode.INVALID_ARGS);
   }
 
   status(`Scaling ${pc.cyan(service)} to ${pc.cyan(String(numReplicas))} replicas...`, "info");
@@ -319,7 +318,7 @@ async function handleScale(
   } else {
     status(`Failed to scale service ${service}`, "error");
     debug("Docker error", { stderr: result.stderr });
-    process.exit(ExitCode.DOCKER_ERROR);
+    process.exit(ExitCode.ERROR);
   }
 }
 
@@ -339,71 +338,77 @@ export function registerServicesCommand(program: Command): void {
     .option("--tail <n>", "Number of log lines to show (default: 100)")
     .option("--since <duration>", "Show logs since duration (e.g., 10m, 1h)")
     .option("--timeout <seconds>", "Timeout for service restart")
-    .action(async (verb: string, args: string[], options: ServiceCommandOptions) => {
-      const globalOptions = options.optsWithGlobals?.();
-      const mergedOptions: ServiceCommandOptions = {
-        dryRun: options.dryRun || globalOptions?.dryRun,
-        yes: options.yes || globalOptions?.yes,
-        format: (options.format || globalOptions?.format) as "json" | "plain" | "table",
-        tail: options.tail ? parseInt(options.tail, 10) : 100,
-        since: options.since,
-        timeout: options.timeout ? parseInt(options.timeout, 10) : undefined,
-      };
+    .action(
+      async (
+        verb: string,
+        args: string[],
+        options: ServiceCommandOptions & { optsWithGlobals?: () => ServiceCommandOptions },
+      ) => {
+        const globalOptions = options.optsWithGlobals?.();
+        const mergedOptions: ServiceCommandOptions = {
+          dryRun: options.dryRun || globalOptions?.dryRun,
+          yes: options.yes || globalOptions?.yes,
+          format: (options.format || globalOptions?.format) as "json" | "plain" | "table",
+          tail: options.tail ?? 100,
+          since: options.since,
+          timeout: options.timeout,
+        };
 
-      try {
-        switch (verb) {
-          case "status":
-            await handleStatus(mergedOptions);
-            break;
+        try {
+          switch (verb) {
+            case "status":
+              await handleStatus(mergedOptions);
+              break;
 
-          case "logs":
-            if (args.length === 0) {
-              status("logs requires a service name: nebutra services logs <service>", "error");
-              process.exit(ExitCode.INVALID_ARGUMENT);
-            }
-            await handleLogs(args[0], mergedOptions);
-            break;
+            case "logs":
+              if (args.length === 0) {
+                status("logs requires a service name: nebutra services logs <service>", "error");
+                process.exit(ExitCode.INVALID_ARGS);
+              }
+              await handleLogs(args[0], mergedOptions);
+              break;
 
-          case "restart":
-            if (args.length === 0) {
+            case "restart":
+              if (args.length === 0) {
+                status(
+                  "restart requires a service name: nebutra services restart <service>",
+                  "error",
+                );
+                process.exit(ExitCode.INVALID_ARGS);
+              }
+              await handleRestart(args[0], mergedOptions);
+              break;
+
+            case "health":
+              await handleHealth(mergedOptions);
+              break;
+
+            case "scale":
+              if (args.length < 2) {
+                status(
+                  "scale requires a service name and replica count: nebutra services scale <service> <count>",
+                  "error",
+                );
+                process.exit(ExitCode.INVALID_ARGS);
+              }
+              await handleScale(args[0], args[1], mergedOptions);
+              break;
+
+            default:
               status(
-                "restart requires a service name: nebutra services restart <service>",
+                `Unknown services subcommand: ${verb}. Valid commands: status, logs, restart, health, scale`,
                 "error",
               );
-              process.exit(ExitCode.INVALID_ARGUMENT);
-            }
-            await handleRestart(args[0], mergedOptions);
-            break;
-
-          case "health":
-            await handleHealth(mergedOptions);
-            break;
-
-          case "scale":
-            if (args.length < 2) {
-              status(
-                "scale requires a service name and replica count: nebutra services scale <service> <count>",
-                "error",
-              );
-              process.exit(ExitCode.INVALID_ARGUMENT);
-            }
-            await handleScale(args[0], args[1], mergedOptions);
-            break;
-
-          default:
-            status(
-              `Unknown services subcommand: ${verb}. Valid commands: status, logs, restart, health, scale`,
-              "error",
-            );
-            process.exit(ExitCode.UNKNOWN_COMMAND);
+              process.exit(ExitCode.ERROR);
+          }
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          status(`Services command failed: ${message}`, "error");
+          debug("Full error", { error });
+          process.exit(ExitCode.ERROR);
         }
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        status(`Services command failed: ${message}`, "error");
-        debug("Full error", { error });
-        process.exit(ExitCode.COMMAND_FAILED);
-      }
-    });
+      },
+    );
 
   // Add help text
   servicesCommand.addHelpText(

@@ -1,9 +1,7 @@
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { delegate, findMonorepoRoot } from "../utils/delegate.js";
 import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
 import { debug, output, status } from "../utils/output.js";
 
 interface SearchCommandOptions {
@@ -104,7 +102,7 @@ async function handleIndexes(options: SearchCommandOptions): Promise<void> {
 
   if (provider.type === "none") {
     status("No search provider configured", "error");
-    process.exit(ExitCode.CONFIGURATION_ERROR);
+    process.exit(ExitCode.CONFIG_ERROR);
   }
 
   // Mock implementation — would integrate with actual provider SDKs
@@ -134,7 +132,7 @@ async function handleReindex(index?: string, options?: SearchCommandOptions): Pr
 
   if (provider.type === "none") {
     status("No search provider configured", "error");
-    process.exit(ExitCode.CONFIGURATION_ERROR);
+    process.exit(ExitCode.CONFIG_ERROR);
   }
 
   const isInteractive = process.stdin.isTTY === true && process.stdout.isTTY === true;
@@ -154,7 +152,7 @@ async function handleReindex(index?: string, options?: SearchCommandOptions): Pr
 
   if (!opts.yes && !opts.dryRun && !index) {
     status("Full reindex requires --yes confirmation", "error");
-    process.exit(ExitCode.INVALID_ARGUMENT);
+    process.exit(ExitCode.INVALID_ARGS);
   }
 
   const targetIndex = index || "all";
@@ -184,7 +182,7 @@ async function handleQuery(
 
   if (provider.type === "none") {
     status("No search provider configured", "error");
-    process.exit(ExitCode.CONFIGURATION_ERROR);
+    process.exit(ExitCode.CONFIG_ERROR);
   }
 
   // Mock search results
@@ -238,7 +236,7 @@ async function handleStats(options: SearchCommandOptions): Promise<void> {
 
   if (provider.type === "none") {
     status("No search provider configured", "error");
-    process.exit(ExitCode.CONFIGURATION_ERROR);
+    process.exit(ExitCode.CONFIG_ERROR);
   }
 
   // Mock statistics
@@ -287,65 +285,71 @@ export function registerSearchCommand(program: Command): void {
     .option("--limit <n>", "Result limit for queries")
     .option("--filters <json>", "Filters for search query (JSON)")
     .option("--tenant <id>", "Tenant ID for multi-tenant queries")
-    .action(async (verb: string, args: string[], options: SearchCommandOptions) => {
-      const globalOptions = options.optsWithGlobals?.();
-      const mergedOptions: SearchCommandOptions = {
-        dryRun: options.dryRun || globalOptions?.dryRun,
-        yes: options.yes || globalOptions?.yes,
-        format: (options.format || globalOptions?.format) as "json" | "plain" | "table",
-        force: options.force || false,
-        limit: options.limit ? parseInt(options.limit, 10) : 10,
-        filters: options.filters,
-        tenant: options.tenant,
-      };
+    .action(
+      async (
+        verb: string,
+        args: string[],
+        options: SearchCommandOptions & { optsWithGlobals?: () => SearchCommandOptions },
+      ) => {
+        const globalOptions = options.optsWithGlobals?.();
+        const mergedOptions: SearchCommandOptions = {
+          dryRun: options.dryRun || globalOptions?.dryRun,
+          yes: options.yes || globalOptions?.yes,
+          format: (options.format || globalOptions?.format) as "json" | "plain" | "table",
+          force: options.force || false,
+          limit: options.limit ?? 10,
+          filters: options.filters,
+          tenant: options.tenant,
+        };
 
-      try {
-        switch (verb) {
-          case "status":
-            await handleStatus(mergedOptions);
-            break;
+        try {
+          switch (verb) {
+            case "status":
+              await handleStatus(mergedOptions);
+              break;
 
-          case "indexes":
-            await handleIndexes(mergedOptions);
-            break;
+            case "indexes":
+              await handleIndexes(mergedOptions);
+              break;
 
-          case "reindex":
-            if (args.length > 0) {
-              await handleReindex(args[0], mergedOptions);
-            } else {
-              await handleReindex(undefined, mergedOptions);
-            }
-            break;
+            case "reindex":
+              if (args.length > 0) {
+                await handleReindex(args[0], mergedOptions);
+              } else {
+                await handleReindex(undefined, mergedOptions);
+              }
+              break;
 
-          case "query":
-            if (args.length < 2) {
+            case "query":
+              if (args.length < 2) {
+                status(
+                  "query requires an index and search term: nebutra search query <index> <query>",
+                  "error",
+                );
+                process.exit(ExitCode.INVALID_ARGS);
+              }
+              await handleQuery(args[0], args.slice(1).join(" "), mergedOptions);
+              break;
+
+            case "stats":
+              await handleStats(mergedOptions);
+              break;
+
+            default:
               status(
-                "query requires an index and search term: nebutra search query <index> <query>",
+                `Unknown search subcommand: ${verb}. Valid commands: status, indexes, reindex, query, stats`,
                 "error",
               );
-              process.exit(ExitCode.INVALID_ARGUMENT);
-            }
-            await handleQuery(args[0], args.slice(1).join(" "), mergedOptions);
-            break;
-
-          case "stats":
-            await handleStats(mergedOptions);
-            break;
-
-          default:
-            status(
-              `Unknown search subcommand: ${verb}. Valid commands: status, indexes, reindex, query, stats`,
-              "error",
-            );
-            process.exit(ExitCode.UNKNOWN_COMMAND);
+              process.exit(ExitCode.ERROR);
+          }
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          status(`Search command failed: ${message}`, "error");
+          debug("Full error", { error });
+          process.exit(ExitCode.ERROR);
         }
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        status(`Search command failed: ${message}`, "error");
-        debug("Full error", { error });
-        process.exit(ExitCode.COMMAND_FAILED);
-      }
-    });
+      },
+    );
 
   // Add help text
   searchCommand.addHelpText(

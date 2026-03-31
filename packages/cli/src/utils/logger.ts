@@ -1,5 +1,5 @@
-import picocolors from "picocolors";
 import { spinner as createSpinner } from "@clack/prompts";
+import picocolors from "picocolors";
 
 /**
  * Log level enumeration
@@ -76,11 +76,7 @@ function getLogFormat(config: LoggerConfig): "plain" | "json" {
 /**
  * Format a log entry as plain text
  */
-function formatPlain(
-  level: LogLevel,
-  message: string,
-  scope?: string
-): string {
+function formatPlain(level: LogLevel, message: string, scope?: string): string {
   const timestamp = new Date().toISOString().split("T")[1].split(".")[0]; // HH:MM:SS
   const prefix = scope ? `[${scope}]` : "";
 
@@ -93,7 +89,6 @@ function formatPlain(
       return `${picocolors.green(`✓ ${prefix}`)} ${message}`.trim();
     case "debug":
       return `${picocolors.dim(`[debug ${timestamp}] ${prefix}`)} ${message}`.trim();
-    case "info":
     default:
       return `${picocolors.blue(`ℹ ${prefix}`)} ${message}`.trim();
   }
@@ -106,7 +101,7 @@ function formatJson(
   level: LogLevel,
   message: string,
   scope?: string,
-  details?: Record<string, any>
+  details?: Record<string, any>,
 ): string {
   const entry: LogEntry = {
     timestamp: new Date().toISOString(),
@@ -169,11 +164,7 @@ class Logger {
   /**
    * Internal log method
    */
-  private log(
-    level: LogLevel,
-    message: string,
-    details?: Record<string, any>
-  ): void {
+  private log(level: LogLevel, message: string, details?: Record<string, any>): void {
     if (!this.shouldLog(level)) return;
 
     const output =

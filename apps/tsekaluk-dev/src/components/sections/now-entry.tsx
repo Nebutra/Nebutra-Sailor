@@ -58,7 +58,9 @@ export async function NowEntry({ preview = false }: { preview?: boolean }) {
 
   return (
     <div className="space-y-6">
-      <div className="text-sm text-gray-500">{t("last_updated")}: {data.date}</div>
+      <div className="text-sm text-gray-500">
+        {t("last_updated")}: {data.date}
+      </div>
       {sections
         .filter((section) => !preview || section.previewOnly)
         .map((section) => (

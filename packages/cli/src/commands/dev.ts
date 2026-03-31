@@ -2,7 +2,6 @@ import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { delegate, pnpmRun, turboRun } from "../utils/delegate.js";
 import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
 
 interface DevOptions {
   app?: string;
@@ -295,7 +294,7 @@ export function registerDevCommand(program: any) {
     .option("--app <name>", `App to run: ${VALID_APPS.join(", ")}`)
     .option("--preset <name>", `Preset to use: ${VALID_PRESETS.join(", ")}`)
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options) => {
+    .action(async (options: any) => {
       const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
       await devCommand({
         ...options,
@@ -312,7 +311,7 @@ export function registerDevCommand(program: any) {
     .option("--app <name>", `App to build: ${VALID_APPS.join(", ")}`)
     .option("--strict", "Run strict build with UI governance verification (pnpm build:strict)")
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options) => {
+    .action(async (options: any) => {
       const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
       await buildCommand({
         ...options,
@@ -329,7 +328,7 @@ export function registerDevCommand(program: any) {
     .option("--app <name>", `App to lint: ${VALID_APPS.join(", ")}`)
     .option("--fix", "Fix linting issues automatically")
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options) => {
+    .action(async (options: any) => {
       const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
       await lintCommand({
         ...options,
@@ -345,7 +344,7 @@ export function registerDevCommand(program: any) {
     .description("Type-check with TypeScript (turbo typecheck)")
     .option("--app <name>", `App to typecheck: ${VALID_APPS.join(", ")}`)
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options) => {
+    .action(async (options: any) => {
       const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
       await typecheckCommand({
         ...options,

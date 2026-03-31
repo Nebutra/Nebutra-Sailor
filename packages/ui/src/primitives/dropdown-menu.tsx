@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu as BaseMenu } from "@base-ui-components/react/menu";
+import { Menu as BaseMenu } from "@base-ui/react/menu";
 import { Check, ChevronRight, Circle } from "lucide-react";
 import * as React from "react";
 import { cn } from "../utils/cn";

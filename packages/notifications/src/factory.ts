@@ -63,8 +63,9 @@ export async function createNotificationProvider(
       const { NovuProvider } = await import("./providers/novu.js");
       const novuConfig = config as Exclude<NotificationConfig, { provider: "direct" }> | undefined;
       return new NovuProvider({
-        apiKey: novuConfig?.apiKey,
-        baseUrl: novuConfig?.baseUrl,
+        provider: "novu",
+        ...(novuConfig?.apiKey !== undefined ? { apiKey: novuConfig.apiKey } : {}),
+        ...(novuConfig?.baseUrl !== undefined ? { baseUrl: novuConfig.baseUrl } : {}),
       });
     }
 
@@ -72,12 +73,23 @@ export async function createNotificationProvider(
       const { DirectProvider } = await import("./providers/direct.js");
       const directConfig = config as Exclude<NotificationConfig, { provider: "novu" }> | undefined;
       return new DirectProvider({
-        inAppStore: directConfig?.inAppStore,
-        emailDispatcher: directConfig?.emailDispatcher,
-        pushDispatcher: directConfig?.pushDispatcher,
-        smsDispatcher: directConfig?.smsDispatcher,
-        chatDispatcher: directConfig?.chatDispatcher,
-        preferenceStore: directConfig?.preferenceStore,
+        provider: "direct",
+        ...(directConfig?.inAppStore !== undefined ? { inAppStore: directConfig.inAppStore } : {}),
+        ...(directConfig?.emailDispatcher !== undefined
+          ? { emailDispatcher: directConfig.emailDispatcher }
+          : {}),
+        ...(directConfig?.pushDispatcher !== undefined
+          ? { pushDispatcher: directConfig.pushDispatcher }
+          : {}),
+        ...(directConfig?.smsDispatcher !== undefined
+          ? { smsDispatcher: directConfig.smsDispatcher }
+          : {}),
+        ...(directConfig?.chatDispatcher !== undefined
+          ? { chatDispatcher: directConfig.chatDispatcher }
+          : {}),
+        ...(directConfig?.preferenceStore !== undefined
+          ? { preferenceStore: directConfig.preferenceStore }
+          : {}),
       });
     }
 
@@ -134,7 +146,7 @@ export function createNotification(
     id: crypto.randomUUID(),
     type,
     recipientId,
-    tenantId,
+    ...(tenantId !== undefined ? { tenantId } : {}),
     channels,
     data,
   };

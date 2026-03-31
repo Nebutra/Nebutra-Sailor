@@ -92,7 +92,11 @@ export function StatusBadge({
   onClick,
 }: StatusBadgeProps) {
   const [status, setStatus] = useState<StatusState>(propStatus ?? "unknown");
-  const config = buildConfig({ pageSlug, provider, pageId });
+  const config = buildConfig({
+    ...(pageSlug !== undefined ? { pageSlug } : {}),
+    ...(provider !== undefined ? { provider } : {}),
+    ...(pageId !== undefined ? { pageId } : {}),
+  });
   const [loading, setLoading] = useState(!propStatus && !!config);
 
   useEffect(() => {

@@ -123,32 +123,83 @@ export const colors = {
 } as const;
 
 /**
- * Typography - 品牌标准字体
+ * Typography - 品牌标准字体系统 "Precision Stack"
  *
- * 中文: vivo Sans (Light/Regular/Medium/DemiBold/Bold)
- * 英文: Poppins (Regular/Medium/SemiBold)
+ * 设计理念：精密工程感 × 2026 AI-Native 定位
+ * 对标：Vercel / Linear / Cursor 的字体审美语言
+ *
+ * 英文 UI / 展示：Geist (Vercel 原生, Variable, 100–900)
+ * 代码 / 数据：Geist Mono (Variable, 100–900)
+ * 中文 UI：Noto Sans SC (Variable, Google Fonts, 100–900)
+ * 中文品牌印刷：vivo Sans (本地字体, VI 手册标准, 保留)
+ *
+ * 升级说明：
+ *   Poppins → Geist  — Poppins 圆润友好适合 2020 消费 SaaS；
+ *                       Geist 几何精密适合 2026 AI-Native 工具产品，
+ *                       与 Vercel 部署平台视觉语言统一。
+ *   JetBrains Mono → Geist Mono — 与 Geist 形成完整字体家族，
+ *                                  暗色界面代码块对比度更优。
+ *   vivo Sans 保留用于品牌印刷物和 Logo 旁文字，网页端以 Noto Sans SC 交付。
+ *
+ * 加载方式 (Next.js / next/font):
+ *   import { GeistSans } from "geist/font/sans"    — variable: "--font-geist-sans"
+ *   import { GeistMono } from "geist/font/mono"    — variable: "--font-geist-mono"
+ *   import { Noto_Sans_SC } from "next/font/google" — variable: "--font-noto-sc"
  */
 export const typography = {
   fontFamily: {
-    // 中文字体 - vivo Sans 为主，系统字体为后备
-    cn: '"vivo Sans", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif',
-    // 英文字体 - Poppins 为主
-    en: '"Poppins", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    // 默认组合 (英文优先，中文后备)
-    sans: '"Poppins", "vivo Sans", "PingFang SC", "Microsoft YaHei", sans-serif',
-    // 代码字体
-    mono: '"JetBrains Mono", "Fira Code", Consolas, monospace',
-    // 展示字体 (标题/Hero)
-    display: '"Poppins", "vivo Sans", sans-serif',
+    // 英文 UI / 展示 - Geist (Vercel, variable font)
+    en: '"Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
+    // 中文 UI - Noto Sans SC (web), vivo Sans (print/brand)
+    cn: '"Noto Sans SC", "vivo Sans", "PingFang SC", "Microsoft YaHei", sans-serif',
+    // 默认组合 - Geist 优先，CJK 自动 unicode-range 接管
+    sans: '"Geist", "Noto Sans SC", "vivo Sans", "PingFang SC", system-ui, sans-serif',
+    // 代码 / 数据 / 时间戳 / API Key / 终端
+    mono: '"Geist Mono", "Fira Code", Consolas, "Courier New", monospace',
+    // 展示字体 (Hero / 超大标题) - 与 UI 一致，依赖字重和字号营造层级
+    display: '"Geist", "Noto Sans SC", sans-serif',
+    // 品牌印刷专用 (Logo 旁文字 / VI 手册 / 线下物料)
+    brandPrint: '"vivo Sans", "PingFang SC", sans-serif',
   },
 
-  // Font weights - 基于 VI 手册字重规范
+  // CSS 变量映射 - 与 @nebutra/tokens 中 @theme 集成
+  cssVars: {
+    sans: "var(--font-geist-sans)",
+    mono: "var(--font-geist-mono)",
+    cnSans: "var(--font-noto-sc)",
+  },
+
+  // Font weights - 基于 Geist variable font 支持范围
   fontWeight: {
-    light: 300, // vivo Sans Light
-    normal: 400, // vivo Sans Regular / Poppins Regular
-    medium: 500, // vivo Sans Medium / Poppins Medium
-    semibold: 600, // vivo Sans DemiBold / Poppins SemiBold
-    bold: 700, // vivo Sans Bold
+    thin: 100,
+    extraLight: 200,
+    light: 300,
+    normal: 400, // Geist Regular / Noto Sans SC Regular
+    medium: 500, // Geist Medium
+    semibold: 600, // Geist SemiBold
+    bold: 700, // Geist Bold / vivo Sans Bold (brand print)
+    extraBold: 800,
+    black: 900,
+  },
+
+  // Letter spacing - Geist 在大字号下需收紧字距
+  letterSpacing: {
+    display: "-0.04em", // Hero / 超大标题 (72px+)
+    heading: "-0.03em", // H1-H2 (40-64px)
+    subheading: "-0.02em", // H3-H4 (24-36px)
+    body: "0em", // 正文 (14-18px)
+    caption: "0.01em", // 说明文字 (12px)
+    mono: "0em", // 代码块
+  },
+
+  // Line height
+  lineHeight: {
+    none: 1,
+    tight: 1.2, // 标题
+    snug: 1.4, // 副标题
+    normal: 1.6, // 正文
+    relaxed: 1.75, // 长文阅读
+    loose: 2, // 特殊场景
   },
 } as const;
 

@@ -168,7 +168,8 @@ const nebultraCommand: CommandMeta = {
       arguments: [
         {
           name: "dir",
-          description: "Target directory for the new project (optional, will prompt if not provided)",
+          description:
+            "Target directory for the new project (optional, will prompt if not provided)",
           required: false,
         },
       ],
@@ -348,12 +349,12 @@ function parseArgs(): GeneratorOptions {
 }
 
 // All commands
-const allCommands: CommandMeta[] = [nebultraCommand, createSailorCommand, nebutraMcpCommand];
+const _allCommands: CommandMeta[] = [nebultraCommand, createSailorCommand, nebutraMcpCommand];
 
 /**
  * Format command usage with proper escaping
  */
-function formatCommandUsage(usage: string | undefined): string {
+function _formatCommandUsage(usage: string | undefined): string {
   if (!usage) return "";
   return usage.replace(/</g, "`<").replace(/>/g, ">`");
 }
@@ -389,7 +390,9 @@ function generateOptionsTable(options?: CommandOption[]): string {
     const defaultValue =
       opt.default !== undefined
         ? typeof opt.default === "boolean"
-          ? opt.default ? "enabled" : "disabled"
+          ? opt.default
+            ? "enabled"
+            : "disabled"
           : `\`${opt.default}\``
         : "—";
     table += `| \`${opt.flags}\` | ${opt.description} | ${defaultValue} |\n`;
@@ -713,7 +716,6 @@ function writeDocs(content: string, outputPath: string): void {
   }
 
   fs.writeFileSync(fullPath, content, "utf-8");
-  console.log(`✓ CLI documentation generated: ${fullPath}`);
 }
 
 /**
@@ -723,12 +725,8 @@ async function main(): Promise<void> {
   const options = parseArgs();
   const outputPath = options.output || "apps/design-docs/content/cli-reference.md";
 
-  console.log("🚀 Generating Nebutra CLI documentation...\n");
-
   const documentation = generateDocumentation();
   writeDocs(documentation, outputPath);
-
-  console.log("\n✓ Done!");
 }
 
 // Run

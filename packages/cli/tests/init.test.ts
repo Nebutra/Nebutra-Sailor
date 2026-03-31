@@ -1,10 +1,10 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { mkdir, rm, readFile } from "fs/promises";
-import { tmpdir } from "os";
-import { join } from "path";
-import { existsSync } from "fs";
-import { spawn } from "child_process";
-import { randomBytes } from "crypto";
+import { spawn } from "node:child_process";
+import { randomBytes } from "node:crypto";
+import { existsSync } from "node:fs";
+import { mkdir, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { ExitCode } from "../src/utils/exit-codes.js";
 
 /**
@@ -12,7 +12,7 @@ import { ExitCode } from "../src/utils/exit-codes.js";
  */
 async function runCliInDir(
   args: string[],
-  cwd: string
+  cwd: string,
 ): Promise<{
   stdout: string;
   stderr: string;
@@ -69,9 +69,7 @@ describe("init command", () => {
     expect(result.exitCode).toBe(ExitCode.SUCCESS);
     expect(existsSync(join(testDir, "nebutra.config.json"))).toBe(true);
 
-    const config = JSON.parse(
-      await readFile(join(testDir, "nebutra.config.json"), "utf-8")
-    );
+    const config = JSON.parse(await readFile(join(testDir, "nebutra.config.json"), "utf-8"));
     expect(config.$schema).toBe("https://nebutra.com/schema.json");
     expect(config.componentsDirectory).toBe("packages/ui/src/components");
   });
@@ -144,16 +142,14 @@ describe("init command", () => {
 
   it("should not modify config during dry-run even with existing config", async () => {
     // Create initial config with a timestamp in the file content
-    const initialConfig = {
+    const _initialConfig = {
       $schema: "https://nebutra.com/schema.json",
       componentsDirectory: "custom/path",
       timestamp: new Date().toISOString(),
     };
 
     await mkdir(testDir, { recursive: true });
-    await readFile(join(testDir, "nebutra.config.json"), "utf-8").catch(
-      () => null
-    );
+    await readFile(join(testDir, "nebutra.config.json"), "utf-8").catch(() => null);
 
     const result = await runCliInDir(["init", "--dry-run"], testDir);
     expect(result.exitCode).toBe(ExitCode.DRY_RUN_OK);

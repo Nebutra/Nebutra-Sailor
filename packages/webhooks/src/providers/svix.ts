@@ -86,12 +86,12 @@ export class SvixProvider implements WebhookProvider {
   ): Promise<WebhookEndpoint> {
     const appId = await this.getOrCreateApplication(tenantId);
 
-    // Filter events: if empty array, subscribe to all (*)
-    const eventTypes = endpoint.eventTypes?.length ? endpoint.eventTypes : ["*"];
+    // Filter events: if empty array, subscribe to all (null = all in Svix v1.x)
+    const filterTypes = endpoint.eventTypes?.length ? endpoint.eventTypes : null;
 
     const svixEndpoint = await this.client.endpoint.create(appId, {
       url: endpoint.url,
-      eventTypes,
+      ...(filterTypes !== null ? { filterTypes } : {}),
       description: `Tenant: ${tenantId}`,
       disabled: !endpoint.active,
     });
@@ -102,12 +102,15 @@ export class SvixProvider implements WebhookProvider {
       url: endpoint.url,
     });
 
+    // Retrieve the signing secret for this endpoint
+    const secretOut = await this.client.endpoint.getSecret(appId, svixEndpoint.id);
+
     return {
       id: svixEndpoint.id,
       url: svixEndpoint.url,
       tenantId,
-      secret: svixEndpoint.key as string, // Svix provides the key
-      eventTypes,
+      secret: secretOut.key,
+      eventTypes: svixEndpoint.filterTypes ?? [],
       active: !svixEndpoint.disabled,
       createdAt: new Date(svixEndpoint.createdAt).toISOString(),
       metadata: endpoint.metadata,
@@ -140,8 +143,8 @@ export class SvixProvider implements WebhookProvider {
       id: ep.id,
       url: ep.url,
       tenantId,
-      secret: ep.key as string,
-      eventTypes: ep.eventTypes || ["*"],
+      secret: "", // Secret not returned in list; use getSecret(appId, ep.id) if needed
+      eventTypes: ep.filterTypes ?? [],
       active: !ep.disabled,
       createdAt: new Date(ep.createdAt).toISOString(),
     }));

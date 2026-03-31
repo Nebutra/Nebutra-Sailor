@@ -1,6 +1,6 @@
 import * as p from "@clack/prompts";
 import pc from "picocolors";
-import { delegate, pnpmRun, turboRun } from "../utils/delegate.js";
+import { pnpmRun, turboRun } from "../utils/delegate.js";
 import { ExitCode } from "../utils/exit-codes.js";
 
 interface TestOptions {
@@ -273,7 +273,7 @@ export function registerTestCommand(program: any) {
     .option("--coverage", "Generate coverage report (unit tests only)")
     .option("--app <name>", `Run tests for specific app: ${VALID_APPS.join(", ")}`)
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (subcommand, options) => {
+    .action(async (subcommand: any, options: any) => {
       const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
 
       // Handle subcommands
@@ -319,7 +319,7 @@ export function registerTestCommand(program: any) {
     .option("--ui", "Open interactive UI mode")
     .option("--ci", "Run in CI mode with strict options")
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options) => {
+    .action(async (options: any) => {
       const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
       await testE2eCommand({
         ...options,
@@ -335,7 +335,7 @@ export function registerTestCommand(program: any) {
     .description("Check bundle size (analyze largest assets)")
     .option("--why", "Show breakdown of largest bundle assets")
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options) => {
+    .action(async (options: any) => {
       const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
       await testSizeCommand({
         ...options,
@@ -350,7 +350,7 @@ export function registerTestCommand(program: any) {
     .command("arch")
     .description("Run architecture tests (verify design layer isolation)")
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options) => {
+    .action(async (options: any) => {
       const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
       await testArchCommand({
         dryRun: options.dryRun || false,

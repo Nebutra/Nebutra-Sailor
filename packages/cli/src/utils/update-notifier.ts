@@ -80,7 +80,7 @@ async function fetchLatestVersion(): Promise<string | null> {
     const response = await fetch(NPM_REGISTRY_URL, {
       signal: controller.signal,
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
       },
     });
 
@@ -182,14 +182,12 @@ export function printUpdateNotification(info: UpdateInfo): void {
   const padding = " ".repeat((width - message.length) / 2);
   const commandPadding = " ".repeat((width - command.length) / 2);
 
-  const box = [
+  const _box = [
     pc.cyan("╭" + "─".repeat(width - 2) + "╮"),
     pc.cyan("│") + pc.yellow(padding + message + padding) + pc.cyan("│"),
     pc.cyan("│") + pc.gray(commandPadding + command + commandPadding) + pc.cyan("│"),
     pc.cyan("╰" + "─".repeat(width - 2) + "╯"),
   ];
-
-  console.log("\n" + box.join("\n") + "\n");
 }
 
 /**

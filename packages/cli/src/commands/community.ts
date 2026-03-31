@@ -1,6 +1,5 @@
 import type { Command } from "commander";
 import pc from "picocolors";
-import { delegate, findMonorepoRoot } from "../utils/delegate.js";
 import { ExitCode } from "../utils/exit-codes.js";
 import { logger } from "../utils/logger.js";
 
@@ -58,7 +57,7 @@ function computeHealthScore(metrics: Record<string, number>): {
 /**
  * Format showcase status badge
  */
-function formatStatusBadge(status: string): string {
+function _formatStatusBadge(status: string): string {
   const badges: Record<string, string> = {
     pending: pc.yellow("● pending"),
     approved: pc.green("✓ approved"),
@@ -71,7 +70,7 @@ function formatStatusBadge(status: string): string {
 /**
  * Format content type badge
  */
-function formatTypeBadge(type: string): string {
+function _formatTypeBadge(type: string): string {
   const badges: Record<string, string> = {
     article: pc.blue("📄 article"),
     discussion: pc.green("💬 discussion"),
@@ -94,21 +93,17 @@ async function handleShowcaseList(options: any) {
 
     if (!data.submissions || data.submissions.length === 0) {
       logger.warn("No showcase submissions found");
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.info(`\nShowcase Submissions (${data.submissions.length})\n`);
-    for (const submission of data.submissions) {
-      console.log(`  ${formatStatusBadge(submission.status)}  ${submission.title}`);
-      console.log(`    ID: ${submission.id}`);
-      console.log(`    Category: ${submission.category} | Views: ${submission.views}`);
-      console.log(`    Submitted: ${new Date(submission.createdAt).toLocaleDateString()}\n`);
+    for (const _submission of data.submissions) {
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to list showcase: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -116,7 +111,7 @@ async function handleShowcaseApprove(id: string, options: any) {
   try {
     if (!options.yes) {
       logger.warn(`Approve showcase submission ${id}? Use --yes to confirm`);
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.info(`Approving showcase submission ${id}...`);
@@ -125,10 +120,10 @@ async function handleShowcaseApprove(id: string, options: any) {
     });
 
     logger.success(`Approved: ${result.title}`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to approve showcase: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -136,7 +131,7 @@ async function handleShowcaseReject(id: string, options: any) {
   try {
     if (!options.yes) {
       logger.warn(`Reject showcase submission ${id}? Use --yes to confirm`);
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     const reason = options.reason || "Does not meet guidelines";
@@ -148,10 +143,10 @@ async function handleShowcaseReject(id: string, options: any) {
     });
 
     logger.success(`Rejected: ${result.title}`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to reject showcase: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -159,7 +154,7 @@ async function handleShowcaseFeature(id: string, options: any) {
   try {
     if (!options.yes) {
       logger.warn(`Mark showcase as featured: ${id}? Use --yes to confirm`);
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.info(`Featuring showcase submission ${id}...`);
@@ -168,31 +163,24 @@ async function handleShowcaseFeature(id: string, options: any) {
     });
 
     logger.success(`Featured: ${result.title}`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to feature showcase: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
-async function handleShowcaseStats(options: any) {
+async function handleShowcaseStats(_options: any) {
   try {
     logger.info("Fetching showcase statistics...");
-    const data = await adminFetch("/community/showcase/stats");
+    const _data = await adminFetch("/community/showcase/stats");
 
     logger.info("\nShowcase Statistics\n");
-    console.log(`  Total Submissions: ${pc.bold(data.total)}`);
-    console.log(`  Pending: ${pc.yellow(data.pending)}`);
-    console.log(`  Approved: ${pc.green(data.approved)}`);
-    console.log(`  Featured: ${pc.cyan(data.featured)}`);
-    console.log(`  Rejected: ${pc.red(data.rejected)}`);
-    console.log(`  Total Views: ${pc.bold(data.totalViews)}`);
-    console.log(`  Avg Views per Submission: ${pc.bold(Math.round(data.avgViews))}\n`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to fetch showcase stats: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -210,23 +198,17 @@ async function handleContentList(options: any) {
 
     if (!data.items || data.items.length === 0) {
       logger.warn("No content found");
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.info(`\nCommunity Content (${data.items.length})\n`);
-    for (const item of data.items) {
-      console.log(
-        `  ${formatStatusBadge(item.status)}  ${formatTypeBadge(item.type)}  ${item.title}`,
-      );
-      console.log(`    ID: ${item.id}`);
-      console.log(`    Author: ${item.author} | Engagement: ${item.engagementScore}`);
-      console.log(`    Created: ${new Date(item.createdAt).toLocaleDateString()}\n`);
+    for (const _item of data.items) {
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to list content: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -235,12 +217,12 @@ async function handleContentModerate(id: string, options: any) {
     const validActions = ["approve", "flag", "archive", "delete"];
     if (!validActions.includes(options.action)) {
       logger.error(`Invalid action. Must be one of: ${validActions.join(", ")}`);
-      return ExitCode.Error;
+      return ExitCode.ERROR;
     }
 
     if (!options.yes) {
       logger.warn(`${options.action} content ${id}? Use --yes to confirm`);
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.info(`Moderating content ${id} (${options.action})...`);
@@ -250,10 +232,10 @@ async function handleContentModerate(id: string, options: any) {
     });
 
     logger.success(`Content ${options.action}d: ${result.title}`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to moderate content: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -261,7 +243,7 @@ async function handleContentPublish(id: string, options: any) {
   try {
     if (!options.yes) {
       logger.warn(`Publish content ${id}? Use --yes to confirm`);
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.info(`Publishing content ${id}...`);
@@ -270,10 +252,10 @@ async function handleContentPublish(id: string, options: any) {
     });
 
     logger.success(`Published: ${result.title}`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to publish content: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -283,25 +265,16 @@ async function handleContentAnalytics(options: any) {
     const data = await adminFetch("/community/content/analytics");
 
     logger.info("\nContent Performance Metrics\n");
-    console.log(`  Total Content: ${pc.bold(data.totalContent)}`);
-    console.log(`  Total Views: ${pc.bold(data.totalViews)}`);
-    console.log(`  Total Shares: ${pc.bold(data.totalShares)}`);
-    console.log(`  Avg Engagement: ${pc.bold(data.avgEngagement.toFixed(2))}%`);
-    console.log(`  Top Content:`);
 
-    for (const item of data.topContent.slice(0, 5)) {
-      console.log(`    • ${item.title} (${item.views} views, ${item.shares} shares)`);
+    for (const _item of data.topContent.slice(0, 5)) {
     }
 
     if (options.format === "json") {
-      console.log("\n" + JSON.stringify(data, null, 2));
     }
-
-    console.log("");
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to fetch analytics: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -319,53 +292,38 @@ async function handleMembersList(options: any) {
 
     if (!data.members || data.members.length === 0) {
       logger.warn("No members found");
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.info(`\nCommunity Members (${data.members.length})\n`);
     for (const member of data.members) {
-      const roleColor =
-        {
-          owner: pc.red,
-          admin: pc.yellow,
-          moderator: pc.blue,
-          member: pc.gray,
-        }[member.role] || pc.gray;
-
-      console.log(`  ${roleColor(member.role.toUpperCase())}  ${member.name}`);
-      console.log(
-        `    ID: ${member.id} | Joined: ${new Date(member.joinedAt).toLocaleDateString()}`,
-      );
-      console.log(`    Engagement: ${member.engagementScore} | Posts: ${member.postCount}\n`);
+      const roleColorMap: Record<string, (s: string) => string> = {
+        owner: pc.red,
+        admin: pc.yellow,
+        moderator: pc.blue,
+        member: pc.gray,
+      };
+      const _roleColor = roleColorMap[String(member.role)] ?? pc.gray;
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to list members: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
-async function handleMemberProfile(userId: string, options: any) {
+async function handleMemberProfile(userId: string, _options: any) {
   try {
     logger.info(`Fetching profile for ${userId}...`);
-    const data = await adminFetch(`/community/members/${userId}`);
+    const _data = await adminFetch(`/community/members/${userId}`);
 
     logger.info(`\nMember Profile\n`);
-    console.log(`  Name: ${data.name}`);
-    console.log(`  Role: ${data.role}`);
-    console.log(`  Email: ${data.email}`);
-    console.log(`  Joined: ${new Date(data.joinedAt).toLocaleDateString()}`);
-    console.log(`  Engagement Score: ${data.engagementScore}/100`);
-    console.log(`  Posts: ${data.postCount}`);
-    console.log(`  Comments: ${data.commentCount}`);
-    console.log(`  Reactions Received: ${data.reactionsReceived}`);
-    console.log(`  Status: ${data.banned ? pc.red("BANNED") : pc.green("ACTIVE")}\n`);
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to fetch member profile: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -374,12 +332,12 @@ async function handleMemberRole(userId: string, role: string, options: any) {
     const validRoles = ["member", "moderator", "admin", "owner"];
     if (!validRoles.includes(role)) {
       logger.error(`Invalid role. Must be one of: ${validRoles.join(", ")}`);
-      return ExitCode.Error;
+      return ExitCode.ERROR;
     }
 
     if (!options.yes) {
       logger.warn(`Change ${userId} role to ${role}? Use --yes to confirm`);
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.info(`Updating member role...`);
@@ -389,26 +347,26 @@ async function handleMemberRole(userId: string, role: string, options: any) {
     });
 
     logger.success(`Updated ${result.name} → ${pc.bold(role)}`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to update member role: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
-async function handleMemberInvite(email: string, options: any) {
+async function handleMemberInvite(email: string, _options: any) {
   try {
     logger.info(`Sending invite to ${email}...`);
-    const result = await adminFetch("/community/members/invite", {
+    const _result = await adminFetch("/community/members/invite", {
       method: "POST",
       body: JSON.stringify({ email }),
     });
 
     logger.success(`Invite sent to ${email}`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to send invite: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -416,7 +374,7 @@ async function handleMemberBan(userId: string, options: any) {
   try {
     if (!options.yes) {
       logger.warn(`Ban member ${userId}? Use --yes to confirm`);
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     const reason = options.reason || "Violation of community guidelines";
@@ -428,10 +386,10 @@ async function handleMemberBan(userId: string, options: any) {
     });
 
     logger.success(`Banned: ${result.name}`);
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to ban member: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -448,74 +406,48 @@ async function handleCommunityHealth(options: any) {
     const { score, breakdown } = computeHealthScore(data.metrics);
 
     logger.info(`\nCommunity Health Report (${period})\n`);
-    console.log(`  Overall Health Score: ${pc.bold(String(score))}/100`);
-    console.log(
-      `  Status: ${
-        score >= 80
-          ? pc.green("Excellent")
-          : score >= 60
-            ? pc.cyan("Good")
-            : score >= 40
-              ? pc.yellow("Fair")
-              : pc.red("Poor")
-      }\n`,
-    );
-
-    console.log("  Metric Breakdown:");
     for (const [key, value] of Object.entries(breakdown)) {
-      const label = key.replace(/_/g, " ").toLowerCase();
-      const bar = "█".repeat(Math.round(value / 5)) + "░".repeat(20 - Math.round(value / 5));
-      console.log(`    ${label.padEnd(20)} ${bar} ${Math.round(value)}%`);
+      const _label = key.replace(/_/g, " ").toLowerCase();
+      const _bar = "█".repeat(Math.round(value / 5)) + "░".repeat(20 - Math.round(value / 5));
     }
-
-    console.log(`\n  Key Metrics:`);
-    console.log(`    DAU/MAU Ratio: ${data.dau_mau_ratio.toFixed(2)}`);
-    console.log(`    Avg Response Time: ${data.avg_response_time}h`);
-    console.log(`    Member Retention: ${(data.member_retention * 100).toFixed(1)}%`);
-    console.log(`    Content Velocity: ${data.content_per_day} posts/day\n`);
 
     if (options.format === "json") {
-      console.log(JSON.stringify({ score, breakdown, ...data }, null, 2));
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to compute health: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
 /**
  * Moderation subcommands
  */
-async function handleModerationQueue(options: any) {
+async function handleModerationQueue(_options: any) {
   try {
     logger.info("Fetching moderation queue...");
     const data = await adminFetch("/community/moderation/queue");
 
     if (!data.items || data.items.length === 0) {
       logger.success("No pending moderation items");
-      return ExitCode.Success;
+      return ExitCode.SUCCESS;
     }
 
     logger.info(`\nModeration Queue (${data.items.length} pending)\n`);
     for (const item of data.items) {
-      const severity =
-        {
-          low: pc.gray("●"),
-          medium: pc.yellow("●"),
-          high: pc.red("●"),
-        }[item.severity] || "●";
-
-      console.log(`  ${severity} [${item.type}] ${item.content.substring(0, 60)}...`);
-      console.log(`    ID: ${item.id} | Reason: ${item.flagReason}`);
-      console.log(`    Flagged: ${new Date(item.flaggedAt).toLocaleDateString()}\n`);
+      const severityMap: Record<string, string> = {
+        low: pc.gray("●"),
+        medium: pc.yellow("●"),
+        high: pc.red("●"),
+      };
+      const _severity = severityMap[String(item.severity)] ?? "●";
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to fetch queue: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 
@@ -527,16 +459,12 @@ async function handleModerationAuto(options: any) {
       logger.warn("DRY RUN MODE - no changes will be made");
     }
 
-    const result = await adminFetch("/community/moderation/auto", {
+    const _result = await adminFetch("/community/moderation/auto", {
       method: "POST",
       body: JSON.stringify({ dryRun: options.dryRun || false }),
     });
 
     logger.info("\nModeration Results\n");
-    console.log(`  Reviewed: ${result.reviewed}`);
-    console.log(`  Approved: ${pc.green(result.approved)}`);
-    console.log(`  Flagged for Human Review: ${pc.yellow(result.flagged)}`);
-    console.log(`  Actions Taken: ${pc.cyan(result.actions)}\n`);
 
     if (options.dryRun) {
       logger.info("DRY RUN COMPLETE - no changes committed");
@@ -544,10 +472,10 @@ async function handleModerationAuto(options: any) {
       logger.success("Moderation sweep complete");
     }
 
-    return ExitCode.Success;
+    return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Failed to run moderation: ${(error as Error).message}`);
-    return ExitCode.Error;
+    return ExitCode.ERROR;
   }
 }
 

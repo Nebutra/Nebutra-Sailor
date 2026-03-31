@@ -159,7 +159,8 @@ export const nebultraCommand: CommandMeta = {
       arguments: [
         {
           name: "dir",
-          description: "Target directory for the new project (optional, will prompt if not provided)",
+          description:
+            "Target directory for the new project (optional, will prompt if not provided)",
           required: false,
         },
       ],

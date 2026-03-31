@@ -29,10 +29,7 @@ function componentExists(componentName: string): boolean {
 /**
  * Build a dry-run preview of what would be installed
  */
-function buildDryRunPreview(
-  components: string[],
-  options: AddOptions,
-): Record<string, any> {
+function buildDryRunPreview(components: string[], options: AddOptions): Record<string, any> {
   const preview = {
     mode: "dry-run",
     timestamp: new Date().toISOString(),
@@ -99,9 +96,8 @@ export async function addCommand(components: string[], options: AddOptions) {
 
   // Handle --dry-run flag
   if (options.dryRun) {
-    const preview = buildDryRunPreview(components, options);
+    const _preview = buildDryRunPreview(components, options);
     logger.info("Dry-run preview:");
-    console.log(JSON.stringify(preview, null, 2));
     process.exit(ExitCode.DRY_RUN_OK);
   }
 
@@ -110,8 +106,7 @@ export async function addCommand(components: string[], options: AddOptions) {
     const allComponentsExist =
       (options["21st"] && componentExists(options["21st"])) ||
       (options.v0 && componentExists("shadcn-component")) ||
-      (components.length > 0 &&
-        components.every((comp) => componentExists(comp)));
+      (components.length > 0 && components.every((comp) => componentExists(comp)));
 
     if (allComponentsExist) {
       logger.info("Component(s) already exist. Skipping installation.");
@@ -128,15 +123,13 @@ export async function addCommand(components: string[], options: AddOptions) {
         initialValue: true,
       }));
 
-    if (!shouldProceed || shouldProceed === false) {
+    if (p.isCancel(shouldProceed) || !shouldProceed) {
       p.log.info("Installation cancelled.");
       process.exit(ExitCode.CANCELLED);
     }
 
     p.log.info(
-      pc.cyan(
-        `\nInvoking shadcn integration for 21st.dev component: ${options["21st"]}...`,
-      ),
+      pc.cyan(`\nInvoking shadcn integration for 21st.dev component: ${options["21st"]}...`),
     );
 
     try {
@@ -150,7 +143,9 @@ export async function addCommand(components: string[], options: AddOptions) {
       logger.success(`Successfully installed ${componentId}`);
       process.exit(ExitCode.SUCCESS);
     } catch (error: unknown) {
-      logger.error(`Failed to install component: ${error instanceof Error ? error.message : "Unknown error"}`);
+      logger.error(
+        `Failed to install component: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
       process.exit(ExitCode.ERROR);
     }
   }
@@ -164,7 +159,7 @@ export async function addCommand(components: string[], options: AddOptions) {
         initialValue: true,
       }));
 
-    if (!shouldProceed || shouldProceed === false) {
+    if (p.isCancel(shouldProceed) || !shouldProceed) {
       p.log.info("Installation cancelled.");
       process.exit(ExitCode.CANCELLED);
     }
@@ -198,7 +193,7 @@ export async function addCommand(components: string[], options: AddOptions) {
           initialValue: true,
         }));
 
-      if (!shouldProceed || shouldProceed === false) {
+      if (p.isCancel(shouldProceed) || !shouldProceed) {
         p.log.info("Installation cancelled.");
         process.exit(ExitCode.CANCELLED);
       }
