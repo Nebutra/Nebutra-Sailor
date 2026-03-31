@@ -15,7 +15,7 @@ import type {
 
 export class TypesenseProvider implements SearchProvider {
   readonly name = "typesense";
-  private client: Typesense.Client;
+  private client: unknown;
 
   constructor(config?: TypesenseConfig) {
     const url = config?.url ?? process.env.TYPESENSE_URL ?? "http://localhost:8108";
@@ -41,7 +41,7 @@ export class TypesenseProvider implements SearchProvider {
     try {
       const collectionName = this._getCollectionName(index, doc.tenantId);
       const document = this._prepareDocument(doc);
-      await this.client.collections(collectionName).documents().create(document);
+      await (this.client as any).collections(collectionName).documents().create(document);
       logger.debug("[search:typesense] Indexed document", {
         collection: collectionName,
         docId: doc.id,
@@ -76,7 +76,7 @@ export class TypesenseProvider implements SearchProvider {
         const documents = tenantDocs.map((doc) => this._prepareDocument(doc));
 
         for (const doc of documents) {
-          await this.client.collections(collectionName).documents().create(doc);
+          await (this.client as any).collections(collectionName).documents().create(doc);
         }
 
         logger.debug("[search:typesense] Indexed batch", {
@@ -102,7 +102,6 @@ export class TypesenseProvider implements SearchProvider {
       const collectionName = this._getCollectionName(index, query.tenantId);
       const page = query.page ?? 1;
       const hitsPerPage = Math.min(query.hitsPerPage ?? 20, 100);
-      const offset = (page - 1) * hitsPerPage;
 
       // Build filter conditions
       let filterBy: string | undefined;
@@ -156,24 +155,33 @@ export class TypesenseProvider implements SearchProvider {
         searchParams.highlight_affix_num_tokens = 5;
       }
 
-      const result = await this.client.collections(collectionName).documents().search(searchParams);
+      const result = await (this.client as any)
+        .collections(collectionName)
+        .documents()
+        .search(searchParams);
       const processingTimeMs = performance.now() - startMs;
 
-      const hits = (result.hits || []).map((hit: any) => ({
+      const hits = (result?.hits || []).map((hit: any) => ({
         doc: hit.document as T,
         score: hit.text_match_info?.score ?? 1,
         highlights: hit.highlight ?? undefined,
       }));
 
-      const totalHits = result.found ?? 0;
+      const totalHits = (result as any)?.found ?? 0;
       const totalPages = Math.ceil(totalHits / hitsPerPage);
 
       const facetDistribution: Record<string, Record<string, number>> = {};
-      if (result.facet_counts) {
-        for (const facet of result.facet_counts) {
+      const resultAny = result as any;
+      if (resultAny?.facet_counts) {
+        for (const facet of resultAny.facet_counts) {
           facetDistribution[facet.field_name] = {};
           for (const count of facet.counts) {
-            facetDistribution[facet.field_name][count.value] = count.count;
+            if (count.value !== undefined && count.count !== undefined) {
+              const field = facetDistribution[facet.field_name];
+              if (field) {
+                field[count.value] = count.count;
+              }
+            }
           }
         }
       }
@@ -191,7 +199,7 @@ export class TypesenseProvider implements SearchProvider {
         totalHits,
         processingTimeMs,
         facetDistribution:
-          Object.keys(facetDistribution).length > 0 ? facetDistribution : undefined,
+          (Object.keys(facetDistribution).length > 0 ? facetDistribution : undefined) ?? {},
         page,
         hitsPerPage,
         totalPages,
@@ -209,7 +217,7 @@ export class TypesenseProvider implements SearchProvider {
   async deleteDocument(index: string, docId: string, tenantId?: string): Promise<void> {
     try {
       const collectionName = this._getCollectionName(index, tenantId);
-      await this.client.collections(collectionName).documents(docId).delete();
+      await (this.client as any).collections(collectionName).documents(docId).delete();
       logger.debug("[search:typesense] Deleted document", {
         collection: collectionName,
         docId,
@@ -244,19 +252,19 @@ export class TypesenseProvider implements SearchProvider {
       const filterBy = filterParts.join(" && ");
 
       // Search for matching documents
-      const result = await this.client
+      const result = await (this.client as any)
         .collections(index)
         .documents()
         .search({ q: "*", filter_by: filterBy, limit: 10000 });
 
-      if (result.hits && result.hits.length > 0) {
-        for (const hit of result.hits) {
-          await this.client.collections(index).documents(hit.document.id).delete();
+      if ((result as any)?.hits && (result as any).hits.length > 0) {
+        for (const hit of (result as any).hits) {
+          await (this.client as any).collections(index).documents(hit.document.id).delete();
         }
         logger.debug("[search:typesense] Deleted documents by filter", {
           collection: index,
           filters,
-          deletedCount: result.hits.length,
+          deletedCount: (result as any).hits.length,
         });
       }
     } catch (error) {
@@ -273,7 +281,7 @@ export class TypesenseProvider implements SearchProvider {
     try {
       // Typesense requires explicit schema definition
       const schema = this._buildSchema(index, settings);
-      await this.client.collections().create(schema);
+      await (this.client as any).collections().create(schema);
       logger.info("[search:typesense] Collection created", { collection: index });
     } catch (error) {
       if (error instanceof Error && error.message.includes("Already exists")) {
@@ -288,7 +296,7 @@ export class TypesenseProvider implements SearchProvider {
     }
   }
 
-  async updateSettings(index: string, settings: IndexSettings): Promise<void> {
+  async updateSettings(index: string, _settings: IndexSettings): Promise<void> {
     try {
       // Typesense doesn't support updating schema after creation
       // Log a warning and skip

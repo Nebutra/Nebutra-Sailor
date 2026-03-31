@@ -61,11 +61,11 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
       const meilisearchConfig = config as
         | Exclude<SearchConfig, { provider: "typesense" | "algolia" }>
         | undefined;
-      return new MeilisearchProvider({
-        url: meilisearchConfig?.url,
-        apiKey: meilisearchConfig?.apiKey,
-        timeout: meilisearchConfig?.timeout,
-      });
+      const configObj: any = { provider: "meilisearch" };
+      if (meilisearchConfig?.url !== undefined) configObj.url = meilisearchConfig.url;
+      if (meilisearchConfig?.apiKey !== undefined) configObj.apiKey = meilisearchConfig.apiKey;
+      if (meilisearchConfig?.timeout !== undefined) configObj.timeout = meilisearchConfig.timeout;
+      return new MeilisearchProvider(configObj);
     }
 
     case "typesense": {
@@ -73,11 +73,11 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
       const typesenseConfig = config as
         | Exclude<SearchConfig, { provider: "meilisearch" | "algolia" }>
         | undefined;
-      return new TypesenseProvider({
-        url: typesenseConfig?.url,
-        apiKey: typesenseConfig?.apiKey,
-        timeout: typesenseConfig?.timeout,
-      });
+      const configObj: any = { provider: "typesense" };
+      if (typesenseConfig?.url !== undefined) configObj.url = typesenseConfig.url;
+      if (typesenseConfig?.apiKey !== undefined) configObj.apiKey = typesenseConfig.apiKey;
+      if (typesenseConfig?.timeout !== undefined) configObj.timeout = typesenseConfig.timeout;
+      return new TypesenseProvider(configObj);
     }
 
     case "algolia": {
@@ -85,11 +85,11 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
       const algoliaConfig = config as
         | Exclude<SearchConfig, { provider: "meilisearch" | "typesense" }>
         | undefined;
-      return new AlgoliaProvider({
-        appId: algoliaConfig?.appId,
-        searchKey: algoliaConfig?.searchKey,
-        adminKey: algoliaConfig?.adminKey,
-      });
+      const configObj: any = { provider: "algolia" };
+      if (algoliaConfig?.appId !== undefined) configObj.appId = algoliaConfig.appId;
+      if (algoliaConfig?.searchKey !== undefined) configObj.searchKey = algoliaConfig.searchKey;
+      if (algoliaConfig?.adminKey !== undefined) configObj.adminKey = algoliaConfig.adminKey;
+      return new AlgoliaProvider(configObj);
     }
 
     default:

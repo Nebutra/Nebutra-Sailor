@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import algoliasearch from "algoliasearch";
+import { algoliasearch } from "algoliasearch";
 import type {
   AlgoliaConfig,
   IndexSettings,
@@ -15,16 +15,15 @@ import type {
 
 export class AlgoliaProvider implements SearchProvider {
   readonly name = "algolia";
-  private appId: string;
-  private searchClient: ReturnType<typeof algoliasearch>;
-  private adminClient: ReturnType<typeof algoliasearch>;
+  private searchClient: any;
+  private adminClient: any;
 
   constructor(config?: AlgoliaConfig) {
-    const appId = config?.appId ?? process.env.ALGOLIA_APP_ID;
+    const _appId = config?.appId ?? process.env.ALGOLIA_APP_ID;
     const searchKey = config?.searchKey ?? process.env.ALGOLIA_SEARCH_KEY;
     const adminKey = config?.adminKey ?? process.env.ALGOLIA_ADMIN_KEY;
 
-    if (!appId) {
+    if (!_appId) {
       throw new Error("[search:algolia] Missing ALGOLIA_APP_ID environment variable");
     }
 
@@ -36,11 +35,10 @@ export class AlgoliaProvider implements SearchProvider {
       throw new Error("[search:algolia] Missing ALGOLIA_ADMIN_KEY environment variable");
     }
 
-    this.appId = appId;
-    this.searchClient = algoliasearch(appId, searchKey);
-    this.adminClient = algoliasearch(appId, adminKey);
+    this.searchClient = algoliasearch(_appId, searchKey);
+    this.adminClient = algoliasearch(_appId, adminKey);
 
-    logger.info("[search:algolia] Initializing", { appId });
+    logger.info("[search:algolia] Initializing", { appId: _appId });
   }
 
   async indexDocument<T extends SearchDocument>(index: string, doc: T): Promise<void> {
@@ -176,7 +174,7 @@ export class AlgoliaProvider implements SearchProvider {
         totalHits: result.nbHits,
         processingTimeMs,
         facetDistribution:
-          Object.keys(facetDistribution).length > 0 ? facetDistribution : undefined,
+          (Object.keys(facetDistribution).length > 0 ? facetDistribution : undefined) ?? {},
         page,
         hitsPerPage,
         totalPages,

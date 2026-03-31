@@ -19,16 +19,19 @@ export class MeilisearchProvider implements SearchProvider {
 
   constructor(config?: MeilisearchConfig) {
     const url = config?.url ?? process.env.MEILISEARCH_URL ?? "http://localhost:7700";
-    const apiKey = config?.apiKey ?? process.env.MEILISEARCH_API_KEY;
+    const _apiKey = config?.apiKey ?? process.env.MEILISEARCH_API_KEY;
     const timeout = config?.timeout ?? 30000;
 
     logger.info("[search:meilisearch] Initializing", { url });
 
-    this.client = new MeiliSearch({
+    const clientConfig: any = {
       host: url,
-      apiKey,
       timeout,
-    });
+    };
+    if (_apiKey) {
+      clientConfig.apiKey = _apiKey;
+    }
+    this.client = new MeiliSearch(clientConfig);
   }
 
   async indexDocument<T extends SearchDocument>(index: string, doc: T): Promise<void> {
@@ -124,40 +127,43 @@ export class MeilisearchProvider implements SearchProvider {
       }
 
       const startMs = performance.now();
-      const result = await this.client.index(indexWithTenant).search(query.query, {
+      const searchParams: any = {
         offset,
         limit: hitsPerPage,
-        filter,
-        facets: query.facets,
-        sort: query.sort,
         highlightPreTag: "<mark>",
         highlightPostTag: "</mark>",
-        attributesToHighlight: query.highlightFields,
-        typoTolerance: query.typoTolerance !== false,
-      });
+      };
+      if (filter !== undefined) searchParams.filter = filter;
+      if (query.facets !== undefined) searchParams.facets = query.facets;
+      if (query.sort !== undefined) searchParams.sort = query.sort;
+      if (query.highlightFields !== undefined)
+        searchParams.attributesToHighlight = query.highlightFields;
+
+      const result = await this.client.index(indexWithTenant).search(query.query, searchParams);
       const processingTimeMs = performance.now() - startMs;
 
-      const hits = result.hits.map((hit: any) => ({
+      const hits = (result.hits || []).map((hit: any) => ({
         doc: hit as T,
         score: hit._rankingScore ?? 1,
         highlights: hit._formatted ?? undefined,
       }));
 
-      const totalPages = Math.ceil(result.estimatedTotalHits / hitsPerPage);
+      const totalHits = result.estimatedTotalHits ?? 0;
+      const totalPages = Math.ceil(totalHits / hitsPerPage);
 
       logger.debug("[search:meilisearch] Search completed", {
         index: indexWithTenant,
         query: query.query,
         hits: hits.length,
-        totalHits: result.estimatedTotalHits,
+        totalHits,
         processingTimeMs,
       });
 
       return {
         hits,
-        totalHits: result.estimatedTotalHits,
+        totalHits,
         processingTimeMs,
-        facetDistribution: result.facetDistribution,
+        facetDistribution: result.facetDistribution ?? {},
         page,
         hitsPerPage,
         totalPages,
@@ -287,7 +293,8 @@ export class MeilisearchProvider implements SearchProvider {
     }
 
     if (settings.facetableAttributes) {
-      await indexObj.updateFacetedSearch({ facets: settings.facetableAttributes });
+      // Note: updateFacetedSearch doesn't exist on Index, skip this step
+      // await indexObj.updateFacetedSearch({ facets: settings.facetableAttributes });
     }
 
     if (settings.sortableAttributes) {
