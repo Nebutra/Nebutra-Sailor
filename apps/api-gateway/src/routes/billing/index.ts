@@ -31,6 +31,18 @@ const PortalRequestSchema = z.object({
   returnUrl: z.string().url(),
 });
 
+const UsageResponseSchema = z.object({
+  period: z.string(),
+  apiCalls: z.object({
+    used: z.number(),
+    limit: z.number(),
+    percentUsed: z.number(),
+  }),
+  aiTokens: z.object({
+    used: z.number(),
+  }),
+});
+
 // ── Routes ────────────────────────────────────────────────────────────────────
 
 const checkoutRoute = createRoute({
@@ -134,7 +146,11 @@ const usageRoute = createRoute({
   tags: ["Billing"],
   summary: "Get current usage and limits",
   responses: {
-    200: { description: "Usage data" },
+    200: {
+      description: "Usage data",
+      content: { "application/json": { schema: UsageResponseSchema } },
+    },
+    500: { description: "Internal Server Error" },
   },
 });
 

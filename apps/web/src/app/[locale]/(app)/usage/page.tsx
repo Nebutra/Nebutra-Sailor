@@ -14,9 +14,7 @@ interface UsageData {
 async function fetchUsage(): Promise<UsageData | null> {
   try {
     const api = await getTypedApi();
-    const res = await (api as ReturnType<typeof import("openapi-fetch").default>).GET(
-      "/api/v1/billing/usage",
-    );
+    const res = await api.GET("/api/v1/billing/usage");
     return (res.data as UsageData) ?? null;
   } catch {
     return null;
