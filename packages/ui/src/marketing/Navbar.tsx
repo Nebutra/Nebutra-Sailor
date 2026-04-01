@@ -162,7 +162,10 @@ export function Navbar({
         <div className="hidden md:flex items-center gap-4">
           {/* Locale Switcher (Simplified placeholder) */}
           {showLocaleSwitcher && (
-            <button className="flex items-center gap-1.5 text-xs font-medium text-[var(--neutral-10)] hover:text-[var(--neutral-12)] uppercase tracking-wider transition-colors px-2 py-1 rounded-md hover:bg-[var(--neutral-3)]">
+            <button
+              type="button"
+              className="flex items-center gap-1.5 text-xs font-medium text-[var(--neutral-10)] hover:text-[var(--neutral-12)] uppercase tracking-wider transition-colors px-2 py-1 rounded-md hover:bg-[var(--neutral-3)]"
+            >
               {locale} <ChevronDown className="h-3 w-3" />
             </button>
           )}
@@ -268,7 +271,10 @@ export function Navbar({
                   {showLocaleSwitcher && (
                     <div className="flex items-center justify-between px-3">
                       <span className="text-sm font-medium text-[var(--neutral-11)]">Language</span>
-                      <button className="flex items-center gap-1.5 text-sm font-medium uppercase text-[var(--neutral-12)] bg-[var(--neutral-3)] px-3 py-1.5 rounded-md">
+                      <button
+                        type="button"
+                        className="flex items-center gap-1.5 text-sm font-medium uppercase text-[var(--neutral-12)] bg-[var(--neutral-3)] px-3 py-1.5 rounded-md"
+                      >
                         {locale} <ChevronDown className="h-4 w-4" />
                       </button>
                     </div>

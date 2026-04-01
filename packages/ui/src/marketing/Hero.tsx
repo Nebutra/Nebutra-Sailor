@@ -46,7 +46,6 @@ export function Hero({
           </div>
         );
       case "mesh":
-      case "gradient":
       default:
         return (
           <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 flex items-center justify-center isolate">
