@@ -1,4 +1,5 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { captchaMiddleware } from "@nebutra/captcha/server";
 import { sendVerificationCode, verifyCode } from "@nebutra/sms";
 
 const sendCodeRoute = createRoute({
@@ -92,11 +93,15 @@ const verifyCodeRoute = createRoute({
 });
 
 export const smsAuthRoutes = new OpenAPIHono()
-  .openapi(sendCodeRoute, async (c) => {
-    const { phone } = c.req.valid("json");
-    const result = await sendVerificationCode(phone);
-    return c.json(result, result.success ? 200 : 429);
-  })
+  .openapi(
+    sendCodeRoute,
+    captchaMiddleware({ expectedAction: "sms_send", skipInDev: true }),
+    async (c) => {
+      const { phone } = c.req.valid("json");
+      const result = await sendVerificationCode(phone);
+      return c.json(result, result.success ? 200 : 429);
+    },
+  )
   .openapi(verifyCodeRoute, async (c) => {
     const { phone, code } = c.req.valid("json");
     const result = await verifyCode(phone, code);

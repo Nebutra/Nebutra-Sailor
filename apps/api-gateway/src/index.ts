@@ -27,8 +27,10 @@ import { agentRoutes } from "./routes/agents/index.js";
 import { aiRoutes } from "./routes/ai/index.js";
 import { billingRoutes } from "./routes/billing/index.js";
 import { eventRoutes } from "./routes/events/index.js";
+import { integrationRoutes } from "./routes/integrations/index.js";
 import { consentRoutes } from "./routes/legal/consent.js";
 import { healthRoutes } from "./routes/misc/health.js";
+import { searchRoutes } from "./routes/search/index.js";
 import { statusRoutes } from "./routes/system/status.js";
 import { getAuthWebhookRoutes, stripeWebhookRoutes } from "./routes/webhooks/index.js";
 
@@ -196,6 +198,8 @@ app.route("/api/v1/events", eventRoutes);
 app.route("/api/v1/agents", agentRoutes);
 app.route("/api/v1/ai", aiRoutes);
 app.route("/api/v1/billing", billingRoutes);
+app.route("/api/v1/search", searchRoutes);
+app.route("/api/v1/integrations", integrationRoutes);
 
 // Admin routes — protected by X-Admin-Key, not exposed through public ingress
 app.route("/api/v1/admin", adminRoutes);

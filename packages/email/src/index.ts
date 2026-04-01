@@ -358,3 +358,320 @@ export async function sendContactFormReceivedEmail(opts: {
     tags: [{ name: "type", value: "contact_receipt" }],
   });
 }
+
+// ── Billing Lifecycle Emails ───────────────────────────────────────────────
+
+/**
+ * Checkout completed — subscription created successfully.
+ * Trigger: billing.checkout.completed
+ */
+export async function sendCheckoutCompletedEmail(opts: {
+  to: string;
+  firstName: string;
+  orgName: string;
+  planName: string;
+  dashboardUrl?: string;
+}): Promise<SendResult> {
+  const dashboardUrl = opts.dashboardUrl ?? "https://app.nebutra.ai";
+
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">You're all set! 🎉</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      Hi ${opts.firstName}, great news — <strong>${opts.orgName}</strong> has been upgraded to the
+      <strong style="color:#0033FE;">${opts.planName}</strong> plan.
+    </p>
+    <p style="margin:0 0 24px;font-size:15px;color:#475569;line-height:1.6;">
+      All premium features are now unlocked. Here's what you can do next:
+    </p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;">
+      <tr><td style="padding:8px 0;font-size:15px;color:#475569;">✅ Invite unlimited team members</td></tr>
+      <tr><td style="padding:8px 0;font-size:15px;color:#475569;">✅ Access advanced AI models</td></tr>
+      <tr><td style="padding:8px 0;font-size:15px;color:#475569;">✅ Priority support SLA</td></tr>
+    </table>
+    <a href="${dashboardUrl}" style="display:inline-block;background:linear-gradient(135deg,#0033FE,#0BF1C3);color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 16px;">
+      Go to Dashboard →
+    </a>
+    `,
+    `${opts.orgName} has been upgraded to ${opts.planName}`,
+  );
+
+  return send({
+    to: opts.to,
+    subject: `🎉 ${opts.orgName} is now on the ${opts.planName} plan`,
+    html,
+    tags: [{ name: "type", value: "checkout_completed" }],
+  });
+}
+
+/**
+ * Trial ending soon — 3 days before expiry (Stripe default).
+ * Trigger: billing.trial.ending
+ */
+export async function sendTrialEndingEmail(opts: {
+  to: string;
+  firstName: string;
+  orgName: string;
+  trialEndDate: string;
+  billingUrl?: string;
+}): Promise<SendResult> {
+  const billingUrl = opts.billingUrl ?? "https://app.nebutra.ai/settings/billing";
+
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#d97706;">⏳ Your trial ends soon</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      Hi ${opts.firstName}, the free trial for <strong>${opts.orgName}</strong> ends on
+      <strong>${opts.trialEndDate}</strong>.
+    </p>
+    <p style="margin:0 0 24px;font-size:15px;color:#475569;line-height:1.6;">
+      To keep your workspace and all your data, add a payment method before the trial expires.
+      If you don't, your account will be downgraded to the Free plan.
+    </p>
+    <a href="${billingUrl}" style="display:inline-block;background:linear-gradient(135deg,#0033FE,#0BF1C3);color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
+      Add Payment Method →
+    </a>
+    <p style="margin:0;font-size:13px;color:#94a3b8;">
+      Questions? Reply to this email and our team will help.
+    </p>
+    `,
+    `Your ${opts.orgName} trial ends on ${opts.trialEndDate}`,
+  );
+
+  return send({
+    to: opts.to,
+    subject: `⏳ Your ${opts.orgName} trial ends in 3 days`,
+    html,
+    tags: [{ name: "type", value: "trial_ending" }],
+  });
+}
+
+/**
+ * Invoice successfully paid — receipt.
+ * Trigger: billing.invoice.paid
+ */
+export async function sendInvoicePaidEmail(opts: {
+  to: string;
+  orgName: string;
+  invoiceId: string;
+  amountPaid: number;
+  currency?: string;
+  invoiceUrl?: string;
+}): Promise<SendResult> {
+  const currency = opts.currency ?? "USD";
+  const formatted = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+  }).format(opts.amountPaid / 100);
+
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Payment Received ✓</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      We've received your payment of <strong>${formatted}</strong> for <strong>${opts.orgName}</strong>.
+    </p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;border-collapse:collapse;">
+      <tr>
+        <td style="padding:12px 0;border-bottom:1px solid #e2e8f0;font-size:14px;color:#94a3b8;">Invoice</td>
+        <td style="padding:12px 0;border-bottom:1px solid #e2e8f0;font-size:14px;color:#0f172a;text-align:right;">#${opts.invoiceId.slice(-8).toUpperCase()}</td>
+      </tr>
+      <tr>
+        <td style="padding:12px 0;border-bottom:1px solid #e2e8f0;font-size:14px;color:#94a3b8;">Amount</td>
+        <td style="padding:12px 0;border-bottom:1px solid #e2e8f0;font-size:14px;color:#0f172a;text-align:right;">${formatted}</td>
+      </tr>
+      <tr>
+        <td style="padding:12px 0;font-size:14px;color:#94a3b8;">Status</td>
+        <td style="padding:12px 0;font-size:14px;color:#16a34a;text-align:right;font-weight:600;">Paid</td>
+      </tr>
+    </table>
+    ${
+      opts.invoiceUrl
+        ? `<a href="${opts.invoiceUrl}" style="display:inline-block;background:#0f172a;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 16px;">View Invoice →</a>`
+        : ""
+    }
+    `,
+    `Payment of ${formatted} received for ${opts.orgName}`,
+  );
+
+  return send({
+    to: opts.to,
+    subject: `✓ Payment received — ${formatted}`,
+    html,
+    tags: [{ name: "type", value: "invoice_paid" }],
+  });
+}
+
+/**
+ * Payment failed — retry notification.
+ * Trigger: billing.invoice.payment_failed
+ */
+export async function sendPaymentFailedEmail(opts: {
+  to: string;
+  orgName: string;
+  attemptCount: number;
+  nextAttemptDate?: string;
+  billingUrl?: string;
+}): Promise<SendResult> {
+  const billingUrl = opts.billingUrl ?? "https://app.nebutra.ai/settings/billing";
+
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#dc2626;">⚠️ Payment Failed</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      We were unable to process the payment for <strong>${opts.orgName}</strong>.
+      This was attempt <strong>${opts.attemptCount}</strong>.
+    </p>
+    ${
+      opts.nextAttemptDate
+        ? `<p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">We'll retry automatically on <strong>${opts.nextAttemptDate}</strong>.</p>`
+        : ""
+    }
+    <p style="margin:0 0 24px;font-size:15px;color:#475569;line-height:1.6;">
+      To avoid service interruption, please update your payment method:
+    </p>
+    <a href="${billingUrl}" style="display:inline-block;background:#dc2626;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
+      Update Payment Method →
+    </a>
+    <p style="margin:0;font-size:13px;color:#94a3b8;">
+      If you believe this is an error, please contact support.
+    </p>
+    `,
+    `Payment failed for ${opts.orgName} — update your payment method`,
+  );
+
+  return send({
+    to: opts.to,
+    subject: `⚠️ Payment failed for ${opts.orgName} — action required`,
+    html,
+    tags: [
+      { name: "type", value: "payment_failed" },
+      { name: "attempt", value: String(opts.attemptCount) },
+    ],
+  });
+}
+
+/**
+ * Subscription canceled — confirmation + what happens next.
+ * Trigger: billing.subscription.canceled
+ */
+export async function sendSubscriptionCanceledEmail(opts: {
+  to: string;
+  firstName: string;
+  orgName: string;
+  effectiveDate?: string;
+  reactivateUrl?: string;
+}): Promise<SendResult> {
+  const reactivateUrl = opts.reactivateUrl ?? "https://app.nebutra.ai/settings/billing";
+
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Subscription Canceled</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      Hi ${opts.firstName}, your subscription for <strong>${opts.orgName}</strong> has been canceled.
+      ${opts.effectiveDate ? `It will remain active until <strong>${opts.effectiveDate}</strong>.` : ""}
+    </p>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      After cancellation, your workspace will be downgraded to the <strong>Free</strong> plan.
+      Your data will be preserved, but premium features will no longer be available.
+    </p>
+    <p style="margin:0 0 24px;font-size:15px;color:#475569;line-height:1.6;">
+      Changed your mind? You can reactivate anytime:
+    </p>
+    <a href="${reactivateUrl}" style="display:inline-block;background:linear-gradient(135deg,#0033FE,#0BF1C3);color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
+      Reactivate Subscription →
+    </a>
+    <p style="margin:0;font-size:13px;color:#94a3b8;">
+      We'd love to know why you canceled — reply to this email with any feedback.
+    </p>
+    `,
+    `Your ${opts.orgName} subscription has been canceled`,
+  );
+
+  return send({
+    to: opts.to,
+    subject: `Your ${opts.orgName} subscription has been canceled`,
+    html,
+    tags: [{ name: "type", value: "subscription_canceled" }],
+  });
+}
+
+/**
+ * Upcoming invoice notification — sent ~3 days before next charge.
+ * Trigger: billing.invoice.upcoming
+ */
+export async function sendUpcomingInvoiceEmail(opts: {
+  to: string;
+  orgName: string;
+  amountDue: number;
+  currency?: string;
+  billingUrl?: string;
+}): Promise<SendResult> {
+  const currency = opts.currency ?? "USD";
+  const formatted = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+  }).format(opts.amountDue / 100);
+  const billingUrl = opts.billingUrl ?? "https://app.nebutra.ai/settings/billing";
+
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Upcoming Payment</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      A payment of <strong>${formatted}</strong> for <strong>${opts.orgName}</strong>
+      will be charged to your payment method in the next few days.
+    </p>
+    <p style="margin:0 0 24px;font-size:15px;color:#475569;line-height:1.6;">
+      No action is required. If you'd like to review or update your billing details:
+    </p>
+    <a href="${billingUrl}" style="display:inline-block;background:#0f172a;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 16px;">
+      View Billing →
+    </a>
+    `,
+    `Upcoming payment of ${formatted} for ${opts.orgName}`,
+  );
+
+  return send({
+    to: opts.to,
+    subject: `Upcoming payment: ${formatted} for ${opts.orgName}`,
+    html,
+    tags: [{ name: "type", value: "upcoming_invoice" }],
+  });
+}
+
+/**
+ * Plan changed — upgrade or downgrade notification.
+ * Trigger: billing.subscription.plan_changed
+ */
+export async function sendPlanChangedEmail(opts: {
+  to: string;
+  firstName: string;
+  orgName: string;
+  newPlan: string;
+  dashboardUrl?: string;
+}): Promise<SendResult> {
+  const dashboardUrl = opts.dashboardUrl ?? "https://app.nebutra.ai";
+
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Plan Updated</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      Hi ${opts.firstName}, the plan for <strong>${opts.orgName}</strong> has been changed to
+      <strong style="color:#0033FE;">${opts.newPlan}</strong>.
+    </p>
+    <p style="margin:0 0 24px;font-size:15px;color:#475569;line-height:1.6;">
+      Your feature access and quotas have been updated accordingly. The change takes effect immediately.
+    </p>
+    <a href="${dashboardUrl}" style="display:inline-block;background:linear-gradient(135deg,#0033FE,#0BF1C3);color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 16px;">
+      View Dashboard →
+    </a>
+    `,
+    `${opts.orgName} plan changed to ${opts.newPlan}`,
+  );
+
+  return send({
+    to: opts.to,
+    subject: `Plan updated: ${opts.orgName} is now on ${opts.newPlan}`,
+    html,
+    tags: [{ name: "type", value: "plan_changed" }],
+  });
+}

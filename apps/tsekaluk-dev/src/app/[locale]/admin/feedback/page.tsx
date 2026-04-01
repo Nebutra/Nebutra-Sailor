@@ -48,27 +48,24 @@ export default function AdminFeedbackPage() {
     }
   }, []);
 
-  const handleDelete = useCallback(
-    async (id: string) => {
-      if (!confirm("Are you sure you want to delete this feedback?")) {
-        return;
-      }
+  const handleDelete = useCallback(async (id: string) => {
+    if (!confirm("Are you sure you want to delete this feedback?")) {
+      return;
+    }
 
-      try {
-        const res = await fetch(`/api/feedback?id=${encodeURIComponent(id)}`, {
-          method: "DELETE",
-          signal: AbortSignal.timeout(15_000),
-        });
-        const json = await res.json();
-        if (!json.success) throw new Error(json.error ?? "Failed to delete");
-        setEntries((prev) => prev.filter((e) => e.id !== id));
-      } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : "Failed to delete feedback.";
-        setError(errorMsg);
-      }
-    },
-    []
-  );
+    try {
+      const res = await fetch(`/api/feedback?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        signal: AbortSignal.timeout(15_000),
+      });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.error ?? "Failed to delete");
+      setEntries((prev) => prev.filter((e) => e.id !== id));
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : "Failed to delete feedback.";
+      setError(errorMsg);
+    }
+  }, []);
 
   useEffect(() => {
     fetchEntries();
