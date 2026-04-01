@@ -56,10 +56,10 @@ const jetbrainsMono = JetBrains_Mono({
  * Use: large English/Japanese display headings, section callouts, decorative numbers
  */
 const delaGothic = Dela_Gothic_One({
-  subsets: ["latin"],
   weight: "400",
   variable: "--font-dela-gothic",
   display: "swap",
+  preload: false,
 });
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

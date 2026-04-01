@@ -6,7 +6,7 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { db } from "@nebutra/db";
+import { prisma } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
 
 export const integrationRoutes = new OpenAPIHono();
@@ -18,14 +18,14 @@ const IntegrationTypeEnum = z.enum(["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]);
 const CreateIntegrationSchema = z.object({
   type: IntegrationTypeEnum,
   name: z.string().min(1).max(100),
-  credentials: z.record(z.unknown()).optional(),
-  settings: z.record(z.unknown()).optional(),
+  credentials: z.record(z.string(), z.unknown()).optional(),
+  settings: z.record(z.string(), z.unknown()).optional(),
 });
 
 const UpdateIntegrationSchema = z.object({
   name: z.string().min(1).max(100).optional(),
-  credentials: z.record(z.unknown()).optional(),
-  settings: z.record(z.unknown()).optional(),
+  credentials: z.record(z.string(), z.unknown()).optional(),
+  settings: z.record(z.string(), z.unknown()).optional(),
   isActive: z.boolean().optional(),
 });
 
@@ -46,7 +46,7 @@ integrationRoutes.openapi(listRoute, async (c) => {
   const orgId = tenant?.organizationId ?? "";
 
   try {
-    const integrations = await db.integration.findMany({
+    const integrations = await prisma.integration.findMany({
       where: { organizationId: orgId },
       orderBy: { createdAt: "desc" },
       select: {
@@ -88,7 +88,7 @@ integrationRoutes.openapi(getRoute, async (c) => {
   const id = c.req.param("id");
 
   try {
-    const integration = await db.integration.findFirst({
+    const integration = await prisma.integration.findFirst({
       where: { id, organizationId: orgId },
       select: {
         id: true,
@@ -136,13 +136,13 @@ integrationRoutes.openapi(createRoute_, async (c) => {
   const body = c.req.valid("json");
 
   try {
-    const integration = await db.integration.create({
+    const integration = await prisma.integration.create({
       data: {
         organizationId: orgId,
         type: body.type,
         name: body.name,
-        credentials: body.credentials ?? {},
-        settings: body.settings ?? {},
+        credentials: (body.credentials ?? {}) as any,
+        settings: (body.settings ?? {}) as any,
       },
       select: {
         id: true,
@@ -196,17 +196,17 @@ integrationRoutes.openapi(updateRoute, async (c) => {
 
   try {
     // Verify ownership
-    const existing = await db.integration.findFirst({
+    const existing = await prisma.integration.findFirst({
       where: { id, organizationId: orgId },
     });
     if (!existing) return c.json({ error: "Integration not found" }, 404);
 
-    const updated = await db.integration.update({
+    const updated = await prisma.integration.update({
       where: { id },
       data: {
         ...(body.name !== undefined ? { name: body.name } : {}),
-        ...(body.credentials !== undefined ? { credentials: body.credentials } : {}),
-        ...(body.settings !== undefined ? { settings: body.settings } : {}),
+        ...(body.credentials !== undefined ? { credentials: body.credentials as any } : {}),
+        ...(body.settings !== undefined ? { settings: body.settings as any } : {}),
         ...(body.isActive !== undefined ? { isActive: body.isActive } : {}),
       },
       select: {
@@ -245,12 +245,12 @@ integrationRoutes.openapi(deleteRoute, async (c) => {
   const id = c.req.param("id");
 
   try {
-    const existing = await db.integration.findFirst({
+    const existing = await prisma.integration.findFirst({
       where: { id, organizationId: orgId },
     });
     if (!existing) return c.json({ error: "Integration not found" }, 404);
 
-    await db.integration.delete({ where: { id } });
+    await prisma.integration.delete({ where: { id } });
 
     return c.json({ deleted: true, id });
   } catch (err) {

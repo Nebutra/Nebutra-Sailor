@@ -1,19 +1,18 @@
 // source.config.ts
-
-// lib/remark-component.ts
-import fs from "node:fs";
-import path from "node:path";
 import { remarkFeedbackBlock } from "fumadocs-core/mdx-plugins/remark-feedback-block";
 import { defineConfig, defineDocs, frontmatterSchema } from "fumadocs-mdx/config";
 import { remarkMdxMermaid } from "fumadocs-mermaid";
 import {
   createFileSystemGeneratorCache,
   createGenerator,
-  remarkAutoTypeTable,
+  remarkAutoTypeTable
 } from "fumadocs-typescript";
-import { visit } from "unist-util-visit";
 import { z } from "zod";
 
+// lib/remark-component.ts
+import fs from "node:fs";
+import path from "node:path";
+import { visit } from "unist-util-visit";
 var _fileMap = null;
 function getFileMap(root) {
   if (_fileMap) return _fileMap;
@@ -23,13 +22,10 @@ function getFileMap(root) {
   } catch {
     _fileMap = {};
   }
-  return _fileMap;
+  return _fileMap ?? {};
 }
 function toPascalCase(kebab) {
-  return kebab
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("");
+  return kebab.split("-").map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join("");
 }
 function extractImports(source) {
   const importLines = [];
@@ -54,7 +50,7 @@ function extractComponentCode(source, componentName) {
   const startPatterns = [
     `export function ${pascalName}`,
     `export default function ${pascalName}`,
-    `export const ${pascalName}`,
+    `export const ${pascalName}`
   ];
   let startIdx = -1;
   for (const pattern of startPatterns) {
@@ -92,9 +88,7 @@ ${componentCode}`;
 }
 function remarkComponent() {
   return (tree) => {
-    const root = process.cwd().endsWith("apps/design-docs")
-      ? process.cwd()
-      : path.join(process.cwd(), "apps/design-docs");
+    const root = process.cwd().endsWith("apps/design-docs") ? process.cwd() : path.join(process.cwd(), "apps/design-docs");
     const previewsDir = path.join(root, "src", "components", "previews");
     const fileMap = getFileMap(root);
     visit(tree, (node) => {
@@ -103,7 +97,7 @@ function remarkComponent() {
       const name = nameAttr?.value;
       if (!name) return;
       const candidates = [`${name}.tsx`, fileMap[name] ? `${fileMap[name]}.tsx` : null].filter(
-        Boolean,
+        Boolean
       );
       let rawSource = null;
       for (const candidate of candidates) {
@@ -118,7 +112,7 @@ function remarkComponent() {
         node.attributes.push({
           type: "mdxJsxAttribute",
           name: "code",
-          value: rawSource,
+          value: rawSource
         });
       } else {
       }
@@ -128,19 +122,19 @@ function remarkComponent() {
 
 // source.config.ts
 var generator = createGenerator({
-  cache: createFileSystemGeneratorCache(".next/fumadocs-typescript"),
+  cache: createFileSystemGeneratorCache(".next/fumadocs-typescript")
 });
 var docs = defineDocs({
   dir: "content/docs",
   docs: {
     schema: frontmatterSchema.extend({
       status: z.enum(["stable", "beta", "deprecated", "experimental"]).optional(),
-      figma: z.string().optional(),
+      figma: z.string().optional()
     }),
     postprocess: {
-      includeProcessedMarkdown: true,
-    },
-  },
+      includeProcessedMarkdown: true
+    }
+  }
 });
 var source_config_default = defineConfig({
   mdxOptions: {
@@ -148,10 +142,12 @@ var source_config_default = defineConfig({
       remarkComponent,
       remarkMdxMermaid,
       remarkFeedbackBlock,
-      [remarkAutoTypeTable, { generator }],
+      [remarkAutoTypeTable, { generator }]
     ],
-    rehypePlugins: [],
-  },
+    rehypePlugins: []
+  }
 });
-
-export { docs, source_config_default as default };
+export {
+  source_config_default as default,
+  docs
+};
