@@ -81,7 +81,7 @@ jobs:
 
       # ── QEMU (required for linux/arm64 cross-compilation on amd64 runners) ──
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       # ── Docker Buildx (multi-platform builder) ───────────────────────────────
       - name: Set up Docker Buildx
@@ -252,7 +252,7 @@ jobs:
 
       # ── QEMU (required for linux/arm64 cross-compilation on amd64 runners) ──
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       # ── Docker Buildx (multi-platform builder) ───────────────────────────────
       - name: Set up Docker Buildx
