@@ -15,38 +15,38 @@ vi.mock("@clerk/nextjs/server", () => ({
   }),
 }));
 
-// Mock Prisma
+// Mock Prisma (used directly by route.ts for communityProfile)
 const mockPrisma = {
   communityProfile: { upsert: vi.fn().mockResolvedValue({}) },
-  license: {
-    create: vi.fn().mockResolvedValue({
+};
+vi.mock("@nebutra/db", () => ({ prisma: mockPrisma }));
+
+// Mock @nebutra/license
+const mockIssueLicense = vi.fn().mockResolvedValue({
+  id: "lic_1",
+  licenseKey: "NEBUTRA-TEST-KEY",
+  tier: "OPC",
+  type: "FREE",
+  expiresAt: null,
+});
+vi.mock("@nebutra/license", () => ({
+  issueLicense: (...args: unknown[]) => mockIssueLicense(...args),
+  validateLicense: vi.fn(),
+}));
+
+describe("POST /api/license", () => {
+  beforeEach((): void => {
+    vi.clearAllMocks();
+    mockIssueLicense.mockResolvedValue({
       id: "lic_1",
       licenseKey: "NEBUTRA-TEST-KEY",
       tier: "OPC",
       type: "FREE",
       expiresAt: null,
-    }),
-  },
-  sleptonsaMemberProfile: {
-    create: vi.fn().mockResolvedValue({
-      id: "smp_1",
-      member_number: 42,
-      slug: "test-founder-42",
-    }),
-    update: vi.fn().mockResolvedValue({
-      id: "smp_1",
-      member_number: 42,
-      slug: "test-founder-42",
-    }),
-  },
-};
+    });
+  });
 
-vi.mock("@nebutra/db", () => ({ prisma: mockPrisma }));
-
-describe("POST /api/license", () => {
-  beforeEach(() => vi.clearAllMocks());
-
-  it("creates a sleptons_member_profile after license creation", async () => {
+  it("calls issueLicense with correct params for free tier", async () => {
     const { POST } = await import("../../app/api/license/route");
 
     const req = new Request("http://localhost/api/license", {
@@ -66,14 +66,16 @@ describe("POST /api/license", () => {
     const data = await res.json();
 
     expect(data.success).toBe(true);
-    expect(mockPrisma.sleptonsaMemberProfile.create).toHaveBeenCalledOnce();
+    expect(mockIssueLicense).toHaveBeenCalledOnce();
 
-    const createCall = mockPrisma.sleptonsaMemberProfile.create.mock.calls[0][0];
-    expect(createCall.data.looking_for).toEqual(["early-users", "angel-investor"]);
-    expect(createCall.data.license_id).toBe("lic_1");
+    const callArgs = mockIssueLicense.mock.calls[0]![0];
+    expect(callArgs.userId).toBe("user_test_123");
+    expect(callArgs.tier).toBe("OPC");
+    expect(callArgs.displayName).toBe("Test Founder");
+    expect(callArgs.lookingFor).toEqual(["early-users", "angel-investor"]);
   });
 
-  it("returns communityMemberNumber in response", async () => {
+  it("returns license fields in response", async () => {
     const { POST } = await import("../../app/api/license/route");
 
     const req = new Request("http://localhost/api/license", {
@@ -92,7 +94,9 @@ describe("POST /api/license", () => {
     const res = await POST(req as any);
     const data = await res.json();
 
-    expect(data.community?.memberNumber).toBe(42);
-    expect(data.community?.slug).toBe("test-founder-42");
+    expect(data.success).toBe(true);
+    expect(data.license.licenseKey).toBe("NEBUTRA-TEST-KEY");
+    expect(data.license.tier).toBe("OPC");
+    expect(data.license.type).toBe("FREE");
   });
 });

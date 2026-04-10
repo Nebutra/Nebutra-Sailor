@@ -78,8 +78,7 @@ export {
   type ButtonProps,
   buttonVariants,
 } from "./button";
-export * from "./calendar";
-export * from "./calendar-picker";
+
 export * from "./canvas-reveal-effect";
 export * from "./card";
 export * from "./card-spotlight";
@@ -114,8 +113,7 @@ export * from "./confirm-dialog";
 export * from "./context-card";
 export * from "./context-menu";
 export * from "./copy-button";
-export * from "./date-input";
-export * from "./date-picker";
+
 export * from "./description";
 export {
   Dialog,
@@ -166,10 +164,7 @@ export * from "./grid-feature-card";
 export * from "./grid-pattern-card";
 export * from "./grid-system";
 export * from "./heading";
-export * from "./hero-card";
-export * from "./hero-popover";
-export * from "./hero-select";
-export * from "./hero-skeleton";
+
 export * from "./hex-grid";
 export * from "./highlighter";
 export * from "./hover-card";
@@ -230,7 +225,7 @@ export * from "./shine-border";
 export * from "./skeleton";
 export * from "./slider";
 export * from "./slider-number-flow";
-export * from "./snippet";
+
 export * from "./snippet-status";
 export * from "./spacing";
 export * from "./spinner";
@@ -269,8 +264,6 @@ export {
   TooltipTrigger,
 } from "./tooltip";
 export * from "./tree";
-// Legacy typography (deprecated - use typography/ module)
-export { type TextStyle, textStyles } from "./typography";
 export * from "./video-player";
 export * from "./video-text";
 export * from "./warp-background";

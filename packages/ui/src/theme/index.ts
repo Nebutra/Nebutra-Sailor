@@ -12,20 +12,6 @@ export type { NebutraThemeProviderProps } from "./provider";
 export { NebutraThemeProvider } from "./provider";
 export type { NebutraTokens } from "./tokens";
 /**
- * @internal — Re-exported for backward compatibility only.
- * App code should NOT import these; use CSS variables from @nebutra/tokens instead.
- * @deprecated Use CSS variables from @nebutra/tokens/styles.css
- */
-export {
-  borderRadius,
-  colors,
-  shadows,
-  spacing,
-  tokens,
-  typography,
-} from "./tokens";
-
-/**
  * Theme mode type used by DesignSystemProvider / layout components.
  * Matches next-themes convention.
  */

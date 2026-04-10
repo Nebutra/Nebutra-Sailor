@@ -1,5 +1,7 @@
 import { auth, clerkClient } from "@clerk/nextjs/server";
+import { createCheckoutSession, getOrCreateCustomer } from "@nebutra/billing";
 import { prisma } from "@nebutra/db";
+import { issueLicense, validateLicense } from "@nebutra/license";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -27,16 +29,6 @@ const CreateLicenseSchema = z.object({
   acceptedTerms: z.literal(true),
 });
 
-function generateSlug(displayName: string, memberNumber: number): string {
-  const base = displayName
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-")
-    .slice(0, 40);
-  return `${base}-${memberNumber}`;
-}
-
 // POST /api/license — Create a license after community profile collection
 export async function POST(req: NextRequest) {
   try {
@@ -55,10 +47,13 @@ export async function POST(req: NextRequest) {
     }
 
     const data = parsed.data;
+    const isStartup = data.tier === "STARTUP";
 
-    // Determine license type
-    const isFree = data.tier === "INDIVIDUAL" || data.tier === "OPC";
-    const licenseType = isFree ? "FREE" : "COMMERCIAL";
+    const clerk = await clerkClient();
+    const clerkUser = await clerk.users.getUser(userId);
+    const email = clerkUser.emailAddresses[0]?.emailAddress;
+    const displayName =
+      clerkUser.fullName ?? clerkUser.username ?? email?.split("@")[0] ?? "Founder";
 
     // Upsert community profile (keyed by Clerk userId)
     await prisma.communityProfile.upsert({
@@ -88,47 +83,55 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Create license (keyed by Clerk userId)
-    const license = await prisma.license.create({
-      data: {
-        userId,
-        tier: data.tier,
-        type: licenseType,
-        acceptedIp: req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? undefined,
-        projectName: data.projectName,
-        projectUrl: data.projectUrl,
-        // Free licenses don't expire; paid licenses expire in 1 year
-        expiresAt: isFree ? null : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
-      },
-    });
+    // Paid tiers redirect to Stripe checkout
+    if (isStartup) {
+      if (!email) {
+        return NextResponse.json({ error: "User has no email address" }, { status: 400 });
+      }
 
-    // Auto-create Sleptons community profile
-    const clerk = await clerkClient();
-    const clerkUser = await clerk.users.getUser(userId);
-    const displayName =
-      clerkUser.fullName ??
-      clerkUser.username ??
-      clerkUser.emailAddresses[0]?.emailAddress?.split("@")[0] ??
-      "Founder";
+      const priceId = process.env.STRIPE_PRICE_ID_STARTUP_LICENSE;
+      if (!priceId) {
+        console.error("Missing STRIPE_PRICE_ID_STARTUP_LICENSE");
+        return NextResponse.json({ error: "Stripe configuration missing" }, { status: 500 });
+      }
 
-    const sleptonsProfile = await prisma.sleptonsaMemberProfile.create({
-      data: {
-        user_id: userId,
-        license_id: license.id,
-        slug: `${userId}-${Date.now()}`, // temp slug; updated below
-        display_name: displayName,
-        avatar_url: clerkUser.imageUrl ?? null,
-        looking_for: data.lookingFor,
-        github_handle: data.githubHandle ?? null,
-        tech_stack: [],
-      },
-    });
+      const customer = await getOrCreateCustomer(userId, email, displayName);
+      const origin = req.headers.get("origin") ?? "http://localhost:3000";
 
-    // Update slug with sequential member number
-    const finalSlug = generateSlug(displayName, sleptonsProfile.member_number);
-    await prisma.sleptonsaMemberProfile.update({
-      where: { id: sleptonsProfile.id },
-      data: { slug: finalSlug },
+      const session = await createCheckoutSession({
+        customerId: customer.id,
+        priceId,
+        successUrl: `${origin}/en/get-license?success=true`,
+        cancelUrl: `${origin}/en/get-license?cancel=true`,
+        metadata: {
+          license_tier: "STARTUP",
+          userId,
+          lookingFor: JSON.stringify(data.lookingFor),
+          githubHandle: data.githubHandle || "",
+          projectName: data.projectName || "",
+          projectUrl: data.projectUrl || "",
+        },
+      });
+
+      return NextResponse.json({
+        success: true,
+        requireCheckout: true,
+        url: session.url,
+      });
+    }
+
+    // Free tiers: issue license immediately (enqueues profile + email via queue)
+    const license = await issueLicense({
+      userId,
+      tier: data.tier,
+      displayName,
+      email,
+      avatarUrl: clerkUser.imageUrl ?? null,
+      lookingFor: data.lookingFor,
+      githubHandle: data.githubHandle,
+      projectName: data.projectName,
+      projectUrl: data.projectUrl,
+      acceptedIp: req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip"),
     });
 
     return NextResponse.json({
@@ -139,10 +142,6 @@ export async function POST(req: NextRequest) {
         tier: license.tier,
         type: license.type,
         expiresAt: license.expiresAt,
-      },
-      community: {
-        memberNumber: sleptonsProfile.member_number,
-        slug: finalSlug,
       },
     });
   } catch (error) {
@@ -159,12 +158,15 @@ export async function GET() {
       return NextResponse.json({ hasLicense: false, tier: null });
     }
 
-    const [license, communityProfile] = await Promise.all([
+    const [license, sleptonsProfile] = await Promise.all([
       prisma.license.findFirst({
         where: { userId, isActive: true },
         orderBy: { createdAt: "desc" },
       }),
-      prisma.communityProfile.findUnique({ where: { userId } }),
+      prisma.sleptonsaMemberProfile.findUnique({
+        where: { user_id: userId },
+        select: { member_number: true },
+      }),
     ]);
 
     if (!license) {
@@ -179,7 +181,7 @@ export async function GET() {
       type: license.type,
       licenseKey: license.licenseKey,
       expiresAt: license.expiresAt,
-      hasCommunityProfile: !!communityProfile,
+      memberNumber: sleptonsProfile?.member_number ?? null,
     });
   } catch (error) {
     console.error("[GET /api/license]", error);

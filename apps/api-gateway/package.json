@@ -26,6 +26,7 @@
     "@nebutra/cache": "workspace:*",
     "@nebutra/db": "workspace:*",
     "@nebutra/email": "workspace:*",
+    "@nebutra/license": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/event-bus": "workspace:*",
     "@nebutra/health": "workspace:*",

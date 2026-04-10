@@ -1,5 +1,6 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { type Prisma, prisma } from "@nebutra/db";
+import { issueLicense } from "@nebutra/license";
 import { logger } from "@nebutra/logger";
 import Stripe from "stripe";
 
@@ -140,6 +141,10 @@ stripeWebhookRoutes.openapi(stripeWebhookRoute, async (c) => {
 });
 
 // ============================================
+// Helpers
+// ============================================
+
+// ============================================
 // Prisma type alias for ergonomics
 // ============================================
 
@@ -222,6 +227,26 @@ async function handleCheckoutCompleted(
   stripe: Stripe,
   db: PrismaClient,
 ): Promise<void> {
+  // Fulfill Startup License via @nebutra/license (idempotent + enqueues profile/email)
+  if (session.metadata?.license_tier === "STARTUP" && session.metadata?.userId) {
+    const userId = session.metadata.userId;
+    const customerName =
+      session.customer_details?.name || session.customer_details?.email?.split("@")[0] || "Founder";
+
+    const license = await issueLicense({
+      userId,
+      tier: "STARTUP",
+      displayName: customerName,
+      email: session.customer_details?.email ?? null,
+      lookingFor: session.metadata.lookingFor ? JSON.parse(session.metadata.lookingFor) : [],
+      githubHandle: session.metadata.githubHandle || null,
+      projectName: session.metadata.projectName || null,
+      projectUrl: session.metadata.projectUrl || null,
+    });
+
+    log.info("STARTUP License activated", { userId, licenseId: license.id });
+  }
+
   if (!session.subscription) {
     log.info("Checkout session completed without subscription", {
       sessionId: session.id,
