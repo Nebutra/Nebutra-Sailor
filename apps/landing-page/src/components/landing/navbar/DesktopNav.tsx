@@ -54,8 +54,7 @@ export function DesktopNav() {
             className="whitespace-nowrap flex items-center gap-1.5 text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
             {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
           >
-            {/* @ts-ignore */}
-            {link.icon && <link.icon className="h-4 w-4" />}
+            {link.icon ? <link.icon className="h-4 w-4" /> : null}
             {t(link.labelKey as any)}
           </Component>
         );
