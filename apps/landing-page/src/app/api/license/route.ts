@@ -1,7 +1,7 @@
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { createCheckoutSession, getOrCreateCustomer } from "@nebutra/billing";
 import { prisma } from "@nebutra/db";
-import { issueLicense, validateLicense } from "@nebutra/license";
+import { issueLicense } from "@nebutra/license";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
