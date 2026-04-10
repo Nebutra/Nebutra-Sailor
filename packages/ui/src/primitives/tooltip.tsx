@@ -75,6 +75,7 @@ const TooltipContent = React.forwardRef<
         align={align}
         sideOffset={sideOffset}
         alignOffset={alignOffset}
+        className="z-50"
       >
         <BaseTooltip.Popup
           ref={ref}
