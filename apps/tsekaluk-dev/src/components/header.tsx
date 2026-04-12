@@ -1,7 +1,7 @@
 "use client";
 
+import { Cross, Layout, Logout, MagnifyingGlass, Menu } from "@nebutra/icons";
 import { AnimatePresence, motion } from "framer-motion";
-import { LayoutDashboard, LogOut, Menu, Search, X } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import * as React from "react";
@@ -81,7 +81,7 @@ function AuthIndicator() {
                 onClick={() => setOpen(false)}
                 className="gap-2 w-full px-3 py-2 text-sm flex items-center text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
               >
-                <LayoutDashboard className="h-3.5 w-3.5" />
+                <Layout className="h-3.5 w-3.5" />
                 Admin Panel
               </Link>
               <button
@@ -92,7 +92,7 @@ function AuthIndicator() {
                 }}
                 className="gap-2 w-full px-3 py-2 text-sm flex items-center text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
               >
-                <LogOut className="h-3.5 w-3.5" />
+                <Logout className="h-3.5 w-3.5" />
                 Sign out
               </button>
             </motion.div>
@@ -192,7 +192,7 @@ export function Header() {
                 onClick={() => openCommandPalette(true)}
                 className="gap-1.5 flex items-center text-muted-foreground transition-colors hover:text-foreground"
               >
-                <Search className="h-[18px] w-[18px] stroke-[1.5]" />
+                <MagnifyingGlass className="h-[18px] w-[18px] stroke-[1.5]" />
                 <span className="font-medium text-[11px] opacity-60">⌘K</span>
               </button>
               <LanguageSwitcher />
@@ -214,7 +214,7 @@ export function Header() {
             className="p-2 md:hidden rounded-md text-muted-foreground transition-colors hover:text-foreground focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 focus:outline-none"
             onClick={() => setMobileOpen((prev) => !prev)}
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? <Cross className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </nav>
 

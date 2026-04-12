@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowRight } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { projects as defaultProjects, type Project } from "@/lib/projects";

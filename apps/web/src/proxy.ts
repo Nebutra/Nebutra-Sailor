@@ -1,4 +1,5 @@
 import { routing } from "@nebutra/i18n/routing";
+import { logger } from "@nebutra/logger";
 import type { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
@@ -131,7 +132,7 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
 
       return clerk(req, event);
     } catch (error) {
-      console.error("Failed to load Clerk middleware:", error);
+      logger.error("Failed to load Clerk middleware:", error);
       // Fallback to generic handler
     }
   }

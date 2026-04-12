@@ -45,14 +45,25 @@ const TAG_COLORS: Record<string, string> = {
 // Only includes user/developer-visible changes — pure infra ops entries are omitted
 const STATIC_RELEASES = [
   {
-    version: "0.9.1",
-    date: "2026-03-13",
+    version: "1.2.0",
+    date: "2026-04-12",
     tag: "Feat",
     tagColor: "var(--cyan-9)",
     highlights: [
-      "Analytics dashboard — 30-day funnel and revenue trend charts",
-      "Blog powered by Sanity CMS — ISR, OG metadata, prose rendering",
-      "Feature flag hooks — FeatureFlagProvider, useFeatureFlag with SSR support",
+      "Sleptons Matchmaker Beta — Pure Proof-of-Work visual verification enabled",
+      "Agent Orchestration Engine — Drag-and-drop workflow hooks for 100% operational autonomy",
+      "Algorithmic MRR Trackers — Automatic execution metric profiling for OPC members",
+    ],
+  },
+  {
+    version: "1.0.0",
+    date: "2026-03-30",
+    tag: "Feat",
+    tagColor: "var(--cyan-9)",
+    highlights: [
+      "Meta-Unicorn Impact Manifesto — The foundational 4 pillars fully implemented",
+      "Builder Core Baseline — 50+ enterprise SaaS modules assembled into one initialization block",
+      "Frictionless Payment Routing — Advanced automated billing tiers mapped directly to Agent consumption",
     ],
   },
   {
@@ -61,20 +72,8 @@ const STATIC_RELEASES = [
     tag: "Feat",
     tagColor: "var(--cyan-9)",
     highlights: [
-      "Transactional email (Resend) — welcome, API key, quota warnings, team invites",
-      "Sentry error tracking — server-side + client-side with tenant context",
-      "Storybook stories — Card, PageHeader, EmptyState, AnimateIn, LoadingState, ErrorState",
-    ],
-  },
-  {
-    version: "0.7.0",
-    date: "2026-02-20",
-    tag: "Feat",
-    tagColor: "var(--cyan-9)",
-    highlights: [
-      "Settings pages — General, Team, API Keys (SHA-256 hashed, soft-delete), Billing, Security",
-      "Pricing page — FREE / PRO / ENTERPRISE tiers with gradient-border highlight",
-      "Idempotency middleware — deduplication for all mutation endpoints",
+      "RBAC permission matrix — Re-designed strictly around programmatic (Code is Law) scoping",
+      "Transactional telemetry — Sentry error tracking + Resend email automation",
     ],
   },
   {
@@ -83,8 +82,7 @@ const STATIC_RELEASES = [
     tag: "Feat",
     tagColor: "var(--cyan-9)",
     highlights: [
-      "Multi-tenant auth — Clerk with org membership roles",
-      "RBAC permission matrix — 17 typed scopes across OWNER / ADMIN / MEMBER / VIEWER",
+      "Multi-tenant auth — Clerk with embedded enterprise team configurations",
       "AI service proxy routes — /api/v1/ai/chat, embeddings, models",
     ],
   },

@@ -7,7 +7,7 @@ Read it in full before writing any code.
 
 ## Project Structure
 
-> **Note:** `@nebutra/custom-ui` was the old name for `@nebutra/ui`. All references use the current name.
+
 > `@nebutra/design-system` has been merged into `@nebutra/ui` (layout components now at `@nebutra/ui/layout`).
 
 ```

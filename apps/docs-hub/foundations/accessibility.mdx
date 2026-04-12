@@ -1,0 +1,17 @@
+---
+title: "Accessibility"
+description: "Accessibility patterns and ARIA usage."
+---
+
+## Overview
+
+Every UI aspect strictly targets WCAG 2.1 AA compliancy.
+
+## Design Rationale
+
+Silky micro-interactions are useless without ARIA support. `@nebutra/ui/primitives` bakes in semantic focus rings, high-contrast hover states, and keyboard navigability relying on Radix primitives.
+
+## Usage Guidelines
+
+- Always provide `aria-label` or visually hidden labels on purely decorative or icon buttons.
+- Use Focus Tapping over custom focus rings to retain native behaviors.

@@ -6,5 +6,18 @@
   "LocaleSwitcher": {
     "en": "English",
     "zh": "中文"
+  },
+  "impact": {
+    "hero_title": "重塑商业范式",
+    "hero_subtitle": "让天下没有难创的业",
+    "social_title": "Social 社会责任",
+    "social_headline": "绝对的技术平权",
+    "social_description": "赋能边缘创新者。打破传统履历标签壁垒，为一人公司（OPC）提供真正开箱即用的顶级企业级武装。",
+    "governance_title": "Governance 核心治理",
+    "governance_headline": "算法即共识 (Code is Law)",
+    "governance_description": "用毫无感情的 MRR 和真实产出取代人际傲慢与内耗。基于工作量证明建立开源分发法则。",
+    "environment_title": "Environment 可持续生态",
+    "environment_headline": "数字极简主义",
+    "environment_description": "推崇高人效、低消耗。将庞大的云基础设施成本压缩至最低，大幅降低无意义的算力沉没与碳排放。"
   }
 }

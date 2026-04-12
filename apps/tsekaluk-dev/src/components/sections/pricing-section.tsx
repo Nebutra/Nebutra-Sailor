@@ -19,6 +19,7 @@ import {
   Vercel,
   Zapier,
 } from "@lobehub/icons";
+import { brandSpring } from "@nebutra/brand";
 import {
   ArrowRight,
   Brain,
@@ -27,6 +28,7 @@ import {
   Code,
   Compass,
   Globe,
+  HeartFill,
   type IconProps,
   Layers,
   Message,
@@ -36,7 +38,6 @@ import {
 import { AnimateIn } from "@nebutra/ui/components";
 import { DotPattern } from "@nebutra/ui/primitives";
 import { AnimatePresence, motion } from "framer-motion";
-import { Coffee } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import * as React from "react";
@@ -72,7 +73,7 @@ const TIER_KEYS = ["chat", "coffee", "hire", "partner"] as const;
 const TIER_ICONS: Record<
   (typeof TIER_KEYS)[number],
   React.ComponentType<IconProps | { className?: string; size?: number }>
-> = { chat: Message, coffee: Coffee, hire: Sparkles, partner: Target };
+> = { chat: Message, coffee: HeartFill, hire: Sparkles, partner: Target };
 
 /* ------------------------------------------------------------------ */
 /*  Tech stack data                                                    */
@@ -462,7 +463,7 @@ function ServiceCarousel() {
             initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={brandSpring}
             className="w-full max-w-lg"
           >
             {/* Header */}

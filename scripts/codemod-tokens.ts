@@ -31,7 +31,7 @@ function walkDir(dir: string, extensions: string[]): string[] {
   }
   for (const entry of entries) {
     const fullPath = join(dir, entry);
-    let stat;
+    let stat: ReturnType<typeof statSync>;
     try {
       stat = statSync(fullPath);
     } catch {

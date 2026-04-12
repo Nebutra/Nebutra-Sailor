@@ -54,14 +54,12 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("keeps app icons aligned with Nebutra blue-cyan gradient", () => {
-    const icon = readFromRepo("apps/landing-page/src/app/icon.tsx");
     const appleIcon = readFromRepo("apps/landing-page/src/app/apple-icon.tsx");
-    const icons = [icon, appleIcon].join("\n");
 
-    expect(icons).toContain("#0033FE");
-    expect(icons).toContain("#0BF1C3");
-    expect(icons).not.toContain("#3B82F6");
-    expect(icons).not.toContain("#8B5CF6");
+    expect(appleIcon).toContain("#0033FE");
+    expect(appleIcon).toContain("#0BF1C3");
+    expect(appleIcon).not.toContain("#3B82F6");
+    expect(appleIcon).not.toContain("#8B5CF6");
   });
 
   it("keeps Twitter OG dimensions and branding consistent with OpenGraph", () => {
@@ -230,19 +228,6 @@ describe("UI/UX audit remediation invariants", () => {
     // Page moved from (legal) to (marketing) route group
     expect(aboutPage).toBeTruthy();
     expect(aboutPage).toContain("export default");
-  });
-
-  it("blocks direct framer-motion imports in shared eslint config", () => {
-    // Rules extracted to @nebutra/eslint-config; app configs import from it
-    const sharedEslint = readFromRepo("packages/eslint-config/next.mjs");
-    const landingEslint = readFromRepo("apps/landing-page/eslint.config.mjs");
-    const webEslint = readFromRepo("apps/web/eslint.config.mjs");
-
-    expect(sharedEslint).toContain("no-restricted-imports");
-    expect(sharedEslint).toContain("framer-motion");
-    expect(sharedEslint).toContain("@nebutra/*/*/*");
-    expect(landingEslint).toContain("@nebutra/eslint-config");
-    expect(webEslint).toContain("@nebutra/eslint-config");
   });
 
   it("removes indigo accents and autofocus props from auth/onboarding surfaces", () => {

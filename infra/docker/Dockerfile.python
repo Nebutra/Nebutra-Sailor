@@ -33,13 +33,10 @@ ARG SERVICE
 COPY services/${SERVICE}/requirements.txt ./requirements.txt
 COPY services/${SERVICE}/pyproject.toml ./pyproject.toml
 
-# Install Python dependencies
-# TODO(uv-migration): Replace pip with uv for faster installs:
-#   COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
-#   RUN uv sync --frozen --no-dev
-# For now, falling back to pip + requirements.txt for compatibility.
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies using uv for faster installs
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+ENV UV_COMPILE_BYTECODE=1
+RUN uv pip install --system --no-cache -r requirements.txt
 
 # ============================================
 # Production stage

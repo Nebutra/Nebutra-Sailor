@@ -220,58 +220,6 @@
       "type": "registry:example"
     },
     {
-      "name": "calendar-3-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-4-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-5-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-6-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-min-max-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-month-year-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-multi-month-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-picker-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-range-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-range-multi-month-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-simple-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "calendar-unavailable-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "canvas-reveal-effect-demo",
       "type": "registry:example"
     },
@@ -448,54 +396,6 @@
       "type": "registry:example"
     },
     {
-      "name": "date-input-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-2-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-3-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-4-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-default-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-min-max-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-multi-month-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-range-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-range-min-max-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-single-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "date-picker-variants-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "description-demo",
       "type": "registry:example"
     },
@@ -669,22 +569,6 @@
     },
     {
       "name": "heading-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "hero-card-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "hero-popover-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "hero-select-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "hero-skeleton-demo",
       "type": "registry:example"
     },
     {
@@ -1093,14 +977,6 @@
     },
     {
       "name": "slider-stateful-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "snippet-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "snippet-status-demo",
       "type": "registry:example"
     },
     {

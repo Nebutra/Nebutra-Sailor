@@ -170,7 +170,7 @@ Zero changes required in:
 
 - `apps/web/package.json`
 - `apps/landing-page/package.json`
-- `packages/custom-ui/package.json`
+- `packages/ui/package.json`
 
 All use `"@nebutra/ui": "workspace:*"` — pnpm resolves by package name, not physical path.
 
@@ -388,7 +388,7 @@ All MDX content is extracted from existing implementations — **never invented*
 | Source                        | Content extracted                          |
 | ----------------------------- | ------------------------------------------ |
 | `packages/design-system/src/` | Tokens, theme, typography, base components |
-| `packages/custom-ui/`         | Atom and fragment components               |
+| `packages/ui/`         | Atom and fragment components               |
 | `packages/ui/`                | Shadcn/Radix primitives used in project    |
 | `apps/web/src/`               | Real business usage patterns               |
 | `apps/landing-page/src/`      | Marketing patterns                         |
@@ -429,8 +429,8 @@ Reference sites: Vercel Docs, Stripe Docs, Supabase Docs, Linear Docs, Radix UI.
 - Getting Started (3 pages)
 - Foundations (7 pages) — extracted from `theme/`, `typography/`
 - UI Patterns (8 pages) — extracted from app-level patterns
-- Fragment Components (18 pages) — extracted from `custom-ui/`, `ui/`
-- Atom Components (45+ pages) — extracted from `custom-ui/`, `ui/`
+- Fragment Components (18 pages) — extracted from `ui/`, `ui/`
+- Atom Components (45+ pages) — extracted from `ui/`, `ui/`
 
 ---
 

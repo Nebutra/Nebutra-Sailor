@@ -12,7 +12,7 @@ This plan upgrades the `@nebutra/ui` design system to Geist-level quality by est
 
 - Establish a `primitive.ts` / `semantic.ts` / `components/*.ts` token hierarchy as the single source of truth
 - Update `globals.css` and `tailwind.preset.ts` to consume the new tokens
-- Create `apps/storybook` with `@storybook/react-vite` loading stories from `packages/custom-ui`
+- Create `apps/storybook` with `@storybook/react-vite` loading stories from `packages/ui`
 - Write 5 component stories (button, avatar, input, card, badge)
 - Add `ComponentPreview` and `PropsTable` MDX components to `apps/docs-hub`
 - Refine Button: add outline variant (already exists but needs Geist treatment), loading prop, strict sizing, focus ring
@@ -41,7 +41,7 @@ This plan upgrades the `@nebutra/ui` design system to Geist-level quality by est
 ## Architecture Changes
 
 ```
-packages/custom-ui/src/tokens/
+packages/ui/src/tokens/
   primitive.ts          NEW  -- raw values (hex colors, px numbers, unitless scales)
   semantic.ts           NEW  -- light/dark mode CSS variable name mappings
   components/
@@ -53,8 +53,8 @@ packages/custom-ui/src/tokens/
     index.ts            NEW  -- barrel export
   index.ts              MODIFY -- re-export new files
 
-packages/custom-ui/src/styles/globals.css     MODIFY -- add transition, focus-ring, border tokens
-packages/custom-ui/src/tailwind.preset.ts     MODIFY -- consume primitive.ts instead of hardcoded values
+packages/ui/src/styles/globals.css     MODIFY -- add transition, focus-ring, border tokens
+packages/ui/src/tailwind.preset.ts     MODIFY -- consume primitive.ts instead of hardcoded values
 
 apps/storybook/                               NEW  -- entire directory
   .storybook/main.ts
@@ -62,7 +62,7 @@ apps/storybook/                               NEW  -- entire directory
   package.json
   tsconfig.json
 
-packages/custom-ui/src/primitives/
+packages/ui/src/primitives/
   button.stories.tsx    NEW
   avatar.stories.tsx    NEW
   input.stories.tsx     NEW
@@ -74,7 +74,7 @@ packages/custom-ui/src/primitives/
   card.tsx              MODIFY -- padding variants, interactive
   badge.tsx             MODIFY -- semantic variants, dot variant
 
-packages/custom-ui/src/primitives/index.ts    MODIFY -- export new types/components
+packages/ui/src/primitives/index.ts    MODIFY -- export new types/components
 
 apps/docs-hub/
   snippets/ComponentPreview.mdx   NEW  -- or as custom component
@@ -93,7 +93,7 @@ apps/docs-hub/
 
 **Files to create:**
 
-#### 1.1 `packages/custom-ui/src/tokens/primitive.ts` (NEW)
+#### 1.1 `packages/ui/src/tokens/primitive.ts` (NEW)
 
 ```typescript
 /**
@@ -279,7 +279,7 @@ export type PrimitiveFontSize = keyof typeof primitiveFontSize;
 
 ---
 
-#### 1.2 `packages/custom-ui/src/tokens/semantic.ts` (NEW)
+#### 1.2 `packages/ui/src/tokens/semantic.ts` (NEW)
 
 ```typescript
 /**
@@ -413,7 +413,7 @@ export type SemanticTheme = "light" | "dark";
 
 ---
 
-#### 1.3 `packages/custom-ui/src/tokens/components/button.ts` (NEW)
+#### 1.3 `packages/ui/src/tokens/components/button.ts` (NEW)
 
 ```typescript
 /**
@@ -467,7 +467,7 @@ export type ButtonSize = keyof typeof buttonTokens.size;
 
 ---
 
-#### 1.4 `packages/custom-ui/src/tokens/components/avatar.ts` (NEW)
+#### 1.4 `packages/ui/src/tokens/components/avatar.ts` (NEW)
 
 ```typescript
 /**
@@ -502,7 +502,7 @@ export type AvatarSize = keyof typeof avatarTokens.size;
 
 ---
 
-#### 1.5 `packages/custom-ui/src/tokens/components/input.ts` (NEW)
+#### 1.5 `packages/ui/src/tokens/components/input.ts` (NEW)
 
 ```typescript
 /**
@@ -527,7 +527,7 @@ export const inputTokens = {
 
 ---
 
-#### 1.6 `packages/custom-ui/src/tokens/components/card.ts` (NEW)
+#### 1.6 `packages/ui/src/tokens/components/card.ts` (NEW)
 
 ```typescript
 /**
@@ -553,7 +553,7 @@ export type CardPadding = keyof typeof cardTokens.padding;
 
 ---
 
-#### 1.7 `packages/custom-ui/src/tokens/components/badge.ts` (NEW)
+#### 1.7 `packages/ui/src/tokens/components/badge.ts` (NEW)
 
 ```typescript
 /**
@@ -577,7 +577,7 @@ export const badgeTokens = {
 
 ---
 
-#### 1.8 `packages/custom-ui/src/tokens/components/index.ts` (NEW)
+#### 1.8 `packages/ui/src/tokens/components/index.ts` (NEW)
 
 ```typescript
 export { buttonTokens, type ButtonSize } from "./button";
@@ -589,7 +589,7 @@ export { badgeTokens } from "./badge";
 
 ---
 
-#### 1.9 Modify `packages/custom-ui/src/tokens/index.ts`
+#### 1.9 Modify `packages/ui/src/tokens/index.ts`
 
 **Action:** Add exports for the 3 new layers while keeping existing exports for backward compatibility.
 
@@ -619,7 +619,7 @@ export { durations, easings, ... } from './motion'
 
 **Dependencies:** Phase 1 (token files must exist)
 
-#### 2.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/custom-ui/src/styles/globals.css`
+#### 2.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/styles/globals.css`
 
 **Changes to make:**
 
@@ -686,7 +686,7 @@ export { durations, easings, ... } from './motion'
    }
    ```
 
-#### 2.2 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/custom-ui/src/tailwind.preset.ts`
+#### 2.2 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/tailwind.preset.ts`
 
 **Action:** Import from `./tokens/primitive` instead of hardcoding hex values.
 
@@ -763,7 +763,7 @@ This makes `tailwind.preset.ts` a consumer of Layer 1 rather than a parallel sou
 import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
-  stories: ["../../../packages/custom-ui/src/**/*.stories.@(ts|tsx)"],
+  stories: ["../../../packages/ui/src/**/*.stories.@(ts|tsx)"],
   addons: [
     "@storybook/addon-essentials",
     "@storybook/addon-a11y",
@@ -820,7 +820,7 @@ export default preview;
   },
   "include": [
     ".storybook/**/*",
-    "../../packages/custom-ui/src/**/*.stories.tsx"
+    "../../packages/ui/src/**/*.stories.tsx"
   ],
   "exclude": ["node_modules", "dist"]
 }
@@ -840,7 +840,7 @@ export default preview;
 
 **Dependencies:** Phase 3 (Storybook must be running). These stories initially document the EXISTING component API; they will be updated again in Phases 6--10 as components are refined.
 
-#### 4.1 `packages/custom-ui/src/primitives/button.stories.tsx` (NEW)
+#### 4.1 `packages/ui/src/primitives/button.stories.tsx` (NEW)
 
 ```tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -897,19 +897,19 @@ export const Disabled: Story = {
 
 Patterns repeated for:
 
-#### 4.2 `packages/custom-ui/src/primitives/avatar.stories.tsx` (NEW)
+#### 4.2 `packages/ui/src/primitives/avatar.stories.tsx` (NEW)
 
 Stories: Default, WithImage, WithFallback, Sizes (after Phase 7), Group (after Phase 7).
 
-#### 4.3 `packages/custom-ui/src/primitives/input.stories.tsx` (NEW)
+#### 4.3 `packages/ui/src/primitives/input.stories.tsx` (NEW)
 
 Stories: Default, WithPlaceholder, Disabled, WithLabel. (Prefix/Suffix/Error/Clearable added in Phase 8.)
 
-#### 4.4 `packages/custom-ui/src/primitives/card.stories.tsx` (NEW)
+#### 4.4 `packages/ui/src/primitives/card.stories.tsx` (NEW)
 
 Stories: Default, WithHeader, WithFooter, FullExample. (Padding/Interactive added in Phase 9.)
 
-#### 4.5 `packages/custom-ui/src/primitives/badge.stories.tsx` (NEW)
+#### 4.5 `packages/ui/src/primitives/badge.stories.tsx` (NEW)
 
 Stories: Default, AllVariants, WithIcon. (Semantic/Dot variants added in Phase 10.)
 
@@ -1075,7 +1075,7 @@ And for PropsTable, use Mintlify's `<ResponseField>` or standard markdown tables
 
 **Dependencies:** Phase 1 (button tokens), Phase 2 (globals.css focus ring variables)
 
-#### 6.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/custom-ui/src/primitives/button.tsx`
+#### 6.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/primitives/button.tsx`
 
 **New interface:**
 
@@ -1199,7 +1199,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 ```
 
-#### 6.2 Update exports in `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/custom-ui/src/primitives/index.ts`
+#### 6.2 Update exports in `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/primitives/index.ts`
 
 No change needed -- `ButtonProps` is already exported and the interface extension is backward compatible.
 
@@ -1215,7 +1215,7 @@ No change needed -- `ButtonProps` is already exported and the interface extensio
 
 **Dependencies:** Phase 1 (avatar tokens)
 
-#### 7.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/custom-ui/src/primitives/avatar.tsx`
+#### 7.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/primitives/avatar.tsx`
 
 **New types:**
 
@@ -1333,7 +1333,7 @@ Add: `AllSizes`, `WithGroup`, `GroupWithMax`, `FallbackChain` stories.
 
 **Dependencies:** Phase 1 (input tokens), Phase 2 (destructive/ring CSS variables)
 
-#### 8.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/custom-ui/src/primitives/input.tsx`
+#### 8.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/primitives/input.tsx`
 
 **New interface:**
 
@@ -1444,7 +1444,7 @@ Add: `WithPrefix`, `WithSuffix`, `WithPrefixAndSuffix`, `Clearable`, `ErrorState
 
 **Dependencies:** Phase 1 (card tokens)
 
-#### 9.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/custom-ui/src/primitives/card.tsx`
+#### 9.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/primitives/card.tsx`
 
 **New interface for Card:**
 
@@ -1568,7 +1568,7 @@ Add: `PaddingSm`, `PaddingLg`, `Interactive`, `InteractiveHover` stories.
 
 **Dependencies:** Phase 1 (badge tokens), Phase 2 (CSS variables for success/warning/info)
 
-#### 10.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/custom-ui/src/primitives/badge.tsx`
+#### 10.1 Modify `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/primitives/badge.tsx`
 
 **Updated CVA:**
 
@@ -1669,6 +1669,6 @@ The `success`, `warning` variables already exist in `globals.css`. We need to co
 
 ### Unit Tests
 
-For each refined component, write tests in `packages/custom-ui/src/primitives/__tests__/`:
+For each refined component, write tests in `packages/ui/src/primitives/__tests__/`:
 
 - `

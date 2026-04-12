@@ -1,5 +1,5 @@
+import { Briefcase, Calendar, Code, GitCommit } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { Briefcase, CalendarDays, Code2, GitCommit } from "lucide-react";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { getGithubData } from "@/lib/github";
 
@@ -20,13 +20,13 @@ const METRICS_META = [
     key: "years" as const,
     label: "Years",
     sub: "building in public",
-    Icon: CalendarDays,
+    Icon: Calendar,
   },
   {
     key: "languages" as const,
     label: "Languages",
     sub: "actively shipping in",
-    Icon: Code2,
+    Icon: Code,
   },
 ];
 

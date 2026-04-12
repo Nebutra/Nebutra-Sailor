@@ -1,7 +1,7 @@
 "use client";
 
+import { Droplet, Lightning, ShieldCheck, Sparkles, Star, Users } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { Droplet, Gem, ShieldCheck, Sparkles, Users, Zap } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function FocusSection() {
@@ -28,7 +28,7 @@ export function FocusSection() {
       <AnimateIn preset="fadeUp" delay={0.2} inView>
         <div className="mt-16 sm:mt-24 flex flex-wrap justify-center items-center gap-3 sm:gap-4 max-w-3xl mx-auto px-4 z-10 relative">
           <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-900/60 rounded-full shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors hover:border-[var(--color-accent-muted)] cursor-default">
-            <Zap className="w-4 h-4 text-[var(--color-accent-dark)]" /> {t("pills.ai_agents")}
+            <Lightning className="w-4 h-4 text-[var(--color-accent-dark)]" /> {t("pills.ai_agents")}
           </div>
           <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-900/60 rounded-full shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors hover:border-[var(--color-accent-muted)] cursor-default">
             <Sparkles className="w-4 h-4 text-amber-500" /> {t("pills.ux_engineering")}
@@ -43,7 +43,7 @@ export function FocusSection() {
             <Users className="w-4 h-4 text-gray-500 dark:text-gray-400" /> {t("pills.open_source")}
           </div>
           <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-900/60 rounded-full shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors hover:border-[var(--color-accent-muted)] cursor-default">
-            <Gem className="w-4 h-4 text-emerald-500" /> {t("pills.product_strategy")}
+            <Star className="w-4 h-4 text-emerald-500" /> {t("pills.product_strategy")}
           </div>
         </div>
       </AnimateIn>

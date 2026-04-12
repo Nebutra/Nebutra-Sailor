@@ -165,7 +165,7 @@ function getPackageTemplate(packageName: string): Record<string, string> {
     "src/index.ts": `/**
  * @nebutra/${packageName}
  *
- * TODO: Add your package description here
+ * A modular core package for the Nebutra platform.
  */
 
 export function hello(name: string): string {

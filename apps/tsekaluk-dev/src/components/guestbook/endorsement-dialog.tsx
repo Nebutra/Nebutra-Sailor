@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ImagePlus, Loader2, MessageSquarePlus } from "lucide-react";
+import { Check, Image, LoaderCircle, Message } from "@nebutra/icons";
 import { useEffect, useId, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -166,7 +166,7 @@ export function EndorsementDialog({ onSubmitted }: EndorsementDialogProps) {
           type="button"
           className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-all hover:bg-gray-800 hover:scale-[1.03] active:scale-[0.97] dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
         >
-          <MessageSquarePlus className="h-4 w-4" />
+          <Message className="h-4 w-4" />
           Leave an endorsement
         </button>
       </DialogTrigger>
@@ -195,7 +195,7 @@ export function EndorsementDialog({ onSubmitted }: EndorsementDialogProps) {
               className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors"
               aria-label="Change avatar"
             >
-              <ImagePlus size={14} />
+              <Image size={14} />
             </button>
             <input
               type="file"
@@ -326,7 +326,7 @@ export function EndorsementDialog({ onSubmitted }: EndorsementDialogProps) {
                 disabled={submitting || !value.trim() || !nickname.trim() || !relationship}
                 className="rounded-full bg-gray-900 px-5 py-2 text-sm font-medium text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-2"
               >
-                {submitting && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+                {submitting && <LoaderCircle className="h-3.5 w-3.5 animate-spin" />}
                 {isAuthenticated ? "Submit" : "Submit for review"}
               </button>
             </DialogFooter>

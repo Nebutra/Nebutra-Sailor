@@ -1,5 +1,5 @@
+import { ArrowLeft, ArrowUpRight, LogoGithub } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -197,7 +197,7 @@ export default async function ProjectDetailPage({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
                 >
-                  <Github className="h-4 w-4" />
+                  <LogoGithub className="h-4 w-4" />
                   {t("source_code")}
                 </Link>
               )}
@@ -208,7 +208,7 @@ export default async function ProjectDetailPage({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full bg-gray-900 dark:bg-white px-5 py-2.5 text-sm font-medium text-white dark:text-gray-900 transition-colors hover:bg-gray-800 dark:hover:bg-gray-200"
                 >
-                  <ExternalLink className="h-4 w-4" />
+                  <ArrowUpRight className="h-4 w-4" />
                   {t("live_demo")}
                 </Link>
               )}

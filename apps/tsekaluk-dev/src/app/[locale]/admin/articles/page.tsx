@@ -1,5 +1,5 @@
+import { FileText, Plus } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { FileText, Plus } from "lucide-react";
 import { getArticles } from "@/lib/articles";
 
 export default async function AdminArticlesPage() {

@@ -1,4 +1,4 @@
-import { PromptInputBox } from "@nebutra/ui";
+import { PromptInputBox } from "@nebutra/ui/components";
 
 const AiPromptBoxDemo = () => {
   const _handleSendMessage = (_message: string, _files?: File[]) => {};

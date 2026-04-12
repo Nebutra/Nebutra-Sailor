@@ -11,7 +11,8 @@
     "resources": "Resources",
     "signIn": "Sign In",
     "getStarted": "Get Started",
-    "changelog": "Changelog"
+    "changelog": "Changelog",
+    "impact": "Manifesto"
   },
   "hero": {
     "badge": "Nebutra Intelligence · Leading AI SaaS Foundation",
@@ -177,37 +178,37 @@
   },
   "legalPages": {
     "about": {
-      "title": "About Us — Nebutra Intelligence",
+      "title": "About Us — The Meta-Unicorn Engine",
       "description": "Discover the commercial vision and core engineering principles driving Nebutra Intelligence.",
-      "heading": "Company Overview",
-      "subheading": "A leading provider of AI Native & OPC Infrastructure solutions.",
-      "missionTitle": "Corporate Mission",
-      "missionP1": "Wuxi Nebutra Intelligence Technology Co., Ltd. (Nebutra Intelligence) is an AI-native, geek-driven startup dedicated to democratizing, intelligentizing, and streamlining technological innovation and commercial growth. As pioneers of the \"Vibe Business\" philosophy, we deeply understand that in today's world where AI can rapidly generate code (Vibe Coding), building a creative demo from scratch is no longer the hard part. However, crossing the \"last 10% of the engineering chasm\"—navigating data security, multi-tenant high-concurrency architectures, and global billing monetization—remains a nightmare for countless founders. Our mission is to help you bridge this chasm, rapidly transforming mere \"technical demos\" into truly sustainable, profitable commercial products.",
-      "missionP2": "Nebutra Intelligence's core competency stems from our self-developed flagship open-source infrastructure—Nebutra Sailor. This is an enterprise-grade, AI-native SaaS full-stack architecture purpose-built for modern multi-tenant platforms. Born with global DNA (Day 1 Global), the platform deeply integrates the Next.js ecosystem, Large Language Model (LLM) matrices, and RAG vector retrieval. At the infrastructure layer, we utilize Harness Engineering to construct an impenetrable distributed Saga orchestration and security compliance system; at the application layer, we leverage deep Agentic Engineering to abstract comprehensive MCP intelligent Agent workflows. It provides out-of-the-box automated subscriptions and enterprise-grade high-availability isolation, enabling even solo enterprises or geek squads to directly leverage infrastructure capabilities on par with tech giants.",
-      "missionP3": "Relying on this powerful core foundation, the company has formed three main business loops: First, providing enterprise-grade agile underlying foundation solutions, facilitating private deployments of full-stack business hubs and AI engines for commercial clients. Second, launching cross-digital ecosystem Vibe Business co-incubations, empowering outstanding founders to rapidly validate commercial intuitions in overseas markets and co-incubating the next generation of \"unicorn\" projects with high human-efficiency leverage. Finally, delivering deep digital customization services, intimately combining underlying technology with business workflows to empower vertical industries and government/enterprise sectors in their digital restructuring.",
-      "missionP4": "\"Aggregating in the cloud, birthing intelligence.\" Nebutra Intelligence firmly believes that in this age of acceleration, the ability to rapidly deploy architecture and the execution power of commercial error-correction form the only true moat. Every launch is growth in action; with continuously innovating infrastructure, we strive to be the most reliable technical partner for every explorer setting sail into the commercial sea of stars.",
-      "valuesTitle": "Core Technical Principles",
+      "heading": "The Era of Super Individuals",
+      "subheading": "Terminate human-wave bureaucratic expansion. Equip the creative super individual with maximal algorithmic leverage.",
+      "missionTitle": "A New Order Resisting Administrative Decay",
+      "missionP1": "Nebutra isolates itself as the world's foremost Meta-Unicorn ecosystem. Traditional corporate scale inevitably correlates with bureaucracy and entropy. We are ending that scale curse via absolute Code Governance. Our purpose is not just to hatch a few unicorns, but to architect a creator mother-engine crossing capital barricades and defeating entropy with flawless automated workflows.",
+      "missionP2": "Commerce is merely the restructuring of production elements—but historically riddled with hierarchical frictions. In Nebutra's neural network, any independent builder shipping verifiable Proof of Work receives automatic routing of top talent, institutional trust, and algorithmic capital via our Sleptons matchmaker, democratizing entrepreneurship into a highly certain, standardized track.",
+      "missionP3": "We fundamentally reject scaling by adding middle management. Agents handle 100% of operational workflows. We do not hire passive cogs; we invest in, cultivate, and elevate literal creators.",
+      "missionP4": "",
+      "valuesTitle": "The Four Pillars",
       "values": {
         "0": {
-          "title": "AGI-Centric Architecture",
-          "description": "Built for the era of autonomous intelligence, providing the structural foundation for agents and LLMs to interact globally without friction."
+          "title": "Infinite Fission (Philosophy)",
+          "description": "Rejecting the bloated myth of horizontal expansion. Every micro-entity hatched here is designed to leverage billions in value with ultra-low headcount."
         },
         "1": {
-          "title": "Uncompromising Alignment",
-          "description": "From the very first line of code, our architecture defaults to enforcement of Row-Level Security, transit encryption, and absolute system auditing."
+          "title": "The Builder Core (Infrastructure)",
+          "description": "Transcending simple boilerplates. An arsenal of enterprise multi-tenant isolation, automated MRR billing, shipped by solo founders in one week."
         },
         "2": {
-          "title": "Vibe Business Ergonomics",
-          "description": "R&D efficiency is a critical product metric. We relentlessly optimize for low API latency, elegant interfaces, and highly structured technical documentation."
+          "title": "Frictionless Flow (Routing)",
+          "description": "Algorithms dismantle HR and VC logic. Execution metrics and git commit velocity dictate purely where capital and talent flow."
         },
         "3": {
-          "title": "Global Scale Delivery",
-          "description": "No compromises. Designed for high-concurrency, authentic commercial environments to guarantee sustained enterprise-grade performance from day one."
+          "title": "Code is Law (Organization)",
+          "description": "Eradicate office politics. Provide architectural proofs and the algorithms will automatically elevate your systemic authority."
         }
       },
-      "jobsTitle": "Core Engineering Opportunities",
-      "jobsDescription": "We're expanding our core infrastructure team. Join us to co-create the next generation of AI-native enterprise solutions.",
-      "jobsButton": "View Open Positions",
+      "jobsTitle": "Eradicating JD/CV Recruitment",
+      "jobsDescription": "We ignore degrees and pedigrees. Pass the Sleptons machine vision and topological checks via sheer Proof of Work, and shape the ecosystem.",
+      "jobsButton": "Submit Github Profile",
       "companyInfoTitle": "Organizational Compliance",
       "companyInfo": {
         "legalName": "Legal Entity Registration",
@@ -1627,5 +1628,30 @@
     "desc": "The page you are looking for might have been removed or is temporarily unavailable.",
     "home": "Return Home",
     "docs": "Read Documentation"
+  },
+  "impact": {
+    "hero_eyebrow": "Nebutra Core Vision Whitepaper",
+    "hero_title": "The Meta-Unicorn Ecosystem",
+    "hero_subtitle": "We are not here to merely hatch unicorns. We are here to construct the mother-engine that continuously fissions them.",
+    "phil_title": "Ⅰ. Philosophy",
+    "phil_headline": "Infinite Fission over Infinite Expansion",
+    "phil_desc": "Traditional behemoths fall into the scale curse—relying on human wave attrition and bureaucratic layering to survive. Nebutra terminates this old order. Our social-level calling is to democratize entrepreneurship into a lightweight, reliable pathway, making it the absolute default career choice for top digital minds.",
+    "infra_title": "Ⅱ. Infrastructure",
+    "infra_headline": "The AI-Native Convergence",
+    "infra_desc": "Nebutra is not a duct-tape solution of existing tools; it is a full-lifecycle creator engine running from inspiration to monopoly.",
+    "infra_1_title": "The Builder Core",
+    "infra_1_desc": "Transcend typical boilerplates with 50+ pre-integrated modules. Ship complete enterprise models within a week.",
+    "infra_2_title": "The Launchpad",
+    "infra_2_desc": "Utilize algorithmic distribution over paid acquisition. Expose your MVP to a relentless feedback loop on day zero.",
+    "infra_3_title": "Sleptons Router",
+    "infra_3_desc": "Destroy the JD/CV paradigm. Matchmake solo creators entirely via absolute Proof of Work and semantic compatibility.",
+    "infra_4_title": "Algorithmic Capital",
+    "infra_4_desc": "Funding secured not by pitch decks nor networking, but strictly via trailing MRR graphs and code delivery velocity.",
+    "route_title": "Ⅲ. Routing",
+    "route_headline": "Frictionless Flow of Production Elements",
+    "route_desc": "Nebutra constructs a global super-neural network piercing through physical and hierarchical blockades. It aligns Capital directly to Code, Vision flawlessly to Execution, and establishes Trust upon immutable architectural deliveries rather than hollow prestige.",
+    "org_title": "Ⅳ. Organization",
+    "org_headline": "Automated Scaling Resolving Administrative Decay",
+    "org_desc": "Upon immense scale, we fundamentally reject solving problems via \"middle management layering\". In Nebutra’s ecosystem, Code is Law. Automate all operational procedures via AI Agents, reserving human intellect strictly for creation and strategic vision."
   }
 }

@@ -4,7 +4,7 @@
 
 **Goal:** Create `apps/docs-hub` as a Mintlify documentation site, migrate `packages/design-system` into it as a co-located sub-package, and scaffold all MDX pages for the full Design System — Foundations, UI Patterns, Fragment Components, and Atom Components.
 
-**Architecture:** `apps/docs-hub/` is the Mintlify app root (mint.json + MDX pages). `apps/docs-hub/design-system/` is the migrated `@nebutra/ui` package. `pnpm-workspace.yaml` gains `"apps/docs-hub/*"` so the nested package is still discoverable as a workspace package — consumers (`apps/web`, `apps/landing-page`, `packages/custom-ui`) require zero changes.
+**Architecture:** `apps/docs-hub/` is the Mintlify app root (mint.json + MDX pages). `apps/docs-hub/design-system/` is the migrated `@nebutra/ui` package. `pnpm-workspace.yaml` gains `"apps/docs-hub/*"` so the nested package is still discoverable as a workspace package — consumers (`apps/web`, `apps/landing-page`, `packages/ui`) require zero changes.
 
 **Tech Stack:** Mintlify (docs platform), pnpm workspaces, TypeScript, MDX
 
@@ -430,7 +430,7 @@ description: "How to add or update components in the design system."
 
 ## Adding a new atom component
 
-1. Identify it in `packages/custom-ui/src/primitives/` or an app
+1. Identify it in `packages/ui/src/primitives/` or an app
 2. Ensure it has no semantic overlap with existing components
 3. Add `atom-components/<name>.mdx` with Demo / Usage / Props / Examples / Accessibility sections
 4. Export it from `@nebutra/ui` if it belongs at that layer
@@ -678,7 +678,7 @@ description: "Tailwind utility usage within the design system."
 
 ## Overview
 
-<!-- TODO: Extract from packages/custom-ui tailwind.preset.ts -->
+<!-- TODO: Extract from packages/ui tailwind.preset.ts -->
 
 ## Design Rationale
 
@@ -841,9 +841,9 @@ git commit -m "feat(docs-hub): add ui-patterns pages (introduction + 7 patterns)
 
 **Sources to extract from:**
 
-- `packages/custom-ui/src/components/` — `empty-state.tsx`, `onboarding-checklist.tsx`, `team-chat.tsx`
-- `packages/custom-ui/src/patterns/` — `Card/`, `CommandBox.tsx`, `Terminal/`
-- `packages/custom-ui/src/layouts/` — `SectionContainer.tsx`, `bento-grid.tsx`
+- `packages/ui/src/components/` — `empty-state.tsx`, `onboarding-checklist.tsx`, `team-chat.tsx`
+- `packages/ui/src/patterns/` — `Card/`, `CommandBox.tsx`, `Terminal/`
+- `packages/ui/src/layouts/` — `SectionContainer.tsx`, `bento-grid.tsx`
 - `apps/web/src/` — modal patterns, filter bars, page headers
 
 **Step 1: Create directory and introduction.mdx**
@@ -878,7 +878,7 @@ description: "[One line description]"
 
 ## Demo
 
-<!-- TODO: Extract demo from packages/custom-ui or apps/web -->
+<!-- TODO: Extract demo from packages/ui or apps/web -->
 
 ## Usage
 
@@ -922,7 +922,7 @@ git commit -m "feat(docs-hub): add fragment-components pages (introduction + 18 
 
 **Sources to extract from:**
 
-- `packages/custom-ui/src/primitives/` — the primary source (100+ primitives)
+- `packages/ui/src/primitives/` — the primary source (100+ primitives)
 - `packages/ui/src/components/index.ts` — Lobe UI re-exports
 
 **Step 1: Create directory and introduction.mdx**
@@ -944,7 +944,7 @@ Atom components are the foundation of the design system. They are:
 - **Accessible** — ARIA attributes baked in
 
 <Info>
-  Atoms are implemented in `packages/custom-ui/src/primitives/`. Import them via
+  Atoms are implemented in `packages/ui/src/primitives/`. Import them via
   `@nebutra/ui/primitives`.
 </Info>
 ```
@@ -962,7 +962,7 @@ description: "[One line description]"
 ## Demo
 
 ```tsx
-// TODO: Extract from packages/custom-ui/src/primitives/[name].tsx
+// TODO: Extract from packages/ui/src/primitives/[name].tsx
 ```
 ````
 
@@ -1091,10 +1091,10 @@ MDX stubs are created in this plan. Content population is a separate ongoing eff
 | Priority | Section                                    | Source                                                      |
 | -------- | ------------------------------------------ | ----------------------------------------------------------- |
 | P1       | Foundations: Color, Typography, Theming    | `design-system/src/theme/`, `design-system/src/typography/` |
-| P1       | Atom: Button, Input, Card, Badge           | `custom-ui/src/primitives/`                                 |
-| P2       | Fragment: Page Header, Page Section, Modal | `custom-ui/src/components/`, app code                       |
+| P1       | Atom: Button, Input, Card, Badge           | `ui/src/primitives/`                                 |
+| P2       | Fragment: Page Header, Page Section, Modal | `ui/src/components/`, app code                       |
 | P2       | UI Patterns: Forms, Tables, Layout         | `apps/web/src/`                                             |
-| P3       | Remaining atoms and fragments              | `custom-ui/src/primitives/`                                 |
+| P3       | Remaining atoms and fragments              | `ui/src/primitives/`                                 |
 
 ---
 
@@ -1156,7 +1156,7 @@ git commit -m "feat(arch-tests): scaffold architecture test suite with vitest + 
 
 - Create: `tests/architecture/docs-coverage.test.ts`
 
-**What it tests:** Every `.mdx` file under `apps/docs-hub/atom-components/` and `apps/docs-hub/fragment-components/` (excluding `introduction.mdx`) has a named export in `packages/custom-ui/src/primitives/index.ts` or `apps/docs-hub/design-system/src/index.ts`.
+**What it tests:** Every `.mdx` file under `apps/docs-hub/atom-components/` and `apps/docs-hub/fragment-components/` (excluding `introduction.mdx`) has a named export in `packages/ui/src/primitives/index.ts` or `apps/docs-hub/design-system/src/index.ts`.
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -1182,7 +1182,7 @@ const atomMdx = readdirSync(atomDir).filter(
 );
 
 const primitivesBarrel = readFileSync(
-  resolve(ROOT, "packages/custom-ui/src/primitives/index.ts"),
+  resolve(ROOT, "packages/ui/src/primitives/index.ts"),
   "utf-8",
 );
 const designSystemBarrel = readFileSync(
@@ -1228,7 +1228,7 @@ git commit -m "feat(arch-tests): add docs-coverage property test"
 
 - Create: `tests/architecture/no-inline-css.test.ts`
 
-**What it tests:** No `.tsx` file in `apps/docs-hub/design-system/src/components/` or `packages/custom-ui/src/primitives/` contains inline `style={{` patterns.
+**What it tests:** No `.tsx` file in `apps/docs-hub/design-system/src/components/` or `packages/ui/src/primitives/` contains inline `style={{` patterns.
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -1265,7 +1265,7 @@ function collectTsxFiles(dir: string, files: string[] = []): string[] {
 
 const SCANNED_DIRS = [
   resolve(ROOT, "apps/docs-hub/design-system/src/components"),
-  resolve(ROOT, "packages/custom-ui/src/primitives"),
+  resolve(ROOT, "packages/ui/src/primitives"),
 ];
 
 const componentFiles = SCANNED_DIRS.flatMap((d) => collectTsxFiles(d));
@@ -1316,7 +1316,7 @@ git commit -m "feat(arch-tests): add no-inline-css property test"
 
 - Create: `tests/architecture/token-usage.test.ts`
 
-**What it tests:** No `.tsx` file in design-system or custom-ui components contains hardcoded hex color literals (`#RRGGBB` or `#RGB`).
+**What it tests:** No `.tsx` file in design-system or ui components contains hardcoded hex color literals (`#RRGGBB` or `#RGB`).
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -1370,10 +1370,10 @@ git commit -m "feat(arch-tests): add token-usage property test for hardcoded hex
 
 ```
 design-system → (no @nebutra/* deps)
-custom-ui     → design-system
+ui     → design-system
 ui            → (external only)
-web           → design-system, custom-ui, ui
-landing-page  → design-system, custom-ui, ui
+web           → design-system, ui, ui
+landing-page  → design-system, ui, ui
 docs-hub      → design-system (via nested package)
 ```
 

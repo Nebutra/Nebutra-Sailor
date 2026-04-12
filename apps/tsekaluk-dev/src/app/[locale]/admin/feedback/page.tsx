@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageSquare, RefreshCw, Trash2 } from "lucide-react";
+import { Message, RefreshClockwise, Trash } from "@nebutra/icons";
 import { useLocale } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
@@ -92,7 +92,7 @@ export default function AdminFeedbackPage() {
           aria-label="Refresh"
           className="inline-flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
         >
-          <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+          <RefreshClockwise className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
           Refresh
         </button>
       </div>
@@ -121,14 +121,14 @@ export default function AdminFeedbackPage() {
 
       {loading && !error && (
         <div className="flex items-center justify-center py-16 text-gray-400">
-          <RefreshCw className="h-5 w-5 animate-spin mr-2" />
+          <RefreshClockwise className="h-5 w-5 animate-spin mr-2" />
           <span className="text-sm">Loading...</span>
         </div>
       )}
 
       {!loading && !error && entries.length === 0 && (
         <div className="rounded-xl border border-dashed border-gray-200 dark:border-gray-800 p-12 text-center">
-          <MessageSquare className="mx-auto h-10 w-10 text-gray-300 dark:text-gray-700 mb-3" />
+          <Message className="mx-auto h-10 w-10 text-gray-300 dark:text-gray-700 mb-3" />
           <p className="text-sm text-gray-500 dark:text-gray-400">No feedback yet.</p>
         </div>
       )}
@@ -170,7 +170,7 @@ export default function AdminFeedbackPage() {
                       aria-label="Delete feedback"
                       className="inline-flex items-center justify-center rounded-md p-1.5 text-gray-500 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash className="h-4 w-4" />
                     </button>
                   </div>
                 </div>

@@ -1,8 +1,8 @@
 "use client";
 
+import { ArrowRight, Star } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { DotPattern } from "@nebutra/ui/primitives";
-import { ArrowRight, Award } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -25,7 +25,7 @@ export function Hero() {
       <AnimateIn preset="fade">
         <div className="flex items-center gap-2 mb-10 z-20">
           <div className="flex items-center justify-center">
-            <Award className="w-6 h-6 text-gray-900 dark:text-white" />
+            <Star className="w-6 h-6 text-gray-900 dark:text-white" />
           </div>
           <span className="text-base text-gray-900 dark:text-white font-normal tracking-tight">
             {t("status")}

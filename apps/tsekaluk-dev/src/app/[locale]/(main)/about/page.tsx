@@ -1,5 +1,5 @@
+import { Envelope } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { Mail } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
@@ -448,7 +448,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               href="mailto:contact@tsekaluk.dev"
               className="inline-flex h-11 items-center gap-3 rounded-full bg-foreground px-6 text-sm font-medium text-background transition-transform hover:scale-105 hover:bg-foreground/90"
             >
-              <Mail className="h-4 w-4" />
+              <Envelope className="h-4 w-4" />
               contact@tsekaluk.dev
             </a>
             <div className="h-11 flex items-center">

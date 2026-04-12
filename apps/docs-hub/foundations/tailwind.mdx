@@ -1,0 +1,16 @@
+---
+title: "Tailwind Classes"
+description: "Tailwind utility usage within the design system."
+---
+
+## Overview
+
+Tailwind is configured exclusively via CSS-first v4 tokens. We map our Nebutra UI tokens (e.g. `var(--neutral-*)`, `var(--brand-gradient)`) into the `@theme` directive inside `globals.css`.
+
+## Design Rationale
+
+By avoiding standard utility prefixes like `text-red-500` and favoring semantic aliases like `text-[var(--danger-text)]` or extending `@theme`, we guarantee perfect theme fluidity across OPC profiles and heavy SaaS dashboards.
+
+## Usage Guidelines
+
+All components and layouts MUST use the tokenized variables. Never hardcode colors via inline styles or custom Tailwind hex injections. 

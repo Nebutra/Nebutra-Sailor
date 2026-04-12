@@ -240,59 +240,6 @@ export const ButtonWithIconDemo = dynamic(() =>
     default: m.ButtonWithIconDemo,
   })),
 );
-export const Calendar3Demo = dynamic(() =>
-  import("@/components/previews/calendar-3-demo").then((m) => ({ default: m.Calendar3Demo })),
-);
-export const Calendar4Demo = dynamic(() =>
-  import("@/components/previews/calendar-4-demo").then((m) => ({ default: m.Calendar4Demo })),
-);
-export const Calendar5Demo = dynamic(() =>
-  import("@/components/previews/calendar-5-demo").then((m) => ({ default: m.Calendar5Demo })),
-);
-export const Calendar6Demo = dynamic(() =>
-  import("@/components/previews/calendar-6-demo").then((m) => ({ default: m.Calendar6Demo })),
-);
-export const CalendarDemo = dynamic(() =>
-  import("@/components/previews/calendar-demo").then((m) => ({ default: m.CalendarDemo })),
-);
-export const CalendarMinMaxDemo = dynamic(() =>
-  import("@/components/previews/calendar-min-max-demo").then((m) => ({ default: m.default })),
-);
-export const CalendarMonthYearDemo = dynamic(() =>
-  import("@/components/previews/calendar-month-year-demo").then((m) => ({
-    default: m.CalendarMonthYearDemo,
-  })),
-);
-export const CalendarMultiMonthDemo = dynamic(() =>
-  import("@/components/previews/calendar-multi-month-demo").then((m) => ({
-    default: m.CalendarMultiMonthDemo,
-  })),
-);
-export const CalendarPickerDemo = dynamic(
-  () =>
-    import("@/components/previews/calendar-picker-demo").then((m) => ({
-      default: m.CalendarPickerDemo,
-    })),
-  { ssr: false },
-);
-export const CalendarRangeDemo = dynamic(() =>
-  import("@/components/previews/calendar-range-demo").then((m) => ({
-    default: m.CalendarRangeDemo,
-  })),
-);
-export const CalendarRangeMultiMonthDemo = dynamic(() =>
-  import("@/components/previews/calendar-range-multi-month-demo").then((m) => ({
-    default: m.CalendarRangeMultiMonthDemo,
-  })),
-);
-export const CalendarSimpleDemo = dynamic(() =>
-  import("@/components/previews/calendar-simple-demo").then((m) => ({
-    default: m.CalendarSimpleDemo,
-  })),
-);
-export const CalendarUnavailableDemo = dynamic(() =>
-  import("@/components/previews/calendar-unavailable-demo").then((m) => ({ default: m.default })),
-);
 export const CanvasRevealEffectDemo = dynamic(() =>
   import("@/components/previews/canvas-reveal-effect-demo").then((m) => ({
     default: m.CanvasRevealEffectDemo,
@@ -458,52 +405,6 @@ export const ContextMenuDemo = dynamic(() =>
 export const ContextMenuWithIconsDemo = dynamic(() =>
   import("@/components/previews/context-menu-with-icons-demo").then((m) => ({
     default: m.ContextMenuWithIconsDemo,
-  })),
-);
-export const DateInputDemo = dynamic(() =>
-  import("@/components/previews/date-input-demo").then((m) => ({ default: m.DateInputDemo })),
-);
-export const DatePicker2Demo = dynamic(() =>
-  import("@/components/previews/date-picker-2-demo").then((m) => ({ default: m.DatePicker2Demo })),
-);
-export const DatePicker3Demo = dynamic(() =>
-  import("@/components/previews/date-picker-3-demo").then((m) => ({ default: m.DatePicker3Demo })),
-);
-export const DatePicker4Demo = dynamic(() =>
-  import("@/components/previews/date-picker-4-demo").then((m) => ({ default: m.DatePicker4Demo })),
-);
-export const DatePickerDefaultDemo = dynamic(() =>
-  import("@/components/previews/date-picker-default-demo").then((m) => ({ default: m.default })),
-);
-export const DatePickerDemo = dynamic(() =>
-  import("@/components/previews/date-picker-demo").then((m) => ({ default: m.DatePickerDemo })),
-);
-export const DatePickerMinMaxDemo = dynamic(() =>
-  import("@/components/previews/date-picker-min-max-demo").then((m) => ({ default: m.default })),
-);
-export const DatePickerMultiMonthDemo = dynamic(() =>
-  import("@/components/previews/date-picker-multi-month-demo").then((m) => ({
-    default: m.DatePickerMultiMonthDemo,
-  })),
-);
-export const DatePickerRangeDemo = dynamic(() =>
-  import("@/components/previews/date-picker-range-demo").then((m) => ({
-    default: m.DatePickerRangeDemo,
-  })),
-);
-export const DatePickerRangeMinMaxDemo = dynamic(() =>
-  import("@/components/previews/date-picker-range-min-max-demo").then((m) => ({
-    default: m.DatePickerRangeMinMaxDemo,
-  })),
-);
-export const DatePickerSingleDemo = dynamic(() =>
-  import("@/components/previews/date-picker-single-demo").then((m) => ({
-    default: m.DatePickerSingleDemo,
-  })),
-);
-export const DatePickerVariantsDemo = dynamic(() =>
-  import("@/components/previews/date-picker-variants-demo").then((m) => ({
-    default: m.DatePickerVariantsDemo,
   })),
 );
 export const DescriptionDemo = dynamic(() =>
@@ -681,18 +582,6 @@ export const GridSystemDemo = dynamic(() =>
 );
 export const HeadingDemo = dynamic(() =>
   import("@/components/previews/heading-demo").then((m) => ({ default: m.HeadingDemo })),
-);
-export const HeroCardDemo = dynamic(() =>
-  import("@/components/previews/hero-card-demo").then((m) => ({ default: m.HeroCardDemo })),
-);
-export const HeroPopoverDemo = dynamic(() =>
-  import("@/components/previews/hero-popover-demo").then((m) => ({ default: m.HeroPopoverDemo })),
-);
-export const HeroSelectDemo = dynamic(() =>
-  import("@/components/previews/hero-select-demo").then((m) => ({ default: m.HeroSelectDemo })),
-);
-export const HeroSkeletonDemo = dynamic(() =>
-  import("@/components/previews/hero-skeleton-demo").then((m) => ({ default: m.HeroSkeletonDemo })),
 );
 export const HexGridDemo = dynamic(() =>
   import("@/components/previews/hex-grid-demo").then((m) => ({ default: m.HexGridDemo })),
@@ -1066,14 +955,6 @@ export const SliderOnValueChangeDemo = dynamic(() =>
 export const SliderStatefulDemo = dynamic(() =>
   import("@/components/previews/slider-stateful-demo").then((m) => ({ default: m.default })),
 );
-export const SnippetDemo = dynamic(() =>
-  import("@/components/previews/snippet-demo").then((m) => ({ default: m.SnippetDemo })),
-);
-export const SnippetStatusDemo = dynamic(() =>
-  import("@/components/previews/snippet-status-demo").then((m) => ({
-    default: m.SnippetStatusDemo,
-  })),
-);
 export const SonnerDemo = dynamic(() =>
   import("@/components/previews/sonner-demo").then((m) => ({ default: m.SonnerDemo })),
 );
@@ -1329,31 +1210,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "button-sizes-demo": { name: "button-sizes-demo", component: ButtonSizesDemo },
   "button-variants-demo": { name: "button-variants-demo", component: ButtonVariantsDemo },
   "button-with-icon-demo": { name: "button-with-icon-demo", component: ButtonWithIconDemo },
-  "calendar-3-demo": { name: "calendar-3-demo", component: Calendar3Demo },
-  "calendar-4-demo": { name: "calendar-4-demo", component: Calendar4Demo },
-  "calendar-5-demo": { name: "calendar-5-demo", component: Calendar5Demo },
-  "calendar-6-demo": { name: "calendar-6-demo", component: Calendar6Demo },
-  "calendar-demo": { name: "calendar-demo", component: CalendarDemo },
-  "calendar-min-max-demo": { name: "calendar-min-max-demo", component: CalendarMinMaxDemo },
-  "calendar-month-year-demo": {
-    name: "calendar-month-year-demo",
-    component: CalendarMonthYearDemo,
-  },
-  "calendar-multi-month-demo": {
-    name: "calendar-multi-month-demo",
-    component: CalendarMultiMonthDemo,
-  },
-  "calendar-picker-demo": { name: "calendar-picker-demo", component: CalendarPickerDemo },
-  "calendar-range-demo": { name: "calendar-range-demo", component: CalendarRangeDemo },
-  "calendar-range-multi-month-demo": {
-    name: "calendar-range-multi-month-demo",
-    component: CalendarRangeMultiMonthDemo,
-  },
-  "calendar-simple-demo": { name: "calendar-simple-demo", component: CalendarSimpleDemo },
-  "calendar-unavailable-demo": {
-    name: "calendar-unavailable-demo",
-    component: CalendarUnavailableDemo,
-  },
   "canvas-reveal-effect-demo": {
     name: "canvas-reveal-effect-demo",
     component: CanvasRevealEffectDemo,
@@ -1413,30 +1269,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     name: "context-menu-with-icons-demo",
     component: ContextMenuWithIconsDemo,
   },
-  "date-input-demo": { name: "date-input-demo", component: DateInputDemo },
-  "date-picker-2-demo": { name: "date-picker-2-demo", component: DatePicker2Demo },
-  "date-picker-3-demo": { name: "date-picker-3-demo", component: DatePicker3Demo },
-  "date-picker-4-demo": { name: "date-picker-4-demo", component: DatePicker4Demo },
-  "date-picker-default-demo": {
-    name: "date-picker-default-demo",
-    component: DatePickerDefaultDemo,
-  },
-  "date-picker-demo": { name: "date-picker-demo", component: DatePickerDemo },
-  "date-picker-min-max-demo": { name: "date-picker-min-max-demo", component: DatePickerMinMaxDemo },
-  "date-picker-multi-month-demo": {
-    name: "date-picker-multi-month-demo",
-    component: DatePickerMultiMonthDemo,
-  },
-  "date-picker-range-demo": { name: "date-picker-range-demo", component: DatePickerRangeDemo },
-  "date-picker-range-min-max-demo": {
-    name: "date-picker-range-min-max-demo",
-    component: DatePickerRangeMinMaxDemo,
-  },
-  "date-picker-single-demo": { name: "date-picker-single-demo", component: DatePickerSingleDemo },
-  "date-picker-variants-demo": {
-    name: "date-picker-variants-demo",
-    component: DatePickerVariantsDemo,
-  },
   "description-demo": { name: "description-demo", component: DescriptionDemo },
   "dialog-demo": { name: "dialog-demo", component: DialogDemo },
   "dialog-destructive-demo": { name: "dialog-destructive-demo", component: DialogDestructiveDemo },
@@ -1493,10 +1325,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "grid-pattern-card-demo": { name: "grid-pattern-card-demo", component: GridPatternCardDemo },
   "grid-system-demo": { name: "grid-system-demo", component: GridSystemDemo },
   "heading-demo": { name: "heading-demo", component: HeadingDemo },
-  "hero-card-demo": { name: "hero-card-demo", component: HeroCardDemo },
-  "hero-popover-demo": { name: "hero-popover-demo", component: HeroPopoverDemo },
-  "hero-select-demo": { name: "hero-select-demo", component: HeroSelectDemo },
-  "hero-skeleton-demo": { name: "hero-skeleton-demo", component: HeroSkeletonDemo },
   "hex-grid-demo": { name: "hex-grid-demo", component: HexGridDemo },
   "highlighter-demo": { name: "highlighter-demo", component: HighlighterDemo },
   "hover-card-2-demo": { name: "hover-card-2-demo", component: HoverCard2Demo },
@@ -1635,8 +1463,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     component: SliderOnValueChangeDemo,
   },
   "slider-stateful-demo": { name: "slider-stateful-demo", component: SliderStatefulDemo },
-  "snippet-demo": { name: "snippet-demo", component: SnippetDemo },
-  "snippet-status-demo": { name: "snippet-status-demo", component: SnippetStatusDemo },
   "sonner-demo": { name: "sonner-demo", component: SonnerDemo },
   "spinner-demo": { name: "spinner-demo", component: SpinnerDemo },
   "stack-demo": { name: "stack-demo", component: StackDemo },

@@ -1,29 +1,22 @@
 "use client";
 
-import {
-  Clock,
-  FileText,
-  FolderOpen,
-  LayoutDashboard,
-  type LucideIcon,
-  MessageSquare,
-  Star,
-} from "lucide-react";
+import { Clock, FileText, FolderOpen, Layout, Message, Star } from "@nebutra/icons";
 import { usePathname } from "next/navigation";
+import type * as React from "react";
 import { Link } from "@/i18n/navigation";
 
 interface NavItem {
   href: string;
   label: string;
-  icon: LucideIcon;
+  icon: React.ElementType<{ className?: string }>;
   exact: boolean;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { href: "/admin", label: "Dashboard", icon: Layout, exact: true },
   { href: "/admin/projects", label: "Projects", icon: FolderOpen, exact: false },
   { href: "/admin/articles", label: "Articles", icon: FileText, exact: false },
-  { href: "/admin/guestbook", label: "Guestbook", icon: MessageSquare, exact: false },
+  { href: "/admin/guestbook", label: "Guestbook", icon: Message, exact: false },
   { href: "/admin/feedback", label: "Feedback", icon: Star, exact: false },
   { href: "/admin/now", label: "Now", icon: Clock, exact: false },
 ];

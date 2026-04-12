@@ -49,7 +49,6 @@ import {
   BreadcrumbSeparator,
   Button,
   ButtonLink,
-  Calendar,
   CardContent,
   Carousel,
   CarouselContent,
@@ -91,8 +90,6 @@ import {
   ContextMenuRoot,
   ContextMenuSeparator,
   ContextMenuTrigger,
-  DatePicker,
-  DateRangePicker,
   Dialog,
   DialogClose,
   DialogContent,
@@ -177,7 +174,6 @@ import {
   Progress,
   RadioGroup,
   RadioGroupItem,
-  RangeCalendar,
   Select,
   SelectContent,
   SelectGroup,
@@ -289,8 +285,6 @@ import {
   AvatarSizeDemo,
   ButtonDemo,
   CheckboxDemo,
-  DatePickerDefaultDemo,
-  DatePickerMinMaxDemo,
   DialogDemo,
   DiceBearAvatarDemo,
   DotPatternDemo,
@@ -334,8 +328,6 @@ import {
   CopywritingSuccessDemo,
 } from "@/components/copywriting-demos";
 import { BasePopoverDemo } from "@/components/demos/base-popover-demo";
-import { CalendarMinMaxDemo } from "@/components/demos/calendar-min-max-demo";
-import { CalendarUnavailableDemo } from "@/components/demos/calendar-unavailable-demo";
 import { CommandDialogDemo } from "@/components/demos/command-dialog-demo";
 import { ContextMenuDemo } from "@/components/demos/context-menu-demo";
 import { ContextMenuWithIconsDemo } from "@/components/demos/context-menu-with-icons-demo";
@@ -504,8 +496,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     SwitchDemo,
     DialogDemo,
     InputBasicDemo,
-    DatePickerDefaultDemo,
-    DatePickerMinMaxDemo,
     ProgressBasicDemo,
     AnimatedCircularProgressBarDemo,
     DotPatternDemo,
@@ -521,8 +511,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     BadgeNotificationDemo,
     BadgeFeatureTagDemo,
     AvatarSmartGroup,
-    CalendarMinMaxDemo,
-    CalendarUnavailableDemo,
     InputOTPNumericDemo,
     CommandDialogDemo,
     ContextMenuDemo,
@@ -747,8 +735,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     CarouselItem,
     CarouselPrevious,
     CarouselNext,
-    Calendar,
-    RangeCalendar,
     Command,
     CommandDialog,
     CommandInput,
@@ -759,8 +745,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     CommandShortcut,
     CommandSeparator,
     CommandMenu: CommandMenu as unknown as React.ComponentType<Record<string, unknown>>,
-    DatePicker,
-    DateRangePicker,
     Collapsible,
     CollapsibleTrigger,
     CollapsibleContent,

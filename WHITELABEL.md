@@ -314,8 +314,8 @@ export const brandTheme = createTheme("light", {
 | Layer            | Package                    | Purpose                               |
 | ---------------- | -------------------------- | ------------------------------------- |
 | **SSOT**         | `@yourbrand/design-system` | Base tokens, Primer components        |
-| **Brand**        | `@yourbrand/custom-ui`     | Domain-specific, promoted components  |
-| **Experimental** | `@yourbrand/custom-ui`     | Prototypes, external library wrappers |
+| **Brand**        | `@yourbrand/ui`     | Domain-specific, promoted components  |
+| **Experimental** | `@yourbrand/ui`     | Prototypes, external library wrappers |
 
 See [Component Library Policy](docs/COMPONENT-LIBRARY-POLICY.md) for governance rules.
 

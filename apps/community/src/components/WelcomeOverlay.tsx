@@ -16,6 +16,7 @@ export function WelcomeOverlay({ memberNumber, onClose }: WelcomeOverlayProps) {
     onClose?.();
     const url = new URL(window.location.href);
     url.searchParams.delete("welcome");
+    url.searchParams.delete("member");
     window.history.replaceState({}, "", url.toString());
   };
 

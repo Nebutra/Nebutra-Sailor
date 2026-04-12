@@ -1,6 +1,14 @@
 "use client";
 
 import {
+  ArrowUpRight,
+  ChevronDown,
+  ChevronUp,
+  ChevronUpDown,
+  LogoGithub,
+  MagnifyingGlass,
+} from "@nebutra/icons";
+import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
@@ -9,7 +17,6 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronDown, ChevronsUpDown, ChevronUp, ExternalLink, Github, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { type Project, projects } from "@/lib/projects";
 
@@ -24,7 +31,7 @@ const STATUS_STYLES: Record<string, string> = {
 function SortIcon({ isSorted }: { isSorted: false | "asc" | "desc" }) {
   if (isSorted === "asc") return <ChevronUp className="h-3.5 w-3.5" />;
   if (isSorted === "desc") return <ChevronDown className="h-3.5 w-3.5" />;
-  return <ChevronsUpDown className="h-3.5 w-3.5 opacity-40" />;
+  return <ChevronUpDown className="h-3.5 w-3.5 opacity-40" />;
 }
 
 export default function AdminProjectsPage() {
@@ -88,7 +95,7 @@ export default function AdminProjectsPage() {
                   aria-label="GitHub repository"
                   className="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                 >
-                  <Github className="h-4 w-4" />
+                  <LogoGithub className="h-4 w-4" />
                 </a>
               )}
               {url && (
@@ -99,7 +106,7 @@ export default function AdminProjectsPage() {
                   aria-label="Live demo"
                   className="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                 >
-                  <ExternalLink className="h-4 w-4" />
+                  <ArrowUpRight className="h-4 w-4" />
                 </a>
               )}
             </div>
@@ -136,7 +143,7 @@ export default function AdminProjectsPage() {
 
       {/* Search */}
       <div className="mb-4 relative max-w-xs">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <MagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         <input
           type="text"
           placeholder="Filter by name…"

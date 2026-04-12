@@ -5,6 +5,19 @@
   },
   "LocaleSwitcher": {
     "en": "English",
-    "zh": "中文"
+    "zh": "\u4e2d\u6587"
+  },
+  "impact": {
+    "hero_title": "Redefining the Paradigm",
+    "hero_subtitle": "Let there be no difficult business in the world.",
+    "social_title": "Social",
+    "social_headline": "Absolute Tech Equality",
+    "social_description": "Empowering edge innovators. Breaking traditional filters and empowering solo founders with out-of-the-box infrastructure.",
+    "governance_title": "Governance",
+    "governance_headline": "Code is Law",
+    "governance_description": "Algorithmic governance built on Proof of Work and real business results, replacing opaque bureaucracy.",
+    "environment_title": "Environment",
+    "environment_headline": "Digital Minimalism",
+    "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
   }
 }

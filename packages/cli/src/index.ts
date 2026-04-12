@@ -19,6 +19,7 @@ import { registerGrowthCommand } from "./commands/growth.js";
 import { registerI18nCommand } from "./commands/i18n.js";
 import { registerInfraCommand } from "./commands/infra.js";
 import { initCommand } from "./commands/init.js";
+import { registerLicenseCommand } from "./commands/license.js";
 import { registerMcpCommand } from "./commands/mcp-server.js";
 import { registerPresetCommand } from "./commands/preset.js";
 import { registerSchemaCommand } from "./commands/schema.js";
@@ -96,6 +97,7 @@ async function main() {
   registerI18nCommand(program);
   registerInfraCommand(program);
   registerEnvCommand(program);
+  registerLicenseCommand(program);
   registerAiCommand(program);
   registerAuthCommand(program);
   registerBillingCommand(program);
@@ -232,6 +234,11 @@ Environment:
   CI                      Auto-enable non-interactive mode
 `,
   );
+
+  if (process.argv.length <= 2) {
+    program.outputHelp();
+    process.exit(0);
+  }
 
   await program.parseAsync(process.argv);
 

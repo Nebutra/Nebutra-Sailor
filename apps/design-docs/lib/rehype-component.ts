@@ -57,7 +57,12 @@ export function rehypeComponent() {
             // that bypasses our ComponentPreview filters. We'll let ComponentPreview render the `code` string securely.
           } else {
           }
-        } catch (_error) {}
+        } catch (error) {
+          console.error(
+            `[rehypeComponent] Failed to process ComponentPreview name=${name}:`,
+            error,
+          );
+        }
       }
     });
   };

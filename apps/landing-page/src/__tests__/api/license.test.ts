@@ -68,7 +68,7 @@ describe("POST /api/license", () => {
     expect(data.success).toBe(true);
     expect(mockIssueLicense).toHaveBeenCalledOnce();
 
-    const callArgs = mockIssueLicense.mock.calls[0]![0];
+    const callArgs = mockIssueLicense.mock.calls[0]?.[0];
     expect(callArgs.userId).toBe("user_test_123");
     expect(callArgs.tier).toBe("OPC");
     expect(callArgs.displayName).toBe("Test Founder");

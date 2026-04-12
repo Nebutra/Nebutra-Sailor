@@ -1,6 +1,5 @@
 "use client";
 import {
-  Calendar,
   Command,
   CommandEmpty,
   CommandGroup,
@@ -8,7 +7,6 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@nebutra/ui/primitives";
 import { Search, User } from "lucide-react";
 
@@ -19,14 +17,11 @@ export function CommandDemo() {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
-          <CommandItem>
-            <Calendar className="mr-2 h-4 w-4" />
-            Calendar
-          </CommandItem>
+          <CommandItem></CommandItem>
           <CommandItem>
             <Search className="mr-2 h-4 w-4" />
             Search
-            <CommandShortcut>⌘K</CommandShortcut>
+            <>⌘K</>
           </CommandItem>
         </CommandGroup>
         <CommandSeparator />
@@ -34,7 +29,7 @@ export function CommandDemo() {
           <CommandItem>
             <User className="mr-2 h-4 w-4" />
             Profile
-            <CommandShortcut>⌘P</CommandShortcut>
+            <>⌘P</>
           </CommandItem>
         </CommandGroup>
       </CommandList>

@@ -15,7 +15,7 @@ import { useCallback, useEffect, useState } from "react";
 
 const Dialog = { Root, Portal, Overlay, Content, Title, Description, Close };
 
-import { AlertTriangle, Check, MessageSquare, RefreshCw, Trash2, X } from "lucide-react";
+import { Check, Cross, Message, RefreshClockwise, Trash, Warning } from "@nebutra/icons";
 
 interface GuestbookEntry {
   id: string;
@@ -128,7 +128,7 @@ export default function AdminGuestbookPage() {
           aria-label="Refresh entries"
           className="inline-flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
         >
-          <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+          <RefreshClockwise className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
           Refresh
         </button>
       </div>
@@ -141,21 +141,21 @@ export default function AdminGuestbookPage() {
 
       {actionError && (
         <div className="mb-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400 flex items-center gap-2">
-          <AlertTriangle className="h-4 w-4 shrink-0" />
+          <Warning className="h-4 w-4 shrink-0" />
           {actionError}
         </div>
       )}
 
       {loading && !error && (
         <div className="flex items-center justify-center py-16 text-gray-400">
-          <RefreshCw className="h-5 w-5 animate-spin mr-2" />
+          <RefreshClockwise className="h-5 w-5 animate-spin mr-2" />
           <span className="text-sm">Loading...</span>
         </div>
       )}
 
       {!loading && !error && entries.length === 0 && (
         <div className="rounded-xl border border-dashed border-gray-200 dark:border-gray-800 p-12 text-center">
-          <MessageSquare className="mx-auto h-10 w-10 text-gray-300 dark:text-gray-700 mb-3" />
+          <Message className="mx-auto h-10 w-10 text-gray-300 dark:text-gray-700 mb-3" />
           <p className="text-sm text-gray-500 dark:text-gray-400">No endorsements yet.</p>
         </div>
       )}
@@ -250,7 +250,7 @@ export default function AdminGuestbookPage() {
                             aria-label={`Reject endorsement from ${entry.nickname}`}
                             className="rounded-md p-1.5 text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors disabled:opacity-50"
                           >
-                            <X className="h-4 w-4" />
+                            <Cross className="h-4 w-4" />
                           </button>
                         </>
                       )}
@@ -261,7 +261,7 @@ export default function AdminGuestbookPage() {
                         aria-label={`Delete endorsement from ${entry.nickname}`}
                         className="rounded-md p-1.5 text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors disabled:opacity-50"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash className="h-4 w-4" />
                       </button>
                     </div>
                   </td>
@@ -288,7 +288,7 @@ export default function AdminGuestbookPage() {
           <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 shadow-2xl">
             <div className="flex items-start gap-4">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
-                <Trash2 className="h-5 w-5 text-red-600 dark:text-red-400" />
+                <Trash className="h-5 w-5 text-red-600 dark:text-red-400" />
               </div>
               <div>
                 <Dialog.Title className="text-base font-semibold text-gray-900 dark:text-white">

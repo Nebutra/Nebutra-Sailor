@@ -13,7 +13,7 @@ describe("CLI", () => {
     const result = await runCli(["--help"]);
 
     expect(result.exitCode).toBe(0);
-    expect(result.stdout).toContain("Nebutra Package & Component Manager");
+    expect(result.stdout).toContain("Nebutra — unified CLI");
     expect(result.stdout).toContain("init");
     expect(result.stdout).toContain("add");
   });

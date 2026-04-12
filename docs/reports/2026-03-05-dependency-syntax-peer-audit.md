@@ -79,7 +79,7 @@ Implication:
 - Remaining leak: Storybook still imports internal source path directly:
   - `@nebutra/ui/src/primitives/animate-in` in `apps/storybook/src/stories/Motion.stories.tsx`
   - TS path alias to `@nebutra/ui/src/*` in `apps/storybook/tsconfig.json`
-  - Ambient workaround in `apps/storybook/src/custom-ui.d.ts`
+  - Ambient workaround in `apps/storybook/src/ui.d.ts`
 
 Implication:
 
@@ -96,7 +96,7 @@ Should migrate to Next 16 `proxy` convention.
 
 ### P2 - Legacy/consistency debt in docs and package surface
 
-- Legacy `custom-ui` paths still appear in docs (not code imports):
+- Legacy `ui` paths still appear in docs (not code imports):
   - `apps/landing-page/DESIGN.md`
 - `packages/theme` still exists and documents `data-theme` model, while apps use `@nebutra/tokens` + `.dark`.
 - `packages/ui/README.md` still references old exports like `@nebutra/ui/theme` and icons paths that no longer match current package surface.

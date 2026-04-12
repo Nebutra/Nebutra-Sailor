@@ -1,3 +1,4 @@
+import { ArrowUpRight, Email, Linkedin, LockClosed, LogoGithub, Rss } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import {
   Dialog,
@@ -7,7 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@nebutra/ui/primitives";
-import { ExternalLink, Github, Linkedin, Lock, Mail, Rss } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
@@ -51,7 +51,7 @@ const INTERNATIONAL_LINKS = [
   {
     name: "GitHub",
     url: "https://github.com/TsekaLuk",
-    icon: <Github className="h-5 w-5" />,
+    icon: <LogoGithub className="h-5 w-5" />,
     description: "Open source projects & contributions",
   },
   {
@@ -69,7 +69,7 @@ const INTERNATIONAL_LINKS = [
   {
     name: "Product Hunt",
     url: "https://producthunt.com/@tsekaluk",
-    icon: <ExternalLink className="h-5 w-5" />,
+    icon: <ArrowUpRight className="h-5 w-5" />,
     description: "Product launches",
   },
   {
@@ -164,7 +164,7 @@ export default async function LinksPage({ params }: { params: Promise<{ locale: 
                   </p>
                 </div>
                 <div className="absolute right-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 hidden sm:block">
-                  <ExternalLink className="w-4 h-4 text-gray-300 dark:text-gray-600" />
+                  <ArrowUpRight className="w-4 h-4 text-gray-300 dark:text-gray-600" />
                 </div>
               </a>
             </AnimateIn>
@@ -201,7 +201,7 @@ export default async function LinksPage({ params }: { params: Promise<{ locale: 
                   className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${isComingSoon ? "bg-gray-100/50 text-gray-400 dark:bg-gray-800/30" : "bg-gray-50 text-gray-600 transition-colors group-hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:group-hover:bg-gray-700"}`}
                 >
                   {isComingSoon ? (
-                    <Lock className="w-5 h-5" />
+                    <LockClosed className="w-5 h-5" />
                   ) : (
                     <div className="w-5 h-5 rounded-full bg-current opacity-20" />
                   )}
@@ -295,7 +295,7 @@ export default async function LinksPage({ params }: { params: Promise<{ locale: 
             href="mailto:contact@tsekaluk.dev"
             className="group inline-flex items-center gap-3 rounded-full bg-gray-900 px-8 py-4 text-sm font-semibold text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
           >
-            <Mail className="h-4 w-4 transition-transform group-hover:-rotate-12" />
+            <Email className="h-4 w-4 transition-transform group-hover:-rotate-12" />
             <span>contact@tsekaluk.dev</span>
           </a>
         </div>

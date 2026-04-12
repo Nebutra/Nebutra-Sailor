@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowRight, ArrowUpRight, Check, Rss } from "@nebutra/icons";
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@nebutra/ui/primitives";
-import { ArrowRight, ArrowUpRight, Check, Rss } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Feedback } from "@/components/ui/feedback";

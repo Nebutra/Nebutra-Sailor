@@ -14,6 +14,7 @@
 
 import type { AuthProvider } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
+import { logger } from "@nebutra/logger";
 
 const provider =
   process.env.AUTH_PROVIDER || process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
@@ -43,7 +44,7 @@ async function handler(request: Request): Promise<Response> {
     const response = await authHandler(request);
     return response ?? new Response(null, { status: 404 });
   } catch (error) {
-    console.error("[auth] API route error:", error);
+    logger.error("[auth] API route error:", error);
     return new Response(JSON.stringify({ error: "Internal auth error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },

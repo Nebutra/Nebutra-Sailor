@@ -1,22 +1,22 @@
 "use client";
 
-import { Command } from "cmdk";
 import {
-  Bot,
   Briefcase,
   Clock,
   Cpu,
   FileText,
+  Globe,
   Home,
-  Languages,
-  Link2,
-  Lock,
-  MessageSquare,
+  Link,
+  LockClosed,
+  MagnifyingGlass,
+  Message,
   Moon,
-  Search,
+  Robot,
   Sun,
   User,
-} from "lucide-react";
+} from "@nebutra/icons";
+import { Command } from "cmdk";
 import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
 import * as React from "react";
@@ -62,7 +62,7 @@ const NAV_COMMANDS = [
     id: "soul",
     label: "Soul",
     href: "/soul",
-    icon: Bot,
+    icon: Robot,
     keywords: "ai chat clone digital",
   },
   {
@@ -76,21 +76,21 @@ const NAV_COMMANDS = [
     id: "links",
     label: "Links",
     href: "/links",
-    icon: Link2,
+    icon: Link,
     keywords: "social bookmarks",
   },
   {
     id: "guestbook",
     label: "Guestbook",
     href: "/guestbook",
-    icon: MessageSquare,
+    icon: Message,
     keywords: "endorse comments",
   },
   {
     id: "privacy",
     label: "Privacy",
     href: "/privacy",
-    icon: Lock,
+    icon: LockClosed,
     keywords: "data policy",
   },
 ];
@@ -159,7 +159,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
           loop
         >
           <div className="gap-3 px-4 py-3 dark:border-gray-800/80 flex items-center border-b border-gray-100">
-            <Search className="h-4 w-4 text-gray-400 shrink-0" />
+            <MagnifyingGlass className="h-4 w-4 text-gray-400 shrink-0" />
             <Command.Input
               ref={inputRef}
               placeholder="Search pages, actions..."
@@ -220,7 +220,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                     onSelect={() => switchLocale(l)}
                     className="gap-3 px-4 py-2.5 text-sm dark:data-[selected=true]:bg-gray-800 flex cursor-pointer items-center rounded-none text-gray-700 transition-colors data-[selected=true]:bg-gray-100 dark:text-gray-200"
                   >
-                    <Languages className="h-4 w-4 text-gray-400 shrink-0" />
+                    <Globe className="h-4 w-4 text-gray-400 shrink-0" />
                     Switch to {LOCALE_LABELS[l]}
                   </Command.Item>
                 ))}

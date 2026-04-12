@@ -1,7 +1,7 @@
 "use client";
 
+import { Moon, Sun } from "@nebutra/icons";
 import { AnimatePresence, motion } from "framer-motion";
-import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 

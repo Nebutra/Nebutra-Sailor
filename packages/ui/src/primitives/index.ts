@@ -226,7 +226,6 @@ export * from "./skeleton";
 export * from "./slider";
 export * from "./slider-number-flow";
 
-export * from "./snippet-status";
 export * from "./spacing";
 export * from "./spinner";
 export * from "./stack";

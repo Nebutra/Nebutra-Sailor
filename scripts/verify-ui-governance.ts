@@ -292,7 +292,7 @@ function verifyDependencyBoundaries(policy: GovernancePolicy) {
 function countAggregateBudgetViolations(budget: AggregateBudgetEntry, pattern: RegExp): number {
   const excludeSet = new Set(budget.exclude ?? []);
 
-  // Derive roots from paths (strip glob suffix, e.g. "packages/custom-ui/src/**" -> "packages/custom-ui/src")
+  // Derive roots from paths (strip glob suffix, e.g. "packages/ui/src/**" -> "packages/ui/src")
   const roots = budget.paths.map((p) => p.replace(/\/\*\*$/, "").replace(/\/\*$/, ""));
 
   const allFiles = roots.flatMap((root) => collectFiles(root, new Set([".ts", ".tsx", ".css"])));
@@ -355,7 +355,6 @@ function main() {
   }
   if (budgetStats && policy.budgets) {
   }
-  // biome-ignore lint/suspicious/noConsole: CI guardrail script
   console.log("UI governance verification passed ✓");
 }
 

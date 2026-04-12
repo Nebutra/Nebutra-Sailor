@@ -100,6 +100,7 @@ async function handleOIDC(req: NextRequest): Promise<Response> {
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- oidc-provider expects Node.js req/res shim
+    // biome-ignore lint/suspicious/noExplicitAny: oidc provider shim requires any
     callback(mockReq as any, mockRes as any);
   });
 }

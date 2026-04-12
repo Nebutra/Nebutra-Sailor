@@ -1,8 +1,9 @@
 "use client";
 
+import { brandSpring } from "@nebutra/brand";
+import { LoaderCircle, PaperAirplane, SignIn } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { AnimatePresence, motion } from "framer-motion";
-import { Loader2, LogIn, Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAnalytics } from "@/hooks/use-analytics";
@@ -154,7 +155,9 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
                 return updated;
               });
             }
-          } catch (_parseErr) {}
+          } catch (parseErr) {
+            console.error("[Soul Chat] Stream parsing error:", parseErr);
+          }
         }
       }
     } catch (err) {
@@ -184,7 +187,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
   if (isPending) {
     return (
       <div className="flex h-full items-center justify-center">
-        <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+        <LoaderCircle className="h-5 w-5 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -229,7 +232,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
               }
               className="flex items-center gap-2 rounded-full bg-gray-900 px-6 py-2.5 text-body-14 text-white transition-all duration-200 hover:bg-gray-800 hover:scale-[1.03] active:scale-[0.97] dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 will-change-transform"
             >
-              <LogIn className="h-4 w-4" />
+              <SignIn className="h-4 w-4" />
               {t("auth_button")}
             </button>
           </div>
@@ -250,7 +253,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            transition={brandSpring}
             className="flex h-full flex-col items-center justify-center gap-6 text-center"
           >
             <SoulOrb size="lg" />
@@ -280,7 +283,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
                 key={`${msg.role}-${i}`}
                 initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                transition={brandSpring}
                 className={`flex gap-4 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
               >
                 {msg.role === "assistant" && <SoulOrb isError={msg.isError} />}
@@ -303,7 +306,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
             <motion.div
               initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              transition={brandSpring}
               className="flex gap-4"
             >
               <SoulOrb />
@@ -348,9 +351,9 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
             className="shrink-0 rounded-md bg-foreground p-2 text-background transition-all hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isStreaming ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <LoaderCircle className="h-4 w-4 animate-spin" />
             ) : (
-              <Send className="h-4 w-4" />
+              <PaperAirplane className="h-4 w-4" />
             )}
           </button>
         </div>

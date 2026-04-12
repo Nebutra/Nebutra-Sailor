@@ -69,7 +69,7 @@ export class BullMQProvider implements QueueProvider {
     let queue = this.queues.get(queueName);
     if (!queue) {
       queue = new Queue(queueName, {
-        connection: this.connection.duplicate(),
+        connection: this.connection.duplicate() as any,
         prefix: this.prefix,
         defaultJobOptions: {
           attempts: 3,
@@ -194,7 +194,7 @@ export class BullMQProvider implements QueueProvider {
         await handler(payload);
       },
       {
-        connection: this.connection.duplicate(),
+        connection: this.connection.duplicate() as any,
         prefix: this.prefix,
         concurrency: this.concurrency,
         removeOnComplete: { count: 1000 },

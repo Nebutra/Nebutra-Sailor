@@ -16,9 +16,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   return {
-    title: "Roadmap — Nebutra",
-    description:
-      "From infrastructure foundation to enterprise scale — our product phases, version milestones, and funding vision.",
+    title: "Meta-Unicorn Rollout — Nebutra",
+    description: "The five evolutionary phases of the Nebutra Creator Engine ecosystem.",
     alternates: { canonical: `/${lang}/roadmap` },
   };
 }
@@ -42,82 +41,79 @@ interface Phase {
 const PHASES: Phase[] = [
   {
     number: 0,
-    name: "Foundation",
+    name: "Foundation: The Kernel",
     versions: "v0.1 – v0.4",
     status: "done",
-    vision:
-      "Monorepo, API gateway, database, and auth wired together. Every future feature builds on this.",
+    vision: "Establishing the rigid, uncompromising systems required to construct Meta-Unicorns.",
     milestones: [
-      { label: "Turborepo monorepo — pnpm workspaces, 33 packages, Node 22" },
-      { label: "Hono API gateway with OpenAPI + idiomatic middleware" },
-      { label: "Prisma + Supabase (PostgreSQL + pgvector)" },
-      { label: "Multi-tenant auth — Clerk with org membership roles" },
-      { label: "RBAC permission matrix — 17 typed scopes" },
+      { label: "Monorepo topology — Turborepo, 33 interconnected packages" },
+      { label: "Hono API Gateway — OpenAPI, oRPC, tRPC with middleware composition" },
+      { label: "Database foundation — Prisma + Supabase (PostgreSQL + pgvector)" },
+      { label: "Absolute Identity — Multi-tenant auth with Clerk + org membership" },
+      { label: "Permission matrix — 17 typed RBAC scopes" },
     ],
   },
   {
     number: 1,
-    name: "Platform",
+    name: "The Builder Core",
     versions: "v0.5 – v0.10",
     status: "done",
     vision:
-      "Feature-complete SaaS scaffold. Settings, billing, AI routes, email, analytics, and observability in one box.",
+      "Transcend typical boilerplates. Arming OPCs with 50+ enterprise modules, cutting infrastructure setup from months to a week.",
     milestones: [
-      { label: "Settings pages — General, Team, API Keys, Billing, Security" },
-      { label: "Pricing page — FREE / PRO / ENTERPRISE tiers" },
-      { label: "Transactional email (Resend) — welcome, quota warnings, invites" },
-      { label: "Analytics dashboard — 30-day funnel and revenue charts" },
-      { label: "Blog powered by Sanity CMS with ISR + OG metadata" },
-      { label: "Feature flag hooks — SSR-safe with tenant context" },
-      { label: "Security hardening — RBAC, secrets management, WAF" },
+      { label: "Complete Settings schema — Team, API Keys, Security configurations" },
+      { label: "Monetization engine — FREE / PRO / ENTERPRISE tier tracking" },
+      { label: "Transactional ops — Resend email integrations" },
+      { label: "Telemetry & Observability — Sentry, Analytics, 30-day funnels" },
+      { label: "CMS integration — Sanity v5 powered blog & changelogs" },
     ],
   },
   {
     number: 2,
-    name: "Launch",
+    name: "Sleptons Router",
     versions: "v1.0",
-    funding: "Pre-Seed",
+    funding: "Algorithmic Seed",
     status: "active",
     vision:
-      "Public beta. Real users, real feedback. OPC community goes live. First paying customers.",
+      "Abolishing traditional hiring. Matchmaking top digital talent purely via absolute Proof of Work and semantic compatibility.",
     milestones: [
-      { label: "OPC Free License — one-click activation flow" },
-      { label: "Sleptons community gallery — member profiles + welcome overlay" },
-      { label: "License wizard — persona, team size, use-case onboarding" },
-      { label: "Nebutra.com public launch + product docs" },
-      { label: "First 100 OPC members" },
+      { label: "Sleptons Community Launch — Proof-of-Work visual verification" },
+      { label: "OPC Free License — Automated AGPL commercial exclusion routing" },
+      { label: "Github PR/Commit graph topological analysis integration" },
+      { label: "Nebutra Ecosystem Live Pipeline" },
+      { label: "First 100 Meta-Unicorn Founder nodes established" },
     ],
   },
   {
     number: 3,
-    name: "Traction",
+    name: "The Launchpad",
     versions: "v1.x",
-    funding: "Seed Round",
+    funding: "Execution Scaling",
     status: "upcoming",
     vision:
-      "From free users to paying customers. AI workflows, usage billing, and marketplace integrations ship here.",
+      "Replacing paid acquisition with algorithmic distribution. Exposing new MVPs to a ruthless, high-signal feedback pool.",
     milestones: [
-      { label: "AI workflow builder — drag-and-drop agent pipelines" },
-      { label: "Consumption-based billing — metered API usage + Stripe" },
-      { label: "Marketplace integrations — Slack, Notion, GitHub, Linear" },
-      { label: "Team collaboration — shared workspaces, roles, audit log" },
-      { label: "Mobile-responsive dashboard" },
+      { label: "Algorithmic distribution engine — recommendation feed for OPC products" },
+      { label: "Consumption-based API metering & automated Stripe reconciliation" },
+      { label: "Drag-and-drop Agent orchestration workflows" },
+      { label: "Integrations marketplace — Slack, Notion, GitHub, Linear" },
+      { label: "Cross-platform unified dashboard" },
     ],
   },
   {
     number: 4,
-    name: "Scale",
+    name: "Algorithmic Capital",
     versions: "v2.0",
-    funding: "Series A",
+    funding: "End-Game Ecosystem",
     status: "upcoming",
     vision:
-      "Enterprise-grade. White-label licensing, global edge, SLA guarantees. Nebutra becomes the infrastructure layer for AI-native SaaS.",
+      "Dismantling elite VC networks. Capital routes seamlessly into builder ecosystems based entirely on verified MRR velocity and codebase execution speed.",
     milestones: [
-      { label: "White-label OEM — custom domain, brand, pricing" },
-      { label: "Enterprise SSO — SAML, SCIM, Active Directory" },
-      { label: "Global edge deployment — multi-region with <100ms p99" },
-      { label: "SLA-backed uptime guarantees" },
-      { label: "Dedicated enterprise support + SLAs" },
+      { label: "Automated MRR tracking and algorithmic funding injections" },
+      { label: "White-label enterprise OEM solutions — Custom domains & IP encapsulation" },
+      { label: "Enterprise SSO enforcement — SAML, Active Directory" },
+      { label: "Global Edge acceleration — Multi-region failover" },
+      { label: "Absolute SLA guarantees with 100% Agent-driven operations support" },
     ],
   },
 ];
@@ -168,7 +164,7 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
               background: "rgba(0,51,254,0.06)",
             }}
           >
-            Product Roadmap
+            Ecosystem Rollout
           </span>
         </AnimateIn>
 
@@ -190,8 +186,8 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
 
         <AnimateIn preset="fade">
           <p className="mx-auto mt-6 max-w-2xl text-lg text-[var(--neutral-11)]">
-            From infrastructure foundation to enterprise scale — five phases, clear milestones, and
-            the funding vision behind each one.
+            Executing the 4 pillars of the Meta-Unicorn Whitepaper. Fusing code, talent, and
+            capital.
           </p>
         </AnimateIn>
       </section>
@@ -333,17 +329,18 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
             style={{ borderColor: "var(--neutral-5)", background: "var(--neutral-2)" }}
           >
             <p className="mb-2 text-sm font-semibold text-[var(--neutral-12)]">
-              Shaping the roadmap
+              Shaping the future
             </p>
             <p className="mb-6 text-sm text-[var(--neutral-11)]">
-              OPC members get early access to upcoming features and direct input on priorities.
+              OPC members get early access to the Sleptons router and directly shape algorithmic
+              consensus.
             </p>
             <a
-              href="/en/get-license"
+              href={`/${lang}/get-license`}
               className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white"
               style={{ background: "var(--brand-gradient)" }}
             >
-              Get your free OPC license →
+              Enter the Ecosystem →
             </a>
           </div>
         </AnimateIn>

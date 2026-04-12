@@ -591,7 +591,7 @@ export function generateTailwindTheme(tokens: ThemeTokens): string {
 
 ### Architecture
 
-Extend existing `apps/web` with a composable layout system and reusable dashboard components in `packages/custom-ui`.
+Extend existing `apps/web` with a composable layout system and reusable dashboard components in `packages/ui`.
 
 ```
 apps/web/src/
@@ -750,7 +750,7 @@ export function DataTable<TData>({
 ```
 @tanstack/react-table    # Headless table
 cmdk                     # Command palette
-recharts                 # Already in deps (via custom-ui)
+recharts                 # Already in deps (via ui)
 ```
 
 ---
@@ -1913,10 +1913,10 @@ export async function enforceMFA(organizationId: string): Promise<void> {
 
 ### Architecture
 
-New components in `packages/custom-ui` + presigned URL flow via `packages/storage`.
+New components in `packages/ui` + presigned URL flow via `packages/storage`.
 
 ```
-packages/custom-ui/src/components/upload/
+packages/ui/src/components/upload/
   FileUpload.tsx              # Drag-and-drop upload zone
   FileUploadProgress.tsx      # Upload progress indicator
   ImageCropper.tsx            # Image crop/resize before upload
@@ -1958,7 +1958,7 @@ Client                    API Gateway              R2/S3
 ### FileUpload Component
 
 ```typescript
-// packages/custom-ui/src/components/upload/FileUpload.tsx
+// packages/ui/src/components/upload/FileUpload.tsx
 'use client'
 
 import { useCallback, useState } from 'react'
@@ -2566,7 +2566,7 @@ Discourse handles **dedicated forum** scenarios:
 | `packages/billing`   | Payment gateway abstraction, Alipay/WeChat native SDKs              |
 | `packages/identity`  | SSO config, SCIM 2.0, MFA enforcement                               |
 | `packages/community` | Discussion, profiles, moderation, reputation, follow, notifications |
-| `packages/custom-ui` | Dashboard shell, DataTable, charts, FileUpload, empty states        |
+| `packages/ui` | Dashboard shell, DataTable, charts, FileUpload, empty states        |
 | `packages/storage`   | Presigned URL upload flow                                           |
 
 ### Schema Additions (~250 new lines)

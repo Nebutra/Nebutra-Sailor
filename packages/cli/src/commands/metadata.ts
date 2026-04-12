@@ -268,6 +268,57 @@ export const nebultraCommand: CommandMeta = {
         },
       ],
     },
+    {
+      name: "license",
+      description: "Manage your Nebutra-Sailor commercial license",
+      usage: "nebutra license [subcommand]",
+      arguments: [],
+      options: [],
+      subcommands: [
+        {
+          name: "activate",
+          description: "Activate a commercial license key for local development",
+          usage: "nebutra license activate <key>",
+          arguments: [
+            {
+              name: "key",
+              description: "Your Nebutra-Sailor commercial license key",
+              required: true,
+            },
+          ],
+          options: [
+            {
+              flags: "--quiet",
+              description: "Suppress output",
+            },
+          ],
+          examples: [
+            {
+              command: "nebutra license activate liz_1234567890",
+              description: "Activate your license key globally",
+            },
+          ],
+        },
+        {
+          name: "status",
+          description: "Check the locally configured license status",
+          usage: "nebutra license status",
+          arguments: [],
+          options: [
+            {
+              flags: "--quiet",
+              description: "Suppress output",
+            },
+          ],
+          examples: [
+            {
+              command: "nebutra license status",
+              description: "Check if you have an active license",
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
 

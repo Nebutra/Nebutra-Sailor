@@ -29,8 +29,8 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
         style={{
           margin: 0,
           fontFamily: "system-ui, sans-serif",
-          background: "#09090b",
-          color: "#fafafa",
+          background: "var(--background, #09090b)",
+          color: "var(--foreground, #fafafa)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -42,7 +42,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             style={{
               fontSize: "3rem",
               marginBottom: "1rem",
-              background: "linear-gradient(135deg, #0033FE, #0BF1C3)",
+              background: "var(--brand-gradient, linear-gradient(135deg, #0033FE, #0BF1C3))",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -53,7 +53,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           <h1 style={{ fontSize: "1.5rem", fontWeight: 600, marginBottom: "0.75rem" }}>
             Something went wrong
           </h1>
-          <p style={{ color: "#a1a1aa", marginBottom: "2rem", lineHeight: 1.6 }}>
+          <p style={{ color: "var(--neutral-11, #a1a1aa)", marginBottom: "2rem", lineHeight: 1.6 }}>
             An unexpected error occurred. Our team has been notified automatically.
             {error.digest && (
               <span
@@ -72,8 +72,8 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             type="button"
             onClick={reset}
             style={{
-              background: "linear-gradient(135deg, #0033FE, #0BF1C3)",
-              color: "#fff",
+              background: "var(--brand-gradient, linear-gradient(135deg, #0033FE, #0BF1C3))",
+              color: "var(--neutral-1, #ffffff)",
               border: "none",
               borderRadius: "8px",
               padding: "0.625rem 1.5rem",

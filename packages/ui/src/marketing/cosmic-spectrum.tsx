@@ -440,7 +440,9 @@ export function CosmicSpectrum({
           {/* Main Title */}
           <div
             className="main-title absolute bottom-1/2 left-1/2 z-20 -translate-x-1/2 translate-y-1/2 text-center text-xs leading-relaxed opacity-0 transition-colors duration-300"
-            style={{ color: isDarkTheme ? "#ffffff" : "#333333" }}
+            style={{
+              color: isDarkTheme ? "var(--neutral-1, #ffffff)" : "var(--neutral-12, #333333)",
+            }}
           >
             {subtitle.split("\n").map((line, index) => (
               <React.Fragment key={index}>

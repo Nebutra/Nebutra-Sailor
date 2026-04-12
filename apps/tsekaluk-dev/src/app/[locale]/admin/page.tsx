@@ -1,5 +1,5 @@
+import { FileText, FolderOpen, Message, Star } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { FileText, FolderOpen, MessageSquare, Star } from "lucide-react";
 import Link from "next/link";
 import { getArticles } from "@/lib/articles";
 import { prisma } from "@/lib/prisma";
@@ -35,7 +35,7 @@ export default async function AdminDashboardPage() {
     {
       label: "Guestbook",
       value: pendingCount,
-      icon: MessageSquare,
+      icon: Message,
       href: "/admin/guestbook",
       badge: pendingCount > 0 ? `${pendingCount} pending` : null,
     },

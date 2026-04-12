@@ -17,7 +17,7 @@
 - Workspace packages: `apps/*`, `packages/*`, `services/*`
 - Package manager: pnpm 10 + Turborepo 2
 - `apps/docs-hub/` — current Mintlify docs (to be trimmed, not deleted)
-- `packages/custom-ui/` → `@nebutra/ui` — component library (tsup-built, dist/)
+- `packages/ui/` → `@nebutra/ui` — component library (tsup-built, dist/)
 - `apps/storybook/` — Storybook 8 (unchanged)
 
 ### Content to migrate (from `apps/docs-hub/design-system/`)
@@ -212,7 +212,7 @@ git commit -m "feat(design-docs): add Next.js config with fumadocs-mdx + transpi
 **Files:**
 - Create: `apps/design-docs/src/app/globals.css`
 
-The project uses Tailwind v4 which is CSS-first (no `tailwind.config.ts` needed). Import the custom-ui CSS variables as well.
+The project uses Tailwind v4 which is CSS-first (no `tailwind.config.ts` needed). Import the ui CSS variables as well.
 
 **Step 1: Write globals.css**
 
@@ -236,7 +236,7 @@ If using the built dist, the path is `@nebutra/ui/styles/globals.css` (as export
 
 ```bash
 git add apps/design-docs/src/app/globals.css
-git commit -m "feat(design-docs): add Tailwind v4 + custom-ui globals.css"
+git commit -m "feat(design-docs): add Tailwind v4 + ui globals.css"
 ```
 
 ---
@@ -1042,7 +1042,7 @@ git commit -m "chore(docs-hub): remove design-system navigation groups (moved to
 
 ```bash
 git add package.json
-git commit -m "chore: add dev:design script for design-docs + custom-ui watch"
+git commit -m "chore: add dev:design script for design-docs + ui watch"
 ```
 
 ---

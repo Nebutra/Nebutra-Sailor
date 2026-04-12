@@ -11,7 +11,8 @@
     "resources": "资源",
     "signIn": "登录控制台",
     "getStarted": "免费部署",
-    "changelog": "更新日志"
+    "changelog": "更新日志",
+    "impact": "宣言 (Impact)"
   },
   "hero": {
     "badge": "Nebutra Intelligence · 领先的 AI SaaS 基础架构",
@@ -131,7 +132,8 @@
       "faq": "常见问题",
       "github": "GitHub",
       "discord": "Discord",
-      "twitter": "X (Twitter)"
+      "twitter": "X (Twitter)",
+      "licensing": "授权与协议"
     },
     "copyright": "© 2026 Nebutra Intelligence. 保留所有权利。",
     "statusOnline": "所有子系统在线运行",
@@ -176,37 +178,37 @@
   },
   "legalPages": {
     "about": {
-      "title": "关于我们 — Nebutra Intelligence",
+      "title": "关于我们 — 元独角兽引擎",
       "description": "了解 Nebutra 的商业愿景以及对构建 AI Native + OPC Infrastructure 解决方案的承诺。",
-      "heading": "公司概况",
-      "subheading": "领先的 AI Native + OPC Infrastructure 解决方案提供商。",
-      "missionTitle": "企业使命",
-      "missionP1": "无锡云毓智能科技有限公司（Nebutra Intelligence） 是一家极客驱动的 AI 原生初创企业，致力于让技术创新与商业增长民主化、智能化、轻量化。作为“Vibe Business（氛围创业）”理念的开创者，我们深知在 AI 能够极速生成代码（Vibe Coding）的今天，完成从 0 开始的创意 Demo 已非难事；但跨越数据安全、多租户高并发架构与全球化计费变现这“最后 10% 的工程鸿沟”，却是无数创业者的梦魇。我们的使命，便是帮您逾越这道鸿沟，将单纯的“技术演示”极速转化为真正可持续盈利的商业产品。",
-      "missionP2": "云毓智能的核心竞争力，源自我们自主研发的旗舰开源设施——云毓万象（Nebutra Sailor）。这是一款专为构建现代化多租户平台而生的企业级 AI 原生 SaaS 全栈架构。平台生而具备全球化基因（Day 1 出海），深度整合了 Next.js 全链路生态、大模型矩阵与 RAG 向量检索。我们在底层运用 Harness Engineering（治理工程学）构筑了坚不可摧的分布式 Saga 调度与安全合规体系；在应用层则通过深入的 Agentic Engineering（智能体工程）抽象出完整的 MCP 智能 Agent 工作流。它提供了开箱即用的自动化订阅与企业级高可用隔离体系，让即便是“一人公司”或极客团队，也能直接调用比肩科技巨头的基础设施能力。",
-      "missionP3": "依托强大的核心底座，公司已形成三大主营业务闭环：首先是提供企业级敏捷底层基座方案，为商业客户私有化部署全栈业务中枢与 AI 引擎；其次是开展跨数字生态的 Vibe Business 联合孵化，面向海外市场赋能优秀创业者极速验证商业直觉，共同孵化具备高人效杠杆的下一代“独角兽”项目；最后是提供数智化深度定制服务，将底层技术与业务流深度结合，赋能垂直实体与政企单位完成数字化重构。",
-      "missionP4": "“云端聚合，孕育智能”。云毓智能坚信，在这个加速度时代，快速落地的架构能力与商业纠错的执行力是唯一的护城河。每一次上线，都是增长在场；我们将以持续创新的基础设施，成为每一位航向商业星海的探索者最可靠的技术合伙人。",
-      "valuesTitle": "核心技术价值观",
+      "heading": "The Era of Super Individuals",
+      "subheading": "终结依靠人海战术的扩张主义，用最极端的 AI 杠杆，成就有创造力的「超级个体」。",
+      "missionTitle": "抵抗人治腐化的新秩序",
+      "missionP1": "Nebutra 致力于成为全球首个元独角兽（Meta-Unicorn）生态系统。在传统的商业世界中，规模扩张往往伴随着官僚主义与内部消耗。我们正在用极其激进的代码治理（Code is Law）去终结这一规模诅咒。我们不仅要孵化独角兽，更要构建一台能够跨越资本壁垒、用自动化工作流对抗人类管理熵增的造物主引擎。",
+      "missionP2": "商业的本质是生产要素的重组——但在过去它充满了门阀与信息差的摩擦力。在 Nebutra 的超级神经网络里，任何独立开发者只要交付可验证的工作量（Proof of Work），底层的推荐算法与 Sleptons 路由器就会精准地将顶尖人才、信任架构与算法资本自动输送到位，从而将“创业”降维成一条充满确定性的标准化路径。",
+      "missionP3": "Nebutra 坚决反对传统企业“加人加层级”的解法。我们在所有业务节点推动 AI Agent 100% 自动托底。我们绝不雇佣被动执行的螺丝钉，只吸纳、投资并成就那些最具洞察力的造物主。",
+      "missionP4": "",
+      "valuesTitle": "四大核心基石 (The 4 Pillars)",
       "values": {
         "0": {
-          "title": "AGI 导向架构 (AGI Architecture)",
-          "description": "为自治智能时代构建，提供大语言模型与智能体全球化无缝交互的基础设施级支柱。"
+          "title": "无限裂变 (Philosophy)",
+          "description": "拒绝横向无限堆叠的规模神话，每一家由 Nebutra 孵化的微型企业，都拥有用极低人力撬动十亿美元价值的潜能。"
         },
         "1": {
-          "title": "对齐与绝对安全 (Security Alignment)",
-          "description": "自第一行代码起，即默认强制执行行级数据访问控制（RLS）、全链路加密与不可磨灭的系统级审计。"
+          "title": "造物主基座 (Builder Core)",
+          "description": "超越开源协同与通用脚手架。单兵即拥有包含鉴权、企业级鉴权与多租户隔离的全套军火库，一周上线独角兽项目。"
         },
         "2": {
-          "title": "卓越的极客体验 (Vibe Ergonomics)",
-          "description": "研发效率是第一生产力。我们追求极低的 API 延迟、极尽优雅的代码接口以及高度结构化的技术指引手册。"
+          "title": "无摩擦路由 (Frictionless Flow)",
+          "description": "算法接管招聘逻辑与资本注入，让 MRR 曲线与代码仓库频率说话。让钱直接打向最高效运行的底层堆栈。"
         },
         "3": {
-          "title": "全球化无缝扩张 (Global Scale)",
-          "description": "拒绝任何妥协。在真实的、高并发的商业环境中淬炼每个组件，从上线第一天起即保证企业级持续稳定供能。"
+          "title": "算法即共识 (Code is Law)",
+          "description": "抹杀办公室政治与人情世故。证明你的技术边界（Show me the code），算法会自动为你升阶至最高统治力。"
         }
       },
-      "jobsTitle": "核心基础设施工程机会",
-      "jobsDescription": "我们正在急剧扩充核心基础设施团队。加入我们，共同铸就下一代 AI 原生企业级解决方案。",
-      "jobsButton": "查看开放职位",
+      "jobsTitle": "消灭传统的 JD/简历招聘",
+      "jobsDescription": "不看学历、不查背景调查，只要你的 Proof-of-Work 和审美能通过 Sleptons 的机器视觉测试验证标准。欢迎成为生态奠基人。",
+      "jobsButton": "提交 Github Profile",
       "companyInfoTitle": "组织与合规信息",
       "companyInfo": {
         "legalName": "法定实体名称",
@@ -1631,5 +1633,30 @@
     "desc": "您查找的页面可能已被移除或暂时不可用。",
     "home": "返回首页",
     "docs": "阅读文档"
+  },
+  "impact": {
+    "hero_eyebrow": "Nebutra 核心愿景白皮书",
+    "hero_title": "造物主生态引擎",
+    "hero_subtitle": "我们不仅要孵化独角兽，更要构建一条能够持续裂变独角兽的母体引擎。",
+    "phil_title": "Ⅰ. 核心哲学",
+    "phil_headline": "无限裂变，而非无限扩张",
+    "phil_desc": "传统商业巨头常陷入规模诅咒，依赖人海战术与层级堆叠维持统治。Nebutra 正在终结旧秩序。我们的社会级使命是将「创业」降维成一种智能化、轻量化、民主化的确定性路径，让它成为数字时代最优秀头脑的第一默认选项。这就是元独角兽（Meta-Unicorn）的核心哲学。",
+    "infra_title": "Ⅱ. 超级基建",
+    "infra_headline": "AI 原生的全矩阵聚合体",
+    "infra_desc": "Nebutra 不是对现有工具的简单缝合，而是打造覆盖“灵感”到“垄断”的全生命周期造物主引擎。",
+    "infra_1_title": "极大集成架构模型",
+    "infra_1_desc": "超越传统协同工具。以 50+ 模块封装鉴权、交易、多租户等痛点，单兵一周交付独角兽级产品。",
+    "infra_2_title": "分发与验证台",
+    "infra_2_desc": "抛弃传统买量流量场，引入黑客极客生态驱动推荐分发。发布首日即获取真实市场的毒打与检验。",
+    "infra_3_title": "Sleptons 路由器",
+    "infra_3_desc": "意图颠覆猎头逻辑，基于工作量证明 (Proof of Work) 深度语义匹配合伙人技术栈与共鸣。",
+    "infra_4_title": "算法驱动新资本",
+    "infra_4_desc": "资本注入不看 PPT 与人情人脉，只评估真实的 MRR 曲线与 Git 交付速度，让钱无摩擦地自由流动。",
+    "route_title": "Ⅲ. 全要素路由",
+    "route_headline": "消除生产力流动的绝对摩擦力",
+    "route_desc": "Nebutra 正在构建一张穿透物理与门阀壁垒的超级神经网络。让顶尖的代码、人才组建信任；让资本毫不犹豫地打向这些节点。信息再无滞留，共识畅通无阻，实现全要素低摩擦再重组。",
+    "org_title": "Ⅳ. 组织演进",
+    "org_headline": "逆转大公司病：对抗人治腐化",
+    "org_desc": "当面临规模爆发，坚决反对依靠“增加中层管理”来续命。在我们的共识里，代码构筑规则，AI 代替人工。让人类的天才大脑只保留极少数用来专注「创造」与「洞察」。"
   }
 }

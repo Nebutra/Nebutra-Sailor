@@ -1,4 +1,5 @@
 "use client";
+import { brandSpring } from "@nebutra/brand";
 import { motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
@@ -37,8 +38,8 @@ export function LanguageSwitcher() {
             {isActive && (
               <motion.div
                 layoutId="lang-pill"
-                className="absolute inset-0 bg-background rounded-full shadow-sm"
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                className="absolute inset-0 z-0 bg-background rounded-full shadow-sm"
+                transition={brandSpring}
               />
             )}
             <span

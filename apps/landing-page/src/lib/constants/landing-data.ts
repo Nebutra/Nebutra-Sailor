@@ -371,6 +371,7 @@ export const NAV_LINKS = [
   { labelKey: "features", href: "/features" },
   { labelKey: "pricing", href: "/pricing" },
   { labelKey: "about", href: "/about" },
+  { labelKey: "impact", href: "/impact" },
   {
     labelKey: "resources",
     children: [

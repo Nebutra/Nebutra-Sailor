@@ -1,4 +1,6 @@
-"use client";
+import React from "react";
+
+("use client");
 
 import { ChevronDown } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
@@ -54,7 +56,9 @@ export function DesktopNav() {
             className="whitespace-nowrap flex items-center gap-1.5 text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
             {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
           >
-            {link.icon ? <link.icon className="h-4 w-4" /> : null}
+            {(link as any).icon
+              ? React.createElement((link as any).icon, { className: "h-4 w-4" })
+              : null}
             {t(link.labelKey as any)}
           </Component>
         );

@@ -12,7 +12,7 @@ export const Slider = ({ onValueChange, value }: SliderProps) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    let theme;
+    let theme: string;
     if (typeof window === "undefined") {
       theme = "system";
     } else {

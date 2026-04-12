@@ -100,7 +100,8 @@ export async function initCommand(options: InitOptions = {}) {
       ? JSON.parse(fs.readFileSync(configPath, "utf-8"))
       : undefined;
 
-    const _diff = generateDiff(configPath, config, existingConfig);
+    const diff = generateDiff(configPath, config, existingConfig);
+    console.log(JSON.stringify(diff, null, 2));
 
     logger.info("Dry-run completed. No changes made.");
     process.exit(ExitCode.DRY_RUN_OK);

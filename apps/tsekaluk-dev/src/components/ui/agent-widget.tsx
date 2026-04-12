@@ -1,7 +1,7 @@
 "use client";
 
+import { Cross, Message } from "@nebutra/icons";
 import { AnimatePresence, motion } from "framer-motion";
-import { MessageCircle, X } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import * as React from "react";
@@ -50,7 +50,7 @@ export function AgentWidget() {
                 className="p-1.5 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:text-gray-300 dark:hover:bg-gray-800/50 transition-colors"
                 aria-label="Close chat"
               >
-                <X className="h-4 w-4" />
+                <Cross className="h-4 w-4" />
               </button>
             </div>
 
@@ -77,7 +77,7 @@ export function AgentWidget() {
               exit={{ opacity: 0, rotate: 90 }}
               transition={{ duration: 0.15 }}
             >
-              <X className="h-6 w-6" />
+              <Cross className="h-6 w-6" />
             </motion.div>
           ) : (
             <motion.div
@@ -87,7 +87,7 @@ export function AgentWidget() {
               exit={{ opacity: 0, rotate: -90 }}
               transition={{ duration: 0.15 }}
             >
-              <MessageCircle className="h-6 w-6" />
+              <Message className="h-6 w-6" />
             </motion.div>
           )}
         </AnimatePresence>

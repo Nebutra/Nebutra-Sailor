@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, RefreshCw, Save, Trash2 } from "lucide-react";
+import { Download, Plus, RefreshClockwise, Trash } from "@nebutra/icons";
 import { useCallback, useEffect, useState } from "react";
 
 interface NowEntry {
@@ -163,7 +163,7 @@ export default function AdminNowPage() {
           aria-label="Refresh"
           className="inline-flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
         >
-          <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+          <RefreshClockwise className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
         </button>
       </div>
 
@@ -213,9 +213,9 @@ export default function AdminNowPage() {
             className="inline-flex items-center gap-2 rounded-full bg-gray-900 dark:bg-white px-5 py-2.5 text-sm font-medium text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:opacity-50"
           >
             {saving ? (
-              <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+              <RefreshClockwise className="h-3.5 w-3.5 animate-spin" />
             ) : entry ? (
-              <Save className="h-3.5 w-3.5" />
+              <Download className="h-3.5 w-3.5" />
             ) : (
               <Plus className="h-3.5 w-3.5" />
             )}
@@ -229,9 +229,9 @@ export default function AdminNowPage() {
               className="inline-flex items-center gap-2 rounded-full bg-red-100 dark:bg-red-900/30 px-4 py-2.5 text-sm font-medium text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50"
             >
               {deleting ? (
-                <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                <RefreshClockwise className="h-3.5 w-3.5 animate-spin" />
               ) : (
-                <Trash2 className="h-3.5 w-3.5" />
+                <Trash className="h-3.5 w-3.5" />
               )}
               {deleting ? "Deleting..." : "Delete"}
             </button>

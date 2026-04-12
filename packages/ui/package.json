@@ -25,17 +25,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
-    "@heroui/calendar": "^2.2.31",
-    "@heroui/card": "^2.2.27",
-    "@heroui/checkbox": "^2.3.31",
-    "@heroui/date-input": "^2.3.31",
-    "@heroui/date-picker": "^2.3.32",
-    "@heroui/popover": "^2.3.31",
-    "@heroui/progress": "^2.2.24",
-    "@heroui/select": "^2.4.32",
-    "@heroui/skeleton": "^2.2.18",
-    "@heroui/slider": "^2.4.29",
-    "@heroui/theme": "^2.4.26",
+
     "@icons-pack/react-simple-icons": "^13.13.0",
     "@internationalized/date": "3.12.0",
     "@lobehub/fluent-emoji": "^4.1.0",

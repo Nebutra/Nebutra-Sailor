@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowLeft, Warning } from "@nebutra/icons";
 import { motion, type Variants } from "framer-motion";
-import { AlertTriangle, ArrowLeft } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Suspense } from "react";
@@ -48,7 +48,7 @@ function ErrorContent() {
     >
       <motion.div variants={itemVariants} className="mb-6 flex justify-center">
         <div className="w-16 h-16 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400">
-          <AlertTriangle className="w-8 h-8" />
+          <Warning className="w-8 h-8" />
         </div>
       </motion.div>
 

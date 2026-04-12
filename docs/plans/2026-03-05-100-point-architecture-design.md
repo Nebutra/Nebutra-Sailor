@@ -7,7 +7,7 @@ Status: Approved
 
 12-point gap from 100/100 against 2026 SV unicorn standards. Root causes:
 
-1. **No token SSOT** — HEX (custom-ui) + HSL (@theme) + oklch (themes.css) coexist. 455 raw Tailwind violations.
+1. **No token SSOT** — HEX (ui) + HSL (@theme) + oklch (themes.css) coexist. 455 raw Tailwind violations.
 2. **API not type-safe** — OpenAPI skeleton only, repositories empty, webhooks unvalidated.
 3. **CSP unsafe-inline** — No nonce middleware.
 
@@ -15,7 +15,7 @@ Status: Approved
 
 ### WS1: Token Codemod + ESLint Rule
 
-**Scope:** `packages/custom-ui/src/`, `apps/web/src/`, `apps/landing-page/src/`, `eslint.config.mjs`
+**Scope:** `packages/ui/src/`, `apps/web/src/`, `apps/landing-page/src/`, `eslint.config.mjs`
 
 **Deliverables:**
 1. `scripts/codemod-tokens.ts` — regex-based transformer:

@@ -65,14 +65,7 @@ function buildDryRunPreview(components: string[], options: AddOptions): Record<s
   }
 
   if (components.length > 0 && !options["21st"] && !options.v0) {
-    for (const component of components) {
-      preview.operations.push({
-        type: "install-heroui",
-        component,
-        source: "heroui-cli",
-        command: `npx heroui-cli@latest add ${component}`,
-      });
-    }
+    logger.warn("Legacy HeroUI component addition is no longer supported.");
   }
 
   return preview;
@@ -179,42 +172,11 @@ export async function addCommand(components: string[], options: AddOptions) {
     }
   }
 
-  // Handle standard HeroUI components
-  try {
-    // Instead of a proprietary registry, Nebutra leverages HeroUI for base components.
-    // If they want raw Tailwind/Radix, they use --21st or --v0.
-    // Otherwise, standard `add` implies adding to the core design system (HeroUI).
-
-    if (components.length > 0) {
-      const shouldProceed =
-        skipPrompts ||
-        (await p.confirm({
-          message: `Install ${components.length} component(s): ${components.join(", ")}?`,
-          initialValue: true,
-        }));
-
-      if (p.isCancel(shouldProceed) || !shouldProceed) {
-        p.log.info("Installation cancelled.");
-        process.exit(ExitCode.CANCELLED);
-      }
-
-      const spinner = p.spinner();
-      spinner.start(`Installing ${components.length} component(s)...`);
-
-      for (const component of components) {
-        const addCmd = `npx heroui-cli@latest add ${component}`;
-        execSync(addCmd, { stdio: "pipe" });
-      }
-
-      spinner.stop(`Successfully installed ${components.length} component(s)`);
-      logger.success(`Installed: ${components.join(", ")}`);
-    }
-
-    process.exit(ExitCode.SUCCESS);
-  } catch (error: unknown) {
-    logger.error(
-      `Failed to install components: ${error instanceof Error ? error.message : "Unknown error"}`,
-    );
-    process.exit(ExitCode.ERROR);
+  if (components.length > 0) {
+    logger.warn("Legacy HeroUI component addition is no longer supported.");
+    logger.info("Please use --21st <id> or --v0 <url> exclusively.");
+    process.exit(ExitCode.INVALID_ARGS);
   }
+
+  process.exit(ExitCode.SUCCESS);
 }

@@ -675,3 +675,45 @@ export async function sendPlanChangedEmail(opts: {
     tags: [{ name: "type", value: "plan_changed" }],
   });
 }
+
+/**
+ * License created email sent when a user claims their OPC/STARTUP license.
+ */
+export async function sendLicenseCreatedEmail(opts: {
+  to: string;
+  firstName: string;
+  licenseKey: string;
+  tier: string;
+}): Promise<SendResult> {
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Welcome to Nebutra-Sailor! 🚀</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      Hi ${opts.firstName}, your <strong>${opts.tier}</strong> license has been successfully generated.
+    </p>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      Your official License Key is:
+    </p>
+    <div style="background:#0f172a;border-radius:8px;padding:16px 20px;margin:0 0 24px;overflow-x:auto;">
+      <code style="color:#0BF1C3;font-family:'Courier New',monospace;font-size:13px;word-break:break-all;">${opts.licenseKey}</code>
+    </div>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      To unlock the premium capabilities of the Nebutra CLI locally, run the following command in your terminal:
+    </p>
+    <div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin:0 0 24px;">
+      <code style="color:#334155;font-family:'Courier New',monospace;font-size:13px;">nebutra license activate ${opts.licenseKey}</code>
+    </div>
+    <p style="margin:0;font-size:13px;color:#94a3b8;">
+      If you have questions, reply to this email or visit our <a href="https://docs.nebutra.ai" style="color:#0033FE;">documentation</a>.
+    </p>
+    `,
+    "Your Nebutra License Key is Ready",
+  );
+
+  return send({
+    to: opts.to,
+    subject: `Your Nebutra License Key is Ready (${opts.tier})`,
+    html,
+    tags: [{ name: "type", value: "license_created" }],
+  });
+}
