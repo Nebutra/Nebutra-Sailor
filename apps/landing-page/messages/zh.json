@@ -226,6 +226,10 @@
       "heading": "建立支持联结",
       "subheading": "我们将指派对应的技术专员或架构师跟进您的具体需求。",
       "contacts": {
+        "founder": {
+          "title": "创始人信箱",
+          "description": "针对核心战略布局及深度业务协同等高级别事项的直达联络通道。"
+        },
         "general": {
           "title": "企业综合咨询",
           "description": "针对生态战略合作及产品整体演进规划的初步探讨。"

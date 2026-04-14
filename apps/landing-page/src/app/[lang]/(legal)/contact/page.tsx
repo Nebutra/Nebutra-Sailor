@@ -35,6 +35,11 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
       description: t("contact.contacts.general.description"),
     },
     {
+      title: t("contact.contacts.founder.title"),
+      email: "tseka@nebutra.com",
+      description: t("contact.contacts.founder.description"),
+    },
+    {
       title: t("contact.contacts.sales.title"),
       email: "sales@nebutra.com",
       description: t("contact.contacts.sales.description"),

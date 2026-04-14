@@ -226,6 +226,10 @@
       "heading": "Establish Support Connection",
       "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
       "contacts": {
+        "founder": {
+          "title": "Founder Direct",
+          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+        },
         "general": {
           "title": "Enterprise Consultation",
           "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."

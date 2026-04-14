@@ -191,9 +191,9 @@ export const footerContent = {
 // =============================================================================
 
 export const seoContent = {
-  title: "Nebutra Sailor — The Open-Source Enterprise SaaS Framework",
+  title: "云毓智能官网 — 综合门户与产品矩阵",
   description:
-    "Ship your SaaS in weeks, not months. Multi-tenancy, billing, auth, and AI built in. Production-ready, AGPLv3 licensed.",
+    "提供产品介绍、用户登录及SaaS服务平台。云毓智能致力于提供企业级的解决方案与全栈式的 AI 技术支持。",
   keywords: [
     "saas framework",
     "multi-tenant",
