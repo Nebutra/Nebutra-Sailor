@@ -1,0 +1,86 @@
+name: Sync to sailor-template
+
+# Mirrors Nebutra-Sailor main → nebutra/sailor-template (stripped skeleton)
+# Consumed by `create-sailor` at scaffold time for faster, cleaner cloning.
+#
+# Required repo secrets:
+#   TEMPLATE_PUSH_TOKEN   PAT with repo scope, authorized for nebutra/sailor-template
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "**/*.md"
+      - ".github/**"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build only, do not push"
+        type: boolean
+        default: false
+
+concurrency:
+  group: sync-template
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Verify .templateignore
+        run: pnpm template:check
+
+      - name: Build template
+        run: pnpm tsx scripts/template-build.ts --out=/tmp/sailor-template
+
+      - name: Verify built template is not empty
+        run: |
+          count=$(find /tmp/sailor-template -type f | wc -l)
+          echo "Built template contains $count files"
+          if [ "$count" -lt 100 ]; then
+            echo "::error::Built template is suspiciously small (< 100 files)"
+            exit 1
+          fi
+
+      - name: Push to sailor-template
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.TEMPLATE_PUSH_TOKEN }}
+        with:
+          source-directory: /tmp/sailor-template
+          destination-github-username: Nebutra
+          destination-repository-name: Sailor-Template
+          user-email: bot@nebutra.com
+          user-name: Sailor Template Bot
+          target-branch: main
+          commit-message: "chore: sync from Nebutra-Sailor@${{ github.sha }}"
+
+      - name: Summary
+        run: |
+          echo "### Template sync summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Source SHA: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- File count: $(find /tmp/sailor-template -type f | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- Pushed: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}" >> $GITHUB_STEP_SUMMARY

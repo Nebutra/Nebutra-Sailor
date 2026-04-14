@@ -45,10 +45,72 @@ function createPrismaClient(): PrismaClient {
 
   const adapter = new PrismaPg(pool);
 
-  return new PrismaClient({
+  const baseClient = new PrismaClient({
     adapter,
     log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
   });
+
+  return baseClient.$extends({
+    query: {
+      integration: {
+        async $allOperations({ operation, args, query }) {
+          // Encrypt on write
+          if (["create", "update", "upsert"].includes(operation)) {
+            const vault = await import("@nebutra/vault").then((m) => m.getVault());
+            if (operation === "upsert" && args.create && args.update) {
+              if ((args.create as any).credentials) {
+                (args.create as any).credentials = await vault.encrypt(
+                  JSON.stringify((args.create as any).credentials),
+                );
+              }
+              if ((args.update as any).credentials) {
+                (args.update as any).credentials = await vault.encrypt(
+                  JSON.stringify((args.update as any).credentials),
+                );
+              }
+            } else if ((args as any).data?.credentials) {
+              (args as any).data.credentials = await vault.encrypt(
+                JSON.stringify((args as any).data.credentials),
+              );
+            }
+          }
+
+          // Execute query
+          const result = await query(args);
+
+          // Decrypt on read
+          if (result) {
+            const decryptRecord = async (record: any) => {
+              if (
+                record?.credentials &&
+                typeof record.credentials === "object" &&
+                "ciphertext" in record.credentials &&
+                "encryptedDek" in record.credentials
+              ) {
+                try {
+                  const vault = await import("@nebutra/vault").then((m) => m.getVault());
+                  const decrypted = await vault.decrypt(record.credentials as any);
+                  record.credentials = JSON.parse(decrypted);
+                } catch (err) {
+                  logger.warn("[db] Failed to decrypt integration credentials", {
+                    error: err instanceof Error ? err.message : String(err),
+                  });
+                }
+              }
+            };
+
+            if (Array.isArray(result)) {
+              await Promise.all(result.map(decryptRecord));
+            } else {
+              await decryptRecord(result);
+            }
+          }
+
+          return result as any;
+        },
+      },
+    },
+  }) as unknown as PrismaClient; // Cast to retain type compatibility if needed, or let Prisma infer it
 }
 
 // Lazy singleton — the client is NOT created on import, only on first property
