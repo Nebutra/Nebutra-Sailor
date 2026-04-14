@@ -190,6 +190,86 @@ function pruneEmptyDirs(dir: string): boolean {
   return false;
 }
 
+/**
+ * Inject the license model into the mirror repo so consumers cloning
+ * directly (without create-sailor) still see the same legal guardrails.
+ */
+function injectLicenseAndMarker(targetDir: string): void {
+  // 1. Ensure LICENSE (AGPL-3.0) exists — source repo should already ship it.
+  const licensePath = path.join(targetDir, "LICENSE");
+  if (!fs.existsSync(licensePath)) {
+    // Fail loud rather than silently shipping a template without a license.
+    throw new Error("LICENSE missing from template output. Refusing to push.");
+  }
+
+  // 2. Ensure LICENSE-COMMERCIAL.md is present.
+  const commercialPath = path.join(targetDir, "LICENSE-COMMERCIAL.md");
+  if (!fs.existsSync(commercialPath)) {
+    throw new Error("LICENSE-COMMERCIAL.md missing. Refusing to push.");
+  }
+
+  // 3. Inject NOTICE.md summarizing the dual-license model.
+  const notice = [
+    "# NOTICE · Sailor Template Licensing",
+    "",
+    "This template is distributed under a **dual-license** model:",
+    "",
+    "## 1. Open-source license — AGPL-3.0",
+    "See [LICENSE](./LICENSE). If you deploy the software as a network",
+    "service, AGPL requires you to make your source code available to users.",
+    "",
+    "## 2. Commercial License Exception",
+    "See [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md). Three tiers:",
+    "",
+    "| Tier | Who | Cost |",
+    "|------|-----|------|",
+    "| Individual / OPC | Solo / annual revenue < $1M | **Free** — [register here](https://nebutra.com/get-license) |",
+    "| Startup | ≤ 5 employees | $799/year — [buy here](https://nebutra.com/licensing) |",
+    "| Enterprise | Business / SI / OEM | Contact sales |",
+    "",
+    "## Why dual-license?",
+    "Keeping the codebase under AGPL lets the community learn, audit, and",
+    "contribute. The commercial exception lets businesses ship products",
+    "without opening their source — sustaining full-time engineering on",
+    "the template + ecosystem.",
+    "",
+    "**Self-attest your tier when you scaffold:**",
+    "```bash",
+    "npm create sailor@latest",
+    "# CLI will ask which tier applies. Individual/OPC is free.",
+    "```",
+    "",
+    "## Questions",
+    "- Website: https://nebutra.com",
+    "- Licensing: https://nebutra.com/licensing",
+    "- Email: licensing@nebutra.com",
+    "",
+    "---",
+    "",
+    "_This NOTICE is injected automatically by the sync-template workflow_",
+    "_and represents the licensing model at the time of the last sync._",
+    "",
+  ].join("\n");
+  fs.writeFileSync(path.join(targetDir, "NOTICE.md"), notice);
+
+  // 4. Marker file — lets tools detect "this is a pre-stripped mirror".
+  const marker = {
+    type: "sailor-template-mirror",
+    sourceRepo: "Nebutra/Nebutra-Sailor",
+    syncedAt: new Date().toISOString(),
+    license: {
+      open: "AGPL-3.0",
+      commercialException: "LICENSE-COMMERCIAL.md",
+    },
+    readonly: true,
+    note: "PRs to this repo are closed. Open PRs against Nebutra/Nebutra-Sailor.",
+  };
+  fs.writeFileSync(
+    path.join(targetDir, ".sailor-template.json"),
+    `${JSON.stringify(marker, null, 2)}\n`,
+  );
+}
+
 function initGit(targetDir: string): void {
   try {
     execSync("git init -q", { cwd: targetDir, stdio: "inherit" });
@@ -218,15 +298,19 @@ function main(): void {
   const copied = copyTree(REPO_ROOT, out, args.verbose);
   process.stdout.write(`  copied ${copied} files\n`);
 
-  process.stdout.write("Step 2/3: applying .templateignore…\n");
+  process.stdout.write("Step 2/4: applying .templateignore…\n");
   const stripped = applyTemplateIgnore(out, args.verbose);
   process.stdout.write(`  stripped ${stripped} paths\n`);
 
+  process.stdout.write("Step 3/4: injecting license & template marker…\n");
+  injectLicenseAndMarker(out);
+  process.stdout.write("  injected LICENSE, LICENSE-COMMERCIAL.md, NOTICE.md, .sailor-template\n");
+
   if (args.git) {
-    process.stdout.write("Step 3/3: initializing git repo…\n");
+    process.stdout.write("Step 4/4: initializing git repo…\n");
     initGit(out);
   } else {
-    process.stdout.write("Step 3/3: skipping git init (pass --git to enable)\n");
+    process.stdout.write("Step 4/4: skipping git init (pass --git to enable)\n");
   }
 
   process.stdout.write(`\nDone. Template built at: ${out}\n`);

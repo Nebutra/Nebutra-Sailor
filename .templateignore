@@ -1,0 +1,135 @@
+# .templateignore
+#
+# Gitignore-syntax manifest of files stripped when `create-sailor` scaffolds
+# a new project from this repo. Nebutra-Sailor is simultaneously (1) the
+# template source and (2) Nebutra's live product codebase — this file
+# separates Nebutra-specific business content from the reusable skeleton.
+#
+# Rules:
+#   - Use gitignore syntax (supports globs, negation with `!`).
+#   - Keep packages/* fully intact (they are the reusable primitives).
+#   - Preserve skeleton files (layout.tsx, globals.css, package.json, etc.).
+#   - When adding new Nebutra-owned code, add it here.
+#
+# Validate: `pnpm template:check`
+
+# ---------------------------------------------------------------------------
+# Nebutra landing-page business content
+# Marketing, legal, blog, changelog — all Nebutra-owned pages & sections.
+# The shell (layout, globals, next.config, package.json) is preserved.
+# ---------------------------------------------------------------------------
+apps/landing-page/src/app/[lang]/(marketing)/
+apps/landing-page/src/app/[lang]/(legal)/
+apps/landing-page/src/components/landing/
+apps/landing-page/public/og/
+apps/landing-page/public/brand/
+apps/landing-page/public/brand-compliant/
+apps/landing-page/public/screenshots/
+apps/landing-page/public/images/
+apps/landing-page/public/animations/
+apps/landing-page/src/app/api/changelog/
+apps/landing-page/src/app/api/license/
+apps/landing-page/src/lib/constants/landing-data.ts
+
+# ---------------------------------------------------------------------------
+# Nebutra dashboard (apps/web) business surfaces
+# Keep the locale shell + layout; strip Nebutra-specific feature pages.
+# ---------------------------------------------------------------------------
+apps/web/src/app/[locale]/(app)/admin/
+apps/web/src/app/[locale]/(app)/billing/
+apps/web/src/app/[locale]/(app)/analytics/
+apps/web/src/app/[locale]/(app)/audit/
+apps/web/src/app/[locale]/(app)/chat/
+apps/web/src/app/[locale]/(app)/integrations/
+apps/web/src/app/[locale]/(app)/tenants/
+apps/web/src/app/[locale]/(app)/usage/
+apps/web/src/app/[locale]/(app)/feature-flags/
+apps/web/src/app/[locale]/demo/
+
+# ---------------------------------------------------------------------------
+# Nebutra-owned apps (not reusable skeleton)
+# Community = Sleptons forum. tsekaluk-dev = personal site.
+# design-docs + docs-hub + studio are Nebutra-authored content systems.
+# ---------------------------------------------------------------------------
+apps/community/
+apps/tsekaluk-dev/
+apps/design-docs/content/
+apps/docs-hub/
+apps/studio/
+apps/docs/
+
+# ---------------------------------------------------------------------------
+# Marketing, PR, and changelog content
+# ---------------------------------------------------------------------------
+marketing/
+changelog/
+WHITELABEL.md
+BRAND_GUIDELINES.md
+TRADEMARK.md
+# NOTE: LICENSE-COMMERCIAL.md MUST NOT be stripped — the dual-license
+# model is the core of the template's distribution. Keep it in the mirror.
+README.ja.md
+README.zh-CN.md
+brand.config.example.ts
+
+# ---------------------------------------------------------------------------
+# CI/build/test artifacts — should never ship in a fresh scaffold
+# ---------------------------------------------------------------------------
+artifacts/
+playwright-report/
+test-results/
+lighthouse-reports/
+coverage/
+.turbo/
+.next/
+dist/
+build/
+node_modules/
+
+# ---------------------------------------------------------------------------
+# Internal planning/governance docs
+# ---------------------------------------------------------------------------
+docs/plans/
+docs/reports/
+docs/superpowers/
+docs/DOMAINS.md
+docs/阿里云ECS部署指南.md
+governance/*.current.json
+governance/ui-governance.v1.json
+
+# ---------------------------------------------------------------------------
+# Environment and locks containing Nebutra-specific configuration
+# ---------------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+openstatus.lock
+
+# ---------------------------------------------------------------------------
+# Nebutra-owned content for design-docs shell (keep the Fumadocs skeleton)
+# ---------------------------------------------------------------------------
+apps/design-docs/.source/
+
+# ---------------------------------------------------------------------------
+# Internal scripts that only make sense for the Nebutra repo itself
+# ---------------------------------------------------------------------------
+scripts/lighthouse/
+scripts/check-legal-keys.js
+scripts/check-missing-keys.js
+scripts/show-extra-keys.js
+
+# ---------------------------------------------------------------------------
+# E2E + load tests tied to Nebutra-specific flows
+# ---------------------------------------------------------------------------
+e2e/changelog.spec.ts
+e2e/showcase.spec.ts
+e2e/sleptons-flow.spec.ts
+tests/load/
+
+# ---------------------------------------------------------------------------
+# Template meta files (strip the ignore file itself after apply)
+# ---------------------------------------------------------------------------
+.templateignore
+TEMPLATE.md
