@@ -58,19 +58,23 @@ jobs:
             exit 1
           fi
 
-      - name: Push to sailor-template
+      - name: Push to Sailor-Template
         if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
-        uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.TEMPLATE_PUSH_TOKEN }}
-        with:
-          source-directory: /tmp/sailor-template
-          destination-github-username: Nebutra
-          destination-repository-name: Sailor-Template
-          user-email: bot@nebutra.com
-          user-name: Sailor Template Bot
-          target-branch: main
-          commit-message: "chore: sync from Nebutra-Sailor@${{ github.sha }}"
+          TEMPLATE_PUSH_TOKEN: ${{ secrets.TEMPLATE_PUSH_TOKEN }}
+          SRC_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          cd /tmp/sailor-template
+          git init -q
+          git config user.email "bot@nebutra.com"
+          git config user.name "Sailor Template Bot"
+          git checkout -q -b main
+          git add -A
+          git commit -q -m "chore: sync from Nebutra-Sailor@${SRC_SHA}"
+          # Force-push replaces whatever is there — acceptable for a mirror repo.
+          git remote add origin "https://x-access-token:${TEMPLATE_PUSH_TOKEN}@github.com/Nebutra/Sailor-Template.git"
+          git push -qf origin main
 
       - name: Summary
         run: |
