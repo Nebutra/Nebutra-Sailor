@@ -12,7 +12,7 @@ export const onePerson: PresetDefinition = {
     blog: true,
     admin: true,
     storybook: false,
-    "docs-hub": false,
+    "sailor-docs": false,
   },
   features: {
     billing: true,

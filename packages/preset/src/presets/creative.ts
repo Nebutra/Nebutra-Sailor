@@ -12,7 +12,7 @@ export const creative: PresetDefinition = {
     blog: true,
     admin: false,
     storybook: true,
-    "docs-hub": false,
+    "sailor-docs": false,
   },
   features: {
     billing: false,

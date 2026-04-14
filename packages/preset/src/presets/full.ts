@@ -12,7 +12,7 @@ export const full: PresetDefinition = {
     blog: true,
     admin: true,
     storybook: true,
-    "docs-hub": true,
+    "sailor-docs": true,
   },
   features: {
     billing: true,

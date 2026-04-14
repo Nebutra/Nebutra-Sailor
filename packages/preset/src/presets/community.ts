@@ -12,7 +12,7 @@ export const community: PresetDefinition = {
     blog: true,
     admin: false,
     storybook: false,
-    "docs-hub": false,
+    "sailor-docs": false,
   },
   features: {
     billing: false,

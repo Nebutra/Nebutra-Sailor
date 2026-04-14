@@ -12,7 +12,7 @@ export const overseas: PresetDefinition = {
     blog: true,
     admin: false,
     storybook: false,
-    "docs-hub": false,
+    "sailor-docs": false,
   },
   features: {
     billing: true,

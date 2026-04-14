@@ -12,7 +12,7 @@ export const aiSaas: PresetDefinition = {
     blog: false,
     admin: true,
     storybook: false,
-    "docs-hub": true,
+    "sailor-docs": true,
   },
   features: {
     billing: true,

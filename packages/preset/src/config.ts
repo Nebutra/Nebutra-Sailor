@@ -24,7 +24,7 @@ export const AppId = z.enum([
   "api-gateway",
   "studio",
   "storybook",
-  "docs-hub",
+  "sailor-docs",
 ]);
 
 export const FeatureId = z.enum([

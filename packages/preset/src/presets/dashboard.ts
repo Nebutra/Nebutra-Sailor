@@ -12,7 +12,7 @@ export const dashboard: PresetDefinition = {
     blog: false,
     admin: true,
     storybook: false,
-    "docs-hub": false,
+    "sailor-docs": false,
   },
   features: {
     billing: true,

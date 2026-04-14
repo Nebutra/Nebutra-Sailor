@@ -66,7 +66,7 @@ describe("AppId", () => {
       "api-gateway",
       "studio",
       "storybook",
-      "docs-hub",
+      "sailor-docs",
     ];
     for (const id of ids) {
       expect(AppId.parse(id)).toBe(id);

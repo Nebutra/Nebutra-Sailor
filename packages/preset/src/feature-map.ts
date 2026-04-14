@@ -8,7 +8,7 @@ const APP_PACKAGE_MAP: Record<string, string> = {
   "api-gateway": "@nebutra/api-gateway",
   studio: "@nebutra/studio",
   storybook: "@nebutra/storybook",
-  "docs-hub": "@nebutra/docs-hub",
+  "sailor-docs": "@nebutra/sailor-docs",
 };
 
 export function getFeatureEnvVars(config: ResolvedConfig): Record<string, string> {
