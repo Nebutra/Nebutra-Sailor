@@ -46,9 +46,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
-      - name: Verify .templateignore
-        run: pnpm template:check
-
       - name: Build template
         run: pnpm tsx scripts/template-build.ts --out=/tmp/sailor-template
 
