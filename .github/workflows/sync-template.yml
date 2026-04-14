@@ -58,11 +58,23 @@ jobs:
             exit 1
           fi
 
-      - name: Push to Sailor-Template
+      - name: Configure SSH for Sailor-Template
         if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
         env:
-          TEMPLATE_PUSH_TOKEN: ${{ secrets.TEMPLATE_PUSH_TOKEN }}
+          SAILOR_TEMPLATE_SSH_KEY: ${{ secrets.SAILOR_TEMPLATE_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${SAILOR_TEMPLATE_SSH_KEY}" > ~/.ssh/sailor_template
+          chmod 600 ~/.ssh/sailor_template
+          ssh-keyscan -t ed25519,rsa github.com >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Push to Sailor-Template (via SSH deploy key)
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        env:
           SRC_SHA: ${{ github.sha }}
+          GIT_SSH_COMMAND: "ssh -i ~/.ssh/sailor_template -o IdentitiesOnly=yes -o StrictHostKeyChecking=no"
         run: |
           set -euo pipefail
           cd /tmp/sailor-template
@@ -73,8 +85,12 @@ jobs:
           git add -A
           git commit -q -m "chore: sync from Nebutra-Sailor@${SRC_SHA}"
           # Force-push replaces whatever is there — acceptable for a mirror repo.
-          git remote add origin "https://x-access-token:${TEMPLATE_PUSH_TOKEN}@github.com/Nebutra/Sailor-Template.git"
+          git remote add origin "git@github.com:Nebutra/Sailor-Template.git"
           git push -qf origin main
+
+      - name: Clean up SSH key
+        if: always()
+        run: rm -f ~/.ssh/sailor_template
 
       - name: Summary
         run: |
