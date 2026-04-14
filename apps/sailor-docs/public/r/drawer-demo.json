@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "drawer-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/drawer-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  Drawer,\n  DrawerClose,\n  DrawerContent,\n  DrawerDescription,\n  DrawerFooter,\n  DrawerHeader,\n  DrawerTitle,\n  DrawerTrigger,\n} from \"@nebutra/ui/primitives\";\n\nexport function DrawerDemo() {\n  return (\n    <Drawer>\n      <DrawerTrigger asChild>\n        <Button variant=\"outline\">Open Drawer</Button>\n      </DrawerTrigger>\n      <DrawerContent>\n        <DrawerHeader>\n          <DrawerTitle>Edit Profile</DrawerTitle>\n          <DrawerDescription>Make changes to your profile here.</DrawerDescription>\n        </DrawerHeader>\n        <div className=\"px-4 py-2\">\n          <p className=\"text-sm text-muted-foreground\">Drawer body content.</p>\n        </div>\n        <DrawerFooter>\n          <Button>Save changes</Button>\n          <DrawerClose asChild>\n            <Button variant=\"outline\">Cancel</Button>\n          </DrawerClose>\n        </DrawerFooter>\n      </DrawerContent>\n    </Drawer>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

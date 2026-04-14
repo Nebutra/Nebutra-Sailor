@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-with-addons-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-with-addons-demo.tsx",
+      "content": "\"use client\";\n\nimport { Input } from \"@nebutra/ui/primitives\"; // Usually Input is exported\n\nexport function InputWithAddonsDemo() {\n  return (\n    <div className=\"gap-4 flex flex-col\">\n      {/* Domain hint */}\n      <Input\n        suffix={<span className=\"text-xs text-muted-foreground\">@nebutra.com</span>}\n        placeholder=\"username\"\n      />\n\n      {/* Currency */}\n      <Input\n        prefix={<span className=\"text-xs text-muted-foreground\">$</span>}\n        suffix={\n          <span className=\"text-xs font-medium pl-2 border-l text-muted-foreground\">USD</span>\n        }\n        type=\"number\"\n        placeholder=\"0.00\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

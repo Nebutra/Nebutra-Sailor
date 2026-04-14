@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/context-card-demo.tsx",
+      "content": "\"use client\";\n\nimport { ContextCard } from \"@nebutra/ui/primitives\";\n\nexport function ContextCardDemo() {\n  return (\n    <ContextCard.Trigger content=\"The Evil Rabbit Jumped over the Fence\" side=\"top\">\n      <span className=\"cursor-default underline decoration-dotted underline-offset-4\">\n        Hover over me\n      </span>\n    </ContextCard.Trigger>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feature-check-item-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/feature-check-item-demo.tsx",
+      "content": "import { FeatureCheckItem } from \"@nebutra/ui/primitives\";\nimport { ShieldCheck, Star } from \"lucide-react\";\n\nexport function FeatureCheckItemDemo() {\n  return (\n    <div className=\"gap-8 max-w-md p-8 my-8 mx-auto flex w-full flex-col rounded-xl border bg-background shadow-sm\">\n      <div>\n        <h3 className=\"text-lg font-semibold mb-4\">Pricing Plan Includes</h3>\n        <div className=\"gap-4 flex flex-col\">\n          <FeatureCheckItem\n            title=\"Unlimited Projects\"\n            description=\"Create as many projects as you need without any limits.\"\n          />\n          <FeatureCheckItem\n            title=\"Custom Domains\"\n            description=\"Connect your own domains with automated SSL generation.\"\n          />\n          <FeatureCheckItem\n            title=\"Team Collaboration\"\n            description=\"Invite unlimited team members with role-based access control.\"\n          />\n          <FeatureCheckItem title=\"Advanced Analytics\" />\n        </div>\n      </div>\n\n      <div className=\"pt-6 mt-2 border-t\">\n        <h3 className=\"text-sm font-semibold mb-4 tracking-wider text-muted-foreground uppercase\">\n          Custom Icons\n        </h3>\n        <div className=\"gap-4 flex flex-col\">\n          <FeatureCheckItem\n            icon={Star}\n            iconClassName=\"text-amber-500\"\n            title=\"Premium Support\"\n            description=\"24/7 priority support via email and Slack.\"\n          />\n          <FeatureCheckItem\n            icon={ShieldCheck}\n            iconClassName=\"text-emerald-500\"\n            title=\"Enterprise Security\"\n            description=\"SSO, audit logs, and compliance reporting.\"\n          />\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

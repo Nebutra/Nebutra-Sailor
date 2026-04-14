@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bento-grid-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/bento-grid-demo.tsx",
+      "content": "\"use client\";\n\nimport { BentoCard, BentoGrid } from \"@nebutra/ui/primitives\";\nimport { Globe, Lock, Sparkles, Zap } from \"lucide-react\";\n\nexport function BentoGridDemo() {\n  return (\n    <div className=\"p-8 flex w-full items-center justify-center\">\n      <BentoGrid className=\"max-w-4xl\">\n        <BentoCard\n          name=\"AI-powered\"\n          description=\"Built-in intelligence that learns from your workflow and makes smarter suggestions over time.\"\n          Icon={Sparkles}\n          className=\"lg:col-span-2\"\n          href=\"#\"\n          cta=\"Explore AI features\"\n        />\n        <BentoCard\n          name=\"Lightning fast\"\n          description=\"Sub-second response times, globally distributed across 35+ regions.\"\n          Icon={Zap}\n          href=\"#\"\n          cta=\"See benchmarks\"\n        />\n        <BentoCard\n          name=\"Enterprise security\"\n          description=\"SOC 2 Type II certified. GDPR and HIPAA compliant out of the box.\"\n          Icon={Lock}\n          href=\"#\"\n          cta=\"View compliance\"\n        />\n        <BentoCard\n          name=\"Global reach\"\n          description=\"Deploy anywhere. Serve everyone. One platform, worldwide coverage.\"\n          Icon={Globe}\n          className=\"lg:col-span-2\"\n          href=\"#\"\n          cta=\"See regions\"\n        />\n      </BentoGrid>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

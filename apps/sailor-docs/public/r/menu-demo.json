@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "menu-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/menu-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuLabel,\n  DropdownMenuSeparator,\n  DropdownMenuShortcut,\n  DropdownMenuTrigger,\n} from \"@nebutra/ui/primitives\";\nimport { Command, LogOut, Settings, User } from \"lucide-react\";\n\nexport function MenuDemo() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"outline\">Account</Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent align=\"center\" className=\"w-[200px]\">\n        <DropdownMenuLabel>My Account</DropdownMenuLabel>\n        <DropdownMenuSeparator />\n        <DropdownMenuItem>\n          <User className=\"mr-2 h-4 w-4\" />\n          Profile\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Settings className=\"mr-2 h-4 w-4\" />\n          Settings\n          <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <Command className=\"mr-2 h-4 w-4\" />\n          Keyboard shortcuts\n        </DropdownMenuItem>\n        <DropdownMenuSeparator />\n        <DropdownMenuItem className=\"text-destructive focus:bg-destructive focus:text-destructive-foreground\">\n          <LogOut className=\"mr-2 h-4 w-4\" />\n          Log out\n        </DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

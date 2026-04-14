@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "expandable-tabs-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/expandable-tabs-demo.tsx",
+      "content": "\"use client\";\n\nimport { ExpandableTabs } from \"@nebutra/ui/primitives\";\nimport { Bell, Home, Search, User } from \"lucide-react\";\nimport { useState } from \"react\";\n\nexport function ExpandableTabsDemo() {\n  const [activeTab, setActiveTab] = useState<number | null>(null);\n\n  const tabs = [\n    { title: \"Home\", icon: Home },\n    { title: \"Search\", icon: Search },\n    { title: \"Notifications\", icon: Bell },\n    { title: \"Profile\", icon: User },\n  ];\n\n  return (\n    <div className=\"p-8 gap-4 flex w-full flex-col items-center justify-center\">\n      <ExpandableTabs tabs={tabs} onChange={setActiveTab} />\n      <p className=\"text-sm text-muted-foreground\">\n        Active tab: <strong>{activeTab !== null ? tabs[activeTab]?.title : \"None\"}</strong>\n      </p>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

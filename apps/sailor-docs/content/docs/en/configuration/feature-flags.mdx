@@ -1,0 +1,152 @@
+---
+title: Feature Flags
+description: Enable and disable Nebutra-Sailor product features per environment using environment-variable-based feature flags.
+---
+
+## How feature flags work
+
+Nebutra-Sailor uses environment-variable-based feature flags to enable or disable entire product features without changing code or redeploying. Each flag is a boolean string (`true` / `false`) read at startup by `@nebutra/config`.
+
+All flags default to `false` when the variable is absent. Setting a flag to `true` activates the associated routes, UI, and background jobs.
+
+## Available flags
+
+| Flag | Default | Effect |
+|------|---------|--------|
+| `FEATURE_AI_CHAT` | `false` | Enables the AI chat endpoints on the API gateway and the chat UI in the dashboard. Requires `OPENAI_API_KEY` or `OPENROUTER_API_KEY`. |
+| `FEATURE_AI_EMBEDDINGS` | `false` | Enables the embeddings API. Requires `OPENAI_API_KEY`. |
+| `FEATURE_BLOG` | `false` | Enables the Sanity-powered blog on the landing page. Requires Sanity Studio to be configured. |
+| `FEATURE_CHANGELOG` | `false` | Enables the public changelog page on the landing page. |
+| `FEATURE_TEAMS` | `false` | Enables team and organization features: inviting members, role management, and per-org billing. |
+| `FEATURE_ANALYTICS` | `false` | Enables PostHog event tracking. Requires `NEXT_PUBLIC_POSTHOG_KEY`. |
+
+## Enabling flags per environment
+
+<Steps>
+  <Step title="Local development">
+    Add the flag to your `.env.local`:
+
+    ```bash .env.local
+    FEATURE_AI_CHAT=true
+    FEATURE_TEAMS=true
+    ```
+  </Step>
+  <Step title="Preview deployments">
+    In the Vercel dashboard, open **Settings** → **Environment Variables**. Add the flag for the **Preview** environment only. This lets you test a feature on a preview URL before promoting it to production.
+  </Step>
+  <Step title="Production">
+    Same as above, but select the **Production** environment. Only enable flags that are fully ready for end users.
+  </Step>
+</Steps>
+
+## Flag dependencies
+
+Some flags require additional environment variables to be functional:
+
+<AccordionGroup>
+  <Accordion title="FEATURE_AI_CHAT">
+    Requires at least one AI provider key:
+    - `OPENAI_API_KEY` for direct OpenAI access
+    - `OPENROUTER_API_KEY` for model routing via OpenRouter
+
+    Also optionally reads `AI_DEFAULT_MODEL` to select the default completion model.
+  </Accordion>
+  <Accordion title="FEATURE_AI_EMBEDDINGS">
+    Requires `OPENAI_API_KEY`. The embeddings API uses the `text-embedding-3-small` model by default.
+  </Accordion>
+  <Accordion title="FEATURE_BLOG">
+    Requires Sanity Studio (`apps/studio`) to be deployed and the Sanity project ID and dataset configured. The landing page fetches blog posts from the Sanity CDN at build time and on-demand.
+  </Accordion>
+  <Accordion title="FEATURE_ANALYTICS">
+    Requires `NEXT_PUBLIC_POSTHOG_KEY`. Optionally reads `NEXT_PUBLIC_POSTHOG_HOST` if you self-host PostHog or use the EU data region.
+  </Accordion>
+  <Accordion title="FEATURE_TEAMS">
+    Has no external service dependency, but requires the Clerk organization features to be enabled in your Clerk dashboard. Without that, team invitations will fail at the Clerk API level.
+  </Accordion>
+</AccordionGroup>
+
+## Runtime feature flags via Edge Config
+
+The environment-variable flags above are evaluated at **build time** (for Next.js static generation) and at **process startup**. For flags that need to change without a redeployment, use Vercel Edge Config.
+
+Edge Config gives you sub-millisecond read latency at the edge — ideal for feature flags that need to change without a redeploy.
+
+### Setup
+
+1. Create an Edge Config store in the Vercel dashboard (Storage → Edge Config → Create).
+2. Link it to your project and run `vercel env pull` to get `EDGE_CONFIG` locally.
+3. Install the client:
+
+```bash
+pnpm add @vercel/edge-config
+```
+
+### Writing flags (server-side or deploy hook)
+
+```typescript
+// scripts/update-flags.ts — run via CI or a Vercel deploy hook
+import { createClient } from "@vercel/edge-config";
+
+const edgeConfig = createClient(process.env.EDGE_CONFIG!);
+await edgeConfig.set("featureFlags", {
+  FEATURE_AI_CHAT: true,
+  FEATURE_BETA_DASHBOARD: false,
+});
+```
+
+### Reading flags at the edge (middleware / `proxy.ts`)
+
+```typescript
+import { get } from "@vercel/edge-config";
+
+export async function middleware() {
+  const flags = await get<Record<string, boolean>>("featureFlags");
+  const aiChatEnabled = flags?.FEATURE_AI_CHAT ?? false;
+  // use aiChatEnabled to conditionally rewrite/redirect
+}
+```
+
+### Reading flags in Server Components
+
+```typescript
+import { get } from "@vercel/edge-config";
+
+export default async function Page() {
+  const flags = await get<Record<string, boolean>>("featureFlags") ?? {};
+  if (!flags.FEATURE_BETA_DASHBOARD) notFound();
+  return <BetaDashboard />;
+}
+```
+
+Edge Config reads are cached per-request, so calling `get()` multiple times in a single render is free.
+
+## Per-tenant feature flags (planned)
+
+Future versions of Nebutra-Sailor will support per-tenant feature flags tied to the customer's subscription plan:
+
+| Plan | Flags automatically enabled |
+|------|-----------------------------|
+| Free | `FEATURE_CHANGELOG`, `FEATURE_BLOG` |
+| Pro | + `FEATURE_AI_CHAT`, `FEATURE_ANALYTICS` |
+| Enterprise | + `FEATURE_AI_EMBEDDINGS`, `FEATURE_TEAMS` |
+
+<Note>
+  Per-tenant feature flags are **on the roadmap** and not yet implemented. The current system applies flags globally. Until per-tenant flags ship, you can approximate per-plan feature gating using the `@nebutra/permissions` RBAC system — check `tenant.plan` in your permission policies and return `403` for features the plan doesn't include.
+</Note>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Configuration Overview" icon="gear" href="/configuration/overview">
+    How config validation works and where to set variables per environment.
+  </Card>
+  <Card title="Environment Variables" icon="key" href="/configuration/environment-variables">
+    Full reference for all environment variables including AI and analytics keys.
+  </Card>
+  <Card title="AI Integration" icon="robot" href="/ai/overview">
+    Setting up AI chat and embeddings features.
+  </Card>
+  <Card title="Deployment" icon="rocket" href="/deployment/overview">
+    Managing feature flags in Vercel preview and production environments.
+  </Card>
+</CardGroup>

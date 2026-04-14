@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid-system-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/grid-system-demo.tsx",
+      "content": "import { Grid } from \"@nebutra/ui/primitives\";\n\nexport function GridSystemDemo() {\n  return (\n    <div className=\"max-w-4xl p-4 md:p-8 gap-12 mx-auto flex w-full flex-col\">\n      <div className=\"space-y-4\">\n        <h3 className=\"text-lg font-semibold\">12-Column Layout</h3>\n        <Grid.System columns={12} rowHeight=\"80px\" className=\"border\">\n          <Grid.Cell\n            span={12}\n            solid\n            className=\"text-sm font-medium flex items-center justify-center\"\n          >\n            Header (span 12, solid)\n          </Grid.Cell>\n\n          <Grid.Cell\n            span={3}\n            className=\"text-sm flex items-center justify-center text-muted-foreground\"\n          >\n            Sidebar (span 3)\n          </Grid.Cell>\n          <Grid.Cell\n            span={6}\n            className=\"text-sm p-4 flex items-center justify-center text-center text-muted-foreground\"\n          >\n            Main Content Area (span 6)\n            <br />\n            Shows grid background\n          </Grid.Cell>\n          <Grid.Cell\n            span={3}\n            className=\"text-sm flex items-center justify-center text-muted-foreground\"\n          >\n            Widgets (span 3)\n          </Grid.Cell>\n\n          <Grid.Cell\n            span={4}\n            solid\n            className=\"text-sm font-medium flex items-center justify-center\"\n          >\n            Card 1 (span 4, solid)\n          </Grid.Cell>\n          <Grid.Cell\n            span={4}\n            solid\n            className=\"text-sm font-medium flex items-center justify-center\"\n          >\n            Card 2 (span 4, solid)\n          </Grid.Cell>\n          <Grid.Cell\n            span={4}\n            solid\n            className=\"text-sm font-medium flex items-center justify-center\"\n          >\n            Card 3 (span 4, solid)\n          </Grid.Cell>\n\n          <Grid.Cell\n            span={12}\n            className=\"text-sm flex items-center justify-center text-muted-foreground\"\n          >\n            Footer (span 12)\n          </Grid.Cell>\n        </Grid.System>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

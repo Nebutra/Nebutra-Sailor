@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-pill-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/icons",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/badge-pill-demo.tsx",
+      "content": "\"use client\";\n\nimport { LogoSlackColor } from \"@nebutra/icons\";\nimport { Badge } from \"@nebutra/ui/primitives\";\nimport Link from \"next/link\";\n\nexport function BadgePillDemo() {\n  return (\n    <div className=\"gap-4 flex w-full flex-col items-center justify-center\">\n      <div className=\"gap-2 flex flex-initial flex-row items-center justify-center\">\n        <Badge asChild size=\"sm\" variant=\"pill\">\n          <Link href=\"#badge-pill\">Label</Link>\n        </Badge>\n        <Badge asChild size=\"md\" variant=\"pill\">\n          <Link href=\"#badge-pill\">Label</Link>\n        </Badge>\n        <Badge asChild size=\"lg\" variant=\"pill\">\n          <Link href=\"#badge-pill\">Label</Link>\n        </Badge>\n      </div>\n      <div className=\"gap-2 flex flex-initial flex-row items-center justify-center\">\n        <Badge asChild icon={<LogoSlackColor />} size=\"sm\" variant=\"pill\">\n          <Link href=\"#badge-pill\">Label</Link>\n        </Badge>\n        <Badge asChild icon={<LogoSlackColor />} size=\"md\" variant=\"pill\">\n          <Link href=\"#badge-pill\">Label</Link>\n        </Badge>\n        <Badge asChild icon={<LogoSlackColor />} size=\"lg\" variant=\"pill\">\n          <Link href=\"#badge-pill\">Label</Link>\n        </Badge>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

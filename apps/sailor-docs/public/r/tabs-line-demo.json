@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-line-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/tabs-line-demo.tsx",
+      "content": "\"use client\";\n\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@nebutra/ui/primitives\";\n\nexport function TabsLineDemo() {\n  return (\n    <Tabs defaultValue=\"tab1\" className=\"w-[400px]\">\n      <TabsList variant=\"button\" className=\"grid grid-cols-3\">\n        <TabsTrigger value=\"tab1\">Overview</TabsTrigger>\n        <TabsTrigger value=\"tab2\">Analytics</TabsTrigger>\n        <TabsTrigger value=\"tab3\">Reports</TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"tab1\" className=\"p-4 mt-2\">\n        Overview content\n      </TabsContent>\n      <TabsContent value=\"tab2\" className=\"p-4 mt-2\">\n        Analytics content\n      </TabsContent>\n      <TabsContent value=\"tab3\" className=\"p-4 mt-2\">\n        Reports content\n      </TabsContent>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

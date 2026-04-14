@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "combobox-11-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/combobox-11-demo.tsx",
+      "content": "\"use client\";\n\nimport { Combobox, CommandList } from \"@nebutra/ui/primitives\";\nexport function Combobox11Demo() {\n  return (\n    <Combobox placeholder=\"Select framework...\">\n      <Combobox.Input placeholder=\"Search frameworks...\" />\n      <CommandList>\n        <Combobox.Empty>No frameworks found.</Combobox.Empty>\n        <Combobox.Group heading=\"React\">\n          <Combobox.Option value=\"next\">Next.js</Combobox.Option>\n          <Combobox.Option value=\"remix\">Remix</Combobox.Option>\n        </Combobox.Group>\n        <Combobox.Separator />\n        <Combobox.Group heading=\"Vue\">\n          <Combobox.Option value=\"nuxt\">Nuxt</Combobox.Option>\n        </Combobox.Group>\n      </CommandList>\n    </Combobox>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton-3-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/skeleton-3-demo.tsx",
+      "content": "\"use client\";\n\nimport { Skeleton } from \"@nebutra/ui/primitives\";\nexport function Skeleton3Demo() {\n  return (\n    <div className=\"space-y-3 w-80 p-4 rounded-xl border shadow-sm\">\n      {Array.from({ length: 4 }).map((_, i) => (\n        <div key={i} className=\"gap-3 flex items-center\">\n          <Skeleton className=\"h-10 w-10 shrink-0 rounded-full\" />\n          <div className=\"space-y-1.5 flex-1\">\n            <Skeleton className=\"h-3.5 w-[140px]\" />\n            <Skeleton className=\"h-3 w-[100px]\" />\n          </div>\n        </div>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

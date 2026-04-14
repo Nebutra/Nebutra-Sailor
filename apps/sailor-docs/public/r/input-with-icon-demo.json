@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-with-icon-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-with-icon-demo.tsx",
+      "content": "\"use client\";\n\nimport { Input } from \"@nebutra/ui/primitives\";\nimport { Mail, Search } from \"lucide-react\";\n\nexport function InputWithIconDemo() {\n  return (\n    <div className=\"gap-4 flex flex-col\">\n      {/* Search icon */}\n      <Input prefix={<Search className=\"w-4 h-4 text-muted-foreground\" />} placeholder=\"Search…\" />\n\n      {/* Mail icon */}\n      <Input\n        prefix={<Mail className=\"w-4 h-4 text-muted-foreground\" />}\n        type=\"email\"\n        placeholder=\"contact@nebutra.com\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress-indeterminate-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/progress-indeterminate-demo.tsx",
+      "content": "\"use client\";\n\nimport { Progress } from \"@nebutra/ui/primitives\";\n\nexport function ProgressIndeterminateDemo() {\n  return (\n    <div className=\"w-full\">\n      <Progress value={undefined} className=\"w-full\" />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

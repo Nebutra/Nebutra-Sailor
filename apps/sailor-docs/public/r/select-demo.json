@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/select-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectTrigger,\n  SelectValue,\n} from \"@nebutra/ui/primitives\";\n\nexport function SelectDemo() {\n  return (\n    <Select>\n      <SelectTrigger className=\"w-[200px]\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          <SelectItem value=\"apple\">Apple</SelectItem>\n          <SelectItem value=\"banana\">Banana</SelectItem>\n          <SelectItem value=\"orange\">Orange</SelectItem>\n          <SelectItem value=\"grape\">Grape</SelectItem>\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

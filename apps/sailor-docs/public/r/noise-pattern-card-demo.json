@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "noise-pattern-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/noise-pattern-card-demo.tsx",
+      "content": "\"use client\";\n\nimport { NoisePatternCard, NoisePatternCardBody } from \"@nebutra/ui/primitives\";\nimport { Sparkles } from \"lucide-react\";\n\nexport function NoisePatternCardDemo() {\n  return (\n    <div className=\"max-w-2xl p-4 md:p-8 mx-auto w-full\">\n      <NoisePatternCard className=\"shadow-lg\">\n        <NoisePatternCardBody className=\"md:flex-row gap-6 md:items-start p-8 flex min-h-[250px] flex-col items-center\">\n          <div className=\"w-16 h-16 shadow-inner flex flex-shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary\">\n            <Sparkles className=\"w-8 h-8\" />\n          </div>\n\n          <div className=\"gap-4 md:text-left flex flex-col text-center\">\n            <div>\n              <h3 className=\"text-2xl font-bold tracking-tight mb-2 text-foreground\">\n                Organic Grain Texture\n              </h3>\n              <p className=\"leading-relaxed text-muted-foreground\">\n                Add depth and vintage feel to your interfaces with this animated SVG noise pattern.\n                Perfect for premium cards, feature highlights, and section backgrounds that need\n                that extra touch of analog warmth in a digital world.\n              </p>\n            </div>\n\n            <div className=\"gap-3 md:justify-start mt-2 flex flex-wrap justify-center\">\n              <span className=\"px-3 py-1 text-xs font-semibold rounded-full bg-secondary text-secondary-foreground\">\n                SVG Filters\n              </span>\n              <span className=\"px-3 py-1 text-xs font-semibold rounded-full bg-secondary text-secondary-foreground\">\n                Animated\n              </span>\n              <span className=\"px-3 py-1 text-xs font-semibold rounded-full bg-secondary text-secondary-foreground\">\n                Tailwind CSS\n              </span>\n            </div>\n          </div>\n        </NoisePatternCardBody>\n      </NoisePatternCard>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

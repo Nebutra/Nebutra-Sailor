@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sonner-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/sonner-demo.tsx",
+      "content": "\"use client\";\n\nimport { Button } from \"@nebutra/ui/primitives\";\nimport { CheckCircle2 } from \"lucide-react\";\nimport { useState } from \"react\";\n\nexport function SonnerDemo() {\n  const [showToast, setShowToast] = useState(false);\n\n  return (\n    <div className=\"relative flex h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border bg-muted/30\">\n      <Button\n        variant=\"default\"\n        onClick={() => {\n          setShowToast(false);\n          setTimeout(() => setShowToast(true), 100);\n        }}\n      >\n        Show Toast Notification\n      </Button>\n\n      {/* Mock Sonner Toast */}\n      {showToast && (\n        <div className=\"bottom-4 right-4 animate-in slide-in-from-bottom-5 fade-in absolute duration-300\">\n          <div className=\"gap-3 p-4 pr-8 max-w-sm flex items-center rounded-lg border bg-background shadow-lg\">\n            <CheckCircle2 className=\"text-green-500 w-5 h-5 flex-shrink-0\" />\n            <div className=\"flex flex-col\">\n              <span className=\"font-semibold text-sm\">Action successful</span>\n              <span className=\"text-sm text-muted-foreground\">\n                The resource has been updated perfectly.\n              </span>\n            </div>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

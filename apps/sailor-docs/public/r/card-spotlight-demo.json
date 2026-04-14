@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-spotlight-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/card-spotlight-demo.tsx",
+      "content": "import { CardSpotlight } from \"@nebutra/ui/primitives\";\nimport { ShieldAlert } from \"lucide-react\";\n\nexport function CardSpotlightDemo() {\n  return (\n    <div className=\"p-8 flex w-full items-center justify-center\">\n      <CardSpotlight className=\"h-96 w-96 flex flex-col items-center justify-center text-center\">\n        <ShieldAlert className=\"h-16 w-16 text-white mb-6\" />\n        <h2 className=\"text-2xl font-bold text-white mb-2\">High Security</h2>\n        <p className=\"text-neutral-300\">\n          We use state-of-the-art encryption protocols to keep your data safe and private. Hover to\n          discover more.\n        </p>\n      </CardSpotlight>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

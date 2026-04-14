@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid-feature-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/grid-feature-card-demo.tsx",
+      "content": "import { GridFeatureCard } from \"@nebutra/ui/primitives\";\nimport { Cpu, Database, Lock, Network } from \"lucide-react\";\n\nexport function GridFeatureCardDemo() {\n  return (\n    <div className=\"md:grid-cols-2 gap-4 max-w-4xl p-4 md:p-8 mx-auto grid w-full grid-cols-1\">\n      <GridFeatureCard\n        icon={Network}\n        title=\"Global Edge Network\"\n        description=\"Deploy your applications to the edge for minimum latency and maximum performance wherever your users are located.\"\n        gridSize={24}\n        className=\"rounded-xl border\"\n      />\n\n      <GridFeatureCard\n        icon={Database}\n        title=\"Distributed Database\"\n        description=\"A globally distributed, multi-model database service for any scale with single-digit millisecond latency.\"\n        gridSize={20}\n        className=\"rounded-xl border\"\n      />\n\n      <GridFeatureCard\n        icon={Lock}\n        title=\"Zero Trust Security\"\n        description=\"Every request is authenticated and authorized. Threat detection and DDoS protection is built-in by default.\"\n        gridSize={16}\n        className=\"rounded-xl border\"\n      />\n\n      <GridFeatureCard\n        icon={Cpu}\n        title=\"Serverless Compute\"\n        description=\"Run code without thinking about servers. Pay only for the compute time you consume.\"\n        gridSize={28}\n        className=\"rounded-xl border\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

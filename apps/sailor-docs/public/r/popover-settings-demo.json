@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover-settings-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/popover-settings-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  Label,\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n  Toggle,\n} from \"@nebutra/ui/primitives\";\nimport { Settings } from \"lucide-react\";\n\nexport function PopoverSettingsDemo() {\n  return (\n    <Popover>\n      <PopoverTrigger asChild>\n        <Button variant=\"ghost\" size=\"icon\">\n          <Settings className=\"h-4 w-4\" />\n        </Button>\n      </PopoverTrigger>\n      <PopoverContent side=\"right\" align=\"start\" className=\"w-64\">\n        <div className=\"space-y-3\">\n          <div className=\"flex items-center justify-between\">\n            <Label htmlFor=\"notifications\">Notifications</Label>\n            <Toggle />\n          </div>\n          <div className=\"flex items-center justify-between\">\n            <Label htmlFor=\"marketing\">Marketing emails</Label>\n            <Toggle />\n          </div>\n        </div>\n      </PopoverContent>\n    </Popover>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

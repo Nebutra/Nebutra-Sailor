@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stars-canvas-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/stars-canvas-demo.tsx",
+      "content": "\"use client\";\n\nimport { Button, StarsCanvas } from \"@nebutra/ui/primitives\";\nimport { Pause, Play } from \"lucide-react\";\nimport { useState } from \"react\";\n\nexport function StarsCanvasDemo() {\n  const [paused, setPaused] = useState(false);\n\n  return (\n    <div className=\"bg-black relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-xl border\">\n      {/* Absolute positioned stars canvas */}\n      <StarsCanvas\n        paused={paused}\n        transparent={true} // Transparent so we can see the black bg\n        hue={280} // Purple-ish stars\n        brightness={0.8}\n        speedMultiplier={0.8}\n        position=\"absolute\"\n        zIndex={1}\n      />\n\n      {/* Content on top */}\n      <div className=\"gap-6 p-6 relative z-10 flex flex-col items-center text-center\">\n        <div className=\"space-y-2 max-w-md\">\n          <h2 className=\"text-4xl font-bold tracking-tighter text-white\">Atmospheric Effects</h2>\n          <p className=\"text-zinc-400\">\n            Create immersive depth with performant HTML5 canvas particle systems. Perfect for hero\n            sections and dark mode experiences.\n          </p>\n        </div>\n\n        <Button\n          variant=\"outline\"\n          size=\"sm\"\n          className=\"bg-black/50 border-zinc-800 text-white hover:bg-white hover:text-black transition-colors\"\n          onClick={() => setPaused(!paused)}\n          prefix={paused ? <Play className=\"w-4 h-4\" /> : <Pause className=\"w-4 h-4\" />}\n        >\n          {paused ? \"Resume Animation\" : \"Pause Animation\"}\n        </Button>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

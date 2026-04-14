@@ -1,0 +1,205 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "fumadocs-python/preset.css";
+@import "@fumadocs/story/css/preset.css";
+@import "fumadocs-openapi/css/preset.css";
+@import "@nebutra/tokens/styles.css";
+
+/* 
+ * Inlined `fumadocs-ui/components/image-zoom.css` 
+ * Bypassing broken package.json exports in fumadocs-ui@16.6.9
+ */
+[data-rmiz] {
+  display: block;
+  position: relative;
+}
+
+[data-rmiz-ghost] {
+  pointer-events: none;
+  position: absolute;
+}
+
+[data-rmiz-btn-zoom],
+[data-rmiz-btn-unzoom] {
+  display: none;
+}
+
+[data-rmiz-content="found"] img {
+  cursor: zoom-in;
+}
+
+[data-rmiz-modal][open] {
+  width: 100vw;
+  /* biome-ignore lint/suspicious/noDuplicateProperties: progressive enhancement vw → dvw */
+  width: 100dvw;
+  height: 100vh;
+  /* biome-ignore lint/suspicious/noDuplicateProperties: progressive enhancement vh → dvh */
+  height: 100dvh;
+  background-color: transparent;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  overflow: hidden;
+}
+
+[data-rmiz-modal]:focus-visible {
+  outline: none;
+}
+
+[data-rmiz-modal-overlay] {
+  transition: background-color 0.3s;
+  position: absolute;
+  inset: 0;
+}
+
+[data-rmiz-modal-overlay="visible"] {
+  background-color: var(--color-fd-background);
+}
+
+[data-rmiz-modal-overlay="hidden"] {
+  background-color: transparent;
+}
+
+[data-rmiz-modal-content] {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+[data-rmiz-modal]::backdrop {
+  display: none;
+}
+
+[data-rmiz-modal-img] {
+  cursor: zoom-out;
+  image-rendering: high-quality;
+  transform-origin: 0 0;
+  transition: transform 0.3s;
+  position: absolute;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-rmiz-modal-overlay],
+  [data-rmiz-modal-img] {
+    transition-duration: 0.01ms;
+  }
+}
+
+@theme inline {
+  --color-context-card-border: var(--context-card-border);
+  --color-amber-600: var(--ds-amber-600);
+  --color-gray-200: var(--ds-gray-200);
+  --color-gray-1000: var(--ds-gray-1000);
+  --color-gray-alpha-400: var(--ds-gray-alpha-400);
+  --color-background-200: var(--ds-background-200);
+  --color-book-bind: var(--ds-book-bind);
+  --shadow-book: var(--ds-shadow-book);
+  --shadow-book-border: var(--ds-shadow-book-border);
+}
+
+/* Scan @nebutra/ui source directly via workspace path (avoids node_modules symlink fragility) */
+/* stylelint-disable-next-line at-rule-no-unknown */
+@source "../../../../packages/ui/src";
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@custom-variant dark (&:is(.dark *));
+
+/* Map Fumadocs native CSS variables to Nebutra tokens */
+:root {
+  --color-fd-background: hsl(var(--background));
+  --color-fd-foreground: hsl(var(--foreground));
+  --color-fd-muted: hsl(var(--muted));
+  --color-fd-muted-foreground: hsl(var(--muted-foreground));
+  --color-fd-popover: hsl(var(--popover));
+  --color-fd-popover-foreground: hsl(var(--popover-foreground));
+  --color-fd-card: hsl(var(--card));
+  --color-fd-card-foreground: hsl(var(--card-foreground));
+  --color-fd-border: hsl(var(--border));
+  --color-fd-input: hsl(var(--input));
+
+  /* 
+     * Primary controls active states and prominent buttons.
+     * We map this to the Nebutra Brand Blue.
+     */
+  --color-fd-primary: hsl(var(--primary));
+  --color-fd-primary-foreground: hsl(var(--primary-foreground));
+
+  /* 
+     * Secondary / Accent control structural backgrounds (search bars, tag backgrounds, hover states).
+     * DO NOT map these to the vibrant Nebutra Cyan (var(--secondary)).
+     * Map them to the 12-step Neutral scale for a sleek, Vercel/Linear-like UI.
+     */
+  --color-fd-secondary: var(--neutral-3);
+  --color-fd-secondary-foreground: var(--neutral-12);
+  --color-fd-accent: var(--neutral-4);
+  --color-fd-accent-foreground: var(--neutral-12);
+
+  --color-fd-ring: hsl(var(--ring));
+
+  --context-card-border: hsla(0, 0%, 92%, 1);
+  --ds-amber-600: oklch(80.25% 0.1953 73.59);
+  --ds-gray-200: hsla(0, 0%, 92%, 1);
+  --ds-gray-1000: hsla(0, 0%, 9%, 1);
+  --ds-gray-alpha-400: hsla(0, 0%, 0%, 0.08);
+  --ds-background-200: hsla(0, 0%, 98%, 1);
+  --ds-book-bind:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0) 12%,
+      rgba(255, 255, 255, 0.25) 29.25%,
+      rgba(255, 255, 255, 0) 50.5%,
+      rgba(255, 255, 255, 0) 75.25%,
+      rgba(255, 255, 255, 0.25) 91%,
+      rgba(255, 255, 255, 0)
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.03),
+      rgba(0, 0, 0, 0.1) 12%,
+      rgba(0, 0, 0, 0) 30%,
+      rgba(0, 0, 0, 0.02) 50%,
+      rgba(0, 0, 0, 0.2) 73.5%,
+      rgba(0, 0, 0, 0.5) 75.25%,
+      rgba(0, 0, 0, 0.15) 85.25%,
+      rgba(0, 0, 0, 0)
+    );
+  --ds-shadow-book:
+    0 1px 1px 0 rgba(0, 0, 0, 0.02), 0 4px 8px -4px rgba(0, 0, 0, 0.1),
+    0 16px 24px -8px rgba(0, 0, 0, 0.03);
+  --ds-shadow-book-border: inset 0 1px 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+.dark {
+  --color-fd-background: hsl(var(--background));
+  --color-fd-foreground: hsl(var(--foreground));
+  --color-fd-muted: hsl(var(--muted));
+  --color-fd-muted-foreground: hsl(var(--muted-foreground));
+  --color-fd-popover: hsl(var(--popover));
+  --color-fd-popover-foreground: hsl(var(--popover-foreground));
+  --color-fd-card: hsl(var(--card));
+  --color-fd-card-foreground: hsl(var(--card-foreground));
+  --color-fd-border: hsl(var(--border));
+  --color-fd-input: hsl(var(--input));
+
+  --color-fd-primary: hsl(var(--primary));
+  --color-fd-primary-foreground: hsl(var(--primary-foreground));
+
+  /* In dark mode, var(--neutral-X) automatically resolves to dark mode inverted values */
+  --color-fd-secondary: var(--neutral-3);
+  --color-fd-secondary-foreground: var(--neutral-12);
+  --color-fd-accent: var(--neutral-4);
+  --color-fd-accent-foreground: var(--neutral-12);
+
+  --color-fd-ring: hsl(var(--ring));
+
+  --context-card-border: hsla(0, 0%, 18%, 1);
+  --ds-amber-600: oklch(75.04% 0.1737 74.49);
+  --ds-gray-200: hsla(0, 0%, 12%, 1);
+  --ds-gray-1000: hsla(0, 0%, 93%, 1);
+  --ds-gray-alpha-400: hsla(0, 0%, 100%, 0.14);
+  --ds-background-200: hsla(0, 0%, 0%, 1);
+}

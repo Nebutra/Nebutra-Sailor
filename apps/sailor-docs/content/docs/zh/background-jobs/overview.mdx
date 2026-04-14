@@ -1,0 +1,146 @@
+---
+title: 后台任务概述
+description: 在请求周期之外运行任务——Inngest 用于复杂工作流，@nebutra/queue 用于简单任务队列。
+---
+
+## 为什么需要后台任务？
+
+某些任务太慢、风险太高或成本太大，不适合在 HTTP 请求中同步执行：
+
+- 注册后发送欢迎邮件
+- 生成大型报表
+- 同步数据到第三方服务
+- 处理文件上传
+- 发送配额预警通知
+- 定期清理和重置
+
+Nebutra 为此提供了两套系统，分别针对不同的工作负载类型进行了优化。
+
+## Inngest vs 队列——如何选择
+
+| | Inngest（`@nebutra/event-bus`） | 队列（`@nebutra/queue`） |
+|---|---|---|
+| **适用场景** | 复杂多步骤工作流 | 简单的延迟任务 |
+| **步骤** | 支持——每个步骤独立重试 | 不支持——任务是原子性的 |
+| **扇出** | 支持——一个事件触发多个函数 | 不支持 |
+| **可观测性** | 完整 UI、追踪、重放 | 基础日志 |
+| **定时任务** | 支持（Cron 语法） | 不支持（使用 Vercel Cron 或 Inngest） |
+| **自托管** | 否（托管服务） | 是（BullMQ + Redis） |
+| **Serverless** | 是 | 是（QStash）或否（BullMQ） |
+| **吞吐量** | 中等 | 高 |
+
+**经验法则：** 如果任务有多个步骤、需要精细的重试粒度，或者希望从 UI 中重放——使用 Inngest。如果只是需要延迟执行一个快速任务或处理高并发队列——使用 `@nebutra/queue`。
+
+## 架构
+
+```
+事件发送方 / API 网关
+        │
+        ├─── inngest.send(event) ──────► Inngest Cloud
+        │                                      │
+        │                               Inngest 函数
+        │                               （多步骤、重试）
+        │                                      │
+        │                               POST /api/v1/inngest
+        │                               （你的 API 网关）
+        │
+        └─── queue.enqueue(job) ───────► QStash（Serverless）
+                                         或 BullMQ（Redis）
+                                                │
+                                         queue.registerHandler()
+                                         POST /api/v1/queue/:queue/:type
+```
+
+## 常见使用场景
+
+### 注册后发送欢迎邮件
+
+```typescript
+// 在认证回调中发送事件
+await inngest.send({
+  name: "user/signed-up",
+  data: { userId: user.id },
+});
+
+// 由带重试的持久 Inngest 函数处理
+export const sendWelcomeEmail = inngest.createFunction(
+  { id: "send-welcome-email", retries: 3 },
+  { event: "user/signed-up" },
+  async ({ event, step }) => {
+    const user = await step.run("fetch-user", () =>
+      db.user.findUnique({ where: { id: event.data.userId } })
+    );
+    await step.run("send-email", () =>
+      email.send({ to: user.email, template: "welcome" })
+    );
+  }
+);
+```
+
+### 月度报表生成
+
+```typescript
+// 将报表任务加入队列（异步执行，立即返回）
+const queue = await getQueue();
+await queue.enqueue(
+  createJob("report", "generate", {
+    tenantId: "org_123",
+    reportType: "monthly",
+    periodStart: "2025-03-01",
+  })
+);
+```
+
+### 配额预警通知
+
+```typescript
+// 用量超过 80% 时由计量系统触发
+await inngest.send({
+  name: "quota/threshold-reached",
+  data: { tenantId: "org_123", meter: "ai_tokens", percentage: 0.8 },
+});
+```
+
+### 数据导出
+
+```typescript
+// 扇出：一个事件同时触发导出和邮件通知
+await inngest.send({
+  name: "export/requested",
+  data: { tenantId: "org_123", exportId: "exp_abc", format: "csv" },
+});
+```
+
+## 环境变量
+
+```bash
+# Inngest
+INNGEST_EVENT_KEY=""            # 用于发送事件的密钥
+INNGEST_SIGNING_KEY=""          # 验证 Inngest → 你的服务器的请求
+
+# QStash（Serverless 队列）
+QSTASH_TOKEN=""
+QSTASH_CURRENT_SIGNING_KEY=""
+QSTASH_NEXT_SIGNING_KEY=""
+QSTASH_CALLBACK_BASE_URL=""     # 例如 https://api.yourdomain.com
+
+# BullMQ（自托管队列——复用 REDIS_URL）
+REDIS_URL=""
+```
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="Inngest" icon="bolt" href="/zh/background-jobs/inngest">
+    多步骤持久函数、重试和事件扇出。
+  </Card>
+  <Card title="队列" icon="list" href="/zh/background-jobs/queues">
+    使用 QStash 和 BullMQ 的简单任务队列。
+  </Card>
+  <Card title="定时任务" icon="clock" href="/zh/background-jobs/cron">
+    使用 Inngest 和 Vercel Cron 的定期调度任务。
+  </Card>
+  <Card title="通知" icon="bell" href="/zh/integrations/notifications">
+    从后台任务发送应用内、邮件和推送通知。
+  </Card>
+</CardGroup>

@@ -1,0 +1,106 @@
+---
+title: 部署概览
+description: Nebutra-Sailor 的部署选项 — Vercel（推荐）、Docker 自托管和独立 API — 包含生产架构和迁移策略。
+---
+
+## 部署选项
+
+| 选项 | 适合场景 | 复杂度 | 成本 |
+|------|---------|--------|------|
+| **Vercel** | 大多数团队 | 低 | 按用量计费 |
+| **Docker（自托管）** | 数据本地化、合规要求 | 中 | 基础设施成本 |
+| **独立 API** | 自定义基础设施、仅 Hono | 中 | 基础设施成本 |
+
+## 生产环境架构
+
+```
+用户
+  │
+  ▼
+Vercel Edge Network（CDN、WAF、DDoS 防护）
+  │
+  ├─── apps/landing-page   nebutra.com          (Next.js on Vercel)
+  │
+  ├─── apps/web            app.nebutra.com      (Next.js on Vercel)
+  │         │
+  │         │ REST / Server Actions
+  │         ▼
+  └─── apps/api-gateway    api.nebutra.com      (Hono on Vercel Functions)
+              │
+              ├─── PostgreSQL (Supabase / Neon / RDS)
+              ├─── Redis     (Upstash / ElastiCache)
+              └─── ClickHouse (ClickHouse Cloud / 自托管)
+```
+
+## 部署前准备
+
+### 执行数据库迁移
+
+部署新版本的应用**之前**务必先执行迁移。如果 Schema 落后于迁移状态，应用将无法启动。
+
+```bash
+pnpm db:migrate
+```
+
+在 CI/CD 中，`deploy.yml` GitHub Actions 工作流会自动处理此步骤，在每次 Vercel 部署前以预部署步骤执行迁移。
+
+### 验证环境变量
+
+所有必填环境变量在启动时由 `@nebutra/config` 验证。缺少必填变量会导致硬崩溃并显示描述性错误 — 不会有静默失败。推送前在本地运行验证：
+
+```bash
+pnpm typecheck
+```
+
+## 环境变量管理
+
+<Tabs>
+  <Tab title="Vercel">
+    在 Vercel 控制台的**设置 → 环境变量**中设置环境变量。Vercel 支持为生产、预览和开发环境分别设置不同的值。
+
+    对于跨多个 Vercel 项目共享的密钥，请使用 [Vercel 共享环境变量](https://vercel.com/docs/environment-variables/shared)。
+  </Tab>
+  <Tab title="Docker">
+    通过 `.env` 文件或 Docker Compose 的 `environment:` 块传递环境变量。切勿将包含真实密钥的 `.env` 文件提交到源代码控制。
+
+    生产环境请使用 Docker Secrets 或密钥管理器（AWS Secrets Manager、HashiCorp Vault）。
+  </Tab>
+</Tabs>
+
+## GitHub Actions CI/CD
+
+仓库在 `.github/workflows/` 中内置了 14 个工作流：
+
+| 工作流 | 触发条件 | 作用 |
+|--------|---------|------|
+| `ci.yml` | 每次推送 + PR | 代码检查 → 类型检查 → 构建 → 测试 → E2E → 覆盖率 |
+| `deploy.yml` | 推送到 `main` | 执行迁移 → 部署到 Vercel |
+| `docker-build-push.yml` | 推送到 `main` | 构建并推送 Docker 镜像到镜像仓库 |
+| `security-scan.yml` | 推送 + 定时 | CodeQL 静态分析 + 依赖漏洞扫描 |
+
+<Note>
+  `deploy.yml` 工作流需要在 GitHub 仓库设置中配置 `VERCEL_TOKEN`、`VERCEL_ORG_ID` 以及每个应用的 `VERCEL_PROJECT_ID_*` 密钥。
+</Note>
+
+## 零停机部署
+
+Vercel 自动处理零停机部署。新部署只有在通过健康检查后才会提升为生产版本。回滚是即时的 — 在 Vercel 控制台中点击任何之前部署的"提升"按钮即可。
+
+对于 Docker 自托管部署，请配置反向代理（nginx、Caddy）进行滚动重启，或使用 Docker Swarm / Kubernetes 进行零停机滚动更新。
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="Vercel 部署" icon="triangle" href="/zh/deployment/vercel">
+    在 Vercel 上部署的分步指南。
+  </Card>
+  <Card title="Docker 部署" icon="docker" href="/zh/deployment/docker">
+    使用 Docker Compose 的自托管部署。
+  </Card>
+  <Card title="生产检查清单" icon="circle-check" href="/zh/deployment/production-checklist">
+    上线前需要验证的所有内容。
+  </Card>
+  <Card title="开发环境概览" icon="laptop" href="/zh/development/overview">
+    配置本地开发环境。
+  </Card>
+</CardGroup>

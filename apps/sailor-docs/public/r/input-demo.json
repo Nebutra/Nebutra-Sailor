@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-demo.tsx",
+      "content": "\"use client\";\nimport { Input } from \"@nebutra/ui/primitives\";\nexport function InputDemo() {\n  return (\n    <div className=\"gap-3 max-w-sm flex flex-col\">\n      <Input placeholder=\"Default input\" />\n      <Input placeholder=\"Disabled input\" disabled />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

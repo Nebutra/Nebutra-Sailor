@@ -1,0 +1,122 @@
+---
+title: create-sailor
+description: Interactive scaffolding wizard — bootstrap a production-ready Nebutra-Sailor project in seconds.
+---
+
+`create-sailor` is a one-time scaffolding tool that clones the Nebutra-Sailor template, walks you through configuration questions, and writes your `.env.local` — so you can start coding in under a minute.
+
+## Usage
+
+```bash
+npx create-sailor [dir]
+```
+
+If you omit `[dir]`, the wizard prompts you for a directory name.
+
+## What it does
+
+<Steps>
+  <Step title="Ask where to create the project">
+    Prompts for a target directory (default: `./my-saas-app`).
+  </Step>
+  <Step title="Choose your app configuration">
+    Interactive menus for app type, ORM, database, payment provider, AI provider, and i18n.
+  </Step>
+  <Step title="Set environment variables">
+    Prompts for `DATABASE_URL`, Clerk keys, and other critical secrets — writes them directly to `.env.local`.
+  </Step>
+  <Step title="Clone, configure, and prune">
+    Clones the Nebutra-Sailor monorepo, sets the project name in `package.json`, writes `nebutra.config.json`, prunes unused template features, and injects your env vars.
+  </Step>
+  <Step title="Print next steps">
+    Outputs exactly what to run next: `cd my-saas-app && pnpm install && pnpm dev`.
+  </Step>
+</Steps>
+
+## Configuration prompts
+
+### Application type
+
+| Option | Description |
+|--------|-------------|
+| `saas` (default) | Standard B2B/B2C SaaS — optimized UI + DB stack |
+| `full` | Full monorepo — includes Python AI workflows & Web3 |
+| `ecommerce` | E-Commerce suite |
+| `web3` | Web3 DApp |
+
+### ORM
+
+| Option | Description |
+|--------|-------------|
+| `prisma` (default) | Prisma v7 — recommended |
+| `drizzle` | Drizzle ORM |
+| `none` | Skip — configure manually |
+
+### Database
+
+| Option | Description |
+|--------|-------------|
+| `postgresql` (default) | PostgreSQL — Supabase, Vercel, Neon, etc. |
+| `mysql` | MySQL / PlanetScale |
+| `sqlite` | SQLite / Turso |
+| `none` | Skip |
+
+### Payment provider
+
+| Option | Description |
+|--------|-------------|
+| `stripe` (default) | Stripe subscriptions |
+| `lemonsqueezy` | Lemon Squeezy |
+| `none` | Skip |
+
+### AI provider
+
+| Option | Description |
+|--------|-------------|
+| `openai` (default) | OpenAI |
+| `anthropic` | Anthropic Claude |
+| `none` | Skip |
+
+### i18n
+
+Enable internationalization with `next-intl` (7 locale support). Defaults to **yes**.
+
+## Example session
+
+```
+  create-sailor
+
+✔ Where should we create your project? … ./my-saas
+✔ What kind of application are you building? › Standard B2B/B2C SaaS
+✔ Which ORM would you like to use? › Prisma
+✔ Which database provider? › PostgreSQL
+✔ Which payment provider? › Stripe
+✔ Default AI Provider? › OpenAI
+✔ Enable Internationalization (i18n)? › yes
+✔ Database URL … postgresql://postgres:postgres@localhost:5432/nebutra
+✔ Clerk Publishable Key … pk_test_...
+✔ Clerk Secret Key … sk_test_...
+
+⠋ Cloning Nebutra-Sailor template into ./my-saas...
+✔ Project my-saas successfully initialized!
+
+  Next steps:
+  cd ./my-saas
+  pnpm install
+  pnpm dev
+```
+
+## After scaffolding
+
+```bash
+cd my-saas
+pnpm install          # Install all dependencies
+pnpm infra:lite       # Start PostgreSQL (Docker)
+pnpm db:generate      # Generate Prisma client
+pnpm db:migrate       # Run initial migrations
+pnpm dev:dashboard    # Start web app + API gateway
+```
+
+<Note>
+  `create-sailor` is a one-time tool. For day-to-day tasks (adding components, managing infra, running migrations), use the `nebutra` CLI after the project is created.
+</Note>

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-feature-tag-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/badge-feature-tag-demo.tsx",
+      "content": "import { Badge } from \"@nebutra/ui/primitives\";\nimport { Sparkles } from \"lucide-react\";\n\nexport function BadgeFeatureTagDemo() {\n  return (\n    <div className=\"gap-2 flex items-center\">\n      <h3 className=\"text-lg font-medium\">AI Generation</h3>\n      <Badge variant=\"purple-subtle\" icon={<Sparkles className=\"text-purple-500\" />}>\n        Beta\n      </Badge>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

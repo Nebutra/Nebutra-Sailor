@@ -1,0 +1,90 @@
+---
+title: CLI 概览
+description: Nebutra CLI 生态系统——三款工具覆盖你工作流的每个阶段。
+---
+
+Nebutra 提供三款命令行工具，各自承担不同职责。
+
+<CardGroup cols={3}>
+  <Card title="create-sailor" icon="rocket" href="/zh/cli/create-sailor">
+    交互式向导引导你创建新项目，每个项目只需运行一次。
+  </Card>
+  <Card title="nebutra CLI" icon="terminal" href="/zh/cli/nebutra-cli">
+    日常开发利器：脚手架代码、管理基础设施、运行迁移等。
+  </Card>
+  <Card title="pnpm scripts" icon="wrench" href="/zh/cli/pnpm-scripts">
+    Turborepo 编排的构建、Lint、测试和部署脚本。
+  </Card>
+</CardGroup>
+
+---
+
+## 快速安装
+
+```bash
+# 创建新项目（只需运行一次）
+npx create-sailor my-saas-app
+
+# 全局安装 Nebutra CLI（可选——monorepo 内也可通过 pnpm exec 使用）
+npm install -g nebutra
+
+# 或直接在 monorepo 内使用
+pnpm exec nebutra --help
+```
+
+## 工具选择指南
+
+| 任务 | 工具 |
+|------|------|
+| 从零创建新项目 | `npx create-sailor` |
+| 创建 app、包或组件脚手架 | `nebutra generate` |
+| 管理 Docker 基础设施 | `nebutra infra` |
+| 运行数据库迁移 | `nebutra db migrate` |
+| 验证环境变量 | `nebutra env validate` |
+| 从 21st.dev 或 v0.dev 添加组件 | `nebutra add` |
+| 构建、Lint、类型检查、测试 | `pnpm build / lint / typecheck / test` |
+| 启动开发服务器 | `pnpm dev` 或 `nebutra dev` |
+| 使用 changesets 发布包 | `pnpm release` |
+
+## 全局标志
+
+所有 `nebutra` 子命令均支持以下标志：
+
+| 标志 | 说明 |
+|------|------|
+| `--verbose` | 启用详细输出 |
+| `--quiet` | 抑制非必要输出 |
+| `--format <type>` | 输出格式：`json`、`table`、`plain` |
+| `--yes` | 跳过所有交互提示（Agent / CI 模式） |
+| `--no-interactive` | `--yes` 的别名 |
+| `--no-color` | 禁用彩色输出 |
+
+## 退出码
+
+| 退出码 | 含义 |
+|--------|------|
+| `0` | 成功 |
+| `1` | 通用错误 |
+| `2` | 参数无效 |
+| `3` | 资源未找到 |
+| `4` | 权限不足 |
+| `5` | 冲突 / 已存在 |
+| `6` | 网络错误（可重试） |
+| `10` | Dry-run 成功（未作任何更改） |
+
+## 环境变量
+
+| 变量 | 可选值 | 说明 |
+|------|--------|------|
+| `NEBUTRA_LOG_LEVEL` | `debug\|info\|warn\|error` | CLI 日志级别 |
+| `NEBUTRA_OUTPUT_FORMAT` | `json\|table\|plain` | 默认输出格式 |
+| `NO_COLOR` | 任意值 | 禁用彩色输出 |
+| `CI` | 任意值 | 自动启用非交互模式 |
+
+## MCP 服务器
+
+Nebutra 内置 MCP（模型上下文协议）服务器，供 AI 编码工具使用（Cursor、Windsurf、Claude Code）。在 monorepo 内通过 `nebutra mcp` 启动，或全局运行：
+
+```bash
+npx nebutra-mcp
+```

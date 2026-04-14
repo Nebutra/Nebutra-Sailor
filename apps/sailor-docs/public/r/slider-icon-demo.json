@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-icon-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/slider-icon-demo.tsx",
+      "content": "\"use client\";\nimport { Slider } from \"@nebutra/ui/primitives\";\nimport { Volume2 } from \"lucide-react\";\n\nexport function SliderIconDemo() {\n  return (\n    <div className=\"gap-3 flex w-full items-center\">\n      <Volume2 className=\"h-4 w-4 shrink-0 text-muted-foreground\" />\n      <Slider defaultValue={70} max={100} step={1} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

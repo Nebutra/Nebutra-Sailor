@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "announcement-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/announcement-demo.tsx",
+      "content": "import { Announcement, AnnouncementTag, AnnouncementTitle } from \"@nebutra/ui/primitives\";\nimport { ArrowUpRight } from \"lucide-react\";\n\nexport function AnnouncementDemo() {\n  return (\n    <div className=\"max-w-md px-4 py-8 space-y-4 flex w-full flex-col items-center justify-center\">\n      <Announcement>\n        <AnnouncementTag>Beta</AnnouncementTag>\n        <AnnouncementTitle>Multi-agent workflows are now available</AnnouncementTitle>\n      </Announcement>\n\n      <Announcement>\n        <AnnouncementTag>New</AnnouncementTag>\n        <AnnouncementTitle>\n          Read the release notes\n          <ArrowUpRight size={14} />\n        </AnnouncementTitle>\n      </Announcement>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

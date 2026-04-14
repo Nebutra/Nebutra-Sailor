@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "combobox-sizes-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/combobox-sizes-demo.tsx",
+      "content": "\"use client\";\n\nimport { Combobox } from \"@nebutra/ui/primitives\"; // Mock import\n\nexport function ComboboxSizesDemo() {\n  return (\n    <div className=\"gap-4 flex flex-wrap items-center\">\n      <Combobox\n        options={[{ value: \"1\", label: \"选项 1\" }]}\n        size=\"sm\"\n        placeholder=\"小尺寸 (Small)\"\n      />\n      <Combobox\n        options={[{ value: \"1\", label: \"选项 1\" }]}\n        size=\"default\"\n        placeholder=\"默认 (Default)\"\n      />\n      <Combobox\n        options={[{ value: \"1\", label: \"选项 1\" }]}\n        size=\"lg\"\n        placeholder=\"大尺寸 (Large)\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

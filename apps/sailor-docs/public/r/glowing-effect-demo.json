@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "glowing-effect-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/glowing-effect-demo.tsx",
+      "content": "import { GlowingEffect } from \"@nebutra/ui/primitives\";\n\nexport function GlowingEffectDemo() {\n  return (\n    <div className=\"p-12 flex w-full items-center justify-center\">\n      <div className=\"p-8 w-64 relative rounded-xl border bg-background shadow-sm\">\n        <GlowingEffect\n          spread={40}\n          glow={false}\n          disabled={false}\n          proximity={64}\n          inactiveZone={0.7}\n        />\n        <div className=\"relative z-10 flex flex-col items-center justify-center text-center\">\n          <p className=\"font-bold\">Hover Card</p>\n          <p className=\"text-sm mt-2 text-muted-foreground\">Move mouse to see glow effect</p>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

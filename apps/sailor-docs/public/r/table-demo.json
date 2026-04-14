@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/table-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Table,\n  TableBody,\n  TableCaption,\n  TableCell,\n  TableFooter,\n  TableHead,\n  TableHeader,\n  TableRow,\n} from \"@nebutra/ui/primitives\";\n\nexport function TableDemo() {\n  return (\n    <Table>\n      <TableCaption>A list of your recent invoices.</TableCaption>\n      <TableHeader>\n        <TableRow>\n          <TableHead>Invoice</TableHead>\n          <TableHead>Status</TableHead>\n          <TableHead>Method</TableHead>\n          <TableHead className=\"text-right\">Amount</TableHead>\n        </TableRow>\n      </TableHeader>\n      <TableBody>\n        <TableRow>\n          <TableCell className=\"font-medium\">INV-001</TableCell>\n          <TableCell>Paid</TableCell>\n          <TableCell>Credit Card</TableCell>\n          <TableCell className=\"text-right\">$250.00</TableCell>\n        </TableRow>\n        <TableRow>\n          <TableCell className=\"font-medium\">INV-002</TableCell>\n          <TableCell>Pending</TableCell>\n          <TableCell>Bank Transfer</TableCell>\n          <TableCell className=\"text-right\">$150.00</TableCell>\n        </TableRow>\n        <TableRow>\n          <TableCell className=\"font-medium\">INV-003</TableCell>\n          <TableCell>Unpaid</TableCell>\n          <TableCell>PayPal</TableCell>\n          <TableCell className=\"text-right\">$350.00</TableCell>\n        </TableRow>\n      </TableBody>\n      <TableFooter>\n        <TableRow>\n          <TableCell colSpan={3}>Total</TableCell>\n          <TableCell className=\"text-right\">$750.00</TableCell>\n        </TableRow>\n      </TableFooter>\n    </Table>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

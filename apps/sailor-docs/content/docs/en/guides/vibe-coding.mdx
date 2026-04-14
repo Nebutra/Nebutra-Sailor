@@ -1,0 +1,426 @@
+---
+title: Vibe Coding with Nebutra-Sailor
+description: Clone the template, pick your AI coding tool, and ship production SaaS. Full setup guide for Claude Code, Cursor, Windsurf, Copilot, Codex, Kiro, Trae, Warp.dev, and more.
+---
+
+## Overview
+
+**Vibe Coding** — building software by describing what you want to a large language model and iterating in natural language — is now the default workflow for SaaS teams in 2026.
+
+Nebutra-Sailor is designed from the ground up to work with every major AI coding tool. Every agent context file, every package boundary, and every convention is optimized so that the AI understands the codebase from the first prompt.
+
+This guide covers:
+
+1. [Clone & configure](#1-clone--configure)
+2. [Tool-by-tool setup](#2-tool-by-tool-setup)
+3. [Universal workflow](#3-universal-workflow)
+4. [Prompting patterns that work](#4-prompting-patterns-that-work)
+
+---
+
+## 1. Clone & Configure
+
+```bash
+# Clone the template
+git clone https://github.com/nebutra/nebutra-sailor my-saas
+cd my-saas
+
+# Install dependencies (Node.js 22 + pnpm 10.32+ required)
+pnpm install
+
+# Generate the Prisma client
+pnpm db:generate
+
+# Start lightweight infrastructure (PostgreSQL only for quick start)
+pnpm infra:lite
+
+# Copy environment template and fill in your secrets
+cp .env.example .env.local
+```
+
+The minimum env vars to get started:
+
+```bash
+# .env.local
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/nebutra"
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=""
+CLERK_SECRET_KEY=""
+```
+
+Then start the dev server:
+
+```bash
+pnpm dev:dashboard   # web app (port 3000) + API gateway (port 3001)
+pnpm dev:marketing   # landing page (port 3002) + Sanity Studio (port 3333)
+```
+
+---
+
+## 2. Tool-by-Tool Setup
+
+### Claude Code
+
+Context file: **`CLAUDE.md`** (repo root) — already present, auto-loaded.
+
+Claude Code reads `CLAUDE.md` at session start and injects it as foundational context. No setup required beyond cloning.
+
+```bash
+# Start a Claude Code session in the repo root
+claude
+
+# Useful session starters
+# "Build a new settings page for billing"
+# "Add a webhook endpoint for Stripe payment.failed events"
+# "What's the permissions model for multi-tenant RBAC?"
+```
+
+**Tips:**
+- Use `/plan` before large features to get a step-by-step implementation plan
+- Ask Claude to "check `CLAUDE.md` before starting" if it seems confused about imports
+- The `@nebutra/ui`, `@nebutra/tokens`, and `@nebutra/permissions` packages are well-documented — Claude understands them natively
+
+---
+
+### Cursor
+
+Context file: **`.cursor/rules/nebutra.mdc`** — created by Nebutra-Sailor.
+
+Cursor reads `.cursor/rules/*.mdc` files as project rules. The `nebutra.mdc` file gives Cursor full context on package boundaries, token conventions, and architectural constraints.
+
+**Setup:**
+
+1. Open the repo in Cursor: `cursor .`
+2. The rules file is auto-detected — no additional config needed
+3. Open Cursor Chat (`Cmd+L`) and start prompting
+
+```
+# Example Cursor prompts
+@codebase Add a feature flag hook that reads from Edge Config
+@nebutra.mdc Create a new Hono route for GET /api/v1/usage/summary
+Refactor the billing page to use @nebutra/ui components
+```
+
+**Cursor-specific patterns:**
+- Use `@codebase` to search the entire monorepo before generating
+- Use `@file` to pin specific context (e.g., `@apps/web/src/app/(dashboard)/settings/page.tsx`)
+- Enable **Auto-run** for terminal commands in safe dev environments
+
+---
+
+### Windsurf / Codeium
+
+Context file: **`.windsurfrules`** — created by Nebutra-Sailor.
+
+Windsurf reads `.windsurfrules` from the repo root as a project-wide instruction set.
+
+**Setup:**
+
+1. Open the repo: `windsurf .`
+2. `.windsurfrules` is auto-loaded by the Cascade AI agent
+3. Start a Cascade session (`Cmd+L`) and describe your task
+
+```
+# Example Windsurf prompts
+Create a multi-step onboarding wizard component using @nebutra/ui
+Add rate limiting to the /api/v1/ai/chat route using @nebutra/rate-limit
+Write Vitest unit tests for the metering quota check logic
+```
+
+**Cascade tips:**
+- Cascade understands the full file tree — use it for cross-package refactors
+- Ask it to "follow .windsurfrules" if it deviates from token conventions
+- Cascade's auto-apply is safe for isolated package changes
+
+---
+
+### GitHub Copilot
+
+Context file: **`.github/copilot-instructions.md`** — created by Nebutra-Sailor.
+
+GitHub Copilot reads `.github/copilot-instructions.md` in Copilot Chat for repository-wide context.
+
+**Setup:**
+
+1. Install the GitHub Copilot extension in VS Code
+2. Open the repo
+3. Open Copilot Chat (`Cmd+Shift+I`)
+4. `@workspace` queries will use the instructions file automatically
+
+```
+# Example Copilot Chat prompts
+@workspace How do I add a new permission scope?
+@workspace Create a webhook handler for Linear issue updates
+@workspace What package should I import for sending transactional email?
+```
+
+**CLI workflow with Copilot:**
+```bash
+# Use GitHub Copilot CLI for terminal-native AI assistance
+gh copilot suggest "create a pnpm script that seeds test data"
+gh copilot explain "$(cat apps/api-gateway/src/middleware/rate-limit.ts)"
+```
+
+---
+
+### OpenAI Codex / Agents (AGENTS.md)
+
+Context file: **`AGENTS.md`** (repo root) — already present.
+
+Codex CLI and OpenAI's agentic tools read `AGENTS.md` for project context. This is the same format used by OpenAI's multi-agent framework.
+
+```bash
+# Install Codex CLI
+npm install -g @openai/codex
+
+# Run in the repo
+codex "Add an audit log viewer to the admin dashboard"
+codex --approval-mode auto "Fix all TypeScript errors in packages/billing"
+```
+
+**Auto-approval patterns:**
+```bash
+# Safe operations (auto-approve)
+codex --approval-mode auto-edit "refactor X to use Y"
+
+# Destructive operations (always review)
+codex "migrate the database schema"
+```
+
+---
+
+### Amazon Kiro
+
+Context file: **`.kiro/steering/nebutra.md`** — created by Nebutra-Sailor.
+
+Kiro reads markdown files from `.kiro/steering/` as persistent project steering documents that are always included in the agent's context window.
+
+**Setup:**
+
+1. Install Kiro from [kiro.dev](https://kiro.dev)
+2. Open the repo in Kiro
+3. The steering document is auto-loaded
+
+```
+# Example Kiro specs (create .kiro/specs/ files)
+# notification-preferences.md
+Feature: Add notification preference toggles to the settings page
+Allow users to control which channels (email, Slack, push) receive
+each notification type. Persist per-user settings in the database.
+```
+
+**Kiro hooks workflow:**
+
+```yaml
+# .kiro/hooks/on-file-save.yml
+trigger: file-save
+pattern: "apps/web/src/**/*.tsx"
+actions:
+  - run: pnpm --filter @nebutra/web typecheck
+  - suggest: "Run Storybook to preview the component"
+```
+
+---
+
+### Trae (ByteDance)
+
+Context file: **`.trae/rules/project.md`** — create manually.
+
+Trae IDE (from ByteDance) uses `.trae/rules/` directory for project-specific rules, similar to Cursor's `.cursor/rules/`.
+
+**Setup:**
+
+```bash
+mkdir -p .trae/rules
+cp .cursor/rules/nebutra.mdc .trae/rules/project.md
+```
+
+Open in Trae and the rules are auto-detected.
+
+---
+
+### Warp.dev
+
+Context file: **`AGENTS.md`** — Warp's AI uses project context from AGENTS.md when available.
+
+Warp is a terminal with built-in AI. It reads shell history, file context, and `AGENTS.md` for project-aware suggestions.
+
+```bash
+# In Warp terminal, use # prefix for AI commands
+# pnpm infra:up
+# Add the --no-cache flag to rebuild fresh containers
+
+# Ask Warp about your project
+# What does pnpm dev:dashboard start?
+# How do I run just the api-gateway in watch mode?
+```
+
+**Warp Drive** — save useful Nebutra commands as Warp Drive notebooks:
+- Infrastructure startup sequence
+- Database migration workflow
+- Test + lint before commit
+
+---
+
+### OpenCode
+
+Context file: **`AGENTS.md`** — OpenCode reads AGENTS.md for project context.
+
+OpenCode is an open-source terminal AI coding agent. Run it from the repo root and it will automatically discover `AGENTS.md`.
+
+```bash
+# Install
+npm install -g opencode-ai
+
+# Run in repo
+opencode
+> Add a CSV export endpoint to the billing history API
+> Write tests for the multi-tenant permission matrix
+```
+
+---
+
+### Antigravity
+
+Antigravity connects to your repo via Git and provides context-aware completions across the full codebase.
+
+**Setup:**
+1. Connect your repository at [antigravity.dev](https://antigravity.dev)
+2. It indexes the codebase and learns package conventions from `AGENTS.md` and `CLAUDE.md`
+
+---
+
+### OpenClaw
+
+OpenClaw is a local-first AI coding tool that uses project context files.
+
+```bash
+# Install
+brew install openclaw
+
+# Initialize in repo (reads AGENTS.md automatically)
+claw init
+claw "Add a new integration card for the Zapier connector"
+```
+
+---
+
+## 3. Universal Workflow
+
+Regardless of which tool you use, the workflow is the same:
+
+```
+Clone → Configure env → Pick your tool → Describe feature → Review → Test → Ship
+```
+
+### Phase 1: Feature design
+
+Before writing code, describe the feature at a high level:
+
+```
+"I want to add a usage analytics dashboard to the web app.
+It should show API call volume, error rates, and active tenants
+over the last 30 days. Use @nebutra/ui charts components."
+```
+
+### Phase 2: Implementation
+
+Let the AI implement. Review diffs carefully — especially:
+- Package imports (should use `@nebutra/*`, never raw hex colors)
+- New components must have Storybook stories
+- Server Components should not have `'use client'` unless needed
+
+### Phase 3: Validation
+
+```bash
+pnpm typecheck          # TypeScript errors
+pnpm lint               # Biome lint
+pnpm test               # Unit tests
+pnpm --filter @nebutra/storybook dev  # Visual review
+```
+
+### Phase 4: Ship
+
+```bash
+pnpm build              # Production build
+git add -A && git commit -m "feat: add usage analytics dashboard"
+git push
+```
+
+---
+
+## 4. Prompting Patterns That Work
+
+### Be specific about packages
+
+```
+# ✅ Good
+"Add a notification bell to the navbar using @nebutra/notifications
+and @nebutra/ui/components. Use AnimateIn for the dropdown entrance."
+
+# ❌ Vague
+"Add a notification feature"
+```
+
+### Reference the architecture
+
+```
+# ✅ Good
+"Add a Hono route in apps/api-gateway/src/routes/billing.ts that
+returns the current quota usage. Use @nebutra/metering and require
+the billing:read permission via requirePermission middleware."
+
+# ❌ Missing context
+"Add a billing endpoint"
+```
+
+### Ask for tests first (TDD)
+
+```
+"Write a Vitest test for a function that calculates overage fees
+when a tenant exceeds their API quota limit. Then implement the function."
+```
+
+### Use the right token syntax
+
+```
+"When styling, use Tailwind classes with CSS variable tokens:
+bg-[var(--neutral-1)], text-[var(--neutral-12)], border-[var(--neutral-7)].
+Never use hardcoded hex values. Brand gradient: var(--brand-gradient)."
+```
+
+---
+
+## Context File Reference
+
+| Tool | Context File | Status |
+|------|-------------|--------|
+| Claude Code | `CLAUDE.md` | ✅ Included |
+| OpenAI Codex | `AGENTS.md` | ✅ Included |
+| Cursor | `.cursor/rules/nebutra.mdc` | ✅ Included |
+| Windsurf | `.windsurfrules` | ✅ Included |
+| GitHub Copilot | `.github/copilot-instructions.md` | ✅ Included |
+| Kiro | `.kiro/steering/nebutra.md` | ✅ Included |
+| Trae | `.trae/rules/project.md` | Copy from `.cursor/rules/nebutra.mdc` |
+| Warp.dev | `AGENTS.md` | ✅ Included |
+| OpenCode | `AGENTS.md` | ✅ Included |
+| Antigravity | Auto-indexes `AGENTS.md` | ✅ Included |
+| OpenClaw | `AGENTS.md` | ✅ Included |
+
+---
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Architecture" icon="sitemap" href="/concepts/architecture">
+    Understand the monorepo structure before prompting.
+  </Card>
+  <Card title="Quick Start: Next.js" icon="bolt" href="/quickstart/nextjs">
+    Get the dashboard running in 5 minutes.
+  </Card>
+  <Card title="Permissions" icon="shield" href="/concepts/permissions">
+    RBAC scope reference for AI-generated routes.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/overview">
+    Full API spec for generating integrations.
+  </Card>
+</CardGroup>

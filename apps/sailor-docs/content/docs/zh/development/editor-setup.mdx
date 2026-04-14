@@ -1,0 +1,121 @@
+---
+title: 编辑器配置
+description: Nebutra-Sailor 代码库推荐的 VS Code 扩展、Biome 格式化配置和 Cursor 规则。
+---
+
+## VS Code
+
+VS Code 是推荐的编辑器。以下扩展为必装或强烈建议安装。
+
+### 必装扩展
+
+| 扩展 | ID | 用途 |
+|-----|-----|------|
+| **Biome** | `biomejs.biome` | 代码检查 + 格式化（替代 ESLint 和 Prettier） |
+| **Prisma** | `prisma.prisma` | Schema 语法高亮和自动补全 |
+| **Tailwind CSS IntelliSense** | `bradlc.vscode-tailwindcss` | 类名补全和悬浮预览 |
+| **TypeScript and JavaScript** | `ms-vscode.vscode-typescript-next` | 增强的 TypeScript 语言功能 |
+| **MDX** | `unifiedjs.vscode-mdx` | `.mdx` 文件的语法支持 |
+
+### 推荐扩展
+
+| 扩展 | ID | 用途 |
+|-----|-----|------|
+| **Error Lens** | `usernamehw.errorlens` | 内联错误和警告显示 |
+| **Pretty TypeScript Errors** | `yoavbls.pretty-ts-errors` | 人性化的 TypeScript 错误信息 |
+| **Import Cost** | `wix.vscode-import-cost` | 导入旁边的打包体积提示 |
+| **GitLens** | `eamodio.gitlens` | 增强的 Git 历史和 blame 功能 |
+
+### settings.json
+
+将以下内容添加到您的 workspace 或用户 `settings.json`，以将 Biome 配置为默认格式化工具并启用保存时格式化：
+
+```json
+{
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}
+```
+
+<Warning>
+  **不要**安装 ESLint 或 Prettier 扩展。本代码库使用 **Biome** 进行代码检查和格式化。同时运行 ESLint 和 Biome 会产生冲突结果。
+</Warning>
+
+## Cursor
+
+Cursor 完全支持。仓库在 `.cursor/rules/nebutra.mdc` 中内置了预配置的规则文件，该文件会将项目上下文（组件约定、Token 用法、包导入路径）直接注入 AI 上下文窗口。
+
+无需额外配置 — 在 Cursor 中打开仓库，规则会自动激活。
+
+<Tip>
+  如果您添加了新的架构模式或包约定，请更新 `.cursor/rules/nebutra.mdc`，以确保 AI 辅助编辑与代码库的其余部分保持一致。
+</Tip>
+
+## Biome 配置
+
+Biome 在仓库根目录的 `biome.json` 中进行配置。关键规则：
+
+- **禁止 `console.log`** 出现在生产源代码中（请改用 `@nebutra/logger`）
+- **禁止未使用变量** — 作为错误强制执行
+- **排序导入** — 保存时自动修复
+- 字符串使用**双引号**
+- **必须使用分号**
+
+手动运行代码检查器：
+
+```bash
+pnpm lint          # 检查
+pnpm lint:fix      # 检查 + 自动修复
+```
+
+## TypeScript
+
+本仓库使用 TypeScript 5.9 严格模式。一个共享的基础配置位于仓库根目录的 `tsconfig.base.json` 中。每个包通过自己的 `tsconfig.json` 继承它。
+
+跨所有包运行类型检查器：
+
+```bash
+pnpm typecheck
+```
+
+<Note>
+  类型检查通过 Turborepo 并行运行，并遵循包依赖图。如果 `@nebutra/ui` 有类型错误，任何导入它的应用也会类型检查失败。
+</Note>
+
+## Tailwind CSS IntelliSense 配置
+
+Tailwind 扩展需要了解在 `@nebutra/tokens` 中注册的自定义 CSS 变量。`apps/web` 和 `apps/landing-page` 中的 workspace 级 `tailwind.config.ts` 文件包含必要的 `theme.extend` 条目。无需额外配置。
+
+要在任意值语法中看到 Token 补全（例如 `bg-[var(--blue-9)]`），请确保 Tailwind IntelliSense 扩展版本为 0.12 或更高。
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="本地开发" icon="laptop" href="/zh/development/local-dev">
+    完整的开发环境配置指南。
+  </Card>
+  <Card title="项目结构" icon="folder-tree" href="/zh/development/project-structure">
+    文件命名约定和代码存放位置。
+  </Card>
+</CardGroup>

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feedback-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/feedback-demo.tsx",
+      "content": "\"use client\";\n\nimport { Feedback } from \"@nebutra/ui/primitives\";\n\nexport function FeedbackDemo() {\n  return (\n    <div className=\"h-40 px-4 py-8 flex w-full items-center justify-center\">\n      <Feedback label=\"my-app\" onSubmit={async (_payload) => {}} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider-on-value-change-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/slider-on-value-change-demo.tsx",
+      "content": "import { Slider } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport default function SliderOnValueChangeDemo() {\n  const [value, setValue] = useState<number>(50);\n\n  return <Slider onValueChange={setValue} value={value} />;\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

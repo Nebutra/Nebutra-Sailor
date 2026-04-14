@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flex-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/flex-demo.tsx",
+      "content": "import { Flex } from \"@nebutra/ui/primitives\";\n\nexport function FlexDemo() {\n  return (\n    <Flex\n      gap={4}\n      align=\"center\"\n      justify=\"center\"\n      className=\"max-w-sm p-6 w-full rounded-xl border bg-background/50 shadow-sm\"\n    >\n      <div className=\"h-16 w-16 rounded-lg border border-primary/30 bg-primary/20\" />\n      <div className=\"h-16 w-24 font-medium flex items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm\">\n        Flex\n      </div>\n      <div className=\"h-16 w-16 rounded-lg border border-primary/30 bg-primary/20\" />\n    </Flex>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

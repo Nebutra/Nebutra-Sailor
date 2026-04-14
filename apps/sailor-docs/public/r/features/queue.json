@@ -1,0 +1,12 @@
+{
+  "name": "queue",
+  "description": "Enterprise-grade message queue combining Upstash QStash and BullMQ.",
+  "providers": ["upstash", "bullmq"],
+  "dependencies": [
+    { "name": "@upstash/qstash", "version": "latest" },
+    { "name": "ioredis", "version": "latest" }
+  ],
+  "env": [
+    { "key": "QSTASH_TOKEN", "description": "Upstash QStash REST API Token" }
+  ]
+}

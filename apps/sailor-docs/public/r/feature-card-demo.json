@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feature-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/feature-card-demo.tsx",
+      "content": "\"use client\";\n\nimport { FeatureCard, FeatureCardContent, FeatureCardHeader } from \"@nebutra/ui/primitives\";\nimport { Zap } from \"lucide-react\";\n\nexport function FeatureCardDemo() {\n  return (\n    <FeatureCard className=\"w-80\">\n      <FeatureCardHeader\n        icon={Zap}\n        title=\"Lightning fast\"\n        description=\"Sub-second response times worldwide.\"\n      />\n      <FeatureCardContent className=\"p-6\">\n        <div className=\"h-24 rounded text-sm flex items-center justify-center bg-muted/20 text-muted-foreground\">\n          Visual content area\n        </div>\n      </FeatureCardContent>\n    </FeatureCard>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

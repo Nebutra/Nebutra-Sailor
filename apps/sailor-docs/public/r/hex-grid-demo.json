@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hex-grid-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/hex-grid-demo.tsx",
+      "content": "\"use client\";\n\nimport { HexGrid } from \"@nebutra/ui/primitives\";\n\nexport function HexGridDemo() {\n  return (\n    <div className=\"py-12 mx-auto w-full\">\n      <div className=\"gap-12 max-w-4xl px-4 mx-auto flex flex-col\">\n        {/* Example 1: Basic with Glow */}\n        <div className=\"space-y-4\">\n          <div className=\"mb-6 text-center\">\n            <h3 className=\"text-lg font-bold\">Animated Glowing Grid</h3>\n            <p className=\"text-sm text-muted-foreground\">\n              Standard wireframe hexagon grid with animated glowing cells.\n            </p>\n          </div>\n          <div className=\"md:h-[400px] relative flex h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border bg-card\">\n            <HexGrid glow color=\"hsl(var(--primary))\" opacity={0.25} />\n            <div className=\"backdrop-blur-md px-6 py-4 relative z-10 rounded-full border bg-background/80 shadow-sm\">\n              <span className=\"font-semibold tracking-tight\">Core Infrastructure</span>\n            </div>\n          </div>\n        </div>\n\n        {/* Example 2: Filled with Radial Mask */}\n        <div className=\"space-y-4\">\n          <div className=\"mb-6 text-center\">\n            <h3 className=\"text-lg font-bold\">Filled Grid with Mask</h3>\n            <p className=\"text-sm text-muted-foreground\">\n              Solid filled hexagons masked by a radial gradient.\n            </p>\n          </div>\n          <div className=\"md:h-[400px] bg-black relative flex h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border\">\n            <HexGrid\n              filled\n              size={32}\n              color=\"#0BF1C3\"\n              opacity={0.15}\n              className=\"[mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]\"\n            />\n            <div className=\"relative z-10\">\n              <h2 className=\"text-4xl md:text-5xl font-black text-white tracking-tighter mix-blend-overlay\">\n                NEBUTRA\n              </h2>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/checkbox-demo.tsx",
+      "content": "\"use client\";\nimport { Checkbox } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function CheckboxDemo() {\n  const [checked, setChecked] = useState(false);\n  return (\n    <div className=\"gap-3 flex flex-col\">\n      <Checkbox checked={checked} onChange={(v: boolean) => setChecked(v)}>\n        Accept terms and conditions\n      </Checkbox>\n      <Checkbox checked>Subscribe to newsletter</Checkbox>\n      <Checkbox disabled>Disabled option</Checkbox>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

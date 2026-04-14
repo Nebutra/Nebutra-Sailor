@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "entity-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/entity-demo.tsx",
+      "content": "import { Entity } from \"@nebutra/ui/primitives\";\nimport { ChevronRight, Mail, Settings, User } from \"lucide-react\";\n\nexport function EntityDemo() {\n  return (\n    <div className=\"max-w-md p-8 mx-auto w-full\">\n      <Entity.List>\n        <Entity\n          as=\"li\"\n          left={\n            <div className=\"bg-blue-100 p-2 rounded-full dark:bg-blue-900\">\n              <User className=\"text-blue-600 dark:text-blue-300 size-5\" />\n            </div>\n          }\n          right={<ChevronRight className=\"size-5 text-muted-foreground\" />}\n        >\n          <Entity.Content title=\"Profile Settings\" description=\"Update your personal information\" />\n        </Entity>\n\n        <Entity\n          as=\"li\"\n          left={\n            <div className=\"bg-emerald-100 dark:bg-emerald-900 p-2 rounded-full\">\n              <Mail className=\"text-emerald-600 dark:text-emerald-300 size-5\" />\n            </div>\n          }\n          right={<ChevronRight className=\"size-5 text-muted-foreground\" />}\n        >\n          <Entity.Content title=\"Email Preferences\" description=\"Manage newsletter subscriptions\" />\n        </Entity>\n\n        <Entity\n          as=\"li\"\n          left={\n            <div className=\"bg-orange-100 dark:bg-orange-900 p-2 rounded-full\">\n              <Settings className=\"text-orange-600 dark:text-orange-300 size-5\" />\n            </div>\n          }\n          right={<ChevronRight className=\"size-5 text-muted-foreground\" />}\n        >\n          <Entity.Content\n            title=\"System Configuration\"\n            description=\"Advanced administration options\"\n          />\n        </Entity>\n      </Entity.List>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

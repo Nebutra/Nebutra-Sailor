@@ -1,0 +1,268 @@
+---
+title: Storage Providers
+description: Configure AWS S3, Cloudflare R2, or any S3-compatible backend for @nebutra/uploads.
+---
+
+`@nebutra/uploads` supports three storage backends. All providers expose the same API — the only difference is which environment variables you set.
+
+<Note>
+Provider auto-detection follows this priority: explicit `STORAGE_PROVIDER` env var → `AWS_BUCKET_NAME` present → `R2_ACCOUNT_ID` present → in-memory fallback (development only).
+</Note>
+
+<Tabs>
+  <Tab title="AWS S3">
+    ## AWS S3
+
+    The default provider. Use S3 when you are already invested in the AWS ecosystem or need fine-grained IAM policies.
+
+    ### Environment variables
+
+    ```bash
+    STORAGE_PROVIDER=s3
+    AWS_BUCKET_NAME=nebutra-uploads
+    AWS_REGION=us-east-1
+    AWS_ACCESS_KEY_ID=AKIA...
+    AWS_SECRET_ACCESS_KEY=...
+    ```
+
+    ### Setup steps
+
+    <Steps>
+      <Step title="Create an S3 bucket">
+        In the AWS Console, go to **S3 → Create bucket**.
+
+        - **Bucket name:** `nebutra-uploads` (or your preferred name)
+        - **Region:** choose the region closest to your application
+        - **Block public access:** keep all public access blocked unless you need a public CDN
+        - **Versioning:** optional, recommended for production
+      </Step>
+
+      <Step title="Create an IAM user">
+        Go to **IAM → Users → Create user**. Attach an inline policy:
+
+        ```json
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:DeleteObject",
+                "s3:ListBucket"
+              ],
+              "Resource": [
+                "arn:aws:s3:::nebutra-uploads",
+                "arn:aws:s3:::nebutra-uploads/*"
+              ]
+            }
+          ]
+        }
+        ```
+
+        Generate **access keys** for the user and save them as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+      </Step>
+
+      <Step title="Configure CORS">
+        In the S3 bucket settings, go to **Permissions → CORS configuration** and add:
+
+        ```json
+        [
+          {
+            "AllowedHeaders": ["*"],
+            "AllowedMethods": ["GET", "PUT", "POST", "DELETE", "HEAD"],
+            "AllowedOrigins": ["https://app.nebutra.com"],
+            "ExposeHeaders": ["ETag"],
+            "MaxAgeSeconds": 3600
+          }
+        ]
+        ```
+
+        Replace `AllowedOrigins` with your application's domain. For local development, add `http://localhost:3000`.
+      </Step>
+
+      <Step title="Add env vars and deploy">
+        Add the four variables to your Vercel project (or `.env.local` for local development) and redeploy.
+      </Step>
+    </Steps>
+
+    ### Pricing notes
+
+    AWS S3 charges for storage (GB/month), PUT/GET requests, and data transfer out. For read-heavy workloads, put CloudFront in front of S3 to reduce egress costs.
+  </Tab>
+
+  <Tab title="Cloudflare R2">
+    ## Cloudflare R2
+
+    R2 is S3-compatible and charges **zero egress fees**. Use R2 when minimising bandwidth costs is a priority, or when your application runs on Cloudflare Workers.
+
+    ### Environment variables
+
+    ```bash
+    STORAGE_PROVIDER=r2
+    R2_BUCKET_NAME=nebutra-uploads
+    R2_ACCOUNT_ID=your-cloudflare-account-id
+    R2_ACCESS_KEY_ID=...
+    R2_SECRET_ACCESS_KEY=...
+    R2_PUBLIC_URL=https://assets.nebutra.com
+    ```
+
+    <Tip>
+      `R2_PUBLIC_URL` is the custom domain or `r2.dev` subdomain used to serve public files. Set it to enable CDN delivery without signed URLs for public assets.
+    </Tip>
+
+    ### Setup steps
+
+    <Steps>
+      <Step title="Create an R2 bucket">
+        In the Cloudflare dashboard, go to **R2 → Create bucket**.
+
+        - **Bucket name:** `nebutra-uploads`
+        - **Location:** Auto (or choose a specific region)
+      </Step>
+
+      <Step title="Create an API token">
+        Go to **R2 → Manage R2 API tokens → Create API token**.
+
+        - **Permissions:** Object Read & Write
+        - **Bucket:** restrict to `nebutra-uploads`
+
+        Save the **Access Key ID** and **Secret Access Key**.
+      </Step>
+
+      <Step title="Configure CORS">
+        In R2 bucket settings, go to **Settings → CORS Policy**:
+
+        ```json
+        [
+          {
+            "AllowedOrigins": ["https://app.nebutra.com"],
+            "AllowedMethods": ["GET", "PUT", "HEAD", "DELETE"],
+            "AllowedHeaders": ["*"],
+            "ExposeHeaders": ["ETag"],
+            "MaxAgeSeconds": 3600
+          }
+        ]
+        ```
+      </Step>
+
+      <Step title="Enable public access (optional)">
+        If you need a public CDN URL for assets (avatars, public documents), go to **R2 bucket → Settings → Public access** and connect a custom domain or enable the `r2.dev` subdomain. Set `R2_PUBLIC_URL` to this URL.
+      </Step>
+
+      <Step title="Add env vars and deploy">
+        Add all five variables to Vercel and redeploy. Your `R2_ACCOUNT_ID` is visible on the Cloudflare dashboard home page.
+      </Step>
+    </Steps>
+
+    ### Pricing notes
+
+    R2 has no egress fees. You pay only for storage and operations. For most SaaS applications with moderate file access, R2 is significantly cheaper than S3 once egress is factored in.
+  </Tab>
+
+  <Tab title="S3-Compatible">
+    ## S3-Compatible providers
+
+    Any S3-compatible service works with `@nebutra/uploads` — Backblaze B2, MinIO, DigitalOcean Spaces, Wasabi, and others.
+
+    ### Environment variables
+
+    ```bash
+    STORAGE_PROVIDER=s3-compatible
+    AWS_BUCKET_NAME=nebutra-uploads
+    AWS_REGION=us-east-1
+    AWS_ACCESS_KEY_ID=...
+    AWS_SECRET_ACCESS_KEY=...
+    S3_ENDPOINT_URL=https://s3.us-east-005.backblazeb2.com
+    ```
+
+    <Note>
+      `S3_ENDPOINT_URL` overrides the default AWS endpoint. Set it to your provider's S3-compatible endpoint URL.
+    </Note>
+
+    ### Backblaze B2
+
+    <Steps>
+      <Step title="Create a B2 bucket">
+        In the Backblaze dashboard, go to **B2 Cloud Storage → Create a Bucket**. Note the **Endpoint** URL shown after creation (e.g. `s3.us-east-005.backblazeb2.com`).
+      </Step>
+
+      <Step title="Create application keys">
+        Go to **App Keys → Add a New Application Key**. Restrict it to your bucket and save the **keyID** and **applicationKey**.
+      </Step>
+
+      <Step title="Set environment variables">
+        ```bash
+        STORAGE_PROVIDER=s3-compatible
+        AWS_BUCKET_NAME=nebutra-uploads
+        AWS_REGION=us-east-005
+        AWS_ACCESS_KEY_ID=<keyID>
+        AWS_SECRET_ACCESS_KEY=<applicationKey>
+        S3_ENDPOINT_URL=https://s3.us-east-005.backblazeb2.com
+        ```
+      </Step>
+    </Steps>
+
+    ### MinIO (self-hosted)
+
+    <Steps>
+      <Step title="Start MinIO">
+        ```bash
+        docker run -p 9000:9000 -p 9001:9001 \
+          -e MINIO_ROOT_USER=admin \
+          -e MINIO_ROOT_PASSWORD=password \
+          quay.io/minio/minio server /data --console-address ":9001"
+        ```
+      </Step>
+
+      <Step title="Create a bucket and access key">
+        Open the MinIO console at `http://localhost:9001`. Create a bucket named `nebutra-uploads` and generate an access key pair.
+      </Step>
+
+      <Step title="Set environment variables">
+        ```bash
+        STORAGE_PROVIDER=s3-compatible
+        AWS_BUCKET_NAME=nebutra-uploads
+        AWS_REGION=us-east-1
+        AWS_ACCESS_KEY_ID=<minio-access-key>
+        AWS_SECRET_ACCESS_KEY=<minio-secret-key>
+        S3_ENDPOINT_URL=http://localhost:9000
+        ```
+      </Step>
+    </Steps>
+
+    <Warning>
+      For local MinIO, set `S3_FORCE_PATH_STYLE=true` to avoid virtual-hosted-style URL resolution issues.
+    </Warning>
+  </Tab>
+</Tabs>
+
+## Switching providers
+
+Because all providers use the same `@nebutra/uploads` API, switching is a matter of updating environment variables. No application code changes are needed.
+
+```bash
+# Switch from S3 to R2 — just update env vars
+STORAGE_PROVIDER=r2
+R2_BUCKET_NAME=nebutra-uploads
+R2_ACCOUNT_ID=...
+R2_ACCESS_KEY_ID=...
+R2_SECRET_ACCESS_KEY=...
+R2_PUBLIC_URL=https://assets.nebutra.com
+```
+
+<CardGroup cols={2}>
+  <Card title="Storage Overview" icon="hard-drive" href="/storage/overview">
+    Architecture and upload strategy comparison
+  </Card>
+  <Card title="Uploads" icon="upload" href="/storage/uploads">
+    Presigned URL, multipart, and Tus upload guides
+  </Card>
+  <Card title="Accessing Files" icon="file" href="/storage/accessing-files">
+    Signed URLs, CDN, and file listing
+  </Card>
+  <Card title="Environment Variables" icon="key" href="/guides/environment-variables">
+    Managing secrets across environments
+  </Card>
+</CardGroup>

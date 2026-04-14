@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-button-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/tabs-button-demo.tsx",
+      "content": "\"use client\";\n\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@nebutra/ui/primitives\";\n\nexport function TabsButtonDemo() {\n  return (\n    <Tabs defaultValue=\"tab1\" className=\"w-[400px]\">\n      <TabsList variant=\"line\" className=\"w-full\">\n        <TabsTrigger value=\"tab1\">全部 (All)</TabsTrigger>\n        <TabsTrigger value=\"tab2\">进行中 (Active)</TabsTrigger>\n        <TabsTrigger value=\"tab3\">已归档 (Archived)</TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"tab1\" className=\"p-4 mt-2\">\n        全部内容 (All content)\n      </TabsContent>\n      <TabsContent value=\"tab2\" className=\"p-4 mt-2\">\n        进行中内容 (Active content)\n      </TabsContent>\n      <TabsContent value=\"tab3\" className=\"p-4 mt-2\">\n        已归档内容 (Archived content)\n      </TabsContent>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

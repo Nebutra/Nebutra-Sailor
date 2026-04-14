@@ -1,0 +1,190 @@
+---
+title: Production Checklist
+description: Everything to verify before taking Nebutra-Sailor live — infrastructure, security, compliance, monitoring, and performance.
+---
+
+## How to use this checklist
+
+Work through each section before your first production launch and before every major release. Items marked as critical must be resolved before going live.
+
+---
+
+## Infrastructure
+
+**All environment variables configured and validated**
+
+Every required environment variable must be set in your deployment target (Vercel dashboard, Docker Compose env file, or secrets manager). `@nebutra/config` validates them at startup and crashes with a descriptive error if any are missing.
+
+**Database migrations run against the production database**
+
+Run `pnpm db:migrate` (or `DATABASE_URL=<prod> pnpm db:migrate`) before deploying the new app version.
+
+```bash
+DATABASE_URL=<your-production-db-url> pnpm db:migrate
+```
+
+**PostgreSQL backup strategy configured**
+
+Enable automated daily backups with at least 7-day retention. Verify that a test restore works. If using Supabase or Neon, enable Point-in-Time Recovery (PITR).
+
+**Redis persistence configured**
+
+Enable AOF (Append Only File) persistence on Redis if you are using it for BullMQ queues. Without persistence, in-flight jobs are lost on restart.
+
+---
+
+## Payments
+
+**Stripe webhooks configured and verified**
+
+In the Stripe dashboard, create a webhook endpoint pointing to `https://api.yourdomain.com/api/v1/webhooks/stripe`. Add the webhook signing secret as `STRIPE_WEBHOOK_SECRET`. Use `stripe listen --forward-to` to verify delivery in staging.
+
+**Required Stripe events enabled**
+
+Ensure the following events are selected on the webhook endpoint:
+- `customer.subscription.created`
+- `customer.subscription.updated`
+- `customer.subscription.deleted`
+- `invoice.payment_succeeded`
+- `invoice.payment_failed`
+- `checkout.session.completed`
+
+---
+
+## Authentication
+
+**Clerk webhook endpoints configured**
+
+In the Clerk dashboard, create a webhook pointing to `https://api.yourdomain.com/api/v1/webhooks/clerk`. Add the signing secret as `CLERK_WEBHOOK_SECRET`. Required events: `user.created`, `user.deleted`, `organization.created`, `organizationMembership.created`.
+
+---
+
+## Networking
+
+**Custom domain configured**
+
+Each app (`web`, `landing-page`, `api-gateway`) must have its custom domain added to the Vercel project (or reverse proxy) and a DNS record pointing to the correct origin.
+
+**SSL/TLS active**
+
+Confirm HTTPS is enforced on all domains. On Vercel this is automatic. On Docker self-hosted, verify your reverse proxy (Caddy / nginx + certbot) is terminating TLS correctly.
+
+**HTTPS redirect configured**
+
+All HTTP traffic should redirect to HTTPS with a 301. Verify with:
+
+```bash
+curl -I http://yourdomain.com
+# Expect: HTTP/1.1 301 Moved Permanently
+# Location: https://yourdomain.com
+```
+
+---
+
+## Security
+
+**Rate limiting tested under load**
+
+The API gateway enforces per-tenant rate limits via Redis. Verify the limits are appropriate for your plan tiers and that the `429 Too Many Requests` response is handled gracefully in your frontend.
+
+**Security scan passed**
+
+The `security-scan.yml` GitHub Actions workflow runs CodeQL static analysis and dependency vulnerability scanning. Confirm the latest scan on `main` passed with no critical findings.
+
+**No secrets committed to source control**
+
+Run a secrets scan before launch:
+
+```bash
+git log --all --diff-filter=A -- '*.env*'   # check for committed .env files
+```
+
+Use tools like `trufflehog` or GitHub's secret scanning feature for a thorough audit.
+
+---
+
+## Observability
+
+**Sentry error tracking configured**
+
+Set `NEXT_PUBLIC_SENTRY_DSN` and `SENTRY_AUTH_TOKEN` in all app environments. Verify that a test error appears in your Sentry project.
+
+**Monitoring alerts configured**
+
+Set up uptime monitoring (e.g. Better Uptime, Checkly) for:
+- `https://yourdomain.com` (landing page)
+- `https://app.yourdomain.com` (web app)
+- `https://api.yourdomain.com/health` (API gateway)
+
+Alert on HTTP 5xx rates exceeding 1% or P95 response time above 2 seconds.
+
+**Structured logging verified**
+
+Confirm `@nebutra/logger` output is flowing to your log aggregator (Axiom, Datadog, Cloudwatch). Check that `tenant_id` and `request_id` fields are present in API logs.
+
+---
+
+## Analytics and compliance
+
+**Analytics configured**
+
+`@nebutra/analytics` (powered by Dub.co) requires the following environment variables:
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DUB_API_KEY` | Yes | API key from [app.dub.co/settings/tokens](https://app.dub.co/settings/tokens) |
+| `DUB_WORKSPACE_ID` | Recommended | Your Dub.co workspace ID (avoids per-request lookups) |
+| `DUB_DEFAULT_DOMAIN` | No | Default short-link domain, defaults to `dub.sh` |
+
+Verify by running `nebutra analytics status` (once CLI analytics command is available) or by calling `analytics.getWorkspaceStats()` from a test script.
+
+**GDPR / privacy policy live**
+
+A privacy policy must be publicly accessible at `/privacy` (or a linked URL) before accepting user data from EU residents.
+
+**Terms of service live**
+
+Terms of service must be accessible at `/terms` before processing payments.
+
+**Cookie consent configured**
+
+If you track users with analytics or advertising cookies in the EU, a cookie consent banner is required. Verify it appears for users in EU regions.
+
+---
+
+## Performance
+
+**Performance tested with Lighthouse**
+
+Run Lighthouse against your production domain and target:
+- Performance: 90+
+- Accessibility: 95+
+- Best Practices: 100
+- SEO: 100
+
+```bash
+npx lighthouse https://yourdomain.com --view
+```
+
+**Core Web Vitals passing**
+
+Verify in Google Search Console or Vercel Analytics that LCP, FID, and CLS are in the "Good" range for real user data after the first week of traffic.
+
+---
+
+## Final sign-off
+
+<Warning>
+  Do not go live until all items in the **Infrastructure**, **Payments**, **Authentication**, and **Networking** sections are complete. The remaining sections should be addressed within the first week after launch.
+</Warning>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Vercel Deployment" icon="triangle" href="/deployment/vercel">
+    Deploy to Vercel step by step.
+  </Card>
+  <Card title="Docker Deployment" icon="docker" href="/deployment/docker">
+    Self-hosted Docker Compose deployment.
+  </Card>
+</CardGroup>

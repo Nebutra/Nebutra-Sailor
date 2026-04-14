@@ -1,0 +1,30 @@
+---
+title: AI Providers
+description: The Nebutra-Sailor multi-tenant AI routing strategy.
+---
+
+# Unified AI Orchestration
+
+Nebutra deeply integrates with the `Vercel AI SDK` to provide a normalized API layer across 60+ global AI providers.
+
+## Available Provider Classifications
+
+Instead of manually wrapping models, `create-sailor` categorizes models across 6 categories for optimized terminal prompting:
+1. **Direct Labs**: `OpenAI`, `Anthropic`, `Google Vertex/Gemini`, `Mistral`, `Cohere`.
+2. **CN-Compatible (Domestic)**: `SiliconFlow`, `Volcengine (Doubao)`, `Alibaba Bailian`, `Zhipu`, `Baichuan`, `Minimax`, `Tencent Hunyuan`.
+3. **Gateway Proxies**: `OpenRouter`, `Portkey`.
+4. **Hardware Inference**: `Groq`, `Cerebras`.
+5. **Local Deployment**: `Ollama`, `LM Studio`.
+
+## Registering Custom Providers
+
+To force a custom OpenAI proxy mapping:
+```typescript
+import { createOpenAI } from "@ai-sdk/openai-compatible"
+
+export const customLLM = createOpenAI({
+  name: "Internal Custom AI",
+  baseURL: process.env.CUSTOM_URL,
+  apiKey: process.env.CUSTOM_API_KEY
+});
+```

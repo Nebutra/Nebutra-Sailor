@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover-controlled-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/popover-controlled-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  BaseButton as Button,\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from \"@nebutra/ui/primitives\";\nimport * as React from \"react\";\n\nexport function PopoverControlledDemo() {\n  const [open, setOpen] = React.useState(false);\n\n  React.useEffect(() => {\n    setOpen(true);\n  }, []);\n\n  return (\n    <Popover open={open} onOpenChange={setOpen}>\n      <PopoverTrigger asChild>\n        <Button>Toggle Popover</Button>\n      </PopoverTrigger>\n      <PopoverContent>\n        <p className=\"mb-4 text-sm\">Controlled popover content</p>\n        <Button variant=\"outline\" size=\"sm\">\n          Close\n        </Button>\n      </PopoverContent>\n    </Popover>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

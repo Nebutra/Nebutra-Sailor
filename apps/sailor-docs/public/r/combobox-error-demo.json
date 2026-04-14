@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "combobox-error-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/combobox-error-demo.tsx",
+      "content": "\"use client\";\n\nimport { Combobox } from \"@nebutra/ui/primitives\";\n\nexport function ComboboxErrorDemo() {\n  return (\n    <Combobox\n      options={[\n        { value: \"next\", label: \"Next.js\" },\n        { value: \"remix\", label: \"Remix\" },\n        { value: \"astro\", label: \"Astro\" },\n        { value: \"nuxt\", label: \"Nuxt\" },\n      ]}\n      error\n      placeholder=\"选择框架...\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

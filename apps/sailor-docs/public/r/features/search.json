@@ -1,0 +1,12 @@
+{
+  "name": "search",
+  "description": "Full-text indexing with Meilisearch.",
+  "providers": ["meilisearch"],
+  "dependencies": [
+    { "name": "meilisearch", "version": "latest" }
+  ],
+  "env": [
+    { "key": "MEILISEARCH_HOST", "description": "Host domain" },
+    { "key": "MEILISEARCH_MASTER_KEY", "description": "Master key" }
+  ]
+}

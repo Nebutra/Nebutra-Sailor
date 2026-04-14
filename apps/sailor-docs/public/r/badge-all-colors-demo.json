@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-all-colors-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/badge-all-colors-demo.tsx",
+      "content": "\"use client\";\n\nimport { Badge1 } from \"@nebutra/ui/primitives\";\n\nexport function BadgeAllColorsDemo() {\n  return (\n    <div className=\"gap-2 max-w-sm mx-auto flex w-full flex-col items-center justify-center\">\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"gray\">gray</Badge1>\n        <Badge1 variant=\"gray-subtle\">gray-subtle</Badge1>\n      </div>\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"blue\">blue</Badge1>\n        <Badge1 variant=\"blue-subtle\">blue-subtle</Badge1>\n      </div>\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"purple\">purple</Badge1>\n        <Badge1 variant=\"purple-subtle\">purple-subtle</Badge1>\n      </div>\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"amber\">amber</Badge1>\n        <Badge1 variant=\"amber-subtle\">amber-subtle</Badge1>\n      </div>\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"red\">red</Badge1>\n        <Badge1 variant=\"red-subtle\">red-subtle</Badge1>\n      </div>\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"pink\">pink</Badge1>\n        <Badge1 variant=\"pink-subtle\">pink-subtle</Badge1>\n      </div>\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"green\">green</Badge1>\n        <Badge1 variant=\"green-subtle\">green-subtle</Badge1>\n      </div>\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"teal\">teal</Badge1>\n        <Badge1 variant=\"teal-subtle\">teal-subtle</Badge1>\n      </div>\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"inverted\">inverted</Badge1>\n      </div>\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"trial\">trial</Badge1>\n      </div>\n      <div className=\"gap-2 flex\">\n        <Badge1 variant=\"turbo\">turborepo</Badge1>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

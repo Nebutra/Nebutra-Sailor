@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "menu-5-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/menu-5-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuTrigger,\n} from \"@nebutra/ui/primitives\";\nimport { User } from \"lucide-react\";\n\nexport function Menu5Demo() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger className=\"h-10 w-10 p-0 flex shrink-0 items-center justify-center rounded-full bg-muted text-foreground select-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none\">\n        <User className=\"h-5 w-5\" />\n      </DropdownMenuTrigger>\n      <DropdownMenuContent align=\"end\" className=\"w-[200px]\">\n        <DropdownMenuItem>Profile</DropdownMenuItem>\n        <DropdownMenuItem>Preferences</DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

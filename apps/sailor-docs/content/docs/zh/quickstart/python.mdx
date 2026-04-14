@@ -1,0 +1,60 @@
+---
+title: Python 快速开始
+description: 在 FastAPI、Django 或任意 Python 后端中使用 Nebutra Python SDK。
+---
+
+## 安装
+
+```bash
+pip install nebutra-sdk
+```
+
+## 初始化客户端
+
+```python
+import os
+from nebutra import Client
+
+nebutra = Client(
+    api_key=os.environ["NEBUTRA_API_KEY"],
+    org_id=os.environ["NEBUTRA_ORG_ID"],
+)
+```
+
+## 验证 JWT 令牌（FastAPI）
+
+```python
+from fastapi import HTTPException, Header
+from nebutra import verify_token
+import os
+
+async def require_auth(authorization: str = Header(...)):
+    token = authorization.removeprefix("Bearer ")
+    try:
+        return await verify_token(token, api_key=os.environ["NEBUTRA_API_KEY"])
+    except Exception:
+        raise HTTPException(status_code=401, detail="无效令牌")
+```
+
+## 检查权限
+
+```python
+allowed = await nebutra.permissions.check(
+    user_id=user_id,
+    action="delete",
+    resource="Project",
+)
+if not allowed:
+    raise HTTPException(status_code=403, detail="权限不足")
+```
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="Python SDK 参考" icon="python" href="/zh/sdks/python">
+    完整的 SDK 方法参考。
+  </Card>
+  <Card title="API 参考" icon="code" href="/zh/api-reference/overview">
+    REST API 文档。
+  </Card>
+</CardGroup>

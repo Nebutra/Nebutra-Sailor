@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "drawer-3-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/drawer-3-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  Drawer,\n  DrawerContent,\n  DrawerHeader,\n  DrawerTitle,\n  DrawerTrigger,\n} from \"@nebutra/ui/primitives\";\nexport function Drawer3Demo() {\n  return (\n    <Drawer direction=\"right\">\n      <DrawerTrigger asChild>\n        <Button>Open Sidebar</Button>\n      </DrawerTrigger>\n      <DrawerContent className=\"w-80 p-4 mt-0 mr-0 mb-0 ml-auto h-full\">\n        <DrawerHeader>\n          <DrawerTitle>Navigation</DrawerTitle>\n        </DrawerHeader>\n      </DrawerContent>\n    </Drawer>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

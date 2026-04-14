@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress-custom-color-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/progress-custom-color-demo.tsx",
+      "content": "\"use client\";\n\nimport { Progress } from \"@nebutra/ui/primitives\";\n\nexport function ProgressCustomColorDemo() {\n  return (\n    <div className=\"w-full\">\n      <Progress value={75} className=\"[&>div]:bg-green-500 w-full\" />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

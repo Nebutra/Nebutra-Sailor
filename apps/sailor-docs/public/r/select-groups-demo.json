@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-groups-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/select-groups-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectSeparator,\n  SelectTrigger,\n  SelectValue,\n} from \"@nebutra/ui/primitives\";\n\nexport function SelectGroupsDemo() {\n  return (\n    <Select>\n      <SelectTrigger className=\"w-56\">\n        <SelectValue placeholder=\"选择时区 (Select timezone)\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          <SelectLabel>北美 (North America)</SelectLabel>\n          <SelectItem value=\"est\">东部标准时间 (EST)</SelectItem>\n          <SelectItem value=\"cst\">中部标准时间 (CST)</SelectItem>\n          <SelectItem value=\"pst\">太平洋标准时间 (PST)</SelectItem>\n        </SelectGroup>\n        <SelectSeparator />\n        <SelectGroup>\n          <SelectLabel>欧洲 (Europe)</SelectLabel>\n          <SelectItem value=\"gmt\">格林威治标准时间 (GMT)</SelectItem>\n          <SelectItem value=\"cet\">中央欧洲时间 (CET)</SelectItem>\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

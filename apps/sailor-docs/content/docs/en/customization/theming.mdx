@@ -1,0 +1,312 @@
+---
+title: Theming
+description: Change brand colors, configure light/dark mode, switch multi-theme presets, and create custom oklch themes.
+---
+
+Nebutra-Sailor's theming system has three independent layers that compose together:
+
+| Layer | Package | Responsibility |
+|-------|---------|---------------|
+| **Runtime tokens** | `@nebutra/tokens` | CSS variables — colors, spacing, typography |
+| **Light/dark mode** | `@nebutra/tokens` (next-themes) | `ThemeProvider` + `useTheme` |
+| **Multi-theme presets** | `@nebutra/theme` | 6 oklch presets via `data-theme` attribute |
+
+## Editing CSS variables
+
+All design tokens live in a single file. Open it and edit directly:
+
+```
+packages/tokens/styles.css
+```
+
+### Key token reference
+
+<Tabs>
+  <Tab title="Brand">
+    ```css
+    :root {
+      --brand-primary:   var(--blue-9);    /* Primary CTA, links, charts */
+      --brand-accent:    var(--cyan-9);    /* Accent, success highlight */
+      --brand-tertiary:  #8b5cf6;          /* Infrastructure, tertiary viz */
+      --brand-gradient:  135deg, var(--blue-9) 0%, var(--cyan-9) 100%;
+    }
+    ```
+  </Tab>
+  <Tab title="Neutral scale">
+    ```css
+    :root {
+      --neutral-1:  #ffffff;   /* App background */
+      --neutral-2:  #f8fafc;   /* Subtle background */
+      --neutral-7:  #d1d5db;   /* Default border */
+      --neutral-11: #374151;   /* Secondary text */
+      --neutral-12: #0a0a0a;   /* Primary text */
+    }
+    ```
+  </Tab>
+  <Tab title="Status colors">
+    ```css
+    :root {
+      --status-danger:  #ef4444;              /* Errors, breaking changes */
+      --status-warning: #f59e0b;              /* Improvements, pending */
+      --status-success: #10b981;              /* Fixes, completed */
+      --status-info:    var(--brand-primary); /* Informational */
+    }
+    ```
+  </Tab>
+  <Tab title="Blue & Cyan scales">
+    ```css
+    :root {
+      /* 12-step Radix-style blue scale */
+      --blue-1:  #eff6ff;
+      --blue-9:  #0033FE;   /* ← brand primary */
+      --blue-12: #0a1628;
+
+      /* 12-step cyan scale */
+      --cyan-1:  #ecfeff;
+      --cyan-9:  #0BF1C3;   /* ← brand accent */
+      --cyan-12: #031f19;
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Rebrand with the palette generator
+
+The fastest way to change the entire brand palette is the generator script. It rewrites all token aliases in `packages/tokens/styles.css`:
+
+<Steps>
+  <Step title="Run the palette generator">
+    ```bash
+    node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
+    ```
+    Pass any valid hex color for `--primary` (main brand) and `--secondary` (accent).
+  </Step>
+  <Step title="Restart the dev server">
+    ```bash
+    pnpm --filter @nebutra/landing-page dev
+    # or
+    pnpm --filter @nebutra/web dev
+    ```
+    Hot reload does not pick up changes to `styles.css` in all cases; a full restart is safer.
+  </Step>
+  <Step title="Verify in Storybook">
+    ```bash
+    pnpm --filter @nebutra/storybook dev
+    ```
+    Navigate to **Design Tokens** → **Brand Colors** to confirm the new palette rendered correctly across all scales.
+  </Step>
+</Steps>
+
+### Manual rebranding example
+
+If you prefer to edit tokens by hand:
+
+```css
+/* packages/tokens/styles.css */
+:root {
+  --brand-primary:   #7C3AED;   /* purple */
+  --brand-accent:    #F59E0B;   /* amber */
+  --brand-gradient:  135deg, #7C3AED 0%, #F59E0B 100%;
+
+  /* Update the source scales too */
+  --blue-9:  #7C3AED;
+  --cyan-9:  #F59E0B;
+}
+```
+
+<Warning>
+  When editing the neutral scale, always update both light (`:root`) and dark (`.dark` / `[data-theme]`) blocks. Skipping the dark block causes contrast issues in dark mode.
+</Warning>
+
+## Light/dark mode
+
+Light/dark mode is managed by `next-themes` re-exported from `@nebutra/tokens`.
+
+### Setup
+
+The `ThemeProvider` is already configured in `apps/web/src/app/layout.tsx` and `apps/landing-page/src/app/layout.tsx`. No additional setup is required.
+
+```tsx
+// apps/web/src/app/layout.tsx
+import { ThemeProvider } from "@nebutra/tokens";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### Switching themes programmatically
+
+```tsx
+"use client";
+import { useTheme } from "@nebutra/tokens";
+
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      aria-label="Toggle dark mode"
+      className="rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]"
+    >
+      {theme === "dark" ? "Light" : "Dark"}
+    </button>
+  );
+}
+```
+
+### Resolved theme
+
+`useTheme` returns `"system"` when the user hasn't explicitly chosen a theme. Use `resolvedTheme` for the actual computed value:
+
+```tsx
+const { resolvedTheme } = useTheme();
+// → "light" | "dark"
+```
+
+## Multi-theme presets
+
+`@nebutra/theme` provides 6 ready-to-use color presets built on oklch for perceptually uniform color. Each preset is a complete token override applied via the `data-theme` attribute on `<html>`.
+
+| Preset | Character |
+|--------|-----------|
+| `default` | Blue/cyan — the Nebutra brand |
+| `neon` | High-contrast electric accents on dark |
+| `gradient` | Gradient-heavy with vibrant mid-tones |
+| `dark-dense` | Dense information density, muted palette |
+| `minimal` | Near-monochrome, maximum whitespace |
+| `vibrant` | Saturated, playful, consumer-focused |
+
+### Switching presets
+
+```tsx
+// Static — set in layout
+<html data-theme="neon">
+
+// Dynamic — user preference stored in a cookie or localStorage
+"use client";
+import { useState } from "react";
+
+const PRESETS = ["default", "neon", "gradient", "dark-dense", "minimal", "vibrant"] as const;
+
+export function ThemePresetSelector() {
+  const [preset, setPreset] = useState<string>("default");
+
+  function applyPreset(name: string) {
+    document.documentElement.setAttribute("data-theme", name);
+    setPreset(name);
+  }
+
+  return (
+    <div className="flex gap-2">
+      {PRESETS.map((name) => (
+        <button
+          key={name}
+          type="button"
+          onClick={() => applyPreset(name)}
+          className={`rounded px-3 py-1 text-sm ${preset === name ? "bg-[var(--brand-primary)] text-white" : "bg-neutral-2"}`}
+        >
+          {name}
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+## Creating a custom theme preset
+
+<Steps>
+  <Step title="Open the themes file">
+    ```
+    packages/theme/themes.css
+    ```
+  </Step>
+  <Step title="Add a new data-theme block">
+    Copy an existing preset block and modify the oklch values. Theme names must be lowercase kebab-case.
+
+    ```css
+    /* packages/theme/themes.css */
+    [data-theme="forest"] {
+      --brand-primary:   oklch(45% 0.18 145);   /* forest green */
+      --brand-accent:    oklch(75% 0.15 80);    /* warm gold */
+      --brand-gradient:  135deg,
+        oklch(45% 0.18 145) 0%,
+        oklch(75% 0.15 80) 100%;
+
+      --neutral-1:  oklch(99% 0.005 145);
+      --neutral-12: oklch(12% 0.02 145);
+    }
+    ```
+  </Step>
+  <Step title="Apply and verify">
+    ```tsx
+    <html data-theme="forest">
+    ```
+
+    Open Storybook and check the **Design Tokens** section to verify contrast ratios meet WCAG AA.
+  </Step>
+</Steps>
+
+<Note>
+  oklch values are specified as `oklch(lightness% chroma hue)`. Use a tool like [oklch.com](https://oklch.com) to pick perceptually uniform colors.
+</Note>
+
+## Typography
+
+Fonts are loaded via `next/font` and injected as CSS variables. No external font requests.
+
+```css
+/* packages/tokens/styles.css */
+:root {
+  --font-geist-sans: "Geist", system-ui, sans-serif;   /* UI text */
+  --font-geist-mono: "Geist Mono", monospace;           /* Code, metrics */
+}
+```
+
+To change the font family, update the `next/font` configuration in `apps/web/src/app/layout.tsx` and `apps/landing-page/src/app/layout.tsx`, then update the CSS variable fallbacks in `packages/tokens/styles.css`.
+
+## Storybook Design Tokens reference
+
+The **Design Tokens** section in Storybook renders every token visually:
+
+```bash
+pnpm --filter @nebutra/storybook dev
+# → http://localhost:6006 → Design Tokens
+```
+
+Sections available:
+- Brand Colors (blue + cyan 12-step scales)
+- Semantic palette (neutral scale)
+- Brand gradients
+- Status colors
+- Typography scale
+- Motion presets
+- Shadow/elevation system
+
+---
+
+<CardGroup cols={2}>
+  <Card title="Customization Overview" icon="sliders" href="/customization/overview">
+    Back to the full customization map
+  </Card>
+  <Card title="Dashboard" icon="layout-dashboard" href="/customization/dashboard">
+    Add pages and customize navigation
+  </Card>
+  <Card title="Onboarding" icon="route" href="/customization/onboarding">
+    Customize the new-user flow
+  </Card>
+  <Card title="Design Tokens (Storybook)" icon="palette" href="http://localhost:6006">
+    Visual token reference
+  </Card>
+</CardGroup>

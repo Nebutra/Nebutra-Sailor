@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dotted-map-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/dotted-map-demo.tsx",
+      "content": "import { DottedMap } from \"@nebutra/ui/primitives\";\n\nexport function DottedMapDemo() {\n  const markers = [\n    { lat: 40.7128, lng: -74.006, size: 0.5 }, // New York\n    { lat: 51.5074, lng: -0.1278, size: 0.5 }, // London\n    { lat: 35.6762, lng: 139.6503, size: 0.5 }, // Tokyo\n    { lat: -33.8688, lng: 151.2093, size: 0.5 }, // Sydney\n    { lat: 37.7749, lng: -122.4194, size: 0.5 }, // San Francisco\n    { lat: 1.3521, lng: 103.8198, size: 0.5 }, // Singapore\n    { lat: 48.8566, lng: 2.3522, size: 0.5 }, // Paris\n  ];\n\n  return (\n    <div className=\"max-w-4xl p-4 gap-8 mx-auto flex min-h-[400px] w-full flex-col items-center justify-center\">\n      <div className=\"p-4 relative h-[400px] w-full overflow-hidden rounded-xl border bg-background\">\n        <div className=\"top-4 left-4 backdrop-blur text-sm font-medium px-3 py-1.5 gap-2 absolute z-10 flex items-center rounded-full border bg-background/80 shadow-sm\">\n          <span className=\"w-2 h-2 bg-blue-500 rounded-full\"></span> Active Datacenters\n        </div>\n        <DottedMap\n          markers={markers}\n          markerColor=\"#3b82f6\"\n          dotRadius={0.15}\n          mapSamples={8000}\n          width={150}\n          height={75}\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

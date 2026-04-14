@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "collapsible-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/collapsible-demo.tsx",
+      "content": "\"use client\";\n\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@nebutra/ui/primitives\";\nimport { ChevronsUpDown } from \"lucide-react\";\n\nexport function CollapsibleDemo() {\n  return (\n    <Collapsible className=\"w-80 space-y-2\">\n      <div className=\"px-4 flex items-center justify-between\">\n        <h4 className=\"text-sm font-semibold\">Team Members</h4>\n        <CollapsibleTrigger className=\"gap-2 text-sm font-medium h-10 w-10 inline-flex items-center justify-center rounded-[var(--radius-md)] whitespace-nowrap transition-colors duration-150 ease-out hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none\">\n          <ChevronsUpDown className=\"h-4 w-4\" />\n        </CollapsibleTrigger>\n      </div>\n      <div className=\"px-4 py-2 text-sm rounded-md border\">Alice Johnson</div>\n      <CollapsibleContent className=\"space-y-2\">\n        <div className=\"px-4 py-2 text-sm rounded-md border\">Bob Smith</div>\n        <div className=\"px-4 py-2 text-sm rounded-md border\">Carol White</div>\n      </CollapsibleContent>\n    </Collapsible>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

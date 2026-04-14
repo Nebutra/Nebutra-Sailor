@@ -1,0 +1,244 @@
+---
+title: 架构与迁移
+description: 如何在开发、CI 和生产环境中安全地演进 Prisma 架构并运行数据库迁移。
+---
+
+Prisma 架构是数据库结构的唯一事实来源。对表、列、索引和关系的所有更改都通过 `packages/db/prisma/schema.prisma` 进行。迁移是由 Prisma 生成的版本化 SQL 文件，与架构一起存储。
+
+## 文件位置
+
+```
+packages/db/
+  prisma/
+    schema.prisma          ← 编辑此文件以更改数据模型
+    migrations/            ← 生成的迁移文件（提交这些文件）
+      20240101000000_init/
+        migration.sql
+      20240215120000_add_projects/
+        migration.sql
+    seed.ts                ← 开发种子数据
+```
+
+<Note>
+`prisma/migrations/` 中的迁移文件是每次架构更改的权威记录。始终将它们提交到版本控制 — 这是生产数据库保持同步的方式。
+</Note>
+
+## 开发工作流
+
+<Steps>
+  <Step title="编辑架构">
+    打开 `packages/db/prisma/schema.prisma` 并进行更改 — 添加模型、添加列、创建索引等。
+
+    ```prisma packages/db/prisma/schema.prisma
+    model Project {
+      id          String   @id @default(cuid())
+      name        String
+      slug        String   @unique
+      description String?
+      tenantId    String
+      createdAt   DateTime @default(now())
+      updatedAt   DateTime @updatedAt
+
+      @@index([tenantId])
+      @@map("projects")
+    }
+    ```
+  </Step>
+  <Step title="重新生成 Prisma 客户端">
+    编辑架构后，重新生成 TypeScript 客户端，使应用程序代码立即反映新类型。
+
+    ```bash
+    pnpm db:generate
+    ```
+
+    这将运行 `prisma generate` 并更新 `node_modules/@prisma/client` 中的类型。无需重启开发服务器 — Next.js 会在下一个请求时获取新类型。
+  </Step>
+  <Step title="创建并应用迁移">
+    用一条命令创建命名迁移文件并将其应用到本地数据库：
+
+    ```bash
+    pnpm db:migrate
+    ```
+
+    Prisma 将提示输入迁移名称（例如 `add_project_model`），然后：
+    1. 对比当前架构与上次迁移状态
+    2. 在 `prisma/migrations/` 中生成 `migration.sql` 文件
+    3. 将 SQL 应用到本地数据库
+  </Step>
+  <Step title="提交迁移文件">
+    生成的迁移文件必须与架构更改一起提交。这是 CI/CD 和生产数据库接收更新的方式。
+
+    ```bash
+    git add packages/db/prisma/
+    git commit -m "feat(db): add Project model"
+    ```
+  </Step>
+</Steps>
+
+## push 与 migrate 的区别
+
+<Tabs>
+  <Tab title="db:push（仅限开发）">
+    `pnpm db:push` 直接将架构同步到数据库，**不创建迁移文件**。仅用于尚不需要迁移历史记录的本地快速原型开发。
+
+    ```bash
+    pnpm db:push
+    ```
+
+    **使用时机：**
+    - 对新模型的早期探索
+    - 一次性本地数据库
+    - 在准备好编写正式迁移之前的迭代
+
+    <Warning>
+    `db:push` 不创建迁移文件。通过此方式应用的更改无法在其他环境中重放。永远不要在共享、预发布或生产数据库上使用它。
+    </Warning>
+  </Tab>
+  <Tab title="db:migrate（标准）">
+    `pnpm db:migrate` 创建版本化迁移文件并应用它。这是除一次性本地数据库之外所有环境的正确工作流。
+
+    ```bash
+    pnpm db:migrate
+    ```
+
+    **使用时机：**
+    - 在开发中添加或删除模型
+    - 需要到达预发布或生产环境的任何更改
+    - 团队环境中的所有更改
+
+    迁移名称嵌入在目录名称中，并用于审计日志。
+  </Tab>
+</Tabs>
+
+## CI/CD：在部署前运行迁移
+
+迁移必须在部署新应用程序代码之前应用到数据库。在流水线中添加此步骤：
+
+```yaml .github/workflows/deploy.yml
+- name: 运行数据库迁移
+  run: pnpm db:migrate
+  env:
+    DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    DIRECT_URL: ${{ secrets.DIRECT_URL }}
+```
+
+<Note>
+运行迁移时，Prisma 需要 `DIRECT_URL`（直接、非连接池连接）。PgBouncer 和 Supavisor 等连接池不支持 Prisma 在迁移期间使用的 DDL 语句。在 CI 密钥和 `schema.prisma` 中设置 `DIRECT_URL`：
+
+```prisma
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+```
+</Note>
+
+## 零停机滚动迁移
+
+对于影响大型表的生产更改，使用扩展-收缩模式以避免在部署期间锁定行：
+
+<Steps>
+  <Step title="扩展 — 添加可空的新列">
+    ```prisma
+    model User {
+      // 现有字段 ...
+      displayName String?   // ← 可空；旧代码忽略它，新代码写入它
+    }
+    ```
+    部署此迁移。新旧两个应用程序版本都可以安全运行。
+  </Step>
+  <Step title="回填 — 为现有行填充数据">
+    运行后台任务或一次性脚本为所有现有用户填充 `displayName`。保持批量处理以避免长时间运行的事务。
+  </Step>
+  <Step title="收缩 — 使列变为必填">
+    一旦所有行都已回填，且只有新版本的应用程序在运行，应用第二个迁移来添加 `NOT NULL` 约束。
+
+    ```prisma
+    model User {
+      displayName String    // ← 现在必填
+    }
+    ```
+  </Step>
+</Steps>
+
+## 回滚迁移
+
+Prisma 不提供自动回滚。要回滚迁移：
+
+<Steps>
+  <Step title="编写补偿迁移">
+    创建一个撤销更改的新迁移 — 删除添加的列、重新创建删除的表等。
+
+    ```bash
+    pnpm db:migrate
+    # 命名为：revert_add_display_name
+    ```
+  </Step>
+  <Step title="从历史记录中删除原始迁移（仅限开发）">
+    如果仍在开发阶段且迁移尚未到达生产环境，可以删除迁移目录并重置本地数据库：
+
+    ```bash
+    # 删除不需要的迁移目录
+    rm -rf packages/db/prisma/migrations/20240215_add_display_name
+
+    # 将本地数据库重置到上一个良好迁移状态
+    pnpm --filter @nebutra/db exec prisma migrate reset
+    ```
+
+    <Warning>
+    `prisma migrate reset` 会删除并重新创建整个本地数据库。永远不要在共享或生产数据库上运行它。
+    </Warning>
+  </Step>
+</Steps>
+
+## pgvector 设置
+
+`recsys` 架构使用 `pgvector` 扩展。在初始迁移运行之前，数据库必须启用该扩展。
+
+<Tabs>
+  <Tab title="Neon">
+    pgvector 预安装在所有 Neon 数据库上。无需操作。
+  </Tab>
+  <Tab title="Supabase">
+    pgvector 作为托管扩展提供。从 Supabase 控制台的**数据库 → 扩展**中启用，或通过 SQL 启用：
+
+    ```sql
+    CREATE EXTENSION IF NOT EXISTS vector;
+    ```
+  </Tab>
+  <Tab title="自托管 PostgreSQL">
+    在 PostgreSQL 服务器上安装扩展，然后在数据库中启用它：
+
+    ```bash
+    # Debian/Ubuntu
+    sudo apt install postgresql-16-pgvector
+
+    # macOS (Homebrew)
+    brew install pgvector
+    ```
+
+    ```sql
+    CREATE EXTENSION IF NOT EXISTS vector;
+    ```
+
+    <Warning>
+    如果在首次运行 `pnpm db:migrate` 之前未安装 pgvector，第一次迁移将因 `extension "vector" does not exist` 而失败。
+    </Warning>
+  </Tab>
+</Tabs>
+
+<CardGroup cols={2}>
+  <Card title="数据库概览" icon="database" href="/zh/database/overview">
+    架构布局、关键模型和命令参考
+  </Card>
+  <Card title="数据库提供商" icon="server" href="/zh/database/providers">
+    Neon 和 Supabase 的连接和迁移设置
+  </Card>
+  <Card title="行级安全" icon="shield" href="/zh/database/rls">
+    RLS 策略和 tenantId 约定
+  </Card>
+  <Card title="Prisma Studio" icon="table" href="/zh/database/studio">
+    可视化检查迁移和种子数据
+  </Card>
+</CardGroup>

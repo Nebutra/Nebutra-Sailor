@@ -1,0 +1,104 @@
+---
+title: Database Overview
+description: Prisma v7 + PostgreSQL — the data layer powering every Nebutra application.
+---
+
+Nebutra uses **Prisma v7** as the ORM and **PostgreSQL** as the database engine. The stack is designed for multi-tenant SaaS: shared schemas, row-level security, pgvector for AI embeddings, and provider flexibility (Neon or Supabase).
+
+## Architecture
+
+```
+┌─────────────────────────────────────┐
+│          Application Code           │
+│  (Next.js Server Components, API)   │
+└────────────────┬────────────────────┘
+                 │ import { db } from "@nebutra/db"
+┌────────────────▼────────────────────┐
+│           Prisma v7 Client          │
+│     (type-safe query builder)       │
+└────────────────┬────────────────────┘
+                 │ PostgreSQL wire protocol
+┌────────────────▼────────────────────┐
+│       Connection Pooler             │
+│  PgBouncer (Neon) / Supavisor       │
+│  (Supabase) — prevents conn. exhaust│
+└────────────────┬────────────────────┘
+                 │
+┌────────────────▼────────────────────┐
+│         PostgreSQL Database         │
+│  pgvector · RLS · multi-schema      │
+└─────────────────────────────────────┘
+```
+
+All application code imports the pre-configured `db` singleton from `@nebutra/db`. Direct Prisma imports are not used in application code.
+
+## Schema layout
+
+The Prisma schema is split across four PostgreSQL schemas, each representing a product domain:
+
+| PostgreSQL schema | Purpose | Key models |
+|-------------------|---------|------------|
+| `public` | Core SaaS platform | `Organization`, `User`, `Subscription`, `AuditLog`, `ApiKey` |
+| `ecommerce` | E-commerce features | `Product`, `Order`, `Cart`, `Payment`, `Fulfillment` |
+| `recsys` | Recommendation system | `Embedding`, `Interaction`, `Recommendation`, `FeatureVector` |
+| `web3` | Blockchain / wallet features | `Wallet`, `Token`, `Transaction`, `SmartContract` |
+
+The full schema lives at `packages/db/prisma/schema.prisma` (~1,400 lines).
+
+## Key models
+
+| Model | Schema | Description |
+|-------|--------|-------------|
+| `Organization` | `public` | A tenant — the top-level billing and access boundary |
+| `User` | `public` | An authenticated identity; belongs to one or more organizations |
+| `Subscription` | `public` | Stripe subscription attached to an organization |
+| `AuditLog` | `public` | Immutable event log for compliance and debugging |
+| `ApiKey` | `public` | Scoped API credentials issued per organization |
+| `Content` | `public` | CMS content items (pages, posts, blocks) |
+| `Integration` | `public` | Third-party integration configs per organization |
+| `Project` | `public` | A workspace inside an organization |
+
+## pgvector
+
+PostgreSQL's `pgvector` extension is enabled on every Nebutra database. It powers:
+
+- **Semantic search** — cosine similarity over `Embedding` vectors in the `recsys` schema
+- **RAG pipelines** — chunked document embeddings stored alongside content
+- **Recommendation engine** — collaborative filtering via ANN (approximate nearest-neighbour) queries
+
+<Note>
+pgvector must be enabled on your PostgreSQL instance before running migrations. Both Neon and Supabase enable it by default. Self-hosted PostgreSQL requires `CREATE EXTENSION vector;`.
+</Note>
+
+## Command reference
+
+| Command | When to use |
+|---------|-------------|
+| `pnpm db:generate` | After editing `schema.prisma` — regenerates the Prisma client |
+| `pnpm db:migrate` | Create and apply a new migration (development and CI/CD) |
+| `pnpm db:push` | Push schema changes without a migration file (local prototyping only) |
+| `pnpm db:studio` | Open Prisma Studio at `http://localhost:5555` |
+| `pnpm db:seed` | Populate the database with development seed data |
+
+<Warning>
+Never run `pnpm db:push` against a production or staging database. It applies schema changes without a migration history, which can cause irreversible data loss.
+</Warning>
+
+## Multi-tenancy
+
+Every table in the `public` schema that stores tenant-specific data has a `tenantId` column. Queries are automatically scoped using PostgreSQL Row-Level Security (RLS) via the `withRls` helper from `@nebutra/tenant`. See the [RLS guide](/database/rls) for details.
+
+<CardGroup cols={2}>
+  <Card title="Using the DB Client" icon="code" href="/database/use-client">
+    How to query the database from server components and API routes
+  </Card>
+  <Card title="Schema & Migrations" icon="database" href="/database/schema-migrations">
+    Editing the Prisma schema and running migrations safely
+  </Card>
+  <Card title="Row-Level Security" icon="shield" href="/database/rls">
+    How RLS enforces tenant isolation at the database level
+  </Card>
+  <Card title="Providers" icon="server" href="/database/providers">
+    Neon vs Supabase — connection strings, pooling, and setup
+  </Card>
+</CardGroup>

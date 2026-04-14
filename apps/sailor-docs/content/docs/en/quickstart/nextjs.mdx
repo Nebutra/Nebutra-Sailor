@@ -1,0 +1,152 @@
+---
+title: Next.js Quickstart
+description: Integrate Nebutra with your Next.js 16 App Router project in under 5 minutes.
+---
+
+## Prerequisites
+
+- Node.js 22+
+- A Nebutra account with an [OPC license](https://nebutra.com/en/get-license) (free)
+- An existing Next.js 16 project, or create one:
+
+```bash
+npx create-next-app@latest my-app --typescript --tailwind --app
+cd my-app
+```
+
+## Step 1: Install the SDK
+
+<CodeGroup>
+
+```bash npm
+npm install @nebutra/sdk
+```
+
+```bash pnpm
+pnpm add @nebutra/sdk
+```
+
+```bash yarn
+yarn add @nebutra/sdk
+```
+
+</CodeGroup>
+
+## Step 2: Configure environment variables
+
+Create a `.env.local` file at your project root:
+
+```bash .env.local
+# From your Nebutra dashboard → Settings → API Keys
+NEBUTRA_API_KEY=nbk_live_xxxxxxxxxxxxxxxxxxxx
+NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
+
+# Public key — safe to expose to the browser
+NEXT_PUBLIC_NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
+```
+
+<Warning>
+  Never commit `.env.local` to source control. Add it to `.gitignore`.
+</Warning>
+
+## Step 3: Initialize the client
+
+Create a shared Nebutra client:
+
+```typescript lib/nebutra.ts
+import { createClient } from "@nebutra/sdk";
+
+export const nebutra = createClient({
+  apiKey: process.env.NEBUTRA_API_KEY!,
+  orgId: process.env.NEBUTRA_ORG_ID!,
+});
+```
+
+## Step 4: Protect a route with authentication
+
+Add auth to a Server Component using the Nebutra proxy (Next.js 16+ uses `proxy.ts` instead of `middleware.ts`):
+
+```typescript proxy.ts
+import { withNebutraAuth } from "@nebutra/sdk/next";
+
+export default withNebutraAuth({
+  publicRoutes: ["/", "/sign-in", "/sign-up"],
+});
+
+export const config = {
+  matcher: ["/((?!_next|favicon.ico).*)"],
+};
+```
+
+## Step 5: Read the current user in a Server Component
+
+```typescript app/dashboard/page.tsx
+import { getAuth } from "@nebutra/sdk/next/server";
+
+export default async function DashboardPage() {
+  const { user, org } = await getAuth();
+
+  if (!user) {
+    redirect("/sign-in");
+  }
+
+  return (
+    <div>
+      <h1>Welcome, {user.firstName}</h1>
+      <p>Organization: {org.name}</p>
+      <p>Plan: {org.plan}</p>
+    </div>
+  );
+}
+```
+
+## Step 6: Make your first API call
+
+```typescript app/api/projects/route.ts
+import { NextResponse } from "next/server";
+import { nebutra } from "@/lib/nebutra";
+import { getAuth } from "@nebutra/sdk/next/server";
+
+export async function GET() {
+  const { org } = await getAuth();
+
+  const projects = await nebutra.projects.list({
+    orgId: org.id,
+    limit: 20,
+  });
+
+  return NextResponse.json(projects);
+}
+```
+
+## Step 7: Check permissions before an action
+
+```typescript app/actions/delete-project.ts
+"use server";
+import { requirePermission } from "@nebutra/sdk/next/server";
+import { nebutra } from "@/lib/nebutra";
+
+export async function deleteProject(projectId: string) {
+  // Throws 403 if user lacks the `project:delete` scope
+  await requirePermission("project:delete");
+
+  await nebutra.projects.delete(projectId);
+}
+```
+
+## You're ready
+
+<CardGroup cols={2}>
+  <Card title="Core Concepts" icon="layers" href="/concepts/architecture">
+    Understand multi-tenancy and the permission model.
+  </Card>
+  <Card title="Authentication Guide" icon="shield-check" href="/guides/authentication">
+    Deep dive into auth flows and session management.
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/guides/webhooks">
+    Listen to real-time events from your Nebutra tenant.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/overview">
+    Full REST API documentation.
+  </Card>
+</CardGroup>

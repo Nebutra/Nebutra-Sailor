@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-menu-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/context-menu-demo.tsx",
+      "content": "\"use client\";\n\nimport { ContextMenu } from \"@nebutra/ui/primitives\";\n\nexport function ContextMenuDemo() {\n  return (\n    <ContextMenu.Root>\n      <ContextMenu.Trigger asChild>\n        <div className=\"text-sm flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed\">\n          Right-click here\n        </div>\n      </ContextMenu.Trigger>\n      <ContextMenu.Content>\n        <ContextMenu.Item onSelect={() => {}}>Edit</ContextMenu.Item>\n        <ContextMenu.Item onSelect={() => {}}>Duplicate</ContextMenu.Item>\n        <ContextMenu.Item onSelect={() => {}}>Delete</ContextMenu.Item>\n      </ContextMenu.Content>\n    </ContextMenu.Root>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

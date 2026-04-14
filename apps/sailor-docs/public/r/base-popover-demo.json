@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "base-popover-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/base-popover-demo.tsx",
+      "content": "\"use client\";\n\nimport { Badge, Button } from \"@nebutra/ui/primitives\";\n\nexport default function BasePopoverDemo() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Button variant=\"outline\">Show Popover</Button>\n      <div className=\"rounded-lg border bg-popover p-4 max-w-[300px] text-sm space-y-2 shadow-md\">\n        <p className=\"font-medium\">Premium Plan</p>\n        <p className=\"text-muted-foreground\">\n          Advanced analytics provides deeper insights into your data, including trends, predictions,\n          and detailed user behavior.\n        </p>\n        <p className=\"flex items-center space-x-1\">\n          <Badge variant=\"destructive\">Note!</Badge>\n          <span className=\"text-xs text-muted-foreground\">Plan upgrade is required.</span>\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

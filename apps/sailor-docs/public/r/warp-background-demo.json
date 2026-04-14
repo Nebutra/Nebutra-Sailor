@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "warp-background-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/warp-background-demo.tsx",
+      "content": "\"use client\";\n\nimport { WarpBackground } from \"@nebutra/ui/primitives\";\n\nexport function WarpBackgroundDemo() {\n  return (\n    <div className=\"py-12 gap-12 flex w-full flex-col items-center\">\n      {/* Example 1: Large container */}\n      <WarpBackground\n        perspective={200}\n        className=\"max-w-3xl flex min-h-[400px] w-full items-center justify-center\"\n      >\n        <div className=\"backdrop-blur-md p-8 max-w-md rounded-2xl border bg-background/80 text-center shadow-xl\">\n          <h2 className=\"text-3xl font-bold tracking-tight mb-4\">Warp Speed</h2>\n          <p className=\"mb-6 text-muted-foreground\">\n            Engage your users with immersive 3D perspective grids and animated data beams. Build\n            containers that feel alive and dynamic.\n          </p>\n          <button\n            type=\"button\"\n            className=\"px-6 py-2 font-medium text-sm rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary/90\"\n          >\n            Initialize Sequence\n          </button>\n        </div>\n      </WarpBackground>\n\n      {/* Example 2: Small cards */}\n      <div className=\"md:grid-cols-2 gap-6 max-w-3xl grid w-full grid-cols-1\">\n        <WarpBackground\n          perspective={50}\n          beamSize={8}\n          gridColor=\"rgba(59, 130, 246, 0.3)\"\n          className=\"p-8 h-64 flex flex-col justify-end\"\n        >\n          <div className=\"p-4 backdrop-blur rounded-xl border bg-background/90\">\n            <h3 className=\"font-bold text-lg text-blue-500\">Deep Perspective</h3>\n            <p className=\"text-sm mt-1 text-muted-foreground\">\n              Lower perspective values create dramatic 3D tunneling effects.\n            </p>\n          </div>\n        </WarpBackground>\n\n        <WarpBackground\n          perspective={150}\n          beamsPerSide={5}\n          beamDuration={2}\n          gridColor=\"rgba(239, 68, 68, 0.2)\"\n          className=\"p-8 h-64 flex flex-col justify-end\"\n        >\n          <div className=\"p-4 backdrop-blur rounded-xl border bg-background/90\">\n            <h3 className=\"font-bold text-lg text-red-500\">High Velocity</h3>\n            <p className=\"text-sm mt-1 text-muted-foreground\">\n              More beams paired with shorter durations creates hyper-speed motion.\n            </p>\n          </div>\n        </WarpBackground>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

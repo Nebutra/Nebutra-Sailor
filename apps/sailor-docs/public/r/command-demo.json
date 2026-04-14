@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "command-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/command-demo.tsx",
+      "content": "\"use client\";\nimport {\n  Command,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n  CommandSeparator,\n} from \"@nebutra/ui/primitives\";\nimport { Search, User } from \"lucide-react\";\n\nexport function CommandDemo() {\n  return (\n    <Command className=\"w-96 h-[300px] rounded-lg border shadow-md\">\n      <CommandInput placeholder=\"Type a command or search...\" />\n      <CommandList>\n        <CommandEmpty>No results found.</CommandEmpty>\n        <CommandGroup heading=\"Suggestions\">\n          <CommandItem></CommandItem>\n          <CommandItem>\n            <Search className=\"mr-2 h-4 w-4\" />\n            Search\n            <>⌘K</>\n          </CommandItem>\n        </CommandGroup>\n        <CommandSeparator />\n        <CommandGroup heading=\"Settings\">\n          <CommandItem>\n            <User className=\"mr-2 h-4 w-4\" />\n            Profile\n            <>⌘P</>\n          </CommandItem>\n        </CommandGroup>\n      </CommandList>\n    </Command>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

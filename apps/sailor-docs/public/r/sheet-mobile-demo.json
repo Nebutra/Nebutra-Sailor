@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sheet-mobile-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/sheet-mobile-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  Sheet,\n  SheetContent,\n  SheetHeader,\n  SheetTitle,\n  SheetTrigger,\n} from \"@nebutra/ui/primitives\";\nexport function SheetMobileDemo() {\n  return (\n    <Sheet>\n      <SheetTrigger asChild>\n        <Button>Share</Button>\n      </SheetTrigger>\n      <SheetContent side=\"bottom\" className=\"rounded-t-2xl\">\n        <SheetHeader>\n          <SheetTitle>Share this page</SheetTitle>\n        </SheetHeader>\n        <div className=\"py-4\">Share options here</div>\n      </SheetContent>\n    </Sheet>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

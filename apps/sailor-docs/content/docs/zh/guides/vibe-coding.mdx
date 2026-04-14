@@ -1,0 +1,389 @@
+---
+title: Vibe Coding 与 Nebutra-Sailor
+description: 克隆模板，选择你的 AI 编码工具，快速交付生产级 SaaS。涵盖 Claude Code、Cursor、Windsurf、Copilot、Codex、Kiro、Trae、Warp.dev 等完整配置指南。
+---
+
+## 概述
+
+**Vibe Coding**——用自然语言向大语言模型描述需求、迭代构建软件——已成为 2026 年 SaaS 团队的默认工作流。
+
+Nebutra-Sailor 从一开始就针对所有主流 AI 编码工具进行了深度优化。每个 Agent 上下文文件、每个包边界、每个约定规范，都经过精心设计，确保 AI 从第一个提示词就能理解代码库。
+
+本指南涵盖：
+
+1. [克隆与配置](#1-克隆与配置)
+2. [各工具配置指南](#2-各工具配置指南)
+3. [通用工作流](#3-通用工作流)
+4. [有效的提示词模式](#4-有效的提示词模式)
+
+---
+
+## 1. 克隆与配置
+
+```bash
+# 克隆模板
+git clone https://github.com/nebutra/nebutra-sailor my-saas
+cd my-saas
+
+# 安装依赖（需要 Node.js 22 + pnpm 10.32+）
+pnpm install
+
+# 生成 Prisma 客户端
+pnpm db:generate
+
+# 启动轻量级基础设施（仅 PostgreSQL，快速启动）
+pnpm infra:lite
+
+# 复制环境变量模板并填写密钥
+cp .env.example .env.local
+```
+
+最少需要配置的环境变量：
+
+```bash
+# .env.local
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/nebutra"
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=""
+CLERK_SECRET_KEY=""
+```
+
+然后启动开发服务器：
+
+```bash
+pnpm dev:dashboard   # Web 应用（3000 端口）+ API 网关（3001 端口）
+pnpm dev:marketing   # 落地页（3002 端口）+ Sanity Studio（3333 端口）
+```
+
+---
+
+## 2. 各工具配置指南
+
+### Claude Code
+
+上下文文件：**`CLAUDE.md`**（仓库根目录）——已内置，自动加载。
+
+Claude Code 在会话启动时读取 `CLAUDE.md` 并将其作为基础上下文注入。克隆即用，无需额外配置。
+
+```bash
+# 在仓库根目录启动 Claude Code 会话
+claude
+
+# 常用起始提示词
+# "在计费页面构建新的设置页"
+# "为 Stripe payment.failed 事件添加 webhook 端点"
+# "Nebutra 多租户 RBAC 的权限模型是什么？"
+```
+
+**技巧：**
+- 处理大型功能前，使用 `/plan` 获取逐步实现计划
+- 如果 AI 对导入路径感到困惑，提示它"先检查 `CLAUDE.md`"
+- `@nebutra/ui`、`@nebutra/tokens`、`@nebutra/permissions` 包文档完善，Claude 可原生理解
+
+---
+
+### Cursor
+
+上下文文件：**`.cursor/rules/nebutra.mdc`**——Nebutra-Sailor 内置。
+
+Cursor 将 `.cursor/rules/*.mdc` 文件作为项目规则读取。`nebutra.mdc` 为 Cursor 提供包边界、Token 约定和架构约束的完整上下文。
+
+**配置步骤：**
+
+1. 在 Cursor 中打开仓库：`cursor .`
+2. 规则文件自动检测，无需额外配置
+3. 打开 Cursor Chat（`Cmd+L`）开始提示
+
+```
+# Cursor 提示词示例
+@codebase 添加一个从 Edge Config 读取数据的功能标志 Hook
+@nebutra.mdc 创建一个 GET /api/v1/usage/summary 的 Hono 路由
+将计费页面重构为使用 @nebutra/ui 组件
+```
+
+**Cursor 专属技巧：**
+- 生成前使用 `@codebase` 搜索整个 monorepo
+- 使用 `@file` 固定特定上下文（如 `@apps/web/src/app/(dashboard)/settings/page.tsx`）
+- 在安全的开发环境中启用 **Auto-run** 自动执行终端命令
+
+---
+
+### Windsurf / Codeium
+
+上下文文件：**`.windsurfrules`**——Nebutra-Sailor 内置。
+
+Windsurf 从仓库根目录读取 `.windsurfrules` 作为全项目指令集。
+
+**配置步骤：**
+
+1. 打开仓库：`windsurf .`
+2. Cascade AI Agent 自动加载 `.windsurfrules`
+3. 启动 Cascade 会话（`Cmd+L`）描述任务
+
+```
+# Windsurf 提示词示例
+使用 @nebutra/ui 创建一个多步骤引导向导组件
+使用 @nebutra/rate-limit 为 /api/v1/ai/chat 路由添加限流
+为计量配额检查逻辑编写 Vitest 单元测试
+```
+
+---
+
+### GitHub Copilot
+
+上下文文件：**`.github/copilot-instructions.md`**——Nebutra-Sailor 内置。
+
+GitHub Copilot 在 Copilot Chat 中读取 `.github/copilot-instructions.md` 作为仓库范围的上下文。
+
+**配置步骤：**
+
+1. 在 VS Code 中安装 GitHub Copilot 扩展
+2. 打开仓库
+3. 打开 Copilot Chat（`Cmd+Shift+I`）
+4. `@workspace` 查询将自动使用指令文件
+
+```
+# Copilot Chat 提示词示例
+@workspace 如何添加新的权限作用域？
+@workspace 为 Linear issue 更新创建一个 webhook 处理器
+@workspace 发送事务邮件应该导入哪个包？
+```
+
+---
+
+### OpenAI Codex / Agents (AGENTS.md)
+
+上下文文件：**`AGENTS.md`**（仓库根目录）——已内置。
+
+Codex CLI 和 OpenAI Agent 工具读取 `AGENTS.md` 获取项目上下文。
+
+```bash
+# 安装 Codex CLI
+npm install -g @openai/codex
+
+# 在仓库中运行
+codex "在管理员仪表板添加审计日志查看器"
+codex --approval-mode auto "修复 packages/billing 中的所有 TypeScript 错误"
+```
+
+---
+
+### Amazon Kiro
+
+上下文文件：**`.kiro/steering/nebutra.md`**——Nebutra-Sailor 内置。
+
+Kiro 从 `.kiro/steering/` 读取 Markdown 文件作为持久化项目引导文档，始终包含在 Agent 的上下文窗口中。
+
+**配置步骤：**
+
+1. 从 [kiro.dev](https://kiro.dev) 安装 Kiro
+2. 在 Kiro 中打开仓库
+3. 引导文档自动加载
+
+```
+# Kiro Spec 示例（创建 .kiro/specs/ 文件）
+# notification-preferences.md
+功能：在设置页面添加通知偏好切换
+允许用户控制每种通知类型接收哪些渠道（邮件、Slack、推送）。
+将每用户设置持久化到数据库。
+```
+
+---
+
+### Trae（字节跳动）
+
+上下文文件：**`.trae/rules/project.md`**——手动创建。
+
+Trae IDE 使用 `.trae/rules/` 目录存储项目专属规则，格式与 Cursor 的 `.cursor/rules/` 类似。
+
+**配置步骤：**
+
+```bash
+mkdir -p .trae/rules
+cp .cursor/rules/nebutra.mdc .trae/rules/project.md
+```
+
+在 Trae 中打开后规则自动检测。
+
+---
+
+### Warp.dev
+
+上下文文件：**`AGENTS.md`**——Warp 的 AI 功能在可用时读取 AGENTS.md 作为项目上下文。
+
+Warp 是内置 AI 的终端。它读取 Shell 历史记录、文件上下文和 `AGENTS.md` 提供项目感知建议。
+
+```bash
+# 在 Warp 终端中使用 # 前缀执行 AI 命令
+# pnpm infra:up
+# 添加 --no-cache 标志以重新构建新容器
+
+# 询问 Warp 关于项目的问题
+# pnpm dev:dashboard 会启动什么？
+# 如何仅以监听模式运行 api-gateway？
+```
+
+---
+
+### OpenCode
+
+上下文文件：**`AGENTS.md`**——OpenCode 读取 AGENTS.md 获取项目上下文。
+
+OpenCode 是开源的终端 AI 编码 Agent。在仓库根目录运行，自动发现 `AGENTS.md`。
+
+```bash
+# 安装
+npm install -g opencode-ai
+
+# 在仓库中运行
+opencode
+> 为计费历史 API 添加 CSV 导出端点
+> 为多租户权限矩阵编写测试
+```
+
+---
+
+### Antigravity
+
+Antigravity 通过 Git 连接到仓库，提供全代码库上下文感知的补全。
+
+**配置步骤：**
+1. 在 [antigravity.dev](https://antigravity.dev) 连接你的仓库
+2. 它会索引代码库，从 `AGENTS.md` 和 `CLAUDE.md` 学习包约定
+
+---
+
+### OpenClaw
+
+OpenClaw 是本地优先的 AI 编码工具，使用项目上下文文件。
+
+```bash
+# 安装
+brew install openclaw
+
+# 在仓库中初始化（自动读取 AGENTS.md）
+claw init
+claw "为 Zapier 连接器添加新的集成卡片"
+```
+
+---
+
+## 3. 通用工作流
+
+无论使用哪种工具，工作流都是相同的：
+
+```
+克隆 → 配置环境 → 选择工具 → 描述功能 → 审查代码 → 测试 → 发布
+```
+
+### 阶段 1：功能设计
+
+编写代码前，先在高层次描述功能：
+
+```
+"我想在 Web 应用中添加一个使用量分析仪表板。
+它应该展示过去 30 天的 API 调用量、错误率和活跃租户。
+使用 @nebutra/ui 图表组件。"
+```
+
+### 阶段 2：实现
+
+让 AI 实现代码。仔细审查 diff——尤其是：
+- 包导入（应使用 `@nebutra/*`，不使用原始十六进制颜色）
+- 新组件必须有 Storybook Story
+- Server Components 不应有 `'use client'`（除非确实需要）
+
+### 阶段 3：验证
+
+```bash
+pnpm typecheck          # TypeScript 错误检查
+pnpm lint               # Biome lint
+pnpm test               # 单元测试
+pnpm --filter @nebutra/storybook dev  # 可视化预览
+```
+
+### 阶段 4：发布
+
+```bash
+pnpm build              # 生产构建
+git add -A && git commit -m "feat: 添加使用量分析仪表板"
+git push
+```
+
+---
+
+## 4. 有效的提示词模式
+
+### 明确指定包
+
+```
+# ✅ 好的提示词
+"使用 @nebutra/notifications 和 @nebutra/ui/components 在 Navbar 添加通知铃铛。
+下拉框入场动画使用 AnimateIn。"
+
+# ❌ 模糊的提示词
+"添加通知功能"
+```
+
+### 引用架构上下文
+
+```
+# ✅ 好的提示词
+"在 apps/api-gateway/src/routes/billing.ts 中添加一个 Hono 路由，
+返回当前配额使用情况。使用 @nebutra/metering，并通过 requirePermission
+中间件要求 billing:read 权限。"
+
+# ❌ 缺少上下文
+"添加一个计费端点"
+```
+
+### 先写测试（TDD）
+
+```
+"为计算租户超出 API 配额限制时额外费用的函数编写 Vitest 测试。
+然后再实现该函数。"
+```
+
+### 使用正确的 Token 语法
+
+```
+"样式使用带 CSS 变量 Token 的 Tailwind 类：
+bg-[var(--neutral-1)]、text-[var(--neutral-12)]、border-[var(--neutral-7)]。
+不使用硬编码十六进制值。品牌渐变：var(--brand-gradient)。"
+```
+
+---
+
+## 上下文文件参考
+
+| 工具 | 上下文文件 | 状态 |
+|------|-----------|------|
+| Claude Code | `CLAUDE.md` | ✅ 已内置 |
+| OpenAI Codex | `AGENTS.md` | ✅ 已内置 |
+| Cursor | `.cursor/rules/nebutra.mdc` | ✅ 已内置 |
+| Windsurf | `.windsurfrules` | ✅ 已内置 |
+| GitHub Copilot | `.github/copilot-instructions.md` | ✅ 已内置 |
+| Kiro | `.kiro/steering/nebutra.md` | ✅ 已内置 |
+| Trae | `.trae/rules/project.md` | 从 `.cursor/rules/nebutra.mdc` 复制 |
+| Warp.dev | `AGENTS.md` | ✅ 已内置 |
+| OpenCode | `AGENTS.md` | ✅ 已内置 |
+| Antigravity | 自动索引 `AGENTS.md` | ✅ 已内置 |
+| OpenClaw | `AGENTS.md` | ✅ 已内置 |
+
+---
+
+## 相关资源
+
+<CardGroup cols={2}>
+  <Card title="架构" icon="sitemap" href="/zh/concepts/architecture">
+    提示之前先了解 monorepo 结构。
+  </Card>
+  <Card title="快速开始：Next.js" icon="bolt" href="/zh/quickstart/nextjs">
+    5 分钟内启动仪表板。
+  </Card>
+  <Card title="权限系统" icon="shield" href="/zh/concepts/permissions">
+    AI 生成路由的 RBAC 作用域参考。
+  </Card>
+  <Card title="API 参考" icon="code" href="/zh/api-reference/overview">
+    用于生成集成的完整 API 规范。
+  </Card>
+</CardGroup>

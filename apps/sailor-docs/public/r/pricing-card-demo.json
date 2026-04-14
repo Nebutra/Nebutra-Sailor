@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pricing-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/pricing-card-demo.tsx",
+      "content": "\"use client\";\n\nimport { PricingCard } from \"@nebutra/ui/primitives\";\nimport { Check, Zap } from \"lucide-react\";\n\nexport function PricingCardDemo() {\n  const features = [\"Unlimited projects\", \"API access\", \"Priority support\"];\n\n  return (\n    <PricingCard.Card>\n      <PricingCard.Header>\n        <PricingCard.Plan>\n          <PricingCard.PlanName>\n            <Zap className=\"mr-2 h-4 w-4\" />\n            Pro\n          </PricingCard.PlanName>\n          <PricingCard.Badge>Popular</PricingCard.Badge>\n        </PricingCard.Plan>\n        <PricingCard.Price>\n          <PricingCard.MainPrice>$29</PricingCard.MainPrice>\n          <PricingCard.Period>/month</PricingCard.Period>\n        </PricingCard.Price>\n        <PricingCard.Description>Per workspace, billed annually</PricingCard.Description>\n      </PricingCard.Header>\n      <PricingCard.Body>\n        <PricingCard.List>\n          {features.map((f) => (\n            <PricingCard.ListItem key={f}>\n              <Check className=\"mt-0.5 h-4 w-4 flex-shrink-0 text-primary\" />\n              {f}\n            </PricingCard.ListItem>\n          ))}\n        </PricingCard.List>\n      </PricingCard.Body>\n    </PricingCard.Card>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

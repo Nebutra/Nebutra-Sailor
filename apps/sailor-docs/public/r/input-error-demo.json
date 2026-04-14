@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-error-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-error-demo.tsx",
+      "content": "\"use client\";\n\nimport { Input, Label } from \"@nebutra/ui/primitives\";\n\nexport function InputErrorDemo() {\n  return (\n    <div className=\"gap-1.5 flex w-full flex-col\">\n      <Label htmlFor=\"email-err\">Email address</Label>\n      <Input\n        id=\"email-err\"\n        type=\"email\"\n        defaultValue=\"not-an-email\"\n        className=\"border-destructive focus-visible:ring-destructive\"\n        aria-invalid=\"true\"\n        aria-describedby=\"email-error\"\n      />\n      <div id=\"email-error\" className=\"text-xs text-destructive\">\n        Please enter a valid email address.\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

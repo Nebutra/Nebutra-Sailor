@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-container-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/page-container-demo.tsx",
+      "content": "\"use client\";\n\nimport { SectionContainer } from \"@nebutra/ui/layouts\";\nimport { Button } from \"@nebutra/ui/primitives\";\n\nexport function PageContainerDemo() {\n  return (\n    <SectionContainer\n      size=\"lg\"\n      spacing=\"md\"\n      className=\"relative overflow-hidden rounded-xl border bg-background shadow-sm\"\n    >\n      <div className=\"inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] absolute\" />\n      <SectionContainer.Header>\n        <h2 className=\"text-2xl font-bold tracking-tight\">Features</h2>\n        <p className=\"mt-2 text-muted-foreground\">Everything you need to ship faster.</p>\n      </SectionContainer.Header>\n\n      <SectionContainer.Content className=\"py-12 flex items-center justify-center border-y border-dashed bg-muted/10\">\n        <p className=\"text-sm text-muted-foreground\">Feature Grid Content</p>\n      </SectionContainer.Content>\n\n      <SectionContainer.Footer>\n        <Button>View all features</Button>\n      </SectionContainer.Footer>\n    </SectionContainer>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

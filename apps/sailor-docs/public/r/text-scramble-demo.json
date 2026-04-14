@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-scramble-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/text-scramble-demo.tsx",
+      "content": "import { TextScramble } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport default function TextScrambleDemo() {\n  const [trigger, setTrigger] = useState(false);\n\n  return (\n    <div className=\"flex h-[300px] items-center justify-center\">\n      <TextScramble\n        as=\"span\"\n        trigger={trigger}\n        onScrambleComplete={() => setTrigger(false)}\n        onHoverStart={() => setTrigger(true)}\n        className=\"text-2xl cursor-pointer font-mono\"\n      >\n        Hover over me to scramble\n      </TextScramble>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-badge-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/status-badge-demo.tsx",
+      "content": "\"use client\";\n\nimport { StatusBadge } from \"@nebutra/ui/primitives\";\nimport { ShieldCheck, XCircle } from \"lucide-react\";\n\nexport function StatusBadgeDemo() {\n  return (\n    <StatusBadge\n      leftIcon={ShieldCheck}\n      rightIcon={XCircle}\n      leftLabel=\"Protection\"\n      rightLabel=\"SSO disabled\"\n      status=\"success\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,1159 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "nebutra-ui",
+  "homepage": "https://design.nebutra.com",
+  "items": [
+    {
+      "name": "accordion-compact-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "accordion-controlled-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "accordion-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "accordion-disabled-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "agent-plan-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "alert-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "alert-dialog-custom-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "alert-dialog-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "animated-beam-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "animated-circular-progress-bar-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "animated-gradient-text-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "animated-group-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "animated-hike-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "animated-list-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "animated-shiny-text-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "announcement-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "aspect-ratio-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "assisted-password-confirmation-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "aurora-text-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "avatar-circles-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "avatar-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "avatar-dicebear-simple-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "avatar-fallback-simple-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "avatar-git-simple-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "avatar-group-simple-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "avatar-smart-group-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "awards-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-all-colors-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-feature-tag-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-icon-colors-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-icon-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-notification-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-pill-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-pill-matrix-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-sizes-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-status-dot-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-table-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "badge-variants-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "base-popover-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "bento-grid-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "book-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "border-trail-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "box-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "breadcrumb-custom-separator-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "breadcrumb-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "breadcrumb-ellipsis-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "browser-mockup-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "bubble-text-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "button-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "button-loading-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "button-sizes-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "button-variants-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "button-with-icon-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "canvas-reveal-effect-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "card-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "card-pricing-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "card-spotlight-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "card-with-icon-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "carousel-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "carousel-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "carousel-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "carousel-multiple-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "carousel-vertical-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "checkbox-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "checkbox-group-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "checkbox-indeterminate-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "choicebox-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "choicebox-radio-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "code-block-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "collapsible-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "collapsible-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "color-badge-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-10-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-11-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-4-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-5-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-6-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-7-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-8-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-9-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-default-value-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-disabled-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-error-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-groups-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-sizes-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-width-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "command-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "command-dialog-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "command-dialog-simple-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "confetti-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "context-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "context-menu-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "context-menu-with-icons-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "description-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dialog-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dialog-destructive-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "display-cards-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dithering-background-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dithering-shader-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dot-pattern-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dotted-map-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dotted-world-map-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "drawer-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "drawer-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "drawer-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "drawer-side-right-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dropdown-menu-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dropdown-menu-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dropdown-menu-4-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dropdown-menu-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dropdown-menu-radio-group-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "dropdown-menu-sub-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "empty-state-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "entity-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "error-message-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "expandable-tabs-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "expanding-textarea-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "feature-arrow-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "feature-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "feature-check-item-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "feature-icon-item-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "feedback-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "field-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "flex-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "flickering-grid-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "form-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "gauge-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "github-calendar-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "github-inline-diff-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "globe-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "glowing-effect-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "gradient-animated-text-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "grain-gradient-background-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "grid-feature-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "grid-pattern-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "grid-system-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "heading-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "hex-grid-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "highlighter-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "hover-card-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "hover-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "infinite-slider-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-basic-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-clearable-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-error-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-otp-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-otp-numeric-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-password-reveal-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-with-addons-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-with-icon-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "input-with-label-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "interactive-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "introduction-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "iphone-mockup-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "label-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "label-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "label-4-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "label-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "label-description-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "label-disabled-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "light-rays-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "line-shadow-text-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "loader-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "macbook-pro-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "magic-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "material-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "menu-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "menu-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "menu-4-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "menu-5-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "menu-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "menubar-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "mermaid-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "message-with-reactions-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "multiple-selector-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "navigation-menu-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "noise-pattern-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "notification-message-list-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "page-container-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "pagination-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "popover-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "popover-controlled-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "popover-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "popover-settings-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "pricing-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "progress-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "progress-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "progress-4-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "progress-basic-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "progress-custom-color-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "progress-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "progress-indeterminate-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "progress-with-label-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "progressive-blur-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "radio-group-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "radio-group-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "radio-group-billing-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "radio-group-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "radio-group-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "radio-group-horizontal-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "radio-group-stacked-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "reaction-chip-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "resizable-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "resizable-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "safari-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "scroll-area-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "scroll-area-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "scroll-area-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "scroll-area-list-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "scroll-velocity-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "select-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "select-disabled-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "select-groups-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "separator-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "separator-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "separator-4-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "separator-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "separator-vertical-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "separator-with-text-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "separator-with-text-i18n-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "sheet-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "sheet-mobile-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "sheet-side-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "shine-border-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "sidebar-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "skeleton-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "skeleton-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "skeleton-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "skeleton-list-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "slider-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "slider-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "slider-4-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "slider-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "slider-icon-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "slider-number-flow-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "slider-on-value-change-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "slider-stateful-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "sonner-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "spinner-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "stack-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "stars-canvas-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "status-badge-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "switch-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "table-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "tabs-button-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "tabs-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "tabs-line-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "tabs-pill-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "terminal-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "text-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "text-loop-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "text-scramble-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "text-shimmer-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "textarea-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "textarea-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "textarea-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "textarea-disabled-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "textarea-with-limit-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "theme-switcher-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toggle-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toggle-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toggle-4-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toggle-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toggle-group-2-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toggle-group-3-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toggle-group-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toggle-group-single-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toggle-large-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toggle-small-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "tooltip-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "tooltip-icon-button-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "tooltip-instant-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "tooltip-rich-content-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "tooltip-side-right-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "tree-view-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "video-player-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "video-text-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "warp-background-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "wave-animation-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "word-fade-in-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "x-post-card-demo",
+      "type": "registry:example"
+    }
+  ]
+}

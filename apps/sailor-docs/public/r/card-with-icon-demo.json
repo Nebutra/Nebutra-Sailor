@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-with-icon-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/card-with-icon-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Card,\n  CardBody,\n  CardDescription,\n  CardHeader,\n  CardIcon,\n  CardTitle,\n} from \"@nebutra/ui/patterns\";\n\nexport function CardWithIconDemo() {\n  return (\n    <Card variant=\"bordered\" padding=\"md\">\n      <CardHeader>\n        <CardIcon size=\"md\">\n          <span>⚡️</span>\n        </CardIcon>\n        <CardTitle>Fast Deployments</CardTitle>\n      </CardHeader>\n      <CardBody>\n        <CardDescription>Deploy in seconds.</CardDescription>\n      </CardBody>\n    </Card>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

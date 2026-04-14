@@ -1,0 +1,268 @@
+---
+title: 存储提供商
+description: 为 @nebutra/uploads 配置 AWS S3、Cloudflare R2 或任何兼容 S3 的后端。
+---
+
+`@nebutra/uploads` 支持三种存储后端。所有提供商使用相同的 API，唯一区别是设置不同的环境变量。
+
+<Note>
+提供商自动检测优先级：显式设置 `STORAGE_PROVIDER` 环境变量 → 存在 `AWS_BUCKET_NAME` → 存在 `R2_ACCOUNT_ID` → 内存模式兜底（仅限开发环境）。
+</Note>
+
+<Tabs>
+  <Tab title="AWS S3">
+    ## AWS S3
+
+    默认提供商。当你已在 AWS 生态系统中深度投入或需要精细的 IAM 策略时，使用 S3。
+
+    ### 环境变量
+
+    ```bash
+    STORAGE_PROVIDER=s3
+    AWS_BUCKET_NAME=nebutra-uploads
+    AWS_REGION=us-east-1
+    AWS_ACCESS_KEY_ID=AKIA...
+    AWS_SECRET_ACCESS_KEY=...
+    ```
+
+    ### 配置步骤
+
+    <Steps>
+      <Step title="创建 S3 存储桶">
+        在 AWS 控制台中，前往 **S3 → 创建存储桶**。
+
+        - **存储桶名称：** `nebutra-uploads`（或你偏好的名称）
+        - **区域：** 选择距离你应用最近的区域
+        - **阻止公共访问：** 除非需要公共 CDN，否则保持全部阻止
+        - **版本控制：** 可选，生产环境推荐开启
+      </Step>
+
+      <Step title="创建 IAM 用户">
+        前往 **IAM → 用户 → 创建用户**，附加以下内联策略：
+
+        ```json
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:DeleteObject",
+                "s3:ListBucket"
+              ],
+              "Resource": [
+                "arn:aws:s3:::nebutra-uploads",
+                "arn:aws:s3:::nebutra-uploads/*"
+              ]
+            }
+          ]
+        }
+        ```
+
+        为该用户生成**访问密钥**，并将其保存为 `AWS_ACCESS_KEY_ID` 和 `AWS_SECRET_ACCESS_KEY`。
+      </Step>
+
+      <Step title="配置 CORS">
+        在 S3 存储桶设置中，前往 **权限 → CORS 配置**，添加：
+
+        ```json
+        [
+          {
+            "AllowedHeaders": ["*"],
+            "AllowedMethods": ["GET", "PUT", "POST", "DELETE", "HEAD"],
+            "AllowedOrigins": ["https://app.nebutra.com"],
+            "ExposeHeaders": ["ETag"],
+            "MaxAgeSeconds": 3600
+          }
+        ]
+        ```
+
+        将 `AllowedOrigins` 替换为你的应用域名。本地开发时添加 `http://localhost:3000`。
+      </Step>
+
+      <Step title="添加环境变量并部署">
+        将四个变量添加到 Vercel 项目（或本地开发的 `.env.local`）并重新部署。
+      </Step>
+    </Steps>
+
+    ### 费用说明
+
+    AWS S3 按存储量（GB/月）、PUT/GET 请求数和出站流量计费。对于读取频繁的工作负载，建议在 S3 前部署 CloudFront 以降低出站费用。
+  </Tab>
+
+  <Tab title="Cloudflare R2">
+    ## Cloudflare R2
+
+    R2 兼容 S3 协议，且**零出站费用**。当降低带宽成本是首要考虑，或应用运行在 Cloudflare Workers 上时，使用 R2。
+
+    ### 环境变量
+
+    ```bash
+    STORAGE_PROVIDER=r2
+    R2_BUCKET_NAME=nebutra-uploads
+    R2_ACCOUNT_ID=your-cloudflare-account-id
+    R2_ACCESS_KEY_ID=...
+    R2_SECRET_ACCESS_KEY=...
+    R2_PUBLIC_URL=https://assets.nebutra.com
+    ```
+
+    <Tip>
+      `R2_PUBLIC_URL` 是用于提供公共文件服务的自定义域名或 `r2.dev` 子域名。设置后，公共资源可通过 CDN 直接分发，无需签名 URL。
+    </Tip>
+
+    ### 配置步骤
+
+    <Steps>
+      <Step title="创建 R2 存储桶">
+        在 Cloudflare 控制台中，前往 **R2 → 创建存储桶**。
+
+        - **存储桶名称：** `nebutra-uploads`
+        - **位置：** 自动（或选择特定区域）
+      </Step>
+
+      <Step title="创建 API 令牌">
+        前往 **R2 → 管理 R2 API 令牌 → 创建 API 令牌**。
+
+        - **权限：** 对象读写
+        - **存储桶：** 限定为 `nebutra-uploads`
+
+        保存**访问密钥 ID** 和**密钥**。
+      </Step>
+
+      <Step title="配置 CORS">
+        在 R2 存储桶设置中，前往 **设置 → CORS 策略**：
+
+        ```json
+        [
+          {
+            "AllowedOrigins": ["https://app.nebutra.com"],
+            "AllowedMethods": ["GET", "PUT", "HEAD", "DELETE"],
+            "AllowedHeaders": ["*"],
+            "ExposeHeaders": ["ETag"],
+            "MaxAgeSeconds": 3600
+          }
+        ]
+        ```
+      </Step>
+
+      <Step title="开启公共访问（可选）">
+        如果需要公共 CDN URL 提供资源（头像、公共文档），前往 **R2 存储桶 → 设置 → 公共访问**，连接自定义域名或开启 `r2.dev` 子域名。将 `R2_PUBLIC_URL` 设置为该 URL。
+      </Step>
+
+      <Step title="添加环境变量并部署">
+        将五个变量添加到 Vercel 并重新部署。`R2_ACCOUNT_ID` 可在 Cloudflare 控制台首页查看。
+      </Step>
+    </Steps>
+
+    ### 费用说明
+
+    R2 无出站费用，只按存储量和操作次数计费。对于大多数有中等文件访问量的 SaaS 应用，考虑出站费用后 R2 比 S3 便宜得多。
+  </Tab>
+
+  <Tab title="兼容 S3">
+    ## 兼容 S3 的提供商
+
+    任何兼容 S3 的服务都可与 `@nebutra/uploads` 配合使用，包括 Backblaze B2、MinIO、DigitalOcean Spaces、Wasabi 等。
+
+    ### 环境变量
+
+    ```bash
+    STORAGE_PROVIDER=s3-compatible
+    AWS_BUCKET_NAME=nebutra-uploads
+    AWS_REGION=us-east-1
+    AWS_ACCESS_KEY_ID=...
+    AWS_SECRET_ACCESS_KEY=...
+    S3_ENDPOINT_URL=https://s3.us-east-005.backblazeb2.com
+    ```
+
+    <Note>
+      `S3_ENDPOINT_URL` 会覆盖默认的 AWS 端点地址。将其设置为你的提供商的兼容 S3 端点 URL。
+    </Note>
+
+    ### Backblaze B2
+
+    <Steps>
+      <Step title="创建 B2 存储桶">
+        在 Backblaze 控制台中，前往 **B2 云存储 → 创建存储桶**。创建完成后记录显示的**端点** URL（如 `s3.us-east-005.backblazeb2.com`）。
+      </Step>
+
+      <Step title="创建应用密钥">
+        前往 **应用密钥 → 添加新应用密钥**，限定到你的存储桶，保存 **keyID** 和 **applicationKey**。
+      </Step>
+
+      <Step title="设置环境变量">
+        ```bash
+        STORAGE_PROVIDER=s3-compatible
+        AWS_BUCKET_NAME=nebutra-uploads
+        AWS_REGION=us-east-005
+        AWS_ACCESS_KEY_ID=<keyID>
+        AWS_SECRET_ACCESS_KEY=<applicationKey>
+        S3_ENDPOINT_URL=https://s3.us-east-005.backblazeb2.com
+        ```
+      </Step>
+    </Steps>
+
+    ### MinIO（自托管）
+
+    <Steps>
+      <Step title="启动 MinIO">
+        ```bash
+        docker run -p 9000:9000 -p 9001:9001 \
+          -e MINIO_ROOT_USER=admin \
+          -e MINIO_ROOT_PASSWORD=password \
+          quay.io/minio/minio server /data --console-address ":9001"
+        ```
+      </Step>
+
+      <Step title="创建存储桶和访问密钥">
+        在 `http://localhost:9001` 打开 MinIO 控制台。创建名为 `nebutra-uploads` 的存储桶，并生成访问密钥对。
+      </Step>
+
+      <Step title="设置环境变量">
+        ```bash
+        STORAGE_PROVIDER=s3-compatible
+        AWS_BUCKET_NAME=nebutra-uploads
+        AWS_REGION=us-east-1
+        AWS_ACCESS_KEY_ID=<minio-access-key>
+        AWS_SECRET_ACCESS_KEY=<minio-secret-key>
+        S3_ENDPOINT_URL=http://localhost:9000
+        ```
+      </Step>
+    </Steps>
+
+    <Warning>
+      本地 MinIO 需要设置 `S3_FORCE_PATH_STYLE=true`，以避免虚拟托管样式 URL 解析问题。
+    </Warning>
+  </Tab>
+</Tabs>
+
+## 切换提供商
+
+由于所有提供商使用同一套 `@nebutra/uploads` API，切换只需更新环境变量，无需修改任何应用代码。
+
+```bash
+# 从 S3 切换到 R2 — 只需更新环境变量
+STORAGE_PROVIDER=r2
+R2_BUCKET_NAME=nebutra-uploads
+R2_ACCOUNT_ID=...
+R2_ACCESS_KEY_ID=...
+R2_SECRET_ACCESS_KEY=...
+R2_PUBLIC_URL=https://assets.nebutra.com
+```
+
+<CardGroup cols={2}>
+  <Card title="存储概览" icon="hard-drive" href="/storage/overview">
+    架构与上传策略对比
+  </Card>
+  <Card title="文件上传" icon="upload" href="/storage/uploads">
+    预签名 URL、分片上传和 Tus 上传指南
+  </Card>
+  <Card title="访问文件" icon="file" href="/storage/accessing-files">
+    签名 URL、CDN 和文件列表
+  </Card>
+  <Card title="环境变量" icon="key" href="/guides/environment-variables">
+    跨环境管理密钥
+  </Card>
+</CardGroup>

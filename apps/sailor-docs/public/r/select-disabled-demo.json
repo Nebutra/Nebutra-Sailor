@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-disabled-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/select-disabled-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from \"@nebutra/ui/primitives\";\n\nexport function SelectDisabledDemo() {\n  return (\n    <Select>\n      <SelectTrigger className=\"w-48\">\n        <SelectValue placeholder=\"选择计划 (Select plan)\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectItem value=\"free\">免费版 (Free)</SelectItem>\n        <SelectItem value=\"pro\">专业版 (Pro)</SelectItem>\n        <SelectItem value=\"enterprise\" disabled>\n          企业版 (Enterprise) - 联系销售\n        </SelectItem>\n      </SelectContent>\n    </Select>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

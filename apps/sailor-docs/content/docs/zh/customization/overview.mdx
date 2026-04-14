@@ -1,0 +1,112 @@
+---
+title: 定制概览
+description: Nebutra-Sailor 中所有可定制的内容——品牌颜色、主题、仪表板页面以及引导流程。
+---
+
+Nebutra-Sailor 被设计为完全可白标化。每一个视觉和结构元素——从品牌调色板到单个仪表板页面——都可以在不分叉核心包的情况下进行定制。
+
+## 可定制的内容
+
+<CardGroup cols={2}>
+  <Card title="品牌与主题" icon="palette" href="/zh/customization/theming">
+    更改品牌颜色，在六种多主题预设之间切换，配置明暗模式，以及创建完全自定义的 oklch 主题。
+  </Card>
+  <Card title="仪表板页面" icon="layout-dashboard" href="/zh/customization/dashboard">
+    添加新的仪表板板块，自定义侧边栏导航，以及按套餐限制功能访问。
+  </Card>
+  <Card title="引导流程" icon="map" href="/zh/customization/onboarding">
+    添加、删除或重新排序引导步骤。自定义欢迎文案、各套餐的跳过逻辑，以及配置插图。
+  </Card>
+  <Card title="组件库" icon="blocks" href="https://localhost:6006">
+    在 Storybook 中浏览所有组件，独立开发新组件，以及使用 CVA 变体扩展现有原语组件。
+  </Card>
+</CardGroup>
+
+## 架构
+
+定制遵循严格的单向 Token 流。在较低层级的更改会自动向上传播。
+
+```
+@nebutra/tokens   ← 在此处编辑 CSS 变量以重新品牌化
+      ↓
+@nebutra/ui       ← 组件消费 token；在此处添加新组件
+      ↓
+apps/web          ← 仪表板页面组合组件
+apps/landing-page ← 营销网站组合组件
+```
+
+由于 `@nebutra/ui` 中的每个颜色和间距值都是 CSS 变量引用（而非硬编码的十六进制值），更新 `packages/tokens/styles.css`——或运行调色板脚本——就能级联影响整个产品。
+
+## 快速上手（5 分钟以内）
+
+### 更改品牌颜色
+
+```bash
+# 将蓝色换为紫色，青色换为琥珀色，只需一条命令
+node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
+```
+
+该脚本会重写 `packages/tokens/styles.css` 及所有下游 token 别名。重启开发服务器即可看到更改效果。
+
+### 切换活跃主题预设
+
+```tsx
+// apps/web/src/app/layout.tsx
+<html data-theme="neon">   {/* default | neon | gradient | dark-dense | minimal | vibrant */}
+```
+
+### 切换深色模式
+
+```tsx
+import { useTheme } from "@nebutra/tokens";
+
+const { theme, setTheme } = useTheme();
+setTheme("dark"); // "light" | "dark" | "system"
+```
+
+## 高级定制
+
+| 目标 | 从哪里开始 |
+|------|-----------|
+| 新建多主题预设 | `packages/theme/themes.css` |
+| 新建 UI 原语组件 | `packages/ui/src/components/` + Storybook 故事 |
+| 新建仪表板板块 | `apps/web/src/app/(dashboard)/[section]/page.tsx` |
+| 修改引导步骤 | `apps/web/src/app/(onboarding)/` |
+| 重写调色板生成器 | `scripts/generate-palette.mjs` |
+
+## Token 架构一览
+
+所有运行时 CSS 变量均定义在单一文件中：`packages/tokens/styles.css`。这是**唯一真实来源**——任何地方都不要硬编码十六进制值。
+
+```css
+/* packages/tokens/styles.css — 摘录 */
+:root {
+  --brand-primary:   var(--blue-9);     /* #0033FE */
+  --brand-accent:    var(--cyan-9);     /* #0BF1C3 */
+  --brand-gradient:  135deg, var(--blue-9) 0%, var(--cyan-9) 100%;
+
+  --neutral-1:  #ffffff;
+  --neutral-12: #0a0a0a;
+}
+```
+
+<Tip>
+  打开 Storybook 的 **Design Tokens** 版块，可在明暗两种模式下查看每个 token 的实时视觉参考：`pnpm --filter @nebutra/storybook dev` → http://localhost:6006
+</Tip>
+
+---
+
+<CardGroup cols={2}>
+  <Card title="主题" icon="paintbrush" href="/zh/customization/theming">
+    CSS 变量、明暗模式与多主题预设
+  </Card>
+  <Card title="仪表板" icon="layout-panel-left" href="/zh/customization/dashboard">
+    添加页面、更新导航，以及按套餐限制访问
+  </Card>
+  <Card title="引导流程" icon="route" href="/zh/customization/onboarding">
+    自定义新用户设置流程
+  </Card>
+  <Card title="功能开发实战" icon="hammer" href="/zh/recipes/build-a-feature">
+    端到端配方：使用量分析仪表板
+  </Card>
+</CardGroup>

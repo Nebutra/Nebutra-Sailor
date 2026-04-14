@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "drawer-side-right-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/drawer-side-right-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  Drawer,\n  DrawerContent,\n  DrawerHeader,\n  DrawerTitle,\n  DrawerTrigger,\n} from \"@nebutra/ui/primitives\";\n\nexport function DrawerSideRightDemo() {\n  return (\n    <Drawer direction=\"right\">\n      <DrawerTrigger asChild>\n        <Button>打开侧边栏 (Open Sidebar)</Button>\n      </DrawerTrigger>\n      <DrawerContent className=\"w-80 p-4 mt-0 mr-0 mb-0 ml-auto h-full\">\n        <DrawerHeader>\n          <DrawerTitle>导航 (Navigation)</DrawerTitle>\n        </DrawerHeader>\n      </DrawerContent>\n    </Drawer>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

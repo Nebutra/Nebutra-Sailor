@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-rich-content-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/tooltip-rich-content-demo.tsx",
+      "content": "\"use client\";\nimport { Button, GeistTooltip as Tooltip } from \"@nebutra/ui/primitives\";\n\nexport function TooltipRichContentDemo() {\n  return (\n    <div className=\"p-8 flex items-center justify-center\">\n      <Tooltip\n        text={\n          <>\n            The <b>Evil Rabbit</b> Jumped over the <i>Fence</i>.\n          </>\n        }\n      >\n        <Button variant=\"outline\">Rich Content</Button>\n      </Tooltip>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

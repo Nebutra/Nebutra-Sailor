@@ -1,0 +1,189 @@
+---
+title: pnpm Scripts Reference
+description: Complete reference for all Turborepo-orchestrated pnpm scripts in Nebutra-Sailor.
+---
+
+All scripts are orchestrated by [Turborepo](https://turbo.build/repo) and run from the monorepo root unless otherwise noted.
+
+```bash
+# Run any script from the monorepo root
+pnpm <script>
+
+# Run a script for a specific package
+pnpm --filter @nebutra/ui typecheck
+pnpm --filter apps/web dev
+```
+
+## Development
+
+| Script | Description |
+|--------|-------------|
+| `pnpm dev` | Start all apps simultaneously |
+| `pnpm dev:dashboard` | Web (3000) + Admin (3002) + API gateway (3001) |
+| `pnpm dev:marketing` | Landing page (3002) + Sanity Studio (3333) |
+| `pnpm dev:ai-saas` | All 6 AI SaaS apps |
+| `pnpm dev:overseas` | International locale apps (4 apps) |
+| `pnpm dev:growth` | Growth-focused apps (3 apps) |
+| `pnpm dev:creative` | Creative suite apps (2 apps) |
+| `pnpm dev:blog` | Blog apps (2 apps) |
+| `pnpm dev:community` | Community platform apps (3 apps) |
+| `pnpm dev:solo` | Solo developer bundle (4 apps) |
+| `pnpm dev:design` | Design tools (2 apps) |
+
+## Build
+
+| Script | Description |
+|--------|-------------|
+| `pnpm build` | Production build for all apps |
+| `pnpm build:ai-saas` | Build AI SaaS preset (6 apps) |
+| `pnpm build:marketing` | Build marketing preset (3 apps) |
+| `pnpm build:dashboard` | Build dashboard preset (3 apps) |
+
+## Code quality
+
+| Script | Description |
+|--------|-------------|
+| `pnpm typecheck` | TypeScript type checking (turbo, all packages) |
+| `pnpm lint` | Biome lint (all packages) |
+| `pnpm lint:fix` | Auto-fix lint issues |
+| `pnpm format` | Biome format (all packages) |
+
+## Testing
+
+| Script | Description |
+|--------|-------------|
+| `pnpm test` | Run all Vitest unit tests |
+| `pnpm test:watch` | Watch mode |
+| `pnpm test:coverage` | With coverage report (80% threshold) |
+| `pnpm test:arch` | Architecture conformance tests |
+| `pnpm e2e` | Playwright E2E tests |
+
+## Database
+
+| Script | Description |
+|--------|-------------|
+| `pnpm db:generate` | Regenerate Prisma client |
+| `pnpm db:migrate` | Run pending migrations |
+| `pnpm db:push` | Push schema without migration |
+| `pnpm db:studio` | Launch Prisma Studio GUI |
+
+## Infrastructure
+
+| Script | Description |
+|--------|-------------|
+| `pnpm infra:up` | Start full Docker stack (PG + Redis + ClickHouse + Meilisearch) |
+| `pnpm infra:lite` | Start lite stack (PostgreSQL only — fastest) |
+| `pnpm infra:down` | Stop all services |
+| `pnpm check-env` | Validate environment variables |
+
+## Brand & Design
+
+| Script | Description |
+|--------|-------------|
+| `pnpm brand:sync` | Sync brand assets across packages |
+| `pnpm brand:init` | Initialize brand configuration |
+| `pnpm brand:apply` | Apply brand changes to all packages |
+| `pnpm brand:palette` | Interactive palette generator |
+
+```bash
+# Generate a custom color palette
+node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
+```
+
+## API & Types
+
+| Script | Description |
+|--------|-------------|
+| `pnpm generate:api-types` | Regenerate TypeScript types from OpenAPI spec |
+| `pnpm docs:cli` | Auto-generate CLI reference documentation |
+
+## Preset & Configuration
+
+| Script | Description |
+|--------|-------------|
+| `pnpm preset:env` | Configure active preset via interactive CLI |
+
+## Release & Versioning
+
+| Script | Description |
+|--------|-------------|
+| `pnpm version:packages` | Bump package versions (changesets) |
+| `pnpm release` | Publish packages to npm registry |
+
+```bash
+# Standard release workflow
+pnpm version:packages   # Bump versions based on changesets
+git push --follow-tags
+pnpm release            # Publish to npm
+```
+
+## Bundle analysis
+
+| Script | Description |
+|--------|-------------|
+| `pnpm size` | Check bundle size against budget |
+| `pnpm size:why` | Detailed bundle composition analysis |
+
+## Governance & compliance
+
+| Script | Description |
+|--------|-------------|
+| `pnpm license:check` | Audit production dependency licenses |
+| `pnpm ui:validate-policy` | Validate UI token governance policy |
+| `pnpm ui:verify-governance` | Strict governance verification |
+
+## Useful combos
+
+```bash
+# Fresh start (full reset)
+pnpm infra:down
+pnpm infra:up
+pnpm db:migrate
+
+# Before a commit
+pnpm typecheck && pnpm lint && pnpm test
+
+# After pulling changes
+pnpm install
+pnpm db:generate
+pnpm db:migrate
+
+# Storybook development
+pnpm --filter @nebutra/storybook dev
+
+# Production readiness check
+pnpm build && pnpm test && pnpm e2e
+```
+
+## Filter syntax
+
+Use `--filter` to target specific apps or packages:
+
+```bash
+# By package name
+pnpm --filter @nebutra/ui typecheck
+pnpm --filter @nebutra/billing test
+
+# By app name (without @)
+pnpm --filter landing-page dev
+pnpm --filter web build
+
+# Multiple filters
+pnpm --filter @nebutra/ui --filter @nebutra/tokens build
+
+# Run script in all packages
+pnpm -r typecheck
+```
+
+## Turborepo caching
+
+Turborepo caches task outputs locally and (optionally) remotely. Cache hits are shown with `cache hit, replaying output`.
+
+```bash
+# Force re-run, bypass cache
+pnpm build --force
+
+# Remote caching (requires Vercel account)
+pnpm dlx turbo login
+pnpm dlx turbo link
+```

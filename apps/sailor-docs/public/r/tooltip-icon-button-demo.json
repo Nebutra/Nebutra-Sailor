@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-icon-button-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/tooltip-icon-button-demo.tsx",
+      "content": "\"use client\";\nimport { Button, GeistTooltip as Tooltip } from \"@nebutra/ui/primitives\";\nimport { Plus } from \"lucide-react\";\n\nexport function TooltipIconButtonDemo() {\n  return (\n    <div className=\"p-8 flex items-center justify-center\">\n      <Tooltip text=\"Add item\">\n        <Button variant=\"outline\" size=\"icon\">\n          <Plus className=\"w-4 h-4\" />\n        </Button>\n      </Tooltip>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

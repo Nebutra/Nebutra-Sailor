@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "animated-hike-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/animated-hike-card-demo.tsx",
+      "content": "import { AnimatedHikeCard } from \"@nebutra/ui/primitives\";\nimport { Clock, MapPin, Mountain } from \"lucide-react\";\n\nexport function AnimatedHikeCardDemo() {\n  return (\n    <div className=\"p-8 flex w-full items-center justify-center\">\n      <AnimatedHikeCard\n        title=\"Yosemite Valley\"\n        images={[\n          \"https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&q=80&w=400\",\n          \"https://images.unsplash.com/photo-1519681393774-d08959eb4a39?auto=format&fit=crop&q=80&w=400\",\n          \"https://images.unsplash.com/photo-1444090542259-0af8afa965cb?auto=format&fit=crop&q=80&w=400\",\n        ]}\n        stats={[\n          { icon: <Clock className=\"h-4 w-4\" />, label: \"~6 Hours\" },\n          { icon: <Mountain className=\"h-4 w-4\" />, label: \"8 km\" },\n          { icon: <MapPin className=\"h-4 w-4\" />, label: \"California\" },\n        ]}\n        description=\"Experience the breathtaking cliffs, spectacular waterfalls, and ancient sequoia trees in this unforgettable day hike.\"\n        href=\"#\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

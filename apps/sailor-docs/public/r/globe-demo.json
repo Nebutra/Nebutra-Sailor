@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "globe-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/globe-demo.tsx",
+      "content": "import { Globe } from \"@nebutra/ui/primitives\";\n\nexport function GlobeDemo() {\n  return (\n    <div className=\"p-8 flex w-full items-center justify-center\">\n      <div className=\"relative h-[360px] w-[360px]\">\n        <Globe\n          config={{\n            markers: [\n              { location: [40.7128, -74.006], size: 0.1 },\n              { location: [51.5074, -0.1278], size: 0.08 },\n              { location: [35.6762, 139.6503], size: 0.08 },\n              { location: [48.8566, 2.3522], size: 0.07 },\n            ],\n            markerColor: [0.1, 0.8, 1],\n            baseColor: [0.3, 0.3, 0.3],\n            glowColor: [0.2, 0.4, 1],\n            dark: 1,\n          }}\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

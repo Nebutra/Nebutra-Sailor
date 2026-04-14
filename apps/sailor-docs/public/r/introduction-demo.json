@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "introduction-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/introduction-demo.tsx",
+      "content": "\"use client\";\n\nimport { Alert } from \"@nebutra/ui/primitives\";\nimport { Info } from \"lucide-react\";\n\nexport function IntroductionDemo() {\n  return (\n    <div className=\"p-8 max-w-3xl mx-auto w-full\">\n      <Alert className=\"mb-6 gap-4 flex items-start\">\n        <Info className=\"w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0\" />\n        <div>\n          <h4 className=\"font-semibold text-foreground\">Welcome to Nebutra Sailor</h4>\n          <p className=\"text-sm mt-1 text-muted-foreground\">\n            This collection of primitives provides a strong foundation for building exceptional SaaS\n            applications. Explore the available components to get started.\n          </p>\n        </div>\n      </Alert>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

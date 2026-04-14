@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "light-rays-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/light-rays-demo.tsx",
+      "content": "\"use client\";\n\nimport { Card, LightRays } from \"@nebutra/ui/primitives\";\nimport { Sparkles } from \"lucide-react\";\n\nexport function LightRaysDemo() {\n  return (\n    <div className=\"max-w-3xl p-4 md:p-8 mx-auto w-full\">\n      <Card className=\"p-8 bg-black dark:bg-black/90 relative flex h-[400px] w-full flex-col items-center justify-center overflow-hidden border text-center\">\n        {/* The light rays component in the background */}\n        <LightRays\n          count={12}\n          color=\"rgba(125, 211, 252, 0.3)\" // soft blue\n          speed={15}\n          blur={24}\n        />\n\n        <div className=\"relative z-10 flex flex-col items-center\">\n          <div className=\"w-16 h-16 bg-blue-500/10 border-blue-500/20 mb-6 flex items-center justify-center rounded-full border\">\n            <Sparkles className=\"w-8 h-8 text-blue-400\" />\n          </div>\n\n          <h2 className=\"text-3xl md:text-4xl font-bold tracking-tight text-white mb-4\">\n            Illuminate Your Data\n          </h2>\n\n          <p className=\"text-blue-100/60 max-w-md text-lg\">\n            Discover insights previously hidden in the dark. Our advanced analytics engine brings\n            everything to light.\n          </p>\n\n          <button\n            type=\"button\"\n            className=\"mt-8 px-6 py-2.5 bg-white text-black font-medium hover:bg-blue-50 rounded-full transition-colors\"\n          >\n            Get Started\n          </button>\n        </div>\n      </Card>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

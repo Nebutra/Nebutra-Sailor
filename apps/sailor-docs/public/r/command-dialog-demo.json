@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "command-dialog-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/command-dialog-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  CommandDialog,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n} from \"@nebutra/ui/primitives\";\nimport * as React from \"react\";\n\nexport function CommandDialogDemo() {\n  const [open, setOpen] = React.useState(false);\n\n  React.useEffect(() => {\n    const down = (e: KeyboardEvent) => {\n      if (e.key === \"j\" && (e.metaKey || e.ctrlKey)) {\n        e.preventDefault();\n        setOpen((open) => !open);\n      }\n    };\n\n    document.addEventListener(\"keydown\", down);\n    return () => document.removeEventListener(\"keydown\", down);\n  }, []);\n\n  return (\n    <>\n      <p className=\"text-sm text-muted-foreground\">\n        Press{\" \"}\n        <kbd className=\"h-5 gap-1 rounded px-1.5 font-medium pointer-events-none inline-flex items-center border bg-muted font-mono text-[10px] text-muted-foreground opacity-100 select-none\">\n          <span className=\"text-xs\">⌘</span>J\n        </kbd>\n      </p>\n      <CommandDialog open={open} onOpenChange={setOpen}>\n        <CommandInput placeholder=\"Type a command or search...\" />\n        <CommandList>\n          <CommandEmpty>No results found.</CommandEmpty>\n          <CommandGroup heading=\"Suggestions\">\n            <CommandItem\n              onSelect={() => {\n                /* Calendar selected */\n              }}\n            >\n              Calendar\n            </CommandItem>\n            <CommandItem\n              onSelect={() => {\n                /* Search Emoji selected */\n              }}\n            >\n              Search Emoji\n            </CommandItem>\n            <CommandItem\n              onSelect={() => {\n                /* Calculator selected */\n              }}\n            >\n              Calculator\n            </CommandItem>\n          </CommandGroup>\n        </CommandList>\n      </CommandDialog>\n    </>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

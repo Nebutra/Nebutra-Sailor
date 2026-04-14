@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-icon-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/badge-icon-demo.tsx",
+      "content": "import { Badge } from \"@nebutra/ui/primitives\";\nimport { Check } from \"lucide-react\";\n\nexport function BadgeIconDemo() {\n  return (\n    <Badge variant=\"outline\" icon={<Check />}>\n      Completed\n    </Badge>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "browser-mockup-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/browser-mockup-demo.tsx",
+      "content": "import { Browser } from \"@nebutra/ui/primitives\";\n\nexport function BrowserMockupDemo() {\n  return (\n    <div className=\"max-w-3xl px-4 py-8 w-full\">\n      <Browser address=\"nebutra.dev\" className=\"h-[400px]\">\n        <div className=\"flex h-full w-full items-center justify-center bg-muted/50\">\n          <p className=\"text-muted-foreground\">Your SaaS content goes here</p>\n        </div>\n      </Browser>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

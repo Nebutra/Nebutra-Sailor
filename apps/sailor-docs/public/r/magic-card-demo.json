@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "magic-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/magic-card-demo.tsx",
+      "content": "import { MagicCard } from \"@nebutra/ui/primitives\";\nimport { Layers, Sparkles, Zap } from \"lucide-react\";\n\nexport function MagicCardDemo() {\n  return (\n    <div className=\"md:grid-cols-3 gap-6 max-w-5xl p-4 md:p-8 mx-auto grid w-full grid-cols-1\">\n      <MagicCard className=\"p-8 h-64 flex cursor-pointer flex-col justify-between border\">\n        <div>\n          <Sparkles className=\"h-8 w-8 text-blue-500 mb-4\" />\n          <h3 className=\"text-xl font-bold mb-2\">Beautiful Design</h3>\n          <p className=\"text-muted-foreground\">\n            Every component is crafted with attention to detail and modern aesthetics.\n          </p>\n        </div>\n      </MagicCard>\n\n      <MagicCard\n        className=\"p-8 h-64 flex cursor-pointer flex-col justify-between border\"\n        gradientFrom=\"#f59e0b\"\n        gradientTo=\"#d31212\"\n        gradientColor=\"rgba(245, 158, 11, 0.15)\"\n      >\n        <div>\n          <Layers className=\"h-8 w-8 text-orange-500 mb-4\" />\n          <h3 className=\"text-xl font-bold mb-2\">Highly Customizable</h3>\n          <p className=\"text-muted-foreground\">\n            Modify colors, sizing, and animations to fit your exact brand needs.\n          </p>\n        </div>\n      </MagicCard>\n\n      <MagicCard\n        className=\"p-8 h-64 flex cursor-pointer flex-col justify-between border\"\n        gradientFrom=\"#10b981\"\n        gradientTo=\"#3b82f6\"\n        gradientColor=\"rgba(16, 185, 129, 0.15)\"\n      >\n        <div>\n          <Zap className=\"h-8 w-8 text-emerald-500 mb-4\" />\n          <h3 className=\"text-xl font-bold mb-2\">Unmatched Performance</h3>\n          <p className=\"text-muted-foreground\">\n            Optimized for speed and minimal bundle sizes out of the box.\n          </p>\n        </div>\n      </MagicCard>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

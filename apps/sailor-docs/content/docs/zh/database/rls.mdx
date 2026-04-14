@@ -1,0 +1,177 @@
+---
+title: 行级安全
+description: PostgreSQL RLS 如何在数据库级别强制租户数据隔离，以及 Nebutra 如何通过 Prisma 将其串联起来。
+---
+
+行级安全（RLS）是 PostgreSQL 的一个功能，它根据针对每行评估的策略，限制数据库会话可以读取或写入哪些行。Nebutra 使用 RLS 作为多租户数据隔离的主要机制。
+
+## 为什么使用 RLS 而不是应用层过滤
+
+应用层的 `WHERE tenantId = ?` 子句可以工作，但有一个关键弱点：缺少子句会暴露所有租户的数据。RLS 将强制执行移至数据库引擎本身，因此即使没有租户过滤的查询也会自动限制为当前会话允许查看的行。
+
+| 方法 | 强制执行层 | 开发者忘记时的风险 |
+|------|-----------|-----------------|
+| `WHERE tenantId = ?` | 应用程序代码 | 跨租户完全数据泄露 |
+| 行级安全 | PostgreSQL 引擎 | 查询返回空集 — 默认安全 |
+
+## `withRls` 的工作原理
+
+`@nebutra/tenant` 的 `withRls` 返回一个 Prisma 客户端扩展，它：
+
+1. 开启一个 PostgreSQL 事务
+2. 将会话本地变量 `app.current_tenant_id` 设置为提供的 `tenantId`
+3. 执行查询 — PostgreSQL 使用此变量评估 RLS 策略
+4. 完成时清除会话变量
+
+```typescript
+import { db } from "@nebutra/db";
+import { getCurrentTenant, withRls } from "@nebutra/tenant";
+
+const tenant = getCurrentTenant();
+const tenantDb = withRls(db, tenant.tenantId);
+
+// PostgreSQL 强制执行：只返回 WHERE tenant_id = 'org_abc123' 的行
+const projects = await tenantDb.project.findMany();
+```
+
+在底层，`withRls` 执行：
+
+```sql
+SET LOCAL app.current_tenant_id = 'org_abc123';
+SELECT * FROM projects;  -- RLS 策略自动过滤
+```
+
+## RLS 策略示例
+
+这些是应用于租户作用域表的 SQL 策略。`packages/db/prisma/migrations/` 中的迁移会自动应用它们。
+
+### SELECT 策略（读取隔离）
+
+```sql
+ALTER TABLE public.projects ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "tenant_isolation_select"
+  ON public.projects
+  FOR SELECT
+  USING (
+    tenant_id = current_setting('app.current_tenant_id', TRUE)
+  );
+```
+
+### INSERT 策略（写入隔离）
+
+```sql
+CREATE POLICY "tenant_isolation_insert"
+  ON public.projects
+  FOR INSERT
+  WITH CHECK (
+    tenant_id = current_setting('app.current_tenant_id', TRUE)
+  );
+```
+
+### UPDATE 和 DELETE 策略
+
+```sql
+CREATE POLICY "tenant_isolation_update"
+  ON public.projects
+  FOR UPDATE
+  USING (tenant_id = current_setting('app.current_tenant_id', TRUE))
+  WITH CHECK (tenant_id = current_setting('app.current_tenant_id', TRUE));
+
+CREATE POLICY "tenant_isolation_delete"
+  ON public.projects
+  FOR DELETE
+  USING (tenant_id = current_setting('app.current_tenant_id', TRUE));
+```
+
+<Note>
+`current_setting('app.current_tenant_id', TRUE)` — 第二个参数 `TRUE` 使函数在变量未设置时返回 `NULL` 而不是报错。这意味着在租户上下文之外运行的查询返回零行而不是抛出异常。
+</Note>
+
+## `tenantId` 列约定
+
+存储租户特定数据的每个表都必须包含 `tenantId` 列。Prisma 架构约定：
+
+```prisma packages/db/prisma/schema.prisma
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  tenantId    String                         // ← 每个租户作用域模型必须有
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([tenantId])                        // ← 性能要求必须有索引
+  @@map("projects")
+}
+```
+
+<Warning>
+永远不要在大型表上省略 `@@index([tenantId])`。没有索引，PostgreSQL 会在每次 RLS 策略检查时执行全表扫描，随着数据增长，查询性能会显著下降。
+</Warning>
+
+## 为管理操作绕过 RLS
+
+某些操作 — 例如跨租户分析、计费任务或管理员控制台 — 需要查询所有租户。为这些操作使用具有 `BYPASSRLS` 权限的单独数据库角色，而不是应用程序服务角色。
+
+```typescript packages/db/src/admin.ts
+// 管理员客户端 — 完全绕过 RLS
+// 仅用于内部后台任务和管理工具
+export const adminDb = new PrismaClient({
+  datasources: {
+    db: { url: process.env.DATABASE_ADMIN_URL },
+  },
+});
+```
+
+<Warning>
+永远不要通过面向用户的 API 路由暴露 `adminDb` 客户端。它绕过所有租户隔离。将其限制在后台工作器、定时任务和内部管理工具中。
+</Warning>
+
+## 性能：`tenantId` 上的索引
+
+RLS 策略为每个查询添加 `tenant_id` 过滤。为使其快速执行，PostgreSQL 需要该列上的索引。始终在 Prisma 架构中添加 `@@index([tenantId])`，这会生成：
+
+```sql
+CREATE INDEX "projects_tenant_id_idx" ON "projects"("tenant_id");
+```
+
+对于几乎总是同时按 `tenantId` 和另一列（例如 `status`）查询的表，使用复合索引：
+
+```prisma
+@@index([tenantId, status])
+```
+
+## 验证 RLS 是否已激活
+
+要确认表已启用 RLS 并应用了策略，在数据库中运行此查询：
+
+```sql
+-- 检查所有租户作用域表的 RLS 状态
+SELECT
+  tablename,
+  rowsecurity AS rls_enabled,
+  forcerowsecurity AS rls_forced
+FROM pg_tables
+WHERE schemaname = 'public'
+ORDER BY tablename;
+
+-- 列出特定表上的所有策略
+SELECT policyname, cmd, qual, with_check
+FROM pg_policies
+WHERE tablename = 'projects';
+```
+
+<CardGroup cols={2}>
+  <Card title="使用数据库客户端" icon="code" href="/zh/database/use-client">
+    如何在服务端组件和 API 路由中使用 withRls
+  </Card>
+  <Card title="多租户" icon="building" href="/zh/concepts/tenants">
+    租户上下文、AsyncLocalStorage 和隔离策略
+  </Card>
+  <Card title="架构与迁移" icon="database" href="/zh/database/schema-migrations">
+    在迁移中添加 tenantId 列和索引
+  </Card>
+  <Card title="数据库概览" icon="layout" href="/zh/database/overview">
+    架构、模型和整体架构
+  </Card>
+</CardGroup>

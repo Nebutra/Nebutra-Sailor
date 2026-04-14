@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feature-arrow-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/feature-arrow-card-demo.tsx",
+      "content": "\"use client\";\n\nimport { FeatureArrowCard } from \"@nebutra/ui/primitives\";\nimport { Shield, Sparkles, Zap } from \"lucide-react\";\n\nexport function FeatureArrowCardDemo() {\n  return (\n    <div className=\"md:grid-cols-2 gap-6 max-w-3xl p-4 md:p-8 mx-auto grid w-full grid-cols-1\">\n      <FeatureArrowCard\n        icon={Zap}\n        title=\"Performance\"\n        subtitle=\"Lightning fast.\"\n        description=\"Built for speed from the ground up.\"\n        cardContent={\n          <div className=\"bg-blue-50 dark:bg-blue-950/30 flex h-full w-full items-center justify-center\">\n            <span className=\"text-2xl font-bold text-blue-500\">99.9%</span>\n          </div>\n        }\n        onArrowClick={() => {}}\n        className=\"rounded-xl\"\n      />\n\n      <FeatureArrowCard\n        icon={Shield}\n        title=\"Security\"\n        subtitle=\"Bank-grade protection.\"\n        description=\"Your data is safe with us always.\"\n        cardContent={\n          <div className=\"bg-emerald-50 dark:bg-emerald-950/30 flex h-full w-full items-center justify-center\">\n            <Shield className=\"size-8 text-emerald-500\" />\n          </div>\n        }\n        onArrowClick={() => {}}\n        className=\"rounded-xl\"\n      />\n\n      <FeatureArrowCard\n        icon={Sparkles}\n        title=\"AI Native\"\n        subtitle=\"Smart automation.\"\n        description=\"Let AI handle the repetitive tasks.\"\n        cardContent={\n          <div className=\"bg-purple-50 dark:bg-purple-950/30 flex h-full w-full items-center justify-center\">\n            <div className=\"gap-1 flex\">\n              <span className=\"size-2 bg-purple-500 animate-bounce rounded-full delay-75\"></span>\n              <span className=\"size-2 bg-purple-500 animate-bounce rounded-full delay-150\"></span>\n              <span className=\"size-2 bg-purple-500 animate-bounce rounded-full delay-300\"></span>\n            </div>\n          </div>\n        }\n        onArrowClick={() => {}}\n        className=\"md:col-span-2 rounded-xl\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

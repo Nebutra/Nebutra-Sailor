@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "error-message-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/error-message-demo.tsx",
+      "content": "import { ErrorMessage } from \"@nebutra/ui/primitives\";\n\nexport function ErrorMessageDemo() {\n  return (\n    <div className=\"max-w-sm px-4 py-8 relative w-full\">\n      <ErrorMessage>This email address is already in use.</ErrorMessage>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

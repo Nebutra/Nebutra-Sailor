@@ -1,0 +1,136 @@
+---
+title: Troubleshooting Overview
+description: Quick diagnostic checklist, how to read Nebutra error messages, how to increase log verbosity, and how to get help.
+---
+
+## Quick diagnostic checklist
+
+Before diving into specific errors, run through this checklist. Most issues are resolved by one of these steps.
+
+<Steps>
+  <Step title="Check infrastructure is running">
+    ```bash
+    pnpm infra:up
+    ```
+    This starts PostgreSQL 16, Redis 7, and ClickHouse 24 via Docker Compose. Without these services, database connection errors and queue failures are expected.
+  </Step>
+  <Step title="Install dependencies">
+    ```bash
+    pnpm install
+    ```
+    After cloning or pulling new commits, always reinstall. Workspace symlinks can break if packages are added or removed.
+  </Step>
+  <Step title="Check environment variables">
+    Ensure `.env.local` exists and all required variables are set. See the [Environment Variables](/configuration/environment-variables) reference. The app will print the name of any missing required variable on startup.
+  </Step>
+  <Step title="Regenerate the Prisma client">
+    ```bash
+    pnpm db:generate
+    ```
+    Run this after any change to `packages/database/prisma/schema.prisma`. A stale Prisma client causes TypeScript type errors and runtime query failures.
+  </Step>
+  <Step title="Clear the Next.js cache">
+    ```bash
+    rm -rf apps/web/.next apps/landing-page/.next
+    pnpm dev
+    ```
+    Turbopack and Webpack both maintain on-disk caches. Stale cache entries can cause module resolution errors that disappear after a clean restart.
+  </Step>
+  <Step title="Run the linter">
+    ```bash
+    pnpm lint:fix
+    ```
+    Biome auto-fixes most lint errors. If the build fails on lint, this step resolves it.
+  </Step>
+</Steps>
+
+## How to read Nebutra error messages
+
+Nebutra uses structured error messages that follow a consistent format:
+
+```
+Error: [package] Short description of the problem
+  at functionName (file.ts:line)
+
+Context:
+  variable: value
+  tenantId: org_xxx
+```
+
+The `[package]` prefix tells you which package threw the error. Common prefixes:
+
+| Prefix | Package | What it means |
+|--------|---------|---------------|
+| `[config]` | `@nebutra/config` | Missing or invalid environment variable |
+| `[tenant]` | `@nebutra/tenant` | Tenant context not initialised |
+| `[queue]` | `@nebutra/queue` | Message queue connection or handler error |
+| `[search]` | `@nebutra/search` | Search provider connection error |
+| `[vault]` | `@nebutra/vault` | Encryption key misconfiguration |
+
+## Increasing log verbosity
+
+Set the `LOG_LEVEL` environment variable to see more detail:
+
+```bash .env.local
+LOG_LEVEL=debug
+```
+
+Valid levels (least to most verbose): `error` → `warn` → `info` → `debug`.
+
+The default level is `info` in development and `warn` in production. Debug output includes:
+- All outgoing HTTP requests from the API gateway
+- Queue job enqueue and dequeue events
+- Tenant context resolution steps
+- Config validation details
+
+<Warning>
+  Do not use `LOG_LEVEL=debug` in production. Debug output contains internal request details that should not appear in production logs.
+</Warning>
+
+## Getting help
+
+<AccordionGroup>
+  <Accordion title="Discord community">
+    Join the Nebutra Discord server for real-time help from the core team and community members. Use the `#support` channel for questions and the `#bugs` channel for confirmed issues.
+
+    [Join the Nebutra Discord →](https://discord.gg/nebutra)
+  </Accordion>
+  <Accordion title="GitHub Issues">
+    For reproducible bugs, open an issue at `github.com/nebutra/nebutra-sailor`. Use the bug report template and include the information from the section below.
+  </Accordion>
+  <Accordion title="Paid support">
+    Enterprise plan customers have access to dedicated support with an SLA. Contact `support@nebutra.com` with your organisation ID.
+  </Accordion>
+</AccordionGroup>
+
+## How to submit a good bug report
+
+A useful bug report includes the following:
+
+1. **The exact error message** — copy the full stack trace, not a paraphrase.
+2. **Reproduction steps** — the minimum sequence of actions that triggers the error.
+3. **Environment** — Node.js version, pnpm version, OS, and which app (`web`, `api-gateway`, etc.).
+4. **What you expected** vs **what actually happened**.
+5. **What you already tried** from the checklist above.
+
+```bash
+# Collect environment info quickly
+node --version && pnpm --version && uname -a
+```
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Common Errors" icon="triangle-exclamation" href="/troubleshooting/common-errors">
+    Detailed solutions for the 12 most frequently encountered errors.
+  </Card>
+  <Card title="Environment Variables" icon="key" href="/configuration/environment-variables">
+    Reference for all environment variables — check this first for config errors.
+  </Card>
+  <Card title="Development Setup" icon="laptop-code" href="/development/overview">
+    Full local development setup guide.
+  </Card>
+  <Card title="Deployment" icon="rocket" href="/deployment/overview">
+    Troubleshooting production deployment issues.
+  </Card>
+</CardGroup>

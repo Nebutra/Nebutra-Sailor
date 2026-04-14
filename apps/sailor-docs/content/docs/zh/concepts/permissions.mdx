@@ -1,0 +1,91 @@
+---
+title: 权限与 RBAC
+description: Nebutra 的基于角色的访问控制模型——4 个角色、17 个类型化权限范围及如何强制执行。
+---
+
+## 概述
+
+Nebutra 开箱即用地提供生产就绪的 RBAC（基于角色的访问控制）系统，包括：
+
+- **4 个内置角色**：`OWNER`、`ADMIN`、`MEMBER`、`VIEWER`
+- **跨资源的 17 个类型化权限范围**
+- **通过 CASL 在进程内强制执行**（亚毫秒级）
+- **通过 OpenFGA 进行 Zanzibar 级强制执行**（可选）
+- **通过 `<Can>` 组件进行 React UI 门控**
+
+## 角色
+
+| 角色 | 描述 |
+|------|------|
+| `OWNER` | 完全控制——计费、删除、所有权限范围 |
+| `ADMIN` | 管理团队、设置、API 密钥——除组织删除外的所有权限 |
+| `MEMBER` | 核心产品访问——创建、读取、更新 |
+| `VIEWER` | 只读访问 |
+
+## 权限范围参考
+
+| 权限范围 | 描述 | OWNER | ADMIN | MEMBER | VIEWER |
+|---------|------|-------|-------|--------|--------|
+| `org:read` | 读取组织详情 | ✓ | ✓ | ✓ | ✓ |
+| `org:update` | 更新组织设置 | ✓ | ✓ | — | — |
+| `org:delete` | 删除组织 | ✓ | — | — | — |
+| `member:read` | 列出组织成员 | ✓ | ✓ | ✓ | ✓ |
+| `member:invite` | 邀请新成员 | ✓ | ✓ | — | — |
+| `member:remove` | 移除成员 | ✓ | ✓ | — | — |
+| `member:update_role` | 更改成员角色 | ✓ | ✓ | — | — |
+| `api_key:create` | 创建 API 密钥 | ✓ | ✓ | — | — |
+| `api_key:read` | 列出 API 密钥（脱敏） | ✓ | ✓ | ✓ | — |
+| `api_key:delete` | 撤销 API 密钥 | ✓ | ✓ | — | — |
+| `project:create` | 创建新项目 | ✓ | ✓ | ✓ | — |
+| `project:read` | 读取项目数据 | ✓ | ✓ | ✓ | ✓ |
+| `project:update` | 更新项目设置 | ✓ | ✓ | ✓ | — |
+| `project:delete` | 删除项目 | ✓ | ✓ | — | — |
+| `billing:read` | 查看计费信息 | ✓ | ✓ | — | — |
+| `billing:update` | 更改套餐/付款方式 | ✓ | — | — | — |
+| `audit_log:read` | 查看审计日志 | ✓ | ✓ | — | — |
+
+## 强制执行权限
+
+### API 网关（Hono 中间件）
+
+```typescript
+import { requirePermission } from "@nebutra/permissions";
+
+app.delete("/api/projects/:id", requirePermission("project:delete"), handler);
+```
+
+### Server Actions（Next.js）
+
+```typescript
+"use server";
+import { requirePermission } from "@nebutra/permissions/next";
+
+export async function deleteProject(projectId: string) {
+  await requirePermission("project:delete"); // 未授权时抛出异常
+}
+```
+
+### React UI 门控
+
+```tsx
+import { Can } from "@nebutra/permissions/react";
+
+<Can action="delete" resource="Project">
+  <DeleteButton />
+</Can>
+
+<Can action="billing:update" fallback={<UpgradePrompt />}>
+  <BillingSettings />
+</Can>
+```
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="认证指南" icon="shield-check" href="/zh/guides/authentication">
+    Auth 令牌如何携带权限范围信息。
+  </Card>
+  <Card title="多租户" icon="building" href="/zh/concepts/tenants">
+    租户成员关系如何映射到角色。
+  </Card>
+</CardGroup>

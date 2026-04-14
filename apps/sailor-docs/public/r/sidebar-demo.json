@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/sidebar-demo.tsx",
+      "content": "\"use client\";\n\nimport { Building2, Home, Settings, Users } from \"lucide-react\";\n\nexport function SidebarDemo() {\n  return (\n    <div className=\"flex h-[400px] w-full overflow-hidden rounded-xl border bg-background\">\n      {/* Mock Sidebar */}\n      <div className=\"w-64 flex h-full flex-col border-r bg-muted/30\">\n        <div className=\"p-4 gap-2 flex items-center border-b\">\n          <div className=\"w-6 h-6 rounded font-bold text-xs flex items-center justify-center bg-primary text-primary-foreground\">\n            N\n          </div>\n          <span className=\"font-semibold text-sm\">Nebutra App</span>\n        </div>\n\n        <div className=\"p-3 space-y-1 flex-1\">\n          <button\n            type=\"button\"\n            className=\"gap-3 px-3 py-2 text-sm font-medium flex w-full items-center rounded-md bg-secondary text-secondary-foreground\"\n          >\n            <Home className=\"w-4 h-4\" />\n            Dashboard\n          </button>\n          <button\n            type=\"button\"\n            className=\"gap-3 px-3 py-2 text-sm font-medium flex w-full items-center rounded-md text-muted-foreground transition-colors hover:bg-muted\"\n          >\n            <Users className=\"w-4 h-4\" />\n            Team\n          </button>\n          <button\n            type=\"button\"\n            className=\"gap-3 px-3 py-2 text-sm font-medium flex w-full items-center rounded-md text-muted-foreground transition-colors hover:bg-muted\"\n          >\n            <Building2 className=\"w-4 h-4\" />\n            Projects\n          </button>\n        </div>\n\n        <div className=\"p-3 border-t\">\n          <button\n            type=\"button\"\n            className=\"gap-3 px-3 py-2 text-sm font-medium flex w-full items-center rounded-md text-muted-foreground transition-colors hover:bg-muted\"\n          >\n            <Settings className=\"w-4 h-4\" />\n            Settings\n          </button>\n        </div>\n      </div>\n\n      {/* Main Content Area */}\n      <div className=\"p-6 flex-1 bg-muted/10\">\n        <div className=\"h-8 w-48 mb-6 animate-pulse rounded-md bg-muted\" />\n        <div className=\"gap-4 mb-6 grid grid-cols-3\">\n          <div className=\"h-24 rounded-lg border bg-card shadow-sm\" />\n          <div className=\"h-24 rounded-lg border bg-card shadow-sm\" />\n          <div className=\"h-24 rounded-lg border bg-card shadow-sm\" />\n        </div>\n        <div className=\"h-48 animate-pulse w-full rounded-lg border bg-card shadow-sm\" />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

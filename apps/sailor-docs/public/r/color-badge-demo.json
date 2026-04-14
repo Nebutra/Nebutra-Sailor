@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "color-badge-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/color-badge-demo.tsx",
+      "content": "import { ColorBadge } from \"@nebutra/ui/primitives\";\nimport { AlertTriangle, CheckCircle2, Info, Shield, XCircle, Zap } from \"lucide-react\";\n\nexport function ColorBadgeDemo() {\n  return (\n    <div className=\"gap-8 max-w-2xl p-6 mx-auto flex min-h-[400px] w-full flex-col items-center justify-center\">\n      <div className=\"gap-4 flex flex-col items-center\">\n        <h3 className=\"text-sm font-medium mb-2 text-muted-foreground\">Standard Variants</h3>\n        <div className=\"gap-3 flex flex-wrap items-center justify-center\">\n          <ColorBadge variant=\"gray\">Draft</ColorBadge>\n          <ColorBadge variant=\"blue\">In Progress</ColorBadge>\n          <ColorBadge variant=\"purple\">Review</ColorBadge>\n          <ColorBadge variant=\"amber\">Pending</ColorBadge>\n          <ColorBadge variant=\"green\">Shipped</ColorBadge>\n          <ColorBadge variant=\"red\">Failed</ColorBadge>\n          <ColorBadge variant=\"pink\">Marketing</ColorBadge>\n          <ColorBadge variant=\"teal\">Engineering</ColorBadge>\n        </div>\n      </div>\n\n      <div className=\"gap-4 flex flex-col items-center\">\n        <h3 className=\"text-sm font-medium mb-2 text-muted-foreground\">Subtle Variants</h3>\n        <div className=\"gap-3 flex flex-wrap items-center justify-center\">\n          <ColorBadge variant=\"gray-subtle\">Archived</ColorBadge>\n          <ColorBadge variant=\"blue-subtle\">Info</ColorBadge>\n          <ColorBadge variant=\"purple-subtle\">Design</ColorBadge>\n          <ColorBadge variant=\"amber-subtle\">Warning</ColorBadge>\n          <ColorBadge variant=\"green-subtle\">Success</ColorBadge>\n          <ColorBadge variant=\"red-subtle\">Error</ColorBadge>\n          <ColorBadge variant=\"pink-subtle\">Brand</ColorBadge>\n          <ColorBadge variant=\"teal-subtle\">Data</ColorBadge>\n        </div>\n      </div>\n\n      <div className=\"gap-4 flex flex-col items-center\">\n        <h3 className=\"text-sm font-medium mb-2 text-muted-foreground\">\n          With Icons & Special Variants\n        </h3>\n        <div className=\"gap-3 flex flex-wrap items-center justify-center\">\n          <ColorBadge variant=\"green\" icon={<CheckCircle2 />}>\n            Healthy\n          </ColorBadge>\n          <ColorBadge variant=\"amber-subtle\" icon={<AlertTriangle />}>\n            Degraded\n          </ColorBadge>\n          <ColorBadge variant=\"red\" icon={<XCircle />}>\n            Outage\n          </ColorBadge>\n          <ColorBadge variant=\"blue-subtle\" icon={<Info />}>\n            Maintenance\n          </ColorBadge>\n          <ColorBadge variant=\"purple\" icon={<Shield />}>\n            Protected\n          </ColorBadge>\n          <ColorBadge variant=\"turbo\" icon={<Zap />}>\n            v2.0 Beta\n          </ColorBadge>\n          <ColorBadge variant=\"trial\">14 days left</ColorBadge>\n        </div>\n      </div>\n\n      <div className=\"gap-4 flex flex-col items-center\">\n        <h3 className=\"text-sm font-medium mb-2 text-muted-foreground\">Sizes</h3>\n        <div className=\"gap-4 flex items-center justify-center\">\n          <ColorBadge variant=\"blue\" size=\"sm\">\n            Small\n          </ColorBadge>\n          <ColorBadge variant=\"blue\" size=\"md\">\n            Medium\n          </ColorBadge>\n          <ColorBadge variant=\"blue\" size=\"lg\">\n            Large\n          </ColorBadge>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

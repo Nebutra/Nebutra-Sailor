@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "combobox-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/combobox-demo.tsx",
+      "content": "\"use client\";\n\nimport { Combobox } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nconst frameworks = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n];\n\nexport function ComboboxDemo() {\n  const [value, setValue] = useState(\"\");\n\n  return (\n    <Combobox\n      options={frameworks}\n      value={value}\n      onChange={setValue}\n      placeholder=\"Select framework...\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

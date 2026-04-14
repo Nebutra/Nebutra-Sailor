@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-variants-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/badge-variants-demo.tsx",
+      "content": "import { Badge } from \"@nebutra/ui/primitives\";\n\nexport function BadgeVariantsDemo() {\n  return (\n    <div className=\"gap-4 flex flex-wrap\">\n      <Badge variant=\"gray\">gray</Badge>\n      <Badge variant=\"blue\">blue</Badge>\n      <Badge variant=\"purple\">purple</Badge>\n      <Badge variant=\"amber\">amber</Badge>\n      <Badge variant=\"red\">red</Badge>\n      <Badge variant=\"pink\">pink</Badge>\n      <Badge variant=\"green\">green</Badge>\n      <Badge variant=\"teal\">teal</Badge>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

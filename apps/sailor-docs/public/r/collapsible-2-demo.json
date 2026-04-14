@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "collapsible-2-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/collapsible-2-demo.tsx",
+      "content": "\"use client\";\n\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@nebutra/ui/primitives\";\nimport { ChevronDown } from \"lucide-react\";\n\nexport function Collapsible2Demo() {\n  return (\n    <Collapsible className=\"w-80 p-4 rounded-md border bg-background shadow-sm\">\n      <CollapsibleTrigger className=\"font-medium flex w-full items-center justify-between\">\n        Advanced Options\n        <ChevronDown className=\"h-4 w-4\" />\n      </CollapsibleTrigger>\n      <CollapsibleContent>\n        <div className=\"space-y-2 pt-4\">\n          <p className=\"text-sm text-muted-foreground\">Advanced configuration here.</p>\n          <div className=\"p-3 text-xs rounded-md border bg-muted/50 font-mono text-muted-foreground\">\n            {'{ \"debug\": true, \"level\": \"verbose\" }'}\n          </div>\n        </div>\n      </CollapsibleContent>\n    </Collapsible>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

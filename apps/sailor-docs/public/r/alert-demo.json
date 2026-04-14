@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/alert-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Alert,\n  AlertContent,\n  AlertDescription,\n  AlertIcon,\n  AlertTitle,\n} from \"@nebutra/ui/primitives\";\nimport { CircleAlert, CircleCheck, Info, TriangleAlert } from \"lucide-react\";\n\nexport function AlertDemo() {\n  return (\n    <div className=\"space-y-3 max-w-2xl w-full\">\n      <Alert variant=\"success\" appearance=\"light\">\n        <AlertIcon>\n          <CircleCheck />\n        </AlertIcon>\n        <AlertContent>\n          <AlertTitle>Operation successful!</AlertTitle>\n          <AlertDescription>Your changes have been saved.</AlertDescription>\n        </AlertContent>\n      </Alert>\n\n      <Alert variant=\"destructive\" appearance=\"light\">\n        <AlertIcon>\n          <CircleAlert />\n        </AlertIcon>\n        <AlertContent>\n          <AlertTitle>Something went wrong</AlertTitle>\n          <AlertDescription>Please try again or contact support.</AlertDescription>\n        </AlertContent>\n      </Alert>\n\n      <Alert variant=\"warning\" appearance=\"light\">\n        <AlertIcon>\n          <TriangleAlert />\n        </AlertIcon>\n        <AlertTitle>Storage almost full</AlertTitle>\n      </Alert>\n\n      <Alert variant=\"info\" appearance=\"light\">\n        <AlertIcon>\n          <Info />\n        </AlertIcon>\n        <AlertTitle>New features available</AlertTitle>\n      </Alert>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

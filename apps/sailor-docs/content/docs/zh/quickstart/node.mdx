@@ -1,0 +1,69 @@
+---
+title: Node.js 快速开始
+description: 在 Node.js 后端或 Serverless 函数中使用 Nebutra SDK，5 分钟内完成集成。
+---
+
+## 前提条件
+
+- Node.js 22+
+- 拥有 [OPC 许可证](https://nebutra.com/en/get-license) 的 Nebutra 账户（免费）
+
+## 安装与初始化
+
+```bash
+npm install @nebutra/sdk
+```
+
+```bash .env
+NEBUTRA_API_KEY=nbk_live_xxxxxxxxxxxxxxxxxxxx
+NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
+```
+
+```typescript src/lib/nebutra.ts
+import { createClient } from "@nebutra/sdk";
+
+export const nebutra = createClient({
+  apiKey: process.env.NEBUTRA_API_KEY!,
+  orgId: process.env.NEBUTRA_ORG_ID!,
+});
+```
+
+## 验证请求令牌
+
+```typescript
+import { verifyToken } from "@nebutra/sdk/server";
+
+export async function authMiddleware(req: Request) {
+  const token = req.headers.get("authorization")?.replace("Bearer ", "");
+  if (!token) throw new Error("未授权");
+
+  const { userId, orgId, scopes } = await verifyToken(token, {
+    apiKey: process.env.NEBUTRA_API_KEY!,
+  });
+
+  return { userId, orgId, scopes };
+}
+```
+
+## 检查权限
+
+```typescript
+const allowed = await nebutra.permissions.check({
+  userId,
+  action: "delete",
+  resource: "Project",
+});
+
+if (!allowed) throw new Error("权限不足");
+```
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="JavaScript SDK 参考" icon="js" href="/zh/sdks/javascript">
+    完整的 SDK 方法参考。
+  </Card>
+  <Card title="API 参考" icon="code" href="/zh/api-reference/overview">
+    完整的 REST API 文档。
+  </Card>
+</CardGroup>

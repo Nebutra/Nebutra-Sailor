@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "book-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/book-demo.tsx",
+      "content": "import { Book } from \"@nebutra/ui/primitives\";\n\nexport function BookDemo() {\n  return (\n    <div className=\"md:flex-row gap-12 p-8 flex w-full flex-col items-center justify-center\">\n      {/* 3D Book with Texture */}\n      <Book\n        title=\"Frontend Engineering\"\n        color=\"#3b82f6\"\n        textColor=\"#ffffff\"\n        textured={true}\n        width={{ sm: 140, md: 180 }}\n      />\n\n      {/* Simple Flat Book */}\n      <Book\n        title=\"CSS Mastery\"\n        color=\"#10b981\" /* emerald-500 */\n        textColor=\"#ffffff\"\n        variant=\"simple\"\n        width={{ sm: 140, md: 180 }}\n      />\n\n      {/* Book with Illustration */}\n      <Book\n        title=\"Design Systems\"\n        color=\"#f97316\" /* orange-500 */\n        textColor=\"#ffffff\"\n        textured={true}\n        illustration={\n          <div className=\"from-orange-400 to-red-500 flex h-full w-full items-center justify-center bg-gradient-to-br\">\n            <div className=\"w-16 h-16 border-white/30 border-t-white animate-spin rounded-full border-4\" />\n          </div>\n        }\n        width={{ sm: 140, md: 180 }}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

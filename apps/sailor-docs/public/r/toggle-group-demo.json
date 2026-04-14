@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-group-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/toggle-group-demo.tsx",
+      "content": "\"use client\";\n\nimport { ToggleGroup, ToggleGroupItem } from \"@nebutra/ui/primitives\";\nimport { AlignCenter, AlignLeft, AlignRight } from \"lucide-react\";\n\nexport function ToggleGroupDemo() {\n  return (\n    <ToggleGroup type=\"single\" defaultValue=\"center\">\n      <ToggleGroupItem value=\"left\" aria-label=\"Align left\">\n        <AlignLeft className=\"size-4\" />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"center\" aria-label=\"Align center\">\n        <AlignCenter className=\"size-4\" />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"right\" aria-label=\"Align right\">\n        <AlignRight className=\"size-4\" />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

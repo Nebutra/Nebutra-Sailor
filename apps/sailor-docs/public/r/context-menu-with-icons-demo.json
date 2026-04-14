@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-menu-with-icons-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/context-menu-with-icons-demo.tsx",
+      "content": "\"use client\";\n\nimport { ContextMenu } from \"@nebutra/ui/primitives\";\nimport { Copy, Edit2, Trash2 } from \"lucide-react\";\n\nexport function ContextMenuWithIconsDemo() {\n  return (\n    <ContextMenu.Root>\n      <ContextMenu.Trigger asChild>\n        <div className=\"text-sm flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed\">\n          Right-click here\n        </div>\n      </ContextMenu.Trigger>\n      <ContextMenu.Content>\n        <ContextMenu.Item onSelect={() => {}}>\n          <Edit2 className=\"mr-2 h-4 w-4\" />\n          Edit\n        </ContextMenu.Item>\n        <ContextMenu.Item onSelect={() => {}}>\n          <Copy className=\"mr-2 h-4 w-4\" />\n          Copy\n        </ContextMenu.Item>\n        <ContextMenu.Separator />\n        <ContextMenu.Item onSelect={() => {}}>\n          <Trash2 className=\"mr-2 h-4 w-4\" />\n          Delete\n        </ContextMenu.Item>\n      </ContextMenu.Content>\n    </ContextMenu.Root>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

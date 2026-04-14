@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-state-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/empty-state-demo.tsx",
+      "content": "import { EmptyState } from \"@nebutra/ui/primitives\";\nimport { Activity } from \"lucide-react\";\n\nexport function EmptyStateDemo() {\n  return (\n    <div className=\"max-w-md p-8 my-8 mx-auto w-full rounded-xl border bg-background\">\n      <EmptyState.Root\n        icon={<EmptyState.Icon icon={<Activity size={20} />} />}\n        title=\"Title\"\n        description=\"A message conveying the state of the product.\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

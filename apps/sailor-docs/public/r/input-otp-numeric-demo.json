@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-otp-numeric-demo",
+  "type": "registry:example",
+  "files": [
+    {
+      "path": "registry/examples/input-otp-numeric-demo.tsx",
+      "content": "\"use client\";\n\nexport function InputOTPNumericDemo() {\n  return null;\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

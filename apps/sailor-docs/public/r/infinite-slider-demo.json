@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "infinite-slider-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/infinite-slider-demo.tsx",
+      "content": "\"use client\";\n\nimport { InfiniteSlider } from \"@nebutra/ui/primitives\";\nimport { Cloud, Code, Cpu, Database, Lock, Network, Shield, Zap } from \"lucide-react\";\n\nexport function InfiniteSliderDemo() {\n  const icons = [\n    { icon: <Cpu className=\"size-8\" />, label: \"Compute\" },\n    { icon: <Cloud className=\"size-8\" />, label: \"Storage\" },\n    { icon: <Database className=\"size-8\" />, label: \"Database\" },\n    { icon: <Network className=\"size-8\" />, label: \"Network\" },\n    { icon: <Shield className=\"size-8\" />, label: \"Security\" },\n    { icon: <Zap className=\"size-8\" />, label: \"Serverless\" },\n    { icon: <Lock className=\"size-8\" />, label: \"IAM\" },\n    { icon: <Code className=\"size-8\" />, label: \"DevTools\" },\n  ];\n\n  return (\n    <div className=\"max-w-4xl py-12 gap-16 mx-auto flex w-full flex-col overflow-hidden\">\n      <div className=\"space-y-4\">\n        <h3 className=\"text-sm font-semibold tracking-wider mb-8 text-center text-muted-foreground uppercase\">\n          Trusted by top cloud infrastructure providers\n        </h3>\n\n        {/* Fast right-to-left */}\n        <InfiniteSlider gap={24} speed={60}>\n          {icons.map((item, i) => (\n            <div\n              key={i}\n              className=\"gap-2 px-6 py-3 flex items-center rounded-full bg-secondary text-secondary-foreground\"\n            >\n              {item.icon}\n              <span className=\"font-medium\">{item.label}</span>\n            </div>\n          ))}\n        </InfiniteSlider>\n\n        {/* Slow left-to-right on hover */}\n        <InfiniteSlider gap={24} speed={40} speedOnHover={10} reverse className=\"mt-8\">\n          {icons.reverse().map((item, i) => (\n            <div\n              key={i}\n              className=\"w-32 h-32 flex cursor-pointer flex-col items-center justify-center rounded-2xl border bg-card text-card-foreground shadow-sm transition-colors hover:border-primary\"\n            >\n              <div className=\"mb-3 text-primary\">{item.icon}</div>\n              <span className=\"font-medium text-sm\">{item.label}</span>\n            </div>\n          ))}\n        </InfiniteSlider>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

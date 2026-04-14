@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "canvas-reveal-effect-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/canvas-reveal-effect-demo.tsx",
+      "content": "\"use client\";\n\nimport { CanvasRevealEffect } from \"@nebutra/ui/primitives\";\n\nexport function CanvasRevealEffectDemo() {\n  return (\n    <div className=\"p-4 flex w-full items-center justify-center\">\n      <div className=\"max-w-2xl h-[300px] w-full overflow-hidden rounded-xl border\">\n        <CanvasRevealEffect\n          animationSpeed={0.5}\n          colors={[\n            [59, 130, 246],\n            [139, 92, 246],\n          ]}\n          dotSize={3}\n          containerClassName=\"bg-slate-950\"\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

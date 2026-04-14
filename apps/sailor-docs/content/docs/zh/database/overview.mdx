@@ -1,0 +1,104 @@
+---
+title: 数据库概览
+description: Prisma v7 + PostgreSQL — 为每个 Nebutra 应用程序提供支持的数据层。
+---
+
+Nebutra 使用 **Prisma v7** 作为 ORM，**PostgreSQL** 作为数据库引擎。该技术栈专为多租户 SaaS 设计：共享架构、行级安全（RLS）、用于 AI 嵌入的 pgvector，以及灵活的数据库提供商（Neon 或 Supabase）。
+
+## 架构
+
+```
+┌─────────────────────────────────────┐
+│            应用程序代码              │
+│  (Next.js Server Components, API)   │
+└────────────────┬────────────────────┘
+                 │ import { db } from "@nebutra/db"
+┌────────────────▼────────────────────┐
+│           Prisma v7 客户端          │
+│       （类型安全的查询构建器）        │
+└────────────────┬────────────────────┘
+                 │ PostgreSQL 协议
+┌────────────────▼────────────────────┐
+│            连接池                   │
+│  PgBouncer (Neon) / Supavisor       │
+│  (Supabase) — 防止连接耗尽           │
+└────────────────┬────────────────────┘
+                 │
+┌────────────────▼────────────────────┐
+│         PostgreSQL 数据库           │
+│  pgvector · RLS · 多架构            │
+└─────────────────────────────────────┘
+```
+
+所有应用程序代码从 `@nebutra/db` 导入预配置的 `db` 单例。应用程序代码中不直接使用 Prisma 导入。
+
+## 架构布局
+
+Prisma 架构分布在四个 PostgreSQL 架构中，每个代表一个产品域：
+
+| PostgreSQL 架构 | 用途 | 关键模型 |
+|----------------|------|---------|
+| `public` | 核心 SaaS 平台 | `Organization`、`User`、`Subscription`、`AuditLog`、`ApiKey` |
+| `ecommerce` | 电商功能 | `Product`、`Order`、`Cart`、`Payment`、`Fulfillment` |
+| `recsys` | 推荐系统 | `Embedding`、`Interaction`、`Recommendation`、`FeatureVector` |
+| `web3` | 区块链/钱包功能 | `Wallet`、`Token`、`Transaction`、`SmartContract` |
+
+完整架构位于 `packages/db/prisma/schema.prisma`（约 1,400 行）。
+
+## 关键模型
+
+| 模型 | 架构 | 描述 |
+|------|------|------|
+| `Organization` | `public` | 租户 — 顶级计费和访问边界 |
+| `User` | `public` | 已认证身份；属于一个或多个组织 |
+| `Subscription` | `public` | 附加到组织的 Stripe 订阅 |
+| `AuditLog` | `public` | 用于合规和调试的不可变事件日志 |
+| `ApiKey` | `public` | 按组织颁发的作用域 API 凭据 |
+| `Content` | `public` | CMS 内容项（页面、文章、块） |
+| `Integration` | `public` | 每个组织的第三方集成配置 |
+| `Project` | `public` | 组织内的工作区 |
+
+## pgvector
+
+每个 Nebutra 数据库都启用了 PostgreSQL 的 `pgvector` 扩展，用于支持：
+
+- **语义搜索** — 对 `recsys` 架构中的 `Embedding` 向量进行余弦相似度计算
+- **RAG 管道** — 存储在内容旁边的分块文档嵌入
+- **推荐引擎** — 通过近似最近邻（ANN）查询实现协同过滤
+
+<Note>
+在运行迁移之前，必须在 PostgreSQL 实例上启用 pgvector。Neon 和 Supabase 默认启用它。自托管 PostgreSQL 需要执行 `CREATE EXTENSION vector;`。
+</Note>
+
+## 命令参考
+
+| 命令 | 使用时机 |
+|------|---------|
+| `pnpm db:generate` | 编辑 `schema.prisma` 后 — 重新生成 Prisma 客户端 |
+| `pnpm db:migrate` | 创建并应用新迁移（开发和 CI/CD） |
+| `pnpm db:push` | 不生成迁移文件直接推送架构变更（仅限本地原型开发） |
+| `pnpm db:studio` | 在 `http://localhost:5555` 打开 Prisma Studio |
+| `pnpm db:seed` | 用开发种子数据填充数据库 |
+
+<Warning>
+永远不要对生产或预发布数据库运行 `pnpm db:push`。它在没有迁移历史记录的情况下应用架构变更，可能导致不可逆的数据丢失。
+</Warning>
+
+## 多租户
+
+`public` 架构中存储租户特定数据的每个表都有一个 `tenantId` 列。查询通过 `@nebutra/tenant` 的 `withRls` 助手使用 PostgreSQL 行级安全（RLS）自动限定范围。详情请参阅 [RLS 指南](/zh/database/rls)。
+
+<CardGroup cols={2}>
+  <Card title="使用数据库客户端" icon="code" href="/zh/database/use-client">
+    如何从服务端组件和 API 路由查询数据库
+  </Card>
+  <Card title="架构与迁移" icon="database" href="/zh/database/schema-migrations">
+    编辑 Prisma 架构并安全运行迁移
+  </Card>
+  <Card title="行级安全" icon="shield" href="/zh/database/rls">
+    RLS 如何在数据库级别强制租户隔离
+  </Card>
+  <Card title="数据库提供商" icon="server" href="/zh/database/providers">
+    Neon 与 Supabase — 连接字符串、连接池和设置
+  </Card>
+</CardGroup>

@@ -1,0 +1,107 @@
+---
+title: JavaScript / TypeScript SDK
+description: 官方 @nebutra/sdk 参考——安装、初始化和完整方法参考。
+---
+
+## 安装
+
+```bash
+npm install @nebutra/sdk
+# 或
+pnpm add @nebutra/sdk
+```
+
+## 初始化客户端
+
+```typescript
+import { createClient } from "@nebutra/sdk";
+
+const nebutra = createClient({
+  apiKey: process.env.NEBUTRA_API_KEY!,
+  orgId: process.env.NEBUTRA_ORG_ID!,
+  retry: { maxAttempts: 3, backoff: "exponential" },
+});
+```
+
+## 认证
+
+```typescript
+import { verifyToken } from "@nebutra/sdk/server";
+
+// 验证 JWT 令牌
+const payload = await verifyToken(bearerToken, {
+  apiKey: process.env.NEBUTRA_API_KEY!,
+});
+// payload.userId, payload.orgId, payload.scopes, payload.plan
+```
+
+## 组织
+
+```typescript
+const org = await nebutra.orgs.get(orgId);
+await nebutra.orgs.update(orgId, { name: "新名称" });
+
+const members = await nebutra.members.list({ orgId });
+await nebutra.members.invite({ orgId, email: "alice@example.com", role: "MEMBER" });
+await nebutra.members.remove({ orgId, userId });
+```
+
+## 项目
+
+```typescript
+const { data, meta } = await nebutra.projects.list({ limit: 20 });
+const project = await nebutra.projects.get("proj_123");
+const project = await nebutra.projects.create({ name: "我的项目" });
+await nebutra.projects.update("proj_123", { name: "新名称" });
+await nebutra.projects.delete("proj_123");
+```
+
+## 权限
+
+```typescript
+import { can, requirePermission } from "@nebutra/sdk/permissions";
+
+const allowed = await can(userId, "project:delete", { orgId });
+await requirePermission("project:delete"); // 权限不足时抛出 403
+```
+
+## 计量与配额
+
+```typescript
+const quota = await nebutra.metering.getQuota("api_calls");
+// { limit, used, remaining, percentage, reset_at }
+
+await nebutra.metering.ingest({ metricId: "api_calls", tenantId: orgId, quantity: 1 });
+```
+
+## 错误处理
+
+```typescript
+import { NebutraError, NotFoundError, ValidationError, RateLimitError } from "@nebutra/sdk";
+
+try {
+  await nebutra.projects.get("proj_123");
+} catch (error) {
+  if (error instanceof NotFoundError) { return notFound(); }
+  if (error instanceof ValidationError) { return { errors: error.fields }; }
+  if (error instanceof RateLimitError) { await sleep(error.retryAfter * 1000); }
+  if (error instanceof NebutraError) {
+    console.error(`[${error.code}] ${error.requestId}`);
+    throw error;
+  }
+}
+```
+
+## React Hooks
+
+安装 `@nebutra/react`：
+
+```bash
+npm install @nebutra/react
+```
+
+```typescript
+import { useNebutraUser, useNebutraOrg, Can, NebutraProvider } from "@nebutra/react";
+```
+
+详见 [React 快速开始](/zh/quickstart/react)。

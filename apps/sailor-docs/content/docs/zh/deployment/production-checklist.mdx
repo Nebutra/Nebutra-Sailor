@@ -1,0 +1,190 @@
+---
+title: 生产检查清单
+description: Nebutra-Sailor 正式上线前需要验证的所有内容 — 基础设施、安全、合规、监控和性能。
+---
+
+## 如何使用此检查清单
+
+在首次正式上线前以及每次主要版本发布前，逐一完成每个章节。标记为关键的项目必须在上线前解决。
+
+---
+
+## 基础设施
+
+**所有环境变量已配置并通过验证**
+
+所有必填环境变量必须在您的部署目标中设置（Vercel 控制台、Docker Compose 环境变量文件或密钥管理器）。`@nebutra/config` 在启动时验证它们，如果有任何变量缺失，会以描述性错误崩溃。
+
+**已对生产数据库执行数据库迁移**
+
+在部署新版本应用之前，运行 `pnpm db:migrate`（或 `DATABASE_URL=<prod> pnpm db:migrate`）。
+
+```bash
+DATABASE_URL=<your-production-db-url> pnpm db:migrate
+```
+
+**已配置 PostgreSQL 备份策略**
+
+启用至少保留 7 天的自动每日备份。验证测试恢复是否正常工作。如果使用 Supabase 或 Neon，请启用时间点恢复（PITR）。
+
+**已配置 Redis 持久化**
+
+如果将 Redis 用于 BullMQ 队列，请启用 AOF（追加写文件）持久化。没有持久化的话，重启时正在处理中的任务将丢失。
+
+---
+
+## 支付
+
+**Stripe Webhook 已配置并验证**
+
+在 Stripe 控制台中，创建指向 `https://api.yourdomain.com/api/v1/webhooks/stripe` 的 Webhook 端点。将 Webhook 签名密钥设置为 `STRIPE_WEBHOOK_SECRET`。使用 `stripe listen --forward-to` 在测试环境中验证分发。
+
+**已启用必要的 Stripe 事件**
+
+确保在 Webhook 端点上选中以下事件：
+- `customer.subscription.created`
+- `customer.subscription.updated`
+- `customer.subscription.deleted`
+- `invoice.payment_succeeded`
+- `invoice.payment_failed`
+- `checkout.session.completed`
+
+---
+
+## 认证
+
+**Clerk Webhook 端点已配置**
+
+在 Clerk 控制台中，创建指向 `https://api.yourdomain.com/api/v1/webhooks/clerk` 的 Webhook。将签名密钥设置为 `CLERK_WEBHOOK_SECRET`。必需事件：`user.created`、`user.deleted`、`organization.created`、`organizationMembership.created`。
+
+---
+
+## 网络
+
+**自定义域名已配置**
+
+每个应用（`web`、`landing-page`、`api-gateway`）都必须在 Vercel 项目（或反向代理）中添加自定义域名，并且 DNS 记录应指向正确的源站。
+
+**SSL/TLS 已激活**
+
+确认所有域名强制使用 HTTPS。在 Vercel 上这是自动的。在 Docker 自托管环境中，验证您的反向代理（Caddy / nginx + certbot）是否正确终止 TLS。
+
+**已配置 HTTPS 重定向**
+
+所有 HTTP 流量应以 301 重定向到 HTTPS。使用以下方式验证：
+
+```bash
+curl -I http://yourdomain.com
+# 期望返回：HTTP/1.1 301 Moved Permanently
+# Location: https://yourdomain.com
+```
+
+---
+
+## 安全
+
+**限流在负载下已测试**
+
+API 网关通过 Redis 对每个租户强制执行限流。验证各计划层级的限制是否合理，并确保前端能优雅处理 `429 Too Many Requests` 响应。
+
+**安全扫描已通过**
+
+`security-scan.yml` GitHub Actions 工作流运行 CodeQL 静态分析和依赖漏洞扫描。确认 `main` 上的最新扫描通过，没有严重发现。
+
+**没有密钥提交到源代码控制**
+
+上线前运行密钥扫描：
+
+```bash
+git log --all --diff-filter=A -- '*.env*'   # 检查是否有已提交的 .env 文件
+```
+
+使用 `trufflehog` 或 GitHub 的密钥扫描功能进行全面审计。
+
+---
+
+## 可观测性
+
+**Sentry 错误追踪已配置**
+
+在所有应用环境中设置 `NEXT_PUBLIC_SENTRY_DSN` 和 `SENTRY_AUTH_TOKEN`。验证测试错误是否出现在您的 Sentry 项目中。
+
+**监控告警已配置**
+
+为以下地址设置正常运行时间监控（例如 Better Uptime、Checkly）：
+- `https://yourdomain.com`（营销网站）
+- `https://app.yourdomain.com`（Web 应用）
+- `https://api.yourdomain.com/health`（API 网关）
+
+当 HTTP 5xx 错误率超过 1% 或 P95 响应时间超过 2 秒时发出告警。
+
+**已验证结构化日志**
+
+确认 `@nebutra/logger` 的输出正在流向您的日志聚合器（Axiom、Datadog、CloudWatch）。检查 API 日志中是否存在 `tenant_id` 和 `request_id` 字段。
+
+---
+
+## 分析与合规
+
+**分析服务已配置**
+
+`@nebutra/analytics`（由 Dub.co 驱动）需要以下环境变量：
+
+| 变量 | 必填 | 说明 |
+|------|------|------|
+| `DUB_API_KEY` | 是 | 在 [app.dub.co/settings/tokens](https://app.dub.co/settings/tokens) 获取 |
+| `DUB_WORKSPACE_ID` | 建议填写 | 你的 Dub.co 工作区 ID（避免每次请求额外查询） |
+| `DUB_DEFAULT_DOMAIN` | 否 | 默认短链接域名，默认为 `dub.sh` |
+
+通过调用测试脚本中的 `analytics.getWorkspaceStats()` 来验证配置是否正确。
+
+**GDPR / 隐私政策已上线**
+
+在接受来自欧盟居民的用户数据之前，隐私政策必须在 `/privacy`（或链接的 URL）公开访问。
+
+**服务条款已上线**
+
+在处理付款之前，服务条款必须在 `/terms` 可访问。
+
+**Cookie 同意已配置**
+
+如果您在欧盟使用分析或广告 Cookie 追踪用户，则需要 Cookie 同意横幅。验证它是否对欧盟地区的用户显示。
+
+---
+
+## 性能
+
+**已通过 Lighthouse 性能测试**
+
+对您的生产域名运行 Lighthouse，目标分数：
+- 性能：90+
+- 无障碍：95+
+- 最佳实践：100
+- SEO：100
+
+```bash
+npx lighthouse https://yourdomain.com --view
+```
+
+**Core Web Vitals 通过**
+
+在 Google Search Console 或 Vercel Analytics 中验证，确保第一周实际用户数据的 LCP、FID 和 CLS 处于"良好"范围内。
+
+---
+
+## 最终确认
+
+<Warning>
+  在**基础设施**、**支付**、**认证**和**网络**章节的所有项目完成之前，请勿上线。其余章节应在上线后第一周内完成。
+</Warning>
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="Vercel 部署" icon="triangle" href="/zh/deployment/vercel">
+    分步骤部署到 Vercel。
+  </Card>
+  <Card title="Docker 部署" icon="docker" href="/zh/deployment/docker">
+    使用 Docker Compose 的自托管部署。
+  </Card>
+</CardGroup>

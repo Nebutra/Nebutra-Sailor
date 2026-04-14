@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group-billing-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/radio-group-billing-demo.tsx",
+      "content": "\"use client\";\n\nimport { Label, RadioGroup, RadioGroupItem } from \"@nebutra/ui/primitives\";\n\nexport function RadioGroupBillingDemo() {\n  return (\n    <RadioGroup defaultValue=\"monthly\">\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"monthly\" id=\"monthly\" />\n        <Label htmlFor=\"monthly\">Monthly billing</Label>\n      </div>\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"annually\" id=\"annually\" />\n        <Label htmlFor=\"annually\">Annual billing (save 20%)</Label>\n      </div>\n    </RadioGroup>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

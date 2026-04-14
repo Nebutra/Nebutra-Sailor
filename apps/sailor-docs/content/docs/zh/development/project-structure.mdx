@@ -1,0 +1,150 @@
+---
+title: 项目结构
+description: Nebutra-Sailor 单体仓库的目录树注释说明 — 每个应用、包和文件命名约定的详细解释。
+---
+
+## 目录树
+
+```
+nebutra-sailor/
+├── apps/
+│   ├── landing-page/     Next.js 16 — 公开营销网站（7 种语言，端口 3002）
+│   ├── web/              Next.js 16 — 已认证的 SaaS 控制台（端口 3000）
+│   ├── api-gateway/      Hono + OpenAPI — REST API 后端（端口 3001）
+│   ├── storybook/        Storybook 8.x — 组件库文档（端口 6006）
+│   ├── design-docs/      Fumadocs — 内部设计系统文档（端口 3004）
+│   ├── studio/           Sanity Studio v5 — 内容管理系统（端口 3333）
+│   └── docs/             Mintlify — 公开产品文档（本站）
+│
+├── packages/
+│   ├── ui/               主要组件库（Radix + HeroUI + Lobe UI）
+│   ├── tokens/           运行时 CSS 设计 Token + ThemeProvider
+│   ├── icons/            541 个 Geist 图标，以可按需加载的 TSX 组件提供
+│   ├── brand/            品牌色彩、渐变和动效语言
+│   ├── theme/            纯 CSS 多主题引擎（6 个 oklch 主题）
+│   ├── preset/           基于功能的 SaaS 入门配置系统
+│   ├── db/               Prisma v7 Schema、迁移和客户端
+│   ├── identity/         认证适配器（Clerk / Better Auth）
+│   ├── billing/          Stripe 计费、Webhook 和配额门控
+│   ├── email/            事务邮件（Resend + React Email）
+│   ├── ai-sdk/           AI 服务代理辅助工具和模型路由
+│   ├── permissions/      RBAC/ABAC — CASL（进程内）+ OpenFGA
+│   ├── webhooks/         出站 Webhook 分发 — Svix + 自定义
+│   ├── metering/         使用量计量管道 — ClickHouse
+│   ├── queue/            消息队列 — QStash（无服务器）+ BullMQ
+│   ├── search/           全文检索 — Meilisearch + Typesense + Algolia
+│   ├── notifications/    多渠道通知 — Novu + 直接分发器
+│   ├── uploads/          文件上传 — S3/R2 分片 + Tus 断点续传
+│   ├── vault/            应用层密钥信封加密
+│   ├── tenant/           多租户上下文 — AsyncLocalStorage + RLS
+│   ├── analytics/        产品分析管道
+│   ├── audit/            不可变审计日志
+│   ├── logger/           结构化日志（替代 console.log）
+│   └── errors/           类型化错误层次结构和 HTTP 错误辅助工具
+│
+├── scripts/              仓库级别工具脚本（调色板生成器等）
+├── docker-compose.infra.yml  本地基础设施（PostgreSQL、Redis、ClickHouse）
+├── turbo.json            Turborepo 任务管道配置
+├── pnpm-workspace.yaml   pnpm workspace 包路径配置
+└── package.json          根脚本和开发依赖
+```
+
+## 应用详情
+
+| 应用 | 端口 | 框架 | 关键依赖 |
+|-----|------|------|---------|
+| `apps/landing-page` | 3002 | Next.js 16 + Tailwind v4 | next-intl、Sanity 客户端、@nebutra/ui |
+| `apps/web` | 3000 | Next.js 16 + Tailwind v4 | Clerk、@nebutra/billing、@nebutra/permissions |
+| `apps/api-gateway` | 3001 | Hono + TypeScript | @hono/zod-openapi、@nebutra/tenant、@nebutra/metering |
+| `apps/storybook` | 6006 | Storybook 8.x | @nebutra/ui、@nebutra/tokens、@nebutra/icons |
+| `apps/design-docs` | 3004 | Next.js 16 + Fumadocs | @nebutra/ui、@nebutra/tokens |
+| `apps/studio` | 3333 | Sanity Studio v5 | sanity、@sanity/vision |
+| `apps/docs` | — | Mintlify | — |
+
+## 包详情
+
+| 包名 | 导入路径 | 用途 |
+|-----|---------|------|
+| `@nebutra/ui` | `@nebutra/ui/components`、`@nebutra/ui/layout` | 组件库 — Radix + HeroUI + Lobe UI + 布局封装 |
+| `@nebutra/tokens` | `@nebutra/tokens` | 运行时 CSS 变量、ThemeProvider、useTheme |
+| `@nebutra/icons` | `@nebutra/icons` | 541 个 Geist 图标，以可按需加载的 TSX 组件提供 |
+| `@nebutra/db` | `@nebutra/db` | Prisma 客户端、Schema、迁移 |
+| `@nebutra/identity` | `@nebutra/identity` | 认证适配器（Clerk / Better Auth） |
+| `@nebutra/billing` | `@nebutra/billing` | Stripe 计费、计划门控、使用配额执行 |
+| `@nebutra/email` | `@nebutra/email` | 事务邮件模板和分发 |
+| `@nebutra/ai-sdk` | `@nebutra/ai-sdk` | AI 服务代理、模型路由、提供商适配器 |
+| `@nebutra/permissions` | `@nebutra/permissions` | RBAC/ABAC — CASL + OpenFGA |
+| `@nebutra/webhooks` | `@nebutra/webhooks` | 出站 Webhook 分发 |
+| `@nebutra/metering` | `@nebutra/metering` | 基于 ClickHouse 的使用量计量 |
+| `@nebutra/queue` | `@nebutra/queue` | 消息队列 — QStash + BullMQ |
+| `@nebutra/search` | `@nebutra/search` | 全文检索 |
+| `@nebutra/notifications` | `@nebutra/notifications` | 多渠道通知 |
+| `@nebutra/uploads` | `@nebutra/uploads` | 文件上传 — S3/R2 + Tus |
+| `@nebutra/vault` | `@nebutra/vault` | 应用层密钥加密 |
+| `@nebutra/tenant` | `@nebutra/tenant` | 多租户上下文传播 |
+| `@nebutra/analytics` | `@nebutra/analytics` | 产品分析管道 |
+| `@nebutra/audit` | `@nebutra/audit` | 不可变审计日志 |
+| `@nebutra/logger` | `@nebutra/logger` | 结构化日志 |
+| `@nebutra/errors` | `@nebutra/errors` | 类型化错误层次结构 |
+
+## 文件命名约定
+
+| 模式 | 示例 | 用途 |
+|------|------|------|
+| `kebab-case.tsx` | `user-avatar.tsx` | React 组件文件 |
+| `kebab-case.ts` | `format-date.ts` | 工具和辅助函数文件 |
+| `*.test.ts` | `billing.test.ts` | Vitest 单元测试文件 |
+| `*.test.tsx` | `button.test.tsx` | Vitest 组件测试文件 |
+| `*.stories.tsx` | `button.stories.tsx` | Storybook 故事文件 |
+| `*.config.ts` | `tailwind.config.ts` | 配置文件 |
+| `route.ts` | `app/api/webhooks/route.ts` | Next.js App Router API 路由 |
+| `page.tsx` | `app/dashboard/page.tsx` | Next.js App Router 页面 |
+| `layout.tsx` | `app/dashboard/layout.tsx` | Next.js App Router 布局 |
+
+## 新功能应放在哪里
+
+| 您想要... | 放置位置 |
+|-----------|---------|
+| 添加新的控制台页面 | `apps/web/src/app/(dashboard)/` |
+| 添加新的营销页面 | `apps/landing-page/src/app/[lang]/` |
+| 添加新的 API 路由 | `apps/api-gateway/src/routes/` |
+| 添加新的 UI 组件 | `packages/ui/src/components/` + `apps/storybook/` 中的故事文件 |
+| 添加新的布局封装组件 | `packages/ui/src/layout/` |
+| 添加新的设计 Token | `packages/tokens/styles.css` |
+| 添加新的邮件模板 | `packages/email/src/templates/` |
+| 添加新的 Prisma 模型 | `packages/db/prisma/schema.prisma` |
+| 添加新的后台任务类型 | `packages/queue/src/handlers/` |
+
+## Turborepo 任务管道
+
+仓库根目录的 `turbo.json` 定义了任务之间的依赖关系：
+
+```json
+{
+  "tasks": {
+    "build":     { "dependsOn": ["^build"], "outputs": [".next/**", "dist/**"] },
+    "typecheck": { "dependsOn": ["^typecheck"] },
+    "lint":      { "dependsOn": [] },
+    "test":      { "dependsOn": ["^build"] },
+    "dev":       { "cache": false, "persistent": true }
+  }
+}
+```
+
+使用 `--filter` 为单个包运行任务：
+
+```bash
+pnpm turbo run build --filter=@nebutra/ui
+pnpm turbo run typecheck --filter=apps/web
+```
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="本地开发" icon="laptop" href="/zh/development/local-dev">
+    分步骤的开发环境配置指南。
+  </Card>
+  <Card title="开发环境概览" icon="map" href="/zh/development/overview">
+    前置条件和快速开始。
+  </Card>
+</CardGroup>

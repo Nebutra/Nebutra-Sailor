@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-pill-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/tabs-pill-demo.tsx",
+      "content": "\"use client\";\n\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@nebutra/ui/primitives\";\n\nexport function TabsPillDemo() {\n  return (\n    <Tabs defaultValue=\"tab1\" className=\"w-[400px]\">\n      <TabsList shape=\"pill\" className=\"grid w-full grid-cols-2\">\n        <TabsTrigger value=\"tab1\">选项卡 1 (Tab 1)</TabsTrigger>\n        <TabsTrigger value=\"tab2\">选项卡 2 (Tab 2)</TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"tab1\" className=\"p-4 mt-2\">\n        选项卡 1 内容 (Tab 1 Content)\n      </TabsContent>\n      <TabsContent value=\"tab2\" className=\"p-4 mt-2\">\n        选项卡 2 内容 (Tab 2 Content)\n      </TabsContent>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

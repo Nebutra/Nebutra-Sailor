@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-sizes-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/button-sizes-demo.tsx",
+      "content": "\"use client\";\n\nimport { Button } from \"@nebutra/ui/primitives\";\n\nexport function ButtonSizesDemo() {\n  return (\n    <div className=\"gap-4 flex flex-wrap items-center\">\n      <Button size=\"icon\" className=\"h-6 px-2 text-xs\">\n        Tiny\n      </Button>\n      <Button size=\"sm\">Small</Button>\n      <Button size=\"default\">Default</Button>\n      <Button size=\"lg\">Large</Button>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

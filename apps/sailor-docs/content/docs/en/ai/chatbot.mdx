@@ -1,0 +1,259 @@
+---
+title: Chatbot
+description: Build a chatbot using Nebutra's chat completions API — system prompts, conversation history, and rate limits.
+---
+
+## Overview
+
+The chat completions endpoint accepts a list of messages and returns a model response. It supports both streaming (SSE) and non-streaming responses, system prompt customization, and persistent conversation history stored in `@nebutra/db`.
+
+## Setup
+
+<Steps>
+  <Step title="Set environment variables">
+    Add your model provider key to `.env`:
+
+    ```bash
+    OPENAI_API_KEY=""
+    AI_DEFAULT_MODEL="gpt-4o-mini"
+
+    # Optional: enable multi-model routing
+    OPENROUTER_API_KEY=""
+    ```
+  </Step>
+
+  <Step title="Enable the feature flag">
+    AI chat is disabled by default. Enable it for your tenant:
+
+    ```typescript
+    import { setFeatureFlag } from "@nebutra/preset";
+
+    await setFeatureFlag("org_123", "ai.chat", true);
+    ```
+
+    Or toggle it from **Dashboard → Organization → Features → AI Chat**.
+  </Step>
+
+  <Step title="Call the chat endpoint">
+    Make a `POST` request to `/api/v1/ai/chat` with your API key in the `Authorization` header:
+
+    ```bash
+    curl -X POST https://api.yourdomain.com/api/v1/ai/chat \
+      -H "Authorization: Bearer nbk_live_org123_xxx" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "messages": [
+          { "role": "user", "content": "Hello, how can you help me?" }
+        ]
+      }'
+    ```
+  </Step>
+</Steps>
+
+## Request format
+
+`POST /api/v1/ai/chat`
+
+```typescript
+interface ChatRequest {
+  messages: Array<{
+    role: "system" | "user" | "assistant";
+    content: string;
+  }>;
+  model?: string;           // defaults to AI_DEFAULT_MODEL
+  stream?: boolean;         // defaults to true
+  conversationId?: string;  // persist history in @nebutra/db
+  systemPrompt?: string;    // overrides the default system prompt
+  maxTokens?: number;       // default: 2048
+  temperature?: number;     // 0–2, default: 0.7
+}
+```
+
+## Response format
+
+<Tabs>
+  <Tab title="Non-streaming (stream: false)">
+    ```json
+    {
+      "id": "chatcmpl-abc123",
+      "object": "chat.completion",
+      "model": "gpt-4o-mini",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "I can help you with..."
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 42,
+        "completion_tokens": 87,
+        "total_tokens": 129
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Streaming (stream: true)">
+    The response is a Server-Sent Events (SSE) stream. See the [Streaming](/ai/streaming) page for full client-side handling.
+
+    ```
+    data: {"choices":[{"delta":{"role":"assistant"},"index":0}]}
+
+    data: {"choices":[{"delta":{"content":"I can"},"index":0}]}
+
+    data: {"choices":[{"delta":{"content":" help"},"index":0}]}
+
+    data: [DONE]
+    ```
+  </Tab>
+</Tabs>
+
+## System prompt customization
+
+You can override the default system prompt per request or globally per tenant.
+
+**Per request:**
+```typescript
+const response = await fetch("/api/v1/ai/chat", {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${apiKey}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    messages: [{ role: "user", content: userMessage }],
+    systemPrompt: "You are a customer support agent for Acme Corp. Be concise and professional.",
+  }),
+});
+```
+
+**Global tenant default** (stored in tenant settings):
+```typescript
+import { updateTenantAiSettings } from "@nebutra/tenant";
+
+await updateTenantAiSettings("org_123", {
+  systemPrompt: "You are a helpful assistant for Acme Corp.",
+  defaultModel: "gpt-4o",
+});
+```
+
+## Conversation history
+
+Pass a `conversationId` to automatically persist and retrieve message history. The conversation is scoped to the tenant and stored in the Nebutra database.
+
+```typescript
+// First message — creates a new conversation
+const res1 = await fetch("/api/v1/ai/chat", {
+  method: "POST",
+  headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+  body: JSON.stringify({
+    messages: [{ role: "user", content: "What is the capital of France?" }],
+    conversationId: "conv_abc123",
+  }),
+});
+
+// Follow-up — history is retrieved automatically
+const res2 = await fetch("/api/v1/ai/chat", {
+  method: "POST",
+  headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+  body: JSON.stringify({
+    messages: [{ role: "user", content: "What language do they speak there?" }],
+    conversationId: "conv_abc123",  // same ID — prior context is loaded
+  }),
+});
+```
+
+<Note>
+Conversation history counts toward the model's context window. For very long conversations, older messages are automatically summarized to stay within the limit.
+</Note>
+
+## Context window management
+
+The API gateway automatically trims conversation history when it approaches the model's context limit:
+
+1. **Summarization** — oldest messages are condensed into a summary message
+2. **Sliding window** — the most recent N messages are always kept verbatim
+3. **System prompt preservation** — the system prompt is never trimmed
+
+You can inspect the effective context sent to the model in the response headers:
+
+```
+X-Nebutra-Prompt-Tokens: 1842
+X-Nebutra-Context-Window: 128000
+X-Nebutra-Messages-Trimmed: 4
+```
+
+## Calling from server code
+
+Use `@nebutra/ai-sdk` directly in server-side code (API routes, background jobs):
+
+```typescript
+import { generateText, streamText } from "@nebutra/ai-sdk";
+import { getCurrentTenant } from "@nebutra/tenant";
+
+const { tenantId } = getCurrentTenant();
+
+// Non-streaming — good for background processing
+const { text } = await generateText({
+  model: "gpt-4o-mini",
+  prompt: "Summarize this document: " + document.content,
+  tenantId,
+});
+
+// Streaming — good for real-time UI
+const stream = await streamText({
+  model: "gpt-4o",
+  messages: conversation.messages,
+  tenantId,
+});
+```
+
+## Rate limits
+
+AI endpoints are rate-limited per tenant to prevent runaway token consumption:
+
+| Plan | Requests/min | Tokens/min |
+|------|-------------|------------|
+| FREE | 10 | 40,000 |
+| PRO | 60 | 300,000 |
+| ENTERPRISE | Custom | Custom |
+
+When a rate limit is hit, the API returns `429 Too Many Requests` with a `Retry-After` header.
+
+```json
+{
+  "error": "rate_limit_exceeded",
+  "message": "AI request rate limit exceeded. Retry after 12 seconds.",
+  "retryAfter": 12
+}
+```
+
+## Error codes
+
+| Code | Status | Meaning |
+|------|--------|---------|
+| `feature_disabled` | 403 | `ai.chat` flag is off for this tenant |
+| `quota_exceeded` | 402 | Monthly AI token quota exhausted |
+| `rate_limit_exceeded` | 429 | Per-minute rate limit hit |
+| `invalid_model` | 400 | Model slug not recognized |
+| `upstream_error` | 502 | OpenAI / OpenRouter returned an error |
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Streaming" icon="bolt" href="/ai/streaming">
+    Consume SSE streams in React and Next.js.
+  </Card>
+  <Card title="Embeddings" icon="vector-square" href="/ai/embeddings">
+    Add semantic search to your chatbot with RAG.
+  </Card>
+  <Card title="AI Overview" icon="sparkles" href="/ai/overview">
+    Supported models, feature flags, and quotas.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/ai/chat">
+    Full OpenAPI spec for the chat endpoint.
+  </Card>
+</CardGroup>

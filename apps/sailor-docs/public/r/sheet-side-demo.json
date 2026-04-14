@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sheet-side-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/sheet-side-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  Sheet,\n  SheetClose,\n  SheetContent,\n  SheetHeader,\n  SheetTitle,\n  SheetTrigger,\n} from \"@nebutra/ui/primitives\";\nimport { Menu } from \"lucide-react\";\nimport Link from \"next/link\";\n\n<Sheet>\n  <SheetTrigger asChild>\n    <Button variant=\"ghost\" size=\"icon\">\n      <Menu className=\"h-5 w-5\" />\n    </Button>\n  </SheetTrigger>\n  <SheetContent side=\"left\" className=\"w-64\">\n    <SheetHeader>\n      <SheetTitle>Navigation</SheetTitle>\n    </SheetHeader>\n    <nav className=\"gap-2 mt-4 flex flex-col\">\n      <SheetClose asChild>\n        <Link href=\"/docs/components/sheet\">Dashboard</Link>\n      </SheetClose>\n      <SheetClose asChild>\n        <Link href=\"/docs/components/sheet\">Settings</Link>\n      </SheetClose>\n    </nav>\n  </SheetContent>\n</Sheet>;\n\nexport function SheetSideDemo() {\n  return null; // Update this with actual rendering logic\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

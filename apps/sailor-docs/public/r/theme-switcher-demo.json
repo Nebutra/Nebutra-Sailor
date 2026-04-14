@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-switcher-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/theme-switcher-demo.tsx",
+      "content": "\"use client\";\n\nimport { ThemeSwitcher, type ThemeSwitcherValue } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function ThemeSwitcherDemo() {\n  const [theme, setTheme] = useState<ThemeSwitcherValue>(\"system\");\n\n  return (\n    <div className=\"gap-8 p-8 flex min-h-[300px] w-full flex-col items-center justify-center rounded-xl border bg-card\">\n      <div className=\"space-y-2 text-center\">\n        <h3 className=\"font-medium text-lg\">Theme Switcher</h3>\n        <p className=\"text-sm text-muted-foreground\">\n          A compact, animated toggle for light/dark/system preferences.\n        </p>\n      </div>\n\n      <div className=\"gap-4 flex flex-col items-center\">\n        <ThemeSwitcher value={theme} onChange={setTheme} />\n\n        <div className=\"text-sm gap-2 flex items-center text-muted-foreground\">\n          Current state:{\" \"}\n          <span className=\"px-2 py-1 rounded bg-muted font-mono text-foreground\">{theme}</span>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

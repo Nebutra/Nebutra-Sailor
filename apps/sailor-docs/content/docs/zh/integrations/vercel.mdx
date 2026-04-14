@@ -1,0 +1,61 @@
+---
+title: Vercel
+description: 零配置将 Nebutra 部署到 Vercel——自动环境变量提供和边缘网络优化。
+---
+
+## 概述
+
+Nebutra 专为 Vercel 打造。monorepo 中的每个应用都能零额外配置地部署到 Vercel。
+
+## 从 monorepo 部署
+
+monorepo 中的每个应用作为独立的 Vercel 项目部署：
+
+| 应用 | 项目名 |
+|-----|--------|
+| `apps/landing-page` | `nebutra-landing` |
+| `apps/web` | `nebutra-web` |
+| `apps/api-gateway` | `nebutra-api` |
+| `apps/studio` | `nebutra-studio` |
+| `apps/docs` | `nebutra-docs` |
+
+### 链接每个应用
+
+```bash
+cd apps/landing-page
+vercel link
+
+cd ../web
+vercel link
+```
+
+### 设置环境变量
+
+```bash
+# 拉取本地开发用的环境变量
+vercel env pull .env.local
+
+# 添加新的环境变量
+vercel env add DATABASE_URL production
+```
+
+## Turborepo 远程缓存
+
+在 CI 和本地机器之间启用共享构建缓存：
+
+```bash
+npx turbo link
+```
+
+这使用你的 Vercel 账户作为远程缓存后端——消除团队间的缓存未命中。
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="限流" icon="gauge" href="/zh/guides/rate-limits">
+    API 配额和限流配置。
+  </Card>
+  <Card title="API 概览" icon="code" href="/zh/api-reference/overview">
+    API 基础 URL 和规范。
+  </Card>
+</CardGroup>

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feature-icon-item-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/feature-icon-item-demo.tsx",
+      "content": "import { FeatureIconItem } from \"@nebutra/ui/primitives\";\nimport { Cloud, Cpu, Globe, Shield, Smartphone, Zap } from \"lucide-react\";\n\nexport function FeatureIconItemDemo() {\n  return (\n    <div className=\"max-w-4xl p-4 md:p-8 my-8 mx-auto w-full\">\n      <div className=\"md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 grid grid-cols-1\">\n        <FeatureIconItem\n          icon={Zap}\n          iconClassName=\"text-orange-500\"\n          title=\"Fast Performance\"\n          description=\"Optimized for speed and minimal bundle sizes to ensure lightning-fast load times.\"\n        />\n\n        <FeatureIconItem\n          icon={Shield}\n          iconClassName=\"text-emerald-500\"\n          title=\"Secure by Default\"\n          description=\"Built with security best practices in mind, protecting against common web vulnerabilities.\"\n        />\n\n        <FeatureIconItem\n          icon={Smartphone}\n          iconClassName=\"text-blue-500\"\n          title=\"Fully Responsive\"\n          description=\"Layouts that adapt seamlessly to any screen size, from mobile phones to massive desktops.\"\n        />\n\n        <FeatureIconItem\n          icon={Globe}\n          iconClassName=\"text-indigo-500\"\n          title=\"Global Edge Network\"\n          description=\"Deploy your applications to the edge for minimum latency wherever your users are.\"\n        />\n\n        <FeatureIconItem\n          icon={Cpu}\n          iconClassName=\"text-rose-500\"\n          title=\"AI-Powered\"\n          description=\"Integrate machine learning models seamlessly into your workflows with our APIs.\"\n        />\n\n        <FeatureIconItem\n          icon={Cloud}\n          iconClassName=\"text-cyan-500\"\n          title=\"Cloud Native\"\n          description=\"Designed to run perfectly in modern containerized cloud environments.\"\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

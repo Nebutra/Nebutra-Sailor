@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress-with-label-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/progress-with-label-demo.tsx",
+      "content": "\"use client\";\n\nimport { Progress } from \"@nebutra/ui/primitives\";\n\nexport function ProgressWithLabelDemo() {\n  return (\n    <div className=\"space-y-1 w-full\">\n      <div className=\"text-sm flex justify-between\">\n        <span>正在上传 (Uploading...)</span>\n        <span>65%</span>\n      </div>\n      <Progress value={65} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "animated-beam-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/animated-beam-demo.tsx",
+      "content": "\"use client\";\n\nimport { AnimatedBeam } from \"@nebutra/ui/primitives\";\nimport { useRef } from \"react\";\n\nexport function AnimatedBeamDemo() {\n  const containerRef = useRef<HTMLDivElement>(null);\n  const fromRef = useRef<HTMLDivElement>(null);\n  const toRef = useRef<HTMLDivElement>(null);\n\n  return (\n    <div\n      ref={containerRef}\n      className=\"p-12 relative flex w-full max-w-[400px] items-center justify-between rounded-xl border\"\n    >\n      <div\n        ref={fromRef}\n        className=\"size-12 bg-blue-500 font-bold text-white shadow flex items-center justify-center rounded-full\"\n      >\n        A\n      </div>\n      <div\n        ref={toRef}\n        className=\"size-12 bg-purple-500 font-bold text-white shadow flex items-center justify-center rounded-full\"\n      >\n        B\n      </div>\n      <AnimatedBeam containerRef={containerRef} fromRef={fromRef} toRef={toRef} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}
