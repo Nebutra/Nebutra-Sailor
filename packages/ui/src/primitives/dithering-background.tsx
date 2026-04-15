@@ -3,6 +3,7 @@
 import { Dithering, type DitheringProps } from "@paper-design/shaders-react";
 import type * as React from "react";
 import { useEffect, useMemo, useState } from "react";
+import { BRAND_FALLBACK, getBrandPrimary, getBrandTertiary } from "../utils/brand-colors";
 import { cn } from "../utils/cn";
 
 /** Linear RGB mix between two hex colors */
@@ -87,11 +88,54 @@ export interface DitheringBackgroundProps
   showGlow?: boolean;
 }
 
+/**
+ * Build default dark config. Resolves brand CSS vars at call time so the
+ * shader receives a raw hex value (it cannot consume `var(...)` directly).
+ * Falls back to brand hex literals in SSR / no-DOM environments.
+ */
+function buildDefaultDarkConfig(): DitheringThemeConfig {
+  const primary = getBrandPrimary();
+  return {
+    bg: "#000000",
+    back: "#00000000",
+    frontBase: "#001882",
+    frontMix: primary,
+    mixFactor: 0.35,
+    baseSpeed: 0.28,
+    speedMultiplier: 0.35,
+    basePxSize: 2,
+    pxSizeRange: 2,
+    baseScale: 1.05,
+    scaleRange: 0.15,
+    glow: `radial-gradient(60% 40% at 50% 40%, ${primary}1A, transparent 70%)`,
+  };
+}
+
+function buildDefaultLightConfig(): DitheringThemeConfig {
+  const primary = getBrandPrimary();
+  const tertiary = getBrandTertiary();
+  return {
+    bg: "#F7FAFF",
+    back: "#00000000",
+    frontBase: primary,
+    frontMix: tertiary,
+    mixFactor: 0.35,
+    baseSpeed: 0.22,
+    speedMultiplier: 0.28,
+    basePxSize: 2,
+    pxSizeRange: 2,
+    baseScale: 1.03,
+    scaleRange: 0.12,
+    glow: `radial-gradient(60% 40% at 50% 40%, ${primary}1A, transparent 70%)`,
+  };
+}
+
+/** Static SSR fallbacks used before client-side hydration. */
 const DEFAULT_DARK_CONFIG: DitheringThemeConfig = {
   bg: "#000000",
   back: "#00000000",
   frontBase: "#001882",
-  frontMix: "#0033FE",
+  frontMix: BRAND_FALLBACK.primary,
   mixFactor: 0.35,
   baseSpeed: 0.28,
   speedMultiplier: 0.35,
@@ -99,14 +143,14 @@ const DEFAULT_DARK_CONFIG: DitheringThemeConfig = {
   pxSizeRange: 2,
   baseScale: 1.05,
   scaleRange: 0.15,
-  glow: "radial-gradient(60% 40% at 50% 40%, rgba(0,51,254,0.10), transparent 70%)",
+  glow: `radial-gradient(60% 40% at 50% 40%, ${BRAND_FALLBACK.primary}1A, transparent 70%)`,
 };
 
 const DEFAULT_LIGHT_CONFIG: DitheringThemeConfig = {
   bg: "#F7FAFF",
   back: "#00000000",
-  frontBase: "#0033FE",
-  frontMix: "#5c7cfa",
+  frontBase: BRAND_FALLBACK.primary,
+  frontMix: BRAND_FALLBACK.tertiary,
   mixFactor: 0.35,
   baseSpeed: 0.22,
   speedMultiplier: 0.28,
@@ -114,7 +158,7 @@ const DEFAULT_LIGHT_CONFIG: DitheringThemeConfig = {
   pxSizeRange: 2,
   baseScale: 1.03,
   scaleRange: 0.12,
-  glow: "radial-gradient(60% 40% at 50% 40%, rgba(0,51,254,0.10), transparent 70%)",
+  glow: `radial-gradient(60% 40% at 50% 40%, ${BRAND_FALLBACK.primary}1A, transparent 70%)`,
 };
 
 /**
@@ -182,14 +226,26 @@ export function DitheringBackground({
     }
   }, [themeMode, syncTailwindDark]);
 
+  // Track hydration so we can swap SSR fallback hex for resolved brand CSS vars.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Derived config based on theme and intensity
   const config = useMemo(() => {
     const clamp = (v: number, min = 0, max = 1) => Math.max(min, Math.min(max, v));
     const t = clamp(intensity);
 
-    const baseConfig = isDark
-      ? { ...DEFAULT_DARK_CONFIG, ...darkConfig }
-      : { ...DEFAULT_LIGHT_CONFIG, ...lightConfig };
+    const defaults = mounted
+      ? isDark
+        ? buildDefaultDarkConfig()
+        : buildDefaultLightConfig()
+      : isDark
+        ? DEFAULT_DARK_CONFIG
+        : DEFAULT_LIGHT_CONFIG;
+
+    const baseConfig = isDark ? { ...defaults, ...darkConfig } : { ...defaults, ...lightConfig };
 
     return {
       back: baseConfig.back,
@@ -200,7 +256,7 @@ export function DitheringBackground({
       scale: baseConfig.baseScale + t * baseConfig.scaleRange,
       glow: baseConfig.glow,
     };
-  }, [isDark, intensity, darkConfig, lightConfig]);
+  }, [isDark, intensity, darkConfig, lightConfig, mounted]);
 
   // Optional mouse parallax
   useEffect(() => {

@@ -2,18 +2,25 @@
 
 import { MeshGradient, type MeshGradientProps } from "@paper-design/shaders-react";
 import type * as React from "react";
+import { useEffect, useState } from "react";
+import {
+  BRAND_FALLBACK,
+  getBrandAccent,
+  getBrandPrimary,
+  getBrandTertiary,
+} from "../utils/brand-colors";
 import { cn } from "../utils/cn";
 
 // =============================================================================
 // Brand Defaults
 // =============================================================================
 
-/** Nebutra brand palette for mesh gradient: blue → cyan with supporting tones */
-const BRAND_COLORS = [
-  "#0033FE", // nebutra-blue-500
-  "#0BF1C3", // nebutra-cyan-500
-  "#5c7cfa", // nebutra-blue-400
-  "#002ad4", // nebutra-blue-600
+/** SSR fallback palette — used until CSS vars resolve on the client. */
+const BRAND_COLORS_FALLBACK = [
+  BRAND_FALLBACK.primary,
+  BRAND_FALLBACK.accent,
+  BRAND_FALLBACK.tertiary,
+  BRAND_FALLBACK.primaryDark,
 ] as const;
 
 // =============================================================================
@@ -51,17 +58,29 @@ export interface MeshGradientBgProps
  * />
  * ```
  */
-export function MeshGradientBg({
-  className,
-  colors = [...BRAND_COLORS],
-  speed = 0.3,
-  ...props
-}: MeshGradientBgProps) {
+export function MeshGradientBg({ className, colors, speed = 0.3, ...props }: MeshGradientBgProps) {
+  const [resolvedColors, setResolvedColors] = useState<string[]>(
+    colors ? [...colors] : [...BRAND_COLORS_FALLBACK],
+  );
+
+  useEffect(() => {
+    if (colors) {
+      setResolvedColors([...colors]);
+      return;
+    }
+    setResolvedColors([
+      getBrandPrimary(),
+      getBrandAccent(),
+      getBrandTertiary(),
+      BRAND_FALLBACK.primaryDark,
+    ]);
+  }, [colors]);
+
   return (
     <div className={cn("absolute inset-0 -z-10", className)}>
       <MeshGradient
         style={{ height: "100%", width: "100%" }}
-        colors={colors}
+        colors={resolvedColors}
         speed={speed}
         {...props}
       />

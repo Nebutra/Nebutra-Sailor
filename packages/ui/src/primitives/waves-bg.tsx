@@ -2,6 +2,8 @@
 
 import { Waves, type WavesProps } from "@paper-design/shaders-react";
 import type * as React from "react";
+import { useEffect, useState } from "react";
+import { BRAND_FALLBACK, getBrandPrimary } from "../utils/brand-colors";
 import { cn } from "../utils/cn";
 
 // =============================================================================
@@ -42,15 +44,21 @@ export interface WavesBgProps
  */
 export function WavesBg({
   className,
-  colorFront = "#0033FE", // nebutra-blue-500
-  colorBack = "#000830", // nebutra-blue-950
+  colorFront,
+  colorBack = BRAND_FALLBACK.backDark,
   ...props
 }: WavesBgProps) {
+  const [resolvedFront, setResolvedFront] = useState<string>(colorFront ?? BRAND_FALLBACK.primary);
+
+  useEffect(() => {
+    setResolvedFront(colorFront ?? getBrandPrimary());
+  }, [colorFront]);
+
   return (
     <div className={cn("absolute inset-0 -z-10", className)}>
       <Waves
         style={{ height: "100%", width: "100%" }}
-        colorFront={colorFront}
+        colorFront={resolvedFront}
         colorBack={colorBack}
         {...props}
       />

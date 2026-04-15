@@ -2,14 +2,11 @@
  * Utility Functions
  */
 
-import { type ClassValue, clsx } from "clsx";
-
 /**
- * Merge class names
+ * Merge class names — canonical implementation from ./cn.ts
+ * Uses twMerge(clsx(...)) to correctly resolve Tailwind class conflicts.
  */
-export function cn(...inputs: ClassValue[]): string {
-  return clsx(inputs);
-}
+export { cn } from "./cn";
 
 /**
  * Breakpoint values (matches Primer)
@@ -31,3 +28,11 @@ export function isBreakpointUp(breakpoint: Breakpoint): boolean {
   if (typeof window === "undefined") return true;
   return window.innerWidth >= BREAKPOINTS[breakpoint];
 }
+
+export {
+  BRAND_FALLBACK,
+  getBrandAccent,
+  getBrandPrimary,
+  getBrandTertiary,
+  readCssVar,
+} from "./brand-colors";
