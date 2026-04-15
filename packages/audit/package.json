@@ -11,11 +11,12 @@
   },
   "scripts": {},
   "dependencies": {
+    "@nebutra/db": "workspace:*",
     "@nebutra/logger": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.19.15",
-    "typescript": "^5.9.3",
+    "typescript": "catalog:",
     "vitest": "^4.0.18"
   }
 }

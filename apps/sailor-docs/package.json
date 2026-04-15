@@ -60,6 +60,6 @@
     "next-validate-link": "^1.6.4",
     "tailwindcss": "^4.2.1",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }

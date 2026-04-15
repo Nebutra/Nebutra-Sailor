@@ -19,9 +19,9 @@
     "@upstash/qstash": "^2.7.17",
     "bullmq": "^5.34.8",
     "ioredis": "^5.4.2",
-    "zod": "^3.25.76"
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }

@@ -39,7 +39,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "recharts": "^2.15.3",
-    "zod": "^4.3.6",
+    "zod": "catalog:",
     "zustand": "^5.0.11"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "@vitest/coverage-v8": "^4.0.18",
     "openapi-typescript": "^7.8.0",
     "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3",
+    "typescript": "catalog:",
     "vitest": "^4.0.18"
   }
 }

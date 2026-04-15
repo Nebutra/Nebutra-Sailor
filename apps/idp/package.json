@@ -19,7 +19,7 @@
     "next": "^16.1.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "zod": "^4.3.6"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",
@@ -28,6 +28,6 @@
     "@types/react-dom": "^19.2.3",
     "@types/oidc-provider": "^9.1.0",
     "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }

@@ -17,9 +17,9 @@
   "dependencies": {
     "@aws-sdk/client-kms": "^3.700.0",
     "@nebutra/logger": "workspace:*",
-    "zod": "^3.25.76"
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }

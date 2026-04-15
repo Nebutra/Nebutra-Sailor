@@ -18,9 +18,9 @@
   "dependencies": {
     "@nebutra/logger": "workspace:*",
     "svix": "^1.42.0",
-    "zod": "^3.25.76"
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }

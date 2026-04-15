@@ -1,29 +1,81 @@
 {
   "name": "create-sailor",
-  "version": "0.1.0",
-  "description": "Nebutra Sailor scaffolding tool",
+  "version": "1.1.0",
+  "description": "AI-Native SaaS unicorn template. Bootstrap a production-ready Next.js + Hono + Prisma monorepo with Multi-Agent, white-labeling, billing, auth, and 50+ engineering primitives in seconds.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
     "create-sailor": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
-    "prepare": "mkdir -p dist && test -f dist/index.js || echo '#!/usr/bin/env node' > dist/index.js",
     "dev": "tsup --watch",
     "build": "tsup",
+    "prepublishOnly": "pnpm run build",
     "start": "node dist/index.js"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
+    "cfonts": "^3.3.0",
     "commander": "^12.1.0",
-    "picocolors": "^1.1.0"
+    "gradient-string": "^3.0.0",
+    "ignore": "^5.3.2",
+    "picocolors": "^1.1.0",
+    "update-notifier": "^7.3.1"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "@types/update-notifier": "^6.0.8",
     "tsup": "^8.0.0",
-    "typescript": "^5.4.0"
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "keywords": [
+    "sailor",
+    "nebutra",
+    "saas",
+    "template",
+    "scaffold",
+    "starter",
+    "boilerplate",
+    "ai",
+    "ai-sdk",
+    "agent",
+    "multi-agent",
+    "nextjs",
+    "hono",
+    "prisma",
+    "tailwind",
+    "shadcn",
+    "clerk",
+    "stripe",
+    "monorepo",
+    "turbo",
+    "cli",
+    "bootstrap",
+    "opc",
+    "solo-founder",
+    "indie-hacker"
+  ],
+  "author": "Nebutra <hello@nebutra.com> (https://nebutra.com)",
+  "license": "AGPL-3.0",
+  "homepage": "https://nebutra.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nebutra/nebutra-sailor.git",
+    "directory": "packages/create-sailor"
+  },
+  "bugs": {
+    "url": "https://github.com/nebutra/nebutra-sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

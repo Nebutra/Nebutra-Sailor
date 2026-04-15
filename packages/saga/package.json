@@ -17,6 +17,6 @@
     "@nebutra/event-bus": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }

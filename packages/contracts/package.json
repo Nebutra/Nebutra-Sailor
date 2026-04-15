@@ -30,11 +30,11 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "zod": "^4.3.6"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/node": "^22.19.15",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }

@@ -17,7 +17,7 @@
   "devDependencies": {
     "@types/node": "^22.19.15",
     "@vitest/coverage-v8": "^4.0.18",
-    "typescript": "^5.9.3",
+    "typescript": "catalog:",
     "vitest": "^4.0.18"
   }
 }

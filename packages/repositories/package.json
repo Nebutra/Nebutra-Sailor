@@ -9,7 +9,7 @@
     "@nebutra/db": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
+    "typescript": "catalog:",
     "vitest": "^4.0.18"
   }
 }

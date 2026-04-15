@@ -21,10 +21,10 @@
     "@casl/ability": "^6.7.0",
     "@casl/prisma": "^1.5.1",
     "@nebutra/logger": "workspace:*",
-    "zod": "^3.25.76"
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
+    "typescript": "catalog:",
     "react": "^19.0.0"
   },
   "peerDependencies": {

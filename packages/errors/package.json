@@ -12,6 +12,6 @@
   "scripts": {},
   "devDependencies": {
     "@types/node": "^22.19.15",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }

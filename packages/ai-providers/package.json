@@ -17,10 +17,20 @@
     "./config": {
       "types": "./dist/config/index.d.ts",
       "import": "./dist/config/index.js"
-    }
+    },
+    "./meta": {
+      "types": "./dist/meta.d.ts",
+      "import": "./dist/meta.js"
+    },
+    "./registry": {
+      "types": "./dist/registry.d.ts",
+      "import": "./dist/registry.js"
+    },
+    "./templates/*": "./templates/*"
   },
   "files": [
-    "dist"
+    "dist",
+    "templates"
   ],
   "scripts": {
     "build": "tsup",
@@ -30,12 +40,12 @@
   },
   "dependencies": {
     "openai": "^6.27.0",
-    "zod": "^4.3.6"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/node": "^22.19.15",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
+    "typescript": "catalog:",
     "vitest": "^4.0.18"
   },
   "peerDependencies": {

@@ -14,9 +14,10 @@
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
-    "zod": "^3.25.76"
+    "inngest": "^3.22.8",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }
