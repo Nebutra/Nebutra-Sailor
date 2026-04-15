@@ -6,7 +6,6 @@
  * Component source tracking for governance
  */
 export type ComponentSource =
-  | "design-system" // From @nebutra/design-system
   | "custom" // Built in-house
   | "promoted" // Promoted from external library
   | "experimental"; // Still experimental, from external
