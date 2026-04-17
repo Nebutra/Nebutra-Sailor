@@ -267,10 +267,19 @@ Run `pnpm db:generate` after any schema changes.
 After running migrations, seed the AI model pricing table:
 
 ```bash
-pnpm --filter @nebutra/db seed:models
+pnpm --filter @nebutra/db seed:models            # online, ~400+ models from models.dev
+pnpm --filter @nebutra/db seed:models --offline  # embedded 5-model fallback
 ```
 
-This populates `model_configs` with 2026-current pricing for OpenAI, Anthropic, Google, and SiliconFlow models. The script is idempotent — safe to run multiple times — and uses `upsert` on the unique `modelName` field.
+Pricing data comes from [models.dev](https://models.dev/api.json) via the
+[`tokenlens`](https://github.com/xn1cklas/tokenlens) TypeScript wrapper —
+community-maintained, updated whenever providers change prices. No hand-curated
+pricing tables to maintain.
+
+The script is idempotent (safe to re-run) and maps `models.dev` provider IDs to
+our `AIProvider` enum (`OPENAI`, `ANTHROPIC`, `GOOGLE`, `SILICONFLOW`, `CUSTOM`).
+Models without complete `cost.input` / `cost.output` are skipped. Customers
+wishing to override community pricing can manually edit rows after seeding.
 
 ## Related
 
