@@ -28,6 +28,7 @@
     "@nebutra/email": "workspace:*",
     "@nebutra/license": "workspace:*",
     "@nebutra/errors": "workspace:*",
+    "@nebutra/gateway-core": "workspace:*",
     "@nebutra/event-bus": "workspace:*",
     "@nebutra/health": "workspace:*",
     "@nebutra/logger": "workspace:*",

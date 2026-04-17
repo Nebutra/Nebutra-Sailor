@@ -1,0 +1,35 @@
+{
+  "name": "@nebutra/gateway-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "hono": "^4.6.0",
+    "@nebutra/logger": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/db": "workspace:*",
+    "@nebutra/cache": "workspace:*",
+    "@nebutra/billing": "workspace:*",
+    "@nebutra/rate-limit": "workspace:*",
+    "@nebutra/queue": "workspace:*",
+    "@nebutra/metering": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "@vitest/coverage-v8": "catalog:"
+  }
+}
