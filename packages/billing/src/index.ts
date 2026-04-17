@@ -56,8 +56,11 @@ export {
   CreditPurchaseInputSchema,
   type CreditPurchaseMetadata,
   type CreditPurchaseSession,
+  type CreditPurchaseWebhookInput,
+  type CreditPurchaseWebhookResult,
   detectProvider,
   getCheckout,
+  handleCreditPurchaseWebhook,
 } from "./checkout/index.js";
 // China Payment (Alipay + WeChat Pay via aggregator)
 export {

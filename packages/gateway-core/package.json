@@ -25,6 +25,7 @@
     "@nebutra/rate-limit": "workspace:*",
     "@nebutra/queue": "workspace:*",
     "@nebutra/metering": "workspace:*",
+    "js-tiktoken": "^1.0.17",
     "zod": "catalog:"
   },
   "devDependencies": {

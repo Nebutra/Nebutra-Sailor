@@ -8,12 +8,37 @@ import { checkBalance } from "./auth/balance-guard.js";
 export { resolveApiKey } from "./auth/api-key-resolver.js";
 export { checkBalance, invalidateBalanceCache } from "./auth/balance-guard.js";
 export {
+  calculateCost,
+  DEFAULT_PRICING,
+  getModelPricing,
+  type ModelConfigDeps,
+  type ModelPricing,
+} from "./metering/cost-calculator.js";
+export type { MessageForCounting } from "./metering/tiktoken-fallback.js";
+export { countTokens, estimateUsage } from "./metering/tiktoken-fallback.js";
+// Token metering — extract usage from upstream, count tokens locally, compute cost.
+export {
+  createStreamingUsageExtractor,
+  extractUsageFromJson,
+  OpenAIUsageSchema,
+} from "./metering/usage-extractor.js";
+export {
   createGatewayAuthMiddleware as createGatewayPipelineMiddleware,
   type GatewayContextVars,
   type GatewayMiddlewareConfig,
 } from "./middleware.js";
 export type { CompletionEvent, GatewayConfig, ResolvedApiKey, UsageResult } from "./types.js";
 export { CompletionEventSchema } from "./types.js";
+export {
+  COMPLETION_QUEUE,
+  COMPLETION_TYPE,
+  enqueueCompletion,
+} from "./worker/completion-event.js";
+export {
+  processCompletionEvent,
+  registerCompletionWorker,
+  type WorkerDeps,
+} from "./worker/completion-worker.js";
 
 // TODO: These will be moved to @nebutra/provider-adapters later
 interface UpstreamProviderConfig {

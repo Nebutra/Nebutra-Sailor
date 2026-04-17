@@ -1,8 +1,10 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { handleCreditPurchaseWebhook } from "@nebutra/billing";
 import { type Prisma, prisma } from "@nebutra/db";
 import { issueLicense } from "@nebutra/license";
 import { logger } from "@nebutra/logger";
 import Stripe from "stripe";
+import { inngest } from "../../inngest/client.js";
 
 const log = logger.child({ service: "stripe-webhook" });
 
@@ -227,6 +229,28 @@ async function handleCheckoutCompleted(
   stripe: Stripe,
   db: PrismaClient,
 ): Promise<void> {
+  const metadata = session.metadata ?? {};
+
+  // Credit purchase — unified handler across providers
+  const creditResult = await handleCreditPurchaseWebhook({
+    provider: "stripe",
+    sessionId: session.id,
+    metadata,
+    amountPaid: session.amount_total ? session.amount_total / 100 : undefined,
+    currency: session.currency?.toUpperCase(),
+  });
+
+  if (creditResult.handled) {
+    log.info("Credit purchase webhook handled", {
+      sessionId: session.id,
+      organizationId: creditResult.organizationId,
+      creditAmount: creditResult.creditAmount,
+      transactionId: creditResult.transactionId,
+      skipped: creditResult.skipped,
+    });
+    return;
+  }
+
   // Fulfill Startup License via @nebutra/license (idempotent + enqueues profile/email)
   if (session.metadata?.license_tier === "STARTUP" && session.metadata?.userId) {
     const userId = session.metadata.userId;
@@ -306,6 +330,18 @@ async function handleSubscriptionUpdated(
   sub: Stripe.Subscription,
   db: PrismaClient,
 ): Promise<void> {
+  const stripeCustomer = await db.stripeCustomer.findUnique({
+    where: { stripeId: sub.customer as string },
+  });
+
+  if (!stripeCustomer) {
+    log.error("No StripeCustomer found for subscription.updated event", null, {
+      customerId: sub.customer,
+      subscriptionId: sub.id,
+    });
+    return;
+  }
+
   const status = mapStripeStatus(sub.status);
 
   await db.subscription.updateMany({
@@ -324,6 +360,16 @@ async function handleSubscriptionUpdated(
       ...(sub.canceled_at && {
         canceledAt: new Date(sub.canceled_at * 1000),
       }),
+    },
+  });
+
+  await inngest.send({
+    name: "stripe/subscription.updated",
+    data: {
+      organizationId: stripeCustomer.organizationId,
+      subscriptionId: sub.id,
+      customerId: sub.customer as string,
+      status: sub.status as any,
     },
   });
 
