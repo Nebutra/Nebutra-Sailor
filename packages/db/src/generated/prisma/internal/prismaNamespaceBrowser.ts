@@ -66,6 +66,8 @@ export const ModelName = {
   Nft: 'Nft',
   UserActivity: 'UserActivity',
   TenantUsage: 'TenantUsage',
+  ModelConfig: 'ModelConfig',
+  RequestLog: 'RequestLog',
   AIRequest: 'AIRequest',
   UserPreference: 'UserPreference',
   Recommendation: 'Recommendation',
@@ -151,7 +153,10 @@ export const APIKeyScalarFieldEnum = {
   lastUsedAt: 'lastUsedAt',
   revokedAt: 'revokedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  scopes: 'scopes',
+  rateLimitRps: 'rateLimitRps',
+  expiresAt: 'expiresAt'
 } as const
 
 export type APIKeyScalarFieldEnum = (typeof APIKeyScalarFieldEnum)[keyof typeof APIKeyScalarFieldEnum]
@@ -343,6 +348,40 @@ export const TenantUsageScalarFieldEnum = {
 } as const
 
 export type TenantUsageScalarFieldEnum = (typeof TenantUsageScalarFieldEnum)[keyof typeof TenantUsageScalarFieldEnum]
+
+
+export const ModelConfigScalarFieldEnum = {
+  id: 'id',
+  modelName: 'modelName',
+  provider: 'provider',
+  inputPricePerMillion: 'inputPricePerMillion',
+  outputPricePerMillion: 'outputPricePerMillion',
+  currency: 'currency',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModelConfigScalarFieldEnum = (typeof ModelConfigScalarFieldEnum)[keyof typeof ModelConfigScalarFieldEnum]
+
+
+export const RequestLogScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  apiKeyId: 'apiKeyId',
+  organizationId: 'organizationId',
+  model: 'model',
+  promptTokens: 'promptTokens',
+  completionTokens: 'completionTokens',
+  totalTokens: 'totalTokens',
+  cost: 'cost',
+  latencyMs: 'latencyMs',
+  status: 'status',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt'
+} as const
+
+export type RequestLogScalarFieldEnum = (typeof RequestLogScalarFieldEnum)[keyof typeof RequestLogScalarFieldEnum]
 
 
 export const AIRequestScalarFieldEnum = {

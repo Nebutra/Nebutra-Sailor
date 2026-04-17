@@ -117,6 +117,16 @@ export type UserActivity = Prisma.UserActivityModel
  */
 export type TenantUsage = Prisma.TenantUsageModel
 /**
+ * Model ModelConfig
+ * 
+ */
+export type ModelConfig = Prisma.ModelConfigModel
+/**
+ * Model RequestLog
+ * 
+ */
+export type RequestLog = Prisma.RequestLogModel
+/**
  * Model AIRequest
  * 
  */

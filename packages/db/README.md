@@ -262,6 +262,16 @@ import { User } from "./generated/prisma/client.js";
 
 Run `pnpm db:generate` after any schema changes.
 
+## Seeding Model Config
+
+After running migrations, seed the AI model pricing table:
+
+```bash
+pnpm --filter @nebutra/db seed:models
+```
+
+This populates `model_configs` with 2026-current pricing for OpenAI, Anthropic, Google, and SiliconFlow models. The script is idempotent — safe to run multiple times — and uses `upsert` on the unique `modelName` field.
+
 ## Related
 
 - [Prisma 7 Release Notes](https://www.prisma.io/blog/announcing-prisma-orm-7-0-0)

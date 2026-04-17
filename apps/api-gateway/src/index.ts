@@ -2,9 +2,17 @@ import { serve } from "@hono/node-server";
 import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { initializeFromEnv, setAlertErrorHandler } from "@nebutra/alerting";
+import { deductCredits, dollarsToCredits } from "@nebutra/billing";
 import { prisma } from "@nebutra/db";
 import { getStatusCode, toApiError } from "@nebutra/errors";
+import {
+  calculateCost,
+  getModelPricing,
+  invalidateBalanceCache,
+  registerCompletionWorker,
+} from "@nebutra/gateway-core";
 import { initOtel, logger } from "@nebutra/logger";
+import { closeQueue } from "@nebutra/queue";
 import { trace } from "@opentelemetry/api";
 import { bodyLimit } from "hono/body-limit";
 import { compress } from "hono/compress";
@@ -15,6 +23,7 @@ import { secureHeaders } from "hono/secure-headers";
 import { DOMAINS, env } from "./config/env.js";
 import { captureRequestError, initSentry } from "./config/sentry.js";
 import { inngestHandler } from "./inngest/index.js";
+import { buildGatewayDeps } from "./lib/gateway-deps.js";
 import { requestContext, runWithContext } from "./lib/requestContext.js";
 import { apiVersionMiddleware } from "./middlewares/apiVersion.js";
 import { auditMutationMiddleware } from "./middlewares/auditMutation.js";
@@ -24,8 +33,11 @@ import { tenantContextMiddleware } from "./middlewares/tenantContext.js";
 import { usageMeteringMiddleware } from "./middlewares/usageMetering.js";
 import { adminRoutes } from "./routes/admin/index.js";
 import { agentRoutes } from "./routes/agents/index.js";
-import { aiGatewayRoutes } from "./routes/ai/gateway.js";
+import { apiKeysRoutes } from "./routes/ai/api-keys.js";
+import { createAiGatewayRoutes } from "./routes/ai/gateway.js";
 import { aiRoutes } from "./routes/ai/index.js";
+import { usageRoutes } from "./routes/ai/usage.js";
+import { creditsRoutes } from "./routes/billing/credits.js";
 import { billingRoutes } from "./routes/billing/index.js";
 import { eventRoutes } from "./routes/events/index.js";
 import { integrationRoutes } from "./routes/integrations/index.js";
@@ -198,8 +210,51 @@ app.route("/api/v1/legal", consentRoutes);
 app.route("/api/v1/events", eventRoutes);
 app.route("/api/v1/agents", agentRoutes);
 app.route("/api/v1/ai", aiRoutes);
-app.route("/api/v1/ai/gateway", aiGatewayRoutes);
+
+// AI Gateway — build shared deps once, mount route + register completion worker.
+// Graceful degradation: a missing Redis/queue must not prevent app startup.
+let gatewayDepsInitialized = false;
+try {
+  const gatewayDeps = await buildGatewayDeps();
+  app.route("/api/v1/ai/gateway", createAiGatewayRoutes(gatewayDeps));
+
+  try {
+    registerCompletionWorker(gatewayDeps.queue as never, {
+      prisma: gatewayDeps.prisma as never,
+      redis: gatewayDeps.redis,
+      getModelPricing: (model: string) =>
+        getModelPricing(model, {
+          redis: gatewayDeps.redis,
+          prisma: gatewayDeps.prisma as never,
+        }),
+      calculateCost,
+      deductCredits: async (input) => {
+        await deductCredits(input as never);
+      },
+      dollarsToCredits,
+      invalidateBalanceCache: async (orgId: string) => {
+        await invalidateBalanceCache(orgId, gatewayDeps.redis);
+      },
+      // TODO: wire @nebutra/metering.ingest here once ClickHouse pipeline is live.
+      logger: {
+        info: (...args: unknown[]) => logger.info(String(args[0] ?? ""), args[1] as never),
+        warn: (...args: unknown[]) => logger.warn(String(args[0] ?? ""), args[1] as never),
+        error: (...args: unknown[]) => logger.error(String(args[0] ?? ""), args[1] as never),
+      },
+    });
+    logger.info("[gateway] Completion worker registered");
+    gatewayDepsInitialized = true;
+  } catch (err) {
+    logger.error("[gateway] Failed to register completion worker", err);
+  }
+} catch (err) {
+  logger.error("[gateway] Failed to initialize gateway deps — AI Gateway routes disabled", err);
+}
+
+app.route("/api/v1/ai/api-keys", apiKeysRoutes);
+app.route("/api/v1/ai/usage", usageRoutes);
 app.route("/api/v1/billing", billingRoutes);
+app.route("/api/v1/billing/credits", creditsRoutes);
 app.route("/api/v1/search", searchRoutes);
 app.route("/api/v1/integrations", integrationRoutes);
 
@@ -286,6 +341,14 @@ const shutdown = async (signal: string) => {
   logger.info(`Received ${signal}, starting graceful shutdown...`);
   server.close(async () => {
     logger.info("HTTP server closed");
+    if (gatewayDepsInitialized) {
+      try {
+        await closeQueue();
+        logger.info("Queue connection closed");
+      } catch (err) {
+        logger.error("Error closing queue during shutdown", err);
+      }
+    }
     try {
       await prisma.$disconnect();
       logger.info("Database connection closed");

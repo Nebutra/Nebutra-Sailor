@@ -200,20 +200,6 @@ export const UsageLedgerSource = {
 export type UsageLedgerSource = (typeof UsageLedgerSource)[keyof typeof UsageLedgerSource]
 
 
-export const AuditAction = {
-  CREATE: 'CREATE',
-  READ: 'READ',
-  UPDATE: 'UPDATE',
-  DELETE: 'DELETE',
-  LOGIN: 'LOGIN',
-  LOGOUT: 'LOGOUT',
-  EXPORT: 'EXPORT',
-  IMPORT: 'IMPORT'
-} as const
-
-export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction]
-
-
 export const ConsentType = {
   EXPLICIT: 'EXPLICIT',
   IMPLICIT: 'IMPLICIT',

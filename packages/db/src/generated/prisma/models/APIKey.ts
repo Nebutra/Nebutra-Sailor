@@ -20,8 +20,18 @@ export type APIKeyModel = runtime.Types.Result.DefaultSelection<Prisma.$APIKeyPa
 
 export type AggregateAPIKey = {
   _count: APIKeyCountAggregateOutputType | null
+  _avg: APIKeyAvgAggregateOutputType | null
+  _sum: APIKeySumAggregateOutputType | null
   _min: APIKeyMinAggregateOutputType | null
   _max: APIKeyMaxAggregateOutputType | null
+}
+
+export type APIKeyAvgAggregateOutputType = {
+  rateLimitRps: number | null
+}
+
+export type APIKeySumAggregateOutputType = {
+  rateLimitRps: number | null
 }
 
 export type APIKeyMinAggregateOutputType = {
@@ -35,6 +45,8 @@ export type APIKeyMinAggregateOutputType = {
   revokedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  rateLimitRps: number | null
+  expiresAt: Date | null
 }
 
 export type APIKeyMaxAggregateOutputType = {
@@ -48,6 +60,8 @@ export type APIKeyMaxAggregateOutputType = {
   revokedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  rateLimitRps: number | null
+  expiresAt: Date | null
 }
 
 export type APIKeyCountAggregateOutputType = {
@@ -61,9 +75,20 @@ export type APIKeyCountAggregateOutputType = {
   revokedAt: number
   createdAt: number
   updatedAt: number
+  scopes: number
+  rateLimitRps: number
+  expiresAt: number
   _all: number
 }
 
+
+export type APIKeyAvgAggregateInputType = {
+  rateLimitRps?: true
+}
+
+export type APIKeySumAggregateInputType = {
+  rateLimitRps?: true
+}
 
 export type APIKeyMinAggregateInputType = {
   id?: true
@@ -76,6 +101,8 @@ export type APIKeyMinAggregateInputType = {
   revokedAt?: true
   createdAt?: true
   updatedAt?: true
+  rateLimitRps?: true
+  expiresAt?: true
 }
 
 export type APIKeyMaxAggregateInputType = {
@@ -89,6 +116,8 @@ export type APIKeyMaxAggregateInputType = {
   revokedAt?: true
   createdAt?: true
   updatedAt?: true
+  rateLimitRps?: true
+  expiresAt?: true
 }
 
 export type APIKeyCountAggregateInputType = {
@@ -102,6 +131,9 @@ export type APIKeyCountAggregateInputType = {
   revokedAt?: true
   createdAt?: true
   updatedAt?: true
+  scopes?: true
+  rateLimitRps?: true
+  expiresAt?: true
   _all?: true
 }
 
@@ -143,6 +175,18 @@ export type APIKeyAggregateArgs<ExtArgs extends runtime.Types.Extensions.Interna
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: APIKeyAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: APIKeySumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: APIKeyMinAggregateInputType
@@ -173,6 +217,8 @@ export type APIKeyGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   _count?: APIKeyCountAggregateInputType | true
+  _avg?: APIKeyAvgAggregateInputType
+  _sum?: APIKeySumAggregateInputType
   _min?: APIKeyMinAggregateInputType
   _max?: APIKeyMaxAggregateInputType
 }
@@ -188,7 +234,12 @@ export type APIKeyGroupByOutputType = {
   revokedAt: Date | null
   createdAt: Date
   updatedAt: Date
+  scopes: string[]
+  rateLimitRps: number
+  expiresAt: Date | null
   _count: APIKeyCountAggregateOutputType | null
+  _avg: APIKeyAvgAggregateOutputType | null
+  _sum: APIKeySumAggregateOutputType | null
   _min: APIKeyMinAggregateOutputType | null
   _max: APIKeyMaxAggregateOutputType | null
 }
@@ -222,6 +273,9 @@ export type APIKeyWhereInput = {
   revokedAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"APIKey"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"APIKey"> | Date | string
+  scopes?: Prisma.StringNullableListFilter<"APIKey">
+  rateLimitRps?: Prisma.IntFilter<"APIKey"> | number
+  expiresAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
 }
 
@@ -236,6 +290,9 @@ export type APIKeyOrderByWithRelationInput = {
   revokedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  scopes?: Prisma.SortOrder
+  rateLimitRps?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
 }
 
@@ -253,6 +310,9 @@ export type APIKeyWhereUniqueInput = Prisma.AtLeast<{
   revokedAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"APIKey"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"APIKey"> | Date | string
+  scopes?: Prisma.StringNullableListFilter<"APIKey">
+  rateLimitRps?: Prisma.IntFilter<"APIKey"> | number
+  expiresAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
 }, "id" | "keyHash">
 
@@ -267,9 +327,14 @@ export type APIKeyOrderByWithAggregationInput = {
   revokedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  scopes?: Prisma.SortOrder
+  rateLimitRps?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.APIKeyCountOrderByAggregateInput
+  _avg?: Prisma.APIKeyAvgOrderByAggregateInput
   _max?: Prisma.APIKeyMaxOrderByAggregateInput
   _min?: Prisma.APIKeyMinOrderByAggregateInput
+  _sum?: Prisma.APIKeySumOrderByAggregateInput
 }
 
 export type APIKeyScalarWhereWithAggregatesInput = {
@@ -286,6 +351,9 @@ export type APIKeyScalarWhereWithAggregatesInput = {
   revokedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"APIKey"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"APIKey"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"APIKey"> | Date | string
+  scopes?: Prisma.StringNullableListFilter<"APIKey">
+  rateLimitRps?: Prisma.IntWithAggregatesFilter<"APIKey"> | number
+  expiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"APIKey"> | Date | string | null
 }
 
 export type APIKeyCreateInput = {
@@ -298,6 +366,9 @@ export type APIKeyCreateInput = {
   revokedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  scopes?: Prisma.APIKeyCreatescopesInput | string[]
+  rateLimitRps?: number
+  expiresAt?: Date | string | null
   organization: Prisma.OrganizationCreateNestedOneWithoutApiKeysInput
 }
 
@@ -312,6 +383,9 @@ export type APIKeyUncheckedCreateInput = {
   revokedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  scopes?: Prisma.APIKeyCreatescopesInput | string[]
+  rateLimitRps?: number
+  expiresAt?: Date | string | null
 }
 
 export type APIKeyUpdateInput = {
@@ -324,6 +398,9 @@ export type APIKeyUpdateInput = {
   revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scopes?: Prisma.APIKeyUpdatescopesInput | string[]
+  rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutApiKeysNestedInput
 }
 
@@ -338,6 +415,9 @@ export type APIKeyUncheckedUpdateInput = {
   revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scopes?: Prisma.APIKeyUpdatescopesInput | string[]
+  rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type APIKeyCreateManyInput = {
@@ -351,6 +431,9 @@ export type APIKeyCreateManyInput = {
   revokedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  scopes?: Prisma.APIKeyCreatescopesInput | string[]
+  rateLimitRps?: number
+  expiresAt?: Date | string | null
 }
 
 export type APIKeyUpdateManyMutationInput = {
@@ -363,6 +446,9 @@ export type APIKeyUpdateManyMutationInput = {
   revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scopes?: Prisma.APIKeyUpdatescopesInput | string[]
+  rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type APIKeyUncheckedUpdateManyInput = {
@@ -376,6 +462,9 @@ export type APIKeyUncheckedUpdateManyInput = {
   revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scopes?: Prisma.APIKeyUpdatescopesInput | string[]
+  rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type APIKeyListRelationFilter = {
@@ -386,6 +475,14 @@ export type APIKeyListRelationFilter = {
 
 export type APIKeyOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type APIKeyCountOrderByAggregateInput = {
@@ -399,6 +496,13 @@ export type APIKeyCountOrderByAggregateInput = {
   revokedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  scopes?: Prisma.SortOrder
+  rateLimitRps?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
+}
+
+export type APIKeyAvgOrderByAggregateInput = {
+  rateLimitRps?: Prisma.SortOrder
 }
 
 export type APIKeyMaxOrderByAggregateInput = {
@@ -412,6 +516,8 @@ export type APIKeyMaxOrderByAggregateInput = {
   revokedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  rateLimitRps?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
 }
 
 export type APIKeyMinOrderByAggregateInput = {
@@ -425,6 +531,12 @@ export type APIKeyMinOrderByAggregateInput = {
   revokedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  rateLimitRps?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
+}
+
+export type APIKeySumOrderByAggregateInput = {
+  rateLimitRps?: Prisma.SortOrder
 }
 
 export type APIKeyCreateNestedManyWithoutOrganizationInput = {
@@ -469,12 +581,29 @@ export type APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.APIKeyScalarWhereInput | Prisma.APIKeyScalarWhereInput[]
 }
 
+export type APIKeyCreatescopesInput = {
+  set: string[]
+}
+
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type APIKeyUpdatescopesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type APIKeyCreateWithoutOrganizationInput = {
@@ -487,6 +616,9 @@ export type APIKeyCreateWithoutOrganizationInput = {
   revokedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  scopes?: Prisma.APIKeyCreatescopesInput | string[]
+  rateLimitRps?: number
+  expiresAt?: Date | string | null
 }
 
 export type APIKeyUncheckedCreateWithoutOrganizationInput = {
@@ -499,6 +631,9 @@ export type APIKeyUncheckedCreateWithoutOrganizationInput = {
   revokedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  scopes?: Prisma.APIKeyCreatescopesInput | string[]
+  rateLimitRps?: number
+  expiresAt?: Date | string | null
 }
 
 export type APIKeyCreateOrConnectWithoutOrganizationInput = {
@@ -541,6 +676,9 @@ export type APIKeyScalarWhereInput = {
   revokedAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"APIKey"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"APIKey"> | Date | string
+  scopes?: Prisma.StringNullableListFilter<"APIKey">
+  rateLimitRps?: Prisma.IntFilter<"APIKey"> | number
+  expiresAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
 }
 
 export type APIKeyCreateManyOrganizationInput = {
@@ -553,6 +691,9 @@ export type APIKeyCreateManyOrganizationInput = {
   revokedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  scopes?: Prisma.APIKeyCreatescopesInput | string[]
+  rateLimitRps?: number
+  expiresAt?: Date | string | null
 }
 
 export type APIKeyUpdateWithoutOrganizationInput = {
@@ -565,6 +706,9 @@ export type APIKeyUpdateWithoutOrganizationInput = {
   revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scopes?: Prisma.APIKeyUpdatescopesInput | string[]
+  rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type APIKeyUncheckedUpdateWithoutOrganizationInput = {
@@ -577,6 +721,9 @@ export type APIKeyUncheckedUpdateWithoutOrganizationInput = {
   revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scopes?: Prisma.APIKeyUpdatescopesInput | string[]
+  rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type APIKeyUncheckedUpdateManyWithoutOrganizationInput = {
@@ -589,6 +736,9 @@ export type APIKeyUncheckedUpdateManyWithoutOrganizationInput = {
   revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scopes?: Prisma.APIKeyUpdatescopesInput | string[]
+  rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -604,6 +754,9 @@ export type APIKeySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   revokedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  scopes?: boolean
+  rateLimitRps?: boolean
+  expiresAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aPIKey"]>
 
@@ -618,6 +771,9 @@ export type APIKeySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   revokedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  scopes?: boolean
+  rateLimitRps?: boolean
+  expiresAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aPIKey"]>
 
@@ -632,6 +788,9 @@ export type APIKeySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   revokedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  scopes?: boolean
+  rateLimitRps?: boolean
+  expiresAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aPIKey"]>
 
@@ -646,9 +805,12 @@ export type APIKeySelectScalar = {
   revokedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  scopes?: boolean
+  rateLimitRps?: boolean
+  expiresAt?: boolean
 }
 
-export type APIKeyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "keyHash" | "keyPrefix" | "organizationId" | "createdById" | "lastUsedAt" | "revokedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["aPIKey"]>
+export type APIKeyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "keyHash" | "keyPrefix" | "organizationId" | "createdById" | "lastUsedAt" | "revokedAt" | "createdAt" | "updatedAt" | "scopes" | "rateLimitRps" | "expiresAt", ExtArgs["result"]["aPIKey"]>
 export type APIKeyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }
@@ -675,6 +837,9 @@ export type $APIKeyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     revokedAt: Date | null
     createdAt: Date
     updatedAt: Date
+    scopes: string[]
+    rateLimitRps: number
+    expiresAt: Date | null
   }, ExtArgs["result"]["aPIKey"]>
   composites: {}
 }
@@ -1109,6 +1274,9 @@ export interface APIKeyFieldRefs {
   readonly revokedAt: Prisma.FieldRef<"APIKey", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"APIKey", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"APIKey", 'DateTime'>
+  readonly scopes: Prisma.FieldRef<"APIKey", 'String[]'>
+  readonly rateLimitRps: Prisma.FieldRef<"APIKey", 'Int'>
+  readonly expiresAt: Prisma.FieldRef<"APIKey", 'DateTime'>
 }
     
 

@@ -399,6 +399,8 @@ export const ModelName = {
   Nft: 'Nft',
   UserActivity: 'UserActivity',
   TenantUsage: 'TenantUsage',
+  ModelConfig: 'ModelConfig',
+  RequestLog: 'RequestLog',
   AIRequest: 'AIRequest',
   UserPreference: 'UserPreference',
   Recommendation: 'Recommendation',
@@ -458,7 +460,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "aPIKey" | "user" | "organizationMember" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "wallet" | "nft" | "userActivity" | "tenantUsage" | "aIRequest" | "userPreference" | "recommendation" | "featureFlag" | "featureFlagOverride" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageRecord" | "usageLedgerEntry" | "usageAggregate" | "creditBalance" | "creditTransaction" | "entitlement" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection"
+    modelProps: "organization" | "aPIKey" | "user" | "organizationMember" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "wallet" | "nft" | "userActivity" | "tenantUsage" | "modelConfig" | "requestLog" | "aIRequest" | "userPreference" | "recommendation" | "featureFlag" | "featureFlagOverride" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageRecord" | "usageLedgerEntry" | "usageAggregate" | "creditBalance" | "creditTransaction" | "entitlement" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1553,6 +1555,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TenantUsageCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TenantUsageCountAggregateOutputType> | number
+        }
+      }
+    }
+    ModelConfig: {
+      payload: Prisma.$ModelConfigPayload<ExtArgs>
+      fields: Prisma.ModelConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ModelConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ModelConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.ModelConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ModelConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload>
+        }
+        findMany: {
+          args: Prisma.ModelConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload>[]
+        }
+        create: {
+          args: Prisma.ModelConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload>
+        }
+        createMany: {
+          args: Prisma.ModelConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ModelConfigCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload>[]
+        }
+        delete: {
+          args: Prisma.ModelConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload>
+        }
+        update: {
+          args: Prisma.ModelConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.ModelConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ModelConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ModelConfigUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload>[]
+        }
+        upsert: {
+          args: Prisma.ModelConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.ModelConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateModelConfig>
+        }
+        groupBy: {
+          args: Prisma.ModelConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ModelConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ModelConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ModelConfigCountAggregateOutputType> | number
+        }
+      }
+    }
+    RequestLog: {
+      payload: Prisma.$RequestLogPayload<ExtArgs>
+      fields: Prisma.RequestLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RequestLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RequestLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload>
+        }
+        findFirst: {
+          args: Prisma.RequestLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RequestLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload>
+        }
+        findMany: {
+          args: Prisma.RequestLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload>[]
+        }
+        create: {
+          args: Prisma.RequestLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload>
+        }
+        createMany: {
+          args: Prisma.RequestLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RequestLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload>[]
+        }
+        delete: {
+          args: Prisma.RequestLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload>
+        }
+        update: {
+          args: Prisma.RequestLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.RequestLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RequestLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RequestLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.RequestLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestLogPayload>
+        }
+        aggregate: {
+          args: Prisma.RequestLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRequestLog>
+        }
+        groupBy: {
+          args: Prisma.RequestLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RequestLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RequestLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RequestLogCountAggregateOutputType> | number
         }
       }
     }
@@ -4874,7 +5024,10 @@ export const APIKeyScalarFieldEnum = {
   lastUsedAt: 'lastUsedAt',
   revokedAt: 'revokedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  scopes: 'scopes',
+  rateLimitRps: 'rateLimitRps',
+  expiresAt: 'expiresAt'
 } as const
 
 export type APIKeyScalarFieldEnum = (typeof APIKeyScalarFieldEnum)[keyof typeof APIKeyScalarFieldEnum]
@@ -5066,6 +5219,40 @@ export const TenantUsageScalarFieldEnum = {
 } as const
 
 export type TenantUsageScalarFieldEnum = (typeof TenantUsageScalarFieldEnum)[keyof typeof TenantUsageScalarFieldEnum]
+
+
+export const ModelConfigScalarFieldEnum = {
+  id: 'id',
+  modelName: 'modelName',
+  provider: 'provider',
+  inputPricePerMillion: 'inputPricePerMillion',
+  outputPricePerMillion: 'outputPricePerMillion',
+  currency: 'currency',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModelConfigScalarFieldEnum = (typeof ModelConfigScalarFieldEnum)[keyof typeof ModelConfigScalarFieldEnum]
+
+
+export const RequestLogScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  apiKeyId: 'apiKeyId',
+  organizationId: 'organizationId',
+  model: 'model',
+  promptTokens: 'promptTokens',
+  completionTokens: 'completionTokens',
+  totalTokens: 'totalTokens',
+  cost: 'cost',
+  latencyMs: 'latencyMs',
+  status: 'status',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt'
+} as const
+
+export type RequestLogScalarFieldEnum = (typeof RequestLogScalarFieldEnum)[keyof typeof RequestLogScalarFieldEnum]
 
 
 export const AIRequestScalarFieldEnum = {
@@ -5938,6 +6125,20 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'Role'
  */
 export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
@@ -5976,20 +6177,6 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Decimal[]'
  */
 export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -6071,20 +6258,6 @@ export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'AIRequestType'
- */
-export type EnumAIRequestTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AIRequestType'>
-    
-
-
-/**
- * Reference to a field of type 'AIRequestType[]'
- */
-export type ListEnumAIRequestTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AIRequestType[]'>
-    
-
-
-/**
  * Reference to a field of type 'AIProvider'
  */
 export type EnumAIProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AIProvider'>
@@ -6095,6 +6268,20 @@ export type EnumAIProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'AIProvider[]'
  */
 export type ListEnumAIProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AIProvider[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AIRequestType'
+ */
+export type EnumAIRequestTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AIRequestType'>
+    
+
+
+/**
+ * Reference to a field of type 'AIRequestType[]'
+ */
+export type ListEnumAIRequestTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AIRequestType[]'>
     
 
 
@@ -6221,20 +6408,6 @@ export type EnumCreditTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInput
  * Reference to a field of type 'CreditTransactionType[]'
  */
 export type ListEnumCreditTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CreditTransactionType[]'>
-    
-
-
-/**
- * Reference to a field of type 'AuditAction'
- */
-export type EnumAuditActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuditAction'>
-    
-
-
-/**
- * Reference to a field of type 'AuditAction[]'
- */
-export type ListEnumAuditActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuditAction[]'>
     
 
 
@@ -6459,6 +6632,8 @@ export type GlobalOmitConfig = {
   nft?: Prisma.NftOmit
   userActivity?: Prisma.UserActivityOmit
   tenantUsage?: Prisma.TenantUsageOmit
+  modelConfig?: Prisma.ModelConfigOmit
+  requestLog?: Prisma.RequestLogOmit
   aIRequest?: Prisma.AIRequestOmit
   userPreference?: Prisma.UserPreferenceOmit
   recommendation?: Prisma.RecommendationOmit
