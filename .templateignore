@@ -133,3 +133,4 @@ tests/load/
 # ---------------------------------------------------------------------------
 .templateignore
 TEMPLATE.md
+apps/sailor-docs/

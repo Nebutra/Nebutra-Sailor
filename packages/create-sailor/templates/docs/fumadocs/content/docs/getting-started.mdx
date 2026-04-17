@@ -1,0 +1,56 @@
+---
+title: Getting Started
+description: Run your first example in 5 minutes
+---
+
+{/* 2026 BEST PRACTICE: Getting Started's ONLY goal is 5-minute first example */}
+{/* 2026 BEST PRACTICE: No architecture explanation here — that belongs in Concepts */}
+{/* 2026 BEST PRACTICE: Structure: Install → Initialize → Hello World → Next steps */}
+
+# Getting Started
+
+## Install
+
+```bash
+npm install @your-product/sdk
+```
+
+## Initialize
+
+```ts title="src/index.ts"
+import { YourProduct } from '@your-product/sdk';
+
+const client = new YourProduct({
+  apiKey: process.env.YOUR_API_KEY,
+});
+```
+
+## Hello World
+
+<Tabs items={['TypeScript', 'Python', 'cURL']}>
+<Tab value="TypeScript">
+```ts
+const result = await client.hello();
+console.log(result);
+```
+</Tab>
+<Tab value="Python">
+```python
+result = client.hello()
+print(result)
+```
+</Tab>
+<Tab value="cURL">
+```bash
+curl https://api.your-product.com/hello \
+  -H "Authorization: Bearer $YOUR_API_KEY"
+```
+</Tab>
+</Tabs>
+
+## Next steps
+
+<Cards>
+  <Card title="Concepts" href="/docs/concepts" />
+  <Card title="API Reference" href="/docs/api" />
+</Cards>

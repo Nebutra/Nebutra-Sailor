@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+/* Pull in Nebutra design tokens (brand colors, semantic scales, gradients). */
+@import "@nebutra/tokens/styles.css";
+
+/* Tell Tailwind v4 to scan @nebutra/ui source so its utility classes compile. */
+@source "../node_modules/@nebutra/ui/src/**/*.{ts,tsx}";
+@source "../node_modules/fumadocs-ui/dist/**/*.js";

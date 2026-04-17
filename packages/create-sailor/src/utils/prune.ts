@@ -305,20 +305,6 @@ export { default } from './mock-i18n';
     }
   }
 
-  // 3. Application Type Pruning (Stripping heavy backends)
-  if (config.applicationType !== "full") {
-    const packagesToRemove: string[] = [];
-    if (config.applicationType === "saas") {
-      packagesToRemove.push("contracts"); // Strip Web3 smart contracts
-      // More domain removals can be added here
-    }
-
-    for (const pkg of packagesToRemove) {
-      const p = path.join(targetDir, "packages", pkg);
-      if (fs.existsSync(p)) fs.rmSync(p, { recursive: true, force: true });
-    }
-  }
-
   // Save the pruned root package.json back
   fs.writeFileSync(rootPkgPath, JSON.stringify(rootPkg, null, 2) + "\n");
 }
