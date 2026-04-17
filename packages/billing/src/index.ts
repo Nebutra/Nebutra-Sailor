@@ -46,6 +46,19 @@
  * ```
  */
 
+// Checkout (provider-agnostic abstraction)
+export {
+  type CheckoutConfig,
+  type CheckoutProvider,
+  type CheckoutProviderType,
+  CREDIT_PURCHASE_METADATA_TYPE,
+  type CreditPurchaseInput,
+  CreditPurchaseInputSchema,
+  type CreditPurchaseMetadata,
+  type CreditPurchaseSession,
+  detectProvider,
+  getCheckout,
+} from "./checkout/index.js";
 // China Payment (Alipay + WeChat Pay via aggregator)
 export {
   createChinaPayOrder,
