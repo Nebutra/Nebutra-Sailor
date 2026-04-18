@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type { MeteringProvider } from "./types.js";
+import type { MeteringProvider } from "./types";
 
 // =============================================================================
 // Metering Middleware — Hono integration for automatic API metering

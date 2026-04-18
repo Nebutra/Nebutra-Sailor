@@ -2,11 +2,72 @@ import { CheckCircle, LogoGithub as Github } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Badge, Button, Card } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import Link from "next/link";
+import { Suspense } from "react";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
+import { getExchangeRate } from "@/lib/pricing/exchange-rates";
+
+const COMMERCIAL_BASE_PRICE_USD = 799;
+
+/**
+ * Async child component that resolves geo-aware pricing.
+ *
+ * Wrapped in <Suspense> at the call site so Next 16 Cache Components (PPR)
+ * can statically render the marketing shell and stream in the localized
+ * price when the request arrives. Avoids "Uncached data accessed outside
+ * of <Suspense>" prerender errors while preserving user-facing value.
+ */
+async function CommercialPriceBadge({
+  lang,
+  label,
+}: {
+  lang: Locale;
+  label: (price: string) => string;
+}) {
+  const headersList = await headers();
+  const userCurrency = headersList.get("x-user-currency") ?? "USD";
+  const exchangeRate = await getExchangeRate(userCurrency);
+  const commercialPrice = new Intl.NumberFormat(lang, {
+    style: "currency",
+    currency: userCurrency,
+    maximumFractionDigits: 0,
+  }).format(COMMERCIAL_BASE_PRICE_USD * exchangeRate);
+
+  return (
+    <Badge
+      className="mb-6 w-fit bg-muted text-muted-foreground border-border"
+      variant="outline"
+    >
+      {label(commercialPrice)}
+    </Badge>
+  );
+}
+
+function CommercialPriceBadgeFallback({
+  lang,
+  label,
+}: {
+  lang: Locale;
+  label: (price: string) => string;
+}) {
+  const fallbackPrice = new Intl.NumberFormat(lang, {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(COMMERCIAL_BASE_PRICE_USD);
+  return (
+    <Badge
+      className="mb-6 w-fit bg-muted text-muted-foreground border-border"
+      variant="outline"
+    >
+      {label(fallbackPrice)}
+    </Badge>
+  );
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -19,9 +80,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
+  const t = await getTranslations({ locale: lang as Locale, namespace: "licensing.meta" });
   return {
-    title: `Licensing — Nebutra`,
-    description: "Dual license model: AGPL-3.0 open source or commercial licenses.",
+    title: t("title"),
+    description: t("description"),
     alternates: { canonical: `/${lang}/licensing` },
   };
 }
@@ -29,6 +91,21 @@ export async function generateMetadata({
 export default async function LicensingPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
+  const t = await getTranslations({ locale: lang as Locale, namespace: "licensing" });
+
+  // Geo-aware pricing is resolved in <CommercialPriceBadge> (async server
+  // component wrapped in <Suspense>). The marketing shell renders statically;
+  // localized price streams in on request. Next 16 Cache Components pattern.
+  const commercialBadgeLabel = (price: string) =>
+    t("plans.commercial.badge", { price });
+
+  const faqItems = [
+    { q: t("faq.items.whyAgpl.q"), a: t("faq.items.whyAgpl.a") },
+    { q: t("faq.items.soloFree.q"), a: t("faq.items.soloFree.a") },
+    { q: t("faq.items.opcDefinition.q"), a: t("faq.items.opcDefinition.a") },
+    { q: t("faq.items.upgrade.q"), a: t("faq.items.upgrade.a") },
+    { q: t("faq.items.contributions.q"), a: t("faq.items.contributions.a") },
+  ];
 
   return (
     <main
@@ -43,23 +120,24 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
 
         <AnimateIn preset="emerge" inView>
           <h1 className="text-5xl font-black tracking-tighter sm:text-7xl mb-8 leading-[1.1]">
-            Dual{" "}
-            <span
-              className="text-transparent bg-clip-text"
-              style={{
-                background: "var(--brand-gradient)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              License
-            </span>{" "}
-            Model
+            {t.rich("hero.title", {
+              hl: (chunks) => (
+                <span
+                  className="text-transparent bg-clip-text"
+                  style={{
+                    background: "var(--brand-gradient)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  {chunks}
+                </span>
+              ),
+            })}
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground leading-relaxed font-medium">
-            Nebutra-Sailor is open source under AGPL-3.0. We also offer commercial licenses for
-            teams building closed-source products.
+            {t("hero.description")}
           </p>
         </AnimateIn>
       </section>
@@ -77,34 +155,46 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                 className="mb-6 w-fit bg-muted text-muted-foreground border-border"
                 variant="outline"
               >
-                Always Free
+                {t("plans.agpl.badge")}
               </Badge>
 
               <div className="mb-6">
-                <h3 className="text-2xl font-black tracking-tight mb-2">AGPL-3.0</h3>
-                <p className="text-sm font-medium text-muted-foreground">Open Source</p>
+                <h3 className="text-2xl font-black tracking-tight mb-2">
+                  {t("plans.agpl.title")}
+                </h3>
+                <p className="text-sm font-medium text-muted-foreground">
+                  {t("plans.agpl.subtitle")}
+                </p>
               </div>
 
               <p className="text-muted-foreground text-sm mb-6 leading-relaxed min-h-[50px]">
-                Open source projects, academic research, personal learning
+                {t("plans.agpl.description")}
               </p>
 
               <div className="space-y-3 flex-grow mb-8">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">Full source code access</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.agpl.features.sourceAccess")}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">Must open-source your product</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.agpl.features.mustOpenSource")}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">Must credit Nebutra-Sailor</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.agpl.features.mustCredit")}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">Community support only</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.agpl.features.communitySupport")}
+                  </span>
                 </div>
               </div>
 
@@ -118,7 +208,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                   className="flex items-center justify-center gap-2"
                 >
                   <Github className="h-4 w-4" />
-                  View on GitHub
+                  {t("plans.agpl.cta")}
                 </a>
               </Button>
             </Card>
@@ -133,34 +223,46 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                 className="mb-6 w-fit bg-primary text-primary-foreground border-none"
                 variant="default"
               >
-                Free Forever
+                {t("plans.freeCommercial.badge")}
               </Badge>
 
               <div className="mb-6">
-                <h3 className="text-2xl font-black tracking-tight mb-2">Free Commercial</h3>
-                <p className="text-sm font-medium text-muted-foreground">Individual & Solo</p>
+                <h3 className="text-2xl font-black tracking-tight mb-2">
+                  {t("plans.freeCommercial.title")}
+                </h3>
+                <p className="text-sm font-medium text-muted-foreground">
+                  {t("plans.freeCommercial.subtitle")}
+                </p>
               </div>
 
               <p className="text-muted-foreground text-sm mb-6 leading-relaxed min-h-[50px]">
-                Solo developers, one-person companies, solopreneurs
+                {t("plans.freeCommercial.description")}
               </p>
 
               <div className="space-y-3 flex-grow mb-8">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">Use in closed-source products</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.freeCommercial.features.closedSource")}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">Team size ≤ 1 FTE</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.freeCommercial.features.teamSize")}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">Credit required</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.freeCommercial.features.creditRequired")}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">Free license key via registration</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.freeCommercial.features.freeKey")}
+                  </span>
                 </div>
               </div>
 
@@ -169,7 +271,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                 variant="default"
                 asChild
               >
-                <Link href="/get-license">Get Your Free License</Link>
+                <Link href="/get-license">{t("plans.freeCommercial.cta")}</Link>
               </Button>
             </Card>
           </AnimateIn>
@@ -177,38 +279,54 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
           {/* Card 3: Startup / Enterprise */}
           <AnimateIn preset="fadeUp" inView>
             <Card className="p-8 relative flex flex-col overflow-hidden rounded-[2.5rem] transition-all hover:shadow-xl border-border/50 bg-background/50 backdrop-blur-md h-full">
-              <Badge
-                className="mb-6 w-fit bg-muted text-muted-foreground border-border"
-                variant="outline"
+              <Suspense
+                fallback={
+                  <CommercialPriceBadgeFallback
+                    lang={lang as Locale}
+                    label={commercialBadgeLabel}
+                  />
+                }
               >
-                From $799/yr
-              </Badge>
+                <CommercialPriceBadge lang={lang as Locale} label={commercialBadgeLabel} />
+              </Suspense>
 
               <div className="mb-6">
-                <h3 className="text-2xl font-black tracking-tight mb-2">Commercial</h3>
-                <p className="text-sm font-medium text-muted-foreground">Startup & Enterprise</p>
+                <h3 className="text-2xl font-black tracking-tight mb-2">
+                  {t("plans.commercial.title")}
+                </h3>
+                <p className="text-sm font-medium text-muted-foreground">
+                  {t("plans.commercial.subtitle")}
+                </p>
               </div>
 
               <p className="text-muted-foreground text-sm mb-6 leading-relaxed min-h-[50px]">
-                Startups, agencies, teams (2+ people), commercial SaaS products
+                {t("plans.commercial.description")}
               </p>
 
               <div className="space-y-3 flex-grow mb-8">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">Use in closed-source products</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.commercial.features.closedSource")}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">No copyleft obligations</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.commercial.features.noCopyleft")}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">No team size limits</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.commercial.features.noTeamLimits")}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">Commercial support available</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.commercial.features.commercialSupport")}
+                  </span>
                 </div>
               </div>
 
@@ -217,7 +335,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                 variant="secondary"
                 asChild
               >
-                <Link href="/get-license">Get Commercial License</Link>
+                <Link href="/get-license">{t("plans.commercial.cta")}</Link>
               </Button>
             </Card>
           </AnimateIn>
@@ -228,34 +346,13 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
       <section className="relative z-10 mx-auto max-w-4xl px-4 pb-32 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
           <h2 className="text-4xl font-black tracking-tight mb-12 text-center">
-            Frequently Asked Questions
+            {t("faq.title")}
           </h2>
         </AnimateIn>
 
         <div className="space-y-8">
           <AnimateInGroup stagger="normal">
-            {[
-              {
-                q: "Why AGPL-3.0?",
-                a: "AGPL ensures that improvements to the template stay open source. Commercial license removes this obligation for businesses.",
-              },
-              {
-                q: "Am I really free as a solo developer?",
-                a: "Yes, completely. Register at /get-license, get your key, build your product. No strings attached.",
-              },
-              {
-                q: 'What counts as a "one-person company"?',
-                a: "One full-time equivalent or less. If you hire your first employee, you'll need a Startup license (we'll remind you).",
-              },
-              {
-                q: "Can I upgrade later?",
-                a: "Absolutely. Your community profile carries over. Just purchase the Startup license when you're ready.",
-              },
-              {
-                q: "What about open source contributions?",
-                a: "All contributions require a CLA. See CONTRIBUTING.md.",
-              },
-            ].map((item, idx) => (
+            {faqItems.map((item, idx) => (
               <AnimateIn key={idx} preset="fadeUp" inView>
                 <div className="border border-border/50 rounded-2xl p-6 bg-background/50 backdrop-blur-md hover:border-primary/30 transition-colors">
                   <h3 className="text-lg font-bold mb-3">{item.q}</h3>

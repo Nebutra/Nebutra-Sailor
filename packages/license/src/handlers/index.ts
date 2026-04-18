@@ -1,1 +1,1 @@
-export { onLicenseIssued } from "./on-license-issued.js";
+export { onLicenseIssued } from "./on-license-issued";

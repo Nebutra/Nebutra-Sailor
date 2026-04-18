@@ -22,7 +22,7 @@ describe("validateLicense", () => {
       expiresAt: null, // perpetual
     });
 
-    const { validateLicense } = await import("../validate-license.js");
+    const { validateLicense } = await import("../validate-license");
     const result = await validateLicense("valid-key-123");
 
     expect(result).toEqual({ valid: true, tier: "OPC", type: "FREE" });
@@ -39,7 +39,7 @@ describe("validateLicense", () => {
       expiresAt: new Date("2020-01-01"), // in the past
     });
 
-    const { validateLicense } = await import("../validate-license.js");
+    const { validateLicense } = await import("../validate-license");
     const result = await validateLicense("expired-key");
 
     expect(result).toEqual({ valid: false, error: "License has expired" });
@@ -48,7 +48,7 @@ describe("validateLicense", () => {
   it("returns valid=false for non-existent key", async () => {
     mockFindFirst.mockResolvedValue(null);
 
-    const { validateLicense } = await import("../validate-license.js");
+    const { validateLicense } = await import("../validate-license");
     const result = await validateLicense("nonexistent-key");
 
     expect(result).toEqual({ valid: false, error: "License key not found" });
@@ -61,7 +61,7 @@ describe("validateLicense", () => {
       expiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
     });
 
-    const { validateLicense } = await import("../validate-license.js");
+    const { validateLicense } = await import("../validate-license");
     const result = await validateLicense("active-paid-key");
 
     expect(result).toEqual({ valid: true, tier: "STARTUP", type: "COMMERCIAL" });

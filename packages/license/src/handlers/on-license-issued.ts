@@ -1,8 +1,8 @@
 import { getSystemDb } from "@nebutra/db";
 import { sendLicenseCreatedEmail } from "@nebutra/email";
 import { logger } from "@nebutra/logger";
-import { generateSlug } from "../generate-slug.js";
-import type { LicenseIssuedEvent } from "../types.js";
+import { generateSlug } from "../generate-slug";
+import type { LicenseIssuedEvent } from "../types";
 
 const log = logger.child({ service: "license:on-issued" });
 

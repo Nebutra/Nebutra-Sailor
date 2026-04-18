@@ -6,6 +6,7 @@ import { getSystemDb } from "@nebutra/db";
 // any tenant/organization context. The authenticated user's Clerk id is the
 // sole key, and this route runs before any Organization exists for the user.
 const prisma = getSystemDb();
+
 import { issueLicense } from "@nebutra/license";
 import { logger } from "@nebutra/logger";
 import { type NextRequest, NextResponse } from "next/server";

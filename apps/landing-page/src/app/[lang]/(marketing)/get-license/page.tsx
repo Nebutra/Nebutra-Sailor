@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
@@ -12,10 +12,19 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
 }
 
-export const metadata: Metadata = {
-  title: "Get Your License — Nebutra",
-  description: "Join the Nebutra community. Get your free license in 2 minutes.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(routing.locales, lang)) return {};
+  const t = await getTranslations({ locale: lang as Locale, namespace: "getLicenseMeta" });
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 async function RequireAuth({ lang, children }: { lang: string; children: React.ReactNode }) {
   const { userId } = await auth();

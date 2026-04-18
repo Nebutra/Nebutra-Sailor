@@ -24,7 +24,7 @@ export {
   createMetering,
   getMetering,
   setMetering,
-} from "./factory.js";
+} from "./factory";
 // ── Standard Meters ─────────────────────────────────────────────────────────
 export {
   ACTIVE_USERS,
@@ -38,16 +38,16 @@ export {
   REQUEST_LATENCY,
   STORAGE_BYTES,
   WEBHOOKS_FIRED,
-} from "./meters.js";
+} from "./meters";
 // ── Middleware ───────────────────────────────────────────────────────────────
 export {
   createMeteringWrapper,
   meterApiCall,
   meterOperation,
-} from "./middleware.js";
+} from "./middleware";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
-export { ClickHouseProvider } from "./providers/clickhouse.js";
-export { MemoryProvider } from "./providers/memory.js";
+export { ClickHouseProvider } from "./providers/clickhouse";
+export { MemoryProvider } from "./providers/memory";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 export type {
@@ -64,9 +64,9 @@ export type {
   UsageEvent,
   UsageQuota,
   UsageSummary,
-} from "./types.js";
+} from "./types";
 
 export {
   MeterDefinitionSchema,
   UsageEventSchema,
-} from "./types.js";
+} from "./types";

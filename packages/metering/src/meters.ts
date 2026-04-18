@@ -1,4 +1,4 @@
-import type { MeterDefinition } from "./types.js";
+import type { MeterDefinition } from "./types";
 
 // =============================================================================
 // Common SaaS Meters — pre-configured meter definitions for typical billing scenarios

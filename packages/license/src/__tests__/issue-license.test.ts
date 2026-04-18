@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { IssueLicenseParams } from "../types.js";
+import type { IssueLicenseParams } from "../types";
 
 // ── Mocks ───────────────────────────────────────────────────────────────────
 
@@ -59,7 +59,7 @@ describe("issueLicense", () => {
   });
 
   it("creates a FREE license for INDIVIDUAL tier", async () => {
-    const { issueLicense } = await import("../issue-license.js");
+    const { issueLicense } = await import("../issue-license");
 
     const result = await issueLicense({ ...baseParams, tier: "INDIVIDUAL" });
 
@@ -72,7 +72,7 @@ describe("issueLicense", () => {
   });
 
   it("creates a FREE license for OPC tier", async () => {
-    const { issueLicense } = await import("../issue-license.js");
+    const { issueLicense } = await import("../issue-license");
 
     const result = await issueLicense({ ...baseParams, tier: "OPC" });
 
@@ -91,7 +91,7 @@ describe("issueLicense", () => {
       expiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
     });
 
-    const { issueLicense } = await import("../issue-license.js");
+    const { issueLicense } = await import("../issue-license");
     const result = await issueLicense({ ...baseParams, tier: "STARTUP" });
 
     const createArgs = mockLicenseCreate.mock.calls[0]![0];
@@ -110,7 +110,7 @@ describe("issueLicense", () => {
       expiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
     });
 
-    const { issueLicense } = await import("../issue-license.js");
+    const { issueLicense } = await import("../issue-license");
     const result = await issueLicense({ ...baseParams, tier: "ENTERPRISE" });
 
     const createArgs = mockLicenseCreate.mock.calls[0]![0];
@@ -120,7 +120,7 @@ describe("issueLicense", () => {
   });
 
   it("stores acceptedIp and project metadata", async () => {
-    const { issueLicense } = await import("../issue-license.js");
+    const { issueLicense } = await import("../issue-license");
 
     await issueLicense({
       ...baseParams,
@@ -136,7 +136,7 @@ describe("issueLicense", () => {
   });
 
   it("enqueues a license.issued event to the queue", async () => {
-    const { issueLicense } = await import("../issue-license.js");
+    const { issueLicense } = await import("../issue-license");
 
     await issueLicense({
       ...baseParams,
@@ -156,7 +156,7 @@ describe("issueLicense", () => {
   });
 
   it("returns the created license fields", async () => {
-    const { issueLicense } = await import("../issue-license.js");
+    const { issueLicense } = await import("../issue-license");
 
     const result = await issueLicense(baseParams);
 
@@ -178,7 +178,7 @@ describe("issueLicense", () => {
       expiresAt: null,
     });
 
-    const { issueLicense } = await import("../issue-license.js");
+    const { issueLicense } = await import("../issue-license");
     const result = await issueLicense(baseParams);
 
     expect(mockLicenseCreate).not.toHaveBeenCalled();

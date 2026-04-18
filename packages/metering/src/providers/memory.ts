@@ -8,8 +8,8 @@ import type {
   UsageEvent,
   UsageQuota,
   UsageSummary,
-} from "../types.js";
-import { UsageEventSchema } from "../types.js";
+} from "../types";
+import { UsageEventSchema } from "../types";
 
 // =============================================================================
 // Memory Provider — in-memory metering for local dev & testing

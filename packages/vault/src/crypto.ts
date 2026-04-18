@@ -1,5 +1,5 @@
 import { createCipheriv, createDecipheriv, hkdf, randomBytes } from "node:crypto";
-import type { AesDecryptOptions, AesEncryptResult } from "./types.js";
+import type { AesDecryptOptions, AesEncryptResult } from "./types";
 
 // =============================================================================
 // Cryptographic utilities for vault operations

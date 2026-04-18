@@ -1,5 +1,5 @@
-import { getVault } from "./factory.js";
-import type { EncryptedSecret } from "./types.js";
+import { getVault } from "./factory";
+import type { EncryptedSecret } from "./types";
 
 // =============================================================================
 // JSON envelope helpers — convenience wrappers around getVault().encrypt/decrypt
@@ -89,10 +89,7 @@ export async function decryptJSON<T = unknown>(
   const vault = await getVault();
   const tenantId = options.context?.tenantId;
 
-  const plaintext = await vault.decrypt(
-    cipher,
-    tenantId !== undefined ? { tenantId } : undefined,
-  );
+  const plaintext = await vault.decrypt(cipher, tenantId !== undefined ? { tenantId } : undefined);
 
   try {
     return JSON.parse(plaintext) as T;

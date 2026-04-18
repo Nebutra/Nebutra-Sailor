@@ -1,5 +1,5 @@
-export { generateSlug } from "./generate-slug.js";
-export { issueLicense } from "./issue-license.js";
+export { generateSlug } from "./generate-slug";
+export { issueLicense } from "./issue-license";
 export type {
   IssueLicenseParams,
   IssueLicenseResult,
@@ -7,6 +7,6 @@ export type {
   LicenseTier,
   LicenseType,
   ValidateLicenseResult,
-} from "./types.js";
-export { LicenseTierSchema, LicenseTypeSchema } from "./types.js";
-export { validateLicense } from "./validate-license.js";
+} from "./types";
+export { LicenseTierSchema, LicenseTypeSchema } from "./types";
+export { validateLicense } from "./validate-license";

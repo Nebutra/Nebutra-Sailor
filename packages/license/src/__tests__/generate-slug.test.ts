@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateSlug } from "../generate-slug.js";
+import { generateSlug } from "../generate-slug";
 
 describe("generateSlug", () => {
   it("converts display name to lowercase kebab-case with member number suffix", () => {

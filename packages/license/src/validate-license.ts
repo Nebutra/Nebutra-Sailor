@@ -1,5 +1,5 @@
 import { getSystemDb } from "@nebutra/db";
-import type { ValidateLicenseResult } from "./types.js";
+import type { ValidateLicenseResult } from "./types";
 
 /**
  * Validate a license key.

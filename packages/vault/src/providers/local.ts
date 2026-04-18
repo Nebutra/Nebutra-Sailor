@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { logger } from "@nebutra/logger";
-import { aesDecrypt, aesEncrypt, deriveKey, fromBase64, generateKey, toBase64 } from "../crypto.js";
-import type { EncryptedSecret, LocalProviderConfig, VaultProvider } from "../types.js";
+import { aesDecrypt, aesEncrypt, deriveKey, fromBase64, generateKey, toBase64 } from "../crypto";
+import type { EncryptedSecret, LocalProviderConfig, VaultProvider } from "../types";
 
 // =============================================================================
 // Local Vault Provider

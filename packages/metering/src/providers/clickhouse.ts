@@ -9,8 +9,8 @@ import type {
   UsageEvent,
   UsageQuota,
   UsageSummary,
-} from "../types.js";
-import { UsageEventSchema } from "../types.js";
+} from "../types";
+import { UsageEventSchema } from "../types";
 
 // =============================================================================
 // ClickHouse Provider — production usage metering

@@ -4,7 +4,7 @@ import type {
   MeteringConfig,
   MeteringProvider,
   MeteringProviderType,
-} from "./types.js";
+} from "./types";
 
 // =============================================================================
 // Metering Factory — Provider-agnostic metering creation
@@ -57,7 +57,7 @@ export async function createMetering(config?: MeteringConfig): Promise<MeteringP
 
   switch (providerType) {
     case "clickhouse": {
-      const { ClickHouseProvider } = await import("./providers/clickhouse.js");
+      const { ClickHouseProvider } = await import("./providers/clickhouse");
       const chConfig = config as Exclude<MeteringConfig, { provider: "memory" }> | undefined;
       return new ClickHouseProvider({
         httpUrl: chConfig?.httpUrl,
@@ -70,7 +70,7 @@ export async function createMetering(config?: MeteringConfig): Promise<MeteringP
     }
 
     case "memory": {
-      const { MemoryProvider } = await import("./providers/memory.js");
+      const { MemoryProvider } = await import("./providers/memory");
       return new MemoryProvider();
     }
 

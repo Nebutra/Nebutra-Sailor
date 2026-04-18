@@ -22,24 +22,24 @@ export {
   generateIv,
   generateKey,
   toBase64,
-} from "./crypto.js";
+} from "./crypto";
 // ── Factory ─────────────────────────────────────────────────────────────────
 export {
   closeVault,
   createVault,
   getVault,
   setVault,
-} from "./factory.js";
+} from "./factory";
+export type { DecryptJSONOptions, EncryptJSONOptions } from "./json";
 // ── JSON helpers (application-level convenience) ────────────────────────────
 export {
   decryptJSON,
   encryptJSON,
   isEncryptedSecret,
-} from "./json.js";
-export type { DecryptJSONOptions, EncryptJSONOptions } from "./json.js";
+} from "./json";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
-export { AWSKMSProvider } from "./providers/aws-kms.js";
-export { LocalProvider } from "./providers/local.js";
+export { AWSKMSProvider } from "./providers/aws-kms";
+export { LocalProvider } from "./providers/local";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 export type {
@@ -54,8 +54,8 @@ export type {
   VaultConfig,
   VaultProvider,
   VaultProviderType,
-} from "./types.js";
+} from "./types";
 export {
   EncryptedSecretSchema,
   SecretMetadataSchema,
-} from "./types.js";
+} from "./types";

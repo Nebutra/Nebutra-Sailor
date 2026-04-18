@@ -6,7 +6,7 @@ import type {
   IssueLicenseResult,
   LicenseIssuedEvent,
   LicenseType,
-} from "./types.js";
+} from "./types";
 
 const log = logger.child({ service: "license" });
 
