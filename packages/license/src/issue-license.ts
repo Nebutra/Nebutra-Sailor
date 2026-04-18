@@ -1,4 +1,4 @@
-import { prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { createJob, getQueue } from "@nebutra/queue";
 import type {
@@ -28,8 +28,12 @@ function resolveLicenseType(tier: IssueLicenseParams["tier"]): LicenseType {
 export async function issueLicense(params: IssueLicenseParams): Promise<IssueLicenseResult> {
   const { userId, tier } = params;
 
+  // AUDIT(no-tenant): licenses are user-scoped (not tenant-scoped); they pre-
+  // date any Organization membership and are queried by userId/licenseKey.
+  const db = getSystemDb();
+
   // Idempotency: check for existing license
-  const existing = await prisma.license.findFirst({
+  const existing = await db.license.findFirst({
     where: { userId, tier },
   });
 
@@ -47,7 +51,7 @@ export async function issueLicense(params: IssueLicenseParams): Promise<IssueLic
   const type = resolveLicenseType(tier);
   const isFree = type === "FREE";
 
-  const license = await prisma.license.create({
+  const license = await db.license.create({
     data: {
       userId,
       tier,

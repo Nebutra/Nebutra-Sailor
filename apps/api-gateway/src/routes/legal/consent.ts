@@ -1,9 +1,19 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { type Prisma, prisma } from "@nebutra/db";
+import { getSystemDb, getTenantDb, type Prisma } from "@nebutra/db";
 import { DatabaseError, NotFoundError, toApiError } from "@nebutra/errors";
 import { logger } from "@nebutra/logger";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import { requireAuth, requireOrganization } from "@/middlewares/tenantContext.js";
+
+// AUDIT(no-tenant): /legal/documents and /contact are unauthenticated public
+// endpoints (legal documents are global; contact form submissions precede
+// any account). For /consent and /cookie-consent we prefer the tenant-scoped
+// client when an organizationId is present in the Hono context.
+const systemDb = getSystemDb();
+
+function dbForTenant(organizationId: string | undefined) {
+  return organizationId ? getTenantDb(organizationId) : systemDb;
+}
 
 const log = logger.child({ service: "consent" });
 
@@ -133,9 +143,10 @@ consentRoutes.openapi(recordConsentRoute, async (c) => {
   const tenant = c.get("tenant");
   const userId = tenant?.userId;
   const organizationId = tenant?.organizationId;
+  const db = dbForTenant(organizationId);
 
   try {
-    const document = await prisma.legalDocument.findFirst({
+    const document = await db.legalDocument.findFirst({
       where: {
         slug: data.documentSlug,
         isActive: true,
@@ -149,7 +160,7 @@ consentRoutes.openapi(recordConsentRoute, async (c) => {
       return jsonError(c, notFound, notFound.statusCode as ContentfulStatusCode);
     }
 
-    const consentData: Parameters<typeof prisma.userConsent.create>[0]["data"] = {
+    const consentData: Parameters<typeof db.userConsent.create>[0]["data"] = {
       visitorId: data.visitorId,
       documentId: document.id,
       documentSlug: document.slug,
@@ -169,7 +180,7 @@ consentRoutes.openapi(recordConsentRoute, async (c) => {
     const userAgent = c.req.header("user-agent");
     if (userAgent) consentData.userAgent = userAgent;
 
-    const consent = await prisma.userConsent.create({ data: consentData });
+    const consent = await db.userConsent.create({ data: consentData });
 
     return c.json(
       {
@@ -235,9 +246,10 @@ consentRoutes.openapi(consentStatusRoute, async (c) => {
   const { documentSlug, visitorId } = c.req.valid("query");
   const tenant = c.get("tenant");
   const userId = tenant?.userId;
+  const db = dbForTenant(tenant?.organizationId);
 
   try {
-    const currentDocument = await prisma.legalDocument.findFirst({
+    const currentDocument = await db.legalDocument.findFirst({
       where: { slug: documentSlug, isActive: true },
       orderBy: { effectiveAt: "desc" },
     });
@@ -247,7 +259,7 @@ consentRoutes.openapi(consentStatusRoute, async (c) => {
       return jsonError(c, notFound, notFound.statusCode as ContentfulStatusCode);
     }
 
-    const consent = await prisma.userConsent.findFirst({
+    const consent = await db.userConsent.findFirst({
       where: {
         documentSlug,
         consentGiven: true,
@@ -324,9 +336,10 @@ consentRoutes.openapi(withdrawConsentRoute, async (c) => {
   const { documentSlug, visitorId } = c.req.valid("query");
   const tenant = c.get("tenant");
   const userId = tenant?.userId;
+  const db = dbForTenant(tenant?.organizationId);
 
   try {
-    const result = await prisma.userConsent.updateMany({
+    const result = await db.userConsent.updateMany({
       where: {
         documentSlug,
         withdrawnAt: null,
@@ -412,12 +425,13 @@ consentRoutes.openapi(recordCookieConsentRoute, async (c) => {
   const data = c.req.valid("json");
   const tenant = c.get("tenant");
   const userId = tenant?.userId;
+  const db = dbForTenant(tenant?.organizationId);
 
   const expiresAt = new Date();
   expiresAt.setFullYear(expiresAt.getFullYear() + 1);
 
   try {
-    const createData: Parameters<typeof prisma.cookieConsent.upsert>[0]["create"] = {
+    const createData: Parameters<typeof db.cookieConsent.upsert>[0]["create"] = {
       visitorId: data.visitorId,
       necessary: true,
       functional: data.preferences.functional,
@@ -434,7 +448,7 @@ consentRoutes.openapi(recordCookieConsentRoute, async (c) => {
     const userAgent = c.req.header("user-agent");
     if (userAgent) createData.userAgent = userAgent;
 
-    const updateData: Parameters<typeof prisma.cookieConsent.upsert>[0]["update"] = {
+    const updateData: Parameters<typeof db.cookieConsent.upsert>[0]["update"] = {
       functional: data.preferences.functional,
       analytics: data.preferences.analytics,
       marketing: data.preferences.marketing,
@@ -445,7 +459,7 @@ consentRoutes.openapi(recordCookieConsentRoute, async (c) => {
     if (ipAddress) updateData.ipAddress = ipAddress;
     if (userAgent) updateData.userAgent = userAgent;
 
-    const consent = await prisma.cookieConsent.upsert({
+    const consent = await db.cookieConsent.upsert({
       where: { visitorId: data.visitorId },
       create: createData,
       update: updateData,
@@ -538,13 +552,14 @@ consentRoutes.openapi(getCookieConsentRoute, async (c) => {
   const { visitorId } = c.req.valid("query");
   const tenant = c.get("tenant");
   const userId = tenant?.userId;
+  const db = dbForTenant(tenant?.organizationId);
 
   if (!visitorId && !userId) {
     return c.json({ error: "visitorId or userId is required" }, 400);
   }
 
   try {
-    const consent = await prisma.cookieConsent.findFirst({
+    const consent = await db.cookieConsent.findFirst({
       where: {
         OR: [...(visitorId ? [{ visitorId }] : []), ...(userId ? [{ userId }] : [])],
         expiresAt: { gt: new Date() },
@@ -641,7 +656,8 @@ consentRoutes.openapi(listDocumentsRoute, async (c) => {
   const locale = rawLocale || "en";
 
   try {
-    const documents = await prisma.legalDocument.findMany({
+    // Legal documents are global (not tenant-scoped) — use the system client.
+    const documents = await systemDb.legalDocument.findMany({
       where: {
         isActive: true,
         locale,
@@ -732,7 +748,8 @@ consentRoutes.openapi(getDocumentRoute, async (c) => {
   const locale = rawLocale || "en";
 
   try {
-    const document = await prisma.legalDocument.findFirst({
+    // Legal documents are global (not tenant-scoped) — use the system client.
+    const document = await systemDb.legalDocument.findFirst({
       where: {
         slug,
         locale,
@@ -803,7 +820,8 @@ consentRoutes.openapi(contactFormRoute, async (c) => {
   const data = c.req.valid("json");
 
   try {
-    const submission = await prisma.contactSubmission.create({
+    // Contact form is public, pre-auth — no tenant context available.
+    const submission = await systemDb.contactSubmission.create({
       data: {
         name: data.name,
         email: data.email,

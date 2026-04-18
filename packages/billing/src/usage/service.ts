@@ -1,3 +1,4 @@
+import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import type { Plan, RecordUsageInput, UsageType } from "../types.js";
 import { DEFAULT_USAGE_PRICING } from "../types.js";
@@ -101,8 +102,23 @@ export async function flushUsageBuffer(organizationId?: string): Promise<UsageRe
     }
   }
 
-  // In production, batch insert to database here
-  // await prisma.usageRecord.createMany({ data: flushed });
+  if (flushed.length > 0) {
+    try {
+      // AUDIT(no-tenant): flushUsageBuffer can be invoked with no
+      // organizationId to drain all tenants' buffers (periodic flush,
+      // SIGTERM, etc.). Each record carries its own organizationId, so
+      // cross-tenant insertion here is intentional and safe.
+      await getSystemDb().usageRecord.createMany({
+        data: flushed.map((f) => ({
+          ...f,
+          metadata: (f.metadata || {}) as any,
+        })),
+        skipDuplicates: true,
+      });
+    } catch (err) {
+      logger.error("Failed to flush usage records to DB", err);
+    }
+  }
 
   return flushed;
 }
@@ -200,4 +216,12 @@ if (typeof setInterval !== "undefined") {
   setInterval(() => {
     flushUsageBuffer().catch((err: unknown) => logger.error("Usage buffer flush failed", err));
   }, BUFFER_FLUSH_INTERVAL);
+}
+
+if (typeof process !== "undefined") {
+  const drainBuffer = () => {
+    flushUsageBuffer().catch(() => {});
+  };
+  process.on("SIGTERM", drainBuffer);
+  process.on("SIGINT", drainBuffer);
 }

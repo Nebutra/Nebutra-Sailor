@@ -5,6 +5,16 @@
   "description": "Multi-provider AI SDK for Nebutra - SiliconFlow, OpenAI, and more",
   "sideEffects": false,
   "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": ["Provider API key (OPENAI_API_KEY, SILICONFLOW_API_KEY, OPENROUTER_API_KEY, etc.)"],
+    "gaps": [
+      "No production app integrations",
+      "Provider implementations scaffolded but not exercised",
+      "Unified retry/fallback strategy pending"
+    ]
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

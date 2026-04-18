@@ -1,8 +1,14 @@
-import { prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
+import { getRedis } from "@nebutra/cache";
 import { GdprDeletionRequestDataSchema } from "@nebutra/event-bus";
 import { logger } from "@nebutra/logger";
 import { eventType, type InngestFunction } from "inngest";
 import { inngest } from "../client.js";
+
+// AUDIT(no-tenant): GDPR deletion spans multiple tenants (User is deleted
+// across all their orgs). Each step explicitly scopes by clerkId / orgIds
+// from the event payload rather than relying on ambient tenant context.
+const prisma = getSystemDb();
 
 /**
  * GDPR / CCPA data deletion Inngest function.
@@ -97,6 +103,33 @@ export const processGdprDeletion: InngestFunction.Any = inngest.createFunction(
       });
 
       logger.info("Audit log PII anonymized", { userId, count: updated.count, pseudoId });
+    });
+
+    // ── Step 4.5: Purge Redis State (GDPR Article 17) ──────────────────────
+    await step.run("purge-redis-state", async () => {
+      try {
+        const redis = getRedis();
+        // Since user keys are scoped to `sailor:*:${userId}*`, we scan and del
+        let cursor = "0";
+        let deletedCount = 0;
+        
+        do {
+          const [nextCursor, keys] = await redis.scan(cursor, { 
+            match: `*${userId}*`, 
+            count: 100 
+          });
+          
+          if (keys.length > 0) {
+            await redis.del(...keys);
+            deletedCount += keys.length;
+          }
+          cursor = nextCursor;
+        } while (cursor !== "0" && cursor !== "0");
+        
+        logger.info("Redis GDPR state purged", { userId, count: deletedCount });
+      } catch (e) {
+        logger.error("Failed to purge Redis state during GDPR deletion", { userId, error: e });
+      }
     });
 
     // ── Step 5: Notify downstream services ─────────────────────────────────

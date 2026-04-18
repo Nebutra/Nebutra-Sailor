@@ -1,5 +1,5 @@
-import { createHmac, timingSafeEqual } from "node:crypto";
 import { createAuth } from "@nebutra/auth/server";
+import { verifyServiceToken } from "@nebutra/auth";
 import { logger } from "@nebutra/logger";
 import type { Context, Next } from "hono";
 import { getAuthProvider } from "../config/env.js";
@@ -36,50 +36,6 @@ async function getAuthProviderInstance(): Promise<Awaited<ReturnType<typeof crea
 
 // ── S2S HMAC verification ──────────────────────────────────────────────────
 
-let serviceSecretWarningLogged = false;
-
-/**
- * Verify the `x-service-token` HMAC against the canonical S2S headers.
- * Returns `true` when the token is valid. Returns `false` when verification
- * fails or cannot be performed (missing secret / missing token).
- */
-function verifyServiceToken(
-  serviceToken: string,
-  headerUserId: string | undefined,
-  headerOrganizationId: string | undefined,
-  headerRole: string | undefined,
-  headerPlan: string | undefined,
-): boolean {
-  const secret = process.env.SERVICE_SECRET;
-
-  if (!secret) {
-    if (!serviceSecretWarningLogged) {
-      serviceSecretWarningLogged = true;
-      logger.warn(
-        "SERVICE_SECRET is not set — S2S header verification is disabled (dev mode fallback)",
-      );
-    }
-    // Dev mode: allow headers without verification
-    return true;
-  }
-
-  const canonical = `${headerUserId ?? ""}:${headerOrganizationId ?? ""}:${headerRole ?? ""}:${headerPlan ?? ""}`;
-  const expected = createHmac("sha256", secret).update(canonical).digest();
-
-  let tokenBuffer: Buffer;
-  try {
-    tokenBuffer = Buffer.from(serviceToken, "hex");
-  } catch {
-    return false;
-  }
-
-  if (tokenBuffer.length !== expected.length) {
-    return false;
-  }
-
-  return timingSafeEqual(expected, tokenBuffer);
-}
-
 /**
  * Extract and verify JWT from Authorization header using provider-agnostic auth,
  * then populate tenant context.
@@ -106,24 +62,37 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
   };
 
   // Header-based fallback for service-to-service calls.
-  // Canonical headers:
+  // Canonical headers (ONLY trusted when accompanied by a valid HMAC service token):
   //   - x-user-id
   //   - x-organization-id
-  // Legacy compatibility:
-  //   - x-tenant-id (mapped to organizationId)
+  //   - x-role
+  //   - x-plan
+  //
+  // SECURITY: The legacy `x-tenant-id` alias was removed (2026-04).
+  // Any external client could spoof it without HMAC verification; all
+  // callers must now use `x-organization-id` together with a valid
+  // `x-service-token`, or a Bearer JWT from a trusted auth provider.
   const headerUserId = c.req.header("x-user-id") || c.req.header("x_user_id") || undefined;
   const headerOrganizationId =
-    c.req.header("x-organization-id") ||
-    c.req.header("x_organization_id") ||
-    c.req.header("x-tenant-id") ||
-    c.req.header("x_tenant_id") ||
-    undefined;
+    c.req.header("x-organization-id") || c.req.header("x_organization_id") || undefined;
   const headerRole = c.req.header("x-role") || c.req.header("x_role") || undefined;
   const headerPlan = c.req.header("x-plan") || c.req.header("x_plan") || undefined;
 
-  // Only trust S2S headers when accompanied by a valid HMAC service token,
-  // OR when no Bearer JWT is present and no service token is provided (skip entirely).
+  // Only trust S2S headers when accompanied by a valid HMAC service token.
+  // When no service token is present, S2S headers are NOT trusted — the
+  // Bearer JWT flow below (or defaults) is the only source of tenant context.
   const serviceToken = c.req.header("x-service-token");
+
+  // Warn when legacy `x-tenant-id` is present but the request carries no
+  // service token — this is almost always a client that needs updating.
+  const legacyTenantHeader =
+    c.req.header("x-tenant-id") || c.req.header("x_tenant_id") || undefined;
+  if (legacyTenantHeader && !serviceToken) {
+    logger.warn(
+      "Ignoring legacy x-tenant-id header without x-service-token — update client to use x-organization-id with a valid HMAC service token",
+      { ip },
+    );
+  }
 
   if (serviceToken) {
     // S2S call with explicit service token — verify HMAC before trusting headers
@@ -141,8 +110,6 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
       });
     }
   }
-  // When no service token is present, S2S headers are NOT trusted.
-  // The Bearer JWT flow below (or defaults) will be the only source of tenant context.
 
   const authHeader = c.req.header("authorization");
   const token = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : undefined;
@@ -173,6 +140,12 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
   }
 
   c.set("tenant", tenant);
+
+  // NOTE: The middleware no longer attaches a `prisma` client to the Hono
+  // context. Route handlers must explicitly call `getTenantDb(orgId)` from
+  // `@nebutra/db` (or `getSystemDb()` for admin / webhook flows that lack a
+  // tenant context). This forces every Prisma call site to state its tenant
+  // scope up front, which prevents accidental cross-tenant leaks.
 
   await next();
 }

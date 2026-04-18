@@ -9,6 +9,7 @@
  */
 
 import { logger } from "@nebutra/logger";
+import { getSystemDb } from "@nebutra/db";
 
 export type AuditAction =
   | "user.login"
@@ -194,6 +195,16 @@ export function createPrismaStorage(prisma: {
 // ============================================
 
 let storage: AuditStorage = inMemoryStorage;
+
+// Attach Prisma DB storage.
+// AUDIT(no-tenant): audit logs are written for every tenant through a single
+// shared storage adapter. Each AuditEvent carries its own organizationId/
+// tenantId, so cross-tenant writes here are intentional.
+try {
+  setAuditStorage(createPrismaStorage(getSystemDb() as any));
+} catch (e) {
+  logger.warn("Prisma storage adapter failed to initialize, relying on in-memory audit logs", { error: e } as any);
+}
 
 export function setAuditStorage(newStorage: AuditStorage): void {
   storage = newStorage;

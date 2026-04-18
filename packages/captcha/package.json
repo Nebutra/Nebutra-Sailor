@@ -3,6 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "NEXT_PUBLIC_TURNSTILE_SITE_KEY + TURNSTILE_SECRET_KEY (or hCaptcha / Aliyun equivalents)"
+    ],
+    "gaps": [
+      "No production app integrations",
+      "Server verification hook not finalized",
+      "hCaptcha and Aliyun-slide adapters scaffolded only"
+    ]
+  },
   "exports": {
     ".": "./src/index.ts",
     "./react": "./src/react/index.ts",

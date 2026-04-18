@@ -3,6 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": ["Inngest event key (INNGEST_EVENT_KEY, INNGEST_SIGNING_KEY)"],
+    "gaps": [
+      "Partially integrated (consumed by @nebutra/saga and infra/pusher)",
+      "No production app integrations",
+      "Cross-service pub/sub guarantees not verified"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

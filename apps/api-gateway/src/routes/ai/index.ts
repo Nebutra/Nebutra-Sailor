@@ -10,10 +10,12 @@ import { toApiError } from "@nebutra/errors";
 import { SpanStatusCode, trace } from "@opentelemetry/api";
 import { env } from "../../config/env.js";
 import { aiServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
+import { requireAuth } from "../../middlewares/tenantContext.js";
 
 const tracer = trace.getTracer("api-gateway.ai");
 
 export const aiRoutes = new OpenAPIHono();
+aiRoutes.use("*", requireAuth);
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
 

@@ -1,4 +1,4 @@
-import type { Prisma, PrismaClient, WebhookEvent } from "@nebutra/db";
+import { Prisma, type PrismaClient, type WebhookEvent } from "@nebutra/db";
 import type { CursorPaginationParams, CursorPaginationResult } from "./pagination.js";
 import { normalizePaginationParams } from "./pagination.js";
 
@@ -67,11 +67,50 @@ export class WebhookEventRepository {
   }
 
   /**
+   * Atomically claim a webhook event for processing.
+   *
+   * Returns `{ claimed: true, event }` when this caller was the first to
+   * insert the `(provider, eventId)` row, or `{ claimed: false }` when a
+   * concurrent delivery already inserted it. Relies on the unique
+   * constraint `@@unique([provider, eventId])` on WebhookEvent — a
+   * P2002 violation signals "already received" and is handled as a
+   * non-error outcome.
+   *
+   * Use this in webhook handlers instead of check-then-act (findUnique
+   * + upsert) to eliminate the race between concurrent retries.
+   */
+  async claim(
+    data: UpsertWebhookEventData,
+  ): Promise<{ claimed: true; event: WebhookEvent } | { claimed: false }> {
+    const { provider, eventId, eventType, payload } = data;
+
+    try {
+      const event = await this.prisma.webhookEvent.create({
+        data: {
+          provider,
+          eventId,
+          eventType,
+          payload: payload as Prisma.InputJsonValue,
+        },
+      });
+      return { claimed: true, event };
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
+        return { claimed: false };
+      }
+      throw err;
+    }
+  }
+
+  /**
    * Insert or update a webhook event record.
    *
    * On conflict (same provider + eventId), the payload and eventType are
    * updated but processedAt is left untouched so we don't accidentally
    * clear a previously-processed marker.
+   *
+   * @deprecated Use {@link claim} for idempotent event capture to avoid
+   * the check-then-act race present in `findUnique` + `upsert`.
    */
   async upsert(data: UpsertWebhookEventData): Promise<WebhookEvent> {
     const { provider, eventId, eventType, payload } = data;

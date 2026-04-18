@@ -137,7 +137,9 @@ export function CookieBanner({
       if (persistToServer) {
         try {
           await recordCookieConsent(prefs);
-        } catch (_error) {}
+        } catch (error) {
+          console.debug("Failed to persist cookie consent to server", { error });
+        }
       }
 
       // Callback

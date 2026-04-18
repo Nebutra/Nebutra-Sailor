@@ -7,7 +7,7 @@
  */
 import { getCreditBalance } from "@nebutra/billing";
 import { getRedis } from "@nebutra/cache";
-import { prisma } from "@nebutra/db";
+import { getSystemDb, type PrismaClient } from "@nebutra/db";
 import { getQueue } from "@nebutra/queue";
 
 /**
@@ -23,7 +23,12 @@ export interface GatewayRedisAdapter {
 
 export interface GatewayDeps {
   redis: GatewayRedisAdapter;
-  prisma: typeof prisma;
+  /**
+   * System-scope Prisma client used by the AI gateway worker. The worker
+   * processes completions for arbitrary tenants pulled off the queue, so
+   * tenant context is derived from the job payload — not from a request.
+   */
+  prisma: PrismaClient;
   queue: Awaited<ReturnType<typeof getQueue>>;
   getCreditBalance: (orgId: string) => Promise<number>;
 }
@@ -56,7 +61,10 @@ export async function buildGatewayDeps(): Promise<GatewayDeps> {
 
   return {
     redis: redisAdapter,
-    prisma,
+    // AUDIT(no-tenant): the AI gateway worker dequeues completion jobs for
+    // arbitrary tenants; it scopes every DB write by the orgId carried in the
+    // job payload, not by an ambient request context.
+    prisma: getSystemDb(),
     queue,
     getCreditBalance: async (orgId: string) => {
       const result = await getCreditBalance(orgId);

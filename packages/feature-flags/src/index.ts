@@ -18,8 +18,81 @@ export interface FeatureFlagProvider {
   getVariant: <T>(flag: string, defaultValue: T, context?: FeatureFlagContext) => Promise<T>;
 }
 
+import { getRedis } from "@nebutra/cache";
+import { getSystemDb } from "@nebutra/db";
+
 // ============================================
-// Default: Environment-based Provider
+// Default: DB-Backed Provider with Redis Cache
+// ============================================
+
+const CACHE_TTL = 10; // 10 seconds
+
+const dbProvider: FeatureFlagProvider = {
+  isEnabled: async (flag: string, context?: FeatureFlagContext) => {
+    // 1. HARD KILL SWITCH: Check env var first (Process context)
+    const envKey = `KILL_SWITCH_${flag.toUpperCase().replace(/-/g, "_")}`;
+    const envValue = process.env[envKey];
+    if (envValue === "true") return true;
+    if (envValue === "false") return false;
+
+    try {
+      // 2. CHECK CACHE
+      const redis = getRedis();
+      const cacheKey = `sailor:ff:${flag}`;
+      const cached = await redis.get<boolean>(cacheKey);
+      if (cached !== null) {
+         return cached;
+      }
+      
+      // 3. FETCH DB
+      // AUDIT(no-tenant): feature flags are keyed by global id, not by tenant.
+      const dbFlag = await getSystemDb().featureFlag.findUnique({
+        where: { id: flag }
+      });
+      
+      const isEnabled = dbFlag ? dbFlag.isActive : false;
+      await redis.set(cacheKey, isEnabled, { ex: CACHE_TTL });
+      return isEnabled;
+    } catch (e) {
+      // Fallback if DB/Redis fails and we don't want to bring down the app
+      console.warn(`Feature flag [${flag}] check failed, falling back to false`, e);
+      return false;
+    }
+  },
+
+  getVariant: async <T>(
+    flag: string,
+    defaultValue: T,
+    _context?: FeatureFlagContext,
+  ): Promise<T> => {
+    const envKey = `KILL_SWITCH_${flag.toUpperCase().replace(/-/g, "_")}_VARIANT`;
+    const envValue = process.env[envKey];
+    if (envValue) {
+      try { return JSON.parse(envValue) as T; } catch { return envValue as unknown as T; }
+    }
+
+    try {
+       const redis = getRedis();
+       const cacheKey = `sailor:ff:${flag}:variant`;
+       const cached = await redis.get<T>(cacheKey);
+       if (cached !== null) return cached;
+
+       // AUDIT(no-tenant): feature flags are keyed by global id, not by tenant.
+      const dbFlag = await getSystemDb().featureFlag.findUnique({
+        where: { id: flag }
+       });
+       
+       const parsedVariant = dbFlag?.metadata ? (dbFlag.metadata as any)?.variant ?? defaultValue : defaultValue;
+       await redis.set(cacheKey, parsedVariant, { ex: CACHE_TTL });
+       return parsedVariant as T;
+    } catch {
+       return defaultValue;
+    }
+  },
+};
+
+// ============================================
+// Legacy: Environment-based Provider
 // ============================================
 
 const envProvider: FeatureFlagProvider = {
@@ -90,10 +163,14 @@ export function clearMemoryFlags(): void {
 // Main API
 // ============================================
 
-let provider: FeatureFlagProvider = envProvider;
+let provider: FeatureFlagProvider = dbProvider;
 
 export function setFeatureFlagProvider(newProvider: FeatureFlagProvider): void {
   provider = newProvider;
+}
+
+export function useDbProvider(): void {
+  provider = dbProvider;
 }
 
 export function useEnvProvider(): void {

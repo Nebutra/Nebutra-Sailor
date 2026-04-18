@@ -8,8 +8,10 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { toApiError } from "@nebutra/errors";
 import { getSearch } from "@nebutra/search";
+import { requireAuth } from "../../middlewares/tenantContext.js";
 
 export const searchRoutes = new OpenAPIHono();
+searchRoutes.use("*", requireAuth);
 
 const SearchRequestSchema = z.object({
   query: z.string().min(1),

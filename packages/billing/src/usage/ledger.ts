@@ -5,7 +5,7 @@ import {
   type UsageLedgerSourceContract,
   type UsageTypeContract,
 } from "@nebutra/contracts";
-import { Prisma, type PrismaClient, prisma } from "@nebutra/db";
+import { getTenantDb, Prisma, type PrismaClient } from "@nebutra/db";
 
 const DEFAULT_TAKE = 100;
 const MAX_TAKE = 500;
@@ -24,8 +24,8 @@ export interface ListUsageLedgerEntriesInput {
   take?: number;
 }
 
-function getClient(client?: PrismaClient): PrismaClient {
-  return client ?? prisma;
+function getClient(organizationId: string, client?: PrismaClient): PrismaClient {
+  return client ?? getTenantDb(organizationId);
 }
 
 export function buildUsageLedgerIdempotencyKey(input: {
@@ -51,7 +51,7 @@ export async function appendUsageLedgerEntry(
   options: { client?: PrismaClient } = {},
 ): Promise<AppendUsageLedgerEntryResult> {
   const payload = UsageLedgerEntryInputSchema.parse(input);
-  const db = getClient(options.client);
+  const db = getClient(payload.organizationId, options.client);
   const metadata = payload.metadata as Prisma.InputJsonValue;
 
   const existing = await db.usageLedgerEntry.findUnique({
@@ -117,7 +117,7 @@ export async function listUsageLedgerEntries(
   input: ListUsageLedgerEntriesInput,
   options: { client?: PrismaClient } = {},
 ) {
-  const db = getClient(options.client);
+  const db = getClient(input.organizationId, options.client);
   const take = Math.min(Math.max(input.take ?? DEFAULT_TAKE, 1), MAX_TAKE);
 
   return db.usageLedgerEntry.findMany({

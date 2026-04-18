@@ -1,12 +1,14 @@
-import type { Plan } from "@nebutra/db";
-import { prisma } from "@nebutra/db";
+import { getSystemDb, type Plan } from "@nebutra/db";
 import { StripeInvoiceDataSchema, StripeSubscriptionDataSchema } from "@nebutra/event-bus";
 import { logger } from "@nebutra/logger";
 import { OrganizationRepository } from "@nebutra/repositories";
 import { eventType, type InngestFunction } from "inngest";
 import { inngest } from "../client.js";
 
-const orgRepo = new OrganizationRepository(prisma);
+// AUDIT(no-tenant): Stripe billing events arrive on a platform-wide queue.
+// The orgId is resolved from the event payload, and the repository writes
+// the plan on the Organization row — not on any tenant-scoped table.
+const orgRepo = new OrganizationRepository(getSystemDb());
 
 /**
  * Map a Stripe subscription status to an Organization plan.

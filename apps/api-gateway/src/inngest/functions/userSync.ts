@@ -1,10 +1,12 @@
-import { prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import { ClerkUserDataSchema } from "@nebutra/event-bus";
 import { UserRepository } from "@nebutra/repositories";
 import { eventType, type InngestFunction } from "inngest";
 import { inngest } from "../client.js";
 
-const userRepo = new UserRepository(prisma);
+// AUDIT(no-tenant): Clerk user lifecycle events do not carry an
+// organizationId — the User row is per-Clerk-user, not per-tenant.
+const userRepo = new UserRepository(getSystemDb());
 
 /**
  * Inngest function: upsert a Clerk user into the database on

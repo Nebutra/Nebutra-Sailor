@@ -74,12 +74,11 @@ eventRoutes.openapi(ingestRoute, async (c) => {
   const tenant = c.get("tenant");
   const serviceUrl = env.EVENT_INGEST_SERVICE_URL ?? "http://localhost:8008";
 
-  const tenantHeader =
-    c.req.header("x-organization-id") ||
-    c.req.header("x_organization_id") ||
-    c.req.header("x-tenant-id") ||
-    c.req.header("x_tenant_id") ||
-    tenant?.organizationId;
+  // Only trust the tenant resolved by `tenantContextMiddleware` (JWT or S2S+HMAC).
+  // Raw request headers MUST NOT override the authenticated context — any client
+  // could otherwise spoof another tenant by injecting `x-organization-id` or the
+  // legacy `x-tenant-id` header.
+  const tenantHeader = tenant?.organizationId;
 
   const headers: Record<string, string> = {
     "content-type": "application/json",

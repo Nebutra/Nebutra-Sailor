@@ -1,4 +1,4 @@
-import { prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import { sendLicenseCreatedEmail } from "@nebutra/email";
 import { logger } from "@nebutra/logger";
 import { generateSlug } from "../generate-slug.js";
@@ -29,13 +29,17 @@ export async function onLicenseIssued(job: { data: LicenseIssuedEvent }): Promis
     githubHandle,
   } = job.data;
 
+  // AUDIT(no-tenant): Sleptons member profiles are keyed on user_id and
+  // are not per-tenant — they belong to the global community namespace.
+  const db = getSystemDb();
+
   // 1. Create Sleptons member profile
-  const existingProfile = await prisma.sleptonsaMemberProfile.findUnique({
+  const existingProfile = await db.sleptonsaMemberProfile.findUnique({
     where: { user_id: userId },
   });
 
   if (!existingProfile) {
-    const profile = await prisma.sleptonsaMemberProfile.create({
+    const profile = await db.sleptonsaMemberProfile.create({
       data: {
         user_id: userId,
         license_id: licenseId,
@@ -49,7 +53,7 @@ export async function onLicenseIssued(job: { data: LicenseIssuedEvent }): Promis
     });
 
     const finalSlug = generateSlug(displayName, profile.member_number);
-    await prisma.sleptonsaMemberProfile.update({
+    await db.sleptonsaMemberProfile.update({
       where: { id: profile.id },
       data: { slug: finalSlug },
     });

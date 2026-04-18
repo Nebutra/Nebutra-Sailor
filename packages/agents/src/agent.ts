@@ -101,7 +101,7 @@ export class BaseAgent {
 
       const creditCost = Math.max(1, Math.ceil(totalTokens / 10000));
 
-      deductCredits({
+      await deductCredits({
         organizationId: event.tenantId,
         amount: creditCost,
         description: `Agent execution: ${event.model}`,

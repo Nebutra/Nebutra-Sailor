@@ -1,4 +1,5 @@
 import { validateLicense } from "@nebutra/license";
+import { logger } from "@nebutra/logger";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -29,7 +30,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ valid: true, tier: result.tier, type: result.type });
   } catch (error) {
-    console.error("[GET /api/license/validate]", error);
+    logger.error("[GET /api/license/validate]", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

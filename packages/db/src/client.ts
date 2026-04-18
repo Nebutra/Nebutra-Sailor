@@ -54,49 +54,98 @@ function createPrismaClient(): PrismaClient {
     query: {
       integration: {
         async $allOperations({ operation, args, query }) {
-          // Encrypt on write
+          // ── Encrypt on write ───────────────────────────────────────────
+          // `credentials` and `settings` are both encrypted at rest with
+          // tenant-bound ciphertext. Cross-tenant decryption attempts fail
+          // with "Tenant ID mismatch" from the vault provider.
           if (["create", "update", "upsert"].includes(operation)) {
-            const vault = await import("@nebutra/vault").then((m) => m.getVault());
-            if (operation === "upsert" && args.create && args.update) {
-              if ((args.create as any).credentials) {
-                (args.create as any).credentials = await vault.encrypt(
-                  JSON.stringify((args.create as any).credentials),
-                );
+            const { encryptJSON, isEncryptedSecret } = await import("@nebutra/vault");
+
+            const encryptField = async (
+              data: Record<string, unknown>,
+              field: "credentials" | "settings",
+              tenantId: string | undefined,
+            ): Promise<void> => {
+              const value = data[field];
+              if (value === undefined || value === null) return;
+              // Already encrypted — don't double-encrypt (e.g. on update
+              // where the caller round-tripped the decrypted shape).
+              if (isEncryptedSecret(value)) return;
+              // Empty credentials object is a legitimate "no secrets yet" state.
+              if (
+                field === "credentials" &&
+                typeof value === "object" &&
+                !Array.isArray(value) &&
+                Object.keys(value as Record<string, unknown>).length === 0
+              ) {
+                return;
               }
-              if ((args.update as any).credentials) {
-                (args.update as any).credentials = await vault.encrypt(
-                  JSON.stringify((args.update as any).credentials),
-                );
-              }
-            } else if ((args as any).data?.credentials) {
-              (args as any).data.credentials = await vault.encrypt(
-                JSON.stringify((args as any).data.credentials),
-              );
+              data[field] = (await encryptJSON(value, {
+                context: {
+                  ...(tenantId ? { tenantId } : {}),
+                  kind: `integration.${field}`,
+                },
+              })) as unknown as typeof value;
+            };
+
+            const encryptData = async (
+              data: Record<string, unknown> | undefined,
+            ): Promise<void> => {
+              if (!data) return;
+              const tenantId =
+                typeof data.organizationId === "string" ? data.organizationId : undefined;
+              await encryptField(data, "credentials", tenantId);
+              await encryptField(data, "settings", tenantId);
+            };
+
+            const typedArgs = args as {
+              create?: Record<string, unknown>;
+              update?: Record<string, unknown>;
+              data?: Record<string, unknown>;
+            };
+
+            if (operation === "upsert") {
+              await encryptData(typedArgs.create);
+              await encryptData(typedArgs.update);
+            } else if (typedArgs.data) {
+              await encryptData(typedArgs.data);
             }
           }
 
           // Execute query
           const result = await query(args);
 
-          // Decrypt on read
+          // ── Decrypt on read ────────────────────────────────────────────
           if (result) {
-            const decryptRecord = async (record: any) => {
-              if (
-                record?.credentials &&
-                typeof record.credentials === "object" &&
-                "ciphertext" in record.credentials &&
-                "encryptedDek" in record.credentials
-              ) {
-                try {
-                  const vault = await import("@nebutra/vault").then((m) => m.getVault());
-                  const decrypted = await vault.decrypt(record.credentials as any);
-                  record.credentials = JSON.parse(decrypted);
-                } catch (err) {
-                  logger.warn("[db] Failed to decrypt integration credentials", {
-                    error: err instanceof Error ? err.message : String(err),
-                  });
-                }
+            const { decryptJSON, isEncryptedSecret } = await import("@nebutra/vault");
+
+            const decryptField = async (
+              record: Record<string, unknown>,
+              field: "credentials" | "settings",
+            ): Promise<void> => {
+              const value = record[field];
+              if (!isEncryptedSecret(value)) return;
+              const tenantId =
+                typeof record.organizationId === "string" ? record.organizationId : undefined;
+              try {
+                record[field] = (await decryptJSON(value, {
+                  context: tenantId ? { tenantId } : {},
+                })) as unknown as typeof value;
+              } catch (err) {
+                logger.warn(`[db] Failed to decrypt integration.${field}`, {
+                  error: err instanceof Error ? err.message : String(err),
+                  integrationId: typeof record.id === "string" ? record.id : undefined,
+                });
+                // On decrypt failure, null out rather than leaking ciphertext.
+                record[field] = null;
               }
+            };
+
+            const decryptRecord = async (record: unknown): Promise<void> => {
+              if (!record || typeof record !== "object") return;
+              const r = record as Record<string, unknown>;
+              await decryptField(r, "credentials");
+              await decryptField(r, "settings");
             };
 
             if (Array.isArray(result)) {
@@ -106,7 +155,7 @@ function createPrismaClient(): PrismaClient {
             }
           }
 
-          return result as any;
+          return result as unknown as typeof result;
         },
       },
     },
@@ -129,10 +178,103 @@ function getClient(): PrismaClient {
   return _client;
 }
 
-export const prisma: PrismaClient = new Proxy({} as PrismaClient, {
+/**
+ * Lazy proxy over the base Prisma client. Internal to this package — exported
+ * only through `getSystemDb()` and `getTenantDb()` so callers make an explicit
+ * choice between tenant-scoped and system-scope access.
+ */
+const baseClient: PrismaClient = new Proxy({} as PrismaClient, {
   get(_target, prop: string | symbol) {
     return Reflect.get(getClient(), prop);
   },
 });
+
+// =============================================================================
+// Tenant-scoped client factory
+// =============================================================================
+
+/**
+ * Get a tenant-scoped Prisma client for the given `organizationId`.
+ *
+ * Every query issued through the returned client runs inside a transaction
+ * that first sets the PostgreSQL session variable `app.current_org_id`, which
+ * the row-level security (RLS) policies in migration `20260313000000_enable_rls`
+ * use to filter tenant-scoped tables. This guarantees that even a query that
+ * forgets to include `where: { organizationId }` cannot read or mutate rows
+ * belonging to another tenant.
+ *
+ * Callers should derive `organizationId` from the request-scoped tenant
+ * context (e.g. `c.get("tenant").organizationId` in Hono) — never from
+ * client-controlled input.
+ *
+ * @example
+ * ```ts
+ * import { getTenantDb } from "@nebutra/db";
+ *
+ * app.get("/projects", async (c) => {
+ *   const orgId = c.get("tenant").organizationId;
+ *   const db = getTenantDb(orgId);
+ *   const projects = await db.project.findMany();
+ *   return c.json(projects);
+ * });
+ * ```
+ */
+export function getTenantDb(organizationId: string): PrismaClient {
+  if (!organizationId || typeof organizationId !== "string") {
+    throw new Error(
+      "[db] getTenantDb() requires a non-empty organizationId. Did you mean to call getSystemDb()?",
+    );
+  }
+
+  const client = getClient();
+
+  // Prisma v5+ $extends hook. Each query runs inside a short-lived transaction
+  // whose first statement sets `app.current_org_id` so RLS policies filter
+  // rows to this tenant for the remainder of the transaction. The session
+  // variable is transaction-local (3rd arg = true), so it clears automatically.
+  return client.$extends({
+    query: {
+      $allModels: {
+        async $allOperations({ args, query }) {
+          const [, result] = await client.$transaction([
+            client.$executeRaw`SELECT set_config('app.current_org_id', ${organizationId}, true)`,
+            query(args),
+          ]);
+          return result as unknown;
+        },
+      },
+    },
+  }) as unknown as PrismaClient;
+}
+
+/**
+ * ESCAPE HATCH — returns the bare Prisma client with NO tenant RLS filter.
+ *
+ * Use this ONLY for:
+ * - Webhook handlers that lack a tenant context (Stripe, Clerk, etc.) and
+ *   must look up the tenant from the webhook payload.
+ * - Admin / cross-tenant operations (admin dashboard, platform usage reports).
+ * - Background jobs that process events for arbitrary tenants.
+ * - Auth bootstrap (first-user / first-org creation before a tenant exists).
+ * - Health checks, migrations, and other system-level operations.
+ *
+ * Whenever you call this from a request handler, add a comment of the form
+ *
+ *     // AUDIT(no-tenant): <short reason>
+ *
+ * on the line above the call so the reason is reviewable. A lint rule may be
+ * added to flag undocumented calls in the future.
+ *
+ * @example
+ * ```ts
+ * // AUDIT(no-tenant): Stripe webhook payload is the sole source of truth
+ * // for the organization; there is no request-scoped tenant context.
+ * const db = getSystemDb();
+ * const sub = await db.subscription.updateMany({ where: { stripeId }, data });
+ * ```
+ */
+export function getSystemDb(): PrismaClient {
+  return baseClient;
+}
 
 export type { PrismaClient };

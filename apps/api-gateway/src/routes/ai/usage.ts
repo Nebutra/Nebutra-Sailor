@@ -7,7 +7,7 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { prisma } from "@nebutra/db";
+import { getTenantDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 
@@ -161,12 +161,13 @@ usageRoutes.openapi(summaryRouteDef, async (c) => {
     createdAt: { gte: period.from, lte: period.to },
   };
 
+  const db = getTenantDb(organizationId);
   const [aggregate, requestCount] = await Promise.all([
-    prisma.requestLog.aggregate({
+    db.requestLog.aggregate({
       where,
       _sum: { totalTokens: true, cost: true },
     }),
-    prisma.requestLog.count({ where }),
+    db.requestLog.count({ where }),
   ]);
 
   return c.json(
@@ -211,7 +212,8 @@ usageRoutes.openapi(byModelRouteDef, async (c) => {
     return c.json({ error: "Bad Request", message: "Invalid from/to date" }, 400);
   }
 
-  const grouped = await prisma.requestLog.groupBy({
+  const db = getTenantDb(organizationId);
+  const grouped = await db.requestLog.groupBy({
     by: ["model"],
     where: {
       organizationId,
@@ -266,7 +268,8 @@ usageRoutes.openapi(byKeyRouteDef, async (c) => {
     return c.json({ error: "Bad Request", message: "Invalid from/to date" }, 400);
   }
 
-  const grouped = await prisma.requestLog.groupBy({
+  const db = getTenantDb(organizationId);
+  const grouped = await db.requestLog.groupBy({
     by: ["apiKeyId"],
     where: {
       organizationId,
@@ -280,7 +283,7 @@ usageRoutes.openapi(byKeyRouteDef, async (c) => {
   const keyIds = grouped.map((g) => g.apiKeyId).filter((id): id is string => Boolean(id));
 
   const keyMeta = keyIds.length
-    ? await prisma.aPIKey.findMany({
+    ? await db.aPIKey.findMany({
         where: { id: { in: keyIds }, organizationId },
         select: { id: true, name: true, keyPrefix: true },
       })
@@ -345,7 +348,8 @@ usageRoutes.openapi(historyRouteDef, async (c) => {
   // MVP: fetch logs in window and bucket in memory. Acceptable for typical
   // billing-period volumes; swap for Prisma raw SQL with date_trunc if this
   // becomes a hotspot.
-  const rows = await prisma.requestLog.findMany({
+  const db = getTenantDb(organizationId);
+  const rows = await db.requestLog.findMany({
     where: {
       organizationId,
       createdAt: { gte: period.from, lte: period.to },

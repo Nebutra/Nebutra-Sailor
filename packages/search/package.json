@@ -3,6 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "MEILISEARCH_URL + MEILISEARCH_MASTER_KEY",
+      "or TYPESENSE_HOST + TYPESENSE_API_KEY",
+      "or ALGOLIA_APP_ID + ALGOLIA_ADMIN_API_KEY"
+    ],
+    "gaps": [
+      "Provider adapters are stubs — need bulk index + faceted search",
+      "pgvector adapter not implemented",
+      "Tenant-scoped index isolation not enforced"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

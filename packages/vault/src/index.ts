@@ -30,6 +30,13 @@ export {
   getVault,
   setVault,
 } from "./factory.js";
+// ── JSON helpers (application-level convenience) ────────────────────────────
+export {
+  decryptJSON,
+  encryptJSON,
+  isEncryptedSecret,
+} from "./json.js";
+export type { DecryptJSONOptions, EncryptJSONOptions } from "./json.js";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
 export { AWSKMSProvider } from "./providers/aws-kms.js";
 export { LocalProvider } from "./providers/local.js";

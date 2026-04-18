@@ -22,14 +22,19 @@ Feature flags (region-based smart defaults):
       --monitoring <id>     sentry | datadog | aliyun-arms | tingyun | none
       --analytics <id>      posthog | plausible | umami | baidu | sensors | none
       --sms <id>            twilio | aliyun-sms | tencent-sms | yunpian | none
-      --queue <id>          qstash | bullmq | upstash | sqs | none
-      --search <id>         meilisearch | typesense | algolia | pgvector | none
+      --queue <id>          qstash | bullmq | upstash | sqs | none                 [Foundation]
+      --search <id>         meilisearch | typesense | algolia | pgvector | none    [Foundation]
       --cache <id>          upstash-redis | vercel-kv | redis | dragonfly | none
-      --notifications <id>  novu | knock | custom | none
-      --webhooks <id>       svix | custom | none
+      --notifications <id>  novu | knock | custom | none                           [Foundation]
+      --webhooks <id>       svix | custom | none                                   [Foundation]
       --cms <id>            sanity | contentful | strapi | none
-      --feature-flags <id>  vercel-flags | growthbook | configcat | none
-      --captcha <id>        turnstile | hcaptcha | aliyun-slide | none
+      --feature-flags <id>  vercel-flags | growthbook | configcat | none           [WIP]
+      --captcha <id>        turnstile | hcaptcha | aliyun-slide | none             [WIP]
+
+Preview statuses:
+  [Foundation] — types + factory complete; adapters need external credentials & may not work out-of-the-box
+  [WIP]        — actively being built; do not use in production
+  See: https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/package-status.md
 
 Sailor features:
       --mcp <mode>          on | off (default: on — Agent-friendly MCP server)

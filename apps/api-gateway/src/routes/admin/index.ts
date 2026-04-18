@@ -18,11 +18,17 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import { ackDeadLetter, getDeadLetterQueue } from "@nebutra/event-bus";
 import { logger } from "@nebutra/logger";
 import { env } from "../../config/env.js";
 import { getUsageSnapshot } from "../../middlewares/usageMetering.js";
+
+// AUDIT(no-tenant): the /admin/* surface is platform-operator-only and
+// intentionally cross-tenant (list all orgs, cross-tenant usage reports,
+// suspend any tenant). Access is gated by the X-Admin-Key header check in
+// the middleware below, which is why we use the system-scope client.
+const adminDb = getSystemDb();
 
 export const adminRoutes = new OpenAPIHono();
 
@@ -84,13 +90,13 @@ adminRoutes.openapi(
     }
 
     const [orgs, total] = await Promise.all([
-      prisma.organization.findMany(findParams),
+      adminDb.organization.findMany(findParams),
       (async () => {
-        const countParams: Parameters<typeof prisma.organization.count>[0] = {};
+        const countParams: Parameters<typeof adminDb.organization.count>[0] = {};
         if (plan) {
           countParams.where = { plan };
         }
-        return prisma.organization.count(countParams);
+        return adminDb.organization.count(countParams);
       })(),
     ]);
 
@@ -111,7 +117,7 @@ adminRoutes.openapi(
   async (c) => {
     const { id } = c.req.valid("param");
 
-    const org = await prisma.organization.findUnique({
+    const org = await adminDb.organization.findUnique({
       where: { id },
       include: {
         members: { include: { user: { select: { email: true, name: true } } } },
@@ -144,11 +150,11 @@ adminRoutes.openapi(
   async (c) => {
     const { id } = c.req.valid("param");
 
-    const org = await prisma.organization.findUnique({ where: { id } });
+    const org = await adminDb.organization.findUnique({ where: { id } });
     if (!org) return c.json({ error: "Not found" }, 404);
 
     // Revoke all API keys (effectively blocks all API access)
-    const revoked = await prisma.aPIKey.updateMany({
+    const revoked = await adminDb.aPIKey.updateMany({
       where: { organizationId: id, revokedAt: null },
       data: { revokedAt: new Date() },
     });
@@ -170,7 +176,7 @@ adminRoutes.openapi(
   async (c) => {
     const { id } = c.req.valid("param");
 
-    const org = await prisma.organization.findUnique({ where: { id } });
+    const org = await adminDb.organization.findUnique({ where: { id } });
     if (!org) return c.json({ error: "Not found" }, 404);
 
     // Generate a fresh default key on restore
@@ -180,7 +186,7 @@ adminRoutes.openapi(
     const prefix = plaintext.slice(0, 16);
     const hash = crypto.createHash("sha256").update(plaintext).digest("hex");
 
-    await prisma.aPIKey.create({
+    await adminDb.aPIKey.create({
       data: {
         name: "Restored Key",
         keyHash: hash,
@@ -212,7 +218,7 @@ adminRoutes.openapi(
   async (c) => {
     const { limit } = c.req.valid("query");
 
-    const orgs = await prisma.organization.findMany({
+    const orgs = await adminDb.organization.findMany({
       take: limit,
       orderBy: { createdAt: "desc" },
       select: { id: true, name: true, plan: true },

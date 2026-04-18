@@ -1,4 +1,8 @@
-import { prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
+
+// AUDIT(no-tenant): Sleptons community profiles are a global, public namespace
+// (not tenant-scoped). Member records are keyed on Clerk userId / slug.
+const prisma = getSystemDb();
 
 export const MEMBERS_PAGE_SIZE = 24;
 

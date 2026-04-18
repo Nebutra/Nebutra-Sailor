@@ -5,6 +5,26 @@ import type { TenantConfig, TenantResolver } from "./types.js";
 import { TenantRequiredError } from "./types.js";
 
 // =============================================================================
+// Lightweight Hono-compatible types (avoids hard dependency on "hono")
+// =============================================================================
+
+/** Minimal Hono-like context — matches Hono's `Context` without importing it. */
+interface HonoLikeContext {
+  req: {
+    raw: { headers: Headers };
+    url: string;
+    header: (name: string) => string | undefined;
+  };
+  json: (body: unknown, status: number) => Response;
+}
+
+/** Minimal request-like object for Next.js API routes. */
+interface NextLikeRequest {
+  headers: Record<string, string | string[] | undefined>;
+  url?: string;
+}
+
+// =============================================================================
 // Hono Middleware for Multi-Tenant Context
 // =============================================================================
 
@@ -63,7 +83,7 @@ export function tenantMiddleware(config: Partial<TenantConfig> = {}) {
     resolver = fromHeader(mergedConfig.headerName);
   }
 
-  return async (c: any, next: any) => {
+  return async (c: HonoLikeContext, next: () => Promise<Response>) => {
     try {
       // Extract tenant ID from request
       const honoHeaders: Record<string, string | string[] | undefined> = {};
@@ -72,14 +92,16 @@ export function tenantMiddleware(config: Partial<TenantConfig> = {}) {
         honoHeaders[key.toLowerCase()] = value;
       });
 
-      const tenantId = await Promise.resolve(
-        resolver({
-          headers: honoHeaders,
-          url: c.req.url,
-          token: c.req.header("Authorization")?.replace(/^Bearer\s+/i, ""),
-          apiKey: c.req.header("X-API-Key"),
-        }),
-      );
+      const resolverInput: Parameters<typeof resolver>[0] = {
+        headers: honoHeaders,
+        url: c.req.url,
+      };
+      const authHeader = c.req.header("Authorization");
+      if (authHeader) resolverInput.token = authHeader.replace(/^Bearer\s+/i, "");
+      const apiKeyHeader = c.req.header("X-API-Key");
+      if (apiKeyHeader) resolverInput.apiKey = apiKeyHeader;
+
+      const tenantId = await Promise.resolve(resolver(resolverInput));
 
       if (!tenantId) {
         if (mergedConfig.requireTenant) {
@@ -161,7 +183,7 @@ export function withTenant<T extends any[], R>(
 
   return async (...args: T): Promise<R> => {
     // Extract req from args (Next.js convention: req is first arg)
-    const req = args[0] as any;
+    const req = args[0] as NextLikeRequest | undefined;
 
     if (!req || !req.headers) {
       logger.warn("withTenant: No request object found");
@@ -187,14 +209,16 @@ export function withTenant<T extends any[], R>(
     }
 
     // Resolve tenant ID
-    const resolverInput = {
-      headers: req.headers as Record<string, string | string[] | undefined> | undefined,
-      url: req.url ? `${(req.headers.host as string) || ""}${req.url}` : undefined,
-      token: (req.headers.authorization as string)?.replace(/^Bearer\s+/i, ""),
-      apiKey: req.headers["x-api-key"] as string | undefined,
+    const withTenantInput: Parameters<typeof resolver>[0] = {
+      headers: req.headers as Record<string, string | string[] | undefined>,
     };
+    if (req.url) withTenantInput.url = `${(req.headers.host as string) || ""}${req.url}`;
+    const authorization = req.headers.authorization as string | undefined;
+    if (authorization) withTenantInput.token = authorization.replace(/^Bearer\s+/i, "");
+    const apiKey = req.headers["x-api-key"] as string | undefined;
+    if (apiKey) withTenantInput.apiKey = apiKey;
 
-    const tenantId = await Promise.resolve(resolver(resolverInput as any));
+    const tenantId = await Promise.resolve(resolver(withTenantInput));
 
     if (!tenantId) {
       if (mergedConfig.requireTenant) {

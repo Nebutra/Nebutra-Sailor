@@ -226,12 +226,16 @@ describe("requireRole — authorized access", () => {
 });
 
 // ===========================================================================
-// requireRole — header aliases (legacy compatibility)
+// requireRole — legacy header rejection (security hardening)
 // ===========================================================================
 
-describe("requireRole — legacy header aliases", () => {
-  it("accepts x-tenant-id as an alias for x-organization-id", async () => {
-    const token = generateServiceToken("user-123", "org-456", ROLES.ADMIN);
+describe("requireRole — legacy x-tenant-id header rejected", () => {
+  it("does NOT trust x-tenant-id as an alias for x-organization-id (even with service token)", async () => {
+    // Compute service token where organizationId is empty — matching the
+    // canonical string when only `x-tenant-id` is sent. The middleware must
+    // ignore `x-tenant-id` entirely, so the role check should fail (403)
+    // because no organizationId is resolved.
+    const token = generateServiceToken("user-123", "", ROLES.ADMIN);
     const res = await adminRequest({
       "x-user-id": "user-123",
       "x-tenant-id": "org-456",
@@ -239,7 +243,19 @@ describe("requireRole — legacy header aliases", () => {
       "x-service-token": token,
     });
 
-    // x-tenant-id should map to organizationId so the role check passes
+    // Legacy header is ignored — organization membership is missing → 403
+    expect(res.status).toBe(403);
+  });
+
+  it("still accepts x-organization-id as the canonical header", async () => {
+    const token = generateServiceToken("user-123", "org-456", ROLES.ADMIN);
+    const res = await adminRequest({
+      "x-user-id": "user-123",
+      "x-organization-id": "org-456",
+      "x-role": ROLES.ADMIN,
+      "x-service-token": token,
+    });
+
     expect(res.status).toBe(200);
   });
 });

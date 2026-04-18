@@ -136,8 +136,10 @@ statusRoutes.openapi(statusRoute, async (c) => {
   });
 
   // Include circuit breaker states as observability checks
-  const aiBreakerStatus = aiServiceBreaker.status();
-  const billingBreakerStatus = billingServiceBreaker.status();
+  const [aiBreakerStatus, billingBreakerStatus] = await Promise.all([
+    aiServiceBreaker.getStatus(),
+    billingServiceBreaker.getStatus(),
+  ]);
   checks.push(
     {
       name: "circuit-breaker:ai",
@@ -277,9 +279,10 @@ statusRoutes.openapi(pingRoute, (c) => {
 async function checkDatabase(): Promise<StatusResponse["checks"][0]> {
   const start = Date.now();
   try {
-    // Dynamic import to avoid issues when DB is not configured
-    const { prisma } = await import("@nebutra/db");
-    await prisma.$queryRaw`SELECT 1`;
+    // Dynamic import to avoid issues when DB is not configured.
+    // AUDIT(no-tenant): liveness check is not tenant-scoped.
+    const { getSystemDb } = await import("@nebutra/db");
+    await getSystemDb().$queryRaw`SELECT 1`;
 
     return {
       name: "database",

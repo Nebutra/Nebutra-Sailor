@@ -17,13 +17,18 @@
  */
 
 import crypto from "node:crypto";
-import { prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import { sendWelcomeEmail } from "@nebutra/email";
 import { ClerkOrganizationDataSchema } from "@nebutra/event-bus";
 import { logger } from "@nebutra/logger";
 import { eventType, type InngestFunction } from "inngest";
 import Stripe from "stripe";
 import { inngest } from "../client.js";
+
+// AUDIT(no-tenant): tenant-provisioning creates the Organization record and
+// its first API key, StripeCustomer mapping, etc. It runs BEFORE any RLS
+// context for the new tenant exists — the tenant is being bootstrapped here.
+const prisma = getSystemDb();
 
 /** SHA-256 hash of plaintext key (same as API key creation in settings). */
 function hashKey(plaintext: string): string {

@@ -3,6 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": ["Prisma or equivalent DB client for RLS withRls()"],
+    "gaps": [
+      "RLS SQL policy generation not shipped",
+      "Subdomain/JWT resolver strategies scaffolded only",
+      "Schema-per-tenant migration flow pending"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

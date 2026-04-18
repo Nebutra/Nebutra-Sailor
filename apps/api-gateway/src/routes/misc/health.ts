@@ -75,8 +75,9 @@ async function withTimeout(
 
 function checkDatabase() {
   return withTimeout(async () => {
-    const { prisma } = await import("@nebutra/db");
-    await prisma.$queryRaw`SELECT 1`;
+    // AUDIT(no-tenant): liveness check is not tenant-scoped.
+    const { getSystemDb } = await import("@nebutra/db");
+    await getSystemDb().$queryRaw`SELECT 1`;
   });
 }
 

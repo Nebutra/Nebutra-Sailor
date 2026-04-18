@@ -1,4 +1,5 @@
-import { getApiWeight, getRateLimiter } from "@nebutra/rate-limit";
+import { getApiWeight, getRateLimiter, createRedisRateLimiter, PLAN_LIMITS } from "@nebutra/rate-limit";
+import { getRedis } from "@nebutra/cache";
 import type { Context, Next } from "hono";
 
 /**
@@ -22,7 +23,13 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
   const weight = getApiWeight(method, path);
 
   // Get rate limiter for tenant's plan
-  const limiter = getRateLimiter(tenant?.plan || "FREE");
+  let limiter;
+  try {
+    const redisClient = getRedis();
+    limiter = createRedisRateLimiter(PLAN_LIMITS[tenant?.plan || "FREE"] || PLAN_LIMITS.FREE, redisClient as any);
+  } catch (e) {
+    limiter = getRateLimiter(tenant?.plan || "FREE");
+  }
 
   // Try to consume tokens
   const result = await limiter.consume(key, weight);

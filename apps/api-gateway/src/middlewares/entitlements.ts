@@ -23,7 +23,7 @@ export function requireFeature(feature: string, quantity?: number) {
     try {
       // In a real application, ensure initializePlanEntitlements has been
       // called prior to this, usually on tenant creation or session resolution.
-      requireEntitlement(tenant.organizationId, feature, quantity);
+      await requireEntitlement(tenant.organizationId, feature, quantity);
     } catch (error: any) {
       if (error?.name === "EntitlementError" || error?.code === "ENTITLEMENT_DENIED") {
         logger.warn(`Entitlement denied: ${feature} for org ${tenant.organizationId}`);

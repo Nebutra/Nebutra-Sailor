@@ -1,5 +1,5 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { prisma, type Role } from "@nebutra/db";
+import { getSystemDb, type Role } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import {
   type JsonValue,
@@ -10,6 +10,11 @@ import {
 } from "@nebutra/repositories";
 import { Webhook } from "svix";
 import { inngest } from "../../inngest/client.js";
+
+// AUDIT(no-tenant): Clerk webhooks manage user/org lifecycle and arrive
+// without a request-scoped tenant context. Repository writes below use
+// the system-scope Prisma client resolved from the webhook payload.
+const prisma = getSystemDb();
 
 const log = logger.child({ service: "clerk-webhook" });
 
@@ -196,26 +201,23 @@ export function createClerkWebhookRoutes(repos?: Partial<ClerkRepos>): OpenAPIHo
       return c.json({ error: "Invalid signature" }, 400);
     }
 
-    // Idempotency check
-    const existingEvent = await resolvedRepos.webhookEventRepo.findByProviderAndEventId(
-      "clerk",
-      svixId,
-    );
-
-    if (existingEvent?.processedAt) {
-      log.info("Clerk event already processed, skipping", {
-        svixId,
-        type: payload.type,
-      });
-      return c.json({ received: true as const, skipped: true }, 200);
-    }
-
-    await resolvedRepos.webhookEventRepo.upsert({
+    // Atomic idempotency claim — relies on the unique constraint
+    // `@@unique([provider, eventId])` on WebhookEvent. The first pod to
+    // insert the row wins; concurrent retries short-circuit on P2002.
+    const claim = await resolvedRepos.webhookEventRepo.claim({
       provider: "clerk",
       eventId: svixId,
       eventType: payload.type,
       payload: payload as unknown as JsonValue,
     });
+
+    if (!claim.claimed) {
+      log.info("Clerk event already received, skipping", {
+        svixId,
+        type: payload.type,
+      });
+      return c.json({ received: true as const, skipped: true }, 200);
+    }
 
     // Respond immediately; process asynchronously
     const response = c.json({ received: true as const }, 200);

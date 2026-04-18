@@ -3,6 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "AWS_KMS_KEY_ID + AWS credentials (production)",
+      "or VAULT_LOCAL_MASTER_KEY for local HKDF (dev only)"
+    ],
+    "gaps": [
+      "KEK rotation workflow not exposed via CLI",
+      "Per-tenant key isolation scaffolded only",
+      "Audit trail on decrypt operations TODO"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

@@ -44,6 +44,12 @@ import { applyMeteringSwitch } from "./utils/metering.js";
 import { applyMonitoringSelection } from "./utils/monitoring.js";
 import { applyNotificationsSelection } from "./utils/notifications.js";
 import { updatePackageJson } from "./utils/npm.js";
+import {
+  collectPreviewSelections,
+  describeStatus,
+  formatStatusBadge,
+  type PreviewSelection,
+} from "./utils/package-status.js";
 import { applyPaymentSelection, type PaymentChoice } from "./utils/payment.js";
 import { applyProviderSelection } from "./utils/providers.js";
 import { pruneTemplate } from "./utils/prune.js";
@@ -595,6 +601,38 @@ async function run(): Promise<void> {
   const mcp = opts.mcp ?? rDefaults.mcp;
   const metering = opts.metering ?? rDefaults.metering;
 
+  // Detect any non-stable provider selections so we can warn the user
+  // before/after install and emit structured events for --json consumers.
+  const previewSelections: PreviewSelection[] = collectPreviewSelections([
+    { flag: "queue", provider: queue },
+    { flag: "search", provider: search },
+    { flag: "notifications", provider: notifications },
+    { flag: "webhooks", provider: webhooks },
+    { flag: "feature-flags", provider: featureFlags },
+    { flag: "captcha", provider: captcha },
+  ]);
+
+  function emitPreviewWarnings(): void {
+    for (const sel of previewSelections) {
+      if (useJson) {
+        emitJson(true, {
+          event: "warn",
+          step: sel.flag,
+          provider: sel.provider,
+          packageStatus: sel.status,
+          message: describeStatus(sel.status),
+        });
+      } else {
+        const badge = formatStatusBadge(sel.status);
+        process.stdout.write(
+          pc.yellow(
+            `⚠  ${sel.flag}=${sel.provider} ${badge} — ${describeStatus(sel.status)}\n`,
+          ),
+        );
+      }
+    }
+  }
+
   const config: NebutraConfig = {
     region,
     orm,
@@ -722,10 +760,15 @@ async function run(): Promise<void> {
     ];
     if (useJson) {
       plan.forEach((p) => emitJson(true, { event: "plan", action: p }));
+      emitPreviewWarnings();
       emitJson(true, { event: "done", dryRun: true });
     } else {
       process.stdout.write("\n" + pc.bold("Dry run — planned actions:\n"));
       for (const line of plan) process.stdout.write(`  • ${line}\n`);
+      if (previewSelections.length > 0) {
+        process.stdout.write("\n" + pc.bold(pc.yellow("Preview-status providers selected:\n")));
+        emitPreviewWarnings();
+      }
       process.stdout.write(pc.dim("\nNo files were written.\n"));
     }
     process.exit(0);
@@ -964,18 +1007,26 @@ async function run(): Promise<void> {
 
     const elapsedSec = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
 
+    // Surface preview-status warnings before declaring success so the
+    // user doesn't miss them in install/git noise above.
+    if (previewSelections.length > 0) {
+      emitPreviewWarnings();
+    }
+
     if (useJson) {
       emitJson(true, {
         event: "done",
         status: "ok",
         elapsedSec,
         targetDir: resolvedTarget,
+        previewSelections,
       });
     } else {
       showDone({
         elapsedSec,
         targetDir: resolvedTarget,
         skippedInstall: opts.install === false,
+        previewSelections,
       });
     }
 

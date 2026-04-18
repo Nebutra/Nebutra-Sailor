@@ -3,6 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "CASL (in-process, no external creds)",
+      "or OPENFGA_API_URL + OPENFGA_STORE_ID for Zanzibar-style"
+    ],
+    "gaps": [
+      "OpenFGA adapter is a stub",
+      "Role hierarchy and inheritance logic incomplete",
+      "Field-level permission enforcement pending"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

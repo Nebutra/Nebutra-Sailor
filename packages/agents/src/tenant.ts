@@ -36,7 +36,7 @@ export async function checkAgentQuota(
 ): Promise<{ allowed: boolean; remaining: number }> {
   try {
     const { getCreditBalance } = await import("@nebutra/billing/credits");
-    const balance = getCreditBalance(tenantId);
+    const balance = await getCreditBalance(tenantId);
 
     // Simple quota check: tenant must have positive credits
     // In production, we might check plan-specific monthly limits beforehand

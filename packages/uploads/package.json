@@ -3,6 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "AWS_S3_BUCKET + AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY (or R2 equivalents)",
+      "or local filesystem for dev"
+    ],
+    "gaps": [
+      "Tus resumable adapter optional-peer, not wired end-to-end",
+      "MIME/size validation is stub-level",
+      "Virus-scan hook pending"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

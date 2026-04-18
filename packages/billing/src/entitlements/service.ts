@@ -1,3 +1,4 @@
+import { getTenantDb } from "@nebutra/db";
 import type { Plan } from "../types.js";
 import { DEFAULT_PLAN_LIMITS, EntitlementError } from "../types.js";
 
@@ -122,20 +123,70 @@ export const PLAN_FEATURES: Record<Plan, FeatureKey[]> = {
 };
 
 // ============================================
-// In-memory store (production would use database)
+// Database & Cache Layer
 // ============================================
 
-const entitlements: Map<string, Entitlement[]> = new Map();
+const CACHE_TTL_MS = 60 * 1000;
+interface CacheEntry {
+  data: Entitlement[];
+  expiresAt: number;
+}
+const l1Cache = new Map<string, CacheEntry>();
+
+export async function getEntitlements(organizationId: string): Promise<Entitlement[]> {
+  const now = Date.now();
+  const cached = l1Cache.get(organizationId);
+
+  if (cached && cached.expiresAt > now) {
+    return cached.data;
+  }
+
+  const dbEntitlements = await getTenantDb(organizationId).entitlement.findMany({
+    where: { organizationId },
+  });
+
+  const parsed = dbEntitlements.map((e) => ({
+    id: e.id,
+    organizationId: e.organizationId,
+    feature: e.feature,
+    isEnabled: e.isEnabled,
+    limitValue: e.limitValue !== null ? e.limitValue : undefined,
+    usedValue: e.usedValue,
+    resetPeriod: (e.resetPeriod as "monthly" | "daily") || undefined,
+    lastResetAt: e.lastResetAt || undefined,
+    expiresAt: e.expiresAt || undefined,
+    source: (e.source as "plan" | "addon" | "trial" | "custom"),
+    metadata: (e.metadata as Record<string, unknown>) || undefined,
+  }));
+
+  try {
+    const cacheModule = await import("@nebutra/cache").catch(() => null);
+    if (cacheModule) {
+      // Opt: try redis here if supported securely
+    }
+  } catch (err) {}
+
+  l1Cache.set(organizationId, {
+    data: parsed,
+    expiresAt: now + CACHE_TTL_MS,
+  });
+
+  return parsed;
+}
+
+export function invalidateCache(organizationId: string) {
+  l1Cache.delete(organizationId);
+}
 
 /**
  * Check if an organization has access to a feature
  */
-export function checkEntitlement(
+export async function checkEntitlement(
   organizationId: string,
   feature: string,
   quantity?: number,
-): EntitlementCheckResult {
-  const orgEntitlements = entitlements.get(organizationId) || [];
+): Promise<EntitlementCheckResult> {
+  const orgEntitlements = await getEntitlements(organizationId);
   const entitlement = orgEntitlements.find((e) => e.feature === feature);
 
   // No entitlement found
@@ -192,12 +243,12 @@ export function checkEntitlement(
 /**
  * Require an entitlement - throws if not allowed
  */
-export function requireEntitlement(
+export async function requireEntitlement(
   organizationId: string,
   feature: string,
   quantity?: number,
-): void {
-  const result = checkEntitlement(organizationId, feature, quantity);
+): Promise<void> {
+  const result = await checkEntitlement(organizationId, feature, quantity);
 
   if (!result.allowed) {
     throw new EntitlementError(result.reason || "Access denied", "ENTITLEMENT_DENIED");
@@ -207,87 +258,96 @@ export function requireEntitlement(
 /**
  * Grant an entitlement to an organization
  */
-export function grantEntitlement(input: GrantEntitlementInput): Entitlement {
-  const entitlement: Entitlement = {
-    id: crypto.randomUUID(),
-    organizationId: input.organizationId,
-    feature: input.feature,
-    isEnabled: true,
-    limitValue: input.limitValue !== undefined ? BigInt(input.limitValue) : undefined,
-    usedValue: BigInt(0),
-    resetPeriod: input.resetPeriod,
-    expiresAt: input.expiresAt,
-    source: input.source,
-    metadata: input.metadata,
+export async function grantEntitlement(input: GrantEntitlementInput): Promise<Entitlement> {
+  const model = await getTenantDb(input.organizationId).entitlement.upsert({
+    where: {
+      organizationId_feature: { organizationId: input.organizationId, feature: input.feature },
+    },
+    create: {
+      organizationId: input.organizationId,
+      feature: input.feature,
+      isEnabled: true,
+      limitValue: input.limitValue !== undefined ? BigInt(input.limitValue) : null,
+      usedValue: BigInt(0),
+      resetPeriod: input.resetPeriod,
+      expiresAt: input.expiresAt,
+      source: input.source,
+      metadata: (input.metadata || {}) as any,
+    },
+    update: {
+      isEnabled: true,
+      limitValue: input.limitValue !== undefined ? BigInt(input.limitValue) : null,
+      resetPeriod: input.resetPeriod,
+      expiresAt: input.expiresAt,
+      source: input.source,
+      metadata: (input.metadata || {}) as any,
+    },
+  });
+
+  invalidateCache(input.organizationId);
+
+  return {
+    id: model.id,
+    organizationId: model.organizationId,
+    feature: model.feature,
+    isEnabled: model.isEnabled,
+    limitValue: model.limitValue !== null ? model.limitValue : undefined,
+    usedValue: model.usedValue,
+    resetPeriod: (model.resetPeriod as "monthly" | "daily") || undefined,
+    expiresAt: model.expiresAt || undefined,
+    source: (model.source as "plan" | "addon" | "trial" | "custom"),
+    metadata: (model.metadata as Record<string, unknown>) || {},
   };
-
-  const orgEntitlements = entitlements.get(input.organizationId) || [];
-
-  // Remove existing entitlement for this feature
-  const filtered = orgEntitlements.filter((e) => e.feature !== input.feature);
-  filtered.push(entitlement);
-
-  entitlements.set(input.organizationId, filtered);
-
-  return entitlement;
 }
 
 /**
  * Revoke an entitlement from an organization
  */
-export function revokeEntitlement(organizationId: string, feature: string): void {
-  const orgEntitlements = entitlements.get(organizationId) || [];
-  const filtered = orgEntitlements.filter((e) => e.feature !== feature);
-  entitlements.set(organizationId, filtered);
+export async function revokeEntitlement(organizationId: string, feature: string): Promise<void> {
+  await getTenantDb(organizationId).entitlement.deleteMany({
+    where: { organizationId, feature },
+  });
+  invalidateCache(organizationId);
 }
 
 /**
  * Increment usage for a feature
  */
-export function incrementUsage(
+export async function incrementUsage(
   organizationId: string,
   feature: string,
   quantity: number = 1,
-): void {
-  const orgEntitlements = entitlements.get(organizationId) || [];
-  const entitlement = orgEntitlements.find((e) => e.feature === feature);
-
-  if (entitlement) {
-    entitlement.usedValue += BigInt(quantity);
-  }
+): Promise<void> {
+  await getTenantDb(organizationId).entitlement.updateMany({
+    where: { organizationId, feature },
+    data: { usedValue: { increment: BigInt(quantity) } },
+  });
+  invalidateCache(organizationId);
 }
 
 /**
  * Reset usage for a feature
  */
-export function resetUsage(organizationId: string, feature: string): void {
-  const orgEntitlements = entitlements.get(organizationId) || [];
-  const entitlement = orgEntitlements.find((e) => e.feature === feature);
-
-  if (entitlement) {
-    entitlement.usedValue = BigInt(0);
-    entitlement.lastResetAt = new Date();
-  }
+export async function resetUsage(organizationId: string, feature: string): Promise<void> {
+  await getTenantDb(organizationId).entitlement.updateMany({
+    where: { organizationId, feature },
+    data: { usedValue: BigInt(0), lastResetAt: new Date() },
+  });
+  invalidateCache(organizationId);
 }
 
-/**
- * Get all entitlements for an organization
- */
-export function getEntitlements(organizationId: string): Entitlement[] {
-  return entitlements.get(organizationId) || [];
-}
 
 /**
  * Initialize entitlements for a plan
  */
-export function initializePlanEntitlements(organizationId: string, plan: Plan): Entitlement[] {
+export async function initializePlanEntitlements(organizationId: string, plan: Plan): Promise<Entitlement[]> {
   const features = PLAN_FEATURES[plan] || [];
   const limits = DEFAULT_PLAN_LIMITS[plan];
 
   const granted: Entitlement[] = [];
 
   for (const feature of features) {
-    const entitlement = grantEntitlement({
+    const entitlement = await grantEntitlement({
       organizationId,
       feature,
       source: "plan",
@@ -297,7 +357,7 @@ export function initializePlanEntitlements(organizationId: string, plan: Plan): 
 
   // Add usage-based entitlements with limits
   if (limits.apiCalls !== -1) {
-    const apiEntitlement = grantEntitlement({
+    const apiEntitlement = await grantEntitlement({
       organizationId,
       feature: "api.calls",
       limitValue: limits.apiCalls,
@@ -308,7 +368,7 @@ export function initializePlanEntitlements(organizationId: string, plan: Plan): 
   }
 
   if (limits.aiTokens !== -1) {
-    const tokenEntitlement = grantEntitlement({
+    const tokenEntitlement = await grantEntitlement({
       organizationId,
       feature: "ai.tokens",
       limitValue: limits.aiTokens,

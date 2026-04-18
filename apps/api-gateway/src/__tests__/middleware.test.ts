@@ -69,8 +69,22 @@ vi.mock("@nebutra/audit", () => ({
 }));
 
 vi.mock("../../services/circuitBreaker.js", () => ({
-  aiServiceBreaker: { status: () => ({ state: "CLOSED", failures: 0 }) },
-  billingServiceBreaker: { status: () => ({ state: "CLOSED", failures: 0 }) },
+  aiServiceBreaker: {
+    getStatus: async () => ({
+      state: "CLOSED",
+      failures: 0,
+      successes: 0,
+      openedAt: null,
+    }),
+  },
+  billingServiceBreaker: {
+    getStatus: async () => ({
+      state: "CLOSED",
+      failures: 0,
+      successes: 0,
+      openedAt: null,
+    }),
+  },
 }));
 
 // ---------------------------------------------------------------------------
@@ -203,6 +217,50 @@ describe("tenantContextMiddleware", () => {
       expect(body.userId).toBeUndefined();
       expect(body.organizationId).toBeUndefined();
       expect(body.plan).toBe("FREE");
+    });
+
+    it("does NOT trust legacy x-tenant-id header without service token (spoofing attempt)", async () => {
+      const app = createTenantApp();
+      const res = await app.request("/test", {
+        method: "GET",
+        headers: {
+          // Attacker attempts to spoof tenant id without any HMAC proof
+          "x-tenant-id": "attacker-org",
+        },
+      });
+
+      const body = await res.json();
+      expect(res.status).toBe(200);
+      expect(body.userId).toBeUndefined();
+      expect(body.organizationId).toBeUndefined();
+      expect(body.plan).toBe("FREE");
+    });
+
+    it("does NOT trust x-tenant-id even when a service token is also present (alias removed)", async () => {
+      const secret = process.env.SERVICE_SECRET ?? "";
+      // Compute token over empty orgId — matching the canonical string
+      // when only `x-tenant-id` is sent. The middleware must ignore
+      // `x-tenant-id` completely regardless of whether the token validates.
+      const token = computeServiceToken(secret, "user-1", "", "org:member", "FREE");
+
+      const app = createTenantApp();
+      const res = await app.request("/test", {
+        method: "GET",
+        headers: {
+          "x-service-token": token,
+          "x-user-id": "user-1",
+          "x-tenant-id": "org-smuggled",
+          "x-role": "org:member",
+          "x-plan": "FREE",
+        },
+      });
+
+      const body = await res.json();
+      expect(res.status).toBe(200);
+      // User is trusted (token matches the empty-org canonical),
+      // but organizationId must NOT be populated from x-tenant-id.
+      expect(body.userId).toBe("user-1");
+      expect(body.organizationId).toBeUndefined();
     });
   });
 

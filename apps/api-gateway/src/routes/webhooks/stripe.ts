@@ -1,10 +1,15 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { handleCreditPurchaseWebhook } from "@nebutra/billing";
-import { type Prisma, prisma } from "@nebutra/db";
+import { getSystemDb, Prisma } from "@nebutra/db";
 import { issueLicense } from "@nebutra/license";
 import { logger } from "@nebutra/logger";
 import Stripe from "stripe";
 import { inngest } from "../../inngest/client.js";
+
+// AUDIT(no-tenant): Stripe webhooks arrive without a request-scoped tenant
+// context; the tenant is resolved from the webhook payload inside each
+// handler. All writes below use the system-scope Prisma client.
+const prisma = getSystemDb();
 
 const log = logger.child({ service: "stripe-webhook" });
 
@@ -87,30 +92,36 @@ stripeWebhookRoutes.openapi(stripeWebhookRoute, async (c) => {
     return c.json({ error: "Invalid signature" }, 400);
   }
 
-  // Idempotency check — skip already-processed events
-  const existingEvent = await prisma.webhookEvent.findUnique({
-    where: { provider_eventId: { provider: "stripe", eventId: event.id } },
-  });
-
-  if (existingEvent?.processedAt) {
-    log.info("Stripe event already processed, skipping", {
+  // Atomic idempotency claim — relies on the unique constraint
+  // `@@unique([provider, eventId])` on the WebhookEvent model. The first
+  // instance to insert the row wins and proceeds to processing; any
+  // concurrent delivery hits a P2002 unique-constraint violation and
+  // short-circuits with `{ skipped: true }`. This eliminates the
+  // classic check-then-act race between Stripe retries and multi-pod
+  // deployments that `findUnique` + `upsert` could not guarantee.
+  try {
+    await prisma.webhookEvent.create({
+      data: {
+        provider: "stripe",
+        eventId: event.id,
+        eventType: event.type,
+        payload: event as unknown as Prisma.InputJsonValue,
+      },
+    });
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
+      log.info("Stripe event already received, skipping", {
+        eventId: event.id,
+        type: event.type,
+      });
+      return c.json({ received: true as const, skipped: true }, 200);
+    }
+    log.error("Failed to record Stripe webhook event", err, {
       eventId: event.id,
       type: event.type,
     });
-    return c.json({ received: true as const, skipped: true }, 200);
+    return c.json({ error: "Failed to record event" }, 500);
   }
-
-  // Persist event record (upsert in case of duplicate delivery before processing)
-  await prisma.webhookEvent.upsert({
-    where: { provider_eventId: { provider: "stripe", eventId: event.id } },
-    create: {
-      provider: "stripe",
-      eventId: event.id,
-      eventType: event.type,
-      payload: event as unknown as Prisma.InputJsonValue,
-    },
-    update: {},
-  });
 
   // Respond immediately; process asynchronously
   const response = c.json({ received: true as const }, 200);

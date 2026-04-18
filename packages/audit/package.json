@@ -4,6 +4,16 @@
   "private": true,
   "description": "Audit logging for sensitive operations",
   "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": ["@nebutra/db", "@nebutra/logger"],
+    "gaps": [
+      "No production app integrations",
+      "Event schema not finalized",
+      "Query API not implemented"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

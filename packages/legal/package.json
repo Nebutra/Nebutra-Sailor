@@ -4,6 +4,16 @@
   "private": true,
   "description": "Legal & Compliance infrastructure for Nebutra SaaS",
   "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": ["@nebutra/db", "React 19"],
+    "gaps": [
+      "No production app integrations",
+      "Consent persistence API not implemented",
+      "Document versioning workflow pending"
+    ]
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

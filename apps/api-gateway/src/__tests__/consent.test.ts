@@ -9,25 +9,32 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock MUST be declared before the route module is imported.
-vi.mock("@nebutra/db", () => ({
-  prisma: {
-    legalDocument: {
-      findFirst: vi.fn(),
-      findMany: vi.fn(),
-    },
-    userConsent: {
-      create: vi.fn(),
-      findFirst: vi.fn(),
-      updateMany: vi.fn(),
-    },
-    cookieConsent: {
-      upsert: vi.fn(),
-      findFirst: vi.fn(),
-    },
-    contactSubmission: {
-      create: vi.fn(),
-    },
+// The consent routes call `getSystemDb()` for public/global data (legal
+// documents, contact form) and `getTenantDb(orgId)` for tenant-scoped writes.
+// A single shared mock client is returned by both factories so tests can
+// assert on `prisma.<model>.<op>` regardless of the scope the route chose.
+const mockPrisma = {
+  legalDocument: {
+    findFirst: vi.fn(),
+    findMany: vi.fn(),
   },
+  userConsent: {
+    create: vi.fn(),
+    findFirst: vi.fn(),
+    updateMany: vi.fn(),
+  },
+  cookieConsent: {
+    upsert: vi.fn(),
+    findFirst: vi.fn(),
+  },
+  contactSubmission: {
+    create: vi.fn(),
+  },
+};
+
+vi.mock("@nebutra/db", () => ({
+  getSystemDb: () => mockPrisma,
+  getTenantDb: () => mockPrisma,
   Prisma: {},
 }));
 
@@ -50,10 +57,14 @@ vi.mock("@nebutra/logger", () => {
   return { logger: logFns };
 });
 
-import { prisma } from "@nebutra/db";
 import { tenantContextMiddleware } from "@/middlewares/tenantContext.js";
 import { consentRoutes } from "../routes/legal/consent.js";
 import { s2sHeaders, TEST_SERVICE_SECRET } from "./helpers/s2s-token.js";
+
+// Alias back to the preserved reference from the `vi.mock` factory so the
+// existing test assertions (`prisma.legalDocument.findFirst.mockResolvedValue`)
+// continue to work unchanged.
+const prisma = mockPrisma;
 
 const app = new OpenAPIHono();
 app.use("*", tenantContextMiddleware);

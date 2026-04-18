@@ -1,9 +1,15 @@
 import pc from "picocolors";
+import {
+  describeStatus,
+  formatStatusBadge,
+  type PreviewSelection,
+} from "../utils/package-status.js";
 
 export interface DoneOptions {
   elapsedSec: number;
   targetDir: string;
   skippedInstall: boolean;
+  previewSelections?: PreviewSelection[];
 }
 
 function useDecor(): boolean {
@@ -46,6 +52,30 @@ export function showDone(opts: DoneOptions): void {
     `     ${arrow} sailor add email --provider=postmark`,
     `     ${arrow} sailor add storage --provider=supabase`,
     `     ${decor ? pc.dim("(more providers: `sailor add --list`)") : "(more providers: `sailor add --list`)"}`,
+  );
+
+  // Preview-status providers: call them out so the user knows they
+  // scaffolded stub-level packages and won't be surprised at runtime.
+  const preview = opts.previewSelections ?? [];
+  if (preview.length > 0) {
+    const header = decor
+      ? pc.bold(pc.yellow("⚠  Preview features selected:"))
+      : "!! Preview features selected:";
+    lines.push("", `   ${header}`);
+    for (const sel of preview) {
+      const badge = formatStatusBadge(sel.status);
+      const line = `     ${arrow} ${sel.flag} (${sel.provider}) ${badge}`;
+      lines.push(decor ? pc.yellow(line) : line);
+    }
+    lines.push(
+      "",
+      `     ${decor ? pc.dim(describeStatus("foundation")) : describeStatus("foundation")}`,
+      `     ${decor ? pc.dim("You may need to contribute the provider integration yourself.") : "You may need to contribute the provider integration yourself."}`,
+      `     ${decor ? pc.dim("See: https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/package-status.md") : "See: https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/package-status.md"}`,
+    );
+  }
+
+  lines.push(
     "",
     `   ${decor ? pc.bold("Ship faster:") : "Ship faster:"}`,
     `     ${star} Star us       https://github.com/nebutra/nebutra-sailor`,

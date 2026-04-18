@@ -9,7 +9,7 @@
 import { createHash, randomBytes } from "node:crypto";
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { getRedis } from "@nebutra/cache";
-import { prisma } from "@nebutra/db";
+import { getTenantDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 
@@ -111,6 +111,7 @@ apiKeysRoutes.openapi(createRouteDef, async (c) => {
   const tenant = c.get("tenant");
   const organizationId = tenant.organizationId as string;
   const body = c.req.valid("json");
+  const db = getTenantDb(organizationId);
 
   const fullKey = generateFullKey();
   const keyHash = hashKey(fullKey);
@@ -120,7 +121,7 @@ apiKeysRoutes.openapi(createRouteDef, async (c) => {
     ? new Date(Date.now() + body.expiresInDays * 24 * 60 * 60 * 1000)
     : null;
 
-  const created = await prisma.aPIKey.create({
+  const created = await db.aPIKey.create({
     data: {
       name: body.name,
       keyHash,
@@ -175,8 +176,9 @@ const listRouteDef = createRoute({
 apiKeysRoutes.openapi(listRouteDef, async (c) => {
   const tenant = c.get("tenant");
   const organizationId = tenant.organizationId as string;
+  const db = getTenantDb(organizationId);
 
-  const keys = await prisma.aPIKey.findMany({
+  const keys = await db.aPIKey.findMany({
     where: { organizationId },
     orderBy: { createdAt: "desc" },
   });
@@ -220,8 +222,9 @@ apiKeysRoutes.openapi(revokeRouteDef, async (c) => {
   const tenant = c.get("tenant");
   const organizationId = tenant.organizationId as string;
   const { id } = c.req.valid("param");
+  const db = getTenantDb(organizationId);
 
-  const existing = await prisma.aPIKey.findFirst({
+  const existing = await db.aPIKey.findFirst({
     where: { id, organizationId },
   });
 
@@ -230,7 +233,7 @@ apiKeysRoutes.openapi(revokeRouteDef, async (c) => {
   }
 
   const revokedAt = new Date();
-  const updated = await prisma.aPIKey.update({
+  const updated = await db.aPIKey.update({
     where: { id },
     data: { revokedAt },
   });
@@ -271,8 +274,9 @@ apiKeysRoutes.openapi(patchRouteDef, async (c) => {
   const organizationId = tenant.organizationId as string;
   const { id } = c.req.valid("param");
   const body = c.req.valid("json");
+  const db = getTenantDb(organizationId);
 
-  const existing = await prisma.aPIKey.findFirst({
+  const existing = await db.aPIKey.findFirst({
     where: { id, organizationId },
   });
 
@@ -280,7 +284,7 @@ apiKeysRoutes.openapi(patchRouteDef, async (c) => {
     return c.json({ error: "Not Found", message: "API key not found" }, 404);
   }
 
-  const updated = await prisma.aPIKey.update({
+  const updated = await db.aPIKey.update({
     where: { id },
     data: {
       ...(body.name !== undefined ? { name: body.name } : {}),

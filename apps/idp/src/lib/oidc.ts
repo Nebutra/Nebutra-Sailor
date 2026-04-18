@@ -6,7 +6,7 @@
  * which is critical for oidc-provider's internal state management.
  */
 
-import { prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import { createNebutraOIDCProvider } from "@nebutra/oauth-server";
 import Redis from "ioredis";
 
@@ -30,7 +30,9 @@ export function getOIDCProvider() {
 
     _provider = createNebutraOIDCProvider({
       issuer,
-      prisma,
+      // AUDIT(no-tenant): OIDC authorization-server tables (OAuthClient,
+      // OAuthSession, etc.) are global, not scoped to an Organization.
+      prisma: getSystemDb(),
       redis: getRedis(),
       cookieKeys,
       loginUrl: "/oauth/login",

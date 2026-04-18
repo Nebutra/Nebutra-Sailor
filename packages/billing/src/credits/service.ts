@@ -1,3 +1,4 @@
+import { getTenantDb } from "@nebutra/db";
 import type { CreditTransactionType } from "../types.js";
 import { BillingError } from "../types.js";
 
@@ -43,68 +44,113 @@ export interface DeductCreditsInput {
 }
 
 // ============================================
-// In-memory store (production would use database)
+// Database & Cache Layer
 // ============================================
 
-const creditBalances: Map<string, CreditBalance> = new Map();
-const creditTransactions: Map<string, CreditTransaction[]> = new Map();
+const CACHE_TTL_MS = 60 * 1000;
+interface CacheEntry {
+  data: CreditBalance;
+  expiresAt: number;
+}
+const balanceCache = new Map<string, CacheEntry>();
+
+export function invalidateCreditCache(organizationId: string) {
+  balanceCache.delete(organizationId);
+}
 
 /**
  * Get credit balance for an organization
  */
-export function getCreditBalance(organizationId: string): CreditBalance {
-  let balance = creditBalances.get(organizationId);
+export async function getCreditBalance(organizationId: string): Promise<CreditBalance> {
+  const now = Date.now();
+  const cached = balanceCache.get(organizationId);
 
-  if (!balance) {
-    balance = {
-      organizationId,
-      balance: 0,
-      currency: "USD",
-    };
-    creditBalances.set(organizationId, balance);
+  if (cached && cached.expiresAt > now) {
+    return cached.data;
   }
 
-  return balance;
+  const db = getTenantDb(organizationId);
+  let dbBalance = await db.creditBalance.findUnique({
+    where: { organizationId },
+  });
+
+  if (!dbBalance) {
+    dbBalance = await db.creditBalance.create({
+      data: {
+        organizationId,
+        balance: 0,
+        currency: "USD",
+      },
+    });
+  }
+
+  const mapped: CreditBalance = {
+    organizationId: dbBalance.organizationId,
+    balance: Number(dbBalance.balance),
+    currency: dbBalance.currency,
+  };
+
+  balanceCache.set(organizationId, {
+    data: mapped,
+    expiresAt: now + CACHE_TTL_MS,
+  });
+
+  return mapped;
 }
 
 /**
  * Add credits to an organization's balance
  */
-export function addCredits(input: AddCreditsInput): CreditTransaction {
-  const balance = getCreditBalance(input.organizationId);
-  const newBalance = balance.balance + input.amount;
+export async function addCredits(input: AddCreditsInput): Promise<CreditTransaction> {
+  const db = getTenantDb(input.organizationId);
+  const transactionData = await db.$transaction(async (tx: any) => {
+    const balance = await tx.creditBalance.upsert({
+      where: { organizationId: input.organizationId },
+      create: {
+        organizationId: input.organizationId,
+        balance: input.amount,
+        currency: "USD",
+      },
+      update: {
+        balance: { increment: input.amount },
+      },
+    });
 
-  // Update balance
-  balance.balance = newBalance;
-  creditBalances.set(input.organizationId, balance);
+    return await tx.creditTransaction.create({
+      data: {
+        creditBalanceId: balance.id,
+        type: input.type,
+        amount: input.amount,
+        balanceAfter: balance.balance,
+        description: input.description,
+        expiresAt: input.expiresAt,
+        relatedId: input.relatedId,
+        metadata: input.metadata || {},
+      },
+    });
+  });
 
-  // Create transaction
-  const transaction: CreditTransaction = {
-    id: crypto.randomUUID(),
+  invalidateCreditCache(input.organizationId);
+
+  return {
+    id: transactionData.id,
     organizationId: input.organizationId,
-    type: input.type,
-    amount: input.amount,
-    balanceAfter: newBalance,
-    description: input.description,
-    expiresAt: input.expiresAt,
-    relatedId: input.relatedId,
-    metadata: input.metadata,
-    createdAt: new Date(),
+    type: transactionData.type as CreditTransactionType,
+    amount: Number(transactionData.amount),
+    balanceAfter: Number(transactionData.balanceAfter),
+    description: transactionData.description || undefined,
+    expiresAt: transactionData.expiresAt || undefined,
+    relatedId: transactionData.relatedId || undefined,
+    metadata: (transactionData.metadata as Record<string, unknown>) || undefined,
+    createdAt: transactionData.createdAt,
   };
-
-  // Store transaction
-  const transactions = creditTransactions.get(input.organizationId) || [];
-  transactions.push(transaction);
-  creditTransactions.set(input.organizationId, transactions);
-
-  return transaction;
 }
 
 /**
  * Deduct credits from an organization's balance
  */
-export function deductCredits(input: DeductCreditsInput): CreditTransaction {
-  const balance = getCreditBalance(input.organizationId);
+export async function deductCredits(input: DeductCreditsInput): Promise<CreditTransaction> {
+  const balance = await getCreditBalance(input.organizationId);
 
   if (balance.balance < input.amount) {
     throw new BillingError(
@@ -114,67 +160,94 @@ export function deductCredits(input: DeductCreditsInput): CreditTransaction {
     );
   }
 
-  const newBalance = balance.balance - input.amount;
+  const db = getTenantDb(input.organizationId);
+  const transactionData = await db.$transaction(async (tx: any) => {
+    const freshBalance = await tx.creditBalance.update({
+      where: { organizationId: input.organizationId },
+      data: { balance: { decrement: input.amount } },
+    });
 
-  // Update balance
-  balance.balance = newBalance;
-  creditBalances.set(input.organizationId, balance);
+    if (Number(freshBalance.balance) < 0) {
+      throw new BillingError("Insufficient credits", "INSUFFICIENT_CREDITS", 402);
+    }
 
-  // Create transaction
-  const transaction: CreditTransaction = {
-    id: crypto.randomUUID(),
+    return await tx.creditTransaction.create({
+      data: {
+        creditBalanceId: freshBalance.id,
+        type: "USAGE",
+        amount: -input.amount,
+        balanceAfter: freshBalance.balance,
+        description: input.description,
+        relatedId: input.relatedId,
+        metadata: input.metadata || {},
+      },
+    });
+  });
+
+  invalidateCreditCache(input.organizationId);
+
+  return {
+    id: transactionData.id,
     organizationId: input.organizationId,
-    type: "USAGE",
-    amount: -input.amount,
-    balanceAfter: newBalance,
-    description: input.description,
-    relatedId: input.relatedId,
-    metadata: input.metadata,
-    createdAt: new Date(),
+    type: transactionData.type as CreditTransactionType,
+    amount: Number(transactionData.amount),
+    balanceAfter: Number(transactionData.balanceAfter),
+    description: transactionData.description || undefined,
+    relatedId: transactionData.relatedId || undefined,
+    metadata: (transactionData.metadata as Record<string, unknown>) || undefined,
+    createdAt: transactionData.createdAt,
   };
-
-  // Store transaction
-  const transactions = creditTransactions.get(input.organizationId) || [];
-  transactions.push(transaction);
-  creditTransactions.set(input.organizationId, transactions);
-
-  return transaction;
 }
 
 /**
  * Check if organization has enough credits
  */
-export function hasEnoughCredits(organizationId: string, amount: number): boolean {
-  const balance = getCreditBalance(organizationId);
+export async function hasEnoughCredits(organizationId: string, amount: number): Promise<boolean> {
+  const balance = await getCreditBalance(organizationId);
   return balance.balance >= amount;
 }
 
 /**
  * Get credit transaction history
  */
-export function getCreditTransactions(
+export async function getCreditTransactions(
   organizationId: string,
   options?: {
     limit?: number;
     offset?: number;
     type?: CreditTransactionType;
   },
-): CreditTransaction[] {
-  let transactions = creditTransactions.get(organizationId) || [];
+): Promise<CreditTransaction[]> {
+  const db = getTenantDb(organizationId);
+  const balance = await db.creditBalance.findUnique({
+    where: { organizationId },
+    select: { id: true }
+  });
 
-  // Filter by type
-  if (options?.type) {
-    transactions = transactions.filter((t) => t.type === options.type);
-  }
+  if (!balance) return [];
 
-  // Sort by date descending
-  transactions.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  const raw = await db.creditTransaction.findMany({
+    where: {
+      creditBalanceId: balance.id,
+      ...(options?.type ? { type: options.type } : {})
+    },
+    orderBy: { createdAt: 'desc' },
+    take: options?.limit || 50,
+    skip: options?.offset || 0,
+  });
 
-  // Apply pagination
-  const offset = options?.offset || 0;
-  const limit = options?.limit || 50;
-
-  return transactions.slice(offset, offset + limit);
+  return raw.map(tx => ({
+    id: tx.id,
+    organizationId,
+    type: tx.type as CreditTransactionType,
+    amount: Number(tx.amount),
+    balanceAfter: Number(tx.balanceAfter),
+    description: tx.description || undefined,
+    expiresAt: tx.expiresAt || undefined,
+    relatedId: tx.relatedId || undefined,
+    metadata: (tx.metadata as Record<string, unknown>) || undefined,
+    createdAt: tx.createdAt,
+  }));
 }
 
 /**
@@ -203,13 +276,13 @@ export function formatCredits(credits: number): string {
 /**
  * Refund credits to an organization
  */
-export function refundCredits(input: {
+export async function refundCredits(input: {
   organizationId: string;
   amount: number;
   reason?: string;
   relatedId?: string;
-}): CreditTransaction {
-  return addCredits({
+}): Promise<CreditTransaction> {
+  return await addCredits({
     organizationId: input.organizationId,
     amount: input.amount,
     type: "REFUND",
@@ -221,13 +294,13 @@ export function refundCredits(input: {
 /**
  * Add bonus credits
  */
-export function addBonusCredits(input: {
+export async function addBonusCredits(input: {
   organizationId: string;
   amount: number;
   reason?: string;
   expiresAt?: Date;
-}): CreditTransaction {
-  return addCredits({
+}): Promise<CreditTransaction> {
+  return await addCredits({
     organizationId: input.organizationId,
     amount: input.amount,
     type: "BONUS",

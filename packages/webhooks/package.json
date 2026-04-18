@@ -3,6 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "SVIX_API_TOKEN (managed)",
+      "or WEBHOOK_SIGNING_SECRET for custom self-hosted delivery"
+    ],
+    "gaps": [
+      "Custom delivery adapter lacks retry + dead-letter handling",
+      "Endpoint management UI not scaffolded",
+      "Replay protection helpers incomplete"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

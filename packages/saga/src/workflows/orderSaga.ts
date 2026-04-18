@@ -1,3 +1,4 @@
+import { signServiceToken } from "@nebutra/auth";
 import { getStripe } from "@nebutra/billing";
 import { sendOrderConfirmationEmail } from "@nebutra/email";
 import type { EventBus } from "@nebutra/event-bus";
@@ -26,16 +27,27 @@ const SERVICE_SECRET = process.env.SERVICE_SECRET || "";
 /**
  * Helper to make S2S authenticated requests to api-gateway
  */
-async function gatewayFetch(path: string, options: RequestInit = {}) {
-  // In a real execution, we'd sign this request with an HMAC token.
-  // We'll mock the S2S headers for now.
+async function gatewayFetch(
+  path: string,
+  options: RequestInit = {},
+  ctx?: { tenantId: string; userId?: string }
+) {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    ...((options.headers as Record<string, string>) || {}),
+  };
+
+  let serviceToken = SERVICE_SECRET;
+  if (ctx) {
+    serviceToken = signServiceToken({ organizationId: ctx.tenantId, userId: ctx.userId }, SERVICE_SECRET);
+    if (ctx.userId) headers["x-user-id"] = ctx.userId;
+    headers["x-organization-id"] = ctx.tenantId;
+  }
+  headers["x-service-token"] = serviceToken;
+
   return fetch(`${API_GW_URL}${path}`, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      "x-service-token": SERVICE_SECRET,
-      ...options.headers,
-    },
+    headers,
   });
 }
 
@@ -52,7 +64,7 @@ const reserveInventory: SagaStep<OrderContext> = {
         items: ctx.items,
         tenantId: ctx.tenantId,
       }),
-    });
+    }, ctx);
 
     if (!res.ok) throw new Error("Failed to reserve inventory");
     return { ...ctx, inventoryReserved: true };
@@ -66,7 +78,7 @@ const reserveInventory: SagaStep<OrderContext> = {
           items: ctx.items,
           tenantId: ctx.tenantId,
         }),
-      }).catch((err) => logger.error("Inventory release compensation failed", { error: err }));
+      }, ctx).catch((err) => logger.error("Inventory release compensation failed", { error: err }));
     }
   },
 };
@@ -78,9 +90,7 @@ const chargePayment: SagaStep<OrderContext> = {
   name: "charge_payment",
   async execute(ctx) {
     if (!ctx.customerId) {
-      // Mock fallback if customerId isn't provided but we require payment
-      // In real life, require customerId or fail.
-      return { ...ctx, paymentId: `mock_pay_${Date.now()}` };
+      throw new Error("Missing customerId for payment");
     }
     const stripe = getStripe();
     const paymentIntent = await stripe.paymentIntents.create({
@@ -90,6 +100,8 @@ const chargePayment: SagaStep<OrderContext> = {
       confirm: true,
       off_session: true, // charge stored card asynchronously
       metadata: { orderId: ctx.orderId, tenantId: ctx.tenantId },
+    }, {
+      idempotencyKey: `order:${ctx.orderId}:payment`
     });
 
     if (paymentIntent.status !== "succeeded" && paymentIntent.status !== "processing") {
@@ -101,11 +113,9 @@ const chargePayment: SagaStep<OrderContext> = {
   async compensate(ctx) {
     if (ctx.paymentId && ctx.paymentId.startsWith("pi_")) {
       const stripe = getStripe();
-      await stripe.refunds
-        .create({
-          payment_intent: ctx.paymentId,
-        })
-        .catch((err) => logger.error("Payment refund compensation failed", { error: err }));
+      await stripe.refunds.create({
+        payment_intent: ctx.paymentId,
+      });
     }
   },
 };
@@ -127,7 +137,7 @@ const createOrderRecord: SagaStep<OrderContext> = {
         paymentId: ctx.paymentId,
         status: "confirmed",
       }),
-    });
+    }, ctx);
 
     if (!res.ok) throw new Error("Failed to create order record in database");
 
@@ -138,7 +148,7 @@ const createOrderRecord: SagaStep<OrderContext> = {
     if (ctx.orderRecordId || ctx.orderId) {
       await gatewayFetch(`/api/v1/ecommerce/orders/${ctx.orderId}/cancel`, {
         method: "POST",
-      }).catch((err) => logger.error("Order record cancellation failed", { error: err }));
+      }, ctx).catch((err) => logger.error("Order record cancellation failed", { error: err }));
     }
   },
 };

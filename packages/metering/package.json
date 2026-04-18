@@ -3,6 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": ["CLICKHOUSE_URL or in-memory provider for dev"],
+    "gaps": [
+      "ClickHouse provider is a stub — needs real client integration",
+      "Quota enforcement not wired to billing",
+      "Aggregation rollups pending"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

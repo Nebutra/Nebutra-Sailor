@@ -3,6 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "QSTASH_TOKEN (+ signing keys) for serverless",
+      "or REDIS_URL for BullMQ self-hosted"
+    ],
+    "gaps": [
+      "Dead letter queue not implemented",
+      "Worker auto-scaling TODO",
+      "SQS and Upstash Kafka adapters not started"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

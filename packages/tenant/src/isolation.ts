@@ -3,6 +3,17 @@ import type { IsolationStrategy } from "./types.js";
 import { TenantIsolationError } from "./types.js";
 
 // =============================================================================
+// Lightweight Prisma-compatible types (avoids hard dependency on "@prisma/client")
+// =============================================================================
+
+/** Minimal Prisma-like client interface for RLS extension support. */
+interface PrismaLikeClient {
+  $extends?: (extension: unknown) => unknown;
+  $executeRaw?: (query: TemplateStringsArray, ...values: unknown[]) => Promise<number>;
+  $queryRaw?: (query: TemplateStringsArray, ...values: unknown[]) => Promise<unknown[]>;
+}
+
+// =============================================================================
 // Database Isolation Helpers
 // =============================================================================
 
@@ -36,22 +47,18 @@ import { TenantIsolationError } from "./types.js";
  * // SQL: SELECT * FROM users WHERE current_setting('app.current_tenant_id') = user.tenant_id
  * ```
  */
-export function withRls<P extends { $extends?: any; $executeRaw?: any }>(
-  prisma: P,
-  tenantId: string,
-): P {
+export function withRls<P extends PrismaLikeClient>(prisma: P, tenantId: string): P {
   try {
     // Check if Prisma client supports $extends (v5+)
-    if (typeof (prisma as any).$extends === "function") {
+    if (typeof prisma.$extends === "function") {
       // Create a Prisma client extension that sets RLS context on each query
-      const extended = (prisma as any).$extends({
+      const extended = prisma.$extends({
         query: {
           $allOperations: {
             async $before() {
               // Execute SET command to set application variable
-              if (typeof (prisma as any).$executeRaw === "function") {
-                await (prisma as any)
-                  .$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, false)`;
+              if (typeof prisma.$executeRaw === "function") {
+                await prisma.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, false)`;
               }
               logger.debug("RLS context set", { tenantId });
             },
@@ -180,7 +187,7 @@ export function getTenantDatabaseUrl(tenantId: string, baseUrl?: string): string
  */
 export class TenantAwarePrismaClient {
   constructor(
-    private prisma: any,
+    private prisma: PrismaLikeClient,
     private tenantId: string,
   ) {
     logger.debug("TenantAwarePrismaClient initialized", { tenantId });
@@ -210,14 +217,21 @@ export class TenantAwarePrismaClient {
   /**
    * Execute a raw SQL query with tenant context.
    */
-  async executeRaw(query: string): Promise<any> {
+  async executeRaw(query: string): Promise<number> {
     try {
       logger.debug("Executing raw query with tenant context", {
         tenantId: this.tenantId,
         queryLength: query.length,
       });
 
-      return await (this.client as any).$executeRaw`${query}`;
+      const client = this.client as PrismaLikeClient;
+      if (!client.$executeRaw) {
+        throw new TenantIsolationError(
+          "Prisma client does not support $executeRaw",
+          "shared_schema",
+        );
+      }
+      return await client.$executeRaw`${query}`;
     } catch (err) {
       logger.error("Failed to execute raw query", err, { tenantId: this.tenantId });
       throw new TenantIsolationError(
@@ -230,14 +244,18 @@ export class TenantAwarePrismaClient {
   /**
    * Execute a raw query and return results.
    */
-  async queryRaw(query: string): Promise<any[]> {
+  async queryRaw(query: string): Promise<unknown[]> {
     try {
       logger.debug("Executing query with tenant context", {
         tenantId: this.tenantId,
         queryLength: query.length,
       });
 
-      return await (this.client as any).$queryRaw`${query}`;
+      const client = this.client as PrismaLikeClient;
+      if (!client.$queryRaw) {
+        throw new TenantIsolationError("Prisma client does not support $queryRaw", "shared_schema");
+      }
+      return await client.$queryRaw`${query}`;
     } catch (err) {
       logger.error("Failed to execute query", err, { tenantId: this.tenantId });
       throw new TenantIsolationError(
@@ -263,10 +281,10 @@ export class TenantAwarePrismaClient {
  * ```
  */
 export function createTenantPrismaProxy(
-  prisma: any,
+  prisma: PrismaLikeClient,
   tenantId: string,
   strategy: IsolationStrategy = "shared_schema",
-): any {
+): PrismaLikeClient {
   logger.debug("Creating tenant Prisma proxy", { tenantId, strategy });
 
   switch (strategy) {

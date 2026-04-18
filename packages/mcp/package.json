@@ -3,6 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": ["@modelcontextprotocol/sdk runtime"],
+    "gaps": [
+      "No production app integrations",
+      "Context server binary is a placeholder stub",
+      "Tool registry + plan-based access control pending"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

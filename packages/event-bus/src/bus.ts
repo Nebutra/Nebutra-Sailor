@@ -1,5 +1,6 @@
 import { logger } from "@nebutra/logger";
 import { z } from "zod";
+import { Inngest } from "inngest";
 
 // Base event schema
 export const BaseEventSchema = z.object({
@@ -23,6 +24,7 @@ type EventHandler<T extends BaseEvent = BaseEvent> = (event: T) => Promise<void>
 export class EventBus {
   private handlers: Map<string, Set<EventHandler>> = new Map();
   private eventLog: BaseEvent[] = [];
+  private inngestClient = new Inngest({ id: "nebutra-event-bus" });
 
   /**
    * Subscribe to an event type
@@ -48,10 +50,21 @@ export class EventBus {
     // Validate event
     const validated = BaseEventSchema.parse(event);
 
-    // Log event
+    // Swap local bindings for durable Inngest send when applicable.
+    try {
+      await this.inngestClient.send({
+        name: event.type,
+        data: validated.data as any,
+        user: validated.tenantId ? { id: validated.tenantId } : undefined,
+      });
+    } catch (err) {
+      logger.warn("Failed to push event to Inngest durability layer", err);
+    }
+
+    // Log event locally
     this.eventLog.push(validated);
 
-    // Notify handlers
+    // Notify local handlers sync
     const handlers = this.handlers.get(event.type) || new Set();
     const wildcardHandlers = this.handlers.get("*") || new Set();
 

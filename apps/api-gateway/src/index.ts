@@ -3,7 +3,7 @@ import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { initializeFromEnv, setAlertErrorHandler } from "@nebutra/alerting";
 import { deductCredits, dollarsToCredits } from "@nebutra/billing";
-import { prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import { getStatusCode, toApiError } from "@nebutra/errors";
 import {
   calculateCost,
@@ -350,7 +350,8 @@ const shutdown = async (signal: string) => {
       }
     }
     try {
-      await prisma.$disconnect();
+      // AUDIT(no-tenant): graceful shutdown closes the shared connection pool.
+      await getSystemDb().$disconnect();
       logger.info("Database connection closed");
     } catch (err) {
       logger.error("Error during shutdown", err);

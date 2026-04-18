@@ -3,6 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": ["@nebutra/billing", "@nebutra/email", "@nebutra/event-bus"],
+    "gaps": [
+      "No production app integrations",
+      "Orchestrator durability not guaranteed (no persistent journal)",
+      "Compensation logic scaffolded only"
+    ]
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
