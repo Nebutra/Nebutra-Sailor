@@ -42,6 +42,8 @@ export interface NebutraConfig {
   captcha?: "turnstile" | "hcaptcha" | "aliyun-slide" | "none";
   mcp?: "on" | "off";
   metering?: "auto" | "on" | "off";
+  billingMode?: "usage" | "seat" | "credits";
+  idp?: "clerk" | "oauth-server";
 }
 
 export async function writeNebutraConfig(targetDir: string, config: NebutraConfig) {

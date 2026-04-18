@@ -302,18 +302,106 @@ function main(): void {
   const stripped = applyTemplateIgnore(out, args.verbose);
   process.stdout.write(`  stripped ${stripped} paths\n`);
 
-  process.stdout.write("Step 3/4: injecting license & template marker…\n");
+  process.stdout.write("Step 3/5: stripping Nebutra-only Prisma models…\n");
+  const prismaStripped = stripNebutraOnlyModels(out);
+  process.stdout.write(`  stripped ${prismaStripped} Nebutra-only models from schema.prisma\n`);
+
+  process.stdout.write("Step 4/5: injecting license & template marker…\n");
   injectLicenseAndMarker(out);
   process.stdout.write("  injected LICENSE, LICENSE-COMMERCIAL.md, NOTICE.md, .sailor-template\n");
 
   if (args.git) {
-    process.stdout.write("Step 4/4: initializing git repo…\n");
+    process.stdout.write("Step 5/5: initializing git repo…\n");
     initGit(out);
   } else {
-    process.stdout.write("Step 4/4: skipping git init (pass --git to enable)\n");
+    process.stdout.write("Step 5/5: skipping git init (pass --git to enable)\n");
   }
 
   process.stdout.write(`\nDone. Template built at: ${out}\n`);
+}
+
+/**
+ * Remove Nebutra-only Prisma models from the template schema.
+ *
+ * These models power Nebutra's own products (Sleptons community, etc.) and
+ * have no place in a generic SaaS template. Unlike @conditional-annotated
+ * models (which are opt-in via CLI flags), these are hardcoded strips at
+ * mirror-sync time — downstream users of Sailor-Template never see them.
+ *
+ * If you're adding a new Nebutra-only model, add it to NEBUTRA_ONLY_MODELS.
+ */
+const NEBUTRA_ONLY_MODELS = [
+  "SleptonsaMemberProfile",
+  "SleptonsProduct",
+  "SleptonsUpvote",
+  "SleptonsConnection",
+  "CommunityProfile", // licensing/community table tied to Nebutra's OPC network
+  "License",          // Nebutra's license issuance table
+];
+
+const NEBUTRA_ONLY_ENUMS = [
+  "SleptonsTier",
+  "ProductStage",    // used only by Sleptons
+  "LicenseTier",
+  "LicenseType",
+];
+
+function stripNebutraOnlyModels(targetDir: string): number {
+  const schemaPath = path.join(targetDir, "packages/db/prisma/schema.prisma");
+  if (!fs.existsSync(schemaPath)) return 0;
+
+  let src = fs.readFileSync(schemaPath, "utf8");
+  let removed = 0;
+
+  const removeBlock = (kind: "model" | "enum", name: string) => {
+    const re = new RegExp(`^${kind}\\s+${name}\\s*\\{`, "m");
+    const m = re.exec(src);
+    if (!m) return;
+    const start = m.index;
+    // find balanced closing brace
+    let depth = 0;
+    let i = m.index;
+    while (i < src.length) {
+      if (src[i] === "{") depth++;
+      else if (src[i] === "}") {
+        depth--;
+        if (depth === 0) {
+          // consume trailing newline
+          let end = i + 1;
+          if (src[end] === "\n") end++;
+          src = src.slice(0, start) + src.slice(end);
+          removed++;
+          return;
+        }
+      }
+      i++;
+    }
+  };
+
+  for (const m of NEBUTRA_ONLY_MODELS) removeBlock("model", m);
+  for (const e of NEBUTRA_ONLY_ENUMS) removeBlock("enum", e);
+
+  // Strip relation fields from remaining models that point to removed models.
+  const deletedNames = NEBUTRA_ONLY_MODELS.join("|");
+  const relationFieldRe = new RegExp(
+    `^\\s+\\w+\\s+(?:${deletedNames})(?:\\[\\])?(?:\\?)?\\s*(?:@relation\\([^)]*\\))?\\s*$\\n`,
+    "gm",
+  );
+  src = src.replace(relationFieldRe, "");
+
+  // Strip enum field references
+  const deletedEnums = NEBUTRA_ONLY_ENUMS.join("|");
+  const enumFieldRe = new RegExp(
+    `^\\s+\\w+\\s+(?:${deletedEnums})(?:\\?)?(?:\\s+@default\\([^)]*\\))?\\s*$\\n`,
+    "gm",
+  );
+  src = src.replace(enumFieldRe, "");
+
+  // Collapse excess blank lines
+  src = src.replace(/\n{3,}/g, "\n\n");
+
+  fs.writeFileSync(schemaPath, src);
+  return removed;
 }
 
 main();

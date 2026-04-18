@@ -53,6 +53,7 @@ import {
 import { applyPaymentSelection, type PaymentChoice } from "./utils/payment.js";
 import { applyProviderSelection } from "./utils/providers.js";
 import { pruneTemplate } from "./utils/prune.js";
+import { pruneSchemaByFlags } from "./utils/prune-schema.js";
 import { applyQueueSelection } from "./utils/queue.js";
 import { applySearchSelection } from "./utils/search.js";
 import { generateSeedData } from "./utils/seed.js";
@@ -90,6 +91,8 @@ interface CliOptions {
   captcha?: string;
   mcp?: string;
   metering?: string;
+  billingMode?: string;
+  idp?: string;
   i18n?: boolean;
   install?: boolean;
   git?: boolean;
@@ -254,6 +257,8 @@ interface RegionDefaults {
   captcha: string;
   mcp: string;
   metering: string;
+  billingMode: string;
+  idp: string;
 }
 
 function regionDefaults(region: Region): RegionDefaults {
@@ -298,6 +303,8 @@ function regionDefaults(region: Region): RegionDefaults {
     captcha: region === "cn" ? "aliyun-slide" : "turnstile",
     mcp: "on", // Sailor core value
     metering: "auto", // auto-enable if payment is set
+    billingMode: "usage", // all regions default to usage-based billing
+    idp: "clerk", // all regions default — users pick oauth-server explicitly if self-hosting IDP
   };
 }
 
@@ -341,6 +348,8 @@ async function run(): Promise<void> {
     .option("--captcha <id>", "turnstile | hcaptcha | aliyun-slide | none")
     .option("--mcp <mode>", "on | off (default: on)")
     .option("--metering <mode>", "auto | on | off (default: auto — auto-on when payment is set)")
+    .option("--billing-mode <mode>", "usage | seat | credits (default: usage)")
+    .option("--idp <id>", "clerk | oauth-server (default: clerk)")
     .option("--i18n", "enable i18n")
     .option("--no-i18n", "disable i18n")
     .option("--no-install", "skip package install")
@@ -600,6 +609,11 @@ async function run(): Promise<void> {
   const captcha = opts.captcha ?? rDefaults.captcha;
   const mcp = opts.mcp ?? rDefaults.mcp;
   const metering = opts.metering ?? rDefaults.metering;
+  const billingMode = (opts.billingMode ?? rDefaults.billingMode) as
+    | "usage"
+    | "seat"
+    | "credits";
+  const idp = (opts.idp ?? rDefaults.idp) as "clerk" | "oauth-server";
 
   // Detect any non-stable provider selections so we can warn the user
   // before/after install and emit structured events for --json consumers.
@@ -656,6 +670,8 @@ async function run(): Promise<void> {
     captcha: captcha as NebutraConfig["captcha"],
     mcp: mcp as NebutraConfig["mcp"],
     metering: metering as NebutraConfig["metering"],
+    billingMode,
+    idp,
   };
 
   // Progress summary of selections
@@ -747,6 +763,8 @@ async function run(): Promise<void> {
       ...(captcha !== "none" ? [`captcha → configure ${captcha}`] : []),
       `mcp → ${mcp === "on" ? "enable MCP server" : "remove packages/mcp"}`,
       `metering → ${metering === "off" ? "disabled" : metering === "auto" ? (payment !== "none" ? "enabled (auto: payment set)" : "disabled (auto: no payment)") : "enabled"}`,
+      ...(billingMode !== "usage" ? [`billing-mode → ${billingMode}`] : []),
+      ...(idp !== "clerk" ? [`idp → ${idp}`] : []),
       `compliance → inject ${region} boilerplate (ICP/Cookie/AIGC/Privacy)`,
       `welcome → generate dev welcome page`,
       `env → generate random secrets (AUTH_SECRET, JWT_SECRET)`,
@@ -805,6 +823,34 @@ async function run(): Promise<void> {
     emitJson(useJson, { event: "step", step: "prune", status: "start" });
     await pruneTemplate(resolvedTarget, config);
     emitJson(useJson, { event: "step", step: "prune", status: "ok" });
+
+    // Schema-level conditional pruning — strips /// @conditional(flag=values)
+    // model blocks from the scaffolded project's prisma schema based on the
+    // CLI flag selection. See packages/create-sailor/src/utils/prune-schema.ts.
+    const schemaPath = path.join(resolvedTarget, "packages/db/prisma/schema.prisma");
+    if (fs.existsSync(schemaPath)) {
+      emitJson(useJson, { event: "step", step: "schema-prune", status: "start" });
+      try {
+        const raw = fs.readFileSync(schemaPath, "utf-8");
+        const pruned = pruneSchemaByFlags(raw, {
+          auth,
+          payment: paymentChoice,
+          "billing-mode": billingMode,
+          idp,
+          template: "saas", // TODO: wire up once --template flag returns
+          // community: intentionally not a template flag — Sleptons is Nebutra's own
+          // product, stripped from Sailor-Template at mirror-sync time.
+        });
+        fs.writeFileSync(schemaPath, pruned);
+        emitJson(useJson, { event: "step", step: "schema-prune", status: "ok" });
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        emitJson(useJson, { event: "step", step: "schema-prune", status: "error", error: msg });
+        // Non-fatal — the schema stays as-is; user can manually trim later.
+      }
+    } else {
+      emitJson(useJson, { event: "step", step: "schema-prune", status: "skip" });
+    }
 
     emitJson(useJson, { event: "step", step: "auth", choice: auth, status: "start" });
     await applyAuthSelection(resolvedTarget, auth);
@@ -906,6 +952,45 @@ async function run(): Promise<void> {
 
     await applyMeteringSwitch(resolvedTarget, metering, payment);
     if (useJson) emitJson(true, { event: "step", step: "metering", mode: metering, status: "ok" });
+
+    // Schema prune — strip @conditional model blocks that don't match the selection.
+    // Covers: auth, payment, billing-mode, idp, template.
+    // (community flag was removed — Sleptons is Nebutra's own product, not a template
+    // choice. Sleptons models are stripped at mirror-sync time by template-build.ts.)
+    if (config.orm === "prisma" && config.database !== "none") {
+      const schemaPath = path.join(resolvedTarget, "packages/db/prisma/schema.prisma");
+      if (fs.existsSync(schemaPath)) {
+        emitJson(useJson, { event: "step", step: "schema-prune", status: "start" });
+        try {
+          const raw = fs.readFileSync(schemaPath, "utf8");
+          const pruned = pruneSchemaByFlags(raw, {
+            auth,
+            payment: paymentChoice,
+            "billing-mode": billingMode,
+            idp,
+            template: "saas",
+          });
+          fs.writeFileSync(schemaPath, pruned);
+          emitJson(useJson, { event: "step", step: "schema-prune", status: "ok" });
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          emitJson(useJson, { event: "step", step: "schema-prune", status: "error", error: msg });
+        }
+      } else {
+        emitJson(useJson, { event: "step", step: "schema-prune", status: "skip" });
+      }
+    } else {
+      emitJson(useJson, { event: "step", step: "schema-prune", status: "skip" });
+    }
+
+    // JSON events for flags whose "apply" effect is the schema prune above.
+    emitJson(useJson, {
+      event: "step",
+      step: "billing-mode",
+      choice: billingMode,
+      status: "ok",
+    });
+    emitJson(useJson, { event: "step", step: "idp", choice: idp, status: "ok" });
 
     await applyComplianceTemplates(resolvedTarget, region);
     if (useJson) emitJson(true, { event: "step", step: "compliance", region, status: "ok" });

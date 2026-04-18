@@ -1384,7 +1384,6 @@ model SleptonsaMemberProfile {
   @@schema("public")
 }
 
-/// @conditional(community=sleptons)
 model SleptonsProduct {
   id            String       @id @default(cuid())
   member_id     String       @map("member_id")
@@ -1409,7 +1408,6 @@ model SleptonsProduct {
   @@schema("public")
 }
 
-/// @conditional(community=sleptons)
 model SleptonsUpvote {
   member_id  String   @map("member_id")
   product_id String   @map("product_id")
@@ -1422,7 +1420,6 @@ model SleptonsUpvote {
   @@schema("public")
 }
 
-/// @conditional(community=sleptons)
 model SleptonsConnection {
   follower_id  String   @map("follower_id")
   following_id String   @map("following_id")

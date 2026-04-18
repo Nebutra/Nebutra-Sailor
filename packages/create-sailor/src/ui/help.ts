@@ -30,6 +30,8 @@ Feature flags (region-based smart defaults):
       --cms <id>            sanity | contentful | strapi | none
       --feature-flags <id>  vercel-flags | growthbook | configcat | none           [WIP]
       --captcha <id>        turnstile | hcaptcha | aliyun-slide | none             [WIP]
+      --billing-mode <mode> usage | seat | credits (default: usage)
+      --idp <id>            clerk | oauth-server (default: clerk)
 
 Preview statuses:
   [Foundation] — types + factory complete; adapters need external credentials & may not work out-of-the-box
