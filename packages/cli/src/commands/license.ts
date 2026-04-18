@@ -4,6 +4,8 @@ import path from "node:path";
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
+import { emitLicenseCliEvent } from "../utils/analytics-emit.js";
+import { logger } from "../utils/logger.js";
 
 // Configurable base URL: falls back to production landing-page origin.
 // Override with NEBUTRA_LICENSE_API_URL for self-hosted / local dev.
@@ -54,9 +56,27 @@ async function validateKeyRemotely(key: string): Promise<{ tier: string; type: s
   return { tier: data.tier ?? "UNKNOWN", type: data.type ?? "UNKNOWN" };
 }
 
+/**
+ * Map a caught error to a stable analytics `error_code`. Keeps emissions
+ * high-signal without leaking raw error messages (which may contain keys/URLs).
+ */
+function resolveErrorCode(error: unknown): string {
+  const message = error instanceof Error ? error.message : String(error);
+  if (/Invalid license key format/i.test(message)) return "invalid_format";
+  if (/license server/i.test(message)) return "network_error";
+  if (/not found/i.test(message)) return "not_found";
+  if (/expired/i.test(message)) return "expired";
+  if (/not valid/i.test(message)) return "invalid_key";
+  if (/HTTP \d+/i.test(message)) return "http_error";
+  return "unknown";
+}
+
 export async function activateLicenseCommand(key: string, options: Record<string, unknown>) {
   const isQuiet = options.quiet === true;
   if (!isQuiet) p.intro(pc.bgCyan(pc.black(" Nebutra License Activation ")));
+
+  // Fire-and-forget — analytics for attempt is emitted before any network I/O.
+  emitLicenseCliEvent({ action: "activate_attempted" });
 
   try {
     if (key.length < 10) {
@@ -84,10 +104,17 @@ export async function activateLicenseCommand(key: string, options: Record<string
       p.log.success(pc.green(`${tier} license activated and saved to ${licensePath}`));
       p.outro(pc.cyan("Premium CLI capabilities are now unlocked!"));
     }
+
+    emitLicenseCliEvent({ action: "activated", tier, type });
   } catch (error) {
+    emitLicenseCliEvent({
+      action: "failed",
+      error_code: resolveErrorCode(error),
+    });
+
     if (!isQuiet) {
       p.log.error(pc.red("Activation failed"));
-      console.error(pc.red(error instanceof Error ? error.message : String(error)));
+      logger.error(error instanceof Error ? error.message : String(error));
       p.outro("Please check your key and try again.");
     }
     process.exit(1);

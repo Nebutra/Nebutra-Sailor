@@ -13,6 +13,58 @@ const prisma = getSystemDb();
 
 const log = logger.child({ service: "stripe-webhook" });
 
+// ============================================
+// Phase 0 analytics helper — fire-and-forget, silent-fail.
+// Respects NEBUTRA_TELEMETRY=0. The `@nebutra/analytics` PostHog contract is
+// being finalised by a parallel subagent; import is dynamic to keep this
+// module decoupled from the final wrapper schema.
+// ============================================
+function isTelemetryDisabled(): boolean {
+  const envValue = process.env.NEBUTRA_TELEMETRY;
+  return envValue === "0" || envValue === "false";
+}
+
+function emitCheckoutCompleted(props: Record<string, unknown>): void {
+  if (isTelemetryDisabled()) return;
+
+  void (async () => {
+    try {
+      // Phase 0: the PostHog-backed client is being shipped by a parallel
+      // subagent; cast through `unknown` so the final contract (which will
+      // expose a `track` method) compiles against both the in-flight and
+      // final schema without this module needing to be updated.
+      const mod = (await import("@nebutra/analytics")) as unknown as {
+        createAnalyticsClient?: (config: unknown) => {
+          track: (event: string, props: Record<string, unknown>) => Promise<unknown> | unknown;
+        };
+      };
+
+      if (typeof mod.createAnalyticsClient !== "function") return;
+
+      const client = mod.createAnalyticsClient({
+        posthog: {
+          apiKey: process.env.NEBUTRA_POSTHOG_KEY ?? "",
+          host: process.env.NEBUTRA_POSTHOG_HOST ?? "https://analytics.nebutra.com",
+        },
+        onError: () => {
+          // Silent
+        },
+      });
+
+      if (typeof client?.track !== "function") return;
+
+      const result = client.track("checkout", { action: "completed", ...props });
+      if (result && typeof (result as Promise<unknown>).then === "function") {
+        await (result as Promise<unknown>).catch(() => {
+          // Silent
+        });
+      }
+    } catch {
+      // Silent
+    }
+  })();
+}
+
 export const stripeWebhookRoutes = new OpenAPIHono();
 
 const stripeWebhookRoute = createRoute({
@@ -241,6 +293,15 @@ async function handleCheckoutCompleted(
   db: PrismaClient,
 ): Promise<void> {
   const metadata = session.metadata ?? {};
+
+  // Phase 0 analytics — fire-and-forget checkout.completed emission.
+  emitCheckoutCompleted({
+    session_id: session.id,
+    amount_total: session.amount_total ?? null,
+    currency: session.currency ?? null,
+    license_tier: typeof metadata.license_tier === "string" ? metadata.license_tier : null,
+    user_id: typeof metadata.userId === "string" ? metadata.userId : null,
+  });
 
   // Credit purchase — unified handler across providers
   const creditResult = await handleCreditPurchaseWebhook({

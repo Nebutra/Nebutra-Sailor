@@ -81,7 +81,7 @@ export function AnalyticsProvider({
   const sendEvent = useCallback(
     async (eventType: string, data: Record<string, unknown>) => {
       if (!canTrack) {
-        if (debug) console.warn("[Analytics] Tracking disabled, skipping:", eventType);
+        if (debug) console.debug("[Analytics] Tracking disabled, skipping:", eventType);
         return;
       }
 
@@ -102,7 +102,7 @@ export function AnalyticsProvider({
       };
 
       if (debug) {
-        console.warn("[Analytics] Event:", payload);
+        console.debug("[Analytics] Event:", payload);
       }
 
       // Send to analytics endpoint
@@ -113,7 +113,7 @@ export function AnalyticsProvider({
           body: JSON.stringify(payload),
         });
       } catch (error) {
-        if (debug) console.error("[Analytics] Failed to send event:", error);
+        if (debug) console.debug("[Analytics] Failed to send event:", error);
       }
     },
     [canTrack, tenantId, debug],
@@ -367,7 +367,7 @@ export function trackEvent(input: TrackEventInput): void {
       timestamp: new Date().toISOString(),
       url: window.location.href,
     }),
-  }).catch(console.error);
+  }).catch((error: unknown) => console.debug("[Analytics] Failed to track event:", error));
 }
 
 export function trackConversion(input: TrackConversionInput): void {
@@ -385,5 +385,5 @@ export function trackConversion(input: TrackConversionInput): void {
       timestamp: new Date().toISOString(),
       url: window.location.href,
     }),
-  }).catch(console.error);
+  }).catch((error: unknown) => console.debug("[Analytics] Failed to track conversion:", error));
 }

@@ -2,7 +2,9 @@
 
 import { AnimateIn } from "@nebutra/ui/components";
 import { AlertCircle, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { emitBrowserEvent } from "@/lib/analytics/emit";
 
 // Type definitions
 interface WizardStep1 {
@@ -158,6 +160,7 @@ const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSt
 );
 
 export function LicenseWizard() {
+  const t = useTranslations("licenseWizard");
   const [currentStep, setCurrentStep] = useState(1);
   const [step1, setStep1] = useState<WizardStep1>({ role: null, teamSize: null });
   const [step2, setStep2] = useState<WizardStep2>({
@@ -175,6 +178,11 @@ export function LicenseWizard() {
   const [step4, setStep4] = useState<WizardStep4>({ licenseKey: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // Phase 0 analytics — wizard started (mount only).
+  useEffect(() => {
+    emitBrowserEvent("license.wizard", { action: "started" });
+  }, []);
 
   // Determine license tier based on team size
   const determineLicenseTier = (
@@ -198,13 +206,29 @@ export function LicenseWizard() {
   // Handle next step
   const handleNext = async () => {
     if (currentStep === 1 && isStep1Valid) {
+      emitBrowserEvent("license.wizard", {
+        action: "step_completed",
+        step: 1,
+        role: step1.role,
+        team_size: step1.teamSize,
+      });
       // Auto-select tier for step 3
       const tier = determineLicenseTier(step1.teamSize);
       setStep3((prev) => ({ ...prev, tier }));
       setCurrentStep(2);
     } else if (currentStep === 2 && isStep2Valid) {
+      emitBrowserEvent("license.wizard", {
+        action: "step_completed",
+        step: 2,
+        use_case: step2.useCase,
+      });
       setCurrentStep(3);
     } else if (currentStep === 3 && isStep3Valid) {
+      emitBrowserEvent("license.wizard", {
+        action: "step_completed",
+        step: 3,
+        tier: step3.tier,
+      });
       // Submit form
       await handleSubmit();
     }
@@ -255,15 +279,26 @@ export function LicenseWizard() {
       setStep4({ licenseKey: data.license.licenseKey });
       setCurrentStep(4);
 
+      emitBrowserEvent("license.wizard", {
+        action: "submitted",
+        tier: step3.tier,
+        referral_source: step3.referralSource,
+      });
+
       // Redirect to Sleptons community after a short delay
       const communityUrl = process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002";
       setTimeout(() => {
         window.location.href = `${communityUrl}?welcome=true`;
       }, 2500);
     } catch (error) {
-      setSubmitError(
-        error instanceof Error ? error.message : "An error occurred. Please try again.",
-      );
+      const errorMessage =
+        error instanceof Error ? error.message : "An error occurred. Please try again.";
+      setSubmitError(errorMessage);
+      emitBrowserEvent("license.wizard", {
+        action: "failed",
+        tier: step3.tier,
+        error_message: errorMessage.slice(0, 200),
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -520,7 +555,7 @@ export function LicenseWizard() {
                     </div>
                     <div className="grid gap-4">
                       <LicenseTierCard
-                        title="Individual Free License"
+                        title={t("tiers.individualFree")}
                         description="Perfect for solopreneurs and hobbyists"
                         features={[
                           "Free forever (no expiration)",
@@ -533,7 +568,7 @@ export function LicenseWizard() {
                         onClick={() => setStep3((prev) => ({ ...prev, tier: "INDIVIDUAL" }))}
                       />
                       <LicenseTierCard
-                        title="OPC Free License"
+                        title={t("tiers.opcFree")}
                         description="For one-person companies"
                         features={[
                           "Free forever (no expiration)",
@@ -560,7 +595,7 @@ export function LicenseWizard() {
                       </p>
                     </div>
                     <LicenseTierCard
-                      title="Startup Commercial License"
+                      title={t("tiers.startupCommercial")}
                       price="$799/year"
                       description="For teams of 2–50 people"
                       features={[
@@ -585,7 +620,7 @@ export function LicenseWizard() {
                       </p>
                     </div>
                     <LicenseTierCard
-                      title="Enterprise License"
+                      title={t("tiers.enterprise")}
                       description="Custom pricing and support"
                       features={[
                         "Unlimited team members",
@@ -679,10 +714,10 @@ export function LicenseWizard() {
                       }
                       className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
                     >
-                      <option value="">Select an option...</option>
+                      <option value="">{t("referralSource.selectPlaceholder")}</option>
                       <option value="twitter">Twitter/X</option>
                       <option value="github">GitHub</option>
-                      <option value="product_hunt">Product Hunt</option>
+                      <option value="product_hunt">{t("referralSource.productHunt")}</option>
                       <option value="friend">A Friend</option>
                       <option value="search">Search</option>
                       <option value="other">Other</option>

@@ -12,6 +12,7 @@ import { showDone } from "./ui/done.js";
 import { showHelp } from "./ui/help.js";
 import { printProgressLine } from "./ui/progress.js";
 import { PROVIDERS } from "./utils/ai-meta.js";
+import { emitScaffoldCompleted } from "./utils/analytics-emit.js";
 import { applyAnalyticsSelection } from "./utils/analytics.js";
 import { type AuthChoice, applyAuthSelection } from "./utils/auth.js";
 import {
@@ -1089,6 +1090,18 @@ async function run(): Promise<void> {
     }
 
     const elapsedSec = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
+
+    // Phase 0 telemetry — fire-and-forget. Respects NEBUTRA_TELEMETRY=0.
+    emitScaffoldCompleted({
+      template_version: VERSION,
+      package_manager: resolvedPm,
+      region,
+      auth,
+      payment: paymentChoice,
+      ai_providers: aiProviders,
+      deploy_target: deployTarget,
+      duration_ms: Date.now() - startedAt,
+    });
 
     // Surface preview-status warnings before declaring success so the
     // user doesn't miss them in install/git noise above.

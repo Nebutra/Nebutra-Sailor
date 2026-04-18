@@ -25,6 +25,10 @@
     "infra:down": "docker-compose down",
     "infra:lite": "docker-compose -f docker-compose.lite.yml up -d",
     "infra:lite:down": "docker-compose -f docker-compose.lite.yml down",
+    "analytics:up": "docker-compose -f infra/docker-compose.analytics.yml up -d",
+    "analytics:down": "docker-compose -f infra/docker-compose.analytics.yml down",
+    "analytics:reset": "docker-compose -f infra/docker-compose.analytics.yml down -v",
+    "analytics:smoke": "vitest run infra/analytics/smoke-test.ts",
     "clean": "turbo run clean && rm -rf node_modules",
     "clean:deps": "knip",
     "brand:sync": "pnpm --filter @nebutra/brand sync",
@@ -79,16 +83,16 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "^19",
-      "@types/react-dom": "^19",
+      "@types/react": "catalog:",
+      "@types/react-dom": "catalog:",
       "react-avatar-editor": "^14.0.0",
       "baseline-browser-mapping": "^2.10.0",
-      "zod": "^4.0.0",
+      "zod": "catalog:",
       "fast-xml-parser": ">=5.5.6",
       "body-parser": ">=1.20.3",
       "@modelcontextprotocol/sdk": ">=1.26.0",
       "@hono/node-server": ">=1.19.10",
-      "hono": ">=4.12.4",
+      "hono": "catalog:",
       "axios": ">=1.13.5",
       "minimatch": ">=9.0.7",
       "glob": ">=10.5.0",
@@ -104,7 +108,7 @@
       "jsdom>undici": ">=7.24.0",
       "path-to-regexp": ">=0.1.12",
       "valibot": ">=1.2.0",
-      "next": ">=16.0.11"
+      "next": "catalog:"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
@@ -130,30 +134,30 @@
     }
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.8",
+    "@biomejs/biome": "catalog:",
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
     "@size-limit/preset-small-lib": "^11.2.0",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@types/node": "^22.19.15",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/node": "catalog:",
     "@types/pg": "^8.18.0",
-    "@vitejs/plugin-react": "^5.1.4",
+    "@vitejs/plugin-react": "catalog:",
     "ajv": "^8.18.0",
     "babel-plugin-react-compiler": "^1.0.0",
     "fast-check": "^4.5.3",
-    "jsdom": "^28.1.0",
+    "jsdom": "catalog:",
     "knip": "^5.88.1",
     "lefthook": "^2.1.4",
     "openapi-typescript": "^7.13.0",
     "size-limit": "^11.2.0",
-    "tsx": "^4.21.0",
+    "tsx": "catalog:",
     "turbo": "^2.8.16",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.0"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.4.2",
+    "@prisma/adapter-pg": "catalog:",
     "pg": "^8.20.0"
   }
 }

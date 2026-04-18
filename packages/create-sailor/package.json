@@ -16,10 +16,13 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "prepublishOnly": "pnpm run build",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
+    "@mrleebo/prisma-ast": "^0.15.0",
     "cfonts": "^3.3.0",
     "commander": "^12.1.0",
     "gradient-string": "^3.0.0",
@@ -28,10 +31,11 @@
     "update-notifier": "^7.3.1"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@types/node": "catalog:",
     "@types/update-notifier": "^6.0.8",
-    "tsup": "^8.0.0",
-    "typescript": "catalog:"
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "engines": {
     "node": ">=18.17.0"
