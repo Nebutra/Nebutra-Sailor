@@ -18,14 +18,16 @@ catalog:
   "@types/node": ^22.19.15
 
   # ── React ──────────────────────────────────────────────────────────────────
-  react: 19.2.4
-  react-dom: 19.2.4
+  # Most apps use ^19.2.4 (caret); a few pin to 19.2.4 — standardizing to caret.
+  react: ^19.2.4
+  react-dom: ^19.2.4
   "@types/react": ^19.2.14
   "@types/react-dom": ^19.2.3
 
   # ── Next.js ────────────────────────────────────────────────────────────────
   next: ^16.1.6
   next-themes: ^0.4.6
+  next-intl: ^4.8.3
   "@next/bundle-analyzer": ^16.1.6
   eslint-config-next: "16.1.6"
 
@@ -37,6 +39,7 @@ catalog:
   "@tailwindcss/postcss": ^4.2.1
   lucide-react: ^0.577.0
   framer-motion: ^12.35.0
+  motion: ^12.35.0
   class-variance-authority: ^0.7.1
   clsx: ^2.1.1
   tailwind-merge: ^3.5.0
@@ -50,13 +53,41 @@ catalog:
   prisma: ^7.4.2
 
   # ── Testing ────────────────────────────────────────────────────────────────
-  vitest: ^4.0.18
-  "@vitest/coverage-v8": ^4.0.18
+  vitest: ^4.1.4
+  "@vitest/coverage-v8": ^4.1.4
   "@vitejs/plugin-react": ^5.1.4
+  "@testing-library/jest-dom": ^6.9.1
+  "@testing-library/react": ^16.3.2
+  jsdom: ^28.1.0
 
   # ── Linting ────────────────────────────────────────────────────────────────
   eslint: ^9.39.3
   eslint-plugin-jsx-a11y: ^6.10.2
+  "@biomejs/biome": ^2.4.8
 
   # ── UI primitives ──────────────────────────────────────────────────────────
   "@radix-ui/react-slot": ^1.2.4
+
+  # ── Forms & UI utilities ───────────────────────────────────────────────────
+  react-hook-form: ^7.71.2
+  react-resizable-panels: ^4.7.1
+
+  # ── AI ─────────────────────────────────────────────────────────────────────
+  "@ai-sdk/react": ^3.0.118
+  ai: ^6.0.116
+
+  # ── Docs / MDX ─────────────────────────────────────────────────────────────
+  fumadocs-core: ^16.6.12
+  fumadocs-mdx: ^14.2.9
+  fumadocs-ui: ^16.6.12
+  "@types/mdx": ^2.0.13
+  mermaid: ^11.12.3
+
+  # ── Backend / infra ────────────────────────────────────────────────────────
+  hono: ^4.12.5
+  ioredis: ^5.4.2
+  svix: ^1.86.0
+
+  # ── Observability / analytics ──────────────────────────────────────────────
+  "@vercel/analytics": ^1.6.1
+  "@vercel/speed-insights": ^1.3.1
