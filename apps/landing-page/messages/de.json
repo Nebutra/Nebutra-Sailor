@@ -21,8 +21,6 @@
     "subheadline": "Nebutra Sailor is a Next.js SaaS framework engineered for AI founders. It natively integrates Agent orchestration, multi-modal capabilities, and an enterprise-level monetization suite, turning AI concepts into scalable commercial products—not just technical demos.",
     "copyLabel": "Copy Command",
     "copiedLabel": "Copied",
-    "ctaGetStarted": "Start Building",
-    "ctaViewGitHub": "View on GitHub →",
     "ctaGetAccess": "Get lifetime access",
     "ctaExploreDemo": "Explore demo"
   },
@@ -251,6 +249,10 @@
         "security": {
           "title": "Security Disclosures",
           "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+        },
+        "founder": {
+          "title": "Founder Direct",
+          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
         }
       },
       "formTitle": "Submission Portal",
@@ -1194,29 +1196,6 @@
     "pricing": {
       "title": "Accelerate your development cycle.",
       "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
-      "standard": {
-        "badge": "SOLO FOUNDER",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Perfect for One-Person Companies (OPC) executing rapid MVP iterations under the AGPL license.",
-        "cta": "Clone Repository",
-        "f1": "Complete Next.js 16 SaaS core",
-        "f2": "Stripe & Clerk integrations",
-        "f3": "4-Layer Token Design System",
-        "f4": "AGPLv3 Open Source License"
-      },
-      "enterprise": {
-        "badge": "PROPRIETARY",
-        "price": "$349",
-        "period": "lifetime",
-        "desc": "Acquire commercial rights to close-source your applications and protect intellectual property.",
-        "cta": "Purchase License",
-        "f1": "Everything in Solo Founder",
-        "f2": "MIT / Proprietary Commercial License",
-        "f3": "Advanced Architecture Tests",
-        "f4": "Private Discord Developer Community",
-        "f5": "1 Year Expert Technical Support"
-      },
       "socialProofText": "trusted by <highlight>1276 developers</highlight>",
       "frameworkText": "Choose your framework:",
       "frameworkNext": "Next.js",
@@ -1520,8 +1499,7 @@
         "desc": "Future AI products require ecosystems, not silos. Designed with the OPC philosophy to provide standardized plugin structures connecting creators with developer networks.",
         "features": {
           "f1": "Plugin Architecture",
-          "f2": "Developer Portal",
-          "f3": "SDK Generation"
+          "f2": "Developer Portal"
         }
       },
       "ip": {
@@ -1529,8 +1507,7 @@
         "desc": "Establish a world-class founder presence. High-conversion blog, portfolio, and profile templates optimized for personal brand monetization.",
         "features": {
           "f1": "MDX Blog Engine",
-          "f2": "Newsletter Integration",
-          "f3": "SEO Optimized"
+          "f2": "Newsletter Integration"
         }
       },
       "multimodal": {
@@ -1538,8 +1515,7 @@
         "desc": "Launch complete Chatbot, Text-to-Image, or Video generation SaaS with integrated Vercel AI SDK, streaming, and prompt gateways.",
         "features": {
           "f1": "Streaming UI",
-          "f2": "Model Routing",
-          "f3": "Usage Metering"
+          "f2": "Model Routing"
         }
       },
       "enterprise": {
@@ -1547,8 +1523,7 @@
         "desc": "Tailored for the domestic market with ultra-fast local CDN support, WeChat ecosystem integration readiness, and localized compliance.",
         "features": {
           "f1": "Local Compliance",
-          "f2": "High Performance",
-          "f3": "Mobile First"
+          "f2": "High Performance"
         }
       },
       "export": {
@@ -1556,8 +1531,7 @@
         "desc": "Designed for cross-border SaaS. Built-in multi-currency Stripe checkout, next-intl i18n routing, and GDPR compliance.",
         "features": {
           "f1": "Global Payments",
-          "f2": "7 Languages Auto-routing",
-          "f3": "GDPR Ready"
+          "f2": "7 Languages Auto-routing"
         }
       },
       "design": {
@@ -1565,8 +1539,7 @@
         "desc": "A beautiful, token-driven architecture using Radix + framer-motion. Perfect for teams building their own opinionated UI libraries.",
         "features": {
           "f1": "4-Layer Tokens",
-          "f2": "CSS Variables",
-          "f3": "Accessible"
+          "f2": "CSS Variables"
         }
       },
       "edam": {
@@ -1684,5 +1657,127 @@
     "org_title": "Ⅳ. Organization",
     "org_headline": "Automated Scaling Resolving Administrative Decay",
     "org_desc": "Upon immense scale, we fundamentally reject solving problems via \"middle management layering\". In Nebutra’s ecosystem, Code is Law. Automate all operational procedures via AI Agents, reserving human intellect strictly for creation and strategic vision."
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Releases suchen..."
+    },
+    "nav": {
+      "toggleMenu": "Menü umschalten"
+    },
+    "actions": {
+      "showFullRelease": "Vollständigen Release anzeigen",
+      "copyLinkToRelease": "Link zum Release kopieren",
+      "copyLink": "Link kopieren",
+      "openInNewTab": "In neuem Tab öffnen"
+    },
+    "status": {
+      "comingSoon": "Demnächst verfügbar"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Duales <hl>Lizenz</hl> Modell",
+      "description": "Nebutra-Sailor ist Open Source unter AGPL-3.0. Für Teams, die Closed-Source-Produkte entwickeln, bieten wir zusätzlich kommerzielle Lizenzen an."
+    },
+    "plans": {
+      "agpl": {
+        "badge": "Dauerhaft kostenlos",
+        "title": "AGPL-3.0",
+        "subtitle": "Open Source",
+        "description": "Open-Source-Projekte, akademische Forschung, privates Lernen",
+        "features": {
+          "sourceAccess": "Vollständiger Zugriff auf den Quellcode",
+          "mustOpenSource": "Ihr Produkt muss Open Source sein",
+          "mustCredit": "Nennung von Nebutra-Sailor erforderlich",
+          "communitySupport": "Nur Community-Support"
+        },
+        "cta": "Auf GitHub ansehen"
+      },
+      "freeCommercial": {
+        "badge": "Für immer kostenlos",
+        "title": "Kostenlose Kommerzlizenz",
+        "subtitle": "Einzelpersonen & Solo",
+        "description": "Solo-Entwickler, Ein-Personen-Unternehmen, Solopreneure",
+        "features": {
+          "closedSource": "Nutzung in Closed-Source-Produkten",
+          "teamSize": "Teamgröße ≤ 1 FTE",
+          "creditRequired": "Nennung erforderlich",
+          "freeKey": "Kostenloser Lizenzschlüssel bei Registrierung"
+        },
+        "cta": "Kostenlose Lizenz erhalten"
+      },
+      "commercial": {
+        "badge": "Ab {price}/Jahr",
+        "title": "Kommerziell",
+        "subtitle": "Startup & Enterprise",
+        "description": "Startups, Agenturen, Teams (ab 2 Personen), kommerzielle SaaS-Produkte",
+        "features": {
+          "closedSource": "Nutzung in Closed-Source-Produkten",
+          "noCopyleft": "Keine Copyleft-Pflichten",
+          "noTeamLimits": "Keine Begrenzung der Teamgröße",
+          "commercialSupport": "Kommerzieller Support verfügbar"
+        },
+        "cta": "Kommerzielle Lizenz kaufen"
+      }
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "items": {
+        "whyAgpl": {
+          "q": "Warum AGPL-3.0?",
+          "a": "Die AGPL stellt sicher, dass Verbesserungen am Template Open Source bleiben. Die kommerzielle Lizenz hebt diese Verpflichtung für Unternehmen auf."
+        },
+        "soloFree": {
+          "q": "Ist es als Solo-Entwickler wirklich kostenlos?",
+          "a": "Ja, komplett. Registriere dich unter /get-license, hol dir deinen Schlüssel und bau dein Produkt. Ohne versteckte Bedingungen."
+        },
+        "opcDefinition": {
+          "q": "Was gilt als „Ein-Personen-Unternehmen\"?",
+          "a": "Ein Vollzeitäquivalent oder weniger. Sobald du deine erste Mitarbeiterin oder deinen ersten Mitarbeiter einstellst, brauchst du eine Startup-Lizenz (wir erinnern dich daran)."
+        },
+        "upgrade": {
+          "q": "Kann ich später upgraden?",
+          "a": "Absolut. Dein Community-Profil bleibt erhalten. Kauf einfach die Startup-Lizenz, sobald du bereit bist."
+        },
+        "contributions": {
+          "q": "Wie ist das mit Open-Source-Beiträgen?",
+          "a": "Alle Beiträge erfordern ein CLA. Siehe CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Lizenzen — Nebutra",
+      "description": "Duales Lizenzmodell: AGPL-3.0 Open Source oder kommerzielle Lizenzen."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Kostenlose Einzellizenz",
+      "opcFree": "Kostenlose OPC-Lizenz",
+      "startupCommercial": "Startup-Kommerzlizenz",
+      "enterprise": "Enterprise-Lizenz"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Bitte wählen...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Changelog — Nebutra",
+    "description": "Jedes Release, mit obsessiver Liebe zum Detail ausgeliefert.",
+    "versionTitleSuffix": "Nebutra Changelog"
+  },
+  "roadmapMeta": {
+    "title": "Meta-Unicorn-Rollout — Nebutra",
+    "description": "Die fünf Evolutionsphasen des Nebutra Creator Engine Ökosystems."
+  },
+  "blogMeta": {
+    "title": "Blog — Nebutra",
+    "description": "Engineering-Insights, Produkt-Updates und SaaS-Best-Practices vom Nebutra-Team."
+  },
+  "getLicenseMeta": {
+    "title": "Hol dir deine Lizenz — Nebutra",
+    "description": "Werde Teil der Nebutra-Community. Hol dir deine kostenlose Lizenz in 2 Minuten."
   }
 }

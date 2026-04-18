@@ -1662,5 +1662,127 @@
     "org_title": "Ⅳ. 组织演进",
     "org_headline": "逆转大公司病：对抗人治腐化",
     "org_desc": "当面临规模爆发，坚决反对依靠“增加中层管理”来续命。在我们的共识里，代码构筑规则，AI 代替人工。让人类的天才大脑只保留极少数用来专注「创造」与「洞察」。"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "搜索版本发布..."
+    },
+    "nav": {
+      "toggleMenu": "切换菜单"
+    },
+    "actions": {
+      "showFullRelease": "查看完整发布",
+      "copyLinkToRelease": "复制发布链接",
+      "copyLink": "复制链接",
+      "openInNewTab": "在新标签页打开"
+    },
+    "status": {
+      "comingSoon": "即将推出"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "双<hl>许可证</hl>模式",
+      "description": "Nebutra-Sailor 基于 AGPL-3.0 开源。我们同时为构建闭源产品的团队提供商业授权。"
+    },
+    "plans": {
+      "agpl": {
+        "badge": "永久免费",
+        "title": "AGPL-3.0",
+        "subtitle": "开源协议",
+        "description": "开源项目、学术研究、个人学习",
+        "features": {
+          "sourceAccess": "完整源码访问权限",
+          "mustOpenSource": "产品必须同步开源",
+          "mustCredit": "必须署名 Nebutra-Sailor",
+          "communitySupport": "仅限社区支持"
+        },
+        "cta": "在 GitHub 上查看"
+      },
+      "freeCommercial": {
+        "badge": "永久免费",
+        "title": "免费商用",
+        "subtitle": "个人与独立开发者",
+        "description": "独立开发者、一人公司、个体创业者",
+        "features": {
+          "closedSource": "可用于闭源产品",
+          "teamSize": "团队规模 ≤ 1 FTE",
+          "creditRequired": "需要署名",
+          "freeKey": "注册即可获得免费授权密钥"
+        },
+        "cta": "领取免费授权"
+      },
+      "commercial": {
+        "badge": "{price} 起/年",
+        "title": "商业授权",
+        "subtitle": "初创与企业",
+        "description": "初创公司、代理商、团队（2 人及以上）、商业 SaaS 产品",
+        "features": {
+          "closedSource": "可用于闭源产品",
+          "noCopyleft": "无 Copyleft 约束",
+          "noTeamLimits": "无团队人数限制",
+          "commercialSupport": "提供商业支持"
+        },
+        "cta": "购买商业授权"
+      }
+    },
+    "faq": {
+      "title": "常见问题",
+      "items": {
+        "whyAgpl": {
+          "q": "为什么选择 AGPL-3.0？",
+          "a": "AGPL 能确保模板的改进始终开源。商业授权则为企业移除了这一约束。"
+        },
+        "soloFree": {
+          "q": "独立开发者真的可以免费使用吗？",
+          "a": "是的，完全免费。前往 /get-license 注册、获取密钥、构建你的产品，毫无附加条件。"
+        },
+        "opcDefinition": {
+          "q": "什么是「一人公司」？",
+          "a": "即一个全职当量或更少。一旦你招聘了第一位员工，就需要切换到 Startup 授权（我们会主动提醒）。"
+        },
+        "upgrade": {
+          "q": "之后可以升级授权吗？",
+          "a": "当然可以。你的社区档案会自动延续，准备好之后购买 Startup 授权即可。"
+        },
+        "contributions": {
+          "q": "关于开源贡献有什么要求？",
+          "a": "所有贡献都需签署 CLA，详见 CONTRIBUTING.md。"
+        }
+      }
+    },
+    "meta": {
+      "title": "授权方案 — Nebutra",
+      "description": "双许可证模式：AGPL-3.0 开源或商业授权。"
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "个人免费授权",
+      "opcFree": "一人公司免费授权",
+      "startupCommercial": "Startup 商业授权",
+      "enterprise": "企业授权"
+    },
+    "referralSource": {
+      "selectPlaceholder": "请选择...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "更新日志 — Nebutra",
+    "description": "每一次发布，都倾注极致的打磨。",
+    "versionTitleSuffix": "Nebutra 更新日志"
+  },
+  "roadmapMeta": {
+    "title": "元独角兽路线图 — Nebutra",
+    "description": "Nebutra 造物主引擎生态的五大演化阶段。"
+  },
+  "blogMeta": {
+    "title": "博客 — Nebutra",
+    "description": "Nebutra 团队的工程洞察、产品更新与 SaaS 最佳实践。"
+  },
+  "getLicenseMeta": {
+    "title": "获取授权 — Nebutra",
+    "description": "加入 Nebutra 社区，2 分钟获取你的免费授权。"
   }
 }

@@ -1657,5 +1657,127 @@
     "org_title": "Ⅳ. Organization",
     "org_headline": "Automated Scaling Resolving Administrative Decay",
     "org_desc": "Upon immense scale, we fundamentally reject solving problems via \"middle management layering\". In Nebutra’s ecosystem, Code is Law. Automate all operational procedures via AI Agents, reserving human intellect strictly for creation and strategic vision."
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Search releases..."
+    },
+    "nav": {
+      "toggleMenu": "Toggle menu"
+    },
+    "actions": {
+      "showFullRelease": "Show full release",
+      "copyLinkToRelease": "Copy link to release",
+      "copyLink": "Copy link",
+      "openInNewTab": "Open in new tab"
+    },
+    "status": {
+      "comingSoon": "Coming soon"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Dual <hl>License</hl> Model",
+      "description": "Nebutra-Sailor is open source under AGPL-3.0. We also offer commercial licenses for teams building closed-source products."
+    },
+    "plans": {
+      "agpl": {
+        "badge": "Always Free",
+        "title": "AGPL-3.0",
+        "subtitle": "Open Source",
+        "description": "Open source projects, academic research, personal learning",
+        "features": {
+          "sourceAccess": "Full source code access",
+          "mustOpenSource": "Must open-source your product",
+          "mustCredit": "Must credit Nebutra-Sailor",
+          "communitySupport": "Community support only"
+        },
+        "cta": "View on GitHub"
+      },
+      "freeCommercial": {
+        "badge": "Free Forever",
+        "title": "Free Commercial",
+        "subtitle": "Individual & Solo",
+        "description": "Solo developers, one-person companies, solopreneurs",
+        "features": {
+          "closedSource": "Use in closed-source products",
+          "teamSize": "Team size ≤ 1 FTE",
+          "creditRequired": "Credit required",
+          "freeKey": "Free license key via registration"
+        },
+        "cta": "Get Your Free License"
+      },
+      "commercial": {
+        "badge": "From {price}/yr",
+        "title": "Commercial",
+        "subtitle": "Startup & Enterprise",
+        "description": "Startups, agencies, teams (2+ people), commercial SaaS products",
+        "features": {
+          "closedSource": "Use in closed-source products",
+          "noCopyleft": "No copyleft obligations",
+          "noTeamLimits": "No team size limits",
+          "commercialSupport": "Commercial support available"
+        },
+        "cta": "Get Commercial License"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "whyAgpl": {
+          "q": "Why AGPL-3.0?",
+          "a": "AGPL ensures that improvements to the template stay open source. Commercial license removes this obligation for businesses."
+        },
+        "soloFree": {
+          "q": "Am I really free as a solo developer?",
+          "a": "Yes, completely. Register at /get-license, get your key, build your product. No strings attached."
+        },
+        "opcDefinition": {
+          "q": "What counts as a \"one-person company\"?",
+          "a": "One full-time equivalent or less. If you hire your first employee, you'll need a Startup license (we'll remind you)."
+        },
+        "upgrade": {
+          "q": "Can I upgrade later?",
+          "a": "Absolutely. Your community profile carries over. Just purchase the Startup license when you're ready."
+        },
+        "contributions": {
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Licensing — Nebutra",
+      "description": "Dual license model: AGPL-3.0 open source or commercial licenses."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Individual Free License",
+      "opcFree": "OPC Free License",
+      "startupCommercial": "Startup Commercial License",
+      "enterprise": "Enterprise License"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Select an option...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Changelog — Nebutra",
+    "description": "Every release, shipped with obsessive attention to detail.",
+    "versionTitleSuffix": "Nebutra Changelog"
+  },
+  "roadmapMeta": {
+    "title": "Meta-Unicorn Rollout — Nebutra",
+    "description": "The five evolutionary phases of the Nebutra Creator Engine ecosystem."
+  },
+  "blogMeta": {
+    "title": "Blog — Nebutra",
+    "description": "Engineering insights, product updates, and SaaS best practices from the Nebutra team."
+  },
+  "getLicenseMeta": {
+    "title": "Get Your License — Nebutra",
+    "description": "Join the Nebutra community. Get your free license in 2 minutes."
   }
 }
