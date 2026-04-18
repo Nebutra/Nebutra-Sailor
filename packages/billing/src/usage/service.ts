@@ -1,5 +1,6 @@
 import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
+import { getMetering, type PeriodType } from "@nebutra/metering";
 import type { Plan, RecordUsageInput, UsageType } from "../types.js";
 import { DEFAULT_USAGE_PRICING } from "../types.js";
 
@@ -178,6 +179,54 @@ export function calculateOverageCost(type: UsageType, overageQuantity: bigint): 
 
   const units = Number(overageQuantity) / pricing.unitSize;
   return units * pricing.pricePerUnit;
+}
+
+// ============================================
+// Metering Integration — live usage from @nebutra/metering
+// ============================================
+
+/**
+ * Options passed to {@link getUsage}.
+ *
+ * - `period` maps directly to `PeriodType` in `@nebutra/metering`
+ *   (`hourly` | `daily` | `monthly`). We also accept the ergonomic alias
+ *   `"month"` / `"day"` / `"hour"` used by the entitlements surface.
+ */
+export interface GetUsageOptions {
+  period: PeriodType | "month" | "day" | "hour";
+}
+
+function resolvePeriod(period: GetUsageOptions["period"]): PeriodType {
+  if (period === "month") return "monthly";
+  if (period === "day") return "daily";
+  if (period === "hour") return "hourly";
+  return period;
+}
+
+/**
+ * Read the current aggregated usage for an organization/meter from the metering
+ * pipeline. Backed by `@nebutra/metering` — in production this reads from
+ * ClickHouse, in tests from the in-memory provider injected via `setMetering`.
+ *
+ * Returns `0` when no events have been recorded or the meter is unknown to
+ * the provider. Callers should treat the return value as authoritative for
+ * quota / entitlement checks.
+ */
+export async function getUsage(
+  organizationId: string,
+  meterId: string,
+  opts: GetUsageOptions,
+): Promise<number> {
+  try {
+    const metering = await getMetering();
+    const summary = await metering.getUsage(organizationId, meterId, resolvePeriod(opts.period));
+    return summary?.value ?? 0;
+  } catch (error) {
+    logger.error("[billing:getUsage] Failed to read usage from metering", error);
+    throw new Error(
+      `Failed to read usage for tenant=${organizationId} meter=${meterId}: ${(error as Error).message}`,
+    );
+  }
 }
 
 /**

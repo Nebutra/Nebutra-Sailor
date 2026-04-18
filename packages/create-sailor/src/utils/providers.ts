@@ -5,8 +5,12 @@ import path from "node:path";
  * AI Provider selection & template rendering utilities for create-sailor.
  *
  * The renderer consumes `@sailor:*` markers embedded in the templates shipped
- * by `@nebutra/ai-providers/templates/` and produces a per-app registry.ts
- * and .env.example with only the blocks relevant to the user's selection.
+ * by `@nebutra/ai-providers/templates/` (meta-only package) and produces a
+ * per-app registry.ts and .env.example with only the blocks relevant to the
+ * user's selection.
+ *
+ * Runtime AI helpers (generateText, streamText, embed, createModel, agents)
+ * live in `@nebutra/agents` — scaffolded apps import from there.
  */
 
 export interface CustomEndpoint {
@@ -196,9 +200,11 @@ export async function applyProviderSelection(
   const registryOut = renderProviderRegistry(selection, templateDir);
   const envOut = renderProviderEnvExample(selection, templateDir);
 
-  const aiSdkSrcDir = path.join(targetDir, "packages/ai-sdk/src");
-  await fs.promises.mkdir(aiSdkSrcDir, { recursive: true });
-  await fs.promises.writeFile(path.join(aiSdkSrcDir, "registry.ts"), registryOut);
+  // Scaffold the generated registry.ts into @nebutra/agents in the target repo.
+  // The registry is consumed at runtime by the AI helpers (generateText, etc.).
+  const agentsSrcDir = path.join(targetDir, "packages/agents/src");
+  await fs.promises.mkdir(agentsSrcDir, { recursive: true });
+  await fs.promises.writeFile(path.join(agentsSrcDir, "registry.ts"), registryOut);
   await fs.promises.appendFile(path.join(targetDir, ".env.example"), "\n" + envOut);
 
   // Derive dependencies based on AI selection

@@ -1,5 +1,6 @@
 export {
   checkEntitlement,
+  checkEntitlementUsage,
   type Entitlement,
   type EntitlementCheckResult,
   FEATURES,
@@ -10,8 +11,11 @@ export {
   incrementUsage,
   initializePlanEntitlements,
   isPlanFeature,
+  METER_TO_PLAN_LIMIT,
   PLAN_FEATURES,
   requireEntitlement,
+  requireEntitlementUsage,
   resetUsage,
   revokeEntitlement,
+  type UsageEntitlementResult,
 } from "./service.js";

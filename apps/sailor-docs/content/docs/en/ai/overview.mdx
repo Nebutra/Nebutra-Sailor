@@ -5,7 +5,7 @@ description: Built-in AI capabilities in Nebutra — chat completions, embedding
 
 ## What's included
 
-Nebutra ships AI features out of the box via `@nebutra/ai-sdk`, a thin wrapper around the [Vercel AI SDK](https://sdk.vercel.ai/) that adds tenant context, rate limiting, and usage metering automatically.
+Nebutra ships AI features out of the box via `@nebutra/agents`, a thin wrapper around the [Vercel AI SDK](https://sdk.vercel.ai/) that adds tenant context, rate limiting, and usage metering automatically.
 
 The following capabilities are available to every tenant:
 
@@ -31,7 +31,7 @@ POST /api/v1/ai/chat          (API Gateway — Hono)
     ├─ Rate limit (per tenant, @nebutra/rate-limit)
     │
     ▼
-@nebutra/ai-sdk               (Vercel AI SDK v6 wrapper)
+@nebutra/agents               (Vercel AI SDK v6 wrapper)
     │
     ├─ OpenAI  (default)
     └─ OpenRouter  (multi-model: Claude, Llama, Mistral…)
@@ -132,7 +132,7 @@ Quota limits by plan:
 ## Quick usage example
 
 ```typescript
-import { streamText, generateText, embed } from "@nebutra/ai-sdk";
+import { streamText, generateText, embed } from "@nebutra/agents";
 
 // Streaming chat (SSE)
 const result = await streamText({

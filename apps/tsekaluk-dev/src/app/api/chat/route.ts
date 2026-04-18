@@ -1,4 +1,4 @@
-import { configure, streamText } from "@nebutra/ai-sdk";
+import { configure, streamText } from "@nebutra/agents";
 import type { ModelMessage } from "ai";
 import { Langfuse } from "langfuse";
 import { headers } from "next/headers";
@@ -7,7 +7,7 @@ import { createRateLimiter, getClientIp } from "@/lib/rate-limit";
 
 export const maxDuration = 60;
 
-// Initialise @nebutra/ai-sdk — OpenRouter + StepFun free model
+// Initialise @nebutra/agents — OpenRouter + StepFun free model
 configure({
   provider: "openrouter",
   defaultModel: "stepfun/step-3.5-flash:free",

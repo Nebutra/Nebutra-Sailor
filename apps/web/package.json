@@ -18,6 +18,7 @@
     "@ai-sdk/openai": "^3.0.41",
     "@ai-sdk/react": "^3.0.118",
     "@clerk/nextjs": "^7.0.1",
+    "@nebutra/agents": "workspace:*",
     "@nebutra/db": "workspace:*",
     "@nebutra/feature-flags": "workspace:*",
     "@nebutra/i18n": "workspace:*",

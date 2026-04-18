@@ -85,10 +85,10 @@ curl -X POST https://api.yourdomain.com/api/v1/ai/embeddings \
 }
 ```
 
-### 通过 `@nebutra/ai-sdk`（服务端）
+### 通过 `@nebutra/agents`（服务端）
 
 ```typescript
-import { embed } from "@nebutra/ai-sdk";
+import { embed } from "@nebutra/agents";
 
 const { embedding } = await embed({
   model: "text-embedding-3-small",
@@ -105,7 +105,7 @@ console.log(embedding.length); // 1536
 生成嵌入向量后，将其与源内容一起存储：
 
 ```typescript
-import { embed } from "@nebutra/ai-sdk";
+import { embed } from "@nebutra/agents";
 import { prisma } from "@/lib/db";
 
 async function indexDocument(content: string, tenantId: string) {
@@ -135,7 +135,7 @@ async function indexDocument(content: string, tenantId: string) {
 找到与查询语义最相近的文档：
 
 ```typescript
-import { embed } from "@nebutra/ai-sdk";
+import { embed } from "@nebutra/agents";
 import { prisma } from "@/lib/db";
 
 async function semanticSearch(query: string, tenantId: string, topK = 5) {
@@ -174,7 +174,7 @@ async function semanticSearch(query: string, tenantId: string, topK = 5) {
 在单次 API 调用中对多段文本进行嵌入，降低延迟和 Token 开销：
 
 ```typescript
-import { embedMany } from "@nebutra/ai-sdk";
+import { embedMany } from "@nebutra/agents";
 
 const texts = [
   "如何重置我的密码？",
@@ -205,7 +205,7 @@ for (let i = 0; i < texts.length; i++) {
 在调用聊天 API 之前，使用嵌入向量检索相关上下文：
 
 ```typescript
-import { embed, generateText } from "@nebutra/ai-sdk";
+import { embed, generateText } from "@nebutra/agents";
 
 async function ragQuery(userQuestion: string, tenantId: string) {
   // 1. 检索相关文档

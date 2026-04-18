@@ -1,40 +1,24 @@
 {
   "name": "@nebutra/ai-providers",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "Multi-provider AI SDK for Nebutra - SiliconFlow, OpenAI, and more",
+  "description": "Provider registry metadata for Nebutra — meta-only, consumed by @nebutra/create-sailor and docs. Runtime lives in @nebutra/agents.",
   "sideEffects": false,
   "type": "module",
   "nebutra": {
-    "status": "wip",
-    "productionReady": false,
-    "requires": ["Provider API key (OPENAI_API_KEY, SILICONFLOW_API_KEY, OPENROUTER_API_KEY, etc.)"],
-    "gaps": [
-      "No production app integrations",
-      "Provider implementations scaffolded but not exercised",
-      "Unified retry/fallback strategy pending"
-    ]
+    "status": "stable",
+    "productionReady": true,
+    "role": "meta-only",
+    "runtime": "@nebutra/agents"
   },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./providers/*": {
-      "types": "./dist/providers/*.d.ts",
-      "import": "./dist/providers/*.js"
-    },
-    "./config": {
-      "types": "./dist/config/index.d.ts",
-      "import": "./dist/config/index.js"
-    },
     "./meta": {
       "types": "./dist/meta.d.ts",
       "import": "./dist/meta.js"
-    },
-    "./registry": {
-      "types": "./dist/registry.d.ts",
-      "import": "./dist/registry.js"
     },
     "./templates/*": "./templates/*"
   },
@@ -48,15 +32,10 @@
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist"
   },
-  "dependencies": {
-    "openai": "^6.27.0",
-    "zod": "catalog:"
-  },
   "devDependencies": {
     "@types/node": "^22.19.15",
     "tsup": "^8.5.1",
-    "typescript": "catalog:",
-    "vitest": "^4.0.18"
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

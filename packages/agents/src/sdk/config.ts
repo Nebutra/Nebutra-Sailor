@@ -1,9 +1,18 @@
+/**
+ * Runtime configuration for the Vercel AI SDK-backed helpers
+ * (`generateText`, `streamText`, `embed`, `embedMany`).
+ *
+ * Previously lived in `@nebutra/ai-sdk/config`. Absorbed into
+ * `@nebutra/agents` during the AI package consolidation so there is
+ * a single AI runtime package.
+ */
+
 import { z } from "zod";
 
 /**
- * Supported AI provider backends.
+ * Supported AI provider backends for the top-level helpers.
  *
- * - openrouter:   300+ models, automatic failover, pay-as-you-go (recommended default)
+ * - openrouter:   300+ models, automatic failover, pay-as-you-go (default)
  * - openai:       Direct OpenAI API access
  * - siliconflow:  SiliconFlow cloud — Qwen, DeepSeek, etc. (OpenAI-compatible, China-optimized)
  * - gateway:      Vercel AI Gateway with OIDC auth (for Vercel-deployed apps)
@@ -56,7 +65,7 @@ export function resolveApiKey(config: ResolvedNebutraAIConfig): string {
 
   if (!value) {
     throw new Error(
-      `[nebutra/ai-sdk] Missing API key. Set "${envVar}" in environment or pass "apiKey" in config.`,
+      `[@nebutra/agents] Missing API key. Set "${envVar}" in environment or pass "apiKey" in config.`,
     );
   }
 

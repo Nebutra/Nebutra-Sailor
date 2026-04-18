@@ -85,10 +85,10 @@ Response:
 }
 ```
 
-### Via `@nebutra/ai-sdk` (server-side)
+### Via `@nebutra/agents` (server-side)
 
 ```typescript
-import { embed } from "@nebutra/ai-sdk";
+import { embed } from "@nebutra/agents";
 
 const { embedding } = await embed({
   model: "text-embedding-3-small",
@@ -105,7 +105,7 @@ console.log(embedding.length); // 1536
 After generating an embedding, store it alongside the source content:
 
 ```typescript
-import { embed } from "@nebutra/ai-sdk";
+import { embed } from "@nebutra/agents";
 import { prisma } from "@/lib/db";
 
 async function indexDocument(content: string, tenantId: string) {
@@ -135,7 +135,7 @@ The embedding dimension must match when querying. If you index with `text-embedd
 Find the most semantically similar documents to a query:
 
 ```typescript
-import { embed } from "@nebutra/ai-sdk";
+import { embed } from "@nebutra/agents";
 import { prisma } from "@/lib/db";
 
 async function semanticSearch(query: string, tenantId: string, topK = 5) {
@@ -174,7 +174,7 @@ For most text use cases, cosine distance (`<=>`) gives the best results.
 Embed multiple texts in a single API call to reduce latency and token overhead:
 
 ```typescript
-import { embedMany } from "@nebutra/ai-sdk";
+import { embedMany } from "@nebutra/agents";
 
 const texts = [
   "How do I reset my password?",
@@ -205,7 +205,7 @@ Batch embedding is significantly more efficient than calling `embed()` in a loop
 Use embeddings to retrieve relevant context before calling the chat API:
 
 ```typescript
-import { embed, generateText } from "@nebutra/ai-sdk";
+import { embed, generateText } from "@nebutra/agents";
 
 async function ragQuery(userQuestion: string, tenantId: string) {
   // 1. Retrieve relevant documents

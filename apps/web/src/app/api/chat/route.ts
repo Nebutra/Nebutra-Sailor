@@ -1,4 +1,4 @@
-import { streamText } from "@nebutra/ai-sdk";
+import { streamText } from "@nebutra/agents";
 import { convertToModelMessages } from "ai";
 import { getAuth } from "@/lib/auth";
 

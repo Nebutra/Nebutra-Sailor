@@ -97,16 +97,20 @@ export {
 // Entitlements
 export {
   checkEntitlement,
+  checkEntitlementUsage,
   FEATURES,
   getEntitlements,
   grantEntitlement,
   incrementUsage,
   initializePlanEntitlements,
   isPlanFeature,
+  METER_TO_PLAN_LIMIT,
   PLAN_FEATURES,
   requireEntitlement,
+  requireEntitlementUsage,
   resetUsage,
   revokeEntitlement,
+  type UsageEntitlementResult,
 } from "./entitlements/index.js";
 // LemonSqueezy
 export {
@@ -195,6 +199,8 @@ export {
   flushUsageBuffer,
   formatUsage,
   getCurrentPeriod,
+  type GetUsageOptions,
   getPlanUsageLimit,
+  getUsage,
   recordUsage,
 } from "./usage/index.js";

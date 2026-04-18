@@ -357,7 +357,7 @@ const key = "sk-proj-xxxxx";
 | Auth adapter | `@nebutra/identity` | Provider adapters |
 | Billing | `@nebutra/billing` | Stripe operations |
 | Email | `@nebutra/email` | Send templates |
-| AI | `@nebutra/ai-sdk` | streamText, generateText, embed |
+| AI | `@nebutra/agents` | streamText, generateText, embed, BaseAgent, AgentOrchestrator |
 | Logging | `@nebutra/logger` | Structured logger |
 | Errors | `@nebutra/errors` | Typed errors |
 | Audit | `@nebutra/audit` | Log audit events |

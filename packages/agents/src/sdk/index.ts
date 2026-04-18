@@ -1,3 +1,15 @@
+/**
+ * Top-level Vercel AI SDK helpers — absorbed from the former
+ * `@nebutra/ai-sdk` package during the AI consolidation.
+ *
+ * Public API (unchanged):
+ *   configure(), getConfig()
+ *   generateText(), streamText()
+ *   embed(), embedMany()
+ *   createModel(), createEmbeddingModel()
+ *   models, resolveModel()
+ */
+
 import {
   embed as _embed,
   embedMany as _embedMany,
@@ -27,7 +39,7 @@ let _resolved: ResolvedNebutraAIConfig = NebutraAIConfigSchema.parse({});
  *
  * @example
  * ```ts
- * import { configure } from "@nebutra/ai-sdk";
+ * import { configure } from "@nebutra/agents";
  *
  * configure({ provider: "openrouter" });
  * // → reads OPENROUTER_API_KEY from env automatically
@@ -59,14 +71,6 @@ export interface GenerateOptions {
 
 /**
  * Generate a complete text response.
- *
- * @example
- * ```ts
- * const { text } = await generateText(
- *   [{ role: "user", content: "Explain monorepos" }],
- *   { model: "fast" },
- * );
- * ```
  */
 export async function generateText(
   messages: ModelMessage[],
@@ -88,17 +92,6 @@ export async function generateText(
 
 /**
  * Stream a text response for real-time UI.
- *
- * @example
- * ```ts
- * const result = await streamText(
- *   [{ role: "user", content: "Write a haiku" }],
- *   { model: "flagship" },
- * );
- * for await (const chunk of result.textStream) {
- *   process.stdout.write(chunk);
- * }
- * ```
  */
 export async function streamText(
   messages: ModelMessage[],
@@ -144,15 +137,10 @@ export async function embedMany(values: string[], options: EmbedOptions = {}) {
 }
 
 // ---------------------------------------------------------------------------
-// Low-level access — for advanced use cases
+// Re-exports
 // ---------------------------------------------------------------------------
 
-// Re-export core AI SDK types for downstream consumption
 export type { GenerateTextResult, ModelMessage, StreamTextResult } from "ai";
-// ---------------------------------------------------------------------------
-// Agent infrastructure
-// ---------------------------------------------------------------------------
-export * from "./agents/index.js";
 export {
   type NebutraAIConfig,
   NebutraAIConfigSchema,

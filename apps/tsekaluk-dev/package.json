@@ -13,7 +13,7 @@
   "dependencies": {
     "@ai-sdk/react": "^3.0.118",
     "@lobehub/icons": "^5.0.1",
-    "@nebutra/ai-sdk": "workspace:*",
+    "@nebutra/agents": "workspace:*",
     "@nebutra/analytics": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/db": "workspace:*",

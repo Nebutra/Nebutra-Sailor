@@ -5,7 +5,7 @@ description: Nebutra 内置的 AI 功能——基于 OpenAI 和 OpenRouter 的�
 
 ## 包含的功能
 
-Nebutra 通过 `@nebutra/ai-sdk` 开箱即用地提供 AI 功能。该包是 [Vercel AI SDK](https://sdk.vercel.ai/) 的轻量封装，自动集成了租户上下文、限流和用量计量。
+Nebutra 通过 `@nebutra/agents` 开箱即用地提供 AI 功能。该包是 [Vercel AI SDK](https://sdk.vercel.ai/) 的轻量封装，自动集成了租户上下文、限流和用量计量。
 
 每个租户可使用以下功能：
 
@@ -31,7 +31,7 @@ POST /api/v1/ai/chat          (API 网关 — Hono)
     ├─ 限流（按租户，@nebutra/rate-limit）
     │
     ▼
-@nebutra/ai-sdk               (Vercel AI SDK v6 封装)
+@nebutra/agents               (Vercel AI SDK v6 封装)
     │
     ├─ OpenAI  （默认）
     └─ OpenRouter  （多模型：Claude、Llama、Mistral……）
@@ -132,7 +132,7 @@ const quota = await metering.getQuota("org_123", "ai_tokens");
 ## 快速使用示例
 
 ```typescript
-import { streamText, generateText, embed } from "@nebutra/ai-sdk";
+import { streamText, generateText, embed } from "@nebutra/agents";
 
 // 流式聊天（SSE）
 const result = await streamText({

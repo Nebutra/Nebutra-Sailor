@@ -188,10 +188,10 @@ X-Nebutra-Messages-Trimmed: 4
 
 ## Calling from server code
 
-Use `@nebutra/ai-sdk` directly in server-side code (API routes, background jobs):
+Use `@nebutra/agents` directly in server-side code (API routes, background jobs):
 
 ```typescript
-import { generateText, streamText } from "@nebutra/ai-sdk";
+import { generateText, streamText } from "@nebutra/agents";
 import { getCurrentTenant } from "@nebutra/tenant";
 
 const { tenantId } = getCurrentTenant();

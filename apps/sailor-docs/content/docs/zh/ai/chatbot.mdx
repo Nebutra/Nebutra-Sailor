@@ -188,10 +188,10 @@ X-Nebutra-Messages-Trimmed: 4
 
 ## 在服务端代码中调用
 
-在服务端代码（API 路由、后台任务）中直接使用 `@nebutra/ai-sdk`：
+在服务端代码（API 路由、后台任务）中直接使用 `@nebutra/agents`：
 
 ```typescript
-import { generateText, streamText } from "@nebutra/ai-sdk";
+import { generateText, streamText } from "@nebutra/agents";
 import { getCurrentTenant } from "@nebutra/tenant";
 
 const { tenantId } = getCurrentTenant();

@@ -625,9 +625,7 @@ async function run(): Promise<void> {
       } else {
         const badge = formatStatusBadge(sel.status);
         process.stdout.write(
-          pc.yellow(
-            `⚠  ${sel.flag}=${sel.provider} ${badge} — ${describeStatus(sel.status)}\n`,
-          ),
+          pc.yellow(`⚠  ${sel.flag}=${sel.provider} ${badge} — ${describeStatus(sel.status)}\n`),
         );
       }
     }

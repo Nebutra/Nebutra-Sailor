@@ -10,8 +10,8 @@ import {
   checkUsageLimit,
   createBillingPortalSession,
   createCheckoutSession,
+  DEFAULT_PLAN_LIMITS,
   getStripeSubscription,
-  DEFAULT_PLAN_LIMITS
 } from "@nebutra/billing";
 import { toApiError } from "@nebutra/errors";
 import { requireAuth } from "../../middlewares/tenantContext.js";
@@ -163,11 +163,15 @@ billingRoutes.openapi(usageRoute, async (c) => {
 
   try {
     const snapshot = await getUsageSnapshot(orgId);
-    
+
     // Extract plan limit dynamically from the tenant scope
     const plan = (tenant?.plan || "free") as keyof typeof DEFAULT_PLAN_LIMITS;
     const planConfig = DEFAULT_PLAN_LIMITS[plan] || DEFAULT_PLAN_LIMITS.free;
-    const limitResult = checkUsageLimit(BigInt(snapshot.apiCalls), BigInt(planConfig.apiCalls || 10000), BigInt(0));
+    const limitResult = checkUsageLimit(
+      BigInt(snapshot.apiCalls),
+      BigInt(planConfig.apiCalls || 10000),
+      BigInt(0),
+    );
 
     return c.json({
       period: snapshot.period,

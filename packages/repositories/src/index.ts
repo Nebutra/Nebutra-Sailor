@@ -18,6 +18,12 @@ export type {
 // User
 export { UserRepository } from "./user.repository.js";
 export type {
+  ClaimUsageLedgerInput,
+  ClaimUsageLedgerResult,
+} from "./usage-ledger.repository.js";
+// UsageLedger
+export { UsageLedgerRepository } from "./usage-ledger.repository.js";
+export type {
   JsonValue,
   UpsertWebhookEventData,
 } from "./webhook-event.repository.js";

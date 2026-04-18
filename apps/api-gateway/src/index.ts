@@ -39,6 +39,7 @@ import { aiRoutes } from "./routes/ai/index.js";
 import { usageRoutes } from "./routes/ai/usage.js";
 import { creditsRoutes } from "./routes/billing/credits.js";
 import { billingRoutes } from "./routes/billing/index.js";
+import { usageLedgerRoutes } from "./routes/billing/usage.js";
 import { eventRoutes } from "./routes/events/index.js";
 import { integrationRoutes } from "./routes/integrations/index.js";
 import { consentRoutes } from "./routes/legal/consent.js";
@@ -255,6 +256,7 @@ app.route("/api/v1/ai/api-keys", apiKeysRoutes);
 app.route("/api/v1/ai/usage", usageRoutes);
 app.route("/api/v1/billing", billingRoutes);
 app.route("/api/v1/billing/credits", creditsRoutes);
+app.route("/api/v1/billing", usageLedgerRoutes);
 app.route("/api/v1/search", searchRoutes);
 app.route("/api/v1/integrations", integrationRoutes);
 

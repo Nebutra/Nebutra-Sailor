@@ -12,6 +12,8 @@ export {
   formatUsage,
   getCurrentPeriod,
   getPlanUsageLimit,
+  getUsage,
+  type GetUsageOptions,
   recordUsage,
   type UsageCheckResult,
   type UsageRecord,

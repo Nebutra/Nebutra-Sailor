@@ -5,7 +5,7 @@ import { MinimalMonorepoTree } from "./MonorepoFileTree";
 
 const CODE_SNIPPET = `import { Hono } from "hono";
 import { streamText } from "ai";
-import { openai } from "@nebutra/ai-sdk";
+import { openai } from "@nebutra/agents";
 import { authMiddleware } from "@nebutra/identity";
 import { db } from "@nebutra/db";
 import { z } from "zod";

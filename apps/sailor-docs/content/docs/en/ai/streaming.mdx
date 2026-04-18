@@ -22,10 +22,10 @@ Client                    API Gateway              OpenAI
 
 ## Server: how `streamText` works
 
-The `streamText` function from `@nebutra/ai-sdk` returns a `ReadableStream` that the Hono API gateway pipes directly into the SSE response:
+The `streamText` function from `@nebutra/agents` returns a `ReadableStream` that the Hono API gateway pipes directly into the SSE response:
 
 ```typescript
-import { streamText } from "@nebutra/ai-sdk";
+import { streamText } from "@nebutra/agents";
 import { getCurrentTenant } from "@nebutra/tenant";
 import { stream } from "hono/streaming";
 

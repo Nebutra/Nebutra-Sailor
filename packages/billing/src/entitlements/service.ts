@@ -1,6 +1,7 @@
 import { getTenantDb } from "@nebutra/db";
 import type { Plan } from "../types.js";
-import { DEFAULT_PLAN_LIMITS, EntitlementError } from "../types.js";
+import { DEFAULT_PLAN_LIMITS, DEFAULT_USAGE_PRICING, EntitlementError } from "../types.js";
+import { getUsage } from "../usage/service.js";
 
 // ============================================
 // Types
@@ -155,7 +156,7 @@ export async function getEntitlements(organizationId: string): Promise<Entitleme
     resetPeriod: (e.resetPeriod as "monthly" | "daily") || undefined,
     lastResetAt: e.lastResetAt || undefined,
     expiresAt: e.expiresAt || undefined,
-    source: (e.source as "plan" | "addon" | "trial" | "custom"),
+    source: e.source as "plan" | "addon" | "trial" | "custom",
     metadata: (e.metadata as Record<string, unknown>) || undefined,
   }));
 
@@ -295,7 +296,7 @@ export async function grantEntitlement(input: GrantEntitlementInput): Promise<En
     usedValue: model.usedValue,
     resetPeriod: (model.resetPeriod as "monthly" | "daily") || undefined,
     expiresAt: model.expiresAt || undefined,
-    source: (model.source as "plan" | "addon" | "trial" | "custom"),
+    source: model.source as "plan" | "addon" | "trial" | "custom",
     metadata: (model.metadata as Record<string, unknown>) || {},
   };
 }
@@ -336,11 +337,13 @@ export async function resetUsage(organizationId: string, feature: string): Promi
   invalidateCache(organizationId);
 }
 
-
 /**
  * Initialize entitlements for a plan
  */
-export async function initializePlanEntitlements(organizationId: string, plan: Plan): Promise<Entitlement[]> {
+export async function initializePlanEntitlements(
+  organizationId: string,
+  plan: Plan,
+): Promise<Entitlement[]> {
   const features = PLAN_FEATURES[plan] || [];
   const limits = DEFAULT_PLAN_LIMITS[plan];
 
@@ -388,3 +391,109 @@ export function isPlanFeature(plan: Plan, feature: string): boolean {
   const features = PLAN_FEATURES[plan] || [];
   return features.includes(feature as FeatureKey);
 }
+
+// ============================================
+// Plan-level usage entitlement (metering-backed)
+// ============================================
+
+/**
+ * Meter IDs (from `@nebutra/metering`) → plan limit fields.
+ *
+ * Expressed as a plain object so that new meters can be registered without
+ * touching `checkEntitlementUsage` itself. Keys must match the `id` field
+ * of the corresponding `MeterDefinition`.
+ */
+export const METER_TO_PLAN_LIMIT: Record<string, keyof (typeof DEFAULT_PLAN_LIMITS)["FREE"]> = {
+  ai_tokens: "aiTokens",
+  api_calls: "apiCalls",
+  storage_bytes: "storage",
+};
+
+export interface UsageEntitlementResult {
+  allowed: boolean;
+  meterId: string;
+  plan: Plan;
+  used: number;
+  /** Plan limit. `-1` means unlimited (ENTERPRISE). */
+  limit: number;
+  /** Remaining quota (`Infinity` when `limit === -1`). */
+  remaining: number;
+  reason?: string;
+}
+
+/**
+ * Check whether a metered feature is within the plan's usage limit.
+ *
+ * Unlike {@link checkEntitlement} (which reads a stale `usedValue` column
+ * from Prisma), this variant pulls **live usage** from the metering pipeline
+ * and compares it against the plan's configured limit. This closes the loop:
+ *
+ *     AI call → metering.ingest("ai_tokens", org, N)   [ClickHouse write]
+ *             → getUsage(org, "ai_tokens", { period: "monthly" })
+ *             → checkEntitlementUsage(org, "ai_tokens", plan)
+ *
+ * Returns `{ allowed: false }` when usage has reached or exceeded the plan
+ * limit. Returns `{ allowed: true, limit: -1 }` for unlimited plans.
+ *
+ * @throws when the meter is not recognised in {@link METER_TO_PLAN_LIMIT}.
+ */
+export async function checkEntitlementUsage(
+  organizationId: string,
+  meterId: string,
+  plan: Plan,
+): Promise<UsageEntitlementResult> {
+  const limitField = METER_TO_PLAN_LIMIT[meterId];
+  if (!limitField) {
+    throw new EntitlementError(
+      `No plan limit mapping for meter '${meterId}'. Register it in METER_TO_PLAN_LIMIT.`,
+      "UNKNOWN_METER",
+    );
+  }
+
+  const limit = DEFAULT_PLAN_LIMITS[plan][limitField] as number;
+  const used = await getUsage(organizationId, meterId, { period: "monthly" });
+
+  // Unlimited plan (-1) → always allowed
+  if (limit === -1) {
+    return {
+      allowed: true,
+      meterId,
+      plan,
+      used,
+      limit: -1,
+      remaining: Number.POSITIVE_INFINITY,
+    };
+  }
+
+  const remaining = Math.max(0, limit - used);
+  const allowed = used < limit;
+
+  return {
+    allowed,
+    meterId,
+    plan,
+    used,
+    limit,
+    remaining,
+    ...(allowed ? {} : { reason: `${meterId} limit exceeded (${used}/${limit})` }),
+  };
+}
+
+/**
+ * Require a metered entitlement to be within limits — throws otherwise.
+ */
+export async function requireEntitlementUsage(
+  organizationId: string,
+  meterId: string,
+  plan: Plan,
+): Promise<void> {
+  const result = await checkEntitlementUsage(organizationId, meterId, plan);
+  if (!result.allowed) {
+    throw new EntitlementError(result.reason ?? "Usage limit exceeded", "USAGE_LIMIT_EXCEEDED");
+  }
+}
+
+// Keep legacy helper for consumers that still reference it. `DEFAULT_USAGE_PRICING`
+// is the source of truth for monetary price per unit; `METER_TO_PLAN_LIMIT`
+// handles the meter-id → limit-field mapping used above.
+void DEFAULT_USAGE_PRICING;

@@ -221,7 +221,7 @@ export async function getCreditTransactions(
   const db = getTenantDb(organizationId);
   const balance = await db.creditBalance.findUnique({
     where: { organizationId },
-    select: { id: true }
+    select: { id: true },
   });
 
   if (!balance) return [];
@@ -229,14 +229,14 @@ export async function getCreditTransactions(
   const raw = await db.creditTransaction.findMany({
     where: {
       creditBalanceId: balance.id,
-      ...(options?.type ? { type: options.type } : {})
+      ...(options?.type ? { type: options.type } : {}),
     },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
     take: options?.limit || 50,
     skip: options?.offset || 0,
   });
 
-  return raw.map(tx => ({
+  return raw.map((tx) => ({
     id: tx.id,
     organizationId,
     type: tx.type as CreditTransactionType,

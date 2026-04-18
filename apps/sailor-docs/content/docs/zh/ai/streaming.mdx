@@ -22,10 +22,10 @@ description: 通过 Server-Sent Events 实现实时 AI 响应——服务端配�
 
 ## 服务端：`streamText` 的工作方式
 
-`@nebutra/ai-sdk` 中的 `streamText` 函数返回一个 `ReadableStream`，API 网关将其直接管道传输到 SSE 响应中：
+`@nebutra/agents` 中的 `streamText` 函数返回一个 `ReadableStream`，API 网关将其直接管道传输到 SSE 响应中：
 
 ```typescript
-import { streamText } from "@nebutra/ai-sdk";
+import { streamText } from "@nebutra/agents";
 import { getCurrentTenant } from "@nebutra/tenant";
 import { stream } from "hono/streaming";
 

@@ -6,7 +6,11 @@
   "nebutra": {
     "status": "wip",
     "productionReady": false,
-    "requires": ["@nebutra/billing", "@nebutra/email", "@nebutra/event-bus"],
+    "requires": [
+      "@nebutra/billing",
+      "@nebutra/email",
+      "@nebutra/event-bus"
+    ],
     "gaps": [
       "No production app integrations",
       "Orchestrator durability not guaranteed (no persistent journal)",
@@ -19,7 +23,9 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@nebutra/billing": "workspace:*",
@@ -27,6 +33,7 @@
     "@nebutra/event-bus": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
   }
 }

@@ -67,7 +67,7 @@ export function createEmbeddingModel(
 
   if (config.provider !== "openrouter") {
     throw new Error(
-      `[nebutra/ai-sdk] Embedding models are currently only supported with the "openrouter" provider.`,
+      `[@nebutra/agents] Embedding models are currently only supported with the "openrouter" provider.`,
     );
   }
 

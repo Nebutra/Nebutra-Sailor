@@ -42,7 +42,8 @@ This document is always included in Kiro's context window. It provides the found
 | `@nebutra/billing` | Stripe subscriptions + usage metering |
 | `@nebutra/identity` | Auth abstraction (Clerk adapter) |
 | `@nebutra/email` | Resend transactional email |
-| `@nebutra/ai-sdk` | Vercel AI SDK wrapper |
+| `@nebutra/agents` | AI runtime: Vercel AI SDK helpers + multi-agent orchestration |
+| `@nebutra/ai-providers` | Provider registry metadata (meta-only) |
 | `@nebutra/permissions` | RBAC/ABAC — CASL + OpenFGA |
 | `@nebutra/webhooks` | Outbound webhooks via Svix |
 | `@nebutra/metering` | ClickHouse usage metering |

@@ -30,7 +30,7 @@ const SERVICE_SECRET = process.env.SERVICE_SECRET || "";
 async function gatewayFetch(
   path: string,
   options: RequestInit = {},
-  ctx?: { tenantId: string; userId?: string }
+  ctx?: { tenantId: string; userId?: string },
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -39,7 +39,10 @@ async function gatewayFetch(
 
   let serviceToken = SERVICE_SECRET;
   if (ctx) {
-    serviceToken = signServiceToken({ organizationId: ctx.tenantId, userId: ctx.userId }, SERVICE_SECRET);
+    serviceToken = signServiceToken(
+      { organizationId: ctx.tenantId, userId: ctx.userId },
+      SERVICE_SECRET,
+    );
     if (ctx.userId) headers["x-user-id"] = ctx.userId;
     headers["x-organization-id"] = ctx.tenantId;
   }
@@ -57,28 +60,36 @@ async function gatewayFetch(
 const reserveInventory: SagaStep<OrderContext> = {
   name: "reserve_inventory",
   async execute(ctx) {
-    const res = await gatewayFetch("/api/v1/ecommerce/inventory/reserve", {
-      method: "POST",
-      body: JSON.stringify({
-        orderId: ctx.orderId,
-        items: ctx.items,
-        tenantId: ctx.tenantId,
-      }),
-    }, ctx);
-
-    if (!res.ok) throw new Error("Failed to reserve inventory");
-    return { ...ctx, inventoryReserved: true };
-  },
-  async compensate(ctx) {
-    if (ctx.inventoryReserved) {
-      await gatewayFetch("/api/v1/ecommerce/inventory/release", {
+    const res = await gatewayFetch(
+      "/api/v1/ecommerce/inventory/reserve",
+      {
         method: "POST",
         body: JSON.stringify({
           orderId: ctx.orderId,
           items: ctx.items,
           tenantId: ctx.tenantId,
         }),
-      }, ctx).catch((err) => logger.error("Inventory release compensation failed", { error: err }));
+      },
+      ctx,
+    );
+
+    if (!res.ok) throw new Error("Failed to reserve inventory");
+    return { ...ctx, inventoryReserved: true };
+  },
+  async compensate(ctx) {
+    if (ctx.inventoryReserved) {
+      await gatewayFetch(
+        "/api/v1/ecommerce/inventory/release",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            orderId: ctx.orderId,
+            items: ctx.items,
+            tenantId: ctx.tenantId,
+          }),
+        },
+        ctx,
+      ).catch((err) => logger.error("Inventory release compensation failed", { error: err }));
     }
   },
 };
@@ -93,16 +104,19 @@ const chargePayment: SagaStep<OrderContext> = {
       throw new Error("Missing customerId for payment");
     }
     const stripe = getStripe();
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: ctx.totalAmount, // amount in cents
-      currency: "usd",
-      customer: ctx.customerId,
-      confirm: true,
-      off_session: true, // charge stored card asynchronously
-      metadata: { orderId: ctx.orderId, tenantId: ctx.tenantId },
-    }, {
-      idempotencyKey: `order:${ctx.orderId}:payment`
-    });
+    const paymentIntent = await stripe.paymentIntents.create(
+      {
+        amount: ctx.totalAmount, // amount in cents
+        currency: "usd",
+        customer: ctx.customerId,
+        confirm: true,
+        off_session: true, // charge stored card asynchronously
+        metadata: { orderId: ctx.orderId, tenantId: ctx.tenantId },
+      },
+      {
+        idempotencyKey: `order:${ctx.orderId}:payment`,
+      },
+    );
 
     if (paymentIntent.status !== "succeeded" && paymentIntent.status !== "processing") {
       throw new Error(`Payment failed with status: ${paymentIntent.status}`);
@@ -126,18 +140,22 @@ const chargePayment: SagaStep<OrderContext> = {
 const createOrderRecord: SagaStep<OrderContext> = {
   name: "create_order_record",
   async execute(ctx) {
-    const res = await gatewayFetch("/api/v1/ecommerce/orders", {
-      method: "POST",
-      body: JSON.stringify({
-        orderId: ctx.orderId,
-        userId: ctx.userId,
-        tenantId: ctx.tenantId,
-        items: ctx.items,
-        totalAmount: ctx.totalAmount,
-        paymentId: ctx.paymentId,
-        status: "confirmed",
-      }),
-    }, ctx);
+    const res = await gatewayFetch(
+      "/api/v1/ecommerce/orders",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          orderId: ctx.orderId,
+          userId: ctx.userId,
+          tenantId: ctx.tenantId,
+          items: ctx.items,
+          totalAmount: ctx.totalAmount,
+          paymentId: ctx.paymentId,
+          status: "confirmed",
+        }),
+      },
+      ctx,
+    );
 
     if (!res.ok) throw new Error("Failed to create order record in database");
 
@@ -146,9 +164,13 @@ const createOrderRecord: SagaStep<OrderContext> = {
   },
   async compensate(ctx) {
     if (ctx.orderRecordId || ctx.orderId) {
-      await gatewayFetch(`/api/v1/ecommerce/orders/${ctx.orderId}/cancel`, {
-        method: "POST",
-      }, ctx).catch((err) => logger.error("Order record cancellation failed", { error: err }));
+      await gatewayFetch(
+        `/api/v1/ecommerce/orders/${ctx.orderId}/cancel`,
+        {
+          method: "POST",
+        },
+        ctx,
+      ).catch((err) => logger.error("Order record cancellation failed", { error: err }));
     }
   },
 };
