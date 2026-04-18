@@ -51,7 +51,7 @@ apps/web/src/app/[locale]/demo/
 # Community = Sleptons forum. tsekaluk-dev = personal site.
 # design-docs + docs-hub + studio are Nebutra-authored content systems.
 # ---------------------------------------------------------------------------
-apps/community/
+apps/sleptons/
 apps/tsekaluk-dev/
 apps/design-docs/content/
 apps/docs-hub/

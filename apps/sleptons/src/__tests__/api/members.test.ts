@@ -47,10 +47,11 @@ describe("GET /api/members", () => {
   });
 
   it("only returns is_public members", async () => {
-    const { prisma } = await import("@nebutra/db");
+    const { getSystemDb } = await import("@nebutra/db");
     const { GET } = await import("../../app/api/members/route");
     await GET(new Request("http://localhost/api/members") as unknown as Request);
 
+    const prisma = getSystemDb();
     const findManyCall = (prisma.sleptonsaMemberProfile.findMany as ReturnType<typeof vi.fn>).mock
       .calls[0][0];
     expect(findManyCall.where).toMatchObject({ is_public: true });

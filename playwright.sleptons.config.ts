@@ -31,7 +31,7 @@ export default defineConfig({
       timeout: 120_000,
     },
     {
-      command: "pnpm --filter @nebutra/community dev",
+      command: "pnpm --filter @nebutra/sleptons dev",
       url: "http://localhost:3003",
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
