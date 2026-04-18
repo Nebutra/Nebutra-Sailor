@@ -231,6 +231,9 @@ importers:
       '@nebutra/sms':
         specifier: workspace:*
         version: link:../../packages/sms
+      '@nebutra/vault':
+        specifier: workspace:*
+        version: link:../../packages/vault
       '@opentelemetry/api':
         specifier: ^1.9.0
         version: 1.9.0

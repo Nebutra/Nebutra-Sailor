@@ -12,7 +12,6 @@ export type {
   // AI Service
   AIRequest,
   AIRequestType,
-  AuditAction,
   // Audit
   AuditLog,
   // Content
