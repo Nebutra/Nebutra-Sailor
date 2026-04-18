@@ -6,14 +6,14 @@
  */
 
 import { logger } from "@nebutra/logger";
-import { getMemory, saveMemory } from "./memory.js";
+import { getMemory, saveMemory } from "./memory";
 import type {
   AgentConfig,
   AgentContext,
   AgentMessage,
   AgentResponse,
   AgentUsageEvent,
-} from "./types.js";
+} from "./types";
 
 export class BaseAgent {
   public readonly config: AgentConfig;

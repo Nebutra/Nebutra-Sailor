@@ -1,6 +1,6 @@
 import { logger } from "@nebutra/logger";
-import { z } from "zod";
 import { Inngest } from "inngest";
+import { z } from "zod";
 
 // Base event schema
 export const BaseEventSchema = z.object({
@@ -58,7 +58,9 @@ export class EventBus {
         user: validated.tenantId ? { id: validated.tenantId } : undefined,
       });
     } catch (err) {
-      logger.warn("Failed to push event to Inngest durability layer", err);
+      logger.warn("Failed to push event to Inngest durability layer", {
+        error: err instanceof Error ? err.message : String(err),
+      });
     }
 
     // Log event locally

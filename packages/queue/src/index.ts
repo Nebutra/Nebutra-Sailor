@@ -20,13 +20,13 @@ export {
   createQueue,
   getQueue,
   setQueue,
-} from "./factory.js";
+} from "./factory";
 // ── Middleware ───────────────────────────────────────────────────────────────
-export { createQStashWebhookHandler } from "./middleware/qstash-verify.js";
-export { BullMQProvider } from "./providers/bullmq.js";
-export { MemoryProvider } from "./providers/memory.js";
+export { createQStashWebhookHandler } from "./middleware/qstash-verify";
+export { BullMQProvider } from "./providers/bullmq";
+export { MemoryProvider } from "./providers/memory";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
-export { getQStashHandler, getQStashHandlerKeys, QStashProvider } from "./providers/qstash.js";
+export { getQStashHandler, getQStashHandlerKeys, QStashProvider } from "./providers/qstash";
 // ── Types ───────────────────────────────────────────────────────────────────
 export type {
   BullMQProviderConfig,
@@ -41,5 +41,5 @@ export type {
   QueueConfig,
   QueueProvider,
   QueueProviderType,
-} from "./types.js";
-export { JobOptionsSchema, JobPayloadSchema } from "./types.js";
+} from "./types";
+export { JobOptionsSchema, JobPayloadSchema } from "./types";

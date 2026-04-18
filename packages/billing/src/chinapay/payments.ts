@@ -1,6 +1,6 @@
 import { logger } from "@nebutra/logger";
-import { BillingError } from "../types.js";
-import { getChinaPayConfig, signPayload } from "./client.js";
+import { BillingError } from "../types";
+import { getChinaPayConfig, signPayload } from "./client";
 
 export type ChinaPayMethod = "alipay" | "wechat";
 

@@ -8,8 +8,8 @@
  * using LangChain's AgentExecutor or the newer LangGraph approach.
  */
 
-import { BaseAgent } from "../agent.js";
-import type { AgentConfig } from "../types.js";
+import { BaseAgent } from "../agent";
+import type { AgentConfig } from "../types";
 
 export class LangChainAgent extends BaseAgent {
   constructor(config: AgentConfig) {

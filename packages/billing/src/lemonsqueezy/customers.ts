@@ -8,7 +8,7 @@ import {
   type Subscription,
 } from "@lemonsqueezy/lemonsqueezy.js";
 import { logger } from "@nebutra/logger";
-import { getLemonSqueezyConfig } from "./client.js";
+import { getLemonSqueezyConfig } from "./client";
 
 export interface CreateLemonCheckoutOptions {
   variantId: string | number;

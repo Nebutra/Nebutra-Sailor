@@ -8,16 +8,16 @@
  */
 
 import { logger } from "@nebutra/logger";
-import { BaseAgent } from "./agent.js";
-import { AgentRouter } from "./router.js";
-import { checkAgentQuota } from "./tenant.js";
+import { BaseAgent } from "./agent";
+import { AgentRouter } from "./router";
+import { checkAgentQuota } from "./tenant";
 import type {
   AgentContext,
   AgentMessage,
   AgentResponse,
   OrchestratorConfig,
   PipelineStep,
-} from "./types.js";
+} from "./types";
 
 export class AgentOrchestrator {
   private readonly agents: Map<string, BaseAgent>;

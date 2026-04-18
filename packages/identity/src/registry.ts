@@ -1,7 +1,7 @@
-import { AuthJsIdentityAdapter } from "./adapters/authjs.js";
-import { ClerkIdentityAdapter } from "./adapters/clerk.js";
-import { NebutraIdentityAdapter } from "./adapters/nebutra.js";
-import { IdentityAdapterRegistry } from "./types.js";
+import { AuthJsIdentityAdapter } from "./adapters/authjs";
+import { ClerkIdentityAdapter } from "./adapters/clerk";
+import { NebutraIdentityAdapter } from "./adapters/nebutra";
+import { IdentityAdapterRegistry } from "./types";
 
 export function createDefaultIdentityAdapterRegistry(): IdentityAdapterRegistry {
   const registry = new IdentityAdapterRegistry();

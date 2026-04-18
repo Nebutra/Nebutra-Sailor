@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { detectProvider, getCheckout } from "../factory.js";
+import { detectProvider, getCheckout } from "../factory";
 
 describe("detectProvider", () => {
   afterEach(() => {

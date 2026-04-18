@@ -3,7 +3,7 @@ export {
   getChinaPayConfig,
   initChinaPay,
   signPayload,
-} from "./client.js";
+} from "./client";
 export {
   type ChinaPayMethod,
   type ChinaPayOrder,
@@ -11,4 +11,4 @@ export {
   createChinaPayOrder,
   queryChinaPayOrder,
   verifyChinaPayWebhook,
-} from "./payments.js";
+} from "./payments";

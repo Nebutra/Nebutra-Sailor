@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type { JobHandler, JobPayload, JobResult, JobStatusInfo, QueueProvider } from "../types.js";
+import type { JobHandler, JobPayload, JobResult, JobStatusInfo, QueueProvider } from "../types";
 
 // =============================================================================
 // Memory Provider — in-memory queue for local dev & testing

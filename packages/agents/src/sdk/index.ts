@@ -24,8 +24,8 @@ import {
   type NebutraAIConfig,
   NebutraAIConfigSchema,
   type ResolvedNebutraAIConfig,
-} from "./config.js";
-import { createEmbeddingModel, createModel } from "./provider.js";
+} from "./config";
+import { createEmbeddingModel, createModel } from "./provider";
 
 // ---------------------------------------------------------------------------
 // Singleton config — call `configure()` once at app startup
@@ -146,7 +146,7 @@ export {
   NebutraAIConfigSchema,
   type ProviderType,
   type ResolvedNebutraAIConfig,
-} from "./config.js";
-export type { ModelPreset } from "./models.js";
-export { models, resolveModel } from "./models.js";
-export { createEmbeddingModel, createModel } from "./provider.js";
+} from "./config";
+export type { ModelPreset } from "./models";
+export { models, resolveModel } from "./models";
+export { createEmbeddingModel, createModel } from "./provider";

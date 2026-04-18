@@ -1,8 +1,7 @@
-import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { getMetering, type PeriodType } from "@nebutra/metering";
-import type { Plan, RecordUsageInput, UsageType } from "../types.js";
-import { DEFAULT_USAGE_PRICING } from "../types.js";
+import type { Plan, RecordUsageInput, UsageType } from "../types";
+import { DEFAULT_USAGE_PRICING } from "../types";
 
 // ============================================
 // Types
@@ -86,8 +85,18 @@ export function recordUsage(input: RecordUsageInput): void {
 }
 
 /**
- * Flush usage buffer to persistent storage
- * In production, this would write to the database
+ * Flush usage buffer.
+ *
+ * NOTE (schema-orphan-cleanup): The `UsageRecord` Prisma model was deleted.
+ * Usage is now written to the metering pipeline (`@nebutra/metering`) and,
+ * for billing, to the `UsageLedgerEntry` table via
+ * {@link import("./ledger.js").appendUsageLedgerEntry}.
+ *
+ * This function still drains the in-memory buffer so that in-flight callers
+ * do not accumulate unbounded memory, but no longer persists to Prisma.
+ * Migrate `recordUsage(...)` call sites to `metering.ingest(...)` +
+ * `appendUsageLedgerEntry(...)`; once all callers are migrated this buffer
+ * and its flush routine can be removed.
  */
 export async function flushUsageBuffer(organizationId?: string): Promise<UsageRecord[]> {
   const flushed: UsageRecord[] = [];
@@ -104,21 +113,10 @@ export async function flushUsageBuffer(organizationId?: string): Promise<UsageRe
   }
 
   if (flushed.length > 0) {
-    try {
-      // AUDIT(no-tenant): flushUsageBuffer can be invoked with no
-      // organizationId to drain all tenants' buffers (periodic flush,
-      // SIGTERM, etc.). Each record carries its own organizationId, so
-      // cross-tenant insertion here is intentional and safe.
-      await getSystemDb().usageRecord.createMany({
-        data: flushed.map((f) => ({
-          ...f,
-          metadata: (f.metadata || {}) as any,
-        })),
-        skipDuplicates: true,
-      });
-    } catch (err) {
-      logger.error("Failed to flush usage records to DB", err);
-    }
+    // TODO: migrate flushed entries to appendUsageLedgerEntry + metering.ingest.
+    logger.warn(
+      `[billing:flushUsageBuffer] Dropping ${flushed.length} buffered usage records — UsageRecord table removed; migrate callers to @nebutra/metering + UsageLedgerEntry.`,
+    );
   }
 
   return flushed;

@@ -7,4 +7,4 @@ export {
   type PlanConfig,
   PlanConfigService,
   type ResolvedConfig,
-} from "./plan-config.js";
+} from "./plan-config";

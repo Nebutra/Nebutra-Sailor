@@ -1,8 +1,8 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import type { EmbeddingModel, LanguageModel } from "ai";
-import { type ResolvedNebutraAIConfig, resolveApiKey } from "./config.js";
-import { resolveModel } from "./models.js";
+import { type ResolvedNebutraAIConfig, resolveApiKey } from "./config";
+import { resolveModel } from "./models";
 
 /**
  * Creates a language model instance based on the resolved config.

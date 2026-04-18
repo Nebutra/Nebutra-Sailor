@@ -2,7 +2,7 @@ export {
   getLemonSqueezyConfig,
   initLemonSqueezy,
   type LemonSqueezyConfig,
-} from "./client.js";
+} from "./client";
 
 export {
   type CreateLemonCheckoutOptions,
@@ -10,4 +10,4 @@ export {
   createLemonCheckout,
   getLemonCustomerPortalUrl,
   getLemonSubscription,
-} from "./customers.js";
+} from "./customers";

@@ -1,8 +1,8 @@
-export { getPolar, initPolar, type Polar, type PolarConfig } from "./client.js";
+export { getPolar, initPolar, type Polar, type PolarConfig } from "./client";
 export {
   type CreatePolarCheckoutInput,
   cancelPolarSubscription,
   createPolarCheckout,
   getPolarSubscription,
   listPolarProducts,
-} from "./customers.js";
+} from "./customers";

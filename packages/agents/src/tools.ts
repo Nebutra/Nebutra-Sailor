@@ -6,7 +6,7 @@
  * it produces real results.
  */
 
-import type { AgentTool } from "./types.js";
+import type { AgentTool } from "./types";
 
 /** Search the web for current information. */
 export const webSearchTool: AgentTool = {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CREDIT_PURCHASE_METADATA_TYPE, CreditPurchaseInputSchema } from "../types.js";
+import { CREDIT_PURCHASE_METADATA_TYPE, CreditPurchaseInputSchema } from "../types";
 
 describe("CreditPurchaseInputSchema", () => {
   const validInput = {

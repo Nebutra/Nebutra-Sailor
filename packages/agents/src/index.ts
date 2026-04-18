@@ -1,21 +1,43 @@
 // ─── Core ─────────────────────────────────────────────────────────────────────
-export { BaseAgent } from "./agent.js";
+export { BaseAgent } from "./agent";
 // ─── Memory ───────────────────────────────────────────────────────────────────
-export { clearMemory, getMemory, saveMemory } from "./memory.js";
-export { AgentOrchestrator } from "./orchestrator.js";
-export { AgentRouter } from "./router.js";
-
+export { clearMemory, getMemory, saveMemory } from "./memory";
+export { AgentOrchestrator } from "./orchestrator";
+export { AgentRouter } from "./router";
+// ─── Vercel AI SDK helpers (absorbed from @nebutra/ai-sdk) ───────────────────
+// Top-level generation, streaming and embedding helpers that wrap the Vercel
+// AI SDK (`ai` package) with a single configure()-driven provider resolver.
+export {
+  configure,
+  createEmbeddingModel,
+  createModel,
+  type EmbedOptions,
+  embed,
+  embedMany,
+  type GenerateOptions,
+  type GenerateTextResult,
+  generateText,
+  getConfig,
+  type ModelMessage,
+  type ModelPreset,
+  models,
+  type NebutraAIConfig,
+  NebutraAIConfigSchema,
+  type ProviderType,
+  type ResolvedNebutraAIConfig,
+  resolveModel,
+  type StreamTextResult,
+  streamText,
+} from "./sdk/index";
 // ─── Tenant ───────────────────────────────────────────────────────────────────
-export { checkAgentQuota, createAgentContext } from "./tenant.js";
-
+export { checkAgentQuota, createAgentContext } from "./tenant";
 // ─── Tools ────────────────────────────────────────────────────────────────────
 export {
   BUILT_IN_TOOLS,
   databaseQueryTool,
   knowledgeBaseTool,
   webSearchTool,
-} from "./tools.js";
-
+} from "./tools";
 // ─── Types ────────────────────────────────────────────────────────────────────
 export type {
   AgentConfig,
@@ -30,30 +52,4 @@ export type {
   RouterConfig,
   TokenUsage,
   ToolCallResult,
-} from "./types.js";
-
-// ─── Vercel AI SDK helpers (absorbed from @nebutra/ai-sdk) ───────────────────
-// Top-level generation, streaming and embedding helpers that wrap the Vercel
-// AI SDK (`ai` package) with a single configure()-driven provider resolver.
-export {
-  configure,
-  createEmbeddingModel,
-  createModel,
-  embed,
-  embedMany,
-  type EmbedOptions,
-  generateText,
-  type GenerateOptions,
-  type GenerateTextResult,
-  getConfig,
-  type ModelMessage,
-  type ModelPreset,
-  models,
-  type NebutraAIConfig,
-  NebutraAIConfigSchema,
-  type ProviderType,
-  type ResolvedNebutraAIConfig,
-  resolveModel,
-  streamText,
-  type StreamTextResult,
-} from "./sdk/index.js";
+} from "./types";

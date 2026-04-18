@@ -1,7 +1,7 @@
 import { type CanonicalIdentity, CanonicalIdentitySchema } from "@nebutra/contracts";
 import { z } from "zod";
 
-import type { IdentityAdapter } from "../types.js";
+import type { IdentityAdapter } from "../types";
 
 const ClerkPayloadSchema = z.object({
   sub: z.string().min(1),

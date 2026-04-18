@@ -8,7 +8,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import * as agents from "../index.js";
+import * as agents from "../index";
 
 describe("@nebutra/agents public API contract", () => {
   // ─── Agent orchestration primitives ──────────────────────────────────────

@@ -1,4 +1,4 @@
-import type { CheckoutProvider, CreditPurchaseInput, CreditPurchaseSession } from "./types.js";
+import type { CheckoutProvider, CreditPurchaseInput, CreditPurchaseSession } from "./types";
 
 /**
  * StripeCheckoutProvider — bridges the generic checkout API to Stripe Checkout.

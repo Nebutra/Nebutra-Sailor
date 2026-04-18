@@ -1,16 +1,16 @@
 // Public exports for the provider-agnostic checkout abstraction.
 
-export { ChinaPayCheckoutProvider } from "./chinapay.js";
+export { ChinaPayCheckoutProvider } from "./chinapay";
 export {
   type CreditPurchaseWebhookInput,
   type CreditPurchaseWebhookResult,
   handleCreditPurchaseWebhook,
-} from "./credit-webhook.js";
-export { detectProvider, getCheckout } from "./factory.js";
-export { LemonCheckoutProvider } from "./lemonsqueezy.js";
-export { ManualCheckoutProvider } from "./manual.js";
-export { PolarCheckoutProvider } from "./polar.js";
-export { StripeCheckoutProvider } from "./stripe.js";
+} from "./credit-webhook";
+export { detectProvider, getCheckout } from "./factory";
+export { LemonCheckoutProvider } from "./lemonsqueezy";
+export { ManualCheckoutProvider } from "./manual";
+export { PolarCheckoutProvider } from "./polar";
+export { StripeCheckoutProvider } from "./stripe";
 export {
   type CheckoutConfig,
   type CheckoutProvider,
@@ -20,4 +20,4 @@ export {
   CreditPurchaseInputSchema,
   type CreditPurchaseMetadata,
   type CreditPurchaseSession,
-} from "./types.js";
+} from "./types";

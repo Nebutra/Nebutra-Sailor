@@ -6,7 +6,7 @@ import type {
   JobResult,
   QStashProviderConfig,
   QueueProvider,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // QStash Provider — Upstash serverless message queue

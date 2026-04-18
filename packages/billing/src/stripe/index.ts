@@ -4,7 +4,7 @@ export {
   initStripe,
   type Stripe,
   type StripeConfig,
-} from "./client.js";
+} from "./client";
 
 export {
   type CreateCustomerInput,
@@ -16,4 +16,4 @@ export {
   getOrCreateCustomer,
   type UpdateCustomerInput,
   updateCustomer,
-} from "./customers.js";
+} from "./customers";

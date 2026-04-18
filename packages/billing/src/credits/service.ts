@@ -1,6 +1,6 @@
 import { getTenantDb } from "@nebutra/db";
-import type { CreditTransactionType } from "../types.js";
-import { BillingError } from "../types.js";
+import type { CreditTransactionType } from "../types";
+import { BillingError } from "../types";
 
 // ============================================
 // Types

@@ -1,7 +1,7 @@
 import { type CanonicalIdentity, CanonicalIdentitySchema } from "@nebutra/contracts";
 import { z } from "zod";
 
-import type { IdentityAdapter } from "../types.js";
+import type { IdentityAdapter } from "../types";
 
 const AuthJsSessionSchema = z.object({
   user: z

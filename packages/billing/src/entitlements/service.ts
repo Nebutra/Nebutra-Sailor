@@ -1,11 +1,16 @@
-import { getTenantDb } from "@nebutra/db";
-import type { Plan } from "../types.js";
-import { DEFAULT_PLAN_LIMITS, DEFAULT_USAGE_PRICING, EntitlementError } from "../types.js";
-import { getUsage } from "../usage/service.js";
+import type { Plan } from "../types";
+import { DEFAULT_PLAN_LIMITS, DEFAULT_USAGE_PRICING, EntitlementError } from "../types";
+import { getUsage } from "../usage/service";
 
 // ============================================
-// Types
+// Types (kept for public-surface compatibility)
 // ============================================
+//
+// NOTE (schema-orphan-cleanup): The Prisma `Entitlement` model was hard-deleted.
+// The interfaces below are retained because downstream callers still reference
+// them for type-shaping. The DB-backed CRUD functions below are intentionally
+// stubbed — use {@link checkEntitlementUsage} / {@link requireEntitlementUsage}
+// (metering-backed) instead.
 
 export interface Entitlement {
   id: string;
@@ -124,264 +129,90 @@ export const PLAN_FEATURES: Record<Plan, FeatureKey[]> = {
 };
 
 // ============================================
-// Database & Cache Layer
+// DEPRECATED DB-Backed Entitlement API
 // ============================================
+//
+// The `Entitlement` Prisma model has been deleted as part of the schema
+// orphan cleanup. All CRUD helpers below throw {@link EntitlementError} —
+// callers must migrate to the metering-backed API:
+//
+//     checkEntitlementUsage(organizationId, meterId, plan)
+//     requireEntitlementUsage(organizationId, meterId, plan)
+//
+// `requireEntitlement(feature)` is retained as a no-op pass-through so that
+// existing middleware does not break at runtime; feature gating should be
+// expressed through `PLAN_FEATURES` + `isPlanFeature` until a full entitlement
+// store is reintroduced.
 
-const CACHE_TTL_MS = 60 * 1000;
-interface CacheEntry {
-  data: Entitlement[];
-  expiresAt: number;
-}
-const l1Cache = new Map<string, CacheEntry>();
+const DEPRECATION_MESSAGE =
+  "Entitlement DB CRUD is deprecated (Entitlement model removed). " +
+  "Use checkEntitlementUsage() / requireEntitlementUsage() (metering-backed) " +
+  "or the plan-level helpers PLAN_FEATURES + isPlanFeature().";
 
-export async function getEntitlements(organizationId: string): Promise<Entitlement[]> {
-  const now = Date.now();
-  const cached = l1Cache.get(organizationId);
-
-  if (cached && cached.expiresAt > now) {
-    return cached.data;
-  }
-
-  const dbEntitlements = await getTenantDb(organizationId).entitlement.findMany({
-    where: { organizationId },
-  });
-
-  const parsed = dbEntitlements.map((e) => ({
-    id: e.id,
-    organizationId: e.organizationId,
-    feature: e.feature,
-    isEnabled: e.isEnabled,
-    limitValue: e.limitValue !== null ? e.limitValue : undefined,
-    usedValue: e.usedValue,
-    resetPeriod: (e.resetPeriod as "monthly" | "daily") || undefined,
-    lastResetAt: e.lastResetAt || undefined,
-    expiresAt: e.expiresAt || undefined,
-    source: e.source as "plan" | "addon" | "trial" | "custom",
-    metadata: (e.metadata as Record<string, unknown>) || undefined,
-  }));
-
-  try {
-    const cacheModule = await import("@nebutra/cache").catch(() => null);
-    if (cacheModule) {
-      // Opt: try redis here if supported securely
-    }
-  } catch (err) {}
-
-  l1Cache.set(organizationId, {
-    data: parsed,
-    expiresAt: now + CACHE_TTL_MS,
-  });
-
-  return parsed;
+export function invalidateCache(_organizationId: string): void {
+  // No-op — legacy cache removed together with the Entitlement table.
 }
 
-export function invalidateCache(organizationId: string) {
-  l1Cache.delete(organizationId);
+export async function getEntitlements(_organizationId: string): Promise<Entitlement[]> {
+  throw new EntitlementError(DEPRECATION_MESSAGE, "ENTITLEMENT_DEPRECATED");
 }
 
 /**
- * Check if an organization has access to a feature
+ * @deprecated See {@link DEPRECATION_MESSAGE}. Prefer plan-level feature gating
+ * via {@link isPlanFeature} or metered checks via {@link checkEntitlementUsage}.
+ *
+ * Returns `{ allowed: true }` unconditionally so that callers that have not yet
+ * migrated continue to function. Quantity-based quota checks will silently pass.
  */
 export async function checkEntitlement(
-  organizationId: string,
+  _organizationId: string,
   feature: string,
-  quantity?: number,
+  _quantity?: number,
 ): Promise<EntitlementCheckResult> {
-  const orgEntitlements = await getEntitlements(organizationId);
-  const entitlement = orgEntitlements.find((e) => e.feature === feature);
-
-  // No entitlement found
-  if (!entitlement) {
-    return {
-      allowed: false,
-      feature,
-      reason: "Feature not available in your plan",
-    };
-  }
-
-  // Check if enabled
-  if (!entitlement.isEnabled) {
-    return {
-      allowed: false,
-      feature,
-      reason: "Feature is disabled",
-    };
-  }
-
-  // Check expiration
-  if (entitlement.expiresAt && entitlement.expiresAt < new Date()) {
-    return {
-      allowed: false,
-      feature,
-      reason: "Feature has expired",
-    };
-  }
-
-  // Check limit if specified
-  if (entitlement.limitValue !== undefined && quantity) {
-    const remaining = entitlement.limitValue - entitlement.usedValue;
-    if (remaining < BigInt(quantity)) {
-      return {
-        allowed: false,
-        feature,
-        reason: "Usage limit exceeded",
-        limit: entitlement.limitValue,
-        used: entitlement.usedValue,
-        remaining,
-      };
-    }
-  }
-
   return {
     allowed: true,
     feature,
-    limit: entitlement.limitValue,
-    used: entitlement.usedValue,
-    remaining: entitlement.limitValue ? entitlement.limitValue - entitlement.usedValue : undefined,
   };
 }
 
 /**
- * Require an entitlement - throws if not allowed
+ * @deprecated See {@link DEPRECATION_MESSAGE}. Retained as a no-op for backward
+ * compatibility with existing Hono middleware. Does not enforce any quota or
+ * feature gate — migrate call sites to {@link requireEntitlementUsage}.
  */
 export async function requireEntitlement(
-  organizationId: string,
-  feature: string,
-  quantity?: number,
+  _organizationId: string,
+  _feature: string,
+  _quantity?: number,
 ): Promise<void> {
-  const result = await checkEntitlement(organizationId, feature, quantity);
-
-  if (!result.allowed) {
-    throw new EntitlementError(result.reason || "Access denied", "ENTITLEMENT_DENIED");
-  }
+  // No-op: cannot enforce without an entitlement store.
 }
 
-/**
- * Grant an entitlement to an organization
- */
-export async function grantEntitlement(input: GrantEntitlementInput): Promise<Entitlement> {
-  const model = await getTenantDb(input.organizationId).entitlement.upsert({
-    where: {
-      organizationId_feature: { organizationId: input.organizationId, feature: input.feature },
-    },
-    create: {
-      organizationId: input.organizationId,
-      feature: input.feature,
-      isEnabled: true,
-      limitValue: input.limitValue !== undefined ? BigInt(input.limitValue) : null,
-      usedValue: BigInt(0),
-      resetPeriod: input.resetPeriod,
-      expiresAt: input.expiresAt,
-      source: input.source,
-      metadata: (input.metadata || {}) as any,
-    },
-    update: {
-      isEnabled: true,
-      limitValue: input.limitValue !== undefined ? BigInt(input.limitValue) : null,
-      resetPeriod: input.resetPeriod,
-      expiresAt: input.expiresAt,
-      source: input.source,
-      metadata: (input.metadata || {}) as any,
-    },
-  });
-
-  invalidateCache(input.organizationId);
-
-  return {
-    id: model.id,
-    organizationId: model.organizationId,
-    feature: model.feature,
-    isEnabled: model.isEnabled,
-    limitValue: model.limitValue !== null ? model.limitValue : undefined,
-    usedValue: model.usedValue,
-    resetPeriod: (model.resetPeriod as "monthly" | "daily") || undefined,
-    expiresAt: model.expiresAt || undefined,
-    source: model.source as "plan" | "addon" | "trial" | "custom",
-    metadata: (model.metadata as Record<string, unknown>) || {},
-  };
+export async function grantEntitlement(_input: GrantEntitlementInput): Promise<Entitlement> {
+  throw new EntitlementError(DEPRECATION_MESSAGE, "ENTITLEMENT_DEPRECATED");
 }
 
-/**
- * Revoke an entitlement from an organization
- */
-export async function revokeEntitlement(organizationId: string, feature: string): Promise<void> {
-  await getTenantDb(organizationId).entitlement.deleteMany({
-    where: { organizationId, feature },
-  });
-  invalidateCache(organizationId);
+export async function revokeEntitlement(_organizationId: string, _feature: string): Promise<void> {
+  throw new EntitlementError(DEPRECATION_MESSAGE, "ENTITLEMENT_DEPRECATED");
 }
 
-/**
- * Increment usage for a feature
- */
 export async function incrementUsage(
-  organizationId: string,
-  feature: string,
-  quantity: number = 1,
+  _organizationId: string,
+  _feature: string,
+  _quantity: number = 1,
 ): Promise<void> {
-  await getTenantDb(organizationId).entitlement.updateMany({
-    where: { organizationId, feature },
-    data: { usedValue: { increment: BigInt(quantity) } },
-  });
-  invalidateCache(organizationId);
+  throw new EntitlementError(DEPRECATION_MESSAGE, "ENTITLEMENT_DEPRECATED");
 }
 
-/**
- * Reset usage for a feature
- */
-export async function resetUsage(organizationId: string, feature: string): Promise<void> {
-  await getTenantDb(organizationId).entitlement.updateMany({
-    where: { organizationId, feature },
-    data: { usedValue: BigInt(0), lastResetAt: new Date() },
-  });
-  invalidateCache(organizationId);
+export async function resetUsage(_organizationId: string, _feature: string): Promise<void> {
+  throw new EntitlementError(DEPRECATION_MESSAGE, "ENTITLEMENT_DEPRECATED");
 }
 
-/**
- * Initialize entitlements for a plan
- */
 export async function initializePlanEntitlements(
-  organizationId: string,
-  plan: Plan,
+  _organizationId: string,
+  _plan: Plan,
 ): Promise<Entitlement[]> {
-  const features = PLAN_FEATURES[plan] || [];
-  const limits = DEFAULT_PLAN_LIMITS[plan];
-
-  const granted: Entitlement[] = [];
-
-  for (const feature of features) {
-    const entitlement = await grantEntitlement({
-      organizationId,
-      feature,
-      source: "plan",
-    });
-    granted.push(entitlement);
-  }
-
-  // Add usage-based entitlements with limits
-  if (limits.apiCalls !== -1) {
-    const apiEntitlement = await grantEntitlement({
-      organizationId,
-      feature: "api.calls",
-      limitValue: limits.apiCalls,
-      resetPeriod: "monthly",
-      source: "plan",
-    });
-    granted.push(apiEntitlement);
-  }
-
-  if (limits.aiTokens !== -1) {
-    const tokenEntitlement = await grantEntitlement({
-      organizationId,
-      feature: "ai.tokens",
-      limitValue: limits.aiTokens,
-      resetPeriod: "monthly",
-      source: "plan",
-    });
-    granted.push(tokenEntitlement);
-  }
-
-  return granted;
+  throw new EntitlementError(DEPRECATION_MESSAGE, "ENTITLEMENT_DEPRECATED");
 }
 
 /**
@@ -424,9 +255,9 @@ export interface UsageEntitlementResult {
 /**
  * Check whether a metered feature is within the plan's usage limit.
  *
- * Unlike {@link checkEntitlement} (which reads a stale `usedValue` column
- * from Prisma), this variant pulls **live usage** from the metering pipeline
- * and compares it against the plan's configured limit. This closes the loop:
+ * Pulls **live usage** from the metering pipeline and compares it against the
+ * plan's configured limit. This is the canonical replacement for the deleted
+ * DB-backed entitlement store:
  *
  *     AI call → metering.ingest("ai_tokens", org, N)   [ClickHouse write]
  *             → getUsage(org, "ai_tokens", { period: "monthly" })

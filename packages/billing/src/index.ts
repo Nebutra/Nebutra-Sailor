@@ -61,7 +61,7 @@ export {
   detectProvider,
   getCheckout,
   handleCreditPurchaseWebhook,
-} from "./checkout/index.js";
+} from "./checkout/index";
 // China Payment (Alipay + WeChat Pay via aggregator)
 export {
   createChinaPayOrder,
@@ -69,7 +69,7 @@ export {
   initChinaPay,
   queryChinaPayOrder,
   verifyChinaPayWebhook,
-} from "./chinapay/index.js";
+} from "./chinapay/index";
 // Plan Config (Database-driven)
 export {
   type CacheAdapter,
@@ -80,7 +80,7 @@ export {
   type PlanConfig,
   PlanConfigService,
   type ResolvedConfig,
-} from "./config/index.js";
+} from "./config/index";
 // Credits
 export {
   addBonusCredits,
@@ -93,7 +93,7 @@ export {
   getCreditTransactions,
   hasEnoughCredits,
   refundCredits,
-} from "./credits/index.js";
+} from "./credits/index";
 // Entitlements
 export {
   checkEntitlement,
@@ -111,7 +111,7 @@ export {
   resetUsage,
   revokeEntitlement,
   type UsageEntitlementResult,
-} from "./entitlements/index.js";
+} from "./entitlements/index";
 // LemonSqueezy
 export {
   cancelLemonSubscription,
@@ -120,7 +120,7 @@ export {
   getLemonSqueezyConfig,
   getLemonSubscription,
   initLemonSqueezy,
-} from "./lemonsqueezy/index.js";
+} from "./lemonsqueezy/index";
 // Polar
 export {
   cancelPolarSubscription,
@@ -129,7 +129,7 @@ export {
   getPolarSubscription,
   initPolar,
   listPolarProducts,
-} from "./polar/index.js";
+} from "./polar/index";
 // Stripe
 export {
   createBillingPortalSession,
@@ -142,7 +142,7 @@ export {
   getWebhookSecret,
   initStripe,
   updateCustomer,
-} from "./stripe/index.js";
+} from "./stripe/index";
 // Subscriptions
 export {
   cancelStripeSubscription,
@@ -155,7 +155,7 @@ export {
   resumeStripeSubscription,
   unpauseStripeSubscription,
   updateStripeSubscription,
-} from "./subscriptions/index.js";
+} from "./subscriptions/index";
 // Types
 export type {
   BillingInterval,
@@ -173,7 +173,7 @@ export type {
   UpdateSubscriptionInput,
   UsagePricing,
   UsageType,
-} from "./types.js";
+} from "./types";
 // Constants
 // Schemas
 // Errors
@@ -191,16 +191,16 @@ export {
   SubscriptionError,
   UpdateSubscriptionSchema,
   UsageError,
-} from "./types.js";
+} from "./types";
 // Usage
 export {
   calculateOverageCost,
   checkUsageLimit,
   flushUsageBuffer,
   formatUsage,
-  getCurrentPeriod,
   type GetUsageOptions,
+  getCurrentPeriod,
   getPlanUsageLimit,
   getUsage,
   recordUsage,
-} from "./usage/index.js";
+} from "./usage/index";

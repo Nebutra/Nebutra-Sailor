@@ -1,4 +1,4 @@
-import type { CheckoutProvider, CreditPurchaseInput, CreditPurchaseSession } from "./types.js";
+import type { CheckoutProvider, CreditPurchaseInput, CreditPurchaseSession } from "./types";
 
 /**
  * ManualCheckoutProvider — no payment is taken.

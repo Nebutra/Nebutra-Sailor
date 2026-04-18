@@ -18,4 +18,4 @@ export {
   resetUsage,
   revokeEntitlement,
   type UsageEntitlementResult,
-} from "./service.js";
+} from "./service";

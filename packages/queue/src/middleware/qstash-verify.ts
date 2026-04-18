@@ -1,7 +1,7 @@
 import { logger } from "@nebutra/logger";
 import { Receiver } from "@upstash/qstash";
-import { getQStashHandler } from "../providers/qstash.js";
-import type { JobPayload } from "../types.js";
+import { getQStashHandler } from "../providers/qstash";
+import type { JobPayload } from "../types";
 
 // =============================================================================
 // QStash Webhook Verification Middleware

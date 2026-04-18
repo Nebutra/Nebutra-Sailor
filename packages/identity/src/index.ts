@@ -1,6 +1,6 @@
-export { AuthJsIdentityAdapter } from "./adapters/authjs.js";
-export { ClerkIdentityAdapter } from "./adapters/clerk.js";
-export { NebutraIdentityAdapter } from "./adapters/nebutra.js";
-export { createDefaultIdentityAdapterRegistry } from "./registry.js";
-export type { IdentityAdapter, IdentityProvider } from "./types.js";
-export { IdentityAdapterRegistry } from "./types.js";
+export { AuthJsIdentityAdapter } from "./adapters/authjs";
+export { ClerkIdentityAdapter } from "./adapters/clerk";
+export { NebutraIdentityAdapter } from "./adapters/nebutra";
+export { createDefaultIdentityAdapterRegistry } from "./registry";
+export type { IdentityAdapter, IdentityProvider } from "./types";
+export { IdentityAdapterRegistry } from "./types";

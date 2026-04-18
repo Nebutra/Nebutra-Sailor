@@ -1,9 +1,8 @@
-import React from "react";
-
-("use client");
+"use client";
 
 import { ChevronDown } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
+import React from "react";
 import { Link } from "@/i18n/navigation";
 import { NAV_LINKS } from "@/lib/constants/landing-data";
 

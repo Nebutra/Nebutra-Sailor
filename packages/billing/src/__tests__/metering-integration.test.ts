@@ -6,8 +6,8 @@ import {
   setMetering,
 } from "@nebutra/metering";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { checkEntitlementUsage } from "../entitlements/service.js";
-import { getUsage } from "../usage/service.js";
+import { checkEntitlementUsage } from "../entitlements/service";
+import { getUsage } from "../usage/service";
 
 // =============================================================================
 // billing <-> metering integration

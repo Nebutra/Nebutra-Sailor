@@ -1,4 +1,4 @@
-import type { CheckoutConfig, CheckoutProvider, CheckoutProviderType } from "./types.js";
+import type { CheckoutConfig, CheckoutProvider, CheckoutProviderType } from "./types";
 
 // =============================================================================
 // Checkout Factory — provider-agnostic checkout creation

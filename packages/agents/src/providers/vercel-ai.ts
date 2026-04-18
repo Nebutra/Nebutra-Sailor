@@ -6,8 +6,8 @@
  * doesn't fail at require-time when the SDK is absent.
  */
 
-import { BaseAgent } from "../agent.js";
-import type { AgentContext, AgentMessage, AgentResponse } from "../types.js";
+import { BaseAgent } from "../agent";
+import type { AgentContext, AgentMessage, AgentResponse } from "../types";
 
 export class VercelAIAgent extends BaseAgent {
   protected override async execute(

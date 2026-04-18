@@ -13,4 +13,4 @@ export {
   getCreditTransactions,
   hasEnoughCredits,
   refundCredits,
-} from "./service.js";
+} from "./service";

@@ -1,7 +1,7 @@
 import type Stripe from "stripe";
-import { getStripe } from "../stripe/client.js";
-import type { SubscriptionStatus } from "../types.js";
-import { SubscriptionError } from "../types.js";
+import { getStripe } from "../stripe/client";
+import type { SubscriptionStatus } from "../types";
+import { SubscriptionError } from "../types";
 
 // ============================================
 // Types

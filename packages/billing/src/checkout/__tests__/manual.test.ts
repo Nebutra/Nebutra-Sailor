@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { ManualCheckoutProvider } from "../manual.js";
-import type { CreditPurchaseInput } from "../types.js";
+import { ManualCheckoutProvider } from "../manual";
+import type { CreditPurchaseInput } from "../types";
 
 const baseInput: CreditPurchaseInput = {
   organizationId: "org_123",

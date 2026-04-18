@@ -1,5 +1,5 @@
-import { addCredits } from "../credits/index.js";
-import { type CheckoutProviderType, CREDIT_PURCHASE_METADATA_TYPE } from "./types.js";
+import { addCredits } from "../credits/index";
+import { type CheckoutProviderType, CREDIT_PURCHASE_METADATA_TYPE } from "./types";
 
 // =============================================================================
 // Shared credit-purchase webhook handler

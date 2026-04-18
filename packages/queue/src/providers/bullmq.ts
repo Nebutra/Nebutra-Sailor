@@ -9,7 +9,7 @@ import type {
   JobStatus,
   JobStatusInfo,
   QueueProvider,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // BullMQ Provider — self-hosted Redis queue backend

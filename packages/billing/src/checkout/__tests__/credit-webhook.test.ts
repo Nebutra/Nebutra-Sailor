@@ -5,9 +5,9 @@ vi.mock("../../credits/index.js", () => ({
   addCredits: vi.fn(),
 }));
 
-import { addCredits } from "../../credits/index.js";
-import { handleCreditPurchaseWebhook } from "../credit-webhook.js";
-import { CREDIT_PURCHASE_METADATA_TYPE } from "../types.js";
+import { addCredits } from "../../credits/index";
+import { handleCreditPurchaseWebhook } from "../credit-webhook";
+import { CREDIT_PURCHASE_METADATA_TYPE } from "../types";
 
 const mockedAddCredits = vi.mocked(addCredits);
 

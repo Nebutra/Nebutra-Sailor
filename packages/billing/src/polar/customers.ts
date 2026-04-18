@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import { getPolar } from "./client.js";
+import { getPolar } from "./client";
 
 export interface CreatePolarCheckoutInput {
   productId: string;

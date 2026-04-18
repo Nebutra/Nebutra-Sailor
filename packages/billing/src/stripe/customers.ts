@@ -1,5 +1,5 @@
 import type Stripe from "stripe";
-import { getStripe } from "./client.js";
+import { getStripe } from "./client";
 
 export interface CreateCustomerInput {
   organizationId: string;

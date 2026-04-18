@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type { QueueConfig, QueueProvider, QueueProviderType } from "./types.js";
+import type { QueueConfig, QueueProvider, QueueProviderType } from "./types";
 
 // =============================================================================
 // Queue Factory — Provider-agnostic queue creation
@@ -54,7 +54,7 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
 
   switch (providerType) {
     case "qstash": {
-      const { QStashProvider } = await import("./providers/qstash.js");
+      const { QStashProvider } = await import("./providers/qstash");
       const qstashConfig = config as
         | Exclude<QueueConfig, { provider: "bullmq" | "memory" }>
         | undefined;
@@ -75,7 +75,7 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
     }
 
     case "bullmq": {
-      const { BullMQProvider } = await import("./providers/bullmq.js");
+      const { BullMQProvider } = await import("./providers/bullmq");
       const bullConfig = config as
         | Exclude<QueueConfig, { provider: "qstash" | "memory" }>
         | undefined;
@@ -87,7 +87,7 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
     }
 
     case "memory": {
-      const { MemoryProvider } = await import("./providers/memory.js");
+      const { MemoryProvider } = await import("./providers/memory");
       return new MemoryProvider();
     }
 
@@ -128,7 +128,7 @@ export async function closeQueue(): Promise<void> {
 // Convenience: createJob helper
 // =============================================================================
 
-import type { JobOptions, JobPayload } from "./types.js";
+import type { JobOptions, JobPayload } from "./types";
 
 /**
  * Build a `JobPayload` with auto-generated ID and timestamp.

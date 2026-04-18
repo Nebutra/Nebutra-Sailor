@@ -8,7 +8,7 @@
  */
 
 import { logger } from "@nebutra/logger";
-import type { AgentConfig, AgentContext, RouterConfig } from "./types.js";
+import type { AgentConfig, AgentContext, RouterConfig } from "./types";
 
 export class AgentRouter {
   private readonly config: RouterConfig;

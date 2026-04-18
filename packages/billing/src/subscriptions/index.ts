@@ -11,4 +11,4 @@ export {
   type SubscriptionDetails,
   unpauseStripeSubscription,
   updateStripeSubscription,
-} from "./service.js";
+} from "./service";

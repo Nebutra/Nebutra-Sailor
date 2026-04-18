@@ -8,7 +8,7 @@
  */
 
 import type { CanonicalIdentity } from "@nebutra/contracts";
-import type { IdentityAdapter } from "../types.js";
+import type { IdentityAdapter } from "../types";
 
 interface NebutraOIDCClaims {
   sub: string;

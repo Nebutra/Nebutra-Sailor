@@ -5,7 +5,7 @@
  * billing, and audit trail purposes.
  */
 
-import type { AgentContext } from "./types.js";
+import type { AgentContext } from "./types";
 
 /**
  * Create a fully-populated AgentContext.

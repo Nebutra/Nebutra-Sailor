@@ -10,7 +10,7 @@
  */
 
 import { logger } from "@nebutra/logger";
-import type { AgentMessage } from "./types.js";
+import type { AgentMessage } from "./types";
 
 const DEFAULT_TTL_SECONDS = 7 * 24 * 60 * 60; // 7 days
 
