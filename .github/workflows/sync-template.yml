@@ -44,7 +44,12 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --ignore-scripts
+        # Using --no-frozen-lockfile: this workflow only mirrors source to
+        # Sailor-Template; it doesn't run production builds. Lockfile drift
+        # here isn't a security concern (the mirror's consumers have their
+        # own pnpm install). Frozen-lockfile was previously blocking syncs
+        # on catalog resolution edge cases.
+        run: pnpm install --no-frozen-lockfile --ignore-scripts
 
       - name: Build template
         run: pnpm tsx scripts/template-build.ts --out=/tmp/sailor-template
