@@ -59,16 +59,6 @@ enum IntegrationType {
   @@schema("public")
 }
 
-enum NftStatus {
-  MINTING
-  MINTED
-  LISTED
-  SOLD
-  BURNED
-
-  @@schema("public")
-}
-
 enum SleptonsTier {
   V0
   V1
@@ -102,12 +92,9 @@ model Organization {
 
   members      OrganizationMember[]
   contents     Content[]
-  tenantUsage  TenantUsage[]
   products     Product[]
   orders       Order[]
   integrations Integration[]
-  wallets      Wallet[]
-  nfts         Nft[]
   apiKeys      APIKey[]
   oauthClients OAuthClient[]
 
@@ -154,8 +141,6 @@ model User {
   organizations       OrganizationMember[]
   contents            Content[]
   orders              Order[]
-  activities          UserActivity[]
-  wallets             Wallet[]
   oauthAuthorizations OAuthAuthorization[]
 
   @@map("users")
@@ -181,6 +166,7 @@ model OrganizationMember {
 // Content
 // ============================================
 
+/// @conditional(template=blog|portfolio)
 model Content {
   id             String        @id @default(cuid())
   organizationId String        @map("organization_id")
@@ -208,6 +194,7 @@ model Content {
   @@schema("public")
 }
 
+/// @conditional(template=blog|portfolio)
 model ContentTranslation {
   id        String   @id @default(cuid())
   contentId String   @map("content_id")
@@ -228,6 +215,7 @@ model ContentTranslation {
 // Embeddings (pgvector)
 // ============================================
 
+/// @conditional(template=blog|portfolio)
 model ContentEmbedding {
   id        String                      @id @default(cuid())
   contentId String                      @map("content_id")
@@ -246,6 +234,7 @@ model ContentEmbedding {
 // E-Commerce
 // ============================================
 
+/// @conditional(template=ecommerce)
 model Product {
   id             String   @id @default(cuid())
   organizationId String   @map("organization_id")
@@ -270,6 +259,7 @@ model Product {
   @@schema("public")
 }
 
+/// @conditional(template=ecommerce)
 model Order {
   id             String      @id @default(cuid())
   organizationId String      @map("organization_id")
@@ -296,6 +286,7 @@ model Order {
   @@schema("public")
 }
 
+/// @conditional(template=ecommerce)
 model OrderItem {
   id        String  @id @default(cuid())
   orderId   String  @map("order_id")
@@ -310,6 +301,7 @@ model OrderItem {
   @@schema("public")
 }
 
+/// @conditional(template=ecommerce)
 model Integration {
   id             String          @id @default(cuid())
   organizationId String          @map("organization_id")
@@ -333,97 +325,13 @@ model Integration {
 // Web3
 // ============================================
 
-model Wallet {
-  id             String   @id @default(cuid())
-  organizationId String   @map("organization_id")
-  userId         String   @map("user_id")
-  address        String   @db.VarChar(42)
-  chainId        Int      @map("chain_id")
-  isPrimary      Boolean  @default(false) @map("is_primary")
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
-
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  nfts         Nft[]
-
-  @@unique([address, chainId])
-  @@index([userId])
-  @@index([userId, organizationId])
-  @@map("wallets")
-  @@schema("public")
-}
-
-model Nft {
-  id             String    @id @default(cuid())
-  organizationId String    @map("organization_id")
-  walletId       String    @map("wallet_id")
-  contractAddr   String    @map("contract_addr") @db.VarChar(42)
-  tokenId        String    @map("token_id")
-  chainId        Int       @map("chain_id")
-  name           String?
-  description    String?   @db.Text
-  imageUrl       String?   @map("image_url")
-  metadata       Json?     @default("{}")
-  status         NftStatus @default(MINTING)
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @updatedAt @map("updated_at")
-
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  wallet       Wallet       @relation(fields: [walletId], references: [id], onDelete: Cascade)
-
-  @@unique([contractAddr, tokenId, chainId])
-  @@index([walletId])
-  @@index([organizationId, status])
-  @@map("nfts")
-  @@schema("public")
-}
-
 // ============================================
 // User Activity & Analytics
 // ============================================
 
-model UserActivity {
-  id         String   @id @default(cuid())
-  userId     String   @map("user_id")
-  action     String   @db.VarChar(50)
-  entityType String?  @map("entity_type") @db.VarChar(50)
-  entityId   String?  @map("entity_id")
-  metadata   Json?    @default("{}")
-  ipAddress  String?  @map("ip_address") @db.VarChar(45)
-  userAgent  String?  @map("user_agent")
-  createdAt  DateTime @default(now()) @map("created_at")
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([action])
-  @@index([createdAt])
-  @@index([userId, createdAt])
-  @@map("user_activities")
-  @@schema("public")
-}
-
 // ============================================
 // Usage & Billing
 // ============================================
-
-model TenantUsage {
-  id             String   @id @default(cuid())
-  organizationId String   @map("organization_id")
-  month          String // Format: YYYY-MM
-  apiCalls       Int      @default(0) @map("api_calls")
-  aiTokens       Int      @default(0) @map("ai_tokens")
-  storage        BigInt   @default(0) // bytes
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
-
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-
-  @@unique([organizationId, month])
-  @@map("tenant_usage")
-  @@schema("public")
-}
 
 // ============================================
 // AI Service Tracking
@@ -435,15 +343,6 @@ enum AIProvider {
   GOOGLE
   SILICONFLOW
   CUSTOM
-
-  @@schema("public")
-}
-
-enum AIRequestType {
-  GENERATE
-  EMBED
-  TRANSLATE
-  CHAT
 
   @@schema("public")
 }
@@ -485,112 +384,13 @@ model RequestLog {
   @@schema("public")
 }
 
-model AIRequest {
-  id             String        @id @default(cuid())
-  organizationId String        @map("organization_id")
-  userId         String?       @map("user_id")
-  type           AIRequestType
-  provider       AIProvider
-  model          String
-  inputTokens    Int           @default(0) @map("input_tokens")
-  outputTokens   Int           @default(0) @map("output_tokens")
-  latencyMs      Int?          @map("latency_ms")
-  cost           Decimal?      @db.Decimal(10, 6)
-  metadata       Json?         @default("{}")
-  createdAt      DateTime      @default(now()) @map("created_at")
-
-  @@index([organizationId])
-  @@index([userId])
-  @@index([createdAt])
-  @@index([provider, model])
-  @@index([organizationId, createdAt])
-  @@map("ai_requests")
-  @@schema("public")
-}
-
 // ============================================
 // Recommendation System
 // ============================================
 
-model UserPreference {
-  id             String   @id @default(cuid())
-  organizationId String   @map("organization_id")
-  userId         String   @map("user_id")
-  category       String   @db.VarChar(50)
-  weight         Float    @default(1.0)
-  metadata       Json?    @default("{}")
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
-
-  @@unique([organizationId, userId, category])
-  @@index([userId])
-  @@map("user_preferences")
-  @@schema("public")
-}
-
-model Recommendation {
-  id             String   @id @default(cuid())
-  organizationId String   @map("organization_id")
-  userId         String   @map("user_id")
-  itemType       String   @map("item_type") @db.VarChar(50) // content, product, nft
-  itemId         String   @map("item_id")
-  score          Float
-  reason         String?  @db.VarChar(100) // collaborative, content-based, trending
-  shown          Boolean  @default(false)
-  clicked        Boolean  @default(false)
-  createdAt      DateTime @default(now()) @map("created_at")
-  expiresAt      DateTime @map("expires_at")
-
-  @@index([organizationId, userId])
-  @@index([itemType, itemId])
-  @@index([expiresAt])
-  @@map("recommendations")
-  @@schema("public")
-}
-
 // ============================================
 // Feature Flags
 // ============================================
-
-enum FeatureFlagType {
-  BOOLEAN
-  PERCENTAGE
-  JSON
-
-  @@schema("public")
-}
-
-model FeatureFlag {
-  id          String          @id @default(cuid())
-  key         String          @unique @db.VarChar(100)
-  name        String
-  description String?
-  type        FeatureFlagType @default(BOOLEAN)
-  value       Json            @default("false")
-  isEnabled   Boolean         @default(false) @map("is_enabled")
-  createdAt   DateTime        @default(now()) @map("created_at")
-  updatedAt   DateTime        @updatedAt @map("updated_at")
-
-  overrides FeatureFlagOverride[]
-
-  @@map("feature_flags")
-  @@schema("public")
-}
-
-model FeatureFlagOverride {
-  id             String   @id @default(cuid())
-  flagId         String   @map("flag_id")
-  organizationId String?  @map("organization_id")
-  userId         String?  @map("user_id")
-  value          Json
-  createdAt      DateTime @default(now()) @map("created_at")
-
-  flag FeatureFlag @relation(fields: [flagId], references: [id], onDelete: Cascade)
-
-  @@unique([flagId, organizationId, userId])
-  @@map("feature_flag_overrides")
-  @@schema("public")
-}
 
 // ============================================
 // Billing & Monetization
@@ -879,7 +679,6 @@ model Subscription {
 
   pricingPlan        PricingPlan        @relation(fields: [pricingPlanId], references: [id])
   invoices           Invoice[]
-  usageRecords       UsageRecord[]
   usageLedgerEntries UsageLedgerEntry[]
 
   @@index([organizationId])
@@ -890,6 +689,7 @@ model Subscription {
 }
 
 // Invoice Management
+/// @conditional(payment=wechat|alipay)
 model Invoice {
   id               String        @id @default(cuid())
   stripeId         String?       @unique @map("stripe_id")
@@ -925,6 +725,7 @@ model Invoice {
   @@schema("public")
 }
 
+/// @conditional(payment=wechat|alipay)
 model InvoiceItem {
   id            String   @id @default(cuid())
   invoiceId     String   @map("invoice_id")
@@ -947,6 +748,7 @@ model InvoiceItem {
 }
 
 // Payment Records
+/// @conditional(payment=wechat|alipay)
 model Payment {
   id                String            @id @default(cuid())
   stripeId          String?           @unique @map("stripe_id")
@@ -975,6 +777,7 @@ model Payment {
 }
 
 // Payment Methods
+/// @conditional(payment=wechat|alipay)
 model PaymentMethod {
   id             String            @id @default(cuid())
   stripeId       String?           @unique @map("stripe_id")
@@ -998,27 +801,6 @@ model PaymentMethod {
 }
 
 // Usage Tracking (detailed)
-model UsageRecord {
-  id             String    @id @default(cuid())
-  organizationId String    @map("organization_id")
-  subscriptionId String?   @map("subscription_id")
-  userId         String?   @map("user_id")
-  type           UsageType
-  quantity       BigInt
-  unitCost       Decimal?  @map("unit_cost") @db.Decimal(10, 8) // cost per unit
-  totalCost      Decimal?  @map("total_cost") @db.Decimal(10, 6)
-  resource       String?   @db.VarChar(100) // specific resource: gpt-4o, bge-m3, etc.
-  metadata       Json      @default("{}")
-  recordedAt     DateTime  @default(now()) @map("recorded_at")
-
-  subscription Subscription? @relation(fields: [subscriptionId], references: [id])
-
-  @@index([organizationId, recordedAt])
-  @@index([type])
-  @@index([resource])
-  @@map("usage_records")
-  @@schema("public")
-}
 
 // Immutable usage ledger (idempotent append-only records)
 model UsageLedgerEntry {
@@ -1052,24 +834,9 @@ model UsageLedgerEntry {
 }
 
 // Aggregated Usage (for billing)
-model UsageAggregate {
-  id             String    @id @default(cuid())
-  organizationId String    @map("organization_id")
-  type           UsageType
-  period         String // YYYY-MM or YYYY-MM-DD
-  quantity       BigInt
-  cost           Decimal   @db.Decimal(10, 4)
-  currency       String    @default("USD") @db.VarChar(3)
-  metadata       Json      @default("{}")
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @updatedAt @map("updated_at")
-
-  @@unique([organizationId, type, period])
-  @@map("usage_aggregates")
-  @@schema("public")
-}
 
 // Credits System
+/// @conditional(billing-mode=credits)
 model CreditBalance {
   id             String   @id @default(cuid())
   organizationId String   @unique @map("organization_id")
@@ -1083,6 +850,7 @@ model CreditBalance {
   @@schema("public")
 }
 
+/// @conditional(billing-mode=credits)
 model CreditTransaction {
   id              String                @id @default(cuid())
   creditBalanceId String                @map("credit_balance_id")
@@ -1105,26 +873,6 @@ model CreditTransaction {
 }
 
 // Feature Entitlements
-model Entitlement {
-  id             String    @id @default(cuid())
-  organizationId String    @map("organization_id")
-  feature        String    @db.VarChar(100) // ai.chat, ai.embeddings, web3.nft, etc.
-  isEnabled      Boolean   @default(true) @map("is_enabled")
-  limitValue     BigInt?   @map("limit_value") // null = unlimited
-  usedValue      BigInt    @default(0) @map("used_value")
-  resetPeriod    String?   @map("reset_period") // monthly, daily, null = never
-  lastResetAt    DateTime? @map("last_reset_at")
-  expiresAt      DateTime? @map("expires_at")
-  source         String    @db.VarChar(20) // plan, addon, trial, custom
-  metadata       Json      @default("{}")
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @updatedAt @map("updated_at")
-
-  @@unique([organizationId, feature])
-  @@index([feature])
-  @@map("entitlements")
-  @@schema("public")
-}
 
 // Stripe Customer Mapping
 model StripeCustomer {
@@ -1394,6 +1142,7 @@ model OAuthClient {
 }
 
 // User consent records — "User X granted App Y these scopes"
+/// @conditional(idp=oauth-server)
 model OAuthAuthorization {
   id        String    @id @default(cuid())
   userId    String    @map("user_id")
@@ -1412,6 +1161,7 @@ model OAuthAuthorization {
 }
 
 // Issued access tokens (for introspection & revocation)
+/// @conditional(idp=oauth-server)
 model OAuthAccessToken {
   id        String    @id @default(cuid())
   tokenHash String    @unique @map("token_hash")
@@ -1437,6 +1187,7 @@ model OAuthAccessToken {
 // These tables are only populated when using a self-hosted auth provider.
 // When using Clerk, user data lives in Clerk's infrastructure.
 
+/// @conditional(auth=betterauth)
 model AuthUser {
   id            String        @id @default(cuid())
   email         String?       @unique
@@ -1455,6 +1206,7 @@ model AuthUser {
   @@schema("public")
 }
 
+/// @conditional(auth=betterauth)
 model AuthAccount {
   id                    String    @id @default(cuid())
   userId                String    @map("user_id")
@@ -1477,6 +1229,7 @@ model AuthAccount {
   @@schema("public")
 }
 
+/// @conditional(auth=betterauth)
 model AuthSession {
   id        String   @id @default(cuid())
   userId    String   @map("user_id")
@@ -1494,6 +1247,7 @@ model AuthSession {
   @@schema("public")
 }
 
+/// @conditional(auth=betterauth)
 model AuthVerification {
   id         String   @id @default(cuid())
   identifier String
@@ -1630,6 +1384,7 @@ model SleptonsaMemberProfile {
   @@schema("public")
 }
 
+/// @conditional(community=sleptons)
 model SleptonsProduct {
   id            String       @id @default(cuid())
   member_id     String       @map("member_id")
@@ -1654,6 +1409,7 @@ model SleptonsProduct {
   @@schema("public")
 }
 
+/// @conditional(community=sleptons)
 model SleptonsUpvote {
   member_id  String   @map("member_id")
   product_id String   @map("product_id")
@@ -1666,6 +1422,7 @@ model SleptonsUpvote {
   @@schema("public")
 }
 
+/// @conditional(community=sleptons)
 model SleptonsConnection {
   follower_id  String   @map("follower_id")
   following_id String   @map("following_id")
