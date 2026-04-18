@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import * as p from "@clack/prompts";
@@ -11,32 +12,78 @@ import { showDone } from "./ui/done.js";
 import { showHelp } from "./ui/help.js";
 import { printProgressLine } from "./ui/progress.js";
 import { PROVIDERS } from "./utils/ai-meta.js";
+import { applyAnalyticsSelection } from "./utils/analytics.js";
+import { type AuthChoice, applyAuthSelection } from "./utils/auth.js";
+import {
+  parseSocialLoginFlag,
+  SOCIAL_LOGIN_PROVIDERS,
+  type SocialLoginId,
+} from "./utils/auth-social.js";
+import { applySocialLoginProviders } from "./utils/auth-social-apply.js";
+import { applyCacheSelection } from "./utils/cache.js";
+import { applyCaptchaSelection } from "./utils/captcha.js";
+import { applyCmsSelection } from "./utils/cms.js";
+import { applyComplianceTemplates } from "./utils/compliance.js";
 import {
   type CustomEndpoint,
   type DocsFramework,
   type NebutraConfig,
+  type Region,
   writeNebutraConfig,
 } from "./utils/config.js";
+import { applyDatabaseSelection } from "./utils/database.js";
 import { applyDeployTarget } from "./utils/deploy.js";
 import { applyDocsTemplate } from "./utils/docs.js";
+import { applyEmailSelection } from "./utils/email.js";
 import { injectEnv } from "./utils/env.js";
+import { generateEnvSecrets } from "./utils/env-secrets.js";
+import { applyFeatureFlagsSelection } from "./utils/feature-flags.js";
 import { cloneTemplate } from "./utils/git.js";
+import { applyMcpSwitch } from "./utils/mcp.js";
+import { applyMeteringSwitch } from "./utils/metering.js";
+import { applyMonitoringSelection } from "./utils/monitoring.js";
+import { applyNotificationsSelection } from "./utils/notifications.js";
 import { updatePackageJson } from "./utils/npm.js";
+import { applyPaymentSelection, type PaymentChoice } from "./utils/payment.js";
 import { applyProviderSelection } from "./utils/providers.js";
 import { pruneTemplate } from "./utils/prune.js";
+import { applyQueueSelection } from "./utils/queue.js";
+import { applySearchSelection } from "./utils/search.js";
+import { generateSeedData } from "./utils/seed.js";
+import { applySmsSelection } from "./utils/sms.js";
+import { applyStorageSelection } from "./utils/storage.js";
+import { applyWebhooksSelection } from "./utils/webhooks.js";
+import { generateWelcomePage } from "./utils/welcome.js";
+import { VERSION } from "./version.js";
 
-const VERSION = "1.0.0";
 const PKG_NAME = "create-sailor";
 
 interface CliOptions {
   pm?: string;
+  region?: string;
   orm?: string;
   db?: string;
   auth?: string;
+  socialLogin?: string;
   payment?: string;
   ai?: string;
   deploy?: string;
   docs?: string;
+  email?: string;
+  storage?: string;
+  monitoring?: string;
+  analytics?: string;
+  sms?: string;
+  queue?: string;
+  search?: string;
+  cache?: string;
+  notifications?: string;
+  webhooks?: string;
+  cms?: string;
+  featureFlags?: string;
+  captcha?: string;
+  mcp?: string;
+  metering?: string;
   i18n?: boolean;
   install?: boolean;
   git?: boolean;
@@ -96,6 +143,32 @@ function mapPayment(p: string | undefined): NebutraConfig["payment"] {
   return "stripe";
 }
 
+/**
+ * Resolve the raw --payment CLI value to a PaymentChoice that preserves the
+ * full provider granularity needed by `applyPaymentSelection` (wechat/alipay
+ * are not collapsed into "stripe").
+ */
+function resolvePaymentChoice(raw: string | undefined): PaymentChoice {
+  if (!raw) return "stripe";
+  const v = raw.toLowerCase();
+  if (v === "lemon" || v === "lemonsqueezy") return "lemon";
+  if (v === "wechat") return "wechat";
+  if (v === "alipay") return "alipay";
+  if (v === "none") return "none";
+  return "stripe";
+}
+
+/**
+ * Resolve the raw --auth CLI value to an AuthChoice.
+ */
+function resolveAuthChoice(raw: string | undefined): AuthChoice {
+  if (!raw) return "clerk";
+  const v = raw.toLowerCase();
+  if (v === "betterauth" || v === "better-auth") return "betterauth";
+  if (v === "none") return "none";
+  return "clerk";
+}
+
 function mapAi(ids: string | undefined): string[] {
   if (!ids) return ["openai"];
   const list = ids.split(",").map((s) => s.trim().toLowerCase());
@@ -151,6 +224,81 @@ function mapDeploy(d: string | undefined): NebutraConfig["deployTarget"] {
   }
 }
 
+function resolveRegion(raw: string | undefined): Region {
+  if (!raw) return "global";
+  const v = raw.toLowerCase();
+  if (v === "cn") return "cn";
+  if (v === "hybrid") return "hybrid";
+  return "global";
+}
+
+interface RegionDefaults {
+  email: string;
+  storage: string;
+  monitoring: string;
+  analytics: string;
+  sms: string;
+  queue: string;
+  search: string;
+  cache: string;
+  notifications: string;
+  webhooks: string;
+  cms: string;
+  featureFlags: string;
+  captcha: string;
+  mcp: string;
+  metering: string;
+}
+
+function regionDefaults(region: Region): RegionDefaults {
+  const base = (() => {
+    if (region === "cn") {
+      return {
+        email: "aliyun-dm",
+        storage: "aliyun-oss",
+        monitoring: "sentry",
+        analytics: "baidu",
+        sms: "aliyun-sms",
+      };
+    }
+    if (region === "hybrid") {
+      return {
+        email: "resend",
+        storage: "aliyun-oss",
+        monitoring: "sentry",
+        analytics: "posthog",
+        sms: "aliyun-sms",
+      };
+    }
+    // global
+    return {
+      email: "resend",
+      storage: "r2",
+      monitoring: "sentry",
+      analytics: "posthog",
+      sms: "twilio",
+    };
+  })();
+
+  return {
+    ...base,
+    queue: "none", // opt-in, no default
+    search: "none", // opt-in
+    cache: region === "global" ? "upstash-redis" : region === "cn" ? "redis" : "upstash-redis",
+    notifications: "none",
+    webhooks: "none",
+    cms: "none",
+    featureFlags: "none",
+    captcha: region === "cn" ? "aliyun-slide" : "turnstile",
+    mcp: "on", // Sailor core value
+    metering: "auto", // auto-enable if payment is set
+  };
+}
+
+function defaultPaymentForRegion(region: Region): string {
+  return region === "cn" ? "wechat" : "stripe";
+}
+
 async function run(): Promise<void> {
   const program = new Command();
   program
@@ -160,13 +308,33 @@ async function run(): Promise<void> {
     .helpOption(false) // we render our own help
     .argument("[name]", "project directory", undefined)
     .option("-p, --pm <id>", "npm | pnpm | yarn | bun")
+    .option("--region <id>", "global | cn | hybrid")
     .option("--orm <id>", "prisma | drizzle | none")
     .option("--db <id>", "postgres | mysql | sqlite | none")
     .option("--auth <id>", "clerk | betterauth | none")
+    .option(
+      "--social-login <ids>",
+      "CN social login providers — wechat | qq | dingtalk | workweixin | feishu | weibo (comma-separated)",
+    )
     .option("--payment <id>", "stripe | lemon | wechat | alipay | none")
     .option("--ai <ids>", "comma-separated provider ids")
     .option("--deploy <target>", "vercel | railway | cloudflare | selfhost")
     .option("--docs <id>", "fumadocs | mintlify | docusaurus | nextra | vitepress | none")
+    .option("--email <id>", "resend | postmark | ses | aliyun-dm | tencent-ses | netease | none")
+    .option("--storage <id>", "r2 | s3 | supabase | aliyun-oss | tencent-cos | qiniu | none")
+    .option("--monitoring <id>", "sentry | datadog | aliyun-arms | tingyun | none")
+    .option("--analytics <id>", "posthog | plausible | umami | baidu | sensors | none")
+    .option("--sms <id>", "twilio | aliyun-sms | tencent-sms | yunpian | none")
+    .option("--queue <id>", "qstash | bullmq | upstash | sqs | none")
+    .option("--search <id>", "meilisearch | typesense | algolia | pgvector | none")
+    .option("--cache <id>", "upstash-redis | vercel-kv | redis | dragonfly | none")
+    .option("--notifications <id>", "novu | knock | custom | none")
+    .option("--webhooks <id>", "svix | custom | none")
+    .option("--cms <id>", "sanity | contentful | strapi | none")
+    .option("--feature-flags <id>", "vercel-flags | growthbook | configcat | none")
+    .option("--captcha <id>", "turnstile | hcaptcha | aliyun-slide | none")
+    .option("--mcp <mode>", "on | off (default: on)")
+    .option("--metering <mode>", "auto | on | off (default: auto — auto-on when payment is set)")
     .option("--i18n", "enable i18n")
     .option("--no-i18n", "disable i18n")
     .option("--no-install", "skip package install")
@@ -230,17 +398,24 @@ async function run(): Promise<void> {
 
   // Resolve configuration — flags override prompts.
   const resolvedPm = opts.pm ?? detectPm();
-  const hasOrm = !!opts.orm;
-  const hasDb = !!opts.db;
+  const hasRegion = !!opts.region;
+  const hasAuth = !!opts.auth;
   const hasPayment = !!opts.payment;
   const hasAi = !!opts.ai;
-  const hasDeploy = !!opts.deploy;
-  const hasDocs = !!opts.docs;
+  const hasEmail = !!opts.email;
+  const hasStorage = !!opts.storage;
+  const hasMonitoring = !!opts.monitoring;
+  const hasAnalytics = !!opts.analytics;
+  const hasSms = !!opts.sms;
   const hasI18n = opts.i18n !== undefined;
 
+  let region: Region;
   let orm: NebutraConfig["orm"];
   let database: NebutraConfig["database"];
   let payment: NebutraConfig["payment"];
+  let paymentChoice: PaymentChoice;
+  let auth: AuthChoice;
+  const socialLoginIds: SocialLoginId[] = parseSocialLoginFlag(opts.socialLogin);
   let aiProviders: NebutraConfig["aiProviders"];
   let customAiEndpoint: NebutraConfig["customAiEndpoint"];
   let deployTarget: NebutraConfig["deployTarget"];
@@ -248,52 +423,47 @@ async function run(): Promise<void> {
   let i18n: boolean;
 
   if (nonInteractive) {
+    region = resolveRegion(opts.region);
     orm = mapOrm(opts.orm);
     database = mapDb(opts.db);
-    payment = mapPayment(opts.payment);
+    const rawPayment = hasPayment ? opts.payment : defaultPaymentForRegion(region);
+    payment = mapPayment(rawPayment);
+    paymentChoice = resolvePaymentChoice(rawPayment);
+    auth = resolveAuthChoice(opts.auth);
     aiProviders = mapAi(opts.ai);
     deployTarget = mapDeploy(opts.deploy);
     docs = resolveDocs(opts.docs, useJson);
     i18n = hasI18n ? Boolean(opts.i18n) : true;
   } else {
+    // Interactive prompts — only 4 questions: project / region / auth / AI.
     const promptGroup: any = {};
-    if (!hasOrm) {
-      promptGroup.orm = () =>
+
+    if (!hasRegion) {
+      promptGroup.region = () =>
         p.select({
-          message: "Which ORM?",
+          message: "Target region?",
           options: [
-            { value: "prisma", label: "Prisma" },
-            { value: "drizzle", label: "Drizzle" },
-            { value: "none", label: "None" },
+            { value: "global", label: "global — 海外优先" },
+            { value: "cn", label: "cn     — 国内优先" },
+            { value: "hybrid", label: "hybrid — 双轨（国内+出海）" },
           ],
-          initialValue: "prisma",
+          initialValue: "global",
         }) as Promise<unknown>;
     }
-    if (!hasDb) {
-      promptGroup.database = () =>
+
+    if (!hasAuth) {
+      promptGroup.auth = () =>
         p.select({
-          message: "Database?",
+          message: "Auth provider?",
           options: [
-            { value: "postgresql", label: "PostgreSQL" },
-            { value: "mysql", label: "MySQL" },
-            { value: "sqlite", label: "SQLite" },
+            { value: "clerk", label: "Clerk" },
+            { value: "betterauth", label: "Better Auth" },
             { value: "none", label: "None" },
           ],
-          initialValue: "postgresql",
+          initialValue: "clerk",
         }) as Promise<unknown>;
     }
-    if (!hasPayment) {
-      promptGroup.payment = () =>
-        p.select({
-          message: "Payment?",
-          options: [
-            { value: "stripe", label: "Stripe" },
-            { value: "lemonsqueezy", label: "Lemon Squeezy" },
-            { value: "none", label: "None" },
-          ],
-          initialValue: "stripe",
-        }) as Promise<unknown>;
-    }
+
     if (!hasAi) {
       const categories = Array.from(new Set(PROVIDERS.map((p) => p.category)));
       promptGroup.aiCategories = () =>
@@ -369,45 +539,6 @@ async function run(): Promise<void> {
       };
     }
 
-    if (!hasDeploy) {
-      promptGroup.deployTarget = () =>
-        p.select({
-          message: "Where will you deploy?",
-          options: [
-            { value: "vercel", label: "Vercel" },
-            { value: "railway", label: "Railway" },
-            { value: "cloudflare", label: "Cloudflare Workers" },
-            { value: "selfhost", label: "Self-host / Docker" },
-            { value: "none", label: "None for now" },
-          ],
-          initialValue: "vercel",
-        }) as Promise<unknown>;
-    }
-
-    if (!hasDocs) {
-      promptGroup.docs = () =>
-        p.select({
-          message: "What documentation framework? (affects `apps/docs`)",
-          options: [
-            { value: "fumadocs", label: "Fumadocs     — Next.js monorepo native (Recommended)" },
-            { value: "mintlify", label: "Mintlify     — managed docs SaaS (Coming in v1.2)" },
-            { value: "docusaurus", label: "Docusaurus   — Meta's framework (Coming in v1.2)" },
-            { value: "nextra", label: "Nextra       — Next.js minimal (Coming in v1.2)" },
-            {
-              value: "vitepress",
-              label: "VitePress    — Vue ecosystem, separate repo (Experimental)",
-            },
-            { value: "none", label: "None         — skip docs" },
-          ],
-          initialValue: "fumadocs",
-        }) as Promise<unknown>;
-    }
-
-    if (!hasI18n) {
-      promptGroup.i18n = () =>
-        p.confirm({ message: "Enable i18n?", initialValue: true }) as Promise<unknown>;
-    }
-
     const answers =
       Object.keys(promptGroup).length > 0
         ? await p.group(promptGroup, {
@@ -418,11 +549,17 @@ async function run(): Promise<void> {
           })
         : ({} as Record<string, unknown>);
 
-    orm = hasOrm ? mapOrm(opts.orm) : ((answers as any).orm as NebutraConfig["orm"]);
-    database = hasDb ? mapDb(opts.db) : ((answers as any).database as NebutraConfig["database"]);
-    payment = hasPayment
-      ? mapPayment(opts.payment)
-      : ((answers as any).payment as NebutraConfig["payment"]);
+    region = resolveRegion(
+      hasRegion ? opts.region : ((answers as any).region as string | undefined),
+    );
+
+    // Everything below is flag-only (no prompt); defaults are region-based.
+    orm = mapOrm(opts.orm);
+    database = mapDb(opts.db);
+    const rawPayment = hasPayment ? opts.payment : defaultPaymentForRegion(region);
+    payment = mapPayment(rawPayment);
+    paymentChoice = resolvePaymentChoice(rawPayment);
+    auth = resolveAuthChoice(hasAuth ? opts.auth : ((answers as any).auth as string | undefined));
     aiProviders = hasAi
       ? mapAi(opts.ai)
       : (((answers as any).aiProviders as string[])?.filter((id) => id !== "custom") ?? []);
@@ -433,17 +570,33 @@ async function run(): Promise<void> {
         apiKeyEnvName: (answers as any).customAiApiKeyEnv,
       };
     }
-    deployTarget = hasDeploy
-      ? mapDeploy(opts.deploy)
-      : ((answers as any).deployTarget as NebutraConfig["deployTarget"]);
-    docs = resolveDocs(
-      hasDocs ? opts.docs : ((answers as any).docs as string | undefined),
-      useJson,
-    );
-    i18n = hasI18n ? Boolean(opts.i18n) : Boolean((answers as any).i18n);
+    deployTarget = mapDeploy(opts.deploy);
+    docs = resolveDocs(opts.docs, useJson);
+    i18n = hasI18n ? Boolean(opts.i18n) : true;
   }
 
+  // Region-based smart defaults for feature flags.
+  const rDefaults = regionDefaults(region);
+  const email = hasEmail ? (opts.email as string) : rDefaults.email;
+  const storage = hasStorage ? (opts.storage as string) : rDefaults.storage;
+  const monitoring = hasMonitoring ? (opts.monitoring as string) : rDefaults.monitoring;
+  const analytics = hasAnalytics ? (opts.analytics as string) : rDefaults.analytics;
+  const sms = hasSms ? (opts.sms as string) : rDefaults.sms;
+
+  // v1.3.1 additions — flags override region defaults.
+  const queue = opts.queue ?? rDefaults.queue;
+  const search = opts.search ?? rDefaults.search;
+  const cache = opts.cache ?? rDefaults.cache;
+  const notifications = opts.notifications ?? rDefaults.notifications;
+  const webhooks = opts.webhooks ?? rDefaults.webhooks;
+  const cms = opts.cms ?? rDefaults.cms;
+  const featureFlags = opts.featureFlags ?? rDefaults.featureFlags;
+  const captcha = opts.captcha ?? rDefaults.captcha;
+  const mcp = opts.mcp ?? rDefaults.mcp;
+  const metering = opts.metering ?? rDefaults.metering;
+
   const config: NebutraConfig = {
+    region,
     orm,
     database,
     payment,
@@ -452,20 +605,50 @@ async function run(): Promise<void> {
     deployTarget,
     docs,
     i18n,
+    email,
+    storage,
+    monitoring,
+    analytics,
+    sms,
+    queue: queue as NebutraConfig["queue"],
+    search: search as NebutraConfig["search"],
+    cache: cache as NebutraConfig["cache"],
+    notifications: notifications as NebutraConfig["notifications"],
+    webhooks: webhooks as NebutraConfig["webhooks"],
+    cms: cms as NebutraConfig["cms"],
+    featureFlags: featureFlags as NebutraConfig["featureFlags"],
+    captcha: captcha as NebutraConfig["captcha"],
+    mcp: mcp as NebutraConfig["mcp"],
+    metering: metering as NebutraConfig["metering"],
   };
 
   // Progress summary of selections
   const steps: Array<[string, string]> = [
     ["Project name", projectName],
+    ["Region", region],
+    ["Auth", auth],
+    [
+      "Social login",
+      socialLoginIds.length > 0
+        ? socialLoginIds
+            .map((id) => SOCIAL_LOGIN_PROVIDERS.find((p) => p.id === id)?.name ?? id)
+            .join(", ")
+        : "none",
+    ],
     ["ORM", orm],
     ["Database", database],
-    ["Payment", payment],
+    ["Payment", paymentChoice],
     [
       "AI",
       Array.isArray(aiProviders)
         ? aiProviders.join(", ") + (customAiEndpoint ? ", custom" : "")
         : String(aiProviders),
     ],
+    ["Email", email],
+    ["Storage", storage],
+    ["Monitoring", monitoring],
+    ["Analytics", analytics],
+    ["SMS", sms],
     ["Deploy Target", deployTarget],
     ["Docs Framework", docs],
   ];
@@ -489,15 +672,50 @@ async function run(): Promise<void> {
 
   // Dry-run: print plan, exit.
   if (isDry) {
+    const aiCount = aiProviders.length;
     const plan = [
       `clone template → ${resolvedTarget}`,
       `write nebutra.config.json`,
       `prune template (orm=${orm}, i18n=${i18n})`,
+      `region → ${region}`,
+      `auth → ${auth === "none" ? "skip (remove packages/auth)" : `configure ${auth}`}`,
+      ...(socialLoginIds.length > 0
+        ? [
+            `social-login → generate ${socialLoginIds.length} callback route${socialLoginIds.length === 1 ? "" : "s"} + SocialLoginButtons.tsx (${socialLoginIds.join(", ")})`,
+          ]
+        : []),
+      `db → ${database === "none" ? "skip (remove packages/db)" : `configure Prisma for ${database}`}`,
+      `payment → ${paymentChoice === "none" ? "skip (remove packages/billing)" : `configure ${paymentChoice}`}`,
       ...(docs !== "none"
         ? [
             `docs → scaffold apps/docs (${docs === "fumadocs" ? "fumadocs" : `${docs} → fumadocs fallback`})`,
           ]
         : []),
+      ...(aiCount > 0 || customAiEndpoint
+        ? [
+            `ai-providers → generate registry.ts + env (${aiCount}${customAiEndpoint ? " + custom" : ""} provider${aiCount === 1 && !customAiEndpoint ? "" : "s"})`,
+          ]
+        : []),
+      ...(email !== "none" ? [`email → configure ${email}`] : []),
+      ...(storage !== "none" ? [`storage → configure ${storage}`] : []),
+      ...(monitoring !== "none" ? [`monitoring → configure ${monitoring}`] : []),
+      ...(analytics !== "none" ? [`analytics → configure ${analytics}`] : []),
+      ...(sms !== "none" ? [`sms → configure ${sms}`] : []),
+      ...(queue !== "none" ? [`queue → configure ${queue}`] : []),
+      ...(search !== "none" ? [`search → configure ${search}`] : []),
+      ...(cache !== "none" ? [`cache → configure ${cache}`] : []),
+      ...(notifications !== "none" ? [`notifications → configure ${notifications}`] : []),
+      ...(webhooks !== "none" ? [`webhooks → configure ${webhooks}`] : []),
+      ...(cms !== "none" ? [`cms → configure ${cms}`] : []),
+      ...(featureFlags !== "none" ? [`feature-flags → configure ${featureFlags}`] : []),
+      ...(captcha !== "none" ? [`captcha → configure ${captcha}`] : []),
+      `mcp → ${mcp === "on" ? "enable MCP server" : "remove packages/mcp"}`,
+      `metering → ${metering === "off" ? "disabled" : metering === "auto" ? (payment !== "none" ? "enabled (auto: payment set)" : "disabled (auto: no payment)") : "enabled"}`,
+      `compliance → inject ${region} boilerplate (ICP/Cookie/AIGC/Privacy)`,
+      `welcome → generate dev welcome page`,
+      `env → generate random secrets (AUTH_SECRET, JWT_SECRET)`,
+      `seed → generate prisma/seed.ts (1 admin + 3 tenants)`,
+      ...(deployTarget !== "none" ? [`deploy → inject ${deployTarget} config`] : []),
       `inject .env.local`,
       opts.install === false ? "skip install" : `run ${resolvedPm} install`,
       opts.git === false ? "skip git init" : "run git init",
@@ -513,19 +731,18 @@ async function run(): Promise<void> {
     process.exit(0);
   }
 
-  // SIGINT handler — offer to clean partial target
-  const onInterrupt = () => {
+  // SIGINT handler — offer to clean partial target (L2 — ask).
+  const onInterrupt = async () => {
     process.stdout.write("\n" + pc.red("✘ Cancelled\n"));
-    try {
-      if (fs.existsSync(resolvedTarget)) {
-        // Only remove if we created it during this session (empty or partial)
-        // Be conservative — do not remove without explicit flag. Warn user.
-        process.stdout.write(
-          pc.dim(`  Partial directory left at ${resolvedTarget} — remove manually if needed.\n`),
-        );
+    if (fs.existsSync(resolvedTarget)) {
+      const cleanup = await p.confirm({
+        message: `Cleanup partial install at ${resolvedTarget}?`,
+        initialValue: true,
+      });
+      if (cleanup === true) {
+        fs.rmSync(resolvedTarget, { recursive: true, force: true });
+        process.stdout.write(pc.dim(`  ✓ Removed ${resolvedTarget}\n`));
       }
-    } catch {
-      // swallow
     }
     process.exit(130);
   };
@@ -547,6 +764,114 @@ async function run(): Promise<void> {
     emitJson(useJson, { event: "step", step: "prune", status: "start" });
     await pruneTemplate(resolvedTarget, config);
     emitJson(useJson, { event: "step", step: "prune", status: "ok" });
+
+    emitJson(useJson, { event: "step", step: "auth", choice: auth, status: "start" });
+    await applyAuthSelection(resolvedTarget, auth);
+    emitJson(useJson, { event: "step", step: "auth", choice: auth, status: "ok" });
+
+    if (socialLoginIds.length > 0) {
+      emitJson(useJson, {
+        event: "step",
+        step: "social-login",
+        providers: socialLoginIds,
+        status: "start",
+      });
+      await applySocialLoginProviders(resolvedTarget, socialLoginIds, auth);
+      emitJson(useJson, {
+        event: "step",
+        step: "social-login",
+        providers: socialLoginIds,
+        status: "ok",
+      });
+    } else {
+      emitJson(useJson, { event: "step", step: "social-login", status: "skip" });
+    }
+
+    emitJson(useJson, { event: "step", step: "db", choice: database, status: "start" });
+    await applyDatabaseSelection(resolvedTarget, database, projectName);
+    emitJson(useJson, { event: "step", step: "db", choice: database, status: "ok" });
+
+    emitJson(useJson, {
+      event: "step",
+      step: "payment",
+      choice: paymentChoice,
+      status: "start",
+    });
+    await applyPaymentSelection(resolvedTarget, paymentChoice);
+    emitJson(useJson, {
+      event: "step",
+      step: "payment",
+      choice: paymentChoice,
+      status: "ok",
+    });
+
+    // Region-aware feature selections.
+    await applyEmailSelection(resolvedTarget, email, region);
+    if (useJson) emitJson(true, { event: "step", step: "email", choice: email, status: "ok" });
+
+    await applyStorageSelection(resolvedTarget, storage, region);
+    if (useJson) emitJson(true, { event: "step", step: "storage", choice: storage, status: "ok" });
+
+    await applyMonitoringSelection(resolvedTarget, monitoring, region);
+    if (useJson)
+      emitJson(true, {
+        event: "step",
+        step: "monitoring",
+        choice: monitoring,
+        status: "ok",
+      });
+
+    await applyAnalyticsSelection(resolvedTarget, analytics, region);
+    if (useJson)
+      emitJson(true, {
+        event: "step",
+        step: "analytics",
+        choice: analytics,
+        status: "ok",
+      });
+
+    await applySmsSelection(resolvedTarget, sms, region);
+    if (useJson) emitJson(true, { event: "step", step: "sms", choice: sms, status: "ok" });
+
+    await applyQueueSelection(resolvedTarget, queue, region);
+    if (useJson) emitJson(true, { event: "step", step: "queue", choice: queue, status: "ok" });
+
+    await applySearchSelection(resolvedTarget, search, region);
+    if (useJson) emitJson(true, { event: "step", step: "search", choice: search, status: "ok" });
+
+    await applyCacheSelection(resolvedTarget, cache, region);
+    if (useJson) emitJson(true, { event: "step", step: "cache", choice: cache, status: "ok" });
+
+    await applyNotificationsSelection(resolvedTarget, notifications, region);
+    if (useJson)
+      emitJson(true, { event: "step", step: "notifications", choice: notifications, status: "ok" });
+
+    await applyWebhooksSelection(resolvedTarget, webhooks, region);
+    if (useJson)
+      emitJson(true, { event: "step", step: "webhooks", choice: webhooks, status: "ok" });
+
+    await applyCmsSelection(resolvedTarget, cms, region);
+    if (useJson) emitJson(true, { event: "step", step: "cms", choice: cms, status: "ok" });
+
+    await applyFeatureFlagsSelection(resolvedTarget, featureFlags, region);
+    if (useJson)
+      emitJson(true, { event: "step", step: "feature-flags", choice: featureFlags, status: "ok" });
+
+    await applyCaptchaSelection(resolvedTarget, captcha, region);
+    if (useJson) emitJson(true, { event: "step", step: "captcha", choice: captcha, status: "ok" });
+
+    await applyMcpSwitch(resolvedTarget, mcp);
+    if (useJson) emitJson(true, { event: "step", step: "mcp", mode: mcp, status: "ok" });
+
+    await applyMeteringSwitch(resolvedTarget, metering, payment);
+    if (useJson) emitJson(true, { event: "step", step: "metering", mode: metering, status: "ok" });
+
+    await applyComplianceTemplates(resolvedTarget, region);
+    if (useJson) emitJson(true, { event: "step", step: "compliance", region, status: "ok" });
+
+    await generateEnvSecrets(resolvedTarget);
+    await generateSeedData(resolvedTarget, auth);
+    await generateWelcomePage(resolvedTarget, { projectName, region });
 
     emitJson(useJson, { event: "step", step: "ai-providers", status: "start" });
     const selection = { providerIds: config.aiProviders, customEndpoint: config.customAiEndpoint };
@@ -581,6 +906,61 @@ async function run(): Promise<void> {
     emitJson(useJson, { event: "step", step: "env", status: "start" });
     await injectEnv(resolvedTarget, envDefaults);
     emitJson(useJson, { event: "step", step: "env", status: "ok" });
+
+    // Install dependencies (non-fatal on failure).
+    const shouldInstall = opts.install !== false;
+    if (shouldInstall) {
+      const installCmd = resolvedPm === "bun" ? "bun install" : `${resolvedPm} install`;
+      if (useJson) {
+        emitJson(true, { event: "step", step: "install", pm: resolvedPm, status: "start" });
+      } else {
+        process.stdout.write(pc.dim(`  Installing dependencies with ${resolvedPm}…\n`));
+      }
+      try {
+        execSync(installCmd, {
+          cwd: resolvedTarget,
+          stdio: useJson ? "ignore" : "inherit",
+        });
+        emitJson(useJson, { event: "step", step: "install", status: "ok" });
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        if (useJson) {
+          emitJson(true, { event: "step", step: "install", status: "error", error: msg });
+        } else {
+          process.stdout.write(pc.yellow(`  ⚠ install failed — run '${installCmd}' manually.\n`));
+        }
+        // Non-fatal — project was still scaffolded.
+      }
+    } else {
+      emitJson(useJson, { event: "step", step: "install", status: "skip" });
+    }
+
+    // Initialise git repo + initial commit (non-fatal on failure).
+    const shouldGit = opts.git !== false;
+    if (shouldGit) {
+      if (useJson) {
+        emitJson(true, { event: "step", step: "git-init", status: "start" });
+      }
+      try {
+        execSync("git init -q", { cwd: resolvedTarget, stdio: "ignore" });
+        execSync("git add -A", { cwd: resolvedTarget, stdio: "ignore" });
+        execSync(
+          'git -c user.email=you@example.com -c user.name="You" commit -q -m "chore: initial scaffold from create-sailor"',
+          { cwd: resolvedTarget, stdio: "ignore" },
+        );
+        emitJson(useJson, { event: "step", step: "git-init", status: "ok" });
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        if (useJson) {
+          emitJson(true, { event: "step", step: "git-init", status: "error", error: msg });
+        } else {
+          process.stdout.write(pc.yellow(`  ⚠ git init skipped — not fatal.\n`));
+        }
+        // Non-fatal — user can init git manually.
+      }
+    } else {
+      emitJson(useJson, { event: "step", step: "git-init", status: "skip" });
+    }
 
     const elapsedSec = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
 

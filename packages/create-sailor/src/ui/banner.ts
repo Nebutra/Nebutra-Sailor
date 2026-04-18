@@ -1,7 +1,6 @@
 import cfonts from "cfonts";
 import pc from "picocolors";
-
-const VERSION = "1.0.0";
+import { VERSION } from "../version.js";
 
 export function showBanner(): void {
   // NO_COLOR / non-TTY fallback

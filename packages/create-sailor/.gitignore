@@ -1,0 +1,9 @@
+dist
+node_modules
+*.log
+.DS_Store
+
+# Scaffolded test projects
+my-saas-app/
+my-test/
+test-*/
