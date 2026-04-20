@@ -196,7 +196,7 @@ jobs:
       # ── Trivy vulnerability scan ─────────────────────────────────────────────
       - name: Scan image for vulnerabilities
         id: trivy
-        uses: aquasecurity/trivy-action@915b19bbe73b92a6cf82a1bc12b087c9a19a5fe2 # 0.28.0
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
         if: success()
         with:
           image-ref: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
@@ -352,7 +352,7 @@ jobs:
       # ── Trivy vulnerability scan ─────────────────────────────────────────────
       - name: Scan image for vulnerabilities
         id: trivy
-        uses: aquasecurity/trivy-action@915b19bbe73b92a6cf82a1bc12b087c9a19a5fe2 # 0.28.0
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
         if: success()
         with:
           image-ref: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
