@@ -8,9 +8,9 @@ import { type Locale, routing } from "@/i18n/routing";
 import { getAuth } from "@/lib/auth";
 import { LicenseWizard } from "./LicenseWizard";
 
-// Forces dynamic rendering so Better Auth session resolution never runs at
-// build time (it needs incoming cookies + a live database connection).
-export const dynamic = "force-dynamic";
+// Under Next 16's `cacheComponents: true`, route segment `dynamic = "force-dynamic"`
+// is rejected at build time. Dynamic rendering is triggered automatically because
+// `getAuth()` reads cookies via `headers()`; no explicit opt-out is needed.
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
