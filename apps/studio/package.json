@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "@sanity/vision": "^5.13.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "sanity": "^5.13.0",
     "styled-components": "^6.3.11"
   },
   "devDependencies": {
-    "@types/react": "^19.2.14",
+    "@types/react": "catalog:",
     "typescript": "catalog:"
   }
 }
