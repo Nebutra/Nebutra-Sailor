@@ -25,7 +25,7 @@ export function VelocityEngineSection() {
         {/* Two-tone headline */}
         <AnimateIn preset="fadeUp" inView className="mx-auto max-w-4xl text-center mb-16 md:mb-24">
           <p className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary uppercase tracking-widest mb-6">
-            10 分钟
+            10 min
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-black tracking-tight leading-[1.15] text-balance">
             <span className="text-foreground">{t("title")}</span>

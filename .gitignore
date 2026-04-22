@@ -69,3 +69,10 @@ artifacts/
 # Note: types.generated.ts stub is committed so typecheck works before generation;
 # a real generation run will overwrite it (treat modified state as expected).
 apps/api-gateway/openapi.json
+
+# npm auth tokens — MUST NEVER be committed (auth tokens leak secrets).
+# Root .npmrc stays tracked (pnpm public-hoist-pattern); this blocks new
+# .npmrc files in subdirs commonly created by tooling to hold bypass tokens.
+**/.npmrc
+!.npmrc
+!.npmrc.example
