@@ -1,5 +1,6 @@
 {
   "buildCommand": "pnpm turbo build --filter=@nebutra/studio",
+  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/studio",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "outputDirectory": "dist",
   "framework": null

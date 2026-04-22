@@ -51,7 +51,14 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  transpilePackages: ["@nebutra/brand", "@nebutra/ui", "@nebutra/tokens", "@nebutra/marketing"],
+  transpilePackages: [
+    "@nebutra/agents",
+    "@nebutra/brand",
+    "@nebutra/cache",
+    "@nebutra/marketing",
+    "@nebutra/tokens",
+    "@nebutra/ui",
+  ],
 
   serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg"],
 };

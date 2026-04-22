@@ -1,6 +1,7 @@
 {
   "framework": "nextjs",
   "buildCommand": "pnpm turbo build --filter=@nebutra/landing-page",
+  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/landing-page",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "outputDirectory": ".next",
   "regions": ["iad1"],
