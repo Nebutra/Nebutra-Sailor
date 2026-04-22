@@ -72,6 +72,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TRUSTED_PUBLISHING: ${{ vars.NPM_TRUSTED_PUBLISHING }}
           NPM_CONFIG_PROVENANCE: "true"
+          LEFTHOOK: "0"
 
   provenance:
     name: Artifact Attestation
