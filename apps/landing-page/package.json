@@ -15,6 +15,7 @@
   "dependencies": {
     "@chenglou/pretext": "^0.0.3",
     "@lottiefiles/dotlottie-react": "^0.18.3",
+    "@nebutra/auth": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/billing": "workspace:*",
     "@nebutra/email": "workspace:*",

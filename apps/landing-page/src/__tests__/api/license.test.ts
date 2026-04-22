@@ -1,25 +1,31 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// Mock Clerk auth
-vi.mock("@clerk/nextjs/server", () => ({
-  auth: vi.fn().mockResolvedValue({ userId: "user_test_123" }),
-  clerkClient: vi.fn().mockReturnValue({
-    users: {
-      getUser: vi.fn().mockResolvedValue({
-        fullName: "Test Founder",
-        username: "testfounder",
-        emailAddresses: [{ emailAddress: "test@example.com" }],
-        imageUrl: "https://example.com/avatar.jpg",
-      }),
-    },
+// Mock @nebutra/auth via the landing-page helper
+vi.mock("@/lib/auth", () => ({
+  getSessionFromRequest: vi.fn().mockResolvedValue({
+    userId: "user_test_123",
+    email: "test@example.com",
+    expiresAt: new Date(Date.now() + 3_600_000),
+  }),
+  getUserById: vi.fn().mockResolvedValue({
+    id: "user_test_123",
+    email: "test@example.com",
+    name: "Test Founder",
+    imageUrl: "https://example.com/avatar.jpg",
+    createdAt: new Date(),
   }),
 }));
 
-// Mock Prisma (used directly by route.ts for communityProfile)
+// Mock Prisma — route.ts calls getSystemDb() at module load
 const mockPrisma = {
   communityProfile: { upsert: vi.fn().mockResolvedValue({}) },
+  license: { findFirst: vi.fn().mockResolvedValue(null) },
+  sleptonsaMemberProfile: { findUnique: vi.fn().mockResolvedValue(null) },
 };
-vi.mock("@nebutra/db", () => ({ prisma: mockPrisma }));
+vi.mock("@nebutra/db", () => ({
+  getSystemDb: () => mockPrisma,
+  getTenantDb: () => mockPrisma,
+}));
 
 // Mock @nebutra/license
 const mockIssueLicense = vi.fn().mockResolvedValue({
@@ -32,6 +38,12 @@ const mockIssueLicense = vi.fn().mockResolvedValue({
 vi.mock("@nebutra/license", () => ({
   issueLicense: (...args: unknown[]) => mockIssueLicense(...args),
   validateLicense: vi.fn(),
+}));
+
+// Mock @nebutra/billing — not exercised by free-tier tests, but imported at load
+vi.mock("@nebutra/billing", () => ({
+  createCheckoutSession: vi.fn(),
+  getOrCreateCustomer: vi.fn(),
 }));
 
 describe("POST /api/license", () => {
@@ -62,6 +74,7 @@ describe("POST /api/license", () => {
         acceptedTerms: true,
       }),
     });
+    // biome-ignore lint/suspicious/noExplicitAny: NextRequest mirrors Request at runtime
     const res = await POST(req as any);
     const data = await res.json();
 
@@ -72,6 +85,8 @@ describe("POST /api/license", () => {
     expect(callArgs.userId).toBe("user_test_123");
     expect(callArgs.tier).toBe("OPC");
     expect(callArgs.displayName).toBe("Test Founder");
+    expect(callArgs.email).toBe("test@example.com");
+    expect(callArgs.avatarUrl).toBe("https://example.com/avatar.jpg");
     expect(callArgs.lookingFor).toEqual(["early-users", "angel-investor"]);
   });
 
@@ -91,6 +106,7 @@ describe("POST /api/license", () => {
         acceptedTerms: true,
       }),
     });
+    // biome-ignore lint/suspicious/noExplicitAny: NextRequest mirrors Request at runtime
     const res = await POST(req as any);
     const data = await res.json();
 

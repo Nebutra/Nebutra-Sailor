@@ -1,4 +1,3 @@
-import { auth } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -6,7 +5,12 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
+import { getAuth } from "@/lib/auth";
 import { LicenseWizard } from "./LicenseWizard";
+
+// Forces dynamic rendering so Better Auth session resolution never runs at
+// build time (it needs incoming cookies + a live database connection).
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -27,7 +31,7 @@ export async function generateMetadata({
 }
 
 async function RequireAuth({ lang, children }: { lang: string; children: React.ReactNode }) {
-  const { userId } = await auth();
+  const { userId } = await getAuth();
   if (!userId) {
     redirect(`/${lang}/sign-in?redirect_url=/${lang}/get-license`);
   }

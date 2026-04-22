@@ -1,16 +1,15 @@
-import { auth, clerkClient } from "@clerk/nextjs/server";
 import { createCheckoutSession, getOrCreateCustomer } from "@nebutra/billing";
 import { getSystemDb } from "@nebutra/db";
-
-// AUDIT(no-tenant): community profiles + licenses are user-scoped and predate
-// any tenant/organization context. The authenticated user's Clerk id is the
-// sole key, and this route runs before any Organization exists for the user.
-const prisma = getSystemDb();
-
 import { issueLicense } from "@nebutra/license";
 import { logger } from "@nebutra/logger";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { getSessionFromRequest, getUserById } from "@/lib/auth";
+
+// AUDIT(no-tenant): community profiles + licenses are user-scoped and predate
+// any tenant/organization context. The authenticated user's auth id is the
+// sole key, and this route runs before any Organization exists for the user.
+const prisma = getSystemDb();
 
 const CreateLicenseSchema = z.object({
   // Community profile
@@ -39,7 +38,8 @@ const CreateLicenseSchema = z.object({
 // POST /api/license — Create a license after community profile collection
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = await auth();
+    const session = await getSessionFromRequest(req);
+    const userId = session?.userId;
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -56,11 +56,10 @@ export async function POST(req: NextRequest) {
     const data = parsed.data;
     const isStartup = data.tier === "STARTUP";
 
-    const clerk = await clerkClient();
-    const clerkUser = await clerk.users.getUser(userId);
-    const email = clerkUser.emailAddresses[0]?.emailAddress;
-    const displayName =
-      clerkUser.fullName ?? clerkUser.username ?? email?.split("@")[0] ?? "Founder";
+    const user = await getUserById(userId);
+    const email = user?.email ?? session.email;
+    const displayName = user?.name ?? email?.split("@")[0] ?? "Founder";
+    const avatarUrl = user?.imageUrl ?? null;
 
     // Upsert community profile (keyed by Clerk userId)
     await prisma.communityProfile.upsert({
@@ -133,7 +132,7 @@ export async function POST(req: NextRequest) {
       tier: data.tier,
       displayName,
       email,
-      avatarUrl: clerkUser.imageUrl ?? null,
+      avatarUrl,
       lookingFor: data.lookingFor,
       githubHandle: data.githubHandle,
       projectName: data.projectName,
@@ -158,9 +157,10 @@ export async function POST(req: NextRequest) {
 }
 
 // GET /api/license — Check if current user has an active license
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const { userId } = await auth();
+    const session = await getSessionFromRequest(req);
+    const userId = session?.userId;
     if (!userId) {
       return NextResponse.json({ hasLicense: false, tier: null });
     }

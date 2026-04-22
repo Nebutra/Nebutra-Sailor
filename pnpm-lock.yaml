@@ -576,6 +576,9 @@ importers:
       '@lottiefiles/dotlottie-react':
         specifier: ^0.18.3
         version: 0.18.3(react@19.2.4)
+      '@nebutra/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
       '@nebutra/billing':
         specifier: workspace:*
         version: link:../../packages/billing
