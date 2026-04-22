@@ -23,7 +23,7 @@
   "homepage": "https://nebutra.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nebutra/nebutra-sailor.git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
     "directory": "packages/cli"
   },
   "bugs": {
