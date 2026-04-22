@@ -1,5 +1,6 @@
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import ignore from "ignore";
 
@@ -14,23 +15,61 @@ import ignore from "ignore";
  *   - SAILOR_TEMPLATE_SOURCE=main env var is set (debug)
  *   - the primary mirror returns 404 (mirror CI temporarily behind)
  *
- * Override: SAILOR_TEMPLATE_REPO="<owner>/<repo>" + SAILOR_TEMPLATE_REF="<branch>"
+ * Override: SAILOR_TEMPLATE_REPO="<owner>/<repo>" + SAILOR_TEMPLATE_REF="<branch|tag|sha>"
+ * Opt-in mutable fallback: SAILOR_TEMPLATE_ALLOW_MUTABLE_FALLBACK=1
  */
 const TEMPLATE_SOURCES = {
   mirror: {
     repo: process.env.SAILOR_TEMPLATE_REPO || "Nebutra/Sailor-Template",
     ref: process.env.SAILOR_TEMPLATE_REF || "main",
     applyIgnore: false, // mirror is pre-stripped
+    allowMutableFallback: process.env.SAILOR_TEMPLATE_ALLOW_MUTABLE_FALLBACK === "1",
   },
   main: {
     repo: "Nebutra/Nebutra-Sailor",
     ref: "main",
     applyIgnore: true, // live source needs runtime stripping
+    allowMutableFallback: process.env.SAILOR_TEMPLATE_ALLOW_MUTABLE_FALLBACK === "1",
   },
 } as const;
 
-function tarballUrl(repo: string, ref: string): string {
+function mutableTarballUrl(repo: string, ref: string): string {
   return `https://github.com/${repo}/archive/refs/heads/${ref}.tar.gz`;
+}
+
+function immutableTarballUrl(repo: string, sha: string): string {
+  return `https://github.com/${repo}/archive/${sha}.tar.gz`;
+}
+
+function isCommitSha(ref: string): boolean {
+  return /^[0-9a-f]{7,40}$/i.test(ref);
+}
+
+async function resolveImmutableRef(repo: string, ref: string): Promise<string> {
+  if (isCommitSha(ref)) {
+    return ref;
+  }
+
+  const response = await fetch(
+    `https://api.github.com/repos/${repo}/commits/${encodeURIComponent(ref)}`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        "User-Agent": "create-sailor",
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to resolve ${repo}@${ref} (GitHub API ${response.status})`);
+  }
+
+  const data = (await response.json()) as { sha?: unknown };
+  if (typeof data.sha !== "string" || data.sha.length === 0) {
+    throw new Error(`GitHub API did not return a commit SHA for ${repo}@${ref}`);
+  }
+
+  return data.sha;
 }
 
 /**
@@ -96,11 +135,71 @@ function applyTemplateIgnore(targetDir: string): void {
   }
 }
 
-function downloadTarball(url: string, targetDir: string): void {
-  execSync(`set -o pipefail; curl -sSfL ${url} | tar -xz -C "${targetDir}" --strip-components=1`, {
-    stdio: "ignore",
-    shell: "bash",
+async function downloadFile(url: string, targetPath: string): Promise<number> {
+  const response = await fetch(url, {
+    headers: {
+      Accept: "application/octet-stream",
+      "User-Agent": "create-sailor",
+    },
   });
+
+  if (!response.ok) {
+    throw new Error(`Failed to download archive (${response.status})`);
+  }
+
+  const archive = Buffer.from(await response.arrayBuffer());
+  if (archive.byteLength < 1024) {
+    throw new Error(`Downloaded archive is unexpectedly small (${archive.byteLength} bytes)`);
+  }
+
+  fs.writeFileSync(targetPath, archive);
+  const stats = fs.statSync(targetPath);
+  if (stats.size !== archive.byteLength) {
+    throw new Error(`Archive write verification failed (${stats.size} != ${archive.byteLength})`);
+  }
+
+  return stats.size;
+}
+
+function extractTarball(archivePath: string, targetDir: string): void {
+  execFileSync("tar", ["-xzf", archivePath, "-C", targetDir, "--strip-components=1"], {
+    stdio: "ignore",
+  });
+}
+
+function resetDirectory(targetDir: string): void {
+  try {
+    const entries = fs.readdirSync(targetDir);
+    for (const entry of entries) {
+      fs.rmSync(path.join(targetDir, entry), { recursive: true, force: true });
+    }
+  } catch {
+    /* noop */
+  }
+}
+
+async function downloadTemplateSource(
+  source: (typeof TEMPLATE_SOURCES)[keyof typeof TEMPLATE_SOURCES],
+  targetDir: string,
+): Promise<void> {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "create-sailor-"));
+  const archivePath = path.join(tempDir, "template.tar.gz");
+
+  try {
+    const immutableRef = await resolveImmutableRef(source.repo, source.ref);
+    await downloadFile(immutableTarballUrl(source.repo, immutableRef), archivePath);
+    extractTarball(archivePath, targetDir);
+  } catch (error) {
+    if (!source.allowMutableFallback) {
+      throw error;
+    }
+
+    resetDirectory(targetDir);
+    await downloadFile(mutableTarballUrl(source.repo, source.ref), archivePath);
+    extractTarball(archivePath, targetDir);
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
 }
 
 export async function cloneTemplate(targetDir: string): Promise<void> {
@@ -114,9 +213,8 @@ export async function cloneTemplate(targetDir: string): Promise<void> {
   let lastError: Error | undefined;
   for (const key of order) {
     const source = TEMPLATE_SOURCES[key];
-    const url = tarballUrl(source.repo, source.ref);
     try {
-      downloadTarball(url, targetDir);
+      await downloadTemplateSource(source, targetDir);
       if (source.applyIgnore) {
         try {
           applyTemplateIgnore(targetDir);
@@ -132,20 +230,13 @@ export async function cloneTemplate(targetDir: string): Promise<void> {
     } catch (err) {
       lastError = err instanceof Error ? err : new Error(String(err));
       // empty the dir before retrying the next source
-      try {
-        const entries = fs.readdirSync(targetDir);
-        for (const entry of entries) {
-          fs.rmSync(path.join(targetDir, entry), { recursive: true, force: true });
-        }
-      } catch {
-        /* noop */
-      }
+      resetDirectory(targetDir);
     }
   }
 
   throw new Error(
     `Failed to download the template from any source. Last error: ${
       lastError?.message ?? "unknown"
-    }\n\nEnsure you have internet access and curl/tar installed.\nYou can override the source with SAILOR_TEMPLATE_REPO / SAILOR_TEMPLATE_REF env vars.`,
+    }\n\nEnsure you have internet access and 'tar' installed.\nYou can override the source with SAILOR_TEMPLATE_REPO / SAILOR_TEMPLATE_REF env vars.`,
   );
 }

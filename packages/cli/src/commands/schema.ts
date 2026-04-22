@@ -1,35 +1,15 @@
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
+import { EXIT_CODE_DESCRIPTIONS } from "../utils/exit-codes.js";
+import { logger } from "../utils/logger.js";
+import { listFeatureDescriptors } from "../utils/registry.js";
 import { type CommandMeta, nebultraCommand } from "./metadata.js";
 
-/**
- * Exit codes used throughout the CLI
- */
-const EXIT_CODES: Record<number, string> = {
-  0: "Success",
-  1: "General error (command failed)",
-  2: "Misuse of shell command (invalid arguments/options)",
-  64: "EX_USAGE — command line usage error",
-  65: "EX_DATAERR — data format error",
-  66: "EX_NOINPUT — cannot open input",
-  67: "EX_NOUSER — addressee unknown",
-  68: "EX_NOHOST — host name unknown",
-  69: "EX_UNAVAILABLE — service unavailable",
-  70: "EX_SOFTWARE — internal software error",
-  71: "EX_OSERR — operating system error",
-  72: "EX_OSFILE — critical OS file missing",
-  73: "EX_CANTCREAT — cannot create output file",
-  74: "EX_IOERR — input/output error",
-  75: "EX_TEMPFAIL — temporary failure (retry later)",
-  76: "EX_PROTOCOL — remote protocol error",
-  77: "EX_NOPERM — permission denied",
-  78: "EX_CONFIG — configuration error",
-};
+const EXIT_CODES: Record<string, string> = Object.fromEntries(
+  Object.entries(EXIT_CODE_DESCRIPTIONS).map(([code, description]) => [code, description]),
+);
 
-/**
- * Schema representation of a single command
- */
 interface CommandSchema {
   name: string;
   description: string;
@@ -51,11 +31,9 @@ interface CommandSchema {
     command: string;
     description: string;
   }>;
+  extensions?: Record<string, unknown>;
 }
 
-/**
- * Full schema output structure
- */
 interface FullSchema {
   name: string;
   version: string;
@@ -72,32 +50,110 @@ interface FullSchema {
   timestamp: string;
 }
 
-/**
- * Convert CommandMeta to CommandSchema
- */
-function metaToSchema(meta: CommandMeta): CommandSchema {
+function optionType(defaultValue: string | boolean | undefined): string {
+  return typeof defaultValue === "boolean" ? "boolean" : "string";
+}
+
+function buildAddExtensions(): Record<string, unknown> {
+  const features = listFeatureDescriptors().map((feature) => ({
+    name: feature.name,
+    description: feature.description,
+    envFile: feature.envFile ?? ".env.local",
+    providers: (feature.providers ?? []).map((provider) => ({
+      id: provider.id,
+      description: provider.description,
+      dependencies: provider.dependencies ?? [],
+      devDependencies: provider.devDependencies ?? [],
+      env: provider.env ?? [],
+    })),
+    files: (feature.files ?? []).map((file) => file.path),
+  }));
+
+  const providerValues = Array.from(
+    new Set(features.flatMap((feature) => feature.providers.map((provider) => provider.id))),
+  );
+
   return {
+    localFeatures: features,
+    valueDomains: {
+      components: features.map((feature) => feature.name),
+      provider: providerValues,
+    },
+  };
+}
+
+function augmentAddSchema(schema: CommandSchema): CommandSchema {
+  const nextArguments = schema.arguments.map((argument) =>
+    argument.name === "components"
+      ? {
+          ...argument,
+          description: "Local feature names to install from the Nebutra registry",
+        }
+      : argument,
+  );
+
+  const hasProviderOption = schema.options.some((option) => option.flags.includes("--provider"));
+  const nextOptions = hasProviderOption
+    ? schema.options
+    : [
+        ...schema.options,
+        {
+          flags: "--provider <id>",
+          description: "Specify a provider for a local feature install",
+          required: false,
+          type: "string",
+        },
+      ];
+
+  const nextExamples = [
+    {
+      command: "nebutra add queue --provider upstash",
+      description: "Install the local queue feature starter with the Upstash provider",
+    },
+    {
+      command: "nebutra add search --provider meilisearch --dry-run",
+      description: "Preview the local search feature install plan as JSON",
+    },
+    ...schema.examples.filter(
+      (example) => example.command.includes("--21st") || example.command.includes("--v0"),
+    ),
+  ];
+
+  return {
+    ...schema,
+    arguments: nextArguments,
+    options: nextOptions,
+    examples: nextExamples,
+    extensions: buildAddExtensions(),
+  };
+}
+
+function metaToSchema(meta: CommandMeta): CommandSchema {
+  const schema: CommandSchema = {
     name: meta.name,
     description: meta.description,
     usage: meta.usage,
     arguments: meta.arguments || [],
-    options: (meta.options || []).map((opt) => ({
-      flags: opt.flags,
-      description: opt.description,
-      default: opt.default,
+    options: (meta.options || []).map((option) => ({
+      flags: option.flags,
+      description: option.description,
+      default: option.default,
       required: false,
-      type: typeof opt.default === "boolean" ? "boolean" : "string",
+      type: optionType(option.default),
     })),
     examples: meta.examples || [],
   };
+
+  if (meta.name === "add") {
+    return augmentAddSchema(schema);
+  }
+
+  return schema;
 }
 
-/**
- * Get schema for a specific command (by name)
- */
 function getCommandSchema(commandName: string): CommandSchema | null {
   const subcommands = nebultraCommand.subcommands || [];
-  const command = subcommands.find((cmd) => cmd.name === commandName);
+  const command = subcommands.find((entry) => entry.name === commandName);
 
   if (!command) {
     return null;
@@ -106,104 +162,73 @@ function getCommandSchema(commandName: string): CommandSchema | null {
   return metaToSchema(command);
 }
 
-/**
- * Get full schema for all commands
- */
+function getGlobalOptions() {
+  return (nebultraCommand.options ?? []).map((option) => ({
+    flags: option.flags,
+    description: option.description,
+    required: false,
+    type: optionType(option.default),
+  }));
+}
+
 function getFullSchema(version: string): FullSchema {
   const subcommands = nebultraCommand.subcommands || [];
-
-  const globalOptions = [
-    {
-      flags: "--verbose",
-      description: "Enable verbose output",
-      required: false,
-      type: "boolean",
-    },
-    {
-      flags: "--quiet",
-      description: "Suppress non-essential output",
-      required: false,
-      type: "boolean",
-    },
-    {
-      flags: "--help",
-      description: "Show help message",
-      required: false,
-      type: "boolean",
-    },
-    {
-      flags: "--version",
-      description: "Show version number",
-      required: false,
-      type: "boolean",
-    },
-  ];
 
   return {
     name: nebultraCommand.name,
     version,
     description: nebultraCommand.description,
     usage: nebultraCommand.usage || "nebutra [command] [options]",
-    globalOptions,
+    globalOptions: getGlobalOptions(),
     commands: subcommands.map(metaToSchema),
     exitCodes: EXIT_CODES,
     timestamp: new Date().toISOString(),
   };
 }
 
-/**
- * List command names only
- */
 function listCommandNames(): string[] {
   const subcommands = nebultraCommand.subcommands || [];
-  return subcommands.map((cmd) => cmd.name);
+  return subcommands.map((command) => command.name);
 }
 
-/**
- * Output JSON to stdout
- */
-function outputJSON(_data: unknown): void {}
+function outputJSON(data: unknown): void {
+  process.stdout.write(`${JSON.stringify(data, null, 2)}\n`);
+}
 
-/**
- * Handle schema command with various options
- */
+function isExitSignal(error: unknown): error is Error {
+  return error instanceof Error && error.message.startsWith("EXIT:");
+}
+
 export async function schemaCommand(
   commandArg: string | undefined,
   options: Record<string, unknown>,
 ): Promise<void> {
-  // Suppress intro message for JSON output (Agent-friendly)
   const isQuiet = options.quiet === true;
-  const version = "0.1.0"; // Should match main CLI version
+  const version = "0.1.0";
 
   try {
-    // --all: show full schema
     if (options.all === true) {
-      const schema = getFullSchema(version);
-      outputJSON(schema);
+      outputJSON(getFullSchema(version));
       process.exit(0);
     }
 
-    // --list: show command names only
     if (options.list === true) {
-      const names = listCommandNames();
-      outputJSON(names);
+      outputJSON(listCommandNames());
       process.exit(0);
     }
 
-    // --exit-codes: show exit code reference
-    if (options["exit-codes"] === true) {
+    if (options.exitCodes === true || options["exit-codes"] === true) {
       outputJSON(EXIT_CODES);
       process.exit(0);
     }
 
-    // Specific command: nebutra schema init
     if (commandArg) {
       const schema = getCommandSchema(commandArg);
 
       if (!schema) {
         if (!isQuiet) {
-          console.error(pc.red(`Error: Unknown command '${commandArg}'`));
-          console.error(pc.dim("Available commands: " + listCommandNames().join(", ")));
+          logger.error(`Unknown command '${commandArg}'`);
+          logger.info(`Available commands: ${listCommandNames().join(", ")}`);
         }
         process.exit(2);
       }
@@ -212,7 +237,6 @@ export async function schemaCommand(
       process.exit(0);
     }
 
-    // No arguments, no options: show help
     if (!isQuiet) {
       p.intro(pc.bgCyan(pc.black(" nebutra schema ")));
       p.log.info(
@@ -235,16 +259,16 @@ export async function schemaCommand(
 
     process.exit(0);
   } catch (error) {
+    if (isExitSignal(error)) {
+      throw error;
+    }
     if (!isQuiet) {
-      console.error(pc.red("Error:"), error instanceof Error ? error.message : String(error));
+      logger.error(error instanceof Error ? error.message : String(error));
     }
     process.exit(1);
   }
 }
 
-/**
- * Register schema command with commander
- */
 export function registerSchemaCommand(program: Command): void {
   program
     .command("schema [command]")

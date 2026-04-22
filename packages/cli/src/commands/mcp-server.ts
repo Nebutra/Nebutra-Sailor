@@ -2,7 +2,9 @@ import { spawn } from "node:child_process";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as p from "@clack/prompts";
+import type { Command } from "commander";
 import pc from "picocolors";
+import { logger } from "../utils/logger.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -24,7 +26,9 @@ function resolveMcpServerBinary(): string {
     try {
       const path = strategy();
       return path;
-    } catch {}
+    } catch (error) {
+      logger.debug("MCP server binary resolution strategy failed", { error });
+    }
   }
 
   // Fallback: try to find via PATH
@@ -40,12 +44,12 @@ function _isSpawnError(error: unknown): error is SpawnError {
   return error instanceof Error && "code" in error;
 }
 
-export function registerMcpCommand(program: any) {
+export function registerMcpCommand(program: Command) {
   program
     .command("mcp")
     .description("Start the Nebutra MCP server for Cursor/Windsurf")
     .option("--stdio", "Use stdio transport (default)", true)
-    .action(async (_options: any) => {
+    .action(async (_options: Record<string, unknown>) => {
       p.intro(pc.bgCyan(pc.black(" nebutra mcp ")));
 
       try {
@@ -70,13 +74,11 @@ export function registerMcpCommand(program: any) {
         });
 
         child.on("error", (err: SpawnError) => {
-          console.error(pc.red(`\nFailed to start MCP server: ${err.message}`));
+          logger.error(`\nFailed to start MCP server: ${err.message}`);
 
           if (err.code === "ENOENT") {
-            console.error(
-              pc.yellow("\nTip: Ensure @nebutra/mcp is installed or available in your PATH."),
-            );
-            console.error(pc.cyan("  Install globally: npm install -g @nebutra/mcp"));
+            logger.warn("\nTip: Ensure @nebutra/mcp is installed or available in your PATH.");
+            logger.info("  Install globally: npm install -g @nebutra/mcp");
           }
 
           process.exit(1);
@@ -98,7 +100,7 @@ export function registerMcpCommand(program: any) {
         );
 
         if (error instanceof Error) {
-          console.error(pc.dim(error.message));
+          logger.error(error.message);
         }
 
         process.exit(1);

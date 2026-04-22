@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import pc from "picocolors";
+import { logger } from "./logger.js";
 
 interface UpdateInfo {
   currentVersion: string;
@@ -45,7 +46,9 @@ async function readCache(): Promise<CacheEntry | null> {
     }
 
     // Cache expired, remove it
-    await fs.unlink(CACHE_FILE).catch(() => {});
+    await fs.unlink(CACHE_FILE).catch((error) => {
+      logger.debug("Failed to remove expired update cache file", { error });
+    });
     return null;
   } catch {
     // Cache doesn't exist or is invalid; return null
@@ -205,6 +208,11 @@ export async function maybeNotifyUpdate(currentVersion: string): Promise<() => v
 
   // Return a function that prints the notification if one was found
   return async () => {
+    // Only display notifications in interactive TTY environments and not in CI
+    if (!process.stdout.isTTY || process.env.CI) {
+      return;
+    }
+
     // Give the background check a moment to complete
     if (!updateInfo) {
       await new Promise((resolve) => setTimeout(resolve, 100));

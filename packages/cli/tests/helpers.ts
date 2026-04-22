@@ -43,6 +43,46 @@ export async function runCli(args: string[]): Promise<{
   });
 }
 
+export async function runCliInDir(
+  args: string[],
+  cwd: string,
+): Promise<{
+  stdout: string;
+  stderr: string;
+  exitCode: number;
+}> {
+  return new Promise((resolve, reject) => {
+    const cliPath = new URL("../dist/index.js", import.meta.url).pathname;
+
+    const child = spawn("node", [cliPath, ...args], {
+      cwd,
+      stdio: ["pipe", "pipe", "pipe"],
+      timeout: 30000,
+    });
+
+    let stdout = "";
+    let stderr = "";
+
+    child.stdout?.on("data", (data) => {
+      stdout += data.toString();
+    });
+
+    child.stderr?.on("data", (data) => {
+      stderr += data.toString();
+    });
+
+    child.on("error", reject);
+
+    child.on("close", (code) => {
+      resolve({
+        stdout,
+        stderr,
+        exitCode: code ?? 1,
+      });
+    });
+  });
+}
+
 /**
  * Creates a temporary directory for test projects
  */

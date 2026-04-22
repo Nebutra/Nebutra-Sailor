@@ -28,7 +28,14 @@ import { registerSecretsCommand } from "./commands/secrets.js";
 import { registerServicesCommand } from "./commands/services.js";
 import { registerStatsCommand } from "./commands/stats.js";
 import { registerTestCommand } from "./commands/test.js";
+import { logger } from "./utils/logger.js";
 import { maybeNotifyUpdate } from "./utils/update-notifier.js";
+
+// TODO(error-handling): New commands MUST wrap their `.action(...)` body with
+// `runCommand(...)` from "./utils/command-error.js" and throw `CommandError`
+// (with a specific `ExitCode`) instead of calling `process.exit` directly.
+// Existing commands migrate opportunistically — see command-error.ts for the
+// migration guide.
 
 const VERSION = "0.1.0";
 
@@ -77,6 +84,7 @@ async function main() {
     .description("Add a component or feature to your project")
     .option("--21st <id>", "Fetch and install a component from 21st.dev")
     .option("--v0 <url>", "Fetch and install a component from v0.dev")
+    .option("--provider <id>", "Specify a backend provider for a system feature (e.g. upstash)")
     .option("--dry-run", "Preview what would be installed without making changes (exit code 10)")
     .option("--yes", "Skip all interactive prompts and use defaults (Agent mode)")
     .option("--if-not-exists", "Skip installation if component already exists")
@@ -246,4 +254,4 @@ Environment:
   await notifyUpdate();
 }
 
-main().catch(console.error);
+main().catch((err) => logger.error(err instanceof Error ? err.message : String(err)));
