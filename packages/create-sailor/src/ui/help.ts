@@ -55,10 +55,10 @@ Toggles:
   -v, --version             show version
 
 Examples:
-  $ npm create sailor@latest
-  $ npm create sailor@latest my-app -y
-  $ npm create sailor@latest my-app --region=cn --auth=clerk
-  $ npm create sailor@latest my-app --region=hybrid --ai=openai,deepseek
+  $ npx create-sailor@latest
+  $ npx create-sailor@latest my-app -y
+  $ npx create-sailor@latest my-app --region=cn --auth=clerk
+  $ npx create-sailor@latest my-app --region=hybrid --ai=openai,deepseek
   $ npm create sailor@latest --dry-run --region=cn
 `;
 

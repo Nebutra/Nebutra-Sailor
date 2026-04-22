@@ -45,6 +45,31 @@ function isCommitSha(ref: string): boolean {
   return /^[0-9a-f]{7,40}$/i.test(ref);
 }
 
+function resolveImmutableRefWithGit(repo: string, ref: string): string | null {
+  const remote = `https://github.com/${repo}.git`;
+  const candidates = [`refs/heads/${ref}`, `refs/tags/${ref}`];
+
+  for (const candidate of candidates) {
+    try {
+      const output = execFileSync("git", ["ls-remote", remote, candidate], {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      }).trim();
+
+      if (!output) continue;
+
+      const [sha] = output.split(/\s+/);
+      if (isCommitSha(sha)) {
+        return sha;
+      }
+    } catch {
+      // Ignore and continue to the next candidate.
+    }
+  }
+
+  return null;
+}
+
 async function resolveImmutableRef(repo: string, ref: string): Promise<string> {
   if (isCommitSha(ref)) {
     return ref;
@@ -61,6 +86,10 @@ async function resolveImmutableRef(repo: string, ref: string): Promise<string> {
   );
 
   if (!response.ok) {
+    const fallbackSha = resolveImmutableRefWithGit(repo, ref);
+    if (fallbackSha) {
+      return fallbackSha;
+    }
     throw new Error(`Failed to resolve ${repo}@${ref} (GitHub API ${response.status})`);
   }
 

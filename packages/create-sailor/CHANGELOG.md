@@ -1,5 +1,11 @@
 # create-sailor
 
+## 1.3.3
+
+### Patch Changes
+
+- Fix provider template generation and refresh create-sailor onboarding docs and help examples.
+
 ## 1.3.2
 
 ### Patch Changes

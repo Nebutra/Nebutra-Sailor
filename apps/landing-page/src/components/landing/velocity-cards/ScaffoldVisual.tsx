@@ -24,22 +24,22 @@ export function ScaffoldVisual() {
         <p className="flex gap-3">
           <span className="text-muted-foreground select-none">~</span>
           <span>
-            <span className="text-primary font-medium">pnpm</span> create nebutra-sailor
+            <span className="text-primary font-medium">npx</span> create-sailor@latest
           </span>
         </p>
         <div className="pl-5 space-y-2 mt-2">
           <p className="text-muted-foreground flex items-center gap-2">
-            <span className="text-[10px] text-primary">✔</span> Cloning monorepo...
+            <span className="text-[10px] text-primary">✔</span> Cloning verified template...
           </p>
           <p className="text-muted-foreground flex items-center gap-2">
-            <span className="text-[10px] text-primary">✔</span> Installing 26 packages...
+            <span className="text-[10px] text-primary">✔</span> Applying stack defaults...
           </p>
           <p className="text-muted-foreground flex items-center gap-2">
-            <span className="text-[10px] text-primary">✔</span> Generating Prisma client...
+            <span className="text-[10px] text-primary">✔</span> Preparing Prisma + env files...
           </p>
         </div>
         <p className="mt-4 pt-3 border-t border-border/50 text-foreground font-semibold flex items-center gap-2">
-          <span className="text-primary">⚡</span> Ready in 1.8s
+          <span className="text-primary">⚡</span> Project scaffolded
         </p>
       </div>
     </div>

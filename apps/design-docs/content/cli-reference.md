@@ -251,17 +251,17 @@ create-sailor [dir]
 **Examples:**
 
 ```bash
-create-sailor my-project
+npx create-sailor@latest my-project
 ```
-Create a new Nebutra-Sailor project in the my-project directory
+Create a new Nebutra-Sailor project in the `my-project` directory
 
 ```bash
-create-sailor
+npx create-sailor@latest
 ```
 Create a new project with interactive prompts for all configuration options
 
 ```bash
-npm create sailor my-startup
+npm create sailor@latest my-startup
 ```
 Alternative syntax: use npm create to run the create-sailor CLI
 
@@ -303,20 +303,20 @@ nebutra mcp --help
 ### Install globally via npm
 
 ```bash
-npm install -g @nebutra/cli
+npm install -g nebutra
 ```
 
 ### Install in a project
 
 ```bash
-pnpm install --save-dev @nebutra/cli
+pnpm add --save-dev nebutra
 pnpm exec nebutra init
 ```
 
 ### Use with create
 
 ```bash
-npm create sailor my-app
+npx create-sailor@latest my-app
 ```
 
 ---
@@ -418,7 +418,7 @@ You can also provide environment variables:
 
 If `nebutra` or `create-sailor` cannot be found:
 
-1. Ensure it's installed globally: `npm install -g @nebutra/cli`
+1. Ensure it's installed globally: `npm install -g nebutra`
 2. Or run with `pnpm exec nebutra` in your project
 3. Check your PATH: `echo $PATH`
 
@@ -426,8 +426,8 @@ If `nebutra` or `create-sailor` cannot be found:
 
 If `nebutra create` cannot start `create-sailor`:
 
-1. Ensure `@nebutra/create-sailor` is installed: `npm install -g @nebutra/create-sailor`
-2. Or install locally: `pnpm install --save-dev @nebutra/create-sailor`
+1. Ensure `create-sailor` is installed: `npm install -g create-sailor`
+2. Or install locally: `pnpm add --save-dev create-sailor`
 
 ### MCP server fails to start
 
@@ -451,13 +451,13 @@ The CLI respects these environment variables:
 
 ## Advanced Usage
 
-### Programmatic API
+### Monorepo Internal API
 
-You can use the CLI commands programmatically in your scripts:
+For internal tooling inside the Nebutra-Sailor monorepo, import command helpers from the source tree directly:
 
 ```javascript
-import { initCommand } from "@nebutra/cli/commands/init";
-import { addCommand } from "@nebutra/cli/commands/add";
+import { initCommand } from "../../packages/cli/src/commands/init.js";
+import { addCommand } from "../../packages/cli/src/commands/add.js";
 
 await initCommand();
 await addCommand(["button", "input"], { "21st": undefined, v0: undefined });
@@ -479,4 +479,3 @@ nebutra add button input card badge select checkbox radio
 - **GitHub**: https://github.com/nebutra/sailor
 - **Community**: https://discord.gg/nebutra
 - **Issues**: https://github.com/nebutra/sailor/issues
-

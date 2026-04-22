@@ -1,6 +1,6 @@
 # create-sailor
 
-> AI-Native SaaS unicorn template — 领先的 AI SaaS 独角兽模板 + OPC（一人公司）创新创业生态社区脚手架。
+> AI-native SaaS scaffolder for Nebutra Sailor. Bootstrap a production-ready Next.js + Hono + Prisma monorepo with multi-tenant foundations, billing, auth, and AI integrations.
 
 [![npm version](https://img.shields.io/npm/v/create-sailor.svg?color=0033FE)](https://www.npmjs.com/package/create-sailor)
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-0033FE.svg)](https://www.gnu.org/licenses/agpl-3.0)
@@ -9,6 +9,9 @@
 ## Quick Start
 
 ```bash
+# npx
+npx create-sailor@latest
+
 # npm
 npm create sailor@latest
 
@@ -16,12 +19,12 @@ npm create sailor@latest
 pnpm create sailor@latest
 
 # bun
-bun create sailor
+bunx create-sailor@latest
 ```
 
 ## What You Get
 
-- **8 apps + 54 packages + 9 microservices** — landing · dashboard · docs · storybook · api-gateway · community · IDP · studio + Python AI/ML workloads
+- **Production-ready monorepo scaffold** — marketing site, dashboard, docs, Storybook, API gateway, studio, and supporting Python/infra services without hand-assembling the stack
 - **AI-native** — 20+ provider registry, Vercel AI SDK v5, custom OpenAI-compatible endpoints, Multi-Agent orchestration
 - **Dual-track: 海外 + 国内 双生态开箱即用**
   - **Email**: Resend / Postmark / AWS SES / 阿里云邮件推送 / 腾讯云 SES / 网易企业邮箱
@@ -40,7 +43,7 @@ bun create sailor
 ### Interactive (recommended)
 
 ```bash
-npm create sailor@latest
+npx create-sailor@latest
 ```
 
 Asks just 4 questions: **project name / region / auth / AI providers**. Everything else uses region-aware smart defaults.
@@ -114,14 +117,26 @@ callbacks exchange `code` for provider access tokens and leave a
 ```bash
 cd my-app
 pnpm install
+# create .env.local and add your provider credentials
+pnpm db:migrate
+pnpm db:seed
 pnpm dev
+```
+
+Useful follow-ups:
+
+```bash
+pnpm brand:init
+pnpm brand:apply
+pnpm generate:api-types
 ```
 
 ## Why Sailor?
 
-Unlike generic SaaS starters, **Sailor is both a template and a community** — you
-build your product with it, and you join the OPC creator network in the
-process.
+Unlike a thin starter, **Sailor scaffolds the same platform baseline Nebutra uses**
+for multi-tenant SaaS: auth, billing, branding, docs, and AI integration are
+already wired into a coherent monorepo you can adapt instead of assembling from
+scratch.
 
 ## Roadmap
 
@@ -129,7 +144,7 @@ process.
 - ✅ **v1.1** — Fumadocs integration + AI Provider registry
 - ✅ **v1.2** — All flags working end-to-end
 - ✅ **v1.3** — Region-aware defaults + 双生态 providers + 合规套件 + CN social login
-- 🔜 **v1.4** — `sailor add <feature>` with remote registry
+- 🔜 **v1.4** — `nebutra add <feature>` with remote registry
 - 🔜 **v1.5** — Interactive AI Welcome page with onboarding assistant
 
 ## Documentation
