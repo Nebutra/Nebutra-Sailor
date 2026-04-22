@@ -36,10 +36,11 @@ This template follows Nebutra docs best-practices, encoded as MDX comments inlin
 - **Concepts** — explains the "why" / mental model, not steps, not APIs
 - **API Reference** — auto-generated from OpenAPI; every endpoint has method badge + params + schema + multi-language examples
 
-When regenerating the API reference:
+When refreshing the API reference inputs:
 
 ```bash
-pnpm sailor add openapi
+pnpm --filter @nebutra/api-gateway generate:spec
+pnpm generate:api-types
 ```
 
-See `/docs/plans/2026-04-14-create-sailor-roadmap.md` in the Sailor monorepo for the full rationale.
+Then replace `content/docs/api.mdx` with generated reference content sourced from `apps/api-gateway/openapi.json`.

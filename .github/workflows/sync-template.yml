@@ -40,7 +40,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
       - name: Install dependencies
@@ -53,6 +53,11 @@ jobs:
 
       - name: Build template
         run: pnpm tsx scripts/template-build.ts --out=/tmp/sailor-template
+
+      - name: Package template bundle
+        run: |
+          tar -czf /tmp/sailor-template.tar.gz -C /tmp/sailor-template .
+          shasum -a 256 /tmp/sailor-template.tar.gz | awk '{print $1}' > /tmp/sailor-template.tar.gz.sha256
 
       - name: Verify built template is not empty
         run: |
@@ -79,7 +84,7 @@ jobs:
         if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
         env:
           SRC_SHA: ${{ github.sha }}
-          GIT_SSH_COMMAND: "ssh -i ~/.ssh/sailor_template -o IdentitiesOnly=yes -o StrictHostKeyChecking=no"
+          GIT_SSH_COMMAND: "ssh -i ~/.ssh/sailor_template -o IdentitiesOnly=yes"
         run: |
           set -euo pipefail
           cd /tmp/sailor-template
@@ -89,9 +94,20 @@ jobs:
           git checkout -q -b main
           git add -A
           git commit -q -m "chore: sync from Nebutra-Sailor@${SRC_SHA}"
-          # Force-push replaces whatever is there — acceptable for a mirror repo.
+          TEMPLATE_TAG="source-${SRC_SHA}"
           git remote add origin "git@github.com:Nebutra/Sailor-Template.git"
           git push -qf origin main
+          git tag -a "${TEMPLATE_TAG}" -m "Template snapshot for ${SRC_SHA}"
+          git push -q origin "refs/tags/${TEMPLATE_TAG}"
+
+      - name: Upload template bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: sailor-template-${{ github.sha }}
+          path: |
+            /tmp/sailor-template.tar.gz
+            /tmp/sailor-template.tar.gz.sha256
+          retention-days: 90
 
       - name: Clean up SSH key
         if: always()
@@ -103,4 +119,5 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- Source SHA: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- File count: $(find /tmp/sailor-template -type f | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- Immutable tag: \`source-${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- Pushed: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}" >> $GITHUB_STEP_SUMMARY

@@ -1,4 +1,3 @@
-import { spawn } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { existsSync } from "node:fs";
 import { mkdir, readFile, rm } from "node:fs/promises";
@@ -6,49 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { ExitCode } from "../src/utils/exit-codes.js";
-
-/**
- * Run the CLI with given args in a specific directory
- */
-async function runCliInDir(
-  args: string[],
-  cwd: string,
-): Promise<{
-  stdout: string;
-  stderr: string;
-  exitCode: number;
-}> {
-  return new Promise((resolve, reject) => {
-    const cliPath = new URL("../dist/index.js", import.meta.url).pathname;
-
-    const child = spawn("node", [cliPath, ...args], {
-      cwd,
-      stdio: ["pipe", "pipe", "pipe"],
-      timeout: 30000,
-    });
-
-    let stdout = "";
-    let stderr = "";
-
-    child.stdout?.on("data", (data) => {
-      stdout += data.toString();
-    });
-
-    child.stderr?.on("data", (data) => {
-      stderr += data.toString();
-    });
-
-    child.on("error", reject);
-
-    child.on("close", (code) => {
-      resolve({
-        stdout,
-        stderr,
-        exitCode: code ?? 1,
-      });
-    });
-  });
-}
+import { runCliInDir } from "./helpers.js";
 
 describe("init command", () => {
   let testDir: string;

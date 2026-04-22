@@ -2,7 +2,9 @@ import { spawn } from "node:child_process";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as p from "@clack/prompts";
+import type { Command } from "commander";
 import pc from "picocolors";
+import { logger } from "../utils/logger.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -25,7 +27,9 @@ function resolveCreateSailorBinary(): string {
     try {
       const path = strategy();
       return path;
-    } catch {}
+    } catch (error) {
+      logger.debug("create-sailor binary resolution strategy failed", { error });
+    }
   }
 
   // Fallback: try to find via 'which' or assume it's in PATH
@@ -41,12 +45,12 @@ function _isSpawnError(error: unknown): error is SpawnError {
   return error instanceof Error && "code" in error;
 }
 
-export function registerCreateCommand(program: any) {
+export function registerCreateCommand(program: Command) {
   program
     .command("create [dir]")
     .description("Scaffold a new Nebutra-Sailor project")
     .allowUnknownOption(true)
-    .action(async (dir: string | undefined, _options: any, cmd: any) => {
+    .action(async (dir: string | undefined, _options: Record<string, unknown>, cmd: Command) => {
       p.intro(pc.bgCyan(pc.black(" nebutra create ")));
 
       try {
@@ -83,13 +87,11 @@ export function registerCreateCommand(program: any) {
 
         child.on("error", (err: SpawnError) => {
           spinner.stop();
-          console.error(pc.red(`\nFailed to launch create-sailor: ${err.message}`));
+          logger.error(`\nFailed to launch create-sailor: ${err.message}`);
 
           if (err.code === "ENOENT") {
-            console.error(
-              pc.yellow("\nTip: Ensure create-sailor is installed or available in your PATH."),
-            );
-            console.error(pc.cyan("  Install globally: npm install -g create-sailor"));
+            logger.warn("\nTip: Ensure create-sailor is installed or available in your PATH.");
+            logger.info("  Install globally: npm install -g create-sailor");
           }
 
           process.exit(1);
@@ -100,7 +102,7 @@ export function registerCreateCommand(program: any) {
         );
 
         if (error instanceof Error) {
-          console.error(pc.dim(error.message));
+          logger.error(error.message);
         }
 
         process.exit(1);

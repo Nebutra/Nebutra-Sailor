@@ -12,12 +12,12 @@ export interface DoneOptions {
   previewSelections?: PreviewSelection[];
 }
 
-function useDecor(): boolean {
+function shouldUseDecor(): boolean {
   return !process.env.NO_COLOR && !!process.stdout.isTTY;
 }
 
 export function showDone(opts: DoneOptions): void {
-  const decor = useDecor();
+  const decor = shouldUseDecor();
   const anchor = decor ? "⚓" : "-";
   const arrow = decor ? "▸" : "->";
   const star = decor ? "★" : "*";
@@ -40,18 +40,20 @@ export function showDone(opts: DoneOptions): void {
   }
 
   lines.push(
+    `     ${arrow} fill in .env.local ${decor ? pc.dim("→ add provider keys before booting apps") : "-> add provider keys before booting apps"}`,
+    `     ${arrow} pnpm db:migrate    ${decor ? pc.dim("→ sync Prisma schema") : "-> sync Prisma schema"}`,
+    `     ${arrow} pnpm db:seed       ${decor ? pc.dim("→ load example tenants and records") : "-> load example tenants and records"}`,
     `     ${arrow} pnpm dev           ${decor ? pc.dim("→ http://localhost:3000") : "-> http://localhost:3000"}`,
     "",
     `   ${decor ? pc.bold("Customize:") : "Customize:"}`,
-    `     ${arrow} pnpm sailor brand init   ${decor ? pc.dim("→ your colors, logo, domain") : "-> your colors, logo, domain"}`,
-    `     ${arrow} pnpm sailor preset apply ${decor ? pc.dim("→ toggle features") : "-> toggle features"}`,
-    `     ${arrow} pnpm sailor add <feat>   ${decor ? pc.dim("→ add queue/search/cache/...") : "-> add queue/search/cache/..."}`,
+    `     ${arrow} pnpm brand:init    ${decor ? pc.dim("→ create brand.config.ts") : "-> create brand.config.ts"}`,
+    `     ${arrow} pnpm brand:apply   ${decor ? pc.dim("→ propagate brand changes") : "-> propagate brand changes"}`,
+    `     ${arrow} pnpm preset:env    ${decor ? pc.dim("→ review preset env requirements") : "-> review preset env requirements"}`,
     "",
-    `   ${decor ? pc.bold("Add more features later:") : "Add more features later:"}`,
-    `     ${arrow} sailor add payment --provider=wechat`,
-    `     ${arrow} sailor add email --provider=postmark`,
-    `     ${arrow} sailor add storage --provider=supabase`,
-    `     ${decor ? pc.dim("(more providers: `sailor add --list`)") : "(more providers: `sailor add --list`)"}`,
+    `   ${decor ? pc.bold("Useful scripts:") : "Useful scripts:"}`,
+    `     ${arrow} pnpm infra:up      ${decor ? pc.dim("→ start local PostgreSQL/Redis/ClickHouse") : "-> start local PostgreSQL/Redis/ClickHouse"}`,
+    `     ${arrow} pnpm generate:api-types ${decor ? pc.dim("→ refresh shared API client types") : "-> refresh shared API client types"}`,
+    `     ${arrow} pnpm lint          ${decor ? pc.dim("→ quick repo sanity check") : "-> quick repo sanity check"}`,
   );
 
   // Preview-status providers: call them out so the user knows they

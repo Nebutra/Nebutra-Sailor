@@ -7,7 +7,7 @@ import path from "node:path";
  * Writes a static `/welcome` route into the scaffolded Next.js App Router
  * under `apps/web/src/app/[locale]/welcome/page.tsx`. The page guides the
  * user through the first four post-scaffold steps (env, migrate, seed,
- * brand init) and reminds them to delete the route once onboarded.
+ * brand config init/apply) and reminds them to delete the route once onboarded.
  *
  * Also drops a `.sailor/next-steps.md` cheat sheet at the target root
  * mirroring the same four steps — useful for non-TTY flows / CI logs.
@@ -67,9 +67,9 @@ export default function WelcomePage() {
             />
             <Step
               number={4}
-              title="Customize your brand"
-              description="Colors, domain, logo, SEO — all in one file"
-              command="pnpm sailor brand init"
+              title="Initialize brand config"
+              description="Generate brand.config.ts, then run pnpm brand:apply after edits"
+              command="pnpm brand:init"
             />
           </ol>
         </section>
@@ -159,9 +159,10 @@ Your AI-native SaaS scaffold is ready. Complete these four steps to go from temp
    pnpm db:seed
    \`\`\`
 
-4. **Customize your brand** — colors, domain, logo, SEO — all in one file
+4. **Initialize your brand config** — generate \`brand.config.ts\`, then apply it after edits
    \`\`\`bash
-   pnpm sailor brand init
+   pnpm brand:init
+   pnpm brand:apply
    \`\`\`
 
 After setup, delete the welcome route at \`apps/web/src/app/[locale]/welcome/\`.

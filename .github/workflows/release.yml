@@ -39,12 +39,25 @@ jobs:
         with:
           node-version: 22
           cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Generate Prisma Client
         run: pnpm db:generate
+
+      - name: Code Quality (Lint)
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test (Unit)
+        run: pnpm test
+
+      - name: Build All Packages
+        run: pnpm build
 
       - name: Create Release Pull Request or Publish
         id: changesets
@@ -53,13 +66,15 @@ jobs:
           commit: "chore(release): version packages"
           title: "chore(release): version packages"
           version: pnpm version:packages
-          publish: pnpm release
+          publish: bash ./scripts/release-publish.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TRUSTED_PUBLISHING: ${{ vars.NPM_TRUSTED_PUBLISHING }}
+          NPM_CONFIG_PROVENANCE: "true"
 
   provenance:
-    name: SLSA Provenance
+    name: Artifact Attestation
     needs: [release]
     if: needs.release.outputs.published == 'true'
     runs-on: ubuntu-latest

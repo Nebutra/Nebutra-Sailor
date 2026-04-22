@@ -15,8 +15,23 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "start": "node dist/index.js",
-    "test": "vitest run",
+    "test": "pnpm build && vitest run",
     "test:watch": "vitest"
+  },
+  "author": "Nebutra <hello@nebutra.com> (https://nebutra.com)",
+  "license": "AGPL-3.0",
+  "homepage": "https://nebutra.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nebutra/nebutra-sailor.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/nebutra/nebutra-sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
@@ -25,10 +40,10 @@
     "picocolors": "^1.1.0"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@types/node": "catalog:",
     "@types/node-fetch": "^2.6.13",
-    "tsup": "^8.0.0",
+    "tsup": "catalog:",
     "typescript": "catalog:",
-    "vitest": "^1.0.0"
+    "vitest": "catalog:"
   }
 }
