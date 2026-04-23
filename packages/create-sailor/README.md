@@ -1,10 +1,10 @@
 # create-sailor
 
-> AI-native SaaS scaffolder for Nebutra Sailor. Bootstrap a production-ready Next.js + Hono + Prisma monorepo with multi-tenant foundations, billing, auth, and AI integrations.
+> Governed scaffolding for AI-native SaaS. Bootstrap the Nebutra Sailor platform baseline with multi-tenant foundations, region-aware defaults, and production-ready AI integrations.
 
 [![npm version](https://img.shields.io/npm/v/create-sailor.svg?color=0033FE)](https://www.npmjs.com/package/create-sailor)
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-0033FE.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Commercial License](https://img.shields.io/badge/Commercial-Free%20for%20OPC-0BF1C3.svg)](https://nebutra.com/licensing)
+[![Commercial License](https://img.shields.io/badge/Licensing-Commercial%20Options-0BF1C3.svg)](https://nebutra.com/licensing)
 
 ## Quick Start
 
@@ -24,19 +24,11 @@ bunx create-sailor@latest
 
 ## What You Get
 
-- **Production-ready monorepo scaffold** — marketing site, dashboard, docs, Storybook, API gateway, studio, and supporting Python/infra services without hand-assembling the stack
-- **AI-native** — 20+ provider registry, Vercel AI SDK v5, custom OpenAI-compatible endpoints, Multi-Agent orchestration
-- **Dual-track: 海外 + 国内 双生态开箱即用**
-  - **Email**: Resend / Postmark / AWS SES / 阿里云邮件推送 / 腾讯云 SES / 网易企业邮箱
-  - **Storage**: R2 / S3 / Supabase / 阿里云 OSS / 腾讯云 COS / 七牛
-  - **Monitoring**: Sentry / Datadog / 阿里云 ARMS / 听云
-  - **Analytics**: PostHog / Plausible / Umami / 百度统计 / 神策 / GrowingIO
-  - **SMS**: Twilio / 阿里云短信 / 腾讯云短信 / 云片
-  - **Payment**: Stripe / Lemon Squeezy / 微信支付 / 支付宝
-  - **Social login (CN)**: 微信开放平台 · QQ · 钉钉 · 企业微信 · 飞书 · 微博
-- **中国合规套件**: ICP 备案 · 公安备案 · Cookie 弹窗 · AIGC 算法备案声明 · 隐私政策模板
-- **White-label**: `brand.config.ts` 一键换品牌（colors · domains · logos · SEO）
-- **AGPL-3.0 + Commercial Exception**（Individual / OPC 免费）
+- **Governed platform baseline** — web app, marketing site, API gateway, docs, Storybook, studio, and supporting infra packages scaffolded as one coherent monorepo
+- **Verified scaffolding path** — region-aware defaults, template checks, and reproducible project bootstrap instead of hand-assembling a starter stack
+- **AI runtime foundation** — provider registry, Vercel AI SDK v5, OpenAI-compatible endpoints, and agent-ready packages wired into the platform baseline
+- **Global + China delivery surface** — email, storage, monitoring, analytics, SMS, payments, and CN social login options selected through one scaffolding flow
+- **Brand, tenant, and compliance primitives** — white-label branding, multi-tenant foundations, and China-market compliance scaffolding already wired in
 
 ## Usage
 
@@ -133,19 +125,17 @@ pnpm generate:api-types
 
 ## Why Sailor?
 
-Unlike a thin starter, **Sailor scaffolds the same platform baseline Nebutra uses**
-for multi-tenant SaaS: auth, billing, branding, docs, and AI integration are
-already wired into a coherent monorepo you can adapt instead of assembling from
-scratch.
+Sailor is not a thin starter with a long feature checklist. It is the governed
+platform baseline Nebutra uses for AI-native SaaS: auth, billing, branding,
+docs, tenant-aware app structure, and AI integration are scaffolded into a
+single monorepo you can extend instead of re-assembling from scratch.
 
 ## Roadmap
 
-- ✅ **v1.0** — Core scaffolding with cfonts banner + full CLI UX
-- ✅ **v1.1** — Fumadocs integration + AI Provider registry
-- ✅ **v1.2** — All flags working end-to-end
-- ✅ **v1.3** — Region-aware defaults + 双生态 providers + 合规套件 + CN social login
-- 🔜 **v1.4** — `nebutra add <feature>` with remote registry
-- 🔜 **v1.5** — Interactive AI Welcome page with onboarding assistant
+- **Verified scaffolding** — immutable template delivery, scaffold smoke validation, and safer bootstrap defaults
+- **Remote feature registry** — `nebutra add` with compatibility checks, provider awareness, and controlled file application
+- **Harness runtime** — stronger MCP, agent, and automation primitives for AI-native SaaS workflows
+- **Upgrade path** — version-aware migrations, diagnostics, and guided adoption of new platform capabilities
 
 ## Documentation
 
@@ -156,10 +146,10 @@ scratch.
 
 ## License
 
-AGPL-3.0 with Commercial License Exception for Individual / OPC use.
+AGPL-3.0 with a commercial license exception.
 See [LICENSE-COMMERCIAL.md](https://github.com/nebutra/nebutra-sailor/blob/main/LICENSE-COMMERCIAL.md) for details.
-Free for Individual / OPC: [get-license](https://nebutra.com/get-license).
+Commercial and individual licensing details: [get-license](https://nebutra.com/get-license).
 
 ---
 
-**Made with ♥ by [Nebutra](https://nebutra.com)** — Vibe Business for the AI-native era.
+**Built by [Nebutra](https://nebutra.com)** for teams shipping AI-native products.
