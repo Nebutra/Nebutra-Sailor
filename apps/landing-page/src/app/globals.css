@@ -293,6 +293,7 @@
 
 /* Hero background animation: direct video, tokenized fallback, and accessible motion opt-out. */
 .hero-motion-background {
+  height: min(92svh, 980px);
   overflow: hidden;
   background:
     linear-gradient(
