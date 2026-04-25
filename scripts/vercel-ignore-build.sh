@@ -54,8 +54,15 @@ fi
 git -C "$REPO_ROOT" fetch origin --depth=50 2>/dev/null || true
 
 # Check if anything in this app, shared packages, or root workspace config changed.
+# If Vercel's shallow clone cannot resolve the previous deployment SHA, default
+# to building. A false positive build is cheaper than accidentally skipping main.
+if ! DIFF_FILES=$(git -C "$REPO_ROOT" diff "$VERCEL_GIT_PREVIOUS_SHA" HEAD --name-only 2>/dev/null); then
+  echo "Could not compare against $VERCEL_GIT_PREVIOUS_SHA - building to avoid a false skip."
+  exit 1
+fi
+
 CHANGED=$(
-  git -C "$REPO_ROOT" diff "$VERCEL_GIT_PREVIOUS_SHA" HEAD --name-only 2>/dev/null \
+  echo "$DIFF_FILES" \
     | grep -E "^${APP_DIR}/|^packages/|^scripts/|^(package.json|pnpm-lock.yaml|pnpm-workspace.yaml|turbo.json|tsconfig.base.json|vercel.json|biome.json|lefthook.yml)$" \
     || true
 )
