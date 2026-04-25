@@ -3,11 +3,11 @@ name: Nightly Security Scan
 # Runs daily dependency audit and opens a GitHub issue if new vulnerabilities
 # are found. Catches newly disclosed CVEs in code that hasn't changed.
 #
-# Schedule: 02:30 UTC daily (off-peak; after CodeQL weekly runs at 02:00)
+# Schedule: 19:45 UTC daily / 03:45 Asia/Shanghai (off-hours maintenance window)
 
 on:
   schedule:
-    - cron: "30 2 * * *"
+    - cron: "45 19 * * *"
   workflow_dispatch: {}
 
 permissions:
