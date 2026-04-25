@@ -6,23 +6,23 @@
     "github": "GitHub",
     "signIn": "Iniciar Sesión",
     "getStarted": "Comenzar",
-    "about": "About Us",
-    "ideas": "Ideas",
+    "about": "Sobre nosotros",
+    "ideas": "Laboratorio de ideas",
     "opc": "Comunidad OPC",
     "roadmap": "Hoja de Ruta",
     "resources": "Recursos",
     "changelog": "Registro de cambios",
-    "impact": "Manifesto"
+    "impact": "Manifiesto"
   },
   "hero": {
-    "badge": "Nebutra Intelligence · Leading AI Infrastructure",
-    "headline1": "The engineering foundation",
-    "headline2": "for production-grade AI.",
-    "subheadline": "Nebutra Sailor is a Next.js SaaS framework engineered for AI founders. It natively integrates Agent orchestration, multi-modal capabilities, and an enterprise-level monetization suite, turning AI concepts into scalable commercial products—not just technical demos.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Get lifetime access",
-    "ctaExploreDemo": "Explore demo"
+    "badge": "Nebutra Intelligence · Infraestructura líder para IA",
+    "headline1": "La base de ingeniería",
+    "headline2": "para IA de producción.",
+    "subheadline": "Nebutra Sailor es un framework SaaS de Next.js diseñado para fundadores de IA. Integra de forma nativa orquestación de agentes, capacidades multimodales y una suite de monetización empresarial para convertir ideas de IA en productos comerciales escalables, no solo en demos técnicas.",
+    "copyLabel": "Copiar comando",
+    "copiedLabel": "Copiado",
+    "ctaGetAccess": "Obtener acceso de por vida",
+    "ctaExploreDemo": "Explorar demo"
   },
   "features": {
     "sectionTitle": "Infraestructura lista para usar, desde prototipos hasta escalar.",
@@ -40,11 +40,11 @@
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "¿Listo para desplegar tu próximo producto de IA?",
+    "subheading": "Inicializa localmente una arquitectura SaaS completa y cloud-native con un solo comando de terminal.",
+    "copyLabel": "Copiar comando",
+    "copiedLabel": "Copiado",
+    "startBuilding": "Empezar a construir"
   },
   "comparison": {
     "badge": "COMPARATIVA DE SAILOR",
@@ -144,24 +144,24 @@
     "newsletterError": "Algo salió mal"
   },
   "logoStrip": {
-    "tagline": "Engineered upon the premier technologies driving the modern web"
+    "tagline": "Diseñado sobre las tecnologías clave que impulsan la web moderna"
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "6 apps. 5 packages. One monorepo.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "cta": "Explore the monorepo architecture"
+    "badge": "ESTRUCTURA TURBOREPO",
+    "title": "6 apps. 5 paquetes. Un monorepo.",
+    "description": "Código compartido, builds paralelos y cero duplicación. Tipado end-to-end completo desde la base de datos hasta el frontend.",
+    "cta": "Explorar la arquitectura del monorepo"
   },
   "stats": {
-    "title": "By The Numbers",
-    "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "title": "En números",
+    "github": "Estrellas en GitHub",
+    "discord": "Miembros en Discord",
+    "setup": "Tiempo medio de setup",
+    "packages": "Paquetes del monorepo",
+    "ctaStar": "Dar estrella →",
+    "ctaJoin": "Unirse →",
+    "ctaStart": "Empezar →",
+    "ctaExplore": "Explorar →"
   },
   "legal": {
     "nav": {
@@ -1114,8 +1114,8 @@
     }
   },
   "metadata": {
-    "title": "Nebutra Intelligence | AI Native & SaaS Architecture",
-    "description": "The next-generation engineering framework tailored for mainstream AI startups and enterprises. Designed utilizing stringent permission frameworks, it provides an immediate, fully functional commercial value platform."
+    "title": "Nebutra Intelligence | Arquitectura AI Native y SaaS",
+    "description": "Framework de ingeniería de nueva generación para startups y empresas de IA. Diseñado con un modelo de permisos estricto, ofrece una plataforma comercial lista para usar."
   },
   "marketing": {
     "pricing": {

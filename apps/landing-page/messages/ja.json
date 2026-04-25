@@ -4,25 +4,25 @@
     "pricing": "料金",
     "docs": "ドキュメント",
     "github": "GitHub",
-    "signIn": "ログイン",
-    "getStarted": "無料開始",
-    "about": "About Us",
+    "about": "会社情報",
     "ideas": "アイデア",
     "opc": "OPC コミュニティ",
     "roadmap": "ロードマップ",
     "resources": "リソース",
+    "signIn": "ログイン",
+    "getStarted": "無料開始",
     "changelog": "更新履歴",
-    "impact": "Manifesto"
+    "impact": "マニフェスト"
   },
   "hero": {
-    "badge": "Nebutra Intelligence · Leading AI Infrastructure",
-    "headline1": "The engineering foundation",
-    "headline2": "for production-grade AI.",
-    "subheadline": "Nebutra Sailor is a Next.js SaaS framework engineered for AI founders. It natively integrates Agent orchestration, multi-modal capabilities, and an enterprise-level monetization suite, turning AI concepts into scalable commercial products—not just technical demos.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Get lifetime access",
-    "ctaExploreDemo": "Explore demo"
+    "badge": "Nebutra Intelligence · 先進AIインフラストラクチャ",
+    "headline1": "エンジニアリング基盤",
+    "headline2": "本番品質のAIのために。",
+    "subheadline": "Nebutra Sailorは、AI創業者のために設計されたNext.js SaaSフレームワークです。エージェントオーケストレーション、マルチモーダル機能、エンタープライズ級の収益化スイートを標準統合し、AIの構想を技術デモではなく、拡張可能な商用プロダクトへ変えます。",
+    "copyLabel": "コマンドをコピー",
+    "copiedLabel": "コピーしました",
+    "ctaGetAccess": "ライフタイムアクセスを取得",
+    "ctaExploreDemo": "デモを見る"
   },
   "features": {
     "sectionTitle": "プロトタイプからスケールまでの即戦力インフラストラクチャ。",
@@ -40,11 +40,11 @@
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "次のAIプロダクトをすぐにデプロイしませんか？",
+    "subheading": "単一のターミナルコマンドで、完全なクラウドネイティブSaaSアーキテクチャをローカルに初期化できます。",
+    "copyLabel": "コマンドをコピー",
+    "copiedLabel": "コピーしました",
+    "startBuilding": "構築を開始"
   },
   "comparison": {
     "badge": "SAILOR 比較",
@@ -113,6 +113,7 @@
       "community": "コミュニティ"
     },
     "links": {
+      "product": "Product",
       "features": "機能",
       "pricing": "料金プラン",
       "about": "会社概要",
@@ -127,13 +128,12 @@
       "terms": "利用規約",
       "cookies": "Cookie ポリシー",
       "refund": "返金ポリシー",
+      "licensing": "Licensing",
       "contact": "お問い合わせ",
       "faq": "よくある質問",
       "github": "GitHub",
       "discord": "Discord",
-      "twitter": "X (Twitter)",
-      "product": "Product",
-      "licensing": "Licensing"
+      "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 Nebutra Intelligence. 無断複写・転載を禁じます。",
     "statusOnline": "全システム正常稼働中",
@@ -144,24 +144,24 @@
     "newsletterError": "エラーが発生しました"
   },
   "logoStrip": {
-    "tagline": "Engineered upon the premier technologies driving the modern web"
+    "tagline": "モダンWebを支える主要テクノロジーの上に構築"
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "6 apps. 5 packages. One monorepo.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "cta": "Explore the monorepo architecture"
+    "badge": "TURBOREPO構成",
+    "title": "6つのアプリ。5つのパッケージ。1つのモノレポ。",
+    "description": "共有コード、並列ビルド、重複ゼロ。データベースからフロントエンドまで完全なエンドツーエンド型安全性を提供します。",
+    "cta": "モノレポアーキテクチャを見る"
   },
   "stats": {
-    "title": "By The Numbers",
-    "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "title": "数字で見る実績",
+    "github": "GitHubスター",
+    "discord": "Discordメンバー",
+    "setup": "平均セットアップ時間",
+    "packages": "モノレポパッケージ",
+    "ctaStar": "スターを付ける →",
+    "ctaJoin": "参加する →",
+    "ctaStart": "開始する →",
+    "ctaExplore": "見る →"
   },
   "legal": {
     "nav": {
@@ -226,6 +226,10 @@
       "heading": "Establish Support Connection",
       "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
       "contacts": {
+        "founder": {
+          "title": "Founder Direct",
+          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+        },
         "general": {
           "title": "Enterprise Consultation",
           "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
@@ -249,10 +253,6 @@
         "security": {
           "title": "Security Disclosures",
           "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
-        },
-        "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
         }
       },
       "formTitle": "Submission Portal",
@@ -279,10 +279,10 @@
         "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
       },
       "companyInfoTitle": "Operational Telemetry",
-      "socialMedia": "Primary Network Links",
       "companyNameChinese": "无锡云毓智能科技有限公司",
       "companyNameEnglish": "Wuxi Nebutra Intelligent Technology Co., Ltd.",
-      "companyAddress": "Wuxi, Jiangsu Province, China"
+      "companyAddress": "Wuxi, Jiangsu Province, China",
+      "socialMedia": "Primary Network Links"
     },
     "cookies": {
       "title": "Data Retention Protocols — Nebutra",
@@ -1114,8 +1114,8 @@
     }
   },
   "metadata": {
-    "title": "Nebutra Intelligence | AI Native & SaaS Architecture",
-    "description": "The next-generation engineering framework tailored for mainstream AI startups and enterprises. Designed utilizing stringent permission frameworks, it provides an immediate, fully functional commercial value platform."
+    "title": "Nebutra Intelligence | AI Native & SaaSアーキテクチャ",
+    "description": "主流のAIスタートアップと企業に向けた次世代エンジニアリングフレームワーク。厳格な権限モデルと商用価値を備えた、すぐに使えるプラットフォームを提供します。"
   },
   "marketing": {
     "pricing": {

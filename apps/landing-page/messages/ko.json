@@ -6,23 +6,23 @@
     "github": "GitHub",
     "signIn": "로그인",
     "getStarted": "시작하기",
-    "about": "About Us",
+    "about": "회사 소개",
     "ideas": "아이디어",
     "opc": "OPC 커뮤니티",
     "roadmap": "로드맵",
     "resources": "리소스",
     "changelog": "변경 이력",
-    "impact": "Manifesto"
+    "impact": "매니페스토"
   },
   "hero": {
-    "badge": "Nebutra Intelligence · Leading AI Infrastructure",
-    "headline1": "The engineering foundation",
-    "headline2": "for production-grade AI.",
-    "subheadline": "Nebutra Sailor is a Next.js SaaS framework engineered for AI founders. It natively integrates Agent orchestration, multi-modal capabilities, and an enterprise-level monetization suite, turning AI concepts into scalable commercial products—not just technical demos.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Get lifetime access",
-    "ctaExploreDemo": "Explore demo"
+    "badge": "Nebutra Intelligence · 선도적인 AI 인프라",
+    "headline1": "엔지니어링 기반",
+    "headline2": "프로덕션급 AI를 위해.",
+    "subheadline": "Nebutra Sailor는 AI 창업자를 위해 설계된 Next.js SaaS 프레임워크입니다. 에이전트 오케스트레이션, 멀티모달 기능, 엔터프라이즈급 수익화 제품군을 기본 통합해 AI 아이디어를 단순 기술 데모가 아닌 확장 가능한 상용 제품으로 전환합니다.",
+    "copyLabel": "명령어 복사",
+    "copiedLabel": "복사됨",
+    "ctaGetAccess": "평생 액세스 받기",
+    "ctaExploreDemo": "데모 보기"
   },
   "features": {
     "sectionTitle": "프로토타입에서 확장까지, 즉시 사용 가능한 인프라.",
@@ -40,11 +40,11 @@
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "다음 AI 제품을 배포할 준비가 되었나요?",
+    "subheading": "하나의 터미널 명령으로 완전한 클라우드 네이티브 SaaS 아키텍처를 로컬에서 초기화하세요.",
+    "copyLabel": "명령어 복사",
+    "copiedLabel": "복사됨",
+    "startBuilding": "구축 시작"
   },
   "comparison": {
     "badge": "SAILOR 비교",
@@ -144,24 +144,24 @@
     "newsletterError": "문제가 발생했습니다"
   },
   "logoStrip": {
-    "tagline": "Engineered upon the premier technologies driving the modern web"
+    "tagline": "현대 웹을 이끄는 핵심 기술 위에 구축"
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "6 apps. 5 packages. One monorepo.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "cta": "Explore the monorepo architecture"
+    "badge": "TURBOREPO 구조",
+    "title": "6개 앱. 5개 패키지. 하나의 모노레포.",
+    "description": "공유 코드, 병렬 빌드, 중복 제거. 데이터베이스부터 프론트엔드까지 완전한 엔드투엔드 타입 안정성을 제공합니다.",
+    "cta": "모노레포 아키텍처 살펴보기"
   },
   "stats": {
-    "title": "By The Numbers",
-    "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "title": "숫자로 보는 지표",
+    "github": "GitHub 스타",
+    "discord": "Discord 멤버",
+    "setup": "평균 설정 시간",
+    "packages": "모노레포 패키지",
+    "ctaStar": "스타 주기 →",
+    "ctaJoin": "참여하기 →",
+    "ctaStart": "시작하기 →",
+    "ctaExplore": "살펴보기 →"
   },
   "legal": {
     "nav": {
@@ -1114,8 +1114,8 @@
     }
   },
   "metadata": {
-    "title": "Nebutra Intelligence | AI Native & SaaS Architecture",
-    "description": "The next-generation engineering framework tailored for mainstream AI startups and enterprises. Designed utilizing stringent permission frameworks, it provides an immediate, fully functional commercial value platform."
+    "title": "Nebutra Intelligence | AI Native & SaaS 아키텍처",
+    "description": "주요 AI 스타트업과 기업을 위한 차세대 엔지니어링 프레임워크. 엄격한 권한 모델과 즉시 사용 가능한 상용 플랫폼 가치를 제공합니다."
   },
   "marketing": {
     "pricing": {

@@ -6,7 +6,7 @@
     "github": "开源社区",
     "about": "关于我们",
     "ideas": "点子广场",
-    "opc": "OPC社区",
+    "opc": "平台能力",
     "roadmap": "路线图",
     "resources": "资源",
     "signIn": "登录控制台",
@@ -18,7 +18,7 @@
     "badge": "Nebutra Intelligence · 领先的 AI SaaS 基础架构",
     "headline1": "专为严肃创客打造的",
     "headline2": "Next.js AI SaaS 框架。",
-    "subheadline": "基于 <highlight>生产就绪</highlight> 的底座与 <highlight>可扩展架构</highlight> 进行开发，为您节省数周样板代码编写时间并先于竞争对手发布。专为 <highlight>AI 编程智能体及开发者</highlight> 优化。",
+    "subheadline": "基于 <highlight>生产就绪</highlight> 的底座与 <highlight>受治理的架构</highlight> 进行开发，跳过数周重复平台工作。专为 <highlight>AI 编程智能体及开发者</highlight> 优化。",
     "copyLabel": "复制环境配置",
     "copiedLabel": "代码已复制",
     "ctaGetAccess": "获取终身访问权限",
@@ -31,8 +31,8 @@
       "description": "内置且久经考验的大模型编排引擎。绕开底层死胡同，直接通过结构化的智能 API 开展业务。"
     },
     "item1": {
-      "title": "开放产品社区 (OPC)",
-      "description": "未来的 AI 产品需要生态系统，而非孤岛。提供标准化的插件骨架，将应用直接融入全球开发者网络。"
+      "title": "受治理的平台底座",
+      "description": "为 AI Native SaaS 团队提供统一的平台基线。把脚手架、运行时能力和交付面收敛到一个可审计、可扩展的体系里，而不是临时拼装工具链。"
     },
     "item2": {
       "title": "全自动 SaaS 商业底座",
@@ -123,7 +123,7 @@
       "roadmap": "产品路线图",
       "docs": "开发者文档",
       "ideas": "创意实验室",
-      "opc": "开放产品社区",
+      "opc": "平台能力",
       "privacy": "隐私政策",
       "terms": "服务条款",
       "cookies": "Cookie 政策",
@@ -178,12 +178,12 @@
   },
   "legalPages": {
     "about": {
-      "title": "关于我们 — 元独角兽引擎",
+      "title": "关于我们 — 受治理的 AI 平台",
       "description": "了解 Nebutra 的商业愿景以及对构建 AI Native + OPC Infrastructure 解决方案的承诺。",
       "heading": "超级个体时代",
       "subheading": "终结依靠人海战术的扩张主义，用最极端的 AI 杠杆，成就有创造力的「超级个体」。",
       "missionTitle": "抵抗人治腐化的新秩序",
-      "missionP1": "Nebutra 致力于成为全球首个元独角兽生态系统。在传统商业世界中，规模扩张往往伴随官僚主义与内部消耗。我们用极其激进的「代码即法则」原则去终结这一规模诅咒。我们不仅要孵化独角兽，更要构建一台能够跨越资本壁垒、用自动化工作流对抗人类管理熵增的造物主引擎。",
+      "missionP1": "Nebutra 正在构建一套面向长期主义交付的受治理 AI 平台，让团队依赖的不是短生命周期的 starter，而是可审计、可扩展、可持续演进的平台基线。面对规模增长带来的官僚化和熵增，我们选择用代码治理、自动化与平台纪律来回应。",
       "missionP2": "商业的本质是生产要素的重组——但在过去它充满了门阀与信息差的摩擦力。在 Nebutra 的超级神经网络里，任何独立开发者只要交付可验证的工作量证明，底层的推荐算法与 Sleptons 路由器就会精准地将顶尖人才、信任架构与算法资本自动输送到位，从而将「创业」降维成一条充满确定性的标准化路径。",
       "missionP3": "Nebutra 坚决反对传统企业“加人加层级”的解法。我们在所有业务节点推动 AI Agent 100% 自动托底。我们绝不雇佣被动执行的螺丝钉，只吸纳、投资并成就那些最具洞察力的造物主。",
       "missionP4": "",
@@ -1207,10 +1207,10 @@
       "frameworkNuxt": "Nuxt (开发中)",
       "frameworkTanStack": "TanStack (内测)",
       "solo": {
-        "badge": "SOLO / 一人企业 (OPC)",
+        "badge": "INDIVIDUAL / 个人",
         "price": "免费",
         "period": "永久",
-        "desc": "专为在 AGPL 协议下执行快速 MVP 迭代的独立开发者和一人公司 (OPC) 打造。",
+        "desc": "适合在 AGPL 基础上快速验证产品方向的个人开发者。",
         "cta": "克隆代码库",
         "f1": "完整的 Next.js 16 SaaS 核心",
         "f2": "无限量的个人独立商用级应用接入授权",
@@ -1222,7 +1222,7 @@
         "badge": "STARTUP / 敏捷初创",
         "price": "$799",
         "period": "终身授权",
-        "desc": "极客团队的云上超级基石。",
+        "desc": "适合建立在 Nebutra 平台基线之上的小团队。",
         "cta": "购买 Startup 商业授权",
         "f1": "多达 5 名团队成员的联合研制并发访问席位",
         "f2": "团队主体无界限商用的企业级应用下放额度",
@@ -1234,7 +1234,7 @@
         "badge": "AGENCY / 商业工坊",
         "price": "$1,499",
         "period": "终身授权",
-        "desc": "软件出海与数字中台中枢工厂的不二之选。",
+        "desc": "适合交付可重复客户平台的代理商与运营团队。",
         "cta": "购买 Agency 商业授权",
         "f1": "满载配额！最多 10 席架构师研发权限同步分发",
         "f2": "支持向乙方客户无限量出售产品闭源程序的再分发许可",
@@ -1307,7 +1307,7 @@
       },
       "step3": {
         "title": "3. 专注构建",
-        "desc": "将全部精力集中在您 SaaS 独有的核心业务逻辑和 UI 交互上，彻底告别样板代码。"
+        "desc": "把精力集中在产品逻辑和 UI 上，平台底层能力已预先接好。"
       },
       "step4": {
         "title": "4. 全球部署",
@@ -1344,12 +1344,12 @@
       "t2": {
         "quote": "这种企业级 Turborepo 脚手架简直太棒了。类型检查、Lint 与构建任务都可以瞬间完成缓存命中，开发体验极佳。",
         "author": "Marcus Dev",
-        "role": "Solo Founder (独立创客)"
+        "role": "产品工程师"
       },
       "t3": {
         "quote": "终于找到了一个不像是黑盒的架构级脚手盘。极高的代码整洁度与极佳的设计品味让我惊叹。",
         "author": "Emma Founder",
-        "role": "Indie Hacker (独立开发者)"
+        "role": "工程负责人"
       }
     },
     "productDemo": {
@@ -1464,7 +1464,7 @@
     "badge": "🚧 建设中",
     "description": {
       "ideas": "我们正在为您打造极具极客精神的全新体验模块，它将随 Nebutra-Sailor 的下一次核心架构更新同步上线。",
-      "opc": "专属 OPC 开发者们的终极中枢正在构建中。请留意开源社区发版矩阵以获取正式挂载通知。",
+      "opc": "更完整的平台能力介绍正在整理中。请关注更新日志与路线图获取后续发布。",
       "roadmap": "从基础架构到企业规模——产品阶段、大版本里程碑与融资愿景一览。"
     },
     "returnBtn": "返回首页"
@@ -1489,7 +1489,7 @@
     "title": "一个基座，无限可能。",
     "description": "Nebutra Sailor 驱动全球市场的下一代 SaaS 产品。",
     "tabs": {
-      "opc": "AI 与 OPC 创业生态",
+      "opc": "智能体运营中枢",
       "ip": "个人 IP 矩阵",
       "multimodal": "多模态 AI SaaS",
       "enterprise": "现代企业官网",
@@ -1500,11 +1500,11 @@
     },
     "content": {
       "opc": {
-        "title": "领先的 AI 原生与 OPC 一人公司创业生态",
-        "desc": "未来的 AI 产品需要生态，而不是孤岛。专为 OPC 理念设计——标准化插件架构、开发者门户和 SDK 自动生成，连接超级个体与企业级生态网络。",
+        "title": "AI 原生运营中枢",
+        "desc": "将智能体工作流、内部工具和集成面运行在同一套受治理的平台基线之上。通过注册中心扩展、运营控制台和可复用运行时模式，让系统在扩张时仍保持一致性。",
         "features": {
-          "f1": "插件架构与市场",
-          "f2": "自动生成开发者门户"
+          "f1": "工具注册中心与集成接口",
+          "f2": "运营控制台与内部工作台"
         }
       },
       "ip": {
@@ -1640,28 +1640,28 @@
   },
   "impact": {
     "hero_eyebrow": "Nebutra 核心愿景白皮书",
-    "hero_title": "造物主生态引擎",
-    "hero_subtitle": "我们不仅要孵化独角兽，更要构建一条能够持续裂变独角兽的母体引擎。",
+    "hero_title": "受治理的 AI 平台",
+    "hero_subtitle": "我们关注的是 AI Native 产品团队真正依赖的平台底座、治理模型与 Harness 层能力。",
     "phil_title": "Ⅰ. 核心哲学",
-    "phil_headline": "无限裂变，而非无限扩张",
-    "phil_desc": "传统商业巨头常陷入规模诅咒，依赖人海战术与层级堆叠维持统治。Nebutra 正在终结旧秩序。我们的社会级使命是将「创业」降维成一种智能化、轻量化、民主化的确定性路径，让它成为数字时代最优秀头脑的第一默认选项。这就是元独角兽（Meta-Unicorn）的核心哲学。",
+    "phil_headline": "治理优先，而非胶水式拼装",
+    "phil_desc": "团队不应在每次启动 AI Native 产品时都重复搭一遍平台层。Nebutra 的目标，是把这类重复平台工作沉淀成一套可审计、可扩展、可持续交付的基线能力。",
     "infra_title": "Ⅱ. 超级基建",
-    "infra_headline": "AI 原生的全矩阵聚合体",
-    "infra_desc": "Nebutra 不是对现有工具的简单缝合，而是打造覆盖“灵感”到“垄断”的全生命周期造物主引擎。",
+    "infra_headline": "AI 原生平台层",
+    "infra_desc": "Nebutra 不是对现有工具的临时缝合，而是一套覆盖脚手架、运行时集成、工程治理与交付路径的平台层。",
     "infra_1_title": "极大集成架构模型",
-    "infra_1_desc": "超越传统协同工具。以 50+ 模块封装鉴权、交易、多租户等痛点，单兵一周交付独角兽级产品。",
+    "infra_1_desc": "以受治理的 monorepo 基线交付多租户、计费、认证、文档与 AI 集成等核心能力。",
     "infra_2_title": "分发与验证台",
-    "infra_2_desc": "抛弃传统买量流量场，引入黑客极客生态驱动推荐分发。发布首日即获取真实市场的毒打与检验。",
+    "infra_2_desc": "通过可验证脚手架、可复现交付和面向运营的控制面，把平台风险前置收敛。",
     "infra_3_title": "Sleptons 路由器",
-    "infra_3_desc": "意图颠覆猎头逻辑，基于工作量证明 (Proof of Work) 深度语义匹配合伙人技术栈与共鸣。",
+    "infra_3_desc": "通过注册中心驱动的扩展能力与集成接口，让团队在不撕裂代码库的前提下持续演进。",
     "infra_4_title": "算法驱动新资本",
-    "infra_4_desc": "资本注入不看 PPT 与人情人脉，只评估真实的 MRR 曲线与 Git 交付速度，让钱无摩擦地自由流动。",
+    "infra_4_desc": "以 Harness 原语、MCP 互操作与工作流编排，为下一代 AI Native 软件提供稳定的系统坐标。",
     "route_title": "Ⅲ. 全要素路由",
-    "route_headline": "消除生产力流动的绝对摩擦力",
-    "route_desc": "Nebutra 正在构建一张穿透物理与门阀壁垒的超级神经网络。让顶尖的代码、人才组建信任；让资本毫不犹豫地打向这些节点。信息再无滞留，共识畅通无阻，实现全要素低摩擦再重组。",
+    "route_headline": "清晰的升级路径",
+    "route_desc": "平台的成长应建立在兼容性检查、迁移机制与可观测运行时之上，而不是一次次推倒重来和隐性漂移。",
     "org_title": "Ⅳ. 组织演进",
-    "org_headline": "逆转大公司病：对抗人治腐化",
-    "org_desc": "当面临规模爆发，坚决反对依靠“增加中层管理”来续命。在我们的共识里，代码构筑规则，AI 代替人工。让人类的天才大脑只保留极少数用来专注「创造」与「洞察」。"
+    "org_headline": "面向规模的运营纪律",
+    "org_desc": "通过自动化、架构测试与治理棘轮，让平台在团队和负载增长时持续变好。人的注意力应该留给产品判断，而不是反复清理基础设施遗留问题。"
   },
   "ui": {
     "search": {
@@ -1774,8 +1774,8 @@
     "versionTitleSuffix": "Nebutra 更新日志"
   },
   "roadmapMeta": {
-    "title": "元独角兽路线图 — Nebutra",
-    "description": "Nebutra 造物主引擎生态的五大演化阶段。"
+    "title": "平台路线图 — Nebutra",
+    "description": "Nebutra 平台基线、Harness 运行时与升级路径的演进路线。"
   },
   "blogMeta": {
     "title": "博客 — Nebutra",
@@ -1783,6 +1783,6 @@
   },
   "getLicenseMeta": {
     "title": "获取授权 — Nebutra",
-    "description": "加入 Nebutra 社区，2 分钟获取你的免费授权。"
+    "description": "2 分钟获取 Nebutra 授权与平台访问权限。"
   }
 }
