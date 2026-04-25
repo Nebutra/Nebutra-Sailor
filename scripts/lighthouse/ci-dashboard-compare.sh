@@ -181,6 +181,7 @@ run_snapshot_once() {
       pnpm config set store-dir /pnpm-store
       export CI=1
       export SKIP_ENV_VALIDATION=true
+      export NEBUTRA_SKIP_GIT_HOOKS=1
 
       rm -f apps/web/.env.local
 

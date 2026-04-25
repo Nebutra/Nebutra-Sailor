@@ -41,7 +41,7 @@
     "docs:cli": "tsx scripts/generate-cli-docs.ts",
     "template:check": "tsx scripts/template-check.ts",
     "template:build": "tsx scripts/template-build.ts",
-    "prepare": "lefthook install",
+    "prepare": "node scripts/install-git-hooks.mjs",
     "release": "changeset publish",
     "version:packages": "changeset version",
     "changeset": "changeset",
