@@ -35,7 +35,7 @@ const securityHeaders = [
   {
     key: "Content-Security-Policy",
     value:
-      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://svgl.app https://cdn.simpleicons.org https://github.com https://images.unsplash.com https://avatars.githubusercontent.com; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';",
+      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://svgl.app https://cdn.simpleicons.org https://github.com https://images.unsplash.com https://avatars.githubusercontent.com; font-src 'self' data:; media-src 'self' https://d8j0ntlcm91z4.cloudfront.net; connect-src 'self'; frame-ancestors 'none';",
   },
 ];
 

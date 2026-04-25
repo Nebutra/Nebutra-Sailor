@@ -291,6 +291,105 @@
   background-size: 60px 60px;
 }
 
+/* Hero background animation: direct video, tokenized fallback, and accessible motion opt-out. */
+.hero-motion-background {
+  overflow: hidden;
+  background:
+    linear-gradient(
+      180deg,
+      hsl(var(--background) / 0.42) 0%,
+      hsl(var(--background) / 0.18) 48%,
+      hsl(var(--background) / 0.98) 100%
+    ),
+    radial-gradient(1100px 640px at 50% 16%, hsl(var(--primary) / 0.16), transparent 62%),
+    hsl(var(--background));
+}
+
+.dark .hero-motion-background {
+  background:
+    linear-gradient(
+      180deg,
+      hsl(var(--background) / 0.68) 0%,
+      hsl(var(--background) / 0.34) 50%,
+      hsl(var(--background)) 100%
+    ),
+    radial-gradient(1100px 640px at 50% 12%, hsl(var(--primary) / 0.18), transparent 64%),
+    hsl(var(--background));
+}
+
+.hero-motion-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.58;
+  filter: saturate(1.08) contrast(1.04);
+  transform: scale(1.015);
+}
+
+.dark .hero-motion-video {
+  opacity: 0.5;
+  filter: brightness(0.86) saturate(1.08) contrast(1.1);
+}
+
+.hero-motion-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, hsl(var(--foreground) / 0.16) 1px, transparent 1.35px);
+  background-position: 50% 0;
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(180deg, black 0%, black 54%, transparent 92%);
+  mask-image: linear-gradient(180deg, black 0%, black 54%, transparent 92%);
+  opacity: 0.34;
+}
+
+.dark .hero-motion-pattern {
+  opacity: 0.22;
+}
+
+.hero-motion-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      hsl(var(--background) / 0.9) 0%,
+      hsl(var(--background) / 0.48) 34%,
+      hsl(var(--background) / 0.56) 66%,
+      hsl(var(--background) / 0.92) 100%
+    ),
+    linear-gradient(
+      180deg,
+      hsl(var(--background) / 0.3) 0%,
+      hsl(var(--background) / 0.1) 38%,
+      hsl(var(--background)) 100%
+    );
+}
+
+.dark .hero-motion-veil {
+  background:
+    linear-gradient(
+      90deg,
+      hsl(var(--background) / 0.92) 0%,
+      hsl(var(--background) / 0.42) 34%,
+      hsl(var(--background) / 0.52) 66%,
+      hsl(var(--background) / 0.94) 100%
+    ),
+    linear-gradient(
+      180deg,
+      hsl(var(--background) / 0.5) 0%,
+      hsl(var(--background) / 0.16) 40%,
+      hsl(var(--background)) 100%
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-motion-video {
+    display: none;
+  }
+}
+
 /* Landing section container queries */
 .feature-cards-cq {
   container: feature-cards / inline-size;
