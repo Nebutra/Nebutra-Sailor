@@ -11,7 +11,8 @@ All Nebutra backend services and packages share a single logger instance rather 
 ## Usage
 
 ```typescript
-import { logger, initOtel } from "@nebutra/logger";
+import { logger } from "@nebutra/logger";
+import { initOtel } from "@nebutra/logger/otel";
 
 // At process startup
 initOtel({ serviceName: "api-gateway" });

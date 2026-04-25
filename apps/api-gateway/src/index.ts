@@ -11,7 +11,8 @@ import {
   invalidateBalanceCache,
   registerCompletionWorker,
 } from "@nebutra/gateway-core";
-import { initOtel, logger } from "@nebutra/logger";
+import { logger } from "@nebutra/logger";
+import { initOtel } from "@nebutra/logger/otel";
 import { closeQueue } from "@nebutra/queue";
 import { trace } from "@opentelemetry/api";
 import { bodyLimit } from "hono/body-limit";

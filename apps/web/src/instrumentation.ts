@@ -9,7 +9,7 @@ export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     // ── OpenTelemetry ───────────────────────────────────────────────────────
     try {
-      const { initOtel } = await import("@nebutra/logger");
+      const { initOtel } = await import("@nebutra/logger/otel");
       initOtel({ serviceName: "web" });
     } catch (err) {
       process.stderr.write(
