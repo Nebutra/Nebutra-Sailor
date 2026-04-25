@@ -82,7 +82,7 @@ export default async function RootLayout({
         <body className="antialiased">
           <a
             href="#main-content"
-            className="sr-only fixed left-3 top-3 z-100 rounded-md bg-blue-9 px-3 py-2 text-sm font-medium text-white focus:not-sr-only"
+            className="fixed left-3 top-3 z-[100] -translate-y-20 rounded-[var(--radius-md)] bg-[var(--blue-9)] px-3 py-2 text-sm font-medium text-white opacity-0 transition focus:translate-y-0 focus:opacity-100"
           >
             Skip to content
           </a>

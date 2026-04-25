@@ -1,7 +1,6 @@
 "use client";
 
-import { Button, Input } from "@nebutra/ui/components";
-import { Label, Separator } from "@nebutra/ui/primitives";
+import { Button, Input, Label, Separator } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -15,57 +14,66 @@ export function SignInForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     setLoading(true);
     setError("");
 
-    try {
-      const response = await fetch("/api/auth/sign-in/email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+    void fetch("/api/auth/sign-in/email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          const data = await response
+            .json()
+            .catch((): { error?: string } => ({ error: undefined }));
+          setError(data.error ?? "Sign in failed");
+          setLoading(false);
+          return;
+        }
+
+        router.push("/");
+      })
+      .catch((err: unknown) => {
+        setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
+        setLoading(false);
       });
-
-      if (!response.ok) {
-        const data = await response.json();
-        setError(data.error ?? "Sign in failed");
-        return;
-      }
-
-      router.push("/");
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
-    }
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-[var(--neutral-12)]">
+    <div className="w-full">
+      <div className="mb-8">
+        <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
           Log in to Nebutra
         </h1>
-        <p className="mt-1 text-sm text-[var(--neutral-9)]">Welcome back</p>
+        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">Connect to Nebutra with:</p>
       </div>
 
       <OAuthButtons mode="signIn" />
 
-      <div className="relative">
+      <div className="relative my-6">
         <Separator />
-        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-xs text-[var(--neutral-9)]">
+        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--neutral-1)] px-3 text-xs font-medium text-[var(--neutral-9)]">
           Or continue with
         </span>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-5"
+        aria-busy={loading}
+        aria-describedby={error ? "sign-in-error" : undefined}
+      >
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
+            size="lg"
+            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -79,7 +87,7 @@ export function SignInForm() {
             <Label htmlFor="password">Password</Label>
             <Link
               href="/sign-in#/forgot-password"
-              className="text-xs text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
+              className="text-xs font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
             >
               Forgot password?
             </Link>
@@ -87,6 +95,9 @@ export function SignInForm() {
           <Input
             id="password"
             type="password"
+            size="lg"
+            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -94,14 +105,27 @@ export function SignInForm() {
           />
         </div>
 
-        {error && <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>}
+        {error && (
+          <p
+            id="sign-in-error"
+            className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+            role="alert"
+            aria-live="polite"
+          >
+            {error}
+          </p>
+        )}
 
-        <Button htmlType="submit" className="w-full" disabled={loading}>
+        <Button
+          type="submit"
+          className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={loading}
+        >
           {loading ? "Signing in…" : "Log in"}
         </Button>
       </form>
 
-      <p className="text-center text-sm text-[var(--neutral-9)]">
+      <p className="mt-6 text-sm text-[var(--neutral-9)]">
         New to Nebutra?{" "}
         <Link
           href="/sign-up"

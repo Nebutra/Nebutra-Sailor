@@ -1,5 +1,5 @@
 import { cn } from "@nebutra/ui/utils";
-import Link from "next/link";
+import Image from "next/image";
 
 interface AuthBannerProps {
   className?: string;
@@ -7,71 +7,64 @@ interface AuthBannerProps {
 
 export function AuthBanner({ className }: AuthBannerProps) {
   return (
-    <div
+    <aside
       className={cn(
-        "relative hidden overflow-hidden lg:flex lg:flex-col",
-        "bg-[color:var(--neutral-1)]",
+        "relative isolate hidden min-h-[100svh] overflow-hidden border-r border-[var(--neutral-7)] bg-[var(--neutral-2)] lg:flex",
         className,
       )}
     >
-      {/* Decorative radial gradient glow — bottom-right origin */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 -z-30"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 100% 100%, color-mix(in srgb, var(--brand-primary) 35%, transparent) 0%, color-mix(in srgb, var(--brand-accent) 18%, transparent) 40%, transparent 70%)",
+            "linear-gradient(150deg, color-mix(in srgb, var(--cyan-9) 10%, var(--neutral-1)) 0%, var(--neutral-1) 42%, color-mix(in srgb, var(--blue-9) 10%, var(--neutral-1)) 100%)",
         }}
       />
-
-      {/* Halftone dot grid overlay */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-20"
+        className="pointer-events-none absolute -inset-12 -z-20 blur-2xl saturate-150"
+        style={{
+          background:
+            "radial-gradient(120% 92% at -18% 0%, color-mix(in srgb, var(--cyan-9) 30%, transparent) 0%, transparent 62%), radial-gradient(118% 96% at 112% 104%, color-mix(in srgb, var(--blue-9) 18%, transparent) 0%, transparent 64%), linear-gradient(145deg, color-mix(in srgb, var(--blue-9) 9%, transparent), transparent 48%, color-mix(in srgb, var(--cyan-9) 12%, transparent))",
+          opacity: 1,
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.24]"
         style={{
           backgroundImage:
-            "radial-gradient(circle, color-mix(in srgb, var(--neutral-12) 60%, transparent) 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
+            "radial-gradient(circle, color-mix(in srgb, var(--neutral-12) 46%, transparent) 1px, transparent 1.5px), linear-gradient(90deg, color-mix(in srgb, var(--neutral-12) 8%, transparent) 1px, transparent 1px), linear-gradient(0deg, color-mix(in srgb, var(--neutral-12) 8%, transparent) 1px, transparent 1px)",
+          backgroundSize: "18px 18px, 92px 92px, 92px 92px",
+          maskImage:
+            "linear-gradient(90deg, black 0%, rgba(0,0,0,0.92) 58%, rgba(0,0,0,0.36) 100%)",
+          WebkitMaskImage:
+            "linear-gradient(90deg, black 0%, rgba(0,0,0,0.92) 58%, rgba(0,0,0,0.36) 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, transparent 58%, color-mix(in srgb, var(--neutral-1) 34%, transparent) 100%), linear-gradient(0deg, color-mix(in srgb, var(--neutral-1) 24%, transparent) 0%, transparent 40%, color-mix(in srgb, var(--neutral-1) 12%, transparent) 100%)",
         }}
       />
 
-      {/* Top-left Home link */}
-      <div className="relative z-10 p-8">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-white"
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-            <path
-              d="M10 12L6 8l4-4"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          Home
-        </Link>
+      <div className="relative z-10 flex w-full flex-col items-center justify-center px-12 text-center">
+        <Image
+          src="/brand/logo-color.svg"
+          alt="Nebutra"
+          width={68}
+          height={64}
+          className="mb-8 h-20 w-auto drop-shadow-[0_20px_54px_color-mix(in_srgb,var(--blue-9)_24%,transparent)]"
+          priority
+        />
+        <h2 className="max-w-[20rem] text-balance text-3xl font-semibold leading-tight tracking-tight text-[var(--neutral-12)]">
+          Build governed AI products without slowing down.
+        </h2>
       </div>
-
-      {/* Center branding */}
-      <div className="relative z-10 flex flex-1 flex-col items-start justify-center px-12 pb-16">
-        {/* Nebutra Logo */}
-        <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-xl)] bg-[color:var(--blue-9)]">
-            <span className="text-lg font-black text-white">N</span>
-          </div>
-          <span className="text-2xl font-bold text-white">Nebutra</span>
-        </div>
-
-        {/* Tagline */}
-        <p className="max-w-xs text-xl font-semibold leading-snug text-white">
-          Build faster with AI-native infrastructure.
-        </p>
-        <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/50">
-          Enterprise-grade AI, without the enterprise complexity.
-        </p>
-      </div>
-    </div>
+    </aside>
   );
 }
