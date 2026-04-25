@@ -35,6 +35,15 @@ if [[ "$COMMIT_REF" == dependabot/* ]] || [[ "$AUTHOR_LOGIN" == "dependabot[bot]
   exit 0
 fi
 
+# This repo is maintained from main only. Preview branch deployments are
+# intentionally skipped so Vercel does not spend 45 minutes building stale
+# integration branches.
+if [[ -n "$COMMIT_REF" && "$COMMIT_REF" != "main" ]]; then
+  echo "Non-main deployment detected for ref '$COMMIT_REF'"
+  echo "→ Skipping build; only main is deployed."
+  exit 0
+fi
+
 # If Vercel has no previous deployment SHA, always build for non-Dependabot refs.
 if [ -z "${VERCEL_GIT_PREVIOUS_SHA:-}" ]; then
   echo "No previous deployment found — building."
