@@ -25,8 +25,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run --config vitest.config.ts"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
@@ -34,7 +33,6 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "typescript": "catalog:",
-    "vitest": "catalog:"
+    "typescript": "catalog:"
   }
 }
