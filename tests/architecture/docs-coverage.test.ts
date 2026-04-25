@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, statSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as fc from "fast-check";
@@ -6,48 +6,41 @@ import { describe, expect, it } from "vitest";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "../..");
-const DOCS_HUB = resolve(ROOT, "apps/docs");
+const DOCS_ROOT = resolve(ROOT, "apps/sailor-docs/content/docs");
 
-interface NavigationGroup {
-  group: string;
-  pages: string[];
-}
-
-interface MintConfig {
-  navigation: NavigationGroup[];
-}
-
-function extractPagesFromMintJson(): string[] {
-  const mintJsonPath = resolve(DOCS_HUB, "mint.json");
-  const raw = readFileSync(mintJsonPath, "utf-8");
-  const config: MintConfig = JSON.parse(raw);
+function collectMdxPages(current = DOCS_ROOT): string[] {
+  if (!existsSync(current)) return [];
 
   const pages: string[] = [];
-  for (const group of config.navigation) {
-    for (const page of group.pages) {
-      pages.push(page);
+  for (const entry of readdirSync(current)) {
+    const absolute = resolve(current, entry);
+    const stat = statSync(absolute);
+
+    if (stat.isDirectory()) {
+      pages.push(...collectMdxPages(absolute));
+      continue;
+    }
+
+    if (entry.endsWith(".mdx")) {
+      pages.push(absolute.replace(`${DOCS_ROOT}/`, "").replace(/\.mdx$/, ""));
     }
   }
-  return pages;
-}
 
-function mdxFileExistsForPage(page: string): boolean {
-  const mdxPath = resolve(DOCS_HUB, `${page}.mdx`);
-  return existsSync(mdxPath);
+  return pages.sort();
 }
 
 describe("Property 1: Docs Coverage", () => {
-  const pages = extractPagesFromMintJson();
+  const pages = collectMdxPages();
 
-  it("every page in mint.json navigation has a corresponding .mdx file", () => {
+  it("every discovered docs page resolves to an .mdx file", () => {
     expect(pages.length).toBeGreaterThan(0);
 
     fc.assert(
       fc.property(fc.constantFrom(...pages), (page) => {
-        const exists = mdxFileExistsForPage(page);
+        const exists = existsSync(resolve(DOCS_ROOT, `${page}.mdx`));
         if (!exists) {
           throw new Error(
-            `Page "${page}" listed in mint.json but no .mdx file found at: apps/docs-hub/${page}.mdx`,
+            `Discovered docs page "${page}" does not resolve under apps/sailor-docs.`,
           );
         }
         return true;
@@ -56,7 +49,18 @@ describe("Property 1: Docs Coverage", () => {
     );
   });
 
-  it("mint.json navigation has at least 20 pages", () => {
+  it("docs content has at least 20 pages", () => {
     expect(pages.length).toBeGreaterThanOrEqual(20);
+  });
+
+  it("primary localized docs surfaces are populated", () => {
+    const pagesByLocale = pages.reduce<Record<string, number>>((acc, page) => {
+      const [locale] = page.split("/");
+      acc[locale] = (acc[locale] ?? 0) + 1;
+      return acc;
+    }, {});
+
+    expect(pagesByLocale.en).toBeGreaterThanOrEqual(20);
+    expect(pagesByLocale.zh).toBeGreaterThanOrEqual(20);
   });
 });
