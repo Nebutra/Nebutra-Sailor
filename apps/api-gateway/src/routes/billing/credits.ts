@@ -57,7 +57,7 @@ const TransactionSchema = z.object({
   description: z.string().optional(),
   expiresAt: z.string().optional(),
   relatedId: z.string().optional(),
-  metadata: z.record(z.string(), z.unknown()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
   createdAt: z.string(),
 });
 

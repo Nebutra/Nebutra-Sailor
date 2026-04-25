@@ -35,7 +35,7 @@ const UsageRequestSchema = z.object({
     .enum(["API_CALL", "AI_TOKEN", "STORAGE", "COMPUTE", "BANDWIDTH", "CUSTOM"])
     .default("API_CALL"),
   unit: z.string().min(1).default("unit"),
-  metadata: z.record(z.string(), z.unknown()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
 const UsageResponseSchema = z.object({

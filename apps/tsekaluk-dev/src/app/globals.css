@@ -112,9 +112,9 @@
   /*
    * Font System: "Tseka Editorial Stack"
    *
-   * --font-sans-var  → injected by Instrument_Sans (next/font)
-   * --font-playfair  → injected by Playfair_Display (next/font)
-   * --font-mono-var  → injected by JetBrains_Mono (next/font)
+   * --font-sans-var  → local/system fallback for Instrument Sans
+   * --font-playfair  → local/system fallback for Playfair Display
+   * --font-mono-var  → local/system fallback for JetBrains Mono
    * "AlibabaCJK"     → local @font-face, unicode-range scoped (CJK only)
    * "SourceHanSerifCJK" → local @font-face, unicode-range scoped (CJK only)
    *
@@ -128,13 +128,18 @@
    *   Display → SmileySans / AlimamaDigital (explicit class/selector)
    *   Pixel  → ArkPixel (explicit class/selector)
    */
+  --font-sans-var:
+    "Instrument Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-playfair: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono-var: "JetBrains Mono", "Fira Code", "SFMono-Regular", Consolas, "Courier New", monospace;
+  --font-dela-gothic: "Dela Gothic One", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   --font-sans: var(--font-sans-var), "AlibabaCJK", system-ui, sans-serif;
   --font-serif: var(--font-playfair), "LXGWWenKai", serif;
-  --font-mono: var(--font-mono-var), "Fira Code", Consolas, "Courier New", monospace;
+  --font-mono: var(--font-mono-var);
   --font-display-cn: "SmileySans", "AlibabaCJK", sans-serif;
   --font-display-digit: "AlimamaDigital", "SmileySans", sans-serif;
   --font-pixel: "ArkPixel", monospace;
-  /* Dela Gothic One injected via next/font as --font-dela-gothic */
   --font-display-en: var(--font-dela-gothic, "Impact"), system-ui, sans-serif;
 
   /* Type scale — letter spacing */

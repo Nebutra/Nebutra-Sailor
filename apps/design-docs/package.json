@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "lint:links": "node ./scripts/lint-api.mjs",
+    "lint:links": "node ./scripts/lint-links.mjs",
     "sync-obsidian": "tsx scripts/sync-obsidian.ts",
     "sync-python": "node scripts/generate-python-docs.mjs",
     "clean": "rm -rf .next"

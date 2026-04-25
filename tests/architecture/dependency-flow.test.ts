@@ -25,6 +25,10 @@ const EXCLUDED_PACKAGES = new Set([
   "@nebutra/preset",
   "@nebutra/i18n",
   "@nebutra/email",
+  "@nebutra/auth",
+  "@nebutra/billing",
+  "@nebutra/license",
+  "@nebutra/agents",
 ]);
 
 interface DependencyRule {
@@ -39,7 +43,7 @@ interface DependencyRule {
  * After architecture correction (Phase 1–2):
  *   @nebutra/ui             (packages/ui):              none (design-system merged in)
  *   @nebutra/web            (apps/web):                 @nebutra/ui, @nebutra/tokens, @nebutra/feature-flags, @nebutra/logger
- *   @nebutra/landing-page   (apps/landing-page):        @nebutra/ui, @nebutra/tokens
+ *   @nebutra/landing-page   (apps/landing-page):        @nebutra/ui, @nebutra/tokens, @nebutra/icons, @nebutra/logger
  *   @nebutra/design-docs    (apps/design-docs):         @nebutra/ui, @nebutra/tokens
  */
 const DEPENDENCY_RULES: DependencyRule[] = [

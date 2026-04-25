@@ -13,24 +13,26 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 // documents, contact form) and `getTenantDb(orgId)` for tenant-scoped writes.
 // A single shared mock client is returned by both factories so tests can
 // assert on `prisma.<model>.<op>` regardless of the scope the route chose.
-const mockPrisma = {
-  legalDocument: {
-    findFirst: vi.fn(),
-    findMany: vi.fn(),
+const { mockPrisma } = vi.hoisted(() => ({
+  mockPrisma: {
+    legalDocument: {
+      findFirst: vi.fn(),
+      findMany: vi.fn(),
+    },
+    userConsent: {
+      create: vi.fn(),
+      findFirst: vi.fn(),
+      updateMany: vi.fn(),
+    },
+    cookieConsent: {
+      upsert: vi.fn(),
+      findFirst: vi.fn(),
+    },
+    contactSubmission: {
+      create: vi.fn(),
+    },
   },
-  userConsent: {
-    create: vi.fn(),
-    findFirst: vi.fn(),
-    updateMany: vi.fn(),
-  },
-  cookieConsent: {
-    upsert: vi.fn(),
-    findFirst: vi.fn(),
-  },
-  contactSubmission: {
-    create: vi.fn(),
-  },
-};
+}));
 
 vi.mock("@nebutra/db", () => ({
   getSystemDb: () => mockPrisma,

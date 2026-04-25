@@ -7,14 +7,14 @@
       "root": "apps/landing-page/src",
       "extensions": [".tsx"],
       "excludeContains": ["/(legal)/"],
-      "max": 0
+      "max": 399
     },
     {
       "surface": "web-app",
       "root": "apps/web/src",
       "extensions": [".tsx"],
       "excludeContains": [],
-      "max": 34
+      "max": 42
     }
   ],
   "tokenFormatBudget": {

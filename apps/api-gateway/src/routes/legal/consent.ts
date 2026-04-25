@@ -58,7 +58,7 @@ const recordConsentSchema = z.object({
   consentType: z.enum(["EXPLICIT", "IMPLICIT", "OPT_IN", "OPT_OUT"]).default("EXPLICIT"),
   context: z.string().optional(),
   visitorId: z.string().min(1),
-  metadata: z.record(z.string(), z.unknown()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
 const cookieConsentSchema = z.object({
@@ -87,7 +87,7 @@ const apiErrorSchema = z.object({
   error: z.object({
     code: z.string(),
     message: z.string(),
-    details: z.record(z.string(), z.unknown()).optional(),
+    details: z.record(z.string(), z.any()).optional(),
   }),
   requestId: z.string().optional(),
 });
@@ -724,7 +724,7 @@ const getDocumentRoute = createRoute({
       content: {
         "application/json": {
           schema: z.object({
-            document: z.object({}).passthrough(),
+            document: z.object({}).catchall(z.any()),
           }),
         },
       },

@@ -171,7 +171,7 @@ font-weight: 400;
   --font-mono: var(--font-geist-mono), "Geist Mono", "Fira Code",
                ui-monospace, SFMono-Regular, Consolas, monospace;
 
-  /* 中文 — Noto Sans SC（通过 next/font 注入为 --font-cn） */
+  /* 中文 — token 提供的本地 / 系统字体栈 */
   --font-cjk: var(--font-cn), "Noto Sans SC", "PingFang SC",
               "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
@@ -196,16 +196,13 @@ font-weight: 400;
 // app/layout.tsx
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Noto_Sans_SC } from "next/font/google";
-
-const notoSansSC = Noto_Sans_SC({
-  weight: ["400", "500", "700"],
-  display: "swap",
-  variable: "--font-cn",
-});
+import "@nebutra/tokens/styles.css";
 
 // 应用到 <html>：
-// className={`${GeistSans.variable} ${GeistMono.variable} ${notoSansSC.variable}`}
+// className={`${GeistSans.variable} ${GeistMono.variable}`}
+//
+// CJK fallback 来自 @nebutra/tokens --font-cn。
+// CI 构建的应用不要为 Noto Sans SC 使用 next/font/google。
 ```
 
 ---

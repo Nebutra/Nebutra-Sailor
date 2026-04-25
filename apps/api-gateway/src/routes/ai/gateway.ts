@@ -38,7 +38,7 @@ const ChatCompletionRequestSchema = z
     temperature: z.number().optional(),
     max_tokens: z.number().optional(),
   })
-  .passthrough();
+  .catchall(z.any());
 
 const ErrorResponseSchema = z.object({
   error: z.string(),

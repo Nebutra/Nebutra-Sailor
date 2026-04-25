@@ -165,8 +165,8 @@ billingRoutes.openapi(usageRoute, async (c) => {
     const snapshot = await getUsageSnapshot(orgId);
 
     // Extract plan limit dynamically from the tenant scope
-    const plan = (tenant?.plan || "free") as keyof typeof DEFAULT_PLAN_LIMITS;
-    const planConfig = DEFAULT_PLAN_LIMITS[plan] || DEFAULT_PLAN_LIMITS.free;
+    const plan = tenant?.plan === "PRO" || tenant?.plan === "ENTERPRISE" ? tenant.plan : "FREE";
+    const planConfig = DEFAULT_PLAN_LIMITS[plan];
     const limitResult = checkUsageLimit(
       BigInt(snapshot.apiCalls),
       BigInt(planConfig.apiCalls || 10000),
