@@ -18,6 +18,9 @@ const mockQueryRaw = vi.fn();
 const mockPing = vi.fn();
 
 vi.mock("@nebutra/db", () => ({
+  getSystemDb: () => ({
+    $queryRaw: mockQueryRaw,
+  }),
   prisma: {
     $queryRaw: mockQueryRaw,
   },

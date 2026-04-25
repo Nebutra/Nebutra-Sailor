@@ -1,13 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockFindFirst = vi.fn();
+const mockPrisma = {
+  license: {
+    findFirst: (...args: unknown[]) => mockFindFirst(...args),
+  },
+};
 
 vi.mock("@nebutra/db", () => ({
-  prisma: {
-    license: {
-      findFirst: (...args: unknown[]) => mockFindFirst(...args),
-    },
-  },
+  getSystemDb: () => mockPrisma,
+  prisma: mockPrisma,
 }));
 
 describe("validateLicense", () => {

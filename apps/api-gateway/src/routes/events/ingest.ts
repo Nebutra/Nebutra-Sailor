@@ -11,7 +11,7 @@ const eventContextSchema = z.object({
 const eventEnvelopeSchema = z.object({
   eventName: z.string().min(1),
   context: eventContextSchema,
-  payload: z.record(z.string(), z.unknown()).default({}),
+  payload: z.record(z.string(), z.any()).default({}),
   eventId: z.string().min(1).optional(),
   source: z.string().min(1).default("web"),
 });
@@ -48,7 +48,7 @@ const ingestRoute = createRoute({
       description: "Events accepted for processing",
       content: {
         "application/json": {
-          schema: z.object({}).passthrough(),
+          schema: z.object({}).catchall(z.any()),
         },
       },
     },

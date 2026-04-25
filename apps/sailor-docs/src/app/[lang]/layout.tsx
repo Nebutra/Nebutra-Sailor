@@ -3,20 +3,13 @@ import { RootProvider } from "fumadocs-ui/provider/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import { Noto_Sans_SC } from "next/font/google";
 import type { ReactNode } from "react";
 import { i18n } from "@/lib/i18n";
 import "../globals.css";
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
 // Matches the Precision Stack used across apps/web and apps/landing-page
-
-const notoSansSC = Noto_Sans_SC({
-  weight: ["400", "500", "700"],
-  display: "swap",
-  variable: "--font-cn",
-  preload: false,
-});
+// CJK fallback is provided by @nebutra/tokens --font-cn to avoid build-time font fetches.
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
@@ -34,7 +27,7 @@ export default async function RootLayout({
   return (
     <html
       lang={lang}
-      className={`${GeistSans.variable} ${GeistMono.variable} ${notoSansSC.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>

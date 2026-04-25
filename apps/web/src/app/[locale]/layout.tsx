@@ -5,7 +5,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_SC } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -17,12 +16,7 @@ import "../globals.css";
 // GeistSans → --font-geist-sans (variable font, 100–900)
 // GeistMono → --font-geist-mono (variable font, 100–900)
 // Referenced in packages/ui/src/typography/fonts.css via var(--font-geist-sans/mono)
-
-const notoSansSC = Noto_Sans_SC({
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-cn",
-});
+// CJK fallback is provided by @nebutra/tokens and @nebutra/ui without Google font fetches.
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -76,7 +70,7 @@ export default async function RootLayout({
     <AuthProvider provider={authProvider} config={authProviderConfig}>
       <html
         lang={locale}
-        className={`${GeistSans.variable} ${GeistMono.variable} ${notoSansSC.variable}`}
+        className={`${GeistSans.variable} ${GeistMono.variable}`}
         suppressHydrationWarning
       >
         <body className="antialiased">

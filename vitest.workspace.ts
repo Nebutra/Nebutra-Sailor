@@ -1,8 +1,12 @@
-import { defineWorkspace } from "vitest/config";
+import { defineConfig } from "vitest/config";
 
-export default defineWorkspace([
-  // Apps
-  "apps/*/vitest.config.ts",
-  // Packages
-  "packages/*/vitest.config.ts",
-]);
+export default defineConfig({
+  test: {
+    projects: [
+      // Apps
+      "apps/*/vitest.config.ts",
+      // Packages
+      "packages/*/vitest.config.ts",
+    ],
+  },
+});

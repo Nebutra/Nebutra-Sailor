@@ -3,7 +3,8 @@ name: Dependency Review
 # Checks new dependencies introduced in PRs for known vulnerabilities.
 # Blocks merge on High/Critical CVEs; warns on Medium.
 #
-# Requires: GitHub Advanced Security or public repo.
+# Requires GitHub dependency graph support. Set repository variable
+# DEPENDENCY_REVIEW_ENABLED=true after security analysis is enabled.
 
 on:
   pull_request:
@@ -25,6 +26,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Dependency Review
+        if: vars.DEPENDENCY_REVIEW_ENABLED == 'true'
         uses: actions/dependency-review-action@v4
         with:
           # Block on High/Critical — warn on Medium/Low
@@ -35,3 +37,8 @@ jobs:
           comment-summary-in-pr: always
           # Warn about packages not in the license allowlist
           warn-only: false
+
+      - name: Dependency Review disabled
+        if: vars.DEPENDENCY_REVIEW_ENABLED != 'true'
+        run: |
+          echo "::notice::Dependency Review skipped. Enable GitHub dependency graph/security analysis and set DEPENDENCY_REVIEW_ENABLED=true to make this check blocking."

@@ -30,7 +30,7 @@ integrationRoutes.use("*", requireAuth, requireOrganization);
 const IntegrationTypeEnum = z.enum(["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]);
 
 /** JSON-compatible object accepted for credentials / settings. */
-const JsonObjectSchema: z.ZodType<Record<string, unknown>> = z.record(z.string(), z.unknown());
+const JsonObjectSchema: z.ZodType<Record<string, unknown>> = z.record(z.string(), z.any());
 
 const CreateIntegrationSchema = z.object({
   type: IntegrationTypeEnum,
