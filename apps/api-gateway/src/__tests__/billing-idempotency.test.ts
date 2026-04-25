@@ -41,6 +41,12 @@ function ledgerKey(orgId: string, idk: string): string {
   return `${orgId}::${idk}`;
 }
 
+function decodeServiceTokenClaims(token: string): Record<string, unknown> {
+  const [, body] = token.split(".");
+  if (!body) return {};
+  return JSON.parse(Buffer.from(body, "base64url").toString("utf8")) as Record<string, unknown>;
+}
+
 vi.mock("@nebutra/repositories", () => ({
   UsageLedgerRepository: class {
     claim = mockClaim;
@@ -147,11 +153,7 @@ async function ledgerCount(): Promise<number> {
 
 function installClaimMock() {
   mockClaim.mockImplementation(
-    async (input: {
-      organizationId: string;
-      idempotencyKey: string;
-      quantity: number;
-    }) => {
+    async (input: { organizationId: string; idempotencyKey: string; quantity: number }) => {
       const key = ledgerKey(input.organizationId, input.idempotencyKey);
       const existing = ledger.get(key);
       if (existing) {
@@ -176,7 +178,7 @@ beforeEach(() => {
   mockClaim.mockReset();
   mockVerifyToken.mockReset();
   process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
-  mockVerifyToken.mockReturnValue(true);
+  mockVerifyToken.mockImplementation((token: string) => decodeServiceTokenClaims(token));
   installClaimMock();
   app = buildApp();
 });

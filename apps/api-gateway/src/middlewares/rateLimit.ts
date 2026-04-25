@@ -1,6 +1,18 @@
-import { getApiWeight, getRateLimiter, createRedisRateLimiter, PLAN_LIMITS } from "@nebutra/rate-limit";
 import { getRedis } from "@nebutra/cache";
+import {
+  createRedisRateLimiter,
+  getApiWeight,
+  getRateLimiter,
+  PLAN_LIMITS,
+} from "@nebutra/rate-limit";
 import type { Context, Next } from "hono";
+
+type PlanKey = keyof typeof PLAN_LIMITS;
+type RateLimiter = ReturnType<typeof getRateLimiter> | ReturnType<typeof createRedisRateLimiter>;
+
+function resolvePlan(plan: string | undefined): PlanKey {
+  return plan === "PRO" || plan === "ENTERPRISE" ? plan : "FREE";
+}
 
 /**
  * Rate limiting middleware using token bucket algorithm
@@ -23,12 +35,22 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
   const weight = getApiWeight(method, path);
 
   // Get rate limiter for tenant's plan
-  let limiter;
+  let limiter: RateLimiter;
   try {
+    if (!process.env.UPSTASH_REDIS_URL || !process.env.UPSTASH_REDIS_TOKEN) {
+      throw new Error("Redis rate limit store is not configured");
+    }
+
     const redisClient = getRedis();
-    limiter = createRedisRateLimiter(PLAN_LIMITS[tenant?.plan || "FREE"] || PLAN_LIMITS.FREE, redisClient as any);
-  } catch (e) {
-    limiter = getRateLimiter(tenant?.plan || "FREE");
+    const redisAdapter = {
+      get: (key: string) => redisClient.get(key),
+      set: (key: string, value: unknown, opts?: { ex?: number }) =>
+        opts?.ex ? redisClient.set(key, value, { ex: opts.ex }) : redisClient.set(key, value),
+    };
+    const plan = resolvePlan(tenant?.plan);
+    limiter = createRedisRateLimiter(PLAN_LIMITS[plan], redisAdapter);
+  } catch {
+    limiter = getRateLimiter(resolvePlan(tenant?.plan));
   }
 
   // Try to consume tokens

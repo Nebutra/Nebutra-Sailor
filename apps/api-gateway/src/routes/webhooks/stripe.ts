@@ -304,13 +304,15 @@ async function handleCheckoutCompleted(
   });
 
   // Credit purchase — unified handler across providers
-  const creditResult = await handleCreditPurchaseWebhook({
+  const creditPurchaseInput = {
     provider: "stripe",
     sessionId: session.id,
     metadata,
-    amountPaid: session.amount_total ? session.amount_total / 100 : undefined,
-    currency: session.currency?.toUpperCase(),
-  });
+    ...(session.amount_total ? { amountPaid: session.amount_total / 100 } : {}),
+    ...(session.currency ? { currency: session.currency.toUpperCase() } : {}),
+  } as const;
+
+  const creditResult = await handleCreditPurchaseWebhook(creditPurchaseInput);
 
   if (creditResult.handled) {
     log.info("Credit purchase webhook handled", {
@@ -441,7 +443,7 @@ async function handleSubscriptionUpdated(
       organizationId: stripeCustomer.organizationId,
       subscriptionId: sub.id,
       customerId: sub.customer as string,
-      status: sub.status as any,
+      status: sub.status,
     },
   });
 

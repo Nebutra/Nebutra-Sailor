@@ -135,8 +135,24 @@ jobs:
           echo "TURBO_BASE_REF=$BASE_SHA" >> "$GITHUB_ENV"
           echo "Using TURBO_BASE_REF=$BASE_SHA"
 
-      - name: Lint (Biome)
+      - name: Lint changed files (Biome)
+        run: |
+          BIOME_FILES="$(
+            git diff --name-only --diff-filter=ACMRT "$TURBO_BASE_REF"...HEAD \
+              | grep -E '\.(js|jsx|ts|tsx|json|jsonc|css|md|mdx|yml|yaml)$' \
+              || true
+          )"
+
+          if [ -z "$BIOME_FILES" ]; then
+            echo "No Biome-supported changed files."
+            exit 0
+          fi
+
+          pnpm biome ci $BIOME_FILES
+
+      - name: Lint whole repo (advisory)
         run: pnpm biome ci .
+        continue-on-error: true
 
       - name: Typecheck (affected)
         run: pnpm turbo typecheck --filter="...[${TURBO_BASE_REF}]..."

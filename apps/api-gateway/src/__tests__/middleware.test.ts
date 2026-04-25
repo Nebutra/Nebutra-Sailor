@@ -50,9 +50,9 @@ vi.mock("@nebutra/cache", () => ({
 }));
 
 vi.mock("@nebutra/db", () => ({
-  prisma: {
+  getSystemDb: () => ({
     $queryRaw: mockQueryRaw,
-  },
+  }),
 }));
 
 vi.mock("@nebutra/logger", () => ({
@@ -108,8 +108,21 @@ function computeServiceToken(
   role?: string,
   plan?: string,
 ): string {
-  const canonical = `${userId ?? ""}:${orgId ?? ""}:${role ?? ""}:${plan ?? ""}`;
-  return createHmac("sha256", secret).update(canonical).digest("hex");
+  const now = Math.floor(Date.now() / 1000);
+  const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url");
+  const body = Buffer.from(
+    JSON.stringify({
+      ...(userId ? { userId } : {}),
+      ...(orgId ? { organizationId: orgId } : {}),
+      ...(role ? { role } : {}),
+      ...(plan ? { plan } : {}),
+      iat: now,
+      exp: now + 300,
+    }),
+  ).toString("base64url");
+  const signingInput = `${header}.${body}`;
+  const signature = createHmac("sha256", secret).update(signingInput).digest("base64url");
+  return `${signingInput}.${signature}`;
 }
 
 // ---------------------------------------------------------------------------

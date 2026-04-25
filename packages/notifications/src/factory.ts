@@ -1,9 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type {
-  NotificationConfig,
-  NotificationProvider,
-  NotificationProviderType,
-} from "./types";
+import type { NotificationConfig, NotificationProvider, NotificationProviderType } from "./types";
 
 // =============================================================================
 // Notification Factory — Provider-agnostic notification creation

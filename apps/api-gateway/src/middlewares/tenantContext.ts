@@ -1,5 +1,5 @@
-import { createAuth } from "@nebutra/auth/server";
 import { verifyServiceToken } from "@nebutra/auth";
+import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 import type { Context, Next } from "hono";
 import { getAuthProvider } from "../config/env.js";
@@ -75,8 +75,6 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
   const headerUserId = c.req.header("x-user-id") || c.req.header("x_user_id") || undefined;
   const headerOrganizationId =
     c.req.header("x-organization-id") || c.req.header("x_organization_id") || undefined;
-  const headerRole = c.req.header("x-role") || c.req.header("x_role") || undefined;
-  const headerPlan = c.req.header("x-plan") || c.req.header("x_plan") || undefined;
 
   // Only trust S2S headers when accompanied by a valid HMAC service token.
   // When no service token is present, S2S headers are NOT trusted — the
@@ -96,14 +94,13 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
 
   if (serviceToken) {
     // S2S call with explicit service token — verify HMAC before trusting headers
-    if (
-      verifyServiceToken(serviceToken, headerUserId, headerOrganizationId, headerRole, headerPlan)
-    ) {
-      if (headerUserId) tenant.userId = headerUserId;
-      if (headerOrganizationId) tenant.organizationId = headerOrganizationId;
-      if (headerRole) tenant.role = headerRole;
-      if (headerPlan) tenant.plan = headerPlan;
-    } else {
+    try {
+      const claims = verifyServiceToken(serviceToken, process.env.SERVICE_SECRET ?? "");
+      if (claims.userId) tenant.userId = claims.userId;
+      if (claims.organizationId) tenant.organizationId = claims.organizationId;
+      if (claims.role) tenant.role = claims.role;
+      if (claims.plan) tenant.plan = claims.plan;
+    } catch {
       logger.warn("S2S HMAC verification failed — ignoring tenant headers", {
         hasUserId: Boolean(headerUserId),
         hasOrgId: Boolean(headerOrganizationId),

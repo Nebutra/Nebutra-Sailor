@@ -40,7 +40,10 @@ async function gatewayFetch(
   let serviceToken = SERVICE_SECRET;
   if (ctx) {
     serviceToken = signServiceToken(
-      { organizationId: ctx.tenantId, userId: ctx.userId },
+      {
+        organizationId: ctx.tenantId,
+        ...(ctx.userId ? { userId: ctx.userId } : {}),
+      },
       SERVICE_SECRET,
     );
     if (ctx.userId) headers["x-user-id"] = ctx.userId;

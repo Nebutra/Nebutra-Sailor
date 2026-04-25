@@ -7,7 +7,7 @@
     "build": "prisma generate && next build",
     "postinstall": "prisma generate",
     "start": "next start",
-    "typecheck": "fumadocs-mdx && tsc --noEmit",
+    "typecheck": "prisma generate && fumadocs-mdx && tsc --noEmit",
     "lint": "biome check ."
   },
   "dependencies": {

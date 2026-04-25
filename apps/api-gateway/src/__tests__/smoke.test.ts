@@ -5,15 +5,15 @@
  * external dependencies (database, redis, etc.)
  */
 
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 // Mock environment for tests
 beforeAll(() => {
-  process.env.NODE_ENV = "test";
+  vi.stubEnv("NODE_ENV", "test");
 });
 
 afterAll(() => {
-  // Cleanup
+  vi.unstubAllEnvs();
 });
 
 describe("API Gateway Smoke Tests", () => {
