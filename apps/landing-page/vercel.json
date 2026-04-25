@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "pnpm --filter @nebutra/brand build && pnpm --filter @nebutra/icons build && pnpm --filter @nebutra/billing build && pnpm --filter @nebutra/email build && pnpm --filter @nebutra/landing-page build",
+  "buildCommand": "pnpm --filter @nebutra/contracts build && pnpm --filter @nebutra/brand build && pnpm --filter @nebutra/icons build && pnpm --filter @nebutra/billing build && pnpm --filter @nebutra/email build && pnpm --filter @nebutra/landing-page build",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/landing-page",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "outputDirectory": ".next",
