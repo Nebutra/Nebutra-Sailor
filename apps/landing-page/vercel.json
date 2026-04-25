@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "pnpm turbo build --filter=@nebutra/landing-page",
+  "buildCommand": "pnpm --filter @nebutra/landing-page build",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/landing-page",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "outputDirectory": ".next",
