@@ -186,7 +186,7 @@ run_snapshot_once() {
       rm -f apps/web/.env.local
 
       pnpm install --frozen-lockfile --prefer-offline || pnpm install --no-frozen-lockfile --prefer-offline
-      pnpm --filter @nebutra/brand build
+      pnpm turbo run build --filter=@nebutra/web^...
       pnpm --filter @nebutra/brand sync
 
       cd apps/web
