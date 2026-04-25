@@ -87,6 +87,7 @@ export interface PresetDefinition {
 // ─── Resolved Config ───
 
 export interface ResolvedConfig {
+  preset: z.infer<typeof PresetId>;
   apps: Record<z.infer<typeof AppId>, boolean>;
   features: Record<z.infer<typeof FeatureId>, boolean>;
   theme: z.infer<typeof ThemeId>;
@@ -105,6 +106,7 @@ export function defineConfig(config: Partial<NebutraConfig>): NebutraConfig {
 export function resolveConfig(config: NebutraConfig): ResolvedConfig {
   const preset = getPreset(config.preset);
   return {
+    preset: config.preset,
     apps: { ...preset.apps, ...config.apps },
     features: { ...preset.features, ...config.features },
     theme: config.theme,

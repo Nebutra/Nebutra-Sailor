@@ -1,5 +1,15 @@
 // @nebutra/preset — public API
 
+export type {
+  BillingSubject,
+  CheckoutMode,
+  NotificationChannelPreset,
+  NotificationSurface,
+  OnboardingFlow,
+  ProductCapabilities,
+  WorkspaceMode,
+} from "./capabilities";
+export { resolveProductCapabilities } from "./capabilities";
 // Config schema and types
 export {
   ApiProtocolId,

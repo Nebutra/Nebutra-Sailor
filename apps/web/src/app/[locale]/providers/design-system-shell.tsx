@@ -4,7 +4,7 @@ import { useAuth } from "@nebutra/auth/client";
 import { UserButton } from "@nebutra/auth/components";
 import { usePathname } from "next/navigation";
 import type React from "react";
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 function HeaderAuthControls() {
   const { isSignedIn, user, signOut } = useAuth();
@@ -42,19 +42,25 @@ function HeaderAuthControls() {
 import { ChevronRight, Menu, X } from "lucide-react";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { usePermission } from "@/hooks/usePermission";
+import type { WebProductCapabilities } from "@/lib/product-capabilities";
+import { resolvePreferredWorkspaceId } from "@/lib/workspace-selection";
 import {
   buildBreadcrumbs,
   DASHBOARD_NAV_GROUPS,
   DASHBOARD_NAV_ITEMS,
   isActiveRoute,
-  isWorkspaceId,
   WORKSPACES,
-  type WorkspaceId,
 } from "./dashboard-nav";
 
 interface Props {
   children: React.ReactNode;
-  hasClerkKey?: boolean;
+  notificationCenter?: React.ReactNode;
+  productCapabilities?: WebProductCapabilities;
+}
+
+interface WorkspaceOption {
+  id: string;
+  label: string;
 }
 
 function SidebarNav({
@@ -107,12 +113,102 @@ function SidebarNav({
   );
 }
 
-export function DesignSystemShell({ children, hasClerkKey }: Props) {
+export function DesignSystemShell({ children, notificationCenter, productCapabilities }: Props) {
   const pathname = usePathname();
+  const { isSignedIn, session } = useAuth();
+  const workspaceMode = productCapabilities?.workspace.mode ?? "organization";
+  const supportsWorkspaceSwitching = workspaceMode === "organization";
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const [workspace, setWorkspace] = useState<WorkspaceId>(WORKSPACES[0].id);
+  const [workspaceOptions, setWorkspaceOptions] = useState<WorkspaceOption[]>(
+    WORKSPACES.map((workspace) => ({
+      id: workspace.id,
+      label: workspace.label,
+    })),
+  );
+  const [workspace, setWorkspace] = useState<string>(WORKSPACES[0].id);
+  const [workspaceLoading, setWorkspaceLoading] = useState(false);
   const breadcrumbs = buildBreadcrumbs(pathname);
   const currentBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
+
+  const currentWorkspaceLabel = useMemo(
+    () =>
+      supportsWorkspaceSwitching
+        ? (workspaceOptions.find((item) => item.id === workspace)?.label ?? "Starter Workspace")
+        : "Personal workspace",
+    [supportsWorkspaceSwitching, workspace, workspaceOptions],
+  );
+
+  const fetchWorkspaces = useCallback(async () => {
+    if (!isSignedIn || !supportsWorkspaceSwitching) return;
+
+    setWorkspaceLoading(true);
+
+    try {
+      const response = await fetch("/api/organizations", {
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        return;
+      }
+
+      const payload = (await response.json().catch(() => null)) as {
+        organizations?: Array<{ id: string; name: string; slug?: string | null }>;
+      } | null;
+      const organizations = Array.isArray(payload?.organizations) ? payload.organizations : [];
+
+      if (organizations.length === 0) {
+        return;
+      }
+
+      const options = organizations.map((organization) => ({
+        id: organization.id,
+        label: organization.name || organization.slug || "Untitled workspace",
+      }));
+
+      setWorkspaceOptions(options);
+
+      const lastWorkspace =
+        typeof window !== "undefined" ? window.localStorage.getItem("nebutra_active_org") : null;
+      const preferredWorkspaceId = resolvePreferredWorkspaceId({
+        options,
+        sessionOrganizationId: session?.organizationId,
+        storedOrganizationId: lastWorkspace,
+      });
+
+      if (preferredWorkspaceId) {
+        setWorkspace(preferredWorkspaceId);
+      }
+    } finally {
+      setWorkspaceLoading(false);
+    }
+  }, [isSignedIn, session?.organizationId, supportsWorkspaceSwitching]);
+
+  useEffect(() => {
+    void fetchWorkspaces();
+  }, [fetchWorkspaces]);
+
+  const handleWorkspaceChange = useCallback(async (nextWorkspaceId: string) => {
+    setWorkspace(nextWorkspaceId);
+
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("nebutra_active_org", nextWorkspaceId);
+    }
+
+    try {
+      const response = await fetch("/api/organizations/active", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ organizationId: nextWorkspaceId }),
+      });
+
+      if (response.ok) {
+        window.location.reload();
+      }
+    } catch {
+      // Keep optimistic state locally; the settings/select-org flows remain the fallback.
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-neutral-2 text-neutral-12 dark:bg-black dark:text-white">
@@ -140,28 +236,29 @@ export function DesignSystemShell({ children, hasClerkKey }: Props) {
               </button>
             </div>
 
-            <div className="mb-4 px-2">
-              <label htmlFor="workspace-switcher-mobile" className="sr-only">
-                Workspace switcher
-              </label>
-              <select
-                id="workspace-switcher-mobile"
-                aria-label="Workspace switcher"
-                value={workspace}
-                onChange={(event) => {
-                  if (isWorkspaceId(event.target.value)) {
-                    setWorkspace(event.target.value);
-                  }
-                }}
-                className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 dark:border-white/15 dark:bg-black dark:text-white"
-              >
-                {WORKSPACES.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {supportsWorkspaceSwitching && (
+              <div className="mb-4 px-2">
+                <label htmlFor="workspace-switcher-mobile" className="sr-only">
+                  Workspace switcher
+                </label>
+                <select
+                  id="workspace-switcher-mobile"
+                  aria-label="Workspace switcher"
+                  value={workspace}
+                  onChange={(event) => {
+                    void handleWorkspaceChange(event.target.value);
+                  }}
+                  disabled={workspaceLoading}
+                  className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 dark:border-white/15 dark:bg-black dark:text-white"
+                >
+                  {workspaceOptions.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             <SidebarNav pathname={pathname} mobile onNavigate={() => setIsMobileNavOpen(false)} />
           </aside>
@@ -177,34 +274,34 @@ export function DesignSystemShell({ children, hasClerkKey }: Props) {
             <span className="text-lg font-semibold tracking-tight">Nebutra Sailor</span>
           </div>
 
-          <div className="mb-5 px-2">
-            <label htmlFor="workspace-switcher" className="sr-only">
-              Workspace switcher
-            </label>
-            <select
-              id="workspace-switcher"
-              aria-label="Workspace switcher"
-              value={workspace}
-              onChange={(event) => {
-                if (isWorkspaceId(event.target.value)) {
-                  setWorkspace(event.target.value);
-                }
-              }}
-              className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 dark:border-white/15 dark:bg-black/40 dark:text-white"
-            >
-              {WORKSPACES.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
-          </div>
+          {supportsWorkspaceSwitching && (
+            <div className="mb-5 px-2">
+              <label htmlFor="workspace-switcher" className="sr-only">
+                Workspace switcher
+              </label>
+              <select
+                id="workspace-switcher"
+                aria-label="Workspace switcher"
+                value={workspace}
+                onChange={(event) => {
+                  void handleWorkspaceChange(event.target.value);
+                }}
+                disabled={workspaceLoading}
+                className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 dark:border-white/15 dark:bg-black/40 dark:text-white"
+              >
+                {workspaceOptions.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <SidebarNav pathname={pathname} />
 
           <div className="mt-auto rounded-xl border border-neutral-7 bg-neutral-2 p-3 text-xs text-neutral-11 dark:border-white/10 dark:bg-white/5 dark:text-white/70">
-            Workspace mode:{" "}
-            {WORKSPACES.find((item) => item.id === workspace)?.label ?? "Starter Workspace"}
+            Workspace mode: {currentWorkspaceLabel}
           </div>
         </aside>
 
@@ -266,7 +363,10 @@ export function DesignSystemShell({ children, hasClerkKey }: Props) {
                 ))}
               </div>
 
-              <HeaderAuthControls />
+              <div className="flex items-center gap-2">
+                {notificationCenter}
+                <HeaderAuthControls />
+              </div>
             </div>
           </header>
 
