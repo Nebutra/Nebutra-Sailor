@@ -11,6 +11,18 @@ describe("lighthouse dashboard ci harness", () => {
 
     expect(script).toContain("export NEBUTRA_SKIP_GIT_HOOKS=1");
     expect(script).toContain("pnpm turbo run build --filter=@nebutra/web^...");
+    expect(script).toContain("pnpm exec next build");
+    expect(script).toContain("curl -fsS -o /dev/null");
     expect(script).not.toContain("pnpm --filter @nebutra/brand build");
+    expect(script).not.toContain("--experimental-build-mode=compile");
+  });
+
+  it("uses a public route for pull-request Lighthouse checks", async () => {
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/lighthouse-dashboard.yml"),
+      "utf8",
+    );
+
+    expect(workflow).toContain('TARGET_PATH="/demo/embed"');
   });
 });

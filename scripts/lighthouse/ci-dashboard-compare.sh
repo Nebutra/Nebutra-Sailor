@@ -190,17 +190,25 @@ run_snapshot_once() {
       pnpm --filter @nebutra/brand sync
 
       cd apps/web
-      pnpm exec next build --experimental-build-mode=compile
+      pnpm exec next build
       pnpm exec next start -p ${PORT} >/tmp/next.log 2>&1 &
       APP_PID=\$!
       trap 'kill \$APP_PID >/dev/null 2>&1 || true' EXIT
 
+      READY=0
       for i in \$(seq 1 120); do
-        if curl -sS -o /dev/null 'http://127.0.0.1:${PORT}${TARGET_PATH}'; then
+        if curl -fsS -o /dev/null 'http://127.0.0.1:${PORT}${TARGET_PATH}'; then
+          READY=1
           break
         fi
         sleep 1
       done
+
+      if [[ "\$READY" -ne 1 ]]; then
+        echo 'Next.js app did not become healthy before Lighthouse.' >&2
+        cat /tmp/next.log >&2 || true
+        exit 1
+      fi
 
       CHROME_PATH=\$(ls /ms-playwright/chromium-*/chrome-linux/chrome 2>/dev/null | head -n 1 || true)
       if [[ -z "\$CHROME_PATH" ]]; then

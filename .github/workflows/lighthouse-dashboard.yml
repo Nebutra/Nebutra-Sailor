@@ -47,7 +47,7 @@ jobs:
             BEFORE_REF="${{ github.event.pull_request.head.sha }}"
             AFTER_REF="${{ github.event.pull_request.head.sha }}"
             RUNS="3"
-            TARGET_PATH="/"
+            TARGET_PATH="/demo/embed"
           else
             BEFORE_REF="${{ inputs.before_ref }}"
             AFTER_REF="${{ inputs.after_ref }}"
