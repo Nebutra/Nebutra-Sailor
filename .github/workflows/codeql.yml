@@ -6,7 +6,7 @@ name: CodeQL Security Analysis
 # Runs on:
 #   - Every push to main/develop
 #   - Every PR targeting main/develop
-#   - Weekly schedule (Saturday 02:00 UTC) to catch new CVEs in unchanged code
+#   - Weekly schedule (Sunday 03:00 Asia/Shanghai) to catch new CVEs in unchanged code
 
 on:
   push:
@@ -15,7 +15,7 @@ on:
     branches: [main, develop]
   schedule:
     # Weekly scan — catches newly published CVEs in code that hasn't changed
-    - cron: "0 2 * * 6"
+    - cron: "0 19 * * 6"
 
 permissions:
   contents: read

@@ -21,6 +21,7 @@ const {
   mockRedisSet,
   mockRedisDel,
   mockRedisPing,
+  mockRedisStore,
   mockQueryRaw,
   mockVerifyToken,
 } = vi.hoisted(() => ({
@@ -29,6 +30,7 @@ const {
   mockRedisSet: vi.fn(),
   mockRedisDel: vi.fn(),
   mockRedisPing: vi.fn(),
+  mockRedisStore: new Map<string, unknown>(),
   mockQueryRaw: vi.fn(),
   mockVerifyToken: vi.fn(),
 }));
@@ -53,6 +55,9 @@ vi.mock("@nebutra/db", () => ({
   getSystemDb: () => ({
     $queryRaw: mockQueryRaw,
   }),
+  prisma: {
+    $queryRaw: mockQueryRaw,
+  },
 }));
 
 vi.mock("@nebutra/logger", () => ({
@@ -108,21 +113,8 @@ function computeServiceToken(
   role?: string,
   plan?: string,
 ): string {
-  const now = Math.floor(Date.now() / 1000);
-  const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url");
-  const body = Buffer.from(
-    JSON.stringify({
-      ...(userId ? { userId } : {}),
-      ...(orgId ? { organizationId: orgId } : {}),
-      ...(role ? { role } : {}),
-      ...(plan ? { plan } : {}),
-      iat: now,
-      exp: now + 300,
-    }),
-  ).toString("base64url");
-  const signingInput = `${header}.${body}`;
-  const signature = createHmac("sha256", secret).update(signingInput).digest("base64url");
-  return `${signingInput}.${signature}`;
+  const canonical = `${userId ?? ""}:${orgId ?? ""}:${role ?? ""}:${plan ?? ""}`;
+  return createHmac("sha256", secret).update(canonical).digest("hex");
 }
 
 // ---------------------------------------------------------------------------
@@ -131,14 +123,18 @@ function computeServiceToken(
 
 beforeEach(() => {
   vi.clearAllMocks();
+  mockRedisStore.clear();
   // Mock auth provider that returns null session (unauthenticated)
   mockCreateAuth.mockResolvedValue({
     provider: "better-auth",
     getSession: vi.fn().mockResolvedValue(null),
   });
-  mockRedisGet.mockResolvedValue(null);
-  mockRedisSet.mockResolvedValue("OK");
-  mockRedisDel.mockResolvedValue(1);
+  mockRedisGet.mockImplementation(async (key: string) => mockRedisStore.get(key) ?? null);
+  mockRedisSet.mockImplementation(async (key: string, value: unknown) => {
+    mockRedisStore.set(key, value);
+    return "OK";
+  });
+  mockRedisDel.mockImplementation(async (key: string) => (mockRedisStore.delete(key) ? 1 : 0));
   mockRedisPing.mockResolvedValue("PONG");
   mockQueryRaw.mockResolvedValue([{ "?column?": 1 }]);
 

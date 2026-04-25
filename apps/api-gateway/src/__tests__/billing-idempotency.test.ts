@@ -41,12 +41,6 @@ function ledgerKey(orgId: string, idk: string): string {
   return `${orgId}::${idk}`;
 }
 
-function decodeServiceTokenClaims(token: string): Record<string, unknown> {
-  const [, body] = token.split(".");
-  if (!body) return {};
-  return JSON.parse(Buffer.from(body, "base64url").toString("utf8")) as Record<string, unknown>;
-}
-
 vi.mock("@nebutra/repositories", () => ({
   UsageLedgerRepository: class {
     claim = mockClaim;
@@ -178,7 +172,7 @@ beforeEach(() => {
   mockClaim.mockReset();
   mockVerifyToken.mockReset();
   process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
-  mockVerifyToken.mockImplementation((token: string) => decodeServiceTokenClaims(token));
+  mockVerifyToken.mockReturnValue(true);
   installClaimMock();
   app = buildApp();
 });

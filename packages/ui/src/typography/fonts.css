@@ -3,13 +3,13 @@
  * "Precision Stack" — Geist × Geist Mono × Noto Sans SC
  *
  * Font loading strategy (Next.js apps):
- * Each app's layout.tsx loads fonts via next/font or geist/font:
+ * Each app's layout.tsx loads Latin fonts via geist/font:
  *   GeistSans  → injects --font-geist-sans  (variable font, 100–900)
  *   GeistMono  → injects --font-geist-mono  (variable font, 100–900)
- *   Noto_Sans_SC → injects --font-cn        (CJK, loaded per-app)
  *
  * The CSS custom properties below reference those injected variables and
- * fall back gracefully when next/font is unavailable (e.g., Storybook, tests).
+ * fall back gracefully when font loaders are unavailable (e.g., Storybook, tests).
+ * CJK uses local/system font fallback to avoid build-time Google font fetches.
  */
 
 /* ============================================
@@ -32,7 +32,7 @@
     var(--font-geist-mono), "Geist Mono", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono",
     Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* CJK — Noto Sans SC (injected via next/font as --font-cn) */
+  /* CJK — local/system fallback, no build-time font fetch */
   --font-cjk:
     var(--font-cn), "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 

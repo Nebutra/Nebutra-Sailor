@@ -1,14 +1,10 @@
 import { createHmac } from "node:crypto";
 
 /**
- * Test helper: generates a valid S2S JWT-shaped HMAC service token.
+ * Test helper: generates a valid S2S HMAC service token for the given tenant headers.
  * Sets SERVICE_SECRET env var if not already set.
  */
 export const TEST_SERVICE_SECRET = "test-secret-for-s2s-hmac";
-
-function encodeBase64Url(value: unknown): string {
-  return Buffer.from(JSON.stringify(value)).toString("base64url");
-}
 
 export function generateServiceToken(
   userId?: string,
@@ -16,21 +12,8 @@ export function generateServiceToken(
   role?: string,
   plan?: string,
 ): string {
-  const now = Math.floor(Date.now() / 1000);
-  const header = encodeBase64Url({ alg: "HS256", typ: "JWT" });
-  const body = encodeBase64Url({
-    ...(userId ? { userId } : {}),
-    ...(orgId ? { organizationId: orgId } : {}),
-    ...(role ? { role } : {}),
-    ...(plan ? { plan } : {}),
-    iat: now,
-    exp: now + 300,
-  });
-  const signingInput = `${header}.${body}`;
-  const signature = createHmac("sha256", TEST_SERVICE_SECRET)
-    .update(signingInput)
-    .digest("base64url");
-  return `${signingInput}.${signature}`;
+  const canonical = `${userId ?? ""}:${orgId ?? ""}:${role ?? ""}:${plan ?? ""}`;
+  return createHmac("sha256", TEST_SERVICE_SECRET).update(canonical).digest("hex");
 }
 
 /**

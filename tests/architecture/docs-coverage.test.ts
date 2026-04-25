@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as fc from "fast-check";
@@ -6,41 +6,52 @@ import { describe, expect, it } from "vitest";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "../..");
-const DOCS_ROOT = resolve(ROOT, "apps/sailor-docs/content/docs");
+const DOCS_CONTENT = resolve(ROOT, "apps/sailor-docs/content/docs");
 
-function collectMdxPages(current = DOCS_ROOT): string[] {
-  if (!existsSync(current)) return [];
-
+function extractPagesFromDocsContent(locale: string): string[] {
+  const root = resolve(DOCS_CONTENT, locale);
   const pages: string[] = [];
-  for (const entry of readdirSync(current)) {
-    const absolute = resolve(current, entry);
-    const stat = statSync(absolute);
 
-    if (stat.isDirectory()) {
-      pages.push(...collectMdxPages(absolute));
-      continue;
+  const walk = (current: string, prefix = "") => {
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+      const relativePath = prefix ? `${prefix}/${entry.name}` : entry.name;
+      const absolutePath = resolve(current, entry.name);
+
+      if (entry.isDirectory()) {
+        walk(absolutePath, relativePath);
+        continue;
+      }
+
+      if (entry.isFile() && entry.name.endsWith(".mdx")) {
+        pages.push(relativePath.replace(/\.mdx$/, ""));
+      }
     }
+  };
 
-    if (entry.endsWith(".mdx")) {
-      pages.push(absolute.replace(`${DOCS_ROOT}/`, "").replace(/\.mdx$/, ""));
-    }
-  }
-
+  walk(root);
   return pages.sort();
 }
 
-describe("Property 1: Docs Coverage", () => {
-  const pages = collectMdxPages();
+function mdxFileExistsForPage(locale: string, page: string): boolean {
+  const mdxPath = resolve(DOCS_CONTENT, locale, `${page}.mdx`);
+  return existsSync(mdxPath);
+}
 
-  it("every discovered docs page resolves to an .mdx file", () => {
+describe("Property 1: Docs Coverage", () => {
+  const locales = ["en", "zh"];
+
+  it("every discovered docs page maps to an existing .mdx file", () => {
+    const pages = locales.flatMap((locale) =>
+      extractPagesFromDocsContent(locale).map((page) => ({ locale, page })),
+    );
     expect(pages.length).toBeGreaterThan(0);
 
     fc.assert(
-      fc.property(fc.constantFrom(...pages), (page) => {
-        const exists = existsSync(resolve(DOCS_ROOT, `${page}.mdx`));
+      fc.property(fc.constantFrom(...pages), ({ locale, page }) => {
+        const exists = mdxFileExistsForPage(locale, page);
         if (!exists) {
           throw new Error(
-            `Discovered docs page "${page}" does not resolve under apps/sailor-docs.`,
+            `Page "${locale}/${page}" discovered but no .mdx file found at: apps/sailor-docs/content/docs/${locale}/${page}.mdx`,
           );
         }
         return true;
@@ -49,18 +60,9 @@ describe("Property 1: Docs Coverage", () => {
     );
   });
 
-  it("docs content has at least 20 pages", () => {
-    expect(pages.length).toBeGreaterThanOrEqual(20);
-  });
-
-  it("primary localized docs surfaces are populated", () => {
-    const pagesByLocale = pages.reduce<Record<string, number>>((acc, page) => {
-      const [locale] = page.split("/");
-      acc[locale] = (acc[locale] ?? 0) + 1;
-      return acc;
-    }, {});
-
-    expect(pagesByLocale.en).toBeGreaterThanOrEqual(20);
-    expect(pagesByLocale.zh).toBeGreaterThanOrEqual(20);
+  it("each docs locale has at least 20 pages", () => {
+    for (const locale of locales) {
+      expect(extractPagesFromDocsContent(locale).length).toBeGreaterThanOrEqual(20);
+    }
   });
 });

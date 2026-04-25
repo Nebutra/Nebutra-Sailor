@@ -114,7 +114,7 @@ const clerkWebhookRoute = createRoute({
     body: {
       content: {
         "application/json": {
-          schema: z.object({}).passthrough(),
+          schema: z.object({}).catchall(z.any()),
         },
       },
     },

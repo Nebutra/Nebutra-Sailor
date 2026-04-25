@@ -1,4 +1,4 @@
-import { signServiceToken } from "@nebutra/auth";
+import { type ServiceTokenContext, signServiceToken } from "@nebutra/auth";
 import { getStripe } from "@nebutra/billing";
 import { sendOrderConfirmationEmail } from "@nebutra/email";
 import type { EventBus } from "@nebutra/event-bus";
@@ -39,13 +39,10 @@ async function gatewayFetch(
 
   let serviceToken = SERVICE_SECRET;
   if (ctx) {
-    serviceToken = signServiceToken(
-      {
-        organizationId: ctx.tenantId,
-        ...(ctx.userId ? { userId: ctx.userId } : {}),
-      },
-      SERVICE_SECRET,
-    );
+    const tokenContext: ServiceTokenContext = { organizationId: ctx.tenantId };
+    if (ctx.userId) tokenContext.userId = ctx.userId;
+
+    serviceToken = signServiceToken(tokenContext, SERVICE_SECRET);
     if (ctx.userId) headers["x-user-id"] = ctx.userId;
     headers["x-organization-id"] = ctx.tenantId;
   }
@@ -128,7 +125,7 @@ const chargePayment: SagaStep<OrderContext> = {
     return { ...ctx, paymentId: paymentIntent.id };
   },
   async compensate(ctx) {
-    if (ctx.paymentId && ctx.paymentId.startsWith("pi_")) {
+    if (ctx.paymentId?.startsWith("pi_")) {
       const stripe = getStripe();
       await stripe.refunds.create({
         payment_intent: ctx.paymentId,

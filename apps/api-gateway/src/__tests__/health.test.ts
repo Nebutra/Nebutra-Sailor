@@ -21,6 +21,9 @@ vi.mock("@nebutra/db", () => ({
   getSystemDb: () => ({
     $queryRaw: mockQueryRaw,
   }),
+  prisma: {
+    $queryRaw: mockQueryRaw,
+  },
 }));
 
 vi.mock("@nebutra/cache", () => ({

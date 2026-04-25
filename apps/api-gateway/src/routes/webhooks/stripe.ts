@@ -1,5 +1,5 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { handleCreditPurchaseWebhook } from "@nebutra/billing";
+import { type CreditPurchaseWebhookInput, handleCreditPurchaseWebhook } from "@nebutra/billing";
 import { getSystemDb, Prisma } from "@nebutra/db";
 import { issueLicense } from "@nebutra/license";
 import { logger } from "@nebutra/logger";
@@ -78,7 +78,7 @@ const stripeWebhookRoute = createRoute({
     body: {
       content: {
         "application/json": {
-          schema: z.object({}).passthrough(),
+          schema: z.object({}).catchall(z.any()),
         },
       },
     },
@@ -304,15 +304,19 @@ async function handleCheckoutCompleted(
   });
 
   // Credit purchase — unified handler across providers
-  const creditPurchaseInput = {
+  const creditWebhookInput: CreditPurchaseWebhookInput = {
     provider: "stripe",
     sessionId: session.id,
     metadata,
-    ...(session.amount_total ? { amountPaid: session.amount_total / 100 } : {}),
-    ...(session.currency ? { currency: session.currency.toUpperCase() } : {}),
-  } as const;
+  };
+  if (session.amount_total) {
+    creditWebhookInput.amountPaid = session.amount_total / 100;
+  }
+  if (session.currency) {
+    creditWebhookInput.currency = session.currency.toUpperCase();
+  }
 
-  const creditResult = await handleCreditPurchaseWebhook(creditPurchaseInput);
+  const creditResult = await handleCreditPurchaseWebhook(creditWebhookInput);
 
   if (creditResult.handled) {
     log.info("Credit purchase webhook handled", {

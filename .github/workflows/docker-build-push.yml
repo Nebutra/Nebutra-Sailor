@@ -10,14 +10,15 @@ name: Docker Build & Push
 #   - Tencent Cloud Container Registry (TCR)      — requires TENCENT_TCR_HOST + TENCENT_TCR_USERNAME + TENCENT_TCR_PASSWORD
 #
 # Tag strategy:
-#   main branch push  → :latest + :sha-<short-sha>
 #   tag push (v*)     → :<tag-name>  (e.g. v1.2.3)
 #   workflow_dispatch → :latest + :sha-<short-sha>  (on the chosen branch)
+#
+# This workflow intentionally does not run on every main push. CI already
+# verifies source builds; container publishing is release/manual work and is too
+# slow/noisy for routine merges.
 
 on:
   push:
-    branches:
-      - main
     tags:
       - "v*"
   workflow_dispatch:
@@ -137,8 +138,8 @@ jobs:
 
       # ── Image metadata (tags + OCI labels) ──────────────────────────────────
       # docker/metadata-action generates all required tags automatically:
-      #   - On main branch: latest + sha-<short-sha>
-      #   - On semver tag:  the tag itself (e.g. v1.2.3)
+      #   - On manual main builds: latest + sha-<short-sha>
+      #   - On semver tag: the tag itself (e.g. v1.2.3)
       - name: Generate image metadata
         id: meta
         uses: docker/metadata-action@v5
@@ -149,9 +150,9 @@ jobs:
             ${{ secrets.ALIYUN_ACR_USERNAME != '' && format('registry.cn-hangzhou.aliyuncs.com/nebutra/{0}', matrix.app) || '' }}
             ${{ secrets.TENCENT_TCR_HOST != '' && format('{0}/nebutra/{1}', secrets.TENCENT_TCR_HOST, matrix.app) || '' }}
           tags: |
-            # Tag with :latest on main branch pushes and manual triggers
+            # Tag with :latest on manual main builds
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' }}
-            # Tag with short SHA on branch pushes
+            # Tag with short SHA on branch/manual builds
             type=sha,prefix=sha-,format=short,enable=${{ startsWith(github.ref, 'refs/heads/') }}
             # Tag with semver version on tag pushes (e.g. v1.2.3 → 1.2.3, 1.2, 1)
             type=semver,pattern={{version}}
@@ -183,10 +184,10 @@ jobs:
           cache-to: type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.app }}:buildcache,mode=max
 
       # ── Sign image with cosign (keyless, Sigstore OIDC — no keys to rotate) ──
-      # Signs only on main pushes and semver tags to avoid signing PR images.
+      # Signs only on release tags; manual branch builds stay unsigned.
       # Verification: cosign verify --certificate-identity-regexp="github.com/..."
       - name: Sign container image
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         run: |
           cosign sign --yes \
             ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.app }}@${{ steps.build.outputs.digest }}
@@ -196,7 +197,7 @@ jobs:
       # ── Trivy vulnerability scan ─────────────────────────────────────────────
       - name: Scan image for vulnerabilities
         id: trivy
-        uses: aquasecurity/trivy-action@915b19bbe73b92a6cf82a1bc12b087c9a19a5fe2 # 0.28.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         if: success()
         with:
           image-ref: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
@@ -342,7 +343,7 @@ jobs:
 
       # ── Sign image with cosign (keyless, Sigstore OIDC) ──────────────────────
       - name: Sign container image
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         run: |
           cosign sign --yes \
             ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.service }}@${{ steps.build.outputs.digest }}
@@ -352,7 +353,7 @@ jobs:
       # ── Trivy vulnerability scan ─────────────────────────────────────────────
       - name: Scan image for vulnerabilities
         id: trivy
-        uses: aquasecurity/trivy-action@915b19bbe73b92a6cf82a1bc12b087c9a19a5fe2 # 0.28.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         if: success()
         with:
           image-ref: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}

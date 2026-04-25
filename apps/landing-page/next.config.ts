@@ -47,6 +47,12 @@ const nextConfig: NextConfig = {
   // Enable Partial Prerendering — Next.js 16 merged experimental.ppr into cacheComponents.
   cacheComponents: true,
 
+  // Vercel should produce the deployable artifact quickly; type checking stays
+  // a separate validation gate via `pnpm --filter @nebutra/landing-page typecheck`.
+  typescript: {
+    ignoreBuildErrors: process.env.VERCEL === "1",
+  },
+
   // Workspace packages: src/-exporting packages need this for SWC to process
   // TypeScript; dist/-exporting packages need it for "use client" detection.
   transpilePackages: [

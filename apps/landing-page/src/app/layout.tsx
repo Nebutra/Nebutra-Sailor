@@ -5,6 +5,7 @@ import { seoContent } from "@/lib/landing-content";
 import "./globals.css";
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
+// CJK fallback is provided by @nebutra/tokens --font-cn to avoid build-time font fetches.
 
 /**
  * Root layout metadata — locale-independent defaults only.

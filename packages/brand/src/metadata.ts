@@ -141,10 +141,10 @@ export const colors = {
  *                                  暗色界面代码块对比度更优。
  *   vivo Sans 保留用于品牌印刷物和 Logo 旁文字，网页端以 Noto Sans SC 交付。
  *
- * 加载方式 (Next.js / next/font):
+ * 加载方式 (Next.js / geist/font + CSS fallback):
  *   import { GeistSans } from "geist/font/sans"    — variable: "--font-geist-sans"
  *   import { GeistMono } from "geist/font/mono"    — variable: "--font-geist-mono"
- *   import { Noto_Sans_SC } from "next/font/google" — variable: "--font-noto-sc"
+ *   中文 UI 使用本地 / 系统 fallback 字体栈，避免 CI 构建期拉取 Google Fonts。
  */
 export const typography = {
   fontFamily: {

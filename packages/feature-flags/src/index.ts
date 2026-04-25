@@ -28,12 +28,11 @@ import { getSystemDb } from "@nebutra/db";
 const CACHE_TTL = 10; // 10 seconds
 
 function resolveVariant<T>(value: unknown, defaultValue: T): T {
-  if (value === null || value === undefined) {
-    return defaultValue;
-  }
+  if (value === null || value === undefined) return defaultValue;
 
   if (typeof value === "object" && !Array.isArray(value) && "variant" in value) {
-    return ((value as Record<string, unknown>).variant ?? defaultValue) as T;
+    const variant = (value as { variant?: unknown }).variant;
+    return variant === undefined ? defaultValue : (variant as T);
   }
 
   return value as T;
@@ -57,12 +56,12 @@ const dbProvider: FeatureFlagProvider = {
       }
 
       // 3. FETCH DB
-      // AUDIT(no-tenant): feature flags are keyed by global id, not by tenant.
+      // AUDIT(no-tenant): feature flags are keyed by global key, not by tenant.
       const dbFlag = await getSystemDb().featureFlag.findUnique({
         where: { key: flag },
       });
 
-      const isEnabled = dbFlag ? dbFlag.isEnabled : false;
+      const isEnabled = dbFlag?.isEnabled ?? false;
       await redis.set(cacheKey, isEnabled, { ex: CACHE_TTL });
       return isEnabled;
     } catch (e) {
@@ -93,14 +92,14 @@ const dbProvider: FeatureFlagProvider = {
       const cached = await redis.get<T>(cacheKey);
       if (cached !== null) return cached;
 
-      // AUDIT(no-tenant): feature flags are keyed by global id, not by tenant.
+      // AUDIT(no-tenant): feature flags are keyed by global key, not by tenant.
       const dbFlag = await getSystemDb().featureFlag.findUnique({
         where: { key: flag },
       });
 
       const parsedVariant = resolveVariant(dbFlag?.value, defaultValue);
       await redis.set(cacheKey, parsedVariant, { ex: CACHE_TTL });
-      return parsedVariant as T;
+      return parsedVariant;
     } catch {
       return defaultValue;
     }

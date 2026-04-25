@@ -8,7 +8,7 @@
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     try {
-      const { initOtel } = await import("@nebutra/logger");
+      const { initOtel } = await import("@nebutra/logger/otel");
       initOtel({ serviceName: "landing-page" });
     } catch (err) {
       process.stderr.write(

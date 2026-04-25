@@ -21,14 +21,17 @@ const mockMembers = [
   },
 ];
 
-vi.mock("@nebutra/db", () => ({
-  prisma: {
-    sleptonsaMemberProfile: {
-      findMany: vi.fn().mockResolvedValue(mockMembers),
-      count: vi.fn().mockResolvedValue(1),
-      findUnique: vi.fn().mockResolvedValue(mockMembers[0]),
-    },
+const mockPrisma = {
+  sleptonsaMemberProfile: {
+    findMany: vi.fn().mockResolvedValue(mockMembers),
+    count: vi.fn().mockResolvedValue(1),
+    findUnique: vi.fn().mockResolvedValue(mockMembers[0]),
   },
+};
+
+vi.mock("@nebutra/db", () => ({
+  getSystemDb: () => mockPrisma,
+  prisma: mockPrisma,
 }));
 
 describe("GET /api/members", () => {

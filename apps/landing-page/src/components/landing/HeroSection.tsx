@@ -47,7 +47,7 @@ function HeroBackgroundAnimation({ mounted, resolvedTheme }: HeroBackgroundAnima
   return (
     <div
       aria-hidden="true"
-      className="hero-motion-background pointer-events-none absolute inset-0 z-0"
+      className="hero-motion-background pointer-events-none absolute inset-x-0 top-0 z-0"
     >
       {mounted && !prefersReducedMotion ? (
         <video
@@ -84,7 +84,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative isolate flex min-h-[78svh] w-full items-center overflow-hidden bg-background pb-14 pt-24 sm:min-h-[82svh] lg:pt-32">
+    <section className="relative isolate w-full overflow-visible bg-background pb-8 pt-24 lg:pt-32">
       <HeroBackgroundAnimation mounted={mounted} resolvedTheme={resolvedTheme} />
 
       <div className="relative z-10 w-full px-4">

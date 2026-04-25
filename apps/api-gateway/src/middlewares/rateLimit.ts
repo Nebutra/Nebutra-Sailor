@@ -10,8 +10,9 @@ import type { Context, Next } from "hono";
 type PlanKey = keyof typeof PLAN_LIMITS;
 type RateLimiter = ReturnType<typeof getRateLimiter> | ReturnType<typeof createRedisRateLimiter>;
 
-function resolvePlan(plan: string | undefined): PlanKey {
-  return plan === "PRO" || plan === "ENTERPRISE" ? plan : "FREE";
+function resolvePlanKey(plan: unknown): PlanKey {
+  if (plan === "PRO" || plan === "ENTERPRISE") return plan;
+  return "FREE";
 }
 
 /**
@@ -35,6 +36,7 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
   const weight = getApiWeight(method, path);
 
   // Get rate limiter for tenant's plan
+  const planKey = resolvePlanKey(tenant?.plan);
   let limiter: RateLimiter;
   try {
     if (!process.env.UPSTASH_REDIS_URL || !process.env.UPSTASH_REDIS_TOKEN) {
@@ -47,10 +49,9 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
       set: (key: string, value: unknown, opts?: { ex?: number }) =>
         opts?.ex ? redisClient.set(key, value, { ex: opts.ex }) : redisClient.set(key, value),
     };
-    const plan = resolvePlan(tenant?.plan);
-    limiter = createRedisRateLimiter(PLAN_LIMITS[plan], redisAdapter);
+    limiter = createRedisRateLimiter(PLAN_LIMITS[planKey], redisAdapter);
   } catch {
-    limiter = getRateLimiter(resolvePlan(tenant?.plan));
+    limiter = getRateLimiter(planKey);
   }
 
   // Try to consume tokens

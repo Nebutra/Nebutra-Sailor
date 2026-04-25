@@ -5,14 +5,16 @@ import type { IssueLicenseParams } from "../types";
 
 const mockLicenseCreate = vi.fn();
 const mockLicenseFindFirst = vi.fn();
+const mockPrisma = {
+  license: {
+    create: (...args: unknown[]) => mockLicenseCreate(...args),
+    findFirst: (...args: unknown[]) => mockLicenseFindFirst(...args),
+  },
+};
 
 vi.mock("@nebutra/db", () => ({
-  prisma: {
-    license: {
-      create: (...args: unknown[]) => mockLicenseCreate(...args),
-      findFirst: (...args: unknown[]) => mockLicenseFindFirst(...args),
-    },
-  },
+  getSystemDb: () => mockPrisma,
+  prisma: mockPrisma,
 }));
 
 const mockEnqueue = vi

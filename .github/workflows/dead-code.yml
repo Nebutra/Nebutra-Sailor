@@ -6,7 +6,12 @@ on:
     paths:
       - "packages/**"
       - "apps/**"
+      - ".github/workflows/dead-code.yml"
       - "knip.json"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "vitest.workspace.ts"
   schedule:
     - cron: "0 4 * * 1" # Weekly Monday 04:00 UTC
 
@@ -35,7 +40,30 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run Knip
-        # Keep this advisory until the current monorepo-wide baseline is burned down.
-        # The report still appears in logs; PR gating remains focused on changed-code checks.
-        run: pnpm knip --reporter compact --no-exit-code
+      - name: Run Knip advisory report
+        run: |
+          set +e
+          pnpm knip --reporter compact 2>&1 | tee knip-report.txt
+          KNIP_STATUS=${PIPESTATUS[0]}
+
+          {
+            echo "### Knip advisory report"
+            echo ""
+            if [ "$KNIP_STATUS" -eq 0 ]; then
+              echo "No unused files, dependencies, or exports were reported."
+            else
+              echo "Knip reported cleanup candidates, but this workflow is advisory so historical dependency debt does not fail unrelated PRs."
+              echo ""
+              echo "Download the \`knip-report\` artifact for the full compact report."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit 0
+
+      - name: Upload Knip report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: knip-report
+          path: knip-report.txt
+          if-no-files-found: ignore

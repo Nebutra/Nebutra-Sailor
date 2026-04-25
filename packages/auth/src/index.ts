@@ -27,8 +27,8 @@
 
 // Middleware factory
 export { createAuthMiddleware } from "./middleware";
-export type { ServiceTokenClaims, SignServiceTokenOptions } from "./s2s";
-// Service-to-service token helpers
+// Service-to-service HMAC helpers
+export type { ServiceTokenContext } from "./s2s";
 export { signServiceToken, verifyServiceToken } from "./s2s";
 // Server-side factory
 export { createAuth } from "./server";

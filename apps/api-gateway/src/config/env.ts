@@ -113,12 +113,12 @@ export function getAuthProvider(): "clerk" | "better-auth" {
 export function validateEnv(): Env {
   if (process.env.SKIP_ENV_VALIDATION === "true") {
     return envSchema.parse({
-      PORT: "3002",
-      DATABASE_URL: "postgresql://localhost/dev",
-      AUTH_PROVIDER: "clerk",
-      CLERK_SECRET_KEY: "sk_test_placeholder",
       ...process.env,
       NODE_ENV: process.env.NODE_ENV ?? "development",
+      PORT: process.env.PORT ?? "3002",
+      DATABASE_URL: process.env.DATABASE_URL ?? "postgresql://localhost/dev",
+      AUTH_PROVIDER: process.env.AUTH_PROVIDER ?? "clerk",
+      CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? "sk_test_placeholder",
     });
   }
 

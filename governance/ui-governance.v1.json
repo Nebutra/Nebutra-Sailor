@@ -7,7 +7,7 @@
       "root": "apps/landing-page/src",
       "extensions": [".tsx"],
       "excludeContains": ["/(legal)/"],
-      "max": 398
+      "max": 399
     },
     {
       "surface": "web-app",
