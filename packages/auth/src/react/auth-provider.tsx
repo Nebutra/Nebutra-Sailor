@@ -2,6 +2,18 @@
 
 import { type ReactNode, useEffect, useState } from "react";
 import type { AuthProviderId } from "../types";
+import { AuthContextProvider, createUnauthenticatedAuthContext } from "./context";
+
+type ClerkProviderLazyComponent = React.ComponentType<{
+  publishableKey?: string;
+  clerkJSUrl?: string;
+  children: ReactNode;
+}>;
+
+type BetterAuthProviderLazyComponent = React.ComponentType<{
+  apiUrl?: string;
+  children: ReactNode;
+}>;
 
 /**
  * Props for the root AuthProvider component.
@@ -76,7 +88,7 @@ function ClerkProviderLazy({
   clerkJSUrl?: string;
   children: ReactNode;
 }) {
-  const [ClerkProvider, setClerkProvider] = useState<React.ComponentType<any> | null>(null);
+  const [ClerkProvider, setClerkProvider] = useState<ClerkProviderLazyComponent | null>(null);
 
   useEffect(() => {
     import("./providers/clerk-provider").then((mod) => {
@@ -84,12 +96,21 @@ function ClerkProviderLazy({
     });
   }, []);
 
-  if (!ClerkProvider) return <>{children}</>;
-  return (
-    <ClerkProvider publishableKey={publishableKey} clerkJSUrl={clerkJSUrl}>
-      {children}
-    </ClerkProvider>
-  );
+  if (!ClerkProvider) {
+    return (
+      <AuthContextProvider value={createUnauthenticatedAuthContext("clerk", false)}>
+        {children}
+      </AuthContextProvider>
+    );
+  }
+
+  const clerkProps: { publishableKey?: string; clerkJSUrl?: string; children: ReactNode } = {
+    children,
+  };
+  if (publishableKey) clerkProps.publishableKey = publishableKey;
+  if (clerkJSUrl) clerkProps.clerkJSUrl = clerkJSUrl;
+
+  return <ClerkProvider {...clerkProps} />;
 }
 
 /**
@@ -97,9 +118,8 @@ function ClerkProviderLazy({
  * Only imported when provider === "better-auth".
  */
 function BetterAuthProviderLazy({ apiUrl, children }: { apiUrl?: string; children: ReactNode }) {
-  const [BetterAuthProvider, setBetterAuthProvider] = useState<React.ComponentType<any> | null>(
-    null,
-  );
+  const [BetterAuthProvider, setBetterAuthProvider] =
+    useState<BetterAuthProviderLazyComponent | null>(null);
 
   useEffect(() => {
     import("./providers/better-auth-provider").then((mod) => {
@@ -107,6 +127,16 @@ function BetterAuthProviderLazy({ apiUrl, children }: { apiUrl?: string; childre
     });
   }, []);
 
-  if (!BetterAuthProvider) return <>{children}</>;
-  return <BetterAuthProvider apiUrl={apiUrl}>{children}</BetterAuthProvider>;
+  if (!BetterAuthProvider) {
+    return (
+      <AuthContextProvider value={createUnauthenticatedAuthContext("better-auth", false)}>
+        {children}
+      </AuthContextProvider>
+    );
+  }
+
+  const betterAuthProps: { apiUrl?: string; children: ReactNode } = { children };
+  if (apiUrl) betterAuthProps.apiUrl = apiUrl;
+
+  return <BetterAuthProvider {...betterAuthProps} />;
 }

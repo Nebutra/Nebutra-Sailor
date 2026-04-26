@@ -4,6 +4,18 @@ import { getTranslations } from "next-intl/server";
 import { GuestbookClient } from "@/components/guestbook/guestbook-client";
 import { prisma } from "@/lib/prisma";
 
+type GuestbookEntry = {
+  id: string;
+  authorName: string;
+  authorImage: string | null;
+  nickname: string;
+  relationship: string;
+  company: string | null;
+  title: string | null;
+  message: string;
+  createdAt: Date;
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -34,7 +46,7 @@ export default async function GuestbookPage({ params }: { params: Promise<{ loca
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "pages.guestbook" });
 
-  const rawEntries = prisma
+  const rawEntries: GuestbookEntry[] = prisma
     ? await prisma.guestbook
         .findMany({
           where: { status: "approved" },
@@ -53,7 +65,7 @@ export default async function GuestbookPage({ params }: { params: Promise<{ loca
           },
         })
         .catch((_err: unknown) => {
-          return [] as never[];
+          return [] as GuestbookEntry[];
         })
     : [];
 

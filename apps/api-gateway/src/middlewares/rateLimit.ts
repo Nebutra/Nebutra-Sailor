@@ -39,6 +39,10 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
   const planKey = resolvePlanKey(tenant?.plan);
   let limiter: RateLimiter;
   try {
+    if (!process.env.UPSTASH_REDIS_URL || !process.env.UPSTASH_REDIS_TOKEN) {
+      throw new Error("Redis rate limit store is not configured");
+    }
+
     const redisClient = getRedis();
     const redisAdapter = {
       get: (key: string) => redisClient.get(key),

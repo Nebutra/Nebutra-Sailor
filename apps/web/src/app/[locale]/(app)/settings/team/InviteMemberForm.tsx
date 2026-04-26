@@ -33,6 +33,7 @@ export function InviteMemberForm({ orgId }: Props) {
       >
         <option value="org:member">Member</option>
         <option value="org:admin">Admin</option>
+        <option value="org:viewer">Viewer</option>
       </select>
 
       <button

@@ -447,7 +447,7 @@ async function handleSubscriptionUpdated(
       organizationId: stripeCustomer.organizationId,
       subscriptionId: sub.id,
       customerId: sub.customer as string,
-      status: sub.status as any,
+      status: sub.status,
     },
   });
 

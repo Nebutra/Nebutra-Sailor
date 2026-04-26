@@ -40,11 +40,15 @@ test.describe("FooterMinimal", () => {
     await expect(footerNav).toBeVisible();
   });
 
-  test("renders all 4 navigation links", async ({ page }) => {
+  test("renders the expanded footer navigation", async ({ page }) => {
     const footer = page.getByTestId("footer-minimal");
     const footerNav = footer.locator("nav");
     const links = footerNav.getByRole("link");
-    await expect(links).toHaveCount(4);
+    await expect(links).toHaveCount(20);
+    await expect(footerNav.getByRole("link", { name: /features/i })).toBeVisible();
+    await expect(footerNav.getByRole("link", { name: /docs/i })).toBeVisible();
+    await expect(footerNav.getByRole("link", { name: /privacy/i })).toBeVisible();
+    await expect(footerNav.getByRole("link", { name: /github/i })).toBeVisible();
   });
 
   test("internal links use locale-aware href", async ({ page }) => {

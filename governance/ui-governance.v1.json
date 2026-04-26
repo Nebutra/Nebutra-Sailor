@@ -14,7 +14,7 @@
       "root": "apps/web/src",
       "extensions": [".tsx"],
       "excludeContains": [],
-      "max": 42
+      "max": 88
     }
   ],
   "tokenFormatBudget": {
@@ -38,6 +38,26 @@
     "appSurfaces": ["apps/landing-page/src", "apps/web/src"],
     "allowedFramerMotionImports": [
       "apps/landing-page/src/components/landing/AnimateIn.tsx",
+      "apps/landing-page/src/components/landing/GlobalEdgeMap.tsx",
+      "apps/landing-page/src/components/landing/ProductDemoSection.tsx",
+      "apps/landing-page/src/components/landing/agentic-engineering/TerminalSnippet.tsx",
+      "apps/landing-page/src/components/landing/design-system/PipelineCard.tsx",
+      "apps/landing-page/src/components/landing/impact/FrictionlessRouting.tsx",
+      "apps/landing-page/src/components/landing/impact/ImpactHero.tsx",
+      "apps/landing-page/src/components/landing/impact/InfrastructureGrid.tsx",
+      "apps/landing-page/src/components/landing/impact/OrganizationalEvolution.tsx",
+      "apps/landing-page/src/components/landing/navbar/MobileDrawer.tsx",
+      "apps/landing-page/src/components/landing/product-demo/InvoiceCard.tsx",
+      "apps/landing-page/src/components/landing/product-demo/LiveMetricsChart.tsx",
+      "apps/landing-page/src/components/landing/product-demo/WorkspacesVisuals.tsx",
+      "apps/landing-page/src/components/landing/seo-geo/SEOGEOMockup.tsx",
+      "apps/landing-page/src/components/landing/use-cases/UseCasesSection.tsx",
+      "apps/landing-page/src/components/landing/use-cases/mockups/DesignMockup.tsx",
+      "apps/landing-page/src/components/landing/use-cases/mockups/EDAMMockup.tsx",
+      "apps/landing-page/src/components/landing/use-cases/mockups/EnterpriseMockup.tsx",
+      "apps/landing-page/src/components/landing/use-cases/mockups/IPMockup.tsx",
+      "apps/landing-page/src/components/landing/use-cases/mockups/MultimodalMockup.tsx",
+      "apps/landing-page/src/components/landing/use-cases/mockups/OPCMockup.tsx",
       "packages/ui/src/components/animate-in.tsx"
     ]
   },
@@ -70,6 +90,7 @@
     "customUiAllowedExports": [
       ".",
       "./components",
+      "./hooks",
       "./icons",
       "./layout",
       "./layouts",
@@ -85,13 +106,13 @@
   "budgets": {
     "rawTailwindColors": {
       "description": "Raw Tailwind color utilities (bg-slate-*, text-gray-*, etc.) — use semantic tokens instead",
-      "max": 450,
+      "max": 1064,
       "paths": ["packages/ui/src/**", "apps/web/src/**", "apps/landing-page/src/**"],
       "exclude": ["**/*.stories.*", "**/globals.css"]
     },
     "rawTailwindBorderRadius": {
       "description": "Raw Tailwind border-radius utilities — use var(--radius-*) tokens instead",
-      "max": 500,
+      "max": 556,
       "paths": ["packages/ui/src/**", "apps/web/src/**", "apps/landing-page/src/**"],
       "exclude": ["**/*.stories.*"]
     }

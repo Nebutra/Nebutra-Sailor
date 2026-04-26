@@ -23,7 +23,7 @@ const CODE_LINES = [
 
 function getLineClass(type: string, text: string): string {
   if (type === "key") {
-    return "text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-500/10";
+    return "text-emerald-700 dark:text-emerald-300 font-bold bg-emerald-50 dark:bg-emerald-500/10";
   }
   if (type === "import") {
     return "text-primary dark:text-cyan-400";
@@ -89,7 +89,7 @@ export function MultiTenantCard() {
                 key={line.num}
                 className={`flex ${line.type === "key" ? "bg-emerald-50 dark:bg-emerald-500/10 border-l-[3px] border-emerald-500/50" : ""}`}
               >
-                <span className="w-10 shrink-0 text-right pr-3 select-none text-[11px] text-muted-foreground/40 dark:text-zinc-600">
+                <span className="w-10 shrink-0 text-right pr-3 select-none text-[11px] text-muted-foreground dark:text-zinc-400">
                   {line.num}
                 </span>
                 <span className={getLineClass(line.type, line.text)}>{line.text || "\u00a0"}</span>
@@ -104,7 +104,7 @@ export function MultiTenantCard() {
             <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground dark:text-zinc-500">
               Terminal
             </span>
-            <span className="text-[10px] text-muted-foreground/50 dark:text-zinc-600">
+            <span className="text-[10px] text-muted-foreground dark:text-zinc-400">
               &mdash; rls-audit
             </span>
           </div>
@@ -112,12 +112,10 @@ export function MultiTenantCard() {
             <p className="text-muted-foreground dark:text-zinc-500">
               $ npx nebutra rls-audit --strict
             </p>
-            <p className="text-emerald-600 dark:text-emerald-400 font-semibold">
+            <p className="text-emerald-700 dark:text-emerald-300 font-semibold">
               ✔ 0 cross-tenant leaks detected
             </p>
-            <p className="text-muted-foreground/60 dark:text-zinc-600">
-              14 queries scanned in 0.8s
-            </p>
+            <p className="text-muted-foreground dark:text-zinc-400">14 queries scanned in 0.8s</p>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import type { ResolvedConfig } from "../config";
 import { getActiveApps, getActivePackages, getFeatureEnvVars } from "../feature-map";
 
 const mockConfig: ResolvedConfig = {
+  preset: "ai-saas",
   apps: {
     web: true,
     "landing-page": true,

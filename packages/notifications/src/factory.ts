@@ -1,9 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type {
-  NotificationConfig,
-  NotificationProvider,
-  NotificationProviderType,
-} from "./types.js";
+import type { NotificationConfig, NotificationProvider, NotificationProviderType } from "./types";
 
 // =============================================================================
 // Notification Factory — Provider-agnostic notification creation
@@ -60,7 +56,7 @@ export async function createNotificationProvider(
 
   switch (providerType) {
     case "novu": {
-      const { NovuProvider } = await import("./providers/novu.js");
+      const { NovuProvider } = await import("./providers/novu");
       const novuConfig = config as Exclude<NotificationConfig, { provider: "direct" }> | undefined;
       return new NovuProvider({
         provider: "novu",
@@ -70,7 +66,7 @@ export async function createNotificationProvider(
     }
 
     case "direct": {
-      const { DirectProvider } = await import("./providers/direct.js");
+      const { DirectProvider } = await import("./providers/direct");
       const directConfig = config as Exclude<NotificationConfig, { provider: "novu" }> | undefined;
       return new DirectProvider({
         provider: "direct",
@@ -130,7 +126,7 @@ export async function closeNotificationProvider(): Promise<void> {
 // Convenience: createNotification helper
 // =============================================================================
 
-import type { NotificationPayload } from "./types.js";
+import type { NotificationPayload } from "./types";
 
 /**
  * Build a `NotificationPayload` with auto-generated ID.

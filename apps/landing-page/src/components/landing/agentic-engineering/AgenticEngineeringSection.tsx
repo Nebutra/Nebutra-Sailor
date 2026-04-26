@@ -61,9 +61,9 @@ export function AgenticEngineeringSection() {
                   <Icon className="h-5 w-5" style={{ color: card.accent }} />
                 </div>
 
-                <h4 className="relative z-10 text-[19px] font-bold tracking-tight text-foreground mb-3 leading-snug">
+                <h3 className="relative z-10 text-[19px] font-bold tracking-tight text-foreground mb-3 leading-snug">
                   {t(card.titleKey)}
-                </h4>
+                </h3>
 
                 <p className="text-[15px] text-muted-foreground font-medium leading-[1.7] mb-8 relative z-10 flex-1">
                   {t(card.descKey)}

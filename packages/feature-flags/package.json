@@ -6,7 +6,10 @@
   "nebutra": {
     "status": "wip",
     "productionReady": false,
-    "requires": ["@nebutra/cache", "@nebutra/db"],
+    "requires": [
+      "@nebutra/cache",
+      "@nebutra/db"
+    ],
     "gaps": [
       "No production app integrations",
       "Provider adapters not wired (vercel-flags, growthbook, configcat)",
@@ -19,13 +22,17 @@
     ".": "./src/index.ts",
     "./react": "./src/react.ts"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@nebutra/cache": "workspace:*",
     "@nebutra/db": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.19.15",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

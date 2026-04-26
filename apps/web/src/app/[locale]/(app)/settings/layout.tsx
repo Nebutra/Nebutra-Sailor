@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { href: "/settings", label: "General" },
   { href: "/settings/team", label: "Team" },
   { href: "/settings/api-keys", label: "API Keys" },
+  { href: "/settings/notifications", label: "Notifications" },
   { href: "/settings/billing", label: "Billing" },
   { href: "/settings/security", label: "Security" },
 ];

@@ -48,19 +48,19 @@ export function ProductShowcase() {
       id: "dashboard",
       labelKey: "tabs.dashboard",
       icon: <Layout className="size-4" />,
-      screenshot: "/screenshots/dashboard.webp",
+      screenshot: "/dashboard/demo-analytics.svg",
     },
     {
       id: "billing",
       labelKey: "tabs.billing",
       icon: <CreditCard className="size-4" />,
-      screenshot: "/screenshots/billing.webp",
+      screenshot: "/dashboard/demo-billing.svg",
     },
     {
       id: "ai-chat",
       labelKey: "tabs.ai-chat",
       icon: <Message className="size-4" />,
-      screenshot: "/screenshots/ai-chat.webp",
+      screenshot: "/dashboard/demo-tenants.svg",
     },
   ];
 
@@ -135,6 +135,7 @@ export function ProductShowcase() {
                       fill
                       className="object-cover object-top"
                       onError={() => handleImageError(activeTab)}
+                      unoptimized
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
                       priority={activeTab === 0}
                     />

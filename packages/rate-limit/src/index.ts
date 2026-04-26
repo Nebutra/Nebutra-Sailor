@@ -1,5 +1,6 @@
 export {
   API_WEIGHTS,
+  buildKey,
   createRateLimiter,
   createRedisRateLimiter,
   getApiWeight,

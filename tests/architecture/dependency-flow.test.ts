@@ -16,7 +16,9 @@ const EXCLUDED_PACKAGES = new Set([
   "@nebutra/tsconfig",
   "@nebutra/eslint-config",
   "@nebutra/db",
+  "@nebutra/auth",
   "@nebutra/brand",
+  "@nebutra/billing",
   "@nebutra/rate-limit",
   "@nebutra/cache",
   "@nebutra/event-bus",
@@ -29,6 +31,7 @@ const EXCLUDED_PACKAGES = new Set([
   "@nebutra/billing",
   "@nebutra/license",
   "@nebutra/agents",
+  "@nebutra/notifications",
 ]);
 
 interface DependencyRule {
@@ -42,7 +45,7 @@ interface DependencyRule {
  *
  * After architecture correction (Phase 1–2):
  *   @nebutra/ui             (packages/ui):              none (design-system merged in)
- *   @nebutra/web            (apps/web):                 @nebutra/ui, @nebutra/tokens, @nebutra/feature-flags, @nebutra/logger
+ *   @nebutra/web            (apps/web):                 @nebutra/ui, @nebutra/tokens, @nebutra/icons, @nebutra/feature-flags, @nebutra/logger
  *   @nebutra/landing-page   (apps/landing-page):        @nebutra/ui, @nebutra/tokens, @nebutra/icons, @nebutra/logger
  *   @nebutra/design-docs    (apps/design-docs):         @nebutra/ui, @nebutra/tokens
  */
@@ -56,7 +59,14 @@ const DEPENDENCY_RULES: DependencyRule[] = [
     name: "@nebutra/web",
     packageJsonPath: "apps/web/package.json",
     // @nebutra/feature-flags and @nebutra/logger are cross-cutting infrastructure packages
-    allowedDeps: ["@nebutra/ui", "@nebutra/tokens", "@nebutra/feature-flags", "@nebutra/logger"],
+    // @nebutra/icons is used directly by authenticated admin surfaces
+    allowedDeps: [
+      "@nebutra/ui",
+      "@nebutra/tokens",
+      "@nebutra/icons",
+      "@nebutra/feature-flags",
+      "@nebutra/logger",
+    ],
   },
   {
     name: "@nebutra/landing-page",

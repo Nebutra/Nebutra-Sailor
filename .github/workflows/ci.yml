@@ -157,9 +157,24 @@ jobs:
           echo "TURBO_BASE_REF=$BASE_SHA" >> "$GITHUB_ENV"
           echo "Using TURBO_BASE_REF=$BASE_SHA"
 
-      - name: Lint (Biome)
-        continue-on-error: true
+      - name: Lint changed files (Biome)
+        run: |
+          BIOME_FILES="$(
+            git diff --name-only --diff-filter=ACMRT "$TURBO_BASE_REF"...HEAD \
+              | grep -E '\.(js|jsx|ts|tsx|json|jsonc|css|md|mdx|yml|yaml)$' \
+              || true
+          )"
+
+          if [ -z "$BIOME_FILES" ]; then
+            echo "No Biome-supported changed files."
+            exit 0
+          fi
+
+          pnpm biome ci $BIOME_FILES
+
+      - name: Lint whole repo (advisory)
         run: pnpm biome ci .
+        continue-on-error: true
 
       - name: Typecheck (affected)
         run: pnpm turbo typecheck --filter="...[${TURBO_BASE_REF}]..."
@@ -268,7 +283,13 @@ jobs:
           echo "Using TURBO_BASE_REF=$BASE_SHA"
 
       - name: Build (affected)
-        run: pnpm turbo build --filter="...[${TURBO_BASE_REF}]..."
+        run: |
+          pnpm turbo build --filter="...[${TURBO_BASE_REF}]..." \
+            --filter="!@nebutra/design-docs" \
+            --filter="!@nebutra/sailor-docs" \
+            --filter="!@nebutra/storybook" \
+            --filter="!@nebutra/studio" \
+            --filter="!@nebutra/tsekaluk-dev"
         env:
           SKIP_ENV_VALIDATION: true
 
@@ -565,6 +586,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build landing page dependency closure
+        run: pnpm turbo build --filter="@nebutra/landing-page^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+
       - name: Build landing page
         run: pnpm --filter @nebutra/landing-page build
         env:
@@ -659,8 +685,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build api-gateway and dependencies
-        run: pnpm turbo build --filter @nebutra/api-gateway
+      - name: Build api-gateway dependency closure
+        run: pnpm turbo build --filter="@nebutra/api-gateway^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Build api-gateway
+        run: pnpm --filter @nebutra/api-gateway build
         env:
           SKIP_ENV_VALIDATION: true
 
@@ -725,6 +756,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     needs: [detect-changes, build]
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
     if: |
       github.event_name == 'pull_request' &&
       (needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.packages == 'true')
@@ -744,8 +779,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build web app dependency closure
+        run: pnpm turbo build --filter="@nebutra/web^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+
       - name: Build web app with bundle analyzer
-        run: pnpm --filter @nebutra/web build
+        run: pnpm --filter @nebutra/web analyze
         env:
           ANALYZE: "true"
           SKIP_ENV_VALIDATION: true

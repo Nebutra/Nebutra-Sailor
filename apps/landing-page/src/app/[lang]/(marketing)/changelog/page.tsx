@@ -2,6 +2,7 @@ import { getChangelogEntries } from "@nebutra/sanity/queries";
 import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
+import Image from "next/image";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
@@ -40,6 +41,8 @@ const TAG_COLORS: Record<string, string> = {
   breaking: "var(--status-danger)",
   security: "var(--cyan-9)",
 };
+
+const FALLBACK_RELEASE_IMAGE = "/dashboard/demo-analytics.svg";
 
 // Static fallback data used when Sanity CMS has no entries yet
 // Only includes user/developer-visible changes — pure infra ops entries are omitted
@@ -99,11 +102,26 @@ const STATIC_RELEASES = [
   },
 ] as const;
 
+interface PortableTextChild {
+  text?: string;
+}
+
+interface PortableTextBlock {
+  _type?: string;
+  alt?: string;
+  asset?: {
+    url?: string;
+  };
+  children?: PortableTextChild[];
+  listItem?: "bullet" | "number" | string;
+  style?: string;
+}
+
 /**
  * Simple Portable Text renderer — handles block and image types
  * Supports basic Sanity Portable Text structure without external dependencies
  */
-function PortableTextRenderer({ blocks }: { blocks: any[] }) {
+function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
   if (!blocks || blocks.length === 0) return null;
 
   return (
@@ -111,7 +129,7 @@ function PortableTextRenderer({ blocks }: { blocks: any[] }) {
       {blocks.map((block, idx) => {
         if (block._type === "block") {
           // Handle text blocks with styling
-          const text = block.children?.map((child: any) => child.text).join("") || "";
+          const text = block.children?.map((child) => child.text ?? "").join("") || "";
           if (block.style === "h2") {
             return (
               <h2 key={idx} className="text-lg font-semibold mt-6 mb-3">
@@ -149,10 +167,12 @@ function PortableTextRenderer({ blocks }: { blocks: any[] }) {
 
         if (block._type === "image" && block.asset?.url) {
           return (
-            <img
+            <Image
               key={idx}
               src={block.asset.url}
               alt={block.alt || "Changelog image"}
+              width={1200}
+              height={675}
               className="rounded-lg max-w-full h-auto mt-4 mb-4"
             />
           );
@@ -171,7 +191,7 @@ interface CmsEntry {
   publishedAt: string;
   type?: string;
   summary?: string;
-  body?: any[]; // Sanity Portable Text blocks
+  body?: PortableTextBlock[];
 }
 
 export default async function ChangelogPage({ params }: { params: Promise<{ lang: string }> }) {
@@ -197,9 +217,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           tag: entry.type || "feature",
           tagColor: TAG_COLORS[entry.type || "feature"] || TAG_COLORS.feature,
           excerpt: entry.summary ?? entry.title,
-          image:
-            firstBodyImage ||
-            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+          image: firstBodyImage || FALLBACK_RELEASE_IMAGE,
           content: entry.body ? (
             <PortableTextRenderer blocks={entry.body} />
           ) : (
@@ -225,8 +243,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           tag: r.tag.toLowerCase(),
           tagColor: r.tagColor,
           excerpt: r.highlights.join(" · "),
-          image:
-            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+          image: FALLBACK_RELEASE_IMAGE,
           content: (
             <div className="prose prose-sm dark:prose-invert max-w-none">
               <ul className="list-disc pl-4 space-y-2 mt-4">

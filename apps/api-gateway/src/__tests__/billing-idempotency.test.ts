@@ -147,11 +147,7 @@ async function ledgerCount(): Promise<number> {
 
 function installClaimMock() {
   mockClaim.mockImplementation(
-    async (input: {
-      organizationId: string;
-      idempotencyKey: string;
-      quantity: number;
-    }) => {
+    async (input: { organizationId: string; idempotencyKey: string; quantity: number }) => {
       const key = ledgerKey(input.organizationId, input.idempotencyKey);
       const existing = ledger.get(key);
       if (existing) {

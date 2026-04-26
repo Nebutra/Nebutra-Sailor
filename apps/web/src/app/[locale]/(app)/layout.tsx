@@ -1,7 +1,24 @@
+import { ShellNotificationCenter } from "@/components/notifications/shell-notification-center";
+import { requireAuth } from "@/lib/auth";
+import { resolveWebProductCapabilities } from "@/lib/product-capabilities";
 import { DesignSystemShell } from "../providers/design-system-shell";
 
-const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+export default async function AppLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  await requireAuth();
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return <DesignSystemShell hasClerkKey={hasClerkKey}>{children}</DesignSystemShell>;
+  return (
+    <DesignSystemShell
+      notificationCenter={<ShellNotificationCenter locale={locale} />}
+      productCapabilities={resolveWebProductCapabilities()}
+    >
+      {children}
+    </DesignSystemShell>
+  );
 }

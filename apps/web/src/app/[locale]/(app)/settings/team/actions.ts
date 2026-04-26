@@ -13,8 +13,14 @@ export type InviteState =
 const inviteSchema = z.object({
   email: z.string().email(),
   orgId: z.string().min(1),
-  role: z.enum(["admin", "member"]).default("member"),
+  role: z
+    .enum(["admin", "member", "viewer", "org:admin", "org:member", "org:viewer"])
+    .default("member"),
 });
+
+function normalizeInviteRole(role: z.infer<typeof inviteSchema>["role"]) {
+  return role.replace("org:", "").toUpperCase() as "ADMIN" | "MEMBER" | "VIEWER";
+}
 
 export async function inviteTeamMember(
   _prev: InviteState,
@@ -75,7 +81,7 @@ export async function inviteTeamMember(
       data: {
         userId: user.id,
         organizationId: orgId,
-        role: inviteeRole.toUpperCase() as "ADMIN" | "MEMBER",
+        role: normalizeInviteRole(inviteeRole),
       },
     });
 
