@@ -11,6 +11,20 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain('pnpm turbo build --filter="@nebutra/api-gateway^..."');
   });
 
+  it("keeps the core affected build focused on runtime-critical surfaces", async () => {
+    const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
+    const turboBaseRef = "$" + "{TURBO_BASE_REF}";
+
+    expect(workflow).toContain(
+      `run: |\n          pnpm turbo build --filter="...[${turboBaseRef}]..."`,
+    );
+    expect(workflow).toContain('--filter="!@nebutra/design-docs"');
+    expect(workflow).toContain('--filter="!@nebutra/sailor-docs"');
+    expect(workflow).toContain('--filter="!@nebutra/storybook"');
+    expect(workflow).toContain('--filter="!@nebutra/studio"');
+    expect(workflow).toContain('--filter="!@nebutra/tsekaluk-dev"');
+  });
+
   it("runs bundle analysis through the webpack analyzer path", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
     const webPackage = JSON.parse(

@@ -283,7 +283,13 @@ jobs:
           echo "Using TURBO_BASE_REF=$BASE_SHA"
 
       - name: Build (affected)
-        run: pnpm turbo build --filter="...[${TURBO_BASE_REF}]..."
+        run: |
+          pnpm turbo build --filter="...[${TURBO_BASE_REF}]..." \
+            --filter="!@nebutra/design-docs" \
+            --filter="!@nebutra/sailor-docs" \
+            --filter="!@nebutra/storybook" \
+            --filter="!@nebutra/studio" \
+            --filter="!@nebutra/tsekaluk-dev"
         env:
           SKIP_ENV_VALIDATION: true
 
