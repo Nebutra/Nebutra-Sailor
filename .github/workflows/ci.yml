@@ -759,7 +759,7 @@ jobs:
     permissions:
       contents: read
       issues: write
-      pull-requests: read
+      pull-requests: write
     if: |
       github.event_name == 'pull_request' &&
       (needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.packages == 'true')

@@ -48,7 +48,7 @@ describe("ci harness dependency closure", () => {
         "    permissions:",
         "      contents: read",
         "      issues: write",
-        "      pull-requests: read",
+        "      pull-requests: write",
       ].join("\n"),
     );
   });
