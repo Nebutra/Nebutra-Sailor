@@ -292,14 +292,31 @@
 }
 
 /* Hero background animation: direct video, tokenized fallback, and accessible motion opt-out. */
+.hero-stage::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: min(30svh, 320px);
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(
+    180deg,
+    hsl(var(--background) / 0) 0%,
+    hsl(var(--background) / 0.72) 58%,
+    hsl(var(--background)) 100%
+  );
+}
+
 .hero-motion-background {
-  height: min(92svh, 980px);
+  height: clamp(1120px, 128svh, 1480px);
   overflow: hidden;
   background:
     linear-gradient(
       180deg,
       hsl(var(--background) / 0.42) 0%,
-      hsl(var(--background) / 0.18) 48%,
+      hsl(var(--background) / 0.16) 54%,
       hsl(var(--background) / 0.98) 100%
     ),
     radial-gradient(1100px 640px at 50% 16%, hsl(var(--primary) / 0.16), transparent 62%),
@@ -311,7 +328,7 @@
     linear-gradient(
       180deg,
       hsl(var(--background) / 0.68) 0%,
-      hsl(var(--background) / 0.34) 50%,
+      hsl(var(--background) / 0.3) 54%,
       hsl(var(--background)) 100%
     ),
     radial-gradient(1100px 640px at 50% 12%, hsl(var(--primary) / 0.18), transparent 64%),
@@ -340,8 +357,8 @@
   background-image: radial-gradient(circle, hsl(var(--foreground) / 0.16) 1px, transparent 1.35px);
   background-position: 50% 0;
   background-size: 22px 22px;
-  -webkit-mask-image: linear-gradient(180deg, black 0%, black 54%, transparent 92%);
-  mask-image: linear-gradient(180deg, black 0%, black 54%, transparent 92%);
+  -webkit-mask-image: linear-gradient(180deg, black 0%, black 62%, transparent 96%);
+  mask-image: linear-gradient(180deg, black 0%, black 62%, transparent 96%);
   opacity: 0.34;
 }
 
@@ -363,7 +380,7 @@
     linear-gradient(
       180deg,
       hsl(var(--background) / 0.3) 0%,
-      hsl(var(--background) / 0.1) 38%,
+      hsl(var(--background) / 0.08) 48%,
       hsl(var(--background)) 100%
     );
 }
@@ -380,9 +397,15 @@
     linear-gradient(
       180deg,
       hsl(var(--background) / 0.5) 0%,
-      hsl(var(--background) / 0.16) 40%,
+      hsl(var(--background) / 0.14) 48%,
       hsl(var(--background)) 100%
     );
+}
+
+@media (max-width: 767px) {
+  .hero-motion-background {
+    height: clamp(980px, 138svh, 1260px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

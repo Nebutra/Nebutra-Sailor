@@ -84,7 +84,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative isolate w-full overflow-visible bg-background pb-8 pt-24 lg:pt-32">
+    <section className="relative isolate w-full overflow-visible bg-transparent pb-8 pt-24 lg:pt-32">
       <HeroBackgroundAnimation mounted={mounted} resolvedTheme={resolvedTheme} />
 
       <div className="relative z-10 w-full px-4">
