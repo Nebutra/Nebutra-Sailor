@@ -104,7 +104,8 @@ const hreflangMap: Record<string, string> = {
   de: "de",
 };
 
-const BASE_URL = "https://nebutra.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
+const ENABLE_VERCEL_TELEMETRY = process.env.NODE_ENV === "production" && process.env.VERCEL === "1";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -123,7 +124,7 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
 
-  setRequestLocale(lang as any);
+  setRequestLocale(lang as Locale);
   const t = await getTranslations({ locale: lang, namespace: "metadata" });
 
   // Build hreflang map: each locale → its canonical URL prefix
@@ -187,8 +188,12 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
           </NextIntlClientProvider>
         </ErrorBoundary>
       </Providers>
-      <SpeedInsights />
-      <Analytics />
+      {ENABLE_VERCEL_TELEMETRY && (
+        <>
+          <SpeedInsights />
+          <Analytics />
+        </>
+      )}
     </>
   );
 }

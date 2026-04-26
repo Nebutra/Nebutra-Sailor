@@ -3,6 +3,7 @@ import { getImageUrl } from "@nebutra/sanity/image";
 import { getPostBySlug, getPosts } from "@nebutra/sanity/queries";
 import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -12,6 +13,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 
 type Params = { lang: string; slug: string };
+const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";
 
 export async function generateStaticParams() {
   const posts = (await getPosts()) as Array<{ slug: { current: string } }>;
@@ -25,7 +27,7 @@ export async function generateStaticParams() {
     // The official workaround is to return a valid path that doesn't 404, or just a dummy.
     // Instead of a dummy, we'll try to let Next-intl's layout handle the empty state,
     // or just pass a known 'empty' slug that the page component intercepts before querying Sanity.
-    return routing.locales.map((lang) => ({ lang, slug: "empty-placeholder-do-not-fetch" }));
+    return routing.locales.map((lang) => ({ lang, slug: EMPTY_BLOG_PLACEHOLDER_SLUG }));
   }
 
   return routing.locales.flatMap((lang) =>
@@ -34,8 +36,17 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  "use cache";
+  cacheLife("hours");
+
   const { lang, slug } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
+  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) {
+    return {
+      title: "Blog — Nebutra",
+      robots: { index: false, follow: false },
+    };
+  }
 
   const post = await getPostBySlug(slug);
   if (!post) return {};
@@ -104,12 +115,15 @@ function renderBody(body: SanityBlock[] | null) {
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<Params> }) {
+  "use cache";
+  cacheLife("hours");
+
   const { lang, slug } = await params;
 
   if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
 
-  if (slug === "empty-placeholder-do-not-fetch") {
+  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) {
     // Return empty placeholder for build optimization if no posts exist yet
     return (
       <main className="min-h-screen bg-white py-24 dark:bg-black">

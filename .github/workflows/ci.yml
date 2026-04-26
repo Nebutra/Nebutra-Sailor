@@ -756,6 +756,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     needs: [detect-changes, build]
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
     if: |
       github.event_name == 'pull_request' &&
       (needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.packages == 'true')

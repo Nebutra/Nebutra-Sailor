@@ -84,6 +84,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
 
 export function FooterMinimal() {
   const t = useTranslations("footer");
+  type FooterTranslationKey = Parameters<typeof t>[0];
   const { resolvedTheme } = useTheme();
   const isMounted = useMount();
   const { social, status } = footerContent;
@@ -109,10 +110,10 @@ export function FooterMinimal() {
       />
 
       <div className="mx-auto max-w-[1400px] px-6 pt-16 pb-8">
-        {/* Main grid: Brand + Columns */}
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6 lg:gap-12">
+        {/* Main grid: Brand + Navigation */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,4fr)] lg:gap-12">
           {/* Brand block — spans 2 cols on large */}
-          <div className="col-span-2 flex flex-col gap-5">
+          <div className="flex flex-col gap-5">
             <Logo variant="en" size={120} inverted={isDark} />
             <p className="max-w-xs text-[13px] leading-relaxed text-[color:var(--neutral-10)] dark:text-white/50">
               {t("brandDescription")}
@@ -143,35 +144,40 @@ export function FooterMinimal() {
           </div>
 
           {/* Link columns */}
-          {FOOTER_COLUMNS.map((column) => (
-            <div key={column.titleKey} className="flex flex-col gap-3">
-              <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--neutral-11)] dark:text-white/60">
-                {t(`columns.${column.titleKey}` as any)}
-              </h3>
-              <ul className="flex flex-col gap-2.5">
-                {column.links.map((link) =>
-                  link.external ? (
-                    <li key={link.labelKey}>
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={linkClassName}
-                      >
-                        {t(`links.${link.labelKey}` as any)}
-                      </a>
-                    </li>
-                  ) : (
-                    <li key={link.labelKey}>
-                      <Link href={link.href} className={linkClassName}>
-                        {t(`links.${link.labelKey}` as any)}
-                      </Link>
-                    </li>
-                  ),
-                )}
-              </ul>
-            </div>
-          ))}
+          <nav
+            aria-label="Footer"
+            className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 lg:gap-12"
+          >
+            {FOOTER_COLUMNS.map((column) => (
+              <div key={column.titleKey} className="flex flex-col gap-3">
+                <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--neutral-11)] dark:text-white/60">
+                  {t(`columns.${column.titleKey}` as FooterTranslationKey)}
+                </h3>
+                <ul className="flex flex-col gap-2.5">
+                  {column.links.map((link) =>
+                    link.external ? (
+                      <li key={link.labelKey}>
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={linkClassName}
+                        >
+                          {t(`links.${link.labelKey}` as FooterTranslationKey)}
+                        </a>
+                      </li>
+                    ) : (
+                      <li key={link.labelKey}>
+                        <Link href={link.href} className={linkClassName}>
+                          {t(`links.${link.labelKey}` as FooterTranslationKey)}
+                        </Link>
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </div>
+            ))}
+          </nav>
         </div>
 
         {/* Newsletter */}

@@ -45,7 +45,7 @@ export function LocaleSwitcher() {
         type="button"
         onClick={() => setIsOpen((v) => !v)}
         className="flex items-center gap-1.5 rounded-[var(--radius-lg)] px-2.5 py-1.5 text-sm text-[var(--neutral-9)] transition-colors hover:text-[var(--neutral-12)] dark:text-white/60 dark:hover:text-white"
-        aria-label="Switch language"
+        aria-label={`Switch language, current language ${LOCALE_LABELS[locale] ?? locale.toUpperCase()}`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >

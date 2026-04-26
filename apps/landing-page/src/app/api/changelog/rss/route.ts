@@ -114,6 +114,21 @@ function buildDescription(highlights: string[]): string {
   return `<![CDATA[<ul>\n${items}\n</ul>]]>`;
 }
 
+function isNextPrerenderFetchCancellation(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "digest" in error &&
+    (error as { digest?: unknown }).digest === "HANGING_PROMISE_REJECTION"
+  );
+}
+
+function logFeedError(label: string, error: unknown) {
+  if (!isNextPrerenderFetchCancellation(error)) {
+    console.error(label, error);
+  }
+}
+
 function buildRssXml(entries: (ChangelogEntry | (typeof STATIC_RELEASES)[0])[]): string {
   const items = entries
     .map((entry) => {
@@ -167,7 +182,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("[RSS Feed Error]", error);
+    logFeedError("[RSS Feed Error]", error);
     // Fall back to static releases on error
     const rssXml = buildRssXml(STATIC_RELEASES);
     return new Response(rssXml, {

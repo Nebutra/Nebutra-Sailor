@@ -70,7 +70,7 @@ export function RBACCard() {
                       className={`relative flex items-center justify-center rounded-full ring-2 ${role.ring} p-[1.5px] bg-background dark:bg-zinc-900 overflow-hidden`}
                     >
                       <Avatar size="xs" className="w-[20px] h-[20px] rounded-full">
-                        <AvatarImage src={role.src} alt={role.name} className="object-cover" />
+                        <AvatarImage src={role.src} alt="" className="object-cover" />
                         <AvatarFallback className="text-[8px] bg-muted/50 text-muted-foreground">
                           {role.fallback}
                         </AvatarFallback>

@@ -109,6 +109,21 @@ function buildHtmlContent(highlights: string[]): string {
   return `<ul>\n${items}\n</ul>`;
 }
 
+function isNextPrerenderFetchCancellation(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "digest" in error &&
+    (error as { digest?: unknown }).digest === "HANGING_PROMISE_REJECTION"
+  );
+}
+
+function logFeedError(label: string, error: unknown) {
+  if (!isNextPrerenderFetchCancellation(error)) {
+    console.error(label, error);
+  }
+}
+
 function buildAtomXml(entries: (ChangelogEntry | (typeof STATIC_RELEASES)[0])[]): string {
   const now = new Date().toISOString();
   const entries_xml = entries
@@ -162,7 +177,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("[Atom Feed Error]", error);
+    logFeedError("[Atom Feed Error]", error);
     // Fall back to static releases on error
     const atomXml = buildAtomXml(STATIC_RELEASES);
     return new Response(atomXml, {

@@ -35,6 +35,24 @@ describe("ci harness dependency closure", () => {
     expect(webPackage.scripts?.analyze).toContain("next build --webpack");
   });
 
+  it("grants bundle analysis the minimum permission needed to comment on PRs", async () => {
+    const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
+
+    expect(workflow).toContain(
+      [
+        "  bundle-analysis:",
+        "    name: Web Bundle Analysis",
+        "    runs-on: ubuntu-latest",
+        "    timeout-minutes: 20",
+        "    needs: [detect-changes, build]",
+        "    permissions:",
+        "      contents: read",
+        "      issues: write",
+        "      pull-requests: read",
+      ].join("\n"),
+    );
+  });
+
   it("waits for a public web route in Playwright webServer readiness checks", async () => {
     const playwrightConfig = await readFile(join(process.cwd(), "playwright.config.ts"), "utf8");
 

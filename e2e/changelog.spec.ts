@@ -24,7 +24,7 @@ test.describe("Changelog Page", () => {
 
   test("has RSS and social links in footer", async ({ page }) => {
     await page.goto("/changelog");
-    const rssLink = page.getByRole("link", { name: /rss/i });
+    const rssLink = page.getByRole("link", { exact: true, name: "RSS" });
     await expect(rssLink).toBeVisible();
   });
 });
