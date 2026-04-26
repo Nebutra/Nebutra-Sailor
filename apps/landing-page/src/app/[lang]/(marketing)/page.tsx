@@ -112,16 +112,18 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
         className="flex flex-col min-h-screen bg-background overflow-x-hidden"
       >
         <Navbar />
-        {/* 1. Hero Section */}
-        <HeroSection />
+        <div className="hero-stage relative isolate overflow-hidden bg-background">
+          {/* 1. Hero Section */}
+          <HeroSection />
 
-        {/* 2. Trust Badges / Quick Logo Bar */}
-        <LogoStrip locale={lang as Locale} />
+          {/* 2. Trust Badges / Quick Logo Bar */}
+          <LogoStrip locale={lang as Locale} />
 
-        {/* 2.5 Hero Mockup Window */}
-        <section className="relative w-full overflow-hidden bg-background pb-32 pt-2">
-          <HeroMockupWindow />
-        </section>
+          {/* 2.5 Hero Mockup Window */}
+          <section className="relative z-20 w-full overflow-visible bg-transparent pb-32 pt-2">
+            <HeroMockupWindow />
+          </section>
+        </div>
 
         {/* 2.8 AI Constellation Marquee */}
         <AIConstellationMarquee />

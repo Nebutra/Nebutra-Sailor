@@ -19,24 +19,12 @@ export interface FeatureFlagProvider {
 }
 
 import { getRedis } from "@nebutra/cache";
-import { getSystemDb } from "@nebutra/db";
 
 // ============================================
-// Default: DB-Backed Provider with Redis Cache
+// Default: Cached Provider with Env Fallback
 // ============================================
 
 const CACHE_TTL = 10; // 10 seconds
-
-function resolveVariant<T>(value: unknown, defaultValue: T): T {
-  if (value === null || value === undefined) return defaultValue;
-
-  if (typeof value === "object" && !Array.isArray(value) && "variant" in value) {
-    const variant = (value as { variant?: unknown }).variant;
-    return variant === undefined ? defaultValue : (variant as T);
-  }
-
-  return value as T;
-}
 
 const dbProvider: FeatureFlagProvider = {
   isEnabled: async (flag: string, _context?: FeatureFlagContext) => {
@@ -55,13 +43,8 @@ const dbProvider: FeatureFlagProvider = {
         return cached;
       }
 
-      // 3. FETCH DB
-      // AUDIT(no-tenant): feature flags are keyed by global key, not by tenant.
-      const dbFlag = await getSystemDb().featureFlag.findUnique({
-        where: { key: flag },
-      });
-
-      const isEnabled = dbFlag?.isEnabled ?? false;
+      // 3. FALL BACK TO ENV FLAGS
+      const isEnabled = await envProvider.isEnabled(flag, _context);
       await redis.set(cacheKey, isEnabled, { ex: CACHE_TTL });
       return isEnabled;
     } catch (e) {
@@ -92,12 +75,7 @@ const dbProvider: FeatureFlagProvider = {
       const cached = await redis.get<T>(cacheKey);
       if (cached !== null) return cached;
 
-      // AUDIT(no-tenant): feature flags are keyed by global key, not by tenant.
-      const dbFlag = await getSystemDb().featureFlag.findUnique({
-        where: { key: flag },
-      });
-
-      const parsedVariant = resolveVariant(dbFlag?.value, defaultValue);
+      const parsedVariant = await envProvider.getVariant(flag, defaultValue, _context);
       await redis.set(cacheKey, parsedVariant, { ex: CACHE_TTL });
       return parsedVariant;
     } catch {

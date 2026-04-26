@@ -3,7 +3,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
   redisGet: vi.fn(),
   redisSet: vi.fn(),
-  findUnique: vi.fn(),
 }));
 
 vi.mock("@nebutra/cache", () => ({
@@ -13,33 +12,28 @@ vi.mock("@nebutra/cache", () => ({
   }),
 }));
 
-vi.mock("@nebutra/db", () => ({
-  getSystemDb: () => ({
-    featureFlag: {
-      findUnique: mocks.findUnique,
-    },
-  }),
-}));
-
 import { getFeatureVariant, isFeatureEnabled, useDbProvider } from "../index";
 
-const ambientKillSwitchKeys = [
+const ambientFeatureFlagEnvKeys = [
   "KILL_SWITCH_AI_STREAMING",
   "KILL_SWITCH_CHECKOUT_COPY_VARIANT",
+  "FEATURE_FLAG_AI_STREAMING",
+  "FEATURE_FLAG_BETA_DASHBOARD",
+  "FEATURE_FLAG_CHECKOUT_COPY_VARIANT",
 ] as const;
 
 const originalEnv = Object.fromEntries(
-  ambientKillSwitchKeys.map((key) => [key, process.env[key]]),
-) as Record<(typeof ambientKillSwitchKeys)[number], string | undefined>;
+  ambientFeatureFlagEnvKeys.map((key) => [key, process.env[key]]),
+) as Record<(typeof ambientFeatureFlagEnvKeys)[number], string | undefined>;
 
-function clearAmbientKillSwitches() {
-  for (const key of ambientKillSwitchKeys) {
+function clearAmbientFeatureFlagEnv() {
+  for (const key of ambientFeatureFlagEnvKeys) {
     delete process.env[key];
   }
 }
 
-function restoreAmbientKillSwitches() {
-  for (const key of ambientKillSwitchKeys) {
+function restoreAmbientFeatureFlagEnv() {
+  for (const key of ambientFeatureFlagEnvKeys) {
     const value = originalEnv[key];
     if (value === undefined) {
       delete process.env[key];
@@ -49,51 +43,40 @@ function restoreAmbientKillSwitches() {
   }
 }
 
-describe("db-backed feature flags", () => {
+describe("cached feature flags with env fallback", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    clearAmbientKillSwitches();
+    clearAmbientFeatureFlagEnv();
     useDbProvider();
     mocks.redisGet.mockResolvedValue(null);
   });
 
   afterEach(() => {
-    restoreAmbientKillSwitches();
+    restoreAmbientFeatureFlagEnv();
   });
 
-  it("looks up flags by key and reads the current isEnabled field", async () => {
-    mocks.findUnique.mockResolvedValue({
-      isEnabled: true,
-      value: null,
-    });
+  it("falls back to env flags on cache misses", async () => {
+    process.env.FEATURE_FLAG_AI_STREAMING = "true";
 
     await expect(isFeatureEnabled("ai-streaming")).resolves.toBe(true);
 
-    expect(mocks.findUnique).toHaveBeenCalledWith({
-      where: { key: "ai-streaming" },
-    });
     expect(mocks.redisSet).toHaveBeenCalledWith("sailor:ff:ai-streaming", true, { ex: 10 });
   });
 
-  it("uses cached boolean values before hitting the database", async () => {
+  it("uses cached boolean values before env fallback", async () => {
+    process.env.FEATURE_FLAG_BETA_DASHBOARD = "true";
     mocks.redisGet.mockResolvedValue(false);
 
     await expect(isFeatureEnabled("beta-dashboard")).resolves.toBe(false);
 
-    expect(mocks.findUnique).not.toHaveBeenCalled();
+    expect(mocks.redisSet).not.toHaveBeenCalled();
   });
 
-  it("resolves variants from the current value column", async () => {
-    mocks.findUnique.mockResolvedValue({
-      isEnabled: true,
-      value: { variant: "treatment" },
-    });
+  it("resolves variants from env fallback on cache misses", async () => {
+    process.env.FEATURE_FLAG_CHECKOUT_COPY_VARIANT = "treatment";
 
     await expect(getFeatureVariant("checkout-copy", "control")).resolves.toBe("treatment");
 
-    expect(mocks.findUnique).toHaveBeenCalledWith({
-      where: { key: "checkout-copy" },
-    });
     expect(mocks.redisSet).toHaveBeenCalledWith("sailor:ff:checkout-copy:variant", "treatment", {
       ex: 10,
     });
