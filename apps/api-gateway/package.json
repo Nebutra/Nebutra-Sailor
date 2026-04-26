@@ -21,6 +21,7 @@
     "@hono/zod-validator": "^0.7.6",
     "@nebutra/agents": "workspace:*",
     "@nebutra/alerting": "workspace:*",
+    "@nebutra/analytics": "workspace:*",
     "@nebutra/audit": "workspace:*",
     "@nebutra/billing": "workspace:*",
     "@nebutra/cache": "workspace:*",

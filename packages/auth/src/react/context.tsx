@@ -58,6 +58,24 @@ export interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+export function createUnauthenticatedAuthContext(
+  provider: AuthProviderId,
+  isLoaded = false,
+): AuthContextValue {
+  return {
+    provider,
+    user: null,
+    session: null,
+    organization: null,
+    membership: null,
+    isLoaded,
+    isSignedIn: false,
+    getToken: async () => null,
+    signOut: async () => {},
+    setActiveOrganization: async () => {},
+  };
+}
+
 /**
  * Hook to access the auth context.
  *

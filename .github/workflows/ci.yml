@@ -561,6 +561,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build landing page dependency closure
+        run: pnpm turbo build --filter="@nebutra/landing-page^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+
       - name: Build landing page
         run: pnpm --filter @nebutra/landing-page build
         env:
@@ -656,8 +661,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build api-gateway and dependencies
-        run: pnpm turbo build --filter @nebutra/api-gateway
+      - name: Build api-gateway dependency closure
+        run: pnpm turbo build --filter="@nebutra/api-gateway^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Build api-gateway
+        run: pnpm --filter @nebutra/api-gateway build
         env:
           SKIP_ENV_VALIDATION: true
 
@@ -741,8 +751,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build web app dependency closure
+        run: pnpm turbo build --filter="@nebutra/web^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+
       - name: Build web app with bundle analyzer
-        run: pnpm --filter @nebutra/web build
+        run: pnpm --filter @nebutra/web analyze
         env:
           ANALYZE: "true"
           SKIP_ENV_VALIDATION: true

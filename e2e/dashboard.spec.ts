@@ -113,9 +113,13 @@ test.describe("API health checks", () => {
   test.skip(skipApi, "API gateway not running in CI (set API_BASE_URL to enable)");
   const API_BASE = process.env.API_BASE_URL ?? "http://localhost:3002";
 
-  test("API gateway liveness probe returns 200", async ({ request }) => {
+  test("API gateway health probe returns a structured status", async ({ request }) => {
     const response = await request.get(`${API_BASE}/misc/health`);
-    expect(response.status()).toBe(200);
+    expect([200, 503]).toContain(response.status());
+
+    const body = await response.json();
+    expect(["healthy", "degraded", "unhealthy"]).toContain(body.status);
+    expect(body.dependencies).toBeDefined();
   });
 
   test("API gateway returns service info at root", async ({ request }) => {

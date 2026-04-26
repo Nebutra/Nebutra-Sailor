@@ -1,7 +1,133 @@
 "use client";
 
-import { type ReactNode, useCallback, useEffect, useState } from "react";
-import { AuthContextProvider, type AuthContextValue } from "../context";
+import { type ReactNode, useEffect, useState } from "react";
+import {
+  AuthContextProvider,
+  type AuthContextValue,
+  createUnauthenticatedAuthContext,
+} from "../context";
+
+type ClerkProviderRuntimeProps = {
+  publishableKey?: string;
+  clerkJSUrl?: string;
+  children: ReactNode;
+};
+
+type ClerkAuthState = {
+  userId?: string | null;
+  orgId?: string | null;
+  orgRole?: string | null;
+  getToken?: () => Promise<string | null>;
+  signOut?: () => Promise<void>;
+};
+
+type ClerkUserState = {
+  isLoaded?: boolean;
+  user?: {
+    id: string;
+    emailAddresses?: Array<{ emailAddress?: string | null }> | null;
+    fullName?: string | null;
+    imageUrl?: string | null;
+  } | null;
+};
+
+type ClerkOrganizationState = {
+  organization?: {
+    id: string;
+    name: string;
+    slug: string;
+    setActive?: (input: { organization: string }) => Promise<void>;
+  } | null;
+  membership?: {
+    role: string;
+  } | null;
+};
+
+type ClerkAuthHook = () => ClerkAuthState;
+type ClerkUserHook = () => ClerkUserState;
+type ClerkOrganizationHook = () => ClerkOrganizationState | null | undefined;
+
+type ClerkRuntime = {
+  Provider: React.ComponentType<ClerkProviderRuntimeProps>;
+  useAuth: ClerkAuthHook;
+  useUser: ClerkUserHook;
+  useOrganization: ClerkOrganizationHook;
+};
+
+const useEmptyClerkOrganization: ClerkOrganizationHook = () => null;
+
+function ClerkContextBridge({
+  children,
+  useAuth,
+  useUser,
+  useOrganization,
+}: {
+  children: ReactNode;
+  useAuth: ClerkAuthHook;
+  useUser: ClerkUserHook;
+  useOrganization: ClerkOrganizationHook;
+}) {
+  const auth = useAuth();
+  const user = useUser();
+  const organization = useOrganization();
+
+  const contextValue: AuthContextValue = {
+    provider: "clerk",
+    user: user.user
+      ? {
+          id: user.user.id,
+          email: user.user.emailAddresses?.[0]?.emailAddress ?? undefined,
+          name: user.user.fullName ?? undefined,
+          imageUrl: user.user.imageUrl ?? undefined,
+        }
+      : null,
+    session: auth.userId
+      ? {
+          userId: auth.userId,
+          organizationId: auth.orgId ?? undefined,
+          role: auth.orgRole ?? undefined,
+        }
+      : null,
+    organization: organization?.organization
+      ? {
+          id: organization.organization.id,
+          name: organization.organization.name,
+          slug: organization.organization.slug,
+        }
+      : null,
+    membership: organization?.membership
+      ? {
+          role: organization.membership.role,
+        }
+      : null,
+    isLoaded: user.isLoaded ?? false,
+    isSignedIn: !!user.user,
+    getToken: async () => {
+      try {
+        const token = await auth.getToken?.();
+        return typeof token === "string" ? token : null;
+      } catch {
+        return null;
+      }
+    },
+    signOut: async () => {
+      try {
+        await auth.signOut?.();
+      } catch (error) {
+        console.error("Clerk signOut failed:", error);
+      }
+    },
+    setActiveOrganization: async (orgId: string) => {
+      try {
+        await organization?.organization?.setActive?.({ organization: orgId });
+      } catch (error) {
+        console.error("Clerk setActiveOrganization failed:", error);
+      }
+    },
+  };
+
+  return <AuthContextProvider value={contextValue}>{children}</AuthContextProvider>;
+}
 
 /**
  * Clerk provider wrapper for React.
@@ -34,12 +160,10 @@ export function ClerkProvider({
   /** Optional custom Clerk.js URL */
   clerkJSUrl?: string;
 }) {
-  const [contextValue, setContextValue] = useState<AuthContextValue | null>(null);
-  const [ClerkProviderComponent, setClerkProviderComponent] =
-    useState<React.ComponentType<any> | null>(null);
-  const [useAuthHook, setUseAuthHook] = useState<(() => any) | null>(null);
-  const [useUserHook, setUseUserHook] = useState<(() => any) | null>(null);
-  const [useOrganizationHook, setUseOrganizationHook] = useState<(() => any) | null>(null);
+  const [fallbackContextValue, setFallbackContextValue] = useState<AuthContextValue>(() =>
+    createUnauthenticatedAuthContext("clerk", false),
+  );
+  const [runtime, setRuntime] = useState<ClerkRuntime | null>(null);
 
   // Lazy load Clerk components and hooks
   useEffect(() => {
@@ -51,37 +175,28 @@ export function ClerkProvider({
         const clerks = (await import("@clerk/nextjs")) as Record<string, unknown>;
         const clerkReact = (await import("@clerk/react")) as Record<string, unknown>;
 
-        const Provider = clerks.ClerkProvider as React.ComponentType<any> | undefined;
-        const useAuth = clerkReact.useAuth as (() => any) | undefined;
-        const useUser = clerkReact.useUser as (() => any) | undefined;
-        const useOrganization = clerkReact.useOrganization as (() => any) | undefined;
+        const Provider = clerks.ClerkProvider as ClerkRuntime["Provider"] | undefined;
+        const useAuth = clerkReact.useAuth as ClerkAuthHook | undefined;
+        const useUser = clerkReact.useUser as ClerkUserHook | undefined;
+        const useOrganization = clerkReact.useOrganization as ClerkOrganizationHook | undefined;
 
         if (!Provider || !useAuth || !useUser) {
           throw new Error("Clerk components not found");
         }
 
         if (isMounted) {
-          setClerkProviderComponent(() => Provider);
-          setUseAuthHook(() => useAuth);
-          setUseUserHook(() => useUser);
-          setUseOrganizationHook(() => useOrganization ?? null);
+          setRuntime({
+            Provider,
+            useAuth,
+            useUser,
+            useOrganization: useOrganization ?? useEmptyClerkOrganization,
+          });
         }
       } catch (error) {
         console.error("Failed to load @clerk/nextjs:", error);
         // Clerk is optional; continue without it
         if (isMounted) {
-          setContextValue({
-            provider: "clerk",
-            user: null,
-            session: null,
-            organization: null,
-            membership: null,
-            isLoaded: true,
-            isSignedIn: false,
-            getToken: async () => null,
-            signOut: async () => {},
-            setActiveOrganization: async () => {},
-          });
+          setFallbackContextValue(createUnauthenticatedAuthContext("clerk", true));
         }
       }
     };
@@ -93,97 +208,23 @@ export function ClerkProvider({
     };
   }, []);
 
-  // This component will be rendered inside the Clerk provider to access hooks
-  const InnerComponent = useCallback(
-    ({ children }: { children: ReactNode }) => {
-      if (!useAuthHook) {
-        return <>{children}</>;
-      }
-
-      // Safe to call hooks here because we're inside the Clerk provider
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const auth = useAuthHook();
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const user = useUserHook?.();
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const organization = useOrganizationHook?.();
-
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useEffect(() => {
-        setContextValue({
-          provider: "clerk",
-          user: user?.user
-            ? {
-                id: user.user.id,
-                email: user.user.emailAddresses?.[0]?.emailAddress ?? undefined,
-                name: user.user.fullName ?? undefined,
-                imageUrl: user.user.imageUrl ?? undefined,
-              }
-            : null,
-          session: auth?.userId
-            ? {
-                userId: auth.userId,
-                organizationId: auth.orgId ?? undefined,
-                role: auth.orgRole ?? undefined,
-              }
-            : null,
-          organization: organization?.organization
-            ? {
-                id: organization.organization.id,
-                name: organization.organization.name,
-                slug: organization.organization.slug,
-              }
-            : null,
-          membership: organization?.membership
-            ? {
-                role: organization.membership.role,
-              }
-            : null,
-          isLoaded: user?.isLoaded ?? false,
-          isSignedIn: !!user?.user,
-          getToken: async () => {
-            try {
-              const token = await auth?.getToken?.();
-              return typeof token === "string" ? token : null;
-            } catch {
-              return null;
-            }
-          },
-          signOut: async () => {
-            try {
-              await auth?.signOut?.();
-            } catch (error) {
-              console.error("Clerk signOut failed:", error);
-            }
-          },
-          setActiveOrganization: async (orgId: string) => {
-            try {
-              await organization?.organization?.setActive?.({ organization: orgId });
-            } catch (error) {
-              console.error("Clerk setActiveOrganization failed:", error);
-            }
-          },
-        });
-      }, [auth, user, organization]);
-
-      if (!contextValue) return <>{children}</>;
-      return <AuthContextProvider value={contextValue}>{children}</AuthContextProvider>;
-    },
-    [useAuthHook, useUserHook, useOrganizationHook],
-  );
-
-  if (!ClerkProviderComponent) {
-    // Clerk not available; render children without provider
-    return <>{children}</>;
+  if (!runtime) {
+    return <AuthContextProvider value={fallbackContextValue}>{children}</AuthContextProvider>;
   }
 
-  const clerkProps: Record<string, any> = {};
+  const clerkProps: ClerkProviderRuntimeProps = {
+    children: (
+      <ClerkContextBridge
+        useAuth={runtime.useAuth}
+        useOrganization={runtime.useOrganization}
+        useUser={runtime.useUser}
+      >
+        {children}
+      </ClerkContextBridge>
+    ),
+  };
   if (publishableKey) clerkProps.publishableKey = publishableKey;
   if (clerkJSUrl) clerkProps.clerkJSUrl = clerkJSUrl;
 
-  return (
-    <ClerkProviderComponent {...clerkProps}>
-      <InnerComponent>{children}</InnerComponent>
-    </ClerkProviderComponent>
-  );
+  return <runtime.Provider {...clerkProps} />;
 }

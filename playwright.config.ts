@@ -43,7 +43,7 @@ export default defineConfig({
     },
     {
       command: "pnpm --filter @nebutra/web dev --port 3001",
-      url: "http://localhost:3001",
+      url: "http://localhost:3001/demo/embed",
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
       env: {
@@ -61,6 +61,9 @@ export default defineConfig({
       url: "http://localhost:3003",
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
+      env: {
+        SKIP_ENV_VALIDATION: "true",
+      },
     },
   ],
 });

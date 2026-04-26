@@ -201,6 +201,9 @@ importers:
       '@nebutra/alerting':
         specifier: workspace:*
         version: link:../../packages/alerting
+      '@nebutra/analytics':
+        specifier: workspace:*
+        version: link:../../packages/analytics
       '@nebutra/audit':
         specifier: workspace:*
         version: link:../../packages/audit

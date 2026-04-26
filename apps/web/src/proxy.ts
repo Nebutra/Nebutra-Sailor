@@ -60,7 +60,7 @@ function buildCsp(nonce: string): string {
     ...(isDev ? ["'unsafe-inline'", "'unsafe-eval'"] : []),
   ].join(" ");
 
-  const styleSrc = ["'self'", `'nonce-${nonce}'`, ...(isDev ? ["'unsafe-inline'"] : [])].join(" ");
+  const styleSrc = ["'self'", ...(isDev ? ["'unsafe-inline'"] : [`'nonce-${nonce}'`])].join(" ");
 
   return [
     "default-src 'self'",
@@ -86,19 +86,6 @@ function withNonce(_request: NextRequest, response: NextResponse): NextResponse 
   response.headers.set("Content-Security-Policy", csp);
 
   return response;
-}
-
-/**
- * Check if a request path is public (doesn't require auth).
- */
-function isPublicPath(pathname: string): boolean {
-  return publicRoutePaths.some((path) => {
-    if (path.includes("(.*)")) {
-      const regex = new RegExp(`^${path.replace("(.*)", ".*")}$`);
-      return regex.test(pathname);
-    }
-    return pathname === path || pathname.startsWith(path);
-  });
 }
 
 /**

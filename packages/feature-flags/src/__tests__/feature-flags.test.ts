@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   redisGet: vi.fn(),
@@ -23,11 +23,42 @@ vi.mock("@nebutra/db", () => ({
 
 import { getFeatureVariant, isFeatureEnabled, useDbProvider } from "../index";
 
+const ambientKillSwitchKeys = [
+  "KILL_SWITCH_AI_STREAMING",
+  "KILL_SWITCH_CHECKOUT_COPY_VARIANT",
+] as const;
+
+const originalEnv = Object.fromEntries(
+  ambientKillSwitchKeys.map((key) => [key, process.env[key]]),
+) as Record<(typeof ambientKillSwitchKeys)[number], string | undefined>;
+
+function clearAmbientKillSwitches() {
+  for (const key of ambientKillSwitchKeys) {
+    delete process.env[key];
+  }
+}
+
+function restoreAmbientKillSwitches() {
+  for (const key of ambientKillSwitchKeys) {
+    const value = originalEnv[key];
+    if (value === undefined) {
+      delete process.env[key];
+    } else {
+      process.env[key] = value;
+    }
+  }
+}
+
 describe("db-backed feature flags", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    clearAmbientKillSwitches();
     useDbProvider();
     mocks.redisGet.mockResolvedValue(null);
+  });
+
+  afterEach(() => {
+    restoreAmbientKillSwitches();
   });
 
   it("looks up flags by key and reads the current isEnabled field", async () => {

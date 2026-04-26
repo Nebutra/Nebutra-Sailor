@@ -1,7 +1,28 @@
 "use client";
 
 import { type ReactNode, useCallback, useEffect, useState } from "react";
-import { AuthContextProvider, type AuthContextValue } from "../context";
+import {
+  AuthContextProvider,
+  type AuthContextValue,
+  createUnauthenticatedAuthContext,
+} from "../context";
+
+export function resolveBetterAuthBaseUrl(apiUrl: string, origin?: string): string {
+  const trimmedApiUrl = apiUrl.trim() || "/api/auth";
+
+  try {
+    return new URL(trimmedApiUrl).toString();
+  } catch {
+    const runtimeOrigin =
+      origin ?? (typeof window !== "undefined" ? window.location.origin : undefined);
+
+    if (!runtimeOrigin) {
+      return trimmedApiUrl;
+    }
+
+    return new URL(trimmedApiUrl, runtimeOrigin).toString();
+  }
+}
 
 /**
  * Better Auth provider wrapper for React.
@@ -30,15 +51,16 @@ export function BetterAuthProvider({
   /** Base URL for Better Auth API endpoints (default: /api/auth) */
   apiUrl?: string;
 }) {
-  const [contextValue, setContextValue] = useState<AuthContextValue | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [contextValue, setContextValue] = useState<AuthContextValue>(() =>
+    createUnauthenticatedAuthContext("better-auth", false),
+  );
 
   // Lazy load the Better Auth client
   const getAuthClient = useCallback(async () => {
     try {
       const { createAuthClient } = await import("better-auth/react");
       return createAuthClient({
-        baseURL: apiUrl,
+        baseURL: resolveBetterAuthBaseUrl(apiUrl),
       });
     } catch (error) {
       console.error("Failed to load better-auth/react client:", error);
@@ -55,19 +77,7 @@ export function BetterAuthProvider({
         const client = await getAuthClient();
         if (!client) {
           if (isMounted) {
-            setContextValue({
-              provider: "better-auth",
-              user: null,
-              session: null,
-              organization: null,
-              membership: null,
-              isLoaded: true,
-              isSignedIn: false,
-              getToken: async () => null,
-              signOut: async () => {},
-              setActiveOrganization: async () => {},
-            });
-            setIsInitialized(true);
+            setContextValue(createUnauthenticatedAuthContext("better-auth", true));
           }
           return;
         }
@@ -124,24 +134,11 @@ export function BetterAuthProvider({
               );
             },
           });
-          setIsInitialized(true);
         }
       } catch (error) {
         console.error("Failed to initialize Better Auth:", error);
         if (isMounted) {
-          setContextValue({
-            provider: "better-auth",
-            user: null,
-            session: null,
-            organization: null,
-            membership: null,
-            isLoaded: true,
-            isSignedIn: false,
-            getToken: async () => null,
-            signOut: async () => {},
-            setActiveOrganization: async () => {},
-          });
-          setIsInitialized(true);
+          setContextValue(createUnauthenticatedAuthContext("better-auth", true));
         }
       }
     };
@@ -152,10 +149,6 @@ export function BetterAuthProvider({
       isMounted = false;
     };
   }, [getAuthClient]);
-
-  if (!isInitialized || !contextValue) {
-    return <>{children}</>;
-  }
 
   return <AuthContextProvider value={contextValue}>{children}</AuthContextProvider>;
 }

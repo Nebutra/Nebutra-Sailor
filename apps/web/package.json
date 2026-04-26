@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "biome check .",
     "typecheck": "tsc --noEmit",
-    "analyze": "ANALYZE=true next build",
+    "analyze": "pnpm --filter @nebutra/brand sync && ANALYZE=true next build --webpack",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
