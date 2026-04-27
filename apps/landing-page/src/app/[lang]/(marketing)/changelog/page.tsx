@@ -42,7 +42,7 @@ const TAG_COLORS: Record<string, string> = {
   security: "var(--cyan-9)",
 };
 
-const FALLBACK_RELEASE_IMAGE = "/dashboard/demo-analytics.svg";
+const FALLBACK_RELEASE_IMAGE = "/screenshots/demo-dashboard-command.webp";
 
 // Static fallback data used when Sanity CMS has no entries yet
 // Only includes user/developer-visible changes — pure infra ops entries are omitted

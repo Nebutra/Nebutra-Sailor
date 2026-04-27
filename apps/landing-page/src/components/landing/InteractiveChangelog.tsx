@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "@nebutra/tokens";
 import { AnimateIn } from "@nebutra/ui/components";
 import {
   Button,
@@ -60,7 +59,7 @@ const TAG_COLORS: Record<string, string> = {
   foundation: "var(--status-success)",
 };
 
-const FALLBACK_RELEASE_IMAGE = "/dashboard/demo-analytics.svg";
+const FALLBACK_RELEASE_IMAGE = "/screenshots/demo-dashboard-command.webp";
 
 // Debounce utility
 function useDebounce<T>(value: T, delay: number) {
@@ -78,16 +77,10 @@ function useDebounce<T>(value: T, delay: number) {
 }
 
 export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) => {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
   const [searchQuery, setSearchQuery] = React.useState("");
   const debouncedSearch = useDebounce(searchQuery, 300);
   const [reactions, setReactions] = React.useState<Record<string, Record<string, number>>>({});
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Get unique tags from releases
   const uniqueTags = React.useMemo(() => {
@@ -146,46 +139,33 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
 
   return (
     <section className="relative w-full overflow-hidden bg-[var(--neutral-1)] dark:bg-black">
-      {/* spline hero full-width */}
-      <div className="relative w-full overflow-hidden min-h-[300px] bg-neutral-950">
-        {/* Always render the iframe — theme src swaps after mount via mounted flag.
-            opacity-0 on SSR avoids a brief wrong-theme flash; transitions to full
-            opacity once mounted so there's no layout shift or white-screen gap. */}
-        <div
-          className={`spline-container absolute top-0 left-0 w-full h-full -z-10 pointer-events-none transition-opacity duration-700 ${
-            mounted ? "opacity-80 dark:opacity-60" : "opacity-0"
-          }`}
-        >
-          <iframe
-            src={
-              mounted
-                ? resolvedTheme === "light"
-                  ? "https://my.spline.design/orbit-XDLATgFZPQX6SO6dgJGqPwHD/"
-                  : "https://my.spline.design/retrofuturismbganimation-Lb3VtL1bNaYUnirKNzn0FvaW/"
-                : "https://my.spline.design/retrofuturismbganimation-Lb3VtL1bNaYUnirKNzn0FvaW/"
-            }
-            frameBorder="0"
-            width="100%"
-            height="100%"
-            id="aura-spline"
-            title="Changelog Background"
-          />
+      <div className="relative isolate w-full overflow-hidden border-b border-white/10 bg-[#030712] pt-28 pb-20 text-white sm:pt-32 md:pb-24">
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_24%,rgba(11,241,195,0.28),transparent_30%),radial-gradient(circle_at_76%_16%,rgba(0,51,254,0.36),transparent_34%),radial-gradient(circle_at_82%_88%,rgba(91,72,255,0.24),transparent_34%),linear-gradient(135deg,#020617_0%,#07111f_45%,#030712_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.055)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_78%_66%_at_50%_14%,#000_36%,transparent_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.2)_1px,transparent_1.4px)] bg-[size:20px_20px] opacity-25 [mask-image:linear-gradient(90deg,transparent_0%,#000_14%,#000_86%,transparent_100%)]" />
+          <div className="absolute -left-32 top-24 h-64 w-[48rem] -rotate-12 rounded-full bg-[linear-gradient(90deg,rgba(11,241,195,0.24),rgba(0,51,254,0.14),transparent)] blur-3xl" />
+          <div className="absolute right-[-18rem] top-[-12rem] h-[34rem] w-[34rem] rounded-full bg-[var(--blue-9)]/25 blur-[130px]" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[var(--neutral-1)] dark:to-black" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50 w-full" />
 
-        <div className="relative container mx-auto px-4 py-12 text-left">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2 text-sm font-medium text-white/80">
+        <div className="relative container mx-auto px-4 text-left">
+          <div className="flex max-w-4xl flex-col gap-4">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 bg-white/8 px-3 py-1 text-sm font-medium text-white/80 shadow-[0_12px_40px_-24px_rgba(11,241,195,0.8)] backdrop-blur-md">
               <GitPullRequest className="size-4" />
               <p>Changelog</p>
               <Link href="/changelog/feed.xml" aria-label="Subscribe to changelog RSS">
                 <Rss className="size-4 ml-1 hover:text-white transition-colors" />
               </Link>
             </div>
-            <h1 className="text-4xl font-semibold text-white leading-snug">
+            <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
               Changelog
               <br /> Latest Enhancements & Platform News
             </h1>
+            <p className="max-w-2xl text-base leading-7 text-white/68 sm:text-lg">
+              Follow every product-grade improvement across the Nebutra AI SaaS platform.
+            </p>
           </div>
         </div>
       </div>
