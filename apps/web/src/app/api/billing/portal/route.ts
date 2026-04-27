@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { API_BASE_URL } from "@/lib/api/client";
-
-function buildReturnUrl(request: Request) {
-  return `${new URL(request.url).origin}/billing`;
-}
+import { resolveBillingReturnUrl } from "@/lib/billing/return-url";
 
 export async function POST(request: Request) {
   if (!process.env.STRIPE_SECRET_KEY) {
@@ -19,7 +16,7 @@ export async function POST(request: Request) {
       "content-type": "application/json",
       cookie: request.headers.get("cookie") ?? "",
     },
-    body: JSON.stringify({ returnUrl: buildReturnUrl(request) }),
+    body: JSON.stringify({ returnUrl: resolveBillingReturnUrl(request) }),
   });
 
   const payload = (await response.json().catch(() => ({}))) as { url?: unknown; error?: unknown };

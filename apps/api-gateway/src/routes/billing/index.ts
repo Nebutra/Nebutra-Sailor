@@ -13,13 +13,14 @@ import {
   DEFAULT_PLAN_LIMITS,
   getStripeSubscription,
 } from "@nebutra/billing";
+import { getSystemDb } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
-import { requireAuth } from "../../middlewares/tenantContext.js";
+import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 import { getUsageSnapshot } from "../../middlewares/usageMetering.js";
 import { billingServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
 
 export const billingRoutes = new OpenAPIHono();
-billingRoutes.use("*", requireAuth);
+billingRoutes.use("*", requireAuth, requireOrganization);
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
 
@@ -34,6 +35,19 @@ const PortalRequestSchema = z.object({
   returnUrl: z.string().url(),
 });
 
+const ErrorResponseSchema = z.object({
+  error: z.string(),
+});
+
+const CheckoutResponseSchema = z.object({
+  url: z.string().url(),
+  sessionId: z.string(),
+});
+
+const PortalResponseSchema = z.object({
+  url: z.string().url(),
+});
+
 const UsageResponseSchema = z.object({
   period: z.string(),
   apiCalls: z.object({
@@ -46,6 +60,15 @@ const UsageResponseSchema = z.object({
   }),
 });
 
+async function resolveStripeCustomerId(organizationId: string): Promise<string | null> {
+  const customer = await getSystemDb().stripeCustomer.findUnique({
+    where: { organizationId },
+    select: { stripeId: true },
+  });
+
+  return customer?.stripeId ?? null;
+}
+
 // ── Routes ────────────────────────────────────────────────────────────────────
 
 const checkoutRoute = createRoute({
@@ -55,26 +78,54 @@ const checkoutRoute = createRoute({
   summary: "Create Stripe Checkout session",
   request: { body: { content: { "application/json": { schema: CheckoutRequestSchema } } } },
   responses: {
-    200: { description: "Checkout session URL" },
-    400: { description: "Invalid request" },
+    200: {
+      description: "Checkout session URL",
+      content: { "application/json": { schema: CheckoutResponseSchema } },
+    },
+    400: {
+      description: "Invalid request",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
+    403: {
+      description: "Organization membership required",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
+    424: {
+      description: "Stripe customer mapping missing",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
+    503: {
+      description: "Billing service temporarily unavailable",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
   },
 });
 
 billingRoutes.openapi(checkoutRoute, async (c) => {
   const tenant = c.get("tenant");
   const { priceId, successUrl, cancelUrl, trialPeriodDays } = c.req.valid("json");
+  const organizationId = tenant.organizationId as string;
+  const customerId = await resolveStripeCustomerId(organizationId);
+
+  if (!customerId) {
+    return c.json({ error: "Stripe customer mapping is missing for this organization." }, 424);
+  }
 
   try {
     const session = await billingServiceBreaker.call(() =>
       createCheckoutSession({
-        customerId: tenant?.organizationId ?? "",
+        customerId,
         priceId,
         successUrl,
         cancelUrl,
+        metadata: { organizationId },
         ...(trialPeriodDays !== undefined && { trialPeriodDays }),
       }),
     );
-    return c.json({ url: session.url, sessionId: session.id });
+    if (!session.url) {
+      return c.json({ error: "Stripe checkout session URL is missing" }, 503);
+    }
+    return c.json({ url: session.url, sessionId: session.id }, 200);
   } catch (err) {
     if (err instanceof CircuitOpenError) {
       return c.json({ error: "Billing service temporarily unavailable" }, 503);
@@ -91,20 +142,43 @@ const portalRoute = createRoute({
   summary: "Create Stripe Customer Portal session",
   request: { body: { content: { "application/json": { schema: PortalRequestSchema } } } },
   responses: {
-    200: { description: "Billing portal URL" },
-    400: { description: "Invalid request" },
+    200: {
+      description: "Billing portal URL",
+      content: { "application/json": { schema: PortalResponseSchema } },
+    },
+    400: {
+      description: "Invalid request",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
+    403: {
+      description: "Organization membership required",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
+    424: {
+      description: "Stripe customer mapping missing",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
+    503: {
+      description: "Billing service temporarily unavailable",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
   },
 });
 
 billingRoutes.openapi(portalRoute, async (c) => {
   const tenant = c.get("tenant");
   const { returnUrl } = c.req.valid("json");
+  const customerId = await resolveStripeCustomerId(tenant.organizationId as string);
+
+  if (!customerId) {
+    return c.json({ error: "Stripe customer mapping is missing for this organization." }, 424);
+  }
 
   try {
     const session = await billingServiceBreaker.call(() =>
-      createBillingPortalSession(tenant?.organizationId ?? "", returnUrl),
+      createBillingPortalSession(customerId, returnUrl),
     );
-    return c.json({ url: session.url });
+    return c.json({ url: session.url }, 200);
   } catch (err) {
     if (err instanceof CircuitOpenError) {
       return c.json({ error: "Billing service temporarily unavailable" }, 503);

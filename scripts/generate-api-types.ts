@@ -27,6 +27,14 @@ const specFile = path.join(ROOT, "apps/api-gateway/openapi.json");
 
 const gatewayUrl = process.env.API_GATEWAY_URL;
 
+function formatGeneratedTypes() {
+  process.stdout.write("[generate:api-types] Formatting generated types with Biome\n");
+  execSync(`pnpm exec biome check --write ${outFile}`, {
+    stdio: "inherit",
+    cwd: ROOT,
+  });
+}
+
 if (gatewayUrl) {
   // ── URL mode: fetch from running gateway ───────────────────────────────────
   const specUrl = `${gatewayUrl}/openapi.json`;
@@ -35,6 +43,7 @@ if (gatewayUrl) {
     stdio: "inherit",
     cwd: ROOT,
   });
+  formatGeneratedTypes();
 } else {
   // ── File mode: build gateway → export spec → generate types ───────────────
   process.stdout.write("[generate:api-types] Building api-gateway…\n");
@@ -66,6 +75,7 @@ if (gatewayUrl) {
     stdio: "inherit",
     cwd: ROOT,
   });
+  formatGeneratedTypes();
 }
 
 process.stdout.write(`[generate:api-types] Done → ${outFile}\n`);

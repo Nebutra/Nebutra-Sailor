@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
 import { API_BASE_URL } from "@/lib/api/client";
-
-function buildReturnUrl(request: Request) {
-  const origin = new URL(request.url).origin;
-  return `${origin}/billing`;
-}
+import { appendBillingStatus, resolveBillingReturnUrl } from "@/lib/billing/return-url";
 
 async function readPriceId(request: Request) {
   const contentType = request.headers.get("content-type") ?? "";
@@ -21,7 +17,7 @@ async function readPriceId(request: Request) {
 
 export async function POST(request: Request) {
   const priceId = await readPriceId(request);
-  const returnUrl = buildReturnUrl(request);
+  const returnUrl = resolveBillingReturnUrl(request);
 
   if (!process.env.STRIPE_SECRET_KEY) {
     return NextResponse.json(
@@ -42,8 +38,8 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify({
       priceId,
-      successUrl: `${returnUrl}?billing=checkout-success`,
-      cancelUrl: `${returnUrl}?billing=checkout-canceled`,
+      successUrl: appendBillingStatus(returnUrl, "checkout-success"),
+      cancelUrl: appendBillingStatus(returnUrl, "checkout-canceled"),
     }),
   });
 
