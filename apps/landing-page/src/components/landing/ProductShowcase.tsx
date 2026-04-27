@@ -48,19 +48,19 @@ export function ProductShowcase() {
       id: "dashboard",
       labelKey: "tabs.dashboard",
       icon: <Layout className="size-4" />,
-      screenshot: "/dashboard/demo-analytics.svg",
+      screenshot: "/screenshots/demo-dashboard-command.webp",
     },
     {
       id: "billing",
       labelKey: "tabs.billing",
       icon: <CreditCard className="size-4" />,
-      screenshot: "/dashboard/demo-billing.svg",
+      screenshot: "/screenshots/demo-billing-command.webp",
     },
     {
       id: "ai-chat",
       labelKey: "tabs.ai-chat",
       icon: <Message className="size-4" />,
-      screenshot: "/dashboard/demo-tenants.svg",
+      screenshot: "/screenshots/demo-ai-cockpit.webp",
     },
   ];
 
@@ -84,7 +84,7 @@ export function ProductShowcase() {
         </AnimateIn>
 
         <AnimateIn preset="fadeUp" inView>
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-[1280px]">
             {/* Tab buttons */}
             <div className="mb-6 flex items-center justify-center gap-2">
               {tabs.map((tab, index) => (
@@ -108,15 +108,15 @@ export function ProductShowcase() {
             </div>
 
             {/* Browser mockup frame */}
-            <div className="overflow-hidden rounded-xl border border-neutral-7 bg-card shadow-lg">
+            <div className="overflow-hidden rounded-2xl border border-neutral-7/70 bg-white shadow-[0_32px_110px_-42px_rgba(8,20,48,0.45)] ring-1 ring-white/80 dark:bg-zinc-950 dark:ring-white/10">
               {/* Browser chrome */}
-              <div className="flex items-center gap-3 border-b border-neutral-7 bg-neutral-2 px-4 py-2.5">
+              <div className="flex items-center gap-3 border-b border-neutral-7/70 bg-white/85 px-4 py-2.5 backdrop-blur-xl dark:bg-zinc-950/85">
                 <div className="flex items-center gap-1.5" aria-hidden="true">
-                  <span className="size-3 rounded-full bg-border/80" />
-                  <span className="size-3 rounded-full bg-border/80" />
-                  <span className="size-3 rounded-full bg-border/80" />
+                  <span className="size-3 rounded-full bg-[#ff5f56]" />
+                  <span className="size-3 rounded-full bg-[#ffbd2e]" />
+                  <span className="size-3 rounded-full bg-[#27c93f]" />
                 </div>
-                <div className="flex flex-1 items-center justify-center rounded-md bg-neutral-1 px-3 py-1">
+                <div className="flex flex-1 items-center justify-center rounded-md border border-neutral-7/60 bg-neutral-1/70 px-3 py-1">
                   <span className="truncate text-xs text-neutral-8">
                     app.nebutra.com/{tabs[activeTab].id}
                   </span>
@@ -133,7 +133,7 @@ export function ProductShowcase() {
                       src={tabs[activeTab].screenshot}
                       alt={t(tabs[activeTab].labelKey)}
                       fill
-                      className="object-cover object-top"
+                      className="object-cover object-center"
                       onError={() => handleImageError(activeTab)}
                       unoptimized
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
