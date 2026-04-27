@@ -3,6 +3,8 @@ import { Novu } from "@novu/node";
 import type {
   InAppFeedOptions,
   InAppFeedResult,
+  InAppNotification,
+  NotificationChannel,
   NotificationPayload,
   NotificationPreference,
   NotificationProvider,
@@ -17,6 +19,55 @@ import type {
 // This provider uses Novu's managed platform to handle all notification channels.
 // Novu handles template management, delivery guarantees, and preference management.
 // =============================================================================
+
+type NovuTriggerResponse = {
+  transactionId?: string;
+};
+
+type NovuPreferenceValue = {
+  enabled?: boolean;
+  disabledCategories?: string[];
+  frequency?: NotificationPreference["frequency"];
+};
+
+type NovuSubscriber = {
+  preferences?: Record<string, NovuPreferenceValue>;
+};
+
+type NovuSubscribersApi = {
+  setPreferences: (
+    userId: string,
+    preferences: Record<string, { enabled: boolean; disabledCategories: string[] }>,
+  ) => Promise<unknown>;
+};
+
+type NovuMessageContent = string | { title?: unknown; body?: unknown };
+
+type NovuMessage = {
+  _id?: string;
+  id?: string;
+  templateIdentifier?: string;
+  payload?: Record<string, unknown>;
+  content?: NovuMessageContent;
+  read?: boolean;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+type NovuMessagesApi = {
+  markAs: (
+    notificationId: string,
+    payload: { status: "read"; subscriberId: string },
+  ) => Promise<unknown>;
+  get: (
+    userId: string,
+    options: { limit: number; offset: number },
+  ) => Promise<{
+    data?: NovuMessage[];
+    totalCount?: number;
+  }>;
+};
 
 export class NovuProvider implements NotificationProvider {
   readonly name: NotificationProviderType = "novu";
@@ -66,10 +117,11 @@ export class NovuProvider implements NotificationProvider {
         overrides: this.mapOverridesToNovu(payload.overrides),
       });
 
+      const transactionId = (response as NovuTriggerResponse).transactionId;
       const channelResults = payload.channels.map((channel) => ({
         channel,
         sent: true,
-        messageId: (response as any).transactionId,
+        ...(transactionId ? { messageId: transactionId } : {}),
       }));
 
       return {
@@ -124,7 +176,7 @@ export class NovuProvider implements NotificationProvider {
       }
 
       // Map Novu subscriber preferences to our format
-      const preferences = mapNovuPreferences(subscriber, userId, tenantId);
+      const preferences = mapNovuPreferences(asNovuSubscriber(subscriber), userId, tenantId);
       return preferences;
     } catch (error) {
       logger.warn("[notifications:novu] Failed to get preferences, returning defaults", {
@@ -164,7 +216,10 @@ export class NovuProvider implements NotificationProvider {
         {} as Record<string, { enabled: boolean; disabledCategories: string[] }>,
       );
 
-      await (this.novu.subscribers as any).setPreferences(userId, preferencesMap);
+      await (this.novu.subscribers as unknown as NovuSubscribersApi).setPreferences(
+        userId,
+        preferencesMap,
+      );
 
       logger.info("[notifications:novu] Preferences updated successfully", { userId });
     } catch (error) {
@@ -190,7 +245,7 @@ export class NovuProvider implements NotificationProvider {
       });
 
       // Mark message as read in Novu
-      await (this.novu.messages as any).markAs(notificationId, {
+      await (this.novu.messages as unknown as NovuMessagesApi).markAs(notificationId, {
         status: "read",
         subscriberId: userId,
       });
@@ -201,6 +256,36 @@ export class NovuProvider implements NotificationProvider {
       logger.warn("[notifications:novu] Failed to mark as read", { error: errorMessage });
       // Don't throw — this is not critical
     }
+  }
+
+  /**
+   * Mark multiple in-app notifications as read.
+   */
+  async markAsReadBatch(
+    notificationIds: string[],
+    userId: string,
+    tenantId?: string,
+  ): Promise<void> {
+    await Promise.all(
+      notificationIds.map((notificationId) => this.markAsRead(notificationId, userId, tenantId)),
+    );
+  }
+
+  /**
+   * Mark all unread in-app notifications as read for a user.
+   */
+  async markAllAsRead(userId: string, tenantId?: string): Promise<number> {
+    const feed = await this.getInAppNotifications(
+      userId,
+      { limit: 100, unreadOnly: true },
+      tenantId,
+    );
+    const unreadIds = feed.notifications
+      .filter((notification) => !notification.read)
+      .map((notification) => notification.id);
+
+    await this.markAsReadBatch(unreadIds, userId, tenantId);
+    return unreadIds.length;
   }
 
   /**
@@ -223,29 +308,37 @@ export class NovuProvider implements NotificationProvider {
       const offset = options?.offset ?? 0;
 
       // Fetch subscriber messages (in-app notifications) from Novu
-      const messages = await (this.novu.messages as any).get(userId, {
+      const messages = await (this.novu.messages as unknown as NovuMessagesApi).get(userId, {
         limit,
         offset,
       });
 
-      const notifications = (messages.data || []).map((msg: any) => ({
-        id: msg._id,
-        userId,
-        tenantId,
-        type: msg.templateIdentifier,
-        title: msg.payload?.title || msg.content?.title || "",
-        body: msg.payload?.body || msg.content?.body || msg.content || "",
-        data: msg.payload?.data,
-        read: msg.read || msg.status === "read",
-        createdAt: msg.createdAt || new Date().toISOString(),
-        updatedAt: msg.updatedAt || new Date().toISOString(),
-      }));
+      const notifications = (messages.data || []).map((msg): InAppNotification => {
+        const data = getRecord(msg.payload?.data);
 
-      const unreadCount = notifications.filter((n: any) => !n.read).length;
+        return {
+          id: msg._id ?? msg.id ?? crypto.randomUUID(),
+          userId,
+          ...(tenantId !== undefined ? { tenantId } : {}),
+          type: msg.templateIdentifier ?? "notification",
+          title:
+            getString(msg.payload?.title) ?? getString(getContentObject(msg.content)?.title) ?? "",
+          body:
+            getString(msg.payload?.body) ??
+            getString(getContentObject(msg.content)?.body) ??
+            (typeof msg.content === "string" ? msg.content : ""),
+          ...(data ? { data } : {}),
+          read: msg.read === true || msg.status === "read",
+          createdAt: msg.createdAt || new Date().toISOString(),
+          updatedAt: msg.updatedAt || new Date().toISOString(),
+        };
+      });
+
+      const unreadCount = notifications.filter((notification) => !notification.read).length;
 
       return {
         notifications: options?.unreadOnly
-          ? notifications.filter((n: any) => !n.read)
+          ? notifications.filter((notification) => !notification.read)
           : notifications,
         total: messages.totalCount || notifications.length,
         unreadCount,
@@ -278,10 +371,12 @@ export class NovuProvider implements NotificationProvider {
   /**
    * Map our override format to Novu's override format.
    */
-  private mapOverridesToNovu(overrides?: NotificationPayload["overrides"]): Record<string, any> {
+  private mapOverridesToNovu(
+    overrides?: NotificationPayload["overrides"],
+  ): Record<string, unknown> {
     if (!overrides) return {};
 
-    const mapped: Record<string, any> = {};
+    const mapped: Record<string, unknown> = {};
 
     if (overrides.email) {
       mapped.email = {
@@ -323,13 +418,7 @@ export class NovuProvider implements NotificationProvider {
 // ── Utility Functions ───────────────────────────────────────────────────────
 
 function getDefaultPreferences(userId: string, tenantId?: string): NotificationPreference[] {
-  const channels: Array<"in_app" | "email" | "push" | "sms" | "chat"> = [
-    "in_app",
-    "email",
-    "push",
-    "sms",
-    "chat",
-  ];
+  const channels: NotificationChannel[] = ["in_app", "email", "push", "sms", "chat"];
 
   return channels.map((channel) => ({
     userId,
@@ -342,19 +431,46 @@ function getDefaultPreferences(userId: string, tenantId?: string): NotificationP
 }
 
 function mapNovuPreferences(
-  subscriber: any,
+  subscriber: NovuSubscriber,
   userId: string,
   tenantId?: string,
 ): NotificationPreference[] {
   const preferences = subscriber.preferences || {};
 
-  return Object.entries(preferences).map(([channel, pref]: [string, any]) => ({
+  return Object.entries(preferences).map(([channel, pref]) => ({
     userId,
     tenantId,
-    channel: channel as "in_app" | "email" | "push" | "sms" | "chat",
+    channel: channel as NotificationChannel,
     enabled: pref.enabled ?? true,
     disabledCategories: pref.disabledCategories ?? [],
     frequency: pref.frequency ?? "immediate",
     updatedAt: new Date().toISOString(),
   }));
+}
+
+function asNovuSubscriber(value: unknown): NovuSubscriber {
+  const responseData = getRecord(getRecord(value)?.data);
+  if (responseData) {
+    return responseData as NovuSubscriber;
+  }
+
+  return (getRecord(value) ?? {}) as NovuSubscriber;
+}
+
+function getString(value: unknown): string | undefined {
+  return typeof value === "string" ? value : undefined;
+}
+
+function getRecord(value: unknown): Record<string, unknown> | undefined {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    return undefined;
+  }
+
+  return value as Record<string, unknown>;
+}
+
+function getContentObject(
+  content: NovuMessageContent | undefined,
+): { title?: unknown; body?: unknown } | undefined {
+  return typeof content === "object" && content !== null ? content : undefined;
 }

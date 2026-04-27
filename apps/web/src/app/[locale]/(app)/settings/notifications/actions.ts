@@ -280,18 +280,7 @@ export async function markAllNotificationsRead(formData: FormData): Promise<neve
       );
     }
 
-    const feed = await provider.getInAppNotifications(
-      userId,
-      { limit: 100, unreadOnly: true },
-      orgId,
-    );
-    const unreadIds = feed.notifications
-      .filter((notification) => !notification.read)
-      .map((notification) => notification.id);
-
-    await Promise.all(
-      unreadIds.map((notificationId) => provider.markAsRead(notificationId, userId, orgId)),
-    );
+    await provider.markAllAsRead(userId, orgId);
   } catch {
     redirect(
       buildNotificationsPath(locale, {

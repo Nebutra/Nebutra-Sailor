@@ -361,19 +361,10 @@ describe("notification settings actions", () => {
   });
 
   describe("markAllNotificationsRead", () => {
-    it("marks every unread notification from the provider feed as read", async () => {
+    it("delegates mark-all inbox updates to the notification provider", async () => {
       const provider = {
         name: "novu",
-        getInAppNotifications: vi.fn().mockResolvedValue({
-          notifications: [
-            { id: "notif_1", read: false },
-            { id: "notif_2", read: false },
-            { id: "notif_3", read: true },
-          ],
-          total: 3,
-          unreadCount: 2,
-        }),
-        markAsRead: vi.fn().mockResolvedValue(undefined),
+        markAllAsRead: vi.fn().mockResolvedValue(2),
       };
 
       getNotificationProviderMock.mockResolvedValue(provider);
@@ -390,14 +381,7 @@ describe("notification settings actions", () => {
         "/en/dashboard",
       );
 
-      expect(provider.getInAppNotifications).toHaveBeenCalledWith(
-        "user_123",
-        { limit: 100, unreadOnly: true },
-        "org_456",
-      );
-      expect(provider.markAsRead).toHaveBeenCalledTimes(2);
-      expect(provider.markAsRead).toHaveBeenCalledWith("notif_1", "user_123", "org_456");
-      expect(provider.markAsRead).toHaveBeenCalledWith("notif_2", "user_123", "org_456");
+      expect(provider.markAllAsRead).toHaveBeenCalledWith("user_123", "org_456");
       expect(revalidatePathMock).toHaveBeenCalledWith("/en/settings/notifications");
       expect(revalidatePathMock).toHaveBeenCalledWith("/en/dashboard");
     });

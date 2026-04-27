@@ -181,6 +181,17 @@ export interface NotificationProvider {
   markAsRead(notificationId: string, userId: string, tenantId?: string): Promise<void>;
 
   /**
+   * Mark multiple in-app notifications as read.
+   */
+  markAsReadBatch(notificationIds: string[], userId: string, tenantId?: string): Promise<void>;
+
+  /**
+   * Mark all unread in-app notifications as read for a user.
+   * Returns the number of notifications changed.
+   */
+  markAllAsRead(userId: string, tenantId?: string): Promise<number>;
+
+  /**
    * Get the in-app notification feed for a user.
    */
   getInAppNotifications(
@@ -249,6 +260,7 @@ export interface InAppNotificationStore {
     tenantId?: string,
   ): Promise<InAppFeedResult>;
   deleteOld(beforeDate: Date, tenantId?: string): Promise<number>;
+  markAllAsRead?(userId: string, tenantId?: string): Promise<number>;
 }
 
 /**

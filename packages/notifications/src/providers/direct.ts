@@ -1,4 +1,5 @@
 import { logger } from "@nebutra/logger";
+import type { NotificationProviderRuntimeMetadata } from "../runtime.js";
 import type {
   ChannelResult,
   ChatDispatcher,
@@ -34,21 +35,40 @@ export class DirectProvider implements NotificationProvider {
   private smsDispatcher: SMSDispatcher | undefined;
   private chatDispatcher: ChatDispatcher | undefined;
   private preferenceStore: PreferenceStore;
+  private runtimeMetadata: NotificationProviderRuntimeMetadata;
 
   constructor(config: DirectProviderConfig) {
+    const hasInjectedInAppStore = config.inAppStore !== undefined;
+    const hasInjectedPreferenceStore = config.preferenceStore !== undefined;
+
     this.inAppStore = config.inAppStore ?? new InMemoryInAppStore();
     this.emailDispatcher = config.emailDispatcher;
     this.pushDispatcher = config.pushDispatcher;
     this.smsDispatcher = config.smsDispatcher;
     this.chatDispatcher = config.chatDispatcher;
     this.preferenceStore = config.preferenceStore ?? new InMemoryPreferenceStore();
+    this.runtimeMetadata = {
+      provider: this.name,
+      preferenceStoreMode: hasInjectedPreferenceStore ? "adapter" : "memory",
+      inAppStoreMode: hasInjectedInAppStore ? "adapter" : "memory",
+    };
 
     logger.info("[notifications:direct] Provider initialized", {
       hasEmailDispatcher: !!this.emailDispatcher,
       hasPushDispatcher: !!this.pushDispatcher,
       hasSmsDispatcher: !!this.smsDispatcher,
       hasChatDispatcher: !!this.chatDispatcher,
+      preferenceStoreMode: this.runtimeMetadata.preferenceStoreMode,
+      inAppStoreMode: this.runtimeMetadata.inAppStoreMode,
     });
+  }
+
+  /**
+   * Expose runtime capabilities so apps can enable writable settings only
+   * when durable adapters are explicitly connected.
+   */
+  getRuntimeMetadata(): NotificationProviderRuntimeMetadata {
+    return this.runtimeMetadata;
   }
 
   /**
@@ -79,7 +99,7 @@ export class DirectProvider implements NotificationProvider {
     );
 
     const allAccepted = channelResults.every((r) => r.sent);
-    const errors = channelResults.filter((r) => r.error).map((r) => r.error!);
+    const errors = channelResults.flatMap((result) => (result.error ? [result.error] : []));
 
     return {
       id: notificationId,
@@ -157,6 +177,60 @@ export class DirectProvider implements NotificationProvider {
         error: error instanceof Error ? error.message : "Unknown error",
       });
       // Don't throw — this is not critical
+    }
+  }
+
+  /**
+   * Mark multiple in-app notifications as read.
+   */
+  async markAsReadBatch(
+    notificationIds: string[],
+    userId: string,
+    tenantId?: string,
+  ): Promise<void> {
+    try {
+      logger.info("[notifications:direct] Marking batch as read", {
+        count: notificationIds.length,
+        userId,
+        tenantId,
+      });
+
+      await this.inAppStore.markAsReadBatch(notificationIds, userId, tenantId);
+    } catch (error) {
+      logger.warn("[notifications:direct] Failed to mark batch as read", {
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
+
+  /**
+   * Mark all unread in-app notifications as read for a user.
+   */
+  async markAllAsRead(userId: string, tenantId?: string): Promise<number> {
+    try {
+      logger.info("[notifications:direct] Marking all as read", { userId, tenantId });
+
+      if (this.inAppStore.markAllAsRead) {
+        return await this.inAppStore.markAllAsRead(userId, tenantId);
+      }
+
+      const feed = await this.inAppStore.getByUserId(
+        userId,
+        { limit: 1000, unreadOnly: true },
+        tenantId,
+      );
+      await this.inAppStore.markAsReadBatch(
+        feed.notifications.map((notification) => notification.id),
+        userId,
+        tenantId,
+      );
+
+      return feed.notifications.length;
+    } catch (error) {
+      logger.warn("[notifications:direct] Failed to mark all as read", {
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+      return 0;
     }
   }
 
@@ -246,10 +320,10 @@ export class DirectProvider implements NotificationProvider {
   }
 
   private async dispatchInApp(
-    base: any,
+    base: ChannelResult,
     payload: NotificationPayload,
     _notificationId: string,
-  ): Promise<any> {
+  ): Promise<ChannelResult> {
     const title =
       payload.overrides?.in_app?.title ??
       (payload.data.title as string | undefined) ??
@@ -274,10 +348,10 @@ export class DirectProvider implements NotificationProvider {
   }
 
   private async dispatchEmail(
-    base: any,
+    base: ChannelResult,
     payload: NotificationPayload,
     _notificationId: string,
-  ): Promise<any> {
+  ): Promise<ChannelResult> {
     if (!this.emailDispatcher) {
       return { ...base, sent: false, error: "Email dispatcher not configured" };
     }
@@ -298,16 +372,16 @@ export class DirectProvider implements NotificationProvider {
     return {
       ...base,
       sent: result.sent,
-      messageId: result.messageId,
-      error: result.error,
+      ...(result.messageId ? { messageId: result.messageId } : {}),
+      ...(result.error ? { error: result.error } : {}),
     };
   }
 
   private async dispatchPush(
-    base: any,
+    base: ChannelResult,
     payload: NotificationPayload,
     _notificationId: string,
-  ): Promise<any> {
+  ): Promise<ChannelResult> {
     if (!this.pushDispatcher) {
       return { ...base, sent: false, error: "Push dispatcher not configured" };
     }
@@ -325,16 +399,16 @@ export class DirectProvider implements NotificationProvider {
     return {
       ...base,
       sent: result.sent,
-      messageId: result.messageId,
-      error: result.error,
+      ...(result.messageId ? { messageId: result.messageId } : {}),
+      ...(result.error ? { error: result.error } : {}),
     };
   }
 
   private async dispatchSMS(
-    base: any,
+    base: ChannelResult,
     payload: NotificationPayload,
     _notificationId: string,
-  ): Promise<any> {
+  ): Promise<ChannelResult> {
     if (!this.smsDispatcher) {
       return { ...base, sent: false, error: "SMS dispatcher not configured" };
     }
@@ -353,16 +427,16 @@ export class DirectProvider implements NotificationProvider {
     return {
       ...base,
       sent: result.sent,
-      messageId: result.messageId,
-      error: result.error,
+      ...(result.messageId ? { messageId: result.messageId } : {}),
+      ...(result.error ? { error: result.error } : {}),
     };
   }
 
   private async dispatchChat(
-    base: any,
+    base: ChannelResult,
     payload: NotificationPayload,
     _notificationId: string,
-  ): Promise<any> {
+  ): Promise<ChannelResult> {
     if (!this.chatDispatcher) {
       return { ...base, sent: false, error: "Chat dispatcher not configured" };
     }
@@ -379,8 +453,8 @@ export class DirectProvider implements NotificationProvider {
     return {
       ...base,
       sent: result.sent,
-      messageId: result.messageId,
-      error: result.error,
+      ...(result.messageId ? { messageId: result.messageId } : {}),
+      ...(result.error ? { error: result.error } : {}),
     };
   }
 }
@@ -480,6 +554,22 @@ class InMemoryInAppStore implements InAppNotificationStore {
     }
 
     return deleted;
+  }
+
+  async markAllAsRead(userId: string, tenantId?: string): Promise<number> {
+    const key = `${userId}:${tenantId || "default"}`;
+    const notifications = this.notifications.get(key) || [];
+    let changed = 0;
+
+    for (const notification of notifications) {
+      if (!notification.read) {
+        notification.read = true;
+        notification.updatedAt = new Date().toISOString();
+        changed += 1;
+      }
+    }
+
+    return changed;
   }
 }
 
