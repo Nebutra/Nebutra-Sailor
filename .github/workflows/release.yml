@@ -91,7 +91,7 @@ jobs:
           format: cyclonedx-json
           output-file: sbom.cdx.json
       - name: Attest SBOM
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v4
         with:
           subject-path: sbom.cdx.json
       - name: Upload SBOM artifact
