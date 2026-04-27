@@ -15,15 +15,144 @@
 
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM = process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.ai>";
+let resendClient: Resend | undefined;
+
+function getResendClient(): Resend {
+  if (resendClient) {
+    return resendClient;
+  }
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is required to send email");
+  }
+
+  resendClient = new Resend(apiKey);
+  return resendClient;
+}
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
 export interface SendResult {
   id: string;
 }
+
+export interface EmailTemplateCatalogEntry {
+  id: string;
+  label: string;
+  description: string;
+  sendHelper: string;
+  fileName: string;
+}
+
+export const EMAIL_TEMPLATE_CATALOG = [
+  {
+    id: "welcome",
+    label: "Welcome",
+    description: "Workspace provisioning welcome email",
+    sendHelper: "sendWelcomeEmail",
+    fileName: "welcome-email.html",
+  },
+  {
+    id: "order-confirmation",
+    label: "Order Confirmation",
+    description: "Commerce order receipt with line items",
+    sendHelper: "sendOrderConfirmationEmail",
+    fileName: "order-confirmation-email.html",
+  },
+  {
+    id: "api-key-created",
+    label: "API Key Created",
+    description: "One-time API key creation notice",
+    sendHelper: "sendApiKeyCreatedEmail",
+    fileName: "api-key-created-email.html",
+  },
+  {
+    id: "quota-warning",
+    label: "Quota Warning",
+    description: "Usage threshold and quota exhaustion warning",
+    sendHelper: "sendQuotaWarningEmail",
+    fileName: "quota-warning-email.html",
+  },
+  {
+    id: "team-invitation",
+    label: "Team Invitation",
+    description: "Workspace team invitation",
+    sendHelper: "sendInviteEmail",
+    fileName: "team-invitation-email.html",
+  },
+  {
+    id: "magic-link",
+    label: "Magic Link",
+    description: "Passwordless sign-in link",
+    sendHelper: "sendMagicLinkEmail",
+    fileName: "magic-link-email.html",
+  },
+  {
+    id: "contact-form-received",
+    label: "Contact Form Received",
+    description: "Contact form acknowledgement",
+    sendHelper: "sendContactFormReceivedEmail",
+    fileName: "contact-form-received-email.html",
+  },
+  {
+    id: "checkout-completed",
+    label: "Checkout Completed",
+    description: "Subscription checkout success",
+    sendHelper: "sendCheckoutCompletedEmail",
+    fileName: "checkout-completed-email.html",
+  },
+  {
+    id: "trial-ending",
+    label: "Trial Ending",
+    description: "Trial expiry warning",
+    sendHelper: "sendTrialEndingEmail",
+    fileName: "trial-ending-email.html",
+  },
+  {
+    id: "invoice-paid",
+    label: "Invoice Paid",
+    description: "Paid invoice receipt",
+    sendHelper: "sendInvoicePaidEmail",
+    fileName: "invoice-paid-email.html",
+  },
+  {
+    id: "payment-failed",
+    label: "Payment Failed",
+    description: "Billing retry and action-required notice",
+    sendHelper: "sendPaymentFailedEmail",
+    fileName: "payment-failed-email.html",
+  },
+  {
+    id: "subscription-canceled",
+    label: "Subscription Canceled",
+    description: "Subscription cancellation confirmation",
+    sendHelper: "sendSubscriptionCanceledEmail",
+    fileName: "subscription-canceled-email.html",
+  },
+  {
+    id: "upcoming-invoice",
+    label: "Upcoming Invoice",
+    description: "Upcoming charge notice",
+    sendHelper: "sendUpcomingInvoiceEmail",
+    fileName: "upcoming-invoice-email.html",
+  },
+  {
+    id: "plan-changed",
+    label: "Plan Changed",
+    description: "Plan upgrade or downgrade notice",
+    sendHelper: "sendPlanChangedEmail",
+    fileName: "plan-changed-email.html",
+  },
+  {
+    id: "license-created",
+    label: "License Created",
+    description: "License key delivery email",
+    sendHelper: "sendLicenseCreatedEmail",
+    fileName: "license-created-email.html",
+  },
+] as const satisfies readonly EmailTemplateCatalogEntry[];
 
 // ── Core send helper ───────────────────────────────────────────────────────
 
@@ -34,7 +163,7 @@ async function send(opts: {
   replyTo?: string;
   tags?: { name: string; value: string }[];
 }): Promise<SendResult> {
-  const { data, error } = await resend.emails.send({
+  const { data, error } = await getResendClient().emails.send({
     from: FROM,
     to: Array.isArray(opts.to) ? opts.to : [opts.to],
     subject: opts.subject,

@@ -1,4 +1,5 @@
 import { existsSync, readdirSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as fc from "fast-check";
@@ -63,6 +64,33 @@ describe("Property 1: Docs Coverage", () => {
   it("each docs locale has at least 20 pages", () => {
     for (const locale of locales) {
       expect(extractPagesFromDocsContent(locale).length).toBeGreaterThanOrEqual(20);
+    }
+  });
+
+  it("email docs describe the implemented catalog-first package contract", async () => {
+    const stalePatterns = [
+      "getEmailProvider",
+      "pnpm --filter @nebutra/email dev",
+      "packages/email/src/templates",
+      "six built-in",
+      "All six",
+      "六个内置",
+      "所有六个",
+    ];
+
+    for (const locale of locales) {
+      const emailRoot = resolve(DOCS_CONTENT, locale, "email");
+      for (const entry of readdirSync(emailRoot, { withFileTypes: true })) {
+        if (!entry.isFile() || !entry.name.endsWith(".mdx")) continue;
+
+        const content = await readFile(resolve(emailRoot, entry.name), "utf8");
+        for (const stalePattern of stalePatterns) {
+          expect(
+            content,
+            `${locale}/email/${entry.name} should not mention ${stalePattern}`,
+          ).not.toContain(stalePattern);
+        }
+      }
     }
   });
 });

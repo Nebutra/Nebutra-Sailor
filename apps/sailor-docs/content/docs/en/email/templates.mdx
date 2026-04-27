@@ -1,306 +1,63 @@
 ---
 title: Email Templates
-description: All six built-in Nebutra email templates — required data fields, customization, and how to add new templates.
+description: Nebutra email catalog entries, public sender helpers, and preview artifacts.
 ---
 
-Email templates live in `packages/email/src/templates/`. Each template is a React Email component that accepts a typed `data` prop and renders to HTML and plain text.
+Email template ownership is centralized in `packages/email/src/index.ts`.
+`EMAIL_TEMPLATE_CATALOG` defines the catalog ID, public sender helper, and
+preview filename for every template.
 
 ## Template reference
 
-### `welcome`
+| Catalog ID | Helper | Required payload highlights |
+|------------|--------|-----------------------------|
+| `welcome` | `sendWelcomeEmail` | `to`, `firstName`, `orgName` |
+| `order-confirmation` | `sendOrderConfirmationEmail` | `to`, `orderId`, `totalAmount`, `items` |
+| `api-key-created` | `sendApiKeyCreatedEmail` | `to`, `firstName`, `keyPrefix`, `keyName`, `plaintextKey` |
+| `quota-warning` | `sendQuotaWarningEmail` | `to`, `orgName`, `metric`, `used`, `limit`, `percentUsed` |
+| `team-invitation` | `sendInviteEmail` | `to`, `inviterName`, `orgName`, `role`, `inviteUrl` |
+| `magic-link` | `sendMagicLinkEmail` | `to`, `magicLinkUrl` |
+| `contact-form-received` | `sendContactFormReceivedEmail` | `to`, `name`, `subject` |
+| `checkout-completed` | `sendCheckoutCompletedEmail` | `to`, `firstName`, `orgName`, `planName` |
+| `trial-ending` | `sendTrialEndingEmail` | `to`, `firstName`, `orgName`, `trialEndDate` |
+| `invoice-paid` | `sendInvoicePaidEmail` | `to`, `orgName`, `invoiceId`, `amountPaid` |
+| `payment-failed` | `sendPaymentFailedEmail` | `to`, `orgName`, `attemptCount` |
+| `subscription-canceled` | `sendSubscriptionCanceledEmail` | `to`, `firstName`, `orgName` |
+| `upcoming-invoice` | `sendUpcomingInvoiceEmail` | `to`, `orgName`, `amountDue` |
+| `plan-changed` | `sendPlanChangedEmail` | `to`, `firstName`, `orgName`, `newPlan` |
+| `license-created` | `sendLicenseCreatedEmail` | `to`, `firstName`, `licenseKey`, `tier` |
 
-Sent after a new user's account is created.
-
-**File:** `packages/email/src/templates/welcome.tsx`
+## Example
 
 ```typescript
-await email.send({
-  to: user.email,
-  template: "welcome",
-  data: {
-    userName: string,       // Display name, e.g. "Alex Chen"
-    orgName: string,        // Organization name, e.g. "Acme Corp"
-    dashboardUrl: string,   // Full URL to the user's dashboard
-  },
+import { sendInvoicePaidEmail } from "@nebutra/email";
+
+await sendInvoicePaidEmail({
+  to: "owner@example.com",
+  orgName: "Acme Corp",
+  invoiceId: "in_123",
+  amountPaid: 9900,
+  currency: "USD",
+  invoiceUrl: "https://billing.stripe.com/invoice/in_123",
 });
 ```
 
----
+## Adding or changing a template
 
-### `api-key-created`
+1. Add or update the public sender helper in `packages/email/src/index.ts`.
+2. Add or update the matching `EMAIL_TEMPLATE_CATALOG` entry.
+3. Regenerate or validate the preview output in `apps/mail-preview/dist`.
+4. Update `packages/email/src/__tests__/email-contract.test.ts` when the public
+   surface changes.
+5. Run the validation commands:
 
-Sent when an API key is generated for an organization.
-
-**File:** `packages/email/src/templates/api-key-created.tsx`
-
-```typescript
-await email.send({
-  to: adminEmail,
-  template: "api-key-created",
-  data: {
-    userName: string,       // Name of the user who created the key
-    orgName: string,        // Organization name
-    keyName: string,        // Human-readable key name, e.g. "Production Key"
-    keyPrefix: string,      // First 8 chars of the key for identification, e.g. "sk_live_"
-    createdAt: string,      // ISO 8601 timestamp
-    manageUrl: string,      // URL to the API keys settings page
-  },
-});
+```bash
+pnpm --filter @nebutra/email test
+pnpm --filter @nebutra/email typecheck
+pnpm mail:check
 ```
-
----
-
-### `quota-warning`
-
-Sent when metered usage reaches 80% of the plan limit.
-
-**File:** `packages/email/src/templates/quota-warning.tsx`
-
-```typescript
-await email.send({
-  to: adminEmails,          // string | string[]
-  template: "quota-warning",
-  data: {
-    orgName: string,        // Organization name
-    metric: string,         // Metric ID, e.g. "api_calls", "storage_gb"
-    used: number,           // Current usage value
-    limit: number,          // Plan limit value
-    percentage: number,     // Usage percentage (0–100)
-    upgradeUrl: string,     // URL to the billing/upgrade page
-  },
-});
-```
-
----
-
-### `quota-exceeded`
-
-Sent when metered usage exceeds 100% of the plan limit.
-
-**File:** `packages/email/src/templates/quota-exceeded.tsx`
-
-```typescript
-await email.send({
-  to: adminEmails,          // string | string[]
-  template: "quota-exceeded",
-  data: {
-    orgName: string,
-    metric: string,
-    used: number,
-    limit: number,
-    upgradeUrl: string,
-  },
-});
-```
-
----
-
-### `team-invite`
-
-Sent when a user is invited to join an organization.
-
-**File:** `packages/email/src/templates/team-invite.tsx`
-
-```typescript
-await email.send({
-  to: invitee.email,
-  template: "team-invite",
-  data: {
-    inviteeName: string,    // Invitee's name or email if name unknown
-    inviterName: string,    // Name of the person who sent the invite
-    orgName: string,        // Organization the invitee is joining
-    inviteUrl: string,      // One-time invite acceptance URL
-    expiresAt: string,      // ISO 8601 expiry timestamp
-  },
-});
-```
-
----
-
-### `password-reset`
-
-Sent when a user requests a password reset.
-
-**File:** `packages/email/src/templates/password-reset.tsx`
-
-```typescript
-await email.send({
-  to: user.email,
-  template: "password-reset",
-  data: {
-    userName: string,       // User's display name
-    resetUrl: string,       // Password reset URL with token
-    expiresInMinutes: number, // Link validity, e.g. 60
-    ipAddress: string,      // IP address of the request (security info)
-  },
-});
-```
-
-## Customizing a template
-
-Templates are React Email components — edit them like any other React component.
-
-<Steps>
-  <Step title="Locate the template file">
-    Templates are in `packages/email/src/templates/`. For example, to edit the welcome email:
-
-    ```
-    packages/email/src/templates/welcome.tsx
-    ```
-  </Step>
-
-  <Step title="Edit the component">
-    React Email provides layout primitives from `@react-email/components`:
-
-    ```tsx
-    import {
-      Body,
-      Button,
-      Container,
-      Head,
-      Heading,
-      Html,
-      Preview,
-      Section,
-      Text,
-    } from "@react-email/components";
-
-    interface WelcomeEmailProps {
-      userName: string;
-      orgName: string;
-      dashboardUrl: string;
-    }
-
-    export function WelcomeEmail({ userName, orgName, dashboardUrl }: WelcomeEmailProps) {
-      return (
-        <Html>
-          <Head />
-          <Preview>Welcome to Nebutra, {userName}!</Preview>
-          <Body style={{ fontFamily: "sans-serif", backgroundColor: "#f8fafc" }}>
-            <Container style={{ maxWidth: "600px", margin: "0 auto" }}>
-              <Heading>Welcome to {orgName}</Heading>
-              <Text>Hi {userName}, your account is ready.</Text>
-              <Section>
-                <Button href={dashboardUrl}>Open Dashboard</Button>
-              </Section>
-            </Container>
-          </Body>
-        </Html>
-      );
-    }
-    ```
-  </Step>
-
-  <Step title="Preview your changes">
-    Start the preview server to see changes live in a browser:
-
-    ```bash
-    pnpm --filter @nebutra/email dev
-    # Opens at http://localhost:3100
-    ```
-  </Step>
-</Steps>
-
-## Adding a new template
-
-<Steps>
-  <Step title="Create the template component">
-    Add a new file in `packages/email/src/templates/`:
-
-    ```tsx
-    // packages/email/src/templates/invoice-paid.tsx
-    import { Body, Button, Container, Html, Text } from "@react-email/components";
-
-    export interface InvoicePaidEmailProps {
-      userName: string;
-      orgName: string;
-      invoiceId: string;
-      amount: string;     // formatted, e.g. "$99.00"
-      invoiceUrl: string;
-    }
-
-    export function InvoicePaidEmail(props: InvoicePaidEmailProps) {
-      return (
-        <Html>
-          <Body>
-            <Container>
-              <Text>Hi {props.userName}, invoice {props.invoiceId} for {props.amount} has been paid.</Text>
-              <Button href={props.invoiceUrl}>View Invoice</Button>
-            </Container>
-          </Body>
-        </Html>
-      );
-    }
-    ```
-  </Step>
-
-  <Step title="Register the template">
-    Export the new template from the template registry:
-
-    ```typescript
-    // packages/email/src/templates/index.ts
-    export { InvoicePaidEmail, type InvoicePaidEmailProps } from "./invoice-paid";
-    ```
-
-    Then register it in the template map:
-
-    ```typescript
-    // packages/email/src/provider.ts
-    import { InvoicePaidEmail } from "./templates/invoice-paid";
-
-    const templates = {
-      // ... existing templates
-      "invoice-paid": InvoicePaidEmail,
-    } as const;
-    ```
-  </Step>
-
-  <Step title="Export the typed sender function">
-    Each template in `@nebutra/email` is a named, typed export function. Add your new function to `packages/email/src/index.ts`:
-
-    ```typescript
-    export async function sendMyFeatureEmail(opts: {
-      to: string;
-      firstName: string;
-      // your template-specific fields
-    }): Promise<SendResult> {
-      const html = baseLayout(`...`);
-      return send({ to: opts.to, subject: "...", html, tags: [{ name: "type", value: "my_feature" }] });
-    }
-    ```
-
-    Import it directly by name — no union dispatch needed:
-
-    ```typescript
-    import { sendMyFeatureEmail } from "@nebutra/email";
-    await sendMyFeatureEmail({ to: user.email, firstName: user.firstName });
-    ```
-  </Step>
-
-  <Step title="Preview and test">
-    ```bash
-    pnpm --filter @nebutra/email dev
-    ```
-
-    Navigate to your new template in the preview sidebar and verify it renders correctly in both desktop and mobile viewports.
-  </Step>
-</Steps>
 
 <Warning>
-Test all templates before deploying to production. A broken template will cause `email.send()` to throw at runtime. See [Testing](/email/testing) for the recommended test approach.
+Do not edit generated preview HTML as the source of truth. Update the package
+catalog and sender helper first.
 </Warning>
-
-<CardGroup cols={2}>
-  <Card title="Email Overview" icon="mail" href="/email/overview">
-    Full list of templates and architecture
-  </Card>
-  <Card title="Testing" icon="flask" href="/email/testing">
-    Preview server, test mode, and rendering tests
-  </Card>
-  <Card title="Providers" icon="server" href="/email/providers">
-    Resend setup and domain verification
-  </Card>
-  <Card title="Metering" icon="gauge" href="/concepts/metering">
-    How quota thresholds trigger warning emails
-  </Card>
-</CardGroup>

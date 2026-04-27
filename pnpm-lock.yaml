@@ -644,6 +644,22 @@ importers:
         specifier: ^2.0.0
         version: 2.1.9(@types/node@22.19.15)(jsdom@28.1.0(@noble/hashes@2.0.1))(lightningcss@1.31.1)(terser@5.46.0)
 
+  apps/mail-preview:
+    dependencies:
+      '@nebutra/email':
+        specifier: workspace:*
+        version: link:../../packages/email
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.19.15
+      tsx:
+        specifier: 'catalog:'
+        version: 4.21.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+
   apps/sailor-docs:
     dependencies:
       '@ai-sdk/openai-compatible':
@@ -1614,6 +1630,9 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@25.3.5)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.0.1))(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
 
   packages/errors:
     devDependencies:
@@ -1952,6 +1971,9 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@25.3.5)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.0.1))(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
 
   packages/oauth-server:
     dependencies:

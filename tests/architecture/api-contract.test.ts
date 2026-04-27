@@ -27,6 +27,7 @@ const UNVERSIONED_ROUTE_PREFIXES = new Set([
   "/api/inngest", // Background job handler
   "/api/rpc", // oRPC protocol mount (versioning handled by oRPC internally)
   "/api/trpc", // tRPC protocol mount (versioning handled by tRPC internally)
+  "/health", // Root-level container/load-balancer health check
   "/misc", // Legacy health check alias
   "/system", // Legacy status alias
   "/openapi.json", // OpenAPI spec document
@@ -151,13 +152,9 @@ describe("Property 5b: OpenAPI Spec File", () => {
     const violations: string[] = [];
     for (const path of Object.keys(spec.paths)) {
       // Infrastructure paths are allowed unversioned
-      const isInfra =
-        path.startsWith("/api/misc") ||
-        path.startsWith("/api/system") ||
-        path.startsWith("/api/webhooks") ||
-        path.startsWith("/api/inngest") ||
-        path.startsWith("/misc") ||
-        path.startsWith("/system");
+      const isInfra = Array.from(UNVERSIONED_ROUTE_PREFIXES).some(
+        (prefix) => path === prefix || path.startsWith(`${prefix}/`),
+      );
 
       if (!isInfra && !isVersionedRoute(path)) {
         violations.push(path);

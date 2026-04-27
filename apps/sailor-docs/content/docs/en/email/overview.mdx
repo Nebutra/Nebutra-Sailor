@@ -1,130 +1,106 @@
 ---
 title: Email Overview
-description: Transactional email for Nebutra — six built-in templates, React Email components, and Resend delivery via @nebutra/email.
+description: Transactional email for Nebutra — cataloged sender helpers, local previews, and Resend delivery via @nebutra/email.
 ---
 
-Nebutra sends transactional emails through the `@nebutra/email` package. Templates are built with [React Email](https://react.email) and delivered via [Resend](https://resend.com). All six system email templates are included out of the box.
+Nebutra sends transactional emails through the `@nebutra/email` package. The
+current implementation is catalog-first: `EMAIL_TEMPLATE_CATALOG` in
+`packages/email/src/index.ts` maps every public sender helper to its preview
+artifact, while Resend is loaded lazily only when an email is actually sent.
 
 ## Architecture
 
 ```
-┌──────────────────────────────────────┐
-│    Server Action / API Route /       │
-│    Background Job / Webhook          │
-└──────────────┬───────────────────────┘
-               │ email.send({ to, template, data })
-┌──────────────▼───────────────────────┐
-│         @nebutra/email               │
-│  getEmailProvider() → Resend client  │
-│  Renders React Email template →      │
-│  HTML + plain-text                   │
-└──────────────┬───────────────────────┘
-               │ Resend API (HTTPS)
-┌──────────────▼───────────────────────┐
-│              Resend                  │
-│  Transactional delivery, logs,       │
-│  domain verification, webhooks       │
-└──────────────┬───────────────────────┘
-               │ SMTP delivery
-┌──────────────▼───────────────────────┐
-│         Recipient inbox              │
-└──────────────────────────────────────┘
+Server action / route / job / webhook
+  -> named sender helper from @nebutra/email
+  -> branded HTML envelope
+  -> lazy Resend client
+  -> recipient inbox
 ```
 
-Template rendering happens in your application process before the email is sent to Resend. React Email components compile to HTML and a plain-text fallback automatically.
+No-key workflows can import the package, run contract tests, and validate local
+preview output without `RESEND_API_KEY`. Real delivery still requires Resend
+credentials.
 
-## Built-in templates
+## Built-in catalog
 
-| Template key | Subject | When it is sent |
-|--------------|---------|-----------------|
-| `welcome` | Welcome to Nebutra | After a new user signs up and their account is ready |
-| `api-key-created` | Your new API key | After an API key is generated for an organization |
-| `quota-warning` | You've used 80% of your [metric] quota | When metered usage reaches 80% of the plan limit |
-| `quota-exceeded` | You've exceeded your [metric] quota | When metered usage exceeds 100% of the plan limit |
-| `team-invite` | [inviter] invited you to join [org] | When a user is invited to join an organization |
-| `password-reset` | Reset your password | When a user requests a password reset link |
+The package currently tracks 15 templates:
+
+| Catalog ID | Public helper | Preview artifact |
+|------------|---------------|------------------|
+| `welcome` | `sendWelcomeEmail` | `welcome-email.html` |
+| `order-confirmation` | `sendOrderConfirmationEmail` | `order-confirmation-email.html` |
+| `api-key-created` | `sendApiKeyCreatedEmail` | `api-key-created-email.html` |
+| `quota-warning` | `sendQuotaWarningEmail` | `quota-warning-email.html` |
+| `team-invitation` | `sendInviteEmail` | `team-invitation-email.html` |
+| `magic-link` | `sendMagicLinkEmail` | `magic-link-email.html` |
+| `contact-form-received` | `sendContactFormReceivedEmail` | `contact-form-received-email.html` |
+| `checkout-completed` | `sendCheckoutCompletedEmail` | `checkout-completed-email.html` |
+| `trial-ending` | `sendTrialEndingEmail` | `trial-ending-email.html` |
+| `invoice-paid` | `sendInvoicePaidEmail` | `invoice-paid-email.html` |
+| `payment-failed` | `sendPaymentFailedEmail` | `payment-failed-email.html` |
+| `subscription-canceled` | `sendSubscriptionCanceledEmail` | `subscription-canceled-email.html` |
+| `upcoming-invoice` | `sendUpcomingInvoiceEmail` | `upcoming-invoice-email.html` |
+| `plan-changed` | `sendPlanChangedEmail` | `plan-changed-email.html` |
+| `license-created` | `sendLicenseCreatedEmail` | `license-created-email.html` |
 
 ## Quick start
 
 ```typescript
-import { getEmailProvider } from "@nebutra/email";
+import { sendQuotaWarningEmail, sendWelcomeEmail } from "@nebutra/email";
 
-const email = await getEmailProvider();
-
-// Welcome email
-await email.send({
+await sendWelcomeEmail({
   to: user.email,
-  template: "welcome",
-  data: {
-    userName: user.name,
-    orgName: org.name,
-    dashboardUrl: "https://app.nebutra.com/dashboard",
-  },
+  firstName: user.firstName,
+  orgName: org.name,
+  dashboardUrl: "https://app.nebutra.ai",
 });
 
-// Quota warning
-await email.send({
-  to: adminEmails,
-  template: "quota-warning",
-  data: {
-    orgName: org.name,
-    metric: "api_calls",
-    used: 8100,
-    limit: 10000,
-    percentage: 81,
-    upgradeUrl: "https://app.nebutra.com/billing",
-  },
-});
-
-// Team invite
-await email.send({
-  to: invitee.email,
-  template: "team-invite",
-  data: {
-    inviteeName: invitee.name ?? invitee.email,
-    inviterName: inviter.name,
-    orgName: org.name,
-    inviteUrl: `https://app.nebutra.com/invites/${invite.token}`,
-    expiresAt: invite.expiresAt.toISOString(),
-  },
+await sendQuotaWarningEmail({
+  to: admin.email,
+  orgName: org.name,
+  metric: "api calls",
+  used: 8100,
+  limit: 10000,
+  percentUsed: 81,
 });
 ```
 
 ## Environment variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `RESEND_API_KEY` | Yes | Resend API key — starts with `re_` |
-| `EMAIL_FROM` | Yes | Sender address, e.g. `Nebutra <noreply@mail.nebutra.com>` |
+| Variable | Required for send | Description |
+|----------|-------------------|-------------|
+| `RESEND_API_KEY` | Yes | Resend API key, loaded only when sending |
+| `EMAIL_FROM` | No | Sender address, defaults to `Nebutra <noreply@nebutra.ai>` |
 
 <Warning>
-`RESEND_API_KEY` is a secret. Never commit it to source control. Add it to Vercel environment variables or your secrets manager.
+`RESEND_API_KEY` is a secret. Never commit it. Store it in Vercel environment
+variables, CI secrets, or your secrets manager.
 </Warning>
 
-## Resend dashboard
+## Local preview
 
-The [Resend dashboard](https://resend.com) provides:
+Use the mail preview workspace rather than editing generated HTML:
 
-- **Logs** — delivery status, bounces, and opens for every email
-- **Domain verification** — DNS records to verify your sending domain
-- **API keys** — create and rotate keys
-- **Webhooks** — receive delivery events in your application
+```bash
+pnpm mail:check
+pnpm mail:export
+```
 
-<Note>
-Resend requires a verified sending domain before you can deliver to recipients outside your Resend account. See [Providers](/email/providers) for domain verification steps.
-</Note>
+`mail:check` verifies that every catalog entry has a generated preview artifact.
+`mail:export` regenerates the preview index and manifest from the catalog.
 
 <CardGroup cols={2}>
   <Card title="Providers" icon="server" href="/email/providers">
-    Resend setup, domain verification, and API key configuration
+    Resend setup, delivery credentials, and domain verification
   </Card>
   <Card title="Templates" icon="mail" href="/email/templates">
-    All six templates, required data fields, and customization
+    Catalog IDs, helper names, and required payload examples
   </Card>
   <Card title="Testing" icon="flask" href="/email/testing">
-    Local preview server, Resend test mode, and Vitest rendering tests
+    Package tests, preview checks, and no-key validation
   </Card>
   <Card title="Metering" icon="gauge" href="/concepts/metering">
-    How quota warnings integrate with the metering pipeline
+    How quota warnings integrate with usage metering
   </Card>
 </CardGroup>
