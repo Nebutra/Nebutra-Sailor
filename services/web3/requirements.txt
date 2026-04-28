@@ -3,7 +3,7 @@ uvicorn[standard]==0.32.0
 pydantic==2.10.0
 httpx==0.28.0
 redis==5.2.0
-web3==6.15.0
+web3==7.15.0
 python-dotenv==1.0.0
 opentelemetry-api==1.27.0
 opentelemetry-sdk==1.27.0
