@@ -10,7 +10,7 @@ stripe==11.0.0
 supabase==2.10.0
 
 # Redis
-redis==5.2.0
+redis==7.4.0
 
 # Validation
 pydantic==2.10.0
