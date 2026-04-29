@@ -22,6 +22,14 @@ function detectProvider(): NotificationProviderType {
   return "direct";
 }
 
+function shouldAllowMemoryDirectProvider(
+  config?: Extract<NotificationConfig, { provider: "direct" }>,
+): boolean {
+  if (process.env.NODE_ENV !== "production") return true;
+  if (process.env.ALLOW_MEMORY_NOTIFICATIONS_IN_PRODUCTION === "true") return true;
+  return Boolean(config?.inAppStore && config.preferenceStore);
+}
+
 /**
  * Create a notification provider instance.
  *
@@ -68,6 +76,11 @@ export async function createNotificationProvider(
     case "direct": {
       const { DirectProvider } = await import("./providers/direct");
       const directConfig = config as Exclude<NotificationConfig, { provider: "novu" }> | undefined;
+      if (!shouldAllowMemoryDirectProvider(directConfig)) {
+        throw new Error(
+          "Refusing to use in-memory notification stores in production. Configure Novu, inject durable direct provider stores, or set ALLOW_MEMORY_NOTIFICATIONS_IN_PRODUCTION=true for an explicit temporary override.",
+        );
+      }
       return new DirectProvider({
         provider: "direct",
         ...(directConfig?.inAppStore !== undefined ? { inAppStore: directConfig.inAppStore } : {}),

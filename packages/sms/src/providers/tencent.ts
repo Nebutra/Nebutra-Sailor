@@ -10,6 +10,22 @@ export interface TencentSmsConfig {
   templateId: string;
 }
 
+function assertTencentConfig(config: TencentSmsConfig): void {
+  const missing = [
+    ["secretId", config.secretId],
+    ["secretKey", config.secretKey],
+    ["appId", config.appId],
+    ["signName", config.signName],
+    ["templateId", config.templateId],
+  ]
+    .filter(([, value]) => !value)
+    .map(([key]) => key);
+
+  if (missing.length > 0) {
+    throw new Error(`Tencent SMS configuration missing: ${missing.join(", ")}`);
+  }
+}
+
 export function createTencentProvider(config?: TencentSmsConfig): SmsProvider {
   const cfg = config ?? {
     secretId: process.env.TENCENT_SMS_SECRET_ID ?? "",
@@ -18,15 +34,11 @@ export function createTencentProvider(config?: TencentSmsConfig): SmsProvider {
     signName: process.env.TENCENT_SMS_SIGN_NAME ?? "",
     templateId: process.env.TENCENT_SMS_TEMPLATE_ID ?? "",
   };
+  assertTencentConfig(cfg);
 
   return {
     name: "tencent",
     async send(phone: string, code: string): Promise<boolean> {
-      if (!cfg.secretId || !cfg.secretKey) {
-        logger.warn("Tencent SMS credentials not configured, skipping send");
-        return false;
-      }
-
       const timestamp = Math.floor(Date.now() / 1000);
       const date = new Date(timestamp * 1000).toISOString().slice(0, 10);
 

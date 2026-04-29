@@ -9,6 +9,21 @@ export interface AliyunSmsConfig {
   templateCode: string;
 }
 
+function assertAliyunConfig(config: AliyunSmsConfig): void {
+  const missing = [
+    ["accessKeyId", config.accessKeyId],
+    ["accessKeySecret", config.accessKeySecret],
+    ["signName", config.signName],
+    ["templateCode", config.templateCode],
+  ]
+    .filter(([, value]) => !value)
+    .map(([key]) => key);
+
+  if (missing.length > 0) {
+    throw new Error(`Aliyun SMS configuration missing: ${missing.join(", ")}`);
+  }
+}
+
 export function createAliyunProvider(config?: AliyunSmsConfig): SmsProvider {
   const cfg = config ?? {
     accessKeyId: process.env.ALIYUN_SMS_ACCESS_KEY_ID ?? "",
@@ -16,15 +31,11 @@ export function createAliyunProvider(config?: AliyunSmsConfig): SmsProvider {
     signName: process.env.ALIYUN_SMS_SIGN_NAME ?? "",
     templateCode: process.env.ALIYUN_SMS_TEMPLATE_CODE ?? "",
   };
+  assertAliyunConfig(cfg);
 
   return {
     name: "aliyun",
     async send(phone: string, code: string): Promise<boolean> {
-      if (!cfg.accessKeyId || !cfg.accessKeySecret) {
-        logger.warn("Aliyun SMS credentials not configured, skipping send");
-        return false;
-      }
-
       const params = new URLSearchParams({
         PhoneNumbers: phone,
         SignName: cfg.signName,
