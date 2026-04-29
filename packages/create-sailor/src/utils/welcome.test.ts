@@ -39,4 +39,26 @@ describe("generateWelcomePage", () => {
     expect(welcomePage).toContain("pnpm brand:apply");
     expect(welcomePage).not.toContain("pnpm sailor");
   });
+
+  it("documents preview-status provider selections in the scaffold handoff", async () => {
+    const targetDir = fs.mkdtempSync(path.join(os.tmpdir(), "create-sailor-welcome-"));
+    tempDirs.push(targetDir);
+
+    await generateWelcomePage(targetDir, {
+      projectName: "Acme",
+      region: "global",
+      previewSelections: [
+        { flag: "feature-flags", provider: "growthbook", status: "wip" },
+        { flag: "queue", provider: "bullmq", status: "foundation" },
+      ],
+    });
+
+    const nextSteps = fs.readFileSync(path.join(targetDir, ".sailor", "next-steps.md"), "utf8");
+
+    expect(nextSteps).toContain("## Production readiness holds");
+    expect(nextSteps).toContain("feature-flags=growthbook [WIP]");
+    expect(nextSteps).toContain("queue=bullmq [Foundation]");
+    expect(nextSteps).toContain("docs/package-status.md");
+    expect(nextSteps).toContain("Do not enable these in production until you replace stubs");
+  });
 });

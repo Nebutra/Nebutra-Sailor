@@ -1041,7 +1041,7 @@ async function run(): Promise<void> {
 
     await generateEnvSecrets(resolvedTarget);
     await generateSeedData(resolvedTarget, auth);
-    await generateWelcomePage(resolvedTarget, { projectName, region });
+    await generateWelcomePage(resolvedTarget, { projectName, region, previewSelections });
 
     if (config.aiMode !== "none") {
       emitJson(useJson, { event: "step", step: "ai-providers", status: "start" });

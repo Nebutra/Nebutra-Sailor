@@ -351,7 +351,14 @@ describe("notification routes", () => {
       spec.paths["/settings"]?.get?.responses?.["200"]?.content?.["application/json"]?.schema,
     ).toMatchObject({
       properties: {
-        runtime: { type: "object" },
+        runtime: {
+          properties: {
+            mode: {
+              enum: expect.arrayContaining(["managed", "self_hosted", "preview", "degraded"]),
+            },
+          },
+          type: "object",
+        },
         channels: { type: "array" },
         preferenceSource: { type: "string" },
         preferences: { type: "array" },

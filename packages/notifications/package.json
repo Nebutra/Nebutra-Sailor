@@ -7,13 +7,13 @@
     "status": "foundation",
     "productionReady": false,
     "requires": [
-      "NOVU_API_KEY + NOVU_APPLICATION_IDENTIFIER (managed)",
-      "or direct dispatchers (email/sms/push) for custom"
+      "NOVU_API_KEY (managed)",
+      "or direct dispatchers plus durable preference and in-app stores"
     ],
     "gaps": [
       "Novu provider adapter stubs — no batching, retries limited",
-      "In-app feed storage not implemented",
-      "User preference schema pending"
+      "Direct production mode requires injected durable preference and in-app stores",
+      "Provider health and retry telemetry are still minimal"
     ]
   },
   "main": "./src/index.ts",

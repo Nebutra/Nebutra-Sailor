@@ -3070,7 +3070,7 @@ export interface paths {
                 provider: "novu" | "direct";
                 providerLabel: string;
                 /** @enum {string} */
-                mode: "managed" | "self_hosted" | "preview";
+                mode: "managed" | "self_hosted" | "preview" | "degraded";
                 canManagePreferences: boolean;
                 canViewInbox: boolean;
                 canMarkInboxRead: boolean;

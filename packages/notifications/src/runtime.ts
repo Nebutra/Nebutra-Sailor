@@ -1,6 +1,6 @@
 import type { NotificationProvider, NotificationProviderType } from "./types";
 
-export type NotificationRuntimeMode = "managed" | "self_hosted" | "preview";
+export type NotificationRuntimeMode = "managed" | "self_hosted" | "preview" | "degraded";
 
 export interface NotificationProviderRuntimeMetadata {
   provider: NotificationProviderType;
@@ -35,6 +35,10 @@ function getProviderLabel(provider: NotificationProviderType): string {
   return provider === "novu" ? "Novu" : "Direct";
 }
 
+function hasNovuApiKey(env: NodeJS.ProcessEnv): boolean {
+  return typeof env.NOVU_API_KEY === "string" && env.NOVU_API_KEY.trim().length > 0;
+}
+
 export function resolveNotificationRuntimeStatus(input?: {
   provider?: NotificationProvider;
   env?: NodeJS.ProcessEnv;
@@ -45,6 +49,22 @@ export function resolveNotificationRuntimeStatus(input?: {
   const providerType = metadata?.provider ?? provider?.name ?? detectProviderType(env);
 
   if (providerType === "novu") {
+    if (!provider && !hasNovuApiKey(env)) {
+      return {
+        provider: "novu",
+        providerLabel: getProviderLabel("novu"),
+        mode: "degraded",
+        canManagePreferences: false,
+        canViewInbox: false,
+        canMarkInboxRead: false,
+        summary:
+          "Novu is selected, but notification delivery is unavailable until credentials are configured.",
+        reason:
+          "Set NOVU_API_KEY or switch NOTIFICATION_PROVIDER to direct with durable adapters before enabling writable notification flows.",
+        missing: ["NOVU_API_KEY"],
+      };
+    }
+
     return {
       provider: "novu",
       providerLabel: getProviderLabel("novu"),

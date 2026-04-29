@@ -1,5 +1,12 @@
 import { logger } from "@nebutra/logger";
-import type { JobHandler, JobPayload, JobResult, JobStatusInfo, QueueProvider } from "../types";
+import type {
+  DeadLetterJob,
+  JobHandler,
+  JobPayload,
+  JobResult,
+  JobStatusInfo,
+  QueueProvider,
+} from "../types";
 
 // =============================================================================
 // Memory Provider — in-memory queue for local dev & testing
@@ -15,11 +22,12 @@ import type { JobHandler, JobPayload, JobResult, JobStatusInfo, QueueProvider } 
 
 interface StoredJob {
   payload: JobPayload;
-  status: "pending" | "active" | "completed" | "failed";
+  status: "pending" | "active" | "completed" | "failed" | "dead-lettered";
   attempts: number;
   failedReason?: string;
   processedAt?: string;
   completedAt?: string;
+  deadLetteredAt?: string;
 }
 
 export class MemoryProvider implements QueueProvider {
@@ -27,6 +35,7 @@ export class MemoryProvider implements QueueProvider {
 
   private handlers: Map<string, JobHandler> = new Map();
   private jobs: Map<string, StoredJob> = new Map();
+  private deadLetters: Map<string, DeadLetterJob> = new Map();
   private timers: ReturnType<typeof setTimeout>[] = [];
 
   constructor() {
@@ -82,7 +91,7 @@ export class MemoryProvider implements QueueProvider {
 
   // ── Job Status ──────────────────────────────────────────────────────────
 
-  async getJobStatus(jobId: string): Promise<JobStatusInfo | undefined> {
+  async getJobStatus(jobId: string, _queue?: string): Promise<JobStatusInfo | undefined> {
     const stored = this.jobs.get(jobId);
     if (!stored) return undefined;
 
@@ -96,7 +105,13 @@ export class MemoryProvider implements QueueProvider {
       createdAt: stored.payload.createdAt,
       ...(stored.processedAt !== undefined ? { processedAt: stored.processedAt } : {}),
       ...(stored.completedAt !== undefined ? { completedAt: stored.completedAt } : {}),
+      ...(stored.deadLetteredAt !== undefined ? { deadLetteredAt: stored.deadLetteredAt } : {}),
     };
+  }
+
+  async getDeadLetteredJobs(queue?: string): Promise<DeadLetterJob[]> {
+    const jobs = [...this.deadLetters.values()];
+    return queue === undefined ? jobs : jobs.filter((job) => job.queue === queue);
   }
 
   // ── Internal Processing ─────────────────────────────────────────────────
@@ -138,8 +153,7 @@ export class MemoryProvider implements QueueProvider {
         });
 
         if (attempt === maxRetries) {
-          stored.status = "failed";
-          stored.failedReason = msg;
+          this.deadLetter(job, stored, msg, maxRetries);
           logger.error("[queue:memory] Job exhausted retries", {
             jobId: job.id,
             key,
@@ -147,6 +161,29 @@ export class MemoryProvider implements QueueProvider {
         }
       }
     }
+  }
+
+  private deadLetter(
+    job: JobPayload,
+    stored: StoredJob,
+    failedReason: string,
+    maxRetries: number,
+  ): void {
+    const failedAt = new Date().toISOString();
+    stored.status = "dead-lettered";
+    stored.failedReason = failedReason;
+    stored.deadLetteredAt = failedAt;
+    this.deadLetters.set(job.id, {
+      id: job.id,
+      queue: job.queue,
+      type: job.type,
+      originalJob: job,
+      attempts: stored.attempts,
+      maxRetries,
+      failedReason,
+      provider: "memory",
+      failedAt,
+    });
   }
 
   // ── Lifecycle ───────────────────────────────────────────────────────────
@@ -158,6 +195,7 @@ export class MemoryProvider implements QueueProvider {
     this.timers = [];
     this.handlers.clear();
     this.jobs.clear();
+    this.deadLetters.clear();
     logger.info("[queue:memory] Provider closed");
   }
 }

@@ -1,4 +1,4 @@
-> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+> **Status: Foundation** — Notification contracts, provider selection, runtime status, and direct-provider stores exist. `productionReady` remains `false` because production use still requires Novu credentials or injected durable direct-provider adapters plus stronger retry/telemetry coverage.
 
 # @nebutra/notifications
 
@@ -46,7 +46,12 @@ await notifier.send(
 
 The provider is auto-detected based on environment:
 - If `NOVU_API_KEY` is set → Novu
-- Otherwise → Direct (with in-memory store)
+- Otherwise → Direct preview mode with in-memory stores
+
+In production, the factory fails closed instead of silently using memory-backed
+direct stores. Configure Novu, inject both direct-provider stores, or set
+`ALLOW_MEMORY_NOTIFICATIONS_IN_PRODUCTION=true` as an explicit temporary
+escape hatch.
 
 ### Explicit Configuration
 
@@ -62,7 +67,7 @@ const notifier = await createNotificationProvider({
 });
 ```
 
-#### Using Direct Provider with Custom Dispatchers
+#### Using Direct Provider with Custom Dispatchers and Stores
 
 ```typescript
 import { createNotificationProvider } from "@nebutra/notifications";
@@ -87,9 +92,21 @@ const notifier = await createNotificationProvider({
       };
     },
   },
+  inAppStore: myDurableInAppStore,
+  preferenceStore: myDurablePreferenceStore,
   // Add other dispatchers as needed
 });
 ```
+
+## Runtime Status
+
+Use `resolveNotificationRuntimeStatus()` or the API gateway settings endpoint to
+drive UI and operational readiness:
+
+- `managed`: Novu provider is active.
+- `self_hosted`: Direct provider has durable adapters for at least one writable surface.
+- `preview`: Direct provider is using memory stores for development and tests.
+- `degraded`: A provider is selected but cannot run, such as `NOTIFICATION_PROVIDER=novu` without `NOVU_API_KEY`.
 
 ## API Reference
 
@@ -264,6 +281,9 @@ NOVU_BASE_URL=https://api.novu.co # optional, for self-hosted
 
 # Logging
 LOG_LEVEL=info|debug|warn|error
+
+# Explicit temporary escape hatch; do not use as normal production config
+ALLOW_MEMORY_NOTIFICATIONS_IN_PRODUCTION=true
 ```
 
 ## Examples
@@ -335,7 +355,8 @@ await notifier.updatePreferences(userId, [
 
 ## Testing
 
-For development, use the in-memory direct provider (default):
+For development and deterministic tests, use the in-memory direct provider
+(default outside production):
 
 ```typescript
 import { createNotificationProvider } from "@nebutra/notifications";

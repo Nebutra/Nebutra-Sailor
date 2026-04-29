@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { describeStatus, formatStatusBadge, type PreviewSelection } from "./package-status.js";
 
 /**
  * Welcome page generator for create-sailor.
@@ -20,6 +21,7 @@ import path from "node:path";
 interface WelcomeOptions {
   projectName: string;
   region: string;
+  previewSelections?: PreviewSelection[];
 }
 
 function renderWelcomePageTsx(projectName: string): string {
@@ -139,7 +141,32 @@ function Step({
 `;
 }
 
-function renderNextStepsMd(projectName: string, region: string): string {
+function renderReadinessHolds(previewSelections: PreviewSelection[] = []): string {
+  if (previewSelections.length === 0) return "";
+
+  const rows = previewSelections
+    .map((selection) => {
+      const badge = formatStatusBadge(selection.status);
+      return `- ${selection.flag}=${selection.provider} ${badge} — ${describeStatus(selection.status)}`;
+    })
+    .join("\n");
+
+  return `
+## Production readiness holds
+
+Do not enable these in production until you replace stubs, add provider credentials, and verify the integration contract:
+
+${rows}
+
+Review the package readiness matrix before handoff: [docs/package-status.md](docs/package-status.md)
+`;
+}
+
+function renderNextStepsMd(
+  projectName: string,
+  region: string,
+  previewSelections: PreviewSelection[] = [],
+): string {
   return `# Next steps — ${projectName}
 
 Region: ${region}
@@ -166,6 +193,7 @@ Your AI-native SaaS scaffold is ready. Complete these four steps to go from temp
    \`\`\`
 
 After setup, delete the welcome route at \`apps/web/src/app/[locale]/welcome/\`.
+${renderReadinessHolds(previewSelections)}
 
 ## Resources
 
@@ -176,7 +204,7 @@ After setup, delete the welcome route at \`apps/web/src/app/[locale]/welcome/\`.
 }
 
 export async function generateWelcomePage(targetDir: string, opts: WelcomeOptions): Promise<void> {
-  const { projectName, region } = opts;
+  const { projectName, region, previewSelections = [] } = opts;
 
   // 1. Cheat sheet — always written (small, no deps on apps/web existing).
   try {
@@ -184,7 +212,10 @@ export async function generateWelcomePage(targetDir: string, opts: WelcomeOption
     if (!fs.existsSync(sailorDir)) {
       fs.mkdirSync(sailorDir, { recursive: true });
     }
-    fs.writeFileSync(path.join(sailorDir, "next-steps.md"), renderNextStepsMd(projectName, region));
+    fs.writeFileSync(
+      path.join(sailorDir, "next-steps.md"),
+      renderNextStepsMd(projectName, region, previewSelections),
+    );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.warn(`[create-sailor] Failed to write .sailor/next-steps.md: ${message}`);

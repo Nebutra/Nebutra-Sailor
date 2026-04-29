@@ -11,7 +11,7 @@
       "or REDIS_URL for BullMQ self-hosted"
     ],
     "gaps": [
-      "Dead letter queue not implemented",
+      "Durable dead letter queue not implemented for QStash/BullMQ",
       "Worker auto-scaling TODO",
       "SQS and Upstash Kafka adapters not started"
     ]

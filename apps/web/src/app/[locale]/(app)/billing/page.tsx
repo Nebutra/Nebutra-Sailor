@@ -1,5 +1,6 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card, LoadingState, PageHeader } from "@nebutra/ui/layout";
+import Link from "next/link";
 import { Suspense } from "react";
 import {
   ActivePlanCard,
@@ -9,6 +10,11 @@ import {
 } from "@/components/billing/billing-self-service";
 import { getTenantContext } from "@/lib/auth";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
+import {
+  type BillingJourneyNotice,
+  type JourneySearchParams,
+  resolveBillingJourneyNotice,
+} from "./journey-state";
 
 function toCurrency(value: number) {
   return value.toLocaleString(undefined, {
@@ -18,7 +24,41 @@ function toCurrency(value: number) {
   });
 }
 
-async function BillingContent() {
+function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
+  const tone =
+    notice.tone === "success"
+      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100"
+      : "border-amber-500/30 bg-amber-500/10 text-amber-950 dark:text-amber-100";
+
+  return (
+    <div className={`rounded-2xl border p-4 ${tone}`}>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h2 className="font-semibold">{notice.title}</h2>
+          <p className="mt-1 max-w-3xl text-sm opacity-80">{notice.description}</p>
+        </div>
+        <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+          <Link
+            href={notice.primaryAction.href}
+            className="inline-flex items-center justify-center rounded-xl bg-neutral-12 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-11 dark:bg-white dark:text-black dark:hover:bg-white/90"
+          >
+            {notice.primaryAction.label}
+          </Link>
+          {notice.secondaryAction && (
+            <Link
+              href={notice.secondaryAction.href}
+              className="inline-flex items-center justify-center rounded-xl border border-current/20 px-4 py-2 text-sm font-medium transition hover:bg-white/20"
+            >
+              {notice.secondaryAction.label}
+            </Link>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+async function BillingContent({ journeyNotice }: { journeyNotice: BillingJourneyNotice | null }) {
   const tenant = await getTenantContext();
   const tenantId = tenant.tenantId ?? process.env.DEFAULT_DASHBOARD_TENANT_ID ?? "demo_org";
   const billingModel = buildBillingSelfServiceModel({ currentPlan: tenant.plan });
@@ -35,6 +75,12 @@ async function BillingContent() {
       </AnimateIn>
 
       <AnimateInGroup stagger="fast" className="space-y-4">
+        {journeyNotice && (
+          <AnimateIn preset="fadeUp">
+            <BillingReturnNotice notice={journeyNotice} />
+          </AnimateIn>
+        )}
+
         <AnimateIn preset="fadeUp">
           <BillingProviderNotice model={billingModel} />
         </AnimateIn>
@@ -97,11 +143,18 @@ async function BillingContent() {
   );
 }
 
-export default async function BillingPage() {
+interface BillingPageProps {
+  searchParams?: JourneySearchParams | Promise<JourneySearchParams>;
+}
+
+export default async function BillingPage({ searchParams }: BillingPageProps) {
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  const journeyNotice = resolveBillingJourneyNotice(resolvedSearchParams);
+
   return (
     <section className="mx-auto w-full max-w-7xl" aria-label="Billing">
       <Suspense fallback={<LoadingState message="Loading billing overview..." />}>
-        <BillingContent />
+        <BillingContent journeyNotice={journeyNotice} />
       </Suspense>
     </section>
   );

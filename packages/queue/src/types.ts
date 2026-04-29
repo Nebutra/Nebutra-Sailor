@@ -77,7 +77,14 @@ export interface JobResult {
 
 // ── Job Status (for observability) ──────────────────────────────────────────
 
-export type JobStatus = "pending" | "active" | "completed" | "failed" | "delayed" | "waiting";
+export type JobStatus =
+  | "pending"
+  | "active"
+  | "completed"
+  | "failed"
+  | "dead-lettered"
+  | "delayed"
+  | "waiting";
 
 export interface JobStatusInfo {
   id: string;
@@ -89,6 +96,19 @@ export interface JobStatusInfo {
   createdAt: string;
   processedAt?: string;
   completedAt?: string;
+  deadLetteredAt?: string;
+}
+
+export interface DeadLetterJob {
+  id: string;
+  queue: string;
+  type: string;
+  originalJob: JobPayload;
+  attempts: number;
+  maxRetries: number;
+  failedReason: string;
+  provider: QueueProviderType;
+  failedAt: string;
 }
 
 // ── Handler ─────────────────────────────────────────────────────────────────
@@ -138,6 +158,12 @@ export interface QueueProvider {
    * Not all providers support this; returns `undefined` if unsupported.
    */
   getJobStatus?(jobId: string, queue: string): Promise<JobStatusInfo | undefined>;
+
+  /**
+   * Inspect jobs that exhausted retries and require operator attention.
+   * Providers without a durable DLQ may omit this method.
+   */
+  getDeadLetteredJobs?(queue?: string): Promise<DeadLetterJob[]>;
 
   /**
    * Graceful shutdown — drain in-flight jobs, close connections.

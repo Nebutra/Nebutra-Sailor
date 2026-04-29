@@ -30,6 +30,7 @@ export { getQStashHandler, getQStashHandlerKeys, QStashProvider } from "./provid
 // ── Types ───────────────────────────────────────────────────────────────────
 export type {
   BullMQProviderConfig,
+  DeadLetterJob,
   JobHandler,
   JobOptions,
   JobPayload,
