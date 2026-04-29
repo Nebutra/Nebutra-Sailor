@@ -1390,6 +1390,7 @@
       "description": "Nebutra is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
     },
     "sections": {
+      "exploreFeature": "Explore feature",
       "ai_category": "AI & Intelligence",
       "ai_f1_title": "Multi-model chat completions",
       "ai_f1_desc": "Route requests to GPT-5.4, Claude Opus 4, Gemini 3.1, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",

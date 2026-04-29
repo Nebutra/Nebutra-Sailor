@@ -8,7 +8,7 @@
     "getStarted": "시작하기",
     "about": "회사 소개",
     "ideas": "아이디어",
-    "opc": "Platform",
+    "opc": "플랫폼",
     "roadmap": "로드맵",
     "resources": "리소스",
     "changelog": "변경 이력",
@@ -122,7 +122,7 @@
       "roadmap": "로드맵",
       "docs": "문서",
       "ideas": "아이디어",
-      "opc": "Platform",
+      "opc": "플랫폼",
       "privacy": "개인정보처리방침",
       "terms": "이용약관",
       "cookies": "쿠키 정책",
@@ -1390,6 +1390,7 @@
       "description": "Nebutra는 풀스택 SaaS 플랫폼입니다. AI, 빌링, 멀티테넌시, 관측 가능성, 보안이 처음부터 내장되어 있습니다. 바퀴를 다시 발명하지 마세요."
     },
     "sections": {
+      "exploreFeature": "기능 살펴보기",
       "ai_category": "AI & Intelligence",
       "ai_f1_title": "Multi-model chat completions",
       "ai_f1_desc": "Route requests to GPT-5.4, Claude Opus 4, Gemini 3.1, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",

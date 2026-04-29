@@ -1395,6 +1395,7 @@
       "description": "Nebutra 是全栈 SaaS 平台——AI、计费、多租户、可观测性和安全性从第一天起就内置其中。停止重复造轮子。"
     },
     "sections": {
+      "exploreFeature": "探索功能",
       "ai_category": "AI 与智能体引擎",
       "ai_f1_title": "多模型会话代理",
       "ai_f1_desc": "将请求极速路由至 GPT-5.4、Claude Opus 4、Gemini 3.1 或您微调的私有模型。开箱即用的流式传输、视觉处理以及函数调用机制。",

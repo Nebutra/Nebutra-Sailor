@@ -4,9 +4,9 @@ import { Badge, Button, Card } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
-import { Suspense } from "react";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 import { getExchangeRate } from "@/lib/pricing/exchange-rates";
@@ -38,10 +38,7 @@ async function CommercialPriceBadge({
   }).format(COMMERCIAL_BASE_PRICE_USD * exchangeRate);
 
   return (
-    <Badge
-      className="mb-6 w-fit bg-muted text-muted-foreground border-border"
-      variant="outline"
-    >
+    <Badge className="mb-6 w-fit bg-muted text-muted-foreground border-border" variant="outline">
       {label(commercialPrice)}
     </Badge>
   );
@@ -60,10 +57,7 @@ function CommercialPriceBadgeFallback({
     maximumFractionDigits: 0,
   }).format(COMMERCIAL_BASE_PRICE_USD);
   return (
-    <Badge
-      className="mb-6 w-fit bg-muted text-muted-foreground border-border"
-      variant="outline"
-    >
+    <Badge className="mb-6 w-fit bg-muted text-muted-foreground border-border" variant="outline">
       {label(fallbackPrice)}
     </Badge>
   );
@@ -96,8 +90,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
   // Geo-aware pricing is resolved in <CommercialPriceBadge> (async server
   // component wrapped in <Suspense>). The marketing shell renders statically;
   // localized price streams in on request. Next 16 Cache Components pattern.
-  const commercialBadgeLabel = (price: string) =>
-    t("plans.commercial.badge", { price });
+  const commercialBadgeLabel = (price: string) => t("plans.commercial.badge", { price });
 
   const faqItems = [
     { q: t("faq.items.whyAgpl.q"), a: t("faq.items.whyAgpl.a") },
@@ -159,9 +152,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </Badge>
 
               <div className="mb-6">
-                <h3 className="text-2xl font-black tracking-tight mb-2">
-                  {t("plans.agpl.title")}
-                </h3>
+                <h3 className="text-2xl font-black tracking-tight mb-2">{t("plans.agpl.title")}</h3>
                 <p className="text-sm font-medium text-muted-foreground">
                   {t("plans.agpl.subtitle")}
                 </p>
@@ -186,9 +177,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">
-                    {t("plans.agpl.features.mustCredit")}
-                  </span>
+                  <span className="text-sm font-medium">{t("plans.agpl.features.mustCredit")}</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
@@ -345,9 +334,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
       {/* FAQ Section */}
       <section className="relative z-10 mx-auto max-w-4xl px-4 pb-32 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
-          <h2 className="text-4xl font-black tracking-tight mb-12 text-center">
-            {t("faq.title")}
-          </h2>
+          <h2 className="text-4xl font-black tracking-tight mb-12 text-center">{t("faq.title")}</h2>
         </AnimateIn>
 
         <div className="space-y-8">

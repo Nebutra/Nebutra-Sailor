@@ -32,6 +32,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
   setRequestLocale(lang as Locale);
 
   const t = await getTranslations({ locale: lang as Locale, namespace: "featuresPage" });
+  type FeaturePageTranslationKey = Parameters<typeof t>[0];
 
   return (
     <main
@@ -72,6 +73,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
       <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
         <AnimateInGroup stagger="normal" className="grid grid-cols-1 md:grid-cols-6 gap-6">
           {LARGE_FEATURES.map((section, idx) => {
+            const firstFeature = section.features[0];
             return (
               <div
                 key={section.categoryKey}
@@ -84,7 +86,15 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
                   ${idx === 5 ? "md:col-span-3" : ""}
                 `}
               >
-                <FeatureBentoCard {...section} t={t} />
+                <FeatureBentoCard
+                  href={section.href}
+                  icon={section.icon}
+                  color={section.color}
+                  mockup={section.mockup}
+                  title={t(`sections.${section.categoryKey}` as FeaturePageTranslationKey)}
+                  description={t(`sections.${firstFeature.descKey}` as FeaturePageTranslationKey)}
+                  ctaLabel={t("sections.exploreFeature")}
+                />
               </div>
             );
           })}

@@ -1,24 +1,25 @@
 import { ArrowRight } from "lucide-react";
+import type { ComponentType, CSSProperties } from "react";
 import { AnimateIn } from "../AnimateIn";
 
 interface FeatureBentoCardProps {
-  categoryKey: string;
   href: string;
-  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  icon: ComponentType<{ className?: string; style?: CSSProperties }>;
   color: string;
-  mockup: React.ComponentType;
-  features: readonly { titleKey: string; descKey: string }[];
-  t: any;
+  mockup: ComponentType;
+  title: string;
+  description: string;
+  ctaLabel: string;
 }
 
 export function FeatureBentoCard({
-  categoryKey,
   href,
   icon: _Icon,
   color: _color,
   mockup: Mockup,
-  features,
-  t,
+  title,
+  description,
+  ctaLabel,
 }: FeatureBentoCardProps) {
   return (
     <AnimateIn preset="fadeUp" className="h-full">
@@ -29,10 +30,10 @@ export function FeatureBentoCard({
         {/* Top Text Area - Vercel Style Minimal */}
         <div className="px-8 pt-10 sm:px-10 flex-none z-10 relative">
           <h2 className="text-[26px] sm:text-[32px] font-black tracking-tight text-foreground dark:text-white leading-tight">
-            {t(`sections.${categoryKey}`)}
+            {title}
           </h2>
           <p className="mt-4 text-[15px] sm:text-base text-muted-foreground dark:text-zinc-400 font-medium leading-relaxed max-w-sm">
-            {t(`sections.${features[0].descKey}`)}
+            {description}
           </p>
 
           <a
@@ -40,13 +41,13 @@ export function FeatureBentoCard({
             target="_blank"
             rel="noreferrer"
             className="group/link mt-8 flex w-fit items-center gap-3 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            aria-label={`Explore ${t(`sections.${categoryKey}`)}`}
+            aria-label={`${ctaLabel}: ${title}`}
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border/50 bg-background/50 text-muted-foreground backdrop-blur-sm transition-colors group-hover/link:border-foreground group-hover/link:text-foreground dark:border-border dark:group-hover/link:border-border dark:group-hover/link:text-white">
               <ArrowRight className="h-4 w-4" />
             </span>
             <span className="text-sm font-semibold text-muted-foreground transition-colors group-hover/link:text-foreground dark:group-hover/link:text-white">
-              Explore feature
+              {ctaLabel}
             </span>
           </a>
         </div>

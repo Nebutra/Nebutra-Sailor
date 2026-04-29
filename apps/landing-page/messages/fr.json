@@ -8,7 +8,7 @@
     "getStarted": "Commencer",
     "about": "À propos",
     "ideas": "Idées",
-    "opc": "Platform",
+    "opc": "Plateforme",
     "roadmap": "Feuille de Route",
     "resources": "Ressources",
     "changelog": "Journal des modifications",
@@ -122,7 +122,7 @@
       "roadmap": "Feuille de route",
       "docs": "Documentation",
       "ideas": "Idées",
-      "opc": "Platform",
+      "opc": "Plateforme",
       "privacy": "Confidentialité",
       "terms": "Conditions",
       "cookies": "Cookies",
@@ -1390,6 +1390,7 @@
       "description": "Nebutra est une plateforme SaaS full-stack : IA, facturation, multi-tenancy, observabilité et sécurité intégrées dès le premier jour. Arrêtez de réinventer la roue."
     },
     "sections": {
+      "exploreFeature": "Explorer la fonctionnalité",
       "ai_category": "AI & Intelligence",
       "ai_f1_title": "Multi-model chat completions",
       "ai_f1_desc": "Route requests to GPT-5.4, Claude Opus 4, Gemini 3.1, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",

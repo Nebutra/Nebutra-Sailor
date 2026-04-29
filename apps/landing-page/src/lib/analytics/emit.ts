@@ -65,8 +65,7 @@ export function emitBrowserEvent(
       properties: {
         ...properties,
         distinct_id: distinctId,
-        $current_url:
-          typeof window.location !== "undefined" ? window.location.href : undefined,
+        $current_url: typeof window.location !== "undefined" ? window.location.href : undefined,
       },
       timestamp: new Date().toISOString(),
     };

@@ -6,7 +6,7 @@
     "github": "GitHub",
     "about": "会社情報",
     "ideas": "アイデア",
-    "opc": "Platform",
+    "opc": "プラットフォーム",
     "roadmap": "ロードマップ",
     "resources": "リソース",
     "signIn": "ログイン",
@@ -123,7 +123,7 @@
       "roadmap": "ロードマップ",
       "docs": "ドキュメント",
       "ideas": "アイデア",
-      "opc": "Platform",
+      "opc": "プラットフォーム",
       "privacy": "プライバシー",
       "terms": "利用規約",
       "cookies": "Cookie ポリシー",
@@ -1390,6 +1390,7 @@
       "description": "Nebutra はフルスタック SaaS プラットフォームです。AI、課金、マルチテナンシー、オブザーバビリティ、セキュリティが初日から組み込まれています。車輪の再発明はもう不要です。"
     },
     "sections": {
+      "exploreFeature": "機能を見る",
       "ai_category": "AI & Intelligence",
       "ai_f1_title": "Multi-model chat completions",
       "ai_f1_desc": "Route requests to GPT-5.4, Claude Opus 4, Gemini 3.1, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
