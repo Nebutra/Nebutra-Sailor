@@ -3,6 +3,7 @@
 import { Button, Input } from "@nebutra/ui/components";
 import { Label } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import type { InputRef } from "antd/es/input";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -26,8 +27,7 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
   const [slugEdited, setSlugEdited] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Lobehub v5 Input uses antd's InputRef, not HTMLInputElement
-  const workspaceNameRef = useRef<any>(null);
+  const workspaceNameRef = useRef<InputRef>(null);
 
   useEffect(() => {
     if (!slugEdited) {
@@ -48,7 +48,7 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
     setError("");
 
     try {
-      const response = await fetch("/api/onboarding/create-workspace", {
+      const response = await fetch("/api/organizations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, slug }),

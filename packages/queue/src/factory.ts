@@ -23,6 +23,22 @@ function detectProvider(): QueueProviderType {
   return "memory";
 }
 
+function readConfiguredProvider(): QueueProviderType | undefined {
+  const provider = process.env.QUEUE_PROVIDER?.trim();
+  return provider ? (provider as QueueProviderType) : undefined;
+}
+
+function assertMemoryProviderAllowed(): void {
+  if (
+    process.env.NODE_ENV === "production" &&
+    process.env.ALLOW_MEMORY_QUEUE_IN_PRODUCTION !== "true"
+  ) {
+    throw new Error(
+      "Refusing to use the in-memory queue provider in production. Configure QSTASH_TOKEN or REDIS_URL, or set ALLOW_MEMORY_QUEUE_IN_PRODUCTION=true for an explicit temporary override.",
+    );
+  }
+}
+
 /**
  * Create a queue provider instance.
  *
@@ -45,10 +61,7 @@ function detectProvider(): QueueProviderType {
  * ```
  */
 export async function createQueue(config?: QueueConfig): Promise<QueueProvider> {
-  const providerType =
-    config?.provider ??
-    (process.env.QUEUE_PROVIDER as QueueProviderType | undefined) ??
-    detectProvider();
+  const providerType = config?.provider ?? readConfiguredProvider() ?? detectProvider();
 
   logger.info("[queue] Creating provider", { provider: providerType });
 
@@ -87,6 +100,7 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
     }
 
     case "memory": {
+      assertMemoryProviderAllowed();
       const { MemoryProvider } = await import("./providers/memory");
       return new MemoryProvider();
     }

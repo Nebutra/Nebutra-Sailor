@@ -1,10 +1,10 @@
-import { createHmac, timingSafeEqual } from "crypto";
+import { createHmac, timingSafeEqual } from "node:crypto";
 
 // =============================================================================
 // Webhook Signing & Verification — HMAC-SHA256 with replay protection
 // =============================================================================
 // Standard webhook signing format compatible with industry practices (Svix, etc.).
-// Signature format: "whsec_MjAxNDAxMDExMDIwMzA0MDAxMDIwMzA0MA==.{base64_signature}"
+// Signature format: "t={unix_seconds},v1={base64_signature}"
 
 /**
  * Sign a webhook payload with a secret.
@@ -48,7 +48,7 @@ export function verifyPayload(
 ): boolean {
   // 1. Verify timestamp is recent (replay attack protection)
   const timestampNum = parseInt(timestamp, 10);
-  if (isNaN(timestampNum)) {
+  if (Number.isNaN(timestampNum)) {
     throw new Error("Invalid timestamp format");
   }
 
@@ -70,7 +70,9 @@ export function verifyPayload(
   try {
     const expected = Buffer.from(expectedSignature, "utf8");
     const actual = Buffer.from(signature, "utf8");
-    timingSafeEqual(expected, actual);
+    if (expected.length !== actual.length || !timingSafeEqual(expected, actual)) {
+      throw new Error("Signature verification failed");
+    }
   } catch {
     throw new Error("Signature verification failed");
   }
@@ -80,46 +82,37 @@ export function verifyPayload(
 
 /**
  * Extract and decode a webhook signature from a standard "Webhook-Signature" header.
- * Expected format: "whsec_{base64_encoded_secret}.{timestamp}.{signature}"
+ * Expected format: "t={timestamp},v1={signature}"
  *
  * @param headerValue - The "Webhook-Signature" header value
  * @returns { secret, timestamp, signature } or null if format is invalid
  */
 export function parseWebhookSignatureHeader(headerValue: string): {
-  secret: string;
   timestamp: string;
   signature: string;
 } | null {
-  // Remove "whsec_" prefix if present
-  let parts = headerValue;
-  if (parts.startsWith("whsec_")) {
-    parts = parts.slice(6);
-  }
+  const entries = Object.fromEntries(
+    headerValue.split(",").map((part) => {
+      const [key, ...value] = part.trim().split("=");
+      return [key, value.join("=")];
+    }),
+  );
 
-  const tokens = parts.split(".");
-  if (tokens.length !== 3) {
-    return null;
-  }
-
-  const [secret, timestamp, signature] = tokens as [string, string, string];
-  return { secret, timestamp, signature };
+  const timestamp = entries.t;
+  const signature = entries.v1;
+  return timestamp && signature ? { timestamp, signature } : null;
 }
 
 /**
  * Format a signature for the "Webhook-Signature" header.
- * Produces: "whsec_{secret}.{timestamp}.{signature}"
+ * Produces: "t={timestamp},v1={signature}"
  *
- * @param secret - The secret (base64)
  * @param timestamp - Unix timestamp as string
  * @param signature - The HMAC-SHA256 signature (base64)
  * @returns Properly formatted header value
  */
-export function formatWebhookSignatureHeader(
-  secret: string,
-  timestamp: string,
-  signature: string,
-): string {
-  return `whsec_${secret}.${timestamp}.${signature}`;
+export function formatWebhookSignatureHeader(timestamp: string, signature: string): string {
+  return `t=${timestamp},v1=${signature}`;
 }
 
 /**

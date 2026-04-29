@@ -15,6 +15,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "../..");
 const API_GATEWAY_SRC = resolve(ROOT, "apps/api-gateway/src");
 const OPENAPI_SPEC_PATH = resolve(ROOT, "apps/api-gateway/openapi.json");
+const CI_WORKFLOW_PATH = resolve(ROOT, ".github/workflows/ci.yml");
 
 /**
  * Routes that are intentionally unversioned.
@@ -191,5 +192,36 @@ describe("Property 5c: API Versioning Middleware", () => {
       appliedPattern.test(indexContent),
       "apiVersionMiddleware should be applied to /api/* routes",
     ).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Property 5d: CI blocks generated API client drift
+// ---------------------------------------------------------------------------
+
+describe("Property 5d: OpenAPI Client Drift Gate", () => {
+  const workflow = readFileSync(CI_WORKFLOW_PATH, "utf-8");
+
+  it("runs OpenAPI validation when generation or API type files change", () => {
+    for (const requiredPath of [
+      "apps/api-gateway/**",
+      "apps/api-gateway/scripts/export-spec.ts",
+      "apps/web/package.json",
+      "apps/web/src/lib/api/**",
+      "scripts/generate-api-types.ts",
+      ".github/workflows/ci.yml",
+    ]) {
+      expect(workflow).toContain(`- '${requiredPath}'`);
+    }
+  });
+
+  it("regenerates and blocks drift in the committed web API client", () => {
+    expect(workflow).toContain("pnpm --filter @nebutra/web generate:api-types");
+    expect(workflow).toContain("git diff --exit-code -- apps/web/src/lib/api/types.generated.ts");
+  });
+
+  it("does not pretend the ignored OpenAPI spec is a committed freshness gate", () => {
+    expect(workflow).not.toContain("Check spec is up to date");
+    expect(workflow).not.toContain("OpenAPI spec is out of date");
   });
 });

@@ -1,9 +1,21 @@
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
+import { z } from "zod";
+import { setActiveOrganizationCookie } from "@/lib/active-organization";
 
 const provider =
   process.env.AUTH_PROVIDER || process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
+
+const CreateOrganizationSchema = z.object({
+  name: z.string().trim().min(1).max(80),
+  slug: z
+    .string()
+    .trim()
+    .min(3)
+    .max(48)
+    .regex(/^[a-z0-9][a-z0-9-]*[a-z0-9]$/),
+});
 
 interface OrganizationSummary {
   id: string;
@@ -71,6 +83,48 @@ async function getOrganizationsForRequest(request: Request): Promise<Organizatio
   }));
 }
 
+async function createOrganizationForRequest(
+  request: Request,
+  input: z.infer<typeof CreateOrganizationSchema>,
+): Promise<OrganizationSummary | null> {
+  if (provider === "clerk") {
+    const { auth, clerkClient } = await import("@clerk/nextjs/server");
+    const { userId } = await auth();
+    if (!userId) return null;
+
+    const client = await clerkClient();
+    const organization = await client.organizations.createOrganization({
+      name: input.name,
+      slug: input.slug,
+      createdBy: userId,
+    });
+
+    return {
+      id: organization.id,
+      name: organization.name,
+      slug: organization.slug ?? input.slug,
+      image: organization.imageUrl ?? null,
+    };
+  }
+
+  const auth = await createAuth({ provider: "better-auth" });
+  const session = await auth.getSession(request);
+  if (!session?.userId) return null;
+
+  const organization = await auth.createOrganization({
+    name: input.name,
+    slug: input.slug,
+    createdByUserId: session.userId,
+  });
+
+  return {
+    id: organization.id,
+    name: organization.name,
+    slug: organization.slug,
+    image: null,
+  };
+}
+
 export async function GET(request: Request) {
   try {
     const organizations = await getOrganizationsForRequest(request);
@@ -87,5 +141,46 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.json({ error: "Failed to load organizations." }, { status: 500 });
+  }
+}
+
+export async function POST(request: Request) {
+  let payload: unknown;
+
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid organization details." }, { status: 400 });
+  }
+
+  const parsed = CreateOrganizationSchema.safeParse(payload);
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Invalid organization details." }, { status: 400 });
+  }
+
+  try {
+    const organization = await createOrganizationForRequest(request, parsed.data);
+
+    if (!organization) {
+      return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+    }
+
+    const response = NextResponse.json(
+      {
+        organizationId: organization.id,
+        organization,
+      },
+      { status: 201 },
+    );
+    setActiveOrganizationCookie(response, organization.id);
+
+    return response;
+  } catch (error) {
+    logger.error("[organizations] Failed to create organization", {
+      provider,
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+
+    return NextResponse.json({ error: "Failed to create organization." }, { status: 500 });
   }
 }

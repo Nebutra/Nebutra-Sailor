@@ -1,5 +1,11 @@
 import { logger } from "@nebutra/logger";
-import { generateSecret, signPayload, verifyPayload } from "../signing.js";
+import {
+  formatWebhookSignatureHeader,
+  generateSecret,
+  parseWebhookSignatureHeader,
+  signPayload,
+  verifyPayload,
+} from "../signing.js";
 import type {
   WebhookDeliveryAttempt,
   WebhookEndpoint,
@@ -203,14 +209,14 @@ export class CustomProvider implements WebhookProvider {
     if (!messageRecord.attempts.has(endpoint.id)) {
       messageRecord.attempts.set(endpoint.id, []);
     }
-    messageRecord.attempts.get(endpoint.id)!.push(attempt);
+    messageRecord.attempts.get(endpoint.id)?.push(attempt);
 
     try {
       const response = await fetch(endpoint.url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Webhook-Signature": `whsec_${endpoint.secret}.${timestamp}.${signature}`,
+          "Webhook-Signature": formatWebhookSignatureHeader(timestamp, signature),
           "Webhook-ID": message.id,
           "Webhook-Timestamp": timestamp,
         },
@@ -261,7 +267,7 @@ export class CustomProvider implements WebhookProvider {
           });
         }, backoffSec * 1000);
 
-        this.pendingRetries.set(retryKey, timeoutId as any);
+        this.pendingRetries.set(retryKey, timeoutId);
       }
     }
   }
@@ -311,16 +317,8 @@ export class CustomProvider implements WebhookProvider {
 
   async verifySignature(payload: string, signature: string, secret: string): Promise<boolean> {
     try {
-      // Extract timestamp from signature (format: whsec_{secret}.{timestamp}.{sig})
-      const header = signature.startsWith("whsec_") ? signature : `whsec_${signature}`;
-      const parts = header.split(".");
-
-      if (parts.length !== 3) {
-        return false;
-      }
-
-      const [, timestamp, sig] = parts as [string, string, string];
-      return verifyPayload(payload, sig, secret, timestamp);
+      const parsed = parseWebhookSignatureHeader(signature);
+      return parsed ? verifyPayload(payload, parsed.signature, secret, parsed.timestamp) : false;
     } catch {
       return false;
     }

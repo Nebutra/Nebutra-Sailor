@@ -68,8 +68,11 @@ jobs:
               - 'services/**'
             openapi:
               - 'apps/api-gateway/**'
+              - 'apps/api-gateway/scripts/export-spec.ts'
+              - 'apps/web/package.json'
               - 'apps/web/src/lib/api/**'
-              - 'apps/web/scripts/**'
+              - 'scripts/generate-api-types.ts'
+              - '.github/workflows/ci.yml'
               - 'packages/contracts/**'
               - 'packages/gateway-core/**'
             e2e:
@@ -717,19 +720,11 @@ jobs:
           }
         continue-on-error: true
 
-      - name: Check spec is up to date
-        run: |
-          if [ -f apps/api-gateway/openapi.json ]; then
-            # Compare the freshly generated spec (still in cwd from generate:spec) with the committed one
-            cd apps/api-gateway
-            if ! git diff --quiet openapi.json 2>/dev/null; then
-              echo "::warning::OpenAPI spec is out of date. Run 'pnpm --filter @nebutra/api-gateway generate:spec' and commit."
-            fi
-          fi
-        continue-on-error: true
-
       - name: Generate typed API client
         run: pnpm --filter @nebutra/web generate:api-types
+
+      - name: Check generated API client is up to date
+        run: git diff --exit-code -- apps/web/src/lib/api/types.generated.ts
 
       - name: Build web app dependencies
         run: pnpm turbo build --filter "@nebutra/web^..."
