@@ -400,8 +400,8 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                 title: lang === "zh" ? "白皮书" : "Business Whitepaper",
                 desc:
                   lang === "zh"
-                    ? "Nebutra 生态基建宣言 · 元独角兽战略定位 · 组织演进准则"
-                    : "Nebutra ecosystem manifesto · Meta-Unicorn thesis · Organizational principles",
+                    ? "受治理 AI 平台白皮书 · 工程原则 · 组织演进准则"
+                    : "Governed AI platform whitepaper · Engineering principles · Organizational operating model",
               },
             ].map((card) => (
               <Link

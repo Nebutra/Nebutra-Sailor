@@ -16,8 +16,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   return {
-    title: "Meta-Unicorn Rollout — Nebutra",
-    description: "The five evolutionary phases of the Nebutra Creator Engine ecosystem.",
+    title: "Platform Roadmap — Nebutra",
+    description: "The capability roadmap for Nebutra's governed AI platform.",
     alternates: { canonical: `/${lang}/roadmap` },
   };
 }
@@ -44,7 +44,8 @@ const PHASES: Phase[] = [
     name: "Foundation: The Kernel",
     versions: "v0.1 – v0.4",
     status: "done",
-    vision: "Establishing the rigid, uncompromising systems required to construct Meta-Unicorns.",
+    vision:
+      "Establish the governed baseline: shared packages, typed contracts, auth, data, and operational primitives.",
     milestones: [
       { label: "Monorepo topology — Turborepo, 33 interconnected packages" },
       { label: "Hono API Gateway — OpenAPI, oRPC, tRPC with middleware composition" },
@@ -59,7 +60,7 @@ const PHASES: Phase[] = [
     versions: "v0.5 – v0.10",
     status: "done",
     vision:
-      "Transcend typical boilerplates. Arming OPCs with 50+ enterprise modules, cutting infrastructure setup from months to a week.",
+      "Turn repeated product setup into a reusable platform baseline teams can ship against immediately.",
     milestones: [
       { label: "Complete Settings schema — Team, API Keys, Security configurations" },
       { label: "Monetization engine — FREE / PRO / ENTERPRISE tier tracking" },
@@ -70,50 +71,50 @@ const PHASES: Phase[] = [
   },
   {
     number: 2,
-    name: "Sleptons Router",
+    name: "Verified Delivery",
     versions: "v1.0",
-    funding: "Algorithmic Seed",
+    funding: "Current Focus",
     status: "active",
     vision:
-      "Abolishing traditional hiring. Matchmaking top digital talent purely via absolute Proof of Work and semantic compatibility.",
+      "Make scaffolding, release, and adoption verifiable through trusted artifacts, reproducible flows, and safer defaults.",
     milestones: [
-      { label: "Sleptons Community Launch — Proof-of-Work visual verification" },
-      { label: "OPC Free License — Automated AGPL commercial exclusion routing" },
-      { label: "Github PR/Commit graph topological analysis integration" },
-      { label: "Nebutra Ecosystem Live Pipeline" },
-      { label: "First 100 Meta-Unicorn Founder nodes established" },
+      { label: "Trusted publishing and provenance for public packages" },
+      { label: "Immutable template bundles with checksum verification" },
+      { label: "Scaffold smoke validation against fresh installs" },
+      { label: "Governed onboarding flows and safer defaults" },
+      { label: "Operator-facing release and adoption guardrails" },
     ],
   },
   {
     number: 3,
-    name: "The Launchpad",
+    name: "Extension Registry",
     versions: "v1.x",
-    funding: "Execution Scaling",
+    funding: "Next",
     status: "upcoming",
     vision:
-      "Replacing paid acquisition with algorithmic distribution. Exposing new MVPs to a ruthless, high-signal feedback pool.",
+      "Add capabilities safely through a remote registry with compatibility checks, migrations, and governed application of changes.",
     milestones: [
-      { label: "Algorithmic distribution engine — recommendation feed for OPC products" },
-      { label: "Consumption-based API metering & automated Stripe reconciliation" },
-      { label: "Drag-and-drop Agent orchestration workflows" },
+      { label: "Registry-backed nebutra add flows for platform capabilities" },
+      { label: "Compatibility ranges, migrations, and rollback metadata" },
+      { label: "Provider-aware integration bundles and diagnostics" },
       { label: "Integrations marketplace — Slack, Notion, GitHub, Linear" },
-      { label: "Cross-platform unified dashboard" },
+      { label: "Cross-project upgrade guidance and health checks" },
     ],
   },
   {
     number: 4,
-    name: "Algorithmic Capital",
+    name: "Harness Runtime",
     versions: "v2.0",
-    funding: "End-Game Ecosystem",
+    funding: "Longer Horizon",
     status: "upcoming",
     vision:
-      "Dismantling elite VC networks. Capital routes seamlessly into builder ecosystems based entirely on verified MRR velocity and codebase execution speed.",
+      "Ship first-class agent, MCP, and workflow primitives so teams can run AI-native operations on the same governed platform surface.",
     milestones: [
-      { label: "Automated MRR tracking and algorithmic funding injections" },
-      { label: "White-label enterprise OEM solutions — Custom domains & IP encapsulation" },
-      { label: "Enterprise SSO enforcement — SAML, Active Directory" },
-      { label: "Global Edge acceleration — Multi-region failover" },
-      { label: "Absolute SLA guarantees with 100% Agent-driven operations support" },
+      { label: "Project-scoped harness diagnostics and runtime contracts" },
+      { label: "Workflow orchestration for agents, tools, and approvals" },
+      { label: "Enterprise controls — SSO, audit routing, governed operations" },
+      { label: "Global deployment resilience and runtime policy enforcement" },
+      { label: "Operational feedback loops across product, infra, and AI systems" },
     ],
   },
 ];
@@ -186,8 +187,8 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
 
         <AnimateIn preset="fade">
           <p className="mx-auto mt-6 max-w-2xl text-lg text-[var(--neutral-11)]">
-            Executing the 4 pillars of the Meta-Unicorn Whitepaper. Fusing code, talent, and
-            capital.
+            The capability roadmap behind Nebutra&apos;s governed AI platform, from baseline
+            scaffolding to registry-driven upgrades and harness runtime primitives.
           </p>
         </AnimateIn>
       </section>
@@ -329,18 +330,18 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
             style={{ borderColor: "var(--neutral-5)", background: "var(--neutral-2)" }}
           >
             <p className="mb-2 text-sm font-semibold text-[var(--neutral-12)]">
-              Shaping the future
+              Build on the current baseline
             </p>
             <p className="mb-6 text-sm text-[var(--neutral-11)]">
-              OPC members get early access to the Sleptons router and directly shape algorithmic
-              consensus.
+              Start with the governed platform today, then adopt new capabilities through verified
+              upgrades instead of one-off rewrites.
             </p>
             <a
               href={`/${lang}/get-license`}
               className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white"
               style={{ background: "var(--brand-gradient)" }}
             >
-              Enter the Ecosystem →
+              Explore licensing →
             </a>
           </div>
         </AnimateIn>

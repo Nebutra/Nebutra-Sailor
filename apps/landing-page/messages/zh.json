@@ -179,35 +179,35 @@
   "legalPages": {
     "about": {
       "title": "关于我们 — 受治理的 AI 平台",
-      "description": "了解 Nebutra 的商业愿景以及对构建 AI Native + OPC Infrastructure 解决方案的承诺。",
-      "heading": "超级个体时代",
-      "subheading": "终结依靠人海战术的扩张主义，用最极端的 AI 杠杆，成就有创造力的「超级个体」。",
+      "description": "了解 Nebutra 围绕受治理 AI 平台所建立的商业判断与工程原则。",
+      "heading": "精干产品团队时代",
+      "subheading": "用受治理的平台基础设施、自动化与工程杠杆，替代重复的平台体力劳动。",
       "missionTitle": "抵抗人治腐化的新秩序",
       "missionP1": "Nebutra 正在构建一套面向长期主义交付的受治理 AI 平台，让团队依赖的不是短生命周期的 starter，而是可审计、可扩展、可持续演进的平台基线。面对规模增长带来的官僚化和熵增，我们选择用代码治理、自动化与平台纪律来回应。",
-      "missionP2": "商业的本质是生产要素的重组——但在过去它充满了门阀与信息差的摩擦力。在 Nebutra 的超级神经网络里，任何独立开发者只要交付可验证的工作量证明，底层的推荐算法与 Sleptons 路由器就会精准地将顶尖人才、信任架构与算法资本自动输送到位，从而将「创业」降维成一条充满确定性的标准化路径。",
-      "missionP3": "Nebutra 坚决反对传统企业“加人加层级”的解法。我们在所有业务节点推动 AI Agent 100% 自动托底。我们绝不雇佣被动执行的螺丝钉，只吸纳、投资并成就那些最具洞察力的造物主。",
+      "missionP2": "商业系统今天依然被协作成本、工具割裂和升级路径薄弱所拖累。我们更关心如何通过清晰的平台契约、更稳的交付原语和可观测的运行时，把这些摩擦系统性地降下来。",
+      "missionP3": "我们不接受靠增加层级和组织阻力来解决规模问题。自动化、测试与治理规则应该吞掉重复运营工作，让团队把注意力放回产品、架构与客户结果。",
       "missionP4": "",
       "valuesTitle": "四大核心基石 (The 4 Pillars)",
       "values": {
         "0": {
-          "title": "无限裂变 (Philosophy)",
-          "description": "拒绝横向无限堆叠的规模神话，每一家由 Nebutra 孵化的微型企业，都拥有用极低人力撬动十亿美元价值的潜能。"
+          "title": "受治理的规模 (Philosophy)",
+          "description": "规模不应来自更重的组织负担，而应来自更强的系统杠杆、更清晰的运行规则和更稳的工程基础。"
         },
         "1": {
-          "title": "造物主基座 (Builder Core)",
-          "description": "超越开源协同与通用脚手架。单兵即拥有包含鉴权、企业级鉴权与多租户隔离的全套军火库，一周上线独角兽项目。"
+          "title": "Builder Core (Infrastructure)",
+          "description": "把多租户、计费、认证、合规与 AI 集成收敛成一套可审计、可扩展、可重复交付的平台基线。"
         },
         "2": {
-          "title": "无摩擦路由 (Frictionless Flow)",
-          "description": "算法接管招聘逻辑与资本注入，让 MRR 曲线与代码仓库频率说话。让钱直接打向最高效运行的底层堆栈。"
+          "title": "升级纪律 (Routing)",
+          "description": "健康的平台应通过兼容性检查、迁移机制与可观测运行时持续演进，而不是依赖临时救火和隐性漂移。"
         },
         "3": {
-          "title": "算法即共识 (Code is Law)",
-          "description": "抹杀办公室政治与人情世故。证明你的技术边界（Show me the code），算法会自动为你升阶至最高统治力。"
+          "title": "代码即规则 (Code is Law)",
+          "description": "把运营纪律编码进测试、工作流与治理规则，让团队在不依赖政治与口口相传的前提下持续改进平台。"
         }
       },
-      "jobsTitle": "消灭传统的 JD/简历招聘",
-      "jobsDescription": "不看学历、不查背景调查，只要你的 Proof-of-Work 和审美能通过 Sleptons 的机器视觉测试验证标准。欢迎成为生态奠基人。",
+      "jobsTitle": "工程信号优先于头衔资历",
+      "jobsDescription": "我们更看重可验证的工程产出、系统判断力和表达清晰度，而不是被包装过的履历与头衔。",
       "jobsButton": "提交 Github Profile",
       "companyInfoTitle": "组织与合规信息",
       "companyInfo": {
@@ -1648,13 +1648,13 @@
     "infra_title": "Ⅱ. 超级基建",
     "infra_headline": "AI 原生平台层",
     "infra_desc": "Nebutra 不是对现有工具的临时缝合，而是一套覆盖脚手架、运行时集成、工程治理与交付路径的平台层。",
-    "infra_1_title": "极大集成架构模型",
+    "infra_1_title": "Builder Core",
     "infra_1_desc": "以受治理的 monorepo 基线交付多租户、计费、认证、文档与 AI 集成等核心能力。",
-    "infra_2_title": "分发与验证台",
+    "infra_2_title": "可验证交付",
     "infra_2_desc": "通过可验证脚手架、可复现交付和面向运营的控制面，把平台风险前置收敛。",
-    "infra_3_title": "Sleptons 路由器",
+    "infra_3_title": "扩展注册中心",
     "infra_3_desc": "通过注册中心驱动的扩展能力与集成接口，让团队在不撕裂代码库的前提下持续演进。",
-    "infra_4_title": "算法驱动新资本",
+    "infra_4_title": "Harness 运行时",
     "infra_4_desc": "以 Harness 原语、MCP 互操作与工作流编排，为下一代 AI Native 软件提供稳定的系统坐标。",
     "route_title": "Ⅲ. 全要素路由",
     "route_headline": "清晰的升级路径",
@@ -1703,7 +1703,7 @@
         "badge": "永久免费",
         "title": "免费商用",
         "subtitle": "个人与独立开发者",
-        "description": "独立开发者、一人公司、个体创业者",
+        "description": "个人开发者与单席位商业使用者",
         "features": {
           "closedSource": "可用于闭源产品",
           "teamSize": "团队规模 ≤ 1 FTE",
@@ -1734,16 +1734,16 @@
           "a": "AGPL 能确保模板的改进始终开源。商业授权则为企业移除了这一约束。"
         },
         "soloFree": {
-          "q": "独立开发者真的可以免费使用吗？",
+          "q": "个人开发者真的有免费路径吗？",
           "a": "是的，完全免费。前往 /get-license 注册、获取密钥、构建你的产品，毫无附加条件。"
         },
         "opcDefinition": {
-          "q": "什么是「一人公司」？",
-          "a": "即一个全职当量或更少。一旦你招聘了第一位员工，就需要切换到 Startup 授权（我们会主动提醒）。"
+          "q": "什么算作单席位商业使用？",
+          "a": "即一个全职当量或更少。当你的团队或交付范围超出单席位形态时，就应升级到 Startup 授权。"
         },
         "upgrade": {
           "q": "之后可以升级授权吗？",
-          "a": "当然可以。你的社区档案会自动延续，准备好之后购买 Startup 授权即可。"
+          "a": "当然可以。当团队规模或交付需求超出免费商用层级时，再升级即可。"
         },
         "contributions": {
           "q": "关于开源贡献有什么要求？",
@@ -1759,7 +1759,7 @@
   "licenseWizard": {
     "tiers": {
       "individualFree": "个人免费授权",
-      "opcFree": "一人公司免费授权",
+      "opcFree": "单人公司授权",
       "startupCommercial": "Startup 商业授权",
       "enterprise": "企业授权"
     },

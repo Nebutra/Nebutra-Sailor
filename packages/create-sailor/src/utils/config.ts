@@ -7,6 +7,14 @@ export interface CustomEndpoint {
   apiKeyEnvName: string;
 }
 
+export type AiMode = "gateway" | "direct" | "custom" | "none";
+
+export interface AiRoutingConfig {
+  profile: "multi-provider-gateway" | "direct-adapters" | "openai-compatible" | "disabled";
+  providerSeed: string[];
+  runtimeGovernance: boolean;
+}
+
 export type DocsFramework =
   | "fumadocs"
   | "mintlify"
@@ -21,7 +29,9 @@ export interface NebutraConfig {
   region: Region;
   orm: "prisma" | "drizzle" | "none";
   database: "postgresql" | "mysql" | "sqlite" | "none";
-  payment: "stripe" | "lemonsqueezy" | "none";
+  payment: "stripe" | "lemon" | "lemonsqueezy" | "wechat" | "alipay" | "none";
+  aiMode?: AiMode;
+  aiRouting?: AiRoutingConfig;
   aiProviders: string[];
   customAiEndpoint?: CustomEndpoint;
   deployTarget: "vercel" | "railway" | "cloudflare" | "selfhost" | "none";

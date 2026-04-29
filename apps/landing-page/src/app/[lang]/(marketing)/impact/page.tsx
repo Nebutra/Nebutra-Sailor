@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const t = await getTranslations({ locale: lang as Locale, namespace: "impact" });
 
   return {
-    title: `${t("hero_title")} - Nebutra-Sailor Manifesto`,
+    title: `${t("hero_title")} - Nebutra Platform Thesis`,
     description: t("hero_subtitle"),
   };
 }

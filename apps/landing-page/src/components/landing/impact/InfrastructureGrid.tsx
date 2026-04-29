@@ -67,7 +67,7 @@ export function InfrastructureGrid() {
             </div>
           </BentoCard>
 
-          {/* Card 3: Sleptons Router */}
+          {/* Card 3: Extension Registry */}
           <BentoCard className="md:col-span-2 lg:col-span-2 md:row-span-1 border-white/10 bg-white/5 group overflow-hidden">
             <div className="relative z-10 flex h-full flex-col justify-between p-8">
               <GitGraph className="h-8 w-8 text-neutral-300" />
@@ -81,7 +81,7 @@ export function InfrastructureGrid() {
             </div>
           </BentoCard>
 
-          {/* Card 4: Algorithmic Capital */}
+          {/* Card 4: Harness Runtime */}
           <BentoCard className="md:col-span-2 lg:col-span-2 md:row-span-1 border-white/10 bg-white/5 group">
             <div className="relative z-10 flex h-full flex-col justify-between p-8">
               <CircleDollarSign className="h-8 w-8 text-neutral-300" />

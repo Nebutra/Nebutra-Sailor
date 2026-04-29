@@ -22,7 +22,7 @@ export function FeatureBentoCard({
 }: FeatureBentoCardProps) {
   return (
     <AnimateIn preset="fadeUp" className="h-full">
-      <div className="group relative flex flex-col h-full w-full overflow-hidden rounded-[2rem] border border-border/60 dark:border-white/10 bg-background dark:bg-[#0A0A0B] transition-all duration-500 hover:border-foreground/20 dark:hover:border-white/20 hover:shadow-2xl dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <div className="group relative flex h-full w-full flex-col overflow-hidden rounded-[2rem] border border-border/60 bg-background transition-all duration-500 hover:border-foreground/20 hover:shadow-2xl dark:bg-background dark:hover:border-border dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         {/* Subtle Ambient Background */}
         <div className="absolute inset-0 z-0 bg-[radial-gradient(#0000001a_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff1a_1px,transparent_1px)] [background-size:24px_24px] opacity-20 dark:opacity-5 pointer-events-none" />
 

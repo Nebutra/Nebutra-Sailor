@@ -38,9 +38,16 @@ bunx create-sailor@latest
 npx create-sailor@latest
 ```
 
-Asks just 4 questions: **project name / region / auth / AI providers**. Everything else uses region-aware smart defaults.
+Asks just 4 questions: **project name / region / auth / AI topology**. Everything else uses region-aware smart defaults.
 
-### Non-interactive (专家模式)
+The AI prompt is topology-first:
+
+- `gateway` — Multi-provider AI Gateway / router, the recommended default. The scaffold seeds a small provider registry for local development, but runtime provider enablement stays a governance/routing concern.
+- `direct` — Direct SDK/provider adapters for teams that intentionally want concrete providers wired at create time.
+- `custom` — OpenAI-compatible endpoint for proxy, local, or enterprise gateway deployments.
+- `none` — Skip AI scaffolding.
+
+### Non-interactive (expert mode)
 
 ```bash
 npm create sailor@latest my-app \
@@ -54,7 +61,7 @@ npm create sailor@latest my-app \
   --analytics=baidu \
   --sms=aliyun-sms \
   --payment=wechat \
-  --deploy=aliyun \
+  --deploy=selfhost \
   -y
 ```
 
@@ -66,9 +73,9 @@ npm create sailor@latest my-app \
 | `--auth` | `clerk` · `betterauth` · `none` | `clerk` |
 | `--social-login` | `wechat,qq,dingtalk,workweixin,feishu,weibo` (comma-sep) | none |
 | `--payment` | `stripe` · `lemon` · `wechat` · `alipay` · `none` | region-based |
-| `--ai` | comma-separated provider ids | `openai` |
+| `--ai` | expert/non-interactive provider seed, comma-separated ids; omit it to use the governed gateway topology | gateway seed |
 | `--email` | `resend` · `postmark` · `ses` · `aliyun-dm` · `tencent-ses` · `netease` · `none` | region-based |
-| `--storage` | `r2` · `s3` · `supabase` · `aliyun-oss` · `tencent-cos` · `qiniu` · `none` | region-based |
+| `--storage` | `r2` · `s3` · `supabase-storage` · `aliyun-oss` · `tencent-cos` · `qiniu` · `none` | region-based |
 | `--monitoring` | `sentry` · `datadog` · `aliyun-arms` · `tingyun` · `none` | region-based |
 | `--analytics` | `posthog` · `plausible` · `umami` · `baidu` · `sensors` · `none` | region-based |
 | `--sms` | `twilio` · `aliyun-sms` · `tencent-sms` · `yunpian` · `none` | region-based |
@@ -86,8 +93,8 @@ npm create sailor@latest my-app \
 | Region | Email | Storage | Analytics | Monitoring | SMS | Payment |
 |--------|-------|---------|-----------|------------|-----|---------|
 | `global` | Resend | R2 | PostHog | Sentry | Twilio | Stripe |
-| `cn` | 阿里云邮件推送 | 阿里云 OSS | 百度统计 | Sentry | 阿里云短信 | 微信支付 |
-| `hybrid` | Resend | 阿里云 OSS | PostHog | Sentry | 阿里云短信 | Stripe |
+| `cn` | Alibaba Cloud DirectMail | Alibaba Cloud OSS | Baidu Analytics | Sentry | Alibaba Cloud SMS | WeChat Pay |
+| `hybrid` | Resend | Alibaba Cloud OSS | PostHog | Sentry | Alibaba Cloud SMS | Stripe |
 
 ## Social login (CN)
 
@@ -95,7 +102,7 @@ Adding `--social-login=wechat,dingtalk` extends your primary auth provider
 (Clerk or Better Auth) with China-region OAuth:
 
 - Generates `apps/web/src/app/api/auth/callback/<id>/route.ts` stubs with the
-  correct token-exchange endpoints (微信 / QQ / 钉钉 / 企业微信 / 飞书 / 微博)
+  correct token-exchange endpoints (WeChat / QQ / DingTalk / WeCom / Feishu / Weibo)
 - Generates `apps/web/src/components/auth/SocialLoginButtons.tsx` with one
   button per selected provider
 - Appends all required env vars to `.env.example`

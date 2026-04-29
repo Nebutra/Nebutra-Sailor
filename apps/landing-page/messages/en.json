@@ -179,35 +179,35 @@
   "legalPages": {
     "about": {
       "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and core engineering principles driving Nebutra Intelligence.",
-      "heading": "The Era of Super Individuals",
-      "subheading": "Terminate human-wave bureaucratic expansion. Equip the creative super individual with maximal algorithmic leverage.",
+      "description": "Discover the commercial vision and engineering principles behind Nebutra's governed AI platform.",
+      "heading": "The Era of Lean Product Teams",
+      "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
       "missionTitle": "A New Order Resisting Administrative Decay",
       "missionP1": "Nebutra is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce is merely the restructuring of production elements—but historically riddled with hierarchical frictions. In Nebutra's neural network, any independent builder shipping verifiable Proof of Work receives automatic routing of top talent, institutional trust, and algorithmic capital via our Sleptons matchmaker, democratizing entrepreneurship into a highly certain, standardized track.",
-      "missionP3": "We fundamentally reject scaling by adding middle management. Agents handle 100% of operational workflows. We do not hire passive cogs; we invest in, cultivate, and elevate literal creators.",
+      "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
+      "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
       "missionP4": "",
       "valuesTitle": "The Four Pillars",
       "values": {
         "0": {
-          "title": "Infinite Fission (Philosophy)",
-          "description": "Rejecting the bloated myth of horizontal expansion. Every micro-entity hatched here is designed to leverage billions in value with ultra-low headcount."
+          "title": "Governed Scale (Philosophy)",
+          "description": "Scale should come from stronger systems, better leverage, and clearer operating rules — not from piling on more organizational weight."
         },
         "1": {
           "title": "The Builder Core (Infrastructure)",
-          "description": "Transcending simple boilerplates. An arsenal of enterprise multi-tenant isolation, automated MRR billing, shipped by solo founders in one week."
+          "description": "A reusable platform baseline for multi-tenancy, billing, auth, compliance, and AI integrations that teams can audit, extend, and ship on repeatedly."
         },
         "2": {
-          "title": "Frictionless Flow (Routing)",
-          "description": "Algorithms dismantle HR and VC logic. Execution metrics and git commit velocity dictate purely where capital and talent flow."
+          "title": "Upgrade Discipline (Routing)",
+          "description": "Healthy systems grow through compatibility checks, migrations, and observable runtime contracts instead of drift, heroics, and one-off rewrites."
         },
         "3": {
           "title": "Code is Law (Organization)",
-          "description": "Eradicate office politics. Provide architectural proofs and the algorithms will automatically elevate your systemic authority."
+          "description": "Operational discipline should be encoded in tests, workflows, and governance rules so teams can improve the platform without relying on politics or institutional memory."
         }
       },
-      "jobsTitle": "Eradicating JD/CV Recruitment",
-      "jobsDescription": "We ignore degrees and pedigrees. Pass the Sleptons machine vision and topological checks via sheer Proof of Work, and shape the ecosystem.",
+      "jobsTitle": "Engineering Signals over Credentials",
+      "jobsDescription": "We care more about verifiable engineering output, clarity of thinking, and system judgment than pedigree or title inflation.",
       "jobsButton": "Submit Github Profile",
       "companyInfoTitle": "Organizational Compliance",
       "companyInfo": {
@@ -495,7 +495,7 @@
           "questions": {
             "0": {
               "q": "What is the explicit operational purpose of Nebutra Sailor?",
-              "a": "Nebutra Sailor is a highly structured, production-ready Next.js AI SaaS framework. It bundles microservice functionalities, including corporate billing, multi-factor authentication, and multi-tenant isolation, eliminating boilerplate development overhead and allowing teams to hyper-focus on core structural AI implementation."
+              "a": "Nebutra Sailor is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
             },
             "1": {
               "q": "How is the repository licensing structured?",
@@ -1280,7 +1280,7 @@
       },
       "rbac": {
         "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with zero boilerplate.",
+        "desc": "Define admin, member, and viewer roles with built-in policy structure.",
         "cta": "View RBAC documentation"
       },
       "billing": {
@@ -1386,8 +1386,8 @@
     "hero": {
       "badge": "Platform Capabilities",
       "headlinePrefix": "Everything you need to ",
-      "headlineHighlight": "ship a unicorn.",
-      "description": "Nebutra is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the wheel."
+      "headlineHighlight": "ship with confidence.",
+      "description": "Nebutra is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
     },
     "sections": {
       "ai_category": "AI & Intelligence",
@@ -1643,13 +1643,13 @@
     "infra_title": "Ⅱ. Infrastructure",
     "infra_headline": "The AI-Native Platform Layer",
     "infra_desc": "Nebutra is not a stitched-together starter. It is a production platform layer spanning scaffolding, runtime integrations, governance, and delivery.",
-    "infra_1_title": "The Builder Core",
+    "infra_1_title": "Builder Core",
     "infra_1_desc": "A governed monorepo baseline with tenant isolation, billing, auth, docs, and AI integrations already wired.",
-    "infra_2_title": "The Launchpad",
+    "infra_2_title": "Verified Delivery",
     "infra_2_desc": "Verified scaffolding, reproducible delivery, and operator-facing tooling that reduce platform risk from day zero.",
-    "infra_3_title": "Sleptons Router",
+    "infra_3_title": "Extension Registry",
     "infra_3_desc": "Registry-driven extensions and integration surfaces keep teams moving without fragmenting the codebase.",
-    "infra_4_title": "Algorithmic Capital",
+    "infra_4_title": "Harness Runtime",
     "infra_4_desc": "Harness primitives, MCP interoperability, and workflow orchestration position the stack for the next generation of AI-native software.",
     "route_title": "Ⅲ. Routing",
     "route_headline": "A Clear Upgrade Path",
@@ -1698,7 +1698,7 @@
         "badge": "Free Forever",
         "title": "Free Commercial",
         "subtitle": "Individual & Solo",
-        "description": "Solo developers, one-person companies, solopreneurs",
+        "description": "Individual builders and single-seat operators",
         "features": {
           "closedSource": "Use in closed-source products",
           "teamSize": "Team size ≤ 1 FTE",
@@ -1729,16 +1729,16 @@
           "a": "AGPL ensures that improvements to the template stay open source. Commercial license removes this obligation for businesses."
         },
         "soloFree": {
-          "q": "Am I really free as a solo developer?",
+          "q": "Is there really a free path for individual builders?",
           "a": "Yes, completely. Register at /get-license, get your key, build your product. No strings attached."
         },
         "opcDefinition": {
-          "q": "What counts as a \"one-person company\"?",
-          "a": "One full-time equivalent or less. If you hire your first employee, you'll need a Startup license (we'll remind you)."
+          "q": "What counts as a single-seat commercial use case?",
+          "a": "One full-time equivalent or less. If you move beyond a single-seat setup, you should upgrade to a Startup license."
         },
         "upgrade": {
           "q": "Can I upgrade later?",
-          "a": "Absolutely. Your community profile carries over. Just purchase the Startup license when you're ready."
+          "a": "Absolutely. Upgrade whenever your team or delivery scope outgrows the free commercial tier."
         },
         "contributions": {
           "q": "What about open source contributions?",
@@ -1754,7 +1754,7 @@
   "licenseWizard": {
     "tiers": {
       "individualFree": "Individual Free License",
-      "opcFree": "OPC Free License",
+      "opcFree": "Single-Owner Company License",
       "startupCommercial": "Startup Commercial License",
       "enterprise": "Enterprise License"
     },

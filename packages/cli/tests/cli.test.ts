@@ -13,7 +13,7 @@ describe("CLI", () => {
     const result = await runCli(["--help"]);
 
     expect(result.exitCode).toBe(0);
-    expect(result.stdout).toContain("Nebutra — unified CLI");
+    expect(result.stdout).toContain("Nebutra — governance-first CLI");
     expect(result.stdout).toContain("init");
     expect(result.stdout).toContain("add");
   });
@@ -36,7 +36,7 @@ describe("CLI", () => {
     const result = await runCli(["add", "--help"]);
 
     expect(result.exitCode).toBe(0);
-    expect(result.stdout).toContain("Add a component or feature to your project");
+    expect(result.stdout).toContain("Add a registry-backed platform feature");
   });
 
   it("should handle create command with --help", async () => {

@@ -12,8 +12,8 @@
   </a>
   <br />
   <br />
-  <h3>オープンソース エンタープライズ SaaS プラットフォーム</h3>
-  <p><em>起業の成長を民主化・知能化・軽量化し、最後は計測可能でトレース可能に。</em></p>
+  <h3>オープンソース AI ネイティブ SaaS プラットフォーム基盤</h3>
+  <p><em>AI ゲートウェイ、課金、認証、コンプライアンス、ホワイトラベル提供のためのガバナンス可能なマルチテナント基盤。</em></p>
   <br />
   <p>
     <a href="https://nebutra.com"><strong>公式サイト</strong></a> · 
@@ -40,28 +40,26 @@
 
 ## 概要
 
-Nebutra Sailor は、モダンなマルチテナントプラットフォームを構築するための、エンタープライズグレードの AI ネイティブ SaaS モノレポアーキテクチャです。コンテンツコミュニティ、レコメンドシステム、EC 連携、Web3 アプリケーションのための、実戦で検証された基盤を提供します。
+Nebutra Sailor は、ガバナンス可能なモダンなマルチテナントプラットフォームを構築するための、エンタープライズグレードの AI ネイティブ SaaS モノレポアーキテクチャです。AI ゲートウェイ、エージェントワークフロー、課金、認証、コンプライアンス、ホワイトラベル提供のための実用的な基盤を提供します。
 
-Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベクトル検索、インテリジェントワークフローをネイティブサポートする「AI ファースト」の思想を体現しています。
+Next.js 16、React 19、Prisma 7、Vercel AI SDK で構築され、AI をガバナンスが必要なランタイム能力として扱います。プロバイダートポロジー、モデルルーティング、可観測性、テナント分離、コンプライアンスフックがプラットフォーム基盤に含まれます。
 
 ### 会社について
 
 <div align="center">
 <h4>Nebutra Intelligence</h4>
-  <sub>無錫雲毓智能科技有限公司（Wuxi Yunyu Intelligent Technology Co., Ltd.）</sub>
+  <sub>無錫雲毓智能科技有限公司</sub>
   <br /><br />
   <p>
-    次世代ユニコーンプロダクトの創出に取り組む AI ネイティブスタートアップ<br />
-    <strong>Vibe Business</strong> を先駆け — Vibe Coding から Vibe 起業へ
+    ガバナンス可能なプロダクト基盤を構築する AI ネイティブインフラ企業<br />
+    マルチテナント SaaS、エージェントワークフロー、ローンチ運用、グローバル提供を支えます
   </p>
-  <p align="center">技術は複製でき、製品は模倣される。変化への深い理解こそ、唯一信頼できる堀だ。</p>
+  <p align="center">長期的な堀はスターターではなく、変化し続ける AI 能力をガバナンス可能で出荷できるシステムに変える力です。</p>
 </div>
 
-> **Vibe Coding** は「作る」問題を解決し、**Vibe Business** は「稼ぐ」問題を解決する。
+> AI はデモの構築を助けます。Sailor はより難しい本番レイヤー、つまりガバナンス、セキュリティ、アーキテクチャ、スケーラビリティ、収益運用に焦点を当てます。
 >
-> 0 から 90 は簡単—AI がコードを書く。本当の挑戦は残りの 10%：セキュリティ、アーキテクチャ、スケーラビリティ、そしてデモを収益を生むプロダクトにすること。
->
-> **グロースハック** × **AI ネイティブ**：データ駆動の実験、バイラルループ、コンバージョン最適化—インテリジェントオートメーションで加速。
+> 目的はウィザードでプロバイダーを一つずつ選ぶことではありません。プロバイダー、リージョン、テナント、コンプライアンス境界をまたいで進化できる AI トポロジーを運用することです。
 
 <br />
 
@@ -80,13 +78,13 @@ Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベ�
 </td>
 <td align="center" width="25%">
   <h3>💼</h3>
-  <strong>Vibe Business</strong><br />
-  <sub>Demo → 収益 · 高速出荷</sub>
+  <strong>プラットフォームガバナンス</strong><br />
+  <sub>トポロジー · 契約 · CI</sub>
 </td>
 <td align="center" width="25%">
   <h3>🦄</h3>
-  <strong>ユニコーン創出</strong><br />
-  <sub>一人会社 Ready</sub>
+  <strong>ローンチ基盤</strong><br />
+  <sub>認証 · 課金 · AI ゲートウェイ</sub>
 </td>
 </tr>
 </table>
@@ -99,14 +97,7 @@ Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベ�
 
 ### なぜ Sailor を選ぶのか？
 
-**Vibe Business 時代のために**：Sailor は「AI で作れる」と「収益を生むプロダクトを出荷できる」のギャップを埋める。
-
-#### 🗡️ 4つのコアDXベクター (The 4 DX Vectors)
-
-1. **⚡️ 異次元の初期化体験 (Init DX)**：クローンしてコードを探して置換する面倒な作業から解放されます。`npx create-sailor` を実行すると、対話型CLIが自動的に不要なパッケージを物理的に削除（Prune）し、コードベースをあなたの要件に完全フィットさせた状態で `.env.local` と共にセットアップします。
-2. **🌍 グローバルネイティブ (Global DX)**：初日から世界市場に向けて。`next-intl` に深く統合されたダイナミックルーティングにより、言語分離の壁を最初から用意。単一のコードベースのまま、Edge Middleware を通じて海外決済と国内決済を同時に受け入れる基盤が初日から稼働します。
-3. **💰 収益に直結するコンバージョンキット (Revenue DX)**：エンジニアに必要なのはCRUD機能だけではなく、トラフィックを顧客に変える武器です。偽の待機人数を表示する FOMO 搭載の Waitlist、コンバージョン特化の Pricing Table、そしてパスワードレスの Magic Link メールなどを `@nebutra/marketing` として標準装備。
-4. **🏢 スケールを約束するエンタープライズ基盤 (Scale DX)**：一人の開発者から始まり、将来100人のエンジニアチームに成長しても耐えうるアーキテクチャ。Turborepoのマイクロフロントエンド、Changesetsのバージョン管理、そして要件ごとにデータを隔離する Prisma Multi-Schema により、「すべて書き直し」という悪夢を完全に葬り去ります。
+**ガバナンス可能な AI ネイティブプロダクトのために**：Sailor は「AI がデモを作った」と「運用、監査、課金、拡張ができるプロダクト基盤」の間のギャップを埋めます。
 
 <table>
 <tr>
@@ -117,7 +108,7 @@ Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベ�
 | 🚀  | **本番環境対応**   | エンタープライズ実証済みパターン |
 | 🤖  | **AI ネイティブ**  | LLM・Embeddings・RAG・MCP Agent  |
 | 🏢  | **マルチテナント** | RLS・テナント分離・カスタマイズ  |
-| ⚡  | **モダンスタック** | Next.js 16・React 19・TS 5.6+    |
+| ⚡  | **モダンスタック** | Next.js 16・React 19・TypeScript 5.9 |
 | 💳  | **課金機能内蔵**   | Stripe・使用量計測・機能権限     |
 
 </td>
@@ -126,10 +117,10 @@ Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベ�
 |     | 特徴                       | 説明                            |
 | :-: | :------------------------- | :------------------------------ |
 | 📋  | **法務・コンプライアンス** | GDPR/CCPA・Cookie 同意          |
-| 🔐  | **セキュリティ優先**       | WAF・RLS・Prompt Injection 防御 |
+| 🔐  | **セキュリティ優先**       | WAF・RLS・プロンプト注入制御    |
 | 🌍  | **グローバル対応**         | i18n・CDN・エッジキャッシュ     |
-| 👤  | **一人会社 Ready**         | Multi-Agent・自動化 CI/CD       |
-| 🦄  | **ユニコーン志向**         | Demo → プロダクト → 収益        |
+| 👤  | **運用対応**               | マルチエージェント・自動化 CI/CD |
+| 🚢  | **ローンチ対応**           | デモ → プロダクト → 収益        |
 
 </td>
 </tr>
@@ -225,7 +216,7 @@ Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベ�
 <tr>
 <td><strong>フロントエンド</strong></td>
 <td>
-  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js_17-black?style=flat-square&logo=next.js" alt="Next.js" /></a>
+  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js_16-black?style=flat-square&logo=next.js" alt="Next.js" /></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" /></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white&v=1" alt="TypeScript" /></a>
   <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white&v=1" alt="Tailwind" /></a>
@@ -234,10 +225,10 @@ Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベ�
 <tr>
 <td><strong>UI / デザイン</strong></td>
 <td>
-  <a href="https://primer.style/react"><img src="https://img.shields.io/badge/Primer-24292F?style=flat-square&logo=github&logoColor=white&v=1" alt="Primer" /></a>
-  <a href="https://primer.style/octicons"><img src="https://img.shields.io/badge/Octicons-24292F?style=flat-square&logo=github&logoColor=white&v=1" alt="Octicons" /></a>
+  <a href="https://www.radix-ui.com/"><img src="https://img.shields.io/badge/Radix_UI-161618?style=flat-square&logo=radix-ui&logoColor=white" alt="Radix UI" /></a>
+  <img src="https://img.shields.io/badge/HeroUI-000?style=flat-square" alt="HeroUI" />
   <img src="https://img.shields.io/badge/Lobe_UI-000?style=flat-square&logo=react&logoColor=white&v=1" alt="Lobe UI" />
-  <img src="https://img.shields.io/badge/Lobe_Icons-000?style=flat-square" alt="Lobe Icons" />
+  <img src="https://img.shields.io/badge/Geist_Icons-000?style=flat-square" alt="Geist Icons" />
   <img src="https://img.shields.io/badge/Inter-000?style=flat-square&logo=googlefonts&logoColor=white&v=1" alt="Inter" />
   <img src="https://img.shields.io/badge/JetBrains_Mono-000?style=flat-square&logo=jetbrains&logoColor=white&v=1" alt="JetBrains Mono" />
   <img src="https://img.shields.io/badge/デザイントークン-gray?style=flat-square" alt="Design Tokens" />
@@ -354,14 +345,43 @@ Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベ�
 
 <br />
 
+## CLI と公式サイト
+
+### npm から CLI を使う
+
+新規プロジェクトでは、モノレポ全体を clone して削るのではなく、npm から開始できます。
+
+```bash
+# 新しい Sailor プロジェクトを作成
+npx create-sailor@latest
+npm create sailor@latest
+pnpm create sailor@latest
+bunx create-sailor@latest
+
+# 既存の Sailor プロジェクトを運用
+npx nebutra --help
+npm install -g nebutra
+```
+
+| パッケージ | 用途 |
+| ---------- | ---- |
+| [`create-sailor`](https://www.npmjs.com/package/create-sailor) | リージョン対応のデフォルト値とトポロジー優先の AI ゲートウェイ設定で、新しい Nebutra Sailor プロジェクトを作成します。 |
+| [`nebutra`](https://www.npmjs.com/package/nebutra) | 既存プロジェクトを運用します。機能レジストリの追加、AI プロバイダーガバナンス、ゲートウェイルーティング、Schema、診断に使います。 |
+
+### nebutra.com
+
+[`nebutra.com`](https://nebutra.com) は Nebutra Sailor の公開プロダクト入口であり、私たち自身がこのプラットフォームを dogfooding する場所です。今後のプロダクト更新、商用ライセンス、ホステッド機能、ローンチワークフロー、このモノレポで構築した実例は公式サイトで継続的に公開します。
+
+<br />
+
 ## クイックスタート
 
 ### 必要環境
 
 | ツール  | バージョン                                |
 | ------- | ----------------------------------------- |
-| Node.js | `v20+`                                    |
-| pnpm    | `v9+`                                     |
+| Node.js | `v22+`                                    |
+| pnpm    | `v10.32+`                                 |
 | Python  | `3.11+` <sub>（マイクロサービス用）</sub> |
 
 ### インストール
@@ -411,14 +431,14 @@ Nebutra-Sailor/
 │   ├── i18n/              # next-intl ルーティング & ロケール管理
 │   ├── marketing/         # 高コンバージョン UI (Waitlist, Pricing, FAQ)
 │   ├── email/             # トランザクションメール (Magic Link, Resend)
-│   ├── ai-sdk/            # Vercel AI SDK ラッパー
-│   ├── ai-providers/      # マルチプロバイダー AI SDK
+│   ├── agents/            # Vercel AI SDK ラッパー、エージェント、ストリーミング補助
+│   ├── ai-providers/      # マルチプロバイダー AI レジストリとメタデータ
 │   ├── billing/           # Stripe 課金、プラン、使用量計測
 │   ├── brand/             # ブランドアセット、ガイドライン
-│   ├── design-system/     # デザイントークン、テーマ
+│   ├── preset/            # 機能ベースのテンプレート設定
 │   ├── theme/             # グローバルテーマトークン & CSS 変数
-│   ├── ui/                # Lobe UI + Lobe Icons + デザインシステム
-│   ├── icons/             # アイコンライブラリ
+│   ├── ui/                # Radix + HeroUI + Lobe UI コンポーネント
+│   ├── icons/             # Geist アイコンライブラリ
 │   ├── identity/          # 認証ヘルパー & テナント ID
 │   ├── contracts/         # 共有 TypeScript 型 & Zod スキーマ
 │   ├── legal/             # Cookie 同意、プライバシー、GDPR/CCPA

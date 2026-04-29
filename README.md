@@ -12,8 +12,8 @@
   </a>
   <br />
   <br />
-  <h3>The Open-Source Enterprise SaaS Platform</h3>
-  <p><em>We make entrepreneurial growth democratic, intelligent, and lightweight—ultimately measurable and traceable.</em></p>
+  <h3>Open-Source AI-Native SaaS Platform Baseline</h3>
+  <p><em>Governed multi-tenant product infrastructure for AI gateways, billing, auth, compliance, and white-label delivery.</em></p>
   <br />
   <p>
     <a href="https://nebutra.com"><strong>Website</strong></a> · 
@@ -50,9 +50,9 @@
 
 ## Introduction
 
-Nebutra Sailor is an enterprise-grade, AI-native SaaS monorepo architecture designed for building modern multi-tenant platforms. It provides a battle-tested foundation for content communities, recommendation systems, e-commerce integrations, and Web3 applications.
+Nebutra Sailor is an enterprise-grade, AI-native SaaS monorepo architecture designed for building governed multi-tenant platforms. It provides a practical baseline for AI gateways, agent workflows, billing, auth, compliance, and white-label product delivery.
 
-Built with the latest technologies including Next.js 16, React 19, and Prisma 7, Sailor embraces an "AI-first" philosophy with native support for LLMs, vector search, and intelligent workflows.
+Built with Next.js 16, React 19, Prisma 7, and the Vercel AI SDK, Sailor treats AI as a governed runtime surface: provider topology, model routing, observability, tenant isolation, and compliance hooks are part of the platform baseline.
 
 ### Brand Vision
 
@@ -67,20 +67,18 @@ Nebula • Nurture • Ultra • Future
 
 <div align="center">
   <h4>Nebutra Intelligence</h4>
-  <sub>Wuxi Yunyu Intelligent Technology Co., Ltd.（无锡云毓智能科技有限公司）</sub>
+  <sub>Wuxi Yunyu Intelligent Technology Co., Ltd.</sub>
   <br /><br />
   <p>
-    AI-native startup committed to incubating the next generation of unicorn products<br />
-    Pioneering <strong>Vibe Business</strong> — From Vibe Coding to Vibe Entrepreneurship
+    AI-native infrastructure company building governed product baselines<br />
+    for multi-tenant SaaS, agent workflows, launch operations, and global delivery
   </p>
-  <p align="center">Technology can be copied and products imitated; a deep understanding of change is the only reliable moat.</p>
+  <p align="center">The durable moat is not a starter template. It is the ability to turn changing AI capabilities into governed, shippable systems.</p>
 </div>
 
-> **Vibe Coding** solves the problem of _building it_; **Vibe Business** solves the problem of _making it profitable_.
+> AI can help build the demo. Sailor focuses on the harder production layer: governance, security, architecture, scalability, and revenue operations.
 >
-> Going from 0 to 90 is easy—AI handles the coding. The real challenge is the last 10%: security, architecture, scalability, and turning a demo into a product that generates revenue.
->
-> **Growth Hacking** meets **AI-Native**: Data-driven experimentation, viral loops, and conversion optimization—now supercharged by intelligent automation.
+> The goal is not to pick one provider in a wizard. The goal is to operate a governed AI topology that can evolve across providers, regions, tenants, and compliance boundaries.
 
 <br />
 
@@ -99,13 +97,13 @@ Nebula • Nurture • Ultra • Future
 </td>
 <td align="center" width="25%">
   <h3>💼</h3>
-  <strong>Vibe Business</strong><br />
-  <sub>Demo → Revenue · Ship Fast</sub>
+  <strong>Platform Governance</strong><br />
+  <sub>Topology · Contracts · CI</sub>
 </td>
 <td align="center" width="25%">
   <h3>🦄</h3>
-  <strong>Unicorn Incubation</strong><br />
-  <sub>One-Person Company Ready</sub>
+  <strong>Launch Infrastructure</strong><br />
+  <sub>Auth · Billing · AI Gateway</sub>
 </td>
 </tr>
 </table>
@@ -118,7 +116,7 @@ Nebula • Nurture • Ultra • Future
 
 ### Why Sailor?
 
-**For the Vibe Business era**: Sailor bridges the gap between _"I can build it with AI"_ and _"I can ship a profitable product"_.
+**For governed AI-native products**: Sailor bridges the gap between _"AI helped me build a demo"_ and _"this is a product platform we can operate, audit, bill, and scale"_.
 
 <table>
 <tr>
@@ -129,7 +127,7 @@ Nebula • Nurture • Ultra • Future
 | 🚀  | **Production-Ready** | Battle-tested enterprise patterns      |
 | 🤖  | **AI-Native**        | LLM · Embeddings · RAG · MCP Agent     |
 | 🏢  | **Multi-Tenant**     | RLS · Isolation · Customization        |
-| ⚡  | **Modern Stack**     | Next.js 16 · React 19 · TS 5.6+        |
+| ⚡  | **Modern Stack**     | Next.js 16 · React 19 · TypeScript 5.9 |
 | 💳  | **Billing Built-in** | Stripe · Usage metering · Entitlements |
 
 </td>
@@ -138,10 +136,10 @@ Nebula • Nurture • Ultra • Future
 |     | Feature                | Description                      |
 | :-: | :--------------------- | :------------------------------- |
 | 📋  | **Legal & Compliance** | GDPR/CCPA · Cookie consent       |
-| 🔐  | **Security-First**     | WAF · RLS · Prompt Injection防护 |
+| 🔐  | **Security-First**     | WAF · RLS · Prompt injection controls |
 | 🌍  | **Global-Ready**       | i18n · CDN · Edge caching        |
-| 👤  | **One-Person Ready**   | Multi-Agent · Automated CI/CD    |
-| 🦄  | **For Unicorns**       | Demo → Product → Revenue         |
+| 👤  | **Operator-Ready**     | Multi-Agent · Automated CI/CD    |
+| 🚢  | **Launch-Ready**       | Demo → Product → Revenue         |
 
 </td>
 </tr>
@@ -237,7 +235,7 @@ Nebula • Nurture • Ultra • Future
 <tr>
 <td><strong>Frontend</strong></td>
 <td>
-  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js_17-black?style=flat-square&logo=next.js" alt="Next.js" /></a>
+  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js_16-black?style=flat-square&logo=next.js" alt="Next.js" /></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" /></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white&v=1" alt="TypeScript" /></a>
   <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white&v=1" alt="Tailwind" /></a>
@@ -246,10 +244,10 @@ Nebula • Nurture • Ultra • Future
 <tr>
 <td><strong>UI / Design</strong></td>
 <td>
-  <a href="https://primer.style/react"><img src="https://img.shields.io/badge/Primer-24292F?style=flat-square&logo=github&logoColor=white&v=1" alt="Primer" /></a>
-  <a href="https://primer.style/octicons"><img src="https://img.shields.io/badge/Octicons-24292F?style=flat-square&logo=github&logoColor=white&v=1" alt="Octicons" /></a>
+  <a href="https://www.radix-ui.com/"><img src="https://img.shields.io/badge/Radix_UI-161618?style=flat-square&logo=radix-ui&logoColor=white" alt="Radix UI" /></a>
+  <img src="https://img.shields.io/badge/HeroUI-000?style=flat-square" alt="HeroUI" />
   <img src="https://img.shields.io/badge/Lobe_UI-000?style=flat-square&logo=react&logoColor=white&v=1" alt="Lobe UI" />
-  <img src="https://img.shields.io/badge/Lobe_Icons-000?style=flat-square" alt="Lobe Icons" />
+  <img src="https://img.shields.io/badge/Geist_Icons-000?style=flat-square" alt="Geist Icons" />
   <img src="https://img.shields.io/badge/Inter-000?style=flat-square&logo=googlefonts&logoColor=white&v=1" alt="Inter" />
   <img src="https://img.shields.io/badge/JetBrains_Mono-000?style=flat-square&logo=jetbrains&logoColor=white&v=1" alt="JetBrains Mono" />
   <img src="https://img.shields.io/badge/Design_Tokens-gray?style=flat-square" alt="Design Tokens" />
@@ -383,15 +381,15 @@ Nebutra-Sailor/
 │   ├── i18n/              # next-intl routing & locale management
 │   ├── marketing/         # Conversion-optimized UI (Waitlist, Pricing, FAQ)
 │   ├── email/             # Transactional email (Magic Link, Resend)
-│   ├── ai-sdk/            # Vercel AI SDK wrapper & helpers
-│   ├── ai-providers/      # Multi-provider AI SDK (OpenRouter, OpenAI, etc)
+│   ├── agents/            # Vercel AI SDK wrapper, agents, streaming helpers
+│   ├── ai-providers/      # Multi-provider AI registry and metadata
 │   ├── billing/           # Stripe billing, plans, usage metering
 │   ├── brand/             # Brand assets, guidelines & programmatic tokens
-│   ├── design-system/     # Design tokens, marketing themes, Primer base
+│   ├── preset/            # Feature-based starter configuration
 │   ├── theme/             # Global theme tokens & CSS variables
 │   ├── tokens/            # Semantic design token definitions
-│   ├── ui/                # Lobe UI + Lobe Icons + Design System
-│   ├── icons/             # Icon library & sprite sheets
+│   ├── ui/                # Radix + HeroUI + Lobe UI components
+│   ├── icons/             # Geist icon library & sprite sheets
 │   ├── identity/          # Auth helpers & tenant identity
 │   ├── contracts/         # Shared TypeScript types & Zod schemas
 │   ├── legal/             # Cookie consent, privacy, GDPR/CCPA compliance
@@ -461,7 +459,8 @@ Each component has its own README with setup instructions and API documentation:
 <td>
   <a href="packages/billing/">Billing</a> · 
   <a href="packages/legal/">Legal</a> · 
-  <a href="packages/design-system/">Design System</a> · 
+  <a href="packages/ui/">UI</a> ·
+  <a href="packages/tokens/">Tokens</a> ·
   <a href="packages/marketing/">Marketing UI</a> · 
   <a href="packages/brand/">Brand</a> · 
   <a href="packages/db/">DB</a> · 
@@ -494,13 +493,42 @@ Each component has its own README with setup instructions and API documentation:
 
 <br />
 
+## CLI & Website
+
+### Use the CLI from npm
+
+For new projects, start from npm instead of cloning and pruning the full monorepo:
+
+```bash
+# Scaffold a new Sailor project
+npx create-sailor@latest
+npm create sailor@latest
+pnpm create sailor@latest
+bunx create-sailor@latest
+
+# Operate an existing Sailor project
+npx nebutra --help
+npm install -g nebutra
+```
+
+| Package | Use it for |
+| ------- | ---------- |
+| [`create-sailor`](https://www.npmjs.com/package/create-sailor) | Bootstrap a new Nebutra Sailor project with region-aware defaults and topology-first AI gateway setup. |
+| [`nebutra`](https://www.npmjs.com/package/nebutra) | Operate an existing project: feature registry installs, AI provider governance, gateway routing, schemas, and diagnostics. |
+
+### nebutra.com
+
+[`nebutra.com`](https://nebutra.com) is the public product surface for Nebutra Sailor and the place where we dogfood the platform ourselves. We will use it to publish product updates, commercial licensing, hosted capabilities, launch workflows, and real examples built on this monorepo.
+
+<br />
+
 ## Getting Started
 
 ### Prerequisites
 
 <table>
-<tr><td><strong>Node.js</strong></td><td><code>v20+</code></td></tr>
-<tr><td><strong>pnpm</strong></td><td><code>v9+</code></td></tr>
+<tr><td><strong>Node.js</strong></td><td><code>v22+</code></td></tr>
+<tr><td><strong>pnpm</strong></td><td><code>v10.32+</code></td></tr>
 <tr><td><strong>Python</strong></td><td><code>3.11+</code> <sub>(for microservices)</sub></td></tr>
 </table>
 

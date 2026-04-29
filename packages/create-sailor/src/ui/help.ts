@@ -7,7 +7,14 @@ Core options:
   -p, --pm <id>             npm | pnpm | yarn | bun (auto-detected)
       --region <id>         global | cn | hybrid (default: global)
       --auth <id>           clerk | betterauth | none
-      --ai <ids>            comma-separated provider ids (e.g. openai,anthropic)
+      --ai <ids>            expert/non-interactive provider seed (e.g. openai,anthropic)
+
+Interactive AI topology:
+  Default first-run asks for topology, not individual provider enablement:
+    gateway                 Multi-provider AI Gateway / router (recommended)
+    direct                  Direct SDK/provider adapters
+    custom                  OpenAI-compatible endpoint
+    none                    Skip AI
 
 Stack flags (region-based smart defaults):
       --orm <id>            prisma | drizzle | none                 (default: prisma)
@@ -18,7 +25,7 @@ Stack flags (region-based smart defaults):
 
 Feature flags (region-based smart defaults):
       --email <id>          resend | postmark | ses | aliyun-dm | tencent-ses | netease | none
-      --storage <id>        r2 | s3 | supabase | aliyun-oss | tencent-cos | qiniu | none
+      --storage <id>        r2 | s3 | supabase-storage | aliyun-oss | tencent-cos | qiniu | none
       --monitoring <id>     sentry | datadog | aliyun-arms | tingyun | none
       --analytics <id>      posthog | plausible | umami | baidu | sensors | none
       --sms <id>            twilio | aliyun-sms | tencent-sms | yunpian | none

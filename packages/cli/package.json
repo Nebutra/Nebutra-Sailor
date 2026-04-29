@@ -1,7 +1,7 @@
 {
   "name": "nebutra",
-  "version": "0.1.0",
-  "description": "Nebutra Package & Component Manager",
+  "version": "0.1.1",
+  "description": "Governance-first CLI for Nebutra Sailor topology scaffolding, registry-backed feature installs, and platform operations.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -27,7 +27,7 @@
     "directory": "packages/cli"
   },
   "bugs": {
-    "url": "https://github.com/nebutra/nebutra-sailor/issues"
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
   },
   "publishConfig": {
     "access": "public",

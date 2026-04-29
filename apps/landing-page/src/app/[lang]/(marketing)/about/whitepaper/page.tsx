@@ -31,12 +31,12 @@ import {
 const PAGE_META: Bilingual<{ title: string; description: string }> = {
   zh: {
     title: "商业白皮书 — Nebutra",
-    description: "Nebutra 元独角兽生态与超级个体基建宣言 · 四章战略文档",
+    description: "Nebutra 受治理 AI 平台白皮书 · 四章工程与商业文档",
   },
   en: {
     title: "Business Whitepaper — Nebutra",
     description:
-      "Nebutra Meta-Unicorn Ecosystem & Super-Individual Infrastructure — four-chapter strategy document",
+      "Nebutra governed AI platform whitepaper — a four-chapter engineering and business document",
   },
 };
 
@@ -50,7 +50,7 @@ const HERO_LABELS: Bilingual<{
 }> = {
   zh: {
     eyebrow: "NEBUTRA BUSINESS WHITEPAPER / 商业白皮书",
-    title: "Nebutra 商业白皮书与生态基建宣言",
+    title: "Nebutra 平台白皮书与工程原则",
     readTime: "全文约 15 分钟阅读",
     tocKicker: "目录",
     updated: "最后更新:2026-04-21",
@@ -58,7 +58,7 @@ const HERO_LABELS: Bilingual<{
   },
   en: {
     eyebrow: "NEBUTRA BUSINESS WHITEPAPER",
-    title: "The Meta-Unicorn Ecosystem & Super-Individual Infrastructure",
+    title: "The Governed AI Platform & Engineering Principles",
     readTime: "Read 15 min",
     tocKicker: "Contents",
     updated: "Last updated: 2026-04-21",
@@ -75,17 +75,17 @@ const CHAPTER_LABELS: Bilingual<{
 }> = {
   zh: {
     chapter: "第",
-    iTitle: "战略定位:元独角兽与无限裂变",
-    iiTitle: "超级要素路由协议",
-    iiiTitle: "全链路 AI 原生基建",
-    ivTitle: "组织演进准则:AI 杠杆对抗人治腐化",
+    iTitle: "战略定位:平台基线与工程杠杆",
+    iiTitle: "升级路径与协作契约",
+    iiiTitle: "全链路 AI 原生平台层",
+    ivTitle: "组织演进准则:治理与自动化",
   },
   en: {
     chapter: "Chapter",
-    iTitle: "Strategic Position: Meta-Unicorn & Infinite Fission",
-    iiTitle: "Omni-Factor Routing Protocol",
-    iiiTitle: "The AI-Native Convergence",
-    ivTitle: "Organizational Principles: AI Leverage over Human Corrosion",
+    iTitle: "Strategic Position: Platform Baseline & Engineering Leverage",
+    iiTitle: "Upgrade Paths & Coordination Contracts",
+    iiiTitle: "The AI-Native Platform Layer",
+    ivTitle: "Organizational Principles: Governance & Automation",
   },
 };
 
@@ -97,16 +97,16 @@ const I_COPY: Bilingual<{
     goalsKicker: "核心目标",
     goals: [
       {
-        title: "让创业智能化",
-        desc: "以 AI 原生基建降低创业的技术启动成本,让高质量工程产出不再依赖大团队。",
+        title: "让平台工作标准化",
+        desc: "用 AI 原生平台基线降低产品启动时的技术重复劳动，让团队不必每次都重搭平台层。",
       },
       {
-        title: "让创业轻量化",
-        desc: "一人公司(OPC)即可构建具备多租户、计费与合规的高利润数字公司。",
+        title: "让交付更轻量",
+        desc: "让精干团队也能在可审计的平台基线之上交付多租户、计费、合规与 AI 能力。",
       },
       {
-        title: "让创业民主化",
-        desc: "破除「大厂背书」与「名校标签」的权威壁垒,以可验证的工程产出替代身份标签。",
+        title: "让能力可验证",
+        desc: "用可验证的工程产出、升级纪律和运行时信号，替代身份标签与模糊叙事。",
       },
     ],
   },
@@ -114,16 +114,16 @@ const I_COPY: Bilingual<{
     goalsKicker: "Core Objectives",
     goals: [
       {
-        title: "Make entrepreneurship intelligent",
-        desc: "Use AI-native infrastructure to lower the technical cost of starting up — so high-quality engineering output no longer depends on large teams.",
+        title: "Standardize platform work",
+        desc: "Use an AI-native platform baseline to reduce repeated platform setup, so teams do not keep rebuilding the same layer for every product.",
       },
       {
-        title: "Make entrepreneurship lightweight",
-        desc: "A one-person company (OPC) should be able to run a high-margin digital business with multi-tenancy, billing, and compliance built in.",
+        title: "Make delivery lightweight",
+        desc: "Let lean teams ship multi-tenancy, billing, compliance, and AI capabilities on top of an auditable platform baseline.",
       },
       {
-        title: "Make entrepreneurship democratic",
-        desc: 'Dismantle the authority walls of "big-company pedigree" and "elite-school labels" — replace identity signals with verifiable engineering output.',
+        title: "Make capability verifiable",
+        desc: "Replace identity-driven narratives with verifiable engineering output, upgrade discipline, and observable runtime behavior.",
       },
     ],
   },
@@ -132,11 +132,11 @@ const I_COPY: Bilingual<{
 const II_COPY: Bilingual<{ intro: string }> = {
   zh: {
     intro:
-      "现代商业运转的主要摩擦不在于资源不足,而在于中介低效、系统傲慢与标签偏见导致的资源错配。Nebutra 将自身定位为一条消除摩擦的数字神经网络,作为生产要素的终极路由引擎——让三类要素流向它们真正创造产出的节点。",
+      "现代软件团队的主要摩擦,不在于没有工具,而在于平台层反复重建、升级路径模糊和协作契约失真。Nebutra 关注的是如何用更稳定的平台契约和更清晰的演进路径,让系统持续产出而不是持续返工。",
   },
   en: {
     intro:
-      "The primary friction in modern commerce is not scarcity, but resource misallocation — caused by inefficient intermediaries, opaque systems, and identity-based bias. Nebutra positions itself as a friction-eliminating digital neural network, a terminal routing engine for factors of production — directing three classes of inputs to the nodes where they actually generate output.",
+      "The main friction in modern software teams is not lack of tools, but repeated platform rebuilds, weak upgrade paths, and unclear coordination contracts. Nebutra focuses on stronger platform contracts and clearer evolution paths so systems keep shipping instead of constantly being rebuilt.",
   },
 };
 
@@ -149,7 +149,7 @@ const III_COPY: Bilingual<{
 }> = {
   zh: {
     intro:
-      "Nebutra 不是碎片化工具的缝合,而是对商业孵化、代码托管、合伙人匹配、产品发布与风险投资逻辑进行本土化重构与 AI 原生集成,形成一条端到端的可验证链路。",
+      "Nebutra 不是零散工具的拼贴。它把脚手架、运行时集成、治理机制和交付路径收敛进一套可验证的平台层,让团队能围绕同一基线持续演进。",
     builderEyebrow: "L0 · 工程底座",
     sleptonsEyebrow: "L1 · 信任与撮合",
     overviewKicker: "产品概述",
@@ -157,7 +157,7 @@ const III_COPY: Bilingual<{
   },
   en: {
     intro:
-      "Nebutra is not a patchwork of fragmented tools. It is a deep, localized reconstruction and AI-native integration of business incubation, code hosting, partner matching, product launch, and venture logic — assembled into one verifiable end-to-end path.",
+      "Nebutra is not a collage of fragmented tools. It brings scaffolding, runtime integrations, governance, and delivery paths into one verifiable platform layer teams can evolve against a shared baseline.",
     builderEyebrow: "L0 · Engineering Foundation",
     sleptonsEyebrow: "L1 · Trust & Matching",
     overviewKicker: "Overview",
@@ -179,15 +179,15 @@ const IV_COPY: Bilingual<{ intro: string }> = {
 // TOC anchors (stable IDs)
 const TOC: Bilingual<ReadonlyArray<{ id: string; label: string; roman: string }>> = {
   zh: [
-    { id: "section-i", label: "战略定位:元独角兽", roman: "Ⅰ" },
-    { id: "section-ii", label: "超级要素路由协议", roman: "Ⅱ" },
-    { id: "section-iii", label: "全链路 AI 原生基建", roman: "Ⅲ" },
+    { id: "section-i", label: "战略定位:平台基线", roman: "Ⅰ" },
+    { id: "section-ii", label: "升级路径与协作契约", roman: "Ⅱ" },
+    { id: "section-iii", label: "全链路 AI 原生平台层", roman: "Ⅲ" },
     { id: "section-iv", label: "组织演进准则", roman: "Ⅳ" },
   ],
   en: [
-    { id: "section-i", label: "Strategic Position", roman: "Ⅰ" },
-    { id: "section-ii", label: "Omni-Factor Routing Protocol", roman: "Ⅱ" },
-    { id: "section-iii", label: "AI-Native Convergence", roman: "Ⅲ" },
+    { id: "section-i", label: "Platform Baseline", roman: "Ⅰ" },
+    { id: "section-ii", label: "Upgrade Paths & Contracts", roman: "Ⅱ" },
+    { id: "section-iii", label: "AI-Native Platform Layer", roman: "Ⅲ" },
     { id: "section-iv", label: "Organizational Principles", roman: "Ⅳ" },
   ],
 };

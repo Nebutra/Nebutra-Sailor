@@ -12,8 +12,8 @@
   </a>
   <br />
   <br />
-  <h3>开源的企业级 AI 原生 SaaS 平台</h3>
-  <p><em>让创业增长民主化、智能化、轻量化——最终有迹可循。</em></p>
+  <h3>开源的 AI 原生 SaaS 平台基线</h3>
+  <p><em>面向 AI 网关、计费、认证、合规与白标交付的可治理多租户产品基础设施。</em></p>
   <br />
   <p>
     <a href="https://nebutra.com"><strong>官网</strong></a> · 
@@ -51,9 +51,9 @@
 
 ## 简介
 
-Nebutra Sailor 是一个企业级、AI 原生的 SaaS 单体仓库架构，专为构建现代多租户平台而设计。它为内容社区、推荐系统、电商集成和 Web3 应用提供了经过实战检验的基础设施。
+Nebutra Sailor 是一个企业级、AI 原生的 SaaS 单体仓库架构，专为构建可治理的现代多租户平台而设计。它为 AI 网关、智能体工作流、计费、认证、合规和白标产品交付提供可落地的平台基线。
 
-采用最新技术栈构建，包括 Next.js 16、React 19 和 Prisma 7，Sailor 秉承「AI 优先」的理念，原生支持大语言模型、向量搜索和智能工作流。
+采用 Next.js 16、React 19、Prisma 7 和 Vercel AI SDK 构建，Sailor 把 AI 当作需要治理的运行时能力：供应商拓扑、模型路由、可观测性、租户隔离和合规钩子都属于平台基线。
 
 ### 品牌愿景
 
@@ -68,20 +68,18 @@ Nebula • Nurture • Ultra • Future
 
 <div align="center">
   <h4>Nebutra Intelligence</h4>
-  <sub>无锡云毓智能科技有限公司（Wuxi Yunyu Intelligent Technology Co., Ltd.）</sub>
+  <sub>无锡云毓智能科技有限公司</sub>
   <br /><br />
   <p>
-    AI 原生初创企业，致力于孵化下一代独角兽产品<br />
-    开创 <strong>Vibe Business</strong> 理念 — 从氛围编程到氛围创业
+    AI 原生基础设施公司，构建可治理的产品平台基线<br />
+    覆盖多租户 SaaS、智能体工作流、发布运营与全球化交付
   </p>
-  <p align="center">技术可复制、产品可模仿；对变化的深刻理解，才是唯一可靠的护城河。</p>
+  <p align="center">真正长期的护城河不是一个模板，而是把持续变化的 AI 能力转化成可治理、可交付系统的能力。</p>
 </div>
 
-> **Vibe Coding** 解决「做出来」的问题；**Vibe Business** 解决「赚到钱」的问题。
+> AI 可以帮助做出演示，Sailor 聚焦更难的生产层：治理、安全、架构、可扩展性和收入运营。
 >
-> 从 0 到 90 很容易——AI 帮你写代码。真正的挑战在最后 10%：安全、架构、可扩展性，以及把 Demo 变成能产生收入的产品。
->
-> **增长黑客** × **AI 原生**：数据驱动实验、病毒循环、转化优化——现在由智能自动化全面加速。
+> 目标不是在向导里逐个选择供应商，而是运营一个能跨供应商、区域、租户和合规边界演进的 AI 拓扑。
 
 <br />
 
@@ -100,13 +98,13 @@ Nebula • Nurture • Ultra • Future
 </td>
 <td align="center" width="25%">
   <h3>💼</h3>
-  <strong>Vibe Business</strong><br />
-  <sub>Demo → 收入 · 快速交付</sub>
+  <strong>平台治理</strong><br />
+  <sub>拓扑 · 契约 · CI</sub>
 </td>
 <td align="center" width="25%">
   <h3>🦄</h3>
-  <strong>独角兽孵化</strong><br />
-  <sub>一人公司 Ready</sub>
+  <strong>发布基础设施</strong><br />
+  <sub>认证 · 计费 · AI 网关</sub>
 </td>
 </tr>
 </table>
@@ -119,7 +117,7 @@ Nebula • Nurture • Ultra • Future
 
 ### 为什么选择 Sailor？
 
-**面向 Vibe Business 时代**：Sailor 填补了「我能用 AI 做出来」和「我能交付一个盈利产品」之间的鸿沟。
+**面向可治理的 AI 原生产品**：Sailor 填补了「AI 帮我做出演示」和「这是一个可以运营、审计、计费和扩展的平台」之间的鸿沟。
 
 <table>
 <tr>
@@ -130,7 +128,7 @@ Nebula • Nurture • Ultra • Future
 | 🚀  | **生产就绪**   | 企业部署验证的架构模式          |
 | 🤖  | **AI 原生**    | LLM・Embeddings・RAG・MCP Agent |
 | 🏢  | **多租户**     | RLS・租户隔离・租户定制         |
-| ⚡  | **现代技术栈** | Next.js 16・React 19・TS 5.6+   |
+| ⚡  | **现代技术栈** | Next.js 16・React 19・TypeScript 5.9 |
 | 💳  | **计费内置**   | Stripe・用量计量・功能权限      |
 
 </td>
@@ -139,10 +137,10 @@ Nebula • Nurture • Ultra • Future
 |     | 特性               | 说明                            |
 | :-: | :----------------- | :------------------------------ |
 | 📋  | **合规基础设施**   | GDPR/CCPA・Cookie 同意          |
-| 🔐  | **安全优先**       | WAF・RLS・Prompt Injection 防护 |
+| 🔐  | **安全优先**       | WAF・RLS・提示注入控制          |
 | 🌍  | **全球化**         | i18n・CDN・边缘缓存             |
-| 👤  | **一人公司 Ready** | Multi-Agent・自动化 CI/CD       |
-| 🦄  | **面向独角兽**     | Demo → 产品 → 收入              |
+| 👤  | **运营就绪**       | 多智能体・自动化 CI/CD          |
+| 🚢  | **发布就绪**       | 演示 → 产品 → 收入              |
 
 </td>
 </tr>
@@ -238,7 +236,7 @@ Nebula • Nurture • Ultra • Future
 <tr>
 <td><strong>前端</strong></td>
 <td>
-  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js_17-black?style=flat-square&logo=next.js" alt="Next.js" /></a>
+  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js_16-black?style=flat-square&logo=next.js" alt="Next.js" /></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" /></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white&v=1" alt="TypeScript" /></a>
   <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white&v=1" alt="Tailwind" /></a>
@@ -247,10 +245,10 @@ Nebula • Nurture • Ultra • Future
 <tr>
 <td><strong>UI / 设计</strong></td>
 <td>
-  <a href="https://primer.style/react"><img src="https://img.shields.io/badge/Primer-24292F?style=flat-square&logo=github&logoColor=white&v=1" alt="Primer" /></a>
-  <a href="https://primer.style/octicons"><img src="https://img.shields.io/badge/Octicons-24292F?style=flat-square&logo=github&logoColor=white&v=1" alt="Octicons" /></a>
+  <a href="https://www.radix-ui.com/"><img src="https://img.shields.io/badge/Radix_UI-161618?style=flat-square&logo=radix-ui&logoColor=white" alt="Radix UI" /></a>
+  <img src="https://img.shields.io/badge/HeroUI-000?style=flat-square" alt="HeroUI" />
   <img src="https://img.shields.io/badge/Lobe_UI-000?style=flat-square&logo=react&logoColor=white&v=1" alt="Lobe UI" />
-  <img src="https://img.shields.io/badge/Lobe_Icons-000?style=flat-square" alt="Lobe Icons" />
+  <img src="https://img.shields.io/badge/Geist_Icons-000?style=flat-square" alt="Geist Icons" />
   <img src="https://img.shields.io/badge/Inter-000?style=flat-square&logo=googlefonts&logoColor=white&v=1" alt="Inter" />
   <img src="https://img.shields.io/badge/JetBrains_Mono-000?style=flat-square&logo=jetbrains&logoColor=white&v=1" alt="JetBrains Mono" />
   <img src="https://img.shields.io/badge/设计令牌-gray?style=flat-square" alt="Design Tokens" />
@@ -385,15 +383,15 @@ Nebutra-Sailor/
 │   ├── i18n/              # next-intl 路由与多语言管理
 │   ├── marketing/         # 高转化 UI 套件 (Waitlist, Pricing, FAQ)
 │   ├── email/             # 事务邮件 (Magic Link, Resend)
-│   ├── ai-sdk/            # Vercel AI SDK 封装
-│   ├── ai-providers/      # 多供应商 AI SDK (OpenRouter, OpenAI 等)
+│   ├── agents/            # Vercel AI SDK 封装、智能体与流式助手
+│   ├── ai-providers/      # 多供应商 AI 注册表与元数据
 │   ├── billing/           # Stripe 计费、计划、用量计量
 │   ├── brand/             # 统一品牌资产与组件
-│   ├── design-system/     # SSOT: Primer + 字体系统 + 主题令牌
+│   ├── preset/            # 按功能组合的模板配置
 │   ├── theme/             # 全局主题令牌 & CSS 变量
 │   ├── tokens/            # 语义化设计令牌定义
-│   ├── ui/                # Lobe UI + Lobe Icons + 设计系统
-│   ├── icons/             # 图标库 & Sprite Sheets
+│   ├── ui/                # Radix + HeroUI + Lobe UI 组件
+│   ├── icons/             # Geist 图标库 & Sprite Sheets
 │   ├── identity/          # 认证助手 & 租户身份
 │   ├── contracts/         # 共享 TypeScript 类型 & Zod Schemas
 │   ├── legal/             # Cookie 同意、隐私、GDPR/CCPA
@@ -461,7 +459,8 @@ Nebutra-Sailor/
 <tr>
 <td><strong>公共包</strong></td>
 <td>
-  <a href="packages/design-system/">Design System</a> · 
+  <a href="packages/ui/">UI</a> ·
+  <a href="packages/tokens/">Tokens</a> ·
   <a href="packages/marketing/">Marketing</a> · 
   <a href="packages/db/">DB</a> ·
   <a href="packages/cache/">Cache</a> · 
@@ -494,13 +493,42 @@ Nebutra-Sailor/
 
 <br />
 
+## CLI 与官网
+
+### 通过 npm 使用 CLI
+
+新项目建议直接从 npm 创建，不需要先 clone 整个 monorepo 再裁剪：
+
+```bash
+# 创建新的 Sailor 项目
+npx create-sailor@latest
+npm create sailor@latest
+pnpm create sailor@latest
+bunx create-sailor@latest
+
+# 运维已有的 Sailor 项目
+npx nebutra --help
+npm install -g nebutra
+```
+
+| 包 | 用途 |
+| -- | ---- |
+| [`create-sailor`](https://www.npmjs.com/package/create-sailor) | 创建新的 Nebutra Sailor 项目，内置区域化默认值和拓扑优先的 AI 网关配置。 |
+| [`nebutra`](https://www.npmjs.com/package/nebutra) | 治理已有项目：功能注册表安装、AI 供应商治理、网关路由、Schema 和诊断。 |
+
+### nebutra.com
+
+[`nebutra.com`](https://nebutra.com) 是 Nebutra Sailor 的公开产品入口，也是我们自己 dogfooding 这套平台的地方。后续更多产品能力、商业授权、托管能力、发布工作流和基于本仓库构建的真实案例都会在官网持续更新。
+
+<br />
+
 ## 快速开始
 
 ### 环境要求
 
 <table>
-<tr><td><strong>Node.js</strong></td><td><code>v20+</code></td></tr>
-<tr><td><strong>pnpm</strong></td><td><code>v9+</code></td></tr>
+<tr><td><strong>Node.js</strong></td><td><code>v22+</code></td></tr>
+<tr><td><strong>pnpm</strong></td><td><code>v10.32+</code></td></tr>
 <tr><td><strong>Python</strong></td><td><code>3.11+</code> <sub>（微服务需要）</sub></td></tr>
 </table>
 

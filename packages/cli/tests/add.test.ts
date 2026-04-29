@@ -74,4 +74,34 @@ describe("add command", () => {
       "@upstash/qstash": "latest",
     });
   });
+
+  it("supports new Sailor platform features from the registry", async () => {
+    const result = await runCliInDir(
+      ["add", "cache", "--provider", "upstash-redis", "--dry-run"],
+      testDir,
+    );
+
+    expect(result.exitCode).toBe(ExitCode.DRY_RUN_OK);
+
+    const plan = JSON.parse(result.stdout) as {
+      features: Array<{ name: string; provider?: string }>;
+      operations: Array<{ type: string; relativePath?: string; changes?: Array<{ name: string }> }>;
+    };
+
+    expect(plan.features).toEqual([
+      expect.objectContaining({ name: "cache", provider: "upstash-redis" }),
+    ]);
+    expect(plan.operations).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: "write-file",
+          relativePath: "packages/cache/src/index.ts",
+        }),
+        expect.objectContaining({
+          type: "update-package-json",
+          changes: expect.arrayContaining([expect.objectContaining({ name: "@upstash/redis" })]),
+        }),
+      ]),
+    );
+  });
 });

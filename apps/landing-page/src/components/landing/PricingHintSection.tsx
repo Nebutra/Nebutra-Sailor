@@ -18,7 +18,8 @@ export function PricingHintSection() {
                   Start free. Upgrade when your usage demands it.
                 </h2>
                 <p className="mt-4 text-base text-[color:var(--neutral-11)] dark:text-white/70">
-                  The same codebase powers starter projects and enterprise rollouts.
+                  The same platform baseline supports individual builders, product teams, and
+                  enterprise delivery.
                 </p>
               </div>
               <AnimateInGroup
@@ -28,17 +29,17 @@ export function PricingHintSection() {
               >
                 <AnimateIn preset="fadeUp">
                   <p className="rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] px-4 py-3 dark:border-white/10 dark:bg-black/30">
-                    Starter: core multi-tenancy and auth
+                    Baseline: tenant isolation, auth, and platform scaffolding
                   </p>
                 </AnimateIn>
                 <AnimateIn preset="fadeUp">
                   <p className="rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] px-4 py-3 dark:border-white/10 dark:bg-black/30">
-                    Pro: usage billing and advanced automation
+                    Growth: usage billing, runtime integrations, and automation
                   </p>
                 </AnimateIn>
                 <AnimateIn preset="fadeUp">
                   <p className="rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] px-4 py-3 dark:border-white/10 dark:bg-black/30">
-                    Enterprise: SSO, audit controls, dedicated support
+                    Enterprise: SSO, audit controls, and governed delivery
                   </p>
                 </AnimateIn>
               </AnimateInGroup>

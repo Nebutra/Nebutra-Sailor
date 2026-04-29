@@ -197,10 +197,10 @@ export const seoContent = {
   keywords: [
     "saas framework",
     "multi-tenant",
-    "next.js boilerplate",
+    "agent infrastructure",
     "enterprise saas",
     "open source",
-    "startup framework",
+    "ai platform",
   ],
   ogImage: "/og-image.png",
   twitterHandle: "@nebutra",

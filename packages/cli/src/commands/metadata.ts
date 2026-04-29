@@ -1,7 +1,7 @@
 /**
  * CLI Command Metadata
  *
- * Describes all commands available in the Nebutra CLI ecosystem.
+ * Describes all commands available in the Nebutra governance CLI.
  * Used both for generating documentation and providing structured help.
  *
  * This is the single source of truth for CLI command documentation.
@@ -35,12 +35,136 @@ export interface CommandMeta {
   subcommands?: CommandMeta[];
 }
 
+export const createSailorValueDomains = {
+  pm: ["npm", "pnpm", "yarn", "bun"],
+  region: ["global", "cn", "hybrid"],
+  orm: ["prisma", "drizzle", "none"],
+  db: ["postgres", "mysql", "sqlite", "none"],
+  auth: ["clerk", "betterauth", "none"],
+  socialLogin: ["wechat", "qq", "dingtalk", "workweixin", "feishu", "weibo"],
+  payment: ["stripe", "lemon", "wechat", "alipay", "none"],
+  ai: [
+    "openai",
+    "anthropic",
+    "deepseek",
+    "xai",
+    "moonshot",
+    "google",
+    "mistral",
+    "cohere",
+    "perplexity",
+    "ai21",
+    "upstage",
+    "siliconflow",
+    "volcengine-ark",
+    "bailian",
+    "zhipu",
+    "baichuan",
+    "minimax",
+    "stepfun",
+    "sensetime",
+    "tencent",
+    "lingyi",
+    "openrouter",
+    "vercel-gateway",
+    "litellm",
+    "portkey",
+    "aws-bedrock",
+    "azure-openai",
+    "gcp-vertex",
+    "groq",
+    "fireworks",
+    "together",
+    "huggingface",
+    "replicate",
+    "lepton",
+    "anyscale",
+    "octoai",
+    "deepinfra",
+    "novita",
+    "custom",
+    "none",
+  ],
+  deploy: ["vercel", "railway", "cloudflare", "selfhost", "none"],
+  docs: ["fumadocs", "mintlify", "docusaurus", "nextra", "vitepress", "none"],
+  email: ["resend", "postmark", "ses", "aliyun-dm", "tencent-ses", "netease", "none"],
+  storage: ["r2", "s3", "supabase-storage", "aliyun-oss", "tencent-cos", "qiniu", "none"],
+  monitoring: ["sentry", "datadog", "bugsnag", "aliyun-arms", "tingyun", "none"],
+  analytics: ["posthog", "plausible", "umami", "mixpanel", "baidu", "sensors", "growingio", "none"],
+  sms: ["twilio", "messagebird", "plivo", "aliyun-sms", "tencent-sms", "yunpian", "none"],
+  queue: ["qstash", "bullmq", "upstash", "sqs", "none"],
+  search: ["meilisearch", "typesense", "algolia", "pgvector", "none"],
+  cache: ["upstash-redis", "vercel-kv", "redis", "dragonfly", "none"],
+  notifications: ["novu", "knock", "custom", "none"],
+  webhooks: ["svix", "custom", "none"],
+  cms: ["sanity", "contentful", "strapi", "none"],
+  featureFlags: ["vercel-flags", "growthbook", "configcat", "none"],
+  captcha: ["turnstile", "hcaptcha", "aliyun-slide", "none"],
+  mcp: ["on", "off"],
+  metering: ["auto", "on", "off"],
+  billingMode: ["usage", "seat", "credits"],
+  idp: ["clerk", "oauth-server"],
+} as const;
+
+export const createSailorCommandOptions: CommandOption[] = [
+  { flags: "-p, --pm <id>", description: "Package manager: npm, pnpm, yarn, or bun" },
+  { flags: "--region <id>", description: "Target region: global, cn, or hybrid" },
+  { flags: "--orm <id>", description: "ORM: prisma, drizzle, or none" },
+  { flags: "--db <id>", description: "Database: postgres, mysql, sqlite, or none" },
+  { flags: "--auth <id>", description: "Auth provider: clerk, betterauth, or none" },
+  {
+    flags: "--social-login <ids>",
+    description: "Comma-separated CN social login providers",
+  },
+  {
+    flags: "--payment <id>",
+    description: "Payment provider: stripe, lemon, wechat, alipay, or none",
+  },
+  { flags: "--ai <ids>", description: "Expert/non-interactive AI provider seed ids" },
+  {
+    flags: "--deploy <target>",
+    description: "Deploy target: vercel, railway, cloudflare, selfhost, or none",
+  },
+  {
+    flags: "--docs <id>",
+    description: "Docs framework: fumadocs, mintlify, docusaurus, nextra, vitepress, or none",
+  },
+  { flags: "--email <id>", description: "Transactional email provider" },
+  { flags: "--storage <id>", description: "Object storage provider" },
+  { flags: "--monitoring <id>", description: "Monitoring provider" },
+  { flags: "--analytics <id>", description: "Analytics provider" },
+  { flags: "--sms <id>", description: "SMS provider" },
+  { flags: "--queue <id>", description: "Queue provider" },
+  { flags: "--search <id>", description: "Search provider" },
+  { flags: "--cache <id>", description: "Cache provider" },
+  { flags: "--notifications <id>", description: "Notifications provider" },
+  { flags: "--webhooks <id>", description: "Outbound webhooks provider" },
+  { flags: "--cms <id>", description: "Headless CMS provider" },
+  { flags: "--feature-flags <id>", description: "Feature flag provider" },
+  { flags: "--captcha <id>", description: "Captcha provider" },
+  { flags: "--mcp <mode>", description: "MCP server mode: on or off" },
+  { flags: "--metering <mode>", description: "Metering mode: auto, on, or off" },
+  { flags: "--billing-mode <mode>", description: "Billing mode: usage, seat, or credits" },
+  { flags: "--idp <id>", description: "Identity provider: clerk or oauth-server" },
+  { flags: "--i18n", description: "Enable i18n", default: true },
+  { flags: "--no-i18n", description: "Disable i18n" },
+  { flags: "--no-install", description: "Skip package install" },
+  { flags: "--no-git", description: "Skip git init" },
+  {
+    flags: "--dry-run",
+    description: "Preview project scaffolding without creating files (exit code 10)",
+  },
+  { flags: "--json", description: "Emit machine-readable JSON events" },
+  { flags: "--yes", description: "Skip all interactive prompts (Agent mode)" },
+];
+
 /**
- * Nebutra CLI - Package & Component Manager
+ * Nebutra CLI - Governance and Platform Operations
  */
 export const nebultraCommand: CommandMeta = {
   name: "nebutra",
-  description: "Nebutra Package & Component Manager",
+  description:
+    "Governance-first CLI for Nebutra Sailor scaffolding, registry-backed features, and platform operations",
   usage: "nebutra [command] [options]",
   options: [
     {
@@ -101,12 +225,12 @@ export const nebultraCommand: CommandMeta = {
     },
     {
       name: "add",
-      description: "Add a component or feature to your project",
+      description: "Add a registry-backed platform feature or external UI component",
       usage: "nebutra add [components...] [options]",
       arguments: [
         {
           name: "components",
-          description: "Component names to add from the HeroUI component library",
+          description: "Local feature names to install from the Nebutra registry",
           required: false,
           variadic: true,
         },
@@ -135,8 +259,8 @@ export const nebultraCommand: CommandMeta = {
       ],
       examples: [
         {
-          command: "nebutra add button input card",
-          description: "Add HeroUI components (button, input, card) to your project",
+          command: "nebutra add cache --provider upstash-redis --yes",
+          description: "Install the local cache feature with the Upstash Redis provider",
         },
         {
           command: "nebutra add --21st button-01",
@@ -147,14 +271,14 @@ export const nebultraCommand: CommandMeta = {
           description: "Preview adding a component from v0.dev without making changes",
         },
         {
-          command: "nebutra add button --yes --if-not-exists",
-          description: "Add button component without prompts, skip if already exists",
+          command: "nebutra add webhooks --provider svix --yes --if-not-exists",
+          description: "Install webhooks without prompts, skip if already configured",
         },
       ],
     },
     {
       name: "create",
-      description: "Scaffold a new Nebutra-Sailor project",
+      description: "Scaffold a topology-first Nebutra Sailor project with governed defaults",
       usage: "nebutra create [dir] [options]",
       arguments: [
         {
@@ -164,35 +288,27 @@ export const nebultraCommand: CommandMeta = {
           required: false,
         },
       ],
-      options: [
-        {
-          flags: "--dry-run",
-          description: "Preview project scaffolding without creating files (exit code 10)",
-        },
-        {
-          flags: "--yes",
-          description: "Skip all interactive prompts (Agent mode)",
-        },
-      ],
+      options: createSailorCommandOptions,
       examples: [
         {
-          command: "nebutra create my-saas-app",
+          command: "nebutra create my-saas-app --region=hybrid --ai=openai,deepseek",
           description:
-            "Create a new Nebutra-Sailor project in the my-saas-app directory with interactive prompts",
+            "Create a topology-first project with hybrid defaults and selected AI providers",
         },
         {
-          command: "nebutra create",
-          description: "Create a new project with prompts for directory and configuration",
+          command:
+            "nebutra create my-cn-app --region=cn --payment=wechat --storage=aliyun-oss --deploy=selfhost -y",
+          description: "Create a non-interactive China-ready scaffold",
         },
         {
-          command: "nebutra create my-app --dry-run",
-          description: "Preview project scaffolding without creating files",
+          command: "nebutra create my-app --storage=supabase-storage --dry-run --json",
+          description: "Preview scaffolding with structured JSON output",
         },
       ],
     },
     {
       name: "mcp",
-      description: "Start the Nebutra MCP server for Cursor/Windsurf integration",
+      description: "Start the Nebutra MCP server for AI agents and editors",
       usage: "nebutra mcp [options]",
       arguments: [],
       options: [
@@ -269,8 +385,40 @@ export const nebultraCommand: CommandMeta = {
       ],
     },
     {
+      name: "brand",
+      description: "Manage governed brand tokens, palettes, and visual system outputs",
+      usage: "nebutra brand [subcommand]",
+      examples: [
+        {
+          command: "nebutra brand palette --primary=#0047FF",
+          description: "Generate a token-aligned blue palette",
+        },
+      ],
+    },
+    {
+      name: "i18n",
+      description: "Manage localization files and multilingual product copy",
+      usage: "nebutra i18n [subcommand]",
+    },
+    {
+      name: "infra",
+      description: "Manage local infrastructure services for Nebutra development",
+      usage: "nebutra infra [subcommand]",
+      examples: [
+        {
+          command: "nebutra infra up --lite",
+          description: "Start lightweight local infrastructure",
+        },
+      ],
+    },
+    {
+      name: "env",
+      description: "Validate and manage environment variables across apps and packages",
+      usage: "nebutra env [subcommand]",
+    },
+    {
       name: "license",
-      description: "Manage your Nebutra-Sailor commercial license",
+      description: "Manage Nebutra Sailor commercial license activation and status",
       usage: "nebutra license [subcommand]",
       arguments: [],
       options: [],
@@ -282,7 +430,7 @@ export const nebultraCommand: CommandMeta = {
           arguments: [
             {
               name: "key",
-              description: "Your Nebutra-Sailor commercial license key",
+              description: "Your Nebutra Sailor commercial license key",
               required: true,
             },
           ],
@@ -319,6 +467,103 @@ export const nebultraCommand: CommandMeta = {
         },
       ],
     },
+    {
+      name: "ai",
+      description: "Configure AI providers, gateway routing, and agent-ready defaults",
+      usage: "nebutra ai [subcommand]",
+    },
+    {
+      name: "auth",
+      description: "Configure authentication providers and tenant access defaults",
+      usage: "nebutra auth [subcommand]",
+    },
+    {
+      name: "billing",
+      description: "Manage billing providers, subscriptions, usage, and return flows",
+      usage: "nebutra billing [subcommand]",
+    },
+    {
+      name: "stats",
+      description: "Show monorepo statistics, health signals, and platform inventory",
+      usage: "nebutra stats [options]",
+    },
+    {
+      name: "db",
+      description: "Manage database schema, migrations, seeds, and generated clients",
+      usage: "nebutra db [subcommand]",
+    },
+    {
+      name: "generate",
+      description: "Generate apps, modules, API surfaces, and typed project artifacts",
+      usage: "nebutra generate [type] [name]",
+    },
+    {
+      name: "preset",
+      description: "List and apply topology presets for governed SaaS projects",
+      usage: "nebutra preset [subcommand]",
+    },
+    {
+      name: "dev",
+      description: "Start development workflows for selected Nebutra apps or presets",
+      usage: "nebutra dev [options]",
+    },
+    {
+      name: "test",
+      description: "Run unit, architecture, and E2E verification workflows",
+      usage: "nebutra test [scope]",
+    },
+    {
+      name: "admin",
+      description: "Operate tenant, platform health, and administrative workflows",
+      usage: "nebutra admin [subcommand]",
+    },
+    {
+      name: "community",
+      description: "Inspect community health, showcases, and external adoption signals",
+      usage: "nebutra community [subcommand]",
+    },
+    {
+      name: "growth",
+      description: "Analyze product growth, funnels, retention, and lifecycle signals",
+      usage: "nebutra growth [subcommand]",
+    },
+    {
+      name: "ecosystem",
+      description: "Manage template marketplace, ideas, project showcase, and ecosystem sync",
+      usage: "nebutra ecosystem [subcommand]",
+    },
+    {
+      name: "services",
+      description: "Inspect and manage microservice health, logs, scaling, and rollouts",
+      usage: "nebutra services [subcommand]",
+    },
+    {
+      name: "search",
+      description: "Manage search indexes, reindexing, and search diagnostics",
+      usage: "nebutra search [subcommand]",
+    },
+    {
+      name: "secrets",
+      description: "Manage encrypted tenant and platform secrets",
+      usage: "nebutra secrets [subcommand]",
+    },
+    {
+      name: "completions",
+      description: "Generate shell completions for the current Nebutra command surface",
+      usage: "nebutra completions [shell]",
+      arguments: [
+        {
+          name: "shell",
+          description: "Shell to generate completions for: bash, zsh, fish, or install",
+          required: false,
+        },
+      ],
+    },
+    {
+      name: "doctor",
+      description: "Check local project setup and common Nebutra configuration issues",
+      usage: "nebutra doctor",
+    },
   ],
 };
 
@@ -327,7 +572,7 @@ export const nebultraCommand: CommandMeta = {
  */
 export const createSailorCommand: CommandMeta = {
   name: "create-sailor",
-  description: "CLI to bootstrap Nebutra-Sailor scaffolding and create new projects",
+  description: "Topology-first project generator for governed Nebutra Sailor SaaS scaffolds",
   usage: "create-sailor [dir]",
   arguments: [
     {
@@ -360,7 +605,7 @@ export const createSailorCommand: CommandMeta = {
 export const nebutraMcpCommand: CommandMeta = {
   name: "nebutra-mcp",
   description:
-    "Model Context Protocol (MCP) server that exposes Nebutra project structure and tools to Cursor/Windsurf",
+    "Model Context Protocol (MCP) server that exposes Nebutra project structure and tools to AI agents and editors",
   usage: "nebutra-mcp",
   arguments: [],
   options: [],

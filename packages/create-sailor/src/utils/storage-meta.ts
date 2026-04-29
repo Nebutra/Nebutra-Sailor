@@ -107,8 +107,16 @@ export const STORAGE_PROVIDERS: StorageProviderMeta[] = [
   },
 ];
 
+export function normalizeStorageProviderId(id: string): StorageProviderId | undefined {
+  const normalized = id === "supabase" ? "supabase-storage" : id;
+  return STORAGE_PROVIDERS.some((provider) => provider.id === normalized)
+    ? (normalized as StorageProviderId)
+    : undefined;
+}
+
 export function getStorageProvider(id: string): StorageProviderMeta | undefined {
-  return STORAGE_PROVIDERS.find((p) => p.id === id);
+  const normalized = normalizeStorageProviderId(id);
+  return normalized ? STORAGE_PROVIDERS.find((p) => p.id === normalized) : undefined;
 }
 
 export const STORAGE_PROVIDERS_BY_REGION = STORAGE_PROVIDERS.reduce<

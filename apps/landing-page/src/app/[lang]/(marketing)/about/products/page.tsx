@@ -29,14 +29,14 @@ import {
 
 const PAGE_META: Bilingual<{ title: string; description: string }> = {
   zh: {
-    title: "双旗舰产品 — Builder Core × Sleptons | 云毓智能",
+    title: "平台层产品 — Builder Core × Sleptons | 云毓智能",
     description:
-      "云毓战略由两款旗舰构成:Builder Core(以开源 Sailor 为技术内核)解决企业级研发工程鸿沟,Sleptons(含 The Launchpad 子模块)解决人力与资源撮合鸿沟。两者共同覆盖从 0 到 1 创业的完整链路,可验证、可审计、可交付。",
+      "Nebutra 以 Builder Core 与 Sleptons 两个平台层产品构成其交付表面。前者沉淀工程基线,后者承接协作与机会匹配;两者共同强调可验证、可审计、可交付。",
   },
   en: {
-    title: "Flagship Products — Builder Core × Sleptons | Nebutra",
+    title: "Platform Layers — Builder Core × Sleptons | Nebutra",
     description:
-      "Nebutra's strategy rests on two flagships. Builder Core — powered by the open-source Sailor core — bridges the enterprise R&D engineering chasm. Sleptons — with its Launchpad submodule — bridges the talent and resource matching chasm. Verifiable, auditable, deliverable end-to-end coverage of the 0-to-1 founder journey.",
+      "Nebutra presents Builder Core and Sleptons as two platform layers: one for governed product delivery, one for operator and opportunity coordination. Both are framed around verifiable, auditable, deliverable execution.",
   },
 };
 
@@ -53,25 +53,25 @@ const HERO: Bilingual<{
 }> = {
   zh: {
     eyebrow: "FLAGSHIP PRODUCTS / 旗舰产品",
-    heading: "两个答案,一个愿景",
+    heading: "两层产品,一个平台",
     sublead:
-      "Builder Core 是企业级研发基座,以开源项目 Sailor 为技术内核,跨越研发工程鸿沟;Sleptons 是人力与资源撮合引擎,以工作量证明与动态权益为基座,其子模块 The Launchpad 进一步跨越信任与资源错配的鸿沟。两款旗舰覆盖的正是「从 0 到 1 创业」完整链路中最难自动化的两段——可验证、可审计、可交付。",
+      "Builder Core 以开源 Sailor 为技术内核,沉淀多租户、权限、计费、合规与 AI 集成的工程基线; Sleptons 承接协作、机会与资源匹配,其子模块 The Launchpad 提供更结构化的信号路由。两者共同服务于可验证、可审计、可交付的平台运营。",
     builderLabel: "L0 · ENTERPRISE R&D FOUNDATION",
-    sleptonsLabel: "L1 · MATCHING ENGINE",
+    sleptonsLabel: "L1 · COORDINATION LAYER",
     builderCaption: "企业级研发基座 · 含开源 Sailor 技术内核 · 跨越研发工程鸿沟",
-    sleptonsCaption: "人力与资源撮合引擎 · 含 The Launchpad 子模块 · 跨越信任与资源鸿沟",
+    sleptonsCaption: "协作与机会协调层 · 含 The Launchpad 子模块 · 让匹配过程更可观测",
   },
   en: {
     eyebrow: "FLAGSHIP PRODUCTS",
-    heading: "Two Answers, One Vision",
+    heading: "Two Layers, One Platform",
     sublead:
-      "Builder Core is the enterprise R&D foundation, powered by the open-source Sailor core — it bridges the engineering chasm. Sleptons is the talent and resource matching engine, grounded in Proof-of-Contribution and dynamic equity — its Launchpad submodule further closes the trust and resource-misallocation gap. Together, the two flagships cover the two hardest-to-automate segments of the 0-to-1 founder journey: verifiable, auditable, deliverable.",
+      "Builder Core, powered by the open-source Sailor core, captures the governed engineering baseline for multi-tenancy, auth, billing, compliance, and AI integrations. Sleptons handles coordination, opportunity matching, and signal routing, with The Launchpad as its operator-facing submodule. Together they describe a verifiable, auditable, deliverable platform surface.",
     builderLabel: "L0 · ENTERPRISE R&D FOUNDATION",
-    sleptonsLabel: "L1 · MATCHING ENGINE",
+    sleptonsLabel: "L1 · COORDINATION LAYER",
     builderCaption:
       "Enterprise R&D foundation · Open-source Sailor at its core · Crossing the engineering chasm",
     sleptonsCaption:
-      "Talent & resource matching engine · Includes The Launchpad submodule · Crossing the trust & resource chasm",
+      "Coordination and opportunity layer · Includes The Launchpad submodule · Making matching more observable",
   },
 };
 
@@ -125,9 +125,9 @@ const LABELS: Bilingual<{
     githubLabel: "Sailor on GitHub",
     exploreLabel: "了解 Sleptons",
     launchpadKicker: "SUBMODULE · THE LAUNCHPAD",
-    launchpadTitle: "The Launchpad 子模块:以业务数据替代 PPT 融资",
+    launchpadTitle: "The Launchpad 子模块:以业务信号驱动机会路由",
     launchpadBody:
-      "The Launchpad 是 Sleptons 内嵌的资源与资本路由子模块。它以 MRR(月度经常性收入)、代码迭代密度、冷启动验证指标三项客观业务数据为输入,对算法资本、算力配额、合作资源进行自动化倾斜。其目的不是「颠覆投资」,而是在可度量的范围内消除传统创投流程中「PPT 融资」带来的冗余损耗,让资源分配回到可验证、可审计的轨道上。",
+      "The Launchpad 是 Sleptons 内嵌的机会与资源路由子模块。它以 MRR(月度经常性收入)、代码迭代密度、冷启动验证指标等客观业务数据为输入,对合作线索、算力配额与优先级资源做结构化分发。目标不是制造神话,而是让机会流转回到可度量、可验证、可审计的轨道上。",
     launchpadBullets: [
       { metric: "MRR · 月度经常性收入", note: "真实付费曲线作为优先输入" },
       { metric: "代码迭代密度", note: "提交频次 · PR 合并率 · 线上稳定性" },
@@ -136,15 +136,15 @@ const LABELS: Bilingual<{
     whyTitle: "为什么是两款旗舰?",
     whySubtitle: "WHY TWO FLAGSHIPS",
     whyBody:
-      "早期团队最容易倒下的位置,一直不在「写不出代码」这一侧。我们识别到两道结构性鸿沟:第一,研发工程鸿沟——多租户、权限、计费、合规与 AI Agent 结对编程等工程量,使企业级交付常以月计;第二,信任与资源鸿沟——陌生人之间贡献无法量化、权益无法公平分配、资本分配高度依赖主观背书。Builder Core 与 Sleptons 各解一题,并行运作。",
+      "早期团队最容易失速的地方,往往不是写不出功能,而是平台层缺少统一基线,协作与机会流转又缺少稳定机制。Builder Core 负责工程底座,Sleptons 负责协作与匹配,两者并行运作。",
     whyBuilderHead: "Builder Core · 跨越研发工程鸿沟",
     whyBuilderTagline: "工程复杂性的工业化标准件",
     whyBuilderText:
       "将多租户隔离、权限体系、计费结算、合规审计,以及 AI Agent 结对编程与 Harness 工程(MCP/SKILL、A2A、Workflow Graphs、AI Gateway),沉淀为标准化微服务与可复用组件。企业级交付从「数月」压缩到「周级」,产出可验证、过程可审计。",
-    whySleptonsHead: "Sleptons · 跨越信任与资源鸿沟",
-    whySleptonsTagline: "资源错配的路由引擎",
+    whySleptonsHead: "Sleptons · 让协作与机会更可治理",
+    whySleptonsTagline: "协作信号的路由层",
     whySleptonsText:
-      "以工作量证明(Proof-of-Contribution)、动态权益合约(Slicing Pie)、去中心化身份(DID),以及子模块 The Launchpad 的算法资本,取代「大厂背书」「名校标签」「PPT 融资」等传统信任机制。让陌生人协作与资源流转从主观撮合回到可追溯、可审计的轨道。",
+      "通过更结构化的协作信号、身份上下文与 The Launchpad 的运营分发能力,减少机会流转对模糊背书和线下关系的依赖。让协作、匹配与资源流转回到可追溯、可审计的轨道。",
     whyCloser:
       "两道鸿沟同时跨越,才是「创业智能化、轻量化、民主化」的工程实现路径。两款旗舰并非独立产品,而是同一套创业操作系统的两个正交维度。",
     pillarsKicker: "业务版图",
@@ -153,7 +153,7 @@ const LABELS: Bilingual<{
     ctaKicker: "NEXT STEP",
     ctaTitle: "准备好深入了解?",
     ctaSubtitle:
-      "查看 Builder Core 的架构蓝图、API 文档与部署指南,或探索 Sleptons 的撮合协议与 The Launchpad 的资本路由规则。完整的技术与制度说明,可阅读白皮书。",
+      "查看 Builder Core 的架构蓝图、API 文档与部署指南,或探索 Sleptons 的协作协议与 The Launchpad 的信号路由规则。完整的技术与制度说明,可阅读白皮书。",
     ctaDocs: "查看 Builder Core / Sailor 文档",
     ctaSleptons: "了解 Sleptons",
     ctaWhitepaper: "阅读白皮书",
@@ -172,9 +172,9 @@ const LABELS: Bilingual<{
     githubLabel: "Sailor on GitHub",
     exploreLabel: "Explore Sleptons",
     launchpadKicker: "SUBMODULE · THE LAUNCHPAD",
-    launchpadTitle: "The Launchpad: business data over pitch decks",
+    launchpadTitle: "The Launchpad: routing opportunities through operating signals",
     launchpadBody:
-      'The Launchpad is the resource- and capital-routing submodule embedded in Sleptons. It takes three objective business signals — MRR (monthly recurring revenue), code iteration density, and cold-start validation metrics — and routes algorithmic capital, compute quotas, and partnership resources accordingly. The goal is not to "disrupt venture capital" but to remove, within a measurable scope, the overhead that pitch-deck fundraising imposes, so that resource allocation stays on a verifiable, auditable track.',
+      "The Launchpad is the opportunity- and resource-routing submodule embedded in Sleptons. It uses objective operating signals — MRR, code iteration density, and cold-start validation metrics — to prioritize partnership opportunities, compute quotas, and other constrained resources. The goal is not mythology; it is measurable, verifiable allocation.",
     launchpadBullets: [
       { metric: "MRR · Monthly Recurring Revenue", note: "Real payment curves as primary input" },
       {
@@ -189,15 +189,15 @@ const LABELS: Bilingual<{
     whyTitle: "Why Two Flagships?",
     whySubtitle: "WHY TWO FLAGSHIPS",
     whyBody:
-      'Early-stage teams rarely collapse because they cannot "write code." We identify two structural chasms instead. First, the engineering chasm: multi-tenancy, permissions, billing, compliance, and AI-agent pair programming turn enterprise-grade delivery into month-scale work. Second, the trust and resource chasm: contribution cannot be quantified between strangers, equity cannot be split fairly, and capital allocation leans heavily on subjective endorsement. Builder Core and Sleptons each address one — running in parallel.',
+      "Early-stage teams rarely slow down because they cannot write features. They slow down because they lack a governed baseline for delivery and a durable mechanism for coordination. Builder Core handles the engineering layer; Sleptons handles the coordination layer.",
     whyBuilderHead: "Builder Core — Crossing the engineering chasm",
     whyBuilderTagline: "Industrialized standard parts for engineering complexity",
     whyBuilderText:
       "Multi-tenant isolation, permission systems, billing, compliance auditing, plus AI-agent pair programming and Harness engineering (MCP/Skill, A2A, Workflow Graphs, AI Gateway) — all crystallized into standardized microservices and reusable components. Enterprise delivery compresses from months to weeks; output is verifiable, process is auditable.",
-    whySleptonsHead: "Sleptons — Crossing the trust & resource chasm",
-    whySleptonsTagline: "A routing engine for resource misallocation",
+    whySleptonsHead: "Sleptons — Governing coordination and opportunity flow",
+    whySleptonsTagline: "A routing layer for collaboration signals",
     whySleptonsText:
-      "Replace the traditional trust proxies — big-company pedigree, elite-school labels, pitch-deck fundraising — with Proof-of-Contribution, Slicing Pie dynamic equity contracts, Decentralized Identity (DID), and algorithmic capital via the Launchpad submodule. Stranger collaboration and resource flow return to a traceable, auditable track.",
+      "Use stronger collaboration signals, contextual identity, and The Launchpad's operator-facing routing to reduce dependence on vague prestige proxies and opaque handoffs. Coordination, matching, and resource flow return to a traceable, auditable track.",
     whyCloser:
       "Crossing both chasms in parallel is the engineering path toward entrepreneurship that is intelligent, lightweight, and democratic. The two flagships are not separate products — they are two orthogonal dimensions of a single founder operating system.",
     pillarsKicker: "Portfolio",
@@ -207,7 +207,7 @@ const LABELS: Bilingual<{
     ctaKicker: "NEXT STEP",
     ctaTitle: "Ready to explore?",
     ctaSubtitle:
-      "Review the Builder Core architecture blueprint, API reference, and deployment guide — or explore Sleptons' matching protocols and the Launchpad's capital routing rules. For the full technical and institutional account, read the whitepaper.",
+      "Review the Builder Core architecture blueprint, API reference, and deployment guide — or explore Sleptons' coordination model and the Launchpad's signal-routing rules. For the full technical and institutional account, read the whitepaper.",
     ctaDocs: "View Builder Core / Sailor Docs",
     ctaSleptons: "Explore Sleptons",
     ctaWhitepaper: "Read Whitepaper",

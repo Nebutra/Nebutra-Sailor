@@ -15,10 +15,11 @@ const staticPaths = [
   { path: "/changelog", changeFreq: "weekly" as const, priority: 0.6 },
   { path: "/showcase", changeFreq: "weekly" as const, priority: 0.7 },
   { path: "/roadmap", changeFreq: "monthly" as const, priority: 0.5 },
+  { path: "/status", changeFreq: "always" as const, priority: 0.5 },
 
   // Community / ecosystem
   { path: "/ideas", changeFreq: "weekly" as const, priority: 0.6 },
-  { path: "/opc", changeFreq: "monthly" as const, priority: 0.5 },
+  { path: "/about/products", changeFreq: "monthly" as const, priority: 0.6 },
 
   // Support
   { path: "/contact", changeFreq: "monthly" as const, priority: 0.4 },

@@ -271,7 +271,7 @@ export function LicenseWizard() {
         throw new Error(data.error || "Failed to create license");
       }
 
-      // Store member number for Sleptons welcome overlay
+      // Store member number for the community welcome overlay
       if (data.community?.memberNumber) {
         localStorage.setItem("sleptons_member_number", String(data.community.memberNumber));
       }
@@ -285,7 +285,7 @@ export function LicenseWizard() {
         referral_source: step3.referralSource,
       });
 
-      // Redirect to Sleptons community after a short delay
+      // Redirect to the community hub after a short delay
       const communityUrl = process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002";
       setTimeout(() => {
         window.location.href = `${communityUrl}?welcome=true`;
@@ -549,14 +549,14 @@ export function LicenseWizard() {
                   <div className="space-y-4">
                     <div className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
                       <p className="text-sm text-[var(--neutral-11)]">
-                        If you're a registered one-person company or OPC, you can select either
-                        Individual or OPC license below.
+                        If you operate as a single-seat business, you can choose either the
+                        Individual or Single-Owner Company license below.
                       </p>
                     </div>
                     <div className="grid gap-4">
                       <LicenseTierCard
                         title={t("tiers.individualFree")}
-                        description="Perfect for solopreneurs and hobbyists"
+                        description="For individual builders and personal commercial projects"
                         features={[
                           "Free forever (no expiration)",
                           "Full framework access",
@@ -569,7 +569,7 @@ export function LicenseWizard() {
                       />
                       <LicenseTierCard
                         title={t("tiers.opcFree")}
-                        description="For one-person companies"
+                        description="For registered single-owner companies"
                         features={[
                           "Free forever (no expiration)",
                           "Full framework access",
@@ -640,7 +640,7 @@ export function LicenseWizard() {
               {/* Contact fields */}
               {step3.tier !== "ENTERPRISE" && (
                 <div className="space-y-4">
-                  {/* Looking for — seeds Sleptons matching */}
+                  {/* Looking for — seeds community matching */}
                   <div>
                     <p className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
                       What do you need most right now? (optional)
@@ -774,15 +774,15 @@ export function LicenseWizard() {
 
               <div>
                 <h1 className="mb-3 text-3xl font-bold text-[var(--neutral-12)]">
-                  Welcome to Sleptons!
+                  License activated
                 </h1>
                 <p className="text-lg text-[var(--neutral-11)]">
                   {step3.tier === "INDIVIDUAL" || step3.tier === "OPC"
-                    ? "Your free license is active. Your Sleptons profile is live."
+                    ? "Your free license is active."
                     : "Your commercial license is ready. Let's build something remarkable."}
                 </p>
                 <p className="mt-2 text-sm text-[var(--neutral-11)]">
-                  Redirecting you to Sleptons community…
+                  Redirecting you to the Nebutra community…
                 </p>
               </div>
 
@@ -814,7 +814,7 @@ export function LicenseWizard() {
                   className="rounded-lg px-6 py-3 text-center font-semibold text-white transition-opacity hover:opacity-90"
                   style={{ background: "var(--brand-gradient)" }}
                 >
-                  Explore Sleptons Community →
+                  Explore Nebutra Community →
                 </a>
                 <a
                   href="https://app.nebutra.com/dashboard"

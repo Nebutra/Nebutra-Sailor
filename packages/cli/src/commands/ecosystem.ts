@@ -468,7 +468,7 @@ async function handleIdeasComment(id: string, options: { message?: string; dryRu
 }
 
 // ============================================================================
-// ECOSYSTEM OPC
+// LEGACY MEMBER DIRECTORY
 // ============================================================================
 
 async function handleOpcList(options: {
@@ -477,7 +477,7 @@ async function handleOpcList(options: {
   sort?: string;
   format?: string;
 }) {
-  logger.info(pc.cyan("👥 OPC Member Network\n"));
+  logger.info(pc.cyan("👥 Legacy Member Directory\n"));
 
   try {
     const response = await ecosystemFetch(
@@ -499,7 +499,7 @@ async function handleOpcList(options: {
 }
 
 async function handleOpcProfile() {
-  logger.info(pc.cyan("👤 OPC Profile\n"));
+  logger.info(pc.cyan("👤 Legacy Member Profile\n"));
 
   try {
     const response = await ecosystemFetch("/opc/me");
@@ -515,7 +515,7 @@ async function handleOpcProfile() {
 }
 
 async function handleOpcRegister(options: { yes?: boolean; dryRun?: boolean }) {
-  logger.info(pc.cyan("📝 Register as OPC Member\n"));
+  logger.info(pc.cyan("📝 Register Legacy Member Profile\n"));
 
   const profile = {
     name: "Your Name",
@@ -531,7 +531,7 @@ async function handleOpcRegister(options: { yes?: boolean; dryRun?: boolean }) {
   }
 
   if (!options.yes) {
-    logger.info(`This will create your public OPC profile.`);
+    logger.info(`This will create your public legacy member profile.`);
     logger.info(`Run with ${pc.yellow("--yes")} to confirm`);
     return ExitCode.CANCELLED;
   }
@@ -542,9 +542,9 @@ async function handleOpcRegister(options: { yes?: boolean; dryRun?: boolean }) {
       body: profile,
     });
 
-    logger.success(`✓ OPC profile created!\n`);
-    logger.info(`View at: ${pc.blue("https://nebutra.com/opc/your-handle")}`);
-    logger.info(`Share with: ${pc.yellow("nebutra ecosystem opc profile --share")}`);
+    logger.success(`✓ Legacy member profile created!\n`);
+    logger.info(`View at: ${pc.blue("https://nebutra.com/members/your-handle")}`);
+    logger.info(`Compatibility command: ${pc.yellow("nebutra ecosystem opc profile --share")}`);
 
     return ExitCode.SUCCESS;
   } catch (error) {
@@ -690,14 +690,14 @@ async function handleSync(options: { pull?: boolean; push?: boolean; dryRun?: bo
 export function registerEcosystemCommand(program: Command) {
   const cmd = program
     .command("ecosystem")
-    .description("Nebutra OPC ecosystem (templates, ideas, members, showcase)");
+    .description("Nebutra ecosystem marketplace, ideas, showcase, and sync workflows");
 
   // ecosystem status
   cmd
     .command("status")
     .description("Ecosystem overview dashboard")
     .option("--format <format>", "Output format: json", "text")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handleStatus(options);
     });
 
@@ -709,7 +709,7 @@ export function registerEcosystemCommand(program: Command) {
     .option("--org <orgId>", "Organization ID")
     .option("--dry-run", "Preview without making changes")
     .option("--yes", "Skip confirmations")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handleConnect(options);
     });
 
@@ -721,7 +721,7 @@ export function registerEcosystemCommand(program: Command) {
     .option("--visibility <visibility>", "Project visibility: public|private|unlisted", "public")
     .option("--dry-run", "Preview without making changes")
     .option("--yes", "Skip confirmations")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handlePublish(options);
     });
 
@@ -734,7 +734,7 @@ export function registerEcosystemCommand(program: Command) {
     .option("--category <category>", "Filter by category")
     .option("--sort <sort>", "Sort by: stars|downloads|recent", "downloads")
     .option("--format <format>", "Output format", "text")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handleTemplatesList(options);
     });
 
@@ -742,14 +742,14 @@ export function registerEcosystemCommand(program: Command) {
     .command("search <query>")
     .description("Search templates")
     .option("--format <format>", "Output format", "text")
-    .action(async (query: any, options: any) => {
+    .action(async (query, options) => {
       await handleTemplatesSearch(query, options);
     });
 
   templatesCmd
     .command("info <id>")
     .description("Template details")
-    .action(async (id: any) => {
+    .action(async (id) => {
       await handleTemplatesInfo(id);
     });
 
@@ -757,7 +757,7 @@ export function registerEcosystemCommand(program: Command) {
     .command("install <id>")
     .description("Install/fork a template")
     .option("--dry-run", "Preview without making changes")
-    .action(async (id: any, options: any) => {
+    .action(async (id, options) => {
       await handleTemplatesInstall(id, options);
     });
 
@@ -770,7 +770,7 @@ export function registerEcosystemCommand(program: Command) {
     .option("--status <status>", "Filter by status")
     .option("--sort <sort>", "Sort by: votes|recent|trending", "recent")
     .option("--format <format>", "Output format", "text")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handleIdeasList(options);
     });
 
@@ -781,7 +781,7 @@ export function registerEcosystemCommand(program: Command) {
     .option("--description <description>", "Idea description")
     .option("--tags <tags>", "Comma-separated tags")
     .option("--dry-run", "Preview without making changes")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handleIdeasSubmit(options);
     });
 
@@ -789,7 +789,7 @@ export function registerEcosystemCommand(program: Command) {
     .command("vote <id>")
     .description("Upvote an idea")
     .option("--dry-run", "Preview without making changes")
-    .action(async (id: any, options: any) => {
+    .action(async (id, options) => {
       await handleIdeasVote(id, options);
     });
 
@@ -797,7 +797,7 @@ export function registerEcosystemCommand(program: Command) {
     .command("claim <id>")
     .description("Claim an idea to work on")
     .option("--dry-run", "Preview without making changes")
-    .action(async (id: any, options: any) => {
+    .action(async (id, options) => {
       await handleIdeasClaim(id, options);
     });
 
@@ -806,37 +806,37 @@ export function registerEcosystemCommand(program: Command) {
     .description("Comment on an idea")
     .option("--message <message>", "Comment text")
     .option("--dry-run", "Preview without making changes")
-    .action(async (id: any, options: any) => {
+    .action(async (id, options) => {
       await handleIdeasComment(id, options);
     });
 
-  // ecosystem opc
-  const opcCmd = cmd.command("opc").description("OPC member network");
+  // ecosystem opc (legacy compatibility; hidden from public help)
+  const opcCmd = cmd.command("opc", { hidden: true }).description("Legacy member directory");
 
   opcCmd
     .command("list")
-    .description("Browse OPC members")
+    .description("Browse legacy member profiles")
     .option("--skill <skill>", "Filter by skill tag")
     .option("--industry <industry>", "Filter by industry")
     .option("--sort <sort>", "Sort by: active|joined", "active")
     .option("--format <format>", "Output format", "text")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handleOpcList(options);
     });
 
   opcCmd
     .command("profile")
-    .description("View/edit your OPC profile")
+    .description("View/edit your legacy member profile")
     .action(async () => {
       await handleOpcProfile();
     });
 
   opcCmd
     .command("register")
-    .description("Register as OPC member")
+    .description("Register a legacy member profile")
     .option("--yes", "Skip confirmations")
     .option("--dry-run", "Preview without making changes")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handleOpcRegister(options);
     });
 
@@ -849,7 +849,7 @@ export function registerEcosystemCommand(program: Command) {
     .option("--category <category>", "Filter by category")
     .option("--featured", "Show featured only")
     .option("--format <format>", "Output format", "text")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handleShowcaseList(options);
     });
 
@@ -858,7 +858,7 @@ export function registerEcosystemCommand(program: Command) {
     .description("Submit your project to showcase")
     .option("--yes", "Skip confirmations")
     .option("--dry-run", "Preview without making changes")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handleShowcaseSubmit(options);
     });
 
@@ -866,7 +866,7 @@ export function registerEcosystemCommand(program: Command) {
     .command("vote <id>")
     .description("Upvote a project (Product Hunt style)")
     .option("--dry-run", "Preview without making changes")
-    .action(async (id: any, options: any) => {
+    .action(async (id, options) => {
       await handleShowcaseVote(id, options);
     });
 
@@ -877,7 +877,7 @@ export function registerEcosystemCommand(program: Command) {
     .option("--pull", "Pull remote changes")
     .option("--push", "Push local changes")
     .option("--dry-run", "Preview without making changes")
-    .action(async (options: any) => {
+    .action(async (options) => {
       await handleSync(options);
     });
 }

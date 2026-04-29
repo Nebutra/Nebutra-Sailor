@@ -31,7 +31,7 @@ export function MobileDrawer() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-x-0 top-[64px] border-t border-neutral-7 bg-white/95 backdrop-blur-xl dark:border-white/10 dark:bg-black/95 z-50 shadow-2xl h-[calc(100vh-64px)] overflow-y-auto"
+            className="fixed inset-x-0 top-[64px] z-50 h-[calc(100vh-64px)] overflow-y-auto border-t border-neutral-7 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-border dark:bg-background/95"
           >
             <div className="flex flex-col gap-4 px-6 py-6 pb-24 h-full">
               <div className="flex-1 flex flex-col gap-4">
@@ -83,18 +83,18 @@ export function MobileDrawer() {
                 })}
               </div>
 
-              <div className="mt-auto flex flex-col gap-3 border-t border-neutral-7 pt-4 dark:border-white/10">
+              <div className="mt-auto flex flex-col gap-3 border-t border-neutral-7 pt-4 dark:border-border">
                 <a
                   href={`${APP_URL}/sign-in`}
                   onClick={() => setOpen(false)}
-                  className="w-full rounded-lg border border-neutral-7 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-white/15 dark:text-white"
+                  className="w-full rounded-lg border border-neutral-7 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-border dark:text-white"
                 >
                   {t("signIn")}
                 </a>
                 <a
                   href={`${APP_URL}/sign-up`}
                   onClick={() => setOpen(false)}
-                  className="w-full rounded-lg bg-[image:var(--brand-gradient)] px-4 py-3 text-center text-sm font-medium text-white"
+                  className="w-full rounded-lg bg-[color:var(--neutral-12)] px-4 py-3 text-center text-sm font-medium text-[color:var(--neutral-1)]"
                 >
                   {t("getStarted")}
                 </a>

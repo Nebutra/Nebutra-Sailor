@@ -8,7 +8,7 @@
     "getStarted": "Loslegen",
     "about": "Über uns",
     "ideas": "Ideen",
-    "opc": "OPC Community",
+    "opc": "Platform",
     "roadmap": "Produktplan",
     "resources": "Ressourcen",
     "changelog": "Änderungsprotokoll",
@@ -31,8 +31,8 @@
       "description": "Produktionserprobte Agenten und LLM-Orchestrierungs-Engines. Umgehen Sie komplexe Abstraktionen für pure Logik."
     },
     "item1": {
-      "title": "Offene Produkt-Community",
-      "description": "Zukünftige KI-Produkte benötigen Ökosysteme, keine Silos. Bereitstellung standardisierter Architektur Integrationen."
+      "title": "Governed Platform Baseline",
+      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
     },
     "item2": {
       "title": "Enterprise SaaS-Automatisierung",
@@ -122,7 +122,7 @@
       "roadmap": "Roadmap",
       "docs": "Dokumentation",
       "ideas": "Ideen",
-      "opc": "OPC",
+      "opc": "Platform",
       "privacy": "Datenschutz",
       "terms": "Nutzungsbedingungen",
       "cookies": "Cookie-Richtlinie",
@@ -178,12 +178,12 @@
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Meta-Unicorn Engine",
+      "title": "About Us — The Governed AI Platform",
       "description": "Discover the commercial vision and core engineering principles driving Nebutra Intelligence.",
       "heading": "The Era of Super Individuals",
       "subheading": "Terminate human-wave bureaucratic expansion. Equip the creative super individual with maximal algorithmic leverage.",
       "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "Nebutra isolates itself as the world's foremost Meta-Unicorn ecosystem. Traditional corporate scale inevitably correlates with bureaucracy and entropy. We are ending that scale curse via absolute Code Governance. Our purpose is not just to hatch a few unicorns, but to architect a creator mother-engine crossing capital barricades and defeating entropy with flawless automated workflows.",
+      "missionP1": "Nebutra is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
       "missionP2": "Commerce is merely the restructuring of production elements—but historically riddled with hierarchical frictions. In Nebutra's neural network, any independent builder shipping verifiable Proof of Work receives automatic routing of top talent, institutional trust, and algorithmic capital via our Sleptons matchmaker, democratizing entrepreneurship into a highly certain, standardized track.",
       "missionP3": "We fundamentally reject scaling by adding middle management. Agents handle 100% of operational workflows. We do not hire passive cogs; we invest in, cultivate, and elevate literal creators.",
       "missionP4": "",
@@ -1202,10 +1202,10 @@
       "frameworkNuxt": "Nuxt",
       "frameworkTanStack": "TanStack (Soon)",
       "solo": {
-        "badge": "SOLO",
+        "badge": "INDIVIDUAL",
         "price": "Free",
         "period": "forever",
-        "desc": "Perfect for One-Person Companies (OPC) executing rapid MVP iterations under the AGPL license.",
+        "desc": "Best for individual builders validating products on the AGPL foundation.",
         "cta": "Clone Repository",
         "f1": "Complete Next.js 16 SaaS core",
         "f2": "Unlimited Personal Projects (Commercial use allowed)",
@@ -1217,7 +1217,7 @@
         "badge": "STARTUP",
         "price": "$799",
         "period": "lifetime",
-        "desc": "Build faster as a team.",
+        "desc": "For small teams building on the Nebutra platform baseline.",
         "cta": "Get Nebutra for Startups",
         "f1": "Up to 5 Developer Seats",
         "f2": "Unlimited Team Projects",
@@ -1229,7 +1229,7 @@
         "badge": "AGENCY",
         "price": "$1,499",
         "period": "lifetime",
-        "desc": "The ultimate SaaS factory.",
+        "desc": "For agencies and operators shipping repeatable client platforms.",
         "cta": "Get Nebutra for Agencies",
         "f1": "Up to 10 Developer Seats",
         "f2": "Unlimited Client Projects",
@@ -1302,7 +1302,7 @@
       },
       "step3": {
         "title": "3. Build",
-        "desc": "Focus entirely on your unique SaaS features and UI rather than boilerplate."
+        "desc": "Focus on product logic and UI while the platform baseline is already wired."
       },
       "step4": {
         "title": "4. Deploy",
@@ -1339,12 +1339,12 @@
       "t2": {
         "quote": "The Turborepo setup is phenomenal. Testing, linting, and building are instantly cached.",
         "author": "Marcus Dev",
-        "role": "Solo Founder"
+        "role": "Product Engineer"
       },
       "t3": {
-        "quote": "Finally, a boilerplate that doesn't feel like a black box. The code quality is immaculate.",
+        "quote": "Finally, a platform foundation that doesn't feel like a black box. The code quality is immaculate.",
         "author": "Emma Founder",
-        "role": "Indie Hacker"
+        "role": "Engineering Lead"
       }
     },
     "productDemo": {
@@ -1459,7 +1459,7 @@
     "badge": "🚧 Im Aufbau",
     "description": {
       "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "The hub for the ultimate OPC developers is being built. Subscribe to our release channels to be notified of the upcoming launch.",
+      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
       "roadmap": "Von der Infrastruktur bis zur Unternehmensebene — Produktphasen, Versions-Meilensteine und Finanzierungsvision."
     },
     "returnBtn": "Zurück zur Startseite"
@@ -1484,7 +1484,7 @@
     "title": "One foundation. Infinite possibilities.",
     "description": "Nebutra Sailor powers the next generation of SaaS products across global markets.",
     "tabs": {
-      "opc": "AI & OPC Startup Ecosystem",
+      "opc": "Agentic Operations",
       "ip": "Personal IP Matrix",
       "multimodal": "Multimodal AI SaaS",
       "enterprise": "Modern Enterprise (CN)",
@@ -1495,11 +1495,11 @@
     },
     "content": {
       "opc": {
-        "title": "Leading AI-Native & One-Person Company (OPC) Ecosystem Hub",
-        "desc": "Future AI products require ecosystems, not silos. Designed with the OPC philosophy to provide standardized plugin structures connecting creators with developer networks.",
+        "title": "AI-Native Operations Hub",
+        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
         "features": {
-          "f1": "Plugin Architecture",
-          "f2": "Developer Portal"
+          "f1": "Tool Registry & Integration Surface",
+          "f2": "Operator Portal & Internal Console"
         }
       },
       "ip": {
@@ -1635,28 +1635,28 @@
   },
   "impact": {
     "hero_eyebrow": "Nebutra Core Vision Whitepaper",
-    "hero_title": "The Meta-Unicorn Ecosystem",
-    "hero_subtitle": "We are not here to merely hatch unicorns. We are here to construct the mother-engine that continuously fissions them.",
+    "hero_title": "The Governed AI Platform",
+    "hero_subtitle": "We build the platform baseline, governance model, and Harness layer for teams shipping AI-native products.",
     "phil_title": "Ⅰ. Philosophy",
-    "phil_headline": "Infinite Fission over Infinite Expansion",
-    "phil_desc": "Traditional behemoths fall into the scale curse—relying on human wave attrition and bureaucratic layering to survive. Nebutra terminates this old order. Our social-level calling is to democratize entrepreneurship into a lightweight, reliable pathway, making it the absolute default career choice for top digital minds.",
+    "phil_headline": "Governance over Glue Code",
+    "phil_desc": "Teams should not have to rebuild the same platform layer every time they start an AI-native product. Nebutra focuses on turning that repeated platform work into a governed, reusable baseline that stays auditable, extensible, and fast to ship.",
     "infra_title": "Ⅱ. Infrastructure",
-    "infra_headline": "The AI-Native Convergence",
-    "infra_desc": "Nebutra is not a duct-tape solution of existing tools; it is a full-lifecycle creator engine running from inspiration to monopoly.",
+    "infra_headline": "The AI-Native Platform Layer",
+    "infra_desc": "Nebutra is not a stitched-together starter. It is a production platform layer spanning scaffolding, runtime integrations, governance, and delivery.",
     "infra_1_title": "The Builder Core",
-    "infra_1_desc": "Transcend typical boilerplates with 50+ pre-integrated modules. Ship complete enterprise models within a week.",
+    "infra_1_desc": "A governed monorepo baseline with tenant isolation, billing, auth, docs, and AI integrations already wired.",
     "infra_2_title": "The Launchpad",
-    "infra_2_desc": "Utilize algorithmic distribution over paid acquisition. Expose your MVP to a relentless feedback loop on day zero.",
+    "infra_2_desc": "Verified scaffolding, reproducible delivery, and operator-facing tooling that reduce platform risk from day zero.",
     "infra_3_title": "Sleptons Router",
-    "infra_3_desc": "Destroy the JD/CV paradigm. Matchmake solo creators entirely via absolute Proof of Work and semantic compatibility.",
+    "infra_3_desc": "Registry-driven extensions and integration surfaces keep teams moving without fragmenting the codebase.",
     "infra_4_title": "Algorithmic Capital",
-    "infra_4_desc": "Funding secured not by pitch decks nor networking, but strictly via trailing MRR graphs and code delivery velocity.",
+    "infra_4_desc": "Harness primitives, MCP interoperability, and workflow orchestration position the stack for the next generation of AI-native software.",
     "route_title": "Ⅲ. Routing",
-    "route_headline": "Frictionless Flow of Production Elements",
-    "route_desc": "Nebutra constructs a global super-neural network piercing through physical and hierarchical blockades. It aligns Capital directly to Code, Vision flawlessly to Execution, and establishes Trust upon immutable architectural deliveries rather than hollow prestige.",
+    "route_headline": "A Clear Upgrade Path",
+    "route_desc": "The platform should grow through compatibility checks, migrations, and observable runtime behavior, not through one-off rewrites and hidden drift.",
     "org_title": "Ⅳ. Organization",
-    "org_headline": "Automated Scaling Resolving Administrative Decay",
-    "org_desc": "Upon immense scale, we fundamentally reject solving problems via \"middle management layering\". In Nebutra’s ecosystem, Code is Law. Automate all operational procedures via AI Agents, reserving human intellect strictly for creation and strategic vision."
+    "org_headline": "Operational Discipline at Scale",
+    "org_desc": "We use automation, tests, and governance ratchets to keep the platform improving as teams and workloads grow. Human attention stays on product decisions, not repeated infrastructure cleanup."
   },
   "ui": {
     "search": {
@@ -1769,8 +1769,8 @@
     "versionTitleSuffix": "Nebutra Changelog"
   },
   "roadmapMeta": {
-    "title": "Meta-Unicorn-Rollout — Nebutra",
-    "description": "Die fünf Evolutionsphasen des Nebutra Creator Engine Ökosystems."
+    "title": "Platform Roadmap — Nebutra",
+    "description": "The roadmap for Nebutra's governed platform baseline, Harness runtime, and upgrade path."
   },
   "blogMeta": {
     "title": "Blog — Nebutra",
@@ -1778,6 +1778,6 @@
   },
   "getLicenseMeta": {
     "title": "Hol dir deine Lizenz — Nebutra",
-    "description": "Werde Teil der Nebutra-Community. Hol dir deine kostenlose Lizenz in 2 Minuten."
+    "description": "Get your Nebutra license and platform access in 2 minutes."
   }
 }

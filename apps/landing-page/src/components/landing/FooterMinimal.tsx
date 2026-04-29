@@ -53,7 +53,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
       { labelKey: "roadmap", href: "/roadmap" },
       { labelKey: "docs", href: "https://docs.nebutra.com", external: true },
       { labelKey: "ideas", href: "/ideas" },
-      { labelKey: "opc", href: "/opc" },
+      { labelKey: "opc", href: "/about/products" },
     ],
   },
   {

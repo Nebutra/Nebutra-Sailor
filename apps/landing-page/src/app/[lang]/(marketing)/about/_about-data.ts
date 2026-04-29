@@ -410,25 +410,25 @@ export const ORGANIZATION_PRINCIPLES: ReadonlyArray<
   },
 ];
 
-// 元独角兽 · 无限裂变 · OPC — Mission section 关键术语
+// Mission section language for Nebutra's platform thesis
 export const META_UNICORN_THESIS: Bilingual<{
   headline: string;
   thesis: string;
   paradigm: string;
 }> = {
   zh: {
-    headline: "元独角兽（Meta-Unicorn）生态",
+    headline: "受治理 AI 平台生态",
     thesis:
-      "Nebutra 的目标不是成为一家独角兽，而是成为一台能够持续赋能、孵化并裂变出无数超级个体与一人公司（OPC）的母体引擎。我们摒弃传统商业世界「无限扩张、人员臃肿」的旧范式，为每一家从 Nebutra 走出的公司植入「无限裂变」的底层基因。",
+      "Nebutra 的目标不是构建一套夸张叙事，而是沉淀一套能持续赋能产品团队的受治理 AI 平台。我们拒绝靠重复堆人和重复造轮子来扩张，而是把平台基线、升级纪律与运行时能力做成可复用系统。",
     paradigm:
-      "终极的社会级使命是打破权威壁垒与系统性偏见，让创业变得智能化、轻量化、民主化——使「构建并运营一家高利润数字公司」的确定性与吸引力，比肩甚至超越考研、考公、进国企与入职大厂，成为顶尖创造者的首选职业范式。",
+      "更长期的使命，是让高质量创业与产品交付建立在更透明、更轻量、更工程化的系统之上。构建并运营数字产品，不该被平台层重复劳动和不透明协作消耗掉最宝贵的判断力。",
   },
   en: {
-    headline: "The Meta-Unicorn Ecosystem",
+    headline: "The Governed AI Platform Ecosystem",
     thesis:
-      'Nebutra\'s goal is not to become a unicorn, but to become the mother engine that continuously enables, incubates, and fissions countless super individuals and One-Person Companies (OPC). We reject the old paradigm of "scale through headcount" and embed "infinite fission" as the foundational genetic trait of every company that emerges from Nebutra.',
+      "Nebutra's goal is not to manufacture mythology, but to build a governed AI platform that continuously improves how product teams ship. We reject growth through repeated platform rebuilds and expanding headcount for avoidable work; the real leverage is a reusable baseline, upgrade discipline, and stronger runtime capabilities.",
     paradigm:
-      'Our ultimate social mission is to break authority barriers and systemic bias — to make entrepreneurship intelligent, lightweight, and democratic. The certainty and appeal of "building and operating a high-margin digital company" should match or surpass postgraduate exams, civil service, state enterprises, or big-tech employment — becoming the first-choice career path for top creators.',
+      "The longer-term mission is to make product building more transparent, lightweight, and engineering-driven. Building and operating software should spend human attention on judgment and differentiation, not on repeated platform work and opaque coordination.",
   },
 };
 
@@ -544,12 +544,12 @@ export const TRIPLE_VISION: ReadonlyArray<Bilingual<{ keyword: string; statement
   {
     zh: {
       keyword: "轻量化",
-      statement: "用开源 SaaS 底座 + 制度设计，让一人公司与极客团队也能跨越「最后 10% 工程鸿沟」。",
+      statement: "用开源 SaaS 底座与治理机制，让精干团队也能跨越「最后 10% 工程鸿沟」。",
     },
     en: {
       keyword: "Lightweight",
       statement:
-        'Let solo founders and geek teams cross the "last 10% engineering chasm" with open-source SaaS + institutional design.',
+        'Let lean product teams cross the "last 10% engineering chasm" with open-source SaaS and governance design.',
     },
   },
   {

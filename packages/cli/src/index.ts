@@ -51,7 +51,7 @@ async function main() {
   program
     .name("nebutra")
     .description(
-      "Nebutra — unified CLI for project scaffolding, component management, and AI integration",
+      "Nebutra — governance-first CLI for topology scaffolding, registry features, and platform operations",
     )
     .version(VERSION)
     // Existing options
@@ -81,7 +81,7 @@ async function main() {
 
   program
     .command("add [components...]")
-    .description("Add a component or feature to your project")
+    .description("Add a registry-backed platform feature or external UI component")
     .option("--21st <id>", "Fetch and install a component from 21st.dev")
     .option("--v0 <url>", "Fetch and install a component from v0.dev")
     .option("--provider <id>", "Specify a backend provider for a system feature (e.g. upstash)")
@@ -201,12 +201,12 @@ async function main() {
     `
 Examples:
   $ nebutra init                          Initialize a new project
-  $ nebutra add button card --yes         Add components non-interactively
+  $ nebutra add cache --provider upstash-redis --yes  Install a registry feature
   $ nebutra create ./my-app               Scaffold a new project
   $ nebutra dev --preset=ai-saas          Start dev for AI SaaS preset
   $ nebutra db migrate                    Run pending database migrations
   $ nebutra generate app blog             Scaffold a new app
-  $ nebutra brand palette --primary=#7C3AED  Generate color palette
+  $ nebutra brand palette --primary=#0047FF  Generate token-aligned blue palette
   $ nebutra preset list --format json     List available presets
   $ nebutra infra up --lite               Start PostgreSQL + Redis
   $ nebutra test e2e                      Run Playwright E2E tests
@@ -224,7 +224,6 @@ Examples:
   $ nebutra ecosystem status              Ecosystem overview dashboard
   $ nebutra ecosystem publish --tag latest Publish to template marketplace
   $ nebutra ecosystem ideas list          Browse ideas marketplace
-  $ nebutra ecosystem opc register        Join OPC member network
   $ nebutra services status               Microservice health overview
   $ nebutra search reindex products       Reindex search index
   $ nebutra secrets list --tenant org_123 List encrypted secrets

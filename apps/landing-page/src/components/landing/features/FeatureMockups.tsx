@@ -2,8 +2,8 @@ import { CheckCircle2, Cpu, Fingerprint, Terminal } from "lucide-react";
 
 export function MultiTenantMockup() {
   return (
-    <div className="w-full max-w-[340px] bg-background dark:bg-[#0A0A0A] border border-border/60 dark:border-white/10 shadow-2xl rounded-t-[1.5rem] border-b-0 overflow-hidden font-mono text-[11px] leading-relaxed relative top-4 group-hover:top-2 transition-all duration-700">
-      <div className="flex items-center gap-1.5 px-4 py-3 bg-muted/30 dark:bg-white/5 border-b border-border/60 dark:border-white/5">
+    <div className="relative top-4 w-full max-w-[340px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-border/60 bg-background font-mono text-[11px] leading-relaxed shadow-2xl transition-all duration-700 group-hover:top-2 dark:bg-background">
+      <div className="flex items-center gap-1.5 border-b border-border/60 bg-muted/30 px-4 py-3 dark:bg-muted/30">
         <div className="h-2.5 w-2.5 rounded-full bg-border dark:bg-zinc-700"></div>
         <div className="h-2.5 w-2.5 rounded-full bg-border dark:bg-zinc-700"></div>
         <div className="h-2.5 w-2.5 rounded-full bg-border dark:bg-zinc-700"></div>
@@ -37,7 +37,7 @@ export function AIMockup() {
   return (
     <div className="relative w-full max-w-[340px] h-[180px] flex items-center justify-between px-2">
       {/* Vercel-style clean nodes */}
-      <div className="z-10 h-12 w-12 rounded-2xl bg-background dark:bg-[#0A0A0B] border border-border/60 dark:border-white/10 flex items-center justify-center shadow-sm">
+      <div className="z-10 flex h-12 w-12 items-center justify-center rounded-2xl border border-border/60 bg-background shadow-sm dark:bg-background">
         <Cpu className="h-5 w-5 text-foreground dark:text-zinc-200" />
       </div>
 
@@ -48,21 +48,21 @@ export function AIMockup() {
             d="M 60 90 C 130 90, 150 40, 220 40"
             fill="none"
             stroke="currentColor"
-            className="text-border dark:text-white/10"
+            className="text-border"
             strokeWidth="1"
           />
           <path
             d="M 60 90 C 130 90, 150 90, 220 90"
             fill="none"
             stroke="currentColor"
-            className="text-primary/50 dark:text-white/30"
+            className="text-primary/50 dark:text-muted-foreground/45"
             strokeWidth="1.5"
           />
           <path
             d="M 60 90 C 130 90, 150 140, 220 140"
             fill="none"
             stroke="currentColor"
-            className="text-border dark:text-white/10"
+            className="text-border"
             strokeWidth="1"
           />
         </svg>
@@ -72,7 +72,7 @@ export function AIMockup() {
         {["OpenAI", "Anthropic", "DeepSeek"].map((provider, i) => (
           <div
             key={provider}
-            className={`h-8 px-4 rounded-full border flex items-center justify-center text-[11px] font-bold tracking-wide transition-all duration-300 ${i === 1 ? "bg-primary dark:bg-white border-primary dark:border-white text-primary-foreground dark:text-black shadow-md" : "bg-background dark:bg-[#0A0A0A] border-border/60 dark:border-white/10 text-muted-foreground dark:text-zinc-400 hover:bg-muted/50 dark:hover:bg-white/5"}`}
+            className={`flex h-8 items-center justify-center rounded-full border px-4 text-[11px] font-bold tracking-wide transition-all duration-300 ${i === 1 ? "border-primary bg-primary text-primary-foreground shadow-md dark:border-foreground dark:bg-foreground dark:text-background" : "border-border/60 bg-background text-muted-foreground hover:bg-muted/50 dark:bg-background dark:text-zinc-400 dark:hover:bg-muted/40"}`}
           >
             {provider}
           </div>
@@ -84,12 +84,12 @@ export function AIMockup() {
 
 export function SecurityMockup() {
   return (
-    <div className="w-full max-w-[320px] bg-background dark:bg-[#0A0A0A] border border-border/60 dark:border-white/10 shadow-2xl rounded-t-[1.5rem] border-b-0 overflow-hidden font-mono relative top-6 group-hover:top-4 transition-all duration-700">
-      <div className="flex items-center gap-2 px-5 py-4 border-b border-border/60 dark:border-white/5 text-[10px] uppercase tracking-widest text-muted-foreground dark:text-zinc-500 font-bold bg-muted/20 dark:bg-white/[0.02]">
+    <div className="relative top-6 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-border/60 bg-background font-mono shadow-2xl transition-all duration-700 group-hover:top-4 dark:bg-background">
+      <div className="flex items-center gap-2 border-b border-border/60 bg-muted/20 px-5 py-4 text-[10px] font-bold uppercase tracking-widest text-muted-foreground dark:bg-muted/20 dark:text-zinc-500">
         <Fingerprint className="w-3.5 h-3.5" />
         Permission Matrix
       </div>
-      <div className="divide-y divide-border/50 dark:divide-white/5 text-[11px]">
+      <div className="divide-y divide-border/50 text-[11px]">
         {[
           { name: "posts:write", a: true, u: false },
           { name: "billing:read", a: true, u: false },
@@ -97,7 +97,7 @@ export function SecurityMockup() {
         ].map((row, i) => (
           <div
             key={i}
-            className="flex items-center justify-between px-5 py-4 hover:bg-muted/30 dark:hover:bg-white/5 transition-colors"
+            className="flex items-center justify-between px-5 py-4 transition-colors hover:bg-muted/30 dark:hover:bg-muted/40"
           >
             <div className="text-foreground dark:text-zinc-300 font-medium">{row.name}</div>
             <div className="flex gap-6 pr-2">
@@ -108,7 +108,7 @@ export function SecurityMockup() {
                 {row.a ? (
                   <CheckCircle2 className="h-3.5 w-3.5 text-foreground dark:text-white" />
                 ) : (
-                  <div className="h-3.5 w-3.5 border border-border/50 dark:border-white/10 rounded-full" />
+                  <div className="h-3.5 w-3.5 rounded-full border border-border/50" />
                 )}
               </div>
               <div className="flex flex-col items-center gap-1.5">
@@ -116,7 +116,7 @@ export function SecurityMockup() {
                 {row.u ? (
                   <CheckCircle2 className="h-3.5 w-3.5 text-foreground dark:text-white" />
                 ) : (
-                  <div className="h-3.5 w-3.5 border border-border/50 dark:border-white/10 rounded-full" />
+                  <div className="h-3.5 w-3.5 rounded-full border border-border/50" />
                 )}
               </div>
             </div>
@@ -129,8 +129,8 @@ export function SecurityMockup() {
 
 export function BillingMockup() {
   return (
-    <div className="w-full max-w-[320px] bg-background dark:bg-[#0A0A0A] border border-border/60 dark:border-white/10 shadow-2xl rounded-t-[1.5rem] border-b-0 overflow-hidden relative top-4 group-hover:top-2 transition-all duration-700">
-      <div className="p-6 pb-8 border-b border-border/60 dark:border-white/5 bg-gradient-to-b from-emerald-500/5 to-transparent">
+    <div className="relative top-4 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-border/60 bg-background shadow-2xl transition-all duration-700 group-hover:top-2 dark:bg-background">
+      <div className="border-b border-border/60 bg-gradient-to-b from-emerald-500/5 to-transparent p-6 pb-8">
         <div className="text-[11px] text-muted-foreground dark:text-zinc-500 font-semibold mb-1 uppercase tracking-wider">
           Monthly Recurring Revenue
         </div>
@@ -155,8 +155,8 @@ export function BillingMockup() {
 
 export function DXMockup() {
   return (
-    <div className="w-full max-w-[360px] bg-background dark:bg-[#0A0A0A] border border-border/60 dark:border-white/10 shadow-2xl rounded-t-[1.5rem] border-b-0 overflow-hidden font-mono text-[11px] leading-relaxed relative top-4 group-hover:top-2 transition-all duration-700">
-      <div className="flex items-center gap-4 px-5 py-3 bg-muted/30 dark:bg-white/5 border-b border-border/60 dark:border-white/5">
+    <div className="relative top-4 w-full max-w-[360px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-border/60 bg-background font-mono text-[11px] leading-relaxed shadow-2xl transition-all duration-700 group-hover:top-2 dark:bg-background">
+      <div className="flex items-center gap-4 border-b border-border/60 bg-muted/30 px-5 py-3 dark:bg-muted/30">
         <Terminal className="w-3.5 h-3.5 text-muted-foreground dark:text-zinc-500" />
         <span className="text-muted-foreground dark:text-zinc-500 text-[10px] uppercase font-bold tracking-widest">
           Router.ts
@@ -196,11 +196,11 @@ export function DataMockup() {
       {[30, 50, 40, 70, 50, 90, 60, 100].map((h, i) => (
         <div
           key={i}
-          className="w-full bg-muted/20 dark:bg-white/5 rounded-t-sm relative group/bar overflow-hidden"
+          className="group/bar relative w-full overflow-hidden rounded-t-sm bg-muted/20 dark:bg-muted/30"
           style={{ height: "100%" }}
         >
           <div
-            className={`absolute bottom-0 w-full rounded-t-sm transition-all duration-700 ${i === 7 ? "bg-primary dark:bg-white" : "bg-primary/40 dark:bg-zinc-700"}`}
+            className={`absolute bottom-0 w-full rounded-t-sm transition-all duration-700 ${i === 7 ? "bg-primary dark:bg-foreground" : "bg-primary/40 dark:bg-zinc-700"}`}
             style={{ height: `${h}%` }}
           ></div>
         </div>

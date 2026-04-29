@@ -12,8 +12,9 @@ import { showDone } from "./ui/done.js";
 import { showHelp } from "./ui/help.js";
 import { printProgressLine } from "./ui/progress.js";
 import { PROVIDERS } from "./utils/ai-meta.js";
-import { emitScaffoldCompleted } from "./utils/analytics-emit.js";
+import { type AiMode, resolveAiTopology } from "./utils/ai-topology.js";
 import { applyAnalyticsSelection } from "./utils/analytics.js";
+import { emitScaffoldCompleted } from "./utils/analytics-emit.js";
 import { type AuthChoice, applyAuthSelection } from "./utils/auth.js";
 import {
   parseSocialLoginFlag,
@@ -26,7 +27,6 @@ import { applyCaptchaSelection } from "./utils/captcha.js";
 import { applyCmsSelection } from "./utils/cms.js";
 import { applyComplianceTemplates } from "./utils/compliance.js";
 import {
-  type CustomEndpoint,
   type DocsFramework,
   type NebutraConfig,
   type Region,
@@ -60,6 +60,7 @@ import { applySearchSelection } from "./utils/search.js";
 import { generateSeedData } from "./utils/seed.js";
 import { applySmsSelection } from "./utils/sms.js";
 import { applyStorageSelection } from "./utils/storage.js";
+import { normalizeStorageProviderId } from "./utils/storage-meta.js";
 import { applyWebhooksSelection } from "./utils/webhooks.js";
 import { generateWelcomePage } from "./utils/welcome.js";
 import { VERSION } from "./version.js";
@@ -104,6 +105,22 @@ interface CliOptions {
   help?: boolean;
 }
 
+interface InteractiveAnswers {
+  region?: string;
+  auth?: string;
+  aiMode?: AiMode;
+  aiProviders?: string[];
+  customAiName?: string;
+  customAiBaseUrl?: string;
+  customAiApiKeyEnv?: string;
+}
+
+type PromptContext = {
+  results: InteractiveAnswers;
+};
+
+type PromptFactory = (context: PromptContext) => Promise<unknown>;
+
 type JsonEvent = {
   event: string;
   step?: string;
@@ -147,9 +164,10 @@ function mapOrm(o: string | undefined): NebutraConfig["orm"] {
 }
 
 function mapPayment(p: string | undefined): NebutraConfig["payment"] {
-  if (p === "lemon" || p === "lemonsqueezy") return "lemonsqueezy";
+  if (p === "lemon" || p === "lemonsqueezy") return "lemon";
+  if (p === "wechat") return "wechat";
+  if (p === "alipay") return "alipay";
   if (p === "none") return "none";
-  // wechat / alipay / stripe → treat non-stripe alternatives as stripe-compatible placeholder
   return "stripe";
 }
 
@@ -184,6 +202,11 @@ function mapAi(ids: string | undefined): string[] {
   const list = ids.split(",").map((s) => s.trim().toLowerCase());
   if (list.includes("none")) return [];
   return list;
+}
+
+function resolveStorageChoice(raw: string | undefined, fallback: string): string {
+  const value = raw ?? fallback;
+  return normalizeStorageProviderId(value) ?? value;
 }
 
 const DOCS_COMING_SOON: Record<string, string> = {
@@ -331,11 +354,14 @@ async function run(): Promise<void> {
       "CN social login providers — wechat | qq | dingtalk | workweixin | feishu | weibo (comma-separated)",
     )
     .option("--payment <id>", "stripe | lemon | wechat | alipay | none")
-    .option("--ai <ids>", "comma-separated provider ids")
+    .option("--ai <ids>", "expert: comma-separated provider ids used as an AI provider seed")
     .option("--deploy <target>", "vercel | railway | cloudflare | selfhost")
     .option("--docs <id>", "fumadocs | mintlify | docusaurus | nextra | vitepress | none")
     .option("--email <id>", "resend | postmark | ses | aliyun-dm | tencent-ses | netease | none")
-    .option("--storage <id>", "r2 | s3 | supabase | aliyun-oss | tencent-cos | qiniu | none")
+    .option(
+      "--storage <id>",
+      "r2 | s3 | supabase-storage | aliyun-oss | tencent-cos | qiniu | none",
+    )
     .option("--monitoring <id>", "sentry | datadog | aliyun-arms | tingyun | none")
     .option("--analytics <id>", "posthog | plausible | umami | baidu | sensors | none")
     .option("--sms <id>", "twilio | aliyun-sms | tencent-sms | yunpian | none")
@@ -432,6 +458,8 @@ async function run(): Promise<void> {
   let paymentChoice: PaymentChoice;
   let auth: AuthChoice;
   const socialLoginIds: SocialLoginId[] = parseSocialLoginFlag(opts.socialLogin);
+  let aiMode: AiMode;
+  let aiRouting: NebutraConfig["aiRouting"];
   let aiProviders: NebutraConfig["aiProviders"];
   let customAiEndpoint: NebutraConfig["customAiEndpoint"];
   let deployTarget: NebutraConfig["deployTarget"];
@@ -446,13 +474,19 @@ async function run(): Promise<void> {
     payment = mapPayment(rawPayment);
     paymentChoice = resolvePaymentChoice(rawPayment);
     auth = resolveAuthChoice(opts.auth);
-    aiProviders = mapAi(opts.ai);
+    const topology = resolveAiTopology({
+      mode: hasAi ? (opts.ai?.trim().toLowerCase() === "none" ? "none" : "direct") : "gateway",
+      providerIds: hasAi ? mapAi(opts.ai) : undefined,
+    });
+    aiMode = topology.mode;
+    aiRouting = topology.routing;
+    aiProviders = topology.providerIds;
     deployTarget = mapDeploy(opts.deploy);
     docs = resolveDocs(opts.docs, useJson);
     i18n = hasI18n ? Boolean(opts.i18n) : true;
   } else {
     // Interactive prompts — only 4 questions: project / region / auth / AI.
-    const promptGroup: any = {};
+    const promptGroup: Record<string, PromptFactory> = {};
 
     if (!hasRegion) {
       promptGroup.region = () =>
@@ -481,47 +515,40 @@ async function run(): Promise<void> {
     }
 
     if (!hasAi) {
-      const categories = Array.from(new Set(PROVIDERS.map((p) => p.category)));
-      promptGroup.aiCategories = () =>
-        p.multiselect({
-          message: "Which AI Provider categories do you want to explore? (Select multiple)",
-          options: categories.map((c) => ({ value: c, label: c })),
-          initialValues: ["直接实验室", "统一网关"],
-        });
+      promptGroup.aiMode = () =>
+        p.select({
+          message: "AI topology?",
+          options: [
+            {
+              value: "gateway",
+              label: "Multi-provider AI Gateway / router",
+              hint: "recommended",
+            },
+            { value: "direct", label: "Direct SDK/provider adapters" },
+            { value: "custom", label: "OpenAI-compatible endpoint" },
+            { value: "none", label: "Skip AI" },
+          ],
+          initialValue: "gateway",
+        }) as Promise<unknown>;
 
-      promptGroup.aiProviders = ({ results }: any) => {
-        const selectedCategories = (results.aiCategories as string[]) || [];
-        const filteredProviders = PROVIDERS.filter((p) => selectedCategories.includes(p.category));
+      promptGroup.aiProviders = ({ results }: PromptContext) => {
+        if (results.aiMode !== "direct") return Promise.resolve([]);
 
-        const aiOptions = filteredProviders.map((p) => ({
+        const aiOptions = PROVIDERS.map((p) => ({
           value: p.id,
           label: `[${p.category}] ${p.name}`,
         }));
-        aiOptions.push({
-          value: "custom",
-          label: "[自定义] Custom OpenAI-compatible endpoint",
-        });
 
         return p.multiselect({
-          message: "Select AI Providers (Space to select, Enter to submit)",
+          message: "Select direct AI provider adapters (expert path)",
           options: aiOptions,
-          initialValues: ["openai", "anthropic"],
+          initialValues: ["openai"],
           required: false,
         });
       };
 
-      promptGroup.enableCustom = ({ results }: any) => {
-        if ((results.aiProviders as string[])?.includes("custom")) {
-          return p.confirm({
-            message: "Configure custom OpenAI-compatible endpoint?",
-            initialValue: true,
-          });
-        }
-        return Promise.resolve(false);
-      };
-
-      promptGroup.customAiName = ({ results }: any) => {
-        if (results.enableCustom) {
+      promptGroup.customAiName = ({ results }: PromptContext) => {
+        if (results.aiMode === "custom") {
           return p.text({
             message: "Custom endpoint name (e.g. proxy, local):",
             defaultValue: "custom",
@@ -531,8 +558,8 @@ async function run(): Promise<void> {
         return Promise.resolve(undefined);
       };
 
-      promptGroup.customAiBaseUrl = ({ results }: any) => {
-        if (results.enableCustom) {
+      promptGroup.customAiBaseUrl = ({ results }: PromptContext) => {
+        if (results.aiMode === "custom") {
           return p.text({
             message: "Custom endpoint base URL (e.g. https://api.proxy.com/v1):",
             validate: (value) => {
@@ -543,8 +570,8 @@ async function run(): Promise<void> {
         return Promise.resolve(undefined);
       };
 
-      promptGroup.customAiApiKeyEnv = ({ results }: any) => {
-        if (results.enableCustom) {
+      promptGroup.customAiApiKeyEnv = ({ results }: PromptContext) => {
+        if (results.aiMode === "custom") {
           return p.text({
             message: "Environment variable name for the API Key:",
             defaultValue: "CUSTOM_AI_API_KEY",
@@ -555,19 +582,17 @@ async function run(): Promise<void> {
       };
     }
 
-    const answers =
+    const answers: InteractiveAnswers =
       Object.keys(promptGroup).length > 0
-        ? await p.group(promptGroup, {
+        ? ((await p.group(promptGroup, {
             onCancel: () => {
               process.stdout.write(pc.red("✘ Cancelled\n"));
               process.exit(130);
             },
-          })
-        : ({} as Record<string, unknown>);
+          })) as InteractiveAnswers)
+        : {};
 
-    region = resolveRegion(
-      hasRegion ? opts.region : ((answers as any).region as string | undefined),
-    );
+    region = resolveRegion(hasRegion ? opts.region : answers.region);
 
     // Everything below is flag-only (no prompt); defaults are region-based.
     orm = mapOrm(opts.orm);
@@ -575,15 +600,32 @@ async function run(): Promise<void> {
     const rawPayment = hasPayment ? opts.payment : defaultPaymentForRegion(region);
     payment = mapPayment(rawPayment);
     paymentChoice = resolvePaymentChoice(rawPayment);
-    auth = resolveAuthChoice(hasAuth ? opts.auth : ((answers as any).auth as string | undefined));
-    aiProviders = hasAi
-      ? mapAi(opts.ai)
-      : (((answers as any).aiProviders as string[])?.filter((id) => id !== "custom") ?? []);
-    if ((answers as any).enableCustom) {
+    auth = resolveAuthChoice(hasAuth ? opts.auth : answers.auth);
+    const customEndpoint =
+      answers.aiMode === "custom"
+        ? {
+            name: answers.customAiName ?? "custom",
+            baseURL: answers.customAiBaseUrl ?? "",
+            apiKeyEnvName: answers.customAiApiKeyEnv ?? "CUSTOM_AI_API_KEY",
+          }
+        : undefined;
+    const topology = resolveAiTopology({
+      mode: hasAi
+        ? opts.ai?.trim().toLowerCase() === "none"
+          ? "none"
+          : "direct"
+        : (answers.aiMode ?? "gateway"),
+      providerIds: hasAi ? mapAi(opts.ai) : answers.aiProviders,
+      customEndpoint,
+    });
+    aiMode = topology.mode;
+    aiRouting = topology.routing;
+    aiProviders = topology.providerIds;
+    if (topology.customEndpoint) {
       customAiEndpoint = {
-        name: (answers as any).customAiName,
-        baseURL: (answers as any).customAiBaseUrl,
-        apiKeyEnvName: (answers as any).customAiApiKeyEnv,
+        name: topology.customEndpoint.name,
+        baseURL: topology.customEndpoint.baseURL,
+        apiKeyEnvName: topology.customEndpoint.apiKeyEnvName,
       };
     }
     deployTarget = mapDeploy(opts.deploy);
@@ -594,7 +636,7 @@ async function run(): Promise<void> {
   // Region-based smart defaults for feature flags.
   const rDefaults = regionDefaults(region);
   const email = hasEmail ? (opts.email as string) : rDefaults.email;
-  const storage = hasStorage ? (opts.storage as string) : rDefaults.storage;
+  const storage = resolveStorageChoice(hasStorage ? opts.storage : undefined, rDefaults.storage);
   const monitoring = hasMonitoring ? (opts.monitoring as string) : rDefaults.monitoring;
   const analytics = hasAnalytics ? (opts.analytics as string) : rDefaults.analytics;
   const sms = hasSms ? (opts.sms as string) : rDefaults.sms;
@@ -610,10 +652,7 @@ async function run(): Promise<void> {
   const captcha = opts.captcha ?? rDefaults.captcha;
   const mcp = opts.mcp ?? rDefaults.mcp;
   const metering = opts.metering ?? rDefaults.metering;
-  const billingMode = (opts.billingMode ?? rDefaults.billingMode) as
-    | "usage"
-    | "seat"
-    | "credits";
+  const billingMode = (opts.billingMode ?? rDefaults.billingMode) as "usage" | "seat" | "credits";
   const idp = (opts.idp ?? rDefaults.idp) as "clerk" | "oauth-server";
 
   // Detect any non-stable provider selections so we can warn the user
@@ -651,6 +690,8 @@ async function run(): Promise<void> {
     orm,
     database,
     payment,
+    aiMode,
+    aiRouting,
     aiProviders,
     customAiEndpoint,
     deployTarget,
@@ -692,10 +733,10 @@ async function run(): Promise<void> {
     ["Database", database],
     ["Payment", paymentChoice],
     [
-      "AI",
-      Array.isArray(aiProviders)
-        ? aiProviders.join(", ") + (customAiEndpoint ? ", custom" : "")
-        : String(aiProviders),
+      "AI topology",
+      `${aiMode}${aiProviders.length > 0 ? ` (${aiProviders.join(", ")} seed)` : ""}${
+        customAiEndpoint ? " + custom endpoint" : ""
+      }`,
     ],
     ["Email", email],
     ["Storage", storage],
@@ -746,7 +787,7 @@ async function run(): Promise<void> {
         : []),
       ...(aiCount > 0 || customAiEndpoint
         ? [
-            `ai-providers → generate registry.ts + env (${aiCount}${customAiEndpoint ? " + custom" : ""} provider${aiCount === 1 && !customAiEndpoint ? "" : "s"})`,
+            `ai-providers → generate ${aiMode} registry seed + env (${aiCount}${customAiEndpoint ? " + custom" : ""} provider${aiCount === 1 && !customAiEndpoint ? "" : "s"})`,
           ]
         : []),
       ...(email !== "none" ? [`email → configure ${email}`] : []),
@@ -776,7 +817,9 @@ async function run(): Promise<void> {
       opts.git === false ? "skip git init" : "run git init",
     ];
     if (useJson) {
-      plan.forEach((p) => emitJson(true, { event: "plan", action: p }));
+      for (const action of plan) {
+        emitJson(true, { event: "plan", action });
+      }
       emitPreviewWarnings();
       emitJson(true, { event: "done", dryRun: true });
     } else {
@@ -1000,12 +1043,19 @@ async function run(): Promise<void> {
     await generateSeedData(resolvedTarget, auth);
     await generateWelcomePage(resolvedTarget, { projectName, region });
 
-    emitJson(useJson, { event: "step", step: "ai-providers", status: "start" });
-    const selection = { providerIds: config.aiProviders, customEndpoint: config.customAiEndpoint };
-    // Hardcode templateDir to the cloned repo's packages/ai-providers/templates
-    const templateDir = path.join(resolvedTarget, "packages/ai-providers/templates");
-    await applyProviderSelection(resolvedTarget, selection, templateDir);
-    emitJson(useJson, { event: "step", step: "ai-providers", status: "ok" });
+    if (config.aiMode !== "none") {
+      emitJson(useJson, { event: "step", step: "ai-providers", status: "start" });
+      const selection = {
+        providerIds: config.aiProviders,
+        customEndpoint: config.customAiEndpoint,
+      };
+      // Hardcode templateDir to the cloned repo's packages/ai-providers/templates
+      const templateDir = path.join(resolvedTarget, "packages/ai-providers/templates");
+      await applyProviderSelection(resolvedTarget, selection, templateDir);
+      emitJson(useJson, { event: "step", step: "ai-providers", status: "ok" });
+    } else {
+      emitJson(useJson, { event: "step", step: "ai-providers", status: "skip" });
+    }
 
     emitJson(useJson, { event: "step", step: "docs", status: "start" });
     if (docs !== "none") {

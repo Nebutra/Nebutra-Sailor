@@ -67,7 +67,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
           </a>
           <a
             href={`${APP_URL}/sign-up`}
-            className="whitespace-nowrap rounded-lg bg-[image:var(--brand-gradient)] px-3 py-1.5 xl:px-4 xl:py-2 text-[0.8rem] xl:text-sm font-medium text-white shadow-sm hover:shadow-md transition-shadow"
+            className="whitespace-nowrap rounded-lg bg-[color:var(--neutral-12)] px-3 py-1.5 text-[0.8rem] font-medium text-[color:var(--neutral-1)] shadow-sm transition-colors hover:bg-[color:var(--neutral-11)] xl:px-4 xl:py-2 xl:text-sm"
           >
             {t("getStarted")}
           </a>
