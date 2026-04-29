@@ -22,6 +22,7 @@ import {
 export const LARGE_FEATURES = [
   {
     categoryKey: "multi_category",
+    href: "https://docs.nebutra.com/docs/guides/multi-tenancy",
     icon: Layers,
     color: "var(--cyan-9)",
     mockup: MultiTenantMockup,
@@ -33,6 +34,7 @@ export const LARGE_FEATURES = [
   },
   {
     categoryKey: "billing_category",
+    href: "https://docs.nebutra.com/docs/payments/overview",
     icon: CreditCard,
     color: "var(--blue-9)",
     mockup: BillingMockup,
@@ -44,6 +46,7 @@ export const LARGE_FEATURES = [
   },
   {
     categoryKey: "ai_category",
+    href: "https://docs.nebutra.com/docs/ai/overview",
     icon: Cpu,
     color: "var(--purple-9)",
     mockup: AIMockup,
@@ -55,6 +58,7 @@ export const LARGE_FEATURES = [
   },
   {
     categoryKey: "dx_category",
+    href: "https://docs.nebutra.com/docs/development/project-structure",
     icon: TerminalSquare,
     color: "var(--emerald-9)",
     mockup: DXMockup,
@@ -66,6 +70,7 @@ export const LARGE_FEATURES = [
   },
   {
     categoryKey: "sec_category",
+    href: "https://docs.nebutra.com/docs/concepts/permissions",
     icon: Shield,
     color: "var(--red-9)",
     mockup: SecurityMockup,
@@ -77,6 +82,7 @@ export const LARGE_FEATURES = [
   },
   {
     categoryKey: "data_category",
+    href: "https://docs.nebutra.com/docs/database/overview",
     icon: Database,
     color: "var(--blue-9)",
     mockup: DataMockup,

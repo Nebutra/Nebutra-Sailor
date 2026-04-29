@@ -3,6 +3,7 @@ import { AnimateIn } from "../AnimateIn";
 
 interface FeatureBentoCardProps {
   categoryKey: string;
+  href: string;
   icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   color: string;
   mockup: React.ComponentType;
@@ -12,6 +13,7 @@ interface FeatureBentoCardProps {
 
 export function FeatureBentoCard({
   categoryKey,
+  href,
   icon: _Icon,
   color: _color,
   mockup: Mockup,
@@ -33,14 +35,20 @@ export function FeatureBentoCard({
             {t(`sections.${features[0].descKey}`)}
           </p>
 
-          <div className="mt-8 flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full border border-border/50 dark:border-white/10 flex items-center justify-center text-muted-foreground group-hover:text-foreground group-hover:border-foreground dark:group-hover:text-white dark:group-hover:border-white transition-colors cursor-pointer bg-background/50 backdrop-blur-sm">
+          <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            className="group/link mt-8 flex w-fit items-center gap-3 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            aria-label={`Explore ${t(`sections.${categoryKey}`)}`}
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border/50 bg-background/50 text-muted-foreground backdrop-blur-sm transition-colors group-hover/link:border-foreground group-hover/link:text-foreground dark:border-border dark:group-hover/link:border-border dark:group-hover/link:text-white">
               <ArrowRight className="h-4 w-4" />
-            </div>
-            <span className="text-sm font-semibold text-muted-foreground group-hover:text-foreground dark:group-hover:text-white transition-colors">
+            </span>
+            <span className="text-sm font-semibold text-muted-foreground transition-colors group-hover/link:text-foreground dark:group-hover/link:text-white">
               Explore feature
             </span>
-          </div>
+          </a>
         </div>
 
         {/* Bottom Graphic Area - Vercel Bleed */}
