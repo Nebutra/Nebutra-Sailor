@@ -6,9 +6,10 @@
   "nebutra": {
     "status": "foundation",
     "productionReady": false,
-    "requires": ["Prisma or equivalent DB client for RLS withRls()"],
+    "requires": [
+      "Prisma or equivalent DB client for RLS withRls()"
+    ],
     "gaps": [
-      "RLS SQL policy generation not shipped",
       "Subdomain/JWT resolver strategies scaffolded only",
       "Schema-per-tenant migration flow pending"
     ]
@@ -17,11 +18,13 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./isolation": "./src/isolation.ts",
     "./react": "./src/react.ts",
     "./middleware": "./src/middleware.ts"
   },
   "scripts": {
     "build": "tsc",
+    "test": "vitest run --config vitest.config.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -29,6 +32,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "vitest": "catalog:",
     "typescript": "catalog:"
   }
 }

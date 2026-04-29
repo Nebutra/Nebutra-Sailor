@@ -1,6 +1,11 @@
-import { type Ability, AbilityBuilder, createMongoAbility } from "@casl/ability";
+import {
+  type Ability,
+  AbilityBuilder,
+  subject as caslSubject,
+  createMongoAbility,
+} from "@casl/ability";
 import { accessibleBy, type PrismaQuery } from "@casl/prisma";
-import { getDefaultRoles, getRoleHierarchy } from "../roles.js";
+import { getDefaultRoles } from "../roles.js";
 import type {
   Action,
   PermissionContext,
@@ -18,7 +23,7 @@ export class CASLProvider implements PermissionProvider {
 
   constructor(roles?: RoleDefinition[]) {
     const defaultRoles = getDefaultRoles();
-    const allRoles = [...(roles || []), ...defaultRoles];
+    const allRoles = [...defaultRoles, ...(roles || [])];
 
     for (const role of allRoles) {
       this.roleDefinitions.set(role.role, role);
@@ -27,10 +32,11 @@ export class CASLProvider implements PermissionProvider {
 
   defineRole(definition: RoleDefinition): void {
     this.roleDefinitions.set(definition.role, definition);
+    this.clearCache();
   }
 
   getRulesForRole(role: string): PermissionRule[] {
-    const hierarchy = getRoleHierarchy(role);
+    const hierarchy = this.getRoleHierarchy(role);
     const rules: PermissionRule[] = [];
 
     for (const roleInHierarchy of hierarchy) {
@@ -62,9 +68,15 @@ export class CASLProvider implements PermissionProvider {
     return ability;
   }
 
-  can(context: PermissionContext, action: Action, resource: Resource, subject?: unknown): boolean {
+  can(
+    context: PermissionContext,
+    action: Action,
+    resource: Resource,
+    subject?: unknown,
+    field?: string,
+  ): boolean {
     const ability = this.buildAbilityFor(context);
-    return ability.can(action, resource, subject as string | undefined);
+    return ability.can(action, this.resolveSubject(resource, subject) as Resource, field);
   }
 
   cannot(
@@ -72,9 +84,10 @@ export class CASLProvider implements PermissionProvider {
     action: Action,
     resource: Resource,
     subject?: unknown,
+    field?: string,
   ): boolean {
     const ability = this.buildAbilityFor(context);
-    return ability.cannot(action, resource, subject as string | undefined);
+    return ability.cannot(action, this.resolveSubject(resource, subject) as Resource, field);
   }
 
   private collectRulesForContext(context: PermissionContext): PermissionRule[] {
@@ -105,14 +118,40 @@ export class CASLProvider implements PermissionProvider {
 
     for (const action of actions) {
       for (const resource of resources) {
-        if (conditions) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          method.apply(builder, [action, resource, conditions as any]);
-        } else {
-          method.apply(builder, [action, resource]);
+        const args = [action, resource] as unknown[];
+        if (rule.fields) {
+          args.push(rule.fields);
         }
+        if (conditions) {
+          args.push(conditions);
+        }
+
+        method.apply(builder, args as never);
       }
     }
+  }
+
+  private getRoleHierarchy(role: string, visited: Set<string> = new Set()): string[] {
+    if (visited.has(role)) {
+      return [];
+    }
+
+    visited.add(role);
+
+    const definition = this.roleDefinitions.get(role);
+    const inherits = definition?.inherits
+      ? Array.isArray(definition.inherits)
+        ? definition.inherits
+        : [definition.inherits]
+      : [];
+
+    const hierarchy: string[] = [];
+    for (const inherited of inherits) {
+      hierarchy.push(...this.getRoleHierarchy(inherited, visited));
+    }
+    hierarchy.push(role);
+
+    return [...new Set(hierarchy)];
   }
 
   private resolveConditions(
@@ -148,8 +187,19 @@ export class CASLProvider implements PermissionProvider {
     return current;
   }
 
+  private resolveSubject(
+    resource: Resource,
+    subject: unknown,
+  ): Resource | ReturnType<typeof caslSubject> {
+    if (subject && typeof subject === "object") {
+      return caslSubject(resource, subject as Record<string, unknown>);
+    }
+
+    return resource;
+  }
+
   private getCacheKey(context: PermissionContext): string {
-    return `${context.userId}:${context.tenantId}:${context.roles.sort().join(",")}`;
+    return `${context.userId}:${context.tenantId}:${[...context.roles].sort().join(",")}`;
   }
 
   clearCache(): void {
@@ -178,6 +228,10 @@ export function getPrismaQuery(
   action: Action,
   resource: Resource,
 ): PrismaQuery {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (accessibleBy(ability as any, action) as any)[resource] || {};
+  const prismaAbility = ability as unknown as Parameters<typeof accessibleBy>[0];
+  const queryByResource = accessibleBy(prismaAbility, action) as unknown as Record<
+    string,
+    PrismaQuery
+  >;
+  return queryByResource[resource] || {};
 }

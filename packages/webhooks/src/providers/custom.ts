@@ -7,6 +7,7 @@ import {
   verifyPayload,
 } from "../signing.js";
 import type {
+  WebhookDeadLetterDelivery,
   WebhookDeliveryAttempt,
   WebhookEndpoint,
   WebhookMessage,
@@ -53,6 +54,7 @@ export class CustomProvider implements WebhookProvider {
   readonly name = "custom" as const;
   private endpoints: Map<string, EndpointRecord> = new Map();
   private messages: Map<string, MessageRecord> = new Map();
+  private deadLetters: Map<string, WebhookDeadLetterDelivery> = new Map();
   private maxRetries: number;
   private initialBackoffSec: number;
   private pendingRetries: Map<string, NodeJS.Timeout> = new Map(); // for graceful shutdown
@@ -230,6 +232,7 @@ export class CustomProvider implements WebhookProvider {
         attempt.status = "success";
         attempt.statusCode = response.status;
         attempt.response = responseText;
+        this.deadLetters.delete(this.deadLetterKey(message.id, endpoint.id));
         logger.info("[webhooks:custom] Delivery succeeded", {
           endpointId: endpoint.id,
           messageId: message.id,
@@ -268,8 +271,45 @@ export class CustomProvider implements WebhookProvider {
         }, backoffSec * 1000);
 
         this.pendingRetries.set(retryKey, timeoutId);
+      } else {
+        this.recordDeadLetter(message, endpoint, attempt);
       }
     }
+  }
+
+  private deadLetterKey(messageId: string, endpointId: string): string {
+    return `${messageId}:${endpointId}`;
+  }
+
+  private recordDeadLetter(
+    message: WebhookMessage,
+    endpoint: WebhookEndpoint,
+    attempt: WebhookDeliveryAttempt,
+  ): void {
+    const key = this.deadLetterKey(message.id, endpoint.id);
+    const existing = this.deadLetters.get(key);
+
+    this.deadLetters.set(key, {
+      id: existing?.id ?? `dlq_${crypto.randomUUID()}`,
+      messageId: message.id,
+      endpointId: endpoint.id,
+      tenantId: message.tenantId,
+      eventType: message.eventType,
+      payload: message.payload,
+      finalAttemptId: attempt.id,
+      finalAttemptNumber: attempt.attemptNumber,
+      statusCode: attempt.statusCode,
+      response: attempt.response,
+      failedAt: attempt.attemptedAt,
+      deadLetteredAt: existing?.deadLetteredAt ?? new Date().toISOString(),
+    });
+
+    logger.warn("[webhooks:custom] Delivery dead-lettered", {
+      endpointId: endpoint.id,
+      messageId: message.id,
+      finalAttemptNumber: attempt.attemptNumber,
+      statusCode: attempt.statusCode,
+    });
   }
 
   async getDeliveryAttempts(messageId: string): Promise<WebhookDeliveryAttempt[]> {
@@ -285,6 +325,16 @@ export class CustomProvider implements WebhookProvider {
 
     return all.sort(
       (a, b) => new Date(a.attemptedAt).getTime() - new Date(b.attemptedAt).getTime(),
+    );
+  }
+
+  async getDeadLetterDeliveries(messageId?: string): Promise<WebhookDeadLetterDelivery[]> {
+    const deadLetters = Array.from(this.deadLetters.values()).filter(
+      (record) => messageId === undefined || record.messageId === messageId,
+    );
+
+    return deadLetters.sort(
+      (a, b) => new Date(a.deadLetteredAt).getTime() - new Date(b.deadLetteredAt).getTime(),
     );
   }
 
@@ -335,5 +385,6 @@ export class CustomProvider implements WebhookProvider {
     this.pendingRetries.clear();
     this.endpoints.clear();
     this.messages.clear();
+    this.deadLetters.clear();
   }
 }

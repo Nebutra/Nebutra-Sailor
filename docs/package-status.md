@@ -38,15 +38,15 @@ you contribute, or (c) a managed SaaS that the provider wraps.
 
 | Package                  | CLI flag(s)            | Ready out-of-the-box?                 | Main gaps                                                           |
 | ------------------------ | ---------------------- | ------------------------------------- | ------------------------------------------------------------------- |
-| `@nebutra/metering`      | (enabled via payment)  | No — needs ClickHouse or local dev    | ClickHouse adapter is stub; rollups & billing sync pending          |
+| `@nebutra/metering`      | (enabled via payment)  | No — needs ClickHouse or local dev    | ClickHouse adapter is stub; billing/API middleware wiring pending   |
 | `@nebutra/notifications` | `--notifications`      | No — Novu/Knock creds required        | Adapter batching/retry limited; in-app feed + prefs not implemented |
-| `@nebutra/permissions`   | (consumed directly)    | Partial — CASL works in-process       | OpenFGA adapter stub; field-level perms pending                     |
+| `@nebutra/permissions`   | (consumed directly)    | Partial — CASL works in-process       | OpenFGA adapter stub                                                |
 | `@nebutra/queue`         | `--queue`              | No — QStash or Redis credentials      | QStash DLQ retrieval TODO; worker auto-scaling TODO                 |
 | `@nebutra/search`        | `--search`             | No — provider creds required          | Provider adapters are stubs; pgvector not implemented               |
-| `@nebutra/tenant`        | (enabled by middleware)| Partial — AsyncLocalStorage works     | RLS SQL generation pending; subdomain/JWT resolvers scaffolded      |
+| `@nebutra/tenant`        | (enabled by middleware)| Partial — AsyncLocalStorage works     | Subdomain/JWT resolvers scaffolded; schema migration flow pending   |
 | `@nebutra/uploads`       | (consumed directly)    | No — S3/R2 creds required             | Tus flow not end-to-end; validation stubs                           |
 | `@nebutra/vault`         | (consumed directly)    | Partial — local HKDF works for dev    | KMS rotation flow TODO; tenant isolation scaffolded                 |
-| `@nebutra/webhooks`      | `--webhooks`           | No — Svix token or signing secret     | Retry/DLQ in custom adapter incomplete                              |
+| `@nebutra/webhooks`      | `--webhooks`           | No — Svix token or signing secret     | Custom retry/DLQ is in-memory only; replay protection incomplete    |
 
 ## WIP packages (7)
 
@@ -57,7 +57,7 @@ and missing functionality.
 
 | Package                  | CLI flag(s)             | Why WIP                                                          |
 | ------------------------ | ----------------------- | ---------------------------------------------------------------- |
-| `@nebutra/audit`         | (consumed directly)     | Event schema not finalized; query API not implemented            |
+| `@nebutra/audit`         | (consumed directly)     | Event schema not finalized; retention/export workflow pending    |
 | `@nebutra/feature-flags` | `--feature-flags`       | Provider adapters not wired; gradual rollout logic pending       |
 | `@nebutra/captcha`       | `--captcha`             | hCaptcha & Aliyun adapters scaffolded only                       |
 | `@nebutra/event-bus`     | (consumed by saga)      | Cross-service pub/sub guarantees not verified                    |

@@ -35,6 +35,8 @@ export {
   type DeliveryStatus,
   type SvixProviderConfig,
   type WebhookConfig,
+  type WebhookDeadLetterDelivery,
+  WebhookDeadLetterDeliverySchema,
   type WebhookDeliveryAttempt,
   WebhookDeliveryAttemptSchema,
   type WebhookEndpoint,

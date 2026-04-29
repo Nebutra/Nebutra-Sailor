@@ -8,8 +8,8 @@
  * - Billing verification
  */
 
-import { logger } from "@nebutra/logger";
 import { getSystemDb } from "@nebutra/db";
+import { logger } from "@nebutra/logger";
 
 export type AuditAction =
   | "user.login"
@@ -58,6 +58,13 @@ export interface AuditStorage {
   query: (filter: AuditQueryFilter) => Promise<AuditEvent[]>;
 }
 
+interface PrismaAuditLogClient {
+  auditLog: {
+    create: (data: { data: unknown }) => Promise<unknown>;
+    findMany: (args: unknown) => Promise<unknown[]>;
+  };
+}
+
 export interface AuditQueryFilter {
   tenantId?: string;
   actorId?: string;
@@ -68,6 +75,58 @@ export interface AuditQueryFilter {
   endDate?: Date;
   limit?: number;
   offset?: number;
+}
+
+interface PrismaAuditLogRow {
+  id?: string;
+  action: AuditAction;
+  userId: string;
+  actorType: AuditEvent["actorType"];
+  organizationId?: string | null;
+  entityType?: string | null;
+  entityId?: string | null;
+  metadata?: string | Record<string, unknown> | null;
+  ipAddress?: string | null;
+  userAgent?: string | null;
+  outcome: AuditEvent["outcome"];
+  reason?: string | null;
+  createdAt?: Date;
+}
+
+function parseAuditMetadata(
+  metadata: PrismaAuditLogRow["metadata"],
+): Record<string, unknown> | undefined {
+  if (!metadata) return undefined;
+  if (typeof metadata !== "string") return metadata;
+
+  try {
+    const parsed = JSON.parse(metadata) as unknown;
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? (parsed as Record<string, unknown>)
+      : { value: parsed };
+  } catch {
+    return { value: metadata };
+  }
+}
+
+function mapPrismaAuditRow(row: PrismaAuditLogRow): AuditEvent {
+  const metadata = parseAuditMetadata(row.metadata);
+
+  return {
+    ...(row.id ? { id: row.id } : {}),
+    action: row.action,
+    actorId: row.userId,
+    actorType: row.actorType,
+    ...(row.organizationId ? { tenantId: row.organizationId } : {}),
+    ...(row.entityType ? { targetType: row.entityType } : {}),
+    ...(row.entityId ? { targetId: row.entityId } : {}),
+    ...(metadata ? { metadata } : {}),
+    ...(row.ipAddress ? { ipAddress: row.ipAddress } : {}),
+    ...(row.userAgent ? { userAgent: row.userAgent } : {}),
+    ...(row.createdAt ? { timestamp: row.createdAt } : {}),
+    outcome: row.outcome,
+    ...(row.reason ? { reason: row.reason } : {}),
+  };
 }
 
 // ============================================
@@ -131,12 +190,7 @@ export const inMemoryStorage: AuditStorage = {
 // Database Storage (using Prisma)
 // ============================================
 
-export function createPrismaStorage(prisma: {
-  auditLog: {
-    create: (data: { data: unknown }) => Promise<unknown>;
-    findMany: (args: unknown) => Promise<unknown[]>;
-  };
-}): AuditStorage {
+export function createPrismaStorage(prisma: PrismaAuditLogClient): AuditStorage {
   return {
     store: async (event: AuditEvent) => {
       // Field mapping: AuditEvent interface → Prisma AuditLog columns
@@ -185,7 +239,7 @@ export function createPrismaStorage(prisma: {
         skip: filter.offset || 0,
       });
 
-      return results as unknown as AuditEvent[];
+      return (results as PrismaAuditLogRow[]).map(mapPrismaAuditRow);
     },
   };
 }
@@ -201,9 +255,11 @@ let storage: AuditStorage = inMemoryStorage;
 // shared storage adapter. Each AuditEvent carries its own organizationId/
 // tenantId, so cross-tenant writes here are intentional.
 try {
-  setAuditStorage(createPrismaStorage(getSystemDb() as any));
+  setAuditStorage(createPrismaStorage(getSystemDb() as unknown as PrismaAuditLogClient));
 } catch (e) {
-  logger.warn("Prisma storage adapter failed to initialize, relying on in-memory audit logs", { error: e } as any);
+  logger.warn("Prisma storage adapter failed to initialize, relying on in-memory audit logs", {
+    error: e,
+  });
 }
 
 export function setAuditStorage(newStorage: AuditStorage): void {
@@ -339,7 +395,13 @@ export function auditDataExport(
 // ============================================
 
 export function auditMiddleware() {
-  return async (c: any, next: () => Promise<void>) => {
+  return async (
+    c: {
+      req: { header: (name: string) => string | undefined };
+      set: (key: string, value: unknown) => void;
+    },
+    next: () => Promise<void>,
+  ) => {
     // Store audit context
     const ipAddress = c.req.header("x-forwarded-for") || c.req.header("x-real-ip");
     const userAgent = c.req.header("user-agent");

@@ -48,12 +48,19 @@ export interface PermissionContext {
 }
 
 export interface PermissionProvider {
-  can(context: PermissionContext, action: Action, resource: Resource, subject?: unknown): boolean;
+  can(
+    context: PermissionContext,
+    action: Action,
+    resource: Resource,
+    subject?: unknown,
+    field?: string,
+  ): boolean;
   cannot(
     context: PermissionContext,
     action: Action,
     resource: Resource,
     subject?: unknown,
+    field?: string,
   ): boolean;
   getRulesForRole(role: Role): PermissionRule[];
   defineRole(definition: RoleDefinition): void;

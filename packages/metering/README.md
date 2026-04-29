@@ -245,6 +245,31 @@ const alert = await metering.checkThreshold(
 // Returns: ThresholdAlert | null
 ```
 
+### Enforce Billing-Style Limits
+
+Use the package-owned quota helper when a billing or API boundary already has
+the current period usage and plan limit. The helper follows the billing
+convention that `-1` means unlimited and evaluates pending usage before an
+operation is admitted:
+
+```typescript
+import { evaluateUsageLimit } from "@nebutra/metering";
+
+const decision = evaluateUsageLimit({
+  meterId: "ai_tokens",
+  used: 9_900,
+  requested: 150,
+  limit: 10_000,
+});
+
+if (!decision.allowed) {
+  throw new Error(decision.reason);
+}
+```
+
+This is a contract helper only; consumers still need to wire it into billing,
+gateway, or middleware enforcement points.
+
 ## Provider Configuration
 
 ### Auto-Detection

@@ -11,7 +11,7 @@
     ],
     "gaps": [
       "ClickHouse provider is a stub — needs real client integration",
-      "Quota enforcement not wired to billing",
+      "Quota enforcement helper exists for billing-style limits, but consuming billing/API middleware wiring is pending",
       "Aggregation rollups pending"
     ]
   },
@@ -24,6 +24,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -31,6 +32,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

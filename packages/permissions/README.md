@@ -1,4 +1,4 @@
-> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+> **Status: Foundation** — CASL in-process evaluation supports deterministic role inheritance, ABAC conditions, and field-level rules. OpenFGA remains a stub, so this package is not yet production-ready for Zanzibar-style relationship authorization.
 
 # @nebutra/permissions
 
@@ -7,10 +7,10 @@ RBAC (Role-Based Access Control) and ABAC (Attribute-Based Access Control) permi
 ## Features
 
 - **CASL-based in-process evaluation** — Fast, no network calls, great for UI + API middleware
-- **OpenFGA integration** — Managed/self-hosted Zanzibar for complex relationship graphs
-- **Role hierarchy** — Roles inherit permissions from parent roles
+- **OpenFGA integration** — Placeholder for managed/self-hosted Zanzibar relationship graphs
+- **Role hierarchy** — Roles inherit permissions from parent roles; child rules override inherited grants deterministically
 - **ABAC conditions** — Dynamic field resolution at evaluation time
-- **Field-level permissions** — Restrict access to specific fields
+- **Field-level permissions** — Restrict access to specific fields through CASL-backed checks
 - **React hooks & components** — `usePermission()`, `<Can>` component for UI gate-keeping
 - **Hono middleware** — Automatic permission checks in API routes
 - **Provider auto-detection** — Automatically picks CASL or OpenFGA based on env vars
@@ -130,7 +130,7 @@ Roles inherit permissions from parent roles. The default roles are:
 {
   role: "editor",
   inherits: ["member", "reviewer"], // Multiple inheritance
-  rules: [ /* ... */ ]
+  rules: [ /* inherited rules apply first; this role's rules can override */ ]
 }
 ```
 
@@ -165,6 +165,9 @@ const rule: PermissionRule = {
   resource: "Document",
   fields: ["title", "content"], // Only these fields readable
 };
+
+permissions.can(context, "read", "Document", undefined, "title"); // true
+permissions.can(context, "read", "Document", undefined, "internalNotes"); // false
 ```
 
 ## Provider Configuration
@@ -183,7 +186,7 @@ const provider = createCASLProvider();
 
 ### OpenFGA (Relationship-Based)
 
-For complex relationship graphs (teams, departments, role cascades).
+OpenFGA is still a foundation stub and should not be used for production relationship authorization yet.
 
 ```typescript
 import { createOpenFGAProvider } from "@nebutra/permissions/openfga";

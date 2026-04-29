@@ -40,9 +40,11 @@ export {
 // Re-export middleware (as subpath export ./middleware)
 // These are exported via package.json "exports" for tree-shaking
 
+export type { RlsPolicyCommand, RlsPolicySqlOptions } from "./isolation.js";
 // Re-export isolation helpers
 export {
   createTenantPrismaProxy,
+  generateRlsPolicySql,
   getTenantDatabaseUrl,
   getTenantSchema,
   TenantAwarePrismaClient,

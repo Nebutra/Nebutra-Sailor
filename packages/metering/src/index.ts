@@ -48,6 +48,8 @@ export {
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
 export { ClickHouseProvider } from "./providers/clickhouse";
 export { MemoryProvider } from "./providers/memory";
+// ── Quota Enforcement ───────────────────────────────────────────────────────
+export { evaluateUsageLimit } from "./quota-enforcement";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 export type {
@@ -60,6 +62,8 @@ export type {
   MeteringProviderType,
   MeterType,
   PeriodType,
+  QuotaEnforcementInput,
+  QuotaEnforcementResult,
   ThresholdAlert,
   UsageEvent,
   UsageQuota,

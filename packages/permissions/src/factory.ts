@@ -8,6 +8,7 @@ import type {
   PermissionContext,
   PermissionProvider,
   PermissionProviderType,
+  PermissionRule,
   Resource,
   RoleDefinition,
 } from "./types.js";
@@ -56,8 +57,14 @@ export class PermissionsManager {
     return this.providerType;
   }
 
-  can(context: PermissionContext, action: Action, resource: Resource, subject?: unknown): boolean {
-    return this.provider.can(context, action, resource, subject);
+  can(
+    context: PermissionContext,
+    action: Action,
+    resource: Resource,
+    subject?: unknown,
+    field?: string,
+  ): boolean {
+    return this.provider.can(context, action, resource, subject, field);
   }
 
   cannot(
@@ -65,11 +72,12 @@ export class PermissionsManager {
     action: Action,
     resource: Resource,
     subject?: unknown,
+    field?: string,
   ): boolean {
-    return this.provider.cannot(context, action, resource, subject);
+    return this.provider.cannot(context, action, resource, subject, field);
   }
 
-  getRulesForRole(role: string): any[] {
+  getRulesForRole(role: string): PermissionRule[] {
     return this.provider.getRulesForRole(role);
   }
 

@@ -125,6 +125,48 @@ export const WebhookDeliveryAttemptSchema = z.object({
 
 export type WebhookDeliveryAttempt = z.infer<typeof WebhookDeliveryAttemptSchema>;
 
+// ── Dead-Letter Delivery ───────────────────────────────────────────────────
+
+export const WebhookDeadLetterDeliverySchema = z.object({
+  /** Stable dead-letter record ID */
+  id: z.string(),
+
+  /** ID of the message that exhausted delivery attempts */
+  messageId: z.string(),
+
+  /** ID of the endpoint that could not be reached */
+  endpointId: z.string(),
+
+  /** Tenant this failed delivery belongs to */
+  tenantId: z.string(),
+
+  /** Event type that failed delivery */
+  eventType: z.string(),
+
+  /** Original serializable event payload */
+  payload: z.record(z.string(), z.unknown()),
+
+  /** Final delivery attempt ID */
+  finalAttemptId: z.string(),
+
+  /** Final delivery attempt number */
+  finalAttemptNumber: z.number().int().min(1),
+
+  /** Final HTTP status code (if available) */
+  statusCode: z.number().int().nullable(),
+
+  /** Final failure response or error text */
+  response: z.string().nullable(),
+
+  /** ISO-8601 timestamp of the final failed attempt */
+  failedAt: z.string().datetime(),
+
+  /** ISO-8601 timestamp when the record entered dead-letter state */
+  deadLetteredAt: z.string().datetime(),
+});
+
+export type WebhookDeadLetterDelivery = z.infer<typeof WebhookDeadLetterDeliverySchema>;
+
 // ── Provider Interface ──────────────────────────────────────────────────────
 
 /**
@@ -172,6 +214,12 @@ export interface WebhookProvider {
    * Used for observability and debugging.
    */
   getDeliveryAttempts(messageId: string): Promise<WebhookDeliveryAttempt[]>;
+
+  /**
+   * Get dead-lettered deliveries after all retry attempts are exhausted.
+   * Used for operator review, replay tooling, and incident triage.
+   */
+  getDeadLetterDeliveries(messageId?: string): Promise<WebhookDeadLetterDelivery[]>;
 
   /**
    * Manually retry delivery to a specific endpoint.

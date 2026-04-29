@@ -11,7 +11,7 @@
       "or WEBHOOK_SIGNING_SECRET for custom self-hosted delivery"
     ],
     "gaps": [
-      "Custom delivery adapter lacks retry + dead-letter handling",
+      "Custom delivery adapter has in-memory retry + dead-letter metadata but lacks durable persistence",
       "Endpoint management UI not scaffolded",
       "Replay protection helpers incomplete"
     ]
@@ -26,6 +26,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -34,6 +35,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

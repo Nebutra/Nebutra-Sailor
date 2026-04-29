@@ -165,6 +165,48 @@ export interface ThresholdAlert {
   triggeredAt: string;
 }
 
+// ── Quota Enforcement ───────────────────────────────────────────────────────
+
+export interface QuotaEnforcementInput {
+  /** Meter being checked */
+  meterId: string;
+
+  /** Current usage for the billing period */
+  used: number;
+
+  /** Usage that would be consumed by the pending operation */
+  requested?: number;
+
+  /** Billing-style usage limit. `-1` means unlimited. */
+  limit: number;
+}
+
+export interface QuotaEnforcementResult {
+  /** Whether the pending operation is within the usage limit */
+  allowed: boolean;
+
+  /** Meter being checked */
+  meterId: string;
+
+  /** Current usage for the billing period */
+  used: number;
+
+  /** Usage that would be consumed by the pending operation */
+  requested: number;
+
+  /** Usage after applying the pending operation */
+  projected: number;
+
+  /** Billing-style usage limit. `-1` means unlimited. */
+  limit: number;
+
+  /** Remaining quota before the pending operation, or Infinity for unlimited */
+  remaining: number;
+
+  /** Human-readable denial reason when blocked */
+  reason?: string;
+}
+
 // ── Provider Interface ──────────────────────────────────────────────────────
 
 /**

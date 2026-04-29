@@ -9,6 +9,7 @@ Provides:
 - **Tenant resolution strategies** (header, subdomain, path, JWT, API key)
 - **Middleware integration** (Hono + Next.js)
 - **Database isolation** (RLS, schema-per-tenant, database-per-tenant)
+- **Deterministic RLS SQL generation** for migration-reviewed shared-schema policies
 - **React hooks** for client-side tenant access
 
 ## Installation
@@ -139,6 +140,17 @@ const client = withRls(prisma, tenant.id);
 
 // All queries now enforce RLS policies
 const users = await client.user.findMany();
+```
+
+Generate migration SQL for the backing PostgreSQL policies:
+
+```typescript
+import { generateRlsPolicySql } from "@nebutra/tenant/isolation";
+
+const sql = generateRlsPolicySql({
+  tables: ["users", "audit_logs"],
+});
+// Review and apply through your migration tool.
 ```
 
 ## Tenant Resolution Strategies
@@ -359,6 +371,7 @@ interface TenantConfig {
 ### Isolation
 
 - `withRls(prisma, tenantId)` — Apply RLS extension to Prisma
+- `generateRlsPolicySql(options)` — Generate deterministic PostgreSQL RLS policy SQL
 - `getTenantSchema(tenantId)` — Get schema name for schema-per-tenant
 - `getTenantDatabaseUrl(tenantId, baseUrl?)` — Get DB URL for database-per-tenant
 - `TenantAwarePrismaClient` — Wrapper class for tenant isolation

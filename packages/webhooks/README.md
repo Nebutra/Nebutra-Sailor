@@ -134,10 +134,11 @@ const webhooks = await createWebhooks({
 - ✅ In-memory or Redis-backed state
 - ✅ Exponential backoff: 5s, 30s, 2m, 15m, 1h, 6h
 - ✅ Manual retry & delivery observability
+- ✅ In-memory dead-letter metadata after retry exhaustion
 - ✅ HMAC-SHA256 signing (industry standard)
 - ❌ You handle infra, scaling, monitoring
 
-**Note:** For production use, implement Redis persistence and integrate with `@nebutra/queue` for distributed delivery.
+**Note:** Dead-letter metadata is currently in-memory. For production use, implement Redis persistence and integrate with `@nebutra/queue` for distributed delivery.
 
 ## API
 
@@ -214,6 +215,27 @@ interface WebhookDeliveryAttempt {
   attemptNumber: number;
   nextRetryAt: string | null; // ISO-8601
   attemptedAt: string;        // ISO-8601
+}
+```
+
+#### `getDeadLetterDeliveries(messageId?): Promise<WebhookDeadLetterDelivery[]>`
+
+Get dead-lettered deliveries after all retry attempts are exhausted.
+
+```typescript
+interface WebhookDeadLetterDelivery {
+  id: string;
+  messageId: string;
+  endpointId: string;
+  tenantId: string;
+  eventType: string;
+  payload: Record<string, unknown>;
+  finalAttemptId: string;
+  finalAttemptNumber: number;
+  statusCode: number | null;
+  response: string | null;
+  failedAt: string;
+  deadLetteredAt: string;
 }
 ```
 

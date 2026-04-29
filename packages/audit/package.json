@@ -7,11 +7,14 @@
   "nebutra": {
     "status": "wip",
     "productionReady": false,
-    "requires": ["@nebutra/db", "@nebutra/logger"],
+    "requires": [
+      "@nebutra/db",
+      "@nebutra/logger"
+    ],
     "gaps": [
       "No production app integrations",
       "Event schema not finalized",
-      "Query API not implemented"
+      "Retention/export workflow not implemented"
     ]
   },
   "main": "./src/index.ts",
@@ -19,7 +22,10 @@
   "exports": {
     ".": "./src/index.ts"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@nebutra/db": "workspace:*",
     "@nebutra/logger": "workspace:*"

@@ -2,6 +2,7 @@ import { logger } from "@nebutra/logger";
 import { type ApplicationIn, Svix } from "svix";
 import { verifyPayload } from "../signing.js";
 import type {
+  WebhookDeadLetterDelivery,
   WebhookDeliveryAttempt,
   WebhookEndpoint,
   WebhookMessage,
@@ -20,6 +21,19 @@ import type {
 interface SvixProviderOptions {
   apiKey?: string;
   serverUrl?: string;
+}
+
+interface SvixErrorLike {
+  code?: string;
+  message?: string;
+}
+
+interface SvixEndpointListItem {
+  id: string;
+  url: string;
+  filterTypes?: string[] | null;
+  disabled?: boolean;
+  createdAt: string | number | Date;
 }
 
 export class SvixProvider implements WebhookProvider {
@@ -64,10 +78,8 @@ export class SvixProvider implements WebhookProvider {
       logger.info("[webhooks:svix] Created application for tenant", { tenantId, appId: app.id });
       return app.id;
     } catch (error) {
-      if (
-        (error as any)?.code === "conflict" ||
-        (error as any)?.message?.includes("already exists")
-      ) {
+      const svixError = error as SvixErrorLike;
+      if (svixError.code === "conflict" || svixError.message?.includes("already exists")) {
         // Application already exists, try to list and find it
         logger.debug("[webhooks:svix] Application already exists, searching by name...", {
           tenantId,
@@ -139,7 +151,7 @@ export class SvixProvider implements WebhookProvider {
 
     const endpoints = await this.client.endpoint.list(appId);
 
-    return endpoints.data.map((ep: any) => ({
+    return (endpoints.data as SvixEndpointListItem[]).map((ep) => ({
       id: ep.id,
       url: ep.url,
       tenantId,
@@ -169,6 +181,12 @@ export class SvixProvider implements WebhookProvider {
   async getDeliveryAttempts(_messageId: string): Promise<WebhookDeliveryAttempt[]> {
     throw new Error(
       "[webhooks:svix] getDeliveryAttempts requires app context. Use SvixProvider with pre-configured app mapping.",
+    );
+  }
+
+  async getDeadLetterDeliveries(_messageId?: string): Promise<WebhookDeadLetterDelivery[]> {
+    throw new Error(
+      "[webhooks:svix] getDeadLetterDeliveries requires app context. Use SvixProvider with pre-configured app mapping.",
     );
   }
 

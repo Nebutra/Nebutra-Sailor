@@ -13,6 +13,131 @@ interface PrismaLikeClient {
   $queryRaw?: (query: TemplateStringsArray, ...values: unknown[]) => Promise<unknown[]>;
 }
 
+export type RlsPolicyCommand = "ALL" | "SELECT" | "INSERT" | "UPDATE" | "DELETE";
+
+export interface RlsPolicySqlOptions {
+  /** Tables that contain the tenant discriminator column. Sorted for deterministic output. */
+  tables: string[];
+  /** Optional schema qualifier. Defaults to unqualified table names. */
+  schema?: string;
+  /** Tenant discriminator column name. */
+  tenantColumn?: string;
+  /** PostgreSQL policy name prefix. Policy names are generated as `${prefix}_${table}`. */
+  policyPrefix?: string;
+  /** Policy command. Defaults to ALL for read/write tenant isolation. */
+  command?: RlsPolicyCommand;
+  /** Tenant expression used by generated policies. */
+  tenantExpression?: string;
+  /** Emit FORCE ROW LEVEL SECURITY after enabling RLS. Defaults to true. */
+  forceRls?: boolean;
+}
+
+const DEFAULT_TENANT_COLUMN = "tenant_id";
+const DEFAULT_POLICY_PREFIX = "tenant_isolation";
+const DEFAULT_TENANT_EXPRESSION = "current_setting('app.current_tenant_id', true)";
+
+function assertNonEmptyIdentifier(value: string, label: string): void {
+  if (typeof value !== "string" || value.trim().length === 0 || value.includes("\0")) {
+    throw new TenantIsolationError(`Invalid ${label} for RLS policy generation`, "shared_schema");
+  }
+}
+
+function quoteIdentifier(identifier: string): string {
+  assertNonEmptyIdentifier(identifier, "identifier");
+  return `"${identifier.replaceAll('"', '""')}"`;
+}
+
+function tableReference(table: string, schema?: string): string {
+  assertNonEmptyIdentifier(table, "table name");
+
+  if (!schema) {
+    return quoteIdentifier(table);
+  }
+
+  assertNonEmptyIdentifier(schema, "schema name");
+  return `${quoteIdentifier(schema)}.${quoteIdentifier(table)}`;
+}
+
+function policyPredicate(tenantColumn: string, tenantExpression: string): string {
+  assertNonEmptyIdentifier(tenantColumn, "tenant column");
+
+  if (tenantExpression.trim().length === 0 || tenantExpression.includes("\0")) {
+    throw new TenantIsolationError(
+      "Invalid tenant expression for RLS policy generation",
+      "shared_schema",
+    );
+  }
+
+  return `${quoteIdentifier(tenantColumn)} = ${tenantExpression}`;
+}
+
+/**
+ * Generate deterministic PostgreSQL Row-Level Security DDL for shared-schema tenancy.
+ *
+ * The generated SQL is intentionally migration-tool friendly: stable table sorting,
+ * explicit policy replacement, and no database connection side effects.
+ */
+export function generateRlsPolicySql(options: RlsPolicySqlOptions): string {
+  const {
+    command = "ALL",
+    forceRls = true,
+    policyPrefix = DEFAULT_POLICY_PREFIX,
+    schema,
+    tables,
+    tenantColumn = DEFAULT_TENANT_COLUMN,
+    tenantExpression = DEFAULT_TENANT_EXPRESSION,
+  } = options;
+
+  if (!Array.isArray(tables) || tables.length === 0) {
+    throw new TenantIsolationError(
+      "At least one table is required for RLS policy generation",
+      "shared_schema",
+    );
+  }
+
+  assertNonEmptyIdentifier(policyPrefix, "policy prefix");
+
+  const normalizedCommand = command.toUpperCase() as RlsPolicyCommand;
+  if (!["ALL", "SELECT", "INSERT", "UPDATE", "DELETE"].includes(normalizedCommand)) {
+    throw new TenantIsolationError(`Unsupported RLS policy command: ${command}`, "shared_schema");
+  }
+
+  const predicate = policyPredicate(tenantColumn, tenantExpression);
+  const sortedTables = [...new Set(tables)].sort((a, b) => a.localeCompare(b));
+
+  return sortedTables
+    .map((table) => {
+      const target = tableReference(table, schema);
+      const policyName = quoteIdentifier(`${policyPrefix}_${table}`);
+      const statements = [`ALTER TABLE ${target} ENABLE ROW LEVEL SECURITY;`];
+
+      if (forceRls) {
+        statements.push(`ALTER TABLE ${target} FORCE ROW LEVEL SECURITY;`);
+      }
+
+      statements.push(`DROP POLICY IF EXISTS ${policyName} ON ${target};`);
+
+      const createPolicyLines = [`CREATE POLICY ${policyName} ON ${target}`];
+
+      if (normalizedCommand !== "ALL") {
+        createPolicyLines[0] += ` FOR ${normalizedCommand}`;
+      }
+
+      if (normalizedCommand !== "INSERT") {
+        createPolicyLines.push(`  USING (${predicate})`);
+      }
+
+      if (["ALL", "INSERT", "UPDATE"].includes(normalizedCommand)) {
+        const prefix = createPolicyLines.length > 1 ? "  WITH CHECK" : "  WITH CHECK";
+        createPolicyLines.push(`${prefix} (${predicate})`);
+      }
+
+      statements.push(`${createPolicyLines.join("\n")};`);
+      return statements.join("\n");
+    })
+    .join("\n\n");
+}
+
 // =============================================================================
 // Database Isolation Helpers
 // =============================================================================
