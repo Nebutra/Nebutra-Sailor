@@ -29,7 +29,6 @@ export const NEBUTRA_PACKAGE_STATUS: Record<string, PackageStatus> = {
   // WIP — actively under development, do not use in production
   audit: "wip",
   "feature-flags": "wip",
-  "ai-providers": "wip",
   captcha: "wip",
   "event-bus": "wip",
   legal: "wip",

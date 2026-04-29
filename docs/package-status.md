@@ -41,14 +41,14 @@ you contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/metering`      | (enabled via payment)  | No — needs ClickHouse or local dev    | ClickHouse adapter is stub; rollups & billing sync pending          |
 | `@nebutra/notifications` | `--notifications`      | No — Novu/Knock creds required        | Adapter batching/retry limited; in-app feed + prefs not implemented |
 | `@nebutra/permissions`   | (consumed directly)    | Partial — CASL works in-process       | OpenFGA adapter stub; field-level perms pending                     |
-| `@nebutra/queue`         | `--queue`              | No — QStash or Redis credentials      | Dead letter queue TODO; worker auto-scaling TODO                    |
+| `@nebutra/queue`         | `--queue`              | No — QStash or Redis credentials      | QStash DLQ retrieval TODO; worker auto-scaling TODO                 |
 | `@nebutra/search`        | `--search`             | No — provider creds required          | Provider adapters are stubs; pgvector not implemented               |
 | `@nebutra/tenant`        | (enabled by middleware)| Partial — AsyncLocalStorage works     | RLS SQL generation pending; subdomain/JWT resolvers scaffolded      |
 | `@nebutra/uploads`       | (consumed directly)    | No — S3/R2 creds required             | Tus flow not end-to-end; validation stubs                           |
 | `@nebutra/vault`         | (consumed directly)    | Partial — local HKDF works for dev    | KMS rotation flow TODO; tenant isolation scaffolded                 |
 | `@nebutra/webhooks`      | `--webhooks`           | No — Svix token or signing secret     | Retry/DLQ in custom adapter incomplete                              |
 
-## WIP packages (8)
+## WIP packages (7)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -59,7 +59,6 @@ and missing functionality.
 | ------------------------ | ----------------------- | ---------------------------------------------------------------- |
 | `@nebutra/audit`         | (consumed directly)     | Event schema not finalized; query API not implemented            |
 | `@nebutra/feature-flags` | `--feature-flags`       | Provider adapters not wired; gradual rollout logic pending       |
-| `@nebutra/ai-providers`  | `--ai`                  | Provider implementations not exercised; retry/fallback pending   |
 | `@nebutra/captcha`       | `--captcha`             | hCaptcha & Aliyun adapters scaffolded only                       |
 | `@nebutra/event-bus`     | (consumed by saga)      | Cross-service pub/sub guarantees not verified                    |
 | `@nebutra/legal`         | (consumed directly)     | Consent persistence + document versioning pending                |
@@ -94,7 +93,7 @@ Every package carries its status in its own `package.json`:
     "productionReady": false,
     "requires": ["QSTASH_TOKEN or REDIS_URL"],
     "gaps": [
-      "Dead letter queue not implemented",
+      "QStash provider dead letter retrieval not implemented",
       "Worker auto-scaling TODO"
     ]
   }

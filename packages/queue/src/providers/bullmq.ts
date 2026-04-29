@@ -3,6 +3,7 @@ import { type Job as BullJob, Queue, Worker } from "bullmq";
 import IORedis from "ioredis";
 import type {
   BullMQProviderConfig,
+  DeadLetterJob,
   JobHandler,
   JobPayload,
   JobResult,
@@ -12,6 +13,35 @@ import type {
 } from "../types";
 
 // =============================================================================
+
+interface BullMQFailedJobLike {
+  id?: string;
+  data: JobPayload;
+  attemptsMade: number;
+  opts: { attempts?: number };
+  failedReason?: string;
+  finishedOn?: number;
+}
+
+export function toBullMQDeadLetterJob(
+  queue: string,
+  job: BullMQFailedJobLike,
+): DeadLetterJob | undefined {
+  const maxRetries = job.opts.attempts ?? job.data.options?.maxRetries ?? 3;
+  if (job.attemptsMade < maxRetries) return undefined;
+
+  return {
+    id: job.id ?? job.data.id,
+    queue,
+    type: job.data.type,
+    originalJob: job.data,
+    attempts: job.attemptsMade,
+    maxRetries,
+    failedReason: job.failedReason ?? "Job failed without a provider reason",
+    provider: "bullmq",
+    failedAt: new Date(job.finishedOn ?? Date.now()).toISOString(),
+  };
+}
 // BullMQ Provider — self-hosted Redis queue backend
 // =============================================================================
 // Uses BullMQ (the successor to Bull) for job queuing over a standard Redis
@@ -146,7 +176,7 @@ export class BullMQProvider implements QueueProvider {
 
       for (let i = 0; i < bullJobs.length; i++) {
         results.push({
-          jobId: bullJobs[i]?.id ?? queueJobs[i]!.id,
+          jobId: bullJobs[i]?.id ?? queueJobs[i]?.id ?? "",
           accepted: true,
           provider: "bullmq",
         });
@@ -261,6 +291,22 @@ export class BullMQProvider implements QueueProvider {
       ...(bullJob.processedOn ? { processedAt: new Date(bullJob.processedOn).toISOString() } : {}),
       ...(bullJob.finishedOn ? { completedAt: new Date(bullJob.finishedOn).toISOString() } : {}),
     };
+  }
+
+  async getDeadLetteredJobs(queue?: string): Promise<DeadLetterJob[]> {
+    const entries =
+      queue !== undefined ? [[queue, this.getOrCreateQueue(queue)] as const] : this.queues;
+    const deadLetters: DeadLetterJob[] = [];
+
+    for (const [queueName, q] of entries) {
+      const failedJobs = await q.getFailed(0, -1);
+      for (const failedJob of failedJobs) {
+        const deadLetter = toBullMQDeadLetterJob(queueName, failedJob);
+        if (deadLetter) deadLetters.push(deadLetter);
+      }
+    }
+
+    return deadLetters;
   }
 
   // ── Lifecycle ───────────────────────────────────────────────────────────
