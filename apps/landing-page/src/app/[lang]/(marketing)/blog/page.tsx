@@ -127,27 +127,17 @@ export default async function BlogPage({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   setRequestLocale(lang as Locale);
 
-  const posts = (await getPosts()) as SanityPost[];
+  const posts = (await getPosts().catch(() => [])) as SanityPost[];
 
   return (
-    <main id="main-content" className="min-h-screen bg-white dark:bg-black">
+    <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
       <Navbar />
 
       <section className="mx-auto max-w-5xl px-4 py-24 sm:px-6 lg:px-8">
         {/* Header */}
         <AnimateIn preset="emerge" inView>
           <div className="mb-16">
-            <h1
-              className="text-4xl font-bold tracking-tight"
-              style={{
-                background: "var(--brand-gradient)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Blog
-            </h1>
+            <h1 className="text-4xl font-bold tracking-tight text-[var(--neutral-12)]">Blog</h1>
             <p className="mt-4 text-[var(--neutral-11)]">
               Engineering insights, product updates, and SaaS best practices.
             </p>

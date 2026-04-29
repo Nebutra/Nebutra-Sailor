@@ -1,10 +1,9 @@
-import type * as React from "react";
 import { AnimateIn } from "../AnimateIn";
 import type { StatItem } from "./data";
 
 interface StatsDashboardProps {
   stats: StatItem[];
-  t: (key: any) => string;
+  t: (key: string) => string;
 }
 
 /**
@@ -23,7 +22,7 @@ export function StatsDashboard({ stats, t }: StatsDashboardProps) {
               key={stat.valueKey}
               className="group relative flex flex-col items-center justify-center bg-background p-8 md:p-10 transition-colors hover:bg-muted/30"
             >
-              <span className="text-5xl md:text-6xl font-black tracking-tighter bg-gradient-to-b from-foreground to-foreground/50 bg-clip-text text-transparent transition-transform duration-500 group-hover:scale-105 group-hover:text-foreground">
+              <span className="text-5xl md:text-6xl font-black tracking-tighter text-foreground transition-transform duration-500 group-hover:scale-105">
                 {t(stat.valueKey)}
               </span>
               <span className="mt-3 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.25em] text-muted-foreground group-hover:text-foreground/80 transition-colors">

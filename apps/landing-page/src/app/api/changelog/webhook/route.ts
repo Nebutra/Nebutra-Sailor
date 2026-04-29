@@ -75,12 +75,12 @@ export async function POST(req: NextRequest) {
   const type = payload.type || "feature";
 
   // 4. FAN-OUT NOTIFICATIONS (best-effort, don't block on failures)
-  const notifications: Promise<any>[] = [];
+  const notifications: Promise<unknown>[] = [];
 
   // 4a. Email via Resend
   if (process.env.RESEND_API_KEY && process.env.RESEND_AUDIENCE_ID) {
     notifications.push(
-      sendReleaseEmail({ title, url, summary, tag: type, version: payload.version }).catch((e) => {
+      sendReleaseEmail({ title, url, summary, tag: type }).catch((e) => {
         console.error("[changelog-webhook] Email failed:", e instanceof Error ? e.message : e);
         return null;
       }),
@@ -142,13 +142,11 @@ async function sendReleaseEmail({
   url,
   summary,
   tag,
-  version,
 }: {
   title: string;
   url: string;
   summary: string;
   tag: string;
-  version: string;
 }): Promise<void> {
   const resendApiKey = process.env.RESEND_API_KEY;
   const audienceId = process.env.RESEND_AUDIENCE_ID;

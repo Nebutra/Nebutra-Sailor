@@ -41,6 +41,46 @@ interface WizardStep4 {
   licenseKey: string;
 }
 
+interface LicenseApiResponse {
+  error?: string;
+  community?: {
+    memberNumber?: number | string;
+  };
+  license?: {
+    licenseKey?: string;
+  };
+}
+
+type TeamSize = NonNullable<WizardStep1["teamSize"]>;
+type ReferralSource = NonNullable<WizardStep3["referralSource"]>;
+
+const TEAM_SIZE_OPTIONS = [
+  "1",
+  "2-5",
+  "6-20",
+  "21-50",
+  "50+",
+] as const satisfies readonly TeamSize[];
+const REFERRAL_SOURCE_OPTIONS: readonly {
+  value: ReferralSource;
+  label?: string;
+  labelKey?: "referralSource.productHunt";
+}[] = [
+  { value: "twitter", label: "Twitter/X" },
+  { value: "github", label: "GitHub" },
+  { value: "product_hunt", labelKey: "referralSource.productHunt" },
+  { value: "friend", label: "A Friend" },
+  { value: "search", label: "Search" },
+  { value: "other", label: "Other" },
+];
+
+const WIZARD_STEP_MARKERS = [
+  { id: "step-1", value: 1 },
+  { id: "step-2", value: 2 },
+  { id: "step-3", value: 3 },
+  { id: "step-4", value: 4 },
+] as const;
+
 // Role card component
 const RoleCard = ({
   icon: Icon,
@@ -55,6 +95,7 @@ const RoleCard = ({
 }) => (
   <button
     type="button"
+    aria-pressed={selected}
     onClick={onClick}
     className={`flex flex-col items-center gap-3 rounded-lg border-2 p-4 transition-all duration-200 ${
       selected
@@ -81,6 +122,7 @@ const UseCaseCard = ({
 }) => (
   <button
     type="button"
+    aria-pressed={selected}
     onClick={onClick}
     className={`flex flex-col gap-2 rounded-xl border-2 p-5 text-left transition-all duration-200 ${
       selected
@@ -102,7 +144,6 @@ const LicenseTierCard = ({
   highlighted,
   selected,
   onClick,
-  variant = "default",
   cta,
 }: {
   title: string;
@@ -112,11 +153,11 @@ const LicenseTierCard = ({
   highlighted: boolean;
   selected: boolean;
   onClick: () => void;
-  variant?: "default" | "small";
   cta?: string;
 }) => (
   <button
     type="button"
+    aria-pressed={selected}
     onClick={onClick}
     className={`flex flex-col gap-4 rounded-xl border-2 p-6 text-left transition-all duration-200 ${
       highlighted ? "ring-2 ring-[var(--brand-primary)] ring-offset-2" : ""
@@ -133,8 +174,8 @@ const LicenseTierCard = ({
     <p className="text-sm text-[var(--neutral-11)]">{description}</p>
     {features.length > 0 && (
       <ul className="space-y-2 text-sm text-[var(--neutral-11)]">
-        {features.map((feature, i) => (
-          <li key={i} className="flex items-start gap-2">
+        {features.map((feature) => (
+          <li key={feature} className="flex items-start gap-2">
             <span className="mt-1 text-[var(--blue-9)]">•</span>
             <span>{feature}</span>
           </li>
@@ -148,11 +189,11 @@ const LicenseTierCard = ({
 // Progress bar component
 const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
   <div className="flex gap-2">
-    {Array.from({ length: totalSteps }).map((_, i) => (
+    {WIZARD_STEP_MARKERS.slice(0, totalSteps).map((step) => (
       <div
-        key={i}
+        key={step.id}
         className={`h-2 flex-1 rounded-full transition-all duration-300 ${
-          i < currentStep ? "bg-[var(--blue-9)]" : "bg-[var(--neutral-7)]"
+          step.value <= currentStep ? "bg-[var(--blue-9)]" : "bg-[var(--neutral-7)]"
         }`}
       />
     ))}
@@ -236,7 +277,17 @@ export function LicenseWizard() {
 
   // Handle previous step
   const handlePrev = () => {
-    if (currentStep > 1) setCurrentStep(currentStep - 1);
+    if (currentStep > 1) setCurrentStep((step) => step - 1);
+  };
+
+  const failSubmission = (errorMessage: string) => {
+    setSubmitError(errorMessage);
+    setIsSubmitting(false);
+    emitBrowserEvent("license.wizard", {
+      action: "failed",
+      tier: step3.tier,
+      error_message: errorMessage.slice(0, 200),
+    });
   };
 
   // Handle form submission
@@ -246,62 +297,67 @@ export function LicenseWizard() {
     setIsSubmitting(true);
     setSubmitError(null);
 
+    const requestBody = JSON.stringify({
+      role: step1.role,
+      teamSize: step1.teamSize,
+      useCase: step2.useCase,
+      buildingWhat: step2.buildingWhat ? step2.buildingWhat : undefined,
+      industry: step2.industry ? step2.industry : undefined,
+      tier: step3.tier,
+      githubHandle: step3.githubHandle ? step3.githubHandle : undefined,
+      twitterHandle: step3.twitterHandle ? step3.twitterHandle : undefined,
+      referralSource: step3.referralSource,
+      lookingFor: step3.lookingFor,
+      acceptedTerms: true,
+    });
+
+    let response: Response;
     try {
-      const response = await fetch("/api/license", {
+      response = await fetch("/api/license", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          role: step1.role,
-          teamSize: step1.teamSize,
-          useCase: step2.useCase,
-          buildingWhat: step2.buildingWhat || undefined,
-          industry: step2.industry || undefined,
-          tier: step3.tier,
-          githubHandle: step3.githubHandle || undefined,
-          twitterHandle: step3.twitterHandle || undefined,
-          referralSource: step3.referralSource,
-          lookingFor: step3.lookingFor,
-          acceptedTerms: true,
-        }),
+        body: requestBody,
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to create license");
-      }
-
-      // Store member number for the community welcome overlay
-      if (data.community?.memberNumber) {
-        localStorage.setItem("sleptons_member_number", String(data.community.memberNumber));
-      }
-
-      setStep4({ licenseKey: data.license.licenseKey });
-      setCurrentStep(4);
-
-      emitBrowserEvent("license.wizard", {
-        action: "submitted",
-        tier: step3.tier,
-        referral_source: step3.referralSource,
-      });
-
-      // Redirect to the community hub after a short delay
-      const communityUrl = process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002";
-      setTimeout(() => {
-        window.location.href = `${communityUrl}?welcome=true`;
-      }, 2500);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "An error occurred. Please try again.";
-      setSubmitError(errorMessage);
-      emitBrowserEvent("license.wizard", {
-        action: "failed",
-        tier: step3.tier,
-        error_message: errorMessage.slice(0, 200),
-      });
-    } finally {
-      setIsSubmitting(false);
+      failSubmission(errorMessage);
+      return;
     }
+
+    const data = (await response.json()) as LicenseApiResponse;
+
+    if (!response.ok) {
+      failSubmission(data.error ? data.error : "Failed to create license");
+      return;
+    }
+
+    const licenseKey = data.license?.licenseKey;
+    if (!licenseKey) {
+      failSubmission("License API returned an invalid response.");
+      return;
+    }
+
+    // Store member number for the community welcome overlay
+    if (data.community?.memberNumber) {
+      localStorage.setItem("sleptons_member_number", String(data.community.memberNumber));
+    }
+
+    setStep4({ licenseKey });
+    setCurrentStep(4);
+
+    emitBrowserEvent("license.wizard", {
+      action: "submitted",
+      tier: step3.tier,
+      referral_source: step3.referralSource,
+    });
+
+    // Redirect to the community hub after a short delay
+    const communityUrl = process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002";
+    setTimeout(() => {
+      window.location.href = `${communityUrl}?welcome=true`;
+    }, 2500);
+    setIsSubmitting(false);
   };
 
   return (
@@ -326,10 +382,10 @@ export function LicenseWizard() {
               </div>
 
               {/* Role field */}
-              <div>
-                <label className="mb-4 block text-sm font-semibold text-[var(--neutral-12)]">
+              <fieldset>
+                <legend className="mb-4 block text-sm font-semibold text-[var(--neutral-12)]">
                   What's your role?
-                </label>
+                </legend>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                   <RoleCard
                     icon={() => <span className="text-lg">👨‍💻</span>}
@@ -362,22 +418,22 @@ export function LicenseWizard() {
                     onClick={() => setStep1((prev) => ({ ...prev, role: "other" }))}
                   />
                 </div>
-              </div>
+              </fieldset>
 
               {/* Team size field */}
-              <div>
-                <label className="mb-4 block text-sm font-semibold text-[var(--neutral-12)]">
+              <fieldset>
+                <legend className="mb-4 block text-sm font-semibold text-[var(--neutral-12)]">
                   How big is your team?
-                </label>
+                </legend>
                 <div className="space-y-3">
-                  {["1", "2-5", "6-20", "21-50", "50+"].map((size) => (
+                  {TEAM_SIZE_OPTIONS.map((size) => (
                     <label key={size} className="flex items-center gap-3 cursor-pointer">
                       <input
                         type="radio"
                         name="teamSize"
                         value={size}
-                        checked={step1.teamSize === (size as any)}
-                        onChange={() => setStep1((prev) => ({ ...prev, teamSize: size as any }))}
+                        checked={step1.teamSize === size}
+                        onChange={() => setStep1((prev) => ({ ...prev, teamSize: size }))}
                         className="h-4 w-4"
                       />
                       <span className="text-[var(--neutral-12)]">
@@ -390,7 +446,7 @@ export function LicenseWizard() {
                     </label>
                   ))}
                 </div>
-              </div>
+              </fieldset>
 
               {/* Navigation */}
               <div className="flex justify-end gap-3 pt-6">
@@ -423,10 +479,10 @@ export function LicenseWizard() {
               </div>
 
               {/* Use case field */}
-              <div>
-                <label className="mb-4 block text-sm font-semibold text-[var(--neutral-12)]">
+              <fieldset>
+                <legend className="mb-4 block text-sm font-semibold text-[var(--neutral-12)]">
                   What's your primary use case?
-                </label>
+                </legend>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <UseCaseCard
                     label="SaaS Product"
@@ -465,14 +521,20 @@ export function LicenseWizard() {
                     onClick={() => setStep2((prev) => ({ ...prev, useCase: "other" }))}
                   />
                 </div>
-              </div>
+              </fieldset>
 
               {/* Building what field */}
               <div>
-                <label className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]">
+                <label
+                  htmlFor="license-building-what"
+                  className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]"
+                >
                   Describe what you're building (optional)
                 </label>
                 <textarea
+                  id="license-building-what"
+                  name="buildingWhat"
+                  autoComplete="off"
                   value={step2.buildingWhat}
                   onChange={(e) =>
                     setStep2((prev) => ({
@@ -480,7 +542,7 @@ export function LicenseWizard() {
                       buildingWhat: e.target.value.slice(0, 500),
                     }))
                   }
-                  placeholder="e.g. A financial management platform for freelancers..."
+                  placeholder="e.g. A financial management platform for freelancers…"
                   className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
                   rows={4}
                 />
@@ -491,14 +553,20 @@ export function LicenseWizard() {
 
               {/* Industry field */}
               <div>
-                <label className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]">
+                <label
+                  htmlFor="license-industry"
+                  className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]"
+                >
                   Industry (optional)
                 </label>
                 <input
+                  id="license-industry"
                   type="text"
+                  name="industry"
+                  autoComplete="off"
                   value={step2.industry}
                   onChange={(e) => setStep2((prev) => ({ ...prev, industry: e.target.value }))}
-                  placeholder="e.g. Fintech, Healthcare, Dev Tools..."
+                  placeholder="e.g. Fintech, Healthcare, Dev Tools…"
                   className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
                 />
               </div>
@@ -674,60 +742,86 @@ export function LicenseWizard() {
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]">
+                    <label
+                      htmlFor="license-github-handle"
+                      className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]"
+                    >
                       GitHub username (optional)
                     </label>
                     <input
+                      id="license-github-handle"
                       type="text"
+                      name="githubHandle"
+                      autoComplete="off"
+                      spellCheck={false}
                       value={step3.githubHandle}
                       onChange={(e) =>
                         setStep3((prev) => ({ ...prev, githubHandle: e.target.value }))
                       }
-                      placeholder="your-github-username"
+                      placeholder="your-github-username…"
                       className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
                     />
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]">
+                    <label
+                      htmlFor="license-twitter-handle"
+                      className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]"
+                    >
                       Twitter/X handle (optional)
                     </label>
                     <input
+                      id="license-twitter-handle"
                       type="text"
+                      name="twitterHandle"
+                      autoComplete="off"
+                      spellCheck={false}
                       value={step3.twitterHandle}
                       onChange={(e) =>
                         setStep3((prev) => ({ ...prev, twitterHandle: e.target.value }))
                       }
-                      placeholder="your-twitter-handle"
+                      placeholder="your-twitter-handle…"
                       className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
                     />
                   </div>
 
                   <div>
-                    <label className="mb-3 block text-sm font-semibold text-[var(--neutral-12)]">
+                    <label
+                      htmlFor="license-referral-source"
+                      className="mb-3 block text-sm font-semibold text-[var(--neutral-12)]"
+                    >
                       How did you hear about us? *
                     </label>
                     <select
+                      id="license-referral-source"
+                      name="referralSource"
+                      autoComplete="off"
                       value={step3.referralSource || ""}
-                      onChange={(e) =>
-                        setStep3((prev) => ({ ...prev, referralSource: e.target.value as any }))
-                      }
+                      onChange={(e) => {
+                        const value = e.target.value as ReferralSource | "";
+                        setStep3((prev) => ({
+                          ...prev,
+                          referralSource: value === "" ? null : value,
+                        }));
+                      }}
                       className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
                     >
                       <option value="">{t("referralSource.selectPlaceholder")}</option>
-                      <option value="twitter">Twitter/X</option>
-                      <option value="github">GitHub</option>
-                      <option value="product_hunt">{t("referralSource.productHunt")}</option>
-                      <option value="friend">A Friend</option>
-                      <option value="search">Search</option>
-                      <option value="other">Other</option>
+                      {REFERRAL_SOURCE_OPTIONS.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.labelKey ? t(option.labelKey) : option.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
               )}
 
               {submitError && (
-                <div className="flex gap-3 rounded-lg border border-[var(--status-danger)] bg-red-50 p-4">
+                <div
+                  aria-live="polite"
+                  className="flex gap-3 rounded-lg border border-[var(--status-danger)] bg-red-50 p-4"
+                >
                   <AlertCircle className="h-5 w-5 shrink-0 text-[var(--status-danger)]" />
                   <p className="text-sm text-[var(--status-danger)]">{submitError}</p>
                 </div>
@@ -756,7 +850,7 @@ export function LicenseWizard() {
                     background: isStep3Valid && !isSubmitting ? "var(--brand-gradient)" : undefined,
                   }}
                 >
-                  {isSubmitting ? "Creating..." : "Get License"}
+                  {isSubmitting ? "Creating…" : "Get License"}
                   {!isSubmitting && <ChevronRight className="h-4 w-4" />}
                 </button>
               </div>

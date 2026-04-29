@@ -3,15 +3,9 @@
 import { layoutWithLines, prepareWithSegments } from "@chenglou/pretext";
 import { motion, useInView } from "framer-motion";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
-export function OrganizationalEvolution() {
-  const t = useTranslations("impact");
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
-
-  const rawCode = `class ScaleProtocol {
+const RAW_CODE = `class ScaleProtocol {
   execute(load: Growth): Strategy {
     if (load.demands === 'Middle Management') {
       return new Error('Bureaucracy Rejected');
@@ -22,6 +16,12 @@ export function OrganizationalEvolution() {
     });
   }
 }`;
+
+export function OrganizationalEvolution() {
+  const t = useTranslations("impact");
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   useEffect(() => {
     // Only run the extremely fast DOM-less animation when in view
@@ -51,11 +51,11 @@ export function OrganizationalEvolution() {
     const render = (time: number) => {
       // Advance 1 character every ~30ms
       if (time - lastTime > 30) {
-        charCount++;
+        charCount = charCount + 1;
         lastTime = time;
       }
 
-      const currentText = rawCode.substring(0, charCount);
+      const currentText = RAW_CODE.substring(0, charCount);
 
       ctx.clearRect(0, 0, rect.width, rect.height);
       ctx.fillStyle = "#d4d4d4"; // neutral-300
@@ -88,7 +88,7 @@ export function OrganizationalEvolution() {
       }
 
       // Keep pulsing the cursor indefinitely, but stop text increments once done
-      if (charCount < rawCode.length) {
+      if (charCount < RAW_CODE.length) {
         animationFrameId = requestAnimationFrame(render);
       } else {
         // Re-render just for the cursor blink if finished
@@ -99,10 +99,10 @@ export function OrganizationalEvolution() {
     animationFrameId = requestAnimationFrame(render);
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [rawCode, isInView]);
+  }, [isInView]);
 
   return (
-    <section className="relative w-full bg-black py-24 md:py-32 px-4 md:px-10 overflow-hidden pb-48">
+    <section className="relative w-full bg-zinc-950 py-24 md:py-32 px-4 md:px-10 overflow-hidden pb-48">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
       <div className="mx-auto max-w-7xl flex flex-col lg:flex-row items-center gap-16">
@@ -131,7 +131,7 @@ export function OrganizationalEvolution() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="rounded-2xl border border-white/10 bg-black shadow-2xl overflow-hidden relative"
+            className="rounded-2xl border border-white/10 bg-zinc-950 shadow-2xl overflow-hidden relative"
           >
             {/* Window Chrome */}
             <div className="flex items-center px-4 py-3 border-b border-white/10 bg-white/5">
@@ -147,7 +147,7 @@ export function OrganizationalEvolution() {
             <div className="p-6 md:p-8 overflow-x-auto h-[280px] relative">
               {/* Screen reader visibility only! Fixes A11y Junk Output */}
               <pre className="sr-only">
-                <code>{rawCode}</code>
+                <code>{RAW_CODE}</code>
               </pre>
 
               {/* Actual Visual Renderer avoiding DOM Reflows */}

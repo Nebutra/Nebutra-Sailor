@@ -81,94 +81,47 @@ export function TerminalSnippet({ tokens }: TerminalSnippetProps) {
       }
     }
 
-    try {
-      // 1. Math-perfect zero-DOM layout using pretext
-      const prepared = prepareWithSegments(fullText, fontStr, { whiteSpace: "pre-wrap" });
-      const { lines, height: textHeight } = layoutWithLines(prepared, maxWidth, lineHeight);
+    // 1. Math-perfect zero-DOM layout using pretext
+    const prepared = prepareWithSegments(fullText, fontStr, { whiteSpace: "pre-wrap" });
+    const { lines, height: textHeight } = layoutWithLines(prepared, maxWidth, lineHeight);
 
-      const totalHeight = Math.max(100, textHeight + padding * 2);
-      if (dimensions.height !== totalHeight) {
-        setDimensions((prev) => ({ ...prev, height: totalHeight }));
-      }
+    const totalHeight = Math.max(100, textHeight + padding * 2);
+    let resizeFrameId: number | undefined;
+    if (dimensions.height !== totalHeight) {
+      resizeFrameId = requestAnimationFrame(() => {
+        setDimensions((prev) =>
+          prev.height === totalHeight ? prev : { ...prev, height: totalHeight },
+        );
+      });
+    }
 
-      canvas.width = dimensions.width * dpr;
-      canvas.height = totalHeight * dpr;
-      ctx.scale(dpr, dpr);
-      ctx.textBaseline = "top";
-      ctx.font = fontStr;
+    canvas.width = dimensions.width * dpr;
+    canvas.height = totalHeight * dpr;
+    ctx.scale(dpr, dpr);
+    ctx.textBaseline = "top";
+    ctx.font = fontStr;
 
-      const charW = ctx.measureText("a").width;
+    const charW = ctx.measureText("a").width;
 
-      if (!hasAnimated.current) {
-        let currentGlobalChar = 0;
-        let animFrameId: number;
-        const totalChars = fullText.length;
+    if (!hasAnimated.current) {
+      let currentGlobalChar = 0;
+      let animFrameId: number;
+      const totalChars = fullText.length;
 
-        const render = () => {
-          ctx.clearRect(0, 0, dimensions.width, totalHeight);
-
-          let drawnChars = 0;
-          let cursorX = padding;
-          let cursorY = padding;
-
-          for (let l = 0; l < lines.length; l++) {
-            const line = lines[l];
-            for (let c = 0; c < line.text.length; c++) {
-              if (drawnChars >= currentGlobalChar) {
-                break;
-              }
-
-              const char = line.text[c];
-              const meta = charMeta[drawnChars];
-              const x = padding + c * charW;
-              const y = padding + l * lineHeight;
-
-              if (meta?.glow) {
-                ctx.shadowColor = meta.glow;
-                ctx.shadowBlur = 10;
-              } else {
-                ctx.shadowColor = "transparent";
-                ctx.shadowBlur = 0;
-              }
-
-              ctx.fillStyle = meta?.color || "white";
-              ctx.fillText(char, x, y);
-
-              cursorX = x + charW;
-              cursorY = y;
-              drawnChars++;
-            }
-            if (drawnChars >= currentGlobalChar) break;
-            cursorX = padding;
-            cursorY = padding + (l + 1) * lineHeight;
-          }
-
-          // Trailing AI cursor
-          if (currentGlobalChar < totalChars) {
-            ctx.shadowColor = "rgba(34,197,94,0.4)";
-            ctx.shadowBlur = 8;
-            ctx.fillStyle = "rgba(34,197,94,0.9)";
-            ctx.fillRect(cursorX, cursorY + 2, charW, fontSize + 2);
-          }
-
-          if (currentGlobalChar < totalChars) {
-            // Speed: 5 chars per frame creates an aggressive, ultra-fast streaming visual
-            currentGlobalChar = Math.min(totalChars, currentGlobalChar + 5);
-            animFrameId = requestAnimationFrame(render);
-          } else {
-            hasAnimated.current = true;
-          }
-        };
-
-        animFrameId = requestAnimationFrame(render);
-        return () => cancelAnimationFrame(animFrameId);
-      } else {
-        // Fallback static render
+      const render = () => {
         ctx.clearRect(0, 0, dimensions.width, totalHeight);
+
         let drawnChars = 0;
+        let cursorX = padding;
+        let cursorY = padding;
+
         for (let l = 0; l < lines.length; l++) {
           const line = lines[l];
           for (let c = 0; c < line.text.length; c++) {
+            if (drawnChars >= currentGlobalChar) {
+              break;
+            }
+
             const char = line.text[c];
             const meta = charMeta[drawnChars];
             const x = padding + c * charW;
@@ -184,14 +137,69 @@ export function TerminalSnippet({ tokens }: TerminalSnippetProps) {
 
             ctx.fillStyle = meta?.color || "white";
             ctx.fillText(char, x, y);
+
+            cursorX = x + charW;
+            cursorY = y;
             drawnChars++;
           }
+          if (drawnChars >= currentGlobalChar) break;
+          cursorX = padding;
+          cursorY = padding + (l + 1) * lineHeight;
         }
-      }
-    } catch (err) {
-      console.error("Canvas Layout Error", err);
+
+        // Trailing AI cursor
+        if (currentGlobalChar < totalChars) {
+          ctx.shadowColor = "rgba(34,197,94,0.4)";
+          ctx.shadowBlur = 8;
+          ctx.fillStyle = "rgba(34,197,94,0.9)";
+          ctx.fillRect(cursorX, cursorY + 2, charW, fontSize + 2);
+        }
+
+        if (currentGlobalChar < totalChars) {
+          // Speed: 5 chars per frame creates an aggressive, ultra-fast streaming visual
+          currentGlobalChar = Math.min(totalChars, currentGlobalChar + 5);
+          animFrameId = requestAnimationFrame(render);
+        } else {
+          hasAnimated.current = true;
+        }
+      };
+
+      animFrameId = requestAnimationFrame(render);
+      return () => {
+        if (resizeFrameId !== undefined) cancelAnimationFrame(resizeFrameId);
+        cancelAnimationFrame(animFrameId);
+      };
     }
-  }, [dimensions.width, isInView, tokens]);
+
+    // Fallback static render
+    ctx.clearRect(0, 0, dimensions.width, totalHeight);
+    let drawnChars = 0;
+    for (let l = 0; l < lines.length; l++) {
+      const line = lines[l];
+      for (let c = 0; c < line.text.length; c++) {
+        const char = line.text[c];
+        const meta = charMeta[drawnChars];
+        const x = padding + c * charW;
+        const y = padding + l * lineHeight;
+
+        if (meta?.glow) {
+          ctx.shadowColor = meta.glow;
+          ctx.shadowBlur = 10;
+        } else {
+          ctx.shadowColor = "transparent";
+          ctx.shadowBlur = 0;
+        }
+
+        ctx.fillStyle = meta?.color || "white";
+        ctx.fillText(char, x, y);
+        drawnChars++;
+      }
+    }
+
+    return () => {
+      if (resizeFrameId !== undefined) cancelAnimationFrame(resizeFrameId);
+    };
+  }, [dimensions.height, dimensions.width, isInView, tokens]);
 
   return (
     <div className="w-full mt-auto relative z-10 rounded-xl border border-border/50 dark:border-white/5 bg-muted/60 dark:bg-zinc-950/90 shadow-2xl overflow-hidden group-hover:border-border dark:group-hover:border-white/20 transition-colors">

@@ -1,10 +1,10 @@
 import { createCheckoutSession, getOrCreateCustomer } from "@nebutra/billing";
 import { getSystemDb } from "@nebutra/db";
 import { issueLicense } from "@nebutra/license";
-import { logger } from "@nebutra/logger";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getSessionFromRequest, getUserById } from "@/lib/auth";
+import { serverLog } from "@/lib/server-log";
 
 // AUDIT(no-tenant): community profiles + licenses are user-scoped and predate
 // any tenant/organization context. The authenticated user's auth id is the
@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
 
       const priceId = process.env.STRIPE_PRICE_ID_STARTUP_LICENSE;
       if (!priceId) {
-        logger.error("Missing STRIPE_PRICE_ID_STARTUP_LICENSE");
+        serverLog.error("Missing STRIPE_PRICE_ID_STARTUP_LICENSE");
         return NextResponse.json({ error: "Stripe configuration missing" }, { status: 500 });
       }
 
@@ -151,7 +151,7 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (error) {
-    logger.error("[POST /api/license]", error);
+    serverLog.error("[POST /api/license]", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
@@ -191,7 +191,7 @@ export async function GET(req: NextRequest) {
       memberNumber: sleptonsProfile?.member_number ?? null,
     });
   } catch (error) {
-    logger.error("[GET /api/license]", error);
+    serverLog.error("[GET /api/license]", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

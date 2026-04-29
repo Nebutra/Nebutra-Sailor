@@ -114,8 +114,6 @@ export function MatrixLogOcean() {
       for (let i = 0; i < colCount; i++) {
         const colCenterX = i * colBaseWidth + colBaseWidth / 2;
         const distToMouseX = Math.abs(colCenterX - mouseX);
-        const distToMouseY = Math.abs(height / 2 - mouseY); // Overall Y proximity
-
         // 1. Fluid Typography Reflow (Width Compression)
         // If the mouse is horizontally nearby, compress the column width dynamically.
         // Pretext will completely rethink the wrap layout instantly.

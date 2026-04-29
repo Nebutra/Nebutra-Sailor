@@ -10,6 +10,7 @@ import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 
 export function HarnessEngineeringSection() {
   const t = useTranslations("microLanding.harness");
+  type HarnessTranslationKey = Parameters<typeof t>[0];
 
   return (
     <section id="harness" className="w-full bg-background py-24 md:py-32 relative overflow-hidden">
@@ -39,10 +40,10 @@ export function HarnessEngineeringSection() {
             {HARNESS_STATS.map((stat) => (
               <div key={stat.valueKey} className="text-center">
                 <span className="block text-6xl md:text-7xl font-black tracking-tighter bg-[image:var(--brand-gradient)] bg-clip-text text-transparent">
-                  {t(stat.valueKey as any)}
+                  {t(stat.valueKey as HarnessTranslationKey)}
                 </span>
                 <span className="block mt-2 text-sm font-bold uppercase tracking-widest text-muted-foreground">
-                  {t(stat.labelKey as any)}
+                  {t(stat.labelKey as HarnessTranslationKey)}
                 </span>
               </div>
             ))}
@@ -60,13 +61,13 @@ export function HarnessEngineeringSection() {
                     <card.Icon className="h-5 w-5 text-primary" />
                   </div>
                   <h3 className="text-xl font-bold tracking-tight text-foreground">
-                    {t(card.titleKey as any)}
+                    {t(card.titleKey as HarnessTranslationKey)}
                   </h3>
                 </div>
 
                 {/* Description */}
                 <p className="text-base text-muted-foreground leading-relaxed mb-8">
-                  {t(card.descKey as any)}
+                  {t(card.descKey as HarnessTranslationKey)}
                 </p>
 
                 {/* Card-specific visual */}

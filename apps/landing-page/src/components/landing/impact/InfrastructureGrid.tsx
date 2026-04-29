@@ -10,7 +10,7 @@ export function InfrastructureGrid() {
   const t = useTranslations("impact");
 
   return (
-    <section className="relative w-full bg-black py-24 md:py-32 px-4 md:px-10">
+    <section className="relative w-full bg-zinc-950 py-24 md:py-32 px-4 md:px-10">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 flex flex-col items-center justify-center text-center">
           <motion.div
@@ -27,7 +27,7 @@ export function InfrastructureGrid() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="bg-gradient-to-br from-white to-neutral-500 bg-clip-text text-transparent text-3xl font-bold tracking-tight sm:text-5xl"
+            className="text-3xl font-bold tracking-tight text-white sm:text-5xl"
           >
             {t("infra_headline")}
           </motion.h2>

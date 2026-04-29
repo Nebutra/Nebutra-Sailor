@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { AnimateIn } from "./AnimateIn";
 import { MinimalMonorepoTree } from "./MonorepoFileTree";
 
@@ -33,6 +34,63 @@ const app = new Hono()
   });
 
 export default app;`;
+
+const CODE_LINES = CODE_SNIPPET.split("\n").map((line, lineNumber) => ({
+  id: `${lineNumber + 1}:${line}`,
+  line,
+  lineNumber: lineNumber + 1,
+}));
+
+const CODE_TOKEN_REGEX =
+  /("(?:[^"\\]|\\.)*"|\/\/.*|\b(?:import|export|const|async|await|return|from|new|default|function|if|else|try|catch)(?=[\s(;,])|\b(?:Hono|z|streamText|openai|authMiddleware)(?=[\s({.])|\b(?:use|post|get|json|toDataStreamResponse)(?=\()|\b(?:model|system|messages|tools|searchDocs|description|parameters|query)(?=:)|\b(?:app|c|req|result|db)\b)/g;
+
+function getCodeTokenClassName(token: string) {
+  if (token.startsWith("//")) return "text-muted-foreground/50 italic";
+  if (token.startsWith('"')) return "text-teal-600 dark:text-teal-400";
+  if (
+    /^(import|export|const|async|await|return|from|new|default|function|if|else|try|catch)$/.test(
+      token,
+    )
+  ) {
+    return "text-[#ff7b72] dark:text-[#ff7b72] font-medium";
+  }
+  if (/^(Hono|z|streamText|openai|authMiddleware)$/.test(token)) {
+    return "text-[#d2a8ff] dark:text-[#d2a8ff]";
+  }
+  if (/^(use|post|get|json|toDataStreamResponse)$/.test(token)) {
+    return "text-[#79c0ff] dark:text-[#79c0ff]";
+  }
+  if (/^(model|system|messages|tools|searchDocs|description|parameters|query)$/.test(token)) {
+    return "text-[#7ee787] dark:text-[#7ee787]";
+  }
+  return "text-[#79c0ff] dark:text-[#79c0ff]";
+}
+
+function renderHighlightedLine(line: string) {
+  const nodes: ReactNode[] = [];
+  let lastIndex = 0;
+
+  for (const match of line.matchAll(CODE_TOKEN_REGEX)) {
+    const matchIndex = match.index;
+    if (matchIndex > lastIndex) {
+      nodes.push(line.slice(lastIndex, matchIndex));
+    }
+
+    const token = match[0];
+    nodes.push(
+      <span key={`${matchIndex}:${token}`} className={getCodeTokenClassName(token)}>
+        {token}
+      </span>,
+    );
+    lastIndex = matchIndex + token.length;
+  }
+
+  if (lastIndex < line.length) {
+    nodes.push(line.slice(lastIndex));
+  }
+
+  return nodes;
+}
 
 export function HeroMockupWindow() {
   return (
@@ -70,6 +128,8 @@ export function HeroMockupWindow() {
                     className="w-3 h-3 text-blue-500 shrink-0"
                     viewBox="0 0 24 24"
                     fill="currentColor"
+                    aria-hidden="true"
+                    focusable="false"
                   >
                     <path d="M3 3h18v18H3V3zm16.525 13.707c-.131-.821-.666-1.511-2.252-2.155-.552-.259-1.167-.438-1.349-.854-.068-.248-.083-.382-.036-.528.126-.611.936-.793 1.553-.625.397.108.77.421.992.813.836-.544.836-.544 1.416-.91-.216-.366-.328-.526-.476-.657-.652-.72-1.528-1.088-2.941-1.055l-.723.099c-.695.17-1.353.552-1.738 1.076-1.124 1.426-.803 3.924.563 4.949 1.351 1.075 3.33 1.312 3.581 2.321.24 1.2-.886 1.583-2.003 1.443-.828-.182-1.285-.672-1.786-1.219l-1.474.85c.174.393.375.57.674.915 1.44 1.479 5.038 1.405 5.685-.852.022-.076.156-.491.044-1.16zm-6.737-5.48h-1.826c0 1.403-.007 2.8-.01 4.205 0 .893.045 1.715-.098 1.967-.237.484-.853.424-1.134.336-.29-.147-.435-.35-.604-.642-.047-.079-.082-.142-.095-.142l-1.46.892c.243.502.583.928 1.017 1.205.644.41 1.508.559 2.413.369.588-.15 1.093-.477 1.36-.964.389-.665.307-1.482.299-2.394.02-1.611.007-3.223.007-4.843l.13.01z" />
                   </svg>
@@ -84,58 +144,15 @@ export function HeroMockupWindow() {
             <div className="px-4 py-4 overflow-auto h-full relative">
               <pre className="text-[12.5px] font-mono leading-[1.7] overflow-x-auto h-full text-foreground/80 selection:bg-primary/10">
                 <code>
-                  {CODE_SNIPPET.split("\n").map((line, i) => (
+                  {CODE_LINES.map(({ id, line, lineNumber }) => (
                     <div
-                      key={i}
+                      key={id}
                       className="min-w-fit flex hover:bg-muted/30 transition-colors rounded-sm -mx-1 px-1"
                     >
                       <span className="inline-block text-right pr-4 select-none text-[11px] w-7 shrink-0 py-px text-muted-foreground/30">
-                        {i + 1}
+                        {lineNumber}
                       </span>
-                      <span
-                        className="whitespace-pre py-px"
-                        dangerouslySetInnerHTML={{
-                          __html: line
-                            .replace(/&/g, "&amp;")
-                            .replace(/</g, "&lt;")
-                            .replace(/>/g, "&gt;")
-                            // Strings: Light Blue/Teal
-                            .replace(
-                              /("(?:[^"\\]|\\.)*")/g,
-                              "<span class='text-teal-600 dark:text-teal-400'>$1</span>",
-                            )
-                            // Keywords: Pink/Red
-                            .replace(
-                              /\b(import|export|const|async|await|return|from|new|default|function|if|else|try|catch)(?=[\s(;,])/g,
-                              "<span class='text-[#ff7b72] dark:text-[#ff7b72] font-medium'>$1</span>",
-                            )
-                            // Core Packages / Types: Purple
-                            .replace(
-                              /\b(Hono|z|streamText|openai|authMiddleware)(?=[\s({.])/g,
-                              "<span class='text-[#d2a8ff] dark:text-[#d2a8ff]'>$1</span>",
-                            )
-                            // Methods / Props: Orange/Blue
-                            .replace(
-                              /\b(use|post|get|json|toDataStreamResponse)(?=\()/g,
-                              "<span class='text-[#79c0ff] dark:text-[#79c0ff]'>$1</span>",
-                            )
-                            // Keys: Green
-                            .replace(
-                              /\b(model|system|messages|tools|searchDocs|description|parameters|query)(?=:)/g,
-                              "<span class='text-[#7ee787] dark:text-[#7ee787]'>$1</span>",
-                            )
-                            // Variables: Soft blue
-                            .replace(
-                              /\b(app|c|req|result|db)\b/g,
-                              "<span class='text-[#79c0ff] dark:text-[#79c0ff]'>$1</span>",
-                            )
-                            // Comments: Grey
-                            .replace(
-                              /(\/\/.*)/g,
-                              "<span class='text-muted-foreground/50 italic'>$1</span>",
-                            ),
-                        }}
-                      />
+                      <span className="whitespace-pre py-px">{renderHighlightedLine(line)}</span>
                     </div>
                   ))}
                 </code>

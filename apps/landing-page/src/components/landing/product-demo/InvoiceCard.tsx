@@ -90,6 +90,8 @@ export function InvoiceCard() {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
                 >
                   <motion.polyline
                     initial={{ pathLength: 0 }}

@@ -12,11 +12,11 @@ export async function PricingSection({
   currency?: string;
 } = {}) {
   const t = await getTranslations("microLanding.pricing");
+  type PricingTranslationKey = Parameters<typeof t>[0];
   const locale = await getLocale();
 
   let resolvedCurrency = currency;
   if (!resolvedCurrency) {
-    const { headers } = await import("next/headers");
     const headersList = await headers();
     resolvedCurrency = headersList.get("x-user-currency") || "USD";
   }
@@ -92,25 +92,27 @@ export async function PricingSection({
                 ].join(" ")}
                 variant={tier.highlighted ? "default" : "outline"}
               >
-                {t(`${tier.key}.badge` as any)}
+                {t(`${tier.key}.badge` as PricingTranslationKey)}
               </Badge>
 
               <div className="mb-6 flex items-baseline">
                 <span className="text-4xl font-black tracking-tight">{tier.dynamicPrice}</span>
                 <span className="text-muted-foreground font-medium ml-2">
-                  / {t(`${tier.key}.period` as any)}
+                  / {t(`${tier.key}.period` as PricingTranslationKey)}
                 </span>
               </div>
 
               <p className="text-muted-foreground text-sm mb-6 leading-relaxed min-h-[40px]">
-                {t(`${tier.key}.desc` as any)}
+                {t(`${tier.key}.desc` as PricingTranslationKey)}
               </p>
 
               <div className="space-y-3 flex-grow mb-8">
-                {tier.featureKeys.map((fKey, i) => (
-                  <div key={i} className="flex items-start gap-3">
+                {tier.featureKeys.map((fKey) => (
+                  <div key={`${tier.key}-${fKey}`} className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm font-medium">{t(`${tier.key}.${fKey}` as any)}</span>
+                    <span className="text-sm font-medium">
+                      {t(`${tier.key}.${fKey}` as PricingTranslationKey)}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -123,7 +125,7 @@ export async function PricingSection({
                 variant={tier.highlighted ? "default" : "secondary"}
                 asChild
               >
-                <a href={tier.ctaHref}>{t(`${tier.key}.cta` as any)}</a>
+                <a href={tier.ctaHref}>{t(`${tier.key}.cta` as PricingTranslationKey)}</a>
               </Button>
             </Card>
           ))}

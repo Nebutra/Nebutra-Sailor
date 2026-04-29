@@ -3,6 +3,7 @@ import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import Image from "next/image";
+import Link from "next/link";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
@@ -108,6 +109,7 @@ interface PortableTextChild {
 
 interface PortableTextBlock {
   _type?: string;
+  _key?: string;
   alt?: string;
   asset?: {
     url?: string;
@@ -127,39 +129,40 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
   return (
     <div className="prose prose-sm dark:prose-invert max-w-none space-y-4">
       {blocks.map((block, idx) => {
+        const blockKey = block._key ?? `${block._type ?? "block"}-${idx}`;
         if (block._type === "block") {
           // Handle text blocks with styling
           const text = block.children?.map((child) => child.text ?? "").join("") || "";
           if (block.style === "h2") {
             return (
-              <h2 key={idx} className="text-lg font-semibold mt-6 mb-3">
+              <h2 key={blockKey} className="text-lg font-semibold mt-6 mb-3">
                 {text}
               </h2>
             );
           }
           if (block.style === "h3") {
             return (
-              <h3 key={idx} className="text-base font-semibold mt-4 mb-2">
+              <h3 key={blockKey} className="text-base font-semibold mt-4 mb-2">
                 {text}
               </h3>
             );
           }
           if (block.listItem === "bullet") {
             return (
-              <li key={idx} className="list-disc ml-4">
+              <li key={blockKey} className="list-disc ml-4">
                 {text}
               </li>
             );
           }
           if (block.listItem === "number") {
             return (
-              <li key={idx} className="list-decimal ml-4">
+              <li key={blockKey} className="list-decimal ml-4">
                 {text}
               </li>
             );
           }
           return (
-            <p key={idx} className="text-sm leading-relaxed">
+            <p key={blockKey} className="text-sm leading-relaxed">
               {text}
             </p>
           );
@@ -168,7 +171,7 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
         if (block._type === "image" && block.asset?.url) {
           return (
             <Image
-              key={idx}
+              key={blockKey}
               src={block.asset.url}
               alt={block.alt || "Changelog image"}
               width={1200}
@@ -202,7 +205,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
   setRequestLocale(lang as Locale);
 
   // Try CMS first, fall back to static data
-  const cmsEntries: CmsEntry[] = await getChangelogEntries();
+  const cmsEntries: CmsEntry[] = await getChangelogEntries().catch(() => []);
   const useCms = cmsEntries.length > 0;
 
   const mappedReleases: Release[] = useCms
@@ -226,8 +229,8 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
                 {entry.summary
                   ?.split("\n")
                   .filter(Boolean)
-                  .map((bullet, i) => (
-                    <li key={i}>{bullet}</li>
+                  .map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
                   ))}
               </ul>
             </div>
@@ -247,8 +250,8 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           content: (
             <div className="prose prose-sm dark:prose-invert max-w-none">
               <ul className="list-disc pl-4 space-y-2 mt-4">
-                {r.highlights.map((h, i) => (
-                  <li key={i}>{h}</li>
+                {r.highlights.map((h) => (
+                  <li key={h}>{h}</li>
                 ))}
               </ul>
             </div>
@@ -258,7 +261,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
       });
 
   return (
-    <main id="main-content" className="min-h-screen bg-white dark:bg-black">
+    <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
       <Navbar forceDarkTheme />
 
       <InteractiveChangelog releases={mappedReleases} />
@@ -267,19 +270,19 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
         <AnimateIn preset="fade" inView>
           <p className="text-center text-sm text-[var(--neutral-11)]">
             Subscribe to release notes via{" "}
-            <a
+            <Link
               href="/api/changelog/rss"
               className="font-medium text-[var(--blue-9)] underline-offset-4 hover:underline"
             >
               RSS
-            </a>{" "}
+            </Link>{" "}
             or{" "}
-            <a
+            <Link
               href="/api/changelog/atom"
               className="font-medium text-[var(--blue-9)] underline-offset-4 hover:underline"
             >
               Atom
-            </a>{" "}
+            </Link>{" "}
             or follow{" "}
             <a
               href="https://x.com/nebutra_ai"

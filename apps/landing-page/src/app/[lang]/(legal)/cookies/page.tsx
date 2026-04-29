@@ -23,17 +23,43 @@ export function generateStaticParams() {
 }
 
 /** Indices for iterating next-intl indexed objects */
-const USE_ITEMS = [0, 1, 2, 3, 4] as const;
+const USE_ITEMS = [
+  { id: "authentication", index: 0 },
+  { id: "preferences", index: 1 },
+  { id: "analytics", index: 2 },
+  { id: "security", index: 3 },
+  { id: "marketing", index: 4 },
+] as const;
 const COOKIE_CATEGORIES = ["necessary", "functional", "analyticsType", "marketingType"] as const;
-const CONSENT_ITEMS = [0, 1, 2] as const;
-const BROWSERS = [0, 1, 2, 3] as const;
-const TECH_ITEMS = [0, 1, 2] as const;
+const CONSENT_ITEMS = [
+  { id: "accept-all", index: 0 },
+  { id: "reject-all", index: 1 },
+  { id: "customize", index: 2 },
+] as const;
+const BROWSERS = [
+  { id: "chrome", index: 0 },
+  { id: "firefox", index: 1 },
+  { id: "safari", index: 2 },
+  { id: "edge", index: 3 },
+] as const;
+const TECH_ITEMS = [
+  { id: "local-storage", index: 0 },
+  { id: "pixels", index: 1 },
+  { id: "logs", index: 2 },
+] as const;
+const COOKIE_INDEX_BY_CATEGORY: Record<(typeof COOKIE_CATEGORIES)[number], readonly number[]> = {
+  necessary: [0, 1, 2],
+  functional: [0, 1],
+  analyticsType: [0, 1],
+  marketingType: [0, 1],
+};
 
 export default async function CookiePolicyPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const locale = lang as Locale;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "legalPages.cookies" });
+  type CookieTranslationKey = Parameters<typeof t>[0];
 
   return (
     <article className="prose prose-gray dark:prose-invert max-w-none">
@@ -55,8 +81,8 @@ export default async function CookiePolicyPage({ params }: { params: Promise<{ l
       <h2>{t("howWeUse.title")}</h2>
       <p>{t("howWeUse.intro")}</p>
       <ul>
-        {USE_ITEMS.map((i) => (
-          <li key={i}>
+        {USE_ITEMS.map(({ id, index: i }) => (
+          <li key={id}>
             <strong>{t(`howWeUse.items.${i}.label`)}:</strong> {t(`howWeUse.items.${i}.desc`)}
           </li>
         ))}
@@ -66,19 +92,12 @@ export default async function CookiePolicyPage({ params }: { params: Promise<{ l
       <h2>{t("typesTitle")}</h2>
 
       {COOKIE_CATEGORIES.map((category) => {
-        // Determine cookie count per category
-        const cookieCounts: Record<string, readonly number[]> = {
-          necessary: [0, 1, 2],
-          functional: [0, 1],
-          analyticsType: [0, 1],
-          marketingType: [0, 1],
-        };
-        const indices = cookieCounts[category] ?? [0, 1];
+        const indices = COOKIE_INDEX_BY_CATEGORY[category];
 
         return (
           <div key={category}>
-            <h3>{t(`${category}.title` as any)}</h3>
-            <p>{t(`${category}.description` as any)}</p>
+            <h3>{t(`${category}.title` as CookieTranslationKey)}</h3>
+            <p>{t(`${category}.description` as CookieTranslationKey)}</p>
             <div className="overflow-x-auto">
               <table>
                 <thead>
@@ -90,14 +109,22 @@ export default async function CookiePolicyPage({ params }: { params: Promise<{ l
                   </tr>
                 </thead>
                 <tbody>
-                  {indices.map((i) => (
-                    <tr key={i}>
+                  {indices.map((cookieIndex) => (
+                    <tr key={`${category}-${cookieIndex}`}>
                       <td>
-                        <code>{t(`${category}.cookies.${i}.name` as any)}</code>
+                        <code>
+                          {t(`${category}.cookies.${cookieIndex}.name` as CookieTranslationKey)}
+                        </code>
                       </td>
-                      <td>{t(`${category}.cookies.${i}.provider` as any)}</td>
-                      <td>{t(`${category}.cookies.${i}.purpose` as any)}</td>
-                      <td>{t(`${category}.cookies.${i}.duration` as any)}</td>
+                      <td>
+                        {t(`${category}.cookies.${cookieIndex}.provider` as CookieTranslationKey)}
+                      </td>
+                      <td>
+                        {t(`${category}.cookies.${cookieIndex}.purpose` as CookieTranslationKey)}
+                      </td>
+                      <td>
+                        {t(`${category}.cookies.${cookieIndex}.duration` as CookieTranslationKey)}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -113,8 +140,8 @@ export default async function CookiePolicyPage({ params }: { params: Promise<{ l
       <h3>{t("consentBanner.title")}</h3>
       <p>{t("consentBanner.intro")}</p>
       <ul>
-        {CONSENT_ITEMS.map((i) => (
-          <li key={i}>
+        {CONSENT_ITEMS.map(({ id, index: i }) => (
+          <li key={id}>
             <strong>{t(`consentBanner.items.${i}.label`)}:</strong>{" "}
             {t(`consentBanner.items.${i}.desc`)}
           </li>
@@ -125,8 +152,8 @@ export default async function CookiePolicyPage({ params }: { params: Promise<{ l
       <h3>{t("browserSettings.title")}</h3>
       <p>{t("browserSettings.intro")}</p>
       <ul>
-        {BROWSERS.map((i) => (
-          <li key={i}>
+        {BROWSERS.map(({ id, index: i }) => (
+          <li key={id}>
             <strong>{t(`browserSettings.browsers.${i}.name`)}:</strong>{" "}
             {t(`browserSettings.browsers.${i}.path`)}
           </li>
@@ -140,8 +167,8 @@ export default async function CookiePolicyPage({ params }: { params: Promise<{ l
       <h2>{t("similarTech.title")}</h2>
       <p>{t("similarTech.intro")}</p>
       <ul>
-        {TECH_ITEMS.map((i) => (
-          <li key={i}>
+        {TECH_ITEMS.map(({ id, index: i }) => (
+          <li key={id}>
             <strong>{t(`similarTech.items.${i}.label`)}:</strong> {t(`similarTech.items.${i}.desc`)}
           </li>
         ))}

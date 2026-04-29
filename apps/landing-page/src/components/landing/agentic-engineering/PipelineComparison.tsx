@@ -48,6 +48,8 @@ export function PipelineComparison({
             viewBox="0 0 100 32"
             fill="none"
             preserveAspectRatio="none"
+            aria-hidden="true"
+            focusable="false"
           >
             <path
               d="M0 8 H100"

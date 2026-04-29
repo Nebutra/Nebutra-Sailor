@@ -1,11 +1,9 @@
-import bundleAnalyzer from "@next/bundle-analyzer";
+import createBundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
-});
+const withBundleAnalyzer = createBundleAnalyzer({ enabled: true });
 
 const securityHeaders = [
   {
@@ -46,6 +44,13 @@ const nextConfig: NextConfig = {
 
   // Enable Partial Prerendering — Next.js 16 merged experimental.ppr into cacheComponents.
   cacheComponents: true,
+  experimental: {
+    ...(process.env.VERCEL === "1" ? { cpus: 1 } : {}),
+    parallelServerBuildTraces: false,
+    parallelServerCompiles: false,
+    webpackBuildWorker: true,
+    webpackMemoryOptimizations: true,
+  },
 
   // Vercel should produce the deployable artifact quickly; type checking stays
   // a separate validation gate via `pnpm --filter @nebutra/landing-page typecheck`.
@@ -61,7 +66,6 @@ const nextConfig: NextConfig = {
     "@nebutra/tokens",
     "@nebutra/marketing",
     "@nebutra/sanity",
-    "@nebutra/logger",
   ],
   reactCompiler: true,
 
@@ -85,4 +89,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBundleAnalyzer(withNextIntl(nextConfig));
+const config = withNextIntl(nextConfig);
+
+export default process.env.ANALYZE === "true" ? withBundleAnalyzer(config) : config;

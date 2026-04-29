@@ -1,5 +1,22 @@
 import { CheckCircle2, Cpu, Fingerprint, Terminal } from "lucide-react";
 
+const SECURITY_ROWS = [
+  { name: "posts:write", a: true, u: false },
+  { name: "billing:read", a: true, u: false },
+  { name: "profile:edit", a: true, u: true },
+] as const;
+
+const DATA_BARS = [
+  { id: "bar-30", height: 30, highlighted: false },
+  { id: "bar-50-a", height: 50, highlighted: false },
+  { id: "bar-40", height: 40, highlighted: false },
+  { id: "bar-70", height: 70, highlighted: false },
+  { id: "bar-50-b", height: 50, highlighted: false },
+  { id: "bar-90", height: 90, highlighted: false },
+  { id: "bar-60", height: 60, highlighted: false },
+  { id: "bar-100", height: 100, highlighted: true },
+] as const;
+
 export function MultiTenantMockup() {
   return (
     <div className="relative top-4 w-full max-w-[340px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-border/60 bg-background font-mono text-[11px] leading-relaxed shadow-2xl transition-all duration-700 group-hover:top-2 dark:bg-background">
@@ -42,7 +59,7 @@ export function AIMockup() {
       </div>
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <svg className="w-full h-full" overflow="visible">
+        <svg className="w-full h-full" overflow="visible" aria-hidden="true" focusable="false">
           {/* Vercel uses extremely crisp, ultra-thin solid lines instead of thick dashed ones */}
           <path
             d="M 60 90 C 130 90, 150 40, 220 40"
@@ -90,13 +107,9 @@ export function SecurityMockup() {
         Permission Matrix
       </div>
       <div className="divide-y divide-border/50 text-[11px]">
-        {[
-          { name: "posts:write", a: true, u: false },
-          { name: "billing:read", a: true, u: false },
-          { name: "profile:edit", a: true, u: true },
-        ].map((row, i) => (
+        {SECURITY_ROWS.map((row) => (
           <div
-            key={i}
+            key={row.name}
             className="flex items-center justify-between px-5 py-4 transition-colors hover:bg-muted/30 dark:hover:bg-muted/40"
           >
             <div className="text-foreground dark:text-zinc-300 font-medium">{row.name}</div>
@@ -165,7 +178,7 @@ export function DXMockup() {
       <div className="p-6 text-foreground dark:text-zinc-300">
         <span className="text-primary dark:text-blue-400">import</span> {`{ Hono }`}{" "}
         <span className="text-primary dark:text-blue-400">from</span>{" "}
-        <span className="text-emerald-600 dark:text-emerald-300">'hono'</span>;
+        <span className="text-emerald-600 dark:text-emerald-300">{"'hono';"}</span>
         <div className="mt-4 text-muted-foreground dark:text-zinc-600">
           {"// Fully typed edge-ready RPC"}
         </div>
@@ -193,15 +206,15 @@ export function DXMockup() {
 export function DataMockup() {
   return (
     <div className="w-full max-w-[320px] h-[200px] flex items-end justify-between gap-1 mt-auto relative top-2">
-      {[30, 50, 40, 70, 50, 90, 60, 100].map((h, i) => (
+      {DATA_BARS.map((bar) => (
         <div
-          key={i}
+          key={bar.id}
           className="group/bar relative w-full overflow-hidden rounded-t-sm bg-muted/20 dark:bg-muted/30"
           style={{ height: "100%" }}
         >
           <div
-            className={`absolute bottom-0 w-full rounded-t-sm transition-all duration-700 ${i === 7 ? "bg-primary dark:bg-foreground" : "bg-primary/40 dark:bg-zinc-700"}`}
-            style={{ height: `${h}%` }}
+            className={`absolute bottom-0 w-full rounded-t-sm transition-all duration-700 ${bar.highlighted ? "bg-primary dark:bg-foreground" : "bg-primary/40 dark:bg-zinc-700"}`}
+            style={{ height: `${bar.height}%` }}
           ></div>
         </div>
       ))}

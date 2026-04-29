@@ -1,6 +1,5 @@
 import { AnimatedSpan, TypingAnimation } from "@nebutra/ui/primitives";
 import { ActivityMatrix } from "./ActivityMatrix";
-import { FauxTerminal } from "./FauxTerminal";
 import { LiveMetricsChart } from "./LiveMetricsChart";
 
 export function AnalyticsTerminal() {

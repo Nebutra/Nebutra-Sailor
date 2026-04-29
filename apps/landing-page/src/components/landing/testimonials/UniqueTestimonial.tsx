@@ -76,6 +76,7 @@ export function UniqueTestimonial({ testimonials }: UniqueTestimonialsProps) {
 
             return (
               <button
+                type="button"
                 key={testimonial.id}
                 onClick={() => handleSelect(index)}
                 onMouseEnter={() => setHoveredIndex(index)}

@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations } from "next-intl";
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 export function ImpactHero() {
   const t = useTranslations("impact");
@@ -20,7 +20,7 @@ export function ImpactHero() {
   return (
     <div
       ref={containerRef}
-      className="relative flex min-h-[100vh] pt-32 pb-16 w-full flex-col items-center justify-center overflow-hidden bg-black text-white"
+      className="relative flex min-h-[100vh] pt-32 pb-16 w-full flex-col items-center justify-center overflow-hidden bg-zinc-950 text-white"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(120,119,198,0.15)_0%,rgba(0,0,0,0)_50%)] pointer-events-none" />
 
@@ -44,9 +44,7 @@ export function ImpactHero() {
           transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="text-5xl font-black tracking-tighter sm:text-7xl md:text-8xl leading-[1.1]"
         >
-          <span className="bg-gradient-to-br from-white to-white/40 bg-clip-text text-transparent block pb-2">
-            {t("hero_title")}
-          </span>
+          <span className="block pb-2 text-white">{t("hero_title")}</span>
         </motion.h1>
 
         <motion.p

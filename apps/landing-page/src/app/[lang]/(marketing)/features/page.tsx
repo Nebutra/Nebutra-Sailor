@@ -51,17 +51,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
           </div>
           <h1 className="text-5xl font-black tracking-tighter sm:text-7xl mb-8 leading-[1.1]">
             {t("hero.headlinePrefix")}
-            <span
-              className="text-transparent bg-clip-text"
-              style={{
-                background: "var(--brand-gradient)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              {t("hero.headlineHighlight")}
-            </span>
+            <span className="text-primary">{t("hero.headlineHighlight")}</span>
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground leading-relaxed font-medium">
             {t("hero.description")}
@@ -112,9 +102,8 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
               <FeatureSmallCard
                 key={feature.titleKey}
                 icon={section.icon}
-                titleKey={feature.titleKey}
-                descKey={feature.descKey}
-                t={t}
+                title={t(`sections.${feature.titleKey}` as FeaturePageTranslationKey)}
+                description={t(`sections.${feature.descKey}` as FeaturePageTranslationKey)}
               />
             )),
           )}

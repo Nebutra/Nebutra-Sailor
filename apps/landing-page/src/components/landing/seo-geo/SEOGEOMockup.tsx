@@ -50,7 +50,12 @@ function CircleScore({
       className="flex flex-col items-center gap-1"
     >
       <div className="relative w-12 h-12">
-        <svg viewBox="0 0 40 40" className="w-full h-full -rotate-90">
+        <svg
+          viewBox="0 0 40 40"
+          className="w-full h-full -rotate-90"
+          aria-hidden="true"
+          focusable="false"
+        >
           <circle
             cx="20"
             cy="20"

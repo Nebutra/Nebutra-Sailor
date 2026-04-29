@@ -3,14 +3,13 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { MoveRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import React from "react";
 
 export function FrictionlessRouting() {
   const t = useTranslations("impact");
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="relative w-full bg-black py-32 md:py-48 px-4 md:px-10 overflow-hidden border-t border-white/5">
+    <section className="relative w-full bg-zinc-950 py-32 md:py-48 px-4 md:px-10 overflow-hidden border-t border-white/5">
       {/* Super-neural network mesh visualization */}
       <div className="absolute inset-0 z-0">
         <motion.div
@@ -87,7 +86,7 @@ function RoutingPath({
       transition={{ duration: 0.8, delay }}
       className="flex flex-col md:flex-row items-center justify-between gap-4 w-full p-6 md:p-8 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] transition-colors"
     >
-      <div className="text-xl md:text-2xl font-bold bg-gradient-to-br from-white to-neutral-500 bg-clip-text text-transparent w-full md:w-1/3 text-center md:text-left">
+      <div className="text-xl md:text-2xl font-bold text-white w-full md:w-1/3 text-center md:text-left">
         {source}
       </div>
 
@@ -104,7 +103,7 @@ function RoutingPath({
             repeatType: "reverse",
             ease: "easeInOut",
           }}
-          className="bg-black p-2 rounded-full relative z-10"
+          className="bg-zinc-950 p-2 rounded-full relative z-10"
         >
           <MoveRight className="w-5 h-5 text-[var(--cyan-9)] rotate-90 md:rotate-0" />
         </motion.div>

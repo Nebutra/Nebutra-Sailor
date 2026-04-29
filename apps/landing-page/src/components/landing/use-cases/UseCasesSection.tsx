@@ -6,8 +6,14 @@ import { useState } from "react";
 import { AnimateIn } from "../AnimateIn";
 import { USE_CASES_DATA } from "./use-cases-data";
 
+const USE_CASE_FEATURE_SLOTS = [
+  { id: "primary", index: 1 },
+  { id: "secondary", index: 2 },
+] as const;
+
 export function UseCasesSection() {
   const t = useTranslations("useCases");
+  type UseCasesTranslationKey = Parameters<typeof t>[0];
   const [activeTab, setActiveTab] = useState(0);
 
   const ActiveMockup = USE_CASES_DATA[activeTab].mockup;
@@ -44,7 +50,9 @@ export function UseCasesSection() {
 
               return (
                 <button
+                  type="button"
                   key={uc.key}
+                  aria-pressed={isActive}
                   onClick={() => setActiveTab(i)}
                   className={`group relative flex items-start text-left gap-5 p-5 md:p-6 rounded-[2rem] transition-all duration-500 overflow-hidden ${
                     isActive
@@ -72,7 +80,7 @@ export function UseCasesSection() {
                     <h3
                       className={`text-xl font-bold tracking-tight transition-colors duration-500 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
                     >
-                      {t(`tabs.${uc.key}` as any)}
+                      {t(`tabs.${uc.key}` as UseCasesTranslationKey)}
                     </h3>
 
                     <AnimatePresence initial={false}>
@@ -85,17 +93,19 @@ export function UseCasesSection() {
                           className="overflow-hidden"
                         >
                           <p className="text-sm md:text-base text-muted-foreground leading-relaxed font-medium">
-                            {t(`content.${uc.key}.desc` as any)}
+                            {t(`content.${uc.key}.desc` as UseCasesTranslationKey)}
                           </p>
 
                           {/* Optional checkmarks for detail */}
                           <div className="mt-4 flex flex-col gap-2">
-                            {[1, 2].map((idx) => {
-                              const featText = t(`content.${uc.key}.features.f${idx}` as any);
+                            {USE_CASE_FEATURE_SLOTS.map((slot) => {
+                              const featText = t(
+                                `content.${uc.key}.features.f${slot.index}` as UseCasesTranslationKey,
+                              );
                               if (!featText || featText.includes("content.")) return null;
                               return (
                                 <div
-                                  key={idx}
+                                  key={`${uc.key}-${slot.id}`}
                                   className="flex items-center gap-2 text-xs font-semibold text-foreground"
                                 >
                                   <div className="h-1.5 w-1.5 rounded-full bg-primary" />

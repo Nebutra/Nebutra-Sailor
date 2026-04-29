@@ -12,6 +12,7 @@ import { WorkspacesTerminal } from "./product-demo/WorkspacesTerminal";
 
 export function ProductDemoSection() {
   const t = useTranslations("microLanding.productDemo");
+  type ProductDemoTranslationKey = Parameters<typeof t>[0];
   const [activeId, setActiveId] = useState<ProductDemoTabId>(PRODUCT_DEMO_TABS[0].id);
 
   const renderActiveTerminal = () => {
@@ -59,9 +60,11 @@ export function ProductDemoSection() {
               const isActive = activeId === tab.id;
               return (
                 <button
+                  type="button"
                   key={tab.id}
+                  aria-pressed={isActive}
                   onClick={() => setActiveId(tab.id)}
-                  className={`group relative flex items-start text-left py-6 transition-all duration-500 outline-none w-full ${isActive ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
+                  className={`group relative flex items-start text-left py-6 transition-all duration-500 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background w-full ${isActive ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
                 >
                   {/* Step Node */}
                   <div className="relative shrink-0 w-14 h-14 hidden md:flex items-center justify-center mr-6 z-10 transition-transform duration-300">
@@ -92,12 +95,12 @@ export function ProductDemoSection() {
                     <h3
                       className={`text-xl md:text-2xl font-bold mb-3 tracking-tight transition-colors duration-400 ${isActive ? "text-foreground" : "text-muted-foreground"}`}
                     >
-                      {t(tab.labelKey as any)}
+                      {t(tab.labelKey as ProductDemoTranslationKey)}
                     </h3>
                     <p
                       className={`text-sm md:text-base leading-relaxed font-medium transition-colors duration-400 ${isActive ? "text-muted-foreground" : "text-muted-foreground/60"}`}
                     >
-                      {t(tab.descKey as any)}
+                      {t(tab.descKey as ProductDemoTranslationKey)}
                     </p>
                   </div>
                 </button>

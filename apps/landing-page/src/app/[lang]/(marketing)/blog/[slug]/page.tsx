@@ -16,7 +16,7 @@ type Params = { lang: string; slug: string };
 const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";
 
 export async function generateStaticParams() {
-  const posts = (await getPosts()) as Array<{ slug: { current: string } }>;
+  const posts = (await getPosts().catch(() => [])) as Array<{ slug: { current: string } }>;
 
   if (!posts || posts.length === 0) {
     // Next.js requires returning at least one path if we export generateStaticParams.
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     };
   }
 
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlug(slug).catch(() => null);
   if (!post) return {};
 
   const ogImage = post.mainImage
@@ -70,7 +70,7 @@ type SanityBlock = {
   children?: Array<{ _key: string; text: string; marks?: string[] }>;
 };
 
-function renderBody(body: SanityBlock[] | null) {
+function BodyContent({ body }: { body: SanityBlock[] | null }) {
   if (!body?.length) return null;
 
   return (
@@ -97,7 +97,7 @@ function renderBody(body: SanityBlock[] | null) {
             return (
               <blockquote
                 key={block._key}
-                className="mt-4 border-l-4 border-[var(--blue-9)] pl-4 text-[var(--neutral-11)] italic"
+                className="mt-4 rounded-lg bg-[var(--blue-3)] px-4 py-3 text-[var(--neutral-11)] italic shadow-[inset_2px_0_0_var(--blue-9)]"
               >
                 {text}
               </blockquote>
@@ -126,7 +126,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
   if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) {
     // Return empty placeholder for build optimization if no posts exist yet
     return (
-      <main className="min-h-screen bg-white py-24 dark:bg-black">
+      <main className="min-h-screen bg-white py-24 dark:bg-zinc-950">
         <div className="mx-auto max-w-3xl px-4 text-center">
           <h1 className="text-2xl font-bold">No posts published yet</h1>
         </div>
@@ -134,7 +134,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
     );
   }
 
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlug(slug).catch(() => null);
   if (!post) notFound();
 
   const imageUrl = post.mainImage
@@ -150,7 +150,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
     : null;
 
   return (
-    <main id="main-content" className="min-h-screen bg-white dark:bg-black">
+    <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
       <Navbar />
 
       <article className="mx-auto max-w-3xl px-4 py-24 sm:px-6 lg:px-8">
@@ -184,15 +184,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
 
         {/* Title */}
         <AnimateIn preset="emerge" inView>
-          <h1
-            className="text-3xl font-bold tracking-tight sm:text-4xl"
-            style={{
-              background: "var(--brand-gradient)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
+          <h1 className="text-3xl font-bold tracking-tight text-[var(--neutral-12)] sm:text-4xl">
             {post.title}
           </h1>
         </AnimateIn>
@@ -237,7 +229,9 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
 
         {/* Body */}
         <AnimateIn preset="fadeUp" inView>
-          <div className="mt-8">{renderBody(post.body as SanityBlock[] | null)}</div>
+          <div className="mt-8">
+            <BodyContent body={post.body as SanityBlock[] | null} />
+          </div>
         </AnimateIn>
       </article>
 

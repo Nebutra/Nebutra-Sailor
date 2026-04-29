@@ -12,11 +12,14 @@ const APP_URL = env.NEXT_PUBLIC_APP_URL;
 
 export function MobileDrawer() {
   const t = useTranslations("nav");
+  type NavTranslationKey = Parameters<typeof t>[0];
+  type LocalizedHref = Parameters<typeof Link>[0]["href"];
   const [open, setOpen] = useState(false);
 
   return (
     <div className="md:hidden flex items-center">
       <button
+        type="button"
         onClick={() => setOpen(!open)}
         className="rounded-lg p-2 text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white z-[60] relative"
         aria-label="Toggle menu"
@@ -40,23 +43,42 @@ export function MobileDrawer() {
                     return (
                       <div key={link.labelKey} className="flex flex-col gap-3 py-1">
                         <span className="text-xs font-bold text-muted-foreground/60 uppercase tracking-widest">
-                          {t(link.labelKey as any)}
+                          {t(link.labelKey as NavTranslationKey)}
                         </span>
                         <div className="flex flex-col gap-4 pl-4 border-l-2 border-border/40">
                           {link.children.map((child) => {
                             const isExternal = child.href.startsWith("http");
-                            const Component = isExternal ? "a" : Link;
+                            const content = (
+                              <>
+                                {child.icon && <child.icon className="h-4 w-4 opacity-70" />}
+                                {t(child.labelKey as NavTranslationKey)}
+                              </>
+                            );
+
+                            if (isExternal) {
+                              return (
+                                <a
+                                  key={child.labelKey}
+                                  href={child.href}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  onClick={() => setOpen(false)}
+                                  className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+                                >
+                                  {content}
+                                </a>
+                              );
+                            }
+
                             return (
-                              <Component
+                              <Link
                                 key={child.labelKey}
-                                href={child.href as any}
+                                href={child.href as LocalizedHref}
                                 onClick={() => setOpen(false)}
                                 className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
-                                {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
                               >
-                                {child.icon && <child.icon className="h-4 w-4 opacity-70" />}
-                                {t(child.labelKey as any)}
-                              </Component>
+                                {content}
+                              </Link>
                             );
                           })}
                         </div>
@@ -65,20 +87,38 @@ export function MobileDrawer() {
                   }
 
                   const isExternal = link.href.startsWith("http");
-                  const Component = isExternal ? "a" : Link;
                   const Icon = "icon" in link ? link.icon : null;
+                  const content = (
+                    <>
+                      {Icon && <Icon className="h-5 w-5" />}
+                      {t(link.labelKey as NavTranslationKey)}
+                    </>
+                  );
+
+                  if (isExternal) {
+                    return (
+                      <a
+                        key={link.labelKey}
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+                      >
+                        {content}
+                      </a>
+                    );
+                  }
 
                   return (
-                    <Component
+                    <Link
                       key={link.labelKey}
-                      href={link.href as any}
+                      href={link.href as LocalizedHref}
                       onClick={() => setOpen(false)}
                       className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
-                      {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
                     >
-                      {Icon && <Icon className="h-5 w-5" />}
-                      {t(link.labelKey as any)}
-                    </Component>
+                      {content}
+                    </Link>
                   );
                 })}
               </div>

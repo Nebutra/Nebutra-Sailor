@@ -49,6 +49,10 @@ const CATEGORY_LABELS: Record<string, string> = {
   other: "Other",
 };
 
+async function getShowcaseProjectsSafe(): Promise<ShowcaseProject[]> {
+  return getShowcaseProjects().catch(() => [] as ShowcaseProject[]);
+}
+
 export default async function ShowcasePage({ params }: { params: Promise<{ lang: string }> }) {
   "use cache";
   cacheLife("hours");
@@ -57,7 +61,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
   if (!hasLocale(routing.locales, lang)) return null;
   setRequestLocale(lang as Locale);
 
-  const projects: ShowcaseProject[] = await getShowcaseProjects();
+  const projects = await getShowcaseProjectsSafe();
 
   return (
     <>
@@ -103,6 +107,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
                         alt={project.name}
                         fill
                         className="object-cover transition-transform group-hover:scale-105"
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                       />
                     </div>
                   ) : (

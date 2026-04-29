@@ -1,7 +1,7 @@
 "use server";
 
-import { logger } from "@nebutra/logger";
 import { z } from "zod";
+import { serverLog } from "@/lib/server-log";
 
 const contactSchema = z.object({
   name: z.string().min(1).max(100),
@@ -43,7 +43,7 @@ export async function submitContactForm(
   if (!apiKey) {
     // In development without Resend, log and return success so the form is testable.
     if (process.env.NODE_ENV !== "production") {
-      logger.info("Contact form submission (Resend not configured)", {
+      serverLog.info("Contact form submission (Resend not configured)", {
         name,
         email,
         category,
@@ -51,7 +51,7 @@ export async function submitContactForm(
       });
       return { status: "success" };
     }
-    logger.error("RESEND_API_KEY is not set — contact form submission dropped");
+    serverLog.error("RESEND_API_KEY is not set — contact form submission dropped");
     return {
       status: "error",
       message: "Email delivery is not configured. Please email us directly.",
@@ -95,27 +95,27 @@ export async function submitContactForm(
       // 4xx errors are permanent failures — don't retry
       if (res.status >= 400 && res.status < 500) {
         const body = await res.text().catch(() => "");
-        logger.error("Resend API client error (no retry)", { status: res.status, body });
+        serverLog.error("Resend API client error (no retry)", { status: res.status, body });
         return { status: "error", message: "Failed to send message. Please try again." };
       }
 
       if (!res.ok) {
         // 5xx — transient, retry after backoff
         const body = await res.text().catch(() => "");
-        logger.warn(`Resend API server error (attempt ${attempt}/${MAX_ATTEMPTS})`, {
+        serverLog.warn(`Resend API server error (attempt ${attempt}/${MAX_ATTEMPTS})`, {
           status: res.status,
           body,
         });
         lastError = new Error(`HTTP ${res.status}`);
       } else {
-        logger.info("Contact form submitted", {
+        serverLog.info("Contact form submitted", {
           category,
           email: email.replace(/(.{2}).*@/, "$1***@"),
         });
         return { status: "success" };
       }
     } catch (err) {
-      logger.warn(`Contact form fetch failed (attempt ${attempt}/${MAX_ATTEMPTS})`, {
+      serverLog.warn(`Contact form fetch failed (attempt ${attempt}/${MAX_ATTEMPTS})`, {
         error: err instanceof Error ? err.message : String(err),
       });
       lastError = err;
@@ -127,7 +127,7 @@ export async function submitContactForm(
     }
   }
 
-  logger.error("Contact form submission failed after all retries", {
+  serverLog.error("Contact form submission failed after all retries", {
     error: lastError instanceof Error ? lastError.message : String(lastError),
   });
   return { status: "error", message: "Network error. Please try again later." };

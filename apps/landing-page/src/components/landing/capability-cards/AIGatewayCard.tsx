@@ -3,22 +3,24 @@
 import { Anthropic, DeepSeek, Gemini, OpenAI, Sparkles } from "@nebutra/ui/icons";
 import { AnimatedBeam } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
+import type { ComponentType } from "react";
 import { useRef } from "react";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { CapabilityCard } from "./CapabilityCard";
 
-type IconComponent = React.ComponentType<{ size?: number; className?: string }>;
-
-interface Provider {
-  icon: IconComponent & { Color?: IconComponent };
-  name: string;
-  ref: React.RefObject<HTMLDivElement | null>;
-}
+type ProviderIcon = ComponentType<{ size?: number; className?: string }>;
 
 const CURVATURES = [-30, -10, 10, 30];
 const BEAM_DELAYS = [0, 0.6, 1.2, 1.8];
+const getProviderIcon = (icon: ProviderIcon) => icon;
+const OpenAIIcon = getProviderIcon(OpenAI as ProviderIcon);
+const AnthropicIcon = getProviderIcon(Anthropic as ProviderIcon);
+const GeminiIcon = getProviderIcon(Gemini as ProviderIcon);
+const DeepSeekIcon = getProviderIcon(DeepSeek as ProviderIcon);
 
 export function AIGatewayCard() {
+  "use no memo";
+
   const t = useTranslations("microLanding.capability");
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,13 +29,6 @@ export function AIGatewayCard() {
   const anthropicRef = useRef<HTMLDivElement>(null);
   const geminiRef = useRef<HTMLDivElement>(null);
   const deepseekRef = useRef<HTMLDivElement>(null);
-
-  const providers: Provider[] = [
-    { icon: OpenAI, name: "OpenAI", ref: openaiRef },
-    { icon: Anthropic, name: "Anthropic", ref: anthropicRef },
-    { icon: Gemini, name: "Gemini", ref: geminiRef },
-    { icon: DeepSeek, name: "DeepSeek", ref: deepseekRef },
-  ];
 
   return (
     <CapabilityCard
@@ -103,42 +98,102 @@ export function AIGatewayCard() {
 
           {/* External Providers */}
           <div className="flex flex-col gap-3 z-10">
-            {providers.map((provider) => {
-              const Icon = provider.icon.Color ?? provider.icon;
-              return (
-                <div
-                  key={provider.name}
-                  ref={provider.ref}
-                  className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
-                >
-                  <Icon size={14} className="h-3.5 w-3.5 shrink-0" />
-                  <span className="text-[11px] font-bold text-foreground/80 dark:text-zinc-300 tracking-wide">
-                    {provider.name}
-                  </span>
-                </div>
-              );
-            })}
+            <div
+              ref={openaiRef}
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
+            >
+              <OpenAIIcon size={14} className="h-3.5 w-3.5 shrink-0" />
+              <span className="text-[11px] font-bold text-foreground/80 dark:text-zinc-300 tracking-wide">
+                OpenAI
+              </span>
+            </div>
+            <div
+              ref={anthropicRef}
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
+            >
+              <AnthropicIcon size={14} className="h-3.5 w-3.5 shrink-0" />
+              <span className="text-[11px] font-bold text-foreground/80 dark:text-zinc-300 tracking-wide">
+                Anthropic
+              </span>
+            </div>
+            <div
+              ref={geminiRef}
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
+            >
+              <GeminiIcon size={14} className="h-3.5 w-3.5 shrink-0" />
+              <span className="text-[11px] font-bold text-foreground/80 dark:text-zinc-300 tracking-wide">
+                Gemini
+              </span>
+            </div>
+            <div
+              ref={deepseekRef}
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
+            >
+              <DeepSeekIcon size={14} className="h-3.5 w-3.5 shrink-0" />
+              <span className="text-[11px] font-bold text-foreground/80 dark:text-zinc-300 tracking-wide">
+                DeepSeek
+              </span>
+            </div>
           </div>
         </div>
 
         {/* Rendering the connection lines */}
-        {providers.map((provider, i) => (
-          <AnimatedBeam
-            key={provider.name}
-            containerRef={containerRef}
-            fromRef={appRef}
-            toRef={provider.ref}
-            curvature={CURVATURES[i]}
-            delay={BEAM_DELAYS[i]}
-            duration={4.5}
-            pathColor="currentColor"
-            className="text-border dark:text-white/10"
-            pathWidth={1}
-            pathOpacity={0.8}
-            gradientStartColor="var(--color-primary, #0033FE)"
-            gradientStopColor="var(--brand-accent)"
-          />
-        ))}
+        <AnimatedBeam
+          containerRef={containerRef}
+          fromRef={appRef}
+          toRef={openaiRef}
+          curvature={CURVATURES[0]}
+          delay={BEAM_DELAYS[0]}
+          duration={4.5}
+          pathColor="currentColor"
+          className="text-border dark:text-white/10"
+          pathWidth={1}
+          pathOpacity={0.8}
+          gradientStartColor="var(--color-primary, #0033FE)"
+          gradientStopColor="var(--brand-accent)"
+        />
+        <AnimatedBeam
+          containerRef={containerRef}
+          fromRef={appRef}
+          toRef={anthropicRef}
+          curvature={CURVATURES[1]}
+          delay={BEAM_DELAYS[1]}
+          duration={4.5}
+          pathColor="currentColor"
+          className="text-border dark:text-white/10"
+          pathWidth={1}
+          pathOpacity={0.8}
+          gradientStartColor="var(--color-primary, #0033FE)"
+          gradientStopColor="var(--brand-accent)"
+        />
+        <AnimatedBeam
+          containerRef={containerRef}
+          fromRef={appRef}
+          toRef={geminiRef}
+          curvature={CURVATURES[2]}
+          delay={BEAM_DELAYS[2]}
+          duration={4.5}
+          pathColor="currentColor"
+          className="text-border dark:text-white/10"
+          pathWidth={1}
+          pathOpacity={0.8}
+          gradientStartColor="var(--color-primary, #0033FE)"
+          gradientStopColor="var(--brand-accent)"
+        />
+        <AnimatedBeam
+          containerRef={containerRef}
+          fromRef={appRef}
+          toRef={deepseekRef}
+          curvature={CURVATURES[3]}
+          delay={BEAM_DELAYS[3]}
+          duration={4.5}
+          pathColor="currentColor"
+          className="text-border dark:text-white/10"
+          pathWidth={1}
+          pathOpacity={0.8}
+          gradientStartColor="var(--color-primary, #0033FE)"
+          gradientStopColor="var(--brand-accent)"
+        />
       </div>
     </CapabilityCard>
   );

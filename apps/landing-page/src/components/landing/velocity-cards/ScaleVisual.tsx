@@ -1,6 +1,6 @@
 "use client";
 
-import { GitBranch, Infinity, ShieldCheck, Zap } from "lucide-react";
+import { GitBranch, Infinity as InfinityIcon, ShieldCheck, Zap } from "lucide-react";
 
 /**
  * High-fidelity Scale indicators visual showing post-launch growth infrastructure.
@@ -9,7 +9,7 @@ import { GitBranch, Infinity, ShieldCheck, Zap } from "lucide-react";
 const METRICS = [
   {
     label: "Tenants",
-    value: <Infinity className="w-8 h-8" />,
+    value: <InfinityIcon className="w-8 h-8" />,
     desc: "Isolations",
     icon: ShieldCheck,
   },

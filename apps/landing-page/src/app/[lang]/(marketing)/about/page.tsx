@@ -34,6 +34,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
   setRequestLocale(lang as Locale);
 
   const t = await getTranslations({ locale: lang as Locale, namespace: "legalPages.about" });
+  type AboutTranslationKey = Parameters<typeof t>[0];
 
   const valueImages = [
     "/images/about/agi-premium.png",
@@ -41,6 +42,12 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
     "/images/about/ergonomics-premium.png",
     "/images/about/scale-premium.png",
   ];
+  const valueCardIndices = [
+    { id: "clarity", value: 0 },
+    { id: "velocity", value: 1 },
+    { id: "craft", value: 2 },
+    { id: "community", value: 3 },
+  ] as const;
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen bg-background">
@@ -77,6 +84,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                   src="/images/about/hero-premium.png"
                   alt="Abstract Art"
                   fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
                   className="object-cover hover:scale-105 transition-transform duration-700"
                   priority
                 />
@@ -111,6 +119,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               src="/images/about/office.png"
               alt="Office Collaboration"
               fill
+              sizes="(min-width: 1024px) 1024px, 100vw"
               className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
             />
           </div>
@@ -261,15 +270,16 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[0, 1, 2, 3].map((i) => {
-              const titleRaw = t(`values.${i}.title` as any);
+            {valueCardIndices.map((item) => {
+              const i = item.value;
+              const titleRaw = t(`values.${i}.title` as AboutTranslationKey);
               const parts = titleRaw.split(" (");
               const zhText = parts[0];
               const enText = parts.length > 1 ? parts[1].replace(")", "") : "";
 
               return (
                 <div
-                  key={i}
+                  key={item.id}
                   className="group relative bg-muted/20 border border-border/50 rounded-3xl overflow-hidden hover:shadow-2xl hover:border-border transition-all duration-500 flex flex-col h-full"
                 >
                   {/* Top Image Slab */}
@@ -278,6 +288,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                       src={valueImages[i]}
                       alt={zhText}
                       fill
+                      sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   </div>
@@ -292,7 +303,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                       </p>
                     )}
                     <p className="text-sm text-muted-foreground leading-relaxed mt-2">
-                      {t(`values.${i}.description` as any)}
+                      {t(`values.${i}.description` as AboutTranslationKey)}
                     </p>
                   </div>
                 </div>
@@ -336,6 +347,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                   src="/images/about/landscape.png"
                   alt="Organization Philosophy"
                   fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover hover:scale-105 transition-transform duration-1000"
                 />
               </div>

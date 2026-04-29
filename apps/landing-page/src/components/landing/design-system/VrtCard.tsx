@@ -30,7 +30,10 @@ export function VrtCard() {
             <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">
               V1.0
             </span>
-            <button className="px-4 py-2 bg-muted/50 border-2 border-dashed border-red-500/30 text-muted-foreground rounded-sm text-xs font-mono opacity-80 pointer-events-none scale-95 whitespace-nowrap">
+            <button
+              type="button"
+              className="px-4 py-2 bg-muted/50 border-2 border-dashed border-red-500/30 text-muted-foreground rounded-sm text-xs font-mono opacity-80 pointer-events-none scale-95 whitespace-nowrap"
+            >
               {"<Button />"}
             </button>
           </div>
@@ -50,7 +53,10 @@ export function VrtCard() {
             {/* Diff Highlight Overlay */}
             <div className="relative">
               <div className="absolute -inset-1.5 border border-emerald-500/40 bg-emerald-500/5 rounded-xl border-dashed animate-pulse" />
-              <button className="px-6 py-2.5 bg-primary text-primary-foreground rounded-full text-sm font-bold shadow-xl shadow-primary/20 pointer-events-none whitespace-nowrap scale-105 relative z-10">
+              <button
+                type="button"
+                className="px-6 py-2.5 bg-primary text-primary-foreground rounded-full text-sm font-bold shadow-xl shadow-primary/20 pointer-events-none whitespace-nowrap scale-105 relative z-10"
+              >
                 {"<Button />"}
               </button>
             </div>

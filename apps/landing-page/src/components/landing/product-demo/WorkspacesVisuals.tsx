@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 /** Animated Toggle Role Switcher */
 export function RoleSwitcher() {
@@ -21,6 +21,8 @@ export function RoleSwitcher() {
             viewBox="0 0 24 24"
             fill="white"
             className="absolute bottom-[-4px] w-8 h-8 opacity-80 left-0"
+            aria-hidden="true"
+            focusable="false"
           >
             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
           </svg>
@@ -62,11 +64,13 @@ export function RoleSwitcher() {
         </div>
 
         <button
+          type="button"
           className={`relative z-10 w-16 px-2 py-1 text-[10px] font-bold tracking-wider uppercase transition-colors duration-300 ${role === "Viewer" ? "text-foreground" : "text-muted-foreground"}`}
         >
           Viewer
         </button>
         <button
+          type="button"
           className={`relative z-10 w-16 px-2 py-1 text-[10px] font-bold tracking-wider uppercase transition-colors duration-300 ${role === "Admin" ? "text-primary-foreground" : "text-muted-foreground"}`}
         >
           Admin
@@ -91,6 +95,8 @@ export function TenantDiagram() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
+            aria-hidden="true"
+            focusable="false"
           >
             <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
             <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>

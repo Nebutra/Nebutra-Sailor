@@ -3,7 +3,7 @@
 import { getChangelogEntries } from "@nebutra/sanity/queries";
 import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
-import { cacheLife } from "next/cache";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -141,6 +141,36 @@ const TAG_COLORS: Record<string, string> = {
   foundation: "var(--status-success)",
 };
 
+interface PortableTextChild {
+  _key?: string;
+  text?: string;
+}
+
+interface PortableTextImageAsset {
+  url?: string;
+  metadata?: {
+    dimensions?: {
+      width?: number;
+      height?: number;
+    };
+  };
+}
+
+type PortableTextBlock =
+  | {
+      _type?: "block";
+      _key?: string;
+      style?: "h2" | "h3" | "normal" | string;
+      listItem?: "bullet" | "number" | string;
+      children?: PortableTextChild[];
+    }
+  | {
+      _type?: "image";
+      _key?: string;
+      alt?: string;
+      asset?: PortableTextImageAsset;
+    };
+
 interface CmsEntry {
   _id: string;
   version: string;
@@ -148,61 +178,68 @@ interface CmsEntry {
   publishedAt: string;
   type?: string;
   summary?: string;
-  body?: any[];
+  body?: PortableTextBlock[];
 }
 
 /**
  * Simple Portable Text renderer — handles block and image types
  */
-function PortableTextRenderer({ blocks }: { blocks: any[] }) {
+function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
   if (!blocks || blocks.length === 0) return null;
 
   return (
     <div className="prose prose-sm dark:prose-invert max-w-none space-y-4">
       {blocks.map((block, idx) => {
+        const blockKey = block._key ?? `${block._type ?? "block"}-${idx}`;
         if (block._type === "block") {
-          const text = block.children?.map((child: any) => child.text).join("") || "";
+          const text = block.children?.map((child) => child.text ?? "").join("") || "";
           if (block.style === "h2") {
             return (
-              <h2 key={idx} className="text-lg font-semibold mt-6 mb-3">
+              <h2 key={blockKey} className="text-lg font-semibold mt-6 mb-3">
                 {text}
               </h2>
             );
           }
           if (block.style === "h3") {
             return (
-              <h3 key={idx} className="text-base font-semibold mt-4 mb-2">
+              <h3 key={blockKey} className="text-base font-semibold mt-4 mb-2">
                 {text}
               </h3>
             );
           }
           if (block.listItem === "bullet") {
             return (
-              <li key={idx} className="list-disc ml-4">
+              <li key={blockKey} className="list-disc ml-4">
                 {text}
               </li>
             );
           }
           if (block.listItem === "number") {
             return (
-              <li key={idx} className="list-decimal ml-4">
+              <li key={blockKey} className="list-decimal ml-4">
                 {text}
               </li>
             );
           }
           return (
-            <p key={idx} className="text-sm leading-relaxed">
+            <p key={blockKey} className="text-sm leading-relaxed">
               {text}
             </p>
           );
         }
 
         if (block._type === "image" && block.asset?.url) {
+          const width = block.asset.metadata?.dimensions?.width ?? 960;
+          const height = block.asset.metadata?.dimensions?.height ?? 540;
+
           return (
-            <img
-              key={idx}
+            <Image
+              key={blockKey}
               src={block.asset.url}
               alt={block.alt || "Changelog image"}
+              width={width}
+              height={height}
+              sizes="(min-width: 768px) 720px, 100vw"
               className="rounded-lg max-w-full h-auto mt-4 mb-4"
             />
           );
@@ -391,8 +428,8 @@ export default async function ChangelogVersionPage({
                   {cmsEntry.summary
                     .split("\n")
                     .filter(Boolean)
-                    .map((bullet, i) => (
-                      <li key={i}>{bullet}</li>
+                    .map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
                     ))}
                 </ul>
               </div>
@@ -505,8 +542,8 @@ export default async function ChangelogVersionPage({
           {/* Highlights as bullet list */}
           <div className="prose prose-sm dark:prose-invert max-w-none">
             <ul className="list-disc space-y-3 pl-4">
-              {staticRelease.highlights.map((highlight, i) => (
-                <li key={i}>{highlight}</li>
+              {staticRelease.highlights.map((highlight) => (
+                <li key={highlight}>{highlight}</li>
               ))}
             </ul>
           </div>

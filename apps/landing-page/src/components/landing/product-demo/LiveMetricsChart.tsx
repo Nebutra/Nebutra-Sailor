@@ -25,8 +25,7 @@ function generatePath(points: number[], width: number, height: number, max: numb
 }
 
 export function LiveMetricsChart() {
-  const [data, setData] = useState<number[]>(Array.from({ length: 20 }, () => 100));
-  const [value, setValue] = useState(1280);
+  const [data, setData] = useState<number[]>(() => Array.from({ length: 20 }, () => 100));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,9 +34,7 @@ export function LiveMetricsChart() {
           Math.max(prev[prev.length - 1] + (Math.random() * 40 - 15), 50),
           180,
         );
-        const newData = [...prev.slice(1), nextValue];
-        setValue(Math.floor(nextValue * 12.3)); // arbitrary scaling for realism
-        return newData;
+        return [...prev.slice(1), nextValue];
       });
     }, 1500);
     return () => clearInterval(interval);
@@ -46,6 +43,7 @@ export function LiveMetricsChart() {
   const width = 300;
   const height = 80;
   const path = generatePath(data, width, height, 200);
+  const value = Math.floor(data[data.length - 1] * 12.3);
 
   return (
     <div className="relative w-full rounded-xl border border-border/40 bg-background/50 dark:bg-zinc-950/50 p-4 shadow-elevation-high backdrop-blur-md overflow-hidden">
@@ -79,6 +77,8 @@ export function LiveMetricsChart() {
         <svg
           viewBox={`0 0 ${width} ${height}`}
           className="w-full h-full preserve-3d overflow-visible"
+          aria-hidden="true"
+          focusable="false"
         >
           <defs>
             <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">

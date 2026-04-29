@@ -9,6 +9,7 @@ import { StatsDashboard } from "./StatsDashboard";
 
 export function SEOGEOSection() {
   const t = useTranslations("seoGeo");
+  type SeoGeoTranslationKey = Parameters<typeof t>[0];
 
   return (
     <section
@@ -40,7 +41,7 @@ export function SEOGEOSection() {
         </AnimateIn>
 
         {/* Stats dashboard */}
-        <StatsDashboard stats={STATS} t={t as any} />
+        <StatsDashboard stats={STATS} t={(key) => t(key as SeoGeoTranslationKey)} />
 
         {/* Bento grid */}
         <div className="mt-20 md:mt-32 w-full">
@@ -82,11 +83,11 @@ export function SEOGEOSection() {
                   </div>
 
                   <h4 className="relative z-10 text-[19px] font-bold tracking-tight text-foreground mb-3 leading-snug">
-                    {t(card.titleKey as any)}
+                    {t(card.titleKey as SeoGeoTranslationKey)}
                   </h4>
 
                   <p className="relative z-10 text-[15px] text-muted-foreground font-medium leading-[1.7] flex-1">
-                    {t(card.descKey as any)}
+                    {t(card.descKey as SeoGeoTranslationKey)}
                   </p>
                 </AnimateIn>
               );

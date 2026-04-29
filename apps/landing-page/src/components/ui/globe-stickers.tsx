@@ -188,7 +188,7 @@ export function GlobeStickers({
 
   return (
     <div className={`relative aspect-square select-none ${className}`}>
-      <svg width="0" height="0" style={{ position: "absolute" }}>
+      <svg width="0" height="0" className="absolute" aria-hidden="true" focusable="false">
         <defs>
           <filter id="sticker-outline">
             <feMorphology in="SourceAlpha" result="Dilated" operator="dilate" radius="2" />
@@ -204,16 +204,7 @@ export function GlobeStickers({
       <canvas
         ref={canvasRef}
         onPointerDown={handlePointerDown}
-        style={{
-          width: "100%",
-          height: "100%",
-          contain: "layout paint size",
-          cursor: "grab",
-          opacity: 0,
-          transition: "opacity 1.2s ease",
-          borderRadius: "50%",
-          touchAction: "none",
-        }}
+        className="size-full cursor-grab rounded-full opacity-0 transition-opacity duration-700 ease-out [contain:layout_paint_size] [touch-action:none]"
       />
       {markers.map((m, i) => (
         <div
@@ -221,19 +212,7 @@ export function GlobeStickers({
           ref={(el) => {
             markerRefs.current[i] = el;
           }}
-          className="group"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            fontSize: "1.75rem",
-            lineHeight: 1,
-            filter: "url(#sticker-outline) drop-shadow(0 2px 3px rgba(0,0,0,0.15))",
-            opacity: 0,
-            willChange: "transform, opacity",
-            transition: "filter 0.3s, transform 0.05s linear",
-            cursor: "pointer",
-          }}
+          className="group absolute left-0 top-0 cursor-pointer text-[1.75rem] leading-none opacity-0 transition-[filter,transform] duration-300 [filter:url(#sticker-outline)_drop-shadow(0_2px_3px_rgba(0,0,0,0.15))]"
         >
           <div className="group-hover:scale-125 transition-transform duration-300">{m.sticker}</div>
         </div>
