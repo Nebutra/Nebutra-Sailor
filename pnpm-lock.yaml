@@ -237,6 +237,9 @@ importers:
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../packages/logger
+      '@nebutra/notifications':
+        specifier: workspace:*
+        version: link:../../packages/notifications
       '@nebutra/queue':
         specifier: workspace:*
         version: link:../../packages/queue

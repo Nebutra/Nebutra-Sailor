@@ -22,6 +22,10 @@
     "./events": {
       "import": "./dist/events.js",
       "types": "./dist/events.d.ts"
+    },
+    "./notifications": {
+      "import": "./dist/notifications.js",
+      "types": "./dist/notifications.d.ts"
     }
   },
   "scripts": {

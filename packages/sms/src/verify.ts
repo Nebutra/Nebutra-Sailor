@@ -1,3 +1,4 @@
+import { createHash, randomBytes, randomInt, timingSafeEqual } from "node:crypto";
 import { logger } from "@nebutra/logger";
 import type { SmsConfig, SmsProvider } from "./types.js";
 
@@ -29,7 +30,7 @@ export function initSmsVerification(opts: {
 }
 
 function generateCode(length: number): string {
-  return Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
+  return Array.from({ length }, () => randomInt(0, 10)).join("");
 }
 
 function codeKey(phone: string): string {
@@ -38,6 +39,41 @@ function codeKey(phone: string): string {
 
 function cooldownKey(phone: string): string {
   return `sms:cooldown:${phone}`;
+}
+
+function hashCode(code: string, salt = randomBytes(16).toString("base64url")): string {
+  const digest = createHash("sha256").update(`${salt}:${code}`, "utf8").digest("base64url");
+  return JSON.stringify({ v: 1, algorithm: "sha256", salt, digest });
+}
+
+function verifyStoredCode(stored: string, code: string): boolean {
+  try {
+    const parsed = JSON.parse(stored) as {
+      v?: unknown;
+      algorithm?: unknown;
+      salt?: unknown;
+      digest?: unknown;
+    };
+    if (
+      parsed.v !== 1 ||
+      parsed.algorithm !== "sha256" ||
+      typeof parsed.salt !== "string" ||
+      typeof parsed.digest !== "string"
+    ) {
+      return false;
+    }
+
+    const expected = createHash("sha256")
+      .update(`${parsed.salt}:${code}`, "utf8")
+      .digest("base64url");
+    const storedDigest = Buffer.from(parsed.digest, "utf8");
+    const expectedDigest = Buffer.from(expected, "utf8");
+    return (
+      storedDigest.length === expectedDigest.length && timingSafeEqual(storedDigest, expectedDigest)
+    );
+  } catch {
+    return false;
+  }
 }
 
 export async function sendVerificationCode(
@@ -64,8 +100,8 @@ export async function sendVerificationCode(
     return { success: false, message: "Failed to send SMS" };
   }
 
-  // Store code + set cooldown
-  await redisClient.set(codeKey(phone), code, { ex: config.codeTtl });
+  // Store a one-way digest so Redis compromise does not expose usable OTPs.
+  await redisClient.set(codeKey(phone), hashCode(code), { ex: config.codeTtl });
   await redisClient.set(cooldownKey(phone), "1", { ex: config.cooldown });
 
   logger.info("SMS verification code sent", {
@@ -87,7 +123,7 @@ export async function verifyCode(
     return { success: false, message: "Code expired or not found" };
   }
 
-  if (stored !== code) {
+  if (!verifyStoredCode(stored, code)) {
     return { success: false, message: "Invalid code" };
   }
 

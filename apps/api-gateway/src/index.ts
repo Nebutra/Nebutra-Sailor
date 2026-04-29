@@ -45,6 +45,8 @@ import { eventRoutes } from "./routes/events/index.js";
 import { integrationRoutes } from "./routes/integrations/index.js";
 import { consentRoutes } from "./routes/legal/consent.js";
 import { healthRoutes } from "./routes/misc/health.js";
+import { notificationRoutes } from "./routes/notifications/index.js";
+import { queueDeliveryRoutes } from "./routes/queue/delivery.js";
 import { searchRoutes } from "./routes/search/index.js";
 import { statusRoutes } from "./routes/system/status.js";
 import { getAuthWebhookRoutes, stripeWebhookRoutes } from "./routes/webhooks/index.js";
@@ -190,6 +192,7 @@ app.use("/api/*", async (c, next) => {
     path.startsWith("/misc") ||
     path.startsWith("/system") ||
     path.startsWith("/api/webhooks") ||
+    path.startsWith("/api/queue") ||
     path.startsWith("/api/inngest")
   ) {
     return next();
@@ -258,6 +261,7 @@ app.route("/api/v1/ai/usage", usageRoutes);
 app.route("/api/v1/billing", billingRoutes);
 app.route("/api/v1/billing/credits", creditsRoutes);
 app.route("/api/v1/billing", usageLedgerRoutes);
+app.route("/api/v1/notifications", notificationRoutes);
 app.route("/api/v1/search", searchRoutes);
 app.route("/api/v1/integrations", integrationRoutes);
 
@@ -269,6 +273,8 @@ app.route("/api/webhooks", stripeWebhookRoutes);
 // Auth webhook routes (provider-agnostic) — initialized during startup
 const authWebhookRoutes = await getAuthWebhookRoutes();
 app.route("/api/webhooks", authWebhookRoutes);
+// QStash queue delivery endpoint (raw request is verified in @nebutra/queue)
+app.route("/api/queue", queueDeliveryRoutes);
 
 // Inngest background job handler (GET for SDK handshake, POST/PUT for execution)
 app.on(["GET", "POST", "PUT"], "/api/inngest", (c) => inngestHandler(c));

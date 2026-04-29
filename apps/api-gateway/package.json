@@ -30,6 +30,7 @@
     "@nebutra/license": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/gateway-core": "workspace:*",
+    "@nebutra/notifications": "workspace:*",
     "@nebutra/queue": "workspace:*",
     "@nebutra/event-bus": "workspace:*",
     "@nebutra/health": "workspace:*",

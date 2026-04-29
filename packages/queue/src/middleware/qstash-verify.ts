@@ -41,6 +41,8 @@ export function createQStashWebhookHandler(options?: QStashVerifyOptions) {
   const currentSigningKey =
     options?.currentSigningKey ?? process.env.QSTASH_CURRENT_SIGNING_KEY ?? "";
   const nextSigningKey = options?.nextSigningKey ?? process.env.QSTASH_NEXT_SIGNING_KEY ?? "";
+  const requiresSignature =
+    process.env.NODE_ENV === "production" || process.env.QUEUE_PROVIDER === "qstash";
 
   const receiver =
     currentSigningKey && nextSigningKey
@@ -51,6 +53,14 @@ export function createQStashWebhookHandler(options?: QStashVerifyOptions) {
     const body = await request.text();
 
     // ── Signature verification ──────────────────────────────────────────
+    if (!receiver && requiresSignature) {
+      logger.error("[queue:qstash-verify] Signing keys required but not configured", {
+        nodeEnv: process.env.NODE_ENV,
+        queueProvider: process.env.QUEUE_PROVIDER,
+      });
+      return new Response("QStash signing keys not configured", { status: 401 });
+    }
+
     if (receiver) {
       try {
         const signature = request.headers.get("upstash-signature") ?? "";

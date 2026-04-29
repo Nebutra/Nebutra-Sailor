@@ -2946,6 +2946,536 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/notifications": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * List notifications
+     * @description Returns recent in-app notifications for the current user and organization.
+     */
+    get: {
+      parameters: {
+        query?: {
+          limit?: number;
+          offset?: number | null;
+          unreadOnly?: boolean | null;
+        };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Notification feed */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              items: {
+                id: string;
+                userId: string;
+                tenantId?: string;
+                type: string;
+                title: string;
+                body: string;
+                data?: {
+                  [key: string]: unknown;
+                };
+                read: boolean;
+                /** Format: date-time */
+                createdAt: string;
+                /** Format: date-time */
+                updatedAt: string;
+              }[];
+              total: number;
+              unreadCount: number;
+            };
+          };
+        };
+        /** @description Organization membership required */
+        403: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Notification inbox is not backed by durable storage */
+        409: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Notification provider unavailable */
+        503: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/notifications/settings": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get notification settings */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Notification settings snapshot */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              runtime: {
+                /** @enum {string} */
+                provider: "novu" | "direct";
+                providerLabel: string;
+                /** @enum {string} */
+                mode: "managed" | "self_hosted" | "preview";
+                canManagePreferences: boolean;
+                canViewInbox: boolean;
+                canMarkInboxRead: boolean;
+                summary: string;
+                reason?: string;
+                missing: string[];
+              };
+              channels: {
+                /** @enum {string} */
+                id: "in_app" | "email" | "push" | "sms" | "chat";
+                label: string;
+                shortLabel: string;
+                description: string;
+              }[];
+              /** @enum {string} */
+              preferenceSource: "provider" | "catalog-defaults";
+              preferences: {
+                userId: string;
+                tenantId?: string;
+                /** @enum {string} */
+                channel: "in_app" | "email" | "push" | "sms" | "chat";
+                enabled: boolean;
+                disabledCategories?: string[];
+                /** @enum {string} */
+                frequency: "immediate" | "daily" | "weekly" | "never";
+                /** Format: date-time */
+                updatedAt?: string;
+              }[];
+              sections: {
+                id: string;
+                title: string;
+                description: string;
+                rows: {
+                  id: string;
+                  label: string;
+                  description: string;
+                  groupId: string;
+                  cells: {
+                    /** @enum {string} */
+                    channel: "in_app" | "email" | "push" | "sms" | "chat";
+                    channelLabel: string;
+                    enabled: boolean;
+                    editable: boolean;
+                    supported: boolean;
+                    reason?: string;
+                  }[];
+                }[];
+              }[];
+              /** @enum {string} */
+              inboxSource: "provider" | "unavailable";
+              inboxReason?: string;
+              inboxItems: {
+                id: string;
+                type: string;
+                title: string;
+                body: string;
+                href: string | null;
+                read: boolean;
+                /** Format: date-time */
+                createdAt: string;
+                groupId: string;
+              }[];
+              unreadCount: number;
+            };
+          };
+        };
+        /** @description Organization membership required */
+        403: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    /** Update notification settings */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            type: string;
+            /** @enum {string} */
+            channel: "in_app" | "email" | "push" | "sms" | "chat";
+            enabled: boolean;
+          };
+        };
+      };
+      responses: {
+        /** @description Updated notification preference */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              /** @enum {boolean} */
+              ok: true;
+              preference: {
+                userId: string;
+                tenantId?: string;
+                /** @enum {string} */
+                channel: "in_app" | "email" | "push" | "sms" | "chat";
+                enabled: boolean;
+                disabledCategories?: string[];
+                /** @enum {string} */
+                frequency: "immediate" | "daily" | "weekly" | "never";
+                /** Format: date-time */
+                updatedAt?: string;
+              };
+            };
+          };
+        };
+        /** @description Invalid request */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Organization membership required */
+        403: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Notification preferences are not backed by durable storage */
+        409: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Notification provider unavailable */
+        503: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/notifications/unread-count": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Unread notification count */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Unread count */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              count: number;
+            };
+          };
+        };
+        /** @description Organization membership required */
+        403: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Notification inbox is not backed by durable storage */
+        409: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Notification provider unavailable */
+        503: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/notifications/mark-read": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Mark notifications as read */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            ids: string[];
+          };
+        };
+      };
+      responses: {
+        /** @description Marked notifications count */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              count: number;
+            };
+          };
+        };
+        /** @description Invalid request */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Organization membership required */
+        403: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Notification inbox is not backed by durable storage */
+        409: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Notification provider unavailable */
+        503: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/notifications/mark-all-read": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Mark all notifications as read */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Marked notifications count */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              count: number;
+            };
+          };
+        };
+        /** @description Organization membership required */
+        403: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Notification inbox is not backed by durable storage */
+        409: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Notification provider unavailable */
+        503: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/search": {
     parameters: {
       query?: never;

@@ -1,12 +1,12 @@
 import { randomUUID } from "node:crypto";
 import { logger } from "@nebutra/logger";
 import { aesDecrypt, aesEncrypt, deriveKey, fromBase64, generateKey, toBase64 } from "../crypto";
-import type { EncryptedSecret, LocalProviderConfig, VaultProvider } from "../types";
+import type { EncryptedSecret, EncryptOptions, LocalProviderConfig, VaultProvider } from "../types";
 
 // =============================================================================
 // Local Vault Provider
 // =============================================================================
-// Uses VAULT_MASTER_KEY (from env or config) to derive a KEK via HKDF.
+// Uses VAULT_LOCAL_MASTER_KEY or VAULT_MASTER_KEY (from env or config) to derive a KEK via HKDF.
 // Simpler than KMS but suitable for dev/self-hosted environments.
 //
 // Flow:
@@ -25,10 +25,10 @@ export class LocalProvider implements VaultProvider {
   private keyVersion: number;
 
   constructor(config: LocalProviderConfig) {
-    const masterKeyStr = config.masterKey ?? process.env.VAULT_MASTER_KEY;
+    const masterKeyStr = config.masterKey ?? getLocalMasterKeyFromEnv();
     if (!masterKeyStr) {
       throw new Error(
-        "Master key required. Set VAULT_MASTER_KEY env var or pass masterKey in config.",
+        "Master key required. Set VAULT_LOCAL_MASTER_KEY or VAULT_MASTER_KEY env var, or pass masterKey in config.",
       );
     }
 
@@ -55,10 +55,7 @@ export class LocalProvider implements VaultProvider {
    * 3. Encrypt DEK with KEK
    * 4. Encrypt secret with DEK
    */
-  async encrypt(
-    plaintext: string,
-    options?: { id?: string; tenantId?: string; metadata?: unknown },
-  ): Promise<EncryptedSecret> {
+  async encrypt(plaintext: string, options?: EncryptOptions): Promise<EncryptedSecret> {
     try {
       // 1. Derive KEK from master key
       const kek = await this.deriveKek();
@@ -84,7 +81,7 @@ export class LocalProvider implements VaultProvider {
         keyVersion: this.keyVersion,
         algorithm: "aes-256-gcm",
         ...(options?.tenantId !== undefined ? { tenantId: options.tenantId } : {}),
-        metadata: options?.metadata as any,
+        ...(options?.metadata !== undefined ? { metadata: options.metadata } : {}),
         createdAt: new Date().toISOString(),
       };
 
@@ -174,7 +171,17 @@ export class LocalProvider implements VaultProvider {
       const reencrypted = await this.encrypt(plaintext, {
         id: encrypted.id,
         ...(encrypted.tenantId !== undefined ? { tenantId: encrypted.tenantId } : {}),
-        metadata: encrypted.metadata,
+        ...(encrypted.metadata !== undefined
+          ? {
+              metadata: {
+                name: encrypted.metadata.name,
+                type: encrypted.metadata.type,
+                ...(encrypted.metadata.expiresAt !== undefined
+                  ? { expiresAt: encrypted.metadata.expiresAt }
+                  : {}),
+              },
+            }
+          : {}),
       });
 
       // Update rotation timestamp
@@ -213,4 +220,17 @@ export class LocalProvider implements VaultProvider {
   async close(): Promise<void> {
     logger.debug("[vault:local] Closed");
   }
+}
+
+function getLocalMasterKeyFromEnv(): string | undefined {
+  const legacyKey = process.env.VAULT_MASTER_KEY;
+  const localKey = process.env.VAULT_LOCAL_MASTER_KEY;
+
+  if (legacyKey && localKey && legacyKey !== localKey) {
+    throw new Error(
+      "Vault local key mismatch: VAULT_MASTER_KEY and VAULT_LOCAL_MASTER_KEY are both set but differ.",
+    );
+  }
+
+  return localKey ?? legacyKey;
 }

@@ -19,20 +19,20 @@ let defaultProvider: VaultProvider | null = null;
  *
  * Priority:
  * 1. AWS_KMS_KEY_ID or AWS_KMS_KEY_ARN → aws-kms
- * 2. VAULT_MASTER_KEY → local
+ * 2. VAULT_LOCAL_MASTER_KEY or VAULT_MASTER_KEY → local
  * 3. Fail (no valid config found)
  */
 function detectProvider(): VaultProviderType {
   if (process.env.AWS_KMS_KEY_ID || process.env.AWS_KMS_KEY_ARN) {
     return "aws-kms";
   }
-  if (process.env.VAULT_MASTER_KEY) {
+  if (process.env.VAULT_LOCAL_MASTER_KEY || process.env.VAULT_MASTER_KEY) {
     return "local";
   }
 
   throw new Error(
     "No vault provider detected. Set AWS_KMS_KEY_ID/AWS_KMS_KEY_ARN (for AWS KMS) " +
-      "or VAULT_MASTER_KEY (for local). Or pass explicit config to createVault().",
+      "or VAULT_LOCAL_MASTER_KEY/VAULT_MASTER_KEY (for local). Or pass explicit config to createVault().",
   );
 }
 
