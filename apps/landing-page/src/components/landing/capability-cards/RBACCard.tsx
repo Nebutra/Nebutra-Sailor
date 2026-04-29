@@ -4,6 +4,7 @@ import { Shield } from "@nebutra/icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@nebutra/ui/primitives";
 import { CheckCircle2, Fingerprint } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 import { CapabilityCard } from "./CapabilityCard";
 
 const PERMISSIONS = [
@@ -43,7 +44,7 @@ export function RBACCard() {
       title={t("rbac.title")}
       description={t("rbac.desc")}
       ctaText={t("rbac.cta")}
-      ctaHref="/docs/authentication"
+      ctaHref={createPublicDocsUrl("guides/authentication")}
       icon={<Shield />}
     >
       {/* High-Fidelity Matrix Table Bleed */}

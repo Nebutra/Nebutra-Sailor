@@ -2,6 +2,7 @@
 
 import { CreditCard } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 import { CapabilityCard } from "./CapabilityCard";
 
 const BILLING_METRICS = [
@@ -41,7 +42,7 @@ export function BillingCard() {
       title={t("billing.title")}
       description={t("billing.desc")}
       ctaText={t("billing.cta")}
-      ctaHref="/docs/billing"
+      ctaHref={createPublicDocsUrl("payments/overview")}
       icon={<CreditCard />}
     >
       {/* Mini Billing Dashboard */}
@@ -81,6 +82,7 @@ export function BillingCard() {
             />
             {/* Top edge highlight using a pseudo-border effect */}
             <svg
+              aria-hidden="true"
               viewBox="0 0 100 100"
               preserveAspectRatio="none"
               className="absolute inset-0 w-full h-full"

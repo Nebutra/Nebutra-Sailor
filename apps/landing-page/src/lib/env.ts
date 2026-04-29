@@ -8,6 +8,8 @@ export const env = createEnv({
     RESEND_API_KEY: z.string().optional(),
     // Override recipient for contact form (defaults to contact@nebutra.com)
     CONTACT_FORM_TO: z.string().email().default("contact@nebutra.com"),
+    // Direct docs app origin used for health checks and edge redirects.
+    DOCS_ORIGIN_URL: z.string().url().default("https://docs.nebutra.com"),
   },
 
   client: {
@@ -19,6 +21,7 @@ export const env = createEnv({
     // URLs
     NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3001"),
     NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3002"),
+    NEXT_PUBLIC_DOCS_URL: z.string().url().default("https://nebutra.com/docs"),
   },
 
   experimental__runtimeEnv: {
@@ -27,6 +30,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_DOCS_URL: process.env.NEXT_PUBLIC_DOCS_URL,
   },
 });
 

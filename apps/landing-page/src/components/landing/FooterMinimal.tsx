@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useMount } from "@/hooks/useMount";
 import { Link } from "@/i18n/navigation";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 import { footerContent } from "@/lib/landing-content";
 import { cn } from "@/lib/utils";
 import { NewsletterForm } from "./NewsletterForm";
@@ -51,7 +52,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
       { labelKey: "blog", href: "/blog" },
       { labelKey: "changelog", href: "/changelog" },
       { labelKey: "roadmap", href: "/roadmap" },
-      { labelKey: "docs", href: "https://docs.nebutra.com", external: true },
+      { labelKey: "docs", href: createPublicDocsUrl(), external: true },
       { labelKey: "ideas", href: "/ideas" },
       { labelKey: "opc", href: "/about/products" },
     ],

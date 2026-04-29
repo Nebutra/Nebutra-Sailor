@@ -4,6 +4,7 @@ import { Anthropic, DeepSeek, Gemini, OpenAI, Sparkles } from "@nebutra/ui/icons
 import { AnimatedBeam } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useRef } from "react";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 import { CapabilityCard } from "./CapabilityCard";
 
 type IconComponent = React.ComponentType<{ size?: number; className?: string }>;
@@ -39,7 +40,7 @@ export function AIGatewayCard() {
       title={t("aiGateway.title")}
       description={t("aiGateway.desc")}
       ctaText={t("aiGateway.cta")}
-      ctaHref="/docs/ai-integrations"
+      ctaHref={createPublicDocsUrl("ai/overview")}
       icon={<Sparkles />}
     >
       {/* Vercel Bleed AnimatedBeam Canvas — expanded vertical space */}
@@ -63,7 +64,7 @@ export function AIGatewayCard() {
             <div>
               <span className="text-primary dark:text-blue-400">import</span>{" "}
               {`{ createEdgeRouter }`} <span className="text-primary dark:text-blue-400">from</span>{" "}
-              <span className="text-emerald-600 dark:text-emerald-300">'@nebutra/ai'</span>;
+              <span className="text-emerald-600 dark:text-emerald-300">'@nebutra/ai';</span>
             </div>
             <div className="mt-3 text-muted-foreground dark:text-zinc-600 font-medium">
               {"// Auto-fallback & latency routing"}

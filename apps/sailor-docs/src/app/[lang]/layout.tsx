@@ -12,9 +12,13 @@ import "../globals.css";
 // CJK fallback is provided by @nebutra/tokens --font-cn to avoid build-time font fetches.
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  title: "Nebutra UI",
-  description: "The elegant design system powering Nebutra Sailor",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_DOCS_ORIGIN_URL || "https://docs.nebutra.com"),
+  title: {
+    default: "Nebutra Sailor Docs",
+    template: "%s | Nebutra Sailor Docs",
+  },
+  description:
+    "Product documentation for Nebutra Sailor, the governed AI-native SaaS platform baseline.",
 };
 export default async function RootLayout({
   children,

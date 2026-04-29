@@ -373,7 +373,7 @@ Nebutra-Sailor/
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
 │   ├── api-gateway/       # BFF layer (api.nebutra.com)
 │   ├── design-docs/       # Component documentation (Fumadocs)
-│   ├── docs/              # Mintlify documentation site
+│   ├── sailor-docs/       # Public product docs (docs.nebutra.com)
 │   ├── idp/               # Identity provider service
 │   └── storybook/         # Component playground
 ├── packages/

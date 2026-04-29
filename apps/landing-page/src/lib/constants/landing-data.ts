@@ -47,6 +47,7 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import React from "react";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 
 export interface FileNode {
   id: string;
@@ -104,8 +105,8 @@ export const TREE_DATA: FileNode[] = [
       },
       {
         id: "docs",
-        label: "docs",
-        description: "- Public product documentation (Mintlify)",
+        label: "sailor-docs",
+        description: "- Public product documentation (Fumadocs)",
         icon: React.createElement(FileText, { className: "h-4 w-4 text-blue-400" }),
       },
       {
@@ -379,7 +380,7 @@ export const NAV_LINKS = [
       { labelKey: "opc", href: "/about/products", icon: Users },
       { labelKey: "changelog", href: "/changelog", icon: GitPullRequest },
       { labelKey: "roadmap", href: "/roadmap", icon: Route },
-      { labelKey: "docs", href: "https://docs.nebutra.com", icon: BookOpenNebutra },
+      { labelKey: "docs", href: createPublicDocsUrl(), icon: BookOpenNebutra },
     ],
   },
   {

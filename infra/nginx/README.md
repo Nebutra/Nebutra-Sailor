@@ -14,6 +14,7 @@ infra/nginx/
   conf.d/
     security.conf     -- Security headers fragment (http{} context)
     proxy_params.conf -- Common proxy headers (location{} context)
+    docs.nebutra.com.conf -- HTTP bootstrap reverse proxy for Sailor docs
 ```
 
 ---
@@ -55,6 +56,7 @@ sudo cp infra/nginx/nginx.conf /etc/nginx/nginx.conf
 sudo mkdir -p /etc/nginx/conf.d
 sudo cp infra/nginx/conf.d/security.conf     /etc/nginx/conf.d/security.conf
 sudo cp infra/nginx/conf.d/proxy_params.conf /etc/nginx/conf.d/proxy_params.conf
+sudo cp infra/nginx/conf.d/docs.nebutra.com.conf /etc/nginx/conf.d/docs.nebutra.com.conf
 ```
 
 Test the configuration:
@@ -168,6 +170,7 @@ service names:
 upstream nebutra_web     { server web:3000;        keepalive 32; }
 upstream nebutra_landing { server landing-page:3001; keepalive 32; }
 upstream nebutra_api     { server api-gateway:3002; keepalive 32; }
+upstream nebutra_docs    { server sailor-docs:3004; keepalive 16; }
 # Python services use internal container port 8000
 upstream nebutra_ai      { server ai-service:8000;  keepalive 16; }
 ```
@@ -190,7 +193,53 @@ sed -i 's/127.0.0.1:3000/web:3000/g; \
 
 ---
 
-## 6. China deployment (ICP 备案 / CDN)
+## 6. Sailor docs on ECS
+
+`docs.nebutra.com` is not a Vercel hostname. Keep its Cloudflare DNS record
+pointing at the ECS public IP and run `@nebutra/sailor-docs` on localhost port
+`3004`.
+
+Cloudflare DNS bootstrap:
+
+```txt
+Type: A
+Name: docs
+IPv4 address: 106.15.4.31
+Proxy status: DNS only
+TTL: Auto
+```
+
+Deploy from a local machine so the small ECS origin does not compile Next.js:
+
+```bash
+REMOTE_HOST=root@106.15.4.31 bash infra/scripts/deploy-sailor-docs-ecs.sh
+```
+
+Install the HTTP bootstrap proxy and reload Nginx:
+
+```bash
+sudo cp infra/nginx/conf.d/docs.nebutra.com.conf /etc/nginx/conf.d/docs.nebutra.com.conf
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+Verify before enabling Cloudflare proxy or HTTPS:
+
+```bash
+dig +short docs.nebutra.com A
+curl -I http://docs.nebutra.com/
+```
+
+After HTTP returns `200`, issue a certificate:
+
+```bash
+sudo certbot --nginx -d docs.nebutra.com
+curl -I https://docs.nebutra.com/
+```
+
+---
+
+## 7. China deployment (ICP 备案 / CDN)
 
 Use `nginx-china.conf` instead of `nginx.conf`:
 
@@ -228,7 +277,7 @@ Then uncomment `real_ip_header X-Forwarded-For;` and `real_ip_recursive on;`.
 
 ---
 
-## 7. Useful diagnostics
+## 8. Useful diagnostics
 
 ```bash
 # View live access log

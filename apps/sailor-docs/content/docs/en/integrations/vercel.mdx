@@ -1,23 +1,27 @@
 ---
 title: Vercel
-description: Deploy Nebutra to Vercel with zero configuration — automatic environment variable provisioning and edge network optimization.
+description: Deploy the Nebutra marketing surface to Vercel and keep app/API/docs origins on the appropriate runtime boundary.
 ---
 
 ## Overview
 
-Nebutra is built for Vercel. Every app in the monorepo deploys to Vercel with zero additional configuration.
+Nebutra uses Vercel where it is the best runtime boundary: the public marketing
+site, preview deployments, and content surfaces. Stateful app/API/docs origins
+can run separately on ECS or another self-hosted target when regional control,
+network policy, or origin ownership matters.
 
 ## Deploy from the monorepo
 
-Each app in the monorepo is deployed as a separate Vercel project:
+Vercel-hosted apps are deployed as separate projects:
 
 | App | Project name |
 |-----|-------------|
 | `apps/landing-page` | `nebutra-landing` |
-| `apps/web` | `nebutra-web` |
-| `apps/api-gateway` | `nebutra-api` |
 | `apps/studio` | `nebutra-studio` |
-| `apps/docs` | `nebutra-docs` |
+
+`apps/sailor-docs` powers `docs.nebutra.com` and is deployed as a standalone
+Next.js app behind the ECS/Nginx origin. Use `https://nebutra.com/docs` as the
+public product entrypoint; it redirects to the docs app boundary.
 
 ### Link each app
 

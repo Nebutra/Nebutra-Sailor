@@ -3,6 +3,7 @@
 import { DottedWorldMap } from "@nebutra/ui/primitives";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 import { AnimateIn } from "./AnimateIn";
 
 const CDN_NODES = [
@@ -149,7 +150,7 @@ export function GlobalEdgeMap() {
         </div>
 
         <Link
-          href="/docs/infrastructure"
+          href={createPublicDocsUrl("monitoring/overview")}
           className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-colors group/link"
         >
           See performance logs

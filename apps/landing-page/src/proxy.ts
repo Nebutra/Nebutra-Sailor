@@ -1,8 +1,21 @@
-import type { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
+import { createDocsRedirectUrl } from "./lib/docs-routing";
 
 const intlMiddleware = createMiddleware(routing);
+const STATUS_HOST = "status.nebutra.com";
+
+function withSecurityHeaders(response: NextResponse): NextResponse {
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), payment=()",
+  );
+  return response;
+}
 
 function getCurrencyForCountry(countryCode: string): string {
   const map: Record<string, string> = {
@@ -35,6 +48,29 @@ function getCurrencyForCountry(countryCode: string): string {
 }
 
 export default function proxy(request: NextRequest): NextResponse {
+  const host = request.headers.get("host")?.split(":")[0]?.toLowerCase();
+  const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+  const docsRedirectUrl = createDocsRedirectUrl(request.nextUrl, host);
+
+  if (docsRedirectUrl) {
+    return withSecurityHeaders(NextResponse.redirect(docsRedirectUrl, 308));
+  }
+
+  if (pathname === "/status.json") {
+    return withSecurityHeaders(NextResponse.next());
+  }
+
+  if (
+    host === STATUS_HOST &&
+    (pathname === "/" || routing.locales.some((l) => pathname === `/${l}`))
+  ) {
+    const rewriteUrl = request.nextUrl.clone();
+    const locale = routing.locales.find((l) => pathname === `/${l}`);
+    rewriteUrl.pathname =
+      locale && locale !== routing.defaultLocale ? `/${locale}/status` : "/status";
+    request = new NextRequest(rewriteUrl, { headers: request.headers });
+  }
+
   // 1. Detect Country and Currency
   let country = request.headers.get("x-vercel-ip-country");
 
@@ -58,18 +94,13 @@ export default function proxy(request: NextRequest): NextResponse {
   // 3. Process with next-intl
   const response = intlMiddleware(request) as NextResponse;
 
-  // Add security headers
-  response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("X-Frame-Options", "DENY");
-  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-  response.headers.set(
-    "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=(), payment=()",
-  );
-
-  return response;
+  return withSecurityHeaders(response);
 }
 
 export const config = {
-  matcher: "/((?!api|trpc|_next|_vercel|.*/opengraph-image|.*\\..*).*)",
+  matcher: [
+    "/docs/:path*",
+    "/:locale(en|zh|ja|ko|es|fr|de)/docs/:path*",
+    "/((?!api|trpc|_next|_vercel|.*/opengraph-image|.*\\..*).*)",
+  ],
 };

@@ -2,6 +2,7 @@
 
 import { ArrowRight } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 import { heroContent } from "@/lib/landing-content";
 import { AnimateIn } from "./AnimateIn";
 import { CommandInstallBox } from "./CommandInstallBox";
@@ -37,7 +38,7 @@ export function FinalCTA() {
 
         <AnimateIn preset="fadeUp" inView className="mt-8">
           <a
-            href="https://docs.nebutra.com/sailor/getting-started"
+            href={createPublicDocsUrl("getting-started/installation")}
             className="group inline-flex items-center gap-2 rounded-full bg-[image:var(--brand-gradient)] px-8 py-3.5 font-medium text-white shadow-brand-lg transition-transform hover:-translate-y-0.5"
           >
             {t("startBuilding")}

@@ -54,6 +54,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
   });
 
+  const docsLanguages = {
+    en: `${baseUrl}/docs`,
+    zh: `${baseUrl}/zh/docs`,
+  };
+  const docsEntries = [
+    {
+      url: docsLanguages.en,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+      alternates: { languages: docsLanguages },
+    },
+    {
+      url: docsLanguages.zh,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+      alternates: { languages: docsLanguages },
+    },
+  ];
+
   // Individual changelog version URLs
   const changelogVersions = [
     "0.10.0",
@@ -74,5 +95,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
   });
 
-  return [...staticEntries, ...changelogEntries];
+  return [...staticEntries, ...docsEntries, ...changelogEntries];
 }

@@ -2,6 +2,7 @@
 
 import { Database } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 import { CapabilityCard } from "./CapabilityCard";
 
 const CODE_LINES = [
@@ -53,7 +54,7 @@ export function MultiTenantCard() {
       title={t("multiTenant.title")}
       description={t("multiTenant.desc")}
       ctaText={t("multiTenant.cta")}
-      ctaHref="/docs/multi-tenancy"
+      ctaHref={createPublicDocsUrl("guides/multi-tenancy")}
       icon={<Database />}
     >
       {/* High-Fidelity Code Editor with tabs, line numbers, and terminal */}

@@ -1,11 +1,11 @@
 {
   "name": "create-sailor",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "Governed AI-native SaaS scaffolder for Nebutra Sailor. Bootstrap a production-ready Next.js + Hono + Prisma monorepo with multi-tenant foundations, region-aware defaults, and AI integrations.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "create-sailor": "./dist/index.js"
+    "create-sailor": "dist/index.js"
   },
   "files": [
     "dist",

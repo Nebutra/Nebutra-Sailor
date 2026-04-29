@@ -13,9 +13,10 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { type FileNode, TREE_DATA } from "@/lib/constants/landing-data";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 import { AnimateIn } from "./AnimateIn";
 
-function renderNodes(nodes: FileNode[], level = 0, parentPath: boolean[] = []): React.ReactNode {
+function renderNodes(nodes: FileNode[], level = 0, parentPath: boolean[] = []): ReactNode {
   return nodes.map((node, index) => {
     const hasChildren = Boolean(node.children?.length);
     const isLast = index === nodes.length - 1;
@@ -145,7 +146,7 @@ export function MonorepoFileTree() {
         </div>
 
         <Link
-          href="/docs/monorepo"
+          href={createPublicDocsUrl("development/project-structure")}
           className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-colors group/link"
         >
           {t("cta")}

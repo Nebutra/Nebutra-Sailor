@@ -28,6 +28,7 @@ import {
 import { InfiniteSlider } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import type * as React from "react";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 import { AnimateIn } from "./AnimateIn";
 
 type IconComponent = React.ComponentType<{ size?: number; className?: string }>;
@@ -113,7 +114,7 @@ export function AIConstellationMarquee() {
 
       <AnimateIn preset="fade" inView delay={0.3} className="text-center mt-6">
         <Link
-          href="/docs/integrations"
+          href={createPublicDocsUrl("ai/overview")}
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
         >
           View all AI integration docs

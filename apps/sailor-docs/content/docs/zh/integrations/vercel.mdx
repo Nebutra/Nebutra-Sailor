@@ -1,23 +1,25 @@
 ---
 title: Vercel
-description: 零配置将 Nebutra 部署到 Vercel——自动环境变量提供和边缘网络优化。
+description: 将 Nebutra 营销入口部署到 Vercel，同时把 app/API/docs 保留在合适的运行边界。
 ---
 
 ## 概述
 
-Nebutra 专为 Vercel 打造。monorepo 中的每个应用都能零额外配置地部署到 Vercel。
+Nebutra 在适合 Vercel 的地方使用 Vercel：公开营销站点、预览部署和内容入口。
+有状态的 app/API/docs origin 可以运行在 ECS 或其他自托管目标上，以便保留区域、
+网络策略和 origin 所有权。
 
 ## 从 monorepo 部署
 
-monorepo 中的每个应用作为独立的 Vercel 项目部署：
+托管在 Vercel 的应用作为独立项目部署：
 
 | 应用 | 项目名 |
 |-----|--------|
 | `apps/landing-page` | `nebutra-landing` |
-| `apps/web` | `nebutra-web` |
-| `apps/api-gateway` | `nebutra-api` |
 | `apps/studio` | `nebutra-studio` |
-| `apps/docs` | `nebutra-docs` |
+
+`apps/sailor-docs` 支撑 `docs.nebutra.com`，作为 standalone Next.js 应用部署在
+ECS/Nginx origin 后面。公开产品入口统一使用 `https://nebutra.com/docs`，它会跳转到文档应用边界。
 
 ### 链接每个应用
 

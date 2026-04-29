@@ -146,15 +146,15 @@ single monorepo you can extend instead of re-assembling from scratch.
 
 ## Documentation
 
-- **Getting Started**: [nebutra.com/docs](https://nebutra.com/docs)
-- **White-label Guide**: [nebutra.com/docs/whitelabel](https://nebutra.com/docs/whitelabel)
+- **Getting Started**: [nebutra.com/docs/getting-started/installation](https://nebutra.com/docs/getting-started/installation)
+- **Customization Guide**: [nebutra.com/docs/customization/overview](https://nebutra.com/docs/customization/overview)
 - **Licensing**: [nebutra.com/licensing](https://nebutra.com/licensing)
 - **Get Free License**: [nebutra.com/get-license](https://nebutra.com/get-license)
 
 ## License
 
 AGPL-3.0 with a commercial license exception.
-See [LICENSE-COMMERCIAL.md](https://github.com/nebutra/nebutra-sailor/blob/main/LICENSE-COMMERCIAL.md) for details.
+See [LICENSE-COMMERCIAL.md](https://github.com/Nebutra/Nebutra-Sailor/blob/main/LICENSE-COMMERCIAL.md) for details.
 Commercial and individual licensing details: [get-license](https://nebutra.com/get-license).
 
 ---
