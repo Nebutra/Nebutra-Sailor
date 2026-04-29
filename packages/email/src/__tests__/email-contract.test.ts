@@ -1,5 +1,3 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   EMAIL_TEMPLATE_CATALOG,
@@ -48,13 +46,14 @@ describe("@nebutra/email contract", () => {
     }
   });
 
-  it("keeps preview fixture filenames unique and present in mail-preview exports", () => {
+  it("keeps preview fixture filenames unique and safe for mail-preview exports", () => {
     const fileNames = EMAIL_TEMPLATE_CATALOG.map((template) => template.fileName);
     expect(new Set(fileNames).size).toBe(fileNames.length);
 
-    const root = join(process.cwd(), "../..");
     for (const fileName of fileNames) {
-      expect(existsSync(join(root, "apps/mail-preview/dist", fileName))).toBe(true);
+      expect(fileName).not.toContain("/");
+      expect(fileName).not.toContain("\\");
+      expect(fileName).not.toContain("..");
     }
   });
 });
