@@ -77,8 +77,6 @@ Nebula • Nurture • Ultra • Future
 </div>
 
 > AI can help build the demo. Sailor focuses on the harder production layer: governance, security, architecture, scalability, and revenue operations.
->
-> The goal is not to pick one provider in a wizard. The goal is to operate a governed AI topology that can evolve across providers, regions, tenants, and compliance boundaries.
 
 <br />
 
@@ -108,11 +106,6 @@ Nebula • Nurture • Ultra • Future
 </tr>
 </table>
 </div>
-
-#### Manifesto
-
-- In an age of acceleration, technical moats don’t last. The real moat is sustained imagination, sharp trend‑sensing, rapid error‑correction, and the execution to turn ideas into reality faster.
-- Conservative choices feel safe but are the bolder bet: not changing is betting the world won’t. The only constant is change.
 
 ### Why Sailor?
 
