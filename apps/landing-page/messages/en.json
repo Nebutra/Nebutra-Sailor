@@ -1937,5 +1937,15 @@
         }
       }
     }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP record",
+      "publicSecurity": "Public security"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "ICP record",
+    "publicSecurity": "Public security record"
   }
 }
