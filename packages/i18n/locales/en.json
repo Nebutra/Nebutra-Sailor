@@ -391,6 +391,83 @@
     }
   },
   "settings": {
+    "apiKeys": {
+      "title": "API Keys",
+      "description": "Generate and manage API keys for programmatic access to Nebutra.",
+      "createButton": "Create API key",
+      "noPermission": "You do not have permission to view API keys.",
+      "loading": "Loading…",
+      "loadError": "Failed to load API keys.",
+      "createError": "Failed to create API key.",
+      "revokeError": "Failed to revoke API key.",
+      "empty": {
+        "title": "No API keys yet",
+        "cta": "Create your first API key"
+      },
+      "columns": {
+        "name": "Name",
+        "prefix": "Prefix",
+        "lastUsed": "Last Used",
+        "scopes": "Scopes",
+        "created": "Created",
+        "actions": "Actions",
+        "never": "Never"
+      },
+      "actions": {
+        "revoke": "Revoke",
+        "revoking": "Revoking…",
+        "copy": "Copy",
+        "copied": "Copied!",
+        "close": "Close",
+        "submit": "Create key",
+        "submitting": "Creating…"
+      },
+      "dialog": {
+        "title": "Create API key",
+        "description": "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
+        "nameLabel": "Name",
+        "namePlaceholder": "e.g. Production backend",
+        "scopesLabel": "Scopes",
+        "successWarning": "This key will not be shown again — copy it now and store it somewhere safe.",
+        "confirmClose": "Are you sure? Closing this dialog will hide the key forever — make sure you have copied it."
+      }
+    },
+    "auditLog": {
+      "title": "Audit Log",
+      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
+      "empty": "No audit events yet",
+      "loadMore": "Load more",
+      "loading": "Loading…",
+      "forbidden": "You need admin access to view the audit log.",
+      "columns": {
+        "when": "When",
+        "actor": "Actor",
+        "action": "Action",
+        "entity": "Entity",
+        "outcome": "Outcome",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Old value",
+        "newValue": "New value"
+      },
+      "filters": {
+        "action": "Action",
+        "actionPlaceholder": "Search action…",
+        "entityType": "Entity type",
+        "outcome": "Outcome",
+        "outcomeSuccess": "Success",
+        "outcomeFailure": "Failure",
+        "outcomePending": "Pending",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "range24h": "Last 24h",
+        "range7d": "Last 7d",
+        "range30d": "Last 30d",
+        "reset": "Reset",
+        "all": "All"
+      }
+    },
     "notifications": {
       "title": "Notifications",
       "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
@@ -435,6 +512,63 @@
         "push": { "label": "Push" },
         "sms": { "label": "SMS" }
       }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint's secret so you can verify authenticity.",
+      "create": {
+        "heading": "New endpoint",
+        "urlLabel": "Endpoint URL",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Events",
+        "submit": "Create endpoint",
+        "submitting": "Creating…",
+        "selectEvent": "Select at least one event.",
+        "successTitle": "Endpoint created — copy the signing secret now.",
+        "successWarning": "This secret won't be shown again. Store it in your application's secret manager.",
+        "copy": "Copy",
+        "copied": "Copied!"
+      },
+      "list": {
+        "heading": "Active endpoints",
+        "empty": "No webhook endpoints yet. Create one above.",
+        "loading": "Loading…",
+        "loadFailed": "Failed to load webhooks",
+        "columns": {
+          "url": "URL",
+          "events": "Events",
+          "status": "Status",
+          "lastDelivered": "Last delivered",
+          "actions": "Actions"
+        },
+        "status": {
+          "active": "Active",
+          "disabled": "Disabled"
+        },
+        "actions": {
+          "edit": "Edit",
+          "enable": "Enable",
+          "disable": "Disable",
+          "viewDeliveries": "View deliveries",
+          "delete": "Delete"
+        }
+      },
+      "deliveries": {
+        "heading": "Recent deliveries",
+        "close": "Close",
+        "loading": "Loading…",
+        "loadFailed": "Failed to load deliveries",
+        "empty": "No deliveries yet.",
+        "viewPayload": "View payload",
+        "hidePayload": "Hide payload",
+        "replay": "Replay",
+        "replaying": "Replaying…",
+        "status": {
+          "success": "success",
+          "failed": "failed",
+          "retrying": "retrying"
+        }
+      }
     }
   },
   "legal": {
@@ -442,6 +576,44 @@
     "effective": "Effective",
     "notFound": "This document is not available.",
     "backHome": "Back to home"
+  },
+  "commandPalette": {
+    "ariaLabel": "Command palette",
+    "placeholder": "Type a command or search…",
+    "empty": "No results found.",
+    "sections": {
+      "navigation": "Navigation",
+      "actions": "Actions",
+      "settings": "Settings",
+      "account": "Account",
+      "admin": "Admin"
+    },
+    "commands": {
+      "nav": {
+        "home": "Home",
+        "settings": "Settings",
+        "billing": "Billing",
+        "team": "Team",
+        "apiKeys": "API Keys",
+        "notifications": "Notifications",
+        "auditLog": "Audit Log",
+        "webhooks": "Webhooks",
+        "admin": "Admin"
+      },
+      "action": {
+        "inviteMember": "Invite team member",
+        "createApiKey": "Create API key",
+        "switchOrganization": "Switch organization"
+      },
+      "settings": {
+        "themeLight": "Switch to light theme",
+        "themeDark": "Switch to dark theme",
+        "themeSystem": "Use system theme"
+      },
+      "account": {
+        "signOut": "Sign out"
+      }
+    }
   },
   "cookieConsent": {
     "banner": {

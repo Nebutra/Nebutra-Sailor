@@ -391,6 +391,83 @@
     }
   },
   "settings": {
+    "apiKeys": {
+      "title": "API 密钥",
+      "description": "生成并管理用于以编程方式访问 Nebutra 的 API 密钥。",
+      "createButton": "创建 API 密钥",
+      "noPermission": "您没有查看 API 密钥的权限。",
+      "loading": "加载中…",
+      "loadError": "加载 API 密钥失败。",
+      "createError": "创建 API 密钥失败。",
+      "revokeError": "撤销 API 密钥失败。",
+      "empty": {
+        "title": "暂无 API 密钥",
+        "cta": "创建第一个 API 密钥"
+      },
+      "columns": {
+        "name": "名称",
+        "prefix": "前缀",
+        "lastUsed": "最近使用",
+        "scopes": "范围",
+        "created": "创建时间",
+        "actions": "操作",
+        "never": "从未"
+      },
+      "actions": {
+        "revoke": "撤销",
+        "revoking": "撤销中…",
+        "copy": "复制",
+        "copied": "已复制！",
+        "close": "关闭",
+        "submit": "创建密钥",
+        "submitting": "创建中…"
+      },
+      "dialog": {
+        "title": "创建 API 密钥",
+        "description": "API 密钥允许外部系统代表您访问 Nebutra。请像对待密码一样妥善保管。",
+        "nameLabel": "名称",
+        "namePlaceholder": "例如：生产后端",
+        "scopesLabel": "范围",
+        "successWarning": "此密钥不会再次显示——请立即复制并安全保存。",
+        "confirmClose": "确定要关闭吗？关闭对话框后将无法再查看密钥——请确认您已复制。"
+      }
+    },
+    "auditLog": {
+      "title": "审计日志",
+      "description": "追踪工作区中的所有管理操作。可按操作人、动作、实体或时间范围过滤。",
+      "empty": "暂无审计事件",
+      "loadMore": "加载更多",
+      "loading": "加载中…",
+      "forbidden": "需要管理员权限才能查看审计日志。",
+      "columns": {
+        "when": "时间",
+        "actor": "操作人",
+        "action": "动作",
+        "entity": "实体",
+        "outcome": "结果",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "旧值",
+        "newValue": "新值"
+      },
+      "filters": {
+        "action": "动作",
+        "actionPlaceholder": "搜索动作…",
+        "entityType": "实体类型",
+        "outcome": "结果",
+        "outcomeSuccess": "成功",
+        "outcomeFailure": "失败",
+        "outcomePending": "进行中",
+        "startDate": "开始日期",
+        "endDate": "结束日期",
+        "range24h": "最近 24 小时",
+        "range7d": "最近 7 天",
+        "range30d": "最近 30 天",
+        "reset": "重置",
+        "all": "全部"
+      }
+    },
     "notifications": {
       "title": "通知",
       "description": "为每种事件类型选择 Nebutra 通过哪些渠道通知你。",
@@ -435,6 +512,63 @@
         "push": { "label": "推送" },
         "sms": { "label": "短信" }
       }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "订阅工作区事件。我们会用 endpoint 的签名密钥对每条载荷签名，便于你校验真实性。",
+      "create": {
+        "heading": "新建 Endpoint",
+        "urlLabel": "Endpoint URL",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "事件",
+        "submit": "创建 Endpoint",
+        "submitting": "正在创建…",
+        "selectEvent": "请至少选择一个事件。",
+        "successTitle": "Endpoint 已创建——请立即复制签名密钥。",
+        "successWarning": "此密钥仅显示一次，请妥善保存到你的应用机密管理服务。",
+        "copy": "复制",
+        "copied": "已复制！"
+      },
+      "list": {
+        "heading": "活动 Endpoint",
+        "empty": "还没有任何 webhook endpoint，请在上方创建。",
+        "loading": "加载中…",
+        "loadFailed": "加载 webhooks 失败",
+        "columns": {
+          "url": "URL",
+          "events": "事件",
+          "status": "状态",
+          "lastDelivered": "上次投递",
+          "actions": "操作"
+        },
+        "status": {
+          "active": "已启用",
+          "disabled": "已停用"
+        },
+        "actions": {
+          "edit": "编辑",
+          "enable": "启用",
+          "disable": "停用",
+          "viewDeliveries": "查看投递",
+          "delete": "删除"
+        }
+      },
+      "deliveries": {
+        "heading": "最近投递",
+        "close": "关闭",
+        "loading": "加载中…",
+        "loadFailed": "加载投递记录失败",
+        "empty": "暂无投递记录。",
+        "viewPayload": "查看载荷",
+        "hidePayload": "收起载荷",
+        "replay": "重投",
+        "replaying": "重投中…",
+        "status": {
+          "success": "成功",
+          "failed": "失败",
+          "retrying": "重试中"
+        }
+      }
     }
   },
   "legal": {
@@ -442,6 +576,44 @@
     "effective": "生效",
     "notFound": "此文档不可用。",
     "backHome": "返回首页"
+  },
+  "commandPalette": {
+    "ariaLabel": "命令面板",
+    "placeholder": "输入命令或搜索…",
+    "empty": "未找到结果。",
+    "sections": {
+      "navigation": "导航",
+      "actions": "操作",
+      "settings": "设置",
+      "account": "账号",
+      "admin": "管理"
+    },
+    "commands": {
+      "nav": {
+        "home": "首页",
+        "settings": "设置",
+        "billing": "账单",
+        "team": "团队",
+        "apiKeys": "API 密钥",
+        "notifications": "通知",
+        "auditLog": "审计日志",
+        "webhooks": "Webhook",
+        "admin": "管理后台"
+      },
+      "action": {
+        "inviteMember": "邀请团队成员",
+        "createApiKey": "创建 API 密钥",
+        "switchOrganization": "切换组织"
+      },
+      "settings": {
+        "themeLight": "切换到浅色主题",
+        "themeDark": "切换到深色主题",
+        "themeSystem": "跟随系统主题"
+      },
+      "account": {
+        "signOut": "登出"
+      }
+    }
   },
   "cookieConsent": {
     "banner": {
