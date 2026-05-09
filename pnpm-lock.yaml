@@ -1126,6 +1126,9 @@ importers:
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@nebutra/china-compliance':
+        specifier: workspace:*
+        version: link:../../packages/china-compliance
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -1493,6 +1496,18 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
 
+  packages/china-compliance:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.15
+        version: 22.19.15
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.0.1))(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+
   packages/cli:
     dependencies:
       '@clack/prompts':
@@ -1669,6 +1684,9 @@ importers:
 
   packages/email:
     dependencies:
+      nodemailer:
+        specifier: ^6.9.0
+        version: 6.10.1
       resend:
         specifier: ^4.0.1
         version: 4.8.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -2494,6 +2512,9 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.0.1))(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
 
   packages/vault:
     dependencies:
@@ -14342,6 +14363,10 @@ packages:
 
   node-releases@2.0.36:
     resolution: {integrity: sha512-TdC8FSgHz8Mwtw9g5L4gR/Sh9XhSP/0DEkQxfEFXOpiul5IiHgHan2VhYYb6agDSfp4KuvltmGApc8HMgUrIkA==}
+
+  nodemailer@6.10.1:
+    resolution: {integrity: sha512-Z+iLaBGVaSjbIzQ4pX6XV41HrooLsQ10ZWPUehGmuantvzWoDVBnmsdUcOIDM1t+yPor5pDhVlDESgOMEGxhHA==}
+    engines: {node: '>=6.0.0'}
 
   normalize-package-data@2.5.0:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}
@@ -32076,6 +32101,8 @@ snapshots:
       es6-promise: 3.3.1
 
   node-releases@2.0.36: {}
+
+  nodemailer@6.10.1: {}
 
   normalize-package-data@2.5.0:
     dependencies:

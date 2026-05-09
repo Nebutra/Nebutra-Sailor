@@ -106,7 +106,7 @@ export class AgentRouter {
           "",
           defaultAgentId ? `Default agent: ${defaultAgentId}` : "",
         ].join("\n"),
-        prompt: message,
+        messages: [{ role: "user" as const, content: message }],
       });
 
       const selectedId = result.text.trim();

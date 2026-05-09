@@ -12,7 +12,6 @@
     ],
     "gaps": [
       "Tus resumable adapter optional-peer, not wired end-to-end",
-      "MIME/size validation is stub-level",
       "Virus-scan hook pending"
     ]
   },
@@ -25,6 +24,8 @@
   },
   "scripts": {
     "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.15",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

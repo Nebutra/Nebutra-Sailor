@@ -1,42 +1,34 @@
 /**
- * @nebutra/email — Transactional email via Resend
+ * @nebutra/email — Multi-provider transactional email
  *
- * Thin, typed wrapper around the Resend SDK.
- * All templates live here so designs are co-located with send logic.
+ * Provider-agnostic email system with auto-detection:
+ *   1. EMAIL_PROVIDER env var (explicit: "resend" | "nodemailer" | "console")
+ *   2. RESEND_API_KEY present → Resend
+ *   3. SMTP_HOST present → Nodemailer (SMTP)
+ *   4. Fallback → Console (dev/test, no API key needed)
  *
  * Usage:
  *   import { sendWelcomeEmail, sendApiKeyCreatedEmail } from "@nebutra/email";
  *   await sendWelcomeEmail({ to: "user@example.com", orgName: "Acme Corp" });
  *
- * Environment variables required:
- *   RESEND_API_KEY  — from https://resend.com/api-keys
+ * Environment variables:
+ *   EMAIL_PROVIDER  — explicit provider override (optional)
  *   EMAIL_FROM      — verified sender (e.g. "Nebutra <noreply@nebutra.ai>")
+ *   RESEND_API_KEY  — for Resend provider
+ *   SMTP_HOST       — for Nodemailer provider (+ SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE)
  */
 
-import { Resend } from "resend";
+import { getEmailProvider, type SendResult } from "./provider";
+
+export type { EmailProvider, EmailProviderType, SendOptions, SendResult } from "./provider";
+export { getEmailProvider, resetEmailProvider } from "./provider";
+export { ConsoleEmailProvider } from "./providers/console";
+export { NodemailerEmailProvider } from "./providers/nodemailer";
+export { ResendEmailProvider } from "./providers/resend";
 
 const FROM = process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.ai>";
-let resendClient: Resend | undefined;
-
-function getResendClient(): Resend {
-  if (resendClient) {
-    return resendClient;
-  }
-
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    throw new Error("RESEND_API_KEY is required to send email");
-  }
-
-  resendClient = new Resend(apiKey);
-  return resendClient;
-}
 
 // ── Types ──────────────────────────────────────────────────────────────────
-
-export interface SendResult {
-  id: string;
-}
 
 export interface EmailTemplateCatalogEntry {
   id: string;
@@ -191,20 +183,11 @@ async function send(opts: {
   replyTo?: string;
   tags?: { name: string; value: string }[];
 }): Promise<SendResult> {
-  const { data, error } = await getResendClient().emails.send({
+  const provider = getEmailProvider();
+  return provider.send({
+    ...opts,
     from: FROM,
-    to: Array.isArray(opts.to) ? opts.to : [opts.to],
-    subject: opts.subject,
-    html: opts.html,
-    ...(opts.replyTo ? { replyTo: opts.replyTo } : {}),
-    ...(opts.tags ? { tags: opts.tags } : {}),
   });
-
-  if (error) {
-    throw new Error(`Email send failed: ${error.message}`);
-  }
-
-  return { id: data?.id };
 }
 
 // ── Templates ──────────────────────────────────────────────────────────────
