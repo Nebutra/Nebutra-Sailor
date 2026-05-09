@@ -129,6 +129,37 @@
       "fileTooBig": "文件过大，最大 2MB。",
       "invalidType": "不支持的图片格式，请使用 PNG、JPEG 或 WebP。",
       "success": "头像已更新。"
+    },
+    "export": {
+      "title": "导出我的数据",
+      "description": "下载我们为您账户保存的所有记录，包含个人资料、组织、审计事件、通知与邀请。",
+      "compliance": "依据《GDPR》第 20 条（数据可携权）与《个人信息保护法》第 45 条（取得个人信息副本权）提供。",
+      "export": "导出我的数据",
+      "pending": "正在准备导出…",
+      "ready": "您的数据已可下载。",
+      "download": "下载 JSON",
+      "error": "准备导出失败，请稍后重试。"
+    },
+    "emailChange": {
+      "title": "修改邮箱地址",
+      "description": "我们将向新邮箱发送验证链接，您在该邮箱确认后修改才会生效。",
+      "newEmailLabel": "新邮箱地址",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "发送验证链接",
+      "submitting": "正在发送…",
+      "verificationSent": "请在 {email} 邮箱中查收验证邮件以完成修改。",
+      "errorInvalidEmail": "邮箱地址无效。",
+      "error": "请求修改邮箱失败。",
+      "confirm": {
+        "successTitle": "邮箱已更新",
+        "successDescription": "您的登录邮箱已更新。",
+        "successWithEmail": "您的登录邮箱现已更新为 {email}。",
+        "failureTitle": "无法确认该链接",
+        "failureDescription": "验证链接无效、已过期或已被使用。请回到账户设置重新申请。",
+        "errorCode": "原因：{code}",
+        "continueCta": "返回账户设置",
+        "backCta": "返回账户设置"
+      }
     }
   },
   "impact": {
@@ -507,10 +538,18 @@
         }
       },
       "channels": {
-        "in_app": { "label": "应用内" },
-        "email": { "label": "邮件" },
-        "push": { "label": "推送" },
-        "sms": { "label": "短信" }
+        "in_app": {
+          "label": "应用内"
+        },
+        "email": {
+          "label": "邮件"
+        },
+        "push": {
+          "label": "推送"
+        },
+        "sms": {
+          "label": "短信"
+        }
       }
     },
     "webhooks": {
@@ -641,6 +680,16 @@
         "label": "营销",
         "description": "在第三方平台上的个性化广告与再营销。"
       }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP 备案号",
+      "publicSecurity": "公安备案"
+    },
+    "wechat": {
+      "signIn": "使用微信登录",
+      "notConfigured": "微信登录未配置"
     }
   }
 }

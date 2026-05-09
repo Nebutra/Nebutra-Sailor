@@ -61,6 +61,8 @@ const DEPENDENCY_RULES: DependencyRule[] = [
     // @nebutra/feature-flags and @nebutra/logger are cross-cutting infrastructure packages
     // @nebutra/icons is used directly by authenticated admin surfaces.
     // @nebutra/queue is an infrastructure dep used by /api/cron route handlers.
+    // @nebutra/webhooks is consumed by /settings/webhooks management UI.
+    // @nebutra/china-compliance powers ICP footer + WeChat OAuth scaffolding.
     allowedDeps: [
       "@nebutra/ui",
       "@nebutra/tokens",
@@ -68,6 +70,8 @@ const DEPENDENCY_RULES: DependencyRule[] = [
       "@nebutra/feature-flags",
       "@nebutra/logger",
       "@nebutra/queue",
+      "@nebutra/webhooks",
+      "@nebutra/china-compliance",
     ],
   },
   {

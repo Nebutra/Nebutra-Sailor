@@ -129,6 +129,37 @@
       "fileTooBig": "File is too large. Maximum size is 2MB.",
       "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
       "success": "Avatar updated."
+    },
+    "export": {
+      "title": "Export my data",
+      "description": "Download a copy of every record we hold for your account, including profile, organizations, audit events, notifications, and invitations.",
+      "compliance": "Required by GDPR Article 20 (Right to data portability) and PIPL Article 45 (Right to obtain a copy of personal information).",
+      "export": "Export my data",
+      "pending": "Preparing export…",
+      "ready": "Your export is ready.",
+      "download": "Download JSON",
+      "error": "Failed to prepare your export. Please try again."
+    },
+    "emailChange": {
+      "title": "Change email address",
+      "description": "We will send a verification link to the new address. The change only takes effect once you confirm it from that inbox.",
+      "newEmailLabel": "New email address",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Send verification link",
+      "submitting": "Sending…",
+      "verificationSent": "Check your inbox at {email} to confirm the change.",
+      "errorInvalidEmail": "Email address is not valid.",
+      "error": "Failed to request email change.",
+      "confirm": {
+        "successTitle": "Email updated",
+        "successDescription": "Your sign-in email has been updated.",
+        "successWithEmail": "Your sign-in email is now {email}.",
+        "failureTitle": "We couldn't confirm that link",
+        "failureDescription": "This verification link is invalid, expired, or already used. Please request a new one from your account settings.",
+        "errorCode": "Reason: {code}",
+        "continueCta": "Back to account",
+        "backCta": "Back to account"
+      }
     }
   },
   "impact": {
