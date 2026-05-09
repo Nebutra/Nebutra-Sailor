@@ -10,9 +10,9 @@ export {
   getUploadProvider,
   resetUploadProvider,
 } from "./factory.js";
-export { createLocalProvider, LocalUploadProvider } from "./providers/local.js";
-
 // Providers
+export { createVercelBlobProvider, VercelBlobProvider } from "./providers/blob.js";
+export { createLocalProvider, LocalUploadProvider } from "./providers/local.js";
 export { createS3Provider, S3UploadProvider } from "./providers/s3.js";
 // Types
 export type {

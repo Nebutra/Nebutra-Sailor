@@ -35,9 +35,13 @@
     "zod": "catalog:"
   },
   "peerDependencies": {
+    "@vercel/blob": ">=0.23.0",
     "tus-js-client": "^4.2.0"
   },
   "peerDependenciesMeta": {
+    "@vercel/blob": {
+      "optional": true
+    },
     "tus-js-client": {
       "optional": true
     }

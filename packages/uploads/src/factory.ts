@@ -3,6 +3,7 @@
  */
 
 import { logger } from "@nebutra/logger";
+import { createVercelBlobProvider, VercelBlobProvider } from "./providers/blob.js";
 import { createLocalProvider, LocalUploadProvider } from "./providers/local.js";
 import { createS3Provider, S3UploadProvider } from "./providers/s3.js";
 import type { ProviderConfig, UploadProvider, UploadProviderType } from "./types.js";
@@ -34,6 +35,10 @@ function createUploadProviderByType(
     return new S3UploadProvider(config.s3);
   }
 
+  if (type === "blob") {
+    return createVercelBlobProvider();
+  }
+
   if (type === "local") {
     if (!config?.local) {
       return createLocalProvider();
@@ -55,7 +60,13 @@ function autoDetectProvider(config?: ProviderConfig): UploadProvider {
     return createUploadProviderByType(explicitProvider, config);
   }
 
-  // Priority 2: Check for R2 credentials
+  // Priority 2: Check for Vercel Blob token (zero-config on Vercel)
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    logger.info("Auto-detected Vercel Blob token, using Blob provider");
+    return createVercelBlobProvider();
+  }
+
+  // Priority 3: Check for R2 credentials
   if (process.env.R2_ACCESS_KEY_ID || process.env.R2_SECRET_ACCESS_KEY) {
     logger.info("Auto-detected R2 credentials, using S3 provider");
     return new S3UploadProvider({
@@ -121,8 +132,15 @@ export function getActiveProviderType(): UploadProviderType {
   if (instance instanceof S3UploadProvider) {
     return "s3";
   }
+  if (instance instanceof VercelBlobProvider) {
+    return "blob";
+  }
   if (instance instanceof LocalUploadProvider) {
     return "local";
+  }
+
+  if (process.env.UPLOAD_PROVIDER === "blob" || process.env.BLOB_READ_WRITE_TOKEN) {
+    return "blob";
   }
 
   if (

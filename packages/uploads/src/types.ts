@@ -2,7 +2,7 @@
  * Core types for large file uploads
  */
 
-export type UploadProviderType = "s3" | "local";
+export type UploadProviderType = "s3" | "blob" | "local";
 export type UploadMethod = "PUT" | "POST";
 export type ACLType = "private" | "public-read";
 
