@@ -152,6 +152,34 @@ export const EMAIL_TEMPLATE_CATALOG = [
     sendHelper: "sendLicenseCreatedEmail",
     fileName: "license-created-email.html",
   },
+  {
+    id: "welcome-react",
+    label: "Welcome (React Email)",
+    description: "Account onboarding welcome message",
+    sendHelper: "sendWelcomeReactEmail",
+    fileName: "welcome-react-email.html",
+  },
+  {
+    id: "password-reset",
+    label: "Password Reset",
+    description: "Secure password reset link with expiry",
+    sendHelper: "sendPasswordResetEmail",
+    fileName: "password-reset-email.html",
+  },
+  {
+    id: "invitation",
+    label: "Invitation",
+    description: "Workspace invitation with role and expiry",
+    sendHelper: "sendInvitationEmail",
+    fileName: "invitation-email.html",
+  },
+  {
+    id: "receipt",
+    label: "Receipt",
+    description: "Payment receipt with billing period and PDF link",
+    sendHelper: "sendReceiptEmail",
+    fileName: "receipt-email.html",
+  },
 ] as const satisfies readonly EmailTemplateCatalogEntry[];
 
 // ── Core send helper ───────────────────────────────────────────────────────
@@ -844,5 +872,94 @@ export async function sendLicenseCreatedEmail(opts: {
     subject: `Your Nebutra License Key is Ready (${opts.tier})`,
     html,
     tags: [{ name: "type", value: "license_created" }],
+  });
+}
+
+// ── React Email-style templates (welcome, password-reset, invitation, receipt) ─
+
+import {
+  type InvitationEmailProps,
+  invitationEmail,
+  type PasswordResetEmailProps,
+  passwordResetEmail,
+  type ReceiptEmailProps,
+  receiptEmail,
+  type WelcomeEmailProps,
+  welcomeEmail,
+} from "./templates";
+
+export {
+  type InvitationEmailProps,
+  invitationEmail,
+  type PasswordResetEmailProps,
+  passwordResetEmail,
+  REACT_EMAIL_TEMPLATES,
+  type ReactEmailTemplate,
+  type ReceiptEmailProps,
+  type RenderedEmail,
+  receiptEmail,
+  renderInvitationEmail,
+  renderPasswordResetEmail,
+  renderReceiptEmail,
+  renderWelcomeEmail,
+  type WelcomeEmailProps,
+  welcomeEmail,
+} from "./templates";
+
+/**
+ * Send the React Email-style welcome message. Mirrors `WelcomeEmailProps`
+ * exactly so callers can compose messages without depending on the legacy
+ * `sendWelcomeEmail` signature.
+ */
+export async function sendWelcomeReactEmail(
+  opts: { to: string } & WelcomeEmailProps,
+): Promise<SendResult> {
+  return send({
+    to: opts.to,
+    subject: welcomeEmail.subject(opts),
+    html: welcomeEmail.render(opts),
+    tags: [{ name: "type", value: "welcome_react" }],
+  });
+}
+
+/**
+ * Send a password reset email with a tokenized link and expiry note.
+ */
+export async function sendPasswordResetEmail(
+  opts: { to: string } & PasswordResetEmailProps,
+): Promise<SendResult> {
+  return send({
+    to: opts.to,
+    subject: passwordResetEmail.subject(opts),
+    html: passwordResetEmail.render(opts),
+    tags: [{ name: "type", value: "password_reset" }],
+  });
+}
+
+/**
+ * Send a workspace invitation with role and accept link.
+ */
+export async function sendInvitationEmail(
+  opts: { to: string } & InvitationEmailProps,
+): Promise<SendResult> {
+  return send({
+    to: opts.to,
+    subject: invitationEmail.subject(opts),
+    html: invitationEmail.render(opts),
+    tags: [{ name: "type", value: "invitation" }],
+  });
+}
+
+/**
+ * Send a payment receipt with billing period and PDF download URL.
+ */
+export async function sendReceiptEmail(
+  opts: { to: string } & ReceiptEmailProps,
+): Promise<SendResult> {
+  return send({
+    to: opts.to,
+    subject: receiptEmail.subject(opts),
+    html: receiptEmail.render(opts),
+    tags: [{ name: "type", value: "receipt" }],
   });
 }

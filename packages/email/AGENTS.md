@@ -14,6 +14,34 @@ Applies to everything under `packages/email/`.
   `EMAIL_TEMPLATE_CATALOG` in `src/index.ts`
 - Send pipeline and Resend transport handoff: `src/index.ts`
 - Package-local contract coverage: `src/__tests__/email-contract.test.ts`
+- React Email-style template surface (`{ subject, preview, render }`):
+  `src/templates/index.ts` plus per-template modules under `src/templates/`
+- Per-template body coverage: `src/templates/__tests__/templates.test.ts`
+
+## React Email-style templates
+
+Live under `src/templates/`. Each module exports typed `Props`, `subject`,
+`preview`, and `render` plus a default named bundle (e.g. `welcomeEmail`).
+
+Currently registered:
+
+| File | Catalog id | Send helper |
+| ---- | ---------- | ----------- |
+| `welcome.tsx` | `welcome-react` | `sendWelcomeReactEmail` |
+| `password-reset.tsx` | `password-reset` | `sendPasswordResetEmail` |
+| `invitation.tsx` | `invitation` | `sendInvitationEmail` |
+| `receipt.tsx` | `receipt` | `sendReceiptEmail` |
+
+`react-email` / `@react-email/components` is not installed in this workspace.
+The templates are framework-free `.tsx` files that compose plain template
+literals through `src/templates/_layout.ts` (`baseLayout`, `escapeHtml`).
+Migration to React Email is a drop-in replacement of the renderers; the public
+contract (`{ subject, preview, render }`) and `EMAIL_TEMPLATE_CATALOG` entries
+stay stable.
+
+`apps/mail-preview/scripts/render-react-templates.ts` materializes these four
+templates into `apps/mail-preview/dist/<file>-email.html` so the existing
+`pnpm --filter mail-preview check` flow finds them.
 
 ## Contract Boundaries
 

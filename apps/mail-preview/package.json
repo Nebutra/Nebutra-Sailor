@@ -7,6 +7,7 @@
   "scripts": {
     "check": "tsx scripts/check.ts",
     "export": "tsx scripts/export.ts",
+    "render:react": "tsx scripts/render-react-templates.ts",
     "clean": "rm -rf .react-email .turbo"
   },
   "dependencies": {
