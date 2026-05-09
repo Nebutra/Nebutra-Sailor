@@ -2,21 +2,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const getAuthMock = vi.fn();
 const getSystemDbMock = vi.fn();
-const getTenantDbMock = vi.fn();
 const clerkAuthMock = vi.fn();
 const createInvitationBulkMock = vi.fn();
 const loggerErrorMock = vi.fn();
 
 const systemDbMock = {
-  user: {
-    findUnique: vi.fn(),
-  },
-};
-
-const tenantDbMock = {
-  organizationMember: {
+  organizationInvitation: {
     create: vi.fn(),
-    findUnique: vi.fn(),
+    findFirst: vi.fn(),
   },
 };
 
@@ -26,7 +19,6 @@ vi.mock("@/lib/auth", () => ({
 
 vi.mock("@nebutra/db", () => ({
   getSystemDb: getSystemDbMock,
-  getTenantDb: getTenantDbMock,
 }));
 
 vi.mock("@clerk/nextjs/server", () => ({
@@ -53,15 +45,13 @@ describe("POST /api/onboarding/invite-members", () => {
     vi.resetModules();
     getAuthMock.mockReset();
     getSystemDbMock.mockReset().mockReturnValue(systemDbMock);
-    getTenantDbMock.mockReset().mockReturnValue(tenantDbMock);
     clerkAuthMock.mockReset().mockResolvedValue({ userId: "user_admin" });
     createInvitationBulkMock
       .mockReset()
       .mockResolvedValue([{ id: "inv_1", emailAddress: "ada@example.com" }]);
     loggerErrorMock.mockReset();
-    systemDbMock.user.findUnique.mockReset();
-    tenantDbMock.organizationMember.create.mockReset();
-    tenantDbMock.organizationMember.findUnique.mockReset();
+    systemDbMock.organizationInvitation.create.mockReset().mockResolvedValue({ id: "invite_1" });
+    systemDbMock.organizationInvitation.findFirst.mockReset().mockResolvedValue(null);
     delete process.env.AUTH_PROVIDER;
     delete process.env.NEXT_PUBLIC_AUTH_PROVIDER;
   });
@@ -112,15 +102,13 @@ describe("POST /api/onboarding/invite-members", () => {
     });
   });
 
-  it("adds existing users as members when using the database-backed fallback", async () => {
+  it("creates a pending OrganizationInvitation row for the database fallback", async () => {
     getAuthMock.mockResolvedValue({
       userId: "user_admin",
       orgId: "org_alpha",
       sessionClaims: { org_role: "org:admin" },
     });
-    systemDbMock.user.findUnique.mockResolvedValue({ id: "user_ada", email: "ada@example.com" });
-    tenantDbMock.organizationMember.findUnique.mockResolvedValue(null);
-    tenantDbMock.organizationMember.create.mockResolvedValue({ id: "member_ada" });
+    systemDbMock.organizationInvitation.findFirst.mockResolvedValue(null);
 
     const { POST } = await loadRoute();
     const response = await POST(
@@ -132,17 +120,57 @@ describe("POST /api/onboarding/invite-members", () => {
     );
 
     expect(response.status).toBe(200);
-    expect(getTenantDbMock).toHaveBeenCalledWith("org_alpha");
-    expect(tenantDbMock.organizationMember.create).toHaveBeenCalledWith({
+    expect(systemDbMock.organizationInvitation.create).toHaveBeenCalledTimes(1);
+    const createArgs = systemDbMock.organizationInvitation.create.mock.calls[0]![0] as {
       data: {
-        organizationId: "org_alpha",
-        role: "MEMBER",
-        userId: "user_ada",
-      },
-    });
+        email: string;
+        organizationId: string;
+        role: string;
+        inviterId: string;
+        token: string;
+        status: string;
+        expiresAt: Date;
+      };
+    };
+    expect(createArgs.data.email).toBe("ada@example.com");
+    expect(createArgs.data.organizationId).toBe("org_alpha");
+    expect(createArgs.data.role).toBe("member");
+    expect(createArgs.data.inviterId).toBe("user_admin");
+    expect(createArgs.data.status).toBe("pending");
+    expect(typeof createArgs.data.token).toBe("string");
+    expect(createArgs.data.token.length).toBeGreaterThan(8);
+    expect(createArgs.data.expiresAt).toBeInstanceOf(Date);
     await expect(response.json()).resolves.toEqual({
       invited: 1,
       skipped: [],
+    });
+  });
+
+  it("skips an email that already has a pending invitation for the org", async () => {
+    getAuthMock.mockResolvedValue({
+      userId: "user_admin",
+      orgId: "org_alpha",
+      sessionClaims: { org_role: "org:admin" },
+    });
+    systemDbMock.organizationInvitation.findFirst.mockResolvedValue({
+      id: "invite_existing",
+      status: "pending",
+    });
+
+    const { POST } = await loadRoute();
+    const response = await POST(
+      new Request("http://localhost/api/onboarding/invite-members", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ emails: ["ada@example.com"], role: "member" }),
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(systemDbMock.organizationInvitation.create).not.toHaveBeenCalled();
+    await expect(response.json()).resolves.toEqual({
+      invited: 0,
+      skipped: [{ email: "ada@example.com", reason: "already_invited" }],
     });
   });
 });

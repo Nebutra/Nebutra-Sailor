@@ -1,4 +1,4 @@
-import { getSystemDb, getTenantDb } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -13,6 +13,8 @@ const inviteSchema = z.object({
 });
 
 type InviteRole = z.infer<typeof inviteSchema>["role"];
+
+const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 function getConfiguredAuthProvider() {
   return process.env.AUTH_PROVIDER || process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
@@ -32,8 +34,13 @@ function normalizeClerkRole(role: InviteRole): "org:admin" | "org:member" | "org
   }
 }
 
-function normalizeDbRole(role: InviteRole): "ADMIN" | "MEMBER" | "VIEWER" {
-  return role.replace("org:", "").toUpperCase() as "ADMIN" | "MEMBER" | "VIEWER";
+function normalizeInvitationRole(role: InviteRole): "admin" | "member" | "viewer" {
+  return role.replace("org:", "") as "admin" | "member" | "viewer";
+}
+
+function generateToken(): string {
+  // crypto.randomUUID is available in modern Node and the edge runtime.
+  return globalThis.crypto.randomUUID();
 }
 
 async function createClerkInvitations(input: {
@@ -58,43 +65,42 @@ async function createClerkInvitations(input: {
   return { invited: input.emails.length, skipped: [] as Array<{ email: string; reason: string }> };
 }
 
-async function createDatabaseMembershipInvites(input: {
+async function createDatabaseInvitations(input: {
   emails: string[];
   organizationId: string;
   role: InviteRole;
+  inviterUserId: string;
 }) {
   const systemDb = getSystemDb();
-  const tenantDb = getTenantDb(input.organizationId);
-  const role = normalizeDbRole(input.role);
+  const role = normalizeInvitationRole(input.role);
   const skipped: Array<{ email: string; reason: string }> = [];
   let invited = 0;
+  const expiresAt = new Date(Date.now() + INVITE_TTL_MS);
 
   for (const email of input.emails) {
-    const user = await systemDb.user.findUnique({ where: { email } });
-    if (!user) {
-      skipped.push({ email, reason: "user_not_found" });
-      continue;
-    }
-
-    const existingMembership = await tenantDb.organizationMember.findUnique({
+    // Skip if there is already a pending invitation for the same email/org pair.
+    const existingPending = await systemDb.organizationInvitation.findFirst({
       where: {
-        organizationId_userId: {
-          organizationId: input.organizationId,
-          userId: user.id,
-        },
+        email,
+        organizationId: input.organizationId,
+        status: "pending",
       },
     });
 
-    if (existingMembership) {
-      skipped.push({ email, reason: "already_member" });
+    if (existingPending) {
+      skipped.push({ email, reason: "already_invited" });
       continue;
     }
 
-    await tenantDb.organizationMember.create({
+    await systemDb.organizationInvitation.create({
       data: {
+        email,
         organizationId: input.organizationId,
         role,
-        userId: user.id,
+        inviterId: input.inviterUserId,
+        token: generateToken(),
+        expiresAt,
+        status: "pending",
       },
     });
     invited += 1;
@@ -132,10 +138,11 @@ export async function POST(request: Request) {
             role: parsed.data.role,
             inviterUserId: authState.userId,
           })
-        : await createDatabaseMembershipInvites({
+        : await createDatabaseInvitations({
             emails: parsed.data.emails,
             organizationId: authState.orgId,
             role: parsed.data.role,
+            inviterUserId: authState.userId,
           });
 
     return NextResponse.json(result);
