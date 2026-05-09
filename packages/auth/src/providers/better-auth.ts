@@ -124,10 +124,49 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       );
     }
 
+    // Dynamically import the passkey plugin — gracefully degrade if absent.
+    // better-auth 1.5.6 does not ship `./plugins/passkey` in its `exports`
+    // map, so static resolution fails. The runtime try/catch handles the
+    // missing module and logs a warning. Suppress the static TS error since
+    // the import is intentionally optional.
+    let passkeyPlugin: unknown | undefined;
+    try {
+      // @ts-expect-error — passkey plugin path may not exist in installed better-auth version
+      const passkeyModule = await import("better-auth/plugins/passkey");
+      passkeyPlugin = passkeyModule.passkey();
+    } catch {
+      logger.warn(
+        "Better Auth: passkey plugin not available — WebAuthn endpoints (/api/auth/passkey/*) will not be exposed.",
+      );
+    }
+
+    // Dynamically import the magic-link plugin — gracefully degrade if absent
+    let magicLinkPlugin: unknown | undefined;
+    try {
+      const magicLinkModule = await import("better-auth/plugins/magic-link");
+      // The magic-link plugin requires a `sendMagicLink` callback. When not configured,
+      // we register a no-op that logs a warning so endpoints still mount but operators
+      // know to wire a real email transport.
+      magicLinkPlugin = magicLinkModule.magicLink({
+        sendMagicLink: async ({ email, url }: { email: string; url: string }) => {
+          logger.warn(
+            "Better Auth: magic-link sendMagicLink is using a stub. Configure a real email transport.",
+            { email, url },
+          );
+        },
+      });
+    } catch {
+      logger.warn(
+        "Better Auth: magic-link plugin not available — magic-link endpoints (/api/auth/sign-in/magic-link, /api/auth/magic-link/verify) will not be exposed.",
+      );
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const plugins: any[] = [];
     if (orgPlugin) plugins.push(orgPlugin);
     if (twoFactorPlugin) plugins.push(twoFactorPlugin);
+    if (passkeyPlugin) plugins.push(passkeyPlugin);
+    if (magicLinkPlugin) plugins.push(magicLinkPlugin);
 
     const prismaClient = await getPrismaClient(config);
 

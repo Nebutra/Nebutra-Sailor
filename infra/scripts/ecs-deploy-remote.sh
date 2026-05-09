@@ -35,6 +35,11 @@ esac
 
 mkdir -p "$DEPLOY_ROOT"
 
+# Clean stale bundles from prior failed runs so /tmp doesn't fill the disk.
+# Anything not matching the current SHA is from a previous run; safe to drop.
+find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' \
+     ! -name "nebutra-*-${SHA}.tar.gz" -mtime +0 -delete 2>/dev/null || true
+
 deploy_one() {
   local app="$1" pm2_name="$2"
   local tarball="/tmp/nebutra-${app}-${SHA}.tar.gz"
