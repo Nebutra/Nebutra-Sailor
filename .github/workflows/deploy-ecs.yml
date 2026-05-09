@@ -328,19 +328,32 @@ jobs:
       - name: Upload bundles + helper to ECS
         run: |
           set -euo pipefail
-          # SSH_OPTS uses an array so word-splitting is intentional and safe.
-          SSH_OPTS=(-i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" \
-                    -o StrictHostKeyChecking=yes -o ConnectTimeout=20)
+          # ServerAlive options keep the connection alive on slow / lossy
+          # GH-runner -> Aliyun-China links. Without them, scp on a 100MB+
+          # bundle silently hangs forever when TCP keepalives are absent.
+          # 30s ping × 6 misses = drop after 3 min idle.
+          SCP_OPTS=(-i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" \
+                    -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+                    -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
+                    -C)
           BUNDLES_DIR="${RUNNER_TEMP}/bundles"
-          if [ -d "$BUNDLES_DIR" ] && [ -n "$(ls -A "$BUNDLES_DIR" 2>/dev/null)" ]; then
-            scp "${SSH_OPTS[@]}" "$BUNDLES_DIR"/*.tar.gz "${ECS_USER}@${ECS_HOST}:/tmp/"
-          else
+          if [ ! -d "$BUNDLES_DIR" ] || [ -z "$(ls -A "$BUNDLES_DIR" 2>/dev/null)" ]; then
             echo "::warning::No bundle artifacts to upload"; exit 1
           fi
+
+          # Upload bundles one at a time so a stalled transfer surfaces
+          # quickly and the failure points at a specific tarball.
+          for bundle in "$BUNDLES_DIR"/*.tar.gz; do
+            base=$(basename "$bundle")
+            size=$(du -h "$bundle" | cut -f1)
+            echo "→ scp $base ($size)"
+            scp "${SCP_OPTS[@]}" "$bundle" "${ECS_USER}@${ECS_HOST}:/tmp/"
+          done
+
           # Always re-upload the helper + ecosystem config so the box stays in sync.
-          scp "${SSH_OPTS[@]}" infra/scripts/ecs-deploy-remote.sh \
+          scp "${SCP_OPTS[@]}" infra/scripts/ecs-deploy-remote.sh \
             "${ECS_USER}@${ECS_HOST}:/tmp/ecs-deploy-remote.sh"
-          scp "${SSH_OPTS[@]}" infra/ecs/ecosystem.config.cjs \
+          scp "${SCP_OPTS[@]}" infra/ecs/ecosystem.config.cjs \
             "${ECS_USER}@${ECS_HOST}:${ECS_DEPLOY_ROOT}/ecosystem.config.cjs"
 
       - name: Run remote deploy
@@ -365,6 +378,7 @@ jobs:
                           bash /tmp/ecs-deploy-remote.sh"
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
               "${ECS_USER}@${ECS_HOST}" \
               "$REMOTE_CMD"
 
