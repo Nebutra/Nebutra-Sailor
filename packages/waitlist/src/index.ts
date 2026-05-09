@@ -104,10 +104,13 @@ class InMemoryWaitlist implements Waitlist {
     if (opts.referredBy) {
       const referrerIdx = this.entries.findIndex((e) => e.referralCode === opts.referredBy);
       if (referrerIdx >= 0) {
-        this.entries[referrerIdx] = {
-          ...this.entries[referrerIdx]!,
-          referralCount: this.entries[referrerIdx]!.referralCount + 1,
-        };
+        const referrer = this.entries[referrerIdx];
+        if (referrer) {
+          this.entries[referrerIdx] = {
+            ...referrer,
+            referralCount: referrer.referralCount + 1,
+          };
+        }
       }
     }
 
