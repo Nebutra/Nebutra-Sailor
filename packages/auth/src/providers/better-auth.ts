@@ -149,10 +149,15 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       // know to wire a real email transport.
       magicLinkPlugin = magicLinkModule.magicLink({
         sendMagicLink: async ({ email, url }: { email: string; url: string }) => {
-          logger.warn(
-            "Better Auth: magic-link sendMagicLink is using a stub. Configure a real email transport.",
-            { email, url },
-          );
+          try {
+            const { sendMagicLinkEmail } = await import("@nebutra/email");
+            await sendMagicLinkEmail({ to: email, magicLinkUrl: url });
+          } catch {
+            logger.warn(
+              "Better Auth: @nebutra/email not available for magic-link. Install it or configure a real email transport.",
+              { email, url },
+            );
+          }
         },
       });
     } catch {
