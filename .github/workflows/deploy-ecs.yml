@@ -169,6 +169,17 @@ jobs:
         if: matrix.condition == 'true'
         run: pnpm install --frozen-lockfile
 
+      - name: Build workspace dependencies of ${{ matrix.package }}
+        if: matrix.condition == 'true'
+        # Build all transitive workspace deps first (the `^...` filter means
+        # "dependencies only, not the package itself"). Mirrors the pattern in
+        # .github/workflows/ci.yml — required so that workspace packages like
+        # @nebutra/brand, @nebutra/icons, @nebutra/ui produce their dist/ files
+        # before Next tries to resolve them.
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: pnpm turbo build --filter="${{ matrix.package }}^..."
+
       - name: Build ${{ matrix.package }}
         if: matrix.condition == 'true'
         env:
@@ -221,6 +232,9 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - name: Build workspace dependencies of api-gateway
+        run: pnpm turbo build --filter="@nebutra/api-gateway^..."
 
       - name: Build api-gateway
         run: pnpm --filter @nebutra/api-gateway build
