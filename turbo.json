@@ -22,6 +22,20 @@
         "apps/design-docs/public/previews-index.json"
       ]
     },
+    "@nebutra/ui#build:registry": {
+      "dependsOn": ["@nebutra/design-tokens#build"],
+      "inputs": [
+        "packages/ui/src/primitives/**",
+        "packages/ui/src/components/**",
+        "packages/ui/scripts/build-registry.ts",
+        "packages/design-tokens/build/ts/**"
+      ],
+      "outputs": [
+        "apps/design-docs/public/r/**",
+        "apps/design-docs/public/registry.json",
+        "apps/design-docs/public/previews-index.json"
+      ]
+    },
     "dev": {
       "cache": false,
       "persistent": true
