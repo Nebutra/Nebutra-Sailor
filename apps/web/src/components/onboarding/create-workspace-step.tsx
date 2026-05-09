@@ -1,9 +1,8 @@
 "use client";
 
-import { Button, Input } from "@nebutra/ui/components";
-import { Label } from "@nebutra/ui/primitives";
+import { Button } from "@nebutra/ui/components";
+import { Input, Label } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import type { InputRef } from "antd/es/input";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -27,7 +26,7 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
   const [slugEdited, setSlugEdited] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const workspaceNameRef = useRef<InputRef>(null);
+  const workspaceNameRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!slugEdited) {
