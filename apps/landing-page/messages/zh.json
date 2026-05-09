@@ -1785,5 +1785,33 @@
   "getLicenseMeta": {
     "title": "获取授权 — Nebutra",
     "description": "2 分钟获取 Nebutra 授权与平台访问权限。"
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "您的隐私选择",
+      "description": "我们使用 Cookie 来改善体验、分析流量并提供个性化内容。请选择您允许的类别。"
+    },
+    "button": {
+      "acceptAll": "全部接受",
+      "savePreferences": "保存偏好"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "必要",
+        "description": "网站运行所必需，无法禁用。"
+      },
+      "functional": {
+        "label": "功能",
+        "description": "记住您的偏好（语言、主题、布局）。"
+      },
+      "analytics": {
+        "label": "分析",
+        "description": "匿名使用数据，帮助我们改进产品。"
+      },
+      "marketing": {
+        "label": "营销",
+        "description": "在第三方平台上的个性化广告与再营销。"
+      }
+    }
   }
 }

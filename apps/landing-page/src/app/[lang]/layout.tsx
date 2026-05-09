@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { type Locale, routing } from "@/i18n/routing";
 import { seoContent } from "@/lib/landing-content";
@@ -185,6 +186,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
         <ErrorBoundary>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
+            <CookieConsentBanner apiEndpoint={process.env.NEXT_PUBLIC_COOKIE_CONSENT_ENDPOINT} />
           </NextIntlClientProvider>
         </ErrorBoundary>
       </Providers>
