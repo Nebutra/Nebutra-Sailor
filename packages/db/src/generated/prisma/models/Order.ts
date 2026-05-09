@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Order
- * 
+ * @conditional(template=ecommerce)
  */
 export type OrderModel = runtime.Types.Result.DefaultSelection<Prisma.$OrderPayload>
 

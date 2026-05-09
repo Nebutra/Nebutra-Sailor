@@ -88,10 +88,10 @@ export function buildSecurityCapabilities({
         : "Password management is unavailable because this account does not use email/password sign-in.",
     },
     twoFactor: {
-      available: false,
+      available: hasPasswordAccount,
       requiresPasswordAccount: !hasPasswordAccount,
       reason: hasPasswordAccount
-        ? "Two-factor setup is not exposed by the shared Nebutra auth client yet."
+        ? "Two-factor authentication can be enabled with an authenticator app and a TOTP code."
         : "Two-factor setup requires a credential sign-in method first.",
     },
   };

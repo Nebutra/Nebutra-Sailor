@@ -1,7 +1,18 @@
 {
   "Common": {
     "hello": "Hello World",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "actions": {
+      "continue": "Continue",
+      "confirm": "Confirm",
+      "done": "Done",
+      "cancel": "Cancel"
+    }
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -97,6 +108,84 @@
       "providerNotSupported": "This action is managed by your authentication provider.",
       "networkError": "Network error. Check your connection and try again.",
       "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Try one of these to get started",
+      "activity": {
+        "title": "Show recent activity",
+        "prompt": "Show me the most recent activity across my workspace from the past 24 hours."
+      },
+      "debug": {
+        "title": "Debug an error",
+        "prompt": "Help me debug a runtime error. I will paste the stack trace and you can guide me through it."
+      },
+      "email": {
+        "title": "Draft a summary email",
+        "prompt": "Draft a concise weekly summary email I can send to my team about platform progress."
+      },
+      "features": {
+        "title": "Explore platform features",
+        "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
+      }
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Organization logo",
+        "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB) to represent your organization.",
+        "uploadButton": "Upload logo",
+        "uploading": "Uploading…",
+        "fileTooBig": "File is too large. Maximum size is 2MB.",
+        "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
+        "success": "Logo updated."
+      },
+      "name": {
+        "title": "Organization name",
+        "description": "Update the display name shown to your team and customers.",
+        "label": "Name",
+        "submit": "Save",
+        "saving": "Saving…",
+        "success": "Organization name updated."
+      },
+      "delete": {
+        "title": "Delete organization",
+        "description": "Permanently remove this organization, all members, invitations, and associated data. This action cannot be undone.",
+        "trigger": "Delete organization",
+        "confirmLabel": "Type the organization name to confirm",
+        "submit": "Delete organization",
+        "cancel": "Cancel",
+        "success": "Organization deleted."
+      }
+    },
+    "invitation": {
+      "title": "You've been invited",
+      "heading": "You've been invited to join {organizationName}",
+      "description": "Accept the invitation to start collaborating with the team.",
+      "accept": "Accept invitation",
+      "accepting": "Accepting...",
+      "decline": "Decline",
+      "declining": "Declining...",
+      "declinedView": "Invitation declined",
+      "success": "We've let the inviter know.",
+      "backToDashboard": "Back to dashboard",
+      "roleLabel": "Role: {role}",
+      "errorEmailMismatch": "This invitation was sent to a different email",
+      "errorEmailMismatchDetail": "Sign in with the email address that received the invitation to accept it.",
+      "errorExpired": "Invitation expired",
+      "errorExpiredDetail": "Ask the inviter to send a new invitation.",
+      "errorNotFound": "Invitation not found",
+      "errorNotFoundDetail": "The invitation link is invalid or has been revoked.",
+      "errorNotAvailable": "Invitation not available",
+      "errorNotAvailableDetail": "This invitation has already been responded to and is no longer active.",
+      "role": {
+        "owner": "Owner",
+        "admin": "Admin",
+        "member": "Member",
+        "viewer": "Viewer"
+      }
     }
   }
 }

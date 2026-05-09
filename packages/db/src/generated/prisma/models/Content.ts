@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Content
- * 
+ * @conditional(template=blog|portfolio)
  */
 export type ContentModel = runtime.Types.Result.DefaultSelection<Prisma.$ContentPayload>
 

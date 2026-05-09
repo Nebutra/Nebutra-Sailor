@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model AuthVerification
- * 
+ * @conditional(auth=betterauth)
  */
 export type AuthVerificationModel = runtime.Types.Result.DefaultSelection<Prisma.$AuthVerificationPayload>
 

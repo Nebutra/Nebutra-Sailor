@@ -705,6 +705,10 @@ export type EnumUsageLedgerSourceFieldUpdateOperationsInput = {
   set?: $Enums.UsageLedgerSource
 }
 
+export type EnumUsageTypeFieldUpdateOperationsInput = {
+  set?: $Enums.UsageType
+}
+
 export type UsageLedgerEntryCreateWithoutSubscriptionInput = {
   id?: string
   organizationId: string

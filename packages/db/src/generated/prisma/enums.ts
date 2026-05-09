@@ -59,17 +59,6 @@ export const IntegrationType = {
 export type IntegrationType = (typeof IntegrationType)[keyof typeof IntegrationType]
 
 
-export const NftStatus = {
-  MINTING: 'MINTING',
-  MINTED: 'MINTED',
-  LISTED: 'LISTED',
-  SOLD: 'SOLD',
-  BURNED: 'BURNED'
-} as const
-
-export type NftStatus = (typeof NftStatus)[keyof typeof NftStatus]
-
-
 export const SleptonsTier = {
   V0: 'V0',
   V1: 'V1',
@@ -99,25 +88,6 @@ export const AIProvider = {
 } as const
 
 export type AIProvider = (typeof AIProvider)[keyof typeof AIProvider]
-
-
-export const AIRequestType = {
-  GENERATE: 'GENERATE',
-  EMBED: 'EMBED',
-  TRANSLATE: 'TRANSLATE',
-  CHAT: 'CHAT'
-} as const
-
-export type AIRequestType = (typeof AIRequestType)[keyof typeof AIRequestType]
-
-
-export const FeatureFlagType = {
-  BOOLEAN: 'BOOLEAN',
-  PERCENTAGE: 'PERCENTAGE',
-  JSON: 'JSON'
-} as const
-
-export type FeatureFlagType = (typeof FeatureFlagType)[keyof typeof FeatureFlagType]
 
 
 export const SubscriptionStatus = {

@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model CreditBalance
- * 
+ * @conditional(billing-mode=credits)
  */
 export type CreditBalanceModel = runtime.Types.Result.DefaultSelection<Prisma.$CreditBalancePayload>
 

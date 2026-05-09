@@ -105,6 +105,7 @@ export function TwoFactorBlock({
 }: TwoFactorBlockProps) {
   const t = useTranslations("auth.security.twoFactor");
   const tErrors = useTranslations("auth.errors");
+  const tActions = useTranslations("Common.actions");
 
   const [step, setStep] = useState<Step>("idle");
   const [password, setPassword] = useState("");
@@ -330,10 +331,10 @@ export function TwoFactorBlock({
 
           <div className="flex items-center gap-3">
             <Button disabled={pending} htmlType="submit" type="primary">
-              Continue
+              {tActions("continue")}
             </Button>
             <Button disabled={pending} htmlType="button" onClick={returnToIdle} variant="outlined">
-              Cancel
+              {tActions("cancel")}
             </Button>
           </div>
         </form>

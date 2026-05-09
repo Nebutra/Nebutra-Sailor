@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model AuthUser
- * 
+ * @conditional(auth=betterauth)
  */
 export type AuthUserModel = runtime.Types.Result.DefaultSelection<Prisma.$AuthUserPayload>
 
@@ -33,6 +33,8 @@ export type AuthUserMinAggregateOutputType = {
   name: string | null
   image: string | null
   passwordHash: string | null
+  twoFactorEnabled: boolean | null
+  twoFactorSecret: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,6 +48,8 @@ export type AuthUserMaxAggregateOutputType = {
   name: string | null
   image: string | null
   passwordHash: string | null
+  twoFactorEnabled: boolean | null
+  twoFactorSecret: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,6 +63,9 @@ export type AuthUserCountAggregateOutputType = {
   name: number
   image: number
   passwordHash: number
+  twoFactorEnabled: number
+  twoFactorSecret: number
+  backupCodes: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -74,6 +81,8 @@ export type AuthUserMinAggregateInputType = {
   name?: true
   image?: true
   passwordHash?: true
+  twoFactorEnabled?: true
+  twoFactorSecret?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -87,6 +96,8 @@ export type AuthUserMaxAggregateInputType = {
   name?: true
   image?: true
   passwordHash?: true
+  twoFactorEnabled?: true
+  twoFactorSecret?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +111,9 @@ export type AuthUserCountAggregateInputType = {
   name?: true
   image?: true
   passwordHash?: true
+  twoFactorEnabled?: true
+  twoFactorSecret?: true
+  backupCodes?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -186,6 +200,9 @@ export type AuthUserGroupByOutputType = {
   name: string | null
   image: string | null
   passwordHash: string | null
+  twoFactorEnabled: boolean
+  twoFactorSecret: string | null
+  backupCodes: string[]
   createdAt: Date
   updatedAt: Date
   _count: AuthUserCountAggregateOutputType | null
@@ -220,6 +237,9 @@ export type AuthUserWhereInput = {
   name?: Prisma.StringNullableFilter<"AuthUser"> | string | null
   image?: Prisma.StringNullableFilter<"AuthUser"> | string | null
   passwordHash?: Prisma.StringNullableFilter<"AuthUser"> | string | null
+  twoFactorEnabled?: Prisma.BoolFilter<"AuthUser"> | boolean
+  twoFactorSecret?: Prisma.StringNullableFilter<"AuthUser"> | string | null
+  backupCodes?: Prisma.StringNullableListFilter<"AuthUser">
   createdAt?: Prisma.DateTimeFilter<"AuthUser"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AuthUser"> | Date | string
   accounts?: Prisma.AuthAccountListRelationFilter
@@ -235,6 +255,9 @@ export type AuthUserOrderByWithRelationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
+  twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
+  backupCodes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   accounts?: Prisma.AuthAccountOrderByRelationAggregateInput
@@ -253,6 +276,9 @@ export type AuthUserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"AuthUser"> | string | null
   image?: Prisma.StringNullableFilter<"AuthUser"> | string | null
   passwordHash?: Prisma.StringNullableFilter<"AuthUser"> | string | null
+  twoFactorEnabled?: Prisma.BoolFilter<"AuthUser"> | boolean
+  twoFactorSecret?: Prisma.StringNullableFilter<"AuthUser"> | string | null
+  backupCodes?: Prisma.StringNullableListFilter<"AuthUser">
   createdAt?: Prisma.DateTimeFilter<"AuthUser"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AuthUser"> | Date | string
   accounts?: Prisma.AuthAccountListRelationFilter
@@ -268,6 +294,9 @@ export type AuthUserOrderByWithAggregationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
+  twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
+  backupCodes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AuthUserCountOrderByAggregateInput
@@ -287,6 +316,9 @@ export type AuthUserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringNullableWithAggregatesFilter<"AuthUser"> | string | null
   image?: Prisma.StringNullableWithAggregatesFilter<"AuthUser"> | string | null
   passwordHash?: Prisma.StringNullableWithAggregatesFilter<"AuthUser"> | string | null
+  twoFactorEnabled?: Prisma.BoolWithAggregatesFilter<"AuthUser"> | boolean
+  twoFactorSecret?: Prisma.StringNullableWithAggregatesFilter<"AuthUser"> | string | null
+  backupCodes?: Prisma.StringNullableListFilter<"AuthUser">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AuthUser"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AuthUser"> | Date | string
 }
@@ -300,6 +332,9 @@ export type AuthUserCreateInput = {
   name?: string | null
   image?: string | null
   passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
@@ -315,6 +350,9 @@ export type AuthUserUncheckedCreateInput = {
   name?: string | null
   image?: string | null
   passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -330,6 +368,9 @@ export type AuthUserUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
@@ -345,6 +386,9 @@ export type AuthUserUncheckedUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -360,6 +404,9 @@ export type AuthUserCreateManyInput = {
   name?: string | null
   image?: string | null
   passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -373,6 +420,9 @@ export type AuthUserUpdateManyMutationInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -386,6 +436,9 @@ export type AuthUserUncheckedUpdateManyInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -399,6 +452,9 @@ export type AuthUserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   image?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
+  twoFactorSecret?: Prisma.SortOrder
+  backupCodes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -412,6 +468,8 @@ export type AuthUserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   image?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
+  twoFactorSecret?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -425,6 +483,8 @@ export type AuthUserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   image?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
+  twoFactorSecret?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -432,6 +492,15 @@ export type AuthUserMinOrderByAggregateInput = {
 export type AuthUserScalarRelationFilter = {
   is?: Prisma.AuthUserWhereInput
   isNot?: Prisma.AuthUserWhereInput
+}
+
+export type AuthUserCreatebackupCodesInput = {
+  set: string[]
+}
+
+export type AuthUserUpdatebackupCodesInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type AuthUserCreateNestedOneWithoutAccountsInput = {
@@ -471,6 +540,9 @@ export type AuthUserCreateWithoutAccountsInput = {
   name?: string | null
   image?: string | null
   passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
@@ -485,6 +557,9 @@ export type AuthUserUncheckedCreateWithoutAccountsInput = {
   name?: string | null
   image?: string | null
   passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
@@ -515,6 +590,9 @@ export type AuthUserUpdateWithoutAccountsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
@@ -529,6 +607,9 @@ export type AuthUserUncheckedUpdateWithoutAccountsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
@@ -543,6 +624,9 @@ export type AuthUserCreateWithoutSessionsInput = {
   name?: string | null
   image?: string | null
   passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
@@ -557,6 +641,9 @@ export type AuthUserUncheckedCreateWithoutSessionsInput = {
   name?: string | null
   image?: string | null
   passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -587,6 +674,9 @@ export type AuthUserUpdateWithoutSessionsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
@@ -601,6 +691,9 @@ export type AuthUserUncheckedUpdateWithoutSessionsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -655,6 +748,9 @@ export type AuthUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name?: boolean
   image?: boolean
   passwordHash?: boolean
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: boolean
+  backupCodes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   accounts?: boolean | Prisma.AuthUser$accountsArgs<ExtArgs>
@@ -671,6 +767,9 @@ export type AuthUserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   name?: boolean
   image?: boolean
   passwordHash?: boolean
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: boolean
+  backupCodes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["authUser"]>
@@ -684,6 +783,9 @@ export type AuthUserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   name?: boolean
   image?: boolean
   passwordHash?: boolean
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: boolean
+  backupCodes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["authUser"]>
@@ -697,11 +799,14 @@ export type AuthUserSelectScalar = {
   name?: boolean
   image?: boolean
   passwordHash?: boolean
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: boolean
+  backupCodes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AuthUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "phone" | "emailVerified" | "phoneVerified" | "name" | "image" | "passwordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["authUser"]>
+export type AuthUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "phone" | "emailVerified" | "phoneVerified" | "name" | "image" | "passwordHash" | "twoFactorEnabled" | "twoFactorSecret" | "backupCodes" | "createdAt" | "updatedAt", ExtArgs["result"]["authUser"]>
 export type AuthUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.AuthUser$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.AuthUser$sessionsArgs<ExtArgs>
@@ -725,6 +830,9 @@ export type $AuthUserPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     name: string | null
     image: string | null
     passwordHash: string | null
+    twoFactorEnabled: boolean
+    twoFactorSecret: string | null
+    backupCodes: string[]
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["authUser"]>
@@ -1160,6 +1268,9 @@ export interface AuthUserFieldRefs {
   readonly name: Prisma.FieldRef<"AuthUser", 'String'>
   readonly image: Prisma.FieldRef<"AuthUser", 'String'>
   readonly passwordHash: Prisma.FieldRef<"AuthUser", 'String'>
+  readonly twoFactorEnabled: Prisma.FieldRef<"AuthUser", 'Boolean'>
+  readonly twoFactorSecret: Prisma.FieldRef<"AuthUser", 'String'>
+  readonly backupCodes: Prisma.FieldRef<"AuthUser", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"AuthUser", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AuthUser", 'DateTime'>
 }

@@ -113,8 +113,21 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       );
     }
 
+    // Dynamically import the twoFactor plugin — gracefully degrade if absent
+    let twoFactorPlugin: unknown | undefined;
+    try {
+      const twoFactorModule = await import("better-auth/plugins/two-factor");
+      twoFactorPlugin = twoFactorModule.twoFactor();
+    } catch {
+      logger.warn(
+        "Better Auth: two-factor plugin not available — 2FA endpoints (/api/auth/two-factor/*) will not be exposed.",
+      );
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const plugins: any[] = orgPlugin ? [orgPlugin] : [];
+    const plugins: any[] = [];
+    if (orgPlugin) plugins.push(orgPlugin);
+    if (twoFactorPlugin) plugins.push(twoFactorPlugin);
 
     const prismaClient = await getPrismaClient(config);
 

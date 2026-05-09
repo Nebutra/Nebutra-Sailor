@@ -1,7 +1,18 @@
 {
   "Common": {
     "hello": "你好",
-    "dashboard": "仪表盘"
+    "dashboard": "仪表盘",
+    "actions": {
+      "continue": "继续",
+      "confirm": "确认",
+      "done": "完成",
+      "cancel": "取消"
+    }
+  },
+  "theme": {
+    "light": "浅色",
+    "dark": "深色",
+    "system": "跟随系统"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -97,6 +108,84 @@
       "providerNotSupported": "此操作由你的认证服务提供商管理。",
       "networkError": "网络错误，请检查连接后重试。",
       "unknown": "发生错误，请重试。"
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "试试以下提示开始对话",
+      "activity": {
+        "title": "查看最近活动",
+        "prompt": "请展示我工作区在过去 24 小时内最近的活动。"
+      },
+      "debug": {
+        "title": "调试一个错误",
+        "prompt": "帮我调试一个运行时错误。我会粘贴堆栈跟踪，请你引导我解决。"
+      },
+      "email": {
+        "title": "起草一封总结邮件",
+        "prompt": "请起草一封简洁的周报邮件，向团队同步平台进展。"
+      },
+      "features": {
+        "title": "探索平台功能",
+        "prompt": "请带我了解这个 SaaS 平台的核心功能以及我可以如何使用它们。"
+      }
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "组织 Logo",
+        "description": "上传方形图片（PNG、JPEG 或 WebP，最大 2MB）作为组织标识。",
+        "uploadButton": "上传 Logo",
+        "uploading": "上传中…",
+        "fileTooBig": "文件过大。最大限制为 2MB。",
+        "invalidType": "不支持的图片格式。请使用 PNG、JPEG 或 WebP。",
+        "success": "Logo 已更新。"
+      },
+      "name": {
+        "title": "组织名称",
+        "description": "更新展示给团队成员和客户的组织名称。",
+        "label": "名称",
+        "submit": "保存",
+        "saving": "保存中…",
+        "success": "组织名称已更新。"
+      },
+      "delete": {
+        "title": "删除组织",
+        "description": "永久删除该组织、所有成员、邀请记录及相关数据。此操作无法撤销。",
+        "trigger": "删除组织",
+        "confirmLabel": "请输入组织名称以确认",
+        "submit": "删除组织",
+        "cancel": "取消",
+        "success": "组织已删除。"
+      }
+    },
+    "invitation": {
+      "title": "你被邀请加入团队",
+      "heading": "你被邀请加入 {organizationName}",
+      "description": "接受邀请即可开始与团队协作。",
+      "accept": "接受邀请",
+      "accepting": "正在接受…",
+      "decline": "拒绝",
+      "declining": "正在拒绝…",
+      "declinedView": "已拒绝邀请",
+      "success": "我们已通知邀请人。",
+      "backToDashboard": "返回主页",
+      "roleLabel": "角色：{role}",
+      "errorEmailMismatch": "此邀请发往的不是当前邮箱",
+      "errorEmailMismatchDetail": "请使用收到邀请的邮箱重新登录后再尝试接受邀请。",
+      "errorExpired": "邀请已过期",
+      "errorExpiredDetail": "请联系邀请人重新发送邀请。",
+      "errorNotFound": "邀请不存在",
+      "errorNotFoundDetail": "邀请链接无效或已被撤销。",
+      "errorNotAvailable": "邀请已失效",
+      "errorNotAvailableDetail": "此邀请已被处理，无法再次操作。",
+      "role": {
+        "owner": "所有者",
+        "admin": "管理员",
+        "member": "成员",
+        "viewer": "查看者"
+      }
     }
   }
 }

@@ -28,10 +28,8 @@ export function SecuritySettingsClient() {
   const [sessions, setSessions] = useState<ActiveSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  // 2FA enabled state — starts false, schema migration pending for full toggle
-  // (the TwoFactorBlock UI is fully built; it just stays in "Disabled" state until
-  // the AuthUser model gains `twoFactorEnabled` + `twoFactorSecret` columns)
-  const [twoFactorEnabled] = useState(false);
+  const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
+  const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
 
   const authProvider = process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? "better-auth";
   const isBetterAuth = authProvider === "better-auth";
@@ -46,13 +44,18 @@ export function SecuritySettingsClient() {
     setError("");
 
     try {
-      const [accountsResponse, sessionsResponse] = await Promise.all([
-        fetch("/api/auth/list-accounts", { credentials: "include" }),
-        fetch("/api/auth/list-sessions", { credentials: "include" }),
-      ]);
+      const [accountsResponse, sessionsResponse, twoFactorResponse, currentSessionResponse] =
+        await Promise.all([
+          fetch("/api/auth/list-accounts", { credentials: "include" }),
+          fetch("/api/auth/list-sessions", { credentials: "include" }),
+          fetch("/api/auth/two-factor-status", { credentials: "include" }),
+          fetch("/api/auth/current-session", { credentials: "include" }),
+        ]);
 
       const accountsPayload = await accountsResponse.json().catch(() => null);
       const sessionsPayload = await sessionsResponse.json().catch(() => null);
+      const twoFactorPayload = await twoFactorResponse.json().catch(() => null);
+      const currentSessionPayload = await currentSessionResponse.json().catch(() => null);
 
       if (!accountsResponse.ok) {
         throw new Error(
@@ -68,6 +71,26 @@ export function SecuritySettingsClient() {
         Array.isArray(accountsPayload) ? (accountsPayload as SecurityAccountRecord[]) : [],
       );
       setSessions(Array.isArray(sessionsPayload) ? (sessionsPayload as ActiveSession[]) : []);
+
+      // 2FA + current session are non-blocking: if either endpoint errors, we
+      // fall back to the safe defaults so the rest of the page still renders.
+      if (twoFactorResponse.ok && twoFactorPayload && typeof twoFactorPayload === "object") {
+        const enabled = (twoFactorPayload as { enabled?: unknown }).enabled;
+        setTwoFactorEnabled(typeof enabled === "boolean" ? enabled : false);
+      } else {
+        setTwoFactorEnabled(false);
+      }
+
+      if (
+        currentSessionResponse.ok &&
+        currentSessionPayload &&
+        typeof currentSessionPayload === "object"
+      ) {
+        const sessionId = (currentSessionPayload as { sessionId?: unknown }).sessionId;
+        setCurrentSessionId(typeof sessionId === "string" ? sessionId : null);
+      } else {
+        setCurrentSessionId(null);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load security settings.");
     } finally {
@@ -143,6 +166,7 @@ export function SecuritySettingsClient() {
         sessions={sessions}
         loading={loading}
         onRefresh={refreshSecurityState}
+        currentSessionId={currentSessionId ?? undefined}
       />
 
       <DeleteAccountForm

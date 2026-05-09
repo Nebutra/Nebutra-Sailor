@@ -497,6 +497,14 @@ export type PlanUsageLimitUncheckedUpdateManyWithoutPlanNestedInput = {
   deleteMany?: Prisma.PlanUsageLimitScalarWhereInput | Prisma.PlanUsageLimitScalarWhereInput[]
 }
 
+export type BigIntFieldUpdateOperationsInput = {
+  set?: bigint | number
+  increment?: bigint | number
+  decrement?: bigint | number
+  multiply?: bigint | number
+  divide?: bigint | number
+}
+
 export type PlanUsageLimitCreateWithoutLimitDefInput = {
   id?: string
   limitValue: bigint | number

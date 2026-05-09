@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Invoice
- * 
+ * @conditional(payment=wechat|alipay)
  */
 export type InvoiceModel = runtime.Types.Result.DefaultSelection<Prisma.$InvoicePayload>
 

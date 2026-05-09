@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model ContentEmbedding
- * 
+ * @conditional(template=blog|portfolio)
  */
 export type ContentEmbeddingModel = runtime.Types.Result.DefaultSelection<Prisma.$ContentEmbeddingPayload>
 

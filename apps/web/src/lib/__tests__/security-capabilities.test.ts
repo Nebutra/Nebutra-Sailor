@@ -33,9 +33,10 @@ describe("security settings capabilities", () => {
           "Credential sign-in is attached, but in-app password rotation is not exposed by the shared Nebutra auth client yet.",
       },
       twoFactor: {
-        available: false,
+        available: true,
         requiresPasswordAccount: false,
-        reason: "Two-factor setup is not exposed by the shared Nebutra auth client yet.",
+        reason:
+          "Two-factor authentication can be enabled with an authenticator app and a TOTP code.",
       },
     });
   });

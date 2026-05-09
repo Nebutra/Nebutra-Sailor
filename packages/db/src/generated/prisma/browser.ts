@@ -38,60 +38,45 @@ export type User = Prisma.UserModel
  */
 export type OrganizationMember = Prisma.OrganizationMemberModel
 /**
- * Model Content
+ * Model OrganizationInvitation
  * 
+ */
+export type OrganizationInvitation = Prisma.OrganizationInvitationModel
+/**
+ * Model Content
+ * @conditional(template=blog|portfolio)
  */
 export type Content = Prisma.ContentModel
 /**
  * Model ContentTranslation
- * 
+ * @conditional(template=blog|portfolio)
  */
 export type ContentTranslation = Prisma.ContentTranslationModel
 /**
  * Model ContentEmbedding
- * 
+ * @conditional(template=blog|portfolio)
  */
 export type ContentEmbedding = Prisma.ContentEmbeddingModel
 /**
  * Model Product
- * 
+ * @conditional(template=ecommerce)
  */
 export type Product = Prisma.ProductModel
 /**
  * Model Order
- * 
+ * @conditional(template=ecommerce)
  */
 export type Order = Prisma.OrderModel
 /**
  * Model OrderItem
- * 
+ * @conditional(template=ecommerce)
  */
 export type OrderItem = Prisma.OrderItemModel
 /**
  * Model Integration
- * 
+ * @conditional(template=ecommerce)
  */
 export type Integration = Prisma.IntegrationModel
-/**
- * Model Wallet
- * 
- */
-export type Wallet = Prisma.WalletModel
-/**
- * Model Nft
- * 
- */
-export type Nft = Prisma.NftModel
-/**
- * Model UserActivity
- * 
- */
-export type UserActivity = Prisma.UserActivityModel
-/**
- * Model TenantUsage
- * 
- */
-export type TenantUsage = Prisma.TenantUsageModel
 /**
  * Model ModelConfig
  * 
@@ -102,31 +87,6 @@ export type ModelConfig = Prisma.ModelConfigModel
  * 
  */
 export type RequestLog = Prisma.RequestLogModel
-/**
- * Model AIRequest
- * 
- */
-export type AIRequest = Prisma.AIRequestModel
-/**
- * Model UserPreference
- * 
- */
-export type UserPreference = Prisma.UserPreferenceModel
-/**
- * Model Recommendation
- * 
- */
-export type Recommendation = Prisma.RecommendationModel
-/**
- * Model FeatureFlag
- * 
- */
-export type FeatureFlag = Prisma.FeatureFlagModel
-/**
- * Model FeatureFlagOverride
- * 
- */
-export type FeatureFlagOverride = Prisma.FeatureFlagOverrideModel
 /**
  * Model FeatureDefinition
  * 
@@ -174,54 +134,39 @@ export type CustomerUsageLimit = Prisma.CustomerUsageLimitModel
 export type Subscription = Prisma.SubscriptionModel
 /**
  * Model Invoice
- * 
+ * @conditional(payment=wechat|alipay)
  */
 export type Invoice = Prisma.InvoiceModel
 /**
  * Model InvoiceItem
- * 
+ * @conditional(payment=wechat|alipay)
  */
 export type InvoiceItem = Prisma.InvoiceItemModel
 /**
  * Model Payment
- * 
+ * @conditional(payment=wechat|alipay)
  */
 export type Payment = Prisma.PaymentModel
 /**
  * Model PaymentMethod
- * 
+ * @conditional(payment=wechat|alipay)
  */
 export type PaymentMethod = Prisma.PaymentMethodModel
-/**
- * Model UsageRecord
- * 
- */
-export type UsageRecord = Prisma.UsageRecordModel
 /**
  * Model UsageLedgerEntry
  * 
  */
 export type UsageLedgerEntry = Prisma.UsageLedgerEntryModel
 /**
- * Model UsageAggregate
- * 
- */
-export type UsageAggregate = Prisma.UsageAggregateModel
-/**
  * Model CreditBalance
- * 
+ * @conditional(billing-mode=credits)
  */
 export type CreditBalance = Prisma.CreditBalanceModel
 /**
  * Model CreditTransaction
- * 
+ * @conditional(billing-mode=credits)
  */
 export type CreditTransaction = Prisma.CreditTransactionModel
-/**
- * Model Entitlement
- * 
- */
-export type Entitlement = Prisma.EntitlementModel
 /**
  * Model StripeCustomer
  * 
@@ -264,32 +209,32 @@ export type ContactSubmission = Prisma.ContactSubmissionModel
 export type OAuthClient = Prisma.OAuthClientModel
 /**
  * Model OAuthAuthorization
- * 
+ * @conditional(idp=oauth-server)
  */
 export type OAuthAuthorization = Prisma.OAuthAuthorizationModel
 /**
  * Model OAuthAccessToken
- * 
+ * @conditional(idp=oauth-server)
  */
 export type OAuthAccessToken = Prisma.OAuthAccessTokenModel
 /**
  * Model AuthUser
- * 
+ * @conditional(auth=betterauth)
  */
 export type AuthUser = Prisma.AuthUserModel
 /**
  * Model AuthAccount
- * 
+ * @conditional(auth=betterauth)
  */
 export type AuthAccount = Prisma.AuthAccountModel
 /**
  * Model AuthSession
- * 
+ * @conditional(auth=betterauth)
  */
 export type AuthSession = Prisma.AuthSessionModel
 /**
  * Model AuthVerification
- * 
+ * @conditional(auth=betterauth)
  */
 export type AuthVerification = Prisma.AuthVerificationModel
 /**

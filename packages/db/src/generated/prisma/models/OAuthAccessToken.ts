@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model OAuthAccessToken
- * 
+ * @conditional(idp=oauth-server)
  */
 export type OAuthAccessTokenModel = runtime.Types.Result.DefaultSelection<Prisma.$OAuthAccessTokenPayload>
 

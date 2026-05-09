@@ -87,6 +87,7 @@ model Organization {
   name      String
   slug      String   @unique
   plan      Plan     @default(FREE)
+  logo      String?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -159,6 +160,29 @@ model OrganizationMember {
 
   @@unique([organizationId, userId])
   @@map("organization_members")
+  @@schema("public")
+}
+
+// ── Organization Invitations ────────────────────────────────────────────────
+// Pending → Accepted | Declined | Expired state machine for inviting users to
+// join an organization. The `token` is a unique, opaque identifier emailed to
+// the invitee and used as the URL slug for the accept page.
+model OrganizationInvitation {
+  id             String    @id @default(cuid())
+  email          String
+  organizationId String    @map("organization_id")
+  role           String    @default("member")
+  status         String    @default("pending") // pending | accepted | declined | expired
+  inviterId      String    @map("inviter_id")
+  token          String    @unique
+  expiresAt      DateTime  @map("expires_at")
+  acceptedAt     DateTime? @map("accepted_at")
+  declinedAt     DateTime? @map("declined_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  @@index([email])
+  @@index([organizationId])
+  @@map("organization_invitations")
   @@schema("public")
 }
 
@@ -1189,18 +1213,21 @@ model OAuthAccessToken {
 
 /// @conditional(auth=betterauth)
 model AuthUser {
-  id            String        @id @default(cuid())
-  email         String?       @unique
-  phone         String?       @unique
-  emailVerified Boolean       @default(false) @map("email_verified")
-  phoneVerified Boolean       @default(false) @map("phone_verified")
-  name          String?
-  image         String?
-  passwordHash  String?       @map("password_hash")
-  createdAt     DateTime      @default(now()) @map("created_at")
-  updatedAt     DateTime      @updatedAt @map("updated_at")
-  accounts      AuthAccount[]
-  sessions      AuthSession[]
+  id               String        @id @default(cuid())
+  email            String?       @unique
+  phone            String?       @unique
+  emailVerified    Boolean       @default(false) @map("email_verified")
+  phoneVerified    Boolean       @default(false) @map("phone_verified")
+  name             String?
+  image            String?
+  passwordHash     String?       @map("password_hash")
+  twoFactorEnabled Boolean       @default(false) @map("two_factor_enabled")
+  twoFactorSecret  String?       @map("two_factor_secret")
+  backupCodes      String[]      @default([]) @map("backup_codes")
+  createdAt        DateTime      @default(now()) @map("created_at")
+  updatedAt        DateTime      @updatedAt @map("updated_at")
+  accounts         AuthAccount[]
+  sessions         AuthSession[]
 
   @@map("auth_users")
   @@schema("public")

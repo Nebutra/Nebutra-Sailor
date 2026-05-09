@@ -252,7 +252,6 @@ export type SubscriptionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   pricingPlan?: Prisma.XOR<Prisma.PricingPlanScalarRelationFilter, Prisma.PricingPlanWhereInput>
   invoices?: Prisma.InvoiceListRelationFilter
-  usageRecords?: Prisma.UsageRecordListRelationFilter
   usageLedgerEntries?: Prisma.UsageLedgerEntryListRelationFilter
 }
 
@@ -273,7 +272,6 @@ export type SubscriptionOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   pricingPlan?: Prisma.PricingPlanOrderByWithRelationInput
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
-  usageRecords?: Prisma.UsageRecordOrderByRelationAggregateInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryOrderByRelationAggregateInput
 }
 
@@ -297,7 +295,6 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   pricingPlan?: Prisma.XOR<Prisma.PricingPlanScalarRelationFilter, Prisma.PricingPlanWhereInput>
   invoices?: Prisma.InvoiceListRelationFilter
-  usageRecords?: Prisma.UsageRecordListRelationFilter
   usageLedgerEntries?: Prisma.UsageLedgerEntryListRelationFilter
 }, "id" | "stripeId">
 
@@ -357,7 +354,6 @@ export type SubscriptionCreateInput = {
   updatedAt?: Date | string
   pricingPlan: Prisma.PricingPlanCreateNestedOneWithoutSubscriptionsInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutSubscriptionInput
-  usageRecords?: Prisma.UsageRecordCreateNestedManyWithoutSubscriptionInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutSubscriptionInput
 }
 
@@ -377,7 +373,6 @@ export type SubscriptionUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutSubscriptionInput
-  usageRecords?: Prisma.UsageRecordUncheckedCreateNestedManyWithoutSubscriptionInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutSubscriptionInput
 }
 
@@ -397,7 +392,6 @@ export type SubscriptionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pricingPlan?: Prisma.PricingPlanUpdateOneRequiredWithoutSubscriptionsNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutSubscriptionNestedInput
-  usageRecords?: Prisma.UsageRecordUpdateManyWithoutSubscriptionNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutSubscriptionNestedInput
 }
 
@@ -417,7 +411,6 @@ export type SubscriptionUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutSubscriptionNestedInput
-  usageRecords?: Prisma.UsageRecordUncheckedUpdateManyWithoutSubscriptionNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutSubscriptionNestedInput
 }
 
@@ -597,22 +590,6 @@ export type SubscriptionUpdateOneWithoutInvoicesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriptionUpdateToOneWithWhereWithoutInvoicesInput, Prisma.SubscriptionUpdateWithoutInvoicesInput>, Prisma.SubscriptionUncheckedUpdateWithoutInvoicesInput>
 }
 
-export type SubscriptionCreateNestedOneWithoutUsageRecordsInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUsageRecordsInput, Prisma.SubscriptionUncheckedCreateWithoutUsageRecordsInput>
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUsageRecordsInput
-  connect?: Prisma.SubscriptionWhereUniqueInput
-}
-
-export type SubscriptionUpdateOneWithoutUsageRecordsNestedInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUsageRecordsInput, Prisma.SubscriptionUncheckedCreateWithoutUsageRecordsInput>
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUsageRecordsInput
-  upsert?: Prisma.SubscriptionUpsertWithoutUsageRecordsInput
-  disconnect?: Prisma.SubscriptionWhereInput | boolean
-  delete?: Prisma.SubscriptionWhereInput | boolean
-  connect?: Prisma.SubscriptionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriptionUpdateToOneWithWhereWithoutUsageRecordsInput, Prisma.SubscriptionUpdateWithoutUsageRecordsInput>, Prisma.SubscriptionUncheckedUpdateWithoutUsageRecordsInput>
-}
-
 export type SubscriptionCreateNestedOneWithoutUsageLedgerEntriesInput = {
   create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUsageLedgerEntriesInput, Prisma.SubscriptionUncheckedCreateWithoutUsageLedgerEntriesInput>
   connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUsageLedgerEntriesInput
@@ -644,7 +621,6 @@ export type SubscriptionCreateWithoutPricingPlanInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   invoices?: Prisma.InvoiceCreateNestedManyWithoutSubscriptionInput
-  usageRecords?: Prisma.UsageRecordCreateNestedManyWithoutSubscriptionInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutSubscriptionInput
 }
 
@@ -663,7 +639,6 @@ export type SubscriptionUncheckedCreateWithoutPricingPlanInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutSubscriptionInput
-  usageRecords?: Prisma.UsageRecordUncheckedCreateNestedManyWithoutSubscriptionInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutSubscriptionInput
 }
 
@@ -728,7 +703,6 @@ export type SubscriptionCreateWithoutInvoicesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pricingPlan: Prisma.PricingPlanCreateNestedOneWithoutSubscriptionsInput
-  usageRecords?: Prisma.UsageRecordCreateNestedManyWithoutSubscriptionInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutSubscriptionInput
 }
 
@@ -747,7 +721,6 @@ export type SubscriptionUncheckedCreateWithoutInvoicesInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  usageRecords?: Prisma.UsageRecordUncheckedCreateNestedManyWithoutSubscriptionInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutSubscriptionInput
 }
 
@@ -782,7 +755,6 @@ export type SubscriptionUpdateWithoutInvoicesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pricingPlan?: Prisma.PricingPlanUpdateOneRequiredWithoutSubscriptionsNestedInput
-  usageRecords?: Prisma.UsageRecordUpdateManyWithoutSubscriptionNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutSubscriptionNestedInput
 }
 
@@ -801,99 +773,6 @@ export type SubscriptionUncheckedUpdateWithoutInvoicesInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  usageRecords?: Prisma.UsageRecordUncheckedUpdateManyWithoutSubscriptionNestedInput
-  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutSubscriptionNestedInput
-}
-
-export type SubscriptionCreateWithoutUsageRecordsInput = {
-  id?: string
-  stripeId?: string | null
-  organizationId: string
-  status?: $Enums.SubscriptionStatus
-  currentPeriodStart: Date | string
-  currentPeriodEnd: Date | string
-  cancelAtPeriodEnd?: boolean
-  canceledAt?: Date | string | null
-  trialStart?: Date | string | null
-  trialEnd?: Date | string | null
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  pricingPlan: Prisma.PricingPlanCreateNestedOneWithoutSubscriptionsInput
-  invoices?: Prisma.InvoiceCreateNestedManyWithoutSubscriptionInput
-  usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutSubscriptionInput
-}
-
-export type SubscriptionUncheckedCreateWithoutUsageRecordsInput = {
-  id?: string
-  stripeId?: string | null
-  organizationId: string
-  pricingPlanId: string
-  status?: $Enums.SubscriptionStatus
-  currentPeriodStart: Date | string
-  currentPeriodEnd: Date | string
-  cancelAtPeriodEnd?: boolean
-  canceledAt?: Date | string | null
-  trialStart?: Date | string | null
-  trialEnd?: Date | string | null
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutSubscriptionInput
-  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutSubscriptionInput
-}
-
-export type SubscriptionCreateOrConnectWithoutUsageRecordsInput = {
-  where: Prisma.SubscriptionWhereUniqueInput
-  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutUsageRecordsInput, Prisma.SubscriptionUncheckedCreateWithoutUsageRecordsInput>
-}
-
-export type SubscriptionUpsertWithoutUsageRecordsInput = {
-  update: Prisma.XOR<Prisma.SubscriptionUpdateWithoutUsageRecordsInput, Prisma.SubscriptionUncheckedUpdateWithoutUsageRecordsInput>
-  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutUsageRecordsInput, Prisma.SubscriptionUncheckedCreateWithoutUsageRecordsInput>
-  where?: Prisma.SubscriptionWhereInput
-}
-
-export type SubscriptionUpdateToOneWithWhereWithoutUsageRecordsInput = {
-  where?: Prisma.SubscriptionWhereInput
-  data: Prisma.XOR<Prisma.SubscriptionUpdateWithoutUsageRecordsInput, Prisma.SubscriptionUncheckedUpdateWithoutUsageRecordsInput>
-}
-
-export type SubscriptionUpdateWithoutUsageRecordsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  currentPeriodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  currentPeriodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cancelAtPeriodEnd?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  trialStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  trialEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pricingPlan?: Prisma.PricingPlanUpdateOneRequiredWithoutSubscriptionsNestedInput
-  invoices?: Prisma.InvoiceUpdateManyWithoutSubscriptionNestedInput
-  usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutSubscriptionNestedInput
-}
-
-export type SubscriptionUncheckedUpdateWithoutUsageRecordsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  pricingPlanId?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  currentPeriodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  currentPeriodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cancelAtPeriodEnd?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  trialStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  trialEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutSubscriptionNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutSubscriptionNestedInput
 }
 
@@ -913,7 +792,6 @@ export type SubscriptionCreateWithoutUsageLedgerEntriesInput = {
   updatedAt?: Date | string
   pricingPlan: Prisma.PricingPlanCreateNestedOneWithoutSubscriptionsInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutSubscriptionInput
-  usageRecords?: Prisma.UsageRecordCreateNestedManyWithoutSubscriptionInput
 }
 
 export type SubscriptionUncheckedCreateWithoutUsageLedgerEntriesInput = {
@@ -932,7 +810,6 @@ export type SubscriptionUncheckedCreateWithoutUsageLedgerEntriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutSubscriptionInput
-  usageRecords?: Prisma.UsageRecordUncheckedCreateNestedManyWithoutSubscriptionInput
 }
 
 export type SubscriptionCreateOrConnectWithoutUsageLedgerEntriesInput = {
@@ -967,7 +844,6 @@ export type SubscriptionUpdateWithoutUsageLedgerEntriesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pricingPlan?: Prisma.PricingPlanUpdateOneRequiredWithoutSubscriptionsNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutSubscriptionNestedInput
-  usageRecords?: Prisma.UsageRecordUpdateManyWithoutSubscriptionNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutUsageLedgerEntriesInput = {
@@ -986,7 +862,6 @@ export type SubscriptionUncheckedUpdateWithoutUsageLedgerEntriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutSubscriptionNestedInput
-  usageRecords?: Prisma.UsageRecordUncheckedUpdateManyWithoutSubscriptionNestedInput
 }
 
 export type SubscriptionCreateManyPricingPlanInput = {
@@ -1020,7 +895,6 @@ export type SubscriptionUpdateWithoutPricingPlanInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.InvoiceUpdateManyWithoutSubscriptionNestedInput
-  usageRecords?: Prisma.UsageRecordUpdateManyWithoutSubscriptionNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutSubscriptionNestedInput
 }
 
@@ -1039,7 +913,6 @@ export type SubscriptionUncheckedUpdateWithoutPricingPlanInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutSubscriptionNestedInput
-  usageRecords?: Prisma.UsageRecordUncheckedUpdateManyWithoutSubscriptionNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutSubscriptionNestedInput
 }
 
@@ -1066,13 +939,11 @@ export type SubscriptionUncheckedUpdateManyWithoutPricingPlanInput = {
 
 export type SubscriptionCountOutputType = {
   invoices: number
-  usageRecords: number
   usageLedgerEntries: number
 }
 
 export type SubscriptionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   invoices?: boolean | SubscriptionCountOutputTypeCountInvoicesArgs
-  usageRecords?: boolean | SubscriptionCountOutputTypeCountUsageRecordsArgs
   usageLedgerEntries?: boolean | SubscriptionCountOutputTypeCountUsageLedgerEntriesArgs
 }
 
@@ -1091,13 +962,6 @@ export type SubscriptionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types
  */
 export type SubscriptionCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.InvoiceWhereInput
-}
-
-/**
- * SubscriptionCountOutputType without action
- */
-export type SubscriptionCountOutputTypeCountUsageRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UsageRecordWhereInput
 }
 
 /**
@@ -1125,7 +989,6 @@ export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   updatedAt?: boolean
   pricingPlan?: boolean | Prisma.PricingPlanDefaultArgs<ExtArgs>
   invoices?: boolean | Prisma.Subscription$invoicesArgs<ExtArgs>
-  usageRecords?: boolean | Prisma.Subscription$usageRecordsArgs<ExtArgs>
   usageLedgerEntries?: boolean | Prisma.Subscription$usageLedgerEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.SubscriptionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscription"]>
@@ -1187,7 +1050,6 @@ export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type SubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pricingPlan?: boolean | Prisma.PricingPlanDefaultArgs<ExtArgs>
   invoices?: boolean | Prisma.Subscription$invoicesArgs<ExtArgs>
-  usageRecords?: boolean | Prisma.Subscription$usageRecordsArgs<ExtArgs>
   usageLedgerEntries?: boolean | Prisma.Subscription$usageLedgerEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.SubscriptionCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1203,7 +1065,6 @@ export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     pricingPlan: Prisma.$PricingPlanPayload<ExtArgs>
     invoices: Prisma.$InvoicePayload<ExtArgs>[]
-    usageRecords: Prisma.$UsageRecordPayload<ExtArgs>[]
     usageLedgerEntries: Prisma.$UsageLedgerEntryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1617,7 +1478,6 @@ export interface Prisma__SubscriptionClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   pricingPlan<T extends Prisma.PricingPlanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PricingPlanDefaultArgs<ExtArgs>>): Prisma.Prisma__PricingPlanClient<runtime.Types.Result.GetResult<Prisma.$PricingPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   invoices<T extends Prisma.Subscription$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  usageRecords<T extends Prisma.Subscription$usageRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$usageRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UsageRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   usageLedgerEntries<T extends Prisma.Subscription$usageLedgerEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$usageLedgerEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UsageLedgerEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2079,30 +1939,6 @@ export type Subscription$invoicesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[]
-}
-
-/**
- * Subscription.usageRecords
- */
-export type Subscription$usageRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the UsageRecord
-   */
-  select?: Prisma.UsageRecordSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the UsageRecord
-   */
-  omit?: Prisma.UsageRecordOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UsageRecordInclude<ExtArgs> | null
-  where?: Prisma.UsageRecordWhereInput
-  orderBy?: Prisma.UsageRecordOrderByWithRelationInput | Prisma.UsageRecordOrderByWithRelationInput[]
-  cursor?: Prisma.UsageRecordWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UsageRecordScalarFieldEnum | Prisma.UsageRecordScalarFieldEnum[]
 }
 
 /**

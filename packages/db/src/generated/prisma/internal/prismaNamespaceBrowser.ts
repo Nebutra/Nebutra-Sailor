@@ -55,6 +55,7 @@ export const ModelName = {
   APIKey: 'APIKey',
   User: 'User',
   OrganizationMember: 'OrganizationMember',
+  OrganizationInvitation: 'OrganizationInvitation',
   Content: 'Content',
   ContentTranslation: 'ContentTranslation',
   ContentEmbedding: 'ContentEmbedding',
@@ -62,17 +63,8 @@ export const ModelName = {
   Order: 'Order',
   OrderItem: 'OrderItem',
   Integration: 'Integration',
-  Wallet: 'Wallet',
-  Nft: 'Nft',
-  UserActivity: 'UserActivity',
-  TenantUsage: 'TenantUsage',
   ModelConfig: 'ModelConfig',
   RequestLog: 'RequestLog',
-  AIRequest: 'AIRequest',
-  UserPreference: 'UserPreference',
-  Recommendation: 'Recommendation',
-  FeatureFlag: 'FeatureFlag',
-  FeatureFlagOverride: 'FeatureFlagOverride',
   FeatureDefinition: 'FeatureDefinition',
   UsageLimitDefinition: 'UsageLimitDefinition',
   PricingPlan: 'PricingPlan',
@@ -86,12 +78,9 @@ export const ModelName = {
   InvoiceItem: 'InvoiceItem',
   Payment: 'Payment',
   PaymentMethod: 'PaymentMethod',
-  UsageRecord: 'UsageRecord',
   UsageLedgerEntry: 'UsageLedgerEntry',
-  UsageAggregate: 'UsageAggregate',
   CreditBalance: 'CreditBalance',
   CreditTransaction: 'CreditTransaction',
-  Entitlement: 'Entitlement',
   StripeCustomer: 'StripeCustomer',
   WebhookEvent: 'WebhookEvent',
   AuditLog: 'AuditLog',
@@ -136,6 +125,7 @@ export const OrganizationScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   plan: 'plan',
+  logo: 'logo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -184,6 +174,23 @@ export const OrganizationMemberScalarFieldEnum = {
 } as const
 
 export type OrganizationMemberScalarFieldEnum = (typeof OrganizationMemberScalarFieldEnum)[keyof typeof OrganizationMemberScalarFieldEnum]
+
+
+export const OrganizationInvitationScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  organizationId: 'organizationId',
+  role: 'role',
+  status: 'status',
+  inviterId: 'inviterId',
+  token: 'token',
+  expiresAt: 'expiresAt',
+  acceptedAt: 'acceptedAt',
+  declinedAt: 'declinedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type OrganizationInvitationScalarFieldEnum = (typeof OrganizationInvitationScalarFieldEnum)[keyof typeof OrganizationInvitationScalarFieldEnum]
 
 
 export const ContentScalarFieldEnum = {
@@ -288,68 +295,6 @@ export const IntegrationScalarFieldEnum = {
 export type IntegrationScalarFieldEnum = (typeof IntegrationScalarFieldEnum)[keyof typeof IntegrationScalarFieldEnum]
 
 
-export const WalletScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  userId: 'userId',
-  address: 'address',
-  chainId: 'chainId',
-  isPrimary: 'isPrimary',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof WalletScalarFieldEnum]
-
-
-export const NftScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  walletId: 'walletId',
-  contractAddr: 'contractAddr',
-  tokenId: 'tokenId',
-  chainId: 'chainId',
-  name: 'name',
-  description: 'description',
-  imageUrl: 'imageUrl',
-  metadata: 'metadata',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type NftScalarFieldEnum = (typeof NftScalarFieldEnum)[keyof typeof NftScalarFieldEnum]
-
-
-export const UserActivityScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  action: 'action',
-  entityType: 'entityType',
-  entityId: 'entityId',
-  metadata: 'metadata',
-  ipAddress: 'ipAddress',
-  userAgent: 'userAgent',
-  createdAt: 'createdAt'
-} as const
-
-export type UserActivityScalarFieldEnum = (typeof UserActivityScalarFieldEnum)[keyof typeof UserActivityScalarFieldEnum]
-
-
-export const TenantUsageScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  month: 'month',
-  apiCalls: 'apiCalls',
-  aiTokens: 'aiTokens',
-  storage: 'storage',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type TenantUsageScalarFieldEnum = (typeof TenantUsageScalarFieldEnum)[keyof typeof TenantUsageScalarFieldEnum]
-
-
 export const ModelConfigScalarFieldEnum = {
   id: 'id',
   modelName: 'modelName',
@@ -382,82 +327,6 @@ export const RequestLogScalarFieldEnum = {
 } as const
 
 export type RequestLogScalarFieldEnum = (typeof RequestLogScalarFieldEnum)[keyof typeof RequestLogScalarFieldEnum]
-
-
-export const AIRequestScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  userId: 'userId',
-  type: 'type',
-  provider: 'provider',
-  model: 'model',
-  inputTokens: 'inputTokens',
-  outputTokens: 'outputTokens',
-  latencyMs: 'latencyMs',
-  cost: 'cost',
-  metadata: 'metadata',
-  createdAt: 'createdAt'
-} as const
-
-export type AIRequestScalarFieldEnum = (typeof AIRequestScalarFieldEnum)[keyof typeof AIRequestScalarFieldEnum]
-
-
-export const UserPreferenceScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  userId: 'userId',
-  category: 'category',
-  weight: 'weight',
-  metadata: 'metadata',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type UserPreferenceScalarFieldEnum = (typeof UserPreferenceScalarFieldEnum)[keyof typeof UserPreferenceScalarFieldEnum]
-
-
-export const RecommendationScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  userId: 'userId',
-  itemType: 'itemType',
-  itemId: 'itemId',
-  score: 'score',
-  reason: 'reason',
-  shown: 'shown',
-  clicked: 'clicked',
-  createdAt: 'createdAt',
-  expiresAt: 'expiresAt'
-} as const
-
-export type RecommendationScalarFieldEnum = (typeof RecommendationScalarFieldEnum)[keyof typeof RecommendationScalarFieldEnum]
-
-
-export const FeatureFlagScalarFieldEnum = {
-  id: 'id',
-  key: 'key',
-  name: 'name',
-  description: 'description',
-  type: 'type',
-  value: 'value',
-  isEnabled: 'isEnabled',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type FeatureFlagScalarFieldEnum = (typeof FeatureFlagScalarFieldEnum)[keyof typeof FeatureFlagScalarFieldEnum]
-
-
-export const FeatureFlagOverrideScalarFieldEnum = {
-  id: 'id',
-  flagId: 'flagId',
-  organizationId: 'organizationId',
-  userId: 'userId',
-  value: 'value',
-  createdAt: 'createdAt'
-} as const
-
-export type FeatureFlagOverrideScalarFieldEnum = (typeof FeatureFlagOverrideScalarFieldEnum)[keyof typeof FeatureFlagOverrideScalarFieldEnum]
 
 
 export const FeatureDefinitionScalarFieldEnum = {
@@ -696,23 +565,6 @@ export const PaymentMethodScalarFieldEnum = {
 export type PaymentMethodScalarFieldEnum = (typeof PaymentMethodScalarFieldEnum)[keyof typeof PaymentMethodScalarFieldEnum]
 
 
-export const UsageRecordScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  subscriptionId: 'subscriptionId',
-  userId: 'userId',
-  type: 'type',
-  quantity: 'quantity',
-  unitCost: 'unitCost',
-  totalCost: 'totalCost',
-  resource: 'resource',
-  metadata: 'metadata',
-  recordedAt: 'recordedAt'
-} as const
-
-export type UsageRecordScalarFieldEnum = (typeof UsageRecordScalarFieldEnum)[keyof typeof UsageRecordScalarFieldEnum]
-
-
 export const UsageLedgerEntryScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
@@ -735,22 +587,6 @@ export const UsageLedgerEntryScalarFieldEnum = {
 } as const
 
 export type UsageLedgerEntryScalarFieldEnum = (typeof UsageLedgerEntryScalarFieldEnum)[keyof typeof UsageLedgerEntryScalarFieldEnum]
-
-
-export const UsageAggregateScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  type: 'type',
-  period: 'period',
-  quantity: 'quantity',
-  cost: 'cost',
-  currency: 'currency',
-  metadata: 'metadata',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type UsageAggregateScalarFieldEnum = (typeof UsageAggregateScalarFieldEnum)[keyof typeof UsageAggregateScalarFieldEnum]
 
 
 export const CreditBalanceScalarFieldEnum = {
@@ -778,25 +614,6 @@ export const CreditTransactionScalarFieldEnum = {
 } as const
 
 export type CreditTransactionScalarFieldEnum = (typeof CreditTransactionScalarFieldEnum)[keyof typeof CreditTransactionScalarFieldEnum]
-
-
-export const EntitlementScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  feature: 'feature',
-  isEnabled: 'isEnabled',
-  limitValue: 'limitValue',
-  usedValue: 'usedValue',
-  resetPeriod: 'resetPeriod',
-  lastResetAt: 'lastResetAt',
-  expiresAt: 'expiresAt',
-  source: 'source',
-  metadata: 'metadata',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type EntitlementScalarFieldEnum = (typeof EntitlementScalarFieldEnum)[keyof typeof EntitlementScalarFieldEnum]
 
 
 export const StripeCustomerScalarFieldEnum = {
@@ -998,6 +815,9 @@ export const AuthUserScalarFieldEnum = {
   name: 'name',
   image: 'image',
   passwordHash: 'passwordHash',
+  twoFactorEnabled: 'twoFactorEnabled',
+  twoFactorSecret: 'twoFactorSecret',
+  backupCodes: 'backupCodes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

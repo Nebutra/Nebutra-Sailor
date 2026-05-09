@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Integration
- * 
+ * @conditional(template=ecommerce)
  */
 export type IntegrationModel = runtime.Types.Result.DefaultSelection<Prisma.$IntegrationPayload>
 
