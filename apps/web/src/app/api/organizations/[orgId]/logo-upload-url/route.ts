@@ -1,4 +1,5 @@
 import { logger } from "@nebutra/logger";
+import { getUploadProvider } from "@nebutra/uploads";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getAuth } from "@/lib/auth";
@@ -45,20 +46,22 @@ async function getCurrentMembership(orgId: string, userId: string) {
 }
 
 /**
- * Generate a presigned upload URL for a logo.
- *
- * TODO(uploads): replace with `@nebutra/uploads` `getUploadProvider()` once that
- * package is added to the apps/web dependency graph. For now we emit a route-relative
- * upload URL handled by a future `/api/uploads/[key]` endpoint, or — when configured —
- * an `UPLOADS_BASE_URL` external URL.
+ * Generate a presigned upload URL for a logo using @nebutra/uploads.
+ * Auto-detects provider: Vercel Blob (zero-config), S3, R2, or local.
  */
-function buildPresignedUpload(key: string, contentType: string) {
-  const baseUrl = process.env.UPLOADS_BASE_URL?.replace(/\/+$/, "") ?? "";
-  const url = baseUrl ? `${baseUrl}/${key}` : `/api/uploads/${encodeURIComponent(key)}`;
+async function buildPresignedUpload(key: string, contentType: string, orgId: string) {
+  const provider = await getUploadProvider();
+  const presigned = await provider.createPresignedUpload({
+    bucket: "org-logos",
+    key,
+    contentType,
+    tenantId: orgId,
+    acl: "public-read",
+  });
   return {
-    url,
-    method: "PUT" as const,
-    headers: { "content-type": contentType },
+    url: presigned.url,
+    method: presigned.method,
+    headers: presigned.headers,
     key,
   };
 }
@@ -95,8 +98,8 @@ export async function POST(request: Request, context: RouteContext) {
     }
 
     const ext = extensionFor(parsed.data.contentType);
-    const key = `org-logos/${orgId}/${Date.now()}.${ext}`;
-    const upload = buildPresignedUpload(key, parsed.data.contentType);
+    const key = `${Date.now()}.${ext}`;
+    const upload = await buildPresignedUpload(key, parsed.data.contentType, orgId);
 
     return NextResponse.json(upload);
   } catch (error) {
