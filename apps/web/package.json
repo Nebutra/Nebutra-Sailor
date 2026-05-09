@@ -29,6 +29,7 @@
     "@nebutra/queue": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
+    "@nebutra/webhooks": "workspace:*",
     "@sentry/nextjs": "^9.27.0",
     "@t3-oss/env-nextjs": "^0.13.10",
     "@tanstack/react-query": "^5.90.21",
