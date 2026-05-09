@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bento-grid",
+  "type": "registry:ui",
+  "title": "Bento Grid",
+  "description": "Responsive bento-style feature grid with hover-reveal CTAs.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "components/ui/bento-grid.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/bento-grid.tsx",
+      "content": "\"use client\";\n\nimport { ArrowRight } from \"lucide-react\";\nimport type { ComponentPropsWithoutRef, ElementType, ReactNode } from \"react\";\nimport { cn } from \"../utils\";\nimport { Button } from \"./button\";\n\n// =============================================================================\n// Types\n// =============================================================================\n\n/**\n * Props for BentoGrid container\n *\n * @description\n * A responsive grid container for bento-style feature showcases.\n * Default is 3-column layout with auto-rows.\n *\n * **UX Scenarios:**\n * - Feature showcase sections\n * - Product capability grids\n * - Dashboard widget layouts\n * - Portfolio galleries\n * - Service offering displays\n */\nexport interface BentoGridProps extends ComponentPropsWithoutRef<\"div\"> {\n  children: ReactNode;\n  className?: string;\n}\n\n/**\n * Props for BentoCard item\n *\n * @description\n * Individual card within the BentoGrid with background slot, icon,\n * title, description, and hover-reveal CTA.\n *\n * **Features:**\n * - Background slot for custom content (images, animations, etc.)\n * - Icon with scale animation on hover\n * - Text content slides up on hover (desktop)\n * - CTA button reveals on hover (desktop), always visible on mobile\n */\nexport interface BentoCardProps extends ComponentPropsWithoutRef<\"div\"> {\n  /** Card title */\n  name: string;\n  /** Card description */\n  description: string;\n  /** Icon component to display */\n  Icon: React.ElementType;\n  /** Background content (images, animations, gradients) */\n  background?: ReactNode;\n  /** Link URL for CTA */\n  href?: string;\n  /** CTA button text */\n  cta?: string;\n  /** Additional className for grid span control */\n  className?: string;\n}\n\n// =============================================================================\n// Components\n// =============================================================================\n\n/**\n * BentoGrid - Container for bento-style grid layouts\n *\n * @example\n * ```tsx\n * <BentoGrid className=\"lg:grid-cols-3\">\n *   <BentoCard\n *     name=\"Feature 1\"\n *     description=\"Description here\"\n *     Icon={Sparkles}\n *     className=\"lg:col-span-2\"\n *   />\n *   <BentoCard ... />\n * </BentoGrid>\n * ```\n */\nexport const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {\n  return (\n    <div\n      className={cn(\n        \"grid w-full auto-rows-[22rem] grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3\",\n        className,\n      )}\n      {...props}\n    >\n      {children}\n    </div>\n  );\n};\n\n/**\n * BentoCard - Individual card with hover effects\n *\n * @example\n * ```tsx\n * <BentoCard\n *   name=\"AI Integration\"\n *   description=\"Seamlessly integrate AI into your workflow\"\n *   Icon={Brain}\n *   background={<GradientBackground />}\n *   href=\"/features/ai\"\n *   cta=\"Learn more\"\n *   className=\"lg:col-span-2 lg:row-span-2\"\n * />\n * ```\n */\nexport const BentoCard = ({\n  name,\n  className,\n  background,\n  Icon,\n  description,\n  href,\n  cta = \"Learn more\",\n  ...props\n}: BentoCardProps) => {\n  const IconComponent = Icon as ElementType<{ className?: string }>;\n  return (\n    <div\n      className={cn(\n        \"group relative col-span-1 flex flex-col justify-between overflow-hidden rounded-[var(--radius-xl)]\",\n        // Light styles\n        \"bg-background [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]\",\n        // Dark styles\n        \"transform-gpu dark:bg-background dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]\",\n        className,\n      )}\n      {...props}\n    >\n      {/* Background slot */}\n      <div>{background}</div>\n\n      {/* Content */}\n      <div className=\"p-4\">\n        <div className=\"pointer-events-none z-10 flex transform-gpu flex-col gap-1 transition-all duration-300 lg:group-hover:-translate-y-10\">\n          <IconComponent className=\"h-12 w-12 origin-left transform-gpu text-muted-foreground transition-all duration-300 ease-in-out group-hover:scale-75\" />\n          <h3 className=\"text-xl font-semibold text-foreground\">{name}</h3>\n          <p className=\"max-w-lg text-muted-foreground\">{description}</p>\n        </div>\n\n        {/* Mobile CTA (always visible) */}\n        {href && (\n          <div className=\"pointer-events-none flex w-full translate-y-0 transform-gpu flex-row items-center transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:hidden\">\n            <Button variant=\"link\" asChild size=\"sm\" className=\"pointer-events-auto p-0\">\n              <a href={href}>\n                {cta}\n                <ArrowRight className=\"ms-2 h-4 w-4 rtl:rotate-180\" />\n              </a>\n            </Button>\n          </div>\n        )}\n      </div>\n\n      {/* Desktop CTA (reveals on hover) */}\n      {href && (\n        <div className=\"pointer-events-none absolute bottom-0 hidden w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:flex\">\n          <Button variant=\"link\" asChild size=\"sm\" className=\"pointer-events-auto p-0\">\n            <a href={href}>\n              {cta}\n              <ArrowRight className=\"ms-2 h-4 w-4 rtl:rotate-180\" />\n            </a>\n          </Button>\n        </div>\n      )}\n\n      {/* Hover overlay */}\n      <div className=\"pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] group-hover:dark:bg-muted/50\" />\n    </div>\n  );\n};\n\nexport default BentoGrid;\n"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "--radius-xl": "0.75rem"
+    },
+    "dark": {
+      "--radius-xl": "0.75rem"
+    }
+  },
+  "meta": {
+    "nebutraTokens": [
+      "--radius-xl"
+    ],
+    "nebutraLayer": "marketing"
+  }
+}

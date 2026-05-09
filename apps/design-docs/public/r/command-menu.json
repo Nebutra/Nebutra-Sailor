@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "command-menu",
+  "type": "registry:ui",
+  "title": "Command Menu",
+  "description": "AI command palette built on cmdk + base-ui dialog.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "command",
+    "dialog"
+  ],
+  "files": [
+    {
+      "path": "components/ui/command-menu.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/command-menu.tsx",
+      "content": "\"use client\";\n\nimport { Dialog } from \"@base-ui/react/dialog\";\nimport * as React from \"react\";\nimport { cn } from \"../utils/cn\";\nimport type {\n  CommandEmptyProps,\n  CommandGroupProps,\n  CommandInputProps,\n  CommandItemProps,\n  CommandListProps,\n  CommandSeparatorProps,\n  CommandShortcutProps,\n} from \"./command\";\nimport {\n  Command,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n  CommandSeparator,\n  CommandShortcut,\n} from \"./command\";\nimport { DialogOverlay, DialogPortal } from \"./dialog\";\n\n// =============================================================================\n// Types\n// =============================================================================\n\nexport interface CommandMenuRootProps {\n  /** Whether the command menu is open */\n  open: boolean;\n  /** Setter to control the open state */\n  setOpen: (open: boolean) => void;\n  /** Accessible label announced by screen readers (defaults to \"Command Menu\") */\n  label?: string;\n  children?: React.ReactNode;\n}\n\nexport interface CommandMenuItemProps extends Omit<CommandItemProps, \"onSelect\"> {\n  /** Callback invoked when the item is selected (click or Enter) */\n  callback?: () => void;\n}\n\n// =============================================================================\n// CommandMenuRoot\n// =============================================================================\n\nexport function CommandMenuRoot({\n  open,\n  setOpen,\n  label = \"Command Menu\",\n  children,\n}: CommandMenuRootProps) {\n  return (\n    <Dialog.Root open={open} onOpenChange={setOpen}>\n      <DialogPortal>\n        <DialogOverlay />\n        <Dialog.Popup\n          className={cn(\n            \"fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%]\",\n            \"overflow-hidden rounded-[var(--radius-lg)] border bg-background shadow-lg\",\n            \"duration-200\",\n            \"data-[state=open]:animate-in data-[state=closed]:animate-out\",\n            \"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n            \"data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95\",\n          )}\n        >\n          {/* Visually-hidden title for screen reader accessibility (WCAG 4.1.2) */}\n          <Dialog.Title className=\"sr-only\">{label}</Dialog.Title>\n          <Command\n            className={cn(\n              \"[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium\",\n              \"[&_[cmdk-group-heading]]:text-muted-foreground\",\n              \"[&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0\",\n              \"[&_[cmdk-group]]:px-2\",\n              \"[&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5\",\n              \"[&_[cmdk-input]]:h-12\",\n              \"[&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3\",\n              \"[&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5\",\n            )}\n          >\n            {children}\n          </Command>\n        </Dialog.Popup>\n      </DialogPortal>\n    </Dialog.Root>\n  );\n}\nCommandMenuRoot.displayName = \"CommandMenu.Root\";\n\n// =============================================================================\n// CommandMenuItem\n// =============================================================================\n\nexport const CommandMenuItem = React.forwardRef<\n  React.ElementRef<typeof CommandItem>,\n  CommandMenuItemProps\n>(({ callback, className, ...props }, ref) => (\n  <CommandItem ref={ref} onSelect={() => callback?.()} className={className} {...props} />\n));\nCommandMenuItem.displayName = \"CommandMenu.Item\";\n\n// =============================================================================\n// Pass-through sub-components (typed aliases)\n// =============================================================================\n\nexport const CommandMenuInput = React.forwardRef<\n  React.ElementRef<typeof CommandInput>,\n  CommandInputProps\n>((props, ref) => <CommandInput ref={ref} {...props} />);\nCommandMenuInput.displayName = \"CommandMenu.Input\";\n\nexport const CommandMenuList = React.forwardRef<\n  React.ElementRef<typeof CommandList>,\n  CommandListProps\n>((props, ref) => <CommandList ref={ref} {...props} />);\nCommandMenuList.displayName = \"CommandMenu.List\";\n\nexport const CommandMenuEmpty = React.forwardRef<\n  React.ElementRef<typeof CommandEmpty>,\n  CommandEmptyProps\n>((props, ref) => <CommandEmpty ref={ref} {...props} />);\nCommandMenuEmpty.displayName = \"CommandMenu.Empty\";\n\nexport const CommandMenuGroup = React.forwardRef<\n  React.ElementRef<typeof CommandGroup>,\n  CommandGroupProps\n>((props, ref) => <CommandGroup ref={ref} {...props} />);\nCommandMenuGroup.displayName = \"CommandMenu.Group\";\n\nexport const CommandMenuSeparator = React.forwardRef<\n  React.ElementRef<typeof CommandSeparator>,\n  CommandSeparatorProps\n>((props, ref) => <CommandSeparator ref={ref} {...props} />);\nCommandMenuSeparator.displayName = \"CommandMenu.Separator\";\n\nexport const CommandMenuShortcut = ({ ...props }: CommandShortcutProps) => (\n  <CommandShortcut {...props} />\n);\nCommandMenuShortcut.displayName = \"CommandMenu.Shortcut\";\n\n// =============================================================================\n// Compound Export — plain object namespace (matches Geist .Root API)\n// =============================================================================\n\n/**\n * CommandMenu — Geist-style full-screen command palette overlay.\n *\n * @example\n * ```tsx\n * const [open, setOpen] = useState(false);\n *\n * <Button onClick={() => setOpen(true)}>Open Command Menu</Button>\n * <CommandMenu.Root open={open} setOpen={setOpen}>\n *   <CommandMenu.Input placeholder=\"What do you need?\" />\n *   <CommandMenu.List>\n *     <CommandMenu.Group heading=\"Suggestions\">\n *       <CommandMenu.Item callback={() => doSomething()}>\n *         Figma Import\n *       </CommandMenu.Item>\n *     </CommandMenu.Group>\n *   </CommandMenu.List>\n * </CommandMenu.Root>\n * ```\n */\nexport const CommandMenu = {\n  Root: CommandMenuRoot,\n  Input: CommandMenuInput,\n  List: CommandMenuList,\n  Empty: CommandMenuEmpty,\n  Group: CommandMenuGroup,\n  Item: CommandMenuItem,\n  Shortcut: CommandMenuShortcut,\n  Separator: CommandMenuSeparator,\n} as const;\n"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "--radius-lg": "0.5rem"
+    },
+    "dark": {
+      "--radius-lg": "0.5rem"
+    }
+  },
+  "meta": {
+    "nebutraTokens": [
+      "--radius-lg"
+    ],
+    "nebutraLayer": "business"
+  }
+}

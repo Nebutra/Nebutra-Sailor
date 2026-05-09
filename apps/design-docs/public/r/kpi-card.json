@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kpi-card",
+  "type": "registry:ui",
+  "title": "KPI Card",
+  "description": "Dashboard KPI card with trend chevrons and lucide iconography.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "card"
+  ],
+  "files": [
+    {
+      "path": "components/ui/kpi-card.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/kpi-card.tsx",
+      "content": "import { Minus, TrendingDown, TrendingUp } from \"lucide-react\";\nimport { cn } from \"../utils/cn\";\nimport { Card, CardContent } from \"./card\";\n\nexport interface KpiCardProps {\n  title: string;\n  value: string | number | never;\n  icon: React.ReactNode;\n  trend?: {\n    value: number;\n    isPositive: boolean;\n  };\n  description?: string;\n  className?: string;\n}\n\nexport function KpiCard({ title, value, icon, trend, description, className }: KpiCardProps) {\n  return (\n    <Card className={cn(\"\", className)}>\n      <CardContent className=\"p-6\">\n        <div className=\"flex items-start justify-between\">\n          <div className=\"flex-1\">\n            <p className=\"text-sm font-medium text-muted-foreground\">{title}</p>\n            <p className=\"mt-2 text-3xl font-bold text-foreground\">\n              {typeof value === \"number\" ? value.toLocaleString() : value}\n            </p>\n\n            {trend && (\n              <div className=\"mt-2 flex items-center gap-1\">\n                {trend.isPositive ? (\n                  <>\n                    <TrendingUp className=\"size-4 text-green-600\" />\n                    <span className=\"text-sm font-medium text-green-600\">\n                      +{Math.abs(trend.value)}%\n                    </span>\n                  </>\n                ) : trend.value === 0 ? (\n                  <>\n                    <Minus className=\"size-4 text-muted-foreground\" />\n                    <span className=\"text-sm font-medium text-muted-foreground\">0%</span>\n                  </>\n                ) : (\n                  <>\n                    <TrendingDown className=\"size-4 text-red-600\" />\n                    <span className=\"text-sm font-medium text-red-600\">{trend.value}%</span>\n                  </>\n                )}\n                <span className=\"text-sm text-muted-foreground\">vs last week</span>\n              </div>\n            )}\n\n            {description && <p className=\"mt-1 text-sm text-muted-foreground\">{description}</p>}\n          </div>\n\n          <div className=\"flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-muted\">\n            {icon}\n          </div>\n        </div>\n      </CardContent>\n    </Card>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "nebutraTokens": [],
+    "nebutraLayer": "dashboard"
+  }
+}

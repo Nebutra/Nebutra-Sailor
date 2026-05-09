@@ -353,11 +353,18 @@ for (const basename of uniqueFileBasenames) {
   );
 }
 
-// Generate the top-level index file
-const registryIndex = {
+// ---------------------------------------------------------------------------
+// Merge with the TIER B Phase 1 index produced by
+// packages/ui/scripts/build-registry.ts (if it has already run).
+// We never *overwrite* the canonical registry.json with only previews — the
+// shadcn-distributable components are the source of truth for ui.nebutra.com.
+// Demo previews are written to public/previews-index.json for internal use.
+// ---------------------------------------------------------------------------
+
+const previewsIndex = {
   $schema: "https://ui.shadcn.com/schema/registry.json",
-  name: "nebutra-ui",
-  homepage: "https://design.nebutra.com",
+  name: "nebutra-ui-previews",
+  homepage: "https://ui.nebutra.com",
   items: uniqueFileBasenames.map((basename) => ({
     name: basename,
     type: "registry:example",
@@ -365,10 +372,29 @@ const registryIndex = {
 };
 
 fs.writeFileSync(
-  path.join(ROOT, "public", "registry.json"),
-  JSON.stringify(registryIndex, null, 2) + "\n",
+  path.join(ROOT, "public", "previews-index.json"),
+  JSON.stringify(previewsIndex, null, 2) + "\n",
 );
 
+// If registry.json doesn't exist yet, seed it with an empty index so the
+// /registry page can render. The TIER B builder will replace it on next run.
+const REGISTRY_INDEX_PATH = path.join(ROOT, "public", "registry.json");
+if (!fs.existsSync(REGISTRY_INDEX_PATH)) {
+  fs.writeFileSync(
+    REGISTRY_INDEX_PATH,
+    JSON.stringify(
+      {
+        $schema: "https://ui.shadcn.com/schema/registry.json",
+        name: "nebutra-ui",
+        homepage: "https://ui.nebutra.com",
+        items: [],
+      },
+      null,
+      2,
+    ) + "\n",
+  );
+}
+
 process.stdout.write(
-  `[registry] Public registry: ${uniqueFileBasenames.length} files → public/r/*.json + public/registry.json\n`,
+  `[registry] Previews: ${uniqueFileBasenames.length} files → public/r/*.json + public/previews-index.json\n`,
 );

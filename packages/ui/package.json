@@ -21,7 +21,9 @@
     "./tailwind.preset": "./src/tailwind.preset.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:registry": "tsx scripts/build-registry.ts",
+    "build": "tsx scripts/build-registry.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
@@ -76,8 +78,9 @@
     "@types/react": "^19.2.14",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@types/three": "^0.183.1",
-    "next": "^16.1.6",
+    "next": "^16.2.6",
     "storybook": "^8.6.17",
+    "tsx": "catalog:",
     "typescript": "catalog:"
   },
   "peerDependencies": {

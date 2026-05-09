@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "magic-card",
+  "type": "registry:ui",
+  "title": "Magic Card",
+  "description": "Spotlight cursor-tracking card with gradient border highlight.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "dependencies": [
+    "framer-motion"
+  ],
+  "files": [
+    {
+      "path": "components/ui/magic-card.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/magic-card.tsx",
+      "content": "\"use client\";\n\nimport { motion, useMotionTemplate, useMotionValue } from \"framer-motion\";\nimport type React from \"react\";\nimport { useCallback, useEffect } from \"react\";\n\nimport { cn } from \"../utils/cn\";\n\nexport interface MagicCardProps {\n  children?: React.ReactNode;\n  className?: string;\n  /** Size of the gradient spotlight effect */\n  gradientSize?: number;\n  /** Color of the inner gradient effect */\n  gradientColor?: string;\n  /** Opacity of the inner gradient effect */\n  gradientOpacity?: number;\n  /** Start color of the gradient border */\n  gradientFrom?: string;\n  /** End color of the gradient border */\n  gradientTo?: string;\n}\n\n/**\n * MagicCard - Spotlight effect card that follows mouse cursor\n *\n * @description\n * A card component with a gradient spotlight effect that follows the mouse cursor\n * and highlights borders on hover. Perfect for feature cards, pricing cards, or\n * any interactive card element.\n *\n * @example Basic usage\n * ```tsx\n * <MagicCard>\n *   <div className=\"p-4\">\n *     <p>Hello World</p>\n *     <span>Hover me</span>\n *   </div>\n * </MagicCard>\n * ```\n *\n * @example Custom gradient colors\n * ```tsx\n * <MagicCard\n *   gradientFrom=\"#00C6FF\"\n *   gradientTo=\"#0072FF\"\n *   gradientColor=\"#1a1a2e\"\n * >\n *   <div className=\"p-6\">Custom gradient</div>\n * </MagicCard>\n * ```\n */\nexport function MagicCard({\n  children,\n  className,\n  gradientSize = 200,\n  gradientColor = \"rgba(0, 51, 254, 0.15)\",\n  gradientOpacity = 0.8,\n  gradientFrom = \"#0033FE\",\n  gradientTo = \"#0BF1C3\",\n}: MagicCardProps) {\n  const mouseX = useMotionValue(-gradientSize);\n  const mouseY = useMotionValue(-gradientSize);\n\n  const reset = useCallback(() => {\n    mouseX.set(-gradientSize);\n    mouseY.set(-gradientSize);\n  }, [gradientSize, mouseX, mouseY]);\n\n  const handlePointerMove = useCallback(\n    (e: React.PointerEvent<HTMLDivElement>) => {\n      const rect = e.currentTarget.getBoundingClientRect();\n      mouseX.set(e.clientX - rect.left);\n      mouseY.set(e.clientY - rect.top);\n    },\n    [mouseX, mouseY],\n  );\n\n  useEffect(() => {\n    reset();\n  }, [reset]);\n\n  useEffect(() => {\n    const handleGlobalPointerOut = (e: PointerEvent) => {\n      if (!e.relatedTarget) {\n        reset();\n      }\n    };\n\n    const handleVisibility = () => {\n      if (document.visibilityState !== \"visible\") {\n        reset();\n      }\n    };\n\n    window.addEventListener(\"pointerout\", handleGlobalPointerOut);\n    window.addEventListener(\"blur\", reset);\n    document.addEventListener(\"visibilitychange\", handleVisibility);\n\n    return () => {\n      window.removeEventListener(\"pointerout\", handleGlobalPointerOut);\n      window.removeEventListener(\"blur\", reset);\n      document.removeEventListener(\"visibilitychange\", handleVisibility);\n    };\n  }, [reset]);\n\n  return (\n    <div\n      className={cn(\"group relative rounded-[inherit]\", className)}\n      onPointerMove={handlePointerMove}\n      onPointerLeave={reset}\n      onPointerEnter={reset}\n    >\n      <motion.div\n        className=\"bg-border pointer-events-none absolute inset-0 rounded-[inherit] duration-300 group-hover:opacity-100\"\n        style={{\n          background: useMotionTemplate`\n          radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px,\n          ${gradientFrom}, \n          ${gradientTo}, \n          var(--border) 100%\n          )\n          `,\n        }}\n      />\n      <div className=\"bg-background absolute inset-px rounded-[inherit]\" />\n      <motion.div\n        className=\"pointer-events-none absolute inset-px rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100\"\n        style={{\n          background: useMotionTemplate`\n            radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent 100%)\n          `,\n          opacity: gradientOpacity,\n        }}\n      />\n      <div className=\"relative h-full w-full\">{children}</div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "nebutraTokens": [
+      "--border"
+    ],
+    "nebutraLayer": "animation"
+  }
+}

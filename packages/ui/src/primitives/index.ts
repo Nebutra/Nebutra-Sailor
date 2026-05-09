@@ -19,6 +19,11 @@ export {
 export * from "./agent-plan";
 export * from "./alert";
 export * from "./alert-dialog";
+/**
+ * @deprecated Available via the registry copy:
+ *   `npx shadcn@latest add https://ui.nebutra.com/r/animate-in.json`
+ *   The npm export is kept during the 6-month dual-track period.
+ */
 export * from "./animate-in";
 export * from "./animated-beam";
 export * from "./animated-circular-progress-bar";
@@ -62,6 +67,11 @@ export { Badge, type BadgeProps, badgeVariants } from "./badge";
 export * from "./badge-1";
 export * from "./base-badge";
 export * from "./base-button";
+/**
+ * @deprecated Available via the registry copy:
+ *   `npx shadcn@latest add https://ui.nebutra.com/r/bento-grid.json`
+ *   The npm export is kept during the 6-month dual-track period.
+ */
 export * from "./bento-grid";
 export * from "./book";
 export * from "./border-trail";
@@ -84,6 +94,11 @@ export * from "./card";
 export * from "./card-spotlight";
 export * from "./carousel";
 // export * from "./change-password-form";
+/**
+ * @deprecated Available via the registry copy:
+ *   `npx shadcn@latest add https://ui.nebutra.com/r/chart.json`
+ *   The npm export is kept during the 6-month dual-track period.
+ */
 export * from "./chart";
 export {
   Checkbox,
@@ -107,6 +122,11 @@ export {
   ComboboxSeparator,
 } from "./combobox";
 export * from "./command";
+/**
+ * @deprecated Available via the registry copy:
+ *   `npx shadcn@latest add https://ui.nebutra.com/r/command-menu.json`
+ *   The npm export is kept during the 6-month dual-track period.
+ */
 export * from "./command-menu";
 export * from "./confetti";
 export * from "./confirm-dialog";
@@ -144,6 +164,11 @@ export * from "./expandable-tabs";
 export * from "./expanding-textarea";
 export * from "./fallback-card";
 export * from "./feature-arrow-card";
+/**
+ * @deprecated Available via the registry copy:
+ *   `npx shadcn@latest add https://ui.nebutra.com/r/feature-card.json`
+ *   The npm export is kept during the 6-month dual-track period.
+ */
 export * from "./feature-card";
 export * from "./feature-check-item";
 export * from "./feature-icon-item";
@@ -156,6 +181,11 @@ export * from "./gauge";
 export * from "./geist-tooltip";
 export * from "./github-calendar";
 export * from "./github-inline-diff";
+/**
+ * @deprecated Available via the registry copy:
+ *   `npx shadcn@latest add https://ui.nebutra.com/r/globe.json`
+ *   The npm export is kept during the 6-month dual-track period.
+ */
 export * from "./globe";
 export * from "./glowing-effect";
 export * from "./gradient-animated-text";
@@ -175,6 +205,11 @@ export * from "./interactive-card";
 export * from "./interactive-frosted-glass-card";
 export * from "./iphone-mockup";
 export * from "./kbd";
+/**
+ * @deprecated Available via the registry copy:
+ *   `npx shadcn@latest add https://ui.nebutra.com/r/kpi-card.json`
+ *   The npm export is kept during the 6-month dual-track period.
+ */
 export * from "./kpi-card";
 export { Label, type LabelProps, labelVariants } from "./label";
 export * from "./layout";
@@ -183,10 +218,20 @@ export * from "./line-shadow-text";
 export * from "./loader";
 export * from "./loading-dots";
 export * from "./macbook-pro";
+/**
+ * @deprecated Available via the registry copy:
+ *   `npx shadcn@latest add https://ui.nebutra.com/r/magic-card.json`
+ *   The npm export is kept during the 6-month dual-track period.
+ */
 export * from "./magic-card";
 export * from "./material";
 export * from "./menubar";
 export * from "./mesh-gradient-bg";
+/**
+ * @deprecated Available via the registry copy:
+ *   `npx shadcn@latest add https://ui.nebutra.com/r/metric-card.json`
+ *   The npm export is kept during the 6-month dual-track period.
+ */
 export * from "./metric-card";
 export * from "./multiple-selector";
 export * from "./navigation-menu";
@@ -196,6 +241,11 @@ export * from "./notification-message-list";
 export * from "./pagination";
 export * from "./pagination-control";
 export * from "./popover";
+/**
+ * @deprecated Available via the registry copy:
+ *   `npx shadcn@latest add https://ui.nebutra.com/r/pricing-card.json`
+ *   The npm export is kept during the 6-month dual-track period.
+ */
 export * from "./pricing-card";
 export * from "./progress";
 export * from "./progressive-blur";
