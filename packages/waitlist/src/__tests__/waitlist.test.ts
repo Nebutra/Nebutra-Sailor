@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { createWaitlist, type WaitlistEntry } from "../index";
+import { createWaitlist } from "../index";
 
 describe("Waitlist", () => {
   let waitlist: ReturnType<typeof createWaitlist>;
