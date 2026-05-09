@@ -10,7 +10,7 @@ export function AgenticEngineeringSection() {
   const t = useTranslations("agentic");
 
   return (
-    <section className="w-full bg-background py-24 md:py-32 relative overflow-hidden border-y border-border/40">
+    <section className="w-full bg-background py-32 md:py-40 relative overflow-hidden">
       {/* High-tech Abstract Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
 

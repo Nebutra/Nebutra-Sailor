@@ -33,8 +33,9 @@ export function TestimonialsSection() {
   ];
 
   return (
-    <section className="w-full bg-muted/20 py-24 md:py-32 overflow-hidden border-t border-border/50">
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+    <section className="relative w-full bg-muted/20 py-32 md:py-40 overflow-hidden">
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-primary/5 blur-[120px]" />
+      <div className="relative mx-auto max-w-[1400px] px-4 md:px-6">
         <AnimateIn inView preset="emerge" className="mx-auto max-w-3xl text-center">
           <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
             {t("badge")}

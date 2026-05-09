@@ -9,7 +9,7 @@ export function FrictionlessRouting() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="relative w-full bg-zinc-950 py-32 md:py-48 px-4 md:px-10 overflow-hidden border-t border-white/5">
+    <section className="relative w-full bg-zinc-950 py-32 md:py-48 px-4 md:px-10 overflow-hidden">
       {/* Super-neural network mesh visualization */}
       <div className="absolute inset-0 z-0">
         <motion.div
