@@ -1,4 +1,14 @@
 {
+  "crons": [
+    {
+      "path": "/api/cron/invitation-cleanup",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/session-cleanup",
+      "schedule": "0 4 * * *"
+    }
+  ],
   "framework": "nextjs",
   "buildCommand": "pnpm turbo build --filter=@nebutra/web",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/web",
