@@ -1,3 +1,5 @@
+import { AvatarUploadForm } from "@/components/account/avatar-upload-form";
+import { ProfileForm } from "@/components/account/profile-form";
 import { getUser, requireOrg } from "@/lib/auth";
 
 export const metadata = { title: "Settings" };
@@ -8,19 +10,12 @@ export default async function SettingsPage() {
 
   return (
     <div className="space-y-8">
-      <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-        <h2 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">Profile</h2>
-        <dl className="space-y-3 text-sm">
-          <div className="flex justify-between">
-            <dt className="text-[var(--neutral-11)]">Name</dt>
-            <dd className="font-medium text-[var(--neutral-12)]">{user?.name ?? "—"}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-[var(--neutral-11)]">Email</dt>
-            <dd className="font-medium text-[var(--neutral-12)]">{user?.email ?? "—"}</dd>
-          </div>
-        </dl>
-      </section>
+      <ProfileForm />
+
+      <AvatarUploadForm
+        initialAvatarUrl={user?.imageUrl ?? null}
+        fallbackName={user?.name ?? user?.email ?? ""}
+      />
 
       <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
         <h2 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">Danger Zone</h2>

@@ -1,24 +1,22 @@
 "use client";
 
 import { useAuth } from "@nebutra/auth/client";
-import { UserButton } from "@nebutra/auth/components";
 import { usePathname } from "next/navigation";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
+import { UserMenu } from "@/components/navigation/user-menu";
 
 function HeaderAuthControls() {
-  const { isSignedIn, user, signOut } = useAuth();
+  const { isSignedIn } = useAuth();
 
   return (
     <div className="hidden items-center gap-2 sm:flex">
       {isSignedIn ? (
-        <UserButton
-          user={user ? { name: user.name, email: user.email, imageUrl: user.imageUrl } : null}
-          onSignOut={async () => {
-            await signOut();
-            window.location.href = "/sign-in";
-          }}
-        />
+        <>
+          <LocaleSwitcher />
+          <UserMenu />
+        </>
       ) : (
         <div className="flex gap-2">
           <a
