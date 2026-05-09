@@ -20,6 +20,8 @@ export type Scope =
   | "team:invite"
   | "team:remove"
   | "team:manage_roles"
+  | "team:manage"
+  | "org:delete"
   // Projects
   | "project:read"
   | "project:create"
@@ -52,6 +54,8 @@ const ROLE_PERMISSIONS: Record<Role, ReadonlySet<Scope>> = {
     "team:invite",
     "team:remove",
     "team:manage_roles",
+    "team:manage",
+    "org:delete",
     "project:read",
     "project:create",
     "project:update",
