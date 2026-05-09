@@ -39,7 +39,9 @@ function HeaderAuthControls() {
   );
 }
 
-import { ChevronRight, Menu, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
+import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
+import { ThemeToggle } from "@/components/navigation/theme-toggle";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { usePermission } from "@/hooks/usePermission";
 import type { WebProductCapabilities } from "@/lib/product-capabilities";
@@ -66,10 +68,12 @@ interface WorkspaceOption {
 function SidebarNav({
   pathname,
   mobile = false,
+  collapsed = false,
   onNavigate,
 }: {
   pathname: string;
   mobile?: boolean;
+  collapsed?: boolean;
   onNavigate?: () => void;
 }) {
   const { can } = usePermission();
@@ -81,9 +85,11 @@ function SidebarNav({
         if (group.title === "Admin" && !isAdmin) return null;
         return (
           <div key={group.title} className="mb-4 space-y-1.5">
-            <p className="px-2 text-[11px] font-semibold tracking-[0.12em] text-neutral-10 uppercase dark:text-white/50">
-              {group.title}
-            </p>
+            {!collapsed && (
+              <p className="px-2 text-[11px] font-semibold tracking-[0.12em] text-neutral-10 uppercase dark:text-white/50">
+                {group.title}
+              </p>
+            )}
             {group.items.map((item) => {
               const Icon = item.icon;
               const active = isActiveRoute(pathname, item.href);
@@ -92,17 +98,21 @@ function SidebarNav({
                   key={item.label}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
+                  aria-label={collapsed ? item.label : undefined}
+                  title={collapsed ? item.label : undefined}
                   onClick={() => {
                     if (mobile) onNavigate?.();
                   }}
-                  className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-3 rounded-xl py-2 text-sm font-medium transition-colors ${
+                    collapsed ? "justify-center px-2" : "px-3"
+                  } ${
                     active
                       ? "bg-blue-2 text-blue-11 dark:bg-white/10 dark:text-white"
                       : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
+                  <Icon className="h-4 w-4 shrink-0" />
+                  {!collapsed && <span>{item.label}</span>}
                 </ViewTransitionLink>
               );
             })}
@@ -113,9 +123,18 @@ function SidebarNav({
   );
 }
 
-export function DesignSystemShell({ children, notificationCenter, productCapabilities }: Props) {
+export function DesignSystemShell(props: Props) {
+  return (
+    <SidebarProvider>
+      <DesignSystemShellInner {...props} />
+    </SidebarProvider>
+  );
+}
+
+function DesignSystemShellInner({ children, notificationCenter, productCapabilities }: Props) {
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
+  const { collapsed, toggle: toggleSidebar } = useSidebar();
   const workspaceMode = productCapabilities?.workspace.mode ?? "organization";
   const supportsWorkspaceSwitching = workspaceMode === "organization";
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -268,13 +287,34 @@ export function DesignSystemShell({ children, notificationCenter, productCapabil
       <div className="flex min-h-screen">
         <aside
           aria-label="Sidebar"
-          className="hidden w-72 shrink-0 border-r border-neutral-7 bg-neutral-1 px-4 py-5 md:flex md:flex-col dark:border-white/10 dark:bg-black/30"
+          data-collapsed={collapsed ? "true" : "false"}
+          className={`hidden shrink-0 border-r border-neutral-7 bg-neutral-1 py-5 transition-[width] duration-200 ease-out md:flex md:flex-col dark:border-white/10 dark:bg-black/30 ${
+            collapsed ? "w-16 px-2" : "w-72 px-4"
+          }`}
         >
-          <div className="mb-7 flex items-center px-2">
-            <span className="text-lg font-semibold tracking-tight">Nebutra Sailor</span>
+          <div
+            className={`mb-7 flex items-center ${collapsed ? "justify-center px-0" : "justify-between px-2"}`}
+          >
+            {!collapsed && (
+              <span className="text-lg font-semibold tracking-tight">Nebutra Sailor</span>
+            )}
+            <button
+              type="button"
+              aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+              aria-pressed={collapsed}
+              title={collapsed ? "Expand sidebar (⌘B)" : "Collapse sidebar (⌘B)"}
+              onClick={toggleSidebar}
+              className="rounded-lg p-1.5 text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              {collapsed ? (
+                <ChevronRight className="h-4 w-4" />
+              ) : (
+                <ChevronLeft className="h-4 w-4" />
+              )}
+            </button>
           </div>
 
-          {supportsWorkspaceSwitching && (
+          {supportsWorkspaceSwitching && !collapsed && (
             <div className="mb-5 px-2">
               <label htmlFor="workspace-switcher" className="sr-only">
                 Workspace switcher
@@ -298,10 +338,19 @@ export function DesignSystemShell({ children, notificationCenter, productCapabil
             </div>
           )}
 
-          <SidebarNav pathname={pathname} />
+          <SidebarNav pathname={pathname} collapsed={collapsed} />
 
-          <div className="mt-auto rounded-xl border border-neutral-7 bg-neutral-2 p-3 text-xs text-neutral-11 dark:border-white/10 dark:bg-white/5 dark:text-white/70">
-            Workspace mode: {currentWorkspaceLabel}
+          <div
+            className={`mt-auto flex items-center ${
+              collapsed ? "flex-col gap-2" : "justify-between gap-2"
+            }`}
+          >
+            {!collapsed && (
+              <div className="flex-1 truncate rounded-xl border border-neutral-7 bg-neutral-2 p-3 text-xs text-neutral-11 dark:border-white/10 dark:bg-white/5 dark:text-white/70">
+                Workspace mode: {currentWorkspaceLabel}
+              </div>
+            )}
+            <ThemeToggle compact />
           </div>
         </aside>
 
