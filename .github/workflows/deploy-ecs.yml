@@ -352,15 +352,21 @@ jobs:
           [ "${{ needs.detect-changes.outputs.api }}"     = "true" ] && APPS="$APPS api"
           APPS="$(echo "$APPS" | xargs)"
           echo "Deploying: $APPS"
+          # SSH joins all remaining args into a single shell-evaluated string
+          # on the remote side. We must wrap the whole remote command in one
+          # quoted string and quote any value containing spaces (APPS) — else
+          # `env A=foo APPS=landing web api B=bar` is reparsed and `web` is
+          # treated as a command. See run 25603759255 for the original bug.
+          REMOTE_CMD="env DEPLOY_ROOT='${ECS_DEPLOY_ROOT}' \
+                          APPS='${APPS}' \
+                          KEEP_RELEASES='${ECS_KEEP_RELEASES}' \
+                          PM2_CONFIG='${ECS_DEPLOY_ROOT}/ecosystem.config.cjs' \
+                          SHA='${{ github.sha }}' \
+                          bash /tmp/ecs-deploy-remote.sh"
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
               "${ECS_USER}@${ECS_HOST}" \
-              env DEPLOY_ROOT="${ECS_DEPLOY_ROOT}" \
-                  APPS="$APPS" \
-                  KEEP_RELEASES="${ECS_KEEP_RELEASES}" \
-                  PM2_CONFIG="${ECS_DEPLOY_ROOT}/ecosystem.config.cjs" \
-                  SHA="${{ github.sha }}" \
-                  bash /tmp/ecs-deploy-remote.sh
+              "$REMOTE_CMD"
 
       - name: Smoke test public endpoints
         run: |
