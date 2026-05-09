@@ -17,6 +17,7 @@
     "test:arch": "vitest run --config vitest.arch.config.ts",
     "mail:check": "pnpm --filter mail-preview check",
     "mail:export": "pnpm --filter mail-preview export",
+    "setup": "tsx scripts/setup.ts",
     "check-env": "npx tsx infra/scripts/check-env.ts",
     "db:generate": "turbo run db:generate",
     "db:migrate": "turbo run db:migrate",
