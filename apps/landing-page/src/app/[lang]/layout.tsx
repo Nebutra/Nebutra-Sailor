@@ -7,24 +7,16 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { IcpFooter } from "@/components/icp-footer";
 import { type Locale, routing } from "@/i18n/routing";
 import { seoContent } from "@/lib/landing-content";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { Providers } from "../providers";
 
 interface LangLayoutProps {
   children: React.ReactNode;
   params: Promise<{ lang: string }>;
 }
-
-const ogLocaleMap: Record<string, string> = {
-  en: "en_US",
-  zh: "zh_CN",
-  ja: "ja_JP",
-  ko: "ko_KR",
-  es: "es_ES",
-  fr: "fr_FR",
-  de: "de_DE",
-};
 
 const jsonLd = [
   {
@@ -94,18 +86,6 @@ function toSafeJsonLd(value: unknown): string {
   return JSON.stringify(value).replace(/</g, "\\u003c");
 }
 
-/** Map next-intl locale codes → hreflang BCP-47 values for <link rel="alternate"> */
-const hreflangMap: Record<string, string> = {
-  en: "en",
-  zh: "zh-Hans",
-  ja: "ja",
-  ko: "ko",
-  es: "es",
-  fr: "fr",
-  de: "de",
-};
-
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
 const ENABLE_VERCEL_TELEMETRY = process.env.NODE_ENV === "production" && process.env.VERCEL === "1";
 
 export const viewport: Viewport = {
@@ -128,30 +108,12 @@ export async function generateMetadata({
   setRequestLocale(lang as Locale);
   const t = await getTranslations({ locale: lang, namespace: "metadata" });
 
-  // Build hreflang map: each locale → its canonical URL prefix
-  // Default locale (en) uses no path prefix per `localePrefix: "as-needed"`
-  const languages: Record<string, string> = {};
-  for (const locale of routing.locales) {
-    const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
-    languages[hreflangMap[locale] ?? locale] = `${BASE_URL}${prefix}`;
-  }
-  languages["x-default"] = BASE_URL;
-
-  const canonicalPrefix = lang === routing.defaultLocale ? "" : `/${lang}`;
-
-  return {
+  return buildPageMetadata({
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: `${BASE_URL}${canonicalPrefix}`,
-      languages,
-    },
-    openGraph: {
-      locale: ogLocaleMap[lang] ?? "en_US",
-      title: t("title"),
-      description: t("description"),
-    },
-  };
+    path: "/",
+    locale: lang as Locale,
+  });
 }
 
 export function generateStaticParams() {
@@ -187,6 +149,13 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
             <CookieConsentBanner apiEndpoint={process.env.NEXT_PUBLIC_COOKIE_CONSENT_ENDPOINT} />
+            {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
+              <IcpFooter
+                locale={locale}
+                icpNumber={process.env.NEXT_PUBLIC_ICP_NUMBER}
+                publicSecurityRecord={process.env.NEXT_PUBLIC_PUBLIC_SECURITY_RECORD}
+              />
+            ) : null}
           </NextIntlClientProvider>
         </ErrorBoundary>
       </Providers>

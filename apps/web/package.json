@@ -20,6 +20,7 @@
     "@clerk/nextjs": "^7.0.1",
     "@nebutra/agents": "workspace:*",
     "@nebutra/auth": "workspace:*",
+    "@nebutra/china-compliance": "workspace:*",
     "@nebutra/db": "workspace:*",
     "@nebutra/feature-flags": "workspace:*",
     "@nebutra/i18n": "workspace:*",
