@@ -1,0 +1,39 @@
+{
+  "name": "@nebutra/design-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "W3C DTCG ($value/$type) tokens — SSOT, Style Dictionary 4 pipeline. Coexists with @nebutra/tokens; not a replacement.",
+  "main": "./build/ts/tokens.js",
+  "types": "./build/ts/tokens.d.ts",
+  "exports": {
+    "./tokens/core.json": "./tokens/core.json",
+    "./tokens/semantic.json": "./tokens/semantic.json",
+    "./tokens/themes/light.json": "./tokens/themes/light.json",
+    "./tokens/themes/dark.json": "./tokens/themes/dark.json",
+    "./tokens/themes/neon.json": "./tokens/themes/neon.json",
+    "./tokens/themes/gradient.json": "./tokens/themes/gradient.json",
+    "./tokens/themes/dark-dense.json": "./tokens/themes/dark-dense.json",
+    "./tokens/themes/minimal.json": "./tokens/themes/minimal.json",
+    "./tokens/themes/vibrant.json": "./tokens/themes/vibrant.json",
+    "./tokens/themes/ocean.json": "./tokens/themes/ocean.json",
+    "./build/css/styles.generated.css": "./build/css/styles.generated.css"
+  },
+  "files": [
+    "tokens",
+    "build",
+    "style-dictionary.config.mjs"
+  ],
+  "scripts": {
+    "build": "node style-dictionary.config.mjs",
+    "clean": "rm -rf build && mkdir -p build",
+    "rebuild": "pnpm clean && pnpm build",
+    "verify:parity": "tsx scripts/verify-parity.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.4.0",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
+  }
+}

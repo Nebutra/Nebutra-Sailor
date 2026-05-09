@@ -1,0 +1,73 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Semantic-level tokens — reference core via {color.x.y} aliases. Layer 2 of the cascade. Mode-agnostic; light/dark overrides live in tokens/themes/.",
+  "brand": {
+    "primary": {
+      "$value": "{color.nebutra-blue.500}",
+      "$type": "color",
+      "$description": "Brand primary — 云毓蓝"
+    },
+    "accent": {
+      "$value": "{color.nebutra-cyan.500}",
+      "$type": "color",
+      "$description": "Brand accent — 云毓青"
+    },
+    "tertiary": { "$value": "{color.tertiary-purple}", "$type": "color" },
+    "gradient": {
+      "primary": {
+        "$value": "linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%)",
+        "$type": "gradient",
+        "$description": "Brand gradient — Logo standard 135°"
+      },
+      "reverse": {
+        "$value": "linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%)",
+        "$type": "gradient"
+      },
+      "vertical": {
+        "$value": "linear-gradient(180deg, #0033fe 0%, #0bf1c3 100%)",
+        "$type": "gradient"
+      },
+      "radial": {
+        "$value": "radial-gradient(circle, #0bf1c3 0%, #0033fe 100%)",
+        "$type": "gradient"
+      }
+    }
+  },
+  "status": {
+    "danger": { "$value": "{color.status.danger}", "$type": "color" },
+    "warning": { "$value": "{color.status.warning}", "$type": "color" },
+    "success": { "$value": "{color.status.success}", "$type": "color" },
+    "info": {
+      "$value": "{brand.primary}",
+      "$type": "color",
+      "$description": "VI: Info = Brand Blue"
+    }
+  },
+  "container": {
+    "text": { "$value": "{size.container.text}", "$type": "dimension" },
+    "content": { "$value": "{size.container.content}", "$type": "dimension" },
+    "wide": { "$value": "{size.container.wide}", "$type": "dimension" }
+  },
+  "radius": {
+    "default": {
+      "$value": "{size.radius.md}",
+      "$type": "dimension",
+      "$description": "Geist-matching 6px"
+    }
+  },
+  "transition": {
+    "duration": { "$value": "{duration.normal}", "$type": "duration" },
+    "easing": {
+      "$value": "ease-out",
+      "$type": "string",
+      "$description": "ease-out keyword form (CSS-friendly). Equivalent to cubic-bezier(0,0,0.2,1)."
+    }
+  },
+  "focusRing": {
+    "default": {
+      "$type": "string",
+      "$value": "0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring))",
+      "$description": "Composite focus ring — 2px ring color over 2px background gap. Consumed via --focus-ring."
+    }
+  }
+}

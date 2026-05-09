@@ -1,0 +1,634 @@
+/* ============================================
+   Base Styles — non-token CSS that complements the design-tokens output.
+   This file is concatenated into styles.generated.css after the @theme block.
+   ============================================ */
+
+* ,
+*::before,
+*::after {
+  border-color: hsl(240 5.9% 90%);
+  /* precise neutral — Geist-matching */
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-feature-settings:
+    "rlig" 1,
+    "calt" 1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--primary));
+}
+
+/* ============================================
+   Animation Utilities
+   ============================================ */
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+/* ============================================
+   Named Typography Utility Classes
+   Geist-style: size encoded in class name,
+   state variants as suffixes (-strong/-mono/-tabular)
+   ============================================ */
+
+@utility text-heading-72 {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+@utility text-heading-64 {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+@utility text-heading-56 {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+@utility text-heading-48 {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+@utility text-heading-40 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+@utility text-heading-32 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+
+@utility text-heading-24 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+@utility text-heading-20 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+@utility text-heading-16 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
+@utility text-heading-14 {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-button-16 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-button-14 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-button-12 {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+@utility text-label-20 {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-18 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-16 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-14 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-13 {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-12 {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+@utility text-label-20-strong {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-18-strong {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-16-strong {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-14-strong {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-13-strong {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-12-strong {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+
+@utility text-label-20-mono {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-18-mono {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-16-mono {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-14-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-13-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-12-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+@utility text-label-20-tabular {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-18-tabular {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-16-tabular {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-14-tabular {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-13-tabular {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-12-tabular {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-copy-24 {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-20 {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-18 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-16 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-14 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-13 {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-24-strong {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
+@utility text-copy-20-strong {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
+@utility text-copy-18-strong {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-16-strong {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-14-strong {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-13-strong {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-24-mono {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-20-mono {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-18-mono {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-16-mono {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-14-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-13-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility font-cn {
+  font-family: var(--font-cn);
+  line-height: 1.75;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+/* ─── CJK Auto-Activation via :lang() ───────────────────────
+   When <html lang="zh|ja|ko"> is set by app layouts, body
+   automatically switches to the CJK font stack.
+   ─────────────────────────────────────────────────────────── */
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) body {
+  font-family: var(--font-cn);
+  line-height: 1.75;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(code, kbd, pre, samp) {
+  font-family: var(--font-mono);
+  word-break: normal;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+    scroll-behavior: auto;
+  }
+}
