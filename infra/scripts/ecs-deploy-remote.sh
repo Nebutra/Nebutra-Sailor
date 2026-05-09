@@ -58,11 +58,48 @@ deploy_one() {
 
   rm -f "$tarball"
 
-  log "reload pm2 process: $pm2_name"
+  # Decide between zero-downtime reload and force-recreate.
+  #
+  # `pm2 reload` keeps the existing in-memory config (cwd, script path, env)
+  # and only reloads code from disk. That is fine for incremental deploys, but
+  # it cannot pick up a NEW cwd or script path from ecosystem.config.cjs — for
+  # that we have to delete and start fresh.
+  #
+  # Strategy: if the running process's cwd is already under our managed
+  # release tree, do a zero-downtime reload. Otherwise (first-time migration,
+  # or someone manually started it elsewhere), force-recreate from the
+  # ecosystem so cwd/script match the new layout.
+  local pm_cwd=""
   if pm2 describe "$pm2_name" >/dev/null 2>&1; then
+    if command -v jq >/dev/null 2>&1; then
+      pm_cwd=$(pm2 jlist 2>/dev/null \
+                | jq -r ".[] | select(.name==\"$pm2_name\") | .pm2_env.pm_cwd // empty" \
+                || echo "")
+    elif command -v python3 >/dev/null 2>&1; then
+      pm_cwd=$(pm2 jlist 2>/dev/null | python3 -c '
+import json, sys
+try:
+    procs = json.load(sys.stdin)
+except Exception:
+    sys.exit(0)
+for p in procs:
+    if p.get("name") == sys.argv[1]:
+        print(p.get("pm2_env", {}).get("pm_cwd", ""))
+        break
+' "$pm2_name" 2>/dev/null || echo "")
+    fi
+  fi
+
+  if [ -n "$pm_cwd" ] && [[ "$pm_cwd" == "$app_root/"* ]]; then
+    log "reload pm2 $pm2_name (cwd=$pm_cwd, zero-downtime)"
     pm2 reload "$pm2_name" --update-env
   else
-    log "pm2 process $pm2_name not registered yet — running ecosystem"
+    if [ -n "$pm_cwd" ]; then
+      log "pm2 $pm2_name has cwd=$pm_cwd, not under $app_root — force-recreating"
+    else
+      log "pm2 process $pm2_name not registered — starting from ecosystem"
+    fi
+    pm2 delete "$pm2_name" >/dev/null 2>&1 || true
     pm2 start "$PM2_CONFIG" --only "$pm2_name"
   fi
 

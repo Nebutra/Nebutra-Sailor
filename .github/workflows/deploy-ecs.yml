@@ -91,14 +91,20 @@ jobs:
               - 'apps/landing-page/**'
               - 'packages/**'
               - 'pnpm-lock.yaml'
+              - 'infra/ecs/**'
+              - 'infra/scripts/ecs-deploy-remote.sh'
             web:
               - 'apps/web/**'
               - 'packages/**'
               - 'pnpm-lock.yaml'
+              - 'infra/ecs/**'
+              - 'infra/scripts/ecs-deploy-remote.sh'
             api:
               - 'apps/api-gateway/**'
               - 'packages/**'
               - 'pnpm-lock.yaml'
+              - 'infra/ecs/**'
+              - 'infra/scripts/ecs-deploy-remote.sh'
 
       - name: Resolve target apps
         id: resolve
