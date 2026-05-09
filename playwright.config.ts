@@ -2,6 +2,9 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./e2e",
+  // Golden-path suite has its own config (./e2e/playwright.config.ts).
+  // Exclude it here so the legacy webServer pipeline doesn't double-run it.
+  testIgnore: ["**/tests/**"],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
