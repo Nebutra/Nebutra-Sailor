@@ -1,10 +1,12 @@
 "use client";
 
 import { useUser } from "@nebutra/auth/client";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { type ActiveSession, ActiveSessionsBlock } from "./active-sessions-block";
 import { ChangePasswordForm } from "./change-password-form";
 import { ConnectedAccountsBlock } from "./connected-accounts-block";
+import { DeleteAccountForm } from "./delete-account-form";
 import { PasskeysBlock } from "./passkeys-block";
 import { buildSecurityCapabilities, type SecurityAccountRecord } from "./security-capabilities";
 import { TwoFactorBlock } from "./two-factor-block";
@@ -21,10 +23,15 @@ function readErrorMessage(payload: unknown, fallback: string) {
 
 export function SecuritySettingsClient() {
   const { user, isLoaded } = useUser();
+  const router = useRouter();
   const [accounts, setAccounts] = useState<SecurityAccountRecord[]>([]);
   const [sessions, setSessions] = useState<ActiveSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  // 2FA enabled state — starts false, schema migration pending for full toggle
+  // (the TwoFactorBlock UI is fully built; it just stays in "Disabled" state until
+  // the AuthUser model gains `twoFactorEnabled` + `twoFactorSecret` columns)
+  const [twoFactorEnabled] = useState(false);
 
   const authProvider = process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? "better-auth";
   const isBetterAuth = authProvider === "better-auth";
@@ -125,13 +132,22 @@ export function SecuritySettingsClient() {
 
       <PasskeysBlock capability={capabilities.passkeys} />
 
-      <TwoFactorBlock capability={capabilities.twoFactor} />
+      <TwoFactorBlock
+        capability={capabilities.twoFactor}
+        enabled={twoFactorEnabled}
+        onChanged={refreshSecurityState}
+      />
 
       <ActiveSessionsBlock
         capability={capabilities.activeSessions}
         sessions={sessions}
         loading={loading}
         onRefresh={refreshSecurityState}
+      />
+
+      <DeleteAccountForm
+        available={capabilities.password.hasPasswordAccount}
+        onDeleted={() => router.push("/")}
       />
     </div>
   );

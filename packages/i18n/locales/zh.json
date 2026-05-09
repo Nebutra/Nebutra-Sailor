@@ -72,6 +72,7 @@
         "passwordPrompt": "输入密码以确认",
         "confirmTextLabel": "输入 DELETE 以确认",
         "submit": "删除账户",
+        "cancel": "取消",
         "success": "账户已删除。"
       }
     },

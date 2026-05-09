@@ -72,6 +72,7 @@
         "passwordPrompt": "Enter your password to confirm",
         "confirmTextLabel": "Type DELETE to confirm",
         "submit": "Delete account",
+        "cancel": "Cancel",
         "success": "Account deleted."
       }
     },
