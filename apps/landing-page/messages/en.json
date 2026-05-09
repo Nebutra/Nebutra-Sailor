@@ -1808,5 +1808,134 @@
         "description": "Personalized advertising and retargeting on third-party platforms."
       }
     }
+  },
+  "landing": {
+    "faq": {
+      "badge": "FAQ",
+      "title": "Questions, answered straight",
+      "subtitle": "Everything you need to know before shipping.",
+      "items": {
+        "what-is-sailor": {
+          "question": "What exactly is Nebutra Sailor?",
+          "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
+        },
+        "who-is-it-for": {
+          "question": "Who is Sailor built for?",
+          "answer": "Founders and product engineers who want to spend their time on the differentiator — not on rebuilding the same auth/billing/tenancy plumbing for the fifth time."
+        },
+        "free-or-paid": {
+          "question": "Is it free or paid?",
+          "answer": "There is a free tier you can use to evaluate the framework end-to-end. Pro and Enterprise unlock production features like SSO, audit trails, and dedicated support."
+        },
+        "china-friendly": {
+          "question": "Does it work in China?",
+          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+        },
+        "deployment": {
+          "question": "Where can I deploy it?",
+          "answer": "Anywhere Node 20+ runs. First-class support for Vercel, Cloudflare Workers, and self-hosted Docker. Enterprise customers also deploy inside customer VPCs."
+        },
+        "security": {
+          "question": "How is security handled?",
+          "answer": "Application-layer envelope encryption for secrets, RLS-backed multi-tenancy, RBAC/ABAC via CASL or OpenFGA, signed webhooks, and a SOC2-aligned audit pipeline on Pro and Enterprise plans."
+        },
+        "support": {
+          "question": "What support do I get?",
+          "answer": "Free customers get community Discord + GitHub. Pro tier adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and onboarding engineer."
+        },
+        "byo-provider": {
+          "question": "Can I bring my own provider?",
+          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage) is provider-agnostic — swap Clerk for Better Auth, QStash for BullMQ, Resend for SES with a single config change."
+        },
+        "tech-stack": {
+          "question": "What is the tech stack?",
+          "answer": "Next.js 16 (App Router), React 19, TypeScript, Tailwind v4, Drizzle ORM, Postgres, and a curated set of Radix + HeroUI primitives. AI features are wired through the Vercel AI SDK with provider portability."
+        },
+        "license": {
+          "question": "What is the license?",
+          "answer": "Sailor uses a fair-source license: free for personal and internal use, paid commercial license for production SaaS. Source code is included on every plan."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Loved by builders",
+      "title": "What founders say after shipping with Sailor",
+      "subtitle": "These quotes are placeholders. Replace them with real customer voices before launch."
+    },
+    "comparison": {
+      "badge": "Compare plans",
+      "title": "Pick the plan that fits the stage you are in",
+      "subtitle": "Every plan includes the full source code and lifetime updates inside its release line.",
+      "plan": {
+        "free": "Free",
+        "pro": "Pro",
+        "enterprise": "Enterprise"
+      },
+      "feature": {
+        "auth": {
+          "label": "Authentication",
+          "providers": "Auth providers",
+          "rbac": "Role-based access (RBAC)",
+          "audit": "Audit log"
+        },
+        "tenancy": {
+          "label": "Multi-tenancy",
+          "workspaces": "Workspaces",
+          "rls": "Row-level security",
+          "byo-db": "Bring-your-own database"
+        },
+        "ai": {
+          "label": "AI",
+          "providers": "Model providers",
+          "gateway": "AI gateway routing",
+          "metering": "Usage metering"
+        },
+        "storage": {
+          "label": "Storage",
+          "uploads": "File storage",
+          "s3-compatible": "S3-compatible buckets",
+          "resumable": "Resumable uploads"
+        },
+        "email": {
+          "label": "Email",
+          "transactional": "Transactional volume",
+          "templates": "React Email templates",
+          "domains": "Verified domains"
+        },
+        "support": {
+          "label": "Support",
+          "channel": "Channel",
+          "sla": "Uptime SLA",
+          "onboarding": "Onboarding engineer"
+        }
+      },
+      "ariaTable": "Plan and feature comparison"
+    },
+    "socialProof": {
+      "title": "Trusted by teams shipping at every scale",
+      "logosLabel": "Trusted by",
+      "logos": {
+        "lumen": "Lumen Labs",
+        "northwind": "Northwind AI",
+        "helix": "Helix Health",
+        "ravensteel": "Ravensteel",
+        "atlas": "Atlas Foundry",
+        "boreal": "Boreal Insights"
+      },
+      "metrics": {
+        "developers": {
+          "value": "10K+",
+          "label": "developers building with Sailor"
+        },
+        "projects": {
+          "value": "500+",
+          "label": "production SaaS projects shipped"
+        },
+        "uptime": {
+          "value": "99.99%",
+          "label": "uptime across managed regions"
+        }
+      }
+    }
   }
 }

@@ -77,6 +77,29 @@ const SEOGEOSection = dynamic(
   { loading: () => <section className="h-96" aria-hidden /> },
 );
 
+const SocialProofBar = dynamic(
+  () => import("@/components/landing/social-proof-bar").then((mod) => mod.SocialProofBar),
+  { loading: () => <section className="h-40" aria-hidden /> },
+);
+
+const LandingTestimonialsSection = dynamic(
+  () => import("@/components/landing/testimonials-section").then((mod) => mod.TestimonialsSection),
+  { loading: () => <section className="h-72" aria-hidden /> },
+);
+
+const PricingComparisonTable = dynamic(
+  () =>
+    import("@/components/landing/pricing-comparison-table").then(
+      (mod) => mod.PricingComparisonTable,
+    ),
+  { loading: () => <section className="h-96" aria-hidden /> },
+);
+
+const FAQSection = dynamic(
+  () => import("@/components/landing/faq-section").then((mod) => mod.FAQSection),
+  { loading: () => <section className="h-72" aria-hidden /> },
+);
+
 import {
   Accordion,
   AccordionContent,
@@ -160,6 +183,18 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
         {/* 4. High-Contrast Pricing Investment Section */}
         <PricingSection />
+
+        {/* 4.5 Pricing Comparison Table — feature-by-feature breakdown */}
+        <PricingComparisonTable />
+
+        {/* 4.7 Social Proof Bar — logos + headline metrics */}
+        <SocialProofBar />
+
+        {/* 4.8 Landing Testimonials Grid — 3-col responsive */}
+        <LandingTestimonialsSection />
+
+        {/* 4.9 Landing FAQ Section — extended Q&A accordion */}
+        <FAQSection />
 
         {/* 9. Objection Elimination */}
         <section className="py-24 bg-muted/30">

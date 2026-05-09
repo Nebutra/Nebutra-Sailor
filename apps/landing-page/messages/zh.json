@@ -1813,5 +1813,144 @@
         "description": "在第三方平台上的个性化广告与再营销。"
       }
     }
+  },
+  "landing": {
+    "faq": {
+      "badge": "常见问题",
+      "title": "把疑问一次讲清楚",
+      "subtitle": "在动手之前你需要知道的一切。",
+      "items": {
+        "what-is-sailor": {
+          "question": "Nebutra Sailor 到底是什么？",
+          "answer": "Sailor 是一个观点鲜明的 Next.js + Tailwind v4 SaaS 基础脚手架，认证、计费、多租户、AI、队列、搜索与邮件等模块开箱即用。克隆代码、配置提供商，通常一周内就能上线。"
+        },
+        "who-is-it-for": {
+          "question": "Sailor 适合谁？",
+          "answer": "适合希望把精力放在产品差异化、不愿第五次重写同一套 auth / 计费 / 租户底座的创业者和产品工程师。"
+        },
+        "free-or-paid": {
+          "question": "免费还是付费？",
+          "answer": "提供免费版供你完整评估框架。Pro 与企业版解锁 SSO、审计日志、专属支持等生产能力。"
+        },
+        "china-friendly": {
+          "question": "在中国大陆能用吗？",
+          "answer": "可以。我们提供并行的基础设施配置（阿里云兼容 CDN、ICP 友好域名、可选 Penpot 替代 Figma），同一份代码可以无障碍部署在长城防火墙内。"
+        },
+        "deployment": {
+          "question": "可以部署到哪些环境？",
+          "answer": "任何支持 Node 20+ 的环境。原生支持 Vercel、Cloudflare Workers 与自托管 Docker。企业客户还可部署在客户自有的 VPC 内。"
+        },
+        "security": {
+          "question": "安全性如何保障？",
+          "answer": "应用层信封加密保管密钥、基于 RLS 的多租户隔离、CASL / OpenFGA 的 RBAC/ABAC、签名 Webhook，以及面向 Pro 与企业版的 SOC2 兼容审计管道。"
+        },
+        "support": {
+          "question": "支持服务包括哪些？",
+          "answer": "免费用户享受社区 Discord 与 GitHub 支持。Pro 版增加 1 个工作日响应的优先邮件支持。企业版提供专属 Slack 频道与 onboarding 工程师。"
+        },
+        "byo-provider": {
+          "question": "可以接入我自己的供应商吗？",
+          "answer": "可以。所有集成（认证、队列、搜索、邮件、支付、存储）均为 provider-agnostic：一行配置即可把 Clerk 换成 Better Auth、把 QStash 换成 BullMQ、把 Resend 换成 SES。"
+        },
+        "tech-stack": {
+          "question": "技术栈是什么？",
+          "answer": "Next.js 16 (App Router)、React 19、TypeScript、Tailwind v4、Drizzle ORM、Postgres，以及精选的 Radix + HeroUI 原语。AI 能力通过 Vercel AI SDK 接入，可自由切换提供商。"
+        },
+        "license": {
+          "question": "授权方式是什么？",
+          "answer": "Sailor 使用 fair-source 协议：个人与内部使用免费，生产 SaaS 使用需要付费商业授权。所有套餐都包含完整源码。"
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "构建者好评",
+      "title": "用 Sailor 上线后，他们这么说",
+      "subtitle": "以下引言为占位内容，正式上线前请替换为真实客户声音。"
+    },
+    "comparison": {
+      "badge": "套餐对比",
+      "title": "按当前阶段选择最合适的套餐",
+      "subtitle": "所有套餐都包含完整源代码以及对应版本线的终身更新。",
+      "plan": {
+        "free": "免费版",
+        "pro": "专业版",
+        "enterprise": "企业版"
+      },
+      "feature": {
+        "auth": {
+          "label": "认证",
+          "providers": "认证提供商",
+          "rbac": "基于角色的访问控制 (RBAC)",
+          "audit": "审计日志"
+        },
+        "tenancy": {
+          "label": "多租户",
+          "workspaces": "工作空间",
+          "rls": "行级安全 (RLS)",
+          "byo-db": "自带数据库"
+        },
+        "ai": {
+          "label": "AI",
+          "providers": "模型提供商",
+          "gateway": "AI 网关路由",
+          "metering": "用量计量"
+        },
+        "storage": {
+          "label": "存储",
+          "uploads": "文件存储",
+          "s3-compatible": "S3 兼容存储桶",
+          "resumable": "断点续传上传"
+        },
+        "email": {
+          "label": "邮件",
+          "transactional": "事务邮件额度",
+          "templates": "React Email 模板",
+          "domains": "已验证域名"
+        },
+        "support": {
+          "label": "支持",
+          "channel": "渠道",
+          "sla": "可用性 SLA",
+          "onboarding": "上手工程师"
+        }
+      },
+      "ariaTable": "套餐与功能对比"
+    },
+    "socialProof": {
+      "title": "各种规模的团队都在使用 Sailor 出货",
+      "logosLabel": "他们都在用",
+      "logos": {
+        "lumen": "Lumen Labs",
+        "northwind": "Northwind AI",
+        "helix": "Helix Health",
+        "ravensteel": "Ravensteel",
+        "atlas": "Atlas Foundry",
+        "boreal": "Boreal Insights"
+      },
+      "metrics": {
+        "developers": {
+          "value": "10K+",
+          "label": "位开发者基于 Sailor 构建"
+        },
+        "projects": {
+          "value": "500+",
+          "label": "个生产 SaaS 项目上线"
+        },
+        "uptime": {
+          "value": "99.99%",
+          "label": "托管区域的可用性"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP 备案号",
+      "publicSecurity": "公安备案"
+    }
+  },
+  "icpFooter": {
+    "recordLabel": "ICP 备案号",
+    "publicSecurityLabel": "公安备案"
   }
 }

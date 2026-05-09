@@ -1,0 +1,94 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { FAQS } from "@/lib/landing/faqs";
+
+/**
+ * Marketing FAQ section.
+ *
+ * Renders an accessible single-open accordion driven by the static catalog in
+ * `@/lib/landing/faqs`. Each entry's question/answer text is sourced via
+ * `next-intl` under the `landing.faq.items.{id}.{question,answer}` namespace.
+ */
+export function FAQSection() {
+  const t = useTranslations("landing.faq");
+  const [openId, setOpenId] = useState<string | null>(null);
+
+  return (
+    <section
+      id="faq"
+      className="relative w-full bg-[var(--neutral-1)] py-24 md:py-32"
+      aria-labelledby="landing-faq-title"
+    >
+      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-[var(--brand-primary)]">
+            {t("badge")}
+          </p>
+          <h2
+            id="landing-faq-title"
+            className="text-balance text-4xl font-black tracking-tight text-[var(--neutral-12)] md:text-5xl"
+          >
+            {t("title")}
+          </h2>
+          <p className="mt-4 text-lg text-[var(--neutral-11)]">{t("subtitle")}</p>
+        </div>
+
+        <div className="mx-auto mt-12 max-w-3xl divide-y divide-[var(--neutral-6)] rounded-2xl border border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 backdrop-blur">
+          {FAQS.map((entry) => {
+            const isOpen = openId === entry.id;
+            const panelId = `faq-panel-${entry.id}`;
+            const triggerId = `faq-trigger-${entry.id}`;
+
+            return (
+              <div key={entry.id}>
+                <h3>
+                  <button
+                    type="button"
+                    id={triggerId}
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => setOpenId((prev) => (prev === entry.id ? null : entry.id))}
+                    className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-base font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-1 md:px-8 md:py-6 md:text-lg"
+                  >
+                    <span>
+                      {/* next-intl's strict key typing cannot prove the
+                          dynamic id is part of the union — the ids list is
+                          kept in sync with the i18n bundle by lib/landing/faqs. */}
+                      {t(
+                        // biome-ignore lint/suspicious/noExplicitAny: dynamic i18n key, ids tracked in lib/landing/faqs
+                        `items.${entry.id}.question` as any,
+                      )}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`text-[var(--brand-primary)] transition-transform ${
+                        isOpen ? "rotate-45" : ""
+                      }`}
+                    >
+                      +
+                    </span>
+                  </button>
+                </h3>
+                <section
+                  id={panelId}
+                  aria-labelledby={triggerId}
+                  hidden={!isOpen}
+                  className="px-6 pb-6 text-base leading-relaxed text-[var(--neutral-11)] md:px-8"
+                >
+                  {t(
+                    // biome-ignore lint/suspicious/noExplicitAny: dynamic i18n key, ids tracked in lib/landing/faqs
+                    `items.${entry.id}.answer` as any,
+                  )}
+                </section>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+FAQSection.displayName = "LandingFAQSection";
