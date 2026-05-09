@@ -5,6 +5,11 @@
   "description": "Enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms",
   "scripts": {
     "dev": "turbo run dev",
+    "dev:web": "pnpm --filter @nebutra/web dev",
+    "dev:landing": "pnpm --filter @nebutra/landing-page dev",
+    "dev:api": "pnpm --filter @nebutra/api-gateway dev",
+    "dev:storybook": "pnpm --filter @nebutra/storybook dev",
+    "dev:docs": "pnpm --filter @nebutra/sailor-docs dev",
     "build": "pnpm brand:sync && turbo run build",
     "build:strict": "pnpm ui:verify-governance && pnpm brand:verify-tokens && pnpm run build",
     "lint": "biome check .",
