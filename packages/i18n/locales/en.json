@@ -1,4 +1,59 @@
 {
+  "admin": {
+    "title": "Admin",
+    "description": "Super admin panel — manage users, organizations, and system health.",
+    "nav": {
+      "overview": "Overview",
+      "users": "Users",
+      "organizations": "Organizations"
+    },
+    "users": {
+      "title": "Users",
+      "description": "Browse, search, and impersonate any user across all organizations.",
+      "searchPlaceholder": "Search users…",
+      "totalCount": "{count, plural, one {# user} other {# users}}",
+      "empty": "No users found.",
+      "loadError": "Failed to load users.",
+      "columns": {
+        "email": "Email",
+        "name": "Name",
+        "created": "Created",
+        "activeOrgs": "Active orgs",
+        "actions": "Actions"
+      },
+      "viewOrgs": "View orgs"
+    },
+    "organizations": {
+      "title": "Organizations",
+      "description": "All workspaces in the system, ranked by recency.",
+      "searchPlaceholder": "Search organizations…",
+      "totalCount": "{count, plural, one {# organization} other {# organizations}}",
+      "empty": "No organizations found.",
+      "loadError": "Failed to load organizations.",
+      "columns": {
+        "name": "Name",
+        "slug": "Slug",
+        "plan": "Plan",
+        "members": "Members",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "view": "View"
+    },
+    "impersonate": {
+      "trigger": "Impersonate",
+      "starting": "Starting…",
+      "stop": "Stop impersonating",
+      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
+      "error": "Failed to start impersonation.",
+      "stopError": "Failed to stop impersonation."
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {total}"
+    }
+  },
   "Common": {
     "hello": "Hello World",
     "dashboard": "Dashboard",
@@ -16,7 +71,65 @@
   },
   "LocaleSwitcher": {
     "en": "English",
-    "zh": "中文"
+    "zh": "中文",
+    "label": "Language",
+    "ariaLabel": "Change language"
+  },
+  "onboarding": {
+    "title": "Set up your workspace",
+    "subtitle": "Three quick steps and you're ready to ship.",
+    "steps": {
+      "workspace": "Workspace",
+      "invite": "Invite team",
+      "plan": "Choose plan"
+    },
+    "progress": {
+      "back": "Back",
+      "stepCounter": "Step {current} of {total}"
+    },
+    "plan": {
+      "title": "Pick a plan",
+      "description": "Start free or unlock more capacity. You can change plans any time.",
+      "choose": "Choose a plan",
+      "skip": "Skip for now"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Open user menu",
+    "profile": "Profile",
+    "settings": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "signOut": "Sign out",
+    "signedInAs": "Signed in as"
+  },
+  "account": {
+    "profile": {
+      "title": "Profile",
+      "description": "Update your personal information.",
+      "nameLabel": "Name",
+      "namePlaceholder": "Your full name",
+      "emailLabel": "Email",
+      "emailHint": "We will send a verification link to confirm a new email address.",
+      "languageLabel": "Language",
+      "submit": "Save changes",
+      "saving": "Saving…",
+      "verifyEmail": "Verify",
+      "verifying": "Sending verification…",
+      "success": "Profile updated.",
+      "verificationSent": "Verification email sent.",
+      "errorRequiredName": "Name is required.",
+      "errorInvalidEmail": "Email address is not valid."
+    },
+    "avatar": {
+      "title": "Avatar",
+      "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB).",
+      "uploadButton": "Upload avatar",
+      "uploading": "Uploading…",
+      "fileTooBig": "File is too large. Maximum size is 2MB.",
+      "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
+      "success": "Avatar updated."
+    }
   },
   "impact": {
     "hero_title": "Redefining the Paradigm",
@@ -85,7 +198,41 @@
         "submit": "Delete account",
         "cancel": "Cancel",
         "success": "Account deleted."
+      },
+      "connectedAccounts": {
+        "title": "Connected accounts",
+        "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
+        "connected": "Connected",
+        "connect": "Connect",
+        "unlink": "Unlink",
+        "notLinked": "Not linked"
+      },
+      "passkeys": {
+        "title": "Passkeys",
+        "description": "Use device-bound credentials for phishing-resistant sign-in.",
+        "empty": "No passkeys registered yet",
+        "addPasskey": "Add passkey",
+        "remove": "Remove",
+        "successAdded": "Passkey added.",
+        "successRemoved": "Passkey removed."
+      },
+      "setPassword": {
+        "title": "Set a password",
+        "description": "Add a password to sign in without your OAuth provider.",
+        "submit": "Set password",
+        "sentMessage": "We've sent a password setup link to your email."
       }
+    },
+    "magicLink": {
+      "title": "Sign in with a magic link",
+      "description": "Enter your email and we'll send you a 6-digit code to sign in.",
+      "emailLabel": "Email",
+      "send": "Send link",
+      "codeLabel": "Verification code",
+      "verify": "Verify",
+      "resend": "Resend code",
+      "resendCooldown": "Resend in {seconds}s",
+      "sentTo": "We sent a code to {email}"
     },
     "errors": {
       "invalidCredentials": "Email or password is incorrect.",
@@ -129,6 +276,33 @@
         "title": "Explore platform features",
         "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
       }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Active plan",
+      "manage": "Manage subscription",
+      "noPlanTitle": "No active plan",
+      "noPlanDescription": "Pick a plan to unlock paid features and higher usage limits.",
+      "choosePlan": "Choose a plan",
+      "renewsOn": "Renews on {date}",
+      "endsOn": "Ends on {date}",
+      "trialEndsOn": "Trial ends {date}",
+      "status": {
+        "active": "Active",
+        "trialing": "Trialing",
+        "past_due": "Past due",
+        "canceled": "Canceled",
+        "free": "Free"
+      },
+      "errors": {
+        "loadFailed": "Could not load your billing status."
+      }
+    },
+    "pricing": {
+      "trial": "Free {days}-day trial",
+      "seat": "{count, plural, one {# seat} other {# seats}}",
+      "perSeat": "/ seat"
     }
   },
   "organizations": {

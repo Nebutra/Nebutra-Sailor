@@ -1,4 +1,59 @@
 {
+  "admin": {
+    "title": "管理后台",
+    "description": "超级管理员面板 — 管理用户、组织和系统状态。",
+    "nav": {
+      "overview": "概览",
+      "users": "用户",
+      "organizations": "组织"
+    },
+    "users": {
+      "title": "用户",
+      "description": "浏览、搜索并以任何用户身份登录。",
+      "searchPlaceholder": "搜索用户…",
+      "totalCount": "共 {count} 个用户",
+      "empty": "未找到用户。",
+      "loadError": "加载用户失败。",
+      "columns": {
+        "email": "邮箱",
+        "name": "姓名",
+        "created": "注册时间",
+        "activeOrgs": "活跃组织",
+        "actions": "操作"
+      },
+      "viewOrgs": "查看组织"
+    },
+    "organizations": {
+      "title": "组织",
+      "description": "系统中的所有工作区，按时间倒序排列。",
+      "searchPlaceholder": "搜索组织…",
+      "totalCount": "共 {count} 个组织",
+      "empty": "未找到组织。",
+      "loadError": "加载组织失败。",
+      "columns": {
+        "name": "名称",
+        "slug": "Slug",
+        "plan": "套餐",
+        "members": "成员",
+        "created": "创建时间",
+        "actions": "操作"
+      },
+      "view": "查看"
+    },
+    "impersonate": {
+      "trigger": "模拟登录",
+      "starting": "启动中…",
+      "stop": "停止模拟登录",
+      "confirm": "模拟登录 {label}？你将以该用户身份查看应用，直到主动停止。",
+      "error": "启动模拟登录失败。",
+      "stopError": "停止模拟登录失败。"
+    },
+    "pagination": {
+      "previous": "上一页",
+      "next": "下一页",
+      "pageOf": "第 {page} 页 / 共 {total} 页"
+    }
+  },
   "Common": {
     "hello": "你好",
     "dashboard": "仪表盘",
@@ -16,7 +71,65 @@
   },
   "LocaleSwitcher": {
     "en": "English",
-    "zh": "中文"
+    "zh": "中文",
+    "label": "语言",
+    "ariaLabel": "切换语言"
+  },
+  "onboarding": {
+    "title": "搭建你的工作空间",
+    "subtitle": "三步即可开始使用。",
+    "steps": {
+      "workspace": "工作空间",
+      "invite": "邀请团队",
+      "plan": "选择套餐"
+    },
+    "progress": {
+      "back": "返回",
+      "stepCounter": "第 {current} 步 / 共 {total} 步"
+    },
+    "plan": {
+      "title": "选择套餐",
+      "description": "可先免费开始，随时升级。",
+      "choose": "选择套餐",
+      "skip": "暂时跳过"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "打开用户菜单",
+    "profile": "个人资料",
+    "settings": "设置",
+    "theme": "主题",
+    "language": "语言",
+    "signOut": "退出登录",
+    "signedInAs": "已登录账号"
+  },
+  "account": {
+    "profile": {
+      "title": "个人资料",
+      "description": "更新您的个人信息。",
+      "nameLabel": "姓名",
+      "namePlaceholder": "您的全名",
+      "emailLabel": "邮箱",
+      "emailHint": "我们将发送验证链接以确认新邮箱。",
+      "languageLabel": "语言",
+      "submit": "保存更改",
+      "saving": "正在保存…",
+      "verifyEmail": "验证",
+      "verifying": "发送中…",
+      "success": "资料已更新。",
+      "verificationSent": "验证邮件已发送。",
+      "errorRequiredName": "请输入姓名。",
+      "errorInvalidEmail": "邮箱地址无效。"
+    },
+    "avatar": {
+      "title": "头像",
+      "description": "上传一张正方形图片（PNG、JPEG 或 WebP，最大 2MB）。",
+      "uploadButton": "上传头像",
+      "uploading": "正在上传…",
+      "fileTooBig": "文件过大，最大 2MB。",
+      "invalidType": "不支持的图片格式，请使用 PNG、JPEG 或 WebP。",
+      "success": "头像已更新。"
+    }
   },
   "impact": {
     "hero_title": "重塑商业范式",
@@ -30,6 +143,33 @@
     "environment_title": "Environment 可持续生态",
     "environment_headline": "数字极简主义",
     "environment_description": "推崇高人效、低消耗。将庞大的云基础设施成本压缩至最低，大幅降低无意义的算力沉没与碳排放。"
+  },
+  "billing": {
+    "activePlan": {
+      "title": "当前套餐",
+      "manage": "管理订阅",
+      "noPlanTitle": "暂无套餐",
+      "noPlanDescription": "选择一个套餐以解锁付费功能和更高用量。",
+      "choosePlan": "选择套餐",
+      "renewsOn": "{date} 续订",
+      "endsOn": "{date} 到期",
+      "trialEndsOn": "试用期 {date} 结束",
+      "status": {
+        "active": "使用中",
+        "trialing": "试用中",
+        "past_due": "已逾期",
+        "canceled": "已取消",
+        "free": "免费版"
+      },
+      "errors": {
+        "loadFailed": "无法加载账单状态。"
+      }
+    },
+    "pricing": {
+      "trial": "免费试用 {days} 天",
+      "seat": "{count} 个席位",
+      "perSeat": "/ 席位"
+    }
   },
   "auth": {
     "security": {
@@ -85,7 +225,41 @@
         "submit": "删除账户",
         "cancel": "取消",
         "success": "账户已删除。"
+      },
+      "connectedAccounts": {
+        "title": "已关联账户",
+        "description": "查看已关联到 Nebutra 账户的 OAuth 登录方式。",
+        "connected": "已关联",
+        "connect": "关联",
+        "unlink": "解除关联",
+        "notLinked": "未关联"
+      },
+      "passkeys": {
+        "title": "通行密钥",
+        "description": "使用绑定设备的凭证以实现抗钓鱼登录。",
+        "empty": "尚未注册通行密钥",
+        "addPasskey": "添加通行密钥",
+        "remove": "移除",
+        "successAdded": "通行密钥已添加。",
+        "successRemoved": "通行密钥已移除。"
+      },
+      "setPassword": {
+        "title": "设置密码",
+        "description": "为账户添加密码，便于在不使用 OAuth 的情况下登录。",
+        "submit": "设置密码",
+        "sentMessage": "我们已向你的邮箱发送了密码设置链接。"
       }
+    },
+    "magicLink": {
+      "title": "使用魔法链接登录",
+      "description": "输入邮箱，我们将向你发送 6 位验证码用于登录。",
+      "emailLabel": "邮箱",
+      "send": "发送链接",
+      "codeLabel": "验证码",
+      "verify": "验证",
+      "resend": "重新发送验证码",
+      "resendCooldown": "{seconds} 秒后可重发",
+      "sentTo": "我们已将验证码发送到 {email}"
     },
     "errors": {
       "invalidCredentials": "邮箱或密码错误。",

@@ -26,6 +26,7 @@
     "@nebutra/icons": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/notifications": "workspace:*",
+    "@nebutra/queue": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "@sentry/nextjs": "^9.27.0",
