@@ -5,7 +5,7 @@
   },
   "LocaleSwitcher": {
     "en": "English",
-    "zh": "\u4e2d\u6587"
+    "zh": "中文"
   },
   "impact": {
     "hero_title": "Redefining the Paradigm",
@@ -19,5 +19,83 @@
     "environment_title": "Environment",
     "environment_headline": "Digital Minimalism",
     "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
+  },
+  "auth": {
+    "security": {
+      "title": "Security",
+      "description": "Manage your password, multi-factor authentication, and active sessions.",
+      "managedByProvider": "Security settings are managed by your authentication provider.",
+      "openProviderProfile": "Open profile",
+      "changePassword": {
+        "title": "Change password",
+        "description": "Use a strong password you don't reuse on other sites.",
+        "currentPasswordLabel": "Current password",
+        "newPasswordLabel": "New password",
+        "confirmPasswordLabel": "Confirm new password",
+        "revokeOtherSessions": "Sign out of other devices",
+        "submit": "Update password",
+        "success": "Password updated successfully."
+      },
+      "twoFactor": {
+        "title": "Two-factor authentication",
+        "description": "Add a second verification step using an authenticator app.",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "enable": "Enable two-factor",
+        "disable": "Disable two-factor",
+        "passwordPrompt": "Confirm your password",
+        "scanQrCode": "Scan this QR code with your authenticator app, then enter the 6-digit code below.",
+        "secretKeyLabel": "Or enter this secret manually",
+        "verificationCodeLabel": "Verification code",
+        "verify": "Verify and enable",
+        "backupCodesTitle": "Backup codes",
+        "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
+        "copyBackupCodes": "Copy codes",
+        "successEnabled": "Two-factor authentication enabled.",
+        "successDisabled": "Two-factor authentication disabled."
+      },
+      "sessions": {
+        "title": "Active sessions",
+        "description": "Devices and browsers currently signed in to your account.",
+        "currentSession": "(current)",
+        "ipLabel": "IP address",
+        "lastActiveLabel": "Last active",
+        "revoke": "Sign out",
+        "revokeAll": "Sign out of all other devices",
+        "empty": "No other active sessions.",
+        "successRevoked": "Session signed out.",
+        "successRevokedAll": "All other sessions signed out."
+      },
+      "deleteAccount": {
+        "title": "Delete account",
+        "description": "Permanently remove your account and all associated data. This cannot be undone.",
+        "passwordPrompt": "Enter your password to confirm",
+        "confirmTextLabel": "Type DELETE to confirm",
+        "submit": "Delete account",
+        "success": "Account deleted."
+      }
+    },
+    "errors": {
+      "invalidCredentials": "Email or password is incorrect.",
+      "userNotFound": "No account found with that email.",
+      "userAlreadyExists": "An account with that email already exists.",
+      "weakPassword": "Password is too weak. Use at least 8 characters with mixed case and numbers.",
+      "passwordsDontMatch": "Passwords don't match.",
+      "passwordTooShort": "Password must be at least 8 characters.",
+      "currentPasswordIncorrect": "Current password is incorrect.",
+      "samePassword": "New password must be different from your current password.",
+      "invalidEmail": "Email address is not valid.",
+      "emailNotVerified": "Please verify your email address first.",
+      "sessionExpired": "Your session has expired. Please sign in again.",
+      "twoFactorRequired": "Two-factor verification required.",
+      "invalidVerificationCode": "Verification code is incorrect or expired.",
+      "twoFactorAlreadyEnabled": "Two-factor authentication is already enabled.",
+      "twoFactorNotEnabled": "Two-factor authentication is not enabled.",
+      "tooManyAttempts": "Too many attempts. Please try again later.",
+      "rateLimited": "You're doing that too often. Slow down.",
+      "providerNotSupported": "This action is managed by your authentication provider.",
+      "networkError": "Network error. Check your connection and try again.",
+      "unknown": "Something went wrong. Please try again."
+    }
   }
 }

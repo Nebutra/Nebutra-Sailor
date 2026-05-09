@@ -61,7 +61,7 @@ export async function applyAuthSelection(targetDir: string, auth: AuthChoice): P
     appendReadmeNote(
       targetDir,
       "\n## Auth\n\nAuth was skipped at scaffold time (`--auth=none`). " +
-        "Add your preferred auth provider manually (e.g. Clerk, Better Auth, NextAuth).\n",
+        "Add your preferred auth provider manually (e.g. Clerk, Better Auth).\n",
     );
     return;
   }

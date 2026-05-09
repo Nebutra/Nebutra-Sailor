@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -25,5 +25,34 @@ describe("auth provider boundary", () => {
 
     expect(betterAuthProvider).not.toContain("return <>{children}</>;");
     expect(clerkProvider).not.toContain("return <>{children}</>;");
+  });
+
+  it("AuthProviderId is exactly clerk + better-auth (no NextAuth)", async () => {
+    const types = await readFile(join(process.cwd(), "packages/auth/src/types.ts"), "utf8");
+
+    expect(types).toContain('export type AuthProviderId = "clerk" | "better-auth";');
+    expect(types).not.toMatch(/nextauth|next-auth/i);
+  });
+
+  it("no NextAuth provider files remain in packages/auth", async () => {
+    const serverProviders = await readdir(join(process.cwd(), "packages/auth/src/providers"));
+    const reactProviders = await readdir(join(process.cwd(), "packages/auth/src/react/providers"));
+
+    const matchesNextAuth = (name: string) => /nextauth/i.test(name);
+
+    expect(serverProviders.filter(matchesNextAuth)).toEqual([]);
+    expect(reactProviders.filter(matchesNextAuth)).toEqual([]);
+  });
+
+  it("@nebutra/auth package description does not mention NextAuth", async () => {
+    const pkg = await readFile(join(process.cwd(), "packages/auth/package.json"), "utf8");
+
+    const parsed = JSON.parse(pkg) as {
+      description?: string;
+      dependencies?: Record<string, string>;
+    };
+
+    expect(parsed.description ?? "").not.toMatch(/nextauth|next-auth/i);
+    expect(Object.keys(parsed.dependencies ?? {})).not.toContain("next-auth");
   });
 });
