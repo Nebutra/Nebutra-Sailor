@@ -28,6 +28,20 @@ vi.mock("@nebutra/logger", () => ({
   },
 }));
 
+vi.mock("@nebutra/uploads", () => ({
+  getUploadProvider: () =>
+    Promise.resolve({
+      createPresignedUpload: ({ key, contentType }: { key: string; contentType: string }) =>
+        Promise.resolve({
+          method: "PUT",
+          url: `https://uploads.example.com/${key}`,
+          key,
+          headers: { "content-type": contentType },
+          expiresIn: 3600,
+        }),
+    }),
+}));
+
 const params = (orgId = "org_alpha") => Promise.resolve({ orgId });
 
 async function loadOrgRoute() {

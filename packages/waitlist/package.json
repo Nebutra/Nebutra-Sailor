@@ -10,6 +10,11 @@
     "requires": [
       "Database adapter (Prisma or in-memory)",
       "@nebutra/email for confirmation + position update emails"
+    ],
+    "gaps": [
+      "Prisma adapter not implemented — only in-memory store ships",
+      "Email confirmation + position update notifications not wired",
+      "Referral attribution analytics endpoint TODO"
     ]
   },
   "main": "./src/index.ts",

@@ -72,6 +72,7 @@ const DEPENDENCY_RULES: DependencyRule[] = [
       "@nebutra/queue",
       "@nebutra/webhooks",
       "@nebutra/china-compliance",
+      "@nebutra/uploads",
     ],
   },
   {

@@ -98,7 +98,7 @@ export async function POST(request: Request, context: RouteContext) {
     }
 
     const ext = extensionFor(parsed.data.contentType);
-    const key = `${Date.now()}.${ext}`;
+    const key = `org-logos/${orgId}/${Date.now()}.${ext}`;
     const upload = await buildPresignedUpload(key, parsed.data.contentType, orgId);
 
     return NextResponse.json(upload);
