@@ -3,7 +3,13 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
-    "noEmit": true
+    "noEmit": true,
+    "exactOptionalPropertyTypes": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "paths": {
+      "@/*": ["../web/src/*"]
+    }
   },
   "include": [".storybook/**/*", "src/**/*"],
   "exclude": ["node_modules", "dist"]
