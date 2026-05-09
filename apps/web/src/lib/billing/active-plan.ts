@@ -1,22 +1,20 @@
 /**
  * Active-plan helper.
  *
- * Reads the resolved plan tier for an organization from the billing service
- * and reports whether the org currently holds a paid plan.
+ * Reads the resolved plan tier for an organization and reports whether the org
+ * currently holds a paid plan.
  *
- * The billing package (`@nebutra/billing`) exposes
- * `PlanConfigService.getConfig(organizationId)` which returns a `ResolvedConfig`
- * whose `plan.plan` field is `"FREE" | "PRO" | "ENTERPRISE"`. There is no
- * `getEffectivePlan()` export — the closest equivalent is `getConfig()`.
+ * Production read path: queries `Organization.plan` directly from Prisma. This
+ * is intentionally simpler than going through `@nebutra/billing`'s
+ * `PlanConfigService` — that service requires explicit `init()` with a cache
+ * adapter and a Prisma client, neither of which is wired at the web app's
+ * startup yet. Reading `Organization.plan` is the same source of truth the
+ * webhook handlers write to, so behavior is equivalent without the init dance.
  *
- * To keep this helper testable and decoupled from the billing package's
- * Prisma-bound singleton, it accepts a fetcher via dependency injection.
- * Production code should pass a fetcher backed by
- * `getPlanConfig().getConfig(orgId)` once the billing package is wired into
- * the web app's runtime. Until then the default fetcher throws a documented
- * TODO and `hasActivePlan` defensively reports `inactive`.
+ * Tests inject a fetcher to bypass the DB.
  */
 import { logger } from "@nebutra/logger";
+import { db } from "../db";
 
 export type PlanTier = "FREE" | "PRO" | "ENTERPRISE";
 
@@ -51,19 +49,23 @@ export function isPaidPlanTier(tier: string | null | undefined): boolean {
   return PAID_TIERS.has(tier);
 }
 
-const defaultFetcher: ActivePlanFetcher = async () => {
-  // TODO: wire to PlanConfigService.getConfig() from @nebutra/billing
-  // (see packages/billing/src/config/plan-config.ts). Once @nebutra/billing
-  // is added to apps/web's package.json, replace with:
-  //
-  //   const { getPlanConfig } = await import("@nebutra/billing");
-  //   return getPlanConfig().getConfig(organizationId);
-  //
-  // Until that wiring is done, the helper defensively reports inactive so
-  // first-purchase UX never blocks legitimate users.
-  throw new Error(
-    "TODO: wire hasActivePlan to PlanConfigService.getConfig() from @nebutra/billing",
-  );
+const defaultFetcher: ActivePlanFetcher = async (organizationId) => {
+  const org = await db.organization.findUnique({
+    where: { id: organizationId },
+    select: { id: true, plan: true, slug: true },
+  });
+
+  if (!org) {
+    throw new Error(`Organization ${organizationId} not found`);
+  }
+
+  return {
+    plan: {
+      id: org.id,
+      slug: org.slug,
+      plan: org.plan as PlanTier,
+    },
+  };
 };
 
 /**
