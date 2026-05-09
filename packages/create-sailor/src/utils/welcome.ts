@@ -18,10 +18,21 @@ import { describeStatus, formatStatusBadge, type PreviewSelection } from "./pack
  * skipped but the cheat sheet is still written.
  */
 
+interface WaveFeatureSummary {
+  cronJobs?: boolean;
+  auditLog?: boolean;
+  apiKeys?: boolean;
+  commandPalette?: boolean;
+  cookieConsent?: boolean;
+  legalPages?: boolean;
+  chinaCompliance?: boolean;
+}
+
 interface WelcomeOptions {
   projectName: string;
   region: string;
   previewSelections?: PreviewSelection[];
+  waveFeatures?: WaveFeatureSummary;
 }
 
 function renderWelcomePageTsx(projectName: string): string {
@@ -141,6 +152,32 @@ function Step({
 `;
 }
 
+function renderWhatYouCanDoNext(features: WaveFeatureSummary = {}): string {
+  // All bullets are listed unconditionally so the cheat sheet stays useful
+  // even when a feature was opted out — the user still benefits from
+  // discoverability when they later flip the flag back on.
+  const bullets = [
+    features.apiKeys === false
+      ? "- Manage API keys at `/settings/api-keys` (disabled — re-enable with `--api-keys=true`)"
+      : "- Manage API keys at `/settings/api-keys`",
+    features.auditLog === false
+      ? "- View audit log at `/settings/audit-log` (disabled — re-enable with `--audit-log=true`)"
+      : "- View audit log at `/settings/audit-log`",
+    "- Configure webhooks at `/settings/webhooks`",
+    features.commandPalette === false
+      ? "- Press ⌘K to open the command palette (disabled — re-enable with `--command-palette=true`)"
+      : "- Press ⌘K to open the command palette",
+    "- Edit notification preferences at `/settings/notifications`",
+    "- Export your data at `/settings/account/export`",
+    "- For China deployments, see `packages/china-compliance/README.md`",
+  ];
+  return `
+## What you can do next
+
+${bullets.join("\n")}
+`;
+}
+
 function renderReadinessHolds(previewSelections: PreviewSelection[] = []): string {
   if (previewSelections.length === 0) return "";
 
@@ -166,6 +203,7 @@ function renderNextStepsMd(
   projectName: string,
   region: string,
   previewSelections: PreviewSelection[] = [],
+  waveFeatures: WaveFeatureSummary = {},
 ): string {
   return `# Next steps — ${projectName}
 
@@ -193,7 +231,7 @@ Your AI-native SaaS scaffold is ready. Complete these four steps to go from temp
    \`\`\`
 
 After setup, delete the welcome route at \`apps/web/src/app/[locale]/welcome/\`.
-${renderReadinessHolds(previewSelections)}
+${renderWhatYouCanDoNext(waveFeatures)}${renderReadinessHolds(previewSelections)}
 
 ## Resources
 
@@ -204,7 +242,7 @@ ${renderReadinessHolds(previewSelections)}
 }
 
 export async function generateWelcomePage(targetDir: string, opts: WelcomeOptions): Promise<void> {
-  const { projectName, region, previewSelections = [] } = opts;
+  const { projectName, region, previewSelections = [], waveFeatures = {} } = opts;
 
   // 1. Cheat sheet — always written (small, no deps on apps/web existing).
   try {
@@ -214,7 +252,7 @@ export async function generateWelcomePage(targetDir: string, opts: WelcomeOption
     }
     fs.writeFileSync(
       path.join(sailorDir, "next-steps.md"),
-      renderNextStepsMd(projectName, region, previewSelections),
+      renderNextStepsMd(projectName, region, previewSelections, waveFeatures),
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

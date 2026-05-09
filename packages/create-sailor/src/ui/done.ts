@@ -5,11 +5,22 @@ import {
   type PreviewSelection,
 } from "../utils/package-status.js";
 
+export interface WaveFeatureSummary {
+  cronJobs?: boolean;
+  auditLog?: boolean;
+  apiKeys?: boolean;
+  commandPalette?: boolean;
+  cookieConsent?: boolean;
+  legalPages?: boolean;
+  chinaCompliance?: boolean;
+}
+
 export interface DoneOptions {
   elapsedSec: number;
   targetDir: string;
   skippedInstall: boolean;
   previewSelections?: PreviewSelection[];
+  waveFeatures?: WaveFeatureSummary;
 }
 
 function shouldUseDecor(): boolean {
@@ -76,6 +87,23 @@ export function showDone(opts: DoneOptions): void {
       `     ${decor ? pc.dim("See: https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/package-status.md") : "See: https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/package-status.md"}`,
     );
   }
+
+  // What you can do next — surface the most discoverable wave 3-5 features.
+  const features = opts.waveFeatures ?? {};
+  const enabled = (v: boolean | undefined): boolean => v !== false;
+  const nextHints: string[] = [];
+  if (enabled(features.apiKeys)) nextHints.push("Manage API keys at /settings/api-keys");
+  if (enabled(features.auditLog)) nextHints.push("View audit log at /settings/audit-log");
+  nextHints.push("Configure webhooks at /settings/webhooks");
+  if (enabled(features.commandPalette))
+    nextHints.push("Press Cmd/Ctrl+K to open the command palette");
+  nextHints.push("Edit notification preferences at /settings/notifications");
+  nextHints.push("Export your data at /settings/account/export");
+  if (features.chinaCompliance)
+    nextHints.push("China deployments — see packages/china-compliance/README.md");
+
+  lines.push("", `   ${decor ? pc.bold("What you can do next:") : "What you can do next:"}`);
+  for (const hint of nextHints) lines.push(`     ${arrow} ${hint}`);
 
   lines.push(
     "",

@@ -83,6 +83,25 @@ npm create sailor@latest my-app \
 | `--docs` | `fumadocs` · `none` | `fumadocs` |
 | `--orm` | `prisma` · `drizzle` · `none` | `prisma` |
 | `--db` | `postgres` · `mysql` · `sqlite` · `none` | `postgresql` |
+| `--queue` | `qstash` · `bullmq` · `upstash` · `sqs` · `none` | region-based |
+| `--search` | `meilisearch` · `typesense` · `algolia` · `pgvector` · `none` | region-based |
+| `--cache` | `upstash-redis` · `vercel-kv` · `redis` · `dragonfly` · `none` | region-based |
+| `--notifications` | `novu` · `knock` · `custom` · `none` | `none` |
+| `--webhooks` | `svix` · `custom` · `none` | `none` |
+| `--cms` | `sanity` · `contentful` · `strapi` · `none` | `none` |
+| `--feature-flags` | `vercel-flags` · `growthbook` · `configcat` · `none` | `none` |
+| `--captcha` | `turnstile` · `hcaptcha` · `aliyun-slide` · `none` | region-based |
+| `--mcp` | `on` · `off` | `on` |
+| `--metering` | `auto` · `on` · `off` | `auto` |
+| `--billing-mode` | `usage` · `seat` · `credits` | `usage` |
+| `--idp` | `clerk` · `oauth-server` | `clerk` |
+| `--cron-jobs` | `true` · `false` — scaffold scheduled cron handlers | `true` |
+| `--audit-log` | `true` · `false` — enable `/settings/audit-log` + arch test | `true` |
+| `--api-keys` | `true` · `false` — enable `/settings/api-keys` page | `true` |
+| `--command-palette` | `true` · `false` — enable ⌘K command palette | `true` |
+| `--cookie-consent` | `true` · `false` — enable GDPR/CCPA cookie banner | `true` |
+| `--legal-pages` | `true` · `false` — enable dynamic `/legal/[slug]` route | `true` |
+| `--china-compliance` | `true` · `false` — enable `@nebutra/china-compliance` + ICP footer | `true` when `--region=cn`, otherwise `false` |
 | `--i18n / --no-i18n` | boolean | `true` |
 | `-y, --yes` | accept all defaults (non-interactive) | — |
 | `--dry-run` | preview actions without writing | — |

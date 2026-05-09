@@ -61,6 +61,7 @@ import { generateSeedData } from "./utils/seed.js";
 import { applySmsSelection } from "./utils/sms.js";
 import { applyStorageSelection } from "./utils/storage.js";
 import { normalizeStorageProviderId } from "./utils/storage-meta.js";
+import { resolveWaveFeatureToggles } from "./utils/wave-features.js";
 import { applyWebhooksSelection } from "./utils/webhooks.js";
 import { generateWelcomePage } from "./utils/welcome.js";
 import { VERSION } from "./version.js";
@@ -95,6 +96,15 @@ interface CliOptions {
   metering?: string;
   billingMode?: string;
   idp?: string;
+  // Wave 3-5 feature toggles. Each accepts `true` | `false`; we parse with
+  // `parseBoolFlag` so users can write `--cron-jobs=false` from CI scripts.
+  cronJobs?: string;
+  auditLog?: string;
+  apiKeys?: string;
+  commandPalette?: string;
+  cookieConsent?: string;
+  legalPages?: string;
+  chinaCompliance?: string;
   i18n?: boolean;
   install?: boolean;
   git?: boolean;
@@ -377,6 +387,27 @@ async function run(): Promise<void> {
     .option("--metering <mode>", "auto | on | off (default: auto — auto-on when payment is set)")
     .option("--billing-mode <mode>", "usage | seat | credits (default: usage)")
     .option("--idp <id>", "clerk | oauth-server (default: clerk)")
+    // Wave 3-5 feature toggles — accept `true|false`; defaults are
+    // `true` except `--china-compliance` which auto-flips with --region=cn.
+    .option("--cron-jobs <bool>", "true | false — scaffold scheduled cron handlers (default: true)")
+    .option(
+      "--audit-log <bool>",
+      "true | false — enable /settings/audit-log + arch test (default: true)",
+    )
+    .option("--api-keys <bool>", "true | false — enable /settings/api-keys page (default: true)")
+    .option("--command-palette <bool>", "true | false — enable ⌘K command palette (default: true)")
+    .option(
+      "--cookie-consent <bool>",
+      "true | false — enable GDPR/CCPA cookie banner (default: true)",
+    )
+    .option(
+      "--legal-pages <bool>",
+      "true | false — enable dynamic /legal/[slug] route (default: true)",
+    )
+    .option(
+      "--china-compliance <bool>",
+      "true | false — enable @nebutra/china-compliance + ICP footer (default: true when --region=cn, otherwise false)",
+    )
     .option("--i18n", "enable i18n")
     .option("--no-i18n", "disable i18n")
     .option("--no-install", "skip package install")
@@ -655,6 +686,20 @@ async function run(): Promise<void> {
   const billingMode = (opts.billingMode ?? rDefaults.billingMode) as "usage" | "seat" | "credits";
   const idp = (opts.idp ?? rDefaults.idp) as "clerk" | "oauth-server";
 
+  // Wave 3-5 feature toggles — region-aware defaults, flag overrides.
+  const waveToggles = resolveWaveFeatureToggles(
+    {
+      cronJobs: opts.cronJobs,
+      auditLog: opts.auditLog,
+      apiKeys: opts.apiKeys,
+      commandPalette: opts.commandPalette,
+      cookieConsent: opts.cookieConsent,
+      legalPages: opts.legalPages,
+      chinaCompliance: opts.chinaCompliance,
+    },
+    region,
+  );
+
   // Detect any non-stable provider selections so we can warn the user
   // before/after install and emit structured events for --json consumers.
   const previewSelections: PreviewSelection[] = collectPreviewSelections([
@@ -714,6 +759,13 @@ async function run(): Promise<void> {
     metering: metering as NebutraConfig["metering"],
     billingMode,
     idp,
+    cronJobs: waveToggles.cronJobs,
+    auditLog: waveToggles.auditLog,
+    apiKeys: waveToggles.apiKeys,
+    commandPalette: waveToggles.commandPalette,
+    cookieConsent: waveToggles.cookieConsent,
+    legalPages: waveToggles.legalPages,
+    chinaCompliance: waveToggles.chinaCompliance,
   };
 
   // Progress summary of selections
@@ -807,6 +859,13 @@ async function run(): Promise<void> {
       `metering → ${metering === "off" ? "disabled" : metering === "auto" ? (payment !== "none" ? "enabled (auto: payment set)" : "disabled (auto: no payment)") : "enabled"}`,
       ...(billingMode !== "usage" ? [`billing-mode → ${billingMode}`] : []),
       ...(idp !== "clerk" ? [`idp → ${idp}`] : []),
+      `cron-jobs → ${waveToggles.cronJobs ? "enabled" : "disabled"}`,
+      `audit-log → ${waveToggles.auditLog ? "enabled" : "disabled"}`,
+      `api-keys → ${waveToggles.apiKeys ? "enabled" : "disabled"}`,
+      `command-palette → ${waveToggles.commandPalette ? "enabled" : "disabled"}`,
+      `cookie-consent → ${waveToggles.cookieConsent ? "enabled" : "disabled"}`,
+      `legal-pages → ${waveToggles.legalPages ? "enabled" : "disabled"}`,
+      `china-compliance → ${waveToggles.chinaCompliance ? "enabled (@nebutra/china-compliance + ICP footer)" : "disabled"}`,
       `compliance → inject ${region} boilerplate (ICP/Cookie/AIGC/Privacy)`,
       `welcome → generate dev welcome page`,
       `env → generate random secrets (AUTH_SECRET, JWT_SECRET)`,
@@ -1041,7 +1100,12 @@ async function run(): Promise<void> {
 
     await generateEnvSecrets(resolvedTarget);
     await generateSeedData(resolvedTarget, auth);
-    await generateWelcomePage(resolvedTarget, { projectName, region, previewSelections });
+    await generateWelcomePage(resolvedTarget, {
+      projectName,
+      region,
+      previewSelections,
+      waveFeatures: waveToggles,
+    });
 
     if (config.aiMode !== "none") {
       emitJson(useJson, { event: "step", step: "ai-providers", status: "start" });
@@ -1166,6 +1230,7 @@ async function run(): Promise<void> {
         elapsedSec,
         targetDir: resolvedTarget,
         previewSelections,
+        waveFeatures: waveToggles,
       });
     } else {
       showDone({
@@ -1173,6 +1238,7 @@ async function run(): Promise<void> {
         targetDir: resolvedTarget,
         skippedInstall: opts.install === false,
         previewSelections,
+        waveFeatures: waveToggles,
       });
     }
 

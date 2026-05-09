@@ -54,6 +54,15 @@ export interface NebutraConfig {
   metering?: "auto" | "on" | "off";
   billingMode?: "usage" | "seat" | "credits";
   idp?: "clerk" | "oauth-server";
+  // Wave 3-5 feature toggles. Default to enabled for global; some flip
+  // based on region (e.g. chinaCompliance auto-true when region=cn).
+  cronJobs?: boolean;
+  auditLog?: boolean;
+  apiKeys?: boolean;
+  commandPalette?: boolean;
+  cookieConsent?: boolean;
+  legalPages?: boolean;
+  chinaCompliance?: boolean;
 }
 
 export async function writeNebutraConfig(targetDir: string, config: NebutraConfig) {
