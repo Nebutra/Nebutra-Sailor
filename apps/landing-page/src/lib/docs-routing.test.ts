@@ -17,25 +17,25 @@ describe("docs URL governance", () => {
     );
   });
 
-  it("redirects the public docs entrypoint to the docs app boundary", () => {
+  it("redirects the public docs entrypoint to the docs app root", () => {
     expect(createDocsRedirectUrl(url("/docs"), "nebutra.com")?.toString()).toBe(
-      "https://docs.nebutra.com/docs",
+      "https://docs.nebutra.com/",
     );
     expect(
       createDocsRedirectUrl(
         url("/docs/getting-started/installation?utm=npm"),
         "nebutra.com",
       )?.toString(),
-    ).toBe("https://docs.nebutra.com/docs/getting-started/installation?utm=npm");
+    ).toBe("https://docs.nebutra.com/getting-started/installation?utm=npm");
   });
 
   it("preserves supported docs locales and falls unsupported landing locales back to English", () => {
     expect(
       createDocsRedirectUrl(url("/zh/docs/cli/create-sailor"), "nebutra.com")?.toString(),
-    ).toBe("https://docs.nebutra.com/zh/docs/cli/create-sailor");
+    ).toBe("https://docs.nebutra.com/zh/cli/create-sailor");
     expect(
       createDocsRedirectUrl(url("/de/docs/cli/create-sailor"), "nebutra.com")?.toString(),
-    ).toBe("https://docs.nebutra.com/docs/cli/create-sailor");
+    ).toBe("https://docs.nebutra.com/cli/create-sailor");
   });
 
   it("does not redirect non-docs paths or the docs app host", () => {

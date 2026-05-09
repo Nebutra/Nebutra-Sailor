@@ -155,7 +155,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
             <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 bg-white/8 px-3 py-1 text-sm font-medium text-white/80 shadow-[0_12px_40px_-24px_rgba(11,241,195,0.8)] backdrop-blur-md">
               <GitPullRequest className="size-4" />
               <p>Changelog</p>
-              <Link href="/changelog/feed.xml" aria-label="Subscribe to changelog RSS">
+              <Link href="/api/changelog/rss" aria-label="Subscribe to changelog RSS">
                 <Rss className="size-4 ml-1 hover:text-white transition-colors" />
               </Link>
             </div>

@@ -44,12 +44,5 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
     ],
-    shortcuts: [
-      {
-        name: "Sign In",
-        url: "/sign-in",
-        description: "Sign in to your account",
-      },
-    ],
   };
 }

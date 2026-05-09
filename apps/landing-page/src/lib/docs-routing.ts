@@ -33,13 +33,14 @@ export function createDocsRedirectUrl(requestUrl: URL, requestHost?: string | nu
     return null;
   }
 
+  const trailingSegments = segments.slice(docsIndex + 1);
   const docsSegments =
     locale && locale !== routing.defaultLocale && DOCS_SUPPORTED_LOCALES.has(locale)
-      ? [locale, "docs", ...segments.slice(docsIndex + 1)]
-      : ["docs", ...segments.slice(docsIndex + 1)];
+      ? [locale, ...trailingSegments]
+      : trailingSegments;
 
   const target = new URL(DOCS_ORIGIN);
-  target.pathname = `/${docsSegments.join("/")}`;
+  target.pathname = docsSegments.length > 0 ? `/${docsSegments.join("/")}` : "/";
   target.search = requestUrl.search;
 
   return target;

@@ -773,7 +773,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
             </h2>
           </AnimateIn>
           <AnimateIn preset="fade">
-            <Link href="/careers">
+            <Link href="mailto:careers@nebutra.com">
               <Button
                 size="lg"
                 className="rounded-full h-16 px-10 text-lg font-bold shadow-xl bg-foreground text-background hover:bg-foreground/90 hover:scale-105 transition-transform"
