@@ -2,7 +2,14 @@
  * Color Usage Guidelines - 品牌色彩使用规范
  *
  * Based on: 云毓智能品牌视觉识别手册 (Nebutra Brand Visual Identity Manual)
+ *
+ * SSOT: Color scale values are sourced from `../metadata.ts` (`colors`),
+ *       which itself mirrors `@nebutra/design-tokens/tokens/core.json`.
+ *       The scale exports below (`nebutraBlueScale`, `nebutraCyanScale`,
+ *       `nebutraNeutralScale`) are kept for backwards compatibility and
+ *       redirect to `colors.primary`, `colors.accent`, and `colors.neutral`.
  */
+import { colors } from "../metadata";
 
 /**
  * Brand Primary Color - 云毓蓝 (Nebutra Blue)
@@ -191,60 +198,37 @@ export const allowedColorCombinations = [
 /**
  * Nebutra Blue Color Scale - 云毓蓝色阶
  *
- * Generated from base color #0033FE (HSL 228°, 100%, 50%)
- * Perceptually uniform scale from light to dark
+ * Re-exported from `colors.primary` (metadata.ts SSOT).
+ * Direct hex literals were removed to eliminate the multi-source drift documented
+ * in docs/design-system/token-drift-audit.md.
  */
-export const nebutraBlueScale = {
-  50: "#f0f4ff", // Very light tint for backgrounds
-  100: "#dbe4ff", // Light tint
-  200: "#bac8ff", // Light accent
-  300: "#91a7ff", // Medium light
-  400: "#5c7cfa", // Medium
-  500: "#0033FE", // Base brand color
-  600: "#002ad4", // Slightly darker
-  700: "#0021ab", // Darker
-  800: "#001882", // Very dark
-  900: "#000f59", // Near black
-  950: "#000830", // Darkest
-} as const;
+export const nebutraBlueScale = colors.primary;
 
 /**
  * Nebutra Cyan Color Scale - 云毓青色阶
  *
- * Generated from base color #0BF1C3 (HSL 168°, 91%, 49%)
- * Perceptually uniform scale from light to dark
+ * Re-exported from `colors.accent` (metadata.ts SSOT).
  */
-export const nebutraCyanScale = {
-  50: "#e6fff8", // Very light tint for backgrounds
-  100: "#b3ffec", // Light tint
-  200: "#80ffe0", // Light accent
-  300: "#4dfcd4", // Medium light
-  400: "#1af7c8", // Medium (close to base)
-  500: "#0BF1C3", // Base brand color
-  600: "#09c9a3", // Slightly darker
-  700: "#07a183", // Darker
-  800: "#057963", // Very dark
-  900: "#035143", // Near black
-  950: "#012923", // Darkest
-} as const;
+export const nebutraCyanScale = colors.accent;
 
 /**
- * Extended Neutral Colors - 扩展中性色
+ * Extended Neutral Colors - Slate (cool blue-undertone gray scale)
  *
- * Complementary grays with subtle blue undertone to match brand
+ * Re-exported from `colors.neutral` (metadata.ts SSOT). Slate, not Zinc.
+ * The `0` step (white) is omitted to keep the legacy 50–950 scale shape intact.
  */
 export const nebutraNeutralScale = {
-  50: "#f8fafc", // Lightest - subtle blue tint
-  100: "#f1f5f9",
-  200: "#e2e8f0",
-  300: "#cbd5e1",
-  400: "#94a3b8",
-  500: "#64748b", // Base neutral
-  600: "#475569",
-  700: "#334155",
-  800: "#1e293b",
-  900: "#0f172a",
-  950: "#020617", // Near black
+  50: colors.neutral[50],
+  100: colors.neutral[100],
+  200: colors.neutral[200],
+  300: colors.neutral[300],
+  400: colors.neutral[400],
+  500: colors.neutral[500],
+  600: colors.neutral[600],
+  700: colors.neutral[700],
+  800: colors.neutral[800],
+  900: colors.neutral[900],
+  950: colors.neutral[950],
 } as const;
 
 /**

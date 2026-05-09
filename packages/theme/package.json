@@ -11,6 +11,9 @@
     "./themes.css": "./themes.css"
   },
   "scripts": {
+    "prebuild": "pnpm --filter @nebutra/design-tokens build",
+    "build": "node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/themes.generated.css', './themes.css'); console.log('themes.css regenerated from @nebutra/design-tokens')\"",
+    "sync": "pnpm --filter @nebutra/design-tokens build && node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/themes.generated.css', './themes.css')\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

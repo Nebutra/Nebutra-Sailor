@@ -56,35 +56,35 @@ export const brand = {
  */
 export const colors = {
   // 云毓蓝 - Primary brand color
-  // 蓝色象征科技与信任，契合云毓智能在AI-SaaS与云端数据智能领域的专业定位
+  // Aligned with @nebutra/design-tokens SSOT (tokens/core.json color.nebutra-blue).
   primary: {
-    50: "#e6ebff",
-    100: "#ccd7ff",
-    200: "#99afff",
-    300: "#6687ff",
-    400: "#335ffe",
+    50: "#f0f4ff",
+    100: "#dbe4ff",
+    200: "#bac8ff",
+    300: "#91a7ff",
+    400: "#5c7cfa",
     500: "#0033FE", // 云毓蓝 Main (VI标准色)
-    600: "#0029cb",
-    700: "#001f98",
-    800: "#001466",
-    900: "#000a33",
-    950: "#00051a",
+    600: "#002ad4",
+    700: "#0021ab",
+    800: "#001882",
+    900: "#000f59",
+    950: "#000830",
   },
 
   // 云毓青 - Secondary / Accent
-  // 青色的通透感象征信息的清晰与算法的灵动
+  // Aligned with @nebutra/design-tokens SSOT (tokens/core.json color.nebutra-cyan).
   accent: {
-    50: "#e7fef8",
-    100: "#cffdf1",
-    200: "#9ffbe3",
-    300: "#6ff9d5",
-    400: "#3df5c9",
+    50: "#e6fff8",
+    100: "#b3ffec",
+    200: "#80ffe0",
+    300: "#4dfcd4",
+    400: "#1af7c8",
     500: "#0BF1C3", // 云毓青 Main (VI标准色)
-    600: "#09c19c",
-    700: "#079175",
-    800: "#05614e",
-    900: "#023027",
-    950: "#011814",
+    600: "#09c9a3",
+    700: "#07a183",
+    800: "#057963",
+    900: "#035143",
+    950: "#012923",
   },
 
   // 黑白 - Black & White (VI标准)
@@ -105,20 +105,23 @@ export const colors = {
   error: "#ef4444",
   info: "#0033FE", // 使用品牌蓝
 
-  // Neutrals
+  // Neutrals — Slate (Tailwind) — cool blue-undertone gray.
+  // SSOT decision: Slate over Zinc. Aligns with --nebutra-neutral-* CSS variables
+  // and the @nebutra/design-tokens DTCG SSOT (tokens/core.json).
+  // See docs/design-system/token-drift-audit.md for the rationale.
   neutral: {
     0: "#ffffff",
-    50: "#fafafa",
-    100: "#f4f4f5",
-    200: "#e4e4e7",
-    300: "#d4d4d8",
-    400: "#a1a1aa",
-    500: "#71717a",
-    600: "#52525b",
-    700: "#3f3f46",
-    800: "#27272a",
-    900: "#18181b",
-    950: "#09090b",
+    50: "#f8fafc",
+    100: "#f1f5f9",
+    200: "#e2e8f0",
+    300: "#cbd5e1",
+    400: "#94a3b8",
+    500: "#64748b",
+    600: "#475569",
+    700: "#334155",
+    800: "#1e293b",
+    900: "#0f172a",
+    950: "#020617",
   },
 } as const;
 
@@ -150,14 +153,16 @@ export const typography = {
   fontFamily: {
     // 英文 UI / 展示 - Geist (Vercel, variable font)
     en: '"Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
-    // 中文 UI - Noto Sans SC (web), vivo Sans (print/brand)
-    cn: '"Noto Sans SC", "vivo Sans", "PingFang SC", "Microsoft YaHei", sans-serif',
-    // 默认组合 - Geist 优先，CJK 自动 unicode-range 接管
-    sans: '"Geist", "Noto Sans SC", "vivo Sans", "PingFang SC", system-ui, sans-serif',
+    // 中文 UI - Noto Sans SC + PingFang SC + Microsoft YaHei + vivo Sans (print fallback)
+    cn: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif',
+    // 默认组合 - Geist 优先，CJK 自动接管。Aligned with @nebutra/design-tokens SSOT.
+    sans: '"Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
     // 代码 / 数据 / 时间戳 / API Key / 终端
-    mono: '"Geist Mono", "Fira Code", Consolas, "Courier New", monospace',
-    // 展示字体 (Hero / 超大标题) - 与 UI 一致，依赖字重和字号营造层级
+    mono: '"Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace',
+    // 展示字体 (Hero / 超大标题)
     display: '"Geist", "Noto Sans SC", sans-serif',
+    // Heading - 与 display 一致
+    heading: '"Geist", "Noto Sans SC", sans-serif',
     // 品牌印刷专用 (Logo 旁文字 / VI 手册 / 线下物料)
     brandPrint: '"vivo Sans", "PingFang SC", sans-serif',
   },

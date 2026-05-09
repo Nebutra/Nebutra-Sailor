@@ -1,8 +1,8 @@
 /**
  * @nebutra/ui — Tailwind CSS 4 Preset
  *
- * Consumes primitive design tokens from tokens/primitive.ts.
- * All values are sourced from the VI manual (packages/brand/assets/vi/full.md).
+ * Consumes primitive design tokens from tokens/primitive.ts, which itself
+ * sources values from @nebutra/brand → @nebutra/design-tokens (SSOT).
  *
  * Usage (Tailwind CSS 4, CSS import):
  *   @source "@nebutra/ui/styles/globals.css"

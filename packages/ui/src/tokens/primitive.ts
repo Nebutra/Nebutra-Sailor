@@ -4,8 +4,9 @@
  * Raw values only. No CSS variable references, no semantic meaning.
  * These are the "atoms" of the design system.
  *
- * Color source: 云毓智能 VI 手册 (packages/brand/assets/vi/full.md)
- * Typography:   VI §Typography — Poppins (EN), vivo Sans (CN)
+ * Color source: @nebutra/brand `colors` → @nebutra/design-tokens `tokens/core.json` (SSOT).
+ * Typography:   Geist + Geist Mono (Vercel) with Noto Sans SC + PingFang SC + Microsoft YaHei CJK fallbacks.
+ *               Aligned with @nebutra/design-tokens SSOT.
  */
 
 import { colors } from "@nebutra/brand";
@@ -177,18 +178,22 @@ export const primitiveFontWeight = {
 export type PrimitiveFontWeight = keyof typeof primitiveFontWeight;
 
 // ─── Font Families — VI §Typography ──────────────────────────────────────────
-// EN primary: Poppins (Regular 400 / Medium 500 / SemiBold 600)
-// CN primary: vivo Sans → PingFang SC → Microsoft YaHei → Noto Sans SC
+// Aligned with @nebutra/design-tokens SSOT (tokens/core.json fontFamily.*).
+// EN primary: Geist (Vercel variable, 100–900)
+// EN mono:    Geist Mono
+// CN primary: Noto Sans SC → PingFang SC → Microsoft YaHei → vivo Sans (print)
 
 export const primitiveFontFamily = {
-  /** English body/UI — Poppins per VI manual */
-  sans: '"Poppins", "vivo Sans", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif',
-  /** Chinese body/UI — vivo Sans per VI manual */
-  cnSans: '"vivo Sans", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif',
-  /** Display / hero headlines — pure Poppins per VI manual */
-  display: '"Poppins", sans-serif',
-  /** Code / monospace */
-  mono: '"JetBrains Mono", "Fira Code", ui-monospace, Consolas, monospace',
+  /** Default body/UI stack — Geist with CJK auto-fallbacks */
+  sans: '"Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+  /** Chinese body/UI stack */
+  cnSans: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif',
+  /** Display / hero headlines */
+  display: '"Geist", "Noto Sans SC", sans-serif',
+  /** Heading (alias of display) */
+  heading: '"Geist", "Noto Sans SC", sans-serif',
+  /** Code / monospace — Geist Mono pairs with Geist for full family coverage */
+  mono: '"Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace',
 } as const;
 
 export type PrimitiveFontFamily = keyof typeof primitiveFontFamily;

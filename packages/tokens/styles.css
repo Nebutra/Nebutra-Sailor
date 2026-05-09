@@ -1,57 +1,50 @@
 /**
- * @nebutra/tokens - CSS Variables Theme System
+ * @nebutra/design-tokens — styles.generated.css
+ * AUTO-GENERATED from packages/design-tokens/tokens/*.json — DO NOT EDIT.
+ * Run `pnpm --filter @nebutra/design-tokens build` after editing tokens.
  *
- * Single source of truth for Nebutra design tokens.
- * Import this from app-level globals.css files.
+ * SSOT Architecture:
+ *   tokens/core.json        primitive scales (colors, sizes, durations, fonts)
+ *   tokens/semantic.json    semantic aliases (brand.primary, status.danger, gradients)
+ *   tokens/themes/light.json 12-step scales + shadcn HSL + Geist DS + elevation
+ *   tokens/themes/dark.json  same shape, dark-mode values
  *
- * NOTE: Do NOT add @import "tailwindcss" here - this file is imported
- * by apps that already have their own Tailwind configuration.
+ * Modeling extensions:
+ *   - Display-P3 wide-gamut overrides (`@supports (color: color(display-p3 ...))`)
+ *   - oklch fallbacks for ds-gray-* (`@supports (color: oklch(0 0 0))`)
+ *   - Composite shorthand tokens (`--transition`, `--focus-ring`)
+ *   - Tailwind v4 `@theme inline` block
+ *   - Dark-mode brand alias overrides (`--brand-primary` → `--blue-9` in .dark)
  */
 
-/* Font loading is managed by next/font in app layouts (single source of truth). */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
 
-/* ============================================
-   CSS Variables - Light Theme (Default)
-   ============================================ */
 :root {
-  /* Wide-gamut bridge: default to sRGB, upgrade to Display-P3 when available. */
-  --nebutra-brand-blue: #0033fe;
-  --nebutra-brand-cyan: #0bf1c3;
-
-  /* ===========================================
-     Nebutra Brand Color Scales
-     Source: @nebutra/brand/src/guidelines/color.ts
-     =========================================== */
-
-  /* 云毓蓝 (Nebutra Blue) - Primary Brand Color Scale */
   --nebutra-blue-50: #f0f4ff;
   --nebutra-blue-100: #dbe4ff;
   --nebutra-blue-200: #bac8ff;
   --nebutra-blue-300: #91a7ff;
   --nebutra-blue-400: #5c7cfa;
-  --nebutra-blue-500: var(--nebutra-brand-blue);
-  /* Base brand color */
+  --nebutra-blue-500: #0033fe; /** Base brand color — 云毓蓝 */
   --nebutra-blue-600: #002ad4;
   --nebutra-blue-700: #0021ab;
   --nebutra-blue-800: #001882;
   --nebutra-blue-900: #000f59;
   --nebutra-blue-950: #000830;
-
-  /* 云毓青 (Nebutra Cyan) - Accent Brand Color Scale */
   --nebutra-cyan-50: #e6fff8;
   --nebutra-cyan-100: #b3ffec;
   --nebutra-cyan-200: #80ffe0;
   --nebutra-cyan-300: #4dfcd4;
   --nebutra-cyan-400: #1af7c8;
-  --nebutra-cyan-500: var(--nebutra-brand-cyan);
-  /* Base brand color */
+  --nebutra-cyan-500: #0bf1c3; /** Base brand accent — 云毓青 */
   --nebutra-cyan-600: #09c9a3;
   --nebutra-cyan-700: #07a183;
   --nebutra-cyan-800: #057963;
   --nebutra-cyan-900: #035143;
   --nebutra-cyan-950: #012923;
-
-  /* Extended Neutral Colors (blue undertone) */
   --nebutra-neutral-50: #f8fafc;
   --nebutra-neutral-100: #f1f5f9;
   --nebutra-neutral-200: #e2e8f0;
@@ -63,197 +56,126 @@
   --nebutra-neutral-800: #1e293b;
   --nebutra-neutral-900: #0f172a;
   --nebutra-neutral-950: #020617;
-
-  /* Brand Gradients */
-  --brand-gradient: linear-gradient(
-    135deg,
-    var(--nebutra-blue-500) 0%,
-    var(--nebutra-cyan-500) 100%
-  );
-  --brand-gradient-reverse: linear-gradient(
-    135deg,
-    var(--nebutra-cyan-500) 0%,
-    var(--nebutra-blue-500) 100%
-  );
-  --brand-gradient-vertical: linear-gradient(
-    180deg,
-    var(--nebutra-blue-500) 0%,
-    var(--nebutra-cyan-500) 100%
-  );
-  --brand-gradient-radial: radial-gradient(
-    circle,
-    var(--nebutra-cyan-500) 0%,
-    var(--nebutra-blue-500) 100%
-  );
-
-  /* ===========================================
-     Layout Containers — max-width standards
-     =========================================== */
+  --brand-tertiary: #8b5cf6; /** Tertiary accent — data viz, infrastructure tags */
+  --status-danger: #ef4444;
+  --status-warning: #f59e0b;
+  --status-success: #22c55e; /** Tailwind green-500 — VI manual canonical success color (replaces drifted #10b981 emerald). */
+  --container-text: 896px; /** Reading-focused (hero copy, FAQ) */
+  --container-content: 1152px; /** Pricing, blog */
+  --container-wide: 1400px; /** Feature bento, navbar */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+  --duration-fast: 100ms;
+  --duration-normal: 150ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
+  --font-display: "Geist", "Noto Sans SC", sans-serif;
+  --font-heading: "Geist", "Noto Sans SC", sans-serif;
+  --font-mono: "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
+  --transition-duration: 150ms;
+  --transition-easing: ease-out; /** ease-out keyword form (CSS-friendly). Equivalent to cubic-bezier(0,0,0.2,1). */
+  --brand-primary: #0033fe; /** Brand primary — 云毓蓝 */
+  --brand-accent: #0bf1c3; /** Brand accent — 云毓青 */
+  --brand-tertiary: #8b5cf6;
+  --brand-gradient: linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%); /** Brand gradient — Logo standard 135° */
+  --brand-gradient-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
+  --brand-gradient-vertical: linear-gradient(180deg, #0033fe 0%, #0bf1c3 100%);
+  --brand-gradient-radial: radial-gradient(circle, #0bf1c3 0%, #0033fe 100%);
+  --status-danger: #ef4444;
+  --status-warning: #f59e0b;
+  --status-success: #22c55e;
+  --status-info: #0033fe; /** VI: Info = Brand Blue */
   --container-text: 896px;
   --container-content: 1152px;
   --container-wide: 1400px;
-
-  /* ===========================================
-     12-Step Functional Color Scales (Light Mode)
-
-     Geist-style state-aware semantics:
-       1–2   Backgrounds (app bg, subtle bg)
-       3–5   Component backgrounds (default / hover / active)
-       6–8   Borders (subtle / default / hover)
-       9–10  Solid fills (default / hover)
-       11    Low-contrast text / secondary text
-       12    High-contrast text / primary text
-
-     Built entirely from 云毓VI brand colors.
-     Dark mode values are overridden in .dark below.
-     =========================================== */
-
-  /* Neutral — UI chrome, surfaces, text hierarchy */
-  --neutral-1: #ffffff;
-  /* app background */
-  --neutral-2: var(--nebutra-neutral-50);
-  /* subtle background */
-  --neutral-3: var(--nebutra-neutral-100);
-  /* component bg default */
-  --neutral-4: var(--nebutra-neutral-200);
-  /* component bg hover */
-  --neutral-5: var(--nebutra-neutral-300);
-  /* component bg active */
-  --neutral-6: var(--nebutra-neutral-200);
-  /* subtle border */
-  --neutral-7: var(--nebutra-neutral-300);
-  /* default border */
-  --neutral-8: var(--nebutra-neutral-400);
-  /* hovered border */
-  --neutral-9: var(--nebutra-neutral-500);
-  /* solid fill */
-  --neutral-10: var(--nebutra-neutral-600);
-  /* solid fill hover */
-  --neutral-11: var(--nebutra-neutral-700);
-  /* secondary text */
-  --neutral-12: var(--nebutra-neutral-900);
-  /* primary text */
-
-  /* 云毓蓝 Blue — primary accent */
-  --blue-1: var(--nebutra-blue-50);
-  --blue-2: var(--nebutra-blue-100);
-  --blue-3: var(--nebutra-blue-200);
-  /* component bg default */
-  --blue-4: var(--nebutra-blue-300);
-  /* component bg hover */
-  --blue-5: var(--nebutra-blue-400);
-  /* component bg active */
-  --blue-6: var(--nebutra-blue-200);
-  /* subtle border */
-  --blue-7: var(--nebutra-blue-300);
-  /* default border */
-  --blue-8: var(--nebutra-blue-400);
-  /* hovered border */
-  --blue-9: var(--nebutra-blue-500);
-  /* solid fill — main brand accent */
-  --blue-10: var(--nebutra-blue-600);
-  /* solid fill hover */
-  --blue-11: var(--nebutra-blue-700);
-  /* secondary text */
-  --blue-12: var(--nebutra-blue-900);
-  /* primary text */
-
-  /* 云毓青 Cyan — secondary accent */
-  --cyan-1: var(--nebutra-cyan-50);
-  --cyan-2: var(--nebutra-cyan-100);
-  --cyan-3: var(--nebutra-cyan-200);
-  /* component bg default */
-  --cyan-4: var(--nebutra-cyan-300);
-  /* component bg hover */
-  --cyan-5: var(--nebutra-cyan-400);
-  /* component bg active */
-  --cyan-6: var(--nebutra-cyan-200);
-  /* subtle border */
-  --cyan-7: var(--nebutra-cyan-300);
-  /* default border */
-  --cyan-8: var(--nebutra-cyan-400);
-  /* hovered border */
-  --cyan-9: var(--nebutra-cyan-500);
-  /* solid fill — main brand accent */
-  --cyan-10: var(--nebutra-cyan-600);
-  /* solid fill hover */
-  --cyan-11: var(--nebutra-cyan-700);
-  /* secondary text */
-  --cyan-12: var(--nebutra-cyan-900);
-  /* primary text */
-
-  /* ===========================================
-     Semantic Theme Variables (Light Mode)
-     =========================================== */
-
-  /* Background & Foreground */
-  /* VI: White (#FFFFFF) is the canonical light background — not off-white */
-  --background: 0 0% 100%;
+  --radius: 0.375rem; /** Geist-matching 6px */
+  --focus-ring: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring)); /** Composite focus ring — 2px ring color over 2px background gap. Consumed via --focus-ring. */
+  --neutral-1: #ffffff; /** app background */
+  --neutral-2: #f8fafc; /** subtle background */
+  --neutral-3: #f1f5f9; /** component bg default */
+  --neutral-4: #e2e8f0; /** component bg hover */
+  --neutral-5: #cbd5e1; /** component bg active */
+  --neutral-6: #e2e8f0; /** subtle border */
+  --neutral-7: #cbd5e1; /** default border */
+  --neutral-8: #94a3b8; /** hovered border */
+  --neutral-9: #64748b; /** solid fill */
+  --neutral-10: #475569; /** solid fill hover */
+  --neutral-11: #334155; /** secondary text */
+  --neutral-12: #0f172a; /** primary text */
+  --blue-1: #f0f4ff;
+  --blue-2: #dbe4ff;
+  --blue-3: #bac8ff;
+  --blue-4: #91a7ff;
+  --blue-5: #5c7cfa;
+  --blue-6: #bac8ff;
+  --blue-7: #91a7ff;
+  --blue-8: #5c7cfa;
+  --blue-9: #0033fe; /** solid fill — main brand */
+  --blue-10: #002ad4;
+  --blue-11: #0021ab;
+  --blue-12: #000f59;
+  --cyan-1: #e6fff8;
+  --cyan-2: #b3ffec;
+  --cyan-3: #80ffe0;
+  --cyan-4: #4dfcd4;
+  --cyan-5: #1af7c8;
+  --cyan-6: #80ffe0;
+  --cyan-7: #4dfcd4;
+  --cyan-8: #1af7c8;
+  --cyan-9: #0bf1c3;
+  --cyan-10: #09c9a3;
+  --cyan-11: #07a183;
+  --cyan-12: #035143;
+  --background: 0 0% 100%; /** HSL channel triple — consume via hsl(var(--background)) */
   --foreground: 222 47% 11%;
-  /* nebutra-neutral-900 */
-
-  /* Card */
   --card: 0 0% 100%;
   --card-foreground: 222 47% 11%;
-
-  /* Popover */
   --popover: 0 0% 100%;
   --popover-foreground: 222 47% 11%;
-
-  /* Primary - Softer Brand Blue */
-  --primary: 228 85% 56%;
-  /* #254bfa */
+  --primary: 228 85% 56%; /** Softer brand blue #254bfa */
   --primary-foreground: 0 0% 100%;
-
-  /* Secondary - Low emphasis neutral (matches standard Shadcn behavior) */
   --secondary: 210 40% 96%;
-  /* nebutra-neutral-100 */
   --secondary-foreground: 222 47% 11%;
-
-  /* Muted - Neutral scale */
   --muted: 210 40% 96%;
-  /* nebutra-neutral-100 */
   --muted-foreground: 215 25% 45%;
-  /* nebutra-neutral-500 */
-
-  /* Accent - Light blue tint */
   --accent: 228 100% 97%;
-  /* nebutra-blue-50 */
   --accent-foreground: 228 100% 50%;
-  /* nebutra-blue-500 */
-
-  /* Destructive - Darken slightly to pass 4.5:1 with white text */
   --destructive: 0 84% 45%;
   --destructive-foreground: 0 0% 100%;
-
-  /* Success — Darken to pass 4.5:1 with white text */
   --success: 142 71% 29%;
   --success-foreground: 0 0% 100%;
-
-  /* Warning */
   --warning: 38 92% 50%;
   --warning-foreground: 222 47% 11%;
-
-  /* Info — VI: Info = Brand Blue, not sky/teal */
   --info: 228 100% 50%;
-  /* #0033FE — same as primary */
   --info-foreground: 0 0% 100%;
-
-  /* Status colors — direct CSS color values for inline styles (e.g. SVG, charts, tags).
-     For Tailwind classes, use semantic tokens above: bg-destructive, bg-success, etc. */
-  --status-danger: #ef4444;
-  --status-warning: #f59e0b;
-  --status-success: #10b981;
-  --status-info: var(--brand-primary);
-
-  /* Border, Input, Ring */
   --border: 240 5.9% 90%;
-  /* precise neutral per Geist spec */
   --input: 240 5.9% 90%;
   --ring: 228 100% 50%;
-  /* nebutra-blue-500 — focus ring = brand blue */
-
-  /* Geist Design System color scale (used by 21st.dev components and badges) */
+  --sidebar: 210 40% 98%;
+  --sidebar-foreground: 215 25% 27%;
+  --sidebar-primary: 228 100% 50%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 228 100% 97%;
+  --sidebar-accent-foreground: 228 100% 50%;
+  --sidebar-border: 214 32% 91%;
+  --sidebar-ring: 228 100% 50%;
+  --chart-1: 228 100% 50%;
+  --chart-2: 168 91% 49%;
+  --chart-3: 263 70% 66%;
+  --chart-4: 168 91% 70%;
+  --chart-5: 228 100% 35%;
   --ds-blue-200: oklch(96.29% 0.0195 250.59);
   --ds-blue-700: oklch(57.61% 0.2508 258.23);
   --ds-blue-900: oklch(53.18% 0.2399 256.9900584162342);
@@ -286,62 +208,6 @@
   --ds-trial-end: rgb(248, 28, 229);
   --ds-turbo-start: #ff1e56;
   --ds-turbo-end: #0096ff;
-
-  /* Border Radius — 6px (Geist-matching, more rounded than 4px) */
-  --radius: 0.375rem;
-
-  /* Transition tokens — 150ms ease-out universal */
-  --transition-duration: 150ms;
-  --transition-easing: ease-out;
-  --transition: var(--transition-duration) var(--transition-easing);
-
-  /* Focus ring — brand blue, 2px width, 2px gap */
-  --focus-ring: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
-
-  /* Sidebar (for dashboard layouts) */
-  --sidebar: 210 40% 98%;
-  /* nebutra-neutral-50 */
-  --sidebar-foreground: 215 25% 27%;
-  --sidebar-primary: 228 100% 50%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 228 100% 97%;
-  --sidebar-accent-foreground: 228 100% 50%;
-  --sidebar-border: 214 32% 91%;
-  --sidebar-ring: 228 100% 50%;
-
-  /* Brand Aliases — canonical references for app-level code.
-     Use these instead of raw hex or scale steps. */
-  --brand-primary: var(--blue-9);
-  --brand-accent: var(--cyan-9);
-  --brand-tertiary: #8b5cf6;
-  /* purple — data viz, infrastructure tags, tertiary accent */
-
-  /* Chart colors (for data visualization) */
-  --chart-1: 228 100% 50%;
-  /* nebutra-blue */
-  --chart-2: 168 91% 49%;
-  /* nebutra-cyan */
-  --chart-3: 263 70% 66%;
-  /* purple (--brand-tertiary) */
-  --chart-4: 168 91% 70%;
-  /* nebutra-cyan-300 */
-  --chart-5: 228 100% 35%;
-  /* nebutra-blue-700 */
-
-  /* ===========================================
-     Shadow / Elevation tokens — light mode
-
-     Semantic level → UI layer:
-       xs  → hovered rows, focused inputs
-       sm  → cards, tooltips
-       md  → dropdowns, popovers
-       lg  → sticky headers, floating panels
-       xl  → modals, dialogs
-       2xl → top-level overlays
-
-     Brand variants use 云毓蓝 #0033FE as glow color.
-     Dark mode overrides are in .dark below.
-     =========================================== */
   --elevation-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --elevation-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --elevation-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -352,187 +218,212 @@
   --elevation-brand-lg: 0 0 0 1px rgb(0 51 254 / 0.2), 0 8px 40px -4px rgb(0 51 254 / 0.3);
 }
 
-/* oklch overrides for --ds-gray-* (light mode) — all modern browsers as of 2024.
-   sRGB hsla() fallbacks remain in :root above for legacy engines. */
-@supports (color: oklch(0 0 0)) {
-  :root {
-    --ds-gray-100: oklch(0.953 0 0);
-    /* hsla(0, 0%, 95%, 1)  */
-    --ds-gray-200: oklch(0.929 0 0);
-    /* hsla(0, 0%, 92%, 1)  */
-    --ds-gray-500: oklch(0.81 0 0);
-    /* hsla(0, 0%, 79%, 1)  */
-    --ds-gray-600: oklch(0.69 0 0);
-    /* hsla(0, 0%, 66%, 1)  */
-    --ds-gray-700: oklch(0.598 0 0);
-    /* hsla(0, 0%, 56%, 1)  */
-    --ds-gray-1000: oklch(0.215 0 0);
-    /* hsla(0, 0%, 9%, 1)   */
-    --ds-background-100: oklch(1 0 0);
-    /* hsla(0, 0%, 100%, 1) */
-  }
+:root {
+  /* Wide-gamut bridge: default to sRGB, upgrade to Display-P3 when available. */
+  --nebutra-brand-blue: var(--nebutra-blue-500);
+  --nebutra-brand-cyan: var(--nebutra-cyan-500);
+}
+
+:root {
+  /* Gradient aliases — both --brand-gradient-* (canonical, CLAUDE.md) and --gradient-brand-* (legacy) are emitted. */
+  --gradient-brand: var(--brand-gradient);
+  --gradient-brand-hover: var(--brand-gradient-reverse);
+  --gradient-brand-vertical: var(--brand-gradient-vertical);
+  --gradient-brand-reverse: var(--brand-gradient-reverse);
+  --gradient-brand-radial: var(--brand-gradient-radial);
+  --gradient-brand-glow: var(--brand-gradient-radial);
+  --gradient-section: var(--brand-gradient-vertical);
+  --gradient-glow: var(--brand-gradient-radial);
+}
+
+:root {
+  /* Composite tokens — combine duration + easing for shorthand use. */
+  --transition: 150ms ease-out;
+  --focus-ring: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
 }
 
 @supports (color: color(display-p3 1 1 1)) {
   :root {
-    /* Richer neon brand values on P3 displays with sRGB fallback above. */
+    /* Richer brand values on Display-P3 hardware; sRGB fallback above. */
+    --nebutra-blue-500: color(display-p3 0.03 0.19 0.99);
+    --nebutra-cyan-500: color(display-p3 0.07 0.94 0.79);
     --nebutra-brand-blue: color(display-p3 0.03 0.19 0.99);
     --nebutra-brand-cyan: color(display-p3 0.07 0.94 0.79);
   }
 }
 
-/* ============================================
-   CSS Variables - Dark Theme
-   ============================================ */
+@supports (color: oklch(0 0 0)) {
+  :root {
+    /* oklch values for modern engines (2024+); sRGB hsla() fallback above. */
+    --ds-gray-100: oklch(0.953 0 0);
+    --ds-gray-200: oklch(0.929 0 0);
+    --ds-gray-500: oklch(0.81 0 0);
+    --ds-gray-600: oklch(0.69 0 0);
+    --ds-gray-700: oklch(0.598 0 0);
+    --ds-gray-1000: oklch(0.215 0 0);
+    --ds-background-100: oklch(1 0 0);
+  }
+}
+
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
 .dark {
-  /* Brand scales remain same - only semantic tokens change */
-
-  /* ===========================================
-     12-Step Functional Color Scales (Dark Mode)
-     Inverted from light: step 1 = darkest, step 12 = lightest
-     =========================================== */
-
-  /* Neutral */
-  --neutral-1: var(--nebutra-neutral-950);
-  /* app background */
-  --neutral-2: var(--nebutra-neutral-900);
-  /* subtle background */
-  --neutral-3: var(--nebutra-neutral-800);
-  /* component bg default */
-  --neutral-4: var(--nebutra-neutral-700);
-  /* component bg hover */
-  --neutral-5: var(--nebutra-neutral-600);
-  /* component bg active */
-  --neutral-6: var(--nebutra-neutral-800);
-  /* subtle border */
-  --neutral-7: var(--nebutra-neutral-700);
-  /* default border */
-  --neutral-8: var(--nebutra-neutral-600);
-  /* hovered border */
-  --neutral-9: var(--nebutra-neutral-400);
-  /* solid fill */
-  --neutral-10: var(--nebutra-neutral-300);
-  /* solid fill hover */
-  --neutral-11: var(--nebutra-neutral-200);
-  /* secondary text */
-  --neutral-12: var(--nebutra-neutral-50);
-  /* primary text */
-
-  /* 云毓蓝 Blue */
-  --blue-1: var(--nebutra-blue-950);
-  --blue-2: var(--nebutra-blue-900);
-  --blue-3: var(--nebutra-blue-800);
-  /* component bg default */
-  --blue-4: var(--nebutra-blue-700);
-  /* component bg hover */
-  --blue-5: var(--nebutra-blue-600);
-  /* component bg active */
-  --blue-6: var(--nebutra-blue-800);
-  /* subtle border */
-  --blue-7: var(--nebutra-blue-700);
-  /* default border */
-  --blue-8: var(--nebutra-blue-600);
-  /* hovered border */
-  --blue-9: var(--nebutra-blue-400);
-  /* solid fill — brighter on dark bg */
-  --blue-10: var(--nebutra-blue-300);
-  /* solid fill hover */
-  --blue-11: var(--nebutra-blue-200);
-  /* secondary text */
-  --blue-12: var(--nebutra-blue-100);
-  /* primary text */
-
-  /* 云毓青 Cyan */
-  --cyan-1: var(--nebutra-cyan-950);
-  --cyan-2: var(--nebutra-cyan-900);
-  --cyan-3: var(--nebutra-cyan-800);
-  /* component bg default */
-  --cyan-4: var(--nebutra-cyan-700);
-  /* component bg hover */
-  --cyan-5: var(--nebutra-cyan-600);
-  /* component bg active */
-  --cyan-6: var(--nebutra-cyan-800);
-  /* subtle border */
-  --cyan-7: var(--nebutra-cyan-700);
-  /* default border */
-  --cyan-8: var(--nebutra-cyan-600);
-  /* hovered border */
-  --cyan-9: var(--nebutra-cyan-400);
-  /* solid fill — brighter on dark bg */
-  --cyan-10: var(--nebutra-cyan-300);
-  /* solid fill hover */
-  --cyan-11: var(--nebutra-cyan-200);
-  /* secondary text */
-  --cyan-12: var(--nebutra-cyan-100);
-  /* primary text */
-
-  /* ===========================================
-     Semantic Theme Variables (Dark Mode)
-     =========================================== */
-
-  /* Background & Foreground */
+  --nebutra-blue-50: #f0f4ff;
+  --nebutra-blue-100: #dbe4ff;
+  --nebutra-blue-200: #bac8ff;
+  --nebutra-blue-300: #91a7ff;
+  --nebutra-blue-400: #5c7cfa;
+  --nebutra-blue-500: #0033fe; /** Base brand color — 云毓蓝 */
+  --nebutra-blue-600: #002ad4;
+  --nebutra-blue-700: #0021ab;
+  --nebutra-blue-800: #001882;
+  --nebutra-blue-900: #000f59;
+  --nebutra-blue-950: #000830;
+  --nebutra-cyan-50: #e6fff8;
+  --nebutra-cyan-100: #b3ffec;
+  --nebutra-cyan-200: #80ffe0;
+  --nebutra-cyan-300: #4dfcd4;
+  --nebutra-cyan-400: #1af7c8;
+  --nebutra-cyan-500: #0bf1c3; /** Base brand accent — 云毓青 */
+  --nebutra-cyan-600: #09c9a3;
+  --nebutra-cyan-700: #07a183;
+  --nebutra-cyan-800: #057963;
+  --nebutra-cyan-900: #035143;
+  --nebutra-cyan-950: #012923;
+  --nebutra-neutral-50: #f8fafc;
+  --nebutra-neutral-100: #f1f5f9;
+  --nebutra-neutral-200: #e2e8f0;
+  --nebutra-neutral-300: #cbd5e1;
+  --nebutra-neutral-400: #94a3b8;
+  --nebutra-neutral-500: #64748b;
+  --nebutra-neutral-600: #475569;
+  --nebutra-neutral-700: #334155;
+  --nebutra-neutral-800: #1e293b;
+  --nebutra-neutral-900: #0f172a;
+  --nebutra-neutral-950: #020617;
+  --brand-tertiary: #8b5cf6; /** Tertiary accent — data viz, infrastructure tags */
+  --status-danger: #ef4444;
+  --status-warning: #f59e0b;
+  --status-success: #22c55e; /** Tailwind green-500 — VI manual canonical success color (replaces drifted #10b981 emerald). */
+  --container-text: 896px; /** Reading-focused (hero copy, FAQ) */
+  --container-content: 1152px; /** Pricing, blog */
+  --container-wide: 1400px; /** Feature bento, navbar */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+  --duration-fast: 100ms;
+  --duration-normal: 150ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
+  --font-display: "Geist", "Noto Sans SC", sans-serif;
+  --font-heading: "Geist", "Noto Sans SC", sans-serif;
+  --font-mono: "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
+  --transition-duration: 150ms;
+  --transition-easing: ease-out; /** ease-out keyword form (CSS-friendly). Equivalent to cubic-bezier(0,0,0.2,1). */
+  --brand-primary: #5c7cfa; /** Dark-mode brand primary — visible against dark surfaces (uses --blue-9 = nebutra-blue-400). */
+  --brand-accent: #1af7c8; /** Dark-mode brand accent — visible against dark surfaces (uses --cyan-9 = nebutra-cyan-400). */
+  --brand-tertiary: #8b5cf6;
+  --brand-gradient: linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%); /** Brand gradient — Logo standard 135° */
+  --brand-gradient-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
+  --brand-gradient-vertical: linear-gradient(180deg, #0033fe 0%, #0bf1c3 100%);
+  --brand-gradient-radial: radial-gradient(circle, #0bf1c3 0%, #0033fe 100%);
+  --status-danger: #ef4444;
+  --status-warning: #f59e0b;
+  --status-success: #22c55e;
+  --status-info: #5c7cfa; /** Dark-mode info color — equals dark brand-primary. */
+  --container-text: 896px;
+  --container-content: 1152px;
+  --container-wide: 1400px;
+  --radius: 0.375rem; /** Geist-matching 6px */
+  --focus-ring: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring)); /** Composite focus ring — 2px ring color over 2px background gap. Consumed via --focus-ring. */
+  --neutral-1: #020617;
+  --neutral-2: #0f172a;
+  --neutral-3: #1e293b;
+  --neutral-4: #334155;
+  --neutral-5: #475569;
+  --neutral-6: #1e293b;
+  --neutral-7: #334155;
+  --neutral-8: #475569;
+  --neutral-9: #94a3b8;
+  --neutral-10: #cbd5e1;
+  --neutral-11: #e2e8f0;
+  --neutral-12: #f8fafc;
+  --blue-1: #000830;
+  --blue-2: #000f59;
+  --blue-3: #001882;
+  --blue-4: #0021ab;
+  --blue-5: #002ad4;
+  --blue-6: #001882;
+  --blue-7: #0021ab;
+  --blue-8: #002ad4;
+  --blue-9: #5c7cfa;
+  --blue-10: #91a7ff;
+  --blue-11: #bac8ff;
+  --blue-12: #dbe4ff;
+  --cyan-1: #012923;
+  --cyan-2: #035143;
+  --cyan-3: #057963;
+  --cyan-4: #07a183;
+  --cyan-5: #09c9a3;
+  --cyan-6: #057963;
+  --cyan-7: #07a183;
+  --cyan-8: #09c9a3;
+  --cyan-9: #1af7c8;
+  --cyan-10: #4dfcd4;
+  --cyan-11: #80ffe0;
+  --cyan-12: #b3ffec;
   --background: 222 47% 4%;
-  /* nebutra-neutral-950 */
   --foreground: 210 40% 98%;
-  /* nebutra-neutral-50 */
-
-  /* Card - slightly lighter than background */
   --card: 222 47% 7%;
-  /* between 950 and 900 */
   --card-foreground: 210 40% 98%;
-
-  /* Popover */
   --popover: 222 47% 7%;
   --popover-foreground: 210 40% 98%;
-
-  /* Primary - Softer Brand Blue for dark mode */
   --primary: 228 90% 72%;
-  /* #7394ff */
   --primary-foreground: 222 47% 4%;
-
-  /* Secondary - Low emphasis neutral for dark mode */
   --secondary: 217 33% 17%;
-  /* nebutra-neutral-800 */
   --secondary-foreground: 210 40% 98%;
-
-  /* Muted - Dark neutral */
   --muted: 217 33% 17%;
-  /* nebutra-neutral-800 */
   --muted-foreground: 215 20% 65%;
-  /* nebutra-neutral-400 */
-
-  /* Accent - Dark blue */
   --accent: 228 100% 12%;
-  /* dark nebutra-blue */
   --accent-foreground: 228 95% 67%;
-  /* nebutra-blue-400 */
-
-  /* Destructive */
   --destructive: 0 63% 31%;
   --destructive-foreground: 210 40% 98%;
-
-  /* Success — Dark text on vibrant green background */
   --success: 142 76% 36%;
-  /* #16a34a */
   --success-foreground: 222 47% 4%;
-
-  /* Warning — Dark text on vibrant yellow/orange background MUST be used */
   --warning: 38 80% 45%;
   --warning-foreground: 222 47% 4%;
-
-  /* Info — lighter brand blue for dark mode */
   --info: 228 95% 67%;
-  /* nebutra-blue-400 */
   --info-foreground: 222 47% 4%;
-
-  /* Border, Input, Ring */
   --border: 217 33% 17%;
-  /* nebutra-neutral-800 */
   --input: 217 33% 17%;
   --ring: 228 95% 67%;
-  /* nebutra-blue-400 */
-
-  /* Geist Design System color scale — dark mode */
+  --sidebar: 222 47% 6%;
+  --sidebar-foreground: 210 40% 96%;
+  --sidebar-primary: 228 95% 67%;
+  --sidebar-primary-foreground: 222 47% 4%;
+  --sidebar-accent: 228 100% 12%;
+  --sidebar-accent-foreground: 228 95% 67%;
+  --sidebar-border: 217 33% 17%;
+  --sidebar-ring: 228 95% 67%;
+  --chart-1: 228 95% 67%;
+  --chart-2: 168 96% 54%;
+  --chart-3: 228 100% 82%;
+  --chart-4: 168 100% 75%;
+  --chart-5: 228 100% 50%;
   --ds-blue-200: oklch(25.45% 0.0811 255.8);
   --ds-blue-700: oklch(57.61% 0.2321 258.23);
   --ds-blue-900: oklch(71.7% 0.1648 250.79360374054167);
@@ -565,31 +456,6 @@
   --ds-trial-end: rgb(248, 28, 229);
   --ds-turbo-start: #ff1e56;
   --ds-turbo-end: #0096ff;
-
-  /* Sidebar */
-  --sidebar: 222 47% 6%;
-  --sidebar-foreground: 210 40% 96%;
-  --sidebar-primary: 228 95% 67%;
-  --sidebar-primary-foreground: 222 47% 4%;
-  --sidebar-accent: 228 100% 12%;
-  --sidebar-accent-foreground: 228 95% 67%;
-  --sidebar-border: 217 33% 17%;
-  --sidebar-ring: 228 95% 67%;
-
-  /* Chart colors - brighter for dark mode */
-  --chart-1: 228 95% 67%;
-  /* nebutra-blue-400 */
-  --chart-2: 168 96% 54%;
-  /* nebutra-cyan-400 */
-  --chart-3: 228 100% 82%;
-  /* nebutra-blue-200 */
-  --chart-4: 168 100% 75%;
-  /* nebutra-cyan-200 */
-  --chart-5: 228 100% 50%;
-  /* nebutra-blue-500 */
-
-  /* Shadow — dark mode (pure black backdrop, higher opacity)
-     Brand glow uses 云毓蓝-400 #5c7cfa for visibility on dark background */
   --elevation-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --elevation-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
   --elevation-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
@@ -600,37 +466,36 @@
   --elevation-brand-lg: 0 0 0 1px rgb(92 124 250 / 0.3), 0 8px 40px -4px rgb(92 124 250 / 0.4);
 }
 
-/* oklch overrides for --ds-gray-* (dark mode) — all modern browsers as of 2024.
-   sRGB hsla() fallbacks remain in .dark above for legacy engines. */
+.dark {
+  /* Gradient aliases — both --brand-gradient-* (canonical, CLAUDE.md) and --gradient-brand-* (legacy) are emitted. */
+  --gradient-brand: var(--brand-gradient);
+  --gradient-brand-hover: var(--brand-gradient-reverse);
+  --gradient-brand-vertical: var(--brand-gradient-vertical);
+  --gradient-brand-reverse: var(--brand-gradient-reverse);
+  --gradient-brand-radial: var(--brand-gradient-radial);
+  --gradient-brand-glow: var(--brand-gradient-radial);
+  --gradient-section: var(--brand-gradient-vertical);
+  --gradient-glow: var(--brand-gradient-radial);
+}
+
 @supports (color: oklch(0 0 0)) {
   .dark {
+    /* oklch values for modern engines (2024+); sRGB hsla() fallback above. */
     --ds-gray-100: oklch(0.232 0 0);
-    /* hsla(0, 0%, 10%, 1) */
     --ds-gray-200: oklch(0.259 0 0);
-    /* hsla(0, 0%, 12%, 1) */
     --ds-gray-500: oklch(0.409 0 0);
-    /* hsla(0, 0%, 27%, 1) */
     --ds-gray-600: oklch(0.59 0 0);
-    /* hsla(0, 0%, 53%, 1) */
     --ds-gray-700: oklch(0.598 0 0);
-    /* hsla(0, 0%, 56%, 1) */
     --ds-gray-1000: oklch(0.94 0 0);
-    /* hsla(0, 0%, 93%, 1) */
     --ds-background-100: oklch(0.143 0 0);
-    /* hsla(0, 0%, 4%, 1)  */
   }
 }
 
 /* ============================================
-   Tailwind CSS 4 Theme Configuration
+   Tailwind CSS 4 Theme Configuration (auto-generated)
    ============================================ */
 @theme inline {
-  /* ===========================================
-     Nebutra Brand Color Palette for Tailwind
-     Usage: bg-nebutra-blue-500, text-nebutra-cyan-300, etc.
-     =========================================== */
-
-  /* Nebutra Blue Scale */
+  /* Nebutra Brand Color Palette */
   --color-nebutra-blue-50: var(--nebutra-blue-50);
   --color-nebutra-blue-100: var(--nebutra-blue-100);
   --color-nebutra-blue-200: var(--nebutra-blue-200);
@@ -643,7 +508,6 @@
   --color-nebutra-blue-900: var(--nebutra-blue-900);
   --color-nebutra-blue-950: var(--nebutra-blue-950);
 
-  /* Nebutra Cyan Scale */
   --color-nebutra-cyan-50: var(--nebutra-cyan-50);
   --color-nebutra-cyan-100: var(--nebutra-cyan-100);
   --color-nebutra-cyan-200: var(--nebutra-cyan-200);
@@ -656,7 +520,6 @@
   --color-nebutra-cyan-900: var(--nebutra-cyan-900);
   --color-nebutra-cyan-950: var(--nebutra-cyan-950);
 
-  /* Nebutra Neutral Scale */
   --color-nebutra-neutral-50: var(--nebutra-neutral-50);
   --color-nebutra-neutral-100: var(--nebutra-neutral-100);
   --color-nebutra-neutral-200: var(--nebutra-neutral-200);
@@ -669,46 +532,34 @@
   --color-nebutra-neutral-900: var(--nebutra-neutral-900);
   --color-nebutra-neutral-950: var(--nebutra-neutral-950);
 
-  /* ===========================================
-     Semantic Theme Colors (mapped from CSS vars)
-     =========================================== */
-
-  /* Map CSS variables to Tailwind theme */
+  /* Semantic Theme Colors */
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
-
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
-
   --color-popover: hsl(var(--popover));
   --color-popover-foreground: hsl(var(--popover-foreground));
-
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
-
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
-
   --color-muted: hsl(var(--muted));
   --color-muted-foreground: hsl(var(--muted-foreground));
-
   --color-accent: hsl(var(--accent));
   --color-accent-foreground: hsl(var(--accent-foreground));
-
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
-
   --color-success: hsl(var(--success));
   --color-success-foreground: hsl(var(--success-foreground));
-
   --color-warning: hsl(var(--warning));
   --color-warning-foreground: hsl(var(--warning-foreground));
-
+  --color-info: hsl(var(--info));
+  --color-info-foreground: hsl(var(--info-foreground));
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
 
-  /* Sidebar colors */
+  /* Sidebar */
   --color-sidebar: hsl(var(--sidebar));
   --color-sidebar-foreground: hsl(var(--sidebar-foreground));
   --color-sidebar-primary: hsl(var(--sidebar-primary));
@@ -718,7 +569,7 @@
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
-  /* Brand aliases → Tailwind: bg-brand-primary, text-brand-accent, etc. */
+  /* Brand aliases */
   --color-brand-primary: var(--brand-primary);
   --color-brand-accent: var(--brand-accent);
   --color-brand-tertiary: var(--brand-tertiary);
@@ -730,11 +581,7 @@
   --color-chart-4: hsl(var(--chart-4));
   --color-chart-5: hsl(var(--chart-5));
 
-  /* ===========================================
-     12-Step Functional Scales → Tailwind classes
-     Usage: bg-neutral-3, hover:bg-blue-4, border-cyan-7, text-neutral-11
-     =========================================== */
-
+  /* 12-Step Functional Scales */
   --color-neutral-1: var(--neutral-1);
   --color-neutral-2: var(--neutral-2);
   --color-neutral-3: var(--neutral-3);
@@ -774,6 +621,7 @@
   --color-cyan-11: var(--cyan-11);
   --color-cyan-12: var(--cyan-12);
 
+  /* Geist DS color scale */
   --color-blue-700: var(--ds-blue-700);
   --color-blue-900: var(--ds-blue-900);
   --color-red-200: var(--ds-red-200);
@@ -810,15 +658,7 @@
   --color-geist-gray-1000: var(--ds-gray-1000);
   --color-geist-background-100: var(--ds-background-100);
 
-  /* Border Radius — Geist-style explicit semantic values
-     none → 0          (square corners)
-     sm   → 4px        (badges, chips, tags)
-     md   → 6px        (buttons, inputs, selects)
-     lg   → 8px        (cards, panels)
-     xl   → 12px       (larger cards, popovers)
-     2xl  → 16px       (modals, drawers)
-     3xl  → 24px       (large panels)
-     full → 9999px     (pills, avatars, icon buttons)  */
+  /* Border Radius */
   --radius-none: 0;
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
@@ -828,9 +668,7 @@
   --radius-3xl: 1.5rem;
   --radius-full: 9999px;
 
-  /* Shadows — mode-aware via CSS cascade (resolves from :root or .dark)
-     Usage: shadow-xs / shadow-sm / shadow-md / shadow-lg / shadow-xl
-            shadow-2xl / shadow-brand / shadow-brand-lg                 */
+  /* Shadows */
   --shadow-xs: var(--elevation-xs);
   --shadow-sm: var(--elevation-sm);
   --shadow-md: var(--elevation-md);
@@ -840,61 +678,32 @@
   --shadow-brand: var(--elevation-brand);
   --shadow-brand-lg: var(--elevation-brand-lg);
 
-  /* Motion — Easing curves
-     Usage: ease-in / ease-out / ease-in-out / ease-spring              */
+  /* Motion — Easing curves */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  /* Motion — Durations
-     Usage: duration-fast / duration-normal / duration-slow / duration-slower */
+  /* Motion — Durations */
   --duration-fast: 100ms;
   --duration-normal: 150ms;
   --duration-slow: 300ms;
   --duration-slower: 500ms;
 
-  /* Font family — VI §Typography: Poppins (EN), vivo Sans (CN) */
-  --font-sans:
-    "Poppins", "vivo Sans", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", -apple-system,
-    BlinkMacSystemFont, sans-serif;
-  --font-cn: "vivo Sans", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-  --font-display: "Poppins", sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, Consolas, monospace;
-
-  /* Brand gradients — VI §Brand Gradients (first-class design assets) */
-  --gradient-brand: linear-gradient(
-    135deg,
-    var(--nebutra-blue-500) 0%,
-    var(--nebutra-cyan-500) 100%
-  );
-  --gradient-brand-hover: linear-gradient(
-    135deg,
-    var(--nebutra-cyan-500) 0%,
-    var(--nebutra-blue-500) 100%
-  );
-  --gradient-section: linear-gradient(
-    180deg,
-    var(--nebutra-blue-500) 0%,
-    var(--nebutra-cyan-500) 100%
-  );
-  --gradient-glow: radial-gradient(
-    circle,
-    var(--nebutra-cyan-500) 0%,
-    var(--nebutra-blue-500) 100%
-  );
-
-  /* Info color mapping */
-  --color-info: hsl(var(--info));
-  --color-info-foreground: hsl(var(--info-foreground));
-
-  /* Keep explicit radius scale and font stacks defined above as the source of truth. */
+  /* Font family — Geist primary stack with CJK fallbacks */
+  --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
+  --font-display: "Geist", "Noto Sans SC", sans-serif;
+  --font-heading: "Geist", "Noto Sans SC", sans-serif;
+  --font-mono: "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
 }
 
 /* ============================================
-   Base Styles
+   Base Styles — non-token CSS that complements the design-tokens output.
+   This file is concatenated into styles.generated.css after the @theme block.
    ============================================ */
-*,
+
+* ,
 *::before,
 *::after {
   border-color: hsl(240 5.9% 90%);
@@ -910,18 +719,15 @@ body {
     "calt" 1;
 }
 
-/* Smooth scroll */
 html {
   scroll-behavior: smooth;
 }
 
-/* Focus visible — brand blue ring, 2px gap */
 :focus-visible {
   outline: none;
   box-shadow: var(--focus-ring);
 }
 
-/* Selection */
 ::selection {
   background-color: hsl(var(--primary) / 0.2);
   color: hsl(var(--primary));
@@ -931,7 +737,6 @@ html {
    Animation Utilities
    ============================================ */
 
-/* Spinner — for Button loading state */
 @keyframes spinner {
   to {
     transform: rotate(360deg);
@@ -942,7 +747,6 @@ html {
   from {
     height: 0;
   }
-
   to {
     height: var(--radix-accordion-content-height);
   }
@@ -952,7 +756,6 @@ html {
   from {
     height: var(--radix-accordion-content-height);
   }
-
   to {
     height: 0;
   }
@@ -962,7 +765,6 @@ html {
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -972,7 +774,6 @@ html {
   from {
     opacity: 1;
   }
-
   to {
     opacity: 0;
   }
@@ -982,7 +783,6 @@ html {
   from {
     transform: translateY(-100%);
   }
-
   to {
     transform: translateY(0);
   }
@@ -992,7 +792,6 @@ html {
   from {
     transform: translateY(100%);
   }
-
   to {
     transform: translateY(0);
   }
@@ -1002,7 +801,6 @@ html {
   from {
     transform: translateX(-100%);
   }
-
   to {
     transform: translateX(0);
   }
@@ -1012,7 +810,6 @@ html {
   from {
     transform: translateX(100%);
   }
-
   to {
     transform: translateX(0);
   }
@@ -1022,7 +819,6 @@ html {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
@@ -1033,7 +829,6 @@ html {
   100% {
     opacity: 1;
   }
-
   50% {
     opacity: 0.5;
   }
@@ -1045,7 +840,6 @@ html {
     transform: translateY(-25%);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
-
   50% {
     transform: translateY(0);
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
@@ -1056,21 +850,8 @@ html {
    Named Typography Utility Classes
    Geist-style: size encoded in class name,
    state variants as suffixes (-strong/-mono/-tabular)
-
-   Categories:
-     text-heading-{72|64|56|48|40|32|24|20|16|14}
-     text-button-{16|14|12}
-     text-label-{20|18|16|14|13|12}
-     text-label-{size}-strong / -mono / -tabular
-     text-copy-{24|20|18|16|14|13}
-     text-copy-{size}-strong / -mono
-
-   Fonts: Poppins for heading/button (--font-display),
-          Poppins stack for label/copy (--font-sans),
-          JetBrains Mono for mono variants (--font-mono)
    ============================================ */
 
-/* ---- Heading ---- */
 @utility text-heading-72 {
   font-family: var(--font-display);
   font-size: 4.5rem;
@@ -1151,7 +932,6 @@ html {
   font-weight: 600;
 }
 
-/* ---- Button ---- */
 @utility text-button-16 {
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -1176,7 +956,6 @@ html {
   font-weight: 500;
 }
 
-/* ---- Label (base) ---- */
 @utility text-label-20 {
   font-family: var(--font-sans);
   font-size: 1.25rem;
@@ -1225,7 +1004,6 @@ html {
   font-weight: 500;
 }
 
-/* ---- Label — Strong ---- */
 @utility text-label-20-strong {
   font-family: var(--font-sans);
   font-size: 1.25rem;
@@ -1274,7 +1052,6 @@ html {
   font-weight: 600;
 }
 
-/* ---- Label — Mono ---- */
 @utility text-label-20-mono {
   font-family: var(--font-mono);
   font-size: 1.25rem;
@@ -1323,7 +1100,6 @@ html {
   font-weight: 500;
 }
 
-/* ---- Label — Tabular (numeric data) ---- */
 @utility text-label-20-tabular {
   font-family: var(--font-sans);
   font-size: 1.25rem;
@@ -1378,7 +1154,6 @@ html {
   font-variant-numeric: tabular-nums;
 }
 
-/* ---- Copy (base) ---- */
 @utility text-copy-24 {
   font-family: var(--font-sans);
   font-size: 1.5rem;
@@ -1427,7 +1202,6 @@ html {
   font-weight: 400;
 }
 
-/* ---- Copy — Strong ---- */
 @utility text-copy-24-strong {
   font-family: var(--font-sans);
   font-size: 1.5rem;
@@ -1476,7 +1250,6 @@ html {
   font-weight: 600;
 }
 
-/* ---- Copy — Mono ---- */
 @utility text-copy-24-mono {
   font-family: var(--font-mono);
   font-size: 1.5rem;
@@ -1525,7 +1298,6 @@ html {
   font-weight: 400;
 }
 
-/* ---- CJK font utility ---- */
 @utility font-cn {
   font-family: var(--font-cn);
   line-height: 1.75;
@@ -1535,8 +1307,7 @@ html {
 
 /* ─── CJK Auto-Activation via :lang() ───────────────────────
    When <html lang="zh|ja|ko"> is set by app layouts, body
-   automatically switches to the CJK font stack. Explicit
-   `font-cn` class on individual elements also applies.
+   automatically switches to the CJK font stack.
    ─────────────────────────────────────────────────────────── */
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) body {
   font-family: var(--font-cn);
@@ -1545,7 +1316,6 @@ html {
   overflow-wrap: break-word;
 }
 
-/* Preserve monospace inside CJK pages */
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(code, kbd, pre, samp) {
   font-family: var(--font-mono);
   word-break: normal;
