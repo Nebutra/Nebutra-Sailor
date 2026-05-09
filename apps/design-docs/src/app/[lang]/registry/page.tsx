@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { RegistryCard, type RegistryCardItem } from "@/components/registry/registry-card";
 import { loadRegistryIndex, loadRegistryItem } from "@/lib/registry";
+import { getRegistryStrings, REGISTRY_LANGS } from "@/lib/registry-strings";
 
 export const metadata: Metadata = {
   title: "Nebutra UI Registry",
@@ -13,28 +14,13 @@ interface PageProps {
   params: Promise<{ lang: string }>;
 }
 
-const STRINGS: Record<string, { title: string; subtitle: string; intro: string; empty: string }> = {
-  en: {
-    title: "Nebutra UI Registry",
-    subtitle: "Copy-paste components, wired to the Nebutra design system.",
-    intro:
-      "Every component below ships as a shadcn registry manifest with its source, dependencies, and the CSS variables it consumes. Run the install command in any Next.js project that has shadcn-cli configured.",
-    empty:
-      "No registry items found. Run pnpm --filter @nebutra/ui build:registry to populate apps/design-docs/public/r/.",
-  },
-  zh: {
-    title: "Nebutra UI 组件市集",
-    subtitle: "Copy-paste 组件库，原生绑定 Nebutra 设计系统。",
-    intro:
-      "每个组件都以 shadcn registry 清单的形式发布，附带源码、依赖和 CSS 变量。在配置好 shadcn-cli 的 Next.js 项目中运行下方安装命令即可使用。",
-    empty:
-      "暂无 registry 条目，请运行 pnpm --filter @nebutra/ui build:registry 生成 apps/design-docs/public/r/ 下的清单。",
-  },
-};
+export function generateStaticParams(): { lang: string }[] {
+  return REGISTRY_LANGS.map((lang) => ({ lang }));
+}
 
 export default async function RegistryIndexPage({ params }: PageProps) {
   const { lang } = await params;
-  const t = STRINGS[lang] ?? STRINGS.en;
+  const t = getRegistryStrings(lang);
   const index = loadRegistryIndex();
 
   // Hydrate each entry with a small subset of detail-level metadata so the
@@ -67,7 +53,7 @@ export default async function RegistryIndexPage({ params }: PageProps) {
             href={`/${lang}/docs`}
             className="text-[var(--blue-9)] underline-offset-4 hover:underline"
           >
-            ← {lang === "zh" ? "返回设计系统文档" : "Back to design system docs"}
+            ← {t.backToDocs}
           </Link>
           <a
             href="/registry.json"
