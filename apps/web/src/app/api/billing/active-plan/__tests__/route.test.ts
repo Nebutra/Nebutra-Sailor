@@ -66,30 +66,48 @@ describe("GET /api/billing/active-plan", () => {
 
   it("returns active=false + planId when session org is on a free plan", async () => {
     mockedGetAuth.mockResolvedValue(buildAuth({ orgId: "org_1" }));
-    mockedHasActivePlan.mockResolvedValue({ active: false, planId: "plan_free" });
+    mockedHasActivePlan.mockResolvedValue({
+      active: false,
+      planId: "plan_free",
+      planName: "Free",
+      status: "free",
+      currentPeriodEnd: null,
+    });
 
     const { GET } = await loadRoute();
     const response = await GET(new Request("https://app.example/api/billing/active-plan"));
 
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ active: false, planId: "plan_free" });
+    expect(await response.json()).toMatchObject({ active: false, planId: "plan_free" });
     expect(mockedHasActivePlan).toHaveBeenCalledWith("org_1");
   });
 
   it("returns active=true when org has a paid plan", async () => {
     mockedGetAuth.mockResolvedValue(buildAuth({ orgId: "org_1" }));
-    mockedHasActivePlan.mockResolvedValue({ active: true, planId: "plan_pro" });
+    mockedHasActivePlan.mockResolvedValue({
+      active: true,
+      planId: "plan_pro",
+      planName: "Pro",
+      status: "active",
+      currentPeriodEnd: null,
+    });
 
     const { GET } = await loadRoute();
     const response = await GET(new Request("https://app.example/api/billing/active-plan"));
 
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ active: true, planId: "plan_pro" });
+    expect(await response.json()).toMatchObject({ active: true, planId: "plan_pro" });
   });
 
   it("uses the orgId query param when explicitly provided and matches the session", async () => {
     mockedGetAuth.mockResolvedValue(buildAuth({ orgId: "org_session" }));
-    mockedHasActivePlan.mockResolvedValue({ active: true, planId: "plan_pro" });
+    mockedHasActivePlan.mockResolvedValue({
+      active: true,
+      planId: "plan_pro",
+      planName: "Pro",
+      status: "active",
+      currentPeriodEnd: null,
+    });
 
     const { GET } = await loadRoute();
     const response = await GET(

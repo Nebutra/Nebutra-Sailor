@@ -188,4 +188,65 @@ describe("PricingPlanGrid", () => {
 
     Object.defineProperty(window, "location", { configurable: true, value: originalLocation });
   });
+
+  // ── Trial badge ────────────────────────────────────────────────────────────
+
+  it("does not render a trial badge when no price has trialPeriodDays", () => {
+    render(<PricingPlanGrid plans={PLANS} />);
+    const proCard = screen.getByRole("article", { name: /pro/i });
+    expect(within(proCard).queryByText(/free .*-day trial/i)).not.toBeInTheDocument();
+  });
+
+  it("renders a trial badge when the visible price has trialPeriodDays > 0", () => {
+    const trialPlans: PricingPlan[] = [
+      {
+        ...PLANS[1],
+        prices: [{ ...PLANS[1].prices[0], trialPeriodDays: 14 }, PLANS[1].prices[1]],
+      },
+    ];
+
+    render(<PricingPlanGrid plans={trialPlans} />);
+    const proCard = screen.getByRole("article", { name: /pro/i });
+    expect(within(proCard).getByText(/free 14-day trial/i)).toBeInTheDocument();
+  });
+
+  it("renders different trial labels per plan based on the visible price", () => {
+    const mixed: PricingPlan[] = [
+      {
+        ...PLANS[1],
+        prices: [{ ...PLANS[1].prices[0], trialPeriodDays: 7 }, PLANS[1].prices[1]],
+      },
+      {
+        ...PLANS[2],
+        prices: [{ ...PLANS[2].prices[0], trialPeriodDays: 30 }],
+      },
+    ];
+
+    render(<PricingPlanGrid plans={mixed} />);
+    const proCard = screen.getByRole("article", { name: /pro/i });
+    const entCard = screen.getByRole("article", { name: /enterprise/i });
+    expect(within(proCard).getByText(/free 7-day trial/i)).toBeInTheDocument();
+    expect(within(entCard).getByText(/free 30-day trial/i)).toBeInTheDocument();
+  });
+
+  // ── Per-seat label ─────────────────────────────────────────────────────────
+
+  it("renders the / seat suffix when the plan is flagged perSeat", () => {
+    const seatPlans: PricingPlan[] = [{ ...PLANS[1], perSeat: true }];
+    render(<PricingPlanGrid plans={seatPlans} />);
+    const proCard = screen.getByRole("article", { name: /pro/i });
+    expect(within(proCard).getByText(/\/ seat/i)).toBeInTheDocument();
+  });
+
+  it("renders the / seat suffix when the visible price is seatBased", () => {
+    const seatPlans: PricingPlan[] = [
+      {
+        ...PLANS[1],
+        prices: [{ ...PLANS[1].prices[0], seatBased: true }, PLANS[1].prices[1]],
+      },
+    ];
+    render(<PricingPlanGrid plans={seatPlans} />);
+    const proCard = screen.getByRole("article", { name: /pro/i });
+    expect(within(proCard).getByText(/\/ seat/i)).toBeInTheDocument();
+  });
 });

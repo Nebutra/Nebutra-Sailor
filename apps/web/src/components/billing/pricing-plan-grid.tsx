@@ -10,7 +10,14 @@ export interface PricingPlanPrice {
   interval: BillingInterval | "one-time";
   amount: number; // smallest currency unit (cents)
   currency: string;
+  /**
+   * @deprecated Use `trialPeriodDays` instead. Retained for backward compatibility.
+   */
   trialDays?: number;
+  /** Number of free trial days. Drives the "Free N-day trial" badge. */
+  trialPeriodDays?: number;
+  /** When true, the price is multiplied by seat count at checkout. */
+  seatBased?: boolean;
 }
 
 export interface PricingPlan {
@@ -20,6 +27,8 @@ export interface PricingPlan {
   features: string[];
   tier: "FREE" | "PRO" | "ENTERPRISE";
   recommended?: boolean;
+  /** When true, the per-seat suffix is shown next to the cadence label. */
+  perSeat?: boolean;
   prices: PricingPlanPrice[];
 }
 
@@ -226,6 +235,18 @@ interface PlanCardProps {
   onSelect: () => void;
 }
 
+function resolveTrialDays(price: PricingPlanPrice | null): number | null {
+  if (!price) return null;
+  const days = price.trialPeriodDays ?? price.trialDays ?? null;
+  if (typeof days !== "number" || days <= 0) return null;
+  return days;
+}
+
+function isPerSeatPlan(plan: PricingPlan, price: PricingPlanPrice | null): boolean {
+  if (plan.perSeat === true) return true;
+  return price?.seatBased === true;
+}
+
 function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps) {
   const price = findPriceForInterval(plan, interval);
   const recommended = plan.recommended ?? false;
@@ -240,6 +261,9 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
     : isFree
       ? "forever"
       : "contact us";
+
+  const trialDays = resolveTrialDays(price);
+  const perSeat = isPerSeatPlan(plan, price);
 
   return (
     <article
@@ -276,6 +300,14 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
         <span className="ml-2 text-[color:var(--neutral-10)] text-sm dark:text-white/50">
           {cadenceLabel}
         </span>
+        {perSeat && (
+          <span
+            data-testid={`pricing-plan-${plan.id}-per-seat`}
+            className="ml-1 text-[color:var(--neutral-10)] text-sm dark:text-white/50"
+          >
+            / seat
+          </span>
+        )}
       </div>
 
       {plan.features.length > 0 && (
@@ -293,6 +325,15 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
             </li>
           ))}
         </ul>
+      )}
+
+      {trialDays !== null && !isFree && (
+        <p
+          data-testid={`pricing-plan-${plan.id}-trial`}
+          className="mt-4 inline-flex w-fit items-center rounded-full bg-[color:var(--brand-primary)]/10 px-3 py-1 font-medium text-[color:var(--brand-primary)] text-xs"
+        >
+          {`Free ${trialDays}-day trial`}
+        </p>
       )}
 
       <button
