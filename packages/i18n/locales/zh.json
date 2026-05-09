@@ -261,6 +261,34 @@
       "resendCooldown": "{seconds} 秒后可重发",
       "sentTo": "我们已将验证码发送到 {email}"
     },
+    "forgotPassword": {
+      "title": "忘记密码？",
+      "description": "输入邮箱，我们将向你发送密码重置链接。",
+      "emailLabel": "邮箱",
+      "submit": "发送重置链接",
+      "successTitle": "请查收邮件",
+      "success": "如果该邮箱已注册，你将很快收到一封重置邮件。"
+    },
+    "resetPassword": {
+      "title": "重置密码",
+      "description": "为账户设置一个新密码。",
+      "newPasswordLabel": "新密码",
+      "confirmPasswordLabel": "确认新密码",
+      "submit": "重置密码",
+      "successTitle": "密码已重置",
+      "successDescription": "你现在可以使用新密码登录了。",
+      "signInCta": "前往登录",
+      "invalidTitle": "重置链接无效",
+      "invalidDescription": "此密码重置链接缺失或格式有误，请前往“忘记密码”页面重新申请。"
+    },
+    "verifyEmail": {
+      "successTitle": "邮箱验证成功",
+      "successDescription": "你的邮箱地址已通过验证。",
+      "failureTitle": "验证失败",
+      "failureDescription": "我们无法通过该链接验证你的邮箱。",
+      "continueCta": "继续",
+      "signInCta": "前往登录"
+    },
     "errors": {
       "invalidCredentials": "邮箱或密码错误。",
       "userNotFound": "未找到该邮箱对应的账户。",
@@ -359,6 +387,87 @@
         "admin": "管理员",
         "member": "成员",
         "viewer": "查看者"
+      }
+    }
+  },
+  "settings": {
+    "notifications": {
+      "title": "通知",
+      "description": "为每种事件类型选择 Nebutra 通过哪些渠道通知你。",
+      "actions": {
+        "resetAll": "恢复默认设置",
+        "save": "保存"
+      },
+      "status": {
+        "saving": "保存中…",
+        "saved": "已保存",
+        "error": "保存失败，请重试。"
+      },
+      "eventTypes": {
+        "security": {
+          "label": "安全提醒",
+          "description": "登录提醒、密码变更、两步验证变动。"
+        },
+        "billing": {
+          "label": "账单",
+          "description": "发票、付款失败、订阅变更。"
+        },
+        "invitation": {
+          "label": "团队邀请",
+          "description": "组织邀请、邀请被接受或拒绝。"
+        },
+        "activity": {
+          "label": "团队动态",
+          "description": "成员加入、角色变更等工作区活动。"
+        },
+        "updates": {
+          "label": "产品更新",
+          "description": "新功能、版本更新与发布说明。"
+        },
+        "marketing": {
+          "label": "市场推广",
+          "description": "新闻通讯与偶尔的促销，需要主动订阅。"
+        }
+      },
+      "channels": {
+        "in_app": { "label": "应用内" },
+        "email": { "label": "邮件" },
+        "push": { "label": "推送" },
+        "sms": { "label": "短信" }
+      }
+    }
+  },
+  "legal": {
+    "version": "版本",
+    "effective": "生效",
+    "notFound": "此文档不可用。",
+    "backHome": "返回首页"
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "您的隐私选择",
+      "description": "我们使用 Cookie 来改善体验、分析流量并提供个性化内容。请选择您允许的类别。"
+    },
+    "button": {
+      "acceptAll": "全部接受",
+      "savePreferences": "保存偏好"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "必要",
+        "description": "网站运行所必需，无法禁用。"
+      },
+      "functional": {
+        "label": "功能",
+        "description": "记住您的偏好（语言、主题、布局）。"
+      },
+      "analytics": {
+        "label": "分析",
+        "description": "匿名使用数据，帮助我们改进产品。"
+      },
+      "marketing": {
+        "label": "营销",
+        "description": "在第三方平台上的个性化广告与再营销。"
       }
     }
   }

@@ -3,6 +3,7 @@ import { Bell, Mail, Smartphone } from "lucide-react";
 import { NotificationInboxPreview } from "@/components/notifications/notification-inbox-preview";
 import { NotificationPreferenceMatrix } from "@/components/notifications/notification-preference-matrix";
 import { NotificationRuntimeBanner } from "@/components/notifications/notification-runtime-banner";
+import { NotificationPreferencesSection } from "@/components/settings/notifications/notification-preferences-section";
 import { requireOrg } from "@/lib/auth";
 
 interface Props {
@@ -96,6 +97,10 @@ export default async function NotificationSettingsPage({ params, searchParams }:
           </div>
         ))}
       </section>
+
+      <NotificationPreferencesSection
+        capabilities={{ hasPushSubscription: false, phoneVerified: false }}
+      />
 
       <NotificationPreferenceMatrix
         locale={locale}

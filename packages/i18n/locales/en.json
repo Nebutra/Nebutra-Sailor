@@ -234,6 +234,34 @@
       "resendCooldown": "Resend in {seconds}s",
       "sentTo": "We sent a code to {email}"
     },
+    "forgotPassword": {
+      "title": "Forgot password?",
+      "description": "Enter your email and we will send a link to reset your password.",
+      "emailLabel": "Email",
+      "submit": "Send reset link",
+      "successTitle": "Check your email",
+      "success": "If that email is registered, you'll receive a reset link shortly."
+    },
+    "resetPassword": {
+      "title": "Reset your password",
+      "description": "Choose a new password for your account.",
+      "newPasswordLabel": "New password",
+      "confirmPasswordLabel": "Confirm new password",
+      "submit": "Reset password",
+      "successTitle": "Password reset",
+      "successDescription": "You can now sign in with your new password.",
+      "signInCta": "Go to sign in",
+      "invalidTitle": "Invalid reset link",
+      "invalidDescription": "This password reset link is missing or malformed. Request a new one from the forgot-password page."
+    },
+    "verifyEmail": {
+      "successTitle": "Email verified",
+      "successDescription": "Your email address has been verified.",
+      "failureTitle": "Verification failed",
+      "failureDescription": "We could not verify your email with that link.",
+      "continueCta": "Continue",
+      "signInCta": "Go to sign in"
+    },
     "errors": {
       "invalidCredentials": "Email or password is incorrect.",
       "userNotFound": "No account found with that email.",
@@ -359,6 +387,87 @@
         "admin": "Admin",
         "member": "Member",
         "viewer": "Viewer"
+      }
+    }
+  },
+  "settings": {
+    "notifications": {
+      "title": "Notifications",
+      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "actions": {
+        "resetAll": "Reset to defaults",
+        "save": "Save"
+      },
+      "status": {
+        "saving": "Saving…",
+        "saved": "Saved",
+        "error": "Save failed. Please try again."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Security alerts",
+          "description": "Sign-in alerts, password changes, two-factor changes."
+        },
+        "billing": {
+          "label": "Billing",
+          "description": "Invoices, payment failures, and subscription changes."
+        },
+        "invitation": {
+          "label": "Team invitations",
+          "description": "Invites to join an organization, accepted or declined."
+        },
+        "activity": {
+          "label": "Team activity",
+          "description": "Members joined, role changes, and other workspace activity."
+        },
+        "updates": {
+          "label": "Product updates",
+          "description": "New features, changelog highlights, and release notes."
+        },
+        "marketing": {
+          "label": "Marketing",
+          "description": "Newsletter and occasional promotions. Opt-in only."
+        }
+      },
+      "channels": {
+        "in_app": { "label": "In-app" },
+        "email": { "label": "Email" },
+        "push": { "label": "Push" },
+        "sms": { "label": "SMS" }
+      }
+    }
+  },
+  "legal": {
+    "version": "Version",
+    "effective": "Effective",
+    "notFound": "This document is not available.",
+    "backHome": "Back to home"
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Your privacy choices",
+      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
+    },
+    "button": {
+      "acceptAll": "Accept all",
+      "savePreferences": "Save preferences"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Necessary",
+        "description": "Required for the site to function. Cannot be disabled."
+      },
+      "functional": {
+        "label": "Functional",
+        "description": "Remember your preferences (language, theme, layout)."
+      },
+      "analytics": {
+        "label": "Analytics",
+        "description": "Anonymous usage data so we can improve the product."
+      },
+      "marketing": {
+        "label": "Marketing",
+        "description": "Personalized advertising and retargeting on third-party platforms."
       }
     }
   }
