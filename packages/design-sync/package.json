@@ -1,0 +1,50 @@
+{
+  "name": "@nebutra/design-sync",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Provider-agnostic design-tool sync. Figma + Tokens Studio | Penpot | git-only | memory.",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "FIGMA_PERSONAL_ACCESS_TOKEN + FIGMA_FILE_ID for Figma + Tokens Studio",
+      "or PENPOT_API_URL + PENPOT_TOKEN for Penpot (self-hostable, China-friendly)",
+      "or nothing — git-only is the zero-config default"
+    ],
+    "gaps": [
+      "Figma push (Variables REST API) is dry-run; manual enable required",
+      "Penpot adapter implements healthcheck + pull; push is dry-run scaffolding",
+      "No real-time webhook listeners (manual pull/push only)"
+    ]
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "bin": {
+    "design-sync": "./src/cli/index.ts"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./figma": "./src/providers/figma.ts",
+    "./penpot": "./src/providers/penpot.ts",
+    "./git-only": "./src/providers/git-only.ts",
+    "./memory": "./src/providers/memory.ts",
+    "./cli": "./src/cli/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/logger": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

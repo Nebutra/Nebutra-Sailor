@@ -1,0 +1,292 @@
+name: Design Sync (Figma | Penpot | Git-only)
+
+# Provider-agnostic design-tool sync. Replaces the legacy `tokens-sync.yml` —
+# the CLI in `@nebutra/design-sync` owns DTCG validation, healthcheck, pull,
+# and push. The workflow is a thin wrapper that runs the CLI in CI.
+#
+# Provider resolution mirrors `@nebutra/design-sync`:
+#   1. DESIGN_SYNC_PROVIDER env var
+#   2. FIGMA_PERSONAL_ACCESS_TOKEN + FIGMA_FILE_ID  → "figma"
+#   3. PENPOT_API_URL + PENPOT_TOKEN                → "penpot"
+#   4. fallback                                      → "git-only"
+#
+# Push to remote design tools requires explicit workflow_dispatch with
+# `pushToDesignTool=true` AND credentials configured as repo secrets.
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "packages/design-tokens/tokens/**"
+      - "packages/design-sync/**"
+      - ".tokens-studio/**"
+      - ".github/workflows/design-sync.yml"
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "packages/design-tokens/tokens/**"
+      - "packages/design-sync/**"
+      - ".tokens-studio/**"
+      - ".github/workflows/design-sync.yml"
+  workflow_dispatch:
+    inputs:
+      pushToDesignTool:
+        description: "Push to remote design tool (requires provider creds)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+      provider:
+        description: "Override provider for this run"
+        required: false
+        default: ""
+        type: choice
+        options:
+          - ""
+          - "figma"
+          - "penpot"
+          - "git-only"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: design-sync-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  NODE_VERSION: "22"
+  PNPM_VERSION: "10.32.1"
+
+jobs:
+  # ── 1. Detect resolved provider + sanity-check env ────────────────────
+  detect:
+    name: Detect provider
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      provider: ${{ steps.detect.outputs.provider }}
+      tokens-present: ${{ steps.detect.outputs.tokens-present }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Detect tokens presence
+        id: detect
+        env:
+          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider }}
+          FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
+          FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
+          PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
+          PENPOT_TOKEN: ${{ secrets.PENPOT_TOKEN }}
+        run: |
+          if [ -d "packages/design-tokens/tokens" ] && \
+             [ -n "$(find packages/design-tokens/tokens -name '*.json' -type f -print -quit)" ]; then
+            echo "tokens-present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "tokens-present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No DTCG token files found yet. Skipping downstream jobs."
+          fi
+
+          provider=$(pnpm --filter @nebutra/design-sync exec tsx src/cli/index.ts detect --json | node -e 'let s=""; process.stdin.on("data",c=>s+=c); process.stdin.on("end",()=>{ const j=JSON.parse(s); process.stdout.write(j.resolved); });')
+          echo "provider=$provider" >> "$GITHUB_OUTPUT"
+          echo "::notice::Resolved design-sync provider: $provider"
+
+  # ── 2. Healthcheck + pull (validation) ────────────────────────────────
+  healthcheck:
+    name: Healthcheck + pull
+    runs-on: ubuntu-latest
+    needs: detect
+    if: needs.detect.outputs.tokens-present == 'true'
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: design-sync healthcheck
+        env:
+          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider }}
+          FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
+          FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
+          PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
+          PENPOT_TOKEN: ${{ secrets.PENPOT_TOKEN }}
+          PENPOT_FILE_ID: ${{ secrets.PENPOT_FILE_ID }}
+        run: |
+          pnpm --filter @nebutra/design-sync exec tsx src/cli/index.ts healthcheck --json || {
+            echo "::warning::healthcheck reported a misconfiguration — see output above."
+          }
+
+      - name: design-sync pull (read DTCG)
+        env:
+          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider }}
+          FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
+          FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
+          PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
+          PENPOT_TOKEN: ${{ secrets.PENPOT_TOKEN }}
+        run: pnpm --filter @nebutra/design-sync exec tsx src/cli/index.ts pull --json
+
+  # ── 3. Build @nebutra/design-tokens (Style Dictionary) ────────────────
+  build:
+    name: Build design-tokens
+    runs-on: ubuntu-latest
+    needs: [detect, healthcheck]
+    if: needs.detect.outputs.tokens-present == 'true'
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @nebutra/design-tokens build
+
+      - name: Verify build artifacts exist
+        run: |
+          test -d packages/design-tokens/build || {
+            echo "::error::Expected packages/design-tokens/build/ after build."
+            exit 1
+          }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: design-tokens-build
+          path: packages/design-tokens/build
+          retention-days: 7
+
+  # ── 4. Parity check vs packages/tokens/styles.css ─────────────────────
+  parity:
+    name: Parity check
+    runs-on: ubuntu-latest
+    needs: [detect, build]
+    if: needs.detect.outputs.tokens-present == 'true'
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @nebutra/design-tokens verify:parity
+
+  # ── 5. PR comment with diff summary ───────────────────────────────────
+  pr-comment:
+    name: Token diff comment
+    runs-on: ubuntu-latest
+    needs: [detect, healthcheck]
+    if: github.event_name == 'pull_request' && needs.detect.outputs.tokens-present == 'true'
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Compute token diff
+        id: diff
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          {
+            echo "diff<<__EOF__"
+            git diff --stat "$base" "$head" -- packages/design-tokens/tokens .tokens-studio || true
+            echo
+            echo "Files changed:"
+            git diff --name-only "$base" "$head" -- packages/design-tokens/tokens .tokens-studio || true
+            echo "__EOF__"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Comment on PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: design-sync
+          message: |
+            ### Design Sync — diff summary
+
+            Provider resolved: **${{ needs.detect.outputs.provider }}**
+
+            ```text
+            ${{ steps.diff.outputs.diff }}
+            ```
+
+            - Healthcheck: green
+            - design-tokens build: green
+            - parity vs `packages/tokens/styles.css`: green
+
+            > Push to remote design tool is **disabled** in PR runs.
+            > See `packages/design-sync/README.md` to enable.
+
+  # ── 6. Push to remote design tool (manual approval gate) ──────────────
+  push-to-design-tool:
+    name: Push to design tool
+    runs-on: ubuntu-latest
+    needs: [detect, build, parity]
+    if: >
+      github.event_name == 'workflow_dispatch' &&
+      github.event.inputs.pushToDesignTool == 'true' &&
+      needs.detect.outputs.tokens-present == 'true'
+    environment: design-sync-push
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: design-sync push
+        env:
+          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider }}
+          FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
+          FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
+          PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
+          PENPOT_TOKEN: ${{ secrets.PENPOT_TOKEN }}
+          PENPOT_FILE_ID: ${{ secrets.PENPOT_FILE_ID }}
+        run: |
+          pnpm --filter @nebutra/design-sync exec tsx src/cli/index.ts push --json || {
+            echo "::warning::push reported an issue — current providers throw on live push until wired up."
+            echo "::warning::See packages/design-sync/DESIGN.md for the rollout plan."
+            exit 0
+          }

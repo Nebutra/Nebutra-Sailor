@@ -344,6 +344,65 @@ QSTASH_CALLBACK_BASE_URL=""          # e.g. https://api.nebutra.com
 
 ---
 
+## Design Sync (`@nebutra/design-sync`)
+
+Provider-agnostic design-tool sync. Keeps the W3C DTCG token files in `packages/design-tokens/tokens/` in lock-step with the customer's design tool. Customers swap providers without changing application code.
+
+### Provider auto-detection
+
+| Priority | Condition | Provider | Customer profile |
+|----------|-----------|----------|------------------|
+| 1 | `DESIGN_SYNC_PROVIDER` env var | as specified | — |
+| 2 | `FIGMA_PERSONAL_ACCESS_TOKEN` + `FIGMA_FILE_ID` | `figma` | NA / global w/ Figma seat |
+| 3 | `PENPOT_API_URL` + `PENPOT_TOKEN` | `penpot` | self-host / China-friendly |
+| 4 | fallback | `git-only` | indie hackers, AI-driven dev |
+
+`memory` is never auto-detected; reserved for tests.
+
+### Usage (TypeScript)
+
+```ts
+import { getDesignSync } from "@nebutra/design-sync";
+
+const sync = await getDesignSync();         // auto-detects provider
+await sync.healthcheck();                   // diagnose env / creds
+await sync.pull();                          // design-tool → repo (DTCG)
+await sync.push({ dryRun: true });          // repo → design-tool (dry-run safe)
+```
+
+### CLI
+
+```bash
+pnpm --filter @nebutra/design-sync exec design-sync detect       # which provider + env diag
+pnpm --filter @nebutra/design-sync exec design-sync healthcheck  # provider readiness
+pnpm --filter @nebutra/design-sync exec design-sync pull         # design-tool → repo
+pnpm --filter @nebutra/design-sync exec design-sync push --dry-run  # repo → design-tool
+```
+
+### Environment variables
+
+```env
+DESIGN_SYNC_PROVIDER=""              # figma | penpot | git-only | memory (auto-detect if empty)
+
+# Figma
+FIGMA_PERSONAL_ACCESS_TOKEN=""
+FIGMA_FILE_ID=""
+FIGMA_GITHUB_REPO="Nebutra/Nebutra-Sailor"
+FIGMA_GITHUB_BRANCH="main"
+
+# Penpot
+PENPOT_API_URL="https://design.penpot.app/api"
+PENPOT_TOKEN=""
+PENPOT_FILE_ID=""
+PENPOT_TEAM_ID=""
+```
+
+### Safety
+
+`figma.push()` and `penpot.push()` default to **dry-run** until the operator opts in by providing credentials AND omitting `dryRun: true`. The package never silently writes to a remote design tool. CI workflow: `.github/workflows/design-sync.yml` (replaces the legacy `tokens-sync.yml`).
+
+---
+
 ## Full-Text Search (`@nebutra/search`)
 
 Provider-agnostic search supporting **Meilisearch**, **Typesense**, and **Algolia**.

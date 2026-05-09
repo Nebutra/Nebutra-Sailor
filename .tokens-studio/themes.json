@@ -1,0 +1,106 @@
+[
+  {
+    "id": "base-light",
+    "name": "Base / Light",
+    "group": "Base",
+    "selectedTokenSets": {
+      "core": "source",
+      "semantic": "source",
+      "themes/light": "enabled"
+    },
+    "$figmaStyleReferences": {},
+    "$figmaVariableReferences": {},
+    "$figmaCollectionVariableIds": {}
+  },
+  {
+    "id": "base-dark",
+    "name": "Base / Dark",
+    "group": "Base",
+    "selectedTokenSets": {
+      "core": "source",
+      "semantic": "source",
+      "themes/dark": "enabled"
+    },
+    "$figmaStyleReferences": {},
+    "$figmaVariableReferences": {},
+    "$figmaCollectionVariableIds": {}
+  },
+  {
+    "id": "preset-neon",
+    "name": "Preset / Neon",
+    "group": "Multi-Theme",
+    "selectedTokenSets": {
+      "core": "source",
+      "semantic": "source",
+      "themes/neon": "enabled"
+    },
+    "$figmaStyleReferences": {},
+    "$figmaVariableReferences": {},
+    "$figmaCollectionVariableIds": {}
+  },
+  {
+    "id": "preset-gradient",
+    "name": "Preset / Gradient",
+    "group": "Multi-Theme",
+    "selectedTokenSets": {
+      "core": "source",
+      "semantic": "source",
+      "themes/gradient": "enabled"
+    },
+    "$figmaStyleReferences": {},
+    "$figmaVariableReferences": {},
+    "$figmaCollectionVariableIds": {}
+  },
+  {
+    "id": "preset-dark-dense",
+    "name": "Preset / Dark Dense",
+    "group": "Multi-Theme",
+    "selectedTokenSets": {
+      "core": "source",
+      "semantic": "source",
+      "themes/dark-dense": "enabled"
+    },
+    "$figmaStyleReferences": {},
+    "$figmaVariableReferences": {},
+    "$figmaCollectionVariableIds": {}
+  },
+  {
+    "id": "preset-minimal",
+    "name": "Preset / Minimal",
+    "group": "Multi-Theme",
+    "selectedTokenSets": {
+      "core": "source",
+      "semantic": "source",
+      "themes/minimal": "enabled"
+    },
+    "$figmaStyleReferences": {},
+    "$figmaVariableReferences": {},
+    "$figmaCollectionVariableIds": {}
+  },
+  {
+    "id": "preset-vibrant",
+    "name": "Preset / Vibrant",
+    "group": "Multi-Theme",
+    "selectedTokenSets": {
+      "core": "source",
+      "semantic": "source",
+      "themes/vibrant": "enabled"
+    },
+    "$figmaStyleReferences": {},
+    "$figmaVariableReferences": {},
+    "$figmaCollectionVariableIds": {}
+  },
+  {
+    "id": "preset-ocean",
+    "name": "Preset / Ocean",
+    "group": "Multi-Theme",
+    "selectedTokenSets": {
+      "core": "source",
+      "semantic": "source",
+      "themes/ocean": "enabled"
+    },
+    "$figmaStyleReferences": {},
+    "$figmaVariableReferences": {},
+    "$figmaCollectionVariableIds": {}
+  }
+]
