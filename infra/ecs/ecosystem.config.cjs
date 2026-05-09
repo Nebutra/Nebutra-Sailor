@@ -46,7 +46,13 @@ module.exports = {
     {
       name: "api-gateway",
       cwd: "/var/www/nebutra/api/current",
+      // Workspace dependencies (e.g. @nebutra/alerting) publish .ts source
+      // directly via package.json `main`/`exports`. Plain `node` ESM cannot
+      // load .ts files. tsx as a Node loader compiles them on import. tsx is
+      // a runtime dep of api-gateway so it ships in the production bundle.
       script: "dist/index.js",
+      interpreter: "node",
+      interpreter_args: "--import tsx/esm",
       env: {
         NODE_ENV: "production",
         PORT: 3002,
