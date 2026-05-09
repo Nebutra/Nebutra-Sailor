@@ -27,6 +27,19 @@ export { BullMQProvider } from "./providers/bullmq";
 export { MemoryProvider } from "./providers/memory";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
 export { getQStashHandler, getQStashHandlerKeys, QStashProvider } from "./providers/qstash";
+export type { ScheduledJob, ScheduledJobResult } from "./scheduled/index";
+// ── Scheduled (cron) jobs ────────────────────────────────────────────────────
+export {
+  clearScheduledJobs,
+  getScheduledJob,
+  invitationCleanup,
+  listScheduledJobs,
+  registerDefaultScheduledJobs,
+  registerScheduledJob,
+  runInvitationCleanup,
+  runSessionCleanup,
+  sessionCleanup,
+} from "./scheduled/index";
 // ── Types ───────────────────────────────────────────────────────────────────
 export type {
   BullMQProviderConfig,

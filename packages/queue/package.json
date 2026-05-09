@@ -25,9 +25,11 @@
   },
   "scripts": {
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
+    "@nebutra/db": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@upstash/qstash": "^2.7.17",
     "bullmq": "^5.34.8",

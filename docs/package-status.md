@@ -28,7 +28,7 @@ package is not `stable`, the CLI will:
 You are never blocked from selecting a preview provider — the guarantee
 is transparency, not restriction.
 
-## Foundation packages (9)
+## Foundation packages (10)
 
 These packages ship a real factory, type definitions, and provider
 registration. Their provider adapters are scaffolded but stub-level:
@@ -47,6 +47,7 @@ you contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/uploads`       | (consumed directly)    | No — S3/R2 creds required             | Tus flow not end-to-end; validation stubs                           |
 | `@nebutra/vault`         | (consumed directly)    | Partial — local HKDF works for dev    | KMS rotation flow TODO; tenant isolation scaffolded                 |
 | `@nebutra/webhooks`      | `--webhooks`           | No — Svix token or signing secret     | Custom retry/DLQ is in-memory only; replay protection incomplete    |
+| `@nebutra/design-sync`   | (auto-detect)          | git-only works zero-config            | Figma push (Variables REST API) is dry-run; Penpot push scaffolded  |
 
 ## WIP packages (7)
 

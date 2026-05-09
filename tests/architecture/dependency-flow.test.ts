@@ -59,13 +59,15 @@ const DEPENDENCY_RULES: DependencyRule[] = [
     name: "@nebutra/web",
     packageJsonPath: "apps/web/package.json",
     // @nebutra/feature-flags and @nebutra/logger are cross-cutting infrastructure packages
-    // @nebutra/icons is used directly by authenticated admin surfaces
+    // @nebutra/icons is used directly by authenticated admin surfaces.
+    // @nebutra/queue is an infrastructure dep used by /api/cron route handlers.
     allowedDeps: [
       "@nebutra/ui",
       "@nebutra/tokens",
       "@nebutra/icons",
       "@nebutra/feature-flags",
       "@nebutra/logger",
+      "@nebutra/queue",
     ],
   },
   {
