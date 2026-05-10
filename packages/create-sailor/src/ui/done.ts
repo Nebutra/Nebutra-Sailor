@@ -65,6 +65,7 @@ export function showDone(opts: DoneOptions): void {
     `     ${arrow} pnpm infra:up      ${decor ? pc.dim("→ start local PostgreSQL/Redis/ClickHouse") : "-> start local PostgreSQL/Redis/ClickHouse"}`,
     `     ${arrow} pnpm generate:api-types ${decor ? pc.dim("→ refresh shared API client types") : "-> refresh shared API client types"}`,
     `     ${arrow} pnpm lint          ${decor ? pc.dim("→ quick repo sanity check") : "-> quick repo sanity check"}`,
+    `     ${arrow} pnpm audit         ${decor ? pc.dim("→ scan deps for known CVEs") : "-> scan deps for known CVEs"}`,
   );
 
   // Preview-status providers: call them out so the user knows they

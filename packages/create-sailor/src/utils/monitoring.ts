@@ -9,24 +9,46 @@ import {
 /**
  * Monitoring selection applier for create-sailor.
  *
- * L3 depth: writes real SDK initialization files into the scaffolded project
- * based on the chosen APM / error tracking provider. No npm install is
- * performed here — the generated files reference packages the user will
- * install via `pnpm install` after scaffolding.
+ * L3 depth: writes real SDK initialization files AND injects the runtime
+ * dependencies into the scaffolded `apps/web/package.json` so a single
+ * `pnpm install` after scaffolding produces a working monitoring setup.
  *
  * Silent-skip semantics: if a target app directory doesn't exist in the
  * template (e.g. `--apps` flag dropped `apps/web`), the generator returns
  * without error.
- *
- * SDK versions pinned in generated code:
- *   @sentry/nextjs     ^8.45.0
- *   dd-trace           ^5.32.0
- *   @bugsnag/js        ^8.2.0
- *   @bugsnag/plugin-react ^8.2.0
  */
+
+const MONITORING_DEPS = {
+  sentry: { "@sentry/nextjs": "^8.45.0" },
+  datadog: { "dd-trace": "^5.32.0", "@datadog/browser-rum": "^5.30.0" },
+  bugsnag: { "@bugsnag/js": "^8.2.0", "@bugsnag/plugin-react": "^8.2.0" },
+} as const;
 
 function ensureDir(dir: string): void {
   fs.mkdirSync(dir, { recursive: true });
+}
+
+/**
+ * Adds entries to the `dependencies` field of `apps/web/package.json`.
+ * Only adds keys not already present — never overwrites a user-pinned version.
+ */
+function addDependenciesToWebPackageJson(webDir: string, deps: Record<string, string>): void {
+  const pkgPath = path.join(webDir, "package.json");
+  if (!fs.existsSync(pkgPath)) return;
+  let pkg: { dependencies?: Record<string, string>; [k: string]: unknown };
+  try {
+    pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
+  } catch (error) {
+    console.error(`Failed to parse ${pkgPath}:`, error);
+    return;
+  }
+  const existing = pkg.dependencies ?? {};
+  const merged = { ...existing };
+  for (const [name, version] of Object.entries(deps)) {
+    if (!merged[name]) merged[name] = version;
+  }
+  const next = { ...pkg, dependencies: merged };
+  fs.writeFileSync(pkgPath, JSON.stringify(next, null, 2) + "\n");
 }
 
 function writeFile(filePath: string, content: string): void {
@@ -364,14 +386,17 @@ export async function applyMonitoringSelection(
     switch (id) {
       case "sentry":
         writeSentryFiles(webDir);
+        addDependenciesToWebPackageJson(webDir, MONITORING_DEPS.sentry);
         appendEnv(targetDir, sentryEnvBlock());
         return;
       case "datadog":
         writeDatadogFiles(webDir);
+        addDependenciesToWebPackageJson(webDir, MONITORING_DEPS.datadog);
         appendEnv(targetDir, datadogEnvBlock());
         return;
       case "bugsnag":
         writeBugsnagFiles(webDir);
+        addDependenciesToWebPackageJson(webDir, MONITORING_DEPS.bugsnag);
         appendEnv(targetDir, bugsnagEnvBlock());
         return;
       case "aliyun-arms":
