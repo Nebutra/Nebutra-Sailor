@@ -1,3 +1,7 @@
+// MUST be the first import — registers global OTel tracer provider before any
+// module that emits spans is loaded.
+import "./instrumentation.js";
+
 import { serve } from "@hono/node-server";
 import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";

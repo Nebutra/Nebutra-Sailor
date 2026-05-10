@@ -543,9 +543,6 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/brand
-      '@nebutra/email':
-        specifier: workspace:*
-        version: link:../../packages/email
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/icons
@@ -2036,6 +2033,12 @@ importers:
       '@opentelemetry/sdk-node':
         specifier: ^0.213.0
         version: 0.213.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-trace-base':
+        specifier: ^1.30.0
+        version: 1.30.1(@opentelemetry/api@1.9.0)
+      langfuse-vercel:
+        specifier: ^3.38.20
+        version: 3.38.20(ai@6.0.116(zod@4.3.6))
       pino:
         specifier: ^10.3.1
         version: 10.3.1
@@ -2279,6 +2282,9 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
     devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(@swc/core@1.15.18(@swc/helpers@0.5.19))(jiti@2.6.1)(postcss@8.5.8)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -2555,6 +2561,9 @@ importers:
       storybook:
         specifier: ^8.6.17
         version: 8.6.17(prettier@3.8.1)
+      tsup:
+        specifier: 'catalog:'
+        version: 8.5.1(@swc/core@1.15.18(@swc/helpers@0.5.19))(jiti@2.6.1)(postcss@8.5.8)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
       tsx:
         specifier: 'catalog:'
         version: 4.21.0
