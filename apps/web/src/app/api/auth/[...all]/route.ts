@@ -1,36 +1,40 @@
 /**
- * Better Auth catch-all API route.
+ * Auth catch-all API route.
  *
- * Handles all /api/auth/* requests when using Better Auth provider.
- * Delegates to the Better Auth handler which manages:
- * - POST /api/auth/sign-up/email — email/password registration
- * - POST /api/auth/sign-in/email — email/password login
- * - POST /api/auth/sign-out — session termination
- * - GET  /api/auth/session — current session
- * - POST /api/auth/sign-in/social — OAuth redirects
+ * Routes /api/auth/* requests to the configured provider's middleware:
+ *  - Better Auth — delegates sign-up / sign-in / sign-out / session / OAuth
+ *  - NextAuth (Auth.js v5) — delegates the same surface via Auth.js handlers
+ *  - Clerk — Clerk owns its own routing (clerkMiddleware), so this route 404s
  *
- * When using Clerk, this route is a no-op passthrough.
+ * The provider is resolved from `AUTH_PROVIDER` (or `NEXT_PUBLIC_AUTH_PROVIDER`)
+ * and the resulting handler is cached for the lifetime of the worker.
  */
 
-import type { AuthProvider } from "@nebutra/auth";
+import type { AuthProvider, AuthProviderId } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 
-const provider =
+const PROVIDERS_USING_THIS_ROUTE: ReadonlySet<AuthProviderId> = new Set([
+  "better-auth",
+  "nextauth",
+]);
+
+const rawProvider =
   process.env.AUTH_PROVIDER || process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
+const provider = rawProvider as AuthProviderId;
 
 let authInstance: AuthProvider | null = null;
 
 async function getAuth(): Promise<AuthProvider> {
   if (!authInstance) {
-    authInstance = await createAuth({ provider: provider as "better-auth" | "clerk" });
+    authInstance = await createAuth({ provider });
   }
   return authInstance;
 }
 
 async function handler(request: Request): Promise<Response> {
-  if (provider !== "better-auth") {
-    // Non-Better Auth providers don't use this route
+  if (!PROVIDERS_USING_THIS_ROUTE.has(provider)) {
+    // Clerk and other non-routed providers don't use this catch-all.
     return new Response(JSON.stringify({ error: "Not found" }), {
       status: 404,
       headers: { "Content-Type": "application/json" },
@@ -39,7 +43,6 @@ async function handler(request: Request): Promise<Response> {
 
   try {
     const auth = await getAuth();
-    // Better Auth's middleware() returns a handler that processes auth API routes
     const authHandler = auth.middleware();
     const response = await authHandler(request);
     return response ?? new Response(null, { status: 404 });

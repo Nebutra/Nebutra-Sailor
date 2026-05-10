@@ -103,7 +103,7 @@ export async function POST(request: Request) {
       return response;
     }
 
-    const auth = await createAuth({ provider: provider as "better-auth" | "clerk" });
+    const auth = await createAuth({ provider: provider as "better-auth" | "clerk" | "nextauth" });
     const session = await auth.getSession(request);
 
     if (!session?.userId) {

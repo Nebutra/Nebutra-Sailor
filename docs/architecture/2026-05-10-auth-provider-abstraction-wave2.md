@@ -142,23 +142,27 @@ Escape-hatch (provider-specific, accessed via type narrowing):
 
 ---
 
-### D6 — Migration sequencing: 5 PRs, additive only, TDD-driven, feature-flagged
+### D6 — Migration sequencing: 3 phases, direct-to-main commits, additive only, TDD-driven
 
-| PR | Scope | Risk | Reversible |
-|---|---|---|---|
-| **PR 1** | Schema additive: create `auth` Postgres schema; add `BAOrganization / BAMember / BAInvitation / BAPasskey` models in `auth.*`; add `activeOrganizationId` column to `public.auth_sessions` (additive). **No** existing-table relocation. | Low | Yes (`DROP SCHEMA auth CASCADE` + drop column) |
-| **PR 1.5** | User-table reconciliation plan: create `app.user_profile` table FK to `public.auth_users.id`; add nullable `external_id` columns to existing `User` / `Organization` for backfill linkage. **No data movement yet**, just structural prep. | Low | Yes (drop new tables/columns) |
-| **PR 2** | `@nebutra/auth` API: add `signIn` / `signOut` to `AuthProvider`; add `AuthCapabilities` type + runtime probe; add optional `organizations` / `passkeys` / `twoFactor` / `magicLink` capability shapes; wire Better Auth plugins to expose methods through canonical interface; NextAuth + Clerk providers report `capabilities.* = false` for what they don't do. | Medium | Yes (revert package version) |
-| **PR 3** | `apps/web` opts in to passkeys + orgs in **dev environment only** (env-gated). Tenant bridge: middleware reads `session.activeOrganizationId` → calls `runWithTenant(...)`. Update `@nebutra/identity` AGENTS.md boundary doc. | Medium | Yes (env flag) |
-| **PR 4** | `apps/landing-page` + production rollout via feature flag (gradual %); rewire `@nebutra/oauth-server` to consume `@nebutra/identity`; absorb the 5 Clerk-direct-import files into the canonical interface where possible (some may legitimately stay Clerk-native). | Medium | Yes (flag off) |
+Per project workflow ([feedback_main_only_workflow.md](~/.claude/projects/-Users-tseka-luk-Documents-Nebutra-SaaS-Lab-Nebutra-Sailor/memory/feedback_main_only_workflow.md)) — no feature branches / no PR ceremony for this monorepo. Work ships as **direct commits to `main`**, grouped into 3 logical **phases** for narrative clarity. Within each phase, multiple smaller commits are still expected (each one must independently pass tests and be reversible).
 
-**Hard rules (D6 invariants)**:
-- Every PR ships tests-first (see "TDD Closed Loop" section below)
-- No PR drops or renames existing columns/tables
-- Every PR has a kill-switch (env var or feature flag)
-- Schema migrations forward-only — rollback = forward-fix
-- A PR is not merge-ready until: tests green + manual smoke test on dev + capability probe report attached to PR description
-- Every provider implementation has a contract test — adding a new provider in the future means writing the same test against it
+| Phase | Scope | Commits (target) | Risk | Reversible |
+|---|---|---|---|---|
+| **Phase 1 — Foundation** (schema + API surface) | (a) `auth` Postgres schema + 4 new BA-plugin tables (`organization`/`member`/`invitation`/`passkey`) + `active_organization_id` column on `public.auth_sessions`; (b) `app.user_profile` table FK to `auth_users.id` + nullable `external_id` columns on existing `User`/`Organization`; (c) `AuthProvider` interface gains `signIn`/`signOut` + `capabilities` runtime probe + optional `organizations`/`passkeys`/`twoFactor`/`magicLink` capability shapes; (d) Better Auth provider wires up plugin methods through canonical interface; Clerk + NextAuth providers report `capabilities.* = false` for unsupported features | 4-6 commits | Low–Medium | Yes (drop schema + drop columns + revert package) |
+| **Phase 2 — Dev opt-in** (apps/web in dev only) | Tenant bridge middleware (`session.activeOrganizationId` → `runWithTenant(...)`); passkeys/orgs UI in `apps/web` gated by `NEXT_PUBLIC_AUTH_FEATURES` env flag; E2E tests for new flows; update `packages/auth/AGENTS.md` + `packages/identity/AGENTS.md` boundary docs | 3-5 commits | Medium | Yes (env flag off) |
+| **Phase 3 — Prod rollout + cleanup** | Production feature flag (`@nebutra/feature-flags`) for gradual % rollout; rewire `@nebutra/oauth-server` to consume `@nebutra/identity`; absorb the 5 Clerk-direct-import files in `apps/web` into the canonical interface where possible | 3-5 commits | Medium | Yes (flag off + revert) |
+
+**Hard rules (D6 invariants — apply per-commit, not per-phase)**:
+- Every commit ships tests-first (see "TDD Closed Loop" section below)
+- Every commit individually passes `pnpm typecheck` + `pnpm test` + `pnpm lint`
+- No commit drops or renames existing columns/tables
+- Every commit is independently reversible (`git revert <sha>` should not break `main`)
+- Every behavior-changing commit ships behind a kill-switch (env var or feature flag) that defaults to off until the phase explicitly turns it on
+- Schema migrations are forward-only — rollback = forward-fix, never down-migration on prod
+- A commit message includes: capability probe output (`pnpm --filter @nebutra/auth test:probe` paste), coverage delta, kill-switch name
+- Every provider implementation has a contract test — adding a new provider later means writing the same test against it
+- **No batching**: don't bundle 5 unrelated changes into one mega-commit just because we're not opening PRs. Each commit is one coherent step
+- **Phase boundaries are narrative, not gates**: nothing prevents Phase 2 work from starting before Phase 1's last commit lands, as long as commit-level invariants hold
 
 ---
 
@@ -270,15 +274,20 @@ This section makes the project's TDD principle concrete for the auth refactor. E
 - `packages/tenant`: ≥ 80%
 - Coverage report attached to PR description; CI fails if regression
 
-### Tests-first workflow per PR
+### Tests-first workflow per commit (direct-to-main)
 
-Every PR description must include a "Tests Added" section enumerating:
-1. New contract / unit tests written **before** implementation
-2. Coverage delta (must be ≥ 0)
-3. Capabilities probe output (paste of `console.log(auth.capabilities)` for each provider)
-4. Manual smoke checklist with checkboxes
+Every behavior-changing commit message must include a "Tests" trailer block:
 
-If a PR can't articulate the tests-first ordering, it's blocked at review.
+```
+Tests:
+- Added: <test file>::<test name> (RED → GREEN at this commit)
+- Coverage: packages/auth +X.X% (now Y.Y%)
+- Probe: { passkeys: T/F, organizations: T/F, twoFactor: T/F, magicLink: T/F } per provider
+- Kill-switch: AUTH_FEATURE_X (default: off)
+- Smoke: <one-line manual verification done>
+```
+
+If a commit can't articulate the tests-first ordering, it's reverted. Same standard as PR review, just enforced at commit time instead of merge time.
 
 ### Tooling
 

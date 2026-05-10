@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { ACTIVE_ORG_COOKIE, resolveActiveOrganizationSelection } from "./active-organization";
 import { getDefaultPublicUrls } from "./public-url-defaults";
 
-type WebAuthProvider = "clerk" | "better-auth";
+type WebAuthProvider = "clerk" | "better-auth" | "nextauth";
 type ServerSessionClaims = Record<string, unknown> & {
   org_plan?: string;
   org_role?: string;

@@ -1,6 +1,8 @@
 # @nebutra/auth
 
-> Provider-agnostic authentication abstraction layer supporting Clerk and Better Auth.
+> Provider-agnostic authentication abstraction layer supporting Clerk, Better Auth, and NextAuth (Auth.js v5).
+>
+> Three switchable providers — pick at scaffold time (`create-sailor --auth=...`) or at runtime via the `AUTH_PROVIDER` env var. The server / React / middleware surfaces stay identical regardless of provider.
 
 ## Installation
 

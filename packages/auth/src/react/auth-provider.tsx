@@ -15,6 +15,11 @@ type BetterAuthProviderLazyComponent = React.ComponentType<{
   children: ReactNode;
 }>;
 
+type NextAuthProviderLazyComponent = React.ComponentType<{
+  basePath?: string;
+  children: ReactNode;
+}>;
+
 /**
  * Props for the root AuthProvider component.
  */
@@ -69,6 +74,11 @@ export function AuthProvider({ provider, children, config }: AuthProviderProps) 
   if (provider === "better-auth") {
     const apiUrl = (config?.apiUrl as string) || "/api/auth";
     return <BetterAuthProviderLazy apiUrl={apiUrl}>{children}</BetterAuthProviderLazy>;
+  }
+
+  if (provider === "nextauth") {
+    const basePath = (config?.basePath as string) || "/api/auth";
+    return <NextAuthProviderLazy basePath={basePath}>{children}</NextAuthProviderLazy>;
   }
 
   console.error(`Unknown auth provider: ${String(provider)}`);
@@ -139,4 +149,33 @@ function BetterAuthProviderLazy({ apiUrl, children }: { apiUrl?: string; childre
   if (apiUrl) betterAuthProps.apiUrl = apiUrl;
 
   return <BetterAuthProvider {...betterAuthProps} />;
+}
+
+/**
+ * Lazy-loaded NextAuth (Auth.js v5) provider wrapper.
+ * Only imported when provider === "nextauth".
+ */
+function NextAuthProviderLazy({ basePath, children }: { basePath?: string; children: ReactNode }) {
+  const [NextAuthProvider, setNextAuthProvider] = useState<NextAuthProviderLazyComponent | null>(
+    null,
+  );
+
+  useEffect(() => {
+    import("./providers/nextauth-provider").then((mod) => {
+      setNextAuthProvider(() => mod.NextAuthProvider);
+    });
+  }, []);
+
+  if (!NextAuthProvider) {
+    return (
+      <AuthContextProvider value={createUnauthenticatedAuthContext("nextauth", false)}>
+        {children}
+      </AuthContextProvider>
+    );
+  }
+
+  const props: { basePath?: string; children: ReactNode } = { children };
+  if (basePath) props.basePath = basePath;
+
+  return <NextAuthProvider {...props} />;
 }

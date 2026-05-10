@@ -1,4 +1,4 @@
-export type AuthProviderId = "clerk" | "better-auth";
+export type AuthProviderId = "clerk" | "better-auth" | "nextauth";
 
 export interface SecurityCapabilities {
   provider: AuthProviderId;
@@ -17,7 +17,9 @@ const ENV_PROVIDER =
   process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? process.env.AUTH_PROVIDER ?? "better-auth";
 
 function readProvider(): AuthProviderId {
-  return ENV_PROVIDER === "clerk" ? "clerk" : "better-auth";
+  if (ENV_PROVIDER === "clerk") return "clerk";
+  if (ENV_PROVIDER === "nextauth") return "nextauth";
+  return "better-auth";
 }
 
 export function getSecurityCapabilities(): SecurityCapabilities {
@@ -33,6 +35,21 @@ export function getSecurityCapabilities(): SecurityCapabilities {
       supportsDeleteAccount: false,
       providerProfileUrl:
         configuredProfileUrl && configuredProfileUrl.length > 0 ? configuredProfileUrl : "/account",
+    };
+  }
+
+  if (provider === "nextauth") {
+    // NextAuth (Auth.js v5) capabilities depend on the configured adapter.
+    // With the default JWT-only setup we ship, account-management actions
+    // require the consumer to wire their own DB-backed flows. Conservative
+    // default: report unsupported rather than rendering broken UI.
+    return {
+      provider,
+      supportsChangePassword: false,
+      supportsTwoFactor: false,
+      supportsActiveSessions: false,
+      supportsDeleteAccount: false,
+      providerProfileUrl: null,
     };
   }
 

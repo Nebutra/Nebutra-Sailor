@@ -11,6 +11,7 @@ describe("auth provider boundary", () => {
 
     expect(authProvider).toContain('createUnauthenticatedAuthContext("clerk", false)');
     expect(authProvider).toContain('createUnauthenticatedAuthContext("better-auth", false)');
+    expect(authProvider).toContain('createUnauthenticatedAuthContext("nextauth", false)');
   });
 
   it("concrete auth providers do not render children outside AuthContextProvider during init", async () => {
@@ -22,37 +23,50 @@ describe("auth provider boundary", () => {
       join(process.cwd(), "packages/auth/src/react/providers/clerk-provider.tsx"),
       "utf8",
     );
+    const nextAuthProvider = await readFile(
+      join(process.cwd(), "packages/auth/src/react/providers/nextauth-provider.tsx"),
+      "utf8",
+    );
 
     expect(betterAuthProvider).not.toContain("return <>{children}</>;");
     expect(clerkProvider).not.toContain("return <>{children}</>;");
+    expect(nextAuthProvider).not.toContain("return <>{children}</>;");
   });
 
-  it("AuthProviderId is exactly clerk + better-auth (no NextAuth)", async () => {
+  it("AuthProviderId includes clerk + better-auth + nextauth", async () => {
     const types = await readFile(join(process.cwd(), "packages/auth/src/types.ts"), "utf8");
 
-    expect(types).toContain('export type AuthProviderId = "clerk" | "better-auth";');
-    expect(types).not.toMatch(/nextauth|next-auth/i);
+    expect(types).toContain('export type AuthProviderId = "clerk" | "better-auth" | "nextauth";');
   });
 
-  it("no NextAuth provider files remain in packages/auth", async () => {
+  it("all three provider files exist in packages/auth", async () => {
     const serverProviders = await readdir(join(process.cwd(), "packages/auth/src/providers"));
     const reactProviders = await readdir(join(process.cwd(), "packages/auth/src/react/providers"));
 
-    const matchesNextAuth = (name: string) => /nextauth/i.test(name);
-
-    expect(serverProviders.filter(matchesNextAuth)).toEqual([]);
-    expect(reactProviders.filter(matchesNextAuth)).toEqual([]);
+    expect(serverProviders).toEqual(
+      expect.arrayContaining(["clerk.ts", "better-auth.ts", "nextauth.ts"]),
+    );
+    expect(reactProviders).toEqual(
+      expect.arrayContaining([
+        "clerk-provider.tsx",
+        "better-auth-provider.tsx",
+        "nextauth-provider.tsx",
+      ]),
+    );
   });
 
-  it("@nebutra/auth package description does not mention NextAuth", async () => {
+  it("@nebutra/auth declares next-auth as an optional peer dependency, not a hard dep", async () => {
     const pkg = await readFile(join(process.cwd(), "packages/auth/package.json"), "utf8");
 
     const parsed = JSON.parse(pkg) as {
-      description?: string;
       dependencies?: Record<string, string>;
+      peerDependencies?: Record<string, string>;
+      peerDependenciesMeta?: Record<string, { optional?: boolean }>;
     };
 
-    expect(parsed.description ?? "").not.toMatch(/nextauth|next-auth/i);
+    // next-auth must NOT be a hard dependency — it's an optional integration.
     expect(Object.keys(parsed.dependencies ?? {})).not.toContain("next-auth");
+    expect(Object.keys(parsed.peerDependencies ?? {})).toContain("next-auth");
+    expect(parsed.peerDependenciesMeta?.["next-auth"]?.optional).toBe(true);
   });
 });

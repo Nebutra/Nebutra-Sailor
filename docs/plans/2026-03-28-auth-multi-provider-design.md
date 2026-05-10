@@ -3,7 +3,7 @@
 **Date:** 2026-03-28
 **Goal:** Make Clerk and Better Auth work as switchable auth providers via a single preset config, with full front-end + back-end + database integration.
 
-> **Note (2026-03-29):** NextAuth/Auth.js support was removed. The project now supports only Clerk (managed) and Better Auth (self-hosted). All NextAuth references in this doc are historical.
+> **Note (2026-05-10):** NextAuth/Auth.js was briefly removed (2026-04-14) and then re-introduced as a real adapter on 2026-05-10. The doc below is once again the active design — three switchable providers (Clerk / Better Auth / NextAuth). The ephemeral 2026-03-29 deprecation has been retracted.
 
 ---
 

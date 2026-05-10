@@ -24,6 +24,8 @@ export async function createAuth(config: AuthConfig): Promise<AuthProvider> {
       return (await import("./providers/clerk")).createClerkAuth(config);
     case "better-auth":
       return (await import("./providers/better-auth")).createBetterAuthProvider(config);
+    case "nextauth":
+      return (await import("./providers/nextauth")).createNextAuthProvider(config);
     default:
       throw new Error(`Unknown auth provider: ${String((config as AuthConfig).provider)}`);
   }

@@ -24,7 +24,7 @@
 5. PM 自动检测 + `update-notifier`
 6. `.templateignore` 系统（71 规则，剥离 Nebutra 业务内容）
 7. `packages/ai-providers/` + 20 provider meta + `@sailor:*` marker 模板系统
-8. NextAuth 彻底清除（Clerk + BetterAuth 双 provider）
+8. ~~NextAuth 彻底清除（Clerk + BetterAuth 双 provider）~~ → **撤销**：2026-05-10 重新引入 NextAuth 作为第三 provider，三选一 (`--auth=clerk|betterauth|nextauth|none`)
 9. 占位包：`nebutra` · `@nebutra/sailor` · `@nebutra/sailor-cli`
 
 ---
@@ -471,7 +471,7 @@ push tag → 自动 publish create-sailor + 占位包
 
 | 决策项 | 状态 | 决策日期 |
 |-------|------|---------|
-| NextAuth 完全删除 | ✅ 已执行 | 2026-04-14 |
+| NextAuth 完全删除 | ↩️ 已撤销（2026-05-10 重新引入为三选一第 3 provider，对标 Harness DX 可选） | 2026-04-14 |
 | cfonts block + 蓝青渐变 banner | ✅ 已执行 | 2026-04-14 |
 | `.templateignore` 起步（方案 A） | ✅ 已执行 | 2026-04-14 |
 | 双仓库 + CI 同步（方案 B） | 待 Gemini 执行 | — |

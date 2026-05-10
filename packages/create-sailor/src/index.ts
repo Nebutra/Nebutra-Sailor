@@ -203,6 +203,7 @@ function resolveAuthChoice(raw: string | undefined): AuthChoice {
   if (!raw) return "clerk";
   const v = raw.toLowerCase();
   if (v === "betterauth" || v === "better-auth") return "betterauth";
+  if (v === "nextauth" || v === "next-auth" || v === "authjs" || v === "auth.js") return "nextauth";
   if (v === "none") return "none";
   return "clerk";
 }
@@ -358,7 +359,7 @@ async function run(): Promise<void> {
     .option("--region <id>", "global | cn | hybrid")
     .option("--orm <id>", "prisma | drizzle | none")
     .option("--db <id>", "postgres | mysql | sqlite | none")
-    .option("--auth <id>", "clerk | betterauth | none")
+    .option("--auth <id>", "clerk | betterauth | nextauth | none")
     .option(
       "--social-login <ids>",
       "CN social login providers — wechat | qq | dingtalk | workweixin | feishu | weibo (comma-separated)",
@@ -537,8 +538,17 @@ async function run(): Promise<void> {
         p.select({
           message: "Auth provider?",
           options: [
-            { value: "clerk", label: "Clerk" },
-            { value: "betterauth", label: "Better Auth" },
+            { value: "clerk", label: "Clerk", hint: "managed, fastest setup" },
+            {
+              value: "betterauth",
+              label: "Better Auth",
+              hint: "self-hosted, modern (2FA / passkeys / RBAC)",
+            },
+            {
+              value: "nextauth",
+              label: "NextAuth (Auth.js v5)",
+              hint: "self-hosted, mature, large ecosystem",
+            },
             { value: "none", label: "None" },
           ],
           initialValue: "clerk",

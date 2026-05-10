@@ -6,15 +6,16 @@ import path from "node:path";
  *
  * Maps the `--auth` CLI flag to concrete filesystem mutations in the scaffolded
  * project:
- *  - `clerk`      → keep `packages/auth/src/providers/clerk.ts`, drop better-auth
- *  - `betterauth` → keep `packages/auth/src/providers/better-auth.ts`, drop clerk
+ *  - `clerk`      → keep `packages/auth/src/providers/clerk.ts`, drop the others
+ *  - `betterauth` → keep `packages/auth/src/providers/better-auth.ts`, drop the others
+ *  - `nextauth`   → keep `packages/auth/src/providers/nextauth.ts`, drop the others
  *  - `none`       → remove the entire `packages/auth` directory
  *
  * Silent-skip semantics: if a file targeted for deletion does not exist, we
  * carry on (template may not include it yet).
  */
 
-export type AuthChoice = "clerk" | "betterauth" | "none";
+export type AuthChoice = "clerk" | "betterauth" | "nextauth" | "none";
 
 function safeRm(target: string): void {
   if (fs.existsSync(target)) {
@@ -31,11 +32,17 @@ function appendEnv(targetDir: string, content: string): void {
   }
 }
 
-function narrowAuthProviderId(typesPath: string, providerId: "clerk" | "better-auth"): void {
+function narrowAuthProviderId(
+  typesPath: string,
+  providerId: "clerk" | "better-auth" | "nextauth",
+): void {
   if (!fs.existsSync(typesPath)) return;
   const content = fs.readFileSync(typesPath, "utf8");
+  // Match the multi-provider union (any number of "..."| segments) and narrow
+  // to a single literal so the scaffolded project's type-checks reflect the
+  // chosen provider only.
   const next = content.replace(
-    /export type AuthProviderId\s*=\s*"[^"]+"\s*\|\s*"[^"]+";/,
+    /export type AuthProviderId\s*=\s*(?:"[^"]+"\s*\|\s*)+"[^"]+";/,
     `export type AuthProviderId = "${providerId}";`,
   );
   if (next !== content) {
@@ -71,6 +78,7 @@ export async function applyAuthSelection(targetDir: string, auth: AuthChoice): P
 
   if (auth === "clerk") {
     safeRm(path.join(providersDir, "better-auth.ts"));
+    safeRm(path.join(providersDir, "nextauth.ts"));
     narrowAuthProviderId(typesPath, "clerk");
     appendEnv(targetDir, "# Clerk auth\nCLERK_PUBLISHABLE_KEY=\nCLERK_SECRET_KEY=\n");
     return;
@@ -78,10 +86,29 @@ export async function applyAuthSelection(targetDir: string, auth: AuthChoice): P
 
   if (auth === "betterauth") {
     safeRm(path.join(providersDir, "clerk.ts"));
+    safeRm(path.join(providersDir, "nextauth.ts"));
     narrowAuthProviderId(typesPath, "better-auth");
     appendEnv(
       targetDir,
       "# Better Auth\nBETTER_AUTH_SECRET=\nBETTER_AUTH_URL=http://localhost:3000\n",
+    );
+    return;
+  }
+
+  if (auth === "nextauth") {
+    safeRm(path.join(providersDir, "clerk.ts"));
+    safeRm(path.join(providersDir, "better-auth.ts"));
+    narrowAuthProviderId(typesPath, "nextauth");
+    appendEnv(
+      targetDir,
+      "# NextAuth (Auth.js v5)\n" +
+        "AUTH_SECRET=\n" +
+        "NEXTAUTH_URL=http://localhost:3000\n" +
+        "# OAuth (optional — leave blank to disable that provider)\n" +
+        "GOOGLE_CLIENT_ID=\n" +
+        "GOOGLE_CLIENT_SECRET=\n" +
+        "GITHUB_CLIENT_ID=\n" +
+        "GITHUB_CLIENT_SECRET=\n",
     );
     return;
   }
