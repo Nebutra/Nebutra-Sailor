@@ -351,4 +351,47 @@ If a commit can't articulate the tests-first ordering, it's reverted. Same stand
 - [x] tseka_luk reviewed & accepted (revised version 2026-05-10 post gap analysis)
 - [x] Open questions O1–O5 resolved by gap analysis
 - [x] D6 revised to direct-to-main 3-phase model per project workflow preference
-- [ ] Phase 1 dispatched
+- [x] Phase 1.1 schema additive landed (see Audit Log below)
+- [ ] Phase 1.2 dispatched (blocked on resolving concurrent-agent collision)
+
+---
+
+## Audit Log
+
+### Phase 1.1 — landed in commit `61f656a0` (with attribution issue)
+
+**Date**: 2026-05-10
+**Status**: Work product correct, commit attribution polluted
+
+**What actually landed in `61f656a0`** (despite its title `fix(scripts): correct REPO_ROOT depth in 3 design package scripts after W3b`):
+- 3 design script `REPO_ROOT` depth fixes (matches the title)
+- `packages/iam/auth/package.json` adds missing `@nebutra/db` dep (mentioned in commit body)
+- **Phase 1.1 of this ADR — undocumented in the commit message:**
+  - `packages/platform/db/prisma/schema.prisma` — adds `auth` schema entry to `datasource.schemas`; adds `BAOrganization`/`BAMember`/`BAInvitation`/`BAPasskey` models with `@@schema("auth")`; adds `activeOrganizationId` field + index to existing `AuthSession`
+  - `packages/platform/db/prisma/migrations/20260510000000_add_ba_orgs_passkeys/migration.sql` — strictly additive: 1× `CREATE SCHEMA auth`, 4× `CREATE TABLE`, 8× indexes, 1× `ADD COLUMN active_organization_id`, 4× FK with CASCADE
+  - `packages/platform/db/__tests__/migrations/2026-05-10-add-ba-orgs-passkeys.test.ts` — 19 tests, RED→GREEN
+  - `packages/platform/db/vitest.config.ts` — new
+  - `packages/platform/db/package.json` — adds `@electric-sql/pglite` devDep
+  - `packages/platform/db/src/generated/prisma/**` — regenerated client (new BA model files)
+  - `pnpm-lock.yaml` — updated for pglite
+
+**Verification at HEAD**:
+- `pnpm --filter @nebutra/db test` → 19/19 pass
+- `pnpm --filter @nebutra/db typecheck` → exit 0
+- `pnpm --filter @nebutra/auth typecheck` → exit 0
+- `pnpm exec prisma validate` → schema valid
+
+**Why not rewritten**: `61f656a0` was already pushed to `origin/main` by the time the issue was discovered. Rewrite requires `git push --force` to main, which is prohibited by safety protocol. Documented here for archeology instead.
+
+**Root cause**: a concurrent agent session was running W3b infrastructure fixes during the same window as the Phase 1.1 schema work. That session committed first and silently absorbed the schema work into its own commit. **This violates D6 invariant "no batching" and breaks per-commit TDD attribution.**
+
+**Mitigation for Phase 1.2 / 1.3**: do not dispatch any further agent commits to `packages/platform/db/` or `packages/iam/auth/` while concurrent sessions are active on those paths. Coordinate or serialize.
+
+### Technical findings to apply in Phase 1.2 / 1.3
+
+1. **Prisma 7: `multiSchema` is no longer a preview feature.** `prisma validate` rejects `previewFeatures = ["multiSchema"]`. Use `datasource.schemas` + `@@schema(...)` directives directly. Final 1.1 schema does NOT include the preview flag.
+2. **Prisma 7 CLI rename**: `--to-schema-datamodel` → `--to-schema`. When generating migration SQL without a live DB, the before/after schema-snapshot diff trick works without a shadow DB.
+3. **pglite is the right test infra for schema structural tests** in this repo. Already used in 1.1; reuse for any Phase 2 / 3 migration tests. For tests requiring extensions (`vector`, `uuid_ossp`) or real RLS, fall back to Testcontainers.
+4. **`public.OrganizationInvitation` (old Clerk-shaped) duplicates `auth.invitation` (new BA) in purpose** but with different shape (token, acceptedAt, etc.). They coexist intentionally per D3, but Phase 3 should produce a separate consolidation ADR before deleting the legacy table. Add this to the Phase 3 scope.
+5. **Better Auth passkey table**: Prisma auto-mapped `credentialID` → `credential_i_d` column (literal underscore split). Better Auth's adapter expects this exact name; the 1.1 test asserts it explicitly so accidental rename is caught.
+6. **`pnpm install` triggers postinstall side-effects** in design packages (writes to `packages/design/brand/scripts/sync-assets.ts` etc.). Phase 1.2 should run `pnpm install` once at start, then `git status` to confirm no uncommitted side-effects, then proceed.
