@@ -169,7 +169,7 @@ coverage: {
 
 ```bash
 cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor
-pnpm --filter @nebutra/api-gateway test:coverage 2>&1 | tail -20
+pnpm --filter @nebutra/gateway test:coverage 2>&1 | tail -20
 ```
 
 Expected: coverage report shows percentages, all 43 tests pass.
@@ -289,7 +289,7 @@ COPY packages/platform/health/package.json ./packages/platform/health/
 COPY packages/platform/logger/package.json ./packages/platform/logger/
 COPY packages/platform/rate-limit/package.json ./packages/platform/rate-limit/
 
-RUN pnpm install --frozen-lockfile --filter @nebutra/api-gateway...
+RUN pnpm install --frozen-lockfile --filter @nebutra/gateway...
 
 # ── Stage 2: Build ──────────────────────────────────────────────────────────
 FROM node:20-alpine AS builder
@@ -305,7 +305,7 @@ COPY . .
 RUN pnpm --filter @nebutra/db db:generate
 
 # Compile TypeScript
-RUN pnpm --filter @nebutra/api-gateway build
+RUN pnpm --filter @nebutra/gateway build
 
 # ── Stage 3: Runtime ────────────────────────────────────────────────────────
 FROM node:20-alpine AS runner

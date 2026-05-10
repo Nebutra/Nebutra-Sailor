@@ -39,7 +39,7 @@ This template follows Nebutra docs best-practices, encoded as MDX comments inlin
 When refreshing the API reference inputs:
 
 ```bash
-pnpm --filter @nebutra/api-gateway generate:spec
+pnpm --filter @nebutra/gateway generate:spec
 pnpm generate:api-types
 ```
 

@@ -246,10 +246,10 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Build workspace dependencies of api-gateway
-        run: pnpm turbo build --filter="@nebutra/api-gateway^..."
+        run: pnpm turbo build --filter="@nebutra/gateway^..."
 
       - name: Build api-gateway
-        run: pnpm --filter @nebutra/api-gateway build
+        run: pnpm --filter @nebutra/gateway build
 
       - name: pnpm deploy → self-contained bundle
         run: |
@@ -258,7 +258,7 @@ jobs:
           rm -rf "$STAGE"
           # `pnpm deploy` produces a directory with the workspace package's
           # production deps fully resolved and hoisted — perfect for a server.
-          pnpm deploy --filter @nebutra/api-gateway --prod --legacy "$STAGE"
+          pnpm deploy --filter @nebutra/gateway --prod --legacy "$STAGE"
           ls -la "$STAGE"
           tar -czf "$RUNNER_TEMP/nebutra-api-${{ github.sha }}.tar.gz" -C "$STAGE" .
 

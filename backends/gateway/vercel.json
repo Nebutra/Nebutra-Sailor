@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm turbo build --filter=@nebutra/api-gateway",
+  "buildCommand": "pnpm turbo build --filter=@nebutra/gateway",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh backends/gateway",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "outputDirectory": "dist",

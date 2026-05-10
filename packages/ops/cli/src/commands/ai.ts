@@ -403,7 +403,7 @@ async function handleAiTest(prompt: string, options: AiCommandOptions) {
 
   const output = {
     prompt,
-    note: "To execute this test, the API gateway must be running locally. Run: pnpm --filter @nebutra/api-gateway dev",
+    note: "To execute this test, the API gateway must be running locally. Run: pnpm --filter @nebutra/gateway dev",
     endpoint: "http://localhost:3001/api/ai/test",
     method: "POST",
     payload: {
@@ -413,7 +413,7 @@ async function handleAiTest(prompt: string, options: AiCommandOptions) {
 
   if (!options.dryRun) {
     logger.warn(
-      "AI test execution requires a running API gateway. Start it with: pnpm --filter @nebutra/api-gateway dev",
+      "AI test execution requires a running API gateway. Start it with: pnpm --filter @nebutra/gateway dev",
     );
   }
 

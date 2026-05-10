@@ -8,7 +8,7 @@ describe("ci harness dependency closure", () => {
 
     expect(workflow).toContain('pnpm turbo build --filter="@nebutra/landing-page^..."');
     expect(workflow).toContain('pnpm turbo build --filter="@nebutra/web^..."');
-    expect(workflow).toContain('pnpm turbo build --filter="@nebutra/api-gateway^..."');
+    expect(workflow).toContain('pnpm turbo build --filter="@nebutra/gateway^..."');
   });
 
   it("keeps the core affected build focused on runtime-critical surfaces", async () => {

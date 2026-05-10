@@ -37,7 +37,7 @@ If a frontend behavior is derived from API contracts, regenerate types from
 Regenerate generated API types with:
 
 ```bash
-pnpm --filter @nebutra/api-gateway generate:spec
+pnpm --filter @nebutra/gateway generate:spec
 pnpm --filter @nebutra/web generate:api-types
 ```
 

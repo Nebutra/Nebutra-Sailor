@@ -251,7 +251,7 @@ pnpm --filter @nebutra/landing-page dev
 pnpm --filter @nebutra/web dev
 
 # Run the API gateway
-pnpm --filter @nebutra/api-gateway dev
+pnpm --filter @nebutra/gateway dev
 
 # Generate a new color palette (for rebranding contributions)
 node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B

@@ -218,7 +218,7 @@ log "构建 Web App..."
 pnpm turbo build --filter=@nebutra/web 2>&1 | tail -5
 
 log "构建 API Gateway..."
-pnpm turbo build --filter=@nebutra/api-gateway 2>&1 | tail -5
+pnpm turbo build --filter=@nebutra/gateway 2>&1 | tail -5
 
 log "所有应用构建完成"
 

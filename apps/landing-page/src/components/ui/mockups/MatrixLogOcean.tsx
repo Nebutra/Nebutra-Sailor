@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 const MOCK_LOGS = [
   "[SUCCESS] Pipeline 'nebutra-sailor:main' completed in 1m 45s",
   "[INFO] Starting container deployment to eks-cluster-use1",
-  "[WARN] High memory utilization in @nebutra/api-gateway (85%)",
+  "[WARN] High memory utilization in @nebutra/gateway (85%)",
   "[DEBUG] Checking cache: HIT for /api/v1/workspaces",
   "[INFO] Scaled @nebutra/web deployment to 4 replicas",
   "[SUCCESS] 853 vitest suites passed",

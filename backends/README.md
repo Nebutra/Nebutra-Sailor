@@ -56,7 +56,7 @@ service via the shared `infra/runtime/docker/Dockerfile.python`).
 ### TypeScript gateway
 
 ```bash
-pnpm --filter @nebutra/api-gateway dev   # localhost:3002
+pnpm --filter @nebutra/gateway dev   # localhost:3002
 ```
 
 ### Python services

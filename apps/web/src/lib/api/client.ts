@@ -2,7 +2,7 @@
  * Typed API client for the Nebutra API gateway.
  *
  * Types are auto-generated from the OpenAPI spec via:
- *   pnpm --filter @nebutra/api-gateway generate:spec
+ *   pnpm --filter @nebutra/gateway generate:spec
  *   pnpm --filter @nebutra/web generate:api-types
  *
  * The generated file `types.generated.ts` is committed as a stub and overwritten in CI.

@@ -688,24 +688,24 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build api-gateway dependency closure
-        run: pnpm turbo build --filter="@nebutra/api-gateway^..."
+        run: pnpm turbo build --filter="@nebutra/gateway^..."
         env:
           SKIP_ENV_VALIDATION: true
 
       - name: Build api-gateway
-        run: pnpm --filter @nebutra/api-gateway build
+        run: pnpm --filter @nebutra/gateway build
         env:
           SKIP_ENV_VALIDATION: true
 
       - name: Export OpenAPI spec
-        run: pnpm --filter @nebutra/api-gateway generate:spec
+        run: pnpm --filter @nebutra/gateway generate:spec
         env:
           DATABASE_URL: "postgresql://stub:stub@localhost:5432/stub"
           REDIS_URL: "redis://localhost:6379"
           CLERK_SECRET_KEY: "sk_test_stub"
 
       - name: Validate spec with Redocly
-        run: pnpm --filter @nebutra/api-gateway exec redocly lint openapi.json --format=stylish
+        run: pnpm --filter @nebutra/gateway exec redocly lint openapi.json --format=stylish
 
       - name: Check API backward compatibility
         if: github.event_name == 'pull_request'

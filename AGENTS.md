@@ -194,7 +194,7 @@ const { data, isLoading } = useQuery({
 
 Types are auto-generated from the Hono OpenAPI spec:
 ```bash
-pnpm --filter @nebutra/api-gateway generate:spec   # Export OpenAPI JSON
+pnpm --filter @nebutra/gateway generate:spec   # Export OpenAPI JSON
 pnpm generate:api-types                             # Generate TypeScript types
 ```
 

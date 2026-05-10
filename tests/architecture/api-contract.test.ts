@@ -112,7 +112,7 @@ describe("Property 5b: OpenAPI Spec File", () => {
     // remaining spec-content tests still guard correctness locally.
     if (!existsSync(OPENAPI_SPEC_PATH)) {
       console.warn(
-        "openapi.json not found — run 'pnpm --filter @nebutra/api-gateway generate:spec' to generate it.",
+        "openapi.json not found — run 'pnpm --filter @nebutra/gateway generate:spec' to generate it.",
       );
       return;
     }

@@ -905,7 +905,7 @@ git commit -m "test: add token bucket test suite for rate-limit package"
 **Step 1: Add vitest to api-gateway**
 
 ```bash
-pnpm add -D vitest @vitest/coverage-v8 --filter @nebutra/api-gateway
+pnpm add -D vitest @vitest/coverage-v8 --filter @nebutra/gateway
 ```
 
 **Step 2: Write test file**
@@ -1219,7 +1219,7 @@ describe("GET /cookie-consent", () => {
 
 ```bash
 cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor
-pnpm --filter @nebutra/api-gateway vitest run 2>&1
+pnpm --filter @nebutra/gateway vitest run 2>&1
 ```
 
 Expected: all consent tests PASS. Smoke tests continue to pass too.
@@ -1246,7 +1246,7 @@ git commit -m "test: add consent route integration tests with Prisma mocks"
 **Step 1: Add @nebutra/logger dependency**
 
 ```bash
-pnpm add @nebutra/logger --filter @nebutra/api-gateway --workspace
+pnpm add @nebutra/logger --filter @nebutra/gateway --workspace
 ```
 
 **Step 2: Replace console statements in index.ts**
@@ -1342,7 +1342,7 @@ git commit -m "feat: replace all console statements in api-gateway with structur
 **Step 1: Add alerting dependency**
 
 ```bash
-pnpm add @nebutra/alerting --filter @nebutra/api-gateway --workspace
+pnpm add @nebutra/alerting --filter @nebutra/gateway --workspace
 ```
 
 **Step 2: Wire in index.ts**
@@ -1389,7 +1389,7 @@ git commit -m "feat: wire alerting error handler and startup initialization in a
 - [ ] `pnpm --filter @nebutra/logger typecheck` passes
 - [ ] `pnpm --filter @nebutra/alerting vitest run` all tests PASS
 - [ ] `pnpm --filter @nebutra/rate-limit vitest run` all tests PASS
-- [ ] `pnpm --filter @nebutra/api-gateway vitest run` all tests PASS (smoke + consent)
+- [ ] `pnpm --filter @nebutra/gateway vitest run` all tests PASS (smoke + consent)
 - [ ] `pnpm lint` no errors (no console.\* in api-gateway)
 - [ ] `LOG_LEVEL=debug pnpm dev` (in api-gateway) shows human-readable logs
 - [ ] CORS: `CORS_ORIGINS=https://staging.example.com` accepted by server

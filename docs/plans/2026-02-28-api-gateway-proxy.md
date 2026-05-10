@@ -67,7 +67,7 @@ The `// Service URLs` block should now look like:
 **Step 4: Verify TypeScript compiles**
 
 ```bash
-pnpm --filter @nebutra/api-gateway typecheck
+pnpm --filter @nebutra/gateway typecheck
 ```
 
 Expected: no errors.
@@ -109,7 +109,7 @@ export function buildServiceAuthHeader(): Record<string, string> {
 **Step 2: Verify TypeScript compiles**
 
 ```bash
-pnpm --filter @nebutra/api-gateway typecheck
+pnpm --filter @nebutra/gateway typecheck
 ```
 
 Expected: no errors.
@@ -311,7 +311,7 @@ describe("proxyRequest", () => {
 **Step 2: Run tests — expect them to fail with "module not found"**
 
 ```bash
-pnpm --filter @nebutra/api-gateway test src/lib/proxy.test.ts
+pnpm --filter @nebutra/gateway test src/lib/proxy.test.ts
 ```
 
 Expected: FAIL — `Cannot find module './proxy.js'`
@@ -499,7 +499,7 @@ export async function proxyRequest(
 **Step 4: Run tests — expect them all to pass**
 
 ```bash
-pnpm --filter @nebutra/api-gateway test src/lib/proxy.test.ts
+pnpm --filter @nebutra/gateway test src/lib/proxy.test.ts
 ```
 
 Expected: 6 passing tests.
@@ -507,7 +507,7 @@ Expected: 6 passing tests.
 **Step 5: Verify TypeScript**
 
 ```bash
-pnpm --filter @nebutra/api-gateway typecheck
+pnpm --filter @nebutra/gateway typecheck
 ```
 
 Expected: no errors.
@@ -592,7 +592,7 @@ describe("AI routes", () => {
 **Step 2: Run tests — expect them to fail**
 
 ```bash
-pnpm --filter @nebutra/api-gateway test src/routes/ai/ai.test.ts
+pnpm --filter @nebutra/gateway test src/routes/ai/ai.test.ts
 ```
 
 Expected: FAIL — `Cannot find module './index.js'`
@@ -646,7 +646,7 @@ aiRoutes.all("/*", async (c) => {
 **Step 4: Run tests — expect them to pass**
 
 ```bash
-pnpm --filter @nebutra/api-gateway test src/routes/ai/ai.test.ts
+pnpm --filter @nebutra/gateway test src/routes/ai/ai.test.ts
 ```
 
 Expected: 2 passing tests.
@@ -730,7 +730,7 @@ describe("Content routes", () => {
 **Step 2: Run tests — expect them to fail**
 
 ```bash
-pnpm --filter @nebutra/api-gateway test src/routes/content/content.test.ts
+pnpm --filter @nebutra/gateway test src/routes/content/content.test.ts
 ```
 
 Expected: FAIL — `Cannot find module './index.js'`
@@ -789,7 +789,7 @@ contentRoutes.all("/*", async (c) => {
 **Step 4: Run tests — expect them to pass**
 
 ```bash
-pnpm --filter @nebutra/api-gateway test src/routes/content/content.test.ts
+pnpm --filter @nebutra/gateway test src/routes/content/content.test.ts
 ```
 
 Expected: 3 passing tests.
@@ -939,7 +939,7 @@ describe("Billing routes — authenticated endpoints", () => {
 **Step 2: Run tests — expect them to fail**
 
 ```bash
-pnpm --filter @nebutra/api-gateway test src/routes/billing/billing.test.ts
+pnpm --filter @nebutra/gateway test src/routes/billing/billing.test.ts
 ```
 
 Expected: FAIL — `Cannot find module './index.js'`
@@ -1073,7 +1073,7 @@ billingRoutes.all("/*", async (c) => {
 **Step 4: Run tests — expect them to pass**
 
 ```bash
-pnpm --filter @nebutra/api-gateway test src/routes/billing/billing.test.ts
+pnpm --filter @nebutra/gateway test src/routes/billing/billing.test.ts
 ```
 
 Expected: 5 passing tests.
@@ -1154,7 +1154,7 @@ app.onError((err, c) => {
 **Step 4: Verify TypeScript**
 
 ```bash
-pnpm --filter @nebutra/api-gateway typecheck
+pnpm --filter @nebutra/gateway typecheck
 ```
 
 Expected: no errors.
@@ -1163,7 +1163,7 @@ Expected: no errors.
 
 ```bash
 # In one terminal:
-pnpm --filter @nebutra/api-gateway dev
+pnpm --filter @nebutra/gateway dev
 
 # In another terminal:
 curl -s -o /dev/null -w "%{http_code}" \
@@ -1187,7 +1187,7 @@ git commit -m "feat(api-gateway): register ai/content/billing proxy routes and u
 **Step 1: Run all api-gateway tests**
 
 ```bash
-pnpm --filter @nebutra/api-gateway test
+pnpm --filter @nebutra/gateway test
 ```
 
 Expected: all tests pass (proxy.test.ts × 6, ai.test.ts × 2, content.test.ts × 3, billing.test.ts × 5, plus any pre-existing tests).
@@ -1203,7 +1203,7 @@ Expected: no errors.
 **Step 3: Verify the gateway starts cleanly**
 
 ```bash
-pnpm --filter @nebutra/api-gateway dev
+pnpm --filter @nebutra/gateway dev
 ```
 
 Expected: `API Gateway starting on http://localhost:3002` (no startup errors).
@@ -1228,7 +1228,7 @@ Start the Python services locally (requires Docker or direct Python env):
 cd backends/python/ai && uvicorn app.main:app --port 8001 --reload
 
 # Terminal 2 — Gateway
-AI_SERVICE_URL=http://localhost:8001 pnpm --filter @nebutra/api-gateway dev
+AI_SERVICE_URL=http://localhost:8001 pnpm --filter @nebutra/gateway dev
 ```
 
 Then test a real proxy:

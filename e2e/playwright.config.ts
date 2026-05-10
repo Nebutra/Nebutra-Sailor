@@ -31,7 +31,7 @@ export default defineConfig({
       timeout: 120_000,
     },
     {
-      command: "pnpm --filter @nebutra/api-gateway dev",
+      command: "pnpm --filter @nebutra/gateway dev",
       url: "http://localhost:3002",
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,

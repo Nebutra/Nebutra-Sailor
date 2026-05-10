@@ -34,9 +34,9 @@ semantics.
 ## Validation
 
 ```bash
-pnpm --filter @nebutra/api-gateway test
-pnpm --filter @nebutra/api-gateway typecheck
-pnpm --filter @nebutra/api-gateway generate:spec
+pnpm --filter @nebutra/gateway test
+pnpm --filter @nebutra/gateway typecheck
+pnpm --filter @nebutra/gateway generate:spec
 ```
 
 Run `generate:spec` whenever route contracts or OpenAPI annotations change.

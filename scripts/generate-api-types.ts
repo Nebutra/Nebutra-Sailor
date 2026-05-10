@@ -47,14 +47,14 @@ if (gatewayUrl) {
 } else {
   // ── File mode: build gateway → export spec → generate types ───────────────
   process.stdout.write("[generate:api-types] Building api-gateway…\n");
-  execSync("pnpm --filter @nebutra/api-gateway build", {
+  execSync("pnpm --filter @nebutra/gateway build", {
     stdio: "inherit",
     cwd: ROOT,
     env: { ...process.env, SKIP_ENV_VALIDATION: "true" },
   });
 
   process.stdout.write("[generate:api-types] Exporting OpenAPI spec…\n");
-  execSync("pnpm --filter @nebutra/api-gateway generate:spec", {
+  execSync("pnpm --filter @nebutra/gateway generate:spec", {
     stdio: "inherit",
     cwd: ROOT,
     env: {

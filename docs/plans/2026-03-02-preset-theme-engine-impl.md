@@ -1023,7 +1023,7 @@ describe("getActivePackages", () => {
     const packages = getActivePackages(mockConfig);
     expect(packages).toContain("@nebutra/web");
     expect(packages).toContain("@nebutra/landing-page");
-    expect(packages).toContain("@nebutra/api-gateway");
+    expect(packages).toContain("@nebutra/gateway");
     expect(packages).toContain("@nebutra/admin");
     expect(packages).not.toContain("@nebutra/blog");
   });
@@ -1047,7 +1047,7 @@ const APP_PACKAGE_MAP: Record<string, string> = {
   "landing-page": "@nebutra/landing-page",
   blog: "@nebutra/blog",
   admin: "@nebutra/admin",
-  "api-gateway": "@nebutra/api-gateway",
+  "api-gateway": "@nebutra/gateway",
   studio: "@nebutra/studio",
   storybook: "@nebutra/storybook",
   "docs-hub": "@nebutra/docs-hub",
@@ -1262,18 +1262,18 @@ Add these scripts to root `package.json` under `"scripts"`:
 
 ```json
 {
-  "dev:ai-saas": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/api-gateway --filter=@nebutra/studio --filter=@nebutra/admin --filter=@nebutra/docs-hub",
+  "dev:ai-saas": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/gateway --filter=@nebutra/studio --filter=@nebutra/admin --filter=@nebutra/docs-hub",
   "dev:marketing": "turbo run dev --filter=@nebutra/landing-page --filter=@nebutra/blog --filter=@nebutra/studio",
-  "dev:dashboard": "turbo run dev --filter=@nebutra/web --filter=@nebutra/admin --filter=@nebutra/api-gateway",
-  "dev:overseas": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/api-gateway --filter=@nebutra/blog",
+  "dev:dashboard": "turbo run dev --filter=@nebutra/web --filter=@nebutra/admin --filter=@nebutra/gateway",
+  "dev:overseas": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/gateway --filter=@nebutra/blog",
   "dev:growth": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/blog",
   "dev:creative": "turbo run dev --filter=@nebutra/landing-page --filter=@nebutra/blog --filter=@nebutra/storybook",
   "dev:blog": "turbo run dev --filter=@nebutra/landing-page --filter=@nebutra/blog",
-  "dev:community": "turbo run dev --filter=@nebutra/web --filter=@nebutra/api-gateway --filter=@nebutra/blog",
+  "dev:community": "turbo run dev --filter=@nebutra/web --filter=@nebutra/gateway --filter=@nebutra/blog",
   "dev:solo": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/admin --filter=@nebutra/blog",
-  "build:ai-saas": "turbo run build --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/api-gateway --filter=@nebutra/studio --filter=@nebutra/admin --filter=@nebutra/docs-hub",
+  "build:ai-saas": "turbo run build --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/gateway --filter=@nebutra/studio --filter=@nebutra/admin --filter=@nebutra/docs-hub",
   "build:marketing": "turbo run build --filter=@nebutra/landing-page --filter=@nebutra/blog --filter=@nebutra/studio",
-  "build:dashboard": "turbo run build --filter=@nebutra/web --filter=@nebutra/admin --filter=@nebutra/api-gateway",
+  "build:dashboard": "turbo run build --filter=@nebutra/web --filter=@nebutra/admin --filter=@nebutra/gateway",
   "preset:env": "tsx packages/ops/preset/src/cli.ts"
 }
 ```

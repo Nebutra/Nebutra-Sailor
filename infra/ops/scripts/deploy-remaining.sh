@@ -83,7 +83,7 @@ else
 fi
 
 echo ">>> 构建 API Gateway..."
-if pnpm turbo build --filter=@nebutra/api-gateway 2>&1 | tail -10; then
+if pnpm turbo build --filter=@nebutra/gateway 2>&1 | tail -10; then
   log "API Gateway 构建成功"
 else
   warn "API Gateway 构建失败，可能需要手动修复"

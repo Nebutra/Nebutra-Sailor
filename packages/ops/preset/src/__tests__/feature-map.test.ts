@@ -67,7 +67,7 @@ describe("getActivePackages", () => {
     const packages = getActivePackages(mockConfig);
     expect(packages).toContain("@nebutra/web");
     expect(packages).toContain("@nebutra/landing-page");
-    expect(packages).toContain("@nebutra/api-gateway");
+    expect(packages).toContain("@nebutra/gateway");
     expect(packages).toContain("@nebutra/admin");
     expect(packages).not.toContain("@nebutra/blog");
   });

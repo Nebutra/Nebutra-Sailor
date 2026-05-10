@@ -6,7 +6,7 @@ const APP_PACKAGE_MAP: Record<string, string> = {
   "landing-page": "@nebutra/landing-page",
   blog: "@nebutra/blog",
   admin: "@nebutra/admin",
-  "api-gateway": "@nebutra/api-gateway",
+  "api-gateway": "@nebutra/gateway",
   studio: "@nebutra/studio",
   storybook: "@nebutra/storybook",
   "sailor-docs": "@nebutra/sailor-docs",

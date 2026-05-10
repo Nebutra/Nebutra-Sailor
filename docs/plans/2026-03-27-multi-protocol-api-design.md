@@ -126,7 +126,7 @@ oRPC auto-generates a type-safe client:
 ```ts
 // apps/web usage
 import { createORPCClient } from "@orpc/client";
-import type { orpcRouter } from "@nebutra/api-gateway/orpc";
+import type { orpcRouter } from "@nebutra/gateway/orpc";
 
 const client = createORPCClient<typeof orpcRouter>({
   baseURL: "/api/rpc",
