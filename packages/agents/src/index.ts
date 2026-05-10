@@ -1,7 +1,29 @@
 // ─── Core ─────────────────────────────────────────────────────────────────────
 export { BaseAgent } from "./agent";
+// ─── Env / Observability / Fallback ─────────────────────────────────────────
+export {
+  type AgentsEnv,
+  AgentsEnvSchema,
+  type FallbackProviderName,
+  getAgentsEnv,
+  isLangfuseConfigured,
+} from "./env";
+export {
+  buildSystemWithCache,
+  type CreateFallbackModelOptions,
+  type FallbackResult,
+  isRetryableError,
+  runWithFallback,
+  withAnthropicCacheControl,
+} from "./fallback";
 // ─── Memory ───────────────────────────────────────────────────────────────────
 export { clearMemory, getMemory, saveMemory } from "./memory";
+export {
+  buildTelemetryConfig,
+  flushTelemetry,
+  initLangfuse,
+  type TelemetryMetadata,
+} from "./observability";
 export { AgentOrchestrator } from "./orchestrator";
 export { AgentRouter } from "./router";
 // ─── Vercel AI SDK helpers (absorbed from @nebutra/ai-sdk) ───────────────────

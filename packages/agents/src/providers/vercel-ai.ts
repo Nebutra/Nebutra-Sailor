@@ -7,6 +7,8 @@
  */
 
 import { BaseAgent } from "../agent";
+import { withAnthropicCacheControl } from "../fallback";
+import { buildTelemetryConfig } from "../observability";
 import type { AgentContext, AgentMessage, AgentResponse } from "../types";
 
 export class VercelAIAgent extends BaseAgent {
@@ -37,6 +39,22 @@ export class VercelAIAgent extends BaseAgent {
 
     // Build streamText options, conditionally including tools to satisfy
     // exactOptionalPropertyTypes (tools must not be `undefined`).
+    //
+    // Cost optimization: stable content (system prompt + tool defs) is placed
+    // FIRST and dynamic content (user messages) LAST. This ordering is required
+    // for both Anthropic explicit prompt caching (90% discount via `cacheControl`)
+    // and OpenAI automatic caching (≥1024 token stable prefix). Reordering or
+    // mutating the system prompt invalidates the cache on every call.
+    const telemetry = buildTelemetryConfig({
+      functionId: `agent.${this.config.id}`,
+      metadata: {
+        tenantId: context.tenantId,
+        userId: context.userId,
+        sessionId: context.conversationId,
+        agentId: this.config.id,
+      },
+    });
+
     const baseOptions = {
       model: this.config.model as unknown as StreamTextParams["model"],
       system: this.config.instructions,
@@ -45,7 +63,11 @@ export class VercelAIAgent extends BaseAgent {
         content: m.content,
       })),
       stopWhen: stepCountIs(this.config.maxSteps ?? 20),
-    };
+      // Anthropic prompt cache control on the system message — 90% cost
+      // reduction on cached prefix tokens. No-op for non-Anthropic providers.
+      providerOptions: withAnthropicCacheControl(),
+      experimental_telemetry: telemetry,
+    } as StreamTextParams;
 
     const streamOptions: StreamTextParams =
       toolSet !== undefined ? { ...baseOptions, tools: toolSet } : baseOptions;
