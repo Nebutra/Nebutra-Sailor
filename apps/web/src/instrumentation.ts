@@ -7,7 +7,19 @@
  */
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
-    // ── OpenTelemetry ───────────────────────────────────────────────────────
+    // ── Global OTel NodeSDK (Langfuse + optional OTLP) ─────────────────────
+    // Must run BEFORE Sentry so Sentry's @sentry/opentelemetry layer attaches
+    // to the existing global tracer provider rather than installing its own.
+    try {
+      const { initGlobalOtel } = await import("@nebutra/logger/otel-bootstrap");
+      initGlobalOtel({ serviceName: "nebutra-web" });
+    } catch (err) {
+      process.stderr.write(
+        `[web] Global OTel initialization failed: ${err instanceof Error ? err.message : String(err)}\n`,
+      );
+    }
+
+    // ── Legacy OTel path (OTLP traces + metrics, gated by OTEL_ENABLED) ────
     try {
       const { initOtel } = await import("@nebutra/logger/otel");
       initOtel({ serviceName: "web" });

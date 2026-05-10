@@ -8,10 +8,12 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./otel": "./src/otel.ts"
+    "./otel": "./src/otel.ts",
+    "./otel-bootstrap": "./src/otel-bootstrap.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@opentelemetry/api": "^1.9.0",
@@ -20,6 +22,8 @@
     "@opentelemetry/exporter-trace-otlp-http": "^0.213.0",
     "@opentelemetry/sdk-metrics": "^1.30.0",
     "@opentelemetry/sdk-node": "^0.213.0",
+    "@opentelemetry/sdk-trace-base": "^1.30.0",
+    "langfuse-vercel": "^3.38.20",
     "pino": "^10.3.1"
   },
   "devDependencies": {
