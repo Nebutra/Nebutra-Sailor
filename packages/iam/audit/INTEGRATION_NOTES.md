@@ -23,6 +23,7 @@ events in production.
 | `apps/web/src/app/api/organizations/route.ts` (POST) | `org.created` | severity `info` |
 | `apps/web/src/app/api/organizations/[orgId]/route.ts` (PATCH) | `org.updated` | severity `info`; `changes.before/after.name` |
 | `apps/web/src/app/api/organizations/[orgId]/route.ts` (DELETE) | `org.deleted` | severity **critical** |
+| `apps/web/src/app/api/organizations/[orgId]/members/route.ts` (POST) | `org.member.added` | severity `warning`; metadata `{ invitationId, role, invitedBy }`; resource is the invitee email until they accept |
 | `apps/web/src/app/api/organizations/[orgId]/members/[memberId]/route.ts` (PATCH) | `org.member.role_changed` | severity `warning`; `changes.before/after.role` |
 | `apps/web/src/app/api/organizations/[orgId]/members/[memberId]/route.ts` (DELETE) | `org.member.removed` | severity `warning`; metadata flags `self` for self-removal |
 | `apps/web/src/app/api/webhooks/route.ts` (POST) | `webhook.created` | severity `warning` |
@@ -34,7 +35,6 @@ events in production.
 These routes do not currently exist (or only expose read-only handlers) so
 there is nothing to audit. Wire when the route handler lands.
 
-- `apps/web/src/app/api/organizations/[orgId]/members/route.ts` (POST add member) — handler not implemented yet. When added, emit `org.member.added` (severity `warning`).
 - `apps/web/src/app/api/admin/users/route.ts` (PATCH/PUT/DELETE) — only `GET` exists today. When admin mutation handlers land, emit `admin.user.updated` (severity `warning`).
 - `apps/web/src/app/api/admin/organizations/route.ts` (PATCH/PUT/DELETE) — only `GET` exists today. When admin mutation handlers land, emit `admin.org.updated` (severity `warning`).
 - `auth.password.changed` / `auth.2fa.enabled` / `auth.2fa.disabled` — actions are reserved in the `ACTIONS` catalog. The Better Auth catch-all does not currently expose distinct paths for these, so they're left for a follow-up that taps Better Auth's hook surface directly.
