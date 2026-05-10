@@ -1,12 +1,30 @@
 # AI Service
 
-FastAPI-based AI service providing LLM generation, embeddings, and translation.
+FastAPI-based AI service for **batch / specialized AI workloads** that are
+better in Python than in the TypeScript edge runtime.
 
-## Features
+## When to use this service vs the TS-side AI stack
 
-- **Text Generation** — LLM-powered content generation
-- **Embeddings** — Vector embeddings for semantic search
-- **Translation** — AI-powered i18n translation
+Sailor has **two AI surfaces**. They are not interchangeable — pick the right
+one for the workload:
+
+| Need | Use | Why |
+|------|-----|-----|
+| Interactive chat / streaming completion | `packages/ai/agents` (Vercel AI SDK) | Edge-deployable, sub-100ms cold start, native streaming, runs inside the Next.js process |
+| Single-shot embeddings on hot path | `packages/ai/agents` | Same — no need to cross a service boundary |
+| Provider abstraction in app code | `packages/ai/ai-providers` | TS types end-to-end, Vercel AI Gateway integration |
+| **Batch i18n / translation pipelines** | **this service** (`/api/v1/translate`) | Long-running, queued via Inngest/QStash, benefits from Python's mature i18n libs |
+| **Heavy embedding jobs (>1k docs)** | **this service** (`/api/v1/embed`) | Long-running, queued, can chunk + parallelize without blocking edge functions |
+| **Custom inference / fine-tuning / vLLM / RAG with large indices** | **this service** (future) | Python ecosystem (transformers, vLLM, langchain Python pieces) |
+
+**Rule of thumb:** if a request is interactive (user is waiting on the response),
+use the TS-side stack. If it's a job (queued, can take >5s), use this service.
+
+> The provider abstractions in `providers/` (openai, openrouter, siliconflow)
+> mirror `packages/ai/ai-providers` on purpose — Python jobs need their own
+> SDKs. Keep them in lock-step on supported provider list, but do not try to
+> share types across the language boundary; use OpenAPI-generated clients
+> instead.
 
 ## Quick Start
 
@@ -30,13 +48,13 @@ uvicorn app.main:app --reload --port 8001
 
 ## API Endpoints
 
-| Method | Endpoint            | Description       |
-| ------ | ------------------- | ----------------- |
-| `GET`  | `/`                 | Service info      |
-| `GET`  | `/health`           | Health check      |
-| `POST` | `/api/v1/generate`  | Text generation   |
-| `POST` | `/api/v1/embed`     | Create embeddings |
-| `POST` | `/api/v1/translate` | Translate text    |
+| Method | Endpoint            | Description       | Status |
+| ------ | ------------------- | ----------------- | ------ |
+| `GET`  | `/`                 | Service info      | stable |
+| `GET`  | `/health`           | Health check      | stable |
+| `POST` | `/api/v1/generate`  | Text generation   | **legacy** — prefer `packages/ai/agents` for interactive use |
+| `POST` | `/api/v1/embed`     | Create embeddings | batch only — interactive callers should use Vercel AI SDK |
+| `POST` | `/api/v1/translate` | Translate text    | **canonical** — this is the workload Python is best at |
 
 ## Environment Variables
 
@@ -84,12 +102,23 @@ backends/python/ai/
 
 ## Integration
 
-Called by the BFF layer (`backends/gateway`) via internal HTTP:
+Called by the BFF layer (`backends/gateway`) via internal HTTP — never
+exposed to clients directly:
 
 ```typescript
-// In api-gateway
-const response = await fetch("http://ai-service:8001/api/v1/generate", {
+// In backends/gateway/src/routes/ai
+const response = await fetch(`${env.AI_SERVICE_URL}/api/v1/translate`, {
   method: "POST",
-  body: JSON.stringify({ prompt, model: "gpt-5.2" }),
+  headers: {
+    "Content-Type": "application/json",
+    "X-Tenant-ID": tenantId,
+    // s2s HMAC token added by gateway middleware
+  },
+  body: JSON.stringify({ text, targetLocales: ["zh-CN", "ja"] }),
 });
 ```
+
+Auth: requests carry an HMAC-signed `x-service-token` validated by
+`_shared/auth/`. Tenant context is propagated via `X-Tenant-ID` and used by
+`_shared/db/` for RLS. Never trust headers from clients — only from the
+gateway.
