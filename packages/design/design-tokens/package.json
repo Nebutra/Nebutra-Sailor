@@ -25,7 +25,7 @@
     "style-dictionary.config.mjs"
   ],
   "scripts": {
-    "build": "node style-dictionary.config.mjs",
+    "build": "pnpm clean && node style-dictionary.config.mjs",
     "clean": "rm -rf build && mkdir -p build",
     "rebuild": "pnpm clean && pnpm build",
     "verify:parity": "tsx scripts/verify-parity.ts",
