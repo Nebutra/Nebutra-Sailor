@@ -1,3 +1,4 @@
+import { auditLogger } from "@nebutra/audit";
 import { NextResponse } from "next/server";
 import { API_BASE_URL } from "@/lib/api/client";
 import { getAuth } from "@/lib/auth";
@@ -122,6 +123,22 @@ export async function POST(request: Request) {
       },
       { status: response.ok ? 502 : response.status },
     );
+  }
+
+  // SOC 2 audit — record checkout intent. Resolved auth is best-effort; the
+  // event is emitted only if we can scope it to a tenant.
+  const { userId, orgId } = await getAuth(request);
+  if (userId && orgId) {
+    await auditLogger(request, {
+      actor: { id: userId, type: "user" },
+      tenantId: orgId,
+    }).log({
+      action: "billing.checkout.started",
+      outcome: "success",
+      resource: { type: "stripe_price", id: body.priceId },
+      severity: "info",
+      ...(quantity !== null ? { metadata: { quantity, seatBased: body.seatBased } } : {}),
+    });
   }
 
   return NextResponse.redirect(payload.url, 303);

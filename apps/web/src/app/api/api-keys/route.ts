@@ -1,4 +1,5 @@
 import { createHash, randomBytes } from "node:crypto";
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -165,6 +166,19 @@ export async function POST(request: Request) {
         expiresAt: true,
         createdAt: true,
       },
+    });
+
+    // SOC 2 audit — record API key creation. Failure to log MUST NOT block the
+    // 201 response, so auditLogger.log internally swallows errors.
+    await auditLogger(request, {
+      actor: { id: auth.userId, type: "user" },
+      tenantId: auth.orgId,
+    }).log({
+      action: "api_key.created",
+      outcome: "success",
+      resource: { type: "api_key", id: created.id, name: created.name },
+      severity: "warning",
+      metadata: { keyPrefix: created.keyPrefix, scopes: created.scopes },
     });
 
     // Plaintext key is returned ONCE — never persisted, never returned again.

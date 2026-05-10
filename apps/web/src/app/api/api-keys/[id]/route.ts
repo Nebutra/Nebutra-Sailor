@@ -1,3 +1,4 @@
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { getAuth } from "@/lib/auth";
@@ -8,7 +9,7 @@ interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-export async function DELETE(_request: Request, context: RouteContext) {
+export async function DELETE(request: Request, context: RouteContext) {
   const auth = await getAuth();
 
   if (!auth.isSignedIn || !auth.userId) {
@@ -58,6 +59,17 @@ export async function DELETE(_request: Request, context: RouteContext) {
     await db.aPIKey.update({
       where: { id },
       data: { revokedAt: new Date() },
+    });
+
+    // SOC 2 audit — API key revocation is a security-sensitive event.
+    await auditLogger(request, {
+      actor: { id: auth.userId, type: "user" },
+      tenantId: auth.orgId,
+    }).log({
+      action: "api_key.revoked",
+      outcome: "success",
+      resource: { type: "api_key", id },
+      severity: "warning",
     });
 
     return NextResponse.json({ ok: true });

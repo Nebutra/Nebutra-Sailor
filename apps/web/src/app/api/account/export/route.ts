@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -122,6 +123,21 @@ export async function POST(request: Request) {
       exportId,
       sizeBytes,
       inline,
+    });
+
+    // SOC 2 audit — GDPR Art. 20 / PIPL Art. 45 data portability event.
+    // Tenant scoping: account-level exports are not org-scoped, so we use the
+    // user id as the tenant boundary for these events. Cross-org exports
+    // require a separate `org.export` action when those routes land.
+    await auditLogger(request, {
+      actor: { id: userId, type: "user" },
+      tenantId: userId,
+    }).log({
+      action: "data.export.completed",
+      outcome: "success",
+      resource: { type: "account_export", id: exportId },
+      severity: "warning",
+      metadata: { sizeBytes, inline },
     });
 
     return NextResponse.json(
