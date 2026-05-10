@@ -42,7 +42,7 @@
     },
     "lint": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", "eslint.config*", ".eslintrc*"],
+      "inputs": ["$TURBO_DEFAULT$", "biome.json", "biome.jsonc"],
       "env": ["NODE_ENV"]
     },
     "typecheck": {
