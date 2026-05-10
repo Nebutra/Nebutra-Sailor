@@ -14,12 +14,12 @@
     "./styles.css": "./styles.css"
   },
   "scripts": {
-    "prebuild": "pnpm --filter @nebutra/design-tokens build",
     "build": "node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/styles.generated.css', './styles.css'); console.log('styles.css regenerated from @nebutra/design-tokens')\"",
     "sync": "pnpm --filter @nebutra/design-tokens build && node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/styles.generated.css', './styles.css')\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/design-tokens": "workspace:*",
     "next-themes": "^0.4.6"
   },
   "devDependencies": {
