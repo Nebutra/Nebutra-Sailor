@@ -7,6 +7,7 @@ services:
   # ============================================
 
   # PostgreSQL (Supabase alternative for local dev)
+  # Schema is owned by Prisma 7 (packages/platform/db/prisma/) — see db-migrate service.
   postgres:
     image: pgvector/pgvector:pg16
     container_name: nebutra-postgres
@@ -18,14 +19,24 @@ services:
       - "127.0.0.1:5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./infra/supabase/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
-      - ./infra/supabase/policies.sql:/docker-entrypoint-initdb.d/02-policies.sql
-      - ./infra/supabase/seed.sql:/docker-entrypoint-initdb.d/03-seed.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  # One-shot Prisma migrate runner. Replaces the legacy SQL bootstrap mounts.
+  db-migrate:
+    build:
+      context: .
+      dockerfile: infra/runtime/docker/Dockerfile.db-migrate
+    container_name: nebutra-db-migrate
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
 
   # Redis (Upstash alternative for local dev)
   redis:
@@ -112,6 +123,21 @@ services:
         condition: service_healthy
     profiles: ["notifications"]
 
+  # OpenFGA datastore bootstrap — `openfga migrate` creates the openfga_*
+  # tables in our shared postgres. Idempotent; safe to re-run on every up.
+  openfga-migrate:
+    image: openfga/openfga:v1.8
+    container_name: nebutra-openfga-migrate
+    command: migrate
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=postgres
+      - OPENFGA_DATASTORE_URI=postgresql://postgres:postgres@postgres:5432/nebutra?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    profiles: ["permissions"]
+
   # OpenFGA — relationship-based auth (@nebutra/permissions)
   openfga:
     image: openfga/openfga:v1.8
@@ -126,6 +152,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      openfga-migrate:
+        condition: service_completed_successfully
     profiles: ["permissions"]
 
   # ============================================
@@ -150,6 +178,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
     profiles: ["ai", "core"]
 
   content-service:
@@ -169,6 +199,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
     profiles: ["content", "core"]
 
   recsys-service:
@@ -188,6 +220,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
     profiles: ["recsys", "core"]
 
   ecommerce-service:
@@ -209,6 +243,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
     profiles: ["ecommerce", "core"]
 
   web3-service:
@@ -229,6 +265,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
     profiles: ["web3"]
 
   billing-service:
@@ -254,6 +292,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
     profiles: ["billing", "core"]
 
   event-ingest-service:
@@ -284,9 +324,7 @@ services:
   idp:
     build:
       context: .
-      dockerfile: infra/runtime/docker/Dockerfile.node
-      args:
-        APP: idp
+      dockerfile: apps/idp/Dockerfile
     container_name: nebutra-idp
     ports:
       - "127.0.0.1:3100:3100"
@@ -301,6 +339,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
     profiles: ["idp", "core"]
 
   # ============================================

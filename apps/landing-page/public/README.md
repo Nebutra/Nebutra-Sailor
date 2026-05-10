@@ -1,6 +1,6 @@
 # Brand Assets Protection Notice
 
-The visual assets contained in this directory (including but not limited to logos, illustrations, icons, and marketing graphics) are the intellectual property and trademarks of Wuxi Yunyu Intelligent Technology Co., Ltd. ("Nebutra").
+The visual assets contained in this directory (including but not limited to logos, illustrations, icons, and marketing graphics) are the intellectual property and trademarks of Wuxi Nebutra Intelligence Technology Co., Ltd. ("Nebutra").
 
 **These assets are NOT covered by the project's open-source AGPLv3 license.**
 

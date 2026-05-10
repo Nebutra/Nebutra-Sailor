@@ -268,6 +268,21 @@ services:
           memory: 128M
 
   # ===========================================================================
+  # One-shot Prisma migrate runner (defined in base file).
+  # NOTE: do NOT inherit *restart-policy — one-shot containers must stay
+  # `restart: "no"` so they exit cleanly after `migrate deploy` completes.
+  # ===========================================================================
+  db-migrate:
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  # ===========================================================================
   # Infrastructure services — also no direct host port exposure in prod
   # (accessible only within the Docker network by services that need them)
   # ===========================================================================

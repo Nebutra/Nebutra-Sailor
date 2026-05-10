@@ -1,6 +1,6 @@
 # Trademark Policy
 
-The Nebutra™ name, "Nebutra Sailor", and the Nebutra logos, icons, and brand graphics are trademarks of Wuxi Yunyu Intelligent Technology Co., Ltd. ("Nebutra Intelligence").
+The Nebutra™ name, "Nebutra Sailor", and the Nebutra logos, icons, and brand graphics are trademarks of Wuxi Nebutra Intelligence Technology Co., Ltd. ("Nebutra Co., Ltd").
 
 ## Open Source vs. Trademarks
 

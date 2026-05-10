@@ -161,7 +161,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     },
   },
   company: {
-    name: "Wuxi Yunyu Intelligent Technology Co., Ltd.",
+    name: "Wuxi Nebutra Intelligence Technology Co., Ltd.",
     nameCN: "无锡云毓智能科技有限公司",
     email: "contact@nebutra.com",
     year: 2024,
@@ -240,6 +240,6 @@ export const DEFAULT_BRAND: BrandConfig = {
   packageScope: "@nebutra",
   license: {
     type: "AGPLv3",
-    commercialExempt: ["Wuxi Yunyu Intelligent Technology Co., Ltd.", "Nebutra Intelligence"],
+    commercialExempt: ["Wuxi Nebutra Intelligence Technology Co., Ltd.", "Nebutra Co., Ltd"],
   },
 };

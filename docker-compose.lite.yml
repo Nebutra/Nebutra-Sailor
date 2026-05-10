@@ -9,6 +9,7 @@ services:
   # ============================================
 
   # PostgreSQL (Supabase alternative for local dev)
+  # Schema is owned by Prisma 7 (packages/platform/db/prisma/) — see db-migrate service.
   postgres:
     image: pgvector/pgvector:pg16
     container_name: nebutra-postgres-lite
@@ -20,14 +21,24 @@ services:
       - "127.0.0.1:5432:5432"
     volumes:
       - postgres_data_lite:/var/lib/postgresql/data
-      - ./infra/supabase/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
-      - ./infra/supabase/policies.sql:/docker-entrypoint-initdb.d/02-policies.sql
-      - ./infra/supabase/seed.sql:/docker-entrypoint-initdb.d/03-seed.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  # One-shot Prisma migrate runner — UI devs hit pg via Prisma, schema must exist.
+  db-migrate:
+    build:
+      context: .
+      dockerfile: infra/runtime/docker/Dockerfile.db-migrate
+    container_name: nebutra-db-migrate-lite
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
 
   # Redis (Upstash alternative for local dev)
   redis:

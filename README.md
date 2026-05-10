@@ -67,7 +67,7 @@ Nebula • Nurture • Ultra • Future
 
 <div align="center">
   <h4>Nebutra Intelligence</h4>
-  <sub>Wuxi Yunyu Intelligent Technology Co., Ltd.</sub>
+  <sub>Wuxi Nebutra Intelligence Technology Co., Ltd.</sub>
   <br /><br />
   <p>
     AI-native infrastructure company building governed product baselines<br />
@@ -610,13 +610,13 @@ This project is licensed under the **AGPLv3**.
 | **Free to modify**     | Create derivative works                                    |
 | **Free to distribute** | With attribution                                           |
 | **Commercial use**     | Requires open source                                       |
-| **Exemption**          | Wuxi Yunyu Intelligent Technology Co., Ltd. and affiliates |
+| **Exemption**          | Wuxi Nebutra Intelligence Technology Co., Ltd. and affiliates |
 
 For commercial licensing inquiries, please contact us.
 
 ### Brand Assets & Trademarks
 
-While the source code is open-source, the **brand assets** (the "Nebutra" name, "Nebutra Sailor", logos, icons, and illustrations) are protected trademarks of Wuxi Yunyu Intelligent Technology Co., Ltd.
+While the source code is open-source, the **brand assets** (the "Nebutra" name, "Nebutra Sailor", logos, icons, and illustrations) are protected trademarks of Wuxi Nebutra Intelligence Technology Co., Ltd.
 
 You may not use our brand assets to endorse your own products or services. If you clone or fork this repository to build your own product, you **must** replace all Nebutra logos and branding with your own.
 
@@ -642,7 +642,7 @@ Please see our [Trademark Policy](TRADEMARK.md) and [Brand Guidelines](BRAND_GUI
 <strong>Every release, growth goes live.</strong>
   </p>
   <p>
-    <sub>Made by <a href="https://nebutra.com"><strong>Nebutra Intelligence</strong></a> · © 2024-present <strong>Wuxi Yunyu Intelligent Technology Co., Ltd.</strong></sub>
+    <sub>Made by <a href="https://nebutra.com"><strong>Nebutra Intelligence</strong></a> · © 2024-present <strong>Wuxi Nebutra Intelligence Technology Co., Ltd.</strong></sub>
   </p>
   <br />
   <p>

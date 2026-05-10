@@ -1,0 +1,41 @@
+# Dockerfile for one-shot Prisma migrations against the local Postgres.
+# Used by the `db-migrate` service in docker-compose.yml so that subsequent
+# services can `depends_on: db-migrate: condition: service_completed_successfully`.
+#
+# Build context must be the repository root.
+# Usage: docker build -f infra/runtime/docker/Dockerfile.db-migrate -t nebutra-db-migrate .
+
+FROM node:22-alpine@sha256:92d51e5f20b7ff58faa5a969af1a1cec6cbec3fbff7e0f523242b9b5c85ad887 AS deps
+WORKDIR /app
+
+RUN corepack enable pnpm
+
+# Root workspace manifests
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY patches/ ./patches/
+
+# @nebutra/db manifest + workspace deps it pulls in
+COPY packages/platform/db/package.json     ./packages/platform/db/
+COPY packages/platform/logger/package.json ./packages/platform/logger/
+COPY packages/iam/vault/package.json       ./packages/iam/vault/
+
+# Install the @nebutra/db closure (includes prisma + tsx dev deps for migrations + seed)
+RUN pnpm install --frozen-lockfile --filter @nebutra/db...
+
+# ── Runtime stage ─────────────────────────────────────────────────────────────
+FROM node:22-alpine@sha256:92d51e5f20b7ff58faa5a969af1a1cec6cbec3fbff7e0f523242b9b5c85ad887 AS runner
+WORKDIR /app
+
+RUN corepack enable pnpm
+
+# Restore deps
+COPY --from=deps /app/node_modules                    ./node_modules
+COPY --from=deps /app/packages/platform/db/node_modules ./packages/platform/db/node_modules
+
+# Copy only what the migrate command needs
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY packages/platform/db ./packages/platform/db
+
+# DATABASE_URL is injected at runtime via docker-compose.
+# `migrate deploy` is idempotent — safe to re-run on every `docker-compose up`.
+CMD ["pnpm", "--filter", "@nebutra/db", "db:migrate:deploy"]

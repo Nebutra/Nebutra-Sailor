@@ -1050,7 +1050,7 @@ import { motion } from "framer-motion";
 const timeline = [
   { year: "2020", role: "Self-taught", org: "Web + Marketing Fundamentals" },
   { year: "2023", role: "AI-Native Engineer", org: "Vibe Coding movement" },
-  { year: "2024", role: "Founder", org: "Wuxi Yunyu Intelligent Technology" },
+  { year: "2024", role: "Founder", org: "Wuxi Nebutra Intelligence Technology" },
   { year: "2025", role: "CEO", org: "Nebutra Intelligence" },
   { year: "Now", role: "Building", org: "AI-native unicorn products" },
 ];
