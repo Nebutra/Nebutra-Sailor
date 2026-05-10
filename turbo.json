@@ -36,6 +36,15 @@
         "apps/design-docs/public/previews-index.json"
       ]
     },
+    "@nebutra/design-tokens#build": {
+      "inputs": [
+        "packages/design/design-tokens/tokens/**",
+        "packages/design/design-tokens/style-dictionary.config.mjs",
+        "packages/design/design-tokens/tsconfig.json",
+        "packages/design/design-tokens/package.json"
+      ],
+      "outputs": ["packages/design/design-tokens/build/**"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
