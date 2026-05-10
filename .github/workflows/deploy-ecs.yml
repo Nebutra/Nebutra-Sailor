@@ -144,10 +144,12 @@ jobs:
             package: "@nebutra/landing-page"
             workspace: apps/landing-page
             condition: ${{ needs.detect-changes.outputs.landing }}
+            site_url: "https://nebutra.com"
           - app: web
             package: "@nebutra/web"
             workspace: apps/web
             condition: ${{ needs.detect-changes.outputs.web }}
+            site_url: "https://app.nebutra.com"
     steps:
       - name: Skip if not needed
         if: matrix.condition != 'true'
@@ -182,8 +184,18 @@ jobs:
 
       - name: Build ${{ matrix.package }}
         if: matrix.condition == 'true'
+        # NEXT_PUBLIC_* vars are baked into the client bundle at build time.
+        # Without them, layout.tsx falls back to http://localhost:3000 for
+        # metadataBase, and middleware self-fetches break with EPROTO when
+        # nginx terminates TLS but the bundle thinks the origin is localhost.
+        # These are non-secret prod URLs — safe to hardcode here.
         env:
           NEXT_TELEMETRY_DISABLED: "1"
+          NEXT_PUBLIC_SITE_URL: ${{ matrix.site_url }}
+          NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
+          NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
+          NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
+          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
         run: pnpm --filter ${{ matrix.package }} build
 
       # Next standalone output is at <workspace>/.next/standalone/. We need to

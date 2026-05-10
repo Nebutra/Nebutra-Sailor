@@ -11,7 +11,15 @@ export interface DocsConfig {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const COPYABLE_EXT = /\.(md|mdx|json|ts|tsx|js|mjs|cjs|yaml|yml)$/;
+const COPYABLE_EXT = /\.(md|mdx|json|ts|tsx|js|mjs|cjs|yaml|yml|css|html|vue)$/;
+
+const SUPPORTED_DOCS_FRAMEWORKS: readonly DocsFramework[] = [
+  "fumadocs",
+  "nextra",
+  "mintlify",
+  "docusaurus",
+  "vitepress",
+];
 
 /**
  * Resolves the templates directory regardless of whether we're running from
@@ -34,10 +42,14 @@ function resolveTemplateDir(framework: string): string {
 export async function applyDocsTemplate(targetDir: string, config: DocsConfig): Promise<void> {
   if (config.framework === "none") return;
 
-  // v1.1.0: only fumadocs is implemented; non-fumadocs choices fall back.
-  const effectiveFramework = config.framework === "fumadocs" ? "fumadocs" : "fumadocs";
+  if (!SUPPORTED_DOCS_FRAMEWORKS.includes(config.framework)) {
+    throw new Error(
+      `Unsupported docs framework: "${config.framework}". ` +
+        `Supported: ${SUPPORTED_DOCS_FRAMEWORKS.join(", ")}, none.`,
+    );
+  }
 
-  const templateDir = resolveTemplateDir(effectiveFramework);
+  const templateDir = resolveTemplateDir(config.framework);
   const appsDir = path.join(targetDir, "apps", "docs");
 
   if (!fs.existsSync(templateDir)) {

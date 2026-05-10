@@ -1,0 +1,13 @@
+{
+  "name": "@nebutra/docs",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "mint dev --port 3001",
+    "build": "mint build",
+    "broken-links": "mint broken-links"
+  },
+  "devDependencies": {
+    "mint": "^4.2.0"
+  }
+}

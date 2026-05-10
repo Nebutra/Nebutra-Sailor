@@ -1,0 +1,25 @@
+---
+title: "API Reference"
+description: "{PRODUCT_NAME} REST API"
+---
+
+## Authentication
+
+All endpoints require a bearer token in the `Authorization` header.
+
+```bash
+curl https://api.example.com/v1/health \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+## Generating from OpenAPI
+
+Mintlify can auto-generate this section from an OpenAPI spec. Add to `mint.json`:
+
+```json
+{
+  "openapi": "https://api.example.com/openapi.json"
+}
+```
+
+Then run `mint openapi-to-mdx` to scaffold endpoint pages.
