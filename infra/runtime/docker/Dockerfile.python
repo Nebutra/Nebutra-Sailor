@@ -3,7 +3,7 @@
 
 # Pin to exact digest for reproducible builds.
 # Update monthly via: docker manifest inspect python:3.11-slim --verbose
-FROM python:3.11-slim@sha256:06fa338add3c2ab8daeff7304a6bb204c68f67743b13553a8999605fc8097c58 AS base
+FROM python:3.14-slim@sha256:1697e8e8d39bf168e177ac6b5fdab6df86d81cfc24dae17dfb96cfc3ef76b4dd AS base
 
 # Prevent Python from writing pyc files
 ENV PYTHONDONTWRITEBYTECODE=1
