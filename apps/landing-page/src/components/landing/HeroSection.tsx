@@ -1,91 +1,26 @@
-"use client";
-
 import { ArrowRight } from "@nebutra/icons";
-import { useTheme } from "@nebutra/tokens";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
-import * as React from "react";
+import { getTranslations } from "next-intl/server";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
-
-const HERO_BACKGROUND_VIDEOS = {
-  light:
-    "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260302_085844_21a8f4b3-dea5-4ede-be16-d53f6973bb14.mp4",
-  dark: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260306_074215_04640ca7-042c-45d6-bb56-58b1e8a42489.mp4",
-} as const;
-
-function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
-
-  React.useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const syncPreference = () => {
-      setPrefersReducedMotion(mediaQuery.matches);
-    };
-
-    syncPreference();
-    mediaQuery.addEventListener("change", syncPreference);
-
-    return () => {
-      mediaQuery.removeEventListener("change", syncPreference);
-    };
-  }, []);
-
-  return prefersReducedMotion;
-}
-
-interface HeroBackgroundAnimationProps {
-  mounted: boolean;
-  resolvedTheme?: string;
-}
-
-function HeroBackgroundAnimation({ mounted, resolvedTheme }: HeroBackgroundAnimationProps) {
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const themeKey = mounted && resolvedTheme === "dark" ? "dark" : "light";
-  const videoSource = HERO_BACKGROUND_VIDEOS[themeKey];
-
-  return (
-    <div
-      aria-hidden="true"
-      className="hero-motion-background pointer-events-none absolute inset-x-0 top-0 z-0"
-    >
-      {mounted && !prefersReducedMotion ? (
-        <video
-          key={videoSource}
-          aria-hidden="true"
-          autoPlay
-          className="hero-motion-video"
-          disablePictureInPicture
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          tabIndex={-1}
-        >
-          <source src={videoSource} type="video/mp4" />
-        </video>
-      ) : null}
-      <div className="hero-motion-pattern" />
-      <div className="hero-motion-veil" />
-    </div>
-  );
-}
+import { HeroBackgroundVideo } from "./HeroBackgroundVideo";
 
 /**
- * HeroSection - Conversion-first hero.
+ * HeroSection — Conversion-first hero.
+ *
+ * Server-rendered shell so the H1 (LCP candidate) lands in the initial HTML
+ * payload. The only client surface is `HeroBackgroundVideo`, a small island
+ * that owns theme-aware video swap. Entrance animation is removed from the H1
+ * itself (would otherwise inline `opacity:0` and disqualify it as LCP);
+ * supporting copy and CTAs still animate in around the title.
  */
-export function HeroSection() {
-  const t = useTranslations("hero");
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
+export async function HeroSection() {
+  const t = await getTranslations("hero");
+  const badgeAfterDot = t("badge").split("·")[1];
 
   return (
     <section className="relative isolate w-full overflow-visible bg-transparent pb-8 pt-24 lg:pt-32">
-      <HeroBackgroundAnimation mounted={mounted} resolvedTheme={resolvedTheme} />
+      <HeroBackgroundVideo />
 
       <div className="relative z-10 w-full px-4">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-center text-center">
@@ -99,17 +34,18 @@ export function HeroSection() {
                   Next.js
                 </span>
                 <span className="flex h-5 items-center justify-center text-[10px] opacity-70">
-                  {t("badge").split("·")[1]}
+                  {badgeAfterDot}
                 </span>
               </div>
             </AnimateIn>
 
-            <AnimateIn preset="emerge">
-              <h1 className="mx-auto max-w-[900px] text-[clamp(2.75rem,8vw,5rem)] leading-none font-bold tracking-normal text-zinc-950 dark:text-zinc-50">
-                {t("headline1")}{" "}
-                <span className="text-zinc-950 dark:text-zinc-50">{t("headline2")}</span>
-              </h1>
-            </AnimateIn>
+            {/* H1 paints at full opacity from first frame so the LCP API can
+                attribute it. AnimateIn would inline `opacity:0` server-side
+                and disqualify the element. */}
+            <h1 className="mx-auto max-w-[900px] text-[clamp(2.75rem,8vw,5rem)] leading-none font-bold tracking-normal text-zinc-950 dark:text-zinc-50">
+              {t("headline1")}{" "}
+              <span className="text-zinc-950 dark:text-zinc-50">{t("headline2")}</span>
+            </h1>
 
             <AnimateIn preset="fadeUp">
               <p className="mx-auto max-w-[680px] px-4 text-[17px] leading-normal font-medium text-zinc-600 md:text-[19px] dark:text-zinc-300">
@@ -155,5 +91,3 @@ export function HeroSection() {
     </section>
   );
 }
-
-HeroSection.displayName = "HeroSection";

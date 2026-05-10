@@ -1,8 +1,12 @@
 "use client";
 
 import { brandSpring, emerge, flow } from "@nebutra/brand";
-import { domAnimation, LazyMotion, m, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import type * as React from "react";
+
+// LazyMotion is hoisted to the (marketing) route group layout so framer's
+// domAnimation features register exactly once per session. Components in this
+// file render bare `<m.div>` and inherit the provider.
 
 const PRESETS = {
   emerge: {
@@ -41,14 +45,6 @@ type Preset = keyof typeof PRESETS;
 
 const STAGGER = { fast: 0.05, normal: 0.1, slow: 0.2 } as const;
 
-function MotionDiv(props: React.ComponentProps<typeof m.div>) {
-  return (
-    <LazyMotion features={domAnimation}>
-      <m.div {...props} />
-    </LazyMotion>
-  );
-}
-
 export interface AnimateInProps {
   children: React.ReactNode;
   preset?: Preset;
@@ -78,7 +74,7 @@ export function AnimateIn({
 
   if (inView) {
     return (
-      <MotionDiv
+      <m.div
         className={className}
         initial={initial}
         whileInView={animate}
@@ -87,14 +83,14 @@ export function AnimateIn({
         transition={t}
       >
         {children}
-      </MotionDiv>
+      </m.div>
     );
   }
 
   return (
-    <MotionDiv className={className} initial={initial} animate={animate} exit={exit} transition={t}>
+    <m.div className={className} initial={initial} animate={animate} exit={exit} transition={t}>
       {children}
-    </MotionDiv>
+    </m.div>
   );
 }
 
@@ -121,7 +117,7 @@ export function AnimateInGroup({
 
   if (inView) {
     return (
-      <MotionDiv
+      <m.div
         className={className}
         initial="initial"
         whileInView="animate"
@@ -129,14 +125,14 @@ export function AnimateInGroup({
         variants={variants}
       >
         {children}
-      </MotionDiv>
+      </m.div>
     );
   }
 
   return (
-    <MotionDiv className={className} initial="initial" animate="animate" variants={variants}>
+    <m.div className={className} initial="initial" animate="animate" variants={variants}>
       {children}
-    </MotionDiv>
+    </m.div>
   );
 }
 

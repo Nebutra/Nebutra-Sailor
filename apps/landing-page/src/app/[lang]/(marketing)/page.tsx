@@ -2,102 +2,112 @@ import { ArrowRight } from "@nebutra/icons";
 import dynamic from "next/dynamic";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import {
-  FooterMinimal,
-  HeroMockupWindow,
-  HeroSection,
-  LogoStrip,
-  Navbar,
-  PricingSection,
-} from "@/components/landing";
+import { HeroMockupWindow, LogoStrip, Navbar } from "@/components/landing";
+import { HERO_BACKGROUND_VIDEOS } from "@/components/landing/HeroBackgroundVideo";
+import { HeroSection } from "@/components/landing/HeroSection";
+
+// Skeleton uses min-h so longer locales don't clip. Heights track real
+// section sizes to keep CLS down while content streams in.
+const SectionSkeleton = ({ minH = "32rem" }: { minH?: string }) => (
+  <section aria-hidden className="w-full" style={{ minHeight: minH }} />
+);
 
 const ProductShowcase = dynamic(
-  () => import("@/components/landing").then((mod) => mod.ProductShowcase),
-  { loading: () => <section className="h-96" aria-hidden /> },
+  () => import("@/components/landing/ProductShowcase").then((m) => m.ProductShowcase),
+  { loading: () => <SectionSkeleton minH="44rem" /> },
 );
 
 const ProductDemoSection = dynamic(
-  () => import("@/components/landing/ProductDemoSection").then((mod) => mod.ProductDemoSection),
-  { loading: () => <section className="h-72" aria-hidden /> },
+  () => import("@/components/landing/ProductDemoSection").then((m) => m.ProductDemoSection),
+  { loading: () => <SectionSkeleton minH="48rem" /> },
 );
 
 const AIConstellationMarquee = dynamic(
-  () =>
-    import("@/components/landing/AIConstellationMarquee").then((mod) => mod.AIConstellationMarquee),
-  { loading: () => <section className="h-40" aria-hidden /> },
+  () => import("@/components/landing/AIConstellationMarquee").then((m) => m.AIConstellationMarquee),
+  { loading: () => <SectionSkeleton minH="14rem" /> },
 );
 
 const CapabilityMatrixSection = dynamic(
   () =>
-    import("@/components/landing/CapabilityMatrixSection").then(
-      (mod) => mod.CapabilityMatrixSection,
-    ),
-  { loading: () => <section className="h-96" aria-hidden /> },
+    import("@/components/landing/CapabilityMatrixSection").then((m) => m.CapabilityMatrixSection),
+  { loading: () => <SectionSkeleton minH="56rem" /> },
 );
 
 const VelocityEngineSection = dynamic(
-  () =>
-    import("@/components/landing/VelocityEngineSection").then((mod) => mod.VelocityEngineSection),
-  { loading: () => <section className="h-64" aria-hidden /> },
+  () => import("@/components/landing/VelocityEngineSection").then((m) => m.VelocityEngineSection),
+  { loading: () => <SectionSkeleton minH="36rem" /> },
 );
 
 const TestimonialsSection = dynamic(
-  () => import("@/components/landing/TestimonialsSection").then((mod) => mod.TestimonialsSection),
-  { loading: () => <section className="h-72" aria-hidden /> },
+  () => import("@/components/landing/TestimonialsSection").then((m) => m.TestimonialsSection),
+  { loading: () => <SectionSkeleton minH="40rem" /> },
 );
 
 const AlternativeComparison = dynamic(
-  () =>
-    import("@/components/landing/AlternativeComparison").then((mod) => mod.AlternativeComparison),
-  { loading: () => <div className="h-80" aria-hidden /> },
+  () => import("@/components/landing/AlternativeComparison").then((m) => m.AlternativeComparison),
+  { loading: () => <SectionSkeleton minH="44rem" /> },
 );
 
 const UseCasesSection = dynamic(
-  () => import("@/components/landing/use-cases/UseCasesSection").then((mod) => mod.UseCasesSection),
-  { loading: () => <section className="h-96" aria-hidden /> },
+  () => import("@/components/landing/use-cases/UseCasesSection").then((m) => m.UseCasesSection),
+  { loading: () => <SectionSkeleton minH="56rem" /> },
 );
 
 const AgenticEngineeringSection = dynamic(
-  () => import("@/components/landing").then((mod) => mod.AgenticEngineeringSection),
-  { loading: () => <section className="h-96" aria-hidden /> },
+  () =>
+    import("@/components/landing/agentic-engineering/AgenticEngineeringSection").then(
+      (m) => m.AgenticEngineeringSection,
+    ),
+  { loading: () => <SectionSkeleton minH="48rem" /> },
 );
 
 const HarnessEngineeringSection = dynamic(
-  () => import("@/components/landing").then((mod) => mod.HarnessEngineeringSection),
-  { loading: () => <section className="h-96" aria-hidden /> },
+  () =>
+    import("@/components/landing/HarnessEngineeringSection").then(
+      (m) => m.HarnessEngineeringSection,
+    ),
+  { loading: () => <SectionSkeleton minH="48rem" /> },
 );
 
 const DesignSystemSection = dynamic(
-  () => import("@/components/landing").then((mod) => mod.DesignSystemSection),
-  { loading: () => <section className="h-96" aria-hidden /> },
+  () => import("@/components/landing/DesignSystemSection").then((m) => m.DesignSystemSection),
+  { loading: () => <SectionSkeleton minH="48rem" /> },
 );
 
 const SEOGEOSection = dynamic(
-  () => import("@/components/landing").then((mod) => mod.SEOGEOSection),
-  { loading: () => <section className="h-96" aria-hidden /> },
+  () => import("@/components/landing/seo-geo/SEOGEOSection").then((m) => m.SEOGEOSection),
+  { loading: () => <SectionSkeleton minH="48rem" /> },
 );
 
 const SocialProofBar = dynamic(
-  () => import("@/components/landing/social-proof-bar").then((mod) => mod.SocialProofBar),
-  { loading: () => <section className="h-40" aria-hidden /> },
+  () => import("@/components/landing/social-proof-bar").then((m) => m.SocialProofBar),
+  { loading: () => <SectionSkeleton minH="14rem" /> },
 );
 
 const LandingTestimonialsSection = dynamic(
-  () => import("@/components/landing/testimonials-section").then((mod) => mod.TestimonialsSection),
-  { loading: () => <section className="h-72" aria-hidden /> },
+  () => import("@/components/landing/testimonials-section").then((m) => m.TestimonialsSection),
+  { loading: () => <SectionSkeleton minH="40rem" /> },
+);
+
+const PricingSection = dynamic(
+  () => import("@/components/landing/PricingSection").then((m) => m.PricingSection),
+  { loading: () => <SectionSkeleton minH="56rem" /> },
 );
 
 const PricingComparisonTable = dynamic(
   () =>
-    import("@/components/landing/pricing-comparison-table").then(
-      (mod) => mod.PricingComparisonTable,
-    ),
-  { loading: () => <section className="h-96" aria-hidden /> },
+    import("@/components/landing/pricing-comparison-table").then((m) => m.PricingComparisonTable),
+  { loading: () => <SectionSkeleton minH="56rem" /> },
 );
 
 const FAQSection = dynamic(
-  () => import("@/components/landing/faq-section").then((mod) => mod.FAQSection),
-  { loading: () => <section className="h-72" aria-hidden /> },
+  () => import("@/components/landing/faq-section").then((m) => m.FAQSection),
+  { loading: () => <SectionSkeleton minH="36rem" /> },
+);
+
+const FooterMinimal = dynamic(
+  () => import("@/components/landing/FooterMinimal").then((m) => m.FooterMinimal),
+  { loading: () => <SectionSkeleton minH="20rem" /> },
 );
 
 import {
@@ -130,6 +140,25 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
   return (
     <Suspense>
+      {/* React 19 hoists these to <head>. preconnect warms TLS to the CDN; the
+          two media-scoped preload links let the browser fetch only the video
+          variant that matches the user's color-scheme. */}
+      <link rel="preconnect" href="https://d8j0ntlcm91z4.cloudfront.net" crossOrigin="anonymous" />
+      <link rel="dns-prefetch" href="https://d8j0ntlcm91z4.cloudfront.net" />
+      <link
+        rel="preload"
+        as="video"
+        type="video/mp4"
+        href={HERO_BACKGROUND_VIDEOS.light}
+        media="(prefers-color-scheme: light)"
+      />
+      <link
+        rel="preload"
+        as="video"
+        type="video/mp4"
+        href={HERO_BACKGROUND_VIDEOS.dark}
+        media="(prefers-color-scheme: dark)"
+      />
       <main
         id="main-content"
         className="flex flex-col min-h-screen bg-background overflow-x-hidden"
