@@ -49,8 +49,7 @@ export interface AuditableContext {
 let cachedAuth: AuthProvider | null = null;
 
 function resolveProviderId(): AuthProviderId {
-  const raw =
-    process.env.AUTH_PROVIDER || process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
+  const raw = process.env.AUTH_PROVIDER || process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
   return raw as AuthProviderId;
 }
 
@@ -70,9 +69,7 @@ async function getAuthInstance(): Promise<AuthProvider> {
  * the session has no organization (account-level events), we fall back to the
  * user id so the "every row scoped" invariant holds.
  */
-export async function getAuditableContext(
-  request: Request,
-): Promise<AuditableContext | null> {
+export async function getAuditableContext(request: Request): Promise<AuditableContext | null> {
   try {
     // API-key auth: the gateway middleware sets `x-actor-type=api_key` plus
     // `x-actor-id` once the key is verified. Honor it without re-reading the

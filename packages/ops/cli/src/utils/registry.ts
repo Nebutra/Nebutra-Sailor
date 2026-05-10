@@ -24,6 +24,14 @@ export interface FeatureProviderDescriptor {
 export interface FeatureDescriptor {
   name: string;
   description: string;
+  /**
+   * Workspace group that the feature lives in after the W3b refactor
+   * (packages/<group>/<name>/). Defaults to "integrations" because most
+   * generic features (queue, cache, search, notifications, webhooks) live
+   * there. Override per-feature when the package belongs to a different
+   * group (e.g. captcha → "iam").
+   */
+  group?: string;
   dependencies?: FeatureDependency[];
   devDependencies?: FeatureDependency[];
   env?: FeatureEnv[];
@@ -68,14 +76,20 @@ Next steps:
 3. Replace the placeholder helper with your production adapter.
 `;
 
-function genericFeatureFiles(feature: string): FeatureFile[] {
+const DEFAULT_FEATURE_GROUP = "integrations";
+
+function genericFeatureFiles(
+  feature: string,
+  group: string = DEFAULT_FEATURE_GROUP,
+): FeatureFile[] {
+  const base = `packages/${group}/${feature}`;
   return [
     {
-      path: `packages/${feature}/src/index.ts`,
+      path: `${base}/src/index.ts`,
       content: GENERIC_FEATURE_SOURCE,
     },
     {
-      path: `packages/${feature}/README.md`,
+      path: `${base}/README.md`,
       content: GENERIC_FEATURE_README,
     },
   ];
@@ -358,7 +372,7 @@ Next steps:
         env: [{ key: "CONFIGCAT_SDK_KEY", description: "ConfigCat SDK key" }],
       },
     ],
-    files: genericFeatureFiles("feature-flags"),
+    files: genericFeatureFiles("feature-flags", "platform"),
   },
   captcha: {
     name: "captcha",
@@ -390,7 +404,7 @@ Next steps:
         ],
       },
     ],
-    files: genericFeatureFiles("captcha"),
+    files: genericFeatureFiles("captcha", "iam"),
   },
 };
 
