@@ -11,13 +11,32 @@ Complete navigation to all project documentation.
 
 ## Services
 
-| Service                                      | Port | Description                             |
-| -------------------------------------------- | ---- | --------------------------------------- |
-| [ai](../backends/python/ai/README.md)               | 8001 | LLM generation, embeddings, translation |
-| [content](../backends/python/content/README.md)     | 8002 | Posts, feeds, comments                  |
-| [recsys](../backends/python/recsys/README.md)       | 8003 | Recommendation engine                   |
-| [ecommerce](../backends/python/ecommerce/README.md) | 8004 | Shopify/Shopline sync                   |
-| [web3](../backends/python/web3/README.md)           | 8005 | Blockchain indexer                      |
+> Language policy: TypeScript-by-default for new backend work.
+> Python services exist only when batch/ML/specialized libs justify them
+> (see [ADR 2026-05-10](architecture/2026-05-10-ts-by-default-python-only-when-justified.md)).
+
+### TypeScript
+
+| Service                                                | Description                              |
+| ------------------------------------------------------ | ---------------------------------------- |
+| [gateway](../backends/gateway/README.md)               | BFF: auth, tenancy, rate-limit, routing  |
+
+### Python — active
+
+| Service                                              | Port | Description                             |
+| ---------------------------------------------------- | ---- | --------------------------------------- |
+| [ai](../backends/python/ai/README.md)                | 8001 | Batch translation, embeddings, generation |
+| [recsys](../backends/python/recsys/README.md)        | 8003 | Recommendation engine                   |
+| [ecommerce](../backends/python/ecommerce/README.md)  | 8004 | Shopify/Shopline sync                   |
+| [event-ingest](../backends/python/event-ingest/README.md) | 8008 | High-throughput event ingestion       |
+
+### Python — stub (concept preserved, no implementation)
+
+| Service                                                       | Activation criteria |
+| ------------------------------------------------------------- | -------------------- |
+| [content](../backends/python/content/README.md)               | Batch content moderation / ML feed materialization |
+| [web3](../backends/python/web3/README.md)                     | Long-running blockchain indexing / batch backfills |
+| [third-party](../backends/python/third-party/README.md)       | Heavy multi-page external-data sync |
 
 ## Packages
 
