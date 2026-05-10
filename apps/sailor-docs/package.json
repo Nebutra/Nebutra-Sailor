@@ -14,6 +14,7 @@
     "@ai-sdk/react": "^3.0.118",
     "@fumadocs/mdx-remote": "^1.4.6",
     "@fumadocs/story": "^0.0.11",
+    "@nebutra/brand": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
