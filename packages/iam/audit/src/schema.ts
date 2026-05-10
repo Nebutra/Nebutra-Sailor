@@ -202,7 +202,9 @@ export const ACTIONS = {
   ADMIN_IMPERSONATE_STARTED: defineAction("admin.impersonate.started"),
   ADMIN_IMPERSONATE_ENDED: defineAction("admin.impersonate.ended"),
   ADMIN_USER_UPDATED: defineAction("admin.user.updated"),
+  ADMIN_USER_DELETED: defineAction("admin.user.deleted"),
   ADMIN_ORG_UPDATED: defineAction("admin.org.updated"),
+  ADMIN_ORG_DELETED: defineAction("admin.org.deleted"),
 
   // ── Account ──
   ACCOUNT_EMAIL_CHANGED: defineAction("account.email.changed"),

@@ -20,6 +20,10 @@ events in production.
 | `apps/web/src/app/api/auth/revoke-other-sessions/route.ts` (POST) | `auth.session.revoked_other` | severity `warning` |
 | `apps/web/src/app/api/admin/impersonate/route.ts` (POST) | `admin.impersonate.started` | severity **critical**; metadata includes admin user id |
 | `apps/web/src/app/api/admin/impersonate/route.ts` (DELETE) | `admin.impersonate.ended` | severity `warning` |
+| `apps/web/src/app/api/admin/users/[userId]/route.ts` (PATCH) | `admin.user.updated` | severity `warning`; `changes.before/after` for changed fields only; gated by `admin:manage_users` |
+| `apps/web/src/app/api/admin/users/[userId]/route.ts` (DELETE) | `admin.user.deleted` | severity **critical**; hard-delete (no soft-delete column on User yet); rejects self-delete |
+| `apps/web/src/app/api/admin/organizations/[orgId]/route.ts` (PATCH) | `admin.org.updated` | severity `warning`; `changes.before/after` for changed fields only; gated by `admin:manage_orgs` |
+| `apps/web/src/app/api/admin/organizations/[orgId]/route.ts` (DELETE) | `admin.org.deleted` | severity **critical**; hard-delete (cascades to OrganizationMember) |
 | `apps/web/src/app/api/organizations/route.ts` (POST) | `org.created` | severity `info` |
 | `apps/web/src/app/api/organizations/[orgId]/route.ts` (PATCH) | `org.updated` | severity `info`; `changes.before/after.name` |
 | `apps/web/src/app/api/organizations/[orgId]/route.ts` (DELETE) | `org.deleted` | severity **critical** |
@@ -29,10 +33,6 @@ events in production.
 | `apps/web/src/app/api/webhooks/route.ts` (POST) | `webhook.created` | severity `warning` |
 | `apps/web/src/app/api/webhooks/[id]/route.ts` (PATCH) | `webhook.updated` | severity `warning`; `changes.before/after` for changed fields only |
 | `apps/web/src/app/api/webhooks/[id]/route.ts` (DELETE) | `webhook.deleted` | severity `warning` |
-| `apps/web/src/app/api/admin/users/[userId]/route.ts` (PATCH) | `admin.user.updated` | severity `warning`; `changes.before/after` on changed fields only |
-| `apps/web/src/app/api/admin/users/[userId]/route.ts` (DELETE) | `admin.user.deleted` | severity **critical** |
-| `apps/web/src/app/api/admin/organizations/[orgId]/route.ts` (PATCH) | `admin.org.updated` | severity `warning`; `changes.before/after` on changed fields only |
-| `apps/web/src/app/api/admin/organizations/[orgId]/route.ts` (DELETE) | `admin.org.deleted` | severity **critical** |
 | `packages/iam/auth/src/audit-events.ts` (Better Auth `databaseHooks`) | `auth.password.changed`, `auth.2fa.enabled`, `auth.2fa.disabled` | wired via `buildAuditDatabaseHooks()` in `providers/better-auth.ts`; emits even though paths aren't distinguishable at the route layer |
 
 ## TODO — routes not yet wired
@@ -41,8 +41,8 @@ events in production.
 
 ### Schema gaps
 
-- `User` and `Organization` Prisma models lack `deletedAt` / `status` columns. The admin DELETE handlers currently HARD-DELETE; when the columns land, swap to soft-delete (audit emission stays the same).
-- `User` PATCH only exposes `name` / `avatarUrl` / `email` because the schema lacks `status` / `role` / `emailVerified` columns. Extend `PatchBodySchema` when the columns land.
+- `User` and `Organization` Prisma models lack `deletedAt` / `status` columns. The admin DELETE handlers currently HARD-DELETE; when the columns land, swap to `update({ data: { deletedAt: new Date() } })` — `admin.user.deleted` / `admin.org.deleted` audit emission stays the same.
+- `User` PATCH only exposes `name` / `avatarUrl` / `email` because the schema lacks `status` / `role` / `emailVerified` columns. Extend `PatchBodySchema` in `apps/web/src/app/api/admin/users/[userId]/route.ts` when the columns land.
 
 ## How to wire a new route
 
