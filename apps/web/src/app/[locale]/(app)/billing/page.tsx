@@ -144,7 +144,10 @@ async function BillingContent({ journeyNotice }: { journeyNotice: BillingJourney
 }
 
 interface BillingPageProps {
-  searchParams?: JourneySearchParams | Promise<JourneySearchParams>;
+  // Next.js 16 PageProps constraint requires searchParams to be a Promise (not
+  // a plain object union). The runtime always awaits it via `await searchParams`
+  // below, so this is purely a type-level adjustment.
+  searchParams?: Promise<JourneySearchParams>;
 }
 
 export default async function BillingPage({ searchParams }: BillingPageProps) {
