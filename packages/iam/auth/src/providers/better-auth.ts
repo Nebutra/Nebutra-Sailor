@@ -175,6 +175,13 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
 
     const prismaClient = await getPrismaClient(config);
 
+    // Audit hooks — bridge Better Auth's `databaseHooks` into @nebutra/audit so
+    // that `auth.password.changed` / `auth.2fa.enabled` / `auth.2fa.disabled`
+    // are emitted even though they aren't path-distinguishable at the
+    // /api/auth/[...all] route. See packages/iam/auth/src/audit-events.ts.
+    const { buildAuditDatabaseHooks } = await import("../audit-events.js");
+    const databaseHooks = buildAuditDatabaseHooks() as Record<string, unknown>;
+
     const auth = betterAuth({
       secret,
       baseURL: process.env.BETTER_AUTH_URL,
@@ -193,6 +200,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         },
       ),
       plugins,
+      databaseHooks,
       // Map Better Auth's internal model names to our custom Prisma model names
       // so the Prisma adapter queries the correct tables.
       user: { modelName: "AuthUser" },

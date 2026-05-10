@@ -28,16 +28,21 @@ events in production.
 | `apps/web/src/app/api/webhooks/route.ts` (POST) | `webhook.created` | severity `warning` |
 | `apps/web/src/app/api/webhooks/[id]/route.ts` (PATCH) | `webhook.updated` | severity `warning`; `changes.before/after` for changed fields only |
 | `apps/web/src/app/api/webhooks/[id]/route.ts` (DELETE) | `webhook.deleted` | severity `warning` |
+| `apps/web/src/app/api/organizations/[orgId]/members/route.ts` (POST) | `org.member.added` | severity `warning`; metadata `{ invitationId, role, invitedBy }` |
+| `apps/web/src/app/api/admin/users/[userId]/route.ts` (PATCH) | `admin.user.updated` | severity `warning`; `changes.before/after` on changed fields only |
+| `apps/web/src/app/api/admin/users/[userId]/route.ts` (DELETE) | `admin.user.deleted` | severity **critical** |
+| `apps/web/src/app/api/admin/organizations/[orgId]/route.ts` (PATCH) | `admin.org.updated` | severity `warning`; `changes.before/after` on changed fields only |
+| `apps/web/src/app/api/admin/organizations/[orgId]/route.ts` (DELETE) | `admin.org.deleted` | severity **critical** |
+| `packages/iam/auth/src/audit-events.ts` (Better Auth `databaseHooks`) | `auth.password.changed`, `auth.2fa.enabled`, `auth.2fa.disabled` | wired via `buildAuditDatabaseHooks()` in `providers/better-auth.ts`; emits even though paths aren't distinguishable at the route layer |
 
 ## TODO — routes not yet wired
 
-These routes do not currently exist (or only expose read-only handlers) so
-there is nothing to audit. Wire when the route handler lands.
+(none — all reserved actions are emitted somewhere)
 
-- `apps/web/src/app/api/organizations/[orgId]/members/route.ts` (POST add member) — handler not implemented yet. When added, emit `org.member.added` (severity `warning`).
-- `apps/web/src/app/api/admin/users/route.ts` (PATCH/PUT/DELETE) — only `GET` exists today. When admin mutation handlers land, emit `admin.user.updated` (severity `warning`).
-- `apps/web/src/app/api/admin/organizations/route.ts` (PATCH/PUT/DELETE) — only `GET` exists today. When admin mutation handlers land, emit `admin.org.updated` (severity `warning`).
-- `auth.password.changed` / `auth.2fa.enabled` / `auth.2fa.disabled` — actions are reserved in the `ACTIONS` catalog. The Better Auth catch-all does not currently expose distinct paths for these, so they're left for a follow-up that taps Better Auth's hook surface directly.
+### Schema gaps
+
+- `User` and `Organization` Prisma models lack `deletedAt` / `status` columns. The admin DELETE handlers currently HARD-DELETE; when the columns land, swap to soft-delete (audit emission stays the same).
+- `User` PATCH only exposes `name` / `avatarUrl` / `email` because the schema lacks `status` / `role` / `emailVerified` columns. Extend `PatchBodySchema` when the columns land.
 
 ## How to wire a new route
 
