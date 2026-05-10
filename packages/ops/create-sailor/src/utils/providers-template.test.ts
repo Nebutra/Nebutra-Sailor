@@ -5,10 +5,11 @@ import {
   type ProviderSelection,
   renderProviderEnvExample,
   renderProviderRegistry,
-} from "./providers.js";
+} from "./providers";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const templateDir = path.join(__dirname, "../../../../packages/ai/ai-providers/templates");
+// W3b layout: packages/ops/create-sailor/src/utils/ → repo root requires 5 `..`
+const templateDir = path.join(__dirname, "../../../../../packages/ai/ai-providers/templates");
 
 describe("provider templates", () => {
   it("renders env examples from the shipped template files", () => {

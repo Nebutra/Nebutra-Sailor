@@ -1,38 +1,38 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { addCommand } from "./commands/add.js";
-import { registerAdminCommand } from "./commands/admin.js";
-import { registerAiCommand } from "./commands/ai.js";
-import { registerAuthCommand } from "./commands/auth.js";
-import { registerBillingCommand } from "./commands/billing.js";
-import { registerBrandCommand } from "./commands/brand.js";
-import { registerCommunityCommand } from "./commands/community.js";
-import { registerCompletionsCommand } from "./commands/completions.js";
-import { registerCreateCommand } from "./commands/create.js";
-import { registerDbCommand } from "./commands/db.js";
-import { registerDevCommand } from "./commands/dev.js";
-import { registerEcosystemCommand } from "./commands/ecosystem.js";
-import { registerEnvCommand } from "./commands/env.js";
-import { registerGenerateCommand } from "./commands/generate.js";
-import { registerGrowthCommand } from "./commands/growth.js";
-import { registerI18nCommand } from "./commands/i18n.js";
-import { registerInfraCommand } from "./commands/infra.js";
-import { initCommand } from "./commands/init.js";
-import { registerLicenseCommand } from "./commands/license.js";
-import { registerMcpCommand } from "./commands/mcp-server.js";
-import { registerPresetCommand } from "./commands/preset.js";
-import { registerSchemaCommand } from "./commands/schema.js";
-import { registerSearchCommand } from "./commands/search-mgmt.js";
-import { registerSecretsCommand } from "./commands/secrets.js";
-import { registerServicesCommand } from "./commands/services.js";
-import { registerStatsCommand } from "./commands/stats.js";
-import { registerTestCommand } from "./commands/test.js";
-import { logger } from "./utils/logger.js";
-import { maybeNotifyUpdate } from "./utils/update-notifier.js";
+import { addCommand } from "./commands/add";
+import { registerAdminCommand } from "./commands/admin";
+import { registerAiCommand } from "./commands/ai";
+import { registerAuthCommand } from "./commands/auth";
+import { registerBillingCommand } from "./commands/billing";
+import { registerBrandCommand } from "./commands/brand";
+import { registerCommunityCommand } from "./commands/community";
+import { registerCompletionsCommand } from "./commands/completions";
+import { registerCreateCommand } from "./commands/create";
+import { registerDbCommand } from "./commands/db";
+import { registerDevCommand } from "./commands/dev";
+import { registerEcosystemCommand } from "./commands/ecosystem";
+import { registerEnvCommand } from "./commands/env";
+import { registerGenerateCommand } from "./commands/generate";
+import { registerGrowthCommand } from "./commands/growth";
+import { registerI18nCommand } from "./commands/i18n";
+import { registerInfraCommand } from "./commands/infra";
+import { initCommand } from "./commands/init";
+import { registerLicenseCommand } from "./commands/license";
+import { registerMcpCommand } from "./commands/mcp-server";
+import { registerPresetCommand } from "./commands/preset";
+import { registerSchemaCommand } from "./commands/schema";
+import { registerSearchCommand } from "./commands/search-mgmt";
+import { registerSecretsCommand } from "./commands/secrets";
+import { registerServicesCommand } from "./commands/services";
+import { registerStatsCommand } from "./commands/stats";
+import { registerTestCommand } from "./commands/test";
+import { logger } from "./utils/logger";
+import { maybeNotifyUpdate } from "./utils/update-notifier";
 
 // TODO(error-handling): New commands MUST wrap their `.action(...)` body with
-// `runCommand(...)` from "./utils/command-error.js" and throw `CommandError`
+// `runCommand(...)` from "./utils/command-error" and throw `CommandError`
 // (with a specific `ExitCode`) instead of calling `process.exit` directly.
 // Existing commands migrate opportunistically — see command-error.ts for the
 // migration guide.
@@ -133,8 +133,8 @@ async function main() {
     .command("doctor")
     .description("Check your Nebutra project setup for common issues")
     .action(async () => {
-      const { logger } = await import("./utils/logger.js");
-      const { findMonorepoRoot } = await import("./utils/delegate.js");
+      const { logger } = await import("./utils/logger");
+      const { findMonorepoRoot } = await import("./utils/delegate");
       const fs = await import("node:fs");
       const path = await import("node:path");
 
@@ -144,7 +144,7 @@ async function main() {
 
       // Check Node version
       const nodeVersion = process.version;
-      const majorVersion = parseInt(nodeVersion.replace("v", "").split(".")[0], 10);
+      const majorVersion = parseInt(nodeVersion.replace("v", "").split(".")[0] ?? "0", 10);
       if (majorVersion < 22) {
         logger.error(`Node.js >= 22 required, found ${nodeVersion}`);
         hasErrors = true;

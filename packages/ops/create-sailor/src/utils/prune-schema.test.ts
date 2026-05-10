@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { parseConditionalAnnotations, pruneSchemaByFlags } from "./prune-schema.js";
+import { parseConditionalAnnotations, pruneSchemaByFlags } from "./prune-schema";
 
 const SAMPLE_SCHEMA = `
 generator client {
@@ -148,7 +148,8 @@ describe("pruneSchemaByFlags", () => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
     const realSchema = fs.readFileSync(
-      path.join(__dirname, "../../../../packages/platform/db/prisma/schema.prisma"),
+      // W3b layout: packages/ops/create-sailor/src/utils/ → repo root requires 5 `..`
+      path.join(__dirname, "../../../../../packages/platform/db/prisma/schema.prisma"),
       "utf-8",
     );
     const pruned = pruneSchemaByFlags(realSchema, {
