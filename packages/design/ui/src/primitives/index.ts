@@ -22,7 +22,8 @@ export * from "./alert-dialog";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/animate-in.json`
- *   The npm export is kept during the 6-month dual-track period.
+ *   The npm export is kept during the 6-month dual-track period
+ *   (added 2026-05-09, removal target 2026-11-09).
  */
 export * from "./animate-in";
 export * from "./animated-beam";
@@ -70,7 +71,8 @@ export * from "./base-button";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/bento-grid.json`
- *   The npm export is kept during the 6-month dual-track period.
+ *   The npm export is kept during the 6-month dual-track period
+ *   (added 2026-05-09, removal target 2026-11-09).
  */
 export * from "./bento-grid";
 export * from "./book";
@@ -97,7 +99,8 @@ export * from "./carousel";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/chart.json`
- *   The npm export is kept during the 6-month dual-track period.
+ *   The npm export is kept during the 6-month dual-track period
+ *   (added 2026-05-09, removal target 2026-11-09).
  */
 export * from "./chart";
 export {
@@ -125,7 +128,8 @@ export * from "./command";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/command-menu.json`
- *   The npm export is kept during the 6-month dual-track period.
+ *   The npm export is kept during the 6-month dual-track period
+ *   (added 2026-05-09, removal target 2026-11-09).
  */
 export * from "./command-menu";
 export * from "./confetti";
@@ -167,7 +171,8 @@ export * from "./feature-arrow-card";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/feature-card.json`
- *   The npm export is kept during the 6-month dual-track period.
+ *   The npm export is kept during the 6-month dual-track period
+ *   (added 2026-05-09, removal target 2026-11-09).
  */
 export * from "./feature-card";
 export * from "./feature-check-item";
@@ -184,7 +189,8 @@ export * from "./github-inline-diff";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/globe.json`
- *   The npm export is kept during the 6-month dual-track period.
+ *   The npm export is kept during the 6-month dual-track period
+ *   (added 2026-05-09, removal target 2026-11-09).
  */
 export * from "./globe";
 export * from "./glowing-effect";
@@ -208,7 +214,8 @@ export * from "./kbd";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/kpi-card.json`
- *   The npm export is kept during the 6-month dual-track period.
+ *   The npm export is kept during the 6-month dual-track period
+ *   (added 2026-05-09, removal target 2026-11-09).
  */
 export * from "./kpi-card";
 export { Label, type LabelProps, labelVariants } from "./label";
@@ -221,7 +228,8 @@ export * from "./macbook-pro";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/magic-card.json`
- *   The npm export is kept during the 6-month dual-track period.
+ *   The npm export is kept during the 6-month dual-track period
+ *   (added 2026-05-09, removal target 2026-11-09).
  */
 export * from "./magic-card";
 export * from "./material";
@@ -230,7 +238,8 @@ export * from "./mesh-gradient-bg";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/metric-card.json`
- *   The npm export is kept during the 6-month dual-track period.
+ *   The npm export is kept during the 6-month dual-track period
+ *   (added 2026-05-09, removal target 2026-11-09).
  */
 export * from "./metric-card";
 export * from "./multiple-selector";
@@ -244,7 +253,8 @@ export * from "./popover";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/pricing-card.json`
- *   The npm export is kept during the 6-month dual-track period.
+ *   The npm export is kept during the 6-month dual-track period
+ *   (added 2026-05-09, removal target 2026-11-09).
  */
 export * from "./pricing-card";
 export * from "./progress";
