@@ -59,10 +59,6 @@
   - changed-files:
       - any-glob-to-any-file: "backends/python/ai/**"
 
-"service: billing":
-  - changed-files:
-      - any-glob-to-any-file: "backends/python/billing/**"
-
 "service: recsys":
   - changed-files:
       - any-glob-to-any-file: "backends/python/recsys/**"

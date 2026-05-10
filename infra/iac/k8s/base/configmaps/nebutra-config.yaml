@@ -27,7 +27,6 @@ data:
   #   http://<service-name>.<namespace>.svc.cluster.local
   # ---------------------------------------------------------------------------
   AI_SERVICE_URL: "http://ai-service"
-  BILLING_SERVICE_URL: "http://billing-service"
   CONTENT_SERVICE_URL: "http://content-service"
   ECOMMERCE_SERVICE_URL: "http://ecommerce-service"
   RECSYS_SERVICE_URL: "http://recsys-service"

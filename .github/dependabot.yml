@@ -52,19 +52,6 @@ updates:
         update-types: ["minor", "patch"]
 
   - package-ecosystem: "pip"
-    directory: "/backends/python/billing"
-    schedule:
-      interval: "weekly"
-      day: "tuesday"
-    open-pull-requests-limit: 3
-    groups:
-      python-security:
-        applies-to: security-updates
-        update-types: ["patch"]
-      python-deps:
-        update-types: ["minor", "patch"]
-
-  - package-ecosystem: "pip"
     directory: "/backends/python/content"
     schedule:
       interval: "weekly"

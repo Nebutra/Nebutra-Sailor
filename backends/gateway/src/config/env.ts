@@ -47,15 +47,13 @@ const baseSchema = z.object({
   // Admin API (min 32 chars; generate with: openssl rand -hex 32)
   ADMIN_API_KEY: z.string().min(32).optional(),
 
-  // Service URLs (Python backends — TS-by-default; see ADR 2026-05-10)
+  // Python service URLs (TS-by-default — see ADR 2026-05-10)
   AI_SERVICE_URL: z.string().optional(),
   RECSYS_SERVICE_URL: z.string().optional(),
   ECOMMERCE_SERVICE_URL: z.string().optional(),
   EVENT_INGEST_SERVICE_URL: z.string().optional(),
-  // Stub services (concept preserved, no implementation — see ADR 2026-05-10):
   CONTENT_SERVICE_URL: z.string().optional(),
   WEB3_SERVICE_URL: z.string().optional(),
-  // Removed: BILLING_SERVICE_URL — billing runs in-process via @nebutra/billing
   INTERNAL_API_KEY: z.string().optional(),
 
   // Frontend URLs
