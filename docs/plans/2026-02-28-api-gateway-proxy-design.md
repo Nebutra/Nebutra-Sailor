@@ -8,7 +8,7 @@
 
 ## Context
 
-The `apps/api-gateway` (Hono, port 3002) currently only health-checks the Python microservices. There is no actual request proxying — clients must call each service directly, bypassing rate limiting, tenant context injection, and auth enforcement enforced by the gateway.
+The `backends/gateway` (Hono, port 3002) currently only health-checks the Python microservices. There is no actual request proxying — clients must call each service directly, bypassing rate limiting, tenant context injection, and auth enforcement enforced by the gateway.
 
 This design adds a proper BFF proxy layer routing traffic through the gateway for the three highest-value services: AI (port 8001), Content (port 8002), and Billing (port 8005).
 
@@ -33,7 +33,7 @@ Three options were evaluated:
 ## New File Structure
 
 ```
-apps/api-gateway/src/
+backends/gateway/src/
   lib/
     proxy.ts          ← proxyRequest() — core proxy utility
     serviceAuth.ts    ← INTERNAL_API_KEY header injection
@@ -48,9 +48,9 @@ apps/api-gateway/src/
 
 **Modified files:**
 
-- `apps/api-gateway/src/config/env.ts` — add `BILLING_SERVICE_URL`, `INTERNAL_API_KEY`
-- `apps/api-gateway/src/index.ts` — register 3 route groups; upgrade `onError` to use `@nebutra/errors`
-- `apps/api-gateway/package.json` — add `@nebutra/logger`, `@nebutra/errors` as workspace deps
+- `backends/gateway/src/config/env.ts` — add `BILLING_SERVICE_URL`, `INTERNAL_API_KEY`
+- `backends/gateway/src/index.ts` — register 3 route groups; upgrade `onError` to use `@nebutra/errors`
+- `backends/gateway/package.json` — add `@nebutra/logger`, `@nebutra/errors` as workspace deps
 
 ---
 
@@ -192,8 +192,8 @@ Framework: Vitest (existing). Use `vi.stubGlobal("fetch", ...)` for upstream moc
 
 | File                                                | What to reuse                                                        |
 | --------------------------------------------------- | -------------------------------------------------------------------- |
-| `apps/api-gateway/src/middlewares/tenantContext.ts` | `requireAuth`, `requireOrganization`, `TenantContext` interface      |
+| `backends/gateway/src/middlewares/tenantContext.ts` | `requireAuth`, `requireOrganization`, `TenantContext` interface      |
 | `packages/errors/src/index.ts`                      | `ERROR_CODES`, `toApiError`, `getStatusCode`, `ExternalServiceError` |
-| `apps/api-gateway/src/routes/legal/consent.ts`      | Structural pattern: named Hono export, `c.get("tenant")`, try/catch  |
-| `apps/api-gateway/src/routes/system/status.ts`      | `fetch` with `AbortController` timeout pattern                       |
-| `apps/api-gateway/src/config/env.ts`                | Extend existing Zod schema — don't restructure                       |
+| `backends/gateway/src/routes/legal/consent.ts`      | Structural pattern: named Hono export, `c.get("tenant")`, try/catch  |
+| `backends/gateway/src/routes/system/status.ts`      | `fetch` with `AbortController` timeout pattern                       |
+| `backends/gateway/src/config/env.ts`                | Extend existing Zod schema — don't restructure                       |

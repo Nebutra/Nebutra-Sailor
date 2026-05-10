@@ -20,7 +20,7 @@ Brief summary of this release (1-2 sentences). What's the main theme or highligh
 ### Feature Name
 - Description of the feature
 - User benefit / use case
-- Related module/service: `apps/web`, `services/ai`, etc.
+- Related module/service: `apps/web`, `backends/python/ai`, etc.
 
 ### Another Feature
 - Description...
@@ -91,10 +91,10 @@ pnpm build
 - Change 1
 - Change 2
 
-### apps/api-gateway
+### backends/gateway
 - Change 1
 
-### services/ai
+### backends/python/ai
 - Change 1
 
 ### packages/db

@@ -124,7 +124,7 @@ jobs:
         id: pip-audit
         run: |
           FAILED=0
-          for service in services/*/; do
+          for service in backends/python/*/; do
             if [ -f "$service/pyproject.toml" ]; then
               echo "Auditing $service..."
               cd "$service"

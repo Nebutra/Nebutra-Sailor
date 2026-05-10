@@ -1,6 +1,6 @@
 /* eslint-env node */
 /* global console, process */
-import app from "../apps/api-gateway/src/index.js";
+import app from "../backends/gateway/src/index.js";
 
 // Extract the OpenAPI spec by calling the /openapi.json route
 async function exportSchema() {

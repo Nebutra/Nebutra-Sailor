@@ -110,4 +110,4 @@ const status = await sagaOrchestrator.getStatus(sagaId);
 ## Related
 
 - [Event Bus](../event-bus/)
-- [E-commerce service](../../services/ecommerce/)
+- [E-commerce service](../../backends/python/ecommerce/)

@@ -13,8 +13,8 @@ import { describe, expect, it } from "vitest";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "../..");
-const API_GATEWAY_SRC = resolve(ROOT, "apps/api-gateway/src");
-const OPENAPI_SPEC_PATH = resolve(ROOT, "apps/api-gateway/openapi.json");
+const API_GATEWAY_SRC = resolve(ROOT, "backends/gateway/src");
+const OPENAPI_SPEC_PATH = resolve(ROOT, "backends/gateway/openapi.json");
 const CI_WORKFLOW_PATH = resolve(ROOT, ".github/workflows/ci.yml");
 
 /**
@@ -106,7 +106,7 @@ describe("Property 5a: API Route Versioning", () => {
 // ---------------------------------------------------------------------------
 
 describe("Property 5b: OpenAPI Spec File", () => {
-  it("openapi.json exists in apps/api-gateway/", () => {
+  it("openapi.json exists in backends/gateway/", () => {
     // openapi.json is gitignored (generated artifact). In CI it must be
     // produced by a prior build step. Skip gracefully when absent so the
     // remaining spec-content tests still guard correctness locally.
@@ -205,8 +205,8 @@ describe("Property 5d: OpenAPI Client Drift Gate", () => {
 
   it("runs OpenAPI validation when generation or API type files change", () => {
     for (const requiredPath of [
-      "apps/api-gateway/**",
-      "apps/api-gateway/scripts/export-spec.ts",
+      "backends/gateway/**",
+      "backends/gateway/scripts/export-spec.ts",
       "apps/web/package.json",
       "apps/web/src/lib/api/**",
       "scripts/generate-api-types.ts",

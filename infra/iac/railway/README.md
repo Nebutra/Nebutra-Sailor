@@ -37,7 +37,7 @@ railway init
 ### 4. Link to service
 
 ```bash
-cd services/ai
+cd backends/python/ai
 railway link
 ```
 

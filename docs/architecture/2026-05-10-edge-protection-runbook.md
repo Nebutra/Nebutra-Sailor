@@ -169,9 +169,9 @@ Project → Firewall → **Bot Filter**: ON (Vercel's heuristic, complements CF 
 
 Already in code — **verify deployment**:
 
-- [ ] `apps/api-gateway`: Hono `cors()` allowlist (NOT `*`) — ✅ done in `src/index.ts:140`
-- [ ] `apps/api-gateway`: `secureHeaders()` middleware — ✅ done in `src/index.ts:91`
-- [ ] `apps/api-gateway`: `bodyLimit(1MB)` — ✅ done
+- [ ] `backends/gateway`: Hono `cors()` allowlist (NOT `*`) — ✅ done in `src/index.ts:140`
+- [ ] `backends/gateway`: `secureHeaders()` middleware — ✅ done in `src/index.ts:91`
+- [ ] `backends/gateway`: `bodyLimit(1MB)` — ✅ done
 - [ ] Both apps: HSTS via `vercel.json` — ✅ done in this PR
 - [ ] `packages/rate-limit`: per-tenant + per-IP limits — verify wired into all write routes
 - [ ] `packages/captcha`: Turnstile server verification — pending finish

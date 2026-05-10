@@ -20,7 +20,7 @@ This file provides project-wide context for GitHub Copilot Chat and inline compl
 ```
 apps/landing-page/  → public marketing site (next-intl, 7 locales)
 apps/web/           → authenticated SaaS dashboard (Clerk auth, RBAC)
-apps/api-gateway/   → Hono + OpenAPI backend (Zod, 10-layer middleware)
+backends/gateway/   → Hono + OpenAPI backend (Zod, 10-layer middleware)
 apps/storybook/     → Storybook 8.x component docs
 apps/studio/        → Sanity Studio v5 CMS
 apps/docs/          → Mintlify product docs
@@ -132,7 +132,7 @@ Always use `AnimateIn` or `AnimateInGroup` from `@nebutra/ui/components`:
 ## API Gateway (Hono)
 
 ```ts
-// Routes in: apps/api-gateway/src/routes/
+// Routes in: backends/gateway/src/routes/
 // All routes must use Zod for validation
 import { zValidator } from "@hono/zod-validator";
 

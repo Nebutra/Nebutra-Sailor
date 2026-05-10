@@ -164,7 +164,7 @@ Adapters map provider identities to internal domain identity and emit the same c
 
 ### P0
 
-- Runtime break in services/third-party/app/main.py (indentation)
+- Runtime break in backends/python/third-party/app/main.py (indentation)
 - Tenant header contract mismatch across gateway/workflows/services
 - Health endpoint and env/compose drift
 

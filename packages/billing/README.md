@@ -299,7 +299,7 @@ See `packages/db/prisma/schema.prisma` for billing-related models:
 
 ## Python Microservice
 
-A companion Python microservice is available at `services/billing/` for:
+A companion Python microservice is available at `backends/python/billing/` for:
 
 - REST API endpoints
 - Webhook processing
@@ -307,7 +307,7 @@ A companion Python microservice is available at `services/billing/` for:
 - Usage aggregation
 
 ```bash
-cd services/billing
+cd backends/python/billing
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8005
 ```

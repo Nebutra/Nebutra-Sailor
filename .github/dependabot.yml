@@ -39,7 +39,7 @@ updates:
 
   # Python microservices — one entry per service
   - package-ecosystem: "pip"
-    directory: "/services/ai"
+    directory: "/backends/python/ai"
     schedule:
       interval: "weekly"
       day: "tuesday"
@@ -52,7 +52,7 @@ updates:
         update-types: ["minor", "patch"]
 
   - package-ecosystem: "pip"
-    directory: "/services/billing"
+    directory: "/backends/python/billing"
     schedule:
       interval: "weekly"
       day: "tuesday"
@@ -65,7 +65,7 @@ updates:
         update-types: ["minor", "patch"]
 
   - package-ecosystem: "pip"
-    directory: "/services/content"
+    directory: "/backends/python/content"
     schedule:
       interval: "weekly"
       day: "tuesday"
@@ -78,7 +78,7 @@ updates:
         update-types: ["minor", "patch"]
 
   - package-ecosystem: "pip"
-    directory: "/services/ecommerce"
+    directory: "/backends/python/ecommerce"
     schedule:
       interval: "weekly"
       day: "tuesday"
@@ -91,7 +91,7 @@ updates:
         update-types: ["minor", "patch"]
 
   - package-ecosystem: "pip"
-    directory: "/services/event-ingest"
+    directory: "/backends/python/event-ingest"
     schedule:
       interval: "weekly"
       day: "tuesday"
@@ -104,7 +104,7 @@ updates:
         update-types: ["minor", "patch"]
 
   - package-ecosystem: "pip"
-    directory: "/services/recsys"
+    directory: "/backends/python/recsys"
     schedule:
       interval: "weekly"
       day: "tuesday"
@@ -117,7 +117,7 @@ updates:
         update-types: ["minor", "patch"]
 
   - package-ecosystem: "pip"
-    directory: "/services/web3"
+    directory: "/backends/python/web3"
     schedule:
       interval: "weekly"
       day: "tuesday"
@@ -131,7 +131,7 @@ updates:
 
   # Docker base images — monthly cadence (digest SHA updates)
   - package-ecosystem: "docker"
-    directory: "/apps/api-gateway"
+    directory: "/backends/gateway"
     schedule:
       interval: "monthly"
     open-pull-requests-limit: 2

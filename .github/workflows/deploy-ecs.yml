@@ -35,7 +35,7 @@ on:
     paths:
       - "apps/landing-page/**"
       - "apps/web/**"
-      - "apps/api-gateway/**"
+      - "backends/gateway/**"
       - "packages/**"
       - "pnpm-lock.yaml"
       - ".github/workflows/deploy-ecs.yml"
@@ -100,7 +100,7 @@ jobs:
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
             api:
-              - 'apps/api-gateway/**'
+              - 'backends/gateway/**'
               - 'packages/**'
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'

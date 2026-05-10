@@ -1876,7 +1876,7 @@ model SCIMToken {
 ### SCIM 2.0 Endpoint
 
 ```typescript
-// apps/api-gateway/src/routes/scim/index.ts
+// backends/gateway/src/routes/scim/index.ts
 // SCIM 2.0 API for user provisioning from Identity Providers
 
 app.get("/scim/v2/Users", scimAuth, listUsers);
@@ -2405,7 +2405,7 @@ pre {
 ### API Gateway Webhook Handler
 
 ```typescript
-// apps/api-gateway/src/routes/webhooks/discourse.ts
+// backends/gateway/src/routes/webhooks/discourse.ts
 import { Hono } from "hono";
 import { z } from "zod";
 

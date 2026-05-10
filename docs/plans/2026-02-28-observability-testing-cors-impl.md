@@ -324,12 +324,12 @@ git commit -m "feat: add OpenTelemetry SDK to packages/logger with OTLP exporter
 
 **Files:**
 
-- Modify: `apps/api-gateway/src/config/env.ts` (lines 1-54)
-- Modify: `apps/api-gateway/src/index.ts` (lines 16-36)
+- Modify: `backends/gateway/src/config/env.ts` (lines 1-54)
+- Modify: `backends/gateway/src/index.ts` (lines 16-36)
 
 **Step 1: Add CORS_ORIGINS to env schema**
 
-In `apps/api-gateway/src/config/env.ts`, add `CORS_ORIGINS` to the Zod schema object (after the existing `STUDIO_URL` line):
+In `backends/gateway/src/config/env.ts`, add `CORS_ORIGINS` to the Zod schema object (after the existing `STUDIO_URL` line):
 
 ```typescript
   // Additional allowed CORS origins (comma-separated)
@@ -338,7 +338,7 @@ In `apps/api-gateway/src/config/env.ts`, add `CORS_ORIGINS` to the Zod schema ob
 
 **Step 2: Replace hardcoded CORS origins in index.ts**
 
-In `apps/api-gateway/src/index.ts`, replace the `cors({ origin: [...] })` block (lines 16-36) with:
+In `backends/gateway/src/index.ts`, replace the `cors({ origin: [...] })` block (lines 16-36) with:
 
 ```typescript
 import { env, DOMAINS } from "./config/env.js";
@@ -378,7 +378,7 @@ app.use(
 **Step 3: Verify TypeScript**
 
 ```bash
-cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/api-gateway
+cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/backends/gateway
 pnpm typecheck 2>&1
 ```
 
@@ -387,7 +387,7 @@ Expected: no errors.
 **Step 4: Commit**
 
 ```bash
-git add apps/api-gateway/src/config/env.ts apps/api-gateway/src/index.ts
+git add backends/gateway/src/config/env.ts backends/gateway/src/index.ts
 git commit -m "fix: replace hardcoded CORS origins with DOMAINS constants + CORS_ORIGINS env var"
 ```
 
@@ -899,8 +899,8 @@ git commit -m "test: add token bucket test suite for rate-limit package"
 
 **Files:**
 
-- Modify: `apps/api-gateway/package.json` (add vitest + @types/node@20)
-- Create: `apps/api-gateway/src/__tests__/consent.test.ts`
+- Modify: `backends/gateway/package.json` (add vitest + @types/node@20)
+- Create: `backends/gateway/src/__tests__/consent.test.ts`
 
 **Step 1: Add vitest to api-gateway**
 
@@ -910,7 +910,7 @@ pnpm add -D vitest @vitest/coverage-v8 --filter @nebutra/api-gateway
 
 **Step 2: Write test file**
 
-Create `apps/api-gateway/src/__tests__/consent.test.ts`:
+Create `backends/gateway/src/__tests__/consent.test.ts`:
 
 ```typescript
 import { describe, it, expect, vi, beforeEach } from "vitest";
@@ -1229,7 +1229,7 @@ If Zod validation returns 422 instead of 400, adjust the `expect(res.status).toB
 **Step 4: Commit**
 
 ```bash
-git add apps/api-gateway/src/__tests__/consent.test.ts apps/api-gateway/package.json
+git add backends/gateway/src/__tests__/consent.test.ts backends/gateway/package.json
 git commit -m "test: add consent route integration tests with Prisma mocks"
 ```
 
@@ -1239,9 +1239,9 @@ git commit -m "test: add consent route integration tests with Prisma mocks"
 
 **Files:**
 
-- Modify: `apps/api-gateway/package.json` (add @nebutra/logger)
-- Modify: `apps/api-gateway/src/index.ts` (replace console statements)
-- Modify: `apps/api-gateway/src/routes/legal/consent.ts` (replace 8 console.error)
+- Modify: `backends/gateway/package.json` (add @nebutra/logger)
+- Modify: `backends/gateway/src/index.ts` (replace console statements)
+- Modify: `backends/gateway/src/routes/legal/consent.ts` (replace 8 console.error)
 
 **Step 1: Add @nebutra/logger dependency**
 
@@ -1251,7 +1251,7 @@ pnpm add @nebutra/logger --filter @nebutra/api-gateway --workspace
 
 **Step 2: Replace console statements in index.ts**
 
-In `apps/api-gateway/src/index.ts`:
+In `backends/gateway/src/index.ts`:
 
 Add imports at the top:
 
@@ -1288,7 +1288,7 @@ logger.info("API Gateway started", { port });
 
 **Step 3: Replace console.error in consent.ts**
 
-In `apps/api-gateway/src/routes/legal/consent.ts`, add at the top:
+In `backends/gateway/src/routes/legal/consent.ts`, add at the top:
 
 ```typescript
 import { logger } from "@nebutra/logger";
@@ -1316,7 +1316,7 @@ Each specific message maps to:
 **Step 4: Verify TypeScript and lint**
 
 ```bash
-cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/api-gateway
+cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/backends/gateway
 pnpm typecheck 2>&1
 pnpm lint 2>&1 | grep -i error | head -20
 ```
@@ -1326,7 +1326,7 @@ Expected: no TypeScript errors, no lint errors (no console.\* remaining).
 **Step 5: Commit**
 
 ```bash
-git add apps/api-gateway/
+git add backends/gateway/
 git commit -m "feat: replace all console statements in api-gateway with structured logger"
 ```
 
@@ -1336,8 +1336,8 @@ git commit -m "feat: replace all console statements in api-gateway with structur
 
 **Files:**
 
-- Modify: `apps/api-gateway/package.json` (add @nebutra/alerting)
-- Modify: `apps/api-gateway/src/index.ts` (init alerting with error handler + env channels)
+- Modify: `backends/gateway/package.json` (add @nebutra/alerting)
+- Modify: `backends/gateway/src/index.ts` (init alerting with error handler + env channels)
 
 **Step 1: Add alerting dependency**
 
@@ -1347,7 +1347,7 @@ pnpm add @nebutra/alerting --filter @nebutra/api-gateway --workspace
 
 **Step 2: Wire in index.ts**
 
-In `apps/api-gateway/src/index.ts`, after the `logger` import, add:
+In `backends/gateway/src/index.ts`, after the `logger` import, add:
 
 ```typescript
 import { setAlertErrorHandler, initializeFromEnv } from "@nebutra/alerting";
@@ -1369,7 +1369,7 @@ if (registeredChannels.length > 0) {
 **Step 3: Verify TypeScript**
 
 ```bash
-cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/api-gateway
+cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/backends/gateway
 pnpm typecheck 2>&1
 ```
 
@@ -1378,7 +1378,7 @@ Expected: no errors.
 **Step 4: Commit**
 
 ```bash
-git add apps/api-gateway/src/index.ts apps/api-gateway/package.json
+git add backends/gateway/src/index.ts backends/gateway/package.json
 git commit -m "feat: wire alerting error handler and startup initialization in api-gateway"
 ```
 

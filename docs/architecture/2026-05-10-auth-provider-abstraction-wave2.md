@@ -11,7 +11,7 @@
 
 ## Context
 
-`@nebutra/auth` already ships a provider-agnostic abstraction with three concrete providers (Better Auth, Clerk, NextAuth) and 27 consumer files across `apps/web`, `apps/landing-page`, `apps/api-gateway`, plus a surprise consumer at `packages/saga/src/workflows/orderSaga.ts`. The abstraction is **functional but incomplete**:
+`@nebutra/auth` already ships a provider-agnostic abstraction with three concrete providers (Better Auth, Clerk, NextAuth) and 27 consumer files across `apps/web`, `apps/landing-page`, `backends/gateway`, plus a surprise consumer at `packages/saga/src/workflows/orderSaga.ts`. The abstraction is **functional but incomplete**:
 
 - `AuthProvider` interface omits `signIn`/`signOut` despite being foundational
 - Better Auth plugins (organizations, passkeys, twoFactor, magicLink) load dynamically but their methods are not exposed through the canonical interface

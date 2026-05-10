@@ -129,7 +129,7 @@
 - **Status**: Schema present, zero runtime queries
 - **Evidence**:
   - Seed defines feature keys for content (content.posts, content.comments, content.moderation)
-  - No routes in `apps/api-gateway` for content CRUD
+  - No routes in `backends/gateway` for content CRUD
   - Embeddings defined with pgvector but no query logic
 - **Rationale for Existence**: Core platform feature, but build is deferred pending content moderation and i18n infrastructure
 - **Action**: Keep if content module is planned; drop if pivoting away from content platform

@@ -3,7 +3,7 @@
 #
 # Usage from an app-level vercel.json:
 #   bash ../../scripts/vercel-ignore-build.sh apps/web
-#   bash ../../scripts/vercel-ignore-build.sh apps/api-gateway
+#   bash ../../scripts/vercel-ignore-build.sh backends/gateway
 #   bash ../../scripts/vercel-ignore-build.sh apps/landing-page
 #   bash ../../scripts/vercel-ignore-build.sh apps/studio
 #   bash ../../scripts/vercel-ignore-build.sh apps/tsekaluk-dev

@@ -119,5 +119,5 @@ All tool executions are logged:
 
 ## Related
 
-- [AI service](../../services/ai/)
-- [API Gateway](../../apps/api-gateway/)
+- [AI service](../../backends/python/ai/)
+- [API Gateway](../../backends/gateway/)

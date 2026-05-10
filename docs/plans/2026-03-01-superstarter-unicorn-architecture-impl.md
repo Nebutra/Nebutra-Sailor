@@ -166,8 +166,8 @@ Upgrade policy:
 
 ### Batch A (Week 1)
 
-- `apps/api-gateway`: normalize tenant context and health/status routes.
-- `services/third-party`: fix runtime syntax/startup issues.
+- `backends/gateway`: normalize tenant context and health/status routes.
+- `backends/python/third-party`: fix runtime syntax/startup issues.
 - root env/compose/openstatus: align ports and endpoint paths.
 
 ### Batch B (Week 2)
@@ -178,7 +178,7 @@ Upgrade policy:
 
 ### Batch C (Week 3)
 
-- `services/event-ingest` (new): event validation/dedupe/idempotency.
+- `backends/python/event-ingest` (new): event validation/dedupe/idempotency.
 - `infra/clickhouse` + dbt project (new): bronze/silver/gold models.
 - `apps/web`: marketing+launch data integration from warehouse.
 

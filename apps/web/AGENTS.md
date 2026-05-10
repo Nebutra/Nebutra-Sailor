@@ -16,7 +16,7 @@ Applies to everything under `apps/web/`.
 - Settings and shell behavior: `src/components`, route handlers under `src/app/api`
 
 If a frontend behavior is derived from API contracts, regenerate types from
-`apps/api-gateway` instead of hand-editing generated API types.
+`backends/gateway` instead of hand-editing generated API types.
 
 ## Defaults
 

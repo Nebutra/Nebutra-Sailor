@@ -178,145 +178,6 @@ importers:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.0.1))(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
 
-  apps/api-gateway:
-    dependencies:
-      '@clerk/backend':
-        specifier: ^3.0.1
-        version: 3.0.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@hono/node-server':
-        specifier: '>=1.19.10'
-        version: 1.19.11(hono@4.12.5)
-      '@hono/swagger-ui':
-        specifier: ^0.6.0
-        version: 0.6.0(hono@4.12.5)
-      '@hono/zod-openapi':
-        specifier: ^1.2.3
-        version: 1.2.3(hono@4.12.5)(zod@4.3.6)
-      '@hono/zod-validator':
-        specifier: ^0.7.6
-        version: 0.7.6(hono@4.12.5)(zod@4.3.6)
-      '@nebutra/agents':
-        specifier: workspace:*
-        version: link:../../packages/agents
-      '@nebutra/alerting':
-        specifier: workspace:*
-        version: link:../../packages/alerting
-      '@nebutra/analytics':
-        specifier: workspace:*
-        version: link:../../packages/analytics
-      '@nebutra/audit':
-        specifier: workspace:*
-        version: link:../../packages/audit
-      '@nebutra/auth':
-        specifier: workspace:*
-        version: link:../../packages/auth
-      '@nebutra/billing':
-        specifier: workspace:*
-        version: link:../../packages/billing
-      '@nebutra/cache':
-        specifier: workspace:*
-        version: link:../../packages/cache
-      '@nebutra/captcha':
-        specifier: workspace:*
-        version: link:../../packages/captcha
-      '@nebutra/db':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@nebutra/email':
-        specifier: workspace:*
-        version: link:../../packages/email
-      '@nebutra/errors':
-        specifier: workspace:*
-        version: link:../../packages/errors
-      '@nebutra/event-bus':
-        specifier: workspace:*
-        version: link:../../packages/event-bus
-      '@nebutra/gateway-core':
-        specifier: workspace:*
-        version: link:../../packages/gateway-core
-      '@nebutra/health':
-        specifier: workspace:*
-        version: link:../../packages/health
-      '@nebutra/license':
-        specifier: workspace:*
-        version: link:../../packages/license
-      '@nebutra/logger':
-        specifier: workspace:*
-        version: link:../../packages/logger
-      '@nebutra/notifications':
-        specifier: workspace:*
-        version: link:../../packages/notifications
-      '@nebutra/queue':
-        specifier: workspace:*
-        version: link:../../packages/queue
-      '@nebutra/rate-limit':
-        specifier: workspace:*
-        version: link:../../packages/rate-limit
-      '@nebutra/repositories':
-        specifier: workspace:*
-        version: link:../../packages/repositories
-      '@nebutra/search':
-        specifier: workspace:*
-        version: link:../../packages/search
-      '@nebutra/sms':
-        specifier: workspace:*
-        version: link:../../packages/sms
-      '@nebutra/vault':
-        specifier: workspace:*
-        version: link:../../packages/vault
-      '@opentelemetry/api':
-        specifier: ^1.9.0
-        version: 1.9.0
-      '@orpc/server':
-        specifier: ^1.13.13
-        version: 1.13.13(@opentelemetry/api@1.9.0)(ws@8.19.0)
-      '@orpc/zod':
-        specifier: ^1.13.13
-        version: 1.13.13(@opentelemetry/api@1.9.0)(@orpc/contract@1.13.13(@opentelemetry/api@1.9.0))(@orpc/server@1.13.13(@opentelemetry/api@1.9.0)(ws@8.19.0))(ws@8.19.0)(zod@4.3.6)
-      '@sentry/node':
-        specifier: ^9.0.0
-        version: 9.47.1
-      '@trpc/server':
-        specifier: ^11.15.1
-        version: 11.15.1(typescript@5.9.3)
-      hono:
-        specifier: ^4.12.5
-        version: 4.12.5
-      inngest:
-        specifier: 4.0.0-beta.4
-        version: 4.0.0-beta.4(@opentelemetry/core@2.6.0(@opentelemetry/api@1.9.0))(express@5.2.1)(hono@4.12.5)(koa@3.1.2)(next@16.2.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)(zod@4.3.6)
-      stripe:
-        specifier: ^20.4.0
-        version: 20.4.0(@types/node@22.19.15)
-      svix:
-        specifier: ^1.86.0
-        version: 1.86.0
-      tsx:
-        specifier: 'catalog:'
-        version: 4.21.0
-      zod:
-        specifier: ^4.3.6
-        version: 4.3.6
-    devDependencies:
-      '@prisma/client':
-        specifier: ^7.4.2
-        version: 7.4.2(prisma@7.4.2(@types/react@19.2.14)(magicast@0.3.5)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)
-      '@redocly/cli':
-        specifier: ^1.34.0
-        version: 1.34.10(ajv@8.18.0)
-      '@types/node':
-        specifier: ^22.19.15
-        version: 22.19.15
-      '@vitest/coverage-v8':
-        specifier: ^4.0.18
-        version: 4.1.4(vitest@4.1.4)
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: ^4.0.18
-        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.0.1))(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
-
   apps/design-docs:
     dependencies:
       '@ai-sdk/openai-compatible':
@@ -1325,6 +1186,145 @@ importers:
       tailwindcss:
         specifier: ^4.2.1
         version: 4.2.1
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: ^4.0.18
+        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.0.1))(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+
+  backends/gateway:
+    dependencies:
+      '@clerk/backend':
+        specifier: ^3.0.1
+        version: 3.0.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@hono/node-server':
+        specifier: '>=1.19.10'
+        version: 1.19.11(hono@4.12.5)
+      '@hono/swagger-ui':
+        specifier: ^0.6.0
+        version: 0.6.0(hono@4.12.5)
+      '@hono/zod-openapi':
+        specifier: ^1.2.3
+        version: 1.2.3(hono@4.12.5)(zod@4.3.6)
+      '@hono/zod-validator':
+        specifier: ^0.7.6
+        version: 0.7.6(hono@4.12.5)(zod@4.3.6)
+      '@nebutra/agents':
+        specifier: workspace:*
+        version: link:../../packages/agents
+      '@nebutra/alerting':
+        specifier: workspace:*
+        version: link:../../packages/alerting
+      '@nebutra/analytics':
+        specifier: workspace:*
+        version: link:../../packages/analytics
+      '@nebutra/audit':
+        specifier: workspace:*
+        version: link:../../packages/audit
+      '@nebutra/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
+      '@nebutra/billing':
+        specifier: workspace:*
+        version: link:../../packages/billing
+      '@nebutra/cache':
+        specifier: workspace:*
+        version: link:../../packages/cache
+      '@nebutra/captcha':
+        specifier: workspace:*
+        version: link:../../packages/captcha
+      '@nebutra/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@nebutra/email':
+        specifier: workspace:*
+        version: link:../../packages/email
+      '@nebutra/errors':
+        specifier: workspace:*
+        version: link:../../packages/errors
+      '@nebutra/event-bus':
+        specifier: workspace:*
+        version: link:../../packages/event-bus
+      '@nebutra/gateway-core':
+        specifier: workspace:*
+        version: link:../../packages/gateway-core
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/health
+      '@nebutra/license':
+        specifier: workspace:*
+        version: link:../../packages/license
+      '@nebutra/logger':
+        specifier: workspace:*
+        version: link:../../packages/logger
+      '@nebutra/notifications':
+        specifier: workspace:*
+        version: link:../../packages/notifications
+      '@nebutra/queue':
+        specifier: workspace:*
+        version: link:../../packages/queue
+      '@nebutra/rate-limit':
+        specifier: workspace:*
+        version: link:../../packages/rate-limit
+      '@nebutra/repositories':
+        specifier: workspace:*
+        version: link:../../packages/repositories
+      '@nebutra/search':
+        specifier: workspace:*
+        version: link:../../packages/search
+      '@nebutra/sms':
+        specifier: workspace:*
+        version: link:../../packages/sms
+      '@nebutra/vault':
+        specifier: workspace:*
+        version: link:../../packages/vault
+      '@opentelemetry/api':
+        specifier: ^1.9.0
+        version: 1.9.0
+      '@orpc/server':
+        specifier: ^1.13.13
+        version: 1.13.13(@opentelemetry/api@1.9.0)(ws@8.19.0)
+      '@orpc/zod':
+        specifier: ^1.13.13
+        version: 1.13.13(@opentelemetry/api@1.9.0)(@orpc/contract@1.13.13(@opentelemetry/api@1.9.0))(@orpc/server@1.13.13(@opentelemetry/api@1.9.0)(ws@8.19.0))(ws@8.19.0)(zod@4.3.6)
+      '@sentry/node':
+        specifier: ^9.0.0
+        version: 9.47.1
+      '@trpc/server':
+        specifier: ^11.15.1
+        version: 11.15.1(typescript@5.9.3)
+      hono:
+        specifier: ^4.12.5
+        version: 4.12.5
+      inngest:
+        specifier: 4.0.0-beta.4
+        version: 4.0.0-beta.4(@opentelemetry/core@2.6.0(@opentelemetry/api@1.9.0))(express@5.2.1)(hono@4.12.5)(koa@3.1.2)(next@16.2.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)(zod@4.3.6)
+      stripe:
+        specifier: ^20.4.0
+        version: 20.4.0(@types/node@22.19.15)
+      svix:
+        specifier: ^1.86.0
+        version: 1.86.0
+      tsx:
+        specifier: 'catalog:'
+        version: 4.21.0
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
+    devDependencies:
+      '@prisma/client':
+        specifier: ^7.4.2
+        version: 7.4.2(prisma@7.4.2(@types/react@19.2.14)(magicast@0.3.5)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)
+      '@redocly/cli':
+        specifier: ^1.34.0
+        version: 1.34.10(ajv@8.18.0)
+      '@types/node':
+        specifier: ^22.19.15
+        version: 22.19.15
+      '@vitest/coverage-v8':
+        specifier: ^4.0.18
+        version: 4.1.4(vitest@4.1.4)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3

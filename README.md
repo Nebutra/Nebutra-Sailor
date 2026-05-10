@@ -405,29 +405,30 @@ Nebutra-Sailor/
 │   ├── health/            # Health check utilities
 │   ├── status/            # OpenStatus integration
 │   └── analytics/         # Dub-powered link tracking & conversions
-├── services/
-│   ├── ai/                # Python FastAPI - LLM, embeddings
-│   ├── billing/           # Billing microservice
-│   ├── content/           # Python FastAPI - posts, feed
-│   ├── recsys/            # Python - recommendation engine
-│   ├── ecommerce/         # Python - Shopify/Shopline sync
-│   ├── event-ingest/      # Event ingestion pipeline
-│   ├── third-party/       # Third-party integrations
-│   └── web3/              # Python - blockchain indexer
-├── infra/
-│   ├── cloudflare/        # CDN, WAF, R2 configs
-│   ├── docker/            # Container configurations
-│   ├── k8s/               # Kubernetes manifests
-│   ├── railway/           # Railway deployment
-│   ├── terraform/         # IaC configurations
-│   ├── inngest/           # TypeScript workflow definitions
-│   ├── n8n/               # Visual workflow automation
-│   ├── pusher/            # Real-time communication (Pusher/Soketi)
-│   ├── nginx/             # Reverse proxy configs
-│   ├── clickhouse/        # Analytics database
-│   ├── database/          # Database migrations & seeds
-│   └── observability/     # Logging, tracing, metrics
-└── docs/                  # Architecture documentation
+├── backends/                  # No-UI backends (split by language à la vercel/vercel)
+│   ├── gateway/               # TypeScript / Hono — BFF, auth, tenancy, routing
+│   └── python/                # FastAPI fleet
+│       ├── _shared/           # Cross-service primitives (auth, db, queue client)
+│       ├── ai/                # LLM, embeddings, agent orchestration
+│       ├── billing/           # Usage ingestion + invoicing
+│       ├── content/           # Posts, feed, content pipeline
+│       ├── recsys/            # Recommendation engine
+│       ├── ecommerce/         # Shopify/Shopline sync, orders
+│       ├── event-ingest/      # High-throughput event pipeline
+│       ├── third-party/       # External integrations
+│       └── web3/              # Blockchain indexer
+├── infra/                     # Infrastructure (split by concern in W2.2)
+│   ├── iac/                   # terraform + k8s + ecs + cloudflare + railway
+│   ├── runtime/               # nginx + docker + analytics + compose files
+│   ├── data/                  # database (RLS) + clickhouse (init + dbt)
+│   └── ops/                   # observability + deployment scripts
+├── workflows/                 # Event-driven business workflows (extracted in W2.3)
+│   ├── inngest/               # Serverless background jobs + cron
+│   ├── n8n/                   # Visual workflow automation
+│   └── pusher/                # Real-time messaging glue
+├── e2e/                       # Playwright E2E tests (smoke / golden / sleptons)
+├── tests/                     # Architecture invariants + load tests + UI governance
+└── docs/                      # Architecture documentation
 ```
 
 <br />
@@ -440,11 +441,11 @@ Each component has its own README with setup instructions and API documentation:
 <tr>
 <td><strong>Services</strong></td>
 <td>
-  <a href="services/ai/">AI</a> · 
-  <a href="services/content/">Content</a> · 
-  <a href="services/recsys/">RecSys</a> · 
-  <a href="services/ecommerce/">E-commerce</a> · 
-  <a href="services/web3/">Web3</a>
+  <a href="backends/python/ai/">AI</a> · 
+  <a href="backends/python/content/">Content</a> · 
+  <a href="backends/python/recsys/">RecSys</a> · 
+  <a href="backends/python/ecommerce/">E-commerce</a> · 
+  <a href="backends/python/web3/">Web3</a>
 </td>
 </tr>
 <tr>

@@ -337,7 +337,7 @@ async function handleAiAgents(options: AiCommandOptions) {
 
   try {
     // Try to find agents in the api-gateway
-    const agentsPath = resolve(process.cwd(), "apps/api-gateway/src/routes/agents");
+    const agentsPath = resolve(process.cwd(), "backends/gateway/src/routes/agents");
     let agents: Array<{ name: string; path: string; description?: string }> = [];
 
     try {
@@ -348,7 +348,7 @@ async function handleAiAgents(options: AiCommandOptions) {
           .filter((f) => f.endsWith(".ts") && !f.endsWith(".d.ts"))
           .map((f) => ({
             name: f.replace(".ts", ""),
-            path: `apps/api-gateway/src/routes/agents/${f}`,
+            path: `backends/gateway/src/routes/agents/${f}`,
           }));
       }
     } catch {
@@ -363,7 +363,7 @@ async function handleAiAgents(options: AiCommandOptions) {
           : [
               {
                 name: "No agents found",
-                path: "create agents in apps/api-gateway/src/routes/agents/",
+                path: "create agents in backends/gateway/src/routes/agents/",
               },
             ],
       count: agents.length,
@@ -371,7 +371,7 @@ async function handleAiAgents(options: AiCommandOptions) {
 
     if (!options.dryRun) {
       if (output.count === 0) {
-        logger.info("No agents configured. Create agents in apps/api-gateway/src/routes/agents/");
+        logger.info("No agents configured. Create agents in backends/gateway/src/routes/agents/");
       } else {
         logger.success(`Found ${output.count} agent(s)`);
       }

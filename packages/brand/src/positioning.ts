@@ -57,7 +57,7 @@ export const positioning = {
         "RecommendationSystem (recsys) service for personalization",
         "Event ingestion pipeline for AI training data collection",
       ],
-      packages: ["services/ai", "services/recsys", "services/event-ingest"],
+      packages: ["backends/python/ai", "backends/python/recsys", "backends/python/event-ingest"],
     },
     {
       id: "saas-complete",
@@ -69,7 +69,7 @@ export const positioning = {
         "Entitlement system for feature gating",
         "RBAC-ready tenant context propagated through the API gateway",
       ],
-      packages: ["packages/billing", "apps/api-gateway", "packages/preset"],
+      packages: ["packages/billing", "backends/gateway", "packages/preset"],
     },
     {
       id: "design-system",
@@ -93,7 +93,7 @@ export const positioning = {
         "Python FastAPI microservices for AI, billing, content, e-commerce, web3",
         "Turborepo with affected-only builds and remote caching",
       ],
-      packages: ["apps/web", "apps/api-gateway", "services/*"],
+      packages: ["apps/web", "backends/gateway", "backends/python/*"],
     },
     {
       id: "enterprise-infra",

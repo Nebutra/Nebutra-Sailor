@@ -12,7 +12,7 @@ COPY package.json pnpm-lock.yaml* ./
 COPY turbo.json ./
 COPY patches ./patches
 COPY apps/web/package.json ./apps/web/
-COPY apps/api-gateway/package.json ./apps/api-gateway/
+COPY backends/gateway/package.json ./backends/gateway/
 COPY packages/*/package.json ./packages/
 RUN pnpm install --frozen-lockfile
 

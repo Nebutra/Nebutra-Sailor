@@ -1,7 +1,8 @@
 packages:
   - "apps/*"
   - "packages/*"
-  - "services/*"
+  - "backends/python/*"
+  - "backends/gateway"
 
 # =============================================================================
 # pnpm Catalog — single source of truth for shared dependency versions.

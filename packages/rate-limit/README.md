@@ -52,7 +52,7 @@ const result = await limiter.limit(weight);
 ### In Middleware
 
 ```typescript
-// apps/api-gateway/src/middlewares/rateLimit.ts
+// backends/gateway/src/middlewares/rateLimit.ts
 import { getRateLimiter, getApiWeight } from "@nebutra/rate-limit";
 
 export async function rateLimitMiddleware(c, next) {
@@ -103,4 +103,4 @@ API_WEIGHTS["/api/v1/custom"] = 3;
 ## Related
 
 - [Cache strategies](../cache/)
-- [BFF rate limit middleware](../../apps/api-gateway/)
+- [BFF rate limit middleware](../../backends/gateway/)

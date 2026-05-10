@@ -1,0 +1,5380 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Nebutra API",
+    "version": "1.0.0",
+    "description": "Nebutra SaaS Platform API Gateway"
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Current server"
+    }
+  ],
+  "components": {
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/api/misc/health": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Health check",
+        "description": "Returns health status of the API gateway and its dependencies. Returns 200 for healthy/degraded, 503 for unhealthy.",
+        "responses": {
+          "200": {
+            "description": "Service is healthy or degraded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["healthy", "degraded", "unhealthy"]
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "uptime": {
+                      "type": "number"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "dependencies": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        },
+                        "cache": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        }
+                      },
+                      "required": ["database", "cache"]
+                    }
+                  },
+                  "required": ["status", "version", "uptime", "timestamp", "dependencies"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unhealthy — all dependencies are down",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["healthy", "degraded", "unhealthy"]
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "uptime": {
+                      "type": "number"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "dependencies": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        },
+                        "cache": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        }
+                      },
+                      "required": ["database", "cache"]
+                    }
+                  },
+                  "required": ["status", "version", "uptime", "timestamp", "dependencies"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/status": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Comprehensive system status",
+        "description": "Returns detailed status of all system components including database, Redis, and microservices. Used by OpenStatus monitoring.",
+        "responses": {
+          "200": {
+            "description": "System is healthy or degraded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["healthy", "degraded", "unhealthy"]
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "database": {
+                      "type": "string",
+                      "enum": ["connected", "disconnected"]
+                    },
+                    "redis": {
+                      "type": "string",
+                      "enum": ["connected", "disconnected"]
+                    },
+                    "services": {
+                      "type": "object",
+                      "properties": {
+                        "ai": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "content": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "recsys": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "ecommerce": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "web3": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "billing": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "eventIngest": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        }
+                      },
+                      "required": [
+                        "ai",
+                        "content",
+                        "recsys",
+                        "ecommerce",
+                        "web3",
+                        "billing",
+                        "eventIngest"
+                      ]
+                    },
+                    "uptime": {
+                      "type": "number"
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": ["pass", "fail"]
+                          },
+                          "latency": {
+                            "type": "number"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["name", "status"]
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "timestamp",
+                    "version",
+                    "database",
+                    "redis",
+                    "services",
+                    "uptime",
+                    "checks"
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "System is unhealthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["healthy", "degraded", "unhealthy"]
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "database": {
+                      "type": "string",
+                      "enum": ["connected", "disconnected"]
+                    },
+                    "redis": {
+                      "type": "string",
+                      "enum": ["connected", "disconnected"]
+                    },
+                    "services": {
+                      "type": "object",
+                      "properties": {
+                        "ai": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "content": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "recsys": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "ecommerce": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "web3": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "billing": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "eventIngest": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        }
+                      },
+                      "required": [
+                        "ai",
+                        "content",
+                        "recsys",
+                        "ecommerce",
+                        "web3",
+                        "billing",
+                        "eventIngest"
+                      ]
+                    },
+                    "uptime": {
+                      "type": "number"
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": ["pass", "fail"]
+                          },
+                          "latency": {
+                            "type": "number"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["name", "status"]
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "timestamp",
+                    "version",
+                    "database",
+                    "redis",
+                    "services",
+                    "uptime",
+                    "checks"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/ready": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Kubernetes readiness probe",
+        "description": "Returns whether the service is ready to accept traffic",
+        "responses": {
+          "200": {
+            "description": "Service is ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean",
+                      "enum": [true]
+                    }
+                  },
+                  "required": ["ready"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean",
+                      "enum": [false]
+                    },
+                    "reason": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["ready", "reason"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/live": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Kubernetes liveness probe",
+        "description": "Returns whether the service process is alive",
+        "responses": {
+          "200": {
+            "description": "Service is alive",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "live": {
+                      "type": "boolean",
+                      "enum": [true]
+                    }
+                  },
+                  "required": ["live"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/ping": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Simple uptime ping",
+        "description": "Returns 'pong' for uptime monitoring services",
+        "responses": {
+          "200": {
+            "description": "pong"
+          }
+        }
+      }
+    },
+    "/misc/health": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Health check",
+        "description": "Returns health status of the API gateway and its dependencies. Returns 200 for healthy/degraded, 503 for unhealthy.",
+        "responses": {
+          "200": {
+            "description": "Service is healthy or degraded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["healthy", "degraded", "unhealthy"]
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "uptime": {
+                      "type": "number"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "dependencies": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        },
+                        "cache": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        }
+                      },
+                      "required": ["database", "cache"]
+                    }
+                  },
+                  "required": ["status", "version", "uptime", "timestamp", "dependencies"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unhealthy — all dependencies are down",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["healthy", "degraded", "unhealthy"]
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "uptime": {
+                      "type": "number"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "dependencies": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        },
+                        "cache": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        }
+                      },
+                      "required": ["database", "cache"]
+                    }
+                  },
+                  "required": ["status", "version", "uptime", "timestamp", "dependencies"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/system/status": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Comprehensive system status",
+        "description": "Returns detailed status of all system components including database, Redis, and microservices. Used by OpenStatus monitoring.",
+        "responses": {
+          "200": {
+            "description": "System is healthy or degraded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["healthy", "degraded", "unhealthy"]
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "database": {
+                      "type": "string",
+                      "enum": ["connected", "disconnected"]
+                    },
+                    "redis": {
+                      "type": "string",
+                      "enum": ["connected", "disconnected"]
+                    },
+                    "services": {
+                      "type": "object",
+                      "properties": {
+                        "ai": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "content": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "recsys": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "ecommerce": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "web3": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "billing": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "eventIngest": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        }
+                      },
+                      "required": [
+                        "ai",
+                        "content",
+                        "recsys",
+                        "ecommerce",
+                        "web3",
+                        "billing",
+                        "eventIngest"
+                      ]
+                    },
+                    "uptime": {
+                      "type": "number"
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": ["pass", "fail"]
+                          },
+                          "latency": {
+                            "type": "number"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["name", "status"]
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "timestamp",
+                    "version",
+                    "database",
+                    "redis",
+                    "services",
+                    "uptime",
+                    "checks"
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "System is unhealthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["healthy", "degraded", "unhealthy"]
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "database": {
+                      "type": "string",
+                      "enum": ["connected", "disconnected"]
+                    },
+                    "redis": {
+                      "type": "string",
+                      "enum": ["connected", "disconnected"]
+                    },
+                    "services": {
+                      "type": "object",
+                      "properties": {
+                        "ai": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "content": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "recsys": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "ecommerce": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "web3": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "billing": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        },
+                        "eventIngest": {
+                          "type": "string",
+                          "enum": ["available", "unavailable", "unknown"]
+                        }
+                      },
+                      "required": [
+                        "ai",
+                        "content",
+                        "recsys",
+                        "ecommerce",
+                        "web3",
+                        "billing",
+                        "eventIngest"
+                      ]
+                    },
+                    "uptime": {
+                      "type": "number"
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": ["pass", "fail"]
+                          },
+                          "latency": {
+                            "type": "number"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["name", "status"]
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "timestamp",
+                    "version",
+                    "database",
+                    "redis",
+                    "services",
+                    "uptime",
+                    "checks"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/system/ready": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Kubernetes readiness probe",
+        "description": "Returns whether the service is ready to accept traffic",
+        "responses": {
+          "200": {
+            "description": "Service is ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean",
+                      "enum": [true]
+                    }
+                  },
+                  "required": ["ready"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean",
+                      "enum": [false]
+                    },
+                    "reason": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["ready", "reason"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/system/live": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Kubernetes liveness probe",
+        "description": "Returns whether the service process is alive",
+        "responses": {
+          "200": {
+            "description": "Service is alive",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "live": {
+                      "type": "boolean",
+                      "enum": [true]
+                    }
+                  },
+                  "required": ["live"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/system/ping": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Simple uptime ping",
+        "description": "Returns 'pong' for uptime monitoring services",
+        "responses": {
+          "200": {
+            "description": "pong"
+          }
+        }
+      }
+    },
+    "/api/v1/legal/consent": {
+      "post": {
+        "tags": ["Legal"],
+        "summary": "Record document consent",
+        "description": "Record user consent for a legal document (e.g. terms of service, privacy policy)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "documentSlug": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "documentVersion": {
+                    "type": "string"
+                  },
+                  "consentType": {
+                    "type": "string",
+                    "enum": ["EXPLICIT", "IMPLICIT", "OPT_IN", "OPT_OUT"],
+                    "default": "EXPLICIT"
+                  },
+                  "context": {
+                    "type": "string"
+                  },
+                  "visitorId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                },
+                "required": ["documentSlug", "visitorId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Consent recorded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [true]
+                    },
+                    "consentId": {
+                      "type": "string"
+                    },
+                    "documentSlug": {
+                      "type": "string"
+                    },
+                    "documentVersion": {
+                      "type": "string"
+                    },
+                    "consentedAt": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "consentId",
+                    "documentSlug",
+                    "documentVersion",
+                    "consentedAt"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Legal document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Legal"],
+        "summary": "Withdraw consent",
+        "description": "Withdraw previously given consent for a legal document",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "documentSlug",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "visitorId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consent withdrawn",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [true]
+                    },
+                    "withdrawnCount": {
+                      "type": "number"
+                    }
+                  },
+                  "required": ["success", "withdrawnCount"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/consent/status": {
+      "get": {
+        "tags": ["Legal"],
+        "summary": "Get consent status",
+        "description": "Check whether a user has consented to a specific legal document and whether re-consent is needed",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "documentSlug",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "visitorId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consent status retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "hasConsented": {
+                      "type": "boolean"
+                    },
+                    "consentedVersion": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "currentVersion": {
+                      "type": "string"
+                    },
+                    "needsReconsent": {
+                      "type": "boolean"
+                    },
+                    "lastConsentedAt": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        {}
+                      ]
+                    }
+                  },
+                  "required": [
+                    "hasConsented",
+                    "consentedVersion",
+                    "currentVersion",
+                    "needsReconsent",
+                    "lastConsentedAt"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Legal document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/cookie-consent": {
+      "post": {
+        "tags": ["Legal"],
+        "summary": "Record cookie consent",
+        "description": "Record or update cookie consent preferences for a visitor",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "visitorId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "preferences": {
+                    "type": "object",
+                    "properties": {
+                      "functional": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "analytics": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "marketing": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "thirdParty": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  }
+                },
+                "required": ["visitorId", "preferences"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cookie consent recorded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [true]
+                    },
+                    "consentId": {
+                      "type": "string"
+                    },
+                    "preferences": {
+                      "type": "object",
+                      "properties": {
+                        "necessary": {
+                          "type": "boolean"
+                        },
+                        "functional": {
+                          "type": "boolean"
+                        },
+                        "analytics": {
+                          "type": "boolean"
+                        },
+                        "marketing": {
+                          "type": "boolean"
+                        },
+                        "thirdParty": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "necessary",
+                        "functional",
+                        "analytics",
+                        "marketing",
+                        "thirdParty"
+                      ]
+                    },
+                    "consentedAt": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      ]
+                    },
+                    "expiresAt": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["success", "consentId", "preferences", "consentedAt", "expiresAt"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Legal"],
+        "summary": "Get cookie consent preferences",
+        "description": "Retrieve current cookie consent preferences for a visitor or user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "visitorId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cookie consent preferences",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "hasConsent": {
+                      "type": "boolean"
+                    },
+                    "preferences": {
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "necessary": {
+                          "type": "boolean"
+                        },
+                        "functional": {
+                          "type": "boolean"
+                        },
+                        "analytics": {
+                          "type": "boolean"
+                        },
+                        "marketing": {
+                          "type": "boolean"
+                        },
+                        "thirdParty": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "necessary",
+                        "functional",
+                        "analytics",
+                        "marketing",
+                        "thirdParty"
+                      ]
+                    },
+                    "consentedAt": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      ]
+                    },
+                    "updatedAt": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      ]
+                    },
+                    "expiresAt": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["hasConsent", "preferences"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/documents": {
+      "get": {
+        "tags": ["Legal"],
+        "summary": "List legal documents",
+        "description": "List all active legal documents, optionally filtered by locale and type",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "en"
+            },
+            "required": false,
+            "name": "locale",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "type",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of legal documents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "documents": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "slug": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "locale": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "summary": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "effectiveAt": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            ]
+                          },
+                          "isRequired": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "slug",
+                          "type",
+                          "locale",
+                          "version",
+                          "title",
+                          "summary",
+                          "effectiveAt",
+                          "isRequired"
+                        ]
+                      }
+                    }
+                  },
+                  "required": ["documents"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/documents/{slug}": {
+      "get": {
+        "tags": ["Legal"],
+        "summary": "Get legal document",
+        "description": "Retrieve a specific legal document by its slug",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "slug",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "en"
+            },
+            "required": false,
+            "name": "locale",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Legal document found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "document": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": ["document"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Legal document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/contact": {
+      "post": {
+        "tags": ["Legal"],
+        "summary": "Submit contact form",
+        "description": "Submit a contact form inquiry. Responses are typically provided within 1-2 business days.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "company": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "subject": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "message": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "category": {
+                    "type": "string",
+                    "enum": [
+                      "general",
+                      "sales",
+                      "support",
+                      "legal",
+                      "privacy",
+                      "partnership",
+                      "press"
+                    ],
+                    "default": "general"
+                  }
+                },
+                "required": ["name", "email", "subject", "message"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact form submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [true]
+                    },
+                    "submissionId": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["success", "submissionId", "message"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": ["code", "message"]
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events/ingest": {
+      "post": {
+        "tags": ["Events"],
+        "summary": "Ingest events",
+        "description": "Accepts a batch of events (1-1000) and forwards them to the event ingest service for processing.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "events": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "eventName": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "context": {
+                          "type": "object",
+                          "properties": {
+                            "tenantId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "occurredAt": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              ]
+                            }
+                          },
+                          "required": ["tenantId", "occurredAt"]
+                        },
+                        "payload": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "default": {}
+                        },
+                        "eventId": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "source": {
+                          "type": "string",
+                          "minLength": 1,
+                          "default": "web"
+                        }
+                      },
+                      "required": ["eventName", "context"]
+                    },
+                    "minItems": 1,
+                    "maxItems": 1000
+                  }
+                },
+                "required": ["events"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Events accepted for processing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": {}
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Event ingest service unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agents/chat": {
+      "post": {
+        "tags": ["Agents"],
+        "summary": "Chat with an AI agent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agentId": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 10000
+                  },
+                  "conversationId": {
+                    "type": "string"
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "required": ["message"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "string"
+                    },
+                    "conversationId": {
+                      "type": "string"
+                    },
+                    "agentId": {
+                      "type": "string"
+                    },
+                    "usage": {
+                      "type": "object",
+                      "properties": {
+                        "promptTokens": {
+                          "type": "number"
+                        },
+                        "completionTokens": {
+                          "type": "number"
+                        },
+                        "totalTokens": {
+                          "type": "number"
+                        }
+                      },
+                      "required": ["promptTokens", "completionTokens", "totalTokens"]
+                    }
+                  },
+                  "required": ["response", "conversationId", "agentId", "usage"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Agent service not configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agents": {
+      "get": {
+        "tags": ["Agents"],
+        "summary": "List available agents for the current tenant",
+        "responses": {
+          "200": {
+            "description": "Agent list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agents": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["id", "name", "description"]
+                      }
+                    }
+                  },
+                  "required": ["agents"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agents/conversations": {
+      "get": {
+        "tags": ["Agents"],
+        "summary": "List agent conversations for current user",
+        "responses": {
+          "200": {
+            "description": "Conversation list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "conversations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "agentId": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "lastMessage": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["id", "agentId", "updatedAt"]
+                      }
+                    }
+                  },
+                  "required": ["conversations"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Agent service not configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agents/conversations/{id}": {
+      "delete": {
+        "tags": ["Agents"],
+        "summary": "Delete an agent conversation",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conversation deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["success"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Agent service not configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ai/chat": {
+      "post": {
+        "tags": ["AI"],
+        "summary": "Chat completion",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "enum": ["system", "user", "assistant"]
+                        },
+                        "content": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 32000
+                        }
+                      },
+                      "required": ["role", "content"]
+                    },
+                    "minItems": 1,
+                    "maxItems": 50
+                  },
+                  "model": {
+                    "type": "string",
+                    "default": "gpt-4o"
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2,
+                    "default": 0.7
+                  },
+                  "maxTokens": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 16384
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "required": ["messages"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat completion response"
+          },
+          "402": {
+            "description": "Quota exceeded"
+          },
+          "503": {
+            "description": "AI service unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/embeddings": {
+      "post": {
+        "tags": ["AI"],
+        "summary": "Generate text embeddings",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    ]
+                  },
+                  "model": {
+                    "type": "string",
+                    "default": "text-embedding-3-small"
+                  }
+                },
+                "required": ["input"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Embeddings response"
+          },
+          "503": {
+            "description": "AI service unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/models": {
+      "get": {
+        "tags": ["AI"],
+        "summary": "List available AI models",
+        "responses": {
+          "200": {
+            "description": "Available models list"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/gateway/chat/completions": {
+      "post": {
+        "tags": ["AI Gateway"],
+        "summary": "Chat completions proxy (API key authenticated)",
+        "description": "Proxy chat completion requests to upstream LLM providers. Requires sk-sailor-* API key.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string"
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "enum": ["system", "user", "assistant"]
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["role", "content"]
+                    }
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "temperature": {
+                    "type": "number"
+                  },
+                  "max_tokens": {
+                    "type": "number"
+                  }
+                },
+                "required": ["model", "messages"],
+                "additionalProperties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat completion response"
+          },
+          "401": {
+            "description": "Invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Insufficient credit balance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ai/api-keys": {
+      "post": {
+        "tags": ["API Keys"],
+        "summary": "Create a new API key",
+        "description": "Returns the full key ONCE. Store it securely — it cannot be retrieved later.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64
+                  },
+                  "scopes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "rateLimitRps": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10000
+                  },
+                  "expiresInDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 3650
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "API key created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "key": {
+                      "type": "string",
+                      "description": "Full API key — shown only once. Store it securely."
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "keyPrefix": {
+                      "type": "string"
+                    },
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "rateLimitRps": {
+                      "type": "number"
+                    },
+                    "expiresAt": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "warning": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "key",
+                    "name",
+                    "keyPrefix",
+                    "scopes",
+                    "rateLimitRps",
+                    "expiresAt",
+                    "createdAt",
+                    "warning"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "get": {
+        "tags": ["API Keys"],
+        "summary": "List API keys for the current organization",
+        "responses": {
+          "200": {
+            "description": "List of API keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "keyPrefix": {
+                            "type": "string"
+                          },
+                          "scopes": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "rateLimitRps": {
+                            "type": "number"
+                          },
+                          "lastUsedAt": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "revokedAt": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "expiresAt": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "keyPrefix",
+                          "scopes",
+                          "rateLimitRps",
+                          "lastUsedAt",
+                          "revokedAt",
+                          "expiresAt",
+                          "createdAt"
+                        ]
+                      }
+                    }
+                  },
+                  "required": ["data"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ai/api-keys/{id}": {
+      "delete": {
+        "tags": ["API Keys"],
+        "summary": "Revoke an API key",
+        "description": "Soft-delete: sets revokedAt. Invalidates Redis cache.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Revoked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "revokedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["id", "revokedAt"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["API Keys"],
+        "summary": "Update API key metadata",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64
+                  },
+                  "scopes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "rateLimitRps": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "keyPrefix": {
+                      "type": "string"
+                    },
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "rateLimitRps": {
+                      "type": "number"
+                    },
+                    "lastUsedAt": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "revokedAt": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "expiresAt": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "keyPrefix",
+                    "scopes",
+                    "rateLimitRps",
+                    "lastUsedAt",
+                    "revokedAt",
+                    "expiresAt",
+                    "createdAt"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/usage/summary": {
+      "get": {
+        "tags": ["Usage"],
+        "summary": "Aggregated usage for a billing period",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usage summary",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalTokens": {
+                      "type": "number"
+                    },
+                    "totalCost": {
+                      "type": "number"
+                    },
+                    "requestCount": {
+                      "type": "number"
+                    },
+                    "from": {
+                      "type": "string"
+                    },
+                    "to": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["totalTokens", "totalCost", "requestCount", "from", "to"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid date range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ai/usage/by-model": {
+      "get": {
+        "tags": ["Usage"],
+        "summary": "Usage breakdown by model",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Per-model usage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "model": {
+                            "type": "string"
+                          },
+                          "tokens": {
+                            "type": "number"
+                          },
+                          "cost": {
+                            "type": "number"
+                          },
+                          "requests": {
+                            "type": "number"
+                          }
+                        },
+                        "required": ["model", "tokens", "cost", "requests"]
+                      }
+                    },
+                    "period": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["from", "to"]
+                    }
+                  },
+                  "required": ["data", "period"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid date range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ai/usage/by-key": {
+      "get": {
+        "tags": ["Usage"],
+        "summary": "Usage breakdown by API key",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Per-key usage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "apiKeyId": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "keyPrefix": {
+                            "type": "string"
+                          },
+                          "tokens": {
+                            "type": "number"
+                          },
+                          "cost": {
+                            "type": "number"
+                          },
+                          "requests": {
+                            "type": "number"
+                          }
+                        },
+                        "required": ["apiKeyId", "name", "keyPrefix", "tokens", "cost", "requests"]
+                      }
+                    },
+                    "period": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["from", "to"]
+                    }
+                  },
+                  "required": ["data", "period"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid date range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ai/usage/history": {
+      "get": {
+        "tags": ["Usage"],
+        "summary": "Time-series usage (hourly or daily buckets)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": ["hour", "day"],
+              "default": "day"
+            },
+            "required": false,
+            "name": "granularity",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usage history",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "string"
+                          },
+                          "tokens": {
+                            "type": "number"
+                          },
+                          "cost": {
+                            "type": "number"
+                          },
+                          "requests": {
+                            "type": "number"
+                          }
+                        },
+                        "required": ["timestamp", "tokens", "cost", "requests"]
+                      }
+                    },
+                    "period": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["from", "to"]
+                    }
+                  },
+                  "required": ["data", "period"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid date range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/checkout": {
+      "post": {
+        "tags": ["Billing"],
+        "summary": "Create Stripe Checkout session",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "priceId": {
+                    "type": "string"
+                  },
+                  "successUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "cancelUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "trialPeriodDays": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 30
+                  }
+                },
+                "required": ["priceId", "successUrl", "cancelUrl"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Checkout session URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "sessionId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["url", "sessionId"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Organization membership required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "Stripe customer mapping missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Billing service temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/portal": {
+      "post": {
+        "tags": ["Billing"],
+        "summary": "Create Stripe Customer Portal session",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "returnUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                },
+                "required": ["returnUrl"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Billing portal URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  },
+                  "required": ["url"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Organization membership required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "Stripe customer mapping missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Billing service temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/subscription": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "Get current subscription",
+        "responses": {
+          "200": {
+            "description": "Subscription details"
+          },
+          "404": {
+            "description": "No active subscription"
+          }
+        }
+      }
+    },
+    "/api/v1/billing/usage": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "Get current usage and limits",
+        "responses": {
+          "200": {
+            "description": "Usage data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "period": {
+                      "type": "string"
+                    },
+                    "apiCalls": {
+                      "type": "object",
+                      "properties": {
+                        "used": {
+                          "type": "number"
+                        },
+                        "limit": {
+                          "type": "number"
+                        },
+                        "percentUsed": {
+                          "type": "number"
+                        }
+                      },
+                      "required": ["used", "limit", "percentUsed"]
+                    },
+                    "aiTokens": {
+                      "type": "object",
+                      "properties": {
+                        "used": {
+                          "type": "number"
+                        }
+                      },
+                      "required": ["used"]
+                    }
+                  },
+                  "required": ["period", "apiCalls", "aiTokens"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Billing", "Usage"],
+        "summary": "Append an entry to the usage ledger (idempotent)",
+        "description": "Writes a single row to UsageLedgerEntry. The idempotencyKey is mandatory: replaying the same key for the same tenant returns the first-write record untouched with duplicate=true and a 200 status.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "idempotencyKey": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["API_CALL", "AI_TOKEN", "STORAGE", "COMPUTE", "BANDWIDTH", "CUSTOM"],
+                    "default": "API_CALL"
+                  },
+                  "unit": {
+                    "type": "string",
+                    "minLength": 1,
+                    "default": "unit"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                },
+                "required": ["amount", "idempotencyKey"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Duplicate — returning first-write record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "organizationId": {
+                      "type": "string"
+                    },
+                    "idempotencyKey": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    },
+                    "duplicate": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["id", "organizationId", "idempotencyKey", "amount", "duplicate"]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Ledger row created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "organizationId": {
+                      "type": "string"
+                    },
+                    "idempotencyKey": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    },
+                    "duplicate": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["id", "organizationId", "idempotencyKey", "amount", "duplicate"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Organization membership required"
+          },
+          "500": {
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/credits/pricing": {
+      "get": {
+        "tags": ["Billing", "Credits"],
+        "summary": "List suggested credit pack tiers",
+        "description": "Public endpoint for marketing display — no authentication required.",
+        "responses": {
+          "200": {
+            "description": "Credit pack pricing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "packs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "credits": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "exclusiveMinimum": true
+                          },
+                          "price": {
+                            "type": "number",
+                            "minimum": 0,
+                            "exclusiveMinimum": true
+                          },
+                          "bonus": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "recommended": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": ["credits", "price"]
+                      }
+                    }
+                  },
+                  "required": ["packs"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/credits/checkout": {
+      "post": {
+        "tags": ["Billing", "Credits"],
+        "summary": "Create a credit purchase checkout session",
+        "description": "Creates a provider-agnostic checkout session (Stripe / Polar / LemonSqueezy / ChinaPay). Provider is auto-detected from env.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "creditAmount": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "amount": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "currency": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 3,
+                    "default": "USD"
+                  },
+                  "successUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "cancelUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "priceId": {
+                    "type": "string"
+                  }
+                },
+                "required": ["creditAmount", "amount", "successUrl", "cancelUrl"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Checkout session created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "sessionId": {
+                      "type": "string"
+                    },
+                    "provider": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["url", "sessionId", "provider"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Organization membership required"
+          },
+          "500": {
+            "description": "Checkout provider error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Billing service temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/credits/balance": {
+      "get": {
+        "tags": ["Billing", "Credits"],
+        "summary": "Get current credit balance",
+        "responses": {
+          "200": {
+            "description": "Credit balance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "number"
+                    },
+                    "currency": {
+                      "type": "string"
+                    },
+                    "formatted": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["balance", "currency", "formatted"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Organization membership required"
+          },
+          "500": {
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/credits/transactions": {
+      "get": {
+        "tags": ["Billing", "Credits"],
+        "summary": "List credit transactions (paginated)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated credit transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "organizationId": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "type": "number"
+                          },
+                          "balanceAfter": {
+                            "type": "number"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "expiresAt": {
+                            "type": "string"
+                          },
+                          "relatedId": {
+                            "type": "string"
+                          },
+                          "metadata": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "organizationId",
+                          "type",
+                          "amount",
+                          "balanceAfter",
+                          "createdAt"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number"
+                        },
+                        "hasMore": {
+                          "type": "boolean"
+                        },
+                        "nextCursor": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["total", "hasMore"]
+                    }
+                  },
+                  "required": ["data", "meta"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Organization membership required"
+          },
+          "500": {
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/notifications": {
+      "get": {
+        "tags": ["Notifications"],
+        "summary": "List notifications",
+        "description": "Returns recent in-app notifications for the current user and organization.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "nullable": true,
+              "minimum": 0,
+              "default": 0
+            },
+            "required": false,
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "required": false,
+            "name": "unreadOnly",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification feed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "userId": {
+                            "type": "string"
+                          },
+                          "tenantId": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "body": {
+                            "type": "string"
+                          },
+                          "data": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          },
+                          "read": {
+                            "type": "boolean"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "userId",
+                          "type",
+                          "title",
+                          "body",
+                          "read",
+                          "createdAt",
+                          "updatedAt"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "unreadCount": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["items", "total", "unreadCount"]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Organization membership required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Notification inbox is not backed by durable storage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Notification provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/notifications/settings": {
+      "get": {
+        "tags": ["Notifications"],
+        "summary": "Get notification settings",
+        "responses": {
+          "200": {
+            "description": "Notification settings snapshot",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "runtime": {
+                      "type": "object",
+                      "properties": {
+                        "provider": {
+                          "type": "string",
+                          "enum": ["novu", "direct"]
+                        },
+                        "providerLabel": {
+                          "type": "string"
+                        },
+                        "mode": {
+                          "type": "string",
+                          "enum": ["managed", "self_hosted", "preview", "degraded"]
+                        },
+                        "canManagePreferences": {
+                          "type": "boolean"
+                        },
+                        "canViewInbox": {
+                          "type": "boolean"
+                        },
+                        "canMarkInboxRead": {
+                          "type": "boolean"
+                        },
+                        "summary": {
+                          "type": "string"
+                        },
+                        "reason": {
+                          "type": "string"
+                        },
+                        "missing": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "provider",
+                        "providerLabel",
+                        "mode",
+                        "canManagePreferences",
+                        "canViewInbox",
+                        "canMarkInboxRead",
+                        "summary",
+                        "missing"
+                      ]
+                    },
+                    "channels": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "enum": ["in_app", "email", "push", "sms", "chat"]
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "shortLabel": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["id", "label", "shortLabel", "description"]
+                      }
+                    },
+                    "preferenceSource": {
+                      "type": "string",
+                      "enum": ["provider", "catalog-defaults"]
+                    },
+                    "preferences": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "userId": {
+                            "type": "string"
+                          },
+                          "tenantId": {
+                            "type": "string"
+                          },
+                          "channel": {
+                            "type": "string",
+                            "enum": ["in_app", "email", "push", "sms", "chat"]
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "disabledCategories": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "frequency": {
+                            "type": "string",
+                            "enum": ["immediate", "daily", "weekly", "never"]
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": ["userId", "channel", "enabled", "frequency"]
+                      }
+                    },
+                    "sections": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "rows": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "groupId": {
+                                  "type": "string"
+                                },
+                                "cells": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "channel": {
+                                        "type": "string",
+                                        "enum": ["in_app", "email", "push", "sms", "chat"]
+                                      },
+                                      "channelLabel": {
+                                        "type": "string"
+                                      },
+                                      "enabled": {
+                                        "type": "boolean"
+                                      },
+                                      "editable": {
+                                        "type": "boolean"
+                                      },
+                                      "supported": {
+                                        "type": "boolean"
+                                      },
+                                      "reason": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "channel",
+                                      "channelLabel",
+                                      "enabled",
+                                      "editable",
+                                      "supported"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": ["id", "label", "description", "groupId", "cells"]
+                            }
+                          }
+                        },
+                        "required": ["id", "title", "description", "rows"]
+                      }
+                    },
+                    "inboxSource": {
+                      "type": "string",
+                      "enum": ["provider", "unavailable"]
+                    },
+                    "inboxReason": {
+                      "type": "string"
+                    },
+                    "inboxItems": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "body": {
+                            "type": "string"
+                          },
+                          "href": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "read": {
+                            "type": "boolean"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "groupId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "type",
+                          "title",
+                          "body",
+                          "href",
+                          "read",
+                          "createdAt",
+                          "groupId"
+                        ]
+                      }
+                    },
+                    "unreadCount": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "runtime",
+                    "channels",
+                    "preferenceSource",
+                    "preferences",
+                    "sections",
+                    "inboxSource",
+                    "inboxItems",
+                    "unreadCount"
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Organization membership required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Notifications"],
+        "summary": "Update notification settings",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "channel": {
+                    "type": "string",
+                    "enum": ["in_app", "email", "push", "sms", "chat"]
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["type", "channel", "enabled"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated notification preference",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "enum": [true]
+                    },
+                    "preference": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "type": "string"
+                        },
+                        "tenantId": {
+                          "type": "string"
+                        },
+                        "channel": {
+                          "type": "string",
+                          "enum": ["in_app", "email", "push", "sms", "chat"]
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "disabledCategories": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "frequency": {
+                          "type": "string",
+                          "enum": ["immediate", "daily", "weekly", "never"]
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": ["userId", "channel", "enabled", "frequency"]
+                    }
+                  },
+                  "required": ["ok", "preference"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Organization membership required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Notification preferences are not backed by durable storage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Notification provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/notifications/unread-count": {
+      "get": {
+        "tags": ["Notifications"],
+        "summary": "Unread notification count",
+        "responses": {
+          "200": {
+            "description": "Unread count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["count"]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Organization membership required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Notification inbox is not backed by durable storage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Notification provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/notifications/mark-read": {
+      "post": {
+        "tags": ["Notifications"],
+        "summary": "Mark notifications as read",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1,
+                    "maxItems": 100
+                  }
+                },
+                "required": ["ids"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Marked notifications count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["count"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Organization membership required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Notification inbox is not backed by durable storage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Notification provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/notifications/mark-all-read": {
+      "post": {
+        "tags": ["Notifications"],
+        "summary": "Mark all notifications as read",
+        "responses": {
+          "200": {
+            "description": "Marked notifications count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["count"]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Organization membership required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Notification inbox is not backed by durable storage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Notification provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/search": {
+      "post": {
+        "tags": ["Search"],
+        "summary": "Perform a full-text search",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "index": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "filters": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        }
+                      ]
+                    }
+                  },
+                  "facets": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "sort": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "page": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "hitsPerPage": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  },
+                  "highlightFields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "typoTolerance": {
+                    "type": "boolean"
+                  },
+                  "minScore": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": ["query", "index"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Search results"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "Search provider error"
+          }
+        }
+      }
+    },
+    "/api/v1/search/sync": {
+      "post": {
+        "tags": ["Search"],
+        "summary": "Synchronize database with search index",
+        "responses": {
+          "200": {
+            "description": "Sync triggered"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/v1/integrations": {
+      "get": {
+        "tags": ["Integrations"],
+        "summary": "List all integrations for the current organization",
+        "responses": {
+          "200": {
+            "description": "List of integrations"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Integrations"],
+        "summary": "Create a new integration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": ["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "credentials": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  },
+                  "settings": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                },
+                "required": ["type", "name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Integration created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "409": {
+            "description": "Integration already exists"
+          }
+        }
+      }
+    },
+    "/api/v1/integrations/:id": {
+      "get": {
+        "tags": ["Integrations"],
+        "summary": "Get integration by ID (returns decrypted credentials and settings)",
+        "responses": {
+          "200": {
+            "description": "Integration details"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Integrations"],
+        "summary": "Update an integration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "credentials": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  },
+                  "settings": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  },
+                  "isActive": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated integration"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Integrations"],
+        "summary": "Delete an integration",
+        "responses": {
+          "200": {
+            "description": "Integration deleted"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/tenants": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all organizations",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 50
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "nullable": true,
+              "minimum": 0,
+              "default": 0
+            },
+            "required": false,
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": ["FREE", "PRO", "ENTERPRISE"]
+            },
+            "required": false,
+            "name": "plan",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization list"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/tenants/{id}": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get organization details with live usage",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization details"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/tenants/{id}/suspend": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Suspend an organization (block API access)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Suspended"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/tenants/{id}/unsuspend": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Restore a suspended organization",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Unsuspended"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/usage/report": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Cross-tenant usage report for current billing period",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usage report"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/dlq": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List dead letter queue entries",
+        "responses": {
+          "200": {
+            "description": "DLQ entries"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/dlq/{id}/ack": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Acknowledge a DLQ entry (remove from queue)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Acknowledged"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/feature-flags": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List per-tenant feature flag overrides",
+        "responses": {
+          "200": {
+            "description": "Feature flag overrides"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Set a per-tenant feature flag override",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "organizationId": {
+                    "type": "string"
+                  },
+                  "flag": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["organizationId", "flag", "enabled"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      }
+    },
+    "/api/webhooks/stripe": {
+      "post": {
+        "tags": ["Webhooks"],
+        "summary": "Stripe webhook handler",
+        "description": "Receives Stripe webhook events for subscription lifecycle management. Signature verification is handled by the Stripe SDK.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Webhook received and queued for processing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "received": {
+                      "type": "boolean",
+                      "enum": [true]
+                    },
+                    "skipped": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["received"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid signature or missing headers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Webhook not configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/webhooks/clerk": {
+      "post": {
+        "tags": ["Webhooks"],
+        "summary": "Clerk webhook handler",
+        "description": "Receives Clerk webhook events for user and organization lifecycle management. Signature verification is handled by the Svix SDK.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Webhook received and queued for processing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "received": {
+                      "type": "boolean",
+                      "enum": [true]
+                    },
+                    "skipped": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["received"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid signature or missing svix headers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Webhook not configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

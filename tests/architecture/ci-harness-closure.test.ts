@@ -64,7 +64,7 @@ describe("ci harness dependency closure", () => {
 
   it("declares dynamic workspace imports as package dependencies", async () => {
     const apiGatewayPackage = JSON.parse(
-      await readFile(join(process.cwd(), "apps/api-gateway/package.json"), "utf8"),
+      await readFile(join(process.cwd(), "backends/gateway/package.json"), "utf8"),
     ) as { dependencies?: Record<string, string> };
 
     expect(apiGatewayPackage.dependencies?.["@nebutra/analytics"]).toBe("workspace:*");

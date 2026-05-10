@@ -3,7 +3,7 @@
  *
  * Copy this to your app's API routes:
  * - Next.js: apps/web/app/api/pusher/auth/route.ts
- * - BFF: apps/api-gateway/src/routes/pusher/auth.ts
+ * - BFF: backends/gateway/src/routes/pusher/auth.ts
  */
 
 /**
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
 // ============================================================================
 
 /*
-// apps/api-gateway/src/routes/pusher/auth.ts
+// backends/gateway/src/routes/pusher/auth.ts
 import { Hono } from "hono";
 import { authorizeChannel } from "@/lib/pusher/server";
 import { getTenantContext } from "@/middlewares/tenantContext";

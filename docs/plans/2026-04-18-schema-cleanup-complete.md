@@ -79,7 +79,7 @@ This is the meaning of "boundary is product" from the harness principles — eve
 | Before | After |
 |--------|-------|
 | "53 Prisma models" | "**27 always-on + 22 CLI-conditional** Prisma models in master schema; any scaffolded project has only what its flags select" |
-| "9 microservices" | **Correct as-is** — `services/ai/`, `services/billing/`, `services/content/`, `services/ecommerce/`, `services/event-ingest/`, `services/recsys/`, `services/third-party/`, `services/web3/` + shared = 9. Python/FastAPI. |
+| "9 microservices" | **Correct as-is** — `backends/python/ai/`, `backends/python/billing/`, `backends/python/content/`, `backends/python/ecommerce/`, `backends/python/event-ingest/`, `backends/python/recsys/`, `backends/python/third-party/`, `backends/python/web3/` + shared = 9. Python/FastAPI. |
 | "54 packages" | **Correct** — unchanged by this cleanup |
 
 ---

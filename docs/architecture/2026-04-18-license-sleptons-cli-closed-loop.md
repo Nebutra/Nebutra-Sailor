@@ -330,7 +330,7 @@ Threat model:
 - [ ] `apps/sleptons/src/app/[slug]/page.tsx` — member profile with their projects + connections
 - [ ] `apps/sleptons/src/app/connections/page.tsx` — following/followers graph
 - [ ] Extract generic `Showcase` / `UpvoteFeed` patterns to `packages/ui/patterns/community/` (template users benefit)
-- [ ] API endpoints in `apps/api-gateway/src/routes/sleptons/` (but guarded so they're template-free — actually route through `apps/sleptons` directly since it's stripped from template)
+- [ ] API endpoints in `backends/gateway/src/routes/sleptons/` (but guarded so they're template-free — actually route through `apps/sleptons` directly since it's stripped from template)
 - [ ] **Success metric**: at least 100 Showcase entries in first 90 days
 
 ### Phase 5 — Commercial conversion funnel (P2, ~6h)

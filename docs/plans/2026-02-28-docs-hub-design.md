@@ -161,7 +161,8 @@ packages:
   - "apps/*"
   - "apps/docs-hub/*" # NEW: recognises nested design-system package
   - "packages/*"
-  - "services/*"
+  - "backends/python/*"
+  - "backends/gateway"
 ```
 
 ### Consumer Impact

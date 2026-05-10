@@ -284,7 +284,7 @@ Vercel (edge / frontend)
 └── apps/web
 
 Alibaba Cloud ECS (backend / data)
-├── apps/api-gateway    (Hono, Node.js)
+├── backends/gateway    (Hono, Node.js)
 ├── ApsaraDB RDS for PG (pgvector extension required — confirm on target tier)
 ├── ApsaraDB Redis      (BullMQ backend)
 ├── Meilisearch ≥1.6    (self-hosted, hybrid search requires 1.6+)

@@ -324,7 +324,7 @@ jobs:
 
       # ── Build & push ─────────────────────────────────────────────────────────
       # Uses the shared Dockerfile.python with SERVICE build arg to select
-      # the correct service directory inside services/<SERVICE>/
+      # the correct service directory inside backends/python/<SERVICE>/
       - name: Build and push image
         id: build
         uses: docker/build-push-action@v5

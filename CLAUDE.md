@@ -11,16 +11,21 @@ Read it in full before writing any code.
 > `@nebutra/design-system` has been merged into `@nebutra/ui` (layout components now at `@nebutra/ui/layout`).
 
 ```
-apps/
-  landing-page/   Next.js 16 + Tailwind v4 — public marketing site
-  web/            Next.js 16 + Tailwind v4 — authenticated dashboard
-  storybook/      Storybook 8.x — component library documentation
-  api-gateway/    Hono + OpenAPI — backend APIs
-  design-docs/    Next.js 16 + Fumadocs — internal docs
-  studio/         Sanity Studio v4 — content management
-  docs/           Mintlify — public product docs
+apps/                  # User-facing apps (Next.js / Hono)
+  landing-page/        # Public marketing site (Next.js 16 + Tailwind v4)
+  web/                 # Authenticated dashboard (Next.js 16 + Tailwind v4)
+  storybook/           # Component library documentation (Storybook 8.x)
+  design-docs/         # Internal design docs (Next.js + Fumadocs)
+  studio/              # Sanity Studio v4 — content management
+  docs/                # Public product docs (Mintlify)
+  sleptons/  idp/  mail-preview/  sailor-docs/  tsekaluk-dev/
 
-packages/
+backends/              # No-UI backends (split by language à la vercel/vercel)
+  gateway/             # TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing
+  python/              # Python / FastAPI fleet
+    _shared/  ai/  billing/  content/  ecommerce/  event-ingest/  recsys/  third-party/  web3/
+
+packages/              # Shared TypeScript libraries
   ui/             PRIMARY component library — Radix + HeroUI + Lobe UI + layout + framer-motion
   tokens/         Runtime design tokens (CSS variables) + next-themes ThemeProvider  ★ SOURCE OF TRUTH
   brand/          Brand colors, gradients, motion language (VI manual)
@@ -36,6 +41,12 @@ packages/
   uploads/        Large file uploads — S3/R2 multipart + Tus resumable + presigned URLs
   vault/          Application-layer secrets — envelope encryption (AWS KMS + local HKDF)
   tenant/         Multi-tenancy context — AsyncLocalStorage + RLS + schema isolation
+  (+ ~40 more)
+
+infra/                 # iac/ + runtime/ + data/ + ops/  (W2.2)
+workflows/             # inngest/ + n8n/ + pusher/  (W2.3)
+e2e/                   # smoke/ + golden/ + sleptons/ + 3 playwright configs  (W2.1)
+tests/                 # architecture/ + load/ + governance/  (vitest + k6)
 ```
 
 ---
@@ -307,7 +318,7 @@ queue.registerHandler("email", "send", async (job) => {
 });
 ```
 
-### QStash webhook route (Hono / api-gateway)
+### QStash webhook route (Hono / backends/gateway)
 
 ```ts
 import { createQStashWebhookHandler } from "@nebutra/queue";

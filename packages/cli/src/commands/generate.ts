@@ -366,7 +366,7 @@ async function getFilesToCreate(
         ? join(root, "apps", name, filePath)
         : type === "package"
           ? join(root, "packages", name, filePath)
-          : join(root, "apps/api-gateway", filePath);
+          : join(root, "backends/gateway", filePath);
 
     files.push({
       path: fullPath,
@@ -413,7 +413,7 @@ async function createFiles(type: string, name: string): Promise<Array<string>> {
     } else if (type === "component") {
       fullPath = join(root, "packages/ui", filePath);
     } else {
-      fullPath = join(root, "apps/api-gateway", filePath);
+      fullPath = join(root, "backends/gateway", filePath);
     }
 
     // Create directory if it doesn't exist
@@ -537,7 +537,7 @@ export async function generateRouteCommand(routePath: string, options: GenerateO
       timestamp: new Date().toISOString(),
       type: "route",
       path: routePath,
-      location: `apps/api-gateway/src/routes/${routePath}.ts`,
+      location: `backends/gateway/src/routes/${routePath}.ts`,
       files: files.map((f) => ({
         path: f.path,
         sizeBytes: f.size,
@@ -560,7 +560,7 @@ export async function generateRouteCommand(routePath: string, options: GenerateO
     spinner.stop(`Created route ${pc.cyan(routePath)}`, 0);
 
     logger.success(`Route created with ${files.length} files`);
-    logger.info(`File: apps/api-gateway/src/routes/${routePath}.ts`);
+    logger.info(`File: backends/gateway/src/routes/${routePath}.ts`);
     logger.info(`Add to your main app.ts: app.route("/${routePath}", routes)`);
 
     process.exit(ExitCode.SUCCESS);

@@ -106,7 +106,7 @@ function CollaborativeEditor({ roomId }) {
 ### Auth Endpoint
 
 ```typescript
-// apps/api-gateway/src/routes/pusher/auth.ts
+// backends/gateway/src/routes/pusher/auth.ts
 import { pusherServer } from "@/lib/pusher/server";
 
 export async function POST(req: Request) {

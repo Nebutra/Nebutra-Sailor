@@ -257,7 +257,8 @@ Current content:
 packages:
   - "apps/*"
   - "packages/*"
-  - "services/*"
+  - "backends/python/*"
+  - "backends/gateway"
 ```
 
 Updated content:
@@ -267,7 +268,8 @@ packages:
   - "apps/*"
   - "apps/docs-hub/*"
   - "packages/*"
-  - "services/*"
+  - "backends/python/*"
+  - "backends/gateway"
 ```
 
 **Step 2: Reinstall to relink workspace**

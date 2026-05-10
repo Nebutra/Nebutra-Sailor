@@ -98,5 +98,5 @@ pnpm sanity typegen generate
 
 ## Related
 
-- [Content service](../../services/content/)
+- [Content service](../../backends/python/content/)
 - [Landing page](../../apps/landing-page/)

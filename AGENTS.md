@@ -22,15 +22,19 @@ AI coding agent onboarding guide for Cursor, Claude Code, Codex, Windsurf, and G
 ## Repository Structure
 
 ```
-apps/
-  landing-page/   Next.js 16 — public marketing site (next-intl, 7 locales)
-  web/            Next.js 16 — authenticated SaaS dashboard (Clerk auth)
-  api-gateway/    Hono + OpenAPI — backend APIs (Zod validation, middleware stack)
-  storybook/      Storybook 8.x — component library documentation
-  design-docs/    Next.js 16 + Fumadocs — internal documentation
-  studio/         Sanity Studio v5 — CMS for blog, changelog, pages
-  docs/           Mintlify — public product documentation
-  idp/            Identity Provider application
+apps/                  # User-facing apps (Next.js / Storybook / Mintlify)
+  landing-page/        # Public marketing site (Next.js 16, next-intl, 7 locales)
+  web/                 # Authenticated SaaS dashboard (Next.js 16, Clerk auth)
+  storybook/           # Component library documentation (Storybook 8.x)
+  design-docs/         # Internal design docs (Next.js + Fumadocs)
+  studio/              # Sanity Studio v5 — CMS for blog/changelog/pages
+  docs/                # Public product docs (Mintlify)
+  idp/                 # Identity Provider application
+
+backends/              # No-UI backends (split by language à la vercel/vercel)
+  gateway/             # TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing
+  python/              # Python / FastAPI fleet
+    _shared/  ai/  billing/  content/  ecommerce/  event-ingest/  recsys/  third-party/  web3/
 
 packages/
   ui/             Component library (Radix + HeroUI + Lobe UI + framer-motion)
@@ -232,7 +236,7 @@ pnpm db:studio         # Open Prisma Studio
 
 ## API Gateway (Hono)
 
-Located at `apps/api-gateway/`. Middleware stack (in order):
+Located at `backends/gateway/`. Middleware stack (in order):
 1. Request/trace ID correlation
 2. CORS (dynamic domain allowlist)
 3. Compression (gzip/deflate/brotli)

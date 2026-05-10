@@ -266,7 +266,7 @@ module.exports = {
     },
     {
       name: "api-gateway",
-      cwd: "./apps/api-gateway",
+      cwd: "./backends/gateway",
       script: "node_modules/.bin/next",
       args: "start -p 3002",
       env: {

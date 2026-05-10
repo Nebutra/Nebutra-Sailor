@@ -30,8 +30,8 @@ FROM base AS builder
 ARG SERVICE
 
 # Copy requirements
-COPY services/${SERVICE}/requirements.txt ./requirements.txt
-COPY services/${SERVICE}/pyproject.toml ./pyproject.toml
+COPY backends/python/${SERVICE}/requirements.txt ./requirements.txt
+COPY backends/python/${SERVICE}/pyproject.toml ./pyproject.toml
 
 # Install Python dependencies using uv for faster installs
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
@@ -51,7 +51,7 @@ COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/pytho
 COPY --from=builder /usr/local/bin /usr/local/bin
 
 # Copy application code
-COPY services/${SERVICE}/ ./
+COPY backends/python/${SERVICE}/ ./
 
 # Change ownership to non-root user
 RUN chown -R appuser:appgroup /app

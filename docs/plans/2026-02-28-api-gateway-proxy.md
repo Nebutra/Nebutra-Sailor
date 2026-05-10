@@ -16,14 +16,14 @@
 
 **Files:**
 
-- Modify: `apps/api-gateway/package.json`
-- Modify: `apps/api-gateway/src/config/env.ts`
+- Modify: `backends/gateway/package.json`
+- Modify: `backends/gateway/src/config/env.ts`
 
 **Context:** The gateway doesn't yet declare `@nebutra/logger` or `@nebutra/errors` as dependencies. The env schema is also missing `BILLING_SERVICE_URL` and `INTERNAL_API_KEY` (used for service-to-service auth).
 
 **Step 1: Add deps to package.json**
 
-Open `apps/api-gateway/package.json`. In the `"dependencies"` object, add:
+Open `backends/gateway/package.json`. In the `"dependencies"` object, add:
 
 ```json
 "@nebutra/errors": "workspace:*",
@@ -40,7 +40,7 @@ Expected: no errors. `node_modules/@nebutra/errors` and `node_modules/@nebutra/l
 
 **Step 3: Extend env.ts**
 
-In `apps/api-gateway/src/config/env.ts`, add two new fields to the `envSchema` object, after the existing `WEB3_SERVICE_URL` line:
+In `backends/gateway/src/config/env.ts`, add two new fields to the `envSchema` object, after the existing `WEB3_SERVICE_URL` line:
 
 ```typescript
   // Service-to-service auth (shared secret forwarded as X-Internal-API-Key)
@@ -75,7 +75,7 @@ Expected: no errors.
 **Step 5: Commit**
 
 ```bash
-git add apps/api-gateway/package.json apps/api-gateway/src/config/env.ts pnpm-lock.yaml
+git add backends/gateway/package.json backends/gateway/src/config/env.ts pnpm-lock.yaml
 git commit -m "feat(api-gateway): add errors/logger deps and extend env schema with BILLING_SERVICE_URL and INTERNAL_API_KEY"
 ```
 
@@ -85,14 +85,14 @@ git commit -m "feat(api-gateway): add errors/logger deps and extend env schema w
 
 **Files:**
 
-- Create: `apps/api-gateway/src/lib/serviceAuth.ts`
+- Create: `backends/gateway/src/lib/serviceAuth.ts`
 
 **Context:** Every proxied request (except Stripe webhooks bypassing our auth, but still forwarding the key) needs an `X-Internal-API-Key` header. This tiny utility reads the env and returns the header dict, so `proxy.ts` can import it. No test needed — it's a one-liner that's tested implicitly via proxy tests.
 
 **Step 1: Create the file**
 
 ```typescript
-// apps/api-gateway/src/lib/serviceAuth.ts
+// backends/gateway/src/lib/serviceAuth.ts
 import { env } from "../config/env.js";
 
 /**
@@ -117,7 +117,7 @@ Expected: no errors.
 **Step 3: Commit**
 
 ```bash
-git add apps/api-gateway/src/lib/serviceAuth.ts
+git add backends/gateway/src/lib/serviceAuth.ts
 git commit -m "feat(api-gateway): add serviceAuth helper for X-Internal-API-Key header injection"
 ```
 
@@ -127,8 +127,8 @@ git commit -m "feat(api-gateway): add serviceAuth helper for X-Internal-API-Key 
 
 **Files:**
 
-- Create: `apps/api-gateway/src/lib/proxy.test.ts` (write first)
-- Create: `apps/api-gateway/src/lib/proxy.ts`
+- Create: `backends/gateway/src/lib/proxy.test.ts` (write first)
+- Create: `backends/gateway/src/lib/proxy.ts`
 
 **Context:** `proxyRequest(c, opts, stripPrefix)` is the heart of the proxy layer. It:
 
@@ -142,7 +142,7 @@ For tests, we create a minimal Hono app that wraps `proxyRequest` and use `app.r
 
 **Step 1: Write the failing tests**
 
-Create `apps/api-gateway/src/lib/proxy.test.ts`:
+Create `backends/gateway/src/lib/proxy.test.ts`:
 
 ```typescript
 import { describe, it, expect, vi, afterEach } from "vitest";
@@ -318,7 +318,7 @@ Expected: FAIL — `Cannot find module './proxy.js'`
 
 **Step 3: Write the implementation**
 
-Create `apps/api-gateway/src/lib/proxy.ts`:
+Create `backends/gateway/src/lib/proxy.ts`:
 
 ```typescript
 import { Context } from "hono";
@@ -515,7 +515,7 @@ Expected: no errors.
 **Step 6: Commit**
 
 ```bash
-git add apps/api-gateway/src/lib/proxy.ts apps/api-gateway/src/lib/proxy.test.ts
+git add backends/gateway/src/lib/proxy.ts backends/gateway/src/lib/proxy.test.ts
 git commit -m "feat(api-gateway): add proxyRequest utility with error normalization and timeout handling"
 ```
 
@@ -525,8 +525,8 @@ git commit -m "feat(api-gateway): add proxyRequest utility with error normalizat
 
 **Files:**
 
-- Create: `apps/api-gateway/src/routes/ai/ai.test.ts` (write first)
-- Create: `apps/api-gateway/src/routes/ai/index.ts`
+- Create: `backends/gateway/src/routes/ai/ai.test.ts` (write first)
+- Create: `backends/gateway/src/routes/ai/index.ts`
 
 **Context:** The `routes/ai/` directory already exists but is empty. The AI route:
 
@@ -538,7 +538,7 @@ For testing, we mock `proxy.ts` and `env.ts` with `vi.mock`, then drive the Hono
 
 **Step 1: Write the failing tests**
 
-Create `apps/api-gateway/src/routes/ai/ai.test.ts`:
+Create `backends/gateway/src/routes/ai/ai.test.ts`:
 
 ```typescript
 import { describe, it, expect, vi } from "vitest";
@@ -599,7 +599,7 @@ Expected: FAIL — `Cannot find module './index.js'`
 
 **Step 3: Write the implementation**
 
-Create `apps/api-gateway/src/routes/ai/index.ts`:
+Create `backends/gateway/src/routes/ai/index.ts`:
 
 ```typescript
 import { Hono } from "hono";
@@ -654,7 +654,7 @@ Expected: 2 passing tests.
 **Step 5: Commit**
 
 ```bash
-git add apps/api-gateway/src/routes/ai/index.ts apps/api-gateway/src/routes/ai/ai.test.ts
+git add backends/gateway/src/routes/ai/index.ts backends/gateway/src/routes/ai/ai.test.ts
 git commit -m "feat(api-gateway): add AI service proxy route with requireAuth guard"
 ```
 
@@ -664,7 +664,7 @@ git commit -m "feat(api-gateway): add AI service proxy route with requireAuth gu
 
 **Files:**
 
-- Create: `apps/api-gateway/src/routes/content/index.ts`
+- Create: `backends/gateway/src/routes/content/index.ts`
 
 **Context:** The `routes/content/` directory already exists. The content route is nearly identical to AI, but adds `requireOrganization` (returns 403 if `X-Organization-Id` header is absent) because all content is org-scoped. No separate test file — the pattern is identical to AI and fully exercised by proxy.test.ts. Add a smoke test in the same style as ai.test.ts.
 
@@ -737,7 +737,7 @@ Expected: FAIL — `Cannot find module './index.js'`
 
 **Step 3: Write the implementation**
 
-Create `apps/api-gateway/src/routes/content/index.ts`:
+Create `backends/gateway/src/routes/content/index.ts`:
 
 ```typescript
 import { Hono } from "hono";
@@ -797,7 +797,7 @@ Expected: 3 passing tests.
 **Step 5: Commit**
 
 ```bash
-git add apps/api-gateway/src/routes/content/index.ts apps/api-gateway/src/routes/content/content.test.ts
+git add backends/gateway/src/routes/content/index.ts backends/gateway/src/routes/content/content.test.ts
 git commit -m "feat(api-gateway): add content service proxy route with requireAuth and requireOrganization guards"
 ```
 
@@ -807,8 +807,8 @@ git commit -m "feat(api-gateway): add content service proxy route with requireAu
 
 **Files:**
 
-- Create: `apps/api-gateway/src/routes/billing/billing.test.ts` (write first)
-- Create: `apps/api-gateway/src/routes/billing/index.ts`
+- Create: `backends/gateway/src/routes/billing/billing.test.ts` (write first)
+- Create: `backends/gateway/src/routes/billing/index.ts`
 
 **Context:** The billing router has two logical sections:
 
@@ -819,7 +819,7 @@ The `billingRoutes` Hono app processes routes in registration order, so the webh
 
 **Step 1: Write the failing tests**
 
-Create `apps/api-gateway/src/routes/billing/billing.test.ts`:
+Create `backends/gateway/src/routes/billing/billing.test.ts`:
 
 ```typescript
 import { describe, it, expect, vi, afterEach } from "vitest";
@@ -946,7 +946,7 @@ Expected: FAIL — `Cannot find module './index.js'`
 
 **Step 3: Write the implementation**
 
-Create `apps/api-gateway/src/routes/billing/index.ts`:
+Create `backends/gateway/src/routes/billing/index.ts`:
 
 ```typescript
 import { Hono } from "hono";
@@ -1081,7 +1081,7 @@ Expected: 5 passing tests.
 **Step 5: Commit**
 
 ```bash
-git add apps/api-gateway/src/routes/billing/index.ts apps/api-gateway/src/routes/billing/billing.test.ts
+git add backends/gateway/src/routes/billing/index.ts backends/gateway/src/routes/billing/billing.test.ts
 git commit -m "feat(api-gateway): add billing service proxy route with stripe webhook raw body forwarding"
 ```
 
@@ -1091,7 +1091,7 @@ git commit -m "feat(api-gateway): add billing service proxy route with stripe we
 
 **Files:**
 
-- Modify: `apps/api-gateway/src/index.ts`
+- Modify: `backends/gateway/src/index.ts`
 
 **Context:** Two changes:
 
@@ -1100,7 +1100,7 @@ git commit -m "feat(api-gateway): add billing service proxy route with stripe we
 
 **Step 1: Add the three route imports**
 
-In `apps/api-gateway/src/index.ts`, after the existing import block, add:
+In `backends/gateway/src/index.ts`, after the existing import block, add:
 
 ```typescript
 import { aiRoutes } from "./routes/ai/index.js";
@@ -1176,7 +1176,7 @@ Expected: `503` (AI_SERVICE_URL not set in dev env) — confirms route is regist
 **Step 6: Commit**
 
 ```bash
-git add apps/api-gateway/src/index.ts
+git add backends/gateway/src/index.ts
 git commit -m "feat(api-gateway): register ai/content/billing proxy routes and upgrade onError handler to use @nebutra/errors"
 ```
 
@@ -1225,7 +1225,7 @@ Start the Python services locally (requires Docker or direct Python env):
 
 ```bash
 # Terminal 1 — AI service
-cd services/ai && uvicorn app.main:app --port 8001 --reload
+cd backends/python/ai && uvicorn app.main:app --port 8001 --reload
 
 # Terminal 2 — Gateway
 AI_SERVICE_URL=http://localhost:8001 pnpm --filter @nebutra/api-gateway dev
@@ -1248,12 +1248,12 @@ Expected: response from the AI service (or a well-formed error if the service is
 
 | File                                                | Purpose                                                                    |
 | --------------------------------------------------- | -------------------------------------------------------------------------- |
-| `apps/api-gateway/src/lib/proxy.ts`                 | Core proxy utility (URL rewriting, header forwarding, error normalization) |
-| `apps/api-gateway/src/lib/serviceAuth.ts`           | Builds `X-Internal-API-Key` header                                         |
-| `apps/api-gateway/src/routes/ai/index.ts`           | AI service wildcard proxy (requireAuth)                                    |
-| `apps/api-gateway/src/routes/content/index.ts`      | Content service wildcard proxy (requireAuth + requireOrganization)         |
-| `apps/api-gateway/src/routes/billing/index.ts`      | Billing proxy + Stripe webhook raw body handler                            |
-| `apps/api-gateway/src/config/env.ts`                | Zod env schema (extended with BILLING_SERVICE_URL, INTERNAL_API_KEY)       |
-| `apps/api-gateway/src/index.ts`                     | Route registration and error handler                                       |
-| `apps/api-gateway/src/middlewares/tenantContext.ts` | `requireAuth`, `requireOrganization`, `TenantContext`                      |
+| `backends/gateway/src/lib/proxy.ts`                 | Core proxy utility (URL rewriting, header forwarding, error normalization) |
+| `backends/gateway/src/lib/serviceAuth.ts`           | Builds `X-Internal-API-Key` header                                         |
+| `backends/gateway/src/routes/ai/index.ts`           | AI service wildcard proxy (requireAuth)                                    |
+| `backends/gateway/src/routes/content/index.ts`      | Content service wildcard proxy (requireAuth + requireOrganization)         |
+| `backends/gateway/src/routes/billing/index.ts`      | Billing proxy + Stripe webhook raw body handler                            |
+| `backends/gateway/src/config/env.ts`                | Zod env schema (extended with BILLING_SERVICE_URL, INTERNAL_API_KEY)       |
+| `backends/gateway/src/index.ts`                     | Route registration and error handler                                       |
+| `backends/gateway/src/middlewares/tenantContext.ts` | `requireAuth`, `requireOrganization`, `TenantContext`                      |
 | `packages/errors/src/index.ts`                      | `ERROR_CODES`, `toApiError`, `getStatusCode`                               |

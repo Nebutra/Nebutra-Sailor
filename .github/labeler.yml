@@ -13,7 +13,7 @@
 
 "app: api-gateway":
   - changed-files:
-      - any-glob-to-any-file: "apps/api-gateway/**"
+      - any-glob-to-any-file: "backends/gateway/**"
 
 "app: studio":
   - changed-files:
@@ -57,19 +57,19 @@
 
 "service: ai":
   - changed-files:
-      - any-glob-to-any-file: "services/ai/**"
+      - any-glob-to-any-file: "backends/python/ai/**"
 
 "service: billing":
   - changed-files:
-      - any-glob-to-any-file: "services/billing/**"
+      - any-glob-to-any-file: "backends/python/billing/**"
 
 "service: recsys":
   - changed-files:
-      - any-glob-to-any-file: "services/recsys/**"
+      - any-glob-to-any-file: "backends/python/recsys/**"
 
 "service: event-ingest":
   - changed-files:
-      - any-glob-to-any-file: "services/event-ingest/**"
+      - any-glob-to-any-file: "backends/python/event-ingest/**"
 
 # ── Infrastructure ────────────────────────────────────────────────────────────
 

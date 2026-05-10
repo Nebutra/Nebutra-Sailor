@@ -42,7 +42,7 @@ const MUST_PRESERVE = [
   "apps/web/src/app/globals.css",
   "apps/landing-page/package.json",
   "apps/landing-page/src/app/[lang]/layout.tsx",
-  "apps/api-gateway/package.json",
+  "backends/gateway/package.json",
 ];
 
 // Must-strip files — Nebutra business content leaking into scaffold is a bug.
@@ -147,12 +147,7 @@ function isIgnored(relPath: string, isDir: boolean, rules: Rule[]): boolean {
   return ignored;
 }
 
-function walk(
-  dir: string,
-  rules: Rule[],
-  preserved: string[],
-  stripped: string[],
-): void {
+function walk(dir: string, rules: Rule[], preserved: string[], stripped: string[]): void {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
     if (HARD_SKIP.has(entry.name)) continue;

@@ -47,7 +47,7 @@ Status: Approved
 
 ### WS2: OpenAPIHono Migration
 
-**Scope:** `apps/api-gateway/src/`
+**Scope:** `backends/gateway/src/`
 
 **Deliverables:**
 1. Replace `new Hono()` with `new OpenAPIHono()` in `src/index.ts`

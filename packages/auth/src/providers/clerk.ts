@@ -11,7 +11,7 @@
  * default and log guidance about which Clerk API to use instead.
  *
  * Clerk dependencies (`@clerk/nextjs`, `@clerk/backend`) should remain in
- * `apps/web` and `apps/api-gateway` — NOT added to `@nebutra/auth`.
+ * `apps/web` and `backends/gateway` — NOT added to `@nebutra/auth`.
  *
  * @see https://clerk.com/docs
  */

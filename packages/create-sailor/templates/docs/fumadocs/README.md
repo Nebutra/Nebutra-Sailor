@@ -43,4 +43,4 @@ pnpm --filter @nebutra/api-gateway generate:spec
 pnpm generate:api-types
 ```
 
-Then replace `content/docs/api.mdx` with generated reference content sourced from `apps/api-gateway/openapi.json`.
+Then replace `content/docs/api.mdx` with generated reference content sourced from `backends/gateway/openapi.json`.

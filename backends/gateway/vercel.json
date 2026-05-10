@@ -1,0 +1,45 @@
+{
+  "buildCommand": "pnpm turbo build --filter=@nebutra/api-gateway",
+  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh backends/gateway",
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "outputDirectory": "dist",
+  "regions": ["iad1"],
+  "functions": {
+    "api/**/*.ts": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-site"
+        }
+      ]
+    }
+  ],
+  "crons": []
+}

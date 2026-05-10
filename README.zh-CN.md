@@ -449,11 +449,11 @@ Nebutra-Sailor/
 <tr>
 <td><strong>微服务</strong></td>
 <td>
-  <a href="services/ai/">AI</a> · 
-  <a href="services/content/">内容</a> · 
-  <a href="services/recsys/">推荐</a> · 
-  <a href="services/ecommerce/">电商</a> · 
-  <a href="services/web3/">Web3</a>
+  <a href="backends/python/ai/">AI</a> · 
+  <a href="backends/python/content/">内容</a> · 
+  <a href="backends/python/recsys/">推荐</a> · 
+  <a href="backends/python/ecommerce/">电商</a> · 
+  <a href="backends/python/web3/">Web3</a>
 </td>
 </tr>
 <tr>

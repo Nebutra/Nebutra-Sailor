@@ -23,7 +23,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const outFile = path.join(ROOT, "apps/web/src/lib/api/types.generated.ts");
-const specFile = path.join(ROOT, "apps/api-gateway/openapi.json");
+const specFile = path.join(ROOT, "backends/gateway/openapi.json");
 
 const gatewayUrl = process.env.API_GATEWAY_URL;
 

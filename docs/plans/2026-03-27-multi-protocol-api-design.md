@@ -8,7 +8,7 @@
 ## Architecture
 
 ```
-apps/api-gateway/src/
+backends/gateway/src/
   index.ts                    ← Hono HTTP server (unchanged entry)
   routes/                     ← REST/OpenAPI routes (existing, unchanged)
   orpc/

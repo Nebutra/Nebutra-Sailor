@@ -109,10 +109,10 @@ OTEL_EXPORTER_OTLP_HEADERS=...          # auth (e.g., "sentry-trace=xxx")
 ### Integration Points
 
 1. **packages/alerting** → `setAlertErrorHandler((ctx, err) => logger.error(ctx, err))`
-2. **apps/api-gateway `onError`** → `logger.error('Unhandled error', err)` (remove `console.error`)
-3. **apps/api-gateway startup** → `logger.info('API Gateway started', { port })` (remove `console.log`)
-4. **apps/api-gateway/consent.ts** → 8 catch blocks → `routeLogger.error(msg, error)` per route
-5. **apps/api-gateway/config/env.ts** → `console.error` in `validateEnv` → `process.stderr.write` (can't use logger before init) or keep as-is (acceptable for startup-time config errors)
+2. **backends/gateway `onError`** → `logger.error('Unhandled error', err)` (remove `console.error`)
+3. **backends/gateway startup** → `logger.info('API Gateway started', { port })` (remove `console.log`)
+4. **backends/gateway/consent.ts** → 8 catch blocks → `routeLogger.error(msg, error)` per route
+5. **backends/gateway/config/env.ts** → `console.error` in `validateEnv` → `process.stderr.write` (can't use logger before init) or keep as-is (acceptable for startup-time config errors)
 
 ---
 
@@ -180,9 +180,9 @@ PLAN_LIMITS:
 
 **Setup:** `vi.useFakeTimers()` to control `Date.now()` for refill calculations.
 
-### Test Suite 3: apps/api-gateway (consent routes)
+### Test Suite 3: backends/gateway (consent routes)
 
-**File:** `apps/api-gateway/src/__tests__/consent.test.ts`
+**File:** `backends/gateway/src/__tests__/consent.test.ts`
 
 Uses Hono's built-in test utility (`app.request()`) + `vi.mock('@nebutra/db')`.
 
@@ -233,7 +233,7 @@ vi.mock("@nebutra/db", () => ({
 
 ### Problem
 
-`apps/api-gateway/src/index.ts` has production domain strings hardcoded inline. Template users must manually grep and replace.
+`backends/gateway/src/index.ts` has production domain strings hardcoded inline. Template users must manually grep and replace.
 
 ### Solution
 

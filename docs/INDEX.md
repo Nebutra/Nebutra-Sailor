@@ -13,11 +13,11 @@ Complete navigation to all project documentation.
 
 | Service                                      | Port | Description                             |
 | -------------------------------------------- | ---- | --------------------------------------- |
-| [ai](../services/ai/README.md)               | 8001 | LLM generation, embeddings, translation |
-| [content](../services/content/README.md)     | 8002 | Posts, feeds, comments                  |
-| [recsys](../services/recsys/README.md)       | 8003 | Recommendation engine                   |
-| [ecommerce](../services/ecommerce/README.md) | 8004 | Shopify/Shopline sync                   |
-| [web3](../services/web3/README.md)           | 8005 | Blockchain indexer                      |
+| [ai](../backends/python/ai/README.md)               | 8001 | LLM generation, embeddings, translation |
+| [content](../backends/python/content/README.md)     | 8002 | Posts, feeds, comments                  |
+| [recsys](../backends/python/recsys/README.md)       | 8003 | Recommendation engine                   |
+| [ecommerce](../backends/python/ecommerce/README.md) | 8004 | Shopify/Shopline sync                   |
+| [web3](../backends/python/web3/README.md)           | 8005 | Blockchain indexer                      |
 
 ## Packages
 

@@ -134,7 +134,7 @@ git commit -m "chore: add Dependabot config for weekly automated dependency upda
 
 **Files:**
 
-- Modify: `apps/api-gateway/vitest.config.ts`
+- Modify: `backends/gateway/vitest.config.ts`
 
 **Step 1: Fix the coverage exclude**
 
@@ -177,7 +177,7 @@ Expected: coverage report shows percentages, all 43 tests pass.
 **Step 3: Commit**
 
 ```bash
-git add apps/api-gateway/vitest.config.ts
+git add backends/gateway/vitest.config.ts
 git commit -m "fix: correct vitest coverage exclude pattern in api-gateway"
 ```
 
@@ -257,20 +257,20 @@ git commit -m "perf: add inputs/outputs to turbo tasks for better cache hit rate
 
 **Files:**
 
-- Create: `apps/api-gateway/Dockerfile`
-- Create: `apps/api-gateway/.dockerignore`
+- Create: `backends/gateway/Dockerfile`
+- Create: `backends/gateway/.dockerignore`
 
 **Step 1: Check the tsconfig has outDir set**
 
 ```bash
-cat apps/api-gateway/tsconfig.json
+cat backends/gateway/tsconfig.json
 ```
 
 If `outDir` is not set to `dist`, note it. The `start` script in package.json already uses `node dist/index.js`.
 
 **Step 2: Create Dockerfile**
 
-Create `apps/api-gateway/Dockerfile`:
+Create `backends/gateway/Dockerfile`:
 
 ```dockerfile
 # ── Stage 1: Install dependencies ──────────────────────────────────────────
@@ -281,7 +281,7 @@ RUN corepack enable pnpm
 
 # Copy manifests for all workspace packages api-gateway depends on
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY apps/api-gateway/package.json ./apps/api-gateway/
+COPY backends/gateway/package.json ./backends/gateway/
 COPY packages/alerting/package.json ./packages/alerting/
 COPY packages/cache/package.json ./packages/cache/
 COPY packages/db/package.json ./packages/db/
@@ -298,7 +298,7 @@ WORKDIR /app
 RUN corepack enable pnpm
 
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/apps/api-gateway/node_modules ./apps/api-gateway/node_modules
+COPY --from=deps /app/backends/gateway/node_modules ./backends/gateway/node_modules
 COPY . .
 
 # Generate Prisma client
@@ -314,9 +314,9 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 # Only copy compiled output + production dependencies
-COPY --from=builder /app/apps/api-gateway/dist ./dist
+COPY --from=builder /app/backends/gateway/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/apps/api-gateway/node_modules ./apps/api-gateway/node_modules
+COPY --from=builder /app/backends/gateway/node_modules ./backends/gateway/node_modules
 COPY --from=builder /app/packages ./packages
 
 EXPOSE 3002
@@ -326,7 +326,7 @@ CMD ["node", "dist/index.js"]
 
 **Step 3: Create .dockerignore**
 
-Create `apps/api-gateway/.dockerignore`:
+Create `backends/gateway/.dockerignore`:
 
 ```
 node_modules
@@ -342,7 +342,7 @@ coverage
 
 ```bash
 cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor
-docker build -f apps/api-gateway/Dockerfile -t nebutra-api-gateway . 2>&1 | tail -10
+docker build -f backends/gateway/Dockerfile -t nebutra-api-gateway . 2>&1 | tail -10
 ```
 
 Expected: `Successfully built ...` If Docker is not available, skip and commit.
@@ -350,7 +350,7 @@ Expected: `Successfully built ...` If Docker is not available, skip and commit.
 **Step 5: Commit**
 
 ```bash
-git add apps/api-gateway/Dockerfile apps/api-gateway/.dockerignore
+git add backends/gateway/Dockerfile backends/gateway/.dockerignore
 git commit -m "feat: add multi-stage Dockerfile for api-gateway"
 ```
 
@@ -1246,9 +1246,9 @@ git commit -m "feat: add Playwright E2E setup with landing page smoke tests and 
 
 - [ ] `pnpm turbo typecheck` passes with strict flags enabled
 - [ ] `.github/dependabot.yml` created
-- [ ] `apps/api-gateway/vitest.config.ts` coverage exclude fixed
+- [ ] `backends/gateway/vitest.config.ts` coverage exclude fixed
 - [ ] `turbo.json` has optimized inputs for lint/typecheck/test
-- [ ] `apps/api-gateway/Dockerfile` created
+- [ ] `backends/gateway/Dockerfile` created
 - [ ] `apps/landing-page/src/lib/env.ts` created with Zod
 - [ ] `apps/web/src/lib/env.ts` migrated to Zod
 - [ ] `apps/web/src/components/ErrorBoundary.tsx` created + wired
