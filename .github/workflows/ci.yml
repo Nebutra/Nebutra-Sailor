@@ -77,7 +77,6 @@ jobs:
               - 'packages/gateway-core/**'
             e2e:
               - 'e2e/**'
-              - 'playwright.config.ts'
               - 'apps/api-gateway/**'
               - 'apps/landing-page/**'
               - 'apps/sleptons/**'
@@ -643,7 +642,7 @@ jobs:
         run: pnpm db:generate
 
       - name: Run E2E tests (shard ${{ matrix.shard }}/4)
-        run: pnpm exec playwright test --shard=${{ matrix.shard }}/4
+        run: pnpm exec playwright test --config=e2e/playwright.config.ts --shard=${{ matrix.shard }}/4
         env:
           CI: true
           APP_BASE_URL: "http://localhost:3001"

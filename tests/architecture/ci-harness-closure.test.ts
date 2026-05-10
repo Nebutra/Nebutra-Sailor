@@ -54,7 +54,10 @@ describe("ci harness dependency closure", () => {
   });
 
   it("waits for a public web route in Playwright webServer readiness checks", async () => {
-    const playwrightConfig = await readFile(join(process.cwd(), "playwright.config.ts"), "utf8");
+    const playwrightConfig = await readFile(
+      join(process.cwd(), "e2e/playwright.config.ts"),
+      "utf8",
+    );
 
     expect(playwrightConfig).toContain('url: "http://localhost:3001/demo/embed"');
   });

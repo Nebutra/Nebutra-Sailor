@@ -3,10 +3,12 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * Minimal Playwright config for Sleptons community E2E tests.
  * Only starts the two servers needed: landing-page + community.
+ *
+ * Sister configs in this directory: playwright.config.ts (smoke, all 4
+ * servers) and playwright.golden.config.ts (post-deploy, no webServer).
  */
 export default defineConfig({
-  testDir: "./e2e",
-  testMatch: "**/sleptons-flow.spec.ts",
+  testDir: "./sleptons",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,

@@ -11,5 +11,13 @@
     "resolveJsonModule": true,
     "types": ["node"]
   },
-  "include": ["tests/**/*.ts", "fixtures/**/*.ts", "playwright.config.ts"]
+  "include": [
+    "smoke/**/*.ts",
+    "golden/**/*.ts",
+    "sleptons/**/*.ts",
+    "fixtures/**/*.ts",
+    "playwright.config.ts",
+    "playwright.golden.config.ts",
+    "playwright.sleptons.config.ts"
+  ]
 }

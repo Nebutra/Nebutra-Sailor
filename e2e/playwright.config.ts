@@ -1,46 +1,74 @@
-/**
- * Playwright config for the **golden-path** suite under `e2e/tests/`.
- *
- * The repo also has a root `playwright.config.ts` that runs the legacy
- * `e2e/*.spec.ts` smoke tests with a managed `webServer`. This config is
- * intentionally lighter — it does NOT spawn a dev server. Run it with the
- * web app + landing page already up (or set `APP_BASE_URL` /
- * `LANDING_BASE_URL` to a deployed environment).
- *
- *   pnpm exec playwright test --config=e2e/playwright.config.ts --list
- *   APP_BASE_URL=http://localhost:3000 pnpm exec playwright test --config=e2e/playwright.config.ts
- *
- * To activate non-fixme'd assertions (i.e. run the tests for real):
- *   E2E_LIVE=1 APP_BASE_URL=... LANDING_BASE_URL=... pnpm exec playwright test --config=e2e/playwright.config.ts
- */
-
 import { defineConfig, devices } from "@playwright/test";
 
-const APP_BASE_URL = process.env.APP_BASE_URL ?? "http://localhost:3000";
-
+/**
+ * Smoke suite — CI default. Spawns 4 dev servers and runs e2e/smoke/*.spec.ts.
+ * Sister configs in this directory: playwright.golden.config.ts (post-deploy
+ * verification, no webServer) and playwright.sleptons.config.ts (sleptons-only).
+ */
 export default defineConfig({
-  testDir: "./tests",
+  testDir: "./smoke",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: process.env.CI
-    ? [["github"], ["html", { open: "never", outputFolder: "playwright-report" }]]
-    : [["list"], ["html", { open: "never", outputFolder: "playwright-report" }]],
-  outputDir: "./test-results",
+  reporter: process.env.CI ? [["github"], ["blob"], ["html", { open: "never" }]] : [["html"]],
   use: {
-    baseURL: APP_BASE_URL,
+    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
-    video: "retain-on-failure",
   },
   projects: [
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
-    // Opt-in: uncomment for cross-browser coverage.
-    // { name: "firefox", use: { ...devices["Desktop Firefox"] } },
-    // { name: "webkit", use: { ...devices["Desktop Safari"] } },
+  ],
+  webServer: [
+    {
+      command: "pnpm --filter @nebutra/landing-page dev",
+      url: "http://localhost:3000",
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+    },
+    {
+      command: "pnpm --filter @nebutra/api-gateway dev",
+      url: "http://localhost:3002",
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+      env: {
+        PORT: "3002",
+        SKIP_ENV_VALIDATION: "true",
+        RESEND_API_KEY: "re_placeholder",
+        DATABASE_URL: "postgresql://localhost/dev_placeholder",
+        CLERK_SECRET_KEY: "sk_test_placeholder",
+        BETTER_AUTH_SECRET: "placeholder",
+        UPSTASH_REDIS_REST_URL: "https://placeholder.upstash.io",
+        UPSTASH_REDIS_REST_TOKEN: "placeholder_token",
+      },
+    },
+    {
+      command: "pnpm --filter @nebutra/web dev --port 3001",
+      url: "http://localhost:3001/demo/embed",
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+      env: {
+        SKIP_ENV_VALIDATION: "true",
+        BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET ?? "placeholder_secret_32_chars_long_xx",
+        CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? "sk_test_placeholder",
+        DATABASE_URL: process.env.DATABASE_URL ?? "postgresql://localhost/dev_placeholder",
+        UPSTASH_REDIS_REST_URL:
+          process.env.UPSTASH_REDIS_REST_URL ?? "https://placeholder.upstash.io",
+        UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN ?? "placeholder_token",
+      },
+    },
+    {
+      command: "pnpm --filter @nebutra/sleptons dev",
+      url: "http://localhost:3003",
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+      env: {
+        SKIP_ENV_VALIDATION: "true",
+      },
+    },
   ],
 });
