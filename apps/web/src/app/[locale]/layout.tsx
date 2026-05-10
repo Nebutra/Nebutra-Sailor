@@ -8,6 +8,7 @@ import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { PostHogProvider } from "@/components/PostHogProvider";
 import { getNonce } from "@/lib/nonce";
 import { QueryProvider } from "./providers";
 import { ThemeShell } from "./providers/theme-provider";
@@ -85,7 +86,9 @@ export default async function RootLayout({
             <NextIntlClientProvider messages={messages}>
               <DesignSystemProvider>
                 <QueryProvider>
-                  <ErrorBoundary>{children}</ErrorBoundary>
+                  <PostHogProvider>
+                    <ErrorBoundary>{children}</ErrorBoundary>
+                  </PostHogProvider>
                 </QueryProvider>
               </DesignSystemProvider>
             </NextIntlClientProvider>

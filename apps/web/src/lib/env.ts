@@ -17,8 +17,18 @@ export const env = createEnv({
     STRIPE_SECRET_KEY: z.string().startsWith("sk_").optional(),
     STRIPE_WEBHOOK_SECRET: z.string().startsWith("whsec_").optional(),
 
-    // Sentry release tracking
+    // Sentry — server-side DSN + sourcemap upload (all optional)
+    SENTRY_DSN: z.string().url().optional(),
     SENTRY_RELEASE: z.string().optional(),
+    SENTRY_AUTH_TOKEN: z.string().optional(),
+    SENTRY_ORG: z.string().optional(),
+    SENTRY_PROJECT: z.string().optional(),
+
+    // Logger Sentry transport — opt-in to avoid double-capturing errors
+    LOGGER_SENTRY_ENABLED: z
+      .enum(["true", "false"])
+      .optional()
+      .default("false"),
   },
 
   client: {
@@ -46,6 +56,10 @@ export const env = createEnv({
 
     // Sentry
     NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
+
+    // PostHog analytics — both optional, host falls back to US cloud
+    NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
+    NEXT_PUBLIC_POSTHOG_HOST: z.string().url().default("https://us.i.posthog.com"),
   },
 
   experimental__runtimeEnv: {
@@ -62,6 +76,8 @@ export const env = createEnv({
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
+    NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
   },
 });
 
