@@ -100,7 +100,11 @@ export const ModelName = {
   SleptonsaMemberProfile: 'SleptonsaMemberProfile',
   SleptonsProduct: 'SleptonsProduct',
   SleptonsUpvote: 'SleptonsUpvote',
-  SleptonsConnection: 'SleptonsConnection'
+  SleptonsConnection: 'SleptonsConnection',
+  BAOrganization: 'BAOrganization',
+  BAMember: 'BAMember',
+  BAInvitation: 'BAInvitation',
+  BAPasskey: 'BAPasskey'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -851,6 +855,7 @@ export const AuthSessionScalarFieldEnum = {
   expiresAt: 'expiresAt',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
+  activeOrganizationId: 'activeOrganizationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -975,6 +980,58 @@ export const SleptonsConnectionScalarFieldEnum = {
 } as const
 
 export type SleptonsConnectionScalarFieldEnum = (typeof SleptonsConnectionScalarFieldEnum)[keyof typeof SleptonsConnectionScalarFieldEnum]
+
+
+export const BAOrganizationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  logo: 'logo',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type BAOrganizationScalarFieldEnum = (typeof BAOrganizationScalarFieldEnum)[keyof typeof BAOrganizationScalarFieldEnum]
+
+
+export const BAMemberScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  organizationId: 'organizationId',
+  role: 'role',
+  createdAt: 'createdAt'
+} as const
+
+export type BAMemberScalarFieldEnum = (typeof BAMemberScalarFieldEnum)[keyof typeof BAMemberScalarFieldEnum]
+
+
+export const BAInvitationScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  inviterId: 'inviterId',
+  organizationId: 'organizationId',
+  role: 'role',
+  status: 'status',
+  expiresAt: 'expiresAt'
+} as const
+
+export type BAInvitationScalarFieldEnum = (typeof BAInvitationScalarFieldEnum)[keyof typeof BAInvitationScalarFieldEnum]
+
+
+export const BAPasskeyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  publicKey: 'publicKey',
+  userId: 'userId',
+  credentialID: 'credentialID',
+  counter: 'counter',
+  deviceType: 'deviceType',
+  backedUp: 'backedUp',
+  transports: 'transports',
+  createdAt: 'createdAt'
+} as const
+
+export type BAPasskeyScalarFieldEnum = (typeof BAPasskeyScalarFieldEnum)[keyof typeof BAPasskeyScalarFieldEnum]
 
 
 export const SortOrder = {

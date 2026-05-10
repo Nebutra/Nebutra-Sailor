@@ -433,7 +433,11 @@ export const ModelName = {
   SleptonsaMemberProfile: 'SleptonsaMemberProfile',
   SleptonsProduct: 'SleptonsProduct',
   SleptonsUpvote: 'SleptonsUpvote',
-  SleptonsConnection: 'SleptonsConnection'
+  SleptonsConnection: 'SleptonsConnection',
+  BAOrganization: 'BAOrganization',
+  BAMember: 'BAMember',
+  BAInvitation: 'BAInvitation',
+  BAPasskey: 'BAPasskey'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -449,7 +453,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection"
+    modelProps: "organization" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4137,6 +4141,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    BAOrganization: {
+      payload: Prisma.$BAOrganizationPayload<ExtArgs>
+      fields: Prisma.BAOrganizationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BAOrganizationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BAOrganizationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload>
+        }
+        findFirst: {
+          args: Prisma.BAOrganizationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BAOrganizationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload>
+        }
+        findMany: {
+          args: Prisma.BAOrganizationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload>[]
+        }
+        create: {
+          args: Prisma.BAOrganizationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload>
+        }
+        createMany: {
+          args: Prisma.BAOrganizationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BAOrganizationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload>[]
+        }
+        delete: {
+          args: Prisma.BAOrganizationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload>
+        }
+        update: {
+          args: Prisma.BAOrganizationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload>
+        }
+        deleteMany: {
+          args: Prisma.BAOrganizationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BAOrganizationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BAOrganizationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload>[]
+        }
+        upsert: {
+          args: Prisma.BAOrganizationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAOrganizationPayload>
+        }
+        aggregate: {
+          args: Prisma.BAOrganizationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBAOrganization>
+        }
+        groupBy: {
+          args: Prisma.BAOrganizationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BAOrganizationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BAOrganizationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BAOrganizationCountAggregateOutputType> | number
+        }
+      }
+    }
+    BAMember: {
+      payload: Prisma.$BAMemberPayload<ExtArgs>
+      fields: Prisma.BAMemberFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BAMemberFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BAMemberFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload>
+        }
+        findFirst: {
+          args: Prisma.BAMemberFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BAMemberFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload>
+        }
+        findMany: {
+          args: Prisma.BAMemberFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload>[]
+        }
+        create: {
+          args: Prisma.BAMemberCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload>
+        }
+        createMany: {
+          args: Prisma.BAMemberCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BAMemberCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload>[]
+        }
+        delete: {
+          args: Prisma.BAMemberDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload>
+        }
+        update: {
+          args: Prisma.BAMemberUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload>
+        }
+        deleteMany: {
+          args: Prisma.BAMemberDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BAMemberUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BAMemberUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload>[]
+        }
+        upsert: {
+          args: Prisma.BAMemberUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAMemberPayload>
+        }
+        aggregate: {
+          args: Prisma.BAMemberAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBAMember>
+        }
+        groupBy: {
+          args: Prisma.BAMemberGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BAMemberGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BAMemberCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BAMemberCountAggregateOutputType> | number
+        }
+      }
+    }
+    BAInvitation: {
+      payload: Prisma.$BAInvitationPayload<ExtArgs>
+      fields: Prisma.BAInvitationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BAInvitationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BAInvitationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload>
+        }
+        findFirst: {
+          args: Prisma.BAInvitationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BAInvitationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload>
+        }
+        findMany: {
+          args: Prisma.BAInvitationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload>[]
+        }
+        create: {
+          args: Prisma.BAInvitationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload>
+        }
+        createMany: {
+          args: Prisma.BAInvitationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BAInvitationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload>[]
+        }
+        delete: {
+          args: Prisma.BAInvitationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload>
+        }
+        update: {
+          args: Prisma.BAInvitationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload>
+        }
+        deleteMany: {
+          args: Prisma.BAInvitationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BAInvitationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BAInvitationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload>[]
+        }
+        upsert: {
+          args: Prisma.BAInvitationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAInvitationPayload>
+        }
+        aggregate: {
+          args: Prisma.BAInvitationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBAInvitation>
+        }
+        groupBy: {
+          args: Prisma.BAInvitationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BAInvitationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BAInvitationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BAInvitationCountAggregateOutputType> | number
+        }
+      }
+    }
+    BAPasskey: {
+      payload: Prisma.$BAPasskeyPayload<ExtArgs>
+      fields: Prisma.BAPasskeyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BAPasskeyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BAPasskeyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload>
+        }
+        findFirst: {
+          args: Prisma.BAPasskeyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BAPasskeyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload>
+        }
+        findMany: {
+          args: Prisma.BAPasskeyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload>[]
+        }
+        create: {
+          args: Prisma.BAPasskeyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload>
+        }
+        createMany: {
+          args: Prisma.BAPasskeyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BAPasskeyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload>[]
+        }
+        delete: {
+          args: Prisma.BAPasskeyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload>
+        }
+        update: {
+          args: Prisma.BAPasskeyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload>
+        }
+        deleteMany: {
+          args: Prisma.BAPasskeyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BAPasskeyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BAPasskeyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload>[]
+        }
+        upsert: {
+          args: Prisma.BAPasskeyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BAPasskeyPayload>
+        }
+        aggregate: {
+          args: Prisma.BAPasskeyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBAPasskey>
+        }
+        groupBy: {
+          args: Prisma.BAPasskeyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BAPasskeyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BAPasskeyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BAPasskeyCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -4908,6 +5208,7 @@ export const AuthSessionScalarFieldEnum = {
   expiresAt: 'expiresAt',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
+  activeOrganizationId: 'activeOrganizationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -5032,6 +5333,58 @@ export const SleptonsConnectionScalarFieldEnum = {
 } as const
 
 export type SleptonsConnectionScalarFieldEnum = (typeof SleptonsConnectionScalarFieldEnum)[keyof typeof SleptonsConnectionScalarFieldEnum]
+
+
+export const BAOrganizationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  logo: 'logo',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type BAOrganizationScalarFieldEnum = (typeof BAOrganizationScalarFieldEnum)[keyof typeof BAOrganizationScalarFieldEnum]
+
+
+export const BAMemberScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  organizationId: 'organizationId',
+  role: 'role',
+  createdAt: 'createdAt'
+} as const
+
+export type BAMemberScalarFieldEnum = (typeof BAMemberScalarFieldEnum)[keyof typeof BAMemberScalarFieldEnum]
+
+
+export const BAInvitationScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  inviterId: 'inviterId',
+  organizationId: 'organizationId',
+  role: 'role',
+  status: 'status',
+  expiresAt: 'expiresAt'
+} as const
+
+export type BAInvitationScalarFieldEnum = (typeof BAInvitationScalarFieldEnum)[keyof typeof BAInvitationScalarFieldEnum]
+
+
+export const BAPasskeyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  publicKey: 'publicKey',
+  userId: 'userId',
+  credentialID: 'credentialID',
+  counter: 'counter',
+  deviceType: 'deviceType',
+  backedUp: 'backedUp',
+  transports: 'transports',
+  createdAt: 'createdAt'
+} as const
+
+export type BAPasskeyScalarFieldEnum = (typeof BAPasskeyScalarFieldEnum)[keyof typeof BAPasskeyScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -5631,6 +5984,10 @@ export type GlobalOmitConfig = {
   sleptonsProduct?: Prisma.SleptonsProductOmit
   sleptonsUpvote?: Prisma.SleptonsUpvoteOmit
   sleptonsConnection?: Prisma.SleptonsConnectionOmit
+  bAOrganization?: Prisma.BAOrganizationOmit
+  bAMember?: Prisma.BAMemberOmit
+  bAInvitation?: Prisma.BAInvitationOmit
+  bAPasskey?: Prisma.BAPasskeyOmit
 }
 
 /* Types for Logging */

@@ -40,11 +40,28 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const UI_ROOT = resolve(__dirname, "..");
-const REPO_ROOT = resolve(UI_ROOT, "..", "..");
+// W3b layout: packages/design/ui/scripts/build-registry.ts → walk 3 levels up to repo root
+const REPO_ROOT = resolve(UI_ROOT, "..", "..", "..");
 const PRIMITIVES_DIR = join(UI_ROOT, "src", "primitives");
 const COMPONENTS_DIR = join(UI_ROOT, "src", "components");
-const TOKENS_LIGHT = join(REPO_ROOT, "packages", "design-tokens", "build", "ts", "light.ts");
-const TOKENS_DARK = join(REPO_ROOT, "packages", "design-tokens", "build", "ts", "dark.ts");
+const TOKENS_LIGHT = join(
+  REPO_ROOT,
+  "packages",
+  "design",
+  "design-tokens",
+  "build",
+  "ts",
+  "light.ts",
+);
+const TOKENS_DARK = join(
+  REPO_ROOT,
+  "packages",
+  "design",
+  "design-tokens",
+  "build",
+  "ts",
+  "dark.ts",
+);
 const OUT_DIR = join(REPO_ROOT, "apps", "design-docs", "public", "r");
 const OUT_INDEX = join(REPO_ROOT, "apps", "design-docs", "public", "registry.json");
 

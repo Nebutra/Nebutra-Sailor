@@ -7,7 +7,7 @@ generator client {
 datasource db {
   provider   = "postgresql"
   extensions = [vector, uuid_ossp(map: "uuid-ossp")]
-  schemas    = ["public"]
+  schemas    = ["public", "auth"]
 }
 
 // ============================================
@@ -1228,6 +1228,11 @@ model AuthUser {
   updatedAt        DateTime      @updatedAt @map("updated_at")
   accounts         AuthAccount[]
   sessions         AuthSession[]
+  // Wave 2 Phase 1.1 — back-relations to BA plugin tables in `auth.*` schema.
+  // These exist purely to satisfy Prisma's bidirectional-relation requirement
+  // and do not alter `public.auth_users` itself.
+  baMembers        BAMember[]
+  baPasskeys       BAPasskey[]
 
   @@map("auth_users")
   @@schema("public")
@@ -1258,18 +1263,23 @@ model AuthAccount {
 
 /// @conditional(auth=betterauth)
 model AuthSession {
-  id        String   @id @default(cuid())
-  userId    String   @map("user_id")
-  token     String   @unique
-  expiresAt DateTime @map("expires_at")
-  ipAddress String?  @map("ip_address")
-  userAgent String?  @map("user_agent")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  user      AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                    String   @id @default(cuid())
+  userId                String   @map("user_id")
+  token                 String   @unique
+  expiresAt             DateTime @map("expires_at")
+  ipAddress             String?  @map("ip_address")
+  userAgent             String?  @map("user_agent")
+  // Active organization id, populated by Better Auth's organization plugin
+  // when the user calls `auth.api.setActiveOrganization()`. Read by the
+  // tenant bridge middleware in Phase 2 to call `runWithTenant()`.
+  activeOrganizationId  String?  @map("active_organization_id")
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+  user                  AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([token])
+  @@index([activeOrganizationId])
   @@map("auth_sessions")
   @@schema("public")
 }
@@ -1458,4 +1468,88 @@ model SleptonsConnection {
   @@id([follower_id, following_id])
   @@map("sleptons_connections")
   @@schema("public")
+}
+
+// ============================================
+// Better Auth — Plugin Tables (auth.* schema)
+// ============================================
+// Greenfield tables for Better Auth's organization + passkey plugins. Live in
+// the dedicated `auth` Postgres schema (Wave 2 Phase 1.1, Shape B isolation).
+// Existing core BA tables (auth_users / auth_sessions / auth_accounts /
+// auth_verifications) intentionally stay in `public` per ADR D3.
+//
+// Naming: prefixed `BA` (Better Auth) on the Prisma side to disambiguate from
+// the legacy Clerk-shaped `Organization` / `OrganizationMember` /
+// `OrganizationInvitation` models in `public.*`. The DB-side names match the
+// Better Auth plugin defaults (`organization`, `member`, `invitation`,
+// `passkey`) so the BA Prisma adapter resolves them without remapping.
+
+/// @conditional(auth=betterauth)
+model BAOrganization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  logo      String?
+  metadata  String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  members     BAMember[]
+  invitations BAInvitation[]
+
+  @@map("organization")
+  @@schema("auth")
+}
+
+/// @conditional(auth=betterauth)
+model BAMember {
+  id             String   @id @default(cuid())
+  userId         String   @map("user_id")
+  organizationId String   @map("organization_id")
+  role           String   @default("member")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  user         AuthUser       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization BAOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@index([organizationId])
+  @@map("member")
+  @@schema("auth")
+}
+
+/// @conditional(auth=betterauth)
+model BAInvitation {
+  id             String    @id @default(cuid())
+  email          String
+  inviterId      String    @map("inviter_id")
+  organizationId String    @map("organization_id")
+  role           String?
+  status         String    @default("pending")
+  expiresAt      DateTime? @map("expires_at")
+
+  organization BAOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([email])
+  @@map("invitation")
+  @@schema("auth")
+}
+
+/// @conditional(auth=betterauth)
+model BAPasskey {
+  id           String   @id @default(cuid())
+  name         String?
+  publicKey    String   @map("public_key")
+  userId       String   @map("user_id")
+  credentialID String   @unique @map("credential_i_d")
+  counter      Int
+  deviceType   String   @map("device_type")
+  backedUp     Boolean  @map("backed_up")
+  transports   String?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("passkey")
+  @@schema("auth")
 }

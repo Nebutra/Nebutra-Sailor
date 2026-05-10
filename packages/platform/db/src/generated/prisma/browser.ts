@@ -267,3 +267,23 @@ export type SleptonsUpvote = Prisma.SleptonsUpvoteModel
  * 
  */
 export type SleptonsConnection = Prisma.SleptonsConnectionModel
+/**
+ * Model BAOrganization
+ * @conditional(auth=betterauth)
+ */
+export type BAOrganization = Prisma.BAOrganizationModel
+/**
+ * Model BAMember
+ * @conditional(auth=betterauth)
+ */
+export type BAMember = Prisma.BAMemberModel
+/**
+ * Model BAInvitation
+ * @conditional(auth=betterauth)
+ */
+export type BAInvitation = Prisma.BAInvitationModel
+/**
+ * Model BAPasskey
+ * @conditional(auth=betterauth)
+ */
+export type BAPasskey = Prisma.BAPasskeyModel

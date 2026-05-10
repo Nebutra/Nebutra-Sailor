@@ -244,6 +244,8 @@ export type AuthUserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"AuthUser"> | Date | string
   accounts?: Prisma.AuthAccountListRelationFilter
   sessions?: Prisma.AuthSessionListRelationFilter
+  baMembers?: Prisma.BAMemberListRelationFilter
+  baPasskeys?: Prisma.BAPasskeyListRelationFilter
 }
 
 export type AuthUserOrderByWithRelationInput = {
@@ -262,6 +264,8 @@ export type AuthUserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   accounts?: Prisma.AuthAccountOrderByRelationAggregateInput
   sessions?: Prisma.AuthSessionOrderByRelationAggregateInput
+  baMembers?: Prisma.BAMemberOrderByRelationAggregateInput
+  baPasskeys?: Prisma.BAPasskeyOrderByRelationAggregateInput
 }
 
 export type AuthUserWhereUniqueInput = Prisma.AtLeast<{
@@ -283,6 +287,8 @@ export type AuthUserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"AuthUser"> | Date | string
   accounts?: Prisma.AuthAccountListRelationFilter
   sessions?: Prisma.AuthSessionListRelationFilter
+  baMembers?: Prisma.BAMemberListRelationFilter
+  baPasskeys?: Prisma.BAPasskeyListRelationFilter
 }, "id" | "email" | "phone">
 
 export type AuthUserOrderByWithAggregationInput = {
@@ -339,6 +345,8 @@ export type AuthUserCreateInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
 }
 
 export type AuthUserUncheckedCreateInput = {
@@ -357,6 +365,8 @@ export type AuthUserUncheckedCreateInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuthUserUpdateInput = {
@@ -375,6 +385,8 @@ export type AuthUserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
 }
 
 export type AuthUserUncheckedUpdateInput = {
@@ -393,6 +405,8 @@ export type AuthUserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AuthUserCreateManyInput = {
@@ -531,6 +545,34 @@ export type AuthUserUpdateOneRequiredWithoutSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AuthUserUpdateToOneWithWhereWithoutSessionsInput, Prisma.AuthUserUpdateWithoutSessionsInput>, Prisma.AuthUserUncheckedUpdateWithoutSessionsInput>
 }
 
+export type AuthUserCreateNestedOneWithoutBaMembersInput = {
+  create?: Prisma.XOR<Prisma.AuthUserCreateWithoutBaMembersInput, Prisma.AuthUserUncheckedCreateWithoutBaMembersInput>
+  connectOrCreate?: Prisma.AuthUserCreateOrConnectWithoutBaMembersInput
+  connect?: Prisma.AuthUserWhereUniqueInput
+}
+
+export type AuthUserUpdateOneRequiredWithoutBaMembersNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthUserCreateWithoutBaMembersInput, Prisma.AuthUserUncheckedCreateWithoutBaMembersInput>
+  connectOrCreate?: Prisma.AuthUserCreateOrConnectWithoutBaMembersInput
+  upsert?: Prisma.AuthUserUpsertWithoutBaMembersInput
+  connect?: Prisma.AuthUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthUserUpdateToOneWithWhereWithoutBaMembersInput, Prisma.AuthUserUpdateWithoutBaMembersInput>, Prisma.AuthUserUncheckedUpdateWithoutBaMembersInput>
+}
+
+export type AuthUserCreateNestedOneWithoutBaPasskeysInput = {
+  create?: Prisma.XOR<Prisma.AuthUserCreateWithoutBaPasskeysInput, Prisma.AuthUserUncheckedCreateWithoutBaPasskeysInput>
+  connectOrCreate?: Prisma.AuthUserCreateOrConnectWithoutBaPasskeysInput
+  connect?: Prisma.AuthUserWhereUniqueInput
+}
+
+export type AuthUserUpdateOneRequiredWithoutBaPasskeysNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthUserCreateWithoutBaPasskeysInput, Prisma.AuthUserUncheckedCreateWithoutBaPasskeysInput>
+  connectOrCreate?: Prisma.AuthUserCreateOrConnectWithoutBaPasskeysInput
+  upsert?: Prisma.AuthUserUpsertWithoutBaPasskeysInput
+  connect?: Prisma.AuthUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthUserUpdateToOneWithWhereWithoutBaPasskeysInput, Prisma.AuthUserUpdateWithoutBaPasskeysInput>, Prisma.AuthUserUncheckedUpdateWithoutBaPasskeysInput>
+}
+
 export type AuthUserCreateWithoutAccountsInput = {
   id?: string
   email?: string | null
@@ -546,6 +588,8 @@ export type AuthUserCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
 }
 
 export type AuthUserUncheckedCreateWithoutAccountsInput = {
@@ -563,6 +607,8 @@ export type AuthUserUncheckedCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuthUserCreateOrConnectWithoutAccountsInput = {
@@ -596,6 +642,8 @@ export type AuthUserUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
 }
 
 export type AuthUserUncheckedUpdateWithoutAccountsInput = {
@@ -613,6 +661,8 @@ export type AuthUserUncheckedUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AuthUserCreateWithoutSessionsInput = {
@@ -630,6 +680,8 @@ export type AuthUserCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
 }
 
 export type AuthUserUncheckedCreateWithoutSessionsInput = {
@@ -647,6 +699,8 @@ export type AuthUserUncheckedCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuthUserCreateOrConnectWithoutSessionsInput = {
@@ -680,6 +734,8 @@ export type AuthUserUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
 }
 
 export type AuthUserUncheckedUpdateWithoutSessionsInput = {
@@ -697,6 +753,192 @@ export type AuthUserUncheckedUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AuthUserCreateWithoutBaMembersInput = {
+  id?: string
+  email?: string | null
+  phone?: string | null
+  emailVerified?: boolean
+  phoneVerified?: boolean
+  name?: string | null
+  image?: string | null
+  passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
+}
+
+export type AuthUserUncheckedCreateWithoutBaMembersInput = {
+  id?: string
+  email?: string | null
+  phone?: string | null
+  emailVerified?: boolean
+  phoneVerified?: boolean
+  name?: string | null
+  image?: string | null
+  passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AuthUserCreateOrConnectWithoutBaMembersInput = {
+  where: Prisma.AuthUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthUserCreateWithoutBaMembersInput, Prisma.AuthUserUncheckedCreateWithoutBaMembersInput>
+}
+
+export type AuthUserUpsertWithoutBaMembersInput = {
+  update: Prisma.XOR<Prisma.AuthUserUpdateWithoutBaMembersInput, Prisma.AuthUserUncheckedUpdateWithoutBaMembersInput>
+  create: Prisma.XOR<Prisma.AuthUserCreateWithoutBaMembersInput, Prisma.AuthUserUncheckedCreateWithoutBaMembersInput>
+  where?: Prisma.AuthUserWhereInput
+}
+
+export type AuthUserUpdateToOneWithWhereWithoutBaMembersInput = {
+  where?: Prisma.AuthUserWhereInput
+  data: Prisma.XOR<Prisma.AuthUserUpdateWithoutBaMembersInput, Prisma.AuthUserUncheckedUpdateWithoutBaMembersInput>
+}
+
+export type AuthUserUpdateWithoutBaMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
+}
+
+export type AuthUserUncheckedUpdateWithoutBaMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AuthUserCreateWithoutBaPasskeysInput = {
+  id?: string
+  email?: string | null
+  phone?: string | null
+  emailVerified?: boolean
+  phoneVerified?: boolean
+  name?: string | null
+  image?: string | null
+  passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
+}
+
+export type AuthUserUncheckedCreateWithoutBaPasskeysInput = {
+  id?: string
+  email?: string | null
+  phone?: string | null
+  emailVerified?: boolean
+  phoneVerified?: boolean
+  name?: string | null
+  image?: string | null
+  passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AuthUserCreateOrConnectWithoutBaPasskeysInput = {
+  where: Prisma.AuthUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthUserCreateWithoutBaPasskeysInput, Prisma.AuthUserUncheckedCreateWithoutBaPasskeysInput>
+}
+
+export type AuthUserUpsertWithoutBaPasskeysInput = {
+  update: Prisma.XOR<Prisma.AuthUserUpdateWithoutBaPasskeysInput, Prisma.AuthUserUncheckedUpdateWithoutBaPasskeysInput>
+  create: Prisma.XOR<Prisma.AuthUserCreateWithoutBaPasskeysInput, Prisma.AuthUserUncheckedCreateWithoutBaPasskeysInput>
+  where?: Prisma.AuthUserWhereInput
+}
+
+export type AuthUserUpdateToOneWithWhereWithoutBaPasskeysInput = {
+  where?: Prisma.AuthUserWhereInput
+  data: Prisma.XOR<Prisma.AuthUserUpdateWithoutBaPasskeysInput, Prisma.AuthUserUncheckedUpdateWithoutBaPasskeysInput>
+}
+
+export type AuthUserUpdateWithoutBaPasskeysInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
+}
+
+export type AuthUserUncheckedUpdateWithoutBaPasskeysInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -707,11 +949,15 @@ export type AuthUserUncheckedUpdateWithoutSessionsInput = {
 export type AuthUserCountOutputType = {
   accounts: number
   sessions: number
+  baMembers: number
+  baPasskeys: number
 }
 
 export type AuthUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | AuthUserCountOutputTypeCountAccountsArgs
   sessions?: boolean | AuthUserCountOutputTypeCountSessionsArgs
+  baMembers?: boolean | AuthUserCountOutputTypeCountBaMembersArgs
+  baPasskeys?: boolean | AuthUserCountOutputTypeCountBaPasskeysArgs
 }
 
 /**
@@ -738,6 +984,20 @@ export type AuthUserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.AuthSessionWhereInput
 }
 
+/**
+ * AuthUserCountOutputType without action
+ */
+export type AuthUserCountOutputTypeCountBaMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BAMemberWhereInput
+}
+
+/**
+ * AuthUserCountOutputType without action
+ */
+export type AuthUserCountOutputTypeCountBaPasskeysArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BAPasskeyWhereInput
+}
+
 
 export type AuthUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -755,6 +1015,8 @@ export type AuthUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   updatedAt?: boolean
   accounts?: boolean | Prisma.AuthUser$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.AuthUser$sessionsArgs<ExtArgs>
+  baMembers?: boolean | Prisma.AuthUser$baMembersArgs<ExtArgs>
+  baPasskeys?: boolean | Prisma.AuthUser$baPasskeysArgs<ExtArgs>
   _count?: boolean | Prisma.AuthUserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["authUser"]>
 
@@ -810,6 +1072,8 @@ export type AuthUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type AuthUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.AuthUser$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.AuthUser$sessionsArgs<ExtArgs>
+  baMembers?: boolean | Prisma.AuthUser$baMembersArgs<ExtArgs>
+  baPasskeys?: boolean | Prisma.AuthUser$baPasskeysArgs<ExtArgs>
   _count?: boolean | Prisma.AuthUserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AuthUserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -820,6 +1084,8 @@ export type $AuthUserPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     accounts: Prisma.$AuthAccountPayload<ExtArgs>[]
     sessions: Prisma.$AuthSessionPayload<ExtArgs>[]
+    baMembers: Prisma.$BAMemberPayload<ExtArgs>[]
+    baPasskeys: Prisma.$BAPasskeyPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1231,6 +1497,8 @@ export interface Prisma__AuthUserClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   accounts<T extends Prisma.AuthUser$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.AuthUser$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  baMembers<T extends Prisma.AuthUser$baMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$baMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BAMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  baPasskeys<T extends Prisma.AuthUser$baPasskeysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$baPasskeysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BAPasskeyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1706,6 +1974,54 @@ export type AuthUser$sessionsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.AuthSessionScalarFieldEnum | Prisma.AuthSessionScalarFieldEnum[]
+}
+
+/**
+ * AuthUser.baMembers
+ */
+export type AuthUser$baMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BAMember
+   */
+  select?: Prisma.BAMemberSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BAMember
+   */
+  omit?: Prisma.BAMemberOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BAMemberInclude<ExtArgs> | null
+  where?: Prisma.BAMemberWhereInput
+  orderBy?: Prisma.BAMemberOrderByWithRelationInput | Prisma.BAMemberOrderByWithRelationInput[]
+  cursor?: Prisma.BAMemberWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BAMemberScalarFieldEnum | Prisma.BAMemberScalarFieldEnum[]
+}
+
+/**
+ * AuthUser.baPasskeys
+ */
+export type AuthUser$baPasskeysArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BAPasskey
+   */
+  select?: Prisma.BAPasskeySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BAPasskey
+   */
+  omit?: Prisma.BAPasskeyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BAPasskeyInclude<ExtArgs> | null
+  where?: Prisma.BAPasskeyWhereInput
+  orderBy?: Prisma.BAPasskeyOrderByWithRelationInput | Prisma.BAPasskeyOrderByWithRelationInput[]
+  cursor?: Prisma.BAPasskeyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BAPasskeyScalarFieldEnum | Prisma.BAPasskeyScalarFieldEnum[]
 }
 
 /**
