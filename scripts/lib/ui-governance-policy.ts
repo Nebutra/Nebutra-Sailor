@@ -7,8 +7,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..", "..");
 
-export const POLICY_POINTER_PATH = "governance/ui-governance.current.json";
-export const POLICY_SCHEMA_PATH = "governance/schemas/ui-governance.schema.json";
+export const POLICY_POINTER_PATH = "tests/architecture/governance/ui-governance.current.json";
+export const POLICY_SCHEMA_PATH = "tests/architecture/governance/schemas/ui-governance.schema.json";
 
 export interface FileSurface {
   root: string;
@@ -93,7 +93,7 @@ function resolvePolicyPathFromPointer() {
     throw new Error(`Invalid policy pointer target: ${pointer.policyFile}`);
   }
 
-  return path.posix.join("governance", pointer.policyFile);
+  return path.posix.join("tests/architecture/governance", pointer.policyFile);
 }
 
 export function loadUiGovernancePolicy(): GovernancePolicy {

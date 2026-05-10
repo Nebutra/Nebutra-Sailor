@@ -9,9 +9,9 @@
  * - Missing registry entries
  *
  * Usage:
- *   npx tsx tools/component-audit.ts
- *   npx tsx tools/component-audit.ts --json
- *   npx tsx tools/component-audit.ts --fix
+ *   npx tsx scripts/component-audit.ts
+ *   npx tsx scripts/component-audit.ts --json
+ *   npx tsx scripts/component-audit.ts --fix
  */
 
 import * as fs from "node:fs";

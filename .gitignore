@@ -35,6 +35,8 @@ pnpm-debug.log*
 coverage
 e2e/test-results
 e2e/playwright-report
+playwright-report
+test-results
 
 # Prisma
 packages/db/generated
