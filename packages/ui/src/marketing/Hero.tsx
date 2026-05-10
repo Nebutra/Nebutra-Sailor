@@ -7,10 +7,10 @@
 
 "use client";
 
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { cn } from "@nebutra/ui/utils";
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import { AnimateIn, AnimateInGroup } from "../components";
+import { cn } from "../utils";
 import type { HeroProps } from "./types";
 
 export function Hero({

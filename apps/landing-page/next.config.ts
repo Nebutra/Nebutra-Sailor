@@ -38,16 +38,14 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  // Required for Docker / self-hosted deployments.
-  // Produces a minimal standalone server bundle under .next/standalone.
-  output: "standalone",
+  // `output: "standalone"` removed — only consumed by the Docker path
+  // (apps/landing-page/Dockerfile sets it via env at build time if needed).
+  // Vercel ignores it, and emitting a standalone trace adds material work
+  // to every build. See git history if Docker self-hosting is reactivated.
 
   // Enable Partial Prerendering — Next.js 16 merged experimental.ppr into cacheComponents.
   cacheComponents: true,
   experimental: {
-    ...(process.env.VERCEL === "1" ? { cpus: 1 } : {}),
-    parallelServerBuildTraces: false,
-    parallelServerCompiles: false,
     webpackBuildWorker: true,
     webpackMemoryOptimizations: true,
   },
@@ -58,22 +56,22 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: process.env.VERCEL === "1",
   },
 
-  // Workspace packages: src/-exporting packages need this for SWC to process
-  // TypeScript; dist/-exporting packages need it for "use client" detection.
+  // Only workspace packages that still export raw `src/` need transpilation.
+  // ui/marketing/sanity/brand/icons publish proper `dist/` (esm + d.ts) and
+  // resolve via package exports — keeping them here would force SWC + React
+  // Compiler to walk the entire workspace src tree on every build.
   transpilePackages: [
     "@nebutra/agents",
     "@nebutra/auth",
     "@nebutra/billing",
-    "@nebutra/brand",
     "@nebutra/db",
-    "@nebutra/icons",
     "@nebutra/identity",
     "@nebutra/license",
-    "@nebutra/marketing",
+    "@nebutra/logger",
+    "@nebutra/metering",
+    "@nebutra/queue",
     "@nebutra/rls",
-    "@nebutra/sanity",
     "@nebutra/tokens",
-    "@nebutra/ui",
   ],
   reactCompiler: true,
 

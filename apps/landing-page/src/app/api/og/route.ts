@@ -3,7 +3,10 @@ import type * as React from "react";
 import { type CSSProperties, createElement, type ReactNode } from "react";
 import { z } from "zod";
 
-export const runtime = "edge";
+// Route segment `runtime = "edge"` removed: incompatible with the project's
+// `cacheComponents: true` (Next 16 PPR). next/og's ImageResponse runs fine on
+// the Node runtime; OG generation latency is dominated by Satori, not by edge
+// vs node startup, so this has negligible user-visible impact.
 
 const querySchema = z.object({
   title: z.string().min(1).max(200),

@@ -6,11 +6,11 @@
 
 "use client";
 
-import { cn } from "@nebutra/ui/utils";
 import useEmblaCarousel from "embla-carousel-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useState } from "react";
+import { cn } from "../utils";
 import type { UseCase, UseCasesProps } from "./types";
 
 export function UseCases({

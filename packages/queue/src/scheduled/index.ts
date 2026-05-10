@@ -7,21 +7,21 @@
 //   - `registerDefaultScheduledJobs()` — convenience to register the built-ins
 // =============================================================================
 
-export type { RunInvitationCleanupOptions } from "./jobs/invitation-cleanup.js";
-export { invitationCleanup, runInvitationCleanup } from "./jobs/invitation-cleanup.js";
-export type { RunSessionCleanupOptions } from "./jobs/session-cleanup.js";
-export { runSessionCleanup, sessionCleanup } from "./jobs/session-cleanup.js";
-export type { ScheduledJob, ScheduledJobResult } from "./scheduler.js";
+export type { RunInvitationCleanupOptions } from "./jobs/invitation-cleanup";
+export { invitationCleanup, runInvitationCleanup } from "./jobs/invitation-cleanup";
+export type { RunSessionCleanupOptions } from "./jobs/session-cleanup";
+export { runSessionCleanup, sessionCleanup } from "./jobs/session-cleanup";
+export type { ScheduledJob, ScheduledJobResult } from "./scheduler";
 export {
   clearScheduledJobs,
   getScheduledJob,
   listScheduledJobs,
   registerScheduledJob,
-} from "./scheduler.js";
+} from "./scheduler";
 
-import { invitationCleanup } from "./jobs/invitation-cleanup.js";
-import { sessionCleanup } from "./jobs/session-cleanup.js";
-import { registerScheduledJob } from "./scheduler.js";
+import { invitationCleanup } from "./jobs/invitation-cleanup";
+import { sessionCleanup } from "./jobs/session-cleanup";
+import { registerScheduledJob } from "./scheduler";
 
 /**
  * Register the two built-in production scheduled jobs:

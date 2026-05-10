@@ -6,24 +6,65 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./components": "./src/components/index.ts",
-    "./layout": "./src/layout/index.ts",
-    "./layouts": "./src/layouts/index.ts",
-    "./icons": "./src/icons/index.ts",
-    "./theme": "./src/theme/index.ts",
-    "./primitives": "./src/primitives/index.ts",
-    "./patterns": "./src/patterns/index.ts",
-    "./typography": "./src/typography/index.ts",
-    "./typography/fonts.css": "./src/typography/fonts.css",
-    "./hooks": "./src/hooks/index.ts",
-    "./utils": "./src/utils/index.ts",
-    "./tailwind.preset": "./src/tailwind.preset.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js"
+    },
+    "./layout": {
+      "types": "./dist/layout/index.d.ts",
+      "import": "./dist/layout/index.js"
+    },
+    "./layouts": {
+      "types": "./dist/layouts/index.d.ts",
+      "import": "./dist/layouts/index.js"
+    },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "import": "./dist/icons/index.js"
+    },
+    "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "import": "./dist/theme/index.js"
+    },
+    "./primitives": {
+      "types": "./dist/primitives/index.d.ts",
+      "import": "./dist/primitives/index.js"
+    },
+    "./patterns": {
+      "types": "./dist/patterns/index.d.ts",
+      "import": "./dist/patterns/index.js"
+    },
+    "./typography": {
+      "types": "./dist/typography/index.d.ts",
+      "import": "./dist/typography/index.js"
+    },
+    "./typography/fonts.css": "./dist/typography/fonts.css",
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
+    },
+    "./tailwind.preset": {
+      "types": "./dist/tailwind.preset.d.ts",
+      "import": "./dist/tailwind.preset.js"
+    }
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build:registry": "tsx scripts/build-registry.ts",
-    "build": "tsx scripts/build-registry.ts"
+    "build": "tsup && tsx scripts/build-registry.ts",
+    "dev": "tsup --watch"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
@@ -80,6 +121,7 @@
     "@types/three": "^0.183.1",
     "next": "^16.2.6",
     "storybook": "^8.6.17",
+    "tsup": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:"
   },

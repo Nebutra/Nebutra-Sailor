@@ -1,9 +1,9 @@
 "use client";
 
 import { Slider as BaseSlider } from "@base-ui/react/slider";
-import { cn } from "@nebutra/ui/utils";
 import NumberFlow, { continuous } from "@number-flow/react";
 import * as React from "react";
+import { cn } from "../utils";
 
 export const SliderNumberFlow = React.forwardRef<
   React.ElementRef<typeof BaseSlider.Root>,

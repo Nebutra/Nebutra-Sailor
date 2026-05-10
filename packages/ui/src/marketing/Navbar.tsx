@@ -7,10 +7,10 @@
 
 "use client";
 
-import { cn } from "@nebutra/ui/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Bell, ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { cn } from "../utils";
 import type { NavbarProps } from "./types";
 
 export function Navbar({
