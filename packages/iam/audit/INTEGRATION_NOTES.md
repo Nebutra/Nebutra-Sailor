@@ -23,12 +23,12 @@ events in production.
 | `apps/web/src/app/api/organizations/route.ts` (POST) | `org.created` | severity `info` |
 | `apps/web/src/app/api/organizations/[orgId]/route.ts` (PATCH) | `org.updated` | severity `info`; `changes.before/after.name` |
 | `apps/web/src/app/api/organizations/[orgId]/route.ts` (DELETE) | `org.deleted` | severity **critical** |
+| `apps/web/src/app/api/organizations/[orgId]/members/route.ts` (POST) | `org.member.added` | severity `warning`; metadata `{ invitationId, role, invitedBy }`; resource is the invitee email until they accept |
 | `apps/web/src/app/api/organizations/[orgId]/members/[memberId]/route.ts` (PATCH) | `org.member.role_changed` | severity `warning`; `changes.before/after.role` |
 | `apps/web/src/app/api/organizations/[orgId]/members/[memberId]/route.ts` (DELETE) | `org.member.removed` | severity `warning`; metadata flags `self` for self-removal |
 | `apps/web/src/app/api/webhooks/route.ts` (POST) | `webhook.created` | severity `warning` |
 | `apps/web/src/app/api/webhooks/[id]/route.ts` (PATCH) | `webhook.updated` | severity `warning`; `changes.before/after` for changed fields only |
 | `apps/web/src/app/api/webhooks/[id]/route.ts` (DELETE) | `webhook.deleted` | severity `warning` |
-| `apps/web/src/app/api/organizations/[orgId]/members/route.ts` (POST) | `org.member.added` | severity `warning`; metadata `{ invitationId, role, invitedBy }` |
 | `apps/web/src/app/api/admin/users/[userId]/route.ts` (PATCH) | `admin.user.updated` | severity `warning`; `changes.before/after` on changed fields only |
 | `apps/web/src/app/api/admin/users/[userId]/route.ts` (DELETE) | `admin.user.deleted` | severity **critical** |
 | `apps/web/src/app/api/admin/organizations/[orgId]/route.ts` (PATCH) | `admin.org.updated` | severity `warning`; `changes.before/after` on changed fields only |
