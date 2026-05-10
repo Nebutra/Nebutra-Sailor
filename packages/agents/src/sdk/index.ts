@@ -26,7 +26,7 @@ import {
   NebutraAIConfigSchema,
   type ResolvedNebutraAIConfig,
 } from "./config";
-import { createEmbeddingModel, createModel } from "./provider";
+import { createModel } from "./provider";
 
 // ---------------------------------------------------------------------------
 // Singleton config — call `configure()` once at app startup

@@ -262,7 +262,7 @@ const EMBEDDING_CAPABLE: ReadonlySet<FallbackProviderName> = new Set<FallbackPro
 async function buildEmbeddingModel(
   provider: FallbackProviderName,
   modelOrPreset: string,
-): Promise<EmbeddingModel<string>> {
+): Promise<EmbeddingModel> {
   const modelId = resolveModel(modelOrPreset);
   const envKey = ENV_KEY_BY_PROVIDER[provider];
   const apiKey = globalThis.process?.env?.[envKey];
@@ -300,7 +300,7 @@ export interface EmbeddingFallbackOptions {
  * embedding-capable chain, trying each provider until one succeeds.
  */
 export async function runEmbedWithFallback<T>(
-  invoke: (model: EmbeddingModel<string>) => Promise<T>,
+  invoke: (model: EmbeddingModel) => Promise<T>,
   options: EmbeddingFallbackOptions = {},
 ): Promise<FallbackResult<T>> {
   const env = getAgentsEnv();
