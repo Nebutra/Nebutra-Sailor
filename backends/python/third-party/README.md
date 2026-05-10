@@ -1,120 +1,48 @@
-# Nebutra Third-Party Data Service
+# Third-Party Data Service — STUB
 
-Third-party data fetching with caching, rate limiting, and data transformation.
+> **Tier**: stub (concept preserved, no implementation)
+> **ADR**: [docs/architecture/2026-05-10-ts-by-default-python-only-when-justified.md](../../../docs/architecture/2026-05-10-ts-by-default-python-only-when-justified.md)
 
-## Features
+This service has been **stubbed**. Source code, dependencies, and Dockerfile
+have been removed. This README preserves the concept.
 
-- **Product Hunt Integration**: Access trending products, topics, collections via GraphQL API v2
-- **Redis Caching**: Configurable TTL for different data types
-- **Rate Limiting**: Protection against API abuse
-- **Graceful Degradation**: Stale cache fallback on errors
-- **Automatic Retries**: Exponential backoff for transient failures
+## Concept
 
-## Integrations
+A standalone Python service for **batch syncing of third-party data sources**
+where the integration is heavy (multi-page GraphQL pagination, OAuth refresh
+loops, rate-limited polling that runs for minutes at a time, scheduled
+caches). Examples: Product Hunt feed sync, large-scale CRM imports, periodic
+public-data scrapes.
 
-### Product Hunt
+Single, interactive third-party calls (one Stripe lookup, one GitHub user
+fetch on the hot path) are **not** in scope. Those go through `fetch()` in a
+TS gateway route — there is no benefit to crossing a service boundary for a
+single API call.
 
-Access Product Hunt data through a simplified REST API:
+## Why this exists as a stub
 
-```
-GET  /api/v1/producthunt/posts           # List posts
-GET  /api/v1/producthunt/posts/trending  # Trending posts
-GET  /api/v1/producthunt/posts/{slug}    # Single post
-GET  /api/v1/producthunt/topics          # All topics
-GET  /api/v1/producthunt/collections     # Collections
-POST /api/v1/producthunt/cache/warm      # Warm cache
-DELETE /api/v1/producthunt/cache         # Invalidate cache
-```
+Some third-party integrations have batch characteristics that fit Python
+better than TS edge runtimes (long-running pagination, mature rate-limit
+libraries like `tenacity`, predictable scheduled jobs). But the original
+implementation only had a Product Hunt module with zero callers — so the
+"thought" is more valuable than the code.
 
-## Setup
+If/when a real product feature requires batch third-party syncing, this
+stub is the activation point.
 
-### 1. Get Product Hunt API Credentials
+## Activation criteria (per ADR)
 
-1. Go to [Product Hunt API Dashboard](https://www.producthunt.com/v2/oauth/applications)
-2. Create a new application
-3. Copy your Developer Token
+To promote `stub` → `active`, a single PR must include **all** of:
 
-### 2. Configure Environment
+1. A real consumer (typically a workflow under `workflows/inngest/` or
+   `workflows/n8n/`) that calls this service.
+2. README justification citing ADR D2.1 (batch).
+3. Restored Python package + Dockerfile + k8s manifests + dependabot entry.
 
-```bash
-cp .env.example .env
-# Edit .env with your credentials
-```
+If activation is for *one-off interactive* third-party calls, redirect to a
+TS gateway route or workflow step. Do not revive Python for that.
 
-Required variables:
+## What was previously here
 
-- `PRODUCT_HUNT_DEV_TOKEN`: Your PH developer token
-- `UPSTASH_REDIS_URL`: Redis connection URL
-
-### 3. Run Locally
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the service
-uvicorn app.main:app --reload --port 8007
-```
-
-### 4. Run with Docker
-
-```bash
-docker build -t nebutra-integrations .
-docker run -p 8007:8007 --env-file .env nebutra-integrations
-```
-
-## API Documentation
-
-Once running, visit:
-
-- Swagger UI: http://localhost:8007/docs
-- ReDoc: http://localhost:8007/redoc
-
-## Architecture
-
-```
-backends/python/third-party/
-├── app/
-│   ├── main.py              # FastAPI entry
-│   └── api/v1/
-│       └── routes_producthunt.py
-├── clients/
-│   └── producthunt.py       # GraphQL client
-├── services/
-│   └── producthunt.py       # Business logic + caching
-├── models/
-│   └── producthunt.py       # Pydantic models
-└── utils/
-    ├── config.py            # Environment config
-    └── redis_client.py      # Cache manager
-```
-
-## Cache TTLs
-
-| Data Type   | Default TTL | Config Key                 |
-| ----------- | ----------- | -------------------------- |
-| Posts       | 1 hour      | `PH_CACHE_TTL_POSTS`       |
-| Trending    | 30 minutes  | `PH_CACHE_TTL_TRENDING`    |
-| Topics      | 24 hours    | `PH_CACHE_TTL_TOPICS`      |
-| Collections | 24 hours    | `PH_CACHE_TTL_COLLECTIONS` |
-
-## Rate Limits
-
-Product Hunt API has fair-use rate limits (~100 requests/hour).
-This service implements:
-
-1. **Caching**: Reduces upstream API calls
-2. **Graceful Degradation**: Returns stale cache on rate limit
-3. **Exponential Backoff**: Retries failed requests
-
-## Usage Notes
-
-⚠️ **Commercial Use**: Product Hunt API is non-commercial by default.
-Contact PH for commercial licensing if using in a commercial product.
-
-## Future Integrations
-
-- [ ] Twitter/X API
-- [ ] GitHub API
-- [ ] Hacker News API
-- [ ] Reddit API
+FastAPI routes for Product Hunt (`routes_producthunt.py`) plus client/service
+classes. Zero external callers at stub time. Recoverable from git history.

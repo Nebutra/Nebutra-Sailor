@@ -1,65 +1,57 @@
-# Content Service
+# Content Service — STUB
 
-FastAPI-based content management service for posts, feeds, and comments.
+> **Tier**: stub (concept preserved, no implementation)
+> **ADR**: [docs/architecture/2026-05-10-ts-by-default-python-only-when-justified.md](../../../docs/architecture/2026-05-10-ts-by-default-python-only-when-justified.md)
 
-## Features
+This service has been **stubbed**. Source code, dependencies, Dockerfile, and
+infrastructure manifests have been removed. This README preserves the concept
+so the namespace and design intent are not lost.
 
-- **Posts** — Create, read, update, delete posts
-- **Feeds** — Personalized content feeds
-- **Comments** — Nested comment threads
-- **Reactions** — Likes, bookmarks, shares
+## Concept
 
-## Quick Start
+A standalone Python service for **batch content operations** — bulk feed
+generation, comment-tree denormalization for cold reads, content moderation
+pipelines that depend on Python ML libs (toxicity classifiers, embedding-based
+similarity search across the post corpus).
 
-```bash
-cd backends/python/content
+Interactive content management — CRUD on posts, real-time comment threads,
+authoring workflows — is **not** in scope for this service. Those flows live
+in:
 
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate
+- `apps/studio` — Sanity Studio for editorial content
+- `apps/web` and `backends/gateway` — for user-generated content (UGC) APIs
 
-# Install dependencies
-pip install -r requirements.txt
+## Why this exists as a stub instead of being deleted
 
-# Run development server
-uvicorn app.main:app --reload --port 8002
-```
+Unlike `billing` (which was deleted because `packages/commerce/billing` already
+captures the canonical TS surface), there is **no TS package** that captures
+"batch content pipeline." If/when batch moderation, large-scale feed
+materialization, or ML-driven content scoring becomes a real product
+requirement, this stub is the activation point.
 
-## API Endpoints
+## Activation criteria (per ADR)
 
-| Method | Endpoint            | Description           |
-| ------ | ------------------- | --------------------- |
-| `GET`  | `/health`           | Health check          |
-| `GET`  | `/api/v1/posts`     | List posts            |
-| `POST` | `/api/v1/posts`     | Create post           |
-| `GET`  | `/api/v1/posts/:id` | Get post              |
-| `GET`  | `/api/v1/feed`      | Get personalized feed |
-| `POST` | `/api/v1/comments`  | Add comment           |
+To promote this service from `stub` → `active`, a single PR must include
+**all** of:
 
-## Environment Variables
+1. A real consumer in `backends/gateway/` or `workflows/` that calls this
+   service over HTTP. (Status checks and MCP registry entries do not count.)
+2. A justification paragraph at the top of this README citing one of the ADR
+   D2 clauses (batch / ML / specialized library).
+3. Restored: `pyproject.toml`, `requirements.txt`, `Dockerfile`, `app/main.py`
+   with `/health` plus the consumed endpoints.
+4. Restored k8s manifests under `infra/iac/k8s/base/{deployments,services}/`.
+5. Restored entries in `infra/iac/k8s/base/kustomization.yaml`,
+   `infra/iac/k8s/base/configmaps/nebutra-config.yaml`, and
+   `.github/dependabot.yml`.
 
-```bash
-DATABASE_URL=postgresql://...
-REDIS_URL=redis://...
-CONTENT_SERVICE_PORT=8002
-```
+If you find yourself activating this for *interactive* CRUD over content,
+stop — that work belongs in TS (`backends/gateway/` + a `packages/...` shared
+library), not here.
 
-## Docker
+## What was previously here (for archaeology)
 
-```bash
-docker build -t nebutra-content .
-docker run -p 8002:8002 --env-file .env nebutra-content
-```
-
-## Project Structure
-
-```
-backends/python/content/
-├── app/
-│   ├── main.py
-│   └── api/v1/
-├── services/
-├── utils/
-├── Dockerfile
-└── requirements.txt
-```
+The pre-stub implementation had FastAPI routes for posts, feeds, and comments
+(`routes_posts.py`, `routes_feed.py`, `routes_comments.py`). It had **zero
+external callers** at the time of stubbing — no gateway route, no workflow,
+no app. Recoverable from git history if ever needed.

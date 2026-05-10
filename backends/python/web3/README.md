@@ -1,82 +1,48 @@
-# Web3 Service
+# Web3 Service — STUB
 
-Python service for blockchain indexing and event listening.
+> **Tier**: stub (concept preserved, no implementation)
+> **ADR**: [docs/architecture/2026-05-10-ts-by-default-python-only-when-justified.md](../../../docs/architecture/2026-05-10-ts-by-default-python-only-when-justified.md)
 
-## Features
+This service has been **stubbed**. Source code, dependencies, Dockerfile, and
+infrastructure manifests have been removed. This README preserves the concept.
 
-- **Block Indexing** — Index blockchain data
-- **Event Listeners** — Subscribe to smart contract events
-- **NFT Metadata** — Fetch and cache NFT metadata
-- **Wallet Tracking** — Track wallet balances and transactions
+## Concept
 
-## Quick Start
+A standalone Python service for **long-running blockchain indexing** —
+listening to smart-contract events across multiple chains, materializing event
+logs into queryable tables, batch NFT metadata fetching with retry/backoff,
+and historical block backfills.
 
-```bash
-cd backends/python/web3
+Interactive on-chain reads (single wallet balance, single contract call,
+ownership lookup on a hot UX path) are **not** in scope for this service.
+Those go through TS edge functions using `viem` or `ethers.js` — the Node
+ecosystem for blockchain reads is more mature than Python's, and edge runtime
+gives sub-100ms latency.
 
-python -m venv .venv
-source .venv/bin/activate
+## Why this exists as a stub
 
-pip install -r requirements.txt
+Web3 indexing is one of the few domains where Python *might* still be the
+right answer (long-running listeners, batch RPC, scientific analysis of
+on-chain data). But until there's a product that demands this, "might" is
+not enough. Stubbed, not deleted, so the concept survives.
 
-uvicorn app.main:app --reload --port 8005
-```
+## Activation criteria (per ADR)
 
-## API Endpoints
+To promote `stub` → `active`, a single PR must include **all** of:
 
-| Method | Endpoint                         | Description         |
-| ------ | -------------------------------- | ------------------- |
-| `GET`  | `/health`                        | Health check        |
-| `GET`  | `/api/v1/blocks/:number`         | Get block info      |
-| `GET`  | `/api/v1/nft/:contract/:tokenId` | Get NFT metadata    |
-| `GET`  | `/api/v1/wallet/:address`        | Get wallet info     |
-| `POST` | `/api/v1/events/subscribe`       | Subscribe to events |
+1. A real consumer (workflow under `workflows/` or gateway route) that calls
+   this service over HTTP for indexing or backfill jobs.
+2. README justification paragraph citing ADR D2.1 (batch / queued > 5s) — the
+   most likely fit.
+3. Restored Python package + Dockerfile + k8s manifests + kustomization +
+   configmap + dependabot entries.
 
-## Environment Variables
+If activation is for *interactive* on-chain reads, redirect to TS using
+`viem` in a gateway route. Do not revive Python for that — Python web3 SDKs
+lag the JS/TS ecosystem.
 
-```bash
-# RPC Endpoints
-ETH_RPC_URL=https://mainnet.infura.io/v3/...
-POLYGON_RPC_URL=https://polygon-rpc.com
+## What was previously here
 
-# API Keys
-ALCHEMY_API_KEY=...
-INFURA_API_KEY=...
-
-# Database
-DATABASE_URL=postgresql://...
-
-WEB3_SERVICE_PORT=8005
-```
-
-## Supported Chains
-
-| Chain    | Status       |
-| -------- | ------------ |
-| Ethereum | ✅ Supported |
-| Polygon  | ✅ Supported |
-| Arbitrum | ✅ Supported |
-| Base     | ✅ Supported |
-| Solana   | 🚧 Planned   |
-
-## Docker
-
-```bash
-docker build -t nebutra-web3 .
-docker run -p 8005:8005 --env-file .env nebutra-web3
-```
-
-## Project Structure
-
-```
-backends/python/web3/
-├── app/
-│   ├── main.py
-│   └── api/v1/
-├── indexers/          # Chain-specific indexers
-├── listeners/         # Event listeners
-├── services/
-├── utils/
-├── Dockerfile
-└── requirements.txt
-```
+FastAPI routes under `app/api/v1/routes_web3.py` plus empty `indexer/` and
+`listener/` placeholders. Zero external callers at stub time. Recoverable
+from git history.

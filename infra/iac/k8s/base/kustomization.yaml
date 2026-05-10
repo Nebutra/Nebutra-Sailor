@@ -17,11 +17,9 @@ resources:
   - deployments/landing-page.yaml
   - deployments/api-gateway.yaml
   - deployments/ai-service.yaml
-  - deployments/content-service.yaml
   - deployments/ecommerce-service.yaml
   - deployments/recsys-service.yaml
   - deployments/event-ingest-service.yaml
-  - deployments/web3-service.yaml
   - deployments/studio.yaml
 
   # Services — ClusterIP, one per deployment
@@ -29,11 +27,9 @@ resources:
   - services/landing-page.yaml
   - services/api-gateway.yaml
   - backends/python/ai-service.yaml
-  - backends/python/content-service.yaml
   - backends/python/ecommerce-service.yaml
   - backends/python/recsys-service.yaml
   - backends/python/event-ingest-service.yaml
-  - backends/python/web3-service.yaml
   - services/studio.yaml
 
   # Ingress — nginx, with TLS via cert-manager

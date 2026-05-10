@@ -52,45 +52,6 @@ export const INTERNAL_SERVERS: MCPServerConfig[] = [
     rateLimit: { maxRequests: 100, windowMs: 60000 },
   },
 
-  // Content Service
-  {
-    id: "nebutra-content",
-    name: "Nebutra Content Service",
-    description: "Content management and feed operations",
-    endpoint: process.env.CONTENT_SERVICE_URL || "http://localhost:8002",
-    transport: "http",
-    tools: [
-      {
-        name: "create_post",
-        description: "Create a new content post",
-        parameters: {
-          title: { type: "string", description: "Post title", required: true },
-          body: { type: "string", description: "Post content", required: true },
-        },
-        returns: "Created post object",
-      },
-      {
-        name: "get_feed",
-        description: "Get content feed",
-        parameters: {
-          limit: { type: "number", description: "Number of items", default: 20 },
-          cursor: { type: "string", description: "Pagination cursor" },
-        },
-        returns: "Feed items array",
-      },
-      {
-        name: "search_content",
-        description: "Search content by query",
-        parameters: {
-          query: { type: "string", description: "Search query", required: true },
-          limit: { type: "number", description: "Max results", default: 10 },
-        },
-        returns: "Search results",
-      },
-    ],
-    rateLimit: { maxRequests: 200, windowMs: 60000 },
-  },
-
   // Recommendation Service
   {
     id: "nebutra-recsys",
@@ -159,45 +120,6 @@ export const INTERNAL_SERVERS: MCPServerConfig[] = [
     ],
     allowedPlans: ["PRO", "ENTERPRISE"],
     rateLimit: { maxRequests: 100, windowMs: 60000 },
-  },
-
-  // Web3 Service
-  {
-    id: "nebutra-web3",
-    name: "Nebutra Web3 Service",
-    description: "Blockchain data and Web3 operations",
-    endpoint: process.env.WEB3_SERVICE_URL || "http://localhost:8005",
-    transport: "http",
-    tools: [
-      {
-        name: "get_balance",
-        description: "Get wallet balance",
-        parameters: {
-          address: { type: "string", description: "Wallet address", required: true },
-          chain: { type: "string", description: "Blockchain network", default: "ethereum" },
-        },
-        returns: "Balance object",
-      },
-      {
-        name: "get_transaction",
-        description: "Get transaction details",
-        parameters: {
-          tx_hash: { type: "string", description: "Transaction hash", required: true },
-        },
-        returns: "Transaction object",
-      },
-      {
-        name: "get_nfts",
-        description: "Get NFTs for a wallet",
-        parameters: {
-          address: { type: "string", description: "Wallet address", required: true },
-          limit: { type: "number", description: "Max NFTs to return", default: 50 },
-        },
-        returns: "NFTs array",
-      },
-    ],
-    allowedPlans: ["ENTERPRISE"],
-    rateLimit: { maxRequests: 50, windowMs: 60000 },
   },
 ];
 

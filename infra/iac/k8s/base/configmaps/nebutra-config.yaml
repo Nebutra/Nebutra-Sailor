@@ -27,11 +27,9 @@ data:
   #   http://<service-name>.<namespace>.svc.cluster.local
   # ---------------------------------------------------------------------------
   AI_SERVICE_URL: "http://ai-service"
-  CONTENT_SERVICE_URL: "http://content-service"
   ECOMMERCE_SERVICE_URL: "http://ecommerce-service"
   RECSYS_SERVICE_URL: "http://recsys-service"
   EVENT_INGEST_SERVICE_URL: "http://event-ingest-service"
-  WEB3_SERVICE_URL: "http://web3-service"
 
   # ---------------------------------------------------------------------------
   # ClickHouse analytics database (non-secret connection settings)
