@@ -5,9 +5,9 @@
 <div align="center">
   <a href="https://{{domains.landing}}">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="packages/brand/assets/logo/logo-inverse.svg" />
-      <source media="(prefers-color-scheme: light)" srcset="packages/brand/assets/logo/logo-horizontal-en.svg" />
-      <img alt="{{brand.name}}" src="packages/brand/assets/logo/logo-horizontal-en.svg" width="320" />
+      <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-horizontal-en.svg" />
+      <img alt="{{brand.name}}" src="packages/design/brand/assets/logo/logo-horizontal-en.svg" width="320" />
     </picture>
   </a>
   <br />
@@ -73,75 +73,75 @@ Built with the latest technologies including Next.js 16, React 19, and Prisma 7,
 <table>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/ai.svg" width="28" alt="AI" /><br />
+      <img src="packages/design/brand/assets/icons/ai.svg" width="28" alt="AI" /><br />
       <strong>AI‑native</strong>
       <br />LLMs, vector search, MCP agents, and premium Lobe UI Chat interfaces.
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/tenants.svg" width="28" alt="Tenants" /><br />
+      <img src="packages/design/brand/assets/icons/tenants.svg" width="28" alt="Tenants" /><br />
       <strong>Multi‑tenant by default</strong>
       <br />Tenant context, RLS, scoped caching and rate limits baked in.
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/enterprise.svg" width="28" alt="Enterprise" /><br />
+      <img src="packages/design/brand/assets/icons/enterprise.svg" width="28" alt="Enterprise" /><br />
       <strong>Enterprise‑ready</strong>
       <br />Cloudflare WAF/R2, Inngest workflows, Sentry/Otel, Vercel deployments.
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/workflows.svg" width="28" alt="Workflows" /><br />
+      <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Workflows" /><br />
       <strong>Billing & Monetization</strong>
       <br />Database-driven plans, Stripe billing, usage metering, feature gates.
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/security.svg" width="28" alt="Security" /><br />
+      <img src="packages/design/brand/assets/icons/security.svg" width="28" alt="Security" /><br />
       <strong>Security & Compliance</strong>
       <br />RLS, WAF, Turnstile, GDPR/CCPA, cookie consent.
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/toolkit.svg" width="28" alt="Toolkit" /><br />
+      <img src="packages/design/brand/assets/icons/toolkit.svg" width="28" alt="Toolkit" /><br />
       <strong>Marketing UI Kit</strong>
       <br />Hero, Features, Pricing, Testimonials — conversion-optimized components.
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/enterprise.svg" width="28" alt="Architecture" /><br />
+      <img src="packages/design/brand/assets/icons/enterprise.svg" width="28" alt="Architecture" /><br />
       <strong>Automated Governance</strong>
       <br />Strict <code>vitest.arch</code> boundaries and semantic token linting.
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/toolkit.svg" width="28" alt="CSS" /><br />
+      <img src="packages/design/brand/assets/icons/toolkit.svg" width="28" alt="CSS" /><br />
       <strong>Zero-Runtime CSS</strong>
       <br />Pure CSS variables as SSOT. No CSS-in-JS runtime overhead.
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/workflows.svg" width="28" alt="Docker" /><br />
+      <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Docker" /><br />
       <strong>Modular Local DX</strong>
       <br />Docker Compose profiles (<code>ai</code>, <code>recsys</code>) to boot only what's needed.
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/ai.svg" width="28" alt="AI Agent" /><br />
+      <img src="packages/design/brand/assets/icons/ai.svg" width="28" alt="AI Agent" /><br />
       <strong>Monetized MCP Registry</strong>
       <br />Native Model Context Protocol with plan-based rate-limits & billing.
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/security.svg" width="28" alt="Saga" /><br />
+      <img src="packages/design/brand/assets/icons/security.svg" width="28" alt="Saga" /><br />
       <strong>Distributed Saga</strong>
       <br />Native TypeScript orchestrator with automatic transaction rollback.
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/tenants.svg" width="28" alt="Event Bus" /><br />
+      <img src="packages/design/brand/assets/icons/tenants.svg" width="28" alt="Event Bus" /><br />
       <strong>Multi-Tenant Event Bus</strong>
       <br />Tenant-isolated Pub/Sub supporting Fan-out & Request-Reply.
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/workflows.svg" width="28" alt="Monitoring" /><br />
+      <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Monitoring" /><br />
       <strong>Unified Status Aggregation</strong>
       <br />Concurrent checks across 9 services returning a standardized schema for OpenStatus & Atlassian.
     </td>
@@ -436,9 +436,9 @@ We welcome contributions of all kinds.
 <div align="center">
   <a href="https://{{domains.landing}}">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="packages/brand/assets/logo/logo-inverse.svg" width="100">
-      <source media="(prefers-color-scheme: light)" srcset="packages/brand/assets/logo/logo-mono.svg" width="100">
-      <img alt="{{brand.name}}" src="packages/brand/assets/logo/logo-mono.svg" width="100">
+      <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" width="100">
+      <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-mono.svg" width="100">
+      <img alt="{{brand.name}}" src="packages/design/brand/assets/logo/logo-mono.svg" width="100">
     </picture>
   </a>
   <br />

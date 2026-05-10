@@ -5,9 +5,9 @@
 <div align="center">
   <a href="https://{{domains.landing}}">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="packages/brand/assets/logo/logo-inverse.svg" />
-      <source media="(prefers-color-scheme: light)" srcset="packages/brand/assets/logo/logo-horizontal-zh.svg" />
-      <img alt="{{brand.name}}" src="packages/brand/assets/logo/logo-horizontal-zh.svg" width="320" />
+      <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-horizontal-zh.svg" />
+      <img alt="{{brand.name}}" src="packages/design/brand/assets/logo/logo-horizontal-zh.svg" width="320" />
     </picture>
   </a>
   <br />
@@ -73,75 +73,75 @@
 <table>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/ai.svg" width="28" alt="AI" /><br />
+      <img src="packages/design/brand/assets/icons/ai.svg" width="28" alt="AI" /><br />
       <strong>AI 原生</strong>
       <br />内置 LLM、向量检索、MCP Agents，以及高级的 Lobe UI 聊天体验。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/tenants.svg" width="28" alt="Tenants" /><br />
+      <img src="packages/design/brand/assets/icons/tenants.svg" width="28" alt="Tenants" /><br />
       <strong>多租户为先</strong>
       <br />租户上下文、RLS、缓存与限流按租户隔离。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/enterprise.svg" width="28" alt="Enterprise" /><br />
+      <img src="packages/design/brand/assets/icons/enterprise.svg" width="28" alt="Enterprise" /><br />
       <strong>企业级工程</strong>
       <br />Cloudflare WAF/R2、Inngest 工作流、Sentry/Otel、Vercel 部署。
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/workflows.svg" width="28" alt="Workflows" /><br />
+      <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Workflows" /><br />
       <strong>计费与变现</strong>
       <br />数据库驱动计划、Stripe 计费、用量计量、功能门控。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/security.svg" width="28" alt="Security" /><br />
+      <img src="packages/design/brand/assets/icons/security.svg" width="28" alt="Security" /><br />
       <strong>安全与合规</strong>
       <br />RLS、WAF、Turnstile、GDPR/CCPA、Cookie 同意。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/toolkit.svg" width="28" alt="Toolkit" /><br />
+      <img src="packages/design/brand/assets/icons/toolkit.svg" width="28" alt="Toolkit" /><br />
       <strong>营销 UI 套件</strong>
       <br />Hero、Features、Pricing、Testimonials 等转化优化组件。
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/enterprise.svg" width="28" alt="Architecture" /><br />
+      <img src="packages/design/brand/assets/icons/enterprise.svg" width="28" alt="Architecture" /><br />
       <strong>自动化架构治理</strong>
       <br />内置 <code>vitest.arch</code> 边界测试与严格的语义化 Token 校验。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/toolkit.svg" width="28" alt="CSS" /><br />
+      <img src="packages/design/brand/assets/icons/toolkit.svg" width="28" alt="CSS" /><br />
       <strong>零运行时 CSS</strong>
       <br />纯 CSS 变量作为 SSOT，彻底抛弃 CSS-in-JS 性能损耗。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/workflows.svg" width="28" alt="Docker" /><br />
+      <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Docker" /><br />
       <strong>按需模块化 DX</strong>
       <br />配置文件隔离，本地开发仅需按需启动核心微服务。
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/ai.svg" width="28" alt="AI Agent" /><br />
+      <img src="packages/design/brand/assets/icons/ai.svg" width="28" alt="AI Agent" /><br />
       <strong>自带商业化 MCP 网关</strong>
       <br />基于订阅计划的 Model Context Protocol 访问控制与审计额度。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/security.svg" width="28" alt="Saga" /><br />
+      <img src="packages/design/brand/assets/icons/security.svg" width="28" alt="Saga" /><br />
       <strong>分布式 Saga 编排器</strong>
       <br />纯 TypeScript 编排机制，自带事务失败自动回滚与补偿。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/tenants.svg" width="28" alt="Event Bus" /><br />
+      <img src="packages/design/brand/assets/icons/tenants.svg" width="28" alt="Event Bus" /><br />
       <strong>多租户事件总线隔离</strong>
       <br />强制 <code>tenantId</code> 隔离，原生支持异步广播与同步等待流。
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/workflows.svg" width="28" alt="Monitoring" /><br />
+      <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Monitoring" /><br />
       <strong>多端监控集成网关</strong>
       <br />单节点并发检测 9 个微服务及组件，提供 OpenStatus 与 Atlassian Statuspage 的标准化遥测。
     </td>
@@ -300,9 +300,9 @@ pnpm db:generate && pnpm dev
 <div align="center">
   <a href="https://{{domains.landing}}">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="packages/brand/assets/logo/logo-inverse.svg" width="100">
-      <source media="(prefers-color-scheme: light)" srcset="packages/brand/assets/logo/logo-mono.svg" width="100">
-      <img alt="{{brand.name}}" src="packages/brand/assets/logo/logo-mono.svg" width="100">
+      <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" width="100">
+      <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-mono.svg" width="100">
+      <img alt="{{brand.name}}" src="packages/design/brand/assets/logo/logo-mono.svg" width="100">
     </picture>
   </a>
   <br />

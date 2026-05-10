@@ -5,9 +5,9 @@
 <div align="center">
   <a href="https://nebutra.com">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="packages/brand/assets/logo/logo-inverse.svg" />
-      <source media="(prefers-color-scheme: light)" srcset="packages/brand/assets/logo/logo-horizontal-en.svg" />
-      <img alt="Nebutra" src="packages/brand/assets/logo/logo-horizontal-en.svg" width="320" />
+      <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-horizontal-en.svg" />
+      <img alt="Nebutra" src="packages/design/brand/assets/logo/logo-horizontal-en.svg" width="320" />
     </picture>
   </a>
   <br />
@@ -131,75 +131,75 @@ Next.js 16、React 19、Prisma 7、Vercel AI SDK で構築され、AI をガバ�
 <table>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/ai.svg" width="28" alt="AI" /><br />
+      <img src="packages/design/brand/assets/icons/ai.svg" width="28" alt="AI" /><br />
       <strong>AI ネイティブ</strong>
       <br />LLM、ベクトル検索、MCPエージェント、および高品質な Lobe UI チャット体験。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/tenants.svg" width="28" alt="Tenants" /><br />
+      <img src="packages/design/brand/assets/icons/tenants.svg" width="28" alt="Tenants" /><br />
       <strong>マルチテナント標準</strong>
       <br />テナントコンテキスト、RLS、スコープ付きキャッシュ・レート制限を標準搭載。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/enterprise.svg" width="28" alt="Enterprise" /><br />
+      <img src="packages/design/brand/assets/icons/enterprise.svg" width="28" alt="Enterprise" /><br />
       <strong>エンタープライズ対応</strong>
       <br />Cloudflare WAF/R2、Inngest ワークフロー、Sentry/Otel、Vercel デプロイ。
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/workflows.svg" width="28" alt="Workflows" /><br />
+      <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Workflows" /><br />
       <strong>課金・収益化</strong>
       <br />DB 駆動プラン、Stripe 課金、使用量計測、機能ゲート。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/security.svg" width="28" alt="Security" /><br />
+      <img src="packages/design/brand/assets/icons/security.svg" width="28" alt="Security" /><br />
       <strong>セキュリティ・コンプライアンス</strong>
       <br />RLS、WAF、Turnstile、GDPR/CCPA、Cookie 同意。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/toolkit.svg" width="28" alt="Toolkit" /><br />
+      <img src="packages/design/brand/assets/icons/toolkit.svg" width="28" alt="Toolkit" /><br />
       <strong>マーケティング UI キット</strong>
       <br />Hero、Features、Pricing、Testimonials — コンバージョン最適化コンポーネント。
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/enterprise.svg" width="28" alt="Architecture" /><br />
+      <img src="packages/design/brand/assets/icons/enterprise.svg" width="28" alt="Architecture" /><br />
       <strong>自動化されたガバナンス</strong>
       <br /><code>vitest.arch</code>による境界テストと厳格なセマンティックトークン検証。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/toolkit.svg" width="28" alt="CSS" /><br />
+      <img src="packages/design/brand/assets/icons/toolkit.svg" width="28" alt="CSS" /><br />
       <strong>ゼロランタイム CSS</strong>
       <br />CSS 変数を SSOT とし、CSS-in-JS のオーバーヘッドを完全排除。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/workflows.svg" width="28" alt="Docker" /><br />
+      <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Docker" /><br />
       <strong>モジュラーなローカル DX</strong>
       <br />Docker プロファイルにより、必要なマイクロサービスのみを起動。
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/ai.svg" width="28" alt="AI Agent" /><br />
+      <img src="packages/design/brand/assets/icons/ai.svg" width="28" alt="AI Agent" /><br />
       <strong>収益化可能な MCP ゲートウェイ</strong>
       <br />サブスクリプションに基づく Model Context Protocol のアクセス制御と監査。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/security.svg" width="28" alt="Saga" /><br />
+      <img src="packages/design/brand/assets/icons/security.svg" width="28" alt="Saga" /><br />
       <strong>分散型 Saga トランザクション</strong>
       <br />トランザクション失敗時の自動補償メカニズムを備えたオーケストレーター。
     </td>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/tenants.svg" width="28" alt="Event Bus" /><br />
+      <img src="packages/design/brand/assets/icons/tenants.svg" width="28" alt="Event Bus" /><br />
       <strong>マルチテナント・バス</strong>
       <br /><code>tenantId</code> による厳密な分離と、非同期・同期パターン標準サポート。
     </td>
   </tr>
   <tr>
     <td width="33%" valign="top">
-      <img src="packages/brand/assets/icons/workflows.svg" width="28" alt="Monitoring" /><br />
+      <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Monitoring" /><br />
       <strong>統合ステータス集約</strong>
       <br />9つのコンポーネントを並行チェックし、OpenStatus と Atlassian 向けの標準化メトリクスを返却。
     </td>
@@ -494,9 +494,9 @@ Nebutra-Sailor/
 <div align="center">
   <a href="https://nebutra.com">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="packages/brand/assets/logo/logo-inverse.svg" width="100">
-      <source media="(prefers-color-scheme: light)" srcset="packages/brand/assets/logo/logo-mono.svg" width="100">
-      <img alt="Nebutra" src="packages/brand/assets/logo/logo-mono.svg" width="100">
+      <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" width="100">
+      <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-mono.svg" width="100">
+      <img alt="Nebutra" src="packages/design/brand/assets/logo/logo-mono.svg" width="100">
     </picture>
   </a>
   <br />
