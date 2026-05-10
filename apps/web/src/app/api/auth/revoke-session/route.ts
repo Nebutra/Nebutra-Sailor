@@ -1,3 +1,4 @@
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -31,6 +32,16 @@ export async function POST(request: Request) {
     if (result.count === 0) {
       return NextResponse.json({ error: "Session not found." }, { status: 404 });
     }
+
+    await auditLogger(request, {
+      actor: { id: authState.userId, type: "user" },
+      tenantId: authState.orgId ?? authState.userId,
+    }).log({
+      action: "auth.session.revoked",
+      outcome: "success",
+      resource: { type: "session", id: parsed.data.sessionId },
+      severity: "warning",
+    });
 
     return NextResponse.json({ ok: true });
   } catch (error) {

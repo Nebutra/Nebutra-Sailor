@@ -1,3 +1,4 @@
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { getAuth } from "@/lib/auth";
@@ -23,6 +24,17 @@ export async function POST(request: Request) {
         userId: authState.userId,
         ...(sessionToken ? { NOT: { token: sessionToken } } : {}),
       },
+    });
+
+    await auditLogger(request, {
+      actor: { id: authState.userId, type: "user" },
+      tenantId: authState.orgId ?? authState.userId,
+    }).log({
+      action: "auth.session.revoked_other",
+      outcome: "success",
+      resource: { type: "user", id: authState.userId },
+      severity: "warning",
+      metadata: { revokedCount: result.count },
     });
 
     return NextResponse.json({ ok: true, revoked: result.count });

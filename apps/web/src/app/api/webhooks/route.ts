@@ -1,3 +1,4 @@
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { getWebhooks, type WebhookEndpoint } from "@nebutra/webhooks";
 import { NextResponse } from "next/server";
@@ -96,6 +97,17 @@ export async function POST(request: Request) {
       tenantId: auth.orgId,
       eventTypes: parsed.data.events,
       active: true,
+    });
+
+    await auditLogger(request, {
+      actor: { id: auth.userId, type: "user" },
+      tenantId: auth.orgId,
+    }).log({
+      action: "webhook.created",
+      outcome: "success",
+      resource: { type: "webhook", id: created.id },
+      severity: "warning",
+      metadata: { url: created.url, events: created.eventTypes },
     });
 
     // Plaintext secret returned ONCE

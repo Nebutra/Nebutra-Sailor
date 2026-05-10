@@ -1,3 +1,4 @@
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { getWebhooks, type WebhookEndpoint } from "@nebutra/webhooks";
 import { NextResponse } from "next/server";
@@ -78,6 +79,32 @@ export async function PATCH(
       ...(parsed.data.isActive !== undefined && { active: parsed.data.isActive }),
     });
 
+    const before: Record<string, unknown> = {};
+    const after: Record<string, unknown> = {};
+    if (parsed.data.url !== undefined) {
+      before.url = found.url;
+      after.url = updated.url;
+    }
+    if (parsed.data.events !== undefined) {
+      before.events = found.eventTypes;
+      after.events = updated.eventTypes;
+    }
+    if (parsed.data.isActive !== undefined) {
+      before.active = found.active;
+      after.active = updated.active;
+    }
+
+    await auditLogger(request, {
+      actor: { id: auth.userId, type: "user" },
+      tenantId: auth.orgId,
+    }).log({
+      action: "webhook.updated",
+      outcome: "success",
+      resource: { type: "webhook", id: updated.id },
+      severity: "warning",
+      changes: { before, after },
+    });
+
     return NextResponse.json({ endpoint: toDto(updated) });
   } catch (error) {
     logger.error("[webhooks:update] failed", { error: String(error) });
@@ -105,6 +132,18 @@ export async function DELETE(
     }
 
     await provider.deleteEndpoint(id);
+
+    await auditLogger(request, {
+      actor: { id: auth.userId, type: "user" },
+      tenantId: auth.orgId,
+    }).log({
+      action: "webhook.deleted",
+      outcome: "success",
+      resource: { type: "webhook", id },
+      severity: "warning",
+      metadata: { url: found.url, events: found.eventTypes },
+    });
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     logger.error("[webhooks:delete] failed", { error: String(error) });

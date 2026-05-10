@@ -176,13 +176,38 @@ export function defineAction<TName extends string, TMeta extends z.ZodTypeAny = 
 // -----------------------------------------------------------------------------
 
 export const ACTIONS = {
+  // ── Auth ──
   AUTH_LOGIN_SUCCESS: defineAction("auth.login.success"),
   AUTH_LOGIN_FAILURE: defineAction("auth.login.failure"),
   AUTH_LOGOUT: defineAction("auth.logout"),
+  AUTH_SIGNUP: defineAction("auth.signup"),
+  AUTH_SESSION_REVOKED: defineAction("auth.session.revoked"),
+  AUTH_SESSION_REVOKED_OTHER: defineAction("auth.session.revoked_other"),
+  AUTH_PASSWORD_CHANGED: defineAction("auth.password.changed"),
+  AUTH_2FA_ENABLED: defineAction("auth.2fa.enabled"),
+  AUTH_2FA_DISABLED: defineAction("auth.2fa.disabled"),
+
+  // ── Organizations ──
+  ORG_CREATED: defineAction("org.created"),
+  ORG_UPDATED: defineAction("org.updated"),
+  ORG_DELETED: defineAction("org.deleted"),
+  ORG_MEMBER_ADDED: defineAction("org.member.added"),
+  ORG_MEMBER_REMOVED: defineAction("org.member.removed"),
   ORG_MEMBER_ROLE_CHANGED: defineAction(
     "org.member.role_changed",
     z.object({ oldRole: z.string(), newRole: z.string() }),
   ),
+
+  // ── Admin ──
+  ADMIN_IMPERSONATE_STARTED: defineAction("admin.impersonate.started"),
+  ADMIN_IMPERSONATE_ENDED: defineAction("admin.impersonate.ended"),
+  ADMIN_USER_UPDATED: defineAction("admin.user.updated"),
+  ADMIN_ORG_UPDATED: defineAction("admin.org.updated"),
+
+  // ── Account ──
+  ACCOUNT_EMAIL_CHANGED: defineAction("account.email.changed"),
+
+  // ── Billing ──
   BILLING_CHECKOUT_STARTED: defineAction(
     "billing.checkout.started",
     z.object({ priceId: z.string(), quantity: z.number().optional() }),
@@ -190,15 +215,28 @@ export const ACTIONS = {
   BILLING_SUBSCRIPTION_CREATED: defineAction("billing.subscription.created"),
   BILLING_SUBSCRIPTION_UPDATED: defineAction("billing.subscription.updated"),
   BILLING_SUBSCRIPTION_CANCELLED: defineAction("billing.subscription.cancelled"),
+
+  // ── Data ──
   DATA_EXPORT_REQUESTED: defineAction("data.export.requested"),
   DATA_EXPORT_COMPLETED: defineAction("data.export.completed"),
+
+  // ── Settings & Secrets ──
   SETTINGS_UPDATED: defineAction("settings.updated"),
   SECRET_ACCESS: defineAction("secret.access"),
+
+  // ── Webhooks ──
+  WEBHOOK_CREATED: defineAction("webhook.created"),
+  WEBHOOK_UPDATED: defineAction("webhook.updated"),
+  WEBHOOK_DELETED: defineAction("webhook.deleted"),
   WEBHOOK_DISPATCHED: defineAction("webhook.dispatched"),
+
+  // ── Cron ──
   CRON_RUN: defineAction(
     "cron.run",
     z.object({ job: z.string(), durationMs: z.number().optional() }),
   ),
+
+  // ── API Keys ──
   API_KEY_CREATED: defineAction("api_key.created"),
   API_KEY_REVOKED: defineAction("api_key.revoked"),
 } as const;
