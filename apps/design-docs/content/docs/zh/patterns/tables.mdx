@@ -1,248 +1,292 @@
 ---
-title: "Tables"
-description: "Tabular data display, sorting, filtering, and row-action patterns."
+title: "表格"
+description: "表格化数据展示、排序、筛选与行操作模式。"
 ---
 
-## When to Use
+## 何时使用
 
-Use a table pattern when displaying structured data where:
-- Users need to compare values across rows and columns
-- Data has a defined schema (columns are consistent across all rows)
-- Users may need to sort, filter, or act on individual rows
+需要以表格展示结构化数据时使用此模式：
+- 用户需要跨行跨列对比数值
+- 数据有明确 schema（每行的列固定一致）
+- 用户可能需要排序、筛选或对单行操作
 
-Use a table over a card list when:
-- There are 4 or more attributes per item that benefit from columnar alignment
-- Sort and filter by column are required
+下列情况优先使用表格而非卡片列表：
+- 每条记录有 4 个或以上属性需要列对齐
+- 需要按列排序与筛选
 
-Do not use a table when:
-- Items are heterogeneous (different attributes per item) — use a list or cards
-- There are fewer than 3 columns — use a definition list or `Card` grid
+下列情况**不要**使用表格：
+- 各项异构（每条记录属性不同）—— 用列表或卡片
+- 列数少于 3 列 —— 用定义列表或 `Card` 网格
 
-## Structure
+## 两种表格 API
+
+`@nebutra/ui` 提供两套互补的表格 API，按能力选择：
+
+| 用途 | API |
+|---|---|
+| 静态或简单列表，自己控制 thead/tbody 标记 | `Table` 原语（`Table`、`TableHeader`、`TableBody`、`TableRow`、`TableHead`、`TableCell`） |
+| 可排序、可筛选、虚拟化、带工具条 / 列显隐 / 单元格选区 | `DataTable` 模式（底层基于 TanStack Table） |
+
+两者都是 tree-shake 的，未导入则不会进 bundle。
+
+## 结构
 
 ```
-Section (title + description + table-level actions)
-  ├── FilterBar (search + filter controls, optional)
-  ├── DataTable | Table
-  │    ├── Table.Head
-  │    │    └── Table.Row → Table.Header (per column, sortable)
-  │    └── Table.Body
-  │         └── Table.Row (per data row)
-  │              ├── Table.Cell (data values)
-  │              └── Table.Cell → ActionMenu (row actions)
-  ├── EmptyState (when data is empty)
-  └── Pagination (when data exceeds page size)
+Section（标题 + 描述 + 表级操作）                    // 来自 @nebutra/ui/layout
+  ├── DataTable                                     // 内置工具条处理搜索 + 筛选
+  │    └── (渲染表格，sticky header、可选虚拟化、列宽可拖拽)
+  ├── EmptyState（数据为空时）                       // 来自 @nebutra/ui/layout
+  └── LoadingState / ErrorState（状态占位）
 ```
 
-## Composition
+静态内容把 `DataTable` 换成原生 `Table` 原语即可。
 
-### DataTable (recommended)
+## 组合方式
 
-`DataTable` from `@primer/react/experimental` is the primary table component. It handles column definition, sorting, and accessibility out of the box.
+### DataTable（推荐用于交互列表）
+
+`DataTable<TData>` 接收 TanStack 的 `ColumnDef[]` 与 `TData[]`。工具条（搜索、筛选、列显隐、额外操作）默认开启。
 
 ```tsx
-import { DataTable, Table } from "@nebutra/ui";
+import { DataTable } from "@nebutra/ui/components";
+import type { ColumnDef } from "@tanstack/react-table";
 
-const columns = [
+type ApiKey = {
+  id: string;
+  name: string;
+  createdAt: string;
+  status: "active" | "revoked";
+};
+
+const columns: ColumnDef<ApiKey>[] = [
   {
-    header: "Name",
-    field: "name",
-    sortBy: "alphanumeric",
-    renderCell: (row) => <strong>{row.name}</strong>,
+    accessorKey: "name",
+    header: "名称",
+    cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
   },
   {
-    header: "Created",
-    field: "createdAt",
-    sortBy: "datetime",
-    renderCell: (row) => <RelativeTime date={new Date(row.createdAt)} />,
+    accessorKey: "createdAt",
+    header: "创建时间",
+    cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString(),
   },
   {
-    header: "Status",
-    field: "status",
-    renderCell: (row) => <StateLabel status={row.status}>{row.status}</StateLabel>,
-  },
-  {
-    header: "",
-    id: "actions",
-    renderCell: (row) => <RowActionMenu row={row} />,
+    accessorKey: "status",
+    header: "状态",
   },
 ];
 
-<Table.Container>
-  <DataTable
-    aria-labelledby="table-heading"
-    data={rows}
-    columns={columns}
-  />
-</Table.Container>
-```
-
-### Sorting
-
-Pass `sortBy` on the column definition and optionally provide `initialSortColumn` and `initialSortDirection` to `DataTable`.
-
-```tsx
 <DataTable
-  data={rows}
   columns={columns}
-  initialSortColumn="createdAt"
-  initialSortDirection="DESC"
-/>
+  data={rows}
+  searchPlaceholder="搜索 Key…"
+/>;
 ```
 
-For server-side sorting, handle the `onSortChange` callback and refetch data with the new sort params.
-
-### Row actions
-
-Row-level actions live in the last column, right-aligned. Use `ActionMenu` for 2 or more actions. For a single primary action, use a `Button variant="invisible"`.
+### Table 原语（推荐用于静态内容）
 
 ```tsx
-function RowActionMenu({ row }: { row: ApiKey }) {
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@nebutra/ui/components";
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>名称</TableHead>
+      <TableHead>创建时间</TableHead>
+      <TableHead>状态</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {rows.map((row) => (
+      <TableRow key={row.id}>
+        <TableCell className="font-medium">{row.name}</TableCell>
+        <TableCell>{new Date(row.createdAt).toLocaleDateString()}</TableCell>
+        <TableCell>{row.status}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>;
+```
+
+### 排序
+
+`DataTable` 通过标准 TanStack 机制启用列排序 —— 在 `ColumnDef` 上设 `enableSorting: true`（默认即开启），表头即可点击排序。需要服务端排序时，将排序状态外置管理，把排序后的切片传入 `data`。
+
+### 行操作
+
+行级操作放最右一列、右对齐。项目中没有 `ActionMenu` 原语 —— 用 `@nebutra/ui/components` 的 `DropdownMenu` 系列组合：
+
+```tsx
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  Button,
+} from "@nebutra/ui/components";
+import { MoreHorizontal } from "lucide-react";
+
+function RowActions({ row, onEdit, onRevoke }: { row: ApiKey; onEdit: (r: ApiKey) => void; onRevoke: (r: ApiKey) => void }) {
   return (
-    <ActionMenu>
-      <ActionMenu.Button size="small" variant="invisible">Actions</ActionMenu.Button>
-      <ActionMenu.Overlay>
-        <ActionList>
-          <ActionList.Item onSelect={() => onEdit(row)}>Edit</ActionList.Item>
-          <ActionList.Divider />
-          <ActionList.Item variant="danger" onSelect={() => onRevoke(row)}>
-            Revoke
-          </ActionList.Item>
-        </ActionList>
-      </ActionMenu.Overlay>
-    </ActionMenu>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button type="button" variant="ghost" size="sm" aria-label={`${row.name} 的操作`}>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onSelect={() => onEdit(row)}>编辑</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="text-destructive" onSelect={() => onRevoke(row)}>
+          吊销
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 ```
 
-### Filtering and search
-
-Place a `FilterBar` fragment above the table when users need to filter or search the data set. The filter bar connects to table data via shared state.
+加入列定义：
 
 ```tsx
-import { FilterBar } from "@nebutra/ui";
+{
+  id: "actions",
+  cell: ({ row }) => <RowActions row={row.original} onEdit={onEdit} onRevoke={onRevoke} />,
+}
+```
 
-const [search, setSearch] = useState("");
-const [statusFilter, setStatusFilter] = useState<string[]>([]);
+### 筛选与搜索
 
-const filteredRows = rows.filter((row) => {
-  const matchesSearch = row.name.toLowerCase().includes(search.toLowerCase());
-  const matchesStatus = !statusFilter.length || statusFilter.includes(row.status);
-  return matchesSearch && matchesStatus;
-});
+`DataTable` 自带搜索框与可选的 `filterableColumns` 集合。传入按列范围的筛选定义即可在工具条渲染筛选标签：
 
-<FilterBar
-  search={search}
-  onSearchChange={setSearch}
-  filters={[
+```tsx
+<DataTable
+  columns={columns}
+  data={rows}
+  searchPlaceholder="搜索 Key…"
+  filterableColumns={[
     {
-      label: "Status",
-      options: ["active", "revoked"],
-      value: statusFilter,
-      onChange: setStatusFilter,
+      id: "status",
+      title: "状态",
+      accessorKey: "status",
+      options: [
+        { label: "活跃", value: "active" },
+        { label: "已吊销", value: "revoked" },
+      ],
     },
   ]}
-/>
-<Table.Container>
-  <DataTable data={filteredRows} columns={columns} />
-</Table.Container>
+/>;
 ```
 
-### Pagination
+`DataTable` 之外的场景，先用 `useMemo` 自行筛选数组，再传给原生 `Table`。
 
-Render `Pagination` directly below the `Table.Container`. Show item count alongside (`Showing 1–25 of 142`).
+### 分页
 
-```tsx
-<Table.Container>
-  <DataTable data={pageData} columns={columns} />
-  <Table.Divider />
-  <Box padding={3} display="flex" justifyContent="space-between" alignItems="center">
-    <Text fontSize={0} color="fg.muted">
-      Showing {startItem}–{endItem} of {totalCount}
-    </Text>
-    <Pagination
-      pageCount={totalPages}
-      currentPage={page}
-      onPageChange={(p) => setPage(p)}
-    />
-  </Box>
-</Table.Container>
-```
+`DataTable` 不附带开箱即用的分页器。超大数据集启用虚拟化（`enableVirtualization`、`virtualizeThreshold`），可以无分页渲染数千行。需要服务端分页时，在组件外做分页，把当前页的切片传给 `data`。
 
-### Empty and loading states
+> **TODO：** 第一方 `Pagination` 原语在路线图中。在它落地之前，用 `Button` + 页码状态 hook 自己组合一个，放在表格旁边。
 
-Render `LoadingState` and `EmptyState` inside the `Table.Container` to preserve column widths and table chrome while data is absent.
+### 空 / 加载 / 错误状态
+
+使用 `@nebutra/ui/layout` 的布局级占位组件，让全应用的状态 UI 保持一致：
 
 ```tsx
-<Table.Container>
-  {isLoading ? (
-    <LoadingState size="medium" />
-  ) : rows.length === 0 ? (
+import { EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";
+
+if (isLoading) return <LoadingState />;
+if (error) return <ErrorState error={error} onRetry={refetch} />;
+if (!rows.length) {
+  return (
     <EmptyState
-      title="No API keys"
-      description="Create a key to start making requests."
-      actions={<Button variant="primary" onClick={onCreate}>Create key</Button>}
+      title="还没有 API Key"
+      description="创建一个 Key 以开始发起请求。"
     />
-  ) : (
-    <DataTable data={rows} columns={columns} />
-  )}
-</Table.Container>
+  );
+}
+
+return <DataTable columns={columns} data={rows} />;
 ```
 
-## Examples
+## 示例
 
-### API keys table
+### API Keys 表格（完整模式）
 
 ```tsx
-function ApiKeysTable() {
+"use client";
+
+import { useState, useMemo } from "react";
+import { DataTable, Button } from "@nebutra/ui/components";
+import { Section, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";
+import type { ColumnDef } from "@tanstack/react-table";
+
+export function ApiKeysTable() {
   const { data, isLoading, error, refetch } = useApiKeys();
-  const [page, setPage] = useState(1);
-  const PAGE_SIZE = 25;
+  const [revoking, setRevoking] = useState<string | null>(null);
 
-  const columns = [
-    { header: "Name", field: "name", sortBy: "alphanumeric" as const },
-    { header: "Created", field: "createdAt", renderCell: (row) => <RelativeTime date={new Date(row.createdAt)} /> },
-    { header: "Last used", field: "lastUsedAt", renderCell: (row) => row.lastUsedAt ? <RelativeTime date={new Date(row.lastUsedAt)} /> : <Text color="fg.muted">Never</Text> },
-    { header: "", id: "actions", renderCell: (row) => <RowActionMenu row={row} onRevoke={revoke} /> },
-  ];
-
-  if (error) return <ErrorState error={error} onRetry={refetch} />;
+  const columns = useMemo<ColumnDef<ApiKey>[]>(
+    () => [
+      {
+        accessorKey: "name",
+        header: "名称",
+        cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
+      },
+      {
+        accessorKey: "createdAt",
+        header: "创建时间",
+        cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString(),
+      },
+      {
+        accessorKey: "lastUsedAt",
+        header: "最近使用",
+        cell: ({ row }) =>
+          row.original.lastUsedAt
+            ? new Date(row.original.lastUsedAt).toLocaleDateString()
+            : <span className="text-muted-foreground">从未</span>,
+      },
+      {
+        id: "actions",
+        cell: ({ row }) => (
+          <RowActions row={row.original} onRevoke={(r) => setRevoking(r.id)} />
+        ),
+      },
+    ],
+    []
+  );
 
   return (
-    <Section title="API Keys" actions={<Button variant="primary" onClick={onCreateKey}>New key</Button>}>
-      <Table.Container>
-        {isLoading ? (
-          <LoadingState size="medium" />
-        ) : !data?.length ? (
-          <EmptyState title="No keys yet" description="Create your first API key." />
-        ) : (
-          <DataTable
-            aria-label="API keys"
-            data={data.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)}
-            columns={columns}
-            initialSortColumn="createdAt"
-            initialSortDirection="DESC"
-          />
-        )}
-      </Table.Container>
-      {data && data.length > PAGE_SIZE && (
-        <Pagination
-          pageCount={Math.ceil(data.length / PAGE_SIZE)}
-          currentPage={page}
-          onPageChange={setPage}
+    <Section
+      title="API Keys"
+      actions={<Button type="button" onClick={onCreateKey}>新建 Key</Button>}
+    >
+      {isLoading ? (
+        <LoadingState />
+      ) : error ? (
+        <ErrorState error={error} onRetry={refetch} />
+      ) : !data?.length ? (
+        <EmptyState
+          title="还没有 Key"
+          description="创建你的第一个 API Key。"
         />
+      ) : (
+        <DataTable columns={columns} data={data} searchPlaceholder="搜索 Key…" />
       )}
     </Section>
   );
 }
 ```
 
-## Related Components
+## 相关组件
 
-- [Table](/atom-components/table) — base table atom (`Table`, `Table.Head`, `Table.Row`, `Table.Cell`)
-- [Filter Bar fragment](/fragment-components/filter-bar) — search + filter controls
-- [Pagination](/atom-components/pagination) — page navigation
-- [Empty State fragment](/fragment-components/empty-state) — zero-data placeholder
-- [Multi Select fragment](/fragment-components/multi-select) — column-level multi-value filter
-- [Scroll Area](/atom-components/scroll-area) — horizontal scroll wrapper for wide tables
-- [Checkbox](/atom-components/checkbox) — row selection checkboxes
+- [Table 原语](/atom-components/table) — `Table`、`TableHeader`、`TableBody`、`TableRow`、`TableHead`、`TableCell`
+- [Filter Bar fragment](/fragment-components/filter-bar) — 搜索 + 筛选控件（能用 `DataTable` 内置工具条就先用它）
+- [Empty State fragment](/fragment-components/empty-state) — 空数据占位
+- [Dropdown Menu](/atom-components/dropdown-menu) — 用于组合行操作菜单的原语
+- [Scroll Area](/atom-components/scroll-area) — 包裹宽表格的水平滚动容器
+- [Checkbox](/atom-components/checkbox) — 行选中复选框

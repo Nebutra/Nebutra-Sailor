@@ -18,219 +18,265 @@ Do not use a table when:
 - Items are heterogeneous (different attributes per item) — use a list or cards
 - There are fewer than 3 columns — use a definition list or `Card` grid
 
+## Two table options
+
+`@nebutra/ui` ships two complementary table APIs. Pick by capability:
+
+| Use | API |
+|---|---|
+| Static or simple lists; you control header/body markup | `Table` primitive (`Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`) |
+| Sortable, filterable, virtualized, with toolbar / column visibility / cell selection | `DataTable` pattern (TanStack Table under the hood) |
+
+Both are tree-shakable; nothing is loaded until you import it.
+
 ## Structure
 
 ```
-Section (title + description + table-level actions)
-  ├── FilterBar (search + filter controls, optional)
-  ├── DataTable | Table
-  │    ├── Table.Head
-  │    │    └── Table.Row → Table.Header (per column, sortable)
-  │    └── Table.Body
-  │         └── Table.Row (per data row)
-  │              ├── Table.Cell (data values)
-  │              └── Table.Cell → ActionMenu (row actions)
-  ├── EmptyState (when data is empty)
-  └── Pagination (when data exceeds page size)
+Section (title + description + table-level actions)  // from @nebutra/ui/layout
+  ├── DataTable                                      // built-in toolbar handles search + filters
+  │    └── (rendered table with sticky header,
+  │         optional virtualization, column resize)
+  ├── EmptyState  (when data is empty)               // from @nebutra/ui/layout
+  └── LoadingState / ErrorState (status placeholders)
 ```
+
+For static content, swap `DataTable` for the bare `Table` primitive.
 
 ## Composition
 
-### DataTable (recommended)
+### DataTable (recommended for interactive lists)
 
-`DataTable` from `@primer/react/experimental` is the primary table component. It handles column definition, sorting, and accessibility out of the box.
+`DataTable<TData>` accepts TanStack `ColumnDef[]` and `TData[]`. The toolbar (search, filters, column visibility, extra actions) is on by default.
 
 ```tsx
-import { DataTable, Table } from "@nebutra/ui";
+import { DataTable } from "@nebutra/ui/components";
+import type { ColumnDef } from "@tanstack/react-table";
 
-const columns = [
+type ApiKey = {
+  id: string;
+  name: string;
+  createdAt: string;
+  status: "active" | "revoked";
+};
+
+const columns: ColumnDef<ApiKey>[] = [
   {
+    accessorKey: "name",
     header: "Name",
-    field: "name",
-    sortBy: "alphanumeric",
-    renderCell: (row) => <strong>{row.name}</strong>,
+    cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
   },
   {
+    accessorKey: "createdAt",
     header: "Created",
-    field: "createdAt",
-    sortBy: "datetime",
-    renderCell: (row) => <RelativeTime date={new Date(row.createdAt)} />,
+    cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString(),
   },
   {
+    accessorKey: "status",
     header: "Status",
-    field: "status",
-    renderCell: (row) => <StateLabel status={row.status}>{row.status}</StateLabel>,
-  },
-  {
-    header: "",
-    id: "actions",
-    renderCell: (row) => <RowActionMenu row={row} />,
   },
 ];
 
-<Table.Container>
-  <DataTable
-    aria-labelledby="table-heading"
-    data={rows}
-    columns={columns}
-  />
-</Table.Container>
+<DataTable
+  columns={columns}
+  data={rows}
+  searchPlaceholder="Search keys…"
+/>;
+```
+
+### Bare Table primitive (recommended for static content)
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@nebutra/ui/components";
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Created</TableHead>
+      <TableHead>Status</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {rows.map((row) => (
+      <TableRow key={row.id}>
+        <TableCell className="font-medium">{row.name}</TableCell>
+        <TableCell>{new Date(row.createdAt).toLocaleDateString()}</TableCell>
+        <TableCell>{row.status}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>;
 ```
 
 ### Sorting
 
-Pass `sortBy` on the column definition and optionally provide `initialSortColumn` and `initialSortDirection` to `DataTable`.
-
-```tsx
-<DataTable
-  data={rows}
-  columns={columns}
-  initialSortColumn="createdAt"
-  initialSortDirection="DESC"
-/>
-```
-
-For server-side sorting, handle the `onSortChange` callback and refetch data with the new sort params.
+`DataTable` enables column sorting through the standard TanStack mechanism — set `enableSorting: true` (default) on the `ColumnDef` and the toolbar header becomes clickable. For server-side sorting, manage sort state externally and pass the sorted slice into `data`.
 
 ### Row actions
 
-Row-level actions live in the last column, right-aligned. Use `ActionMenu` for 2 or more actions. For a single primary action, use a `Button variant="invisible"`.
+Row-level actions belong in the last column, right-aligned. There is no `ActionMenu` primitive — compose one with the `DropdownMenu` family from `@nebutra/ui/components`:
 
 ```tsx
-function RowActionMenu({ row }: { row: ApiKey }) {
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  Button,
+} from "@nebutra/ui/components";
+import { MoreHorizontal } from "lucide-react";
+
+function RowActions({ row, onEdit, onRevoke }: { row: ApiKey; onEdit: (r: ApiKey) => void; onRevoke: (r: ApiKey) => void }) {
   return (
-    <ActionMenu>
-      <ActionMenu.Button size="small" variant="invisible">Actions</ActionMenu.Button>
-      <ActionMenu.Overlay>
-        <ActionList>
-          <ActionList.Item onSelect={() => onEdit(row)}>Edit</ActionList.Item>
-          <ActionList.Divider />
-          <ActionList.Item variant="danger" onSelect={() => onRevoke(row)}>
-            Revoke
-          </ActionList.Item>
-        </ActionList>
-      </ActionMenu.Overlay>
-    </ActionMenu>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button type="button" variant="ghost" size="sm" aria-label={`Actions for ${row.name}`}>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onSelect={() => onEdit(row)}>Edit</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="text-destructive" onSelect={() => onRevoke(row)}>
+          Revoke
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
+}
+```
+
+Add it to the column list:
+
+```tsx
+{
+  id: "actions",
+  cell: ({ row }) => <RowActions row={row.original} onEdit={onEdit} onRevoke={onRevoke} />,
 }
 ```
 
 ### Filtering and search
 
-Place a `FilterBar` fragment above the table when users need to filter or search the data set. The filter bar connects to table data via shared state.
+`DataTable` has a built-in search input and an optional `filterableColumns` set. Pass column-scoped filter definitions to render filter chips in the toolbar:
 
 ```tsx
-import { FilterBar } from "@nebutra/ui";
-
-const [search, setSearch] = useState("");
-const [statusFilter, setStatusFilter] = useState<string[]>([]);
-
-const filteredRows = rows.filter((row) => {
-  const matchesSearch = row.name.toLowerCase().includes(search.toLowerCase());
-  const matchesStatus = !statusFilter.length || statusFilter.includes(row.status);
-  return matchesSearch && matchesStatus;
-});
-
-<FilterBar
-  search={search}
-  onSearchChange={setSearch}
-  filters={[
+<DataTable
+  columns={columns}
+  data={rows}
+  searchPlaceholder="Search keys…"
+  filterableColumns={[
     {
-      label: "Status",
-      options: ["active", "revoked"],
-      value: statusFilter,
-      onChange: setStatusFilter,
+      id: "status",
+      title: "Status",
+      accessorKey: "status",
+      options: [
+        { label: "Active", value: "active" },
+        { label: "Revoked", value: "revoked" },
+      ],
     },
   ]}
-/>
-<Table.Container>
-  <DataTable data={filteredRows} columns={columns} />
-</Table.Container>
+/>;
 ```
+
+For uses outside `DataTable`, filter the array yourself with `useMemo` before passing to the bare `Table` primitive.
 
 ### Pagination
 
-Render `Pagination` directly below the `Table.Container`. Show item count alongside (`Showing 1–25 of 142`).
+`DataTable` does not ship a paginator out of the box. For very large datasets enable virtualization (`enableVirtualization`, `virtualizeThreshold`) to render thousands of rows without paging. For server-side pagination, page the data outside the component and pass the current slice to `data`.
+
+> **TODO:** A first-party `Pagination` primitive is on the roadmap. Until it lands, compose one with `Button` + page-state hooks alongside the table.
+
+### Empty, loading, and error states
+
+Use the layout-level placeholders from `@nebutra/ui/layout` to keep state UI consistent across the app:
 
 ```tsx
-<Table.Container>
-  <DataTable data={pageData} columns={columns} />
-  <Table.Divider />
-  <Box padding={3} display="flex" justifyContent="space-between" alignItems="center">
-    <Text fontSize={0} color="fg.muted">
-      Showing {startItem}–{endItem} of {totalCount}
-    </Text>
-    <Pagination
-      pageCount={totalPages}
-      currentPage={page}
-      onPageChange={(p) => setPage(p)}
-    />
-  </Box>
-</Table.Container>
-```
+import { EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";
 
-### Empty and loading states
-
-Render `LoadingState` and `EmptyState` inside the `Table.Container` to preserve column widths and table chrome while data is absent.
-
-```tsx
-<Table.Container>
-  {isLoading ? (
-    <LoadingState size="medium" />
-  ) : rows.length === 0 ? (
+if (isLoading) return <LoadingState />;
+if (error) return <ErrorState error={error} onRetry={refetch} />;
+if (!rows.length) {
+  return (
     <EmptyState
       title="No API keys"
       description="Create a key to start making requests."
-      actions={<Button variant="primary" onClick={onCreate}>Create key</Button>}
     />
-  ) : (
-    <DataTable data={rows} columns={columns} />
-  )}
-</Table.Container>
+  );
+}
+
+return <DataTable columns={columns} data={rows} />;
 ```
 
 ## Examples
 
-### API keys table
+### API keys table (full pattern)
 
 ```tsx
-function ApiKeysTable() {
+"use client";
+
+import { useState, useMemo } from "react";
+import { DataTable, Button } from "@nebutra/ui/components";
+import { Section, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";
+import type { ColumnDef } from "@tanstack/react-table";
+
+export function ApiKeysTable() {
   const { data, isLoading, error, refetch } = useApiKeys();
-  const [page, setPage] = useState(1);
-  const PAGE_SIZE = 25;
+  const [revoking, setRevoking] = useState<string | null>(null);
 
-  const columns = [
-    { header: "Name", field: "name", sortBy: "alphanumeric" as const },
-    { header: "Created", field: "createdAt", renderCell: (row) => <RelativeTime date={new Date(row.createdAt)} /> },
-    { header: "Last used", field: "lastUsedAt", renderCell: (row) => row.lastUsedAt ? <RelativeTime date={new Date(row.lastUsedAt)} /> : <Text color="fg.muted">Never</Text> },
-    { header: "", id: "actions", renderCell: (row) => <RowActionMenu row={row} onRevoke={revoke} /> },
-  ];
-
-  if (error) return <ErrorState error={error} onRetry={refetch} />;
+  const columns = useMemo<ColumnDef<ApiKey>[]>(
+    () => [
+      {
+        accessorKey: "name",
+        header: "Name",
+        cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
+      },
+      {
+        accessorKey: "createdAt",
+        header: "Created",
+        cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString(),
+      },
+      {
+        accessorKey: "lastUsedAt",
+        header: "Last used",
+        cell: ({ row }) =>
+          row.original.lastUsedAt
+            ? new Date(row.original.lastUsedAt).toLocaleDateString()
+            : <span className="text-muted-foreground">Never</span>,
+      },
+      {
+        id: "actions",
+        cell: ({ row }) => (
+          <RowActions row={row.original} onRevoke={(r) => setRevoking(r.id)} />
+        ),
+      },
+    ],
+    []
+  );
 
   return (
-    <Section title="API Keys" actions={<Button variant="primary" onClick={onCreateKey}>New key</Button>}>
-      <Table.Container>
-        {isLoading ? (
-          <LoadingState size="medium" />
-        ) : !data?.length ? (
-          <EmptyState title="No keys yet" description="Create your first API key." />
-        ) : (
-          <DataTable
-            aria-label="API keys"
-            data={data.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)}
-            columns={columns}
-            initialSortColumn="createdAt"
-            initialSortDirection="DESC"
-          />
-        )}
-      </Table.Container>
-      {data && data.length > PAGE_SIZE && (
-        <Pagination
-          pageCount={Math.ceil(data.length / PAGE_SIZE)}
-          currentPage={page}
-          onPageChange={setPage}
+    <Section
+      title="API Keys"
+      actions={<Button type="button" onClick={onCreateKey}>New key</Button>}
+    >
+      {isLoading ? (
+        <LoadingState />
+      ) : error ? (
+        <ErrorState error={error} onRetry={refetch} />
+      ) : !data?.length ? (
+        <EmptyState
+          title="No keys yet"
+          description="Create your first API key."
         />
+      ) : (
+        <DataTable columns={columns} data={data} searchPlaceholder="Search keys…" />
       )}
     </Section>
   );
@@ -239,10 +285,9 @@ function ApiKeysTable() {
 
 ## Related Components
 
-- [Table](/atom-components/table) — base table atom (`Table`, `Table.Head`, `Table.Row`, `Table.Cell`)
-- [Filter Bar fragment](/fragment-components/filter-bar) — search + filter controls
-- [Pagination](/atom-components/pagination) — page navigation
+- [Table primitive](/atom-components/table) — `Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`
+- [Filter Bar fragment](/fragment-components/filter-bar) — search + filter controls (use the built-in `DataTable` toolbar when possible)
 - [Empty State fragment](/fragment-components/empty-state) — zero-data placeholder
-- [Multi Select fragment](/fragment-components/multi-select) — column-level multi-value filter
-- [Scroll Area](/atom-components/scroll-area) — horizontal scroll wrapper for wide tables
+- [Dropdown Menu](/atom-components/dropdown-menu) — primitive used to compose row-action menus
+- [Scroll Area](/atom-components/scroll-area) — horizontal scroll wrapper for static `Table` overflow
 - [Checkbox](/atom-components/checkbox) — row selection checkboxes

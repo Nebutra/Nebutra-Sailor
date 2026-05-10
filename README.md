@@ -360,51 +360,25 @@ Nebula • Nurture • Ultra • Future
 
 ```
 Nebutra-Sailor/
-├── apps/
+├── apps/                      # User-facing apps (Next.js)
 │   ├── landing-page/      # Marketing site (nebutra.com)
 │   ├── web/               # Main SaaS dashboard (app.nebutra.com)
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
-│   ├── api-gateway/       # BFF layer (api.nebutra.com)
 │   ├── design-docs/       # Component documentation (Fumadocs)
 │   ├── sailor-docs/       # Public product docs (docs.nebutra.com)
-│   ├── idp/               # Identity provider service
-│   └── storybook/         # Component playground
-├── packages/
-│   ├── create-sailor/     # CLI scaffolding tool (npx create-sailor)
-│   ├── i18n/              # next-intl routing & locale management
-│   ├── marketing/         # Conversion-optimized UI (Waitlist, Pricing, FAQ)
-│   ├── email/             # Transactional email (Magic Link, Resend)
-│   ├── agents/            # Vercel AI SDK wrapper, agents, streaming helpers
-│   ├── ai-providers/      # Multi-provider AI registry and metadata
-│   ├── billing/           # Stripe billing, plans, usage metering
-│   ├── brand/             # Brand assets, guidelines & programmatic tokens
-│   ├── preset/            # Feature-based starter configuration
-│   ├── theme/             # Global theme tokens & CSS variables
-│   ├── tokens/            # Semantic design token definitions
-│   ├── ui/                # Radix + HeroUI + Lobe UI components
-│   ├── icons/             # Geist icon library & sprite sheets
-│   ├── identity/          # Auth helpers & tenant identity
-│   ├── contracts/         # Shared TypeScript types & Zod schemas
-│   ├── legal/             # Cookie consent, privacy, GDPR/CCPA compliance
-│   ├── db/                # Prisma 7 schema & client
-│   ├── supabase/          # Supabase Realtime, Storage, Edge Functions
-│   ├── sanity/            # Sanity CMS client & schemas
-│   ├── captcha/           # Cloudflare Turnstile integration
-│   ├── storage/           # R2/S3 storage client
-│   ├── cache/             # Redis caching strategies
-│   ├── rate-limit/        # Multi-tenant rate limiting
-│   ├── event-bus/         # Cross-service messaging
-│   ├── saga/              # Distributed transactions
-│   ├── mcp/               # Model Context Protocol for AI agents
-│   ├── config/            # Shared configuration utilities
-│   ├── errors/            # Standardized error handling
-│   ├── logger/            # Structured logging
-│   ├── feature-flags/     # Feature flag management
-│   ├── alerting/          # Multi-channel alerting
-│   ├── audit/             # Compliance audit logging
-│   ├── health/            # Health check utilities
-│   ├── status/            # OpenStatus integration
-│   └── analytics/         # Dub-powered link tracking & conversions
+│   ├── idp/               # Identity provider service (OAuth 2.0 / OIDC)
+│   ├── storybook/         # Component playground
+│   ├── mail-preview/      # Email template preview
+│   ├── sleptons/          # Sleptons companion app
+│   └── tsekaluk-dev/      # Author dev playground
+├── packages/                  # Shared TS libraries (categorized in W3b)
+│   ├── ai/                # 3 pkgs — agents, ai-providers, mcp
+│   ├── commerce/          # 7 pkgs — billing, contracts, marketing, metering, license, legal, waitlist
+│   ├── design/            # 7 pkgs — ui, tokens, brand, theme, icons, design-tokens, design-sync
+│   ├── iam/               # 8 pkgs — auth, audit, vault, oauth-server, permissions, tenant, identity, captcha
+│   ├── integrations/      # 11 pkgs — queue, search, email, notifications, storage, webhooks, cache, sms, uploads, event-bus, saga
+│   ├── ops/               # 6 pkgs — cli, create-sailor, preset, sanity, supabase, china-compliance
+│   └── platform/          # 13 pkgs — db, logger, rate-limit, feature-flags, gateway-core, errors, config, health, status, alerting, analytics, repositories, i18n
 ├── backends/                  # No-UI backends (split by language à la vercel/vercel)
 │   ├── gateway/               # TypeScript / Hono — BFF, auth, tenancy, routing
 │   └── python/                # FastAPI fleet

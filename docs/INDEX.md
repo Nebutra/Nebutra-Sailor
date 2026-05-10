@@ -48,20 +48,31 @@ Complete navigation to all project documentation.
 
 ## Infrastructure
 
-| Component                                         | Description               |
-| ------------------------------------------------- | ------------------------- |
-| [infra](../infra/README.md)                       | Infrastructure overview   |
-| [cloudflare](../infra/cloudflare/README.md)       | Cloudflare configuration  |
-| [cloudflare/r2](../infra/cloudflare/r2/README.md) | R2 object storage         |
-| [database](../infra/database/README.md)           | Database setup            |
-| [docker](../infra/docker/README.md)               | Docker Compose configs    |
-| [inngest](../infra/inngest/README.md)             | Background job workflows  |
-| [k8s](../infra/k8s/README.md)                     | Kubernetes manifests      |
-| [n8n](../infra/n8n/README.md)                     | Workflow automation       |
-| [observability](../infra/observability/README.md) | Logging, tracing, metrics |
-| [openstatus](../infra/openstatus/README.md)       | Status monitoring         |
-| [railway](../infra/railway/README.md)             | Railway deployment        |
-| [terraform](../infra/terraform/README.md)         | IaC definitions           |
+> Layout follows the W3a single-responsibility split: `iac/` (declarative infra), `runtime/` (containers/proxies), `data/` (databases/warehouses), `ops/` (observability/scripts).
+
+| Component                                                 | Description                          |
+| --------------------------------------------------------- | ------------------------------------ |
+| [infra](../infra/README.md)                               | Infrastructure overview              |
+| [iac/cloudflare](../infra/iac/cloudflare/README.md)       | Cloudflare configuration             |
+| [iac/cloudflare/r2](../infra/iac/cloudflare/r2/README.md) | R2 object storage                    |
+| [iac/k8s](../infra/iac/k8s/README.md)                     | Kubernetes manifests                 |
+| [iac/railway](../infra/iac/railway/README.md)             | Railway deployment                   |
+| [iac/terraform](../infra/iac/terraform/README.md)         | IaC definitions                      |
+| [runtime/docker](../infra/runtime/docker/README.md)       | Docker base images & compose configs |
+| [runtime/nginx](../infra/runtime/nginx/README.md)         | Nginx reverse proxy                  |
+| [runtime/analytics](../infra/runtime/analytics/README.md) | Analytics runtime stack              |
+| [data/database](../infra/data/database/README.md)         | Database (RLS policies, etc.)        |
+| [data/clickhouse](../infra/data/clickhouse/README.md)     | ClickHouse warehouse + dbt models    |
+| [ops/observability](../infra/ops/observability/README.md) | Logging, tracing, metrics            |
+
+## Workflows
+
+| Component                                 | Description                          |
+| ----------------------------------------- | ------------------------------------ |
+| [workflows](../workflows/README.md)       | Event-driven workflow overview       |
+| [inngest](../workflows/inngest/README.md) | Background job workflows (Inngest)   |
+| [n8n](../workflows/n8n/README.md)         | No-code workflow automation          |
+| [pusher](../workflows/pusher/README.md)   | Realtime fan-out                     |
 
 ## Design System
 

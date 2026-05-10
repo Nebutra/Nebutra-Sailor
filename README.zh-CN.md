@@ -369,74 +369,49 @@ Nebula • Nurture • Ultra • Future
 
 ```
 Nebutra-Sailor/
-├── apps/
+├── apps/                      # 用户面应用 (Next.js)
 │   ├── landing-page/      # 营销官网 (nebutra.com)
 │   ├── web/               # SaaS 主控台 (app.nebutra.com)
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
-│   ├── api-gateway/       # BFF 层 (api.nebutra.com)
 │   ├── design-docs/       # 组件文档站 (Fumadocs)
-│   ├── docs/              # Mintlify 文档站
-│   ├── idp/               # 身份认证服务
-│   └── storybook/         # 组件 Playground
-├── packages/
-│   ├── create-sailor/     # CLI 脚手架工具 (npx create-sailor)
-│   ├── i18n/              # next-intl 路由与多语言管理
-│   ├── marketing/         # 高转化 UI 套件 (Waitlist, Pricing, FAQ)
-│   ├── email/             # 事务邮件 (Magic Link, Resend)
-│   ├── agents/            # Vercel AI SDK 封装、智能体与流式助手
-│   ├── ai-providers/      # 多供应商 AI 注册表与元数据
-│   ├── billing/           # Stripe 计费、计划、用量计量
-│   ├── brand/             # 统一品牌资产与组件
-│   ├── preset/            # 按功能组合的模板配置
-│   ├── theme/             # 全局主题令牌 & CSS 变量
-│   ├── tokens/            # 语义化设计令牌定义
-│   ├── ui/                # Radix + HeroUI + Lobe UI 组件
-│   ├── icons/             # Geist 图标库 & Sprite Sheets
-│   ├── identity/          # 认证助手 & 租户身份
-│   ├── contracts/         # 共享 TypeScript 类型 & Zod Schemas
-│   ├── legal/             # Cookie 同意、隐私、GDPR/CCPA
-│   ├── db/                # Prisma 7 Schema 与客户端
-│   ├── supabase/          # Supabase 实时订阅、存储、Edge Functions
-│   ├── sanity/            # Sanity CMS 客户端与 Schema
-│   ├── captcha/           # Cloudflare Turnstile 集成
-│   ├── storage/           # R2/S3 存储客户端
-│   ├── cache/             # Redis 缓存策略
-│   ├── rate-limit/        # 多租户限流
-│   ├── event-bus/         # 跨服务消息总线
-│   ├── saga/              # 分布式事务
-│   ├── mcp/               # Model Context Protocol（AI Agent）
-│   ├── config/            # 共享配置工具
-│   ├── errors/            # 标准化错误处理
-│   ├── logger/            # 结构化日志
-│   ├── feature-flags/     # 功能开关管理
-│   ├── alerting/          # 多渠道告警
-│   ├── audit/             # 合规审计日志
-│   ├── health/            # 健康检查工具
-│   ├── status/            # OpenStatus 集成
-│   └── analytics/         # Dub 链接追踪与转化分析
-├── services/
-│   ├── ai/                # Python FastAPI - LLM、Embeddings
-│   ├── billing/           # 计费微服务
-│   ├── content/           # Python FastAPI - 内容、Feed
-│   ├── recsys/            # Python - 推荐引擎
-│   ├── ecommerce/         # Python - Shopify/Shopline 同步
-│   ├── event-ingest/      # 事件采集管道
-│   ├── third-party/       # 第三方集成
-│   └── web3/              # Python - 区块链索引器
-├── infra/
-│   ├── cloudflare/        # CDN、WAF、R2 配置
-│   ├── docker/            # 容器配置
-│   ├── k8s/               # Kubernetes 清单
-│   ├── railway/           # Railway 部署
-│   ├── terraform/         # IaC 配置
-│   ├── inngest/           # TypeScript 工作流定义
+│   ├── sailor-docs/       # 公开产品文档 (docs.nebutra.com)
+│   ├── idp/               # 身份认证服务 (OAuth 2.0 / OIDC)
+│   ├── storybook/         # 组件 Playground
+│   ├── mail-preview/      # 邮件模板预览
+│   ├── sleptons/          # Sleptons 配套应用
+│   └── tsekaluk-dev/      # 作者开发场地
+├── packages/                  # 共享 TS 库（W3b 已分类）
+│   ├── ai/                # 3 个 — agents、ai-providers、mcp
+│   ├── commerce/          # 7 个 — billing、contracts、marketing、metering、license、legal、waitlist
+│   ├── design/            # 7 个 — ui、tokens、brand、theme、icons、design-tokens、design-sync
+│   ├── iam/               # 8 个 — auth、audit、vault、oauth-server、permissions、tenant、identity、captcha
+│   ├── integrations/      # 11 个 — queue、search、email、notifications、storage、webhooks、cache、sms、uploads、event-bus、saga
+│   ├── ops/               # 6 个 — cli、create-sailor、preset、sanity、supabase、china-compliance
+│   └── platform/          # 13 个 — db、logger、rate-limit、feature-flags、gateway-core、errors、config、health、status、alerting、analytics、repositories、i18n
+├── backends/                  # 无 UI 后端（按语言拆分，参考 vercel/vercel）
+│   ├── gateway/           # TypeScript / Hono — BFF、auth、租户、路由
+│   └── python/            # FastAPI 微服务集
+│       ├── _shared/       # 跨服务原语（auth、db、queue 客户端）
+│       ├── ai/            # LLM、Embeddings、Agent 编排
+│       ├── billing/       # 计量上报 + 开票
+│       ├── content/       # 帖子、Feed、内容管线
+│       ├── recsys/        # 推荐引擎
+│       ├── ecommerce/     # Shopify/Shopline 同步、订单
+│       ├── event-ingest/  # 高吞吐事件管线
+│       ├── third-party/   # 第三方集成
+│       └── web3/          # 区块链索引
+├── infra/                     # 基础设施（W2.2 按职责拆分）
+│   ├── iac/               # terraform + k8s + ecs + cloudflare + railway
+│   ├── runtime/           # nginx + docker + analytics + compose 文件
+│   ├── data/              # database (RLS) + clickhouse (init + dbt)
+│   └── ops/               # observability + 部署脚本
+├── workflows/                 # 事件驱动业务流（W2.3 抽离）
+│   ├── inngest/           # Serverless 后台任务 + 定时
 │   ├── n8n/               # 可视化工作流自动化
-│   ├── pusher/            # 实时通信 (Pusher/Soketi)
-│   ├── nginx/             # 反向代理配置
-│   ├── clickhouse/        # 分析数据库
-│   ├── database/          # 数据库迁移 & 种子数据
-│   └── observability/     # 日志、链路追踪、指标
-└── docs/                  # 架构文档
+│   └── pusher/            # 实时消息粘合层
+├── e2e/                       # Playwright E2E 测试 (smoke / golden / sleptons)
+├── tests/                     # 架构不变量 + 压测 + UI 治理
+└── docs/                      # 架构文档
 ```
 
 <br />
