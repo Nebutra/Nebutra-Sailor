@@ -63,6 +63,7 @@ const DEPENDENCY_RULES: DependencyRule[] = [
     // @nebutra/queue is an infrastructure dep used by /api/cron route handlers.
     // @nebutra/webhooks is consumed by /settings/webhooks management UI.
     // @nebutra/china-compliance powers ICP footer + WeChat OAuth scaffolding.
+    // @nebutra/audit is the SOC 2-grade audit log infrastructure consumed by web routes.
     allowedDeps: [
       "@nebutra/ui",
       "@nebutra/tokens",
@@ -73,6 +74,7 @@ const DEPENDENCY_RULES: DependencyRule[] = [
       "@nebutra/webhooks",
       "@nebutra/china-compliance",
       "@nebutra/uploads",
+      "@nebutra/audit",
     ],
   },
   {

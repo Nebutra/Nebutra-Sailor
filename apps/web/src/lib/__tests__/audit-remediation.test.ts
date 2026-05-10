@@ -164,9 +164,9 @@ describe("UI/UX audit remediation invariants", () => {
     const validateScript = readFromRepo("scripts/validate-ui-governance-policy.ts");
     const sharedPolicyLoader = readFromRepo("scripts/lib/ui-governance-policy.ts");
     const script = readFromRepo("scripts/verify-ui-governance.ts");
-    const pointer = readFromRepo("governance/ui-governance.current.json");
-    const policy = readFromRepo("governance/ui-governance.v1.json");
-    const schema = readFromRepo("governance/schemas/ui-governance.schema.json");
+    const pointer = readFromRepo("tests/architecture/governance/ui-governance.current.json");
+    const policy = readFromRepo("tests/architecture/governance/ui-governance.v1.json");
+    const schema = readFromRepo("tests/architecture/governance/schemas/ui-governance.schema.json");
 
     expect(rootPackage).toContain("ui:validate-policy");
     expect(rootPackage).toContain("ui:verify-governance");

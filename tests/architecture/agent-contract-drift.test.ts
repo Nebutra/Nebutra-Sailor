@@ -51,7 +51,7 @@ describe("scoped AGENTS execution contracts", () => {
     expect(existsSync(readmePath)).toBe(true);
 
     const manifest = await readJson<PackageJson>("apps/mail-preview/package.json");
-    expect(manifest.name).toBe("mail-preview");
+    expect(manifest.name).toBe("@nebutra/mail-preview");
     expect(manifest.scripts?.check).toBeTruthy();
     expect(manifest.scripts?.export).toBeTruthy();
     expect(manifest.dependencies?.["@nebutra/email"]).toBe("workspace:*");
