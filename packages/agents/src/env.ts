@@ -42,6 +42,17 @@ export const AgentsEnvSchema = z.object({
     "anthropic",
     "openai",
   ]),
+
+  /**
+   * Comma-separated chain of providers tried for EMBEDDINGS, in order.
+   * Default: "openrouter,openai" — Anthropic does not currently expose
+   * embedding models, so it is excluded by default. If unset, falls back
+   * to LLM_FALLBACK_CHAIN with embedding-incompatible providers filtered out.
+   */
+  LLM_EMBEDDING_FALLBACK_CHAIN: FallbackChain.default((): FallbackProviderName[] => [
+    "openrouter",
+    "openai",
+  ]),
 });
 
 export type AgentsEnv = z.infer<typeof AgentsEnvSchema>;

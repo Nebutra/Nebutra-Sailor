@@ -7,7 +7,7 @@
  */
 
 import { BaseAgent } from "../agent";
-import { withAnthropicCacheControl } from "../fallback";
+import { runWithFallback, withAnthropicCacheControl } from "../fallback";
 import { buildTelemetryConfig } from "../observability";
 import type { AgentContext, AgentMessage, AgentResponse } from "../types";
 
@@ -55,8 +55,7 @@ export class VercelAIAgent extends BaseAgent {
       },
     });
 
-    const baseOptions = {
-      model: this.config.model as unknown as StreamTextParams["model"],
+    const baseOptionsWithoutModel = {
       system: this.config.instructions,
       messages: messages.map((m) => ({
         role: m.role as "user" | "assistant" | "system",
@@ -67,16 +66,30 @@ export class VercelAIAgent extends BaseAgent {
       // reduction on cached prefix tokens. No-op for non-Anthropic providers.
       providerOptions: withAnthropicCacheControl(),
       experimental_telemetry: telemetry,
-    } as StreamTextParams;
+    };
 
-    const streamOptions: StreamTextParams =
-      toolSet !== undefined ? { ...baseOptions, tools: toolSet } : baseOptions;
+    // Run through the multi-provider fallback chain. The chain is filtered
+    // to providers with API keys present (so single-provider deploys are
+    // backward-compatible — only the configured provider is tried).
+    const { result } = await runWithFallback(
+      async (model) => {
+        const streamOptions = {
+          ...baseOptionsWithoutModel,
+          model,
+          ...(toolSet !== undefined ? { tools: toolSet } : {}),
+        } as StreamTextParams;
+        const r = streamText(streamOptions);
+        // Materialize the result so retryable errors surface inside the
+        // try/catch in runWithFallback() rather than escaping as unhandled
+        // rejections from the lazy stream.
+        const text = await r.text;
+        const usage = await r.usage;
+        return { text, usage };
+      },
+      { model: this.config.model },
+    );
 
-    const result = streamText(streamOptions);
-
-    // Consume the stream to get the final result
-    const text = await result.text;
-    const usage = await result.usage;
+    const { text, usage } = result;
 
     // AI SDK v6 uses inputTokens/outputTokens on LanguageModelUsage
     const inputTokens = usage?.inputTokens ?? 0;
