@@ -29,7 +29,7 @@ function randomBase62(byteCount = 32): string {
  * Generates a fresh API key, its sha256 hash, and a stable 12-char prefix.
  * Format: `nbk_live_<random>`
  */
-export function generateApiKey(): { key: string; keyHash: string; keyPrefix: string } {
+function generateApiKey(): { key: string; keyHash: string; keyPrefix: string } {
   const key = `nbk_live_${randomBase62(32)}`;
   const keyHash = createHash("sha256").update(key).digest("hex");
   const keyPrefix = key.slice(0, 12);

@@ -50,12 +50,9 @@ function signPayload(value: string, secret: string): string {
 
 /**
  * Verify a signed cookie value of the form `<userId>.<signature>`.
- * Exported for the future auth-layer integration described above.
+ * Will be moved to a shared lib when auth-layer integration lands.
  */
-export function verifyImpersonationCookie(
-  raw: string | null | undefined,
-  secret: string,
-): string | null {
+function verifyImpersonationCookie(raw: string | null | undefined, secret: string): string | null {
   if (!raw) return null;
   const dot = raw.lastIndexOf(".");
   if (dot <= 0 || dot === raw.length - 1) return null;
