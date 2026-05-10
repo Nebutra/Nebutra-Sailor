@@ -341,4 +341,5 @@ If a PR can't articulate the tests-first ordering, it's blocked at review.
 
 - [x] tseka_luk reviewed & accepted (revised version 2026-05-10 post gap analysis)
 - [x] Open questions O1–O5 resolved by gap analysis
-- [ ] PR 1 dispatched
+- [x] D6 revised to direct-to-main 3-phase model per project workflow preference
+- [ ] Phase 1 dispatched
