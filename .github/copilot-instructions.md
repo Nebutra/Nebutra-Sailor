@@ -25,20 +25,20 @@ apps/storybook/     → Storybook 8.x component docs
 apps/studio/        → Sanity Studio v5 CMS
 apps/docs/          → Mintlify product docs
 
-packages/ui/        → PRIMARY component library (Radix + HeroUI + Lobe UI)
-packages/tokens/    → CSS variables — SINGLE SOURCE OF TRUTH for theming
-packages/icons/     → 541 Geist icons as TSX components
-packages/db/        → Prisma v7 + PostgreSQL schema
-packages/billing/   → Stripe subscriptions + usage metering
-packages/identity/  → Auth abstraction layer (Clerk adapter)
-packages/email/     → Resend transactional email
+packages/design/ui/        → PRIMARY component library (Radix + HeroUI + Lobe UI)
+packages/design/tokens/    → CSS variables — SINGLE SOURCE OF TRUTH for theming
+packages/design/icons/     → 541 Geist icons as TSX components
+packages/platform/db/        → Prisma v7 + PostgreSQL schema
+packages/commerce/billing/   → Stripe subscriptions + usage metering
+packages/iam/identity/  → Auth abstraction layer (Clerk adapter)
+packages/integrations/email/     → Resend transactional email
 packages/ai-sdk/    → Vercel AI SDK wrapper
-packages/permissions/ → RBAC/ABAC (CASL + OpenFGA)
-packages/webhooks/  → Outbound webhooks via Svix
-packages/metering/  → ClickHouse usage metering
-packages/logger/    → Structured logging (Sentry integration)
-packages/errors/    → Typed error definitions
-packages/audit/     → Audit logging (37 action types)
+packages/iam/permissions/ → RBAC/ABAC (CASL + OpenFGA)
+packages/integrations/webhooks/  → Outbound webhooks via Svix
+packages/commerce/metering/  → ClickHouse usage metering
+packages/platform/logger/    → Structured logging (Sentry integration)
+packages/platform/errors/    → Typed error definitions
+packages/iam/audit/     → Audit logging (37 action types)
 ```
 
 ## Import Conventions

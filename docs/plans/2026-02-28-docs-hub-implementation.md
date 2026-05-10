@@ -432,7 +432,7 @@ description: "How to add or update components in the design system."
 
 ## Adding a new atom component
 
-1. Identify it in `packages/ui/src/primitives/` or an app
+1. Identify it in `packages/design/ui/src/primitives/` or an app
 2. Ensure it has no semantic overlap with existing components
 3. Add `atom-components/<name>.mdx` with Demo / Usage / Props / Examples / Accessibility sections
 4. Export it from `@nebutra/ui` if it belongs at that layer
@@ -698,7 +698,7 @@ description: "Icon system using Octicons and Lucide."
 
 ## Overview
 
-<!-- TODO: Extract from packages/design-system/src/icons/ and packages/ui/src/icons/ -->
+<!-- TODO: Extract from packages/design-system/src/icons/ and packages/design/ui/src/icons/ -->
 
 ## Design Rationale
 
@@ -843,9 +843,9 @@ git commit -m "feat(docs-hub): add ui-patterns pages (introduction + 7 patterns)
 
 **Sources to extract from:**
 
-- `packages/ui/src/components/` — `empty-state.tsx`, `onboarding-checklist.tsx`, `team-chat.tsx`
-- `packages/ui/src/patterns/` — `Card/`, `CommandBox.tsx`, `Terminal/`
-- `packages/ui/src/layouts/` — `SectionContainer.tsx`, `bento-grid.tsx`
+- `packages/design/ui/src/components/` — `empty-state.tsx`, `onboarding-checklist.tsx`, `team-chat.tsx`
+- `packages/design/ui/src/patterns/` — `Card/`, `CommandBox.tsx`, `Terminal/`
+- `packages/design/ui/src/layouts/` — `SectionContainer.tsx`, `bento-grid.tsx`
 - `apps/web/src/` — modal patterns, filter bars, page headers
 
 **Step 1: Create directory and introduction.mdx**
@@ -924,8 +924,8 @@ git commit -m "feat(docs-hub): add fragment-components pages (introduction + 18 
 
 **Sources to extract from:**
 
-- `packages/ui/src/primitives/` — the primary source (100+ primitives)
-- `packages/ui/src/components/index.ts` — Lobe UI re-exports
+- `packages/design/ui/src/primitives/` — the primary source (100+ primitives)
+- `packages/design/ui/src/components/index.ts` — Lobe UI re-exports
 
 **Step 1: Create directory and introduction.mdx**
 
@@ -946,7 +946,7 @@ Atom components are the foundation of the design system. They are:
 - **Accessible** — ARIA attributes baked in
 
 <Info>
-  Atoms are implemented in `packages/ui/src/primitives/`. Import them via
+  Atoms are implemented in `packages/design/ui/src/primitives/`. Import them via
   `@nebutra/ui/primitives`.
 </Info>
 ```
@@ -964,7 +964,7 @@ description: "[One line description]"
 ## Demo
 
 ```tsx
-// TODO: Extract from packages/ui/src/primitives/[name].tsx
+// TODO: Extract from packages/design/ui/src/primitives/[name].tsx
 ```
 ````
 
@@ -1158,7 +1158,7 @@ git commit -m "feat(arch-tests): scaffold architecture test suite with vitest + 
 
 - Create: `tests/architecture/docs-coverage.test.ts`
 
-**What it tests:** Every `.mdx` file under `apps/docs-hub/atom-components/` and `apps/docs-hub/fragment-components/` (excluding `introduction.mdx`) has a named export in `packages/ui/src/primitives/index.ts` or `apps/docs-hub/design-system/src/index.ts`.
+**What it tests:** Every `.mdx` file under `apps/docs-hub/atom-components/` and `apps/docs-hub/fragment-components/` (excluding `introduction.mdx`) has a named export in `packages/design/ui/src/primitives/index.ts` or `apps/docs-hub/design-system/src/index.ts`.
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -1184,7 +1184,7 @@ const atomMdx = readdirSync(atomDir).filter(
 );
 
 const primitivesBarrel = readFileSync(
-  resolve(ROOT, "packages/ui/src/primitives/index.ts"),
+  resolve(ROOT, "packages/design/ui/src/primitives/index.ts"),
   "utf-8",
 );
 const designSystemBarrel = readFileSync(
@@ -1230,7 +1230,7 @@ git commit -m "feat(arch-tests): add docs-coverage property test"
 
 - Create: `tests/architecture/no-inline-css.test.ts`
 
-**What it tests:** No `.tsx` file in `apps/docs-hub/design-system/src/components/` or `packages/ui/src/primitives/` contains inline `style={{` patterns.
+**What it tests:** No `.tsx` file in `apps/docs-hub/design-system/src/components/` or `packages/design/ui/src/primitives/` contains inline `style={{` patterns.
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -1267,7 +1267,7 @@ function collectTsxFiles(dir: string, files: string[] = []): string[] {
 
 const SCANNED_DIRS = [
   resolve(ROOT, "apps/docs-hub/design-system/src/components"),
-  resolve(ROOT, "packages/ui/src/primitives"),
+  resolve(ROOT, "packages/design/ui/src/primitives"),
 ];
 
 const componentFiles = SCANNED_DIRS.flatMap((d) => collectTsxFiles(d));

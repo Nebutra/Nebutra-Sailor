@@ -193,7 +193,7 @@ Framework: Vitest (existing). Use `vi.stubGlobal("fetch", ...)` for upstream moc
 | File                                                | What to reuse                                                        |
 | --------------------------------------------------- | -------------------------------------------------------------------- |
 | `backends/gateway/src/middlewares/tenantContext.ts` | `requireAuth`, `requireOrganization`, `TenantContext` interface      |
-| `packages/errors/src/index.ts`                      | `ERROR_CODES`, `toApiError`, `getStatusCode`, `ExternalServiceError` |
+| `packages/platform/errors/src/index.ts`                      | `ERROR_CODES`, `toApiError`, `getStatusCode`, `ExternalServiceError` |
 | `backends/gateway/src/routes/legal/consent.ts`      | Structural pattern: named Hono export, `c.get("tenant")`, try/catch  |
 | `backends/gateway/src/routes/system/status.ts`      | `fetch` with `AbortController` timeout pattern                       |
 | `backends/gateway/src/config/env.ts`                | Extend existing Zod schema — don't restructure                       |

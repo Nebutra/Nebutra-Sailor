@@ -171,7 +171,7 @@ Zero changes required in:
 
 - `apps/web/package.json`
 - `apps/landing-page/package.json`
-- `packages/ui/package.json`
+- `packages/design/ui/package.json`
 
 All use `"@nebutra/ui": "workspace:*"` — pnpm resolves by package name, not physical path.
 
@@ -389,8 +389,8 @@ All MDX content is extracted from existing implementations — **never invented*
 | Source                        | Content extracted                          |
 | ----------------------------- | ------------------------------------------ |
 | `packages/design-system/src/` | Tokens, theme, typography, base components |
-| `packages/ui/`         | Atom and fragment components               |
-| `packages/ui/`                | Shadcn/Radix primitives used in project    |
+| `packages/design/ui/`         | Atom and fragment components               |
+| `packages/design/ui/`                | Shadcn/Radix primitives used in project    |
 | `apps/web/src/`               | Real business usage patterns               |
 | `apps/landing-page/src/`      | Marketing patterns                         |
 | `docs/*.md`                   | Existing written specifications            |

@@ -11,7 +11,7 @@ function getAbsolutePath(value: string): string {
 const config: StorybookConfig = {
   stories: [
     // Stories co-located with ui components
-    "../../../packages/ui/src/**/*.stories.@(ts|tsx)",
+    "../../../packages/design/ui/src/**/*.stories.@(ts|tsx)",
     // Local stories for docs/layout demos
     "../src/stories/**/*.stories.@(ts|tsx)",
   ],

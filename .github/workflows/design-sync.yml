@@ -17,15 +17,15 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - "packages/design-tokens/tokens/**"
-      - "packages/design-sync/**"
+      - "packages/design/design-tokens/tokens/**"
+      - "packages/design/design-sync/**"
       - ".tokens-studio/**"
       - ".github/workflows/design-sync.yml"
   pull_request:
     branches: [main, develop]
     paths:
-      - "packages/design-tokens/tokens/**"
-      - "packages/design-sync/**"
+      - "packages/design/design-tokens/tokens/**"
+      - "packages/design/design-sync/**"
       - ".tokens-studio/**"
       - ".github/workflows/design-sync.yml"
   workflow_dispatch:
@@ -93,8 +93,8 @@ jobs:
           PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
           PENPOT_TOKEN: ${{ secrets.PENPOT_TOKEN }}
         run: |
-          if [ -d "packages/design-tokens/tokens" ] && \
-             [ -n "$(find packages/design-tokens/tokens -name '*.json' -type f -print -quit)" ]; then
+          if [ -d "packages/design/design-tokens/tokens" ] && \
+             [ -n "$(find packages/design/design-tokens/tokens -name '*.json' -type f -print -quit)" ]; then
             echo "tokens-present=true" >> "$GITHUB_OUTPUT"
           else
             echo "tokens-present=false" >> "$GITHUB_OUTPUT"
@@ -172,18 +172,18 @@ jobs:
 
       - name: Verify build artifacts exist
         run: |
-          test -d packages/design-tokens/build || {
-            echo "::error::Expected packages/design-tokens/build/ after build."
+          test -d packages/design/design-tokens/build || {
+            echo "::error::Expected packages/design/design-tokens/build/ after build."
             exit 1
           }
 
       - uses: actions/upload-artifact@v4
         with:
           name: design-tokens-build
-          path: packages/design-tokens/build
+          path: packages/design/design-tokens/build
           retention-days: 7
 
-  # ── 4. Parity check vs packages/tokens/styles.css ─────────────────────
+  # ── 4. Parity check vs packages/design/tokens/styles.css ─────────────────────
   parity:
     name: Parity check
     runs-on: ubuntu-latest
@@ -224,10 +224,10 @@ jobs:
           head="${{ github.event.pull_request.head.sha }}"
           {
             echo "diff<<__EOF__"
-            git diff --stat "$base" "$head" -- packages/design-tokens/tokens .tokens-studio || true
+            git diff --stat "$base" "$head" -- packages/design/design-tokens/tokens .tokens-studio || true
             echo
             echo "Files changed:"
-            git diff --name-only "$base" "$head" -- packages/design-tokens/tokens .tokens-studio || true
+            git diff --name-only "$base" "$head" -- packages/design/design-tokens/tokens .tokens-studio || true
             echo "__EOF__"
           } >> "$GITHUB_OUTPUT"
 
@@ -246,10 +246,10 @@ jobs:
 
             - Healthcheck: green
             - design-tokens build: green
-            - parity vs `packages/tokens/styles.css`: green
+            - parity vs `packages/design/tokens/styles.css`: green
 
             > Push to remote design tool is **disabled** in PR runs.
-            > See `packages/design-sync/README.md` to enable.
+            > See `packages/design/design-sync/README.md` to enable.
 
   # ── 6. Push to remote design tool (manual approval gate) ──────────────
   push-to-design-tool:
@@ -287,6 +287,6 @@ jobs:
         run: |
           pnpm --filter @nebutra/design-sync exec tsx src/cli/index.ts push --json || {
             echo "::warning::push reported an issue — current providers throw on live push until wired up."
-            echo "::warning::See packages/design-sync/DESIGN.md for the rollout plan."
+            echo "::warning::See packages/design/design-sync/DESIGN.md for the rollout plan."
             exit 0
           }

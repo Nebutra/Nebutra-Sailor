@@ -1,6 +1,6 @@
 packages:
   - "apps/*"
-  - "packages/*"
+  - "packages/*/*"
   - "backends/python/*"
   - "backends/gateway"
 

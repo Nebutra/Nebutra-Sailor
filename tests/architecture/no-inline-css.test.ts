@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "../..");
-const DESIGN_SYSTEM_SRC = resolve(ROOT, "packages/ui/src/layout");
+const DESIGN_SYSTEM_SRC = resolve(ROOT, "packages/design/ui/src/layout");
 
 const EXCLUDED_DIRS = new Set(["node_modules", ".next", "dist", ".turbo", "marketing"]);
 

@@ -4,7 +4,7 @@
 
 **Goal:** Build Layer 1 (Scenario Preset System) and Layer 2 (CSS-only Theme Engine) from the multi-scenario template architecture, enabling one-config scenario switching across the monorepo.
 
-**Architecture:** `nebutra.config.ts` at the repo root selects a preset (e.g. `"ai-saas"`) which resolves to a set of enabled apps, features, theme, and locales. The preset system is a pure TypeScript package (`packages/preset`) with Zod schemas, 10 preset definitions, and an env var generator. The theme engine is radically simplified from the original design — instead of a TypeScript token/provider system, it uses a single CSS file (`packages/theme/themes.css`) with Tailwind CSS v4 `@theme` + `[data-theme="xxx"]` selectors. `next-themes` (already installed) handles theme switching and persistence.
+**Architecture:** `nebutra.config.ts` at the repo root selects a preset (e.g. `"ai-saas"`) which resolves to a set of enabled apps, features, theme, and locales. The preset system is a pure TypeScript package (`packages/preset`) with Zod schemas, 10 preset definitions, and an env var generator. The theme engine is radically simplified from the original design — instead of a TypeScript token/provider system, it uses a single CSS file (`packages/design/theme/themes.css`) with Tailwind CSS v4 `@theme` + `[data-theme="xxx"]` selectors. `next-themes` (already installed) handles theme switching and persistence.
 
 **Tech Stack:** TypeScript, Zod v3, Vitest, Tailwind CSS v4 (`@theme`), CSS `color-mix()` in OKLCH, next-themes v0.4
 
@@ -14,10 +14,10 @@
 
 **Files:**
 
-- Create: `packages/preset/package.json`
-- Create: `packages/preset/tsconfig.json`
-- Create: `packages/preset/vitest.config.ts`
-- Create: `packages/preset/src/index.ts` (empty placeholder)
+- Create: `packages/ops/preset/package.json`
+- Create: `packages/ops/preset/tsconfig.json`
+- Create: `packages/ops/preset/vitest.config.ts`
+- Create: `packages/ops/preset/src/index.ts` (empty placeholder)
 
 **Step 1: Create package.json**
 
@@ -100,7 +100,7 @@ Expected: SUCCESS (no errors)
 **Step 7: Commit**
 
 ```bash
-git add packages/preset/
+git add packages/ops/preset/
 git commit -m "chore: scaffold packages/preset package"
 ```
 
@@ -110,13 +110,13 @@ git commit -m "chore: scaffold packages/preset package"
 
 **Files:**
 
-- Create: `packages/preset/src/__tests__/config.test.ts`
-- Create: `packages/preset/src/config.ts`
+- Create: `packages/ops/preset/src/__tests__/config.test.ts`
+- Create: `packages/ops/preset/src/config.ts`
 
 **Step 1: Write the failing test**
 
 ```typescript
-// packages/preset/src/__tests__/config.test.ts
+// packages/ops/preset/src/__tests__/config.test.ts
 import { describe, it, expect } from "vitest";
 import {
   NebutraConfigSchema,
@@ -270,7 +270,7 @@ Expected: FAIL — `Cannot find module '../config'`
 **Step 3: Write config.ts**
 
 ```typescript
-// packages/preset/src/config.ts
+// packages/ops/preset/src/config.ts
 import { z } from "zod";
 
 // ─── Enum Schemas ───
@@ -375,7 +375,7 @@ Expected: ALL PASS (7 tests)
 **Step 5: Commit**
 
 ```bash
-git add packages/preset/src/config.ts packages/preset/src/__tests__/config.test.ts
+git add packages/ops/preset/src/config.ts packages/ops/preset/src/__tests__/config.test.ts
 git commit -m "feat(preset): add Zod config schema with defineConfig"
 ```
 
@@ -385,23 +385,23 @@ git commit -m "feat(preset): add Zod config schema with defineConfig"
 
 **Files:**
 
-- Create: `packages/preset/src/__tests__/presets.test.ts`
-- Create: `packages/preset/src/presets/ai-saas.ts`
-- Create: `packages/preset/src/presets/marketing.ts`
-- Create: `packages/preset/src/presets/dashboard.ts`
-- Create: `packages/preset/src/presets/overseas.ts`
-- Create: `packages/preset/src/presets/growth.ts`
-- Create: `packages/preset/src/presets/creative.ts`
-- Create: `packages/preset/src/presets/blog-portfolio.ts`
-- Create: `packages/preset/src/presets/community.ts`
-- Create: `packages/preset/src/presets/one-person.ts`
-- Create: `packages/preset/src/presets/full.ts`
-- Create: `packages/preset/src/presets/index.ts`
+- Create: `packages/ops/preset/src/__tests__/presets.test.ts`
+- Create: `packages/ops/preset/src/presets/ai-saas.ts`
+- Create: `packages/ops/preset/src/presets/marketing.ts`
+- Create: `packages/ops/preset/src/presets/dashboard.ts`
+- Create: `packages/ops/preset/src/presets/overseas.ts`
+- Create: `packages/ops/preset/src/presets/growth.ts`
+- Create: `packages/ops/preset/src/presets/creative.ts`
+- Create: `packages/ops/preset/src/presets/blog-portfolio.ts`
+- Create: `packages/ops/preset/src/presets/community.ts`
+- Create: `packages/ops/preset/src/presets/one-person.ts`
+- Create: `packages/ops/preset/src/presets/full.ts`
+- Create: `packages/ops/preset/src/presets/index.ts`
 
 **Step 1: Write the failing test**
 
 ```typescript
-// packages/preset/src/__tests__/presets.test.ts
+// packages/ops/preset/src/__tests__/presets.test.ts
 import { describe, it, expect } from "vitest";
 import { presets, getPreset } from "../presets";
 import { PresetId, AppId, FeatureId, ThemeId } from "../config";
@@ -505,7 +505,7 @@ Expected: FAIL — `Cannot find module '../presets'`
 Each preset file follows this exact pattern. All 8 app keys and all 14 feature keys must be present.
 
 ```typescript
-// packages/preset/src/presets/ai-saas.ts
+// packages/ops/preset/src/presets/ai-saas.ts
 import type { PresetDefinition } from "../config";
 
 export const aiSaas: PresetDefinition = {
@@ -544,7 +544,7 @@ export const aiSaas: PresetDefinition = {
 ```
 
 ```typescript
-// packages/preset/src/presets/marketing.ts
+// packages/ops/preset/src/presets/marketing.ts
 import type { PresetDefinition } from "../config";
 
 export const marketing: PresetDefinition = {
@@ -582,7 +582,7 @@ export const marketing: PresetDefinition = {
 ```
 
 ```typescript
-// packages/preset/src/presets/dashboard.ts
+// packages/ops/preset/src/presets/dashboard.ts
 import type { PresetDefinition } from "../config";
 
 export const dashboard: PresetDefinition = {
@@ -621,7 +621,7 @@ export const dashboard: PresetDefinition = {
 ```
 
 ```typescript
-// packages/preset/src/presets/overseas.ts
+// packages/ops/preset/src/presets/overseas.ts
 import type { PresetDefinition } from "../config";
 
 export const overseas: PresetDefinition = {
@@ -659,7 +659,7 @@ export const overseas: PresetDefinition = {
 ```
 
 ```typescript
-// packages/preset/src/presets/growth.ts
+// packages/ops/preset/src/presets/growth.ts
 import type { PresetDefinition } from "../config";
 
 export const growth: PresetDefinition = {
@@ -698,7 +698,7 @@ export const growth: PresetDefinition = {
 ```
 
 ```typescript
-// packages/preset/src/presets/creative.ts
+// packages/ops/preset/src/presets/creative.ts
 import type { PresetDefinition } from "../config";
 
 export const creative: PresetDefinition = {
@@ -736,7 +736,7 @@ export const creative: PresetDefinition = {
 ```
 
 ```typescript
-// packages/preset/src/presets/blog-portfolio.ts
+// packages/ops/preset/src/presets/blog-portfolio.ts
 import type { PresetDefinition } from "../config";
 
 export const blogPortfolio: PresetDefinition = {
@@ -774,7 +774,7 @@ export const blogPortfolio: PresetDefinition = {
 ```
 
 ```typescript
-// packages/preset/src/presets/community.ts
+// packages/ops/preset/src/presets/community.ts
 import type { PresetDefinition } from "../config";
 
 export const community: PresetDefinition = {
@@ -812,7 +812,7 @@ export const community: PresetDefinition = {
 ```
 
 ```typescript
-// packages/preset/src/presets/one-person.ts
+// packages/ops/preset/src/presets/one-person.ts
 import type { PresetDefinition } from "../config";
 
 export const onePerson: PresetDefinition = {
@@ -851,7 +851,7 @@ export const onePerson: PresetDefinition = {
 ```
 
 ```typescript
-// packages/preset/src/presets/full.ts
+// packages/ops/preset/src/presets/full.ts
 import type { PresetDefinition } from "../config";
 
 export const full: PresetDefinition = {
@@ -891,7 +891,7 @@ export const full: PresetDefinition = {
 **Step 4: Create presets/index.ts**
 
 ```typescript
-// packages/preset/src/presets/index.ts
+// packages/ops/preset/src/presets/index.ts
 import type { PresetDefinition } from "../config";
 import { PresetId } from "../config";
 import { aiSaas } from "./ai-saas";
@@ -936,7 +936,7 @@ Expected: ALL PASS (config + presets tests)
 **Step 6: Commit**
 
 ```bash
-git add packages/preset/src/presets/ packages/preset/src/__tests__/presets.test.ts
+git add packages/ops/preset/src/presets/ packages/ops/preset/src/__tests__/presets.test.ts
 git commit -m "feat(preset): add 10 scenario preset definitions with tests"
 ```
 
@@ -946,13 +946,13 @@ git commit -m "feat(preset): add 10 scenario preset definitions with tests"
 
 **Files:**
 
-- Create: `packages/preset/src/__tests__/feature-map.test.ts`
-- Create: `packages/preset/src/feature-map.ts`
+- Create: `packages/ops/preset/src/__tests__/feature-map.test.ts`
+- Create: `packages/ops/preset/src/feature-map.ts`
 
 **Step 1: Write the failing test**
 
 ```typescript
-// packages/preset/src/__tests__/feature-map.test.ts
+// packages/ops/preset/src/__tests__/feature-map.test.ts
 import { describe, it, expect } from "vitest";
 import {
   getFeatureEnvVars,
@@ -1038,7 +1038,7 @@ Expected: FAIL — `Cannot find module '../feature-map'`
 **Step 3: Implement feature-map.ts**
 
 ```typescript
-// packages/preset/src/feature-map.ts
+// packages/ops/preset/src/feature-map.ts
 import type { ResolvedConfig } from "./config";
 import { AppId } from "./config";
 
@@ -1089,7 +1089,7 @@ Expected: ALL PASS
 **Step 5: Commit**
 
 ```bash
-git add packages/preset/src/feature-map.ts packages/preset/src/__tests__/feature-map.test.ts
+git add packages/ops/preset/src/feature-map.ts packages/ops/preset/src/__tests__/feature-map.test.ts
 git commit -m "feat(preset): add feature-map env var generator"
 ```
 
@@ -1099,14 +1099,14 @@ git commit -m "feat(preset): add feature-map env var generator"
 
 **Files:**
 
-- Create: `packages/preset/src/__tests__/resolve-config.test.ts`
-- Modify: `packages/preset/src/config.ts` (add `resolveConfig`)
-- Modify: `packages/preset/src/index.ts` (public API)
+- Create: `packages/ops/preset/src/__tests__/resolve-config.test.ts`
+- Modify: `packages/ops/preset/src/config.ts` (add `resolveConfig`)
+- Modify: `packages/ops/preset/src/index.ts` (public API)
 
 **Step 1: Write the failing test**
 
 ```typescript
-// packages/preset/src/__tests__/resolve-config.test.ts
+// packages/ops/preset/src/__tests__/resolve-config.test.ts
 import { describe, it, expect } from "vitest";
 import { resolveConfig, defineConfig } from "../config";
 
@@ -1170,7 +1170,7 @@ Expected: FAIL — `resolveConfig is not a function` (not exported from config.t
 
 **Step 3: Add resolveConfig to config.ts**
 
-Add this to the bottom of `packages/preset/src/config.ts`:
+Add this to the bottom of `packages/ops/preset/src/config.ts`:
 
 ```typescript
 import { getPreset } from "./presets";
@@ -1195,7 +1195,7 @@ Expected: ALL PASS
 **Step 5: Write public API index.ts**
 
 ```typescript
-// packages/preset/src/index.ts
+// packages/ops/preset/src/index.ts
 // Config schema and types
 export {
   NebutraConfigSchema,
@@ -1229,7 +1229,7 @@ Expected: SUCCESS
 **Step 7: Commit**
 
 ```bash
-git add packages/preset/src/config.ts packages/preset/src/index.ts packages/preset/src/__tests__/resolve-config.test.ts
+git add packages/ops/preset/src/config.ts packages/ops/preset/src/index.ts packages/ops/preset/src/__tests__/resolve-config.test.ts
 git commit -m "feat(preset): add resolveConfig and public API"
 ```
 
@@ -1274,14 +1274,14 @@ Add these scripts to root `package.json` under `"scripts"`:
   "build:ai-saas": "turbo run build --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/api-gateway --filter=@nebutra/studio --filter=@nebutra/admin --filter=@nebutra/docs-hub",
   "build:marketing": "turbo run build --filter=@nebutra/landing-page --filter=@nebutra/blog --filter=@nebutra/studio",
   "build:dashboard": "turbo run build --filter=@nebutra/web --filter=@nebutra/admin --filter=@nebutra/api-gateway",
-  "preset:env": "tsx packages/preset/src/cli.ts"
+  "preset:env": "tsx packages/ops/preset/src/cli.ts"
 }
 ```
 
 **Step 3: Create a minimal CLI for env generation**
 
 ```typescript
-// packages/preset/src/cli.ts
+// packages/ops/preset/src/cli.ts
 import { resolveConfig, defineConfig, getFeatureEnvVars } from "./index";
 
 async function main() {
@@ -1323,7 +1323,7 @@ NEBUTRA_THEME=neon
 **Step 5: Commit**
 
 ```bash
-git add nebutra.config.ts packages/preset/src/cli.ts package.json
+git add nebutra.config.ts packages/ops/preset/src/cli.ts package.json
 git commit -m "feat(preset): add root nebutra.config.ts, static build scripts, and CLI"
 ```
 
@@ -1333,9 +1333,9 @@ git commit -m "feat(preset): add root nebutra.config.ts, static build scripts, a
 
 **Files:**
 
-- Create: `packages/theme/package.json`
-- Create: `packages/theme/tsconfig.json`
-- Create: `packages/theme/src/index.ts`
+- Create: `packages/design/theme/package.json`
+- Create: `packages/design/theme/tsconfig.json`
+- Create: `packages/design/theme/src/index.ts`
 
 **Step 1: Create package.json**
 
@@ -1386,7 +1386,7 @@ git commit -m "feat(preset): add root nebutra.config.ts, static build scripts, a
 **Step 3: Create src/index.ts**
 
 ```typescript
-// packages/theme/src/index.ts
+// packages/design/theme/src/index.ts
 // Re-export next-themes for convenience — all apps import from @nebutra/theme
 export { ThemeProvider, useTheme } from "next-themes";
 export type { ThemeProviderProps } from "next-themes";
@@ -1416,7 +1416,7 @@ Expected: SUCCESS
 **Step 6: Commit**
 
 ```bash
-git add packages/theme/
+git add packages/design/theme/
 git commit -m "chore: scaffold packages/theme with next-themes re-export"
 ```
 
@@ -1426,14 +1426,14 @@ git commit -m "chore: scaffold packages/theme with next-themes re-export"
 
 **Files:**
 
-- Create: `packages/theme/themes.css`
+- Create: `packages/design/theme/themes.css`
 
 This is the heart of Layer 2. All design tokens are defined in CSS using OKLCH colors and Tailwind v4 `@theme`.
 
 **Step 1: Create themes.css**
 
 ```css
-/* packages/theme/themes.css
+/* packages/design/theme/themes.css
  *
  * Nebutra Theme Engine — CSS-only
  *
@@ -1746,13 +1746,13 @@ This is the heart of Layer 2. All design tokens are defined in CSS using OKLCH c
 
 **Step 2: Verify file was created**
 
-Run: `ls -la packages/theme/themes.css`
+Run: `ls -la packages/design/theme/themes.css`
 Expected: File exists
 
 **Step 3: Commit**
 
 ```bash
-git add packages/theme/themes.css
+git add packages/design/theme/themes.css
 git commit -m "feat(theme): add CSS-only theme engine with 6 scenario presets"
 ```
 
@@ -1847,7 +1847,7 @@ Expected: Dev server starts without CSS errors. Page renders with neon theme col
 **Step 8: Commit**
 
 ```bash
-git add apps/landing-page/ apps/web/ packages/theme/
+git add apps/landing-page/ apps/web/ packages/design/theme/
 git commit -m "feat(theme): wire themes.css into landing-page and web apps"
 ```
 
@@ -1857,12 +1857,12 @@ git commit -m "feat(theme): wire themes.css into landing-page and web apps"
 
 **Files:**
 
-- Create: `packages/preset/src/__tests__/integration.test.ts`
+- Create: `packages/ops/preset/src/__tests__/integration.test.ts`
 
 **Step 1: Write integration test**
 
 ```typescript
-// packages/preset/src/__tests__/integration.test.ts
+// packages/ops/preset/src/__tests__/integration.test.ts
 import { describe, it, expect } from "vitest";
 import {
   defineConfig,
@@ -1956,7 +1956,7 @@ Expected: Build succeeds — themes.css is bundled correctly
 **Step 5: Commit**
 
 ```bash
-git add packages/preset/src/__tests__/integration.test.ts
+git add packages/ops/preset/src/__tests__/integration.test.ts
 git commit -m "test(preset): add integration tests for preset → theme flow"
 ```
 
@@ -1980,7 +1980,7 @@ Expected: ALL PASS
 
 **Step 3: Verify no console.log statements**
 
-Run: `grep -r "console.log" packages/preset/src/ packages/theme/src/ --include="*.ts" --include="*.tsx"`
+Run: `grep -r "console.log" packages/ops/preset/src/ packages/design/theme/src/ --include="*.ts" --include="*.tsx"`
 Expected: Empty (no console.log in source files)
 
 **Step 4: Verify test coverage**

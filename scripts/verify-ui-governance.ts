@@ -271,7 +271,7 @@ function verifyDependencyBoundaries(policy: GovernancePolicy) {
     `Dependency boundary violation (deep cross-package import):\n${importViolations.map((item) => `- ${item}`).join("\n")}`,
   );
 
-  const uiPackage = JSON.parse(read("packages/ui/package.json")) as {
+  const uiPackage = JSON.parse(read("packages/design/ui/package.json")) as {
     exports?: Record<string, unknown>;
   };
   const exportKeys = Object.keys(uiPackage.exports || {});
@@ -292,7 +292,7 @@ function verifyDependencyBoundaries(policy: GovernancePolicy) {
 function countAggregateBudgetViolations(budget: AggregateBudgetEntry, pattern: RegExp): number {
   const excludeSet = new Set(budget.exclude ?? []);
 
-  // Derive roots from paths (strip glob suffix, e.g. "packages/ui/src/**" -> "packages/ui/src")
+  // Derive roots from paths (strip glob suffix, e.g. "packages/design/ui/src/**" -> "packages/design/ui/src")
   const roots = budget.paths.map((p) => p.replace(/\/\*\*$/, "").replace(/\/\*$/, ""));
 
   const allFiles = roots.flatMap((root) => collectFiles(root, new Set([".ts", ".tsx", ".css"])));

@@ -222,7 +222,7 @@ Replace `turbo.json` content:
     },
     "db:generate": {
       "cache": true,
-      "inputs": ["packages/db/prisma/schema.prisma"],
+      "inputs": ["packages/platform/db/prisma/schema.prisma"],
       "outputs": ["node_modules/.pnpm/@prisma+client*/**"]
     },
     "db:migrate": {
@@ -282,12 +282,12 @@ RUN corepack enable pnpm
 # Copy manifests for all workspace packages api-gateway depends on
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY backends/gateway/package.json ./backends/gateway/
-COPY packages/alerting/package.json ./packages/alerting/
-COPY packages/cache/package.json ./packages/cache/
-COPY packages/db/package.json ./packages/db/
-COPY packages/health/package.json ./packages/health/
-COPY packages/logger/package.json ./packages/logger/
-COPY packages/rate-limit/package.json ./packages/rate-limit/
+COPY packages/platform/alerting/package.json ./packages/platform/alerting/
+COPY packages/integrations/cache/package.json ./packages/integrations/cache/
+COPY packages/platform/db/package.json ./packages/platform/db/
+COPY packages/platform/health/package.json ./packages/platform/health/
+COPY packages/platform/logger/package.json ./packages/platform/logger/
+COPY packages/platform/rate-limit/package.json ./packages/platform/rate-limit/
 
 RUN pnpm install --frozen-lockfile --filter @nebutra/api-gateway...
 

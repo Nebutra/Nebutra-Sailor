@@ -1,6 +1,6 @@
 /**
  * Helpers for reading shadcn-style registry manifests written by
- * packages/ui/scripts/build-registry.ts into apps/design-docs/public/r/
+ * packages/design/ui/scripts/build-registry.ts into apps/design-docs/public/r/
  *
  * Read-only at request time — the JSON is generated at build (prebuild) time.
  */

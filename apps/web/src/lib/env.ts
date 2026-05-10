@@ -25,10 +25,7 @@ export const env = createEnv({
     SENTRY_PROJECT: z.string().optional(),
 
     // Logger Sentry transport — opt-in to avoid double-capturing errors
-    LOGGER_SENTRY_ENABLED: z
-      .enum(["true", "false"])
-      .optional()
-      .default("false"),
+    LOGGER_SENTRY_ENABLED: z.enum(["true", "false"]).optional().default("false"),
   },
 
   client: {

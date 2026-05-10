@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - "packages/ui/src/**"
+      - "packages/design/ui/src/**"
       - "apps/storybook/**"
       - "apps/landing-page/src/components/**"
       - "apps/landing-page/src/app/**/page.tsx"
   pull_request:
     paths:
-      - "packages/ui/src/**"
+      - "packages/design/ui/src/**"
       - "apps/storybook/**"
       - "apps/landing-page/src/components/**"
       - "apps/landing-page/src/app/**/page.tsx"

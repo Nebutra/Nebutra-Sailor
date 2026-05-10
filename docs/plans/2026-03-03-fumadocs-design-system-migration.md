@@ -17,7 +17,7 @@
 - Workspace packages: `apps/*`, `packages/*`, `services/*`
 - Package manager: pnpm 10 + Turborepo 2
 - `apps/docs-hub/` — current Mintlify docs (to be trimmed, not deleted)
-- `packages/ui/` → `@nebutra/ui` — component library (tsup-built, dist/)
+- `packages/design/ui/` → `@nebutra/ui` — component library (tsup-built, dist/)
 - `apps/storybook/` — Storybook 8 (unchanged)
 
 ### Content to migrate (from `apps/docs-hub/design-system/`)

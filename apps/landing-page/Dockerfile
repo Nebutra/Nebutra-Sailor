@@ -16,12 +16,12 @@ COPY apps/landing-page/package.json ./apps/landing-page/
 # Internal workspace packages that @nebutra/landing-page depends on.
 # Derived from the "dependencies" field in apps/landing-page/package.json:
 #   @nebutra/brand, @nebutra/ui, @nebutra/marketing, @nebutra/sanity, @nebutra/tokens
-COPY packages/brand/package.json      ./packages/brand/
-COPY packages/ui/package.json         ./packages/ui/
-COPY packages/tokens/package.json     ./packages/tokens/
-COPY packages/marketing/package.json  ./packages/marketing/
-COPY packages/sanity/package.json     ./packages/sanity/
-COPY packages/theme/package.json      ./packages/theme/
+COPY packages/design/brand/package.json      ./packages/design/brand/
+COPY packages/design/ui/package.json         ./packages/design/ui/
+COPY packages/design/tokens/package.json     ./packages/design/tokens/
+COPY packages/commerce/marketing/package.json  ./packages/commerce/marketing/
+COPY packages/ops/sanity/package.json     ./packages/ops/sanity/
+COPY packages/design/theme/package.json      ./packages/design/theme/
 
 # Install only the closure needed for @nebutra/landing-page (and its workspace deps)
 RUN pnpm install --frozen-lockfile --filter @nebutra/landing-page...

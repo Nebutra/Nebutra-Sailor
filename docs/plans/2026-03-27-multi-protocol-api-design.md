@@ -54,7 +54,7 @@ Dynamic imports ensure unused protocols add zero bundle weight.
 ## Preset Config Extension
 
 ```ts
-// packages/preset/src/config.ts
+// packages/ops/preset/src/config.ts
 export const ApiProtocolId = z.enum(["rest", "orpc", "trpc"]);
 
 // Add to NebutraConfigSchema

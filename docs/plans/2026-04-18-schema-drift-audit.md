@@ -1,6 +1,6 @@
 # Prisma Schema Audit: Orphaned Models Analysis
 **Date**: April 18, 2026  
-**Schema Location**: `packages/db/prisma/schema.prisma`  
+**Schema Location**: `packages/platform/db/prisma/schema.prisma`  
 **Audit Scope**: All 61 declared models across `apps/`, `packages/`, and `services/`  
 
 ---
@@ -201,7 +201,7 @@ Otherwise, drop Better Auth tables but keep OAuthClient for future provider role
 **CRITICAL**: This migration drops 34 unused models. Review each carefully before applying.
 
 ```sql
--- packages/db/prisma/migrations/2026-04-18-drop-orphans.sql
+-- packages/platform/db/prisma/migrations/2026-04-18-drop-orphans.sql
 -- DO NOT AUTO-APPLY. Manual review required before execution.
 
 -- ============================================

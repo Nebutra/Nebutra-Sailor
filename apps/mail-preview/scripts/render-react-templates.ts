@@ -10,7 +10,7 @@
 
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { REACT_EMAIL_TEMPLATES } from "../../../packages/email/src/templates/index";
+import { REACT_EMAIL_TEMPLATES } from "../../../packages/integrations/email/src/templates/index";
 
 const distDir = new URL("../dist/", import.meta.url);
 

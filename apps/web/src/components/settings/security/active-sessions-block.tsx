@@ -30,7 +30,7 @@ interface ActiveSessionsBlockProps {
 
 // Inline i18n strings — the web app does not bundle next-intl into this component
 // today, so we keep English-only literals here and align keys with
-// packages/i18n/locales/en.json → auth.security.sessions.* and auth.errors.*.
+// packages/platform/i18n/locales/en.json → auth.security.sessions.* and auth.errors.*.
 const SESSION_STRINGS = {
   title: "Active sessions",
   description: "Review where your account is signed in and revoke sessions you no longer trust.",
@@ -52,7 +52,7 @@ const SESSION_STRINGS = {
   revoking: "Signing out…",
 } as const;
 
-// Error catalog mirrors packages/i18n/locales/en.json → auth.errors.*.
+// Error catalog mirrors packages/platform/i18n/locales/en.json → auth.errors.*.
 // Inline-bundled because @nebutra/i18n is not a runtime dependency of @nebutra/web.
 const ERROR_MESSAGES: Record<AuthErrorKey, string> = {
   invalidCredentials: "Email or password is incorrect.",

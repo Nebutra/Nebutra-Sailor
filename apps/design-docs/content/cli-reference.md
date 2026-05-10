@@ -378,10 +378,10 @@ The `nebutra init` command creates a `nebutra.config.json` file:
 ```json
 {
   "$schema": "https://nebutra.com/schema.json",
-  "componentsDirectory": "packages/ui/src/components",
+  "componentsDirectory": "packages/design/ui/src/components",
   "tailwind": {
     "config": "tailwind.config.ts",
-    "css": "packages/tokens/styles.css",
+    "css": "packages/design/tokens/styles.css",
     "baseColor": "slate",
     "cssVariables": true
   },
@@ -456,8 +456,8 @@ The CLI respects these environment variables:
 For internal tooling inside the Nebutra-Sailor monorepo, import command helpers from the source tree directly:
 
 ```javascript
-import { initCommand } from "../../packages/cli/src/commands/init.js";
-import { addCommand } from "../../packages/cli/src/commands/add.js";
+import { initCommand } from "../../packages/ops/cli/src/commands/init.js";
+import { addCommand } from "../../packages/ops/cli/src/commands/add.js";
 
 await initCommand();
 await addCommand(["button", "input"], { "21st": undefined, v0: undefined });

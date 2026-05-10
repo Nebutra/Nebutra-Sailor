@@ -10,6 +10,9 @@ type PackageStatus = "stable" | "foundation" | "wip" | "deprecated";
 
 type NebutraPackageManifest = {
   name: string;
+  // Absolute path to the package directory (added at scan time so callers can
+  // resolve sibling files like README.md without re-deriving the group dir).
+  __packageDir: string;
   nebutra?: {
     status?: PackageStatus;
     productionReady?: boolean;
@@ -21,18 +24,24 @@ async function readJson<T>(path: string): Promise<T> {
   return JSON.parse(await readFile(path, "utf8")) as T;
 }
 
+// Packages live at packages/<group>/<name>/package.json (W3b 2-level layout).
 async function readWorkspaceReadinessPackages(): Promise<NebutraPackageManifest[]> {
   const manifests: NebutraPackageManifest[] = [];
 
-  for (const entry of readdirSync(PACKAGE_DIR, { withFileTypes: true })) {
-    if (!entry.isDirectory()) continue;
+  for (const groupEntry of readdirSync(PACKAGE_DIR, { withFileTypes: true })) {
+    if (!groupEntry.isDirectory()) continue;
+    const groupDir = join(PACKAGE_DIR, groupEntry.name);
 
-    const manifestPath = join(PACKAGE_DIR, entry.name, "package.json");
-    if (!existsSync(manifestPath)) continue;
+    for (const pkgEntry of readdirSync(groupDir, { withFileTypes: true })) {
+      if (!pkgEntry.isDirectory()) continue;
+      const packageDir = join(groupDir, pkgEntry.name);
+      const manifestPath = join(packageDir, "package.json");
+      if (!existsSync(manifestPath)) continue;
 
-    const manifest = await readJson<NebutraPackageManifest>(manifestPath);
-    if (manifest.name?.startsWith("@nebutra/") && manifest.nebutra?.status) {
-      manifests.push(manifest);
+      const manifest = await readJson<NebutraPackageManifest>(manifestPath);
+      if (manifest.name?.startsWith("@nebutra/") && manifest.nebutra?.status) {
+        manifests.push({ ...manifest, __packageDir: packageDir });
+      }
     }
   }
 
@@ -48,9 +57,9 @@ describe("package readiness governance", () => {
 
     for (const manifest of manifests) {
       const packageName = manifest.name.replace("@nebutra/", "");
-      const readmePath = join(PACKAGE_DIR, packageName, "README.md");
+      const readmePath = join(manifest.__packageDir, "README.md");
       const cliStatusRegistry = await readFile(
-        join(ROOT, "packages/create-sailor/src/utils/package-status.ts"),
+        join(ROOT, "packages/ops/create-sailor/src/utils/package-status.ts"),
         "utf8",
       );
       const readme = existsSync(readmePath) ? await readFile(readmePath, "utf8") : "";

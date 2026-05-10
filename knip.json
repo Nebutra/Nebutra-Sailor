@@ -13,7 +13,7 @@
       ],
       "ignore": ["tailwind.config.ts"]
     },
-    "packages/*": {
+    "packages/*/*": {
       "entry": ["src/index.ts", "src/cli.ts", "tsup.config.ts"]
     }
   },

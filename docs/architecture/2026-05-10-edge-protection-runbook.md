@@ -119,7 +119,7 @@ For `api.nebutra.com`:
 - Cloudflare → Turnstile → Add Site
 - Type: **Managed** (auto-detect; falls back to invisible / interactive)
 - Use on: signup, login (after N failed attempts), public forms (contact, demo request)
-- The codebase already has `packages/captcha/src/server/turnstile.ts` scaffold — finish wiring after dashboard config.
+- The codebase already has `packages/iam/captcha/src/server/turnstile.ts` scaffold — finish wiring after dashboard config.
 
 ### 1.9 Under Attack Mode (emergency only)
 

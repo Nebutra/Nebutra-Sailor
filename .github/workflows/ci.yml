@@ -63,7 +63,7 @@ jobs:
             packages:
               - 'packages/**'
             db:
-              - 'packages/db/**'
+              - 'packages/platform/db/**'
             services:
               - 'backends/python/**'
             openapi:
@@ -73,18 +73,18 @@ jobs:
               - 'apps/web/src/lib/api/**'
               - 'scripts/generate-api-types.ts'
               - '.github/workflows/ci.yml'
-              - 'packages/contracts/**'
-              - 'packages/gateway-core/**'
+              - 'packages/commerce/contracts/**'
+              - 'packages/platform/gateway-core/**'
             e2e:
               - 'e2e/**'
               - 'backends/gateway/**'
               - 'apps/landing-page/**'
               - 'apps/sleptons/**'
               - 'apps/web/**'
-              - 'packages/brand/**'
-              - 'packages/theme/**'
-              - 'packages/tokens/**'
-              - 'packages/ui/**'
+              - 'packages/design/brand/**'
+              - 'packages/design/theme/**'
+              - 'packages/design/tokens/**'
+              - 'packages/design/ui/**'
 
 
 

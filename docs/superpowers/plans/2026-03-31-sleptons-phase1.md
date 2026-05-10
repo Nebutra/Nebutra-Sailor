@@ -17,8 +17,8 @@
 ### Modified
 | File | Change |
 |------|--------|
-| `packages/db/prisma/schema.prisma` | Add 2 enums + 4 Sleptons models |
-| `packages/db/src/index.ts` | Export new model types |
+| `packages/platform/db/prisma/schema.prisma` | Add 2 enums + 4 Sleptons models |
+| `packages/platform/db/src/index.ts` | Export new model types |
 | `apps/landing-page/src/app/api/license/route.ts` | Accept `lookingFor`, auto-create `sleptons_member_profiles`, return `communitySlug` |
 | `apps/landing-page/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx` | Add lookingFor checkboxes to Step 3; update Step 4 redirect to community |
 | `turbo.json` | Add `@nebutra/community` to build pipeline |
@@ -56,7 +56,7 @@
 ## Task 1: Prisma — Enums
 
 **Files:**
-- Modify: `packages/db/prisma/schema.prisma` (after the last existing enum, before the first model)
+- Modify: `packages/platform/db/prisma/schema.prisma` (after the last existing enum, before the first model)
 
 - [ ] **Step 1: Write the failing typecheck**
 
@@ -97,7 +97,7 @@ cd packages/db && pnpm prisma validate
 - [ ] **Step 4: Commit**
 
 ```bash
-git add packages/db/prisma/schema.prisma
+git add packages/platform/db/prisma/schema.prisma
 git commit -m "feat(db): add SleptonsTier and ProductStage enums"
 ```
 
@@ -106,7 +106,7 @@ git commit -m "feat(db): add SleptonsTier and ProductStage enums"
 ## Task 2: Prisma — Sleptons Models
 
 **Files:**
-- Modify: `packages/db/prisma/schema.prisma` (append at end of file)
+- Modify: `packages/platform/db/prisma/schema.prisma` (append at end of file)
 
 - [ ] **Step 1: Append the four Sleptons models**
 
@@ -216,7 +216,7 @@ cd packages/db && pnpm prisma validate
 - [ ] **Step 4: Commit**
 
 ```bash
-git add packages/db/prisma/schema.prisma
+git add packages/platform/db/prisma/schema.prisma
 git commit -m "feat(db): add Sleptons community models (profiles, products, upvotes, connections)"
 ```
 
@@ -225,7 +225,7 @@ git commit -m "feat(db): add Sleptons community models (profiles, products, upvo
 ## Task 3: Prisma Migration
 
 **Files:**
-- Generate: `packages/db/prisma/migrations/YYYYMMDD_sleptons_community/`
+- Generate: `packages/platform/db/prisma/migrations/YYYYMMDD_sleptons_community/`
 
 - [ ] **Step 1: Generate migration**
 
@@ -238,7 +238,7 @@ pnpm prisma migrate dev --name sleptons_community
 - [ ] **Step 2: Verify generated client includes new types**
 
 ```bash
-grep -r "SleptonsaMemberProfile" packages/db/src/generated/
+grep -r "SleptonsaMemberProfile" packages/platform/db/src/generated/
 # Expected: file found with the type
 ```
 
@@ -252,7 +252,7 @@ cd packages/db && pnpm typecheck
 - [ ] **Step 4: Commit**
 
 ```bash
-git add packages/db/prisma/migrations/ packages/db/src/generated/
+git add packages/platform/db/prisma/migrations/ packages/platform/db/src/generated/
 git commit -m "feat(db): run Sleptons community migration"
 ```
 

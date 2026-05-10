@@ -16,11 +16,11 @@ COPY apps/web/package.json ./apps/web/
 # Internal workspace packages that @nebutra/web depends on.
 # Derived from the "dependencies" field in apps/web/package.json
 # and transitive workspace deps (@nebutra/ui → @nebutra/brand).
-COPY packages/ui/package.json          ./packages/ui/
-COPY packages/tokens/package.json      ./packages/tokens/
-COPY packages/theme/package.json       ./packages/theme/
-COPY packages/brand/package.json       ./packages/brand/
-COPY packages/db/package.json          ./packages/db/
+COPY packages/design/ui/package.json          ./packages/design/ui/
+COPY packages/design/tokens/package.json      ./packages/design/tokens/
+COPY packages/design/theme/package.json       ./packages/design/theme/
+COPY packages/design/brand/package.json       ./packages/design/brand/
+COPY packages/platform/db/package.json          ./packages/platform/db/
 
 # Install only the closure needed for @nebutra/web (and its workspace deps)
 # @nebutra/db is added as an explicit filter target so its devDependencies

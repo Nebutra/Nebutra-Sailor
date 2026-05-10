@@ -3,7 +3,7 @@
 **Date:** 2026-02-28
 **Status:** Approved — VI-Revised 2026-02-28
 **Scope:** `packages/ui`, `apps/storybook` (new), `apps/docs-hub`
-**VI Reference:** `packages/brand/assets/vi/full.md` — 云毓智能 VI 手册
+**VI Reference:** `packages/design/brand/assets/vi/full.md` — 云毓智能 VI 手册
 
 ## Problem
 
@@ -29,7 +29,7 @@ The existing design system has 129+ components with strong coverage but falls sh
 
 ## VI Manual Aesthetic Decisions
 
-> Source: `packages/brand/assets/vi/full.md` — reviewed 2026-02-28
+> Source: `packages/design/brand/assets/vi/full.md` — reviewed 2026-02-28
 
 ### Colors
 
@@ -83,7 +83,7 @@ VI defines 4 gradient presets as first-class brand assets. These enter `primitiv
 ### Token 3-Layer System
 
 ```
-packages/ui/src/tokens/
+packages/design/ui/src/tokens/
 ├── primitive.ts          Raw values (numbers, color hex, unitless)
 ├── semantic.ts           Light/dark semantic mapping → CSS variable names
 ├── components/           Per-component design decisions
@@ -110,7 +110,7 @@ primitive.blue500 = '#3b82f6'
 ```
 apps/storybook/
 ├── .storybook/
-│   ├── main.ts           Loads stories from packages/ui/src/**/*.stories.tsx
+│   ├── main.ts           Loads stories from packages/design/ui/src/**/*.stories.tsx
 │   └── preview.tsx       Injects globals.css + dark mode toggle
 └── package.json          @storybook/react-vite
 ```
@@ -118,7 +118,7 @@ apps/storybook/
 Stories live alongside components:
 
 ```
-packages/ui/src/primitives/
+packages/design/ui/src/primitives/
 ├── button.tsx
 ├── button.stories.tsx    ← new
 ├── avatar.tsx
@@ -229,16 +229,16 @@ Two new components in `apps/docs-hub/`:
 
 | Phase | Scope                                  | Key Files                                                         |
 | ----- | -------------------------------------- | ----------------------------------------------------------------- |
-| 1     | Token 3-layer architecture             | `packages/ui/src/tokens/`                                  |
-| 2     | globals.css + tailwind.preset update   | `packages/ui/src/styles/globals.css`, `tailwind.preset.ts` |
+| 1     | Token 3-layer architecture             | `packages/design/ui/src/tokens/`                                  |
+| 2     | globals.css + tailwind.preset update   | `packages/design/ui/src/styles/globals.css`, `tailwind.preset.ts` |
 | 3     | Storybook app setup                    | `apps/storybook/` (new)                                           |
-| 4     | 5 component stories                    | `packages/ui/src/primitives/*.stories.tsx`                 |
+| 4     | 5 component stories                    | `packages/design/ui/src/primitives/*.stories.tsx`                 |
 | 5     | docs-hub ComponentPreview + PropsTable | `apps/docs-hub/components/`                                       |
-| 6     | Button refinement                      | `packages/ui/src/primitives/button.tsx`                    |
-| 7     | Avatar + AvatarGroup refinement        | `packages/ui/src/primitives/avatar.tsx`                    |
-| 8     | Input refinement                       | `packages/ui/src/primitives/input.tsx`                     |
-| 9     | Card refinement                        | `packages/ui/src/primitives/card.tsx`                      |
-| 10    | Badge refinement                       | `packages/ui/src/primitives/badge.tsx`                     |
+| 6     | Button refinement                      | `packages/design/ui/src/primitives/button.tsx`                    |
+| 7     | Avatar + AvatarGroup refinement        | `packages/design/ui/src/primitives/avatar.tsx`                    |
+| 8     | Input refinement                       | `packages/design/ui/src/primitives/input.tsx`                     |
+| 9     | Card refinement                        | `packages/design/ui/src/primitives/card.tsx`                      |
+| 10    | Badge refinement                       | `packages/design/ui/src/primitives/badge.tsx`                     |
 
 ---
 
@@ -255,12 +255,12 @@ For each phase, verify:
 
 ## Key Files
 
-- `packages/ui/src/tokens/` — all new token files
-- `packages/ui/src/styles/globals.css` — CSS variable source
-- `packages/ui/src/tailwind.preset.ts` — Tailwind extension
-- `packages/ui/src/primitives/button.tsx` — current component
-- `packages/ui/src/primitives/avatar.tsx` — current component
-- `packages/ui/src/primitives/input.tsx` — current component
-- `packages/ui/src/primitives/card.tsx` — current component
-- `packages/ui/src/primitives/badge.tsx` — current component
+- `packages/design/ui/src/tokens/` — all new token files
+- `packages/design/ui/src/styles/globals.css` — CSS variable source
+- `packages/design/ui/src/tailwind.preset.ts` — Tailwind extension
+- `packages/design/ui/src/primitives/button.tsx` — current component
+- `packages/design/ui/src/primitives/avatar.tsx` — current component
+- `packages/design/ui/src/primitives/input.tsx` — current component
+- `packages/design/ui/src/primitives/card.tsx` — current component
+- `packages/design/ui/src/primitives/badge.tsx` — current component
 - `apps/docs-hub/` — documentation site

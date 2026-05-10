@@ -64,13 +64,13 @@ git commit -m "chore: strengthen eslint rules - warn to error, add no-console"
 
 **Files:**
 
-- Modify: `packages/alerting/src/index.ts`
+- Modify: `packages/platform/alerting/src/index.ts`
 
 **目标：** 将所有 `console.log` 和 `console.error` 替换为静默处理或标准错误抛出，使生产代码无 console 依赖。
 
 **Step 1: 修改 `initializeFromEnv` 函数**
 
-在 `packages/alerting/src/index.ts` 的第 373-386 行，将：
+在 `packages/platform/alerting/src/index.ts` 的第 373-386 行，将：
 
 ```typescript
 export function initializeFromEnv(): void {
@@ -232,7 +232,7 @@ pnpm lint 2>&1 | grep -E "(alerting|error|Error)" | head -20
 **Step 9: Commit**
 
 ```bash
-git add packages/alerting/src/index.ts
+git add packages/platform/alerting/src/index.ts
 git commit -m "fix: remove console statements from alerting package"
 ```
 

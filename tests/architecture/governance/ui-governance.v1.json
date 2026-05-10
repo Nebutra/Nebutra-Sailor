@@ -20,18 +20,18 @@
   "tokenFormatBudget": {
     "tokenSurfaces": [
       {
-        "root": "packages/ui/src/theme",
+        "root": "packages/design/ui/src/theme",
         "extensions": [".ts", ".tsx"]
       },
       {
-        "root": "packages/theme/themes.css",
+        "root": "packages/design/theme/themes.css",
         "extensions": [".css"]
       }
     ],
     "maxHexLiterals": 40,
     "maxHslLiterals": 1,
     "minOklchLiterals": 120,
-    "allowedHexFiles": ["packages/ui/src/theme/tokens.ts"],
+    "allowedHexFiles": ["packages/design/ui/src/theme/tokens.ts"],
     "allowedHslFiles": []
   },
   "motionBoundary": {
@@ -58,11 +58,11 @@
       "apps/landing-page/src/components/landing/use-cases/mockups/IPMockup.tsx",
       "apps/landing-page/src/components/landing/use-cases/mockups/MultimodalMockup.tsx",
       "apps/landing-page/src/components/landing/use-cases/mockups/OPCMockup.tsx",
-      "packages/ui/src/components/animate-in.tsx"
+      "packages/design/ui/src/components/animate-in.tsx"
     ]
   },
   "componentTierCoverage": {
-    "primitivesRoot": "packages/ui/src/primitives",
+    "primitivesRoot": "packages/design/ui/src/primitives",
     "tiers": [
       {
         "name": "tier-1",
@@ -107,13 +107,13 @@
     "rawTailwindColors": {
       "description": "Raw Tailwind color utilities (bg-slate-*, text-gray-*, etc.) — use semantic tokens instead",
       "max": 1064,
-      "paths": ["packages/ui/src/**", "apps/web/src/**", "apps/landing-page/src/**"],
+      "paths": ["packages/design/ui/src/**", "apps/web/src/**", "apps/landing-page/src/**"],
       "exclude": ["**/*.stories.*", "**/globals.css"]
     },
     "rawTailwindBorderRadius": {
       "description": "Raw Tailwind border-radius utilities — use var(--radius-*) tokens instead",
       "max": 556,
-      "paths": ["packages/ui/src/**", "apps/web/src/**", "apps/landing-page/src/**"],
+      "paths": ["packages/design/ui/src/**", "apps/web/src/**", "apps/landing-page/src/**"],
       "exclude": ["**/*.stories.*"]
     }
   }

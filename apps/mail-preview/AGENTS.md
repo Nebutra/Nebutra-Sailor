@@ -12,7 +12,7 @@ It owns:
 - local preview-specific README and output directory conventions
 
 It does not own the email templates themselves. The canonical template catalog
-and public sender mapping live in `packages/email/src/index.ts`.
+and public sender mapping live in `packages/integrations/email/src/index.ts`.
 
 ## Source Of Truth
 
@@ -21,7 +21,7 @@ Use these files as the canonical source before editing behavior:
 - `package.json` for preview, export, and validation commands
 - `README.md` for local operator guidance only
 
-Treat `packages/email/src/index.ts` and `EMAIL_TEMPLATE_CATALOG` as the real
+Treat `packages/integrations/email/src/index.ts` and `EMAIL_TEMPLATE_CATALOG` as the real
 source of truth for template IDs, preview filenames, and sender mappings.
 
 ## Contract Boundaries

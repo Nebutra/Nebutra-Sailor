@@ -15,7 +15,7 @@ Status: Approved
 
 ### WS1: Token Codemod + ESLint Rule
 
-**Scope:** `packages/ui/src/`, `apps/web/src/`, `apps/landing-page/src/`, `eslint.config.mjs`
+**Scope:** `packages/design/ui/src/`, `apps/web/src/`, `apps/landing-page/src/`, `eslint.config.mjs`
 
 **Deliverables:**
 1. `scripts/codemod-tokens.ts` — regex-based transformer:
@@ -57,7 +57,7 @@ Status: Approved
 
 ### WS3: Repository Implementation
 
-**Scope:** `packages/repositories/src/`
+**Scope:** `packages/platform/repositories/src/`
 
 **Deliverables:**
 1. `user.repository.ts` — UserRepository class wrapping Prisma User model

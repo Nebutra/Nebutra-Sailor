@@ -34,8 +34,8 @@ pnpm --filter @nebutra/mail-preview check          # verify every catalog entry 
 
 ## Adding a template
 
-1. Create the template module under `packages/email/src/templates/<name>.tsx` exporting
+1. Create the template module under `packages/integrations/email/src/templates/<name>.tsx` exporting
    `subject`, `preview`, `render`, plus the `Props` interface.
-2. Add an entry to `REACT_EMAIL_TEMPLATES` in `packages/email/src/templates/index.ts`.
+2. Add an entry to `REACT_EMAIL_TEMPLATES` in `packages/integrations/email/src/templates/index.ts`.
 3. Add fixture props in `apps/mail-preview/src/lib/fixtures.ts`.
 4. Refresh the preview app — the template appears automatically in the sidebar.

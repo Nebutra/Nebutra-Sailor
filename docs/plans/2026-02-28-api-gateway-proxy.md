@@ -1256,4 +1256,4 @@ Expected: response from the AI service (or a well-formed error if the service is
 | `backends/gateway/src/config/env.ts`                | Zod env schema (extended with BILLING_SERVICE_URL, INTERNAL_API_KEY)       |
 | `backends/gateway/src/index.ts`                     | Route registration and error handler                                       |
 | `backends/gateway/src/middlewares/tenantContext.ts` | `requireAuth`, `requireOrganization`, `TenantContext`                      |
-| `packages/errors/src/index.ts`                      | `ERROR_CODES`, `toApiError`, `getStatusCode`                               |
+| `packages/platform/errors/src/index.ts`                      | `ERROR_CODES`, `toApiError`, `getStatusCode`                               |

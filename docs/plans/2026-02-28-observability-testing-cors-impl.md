@@ -14,11 +14,11 @@
 
 **Files:**
 
-- Create: `packages/logger/package.json`
-- Create: `packages/logger/tsconfig.json`
-- Create: `packages/logger/src/types.ts`
-- Create: `packages/logger/src/logger.ts`
-- Create: `packages/logger/src/index.ts`
+- Create: `packages/platform/logger/package.json`
+- Create: `packages/platform/logger/tsconfig.json`
+- Create: `packages/platform/logger/src/types.ts`
+- Create: `packages/platform/logger/src/logger.ts`
+- Create: `packages/platform/logger/src/index.ts`
 
 **Step 1: Install pino dependencies**
 
@@ -32,7 +32,7 @@ Expected: pnpm installs without errors.
 
 **Step 2: Create package.json**
 
-Create `packages/logger/package.json`:
+Create `packages/platform/logger/package.json`:
 
 ```json
 {
@@ -62,7 +62,7 @@ Create `packages/logger/package.json`:
 
 **Step 3: Create tsconfig.json**
 
-Create `packages/logger/tsconfig.json`:
+Create `packages/platform/logger/tsconfig.json`:
 
 ```json
 {
@@ -78,7 +78,7 @@ Create `packages/logger/tsconfig.json`:
 
 **Step 4: Create src/types.ts**
 
-Create `packages/logger/src/types.ts`:
+Create `packages/platform/logger/src/types.ts`:
 
 ```typescript
 export type LogLevel = "debug" | "info" | "warn" | "error";
@@ -95,7 +95,7 @@ export interface Logger {
 
 **Step 5: Create src/logger.ts**
 
-Create `packages/logger/src/logger.ts`:
+Create `packages/platform/logger/src/logger.ts`:
 
 ```typescript
 import pino from "pino";
@@ -152,7 +152,7 @@ export const logger: Logger = makeLogger(pinoInstance);
 
 **Step 6: Create src/index.ts**
 
-Create `packages/logger/src/index.ts`:
+Create `packages/platform/logger/src/index.ts`:
 
 ```typescript
 export { logger } from "./logger.js";
@@ -162,7 +162,7 @@ export type { Logger, LogLevel, Meta } from "./types.js";
 
 Note: `otel.ts` will be created in Task 2. For now create a stub:
 
-Create `packages/logger/src/otel.ts`:
+Create `packages/platform/logger/src/otel.ts`:
 
 ```typescript
 // Stub — full implementation in Task 2
@@ -183,7 +183,7 @@ Expected: no errors.
 **Step 8: Commit**
 
 ```bash
-git add packages/logger/
+git add packages/platform/logger/
 git commit -m "feat: add packages/logger with Pino structured logging"
 ```
 
@@ -193,9 +193,9 @@ git commit -m "feat: add packages/logger with Pino structured logging"
 
 **Files:**
 
-- Modify: `packages/logger/package.json`
-- Modify: `packages/logger/src/otel.ts`
-- Modify: `packages/logger/src/logger.ts` (inject traceId)
+- Modify: `packages/platform/logger/package.json`
+- Modify: `packages/platform/logger/src/otel.ts`
+- Modify: `packages/platform/logger/src/logger.ts` (inject traceId)
 
 **Step 1: Install OTel packages**
 
@@ -207,7 +207,7 @@ Expected: installs without errors (these are well-maintained packages).
 
 **Step 2: Implement src/otel.ts**
 
-Replace the stub in `packages/logger/src/otel.ts` with:
+Replace the stub in `packages/platform/logger/src/otel.ts` with:
 
 ```typescript
 import { NodeSDK } from "@opentelemetry/sdk-node";
@@ -249,7 +249,7 @@ export function initOtel(opts: { serviceName: string }): void {
 
 **Step 3: Inject traceId into Pino logger**
 
-Modify `packages/logger/src/logger.ts` — add traceId auto-injection.
+Modify `packages/platform/logger/src/logger.ts` — add traceId auto-injection.
 
 At the top, add the OTel import (gracefully handles missing context):
 
@@ -314,7 +314,7 @@ Expected: no errors.
 **Step 5: Commit**
 
 ```bash
-git add packages/logger/
+git add packages/platform/logger/
 git commit -m "feat: add OpenTelemetry SDK to packages/logger with OTLP exporter"
 ```
 
@@ -397,12 +397,12 @@ git commit -m "fix: replace hardcoded CORS origins with DOMAINS constants + CORS
 
 **Files:**
 
-- Create: `packages/alerting/vitest.config.ts`
-- Create: `packages/alerting/src/__tests__/alerting.test.ts`
+- Create: `packages/platform/alerting/vitest.config.ts`
+- Create: `packages/platform/alerting/src/__tests__/alerting.test.ts`
 
 **Step 1: Create vitest.config.ts**
 
-Create `packages/alerting/vitest.config.ts`:
+Create `packages/platform/alerting/vitest.config.ts`:
 
 ```typescript
 import { defineConfig } from "vitest/config";
@@ -422,7 +422,7 @@ export default defineConfig({
 
 **Step 2: Write the failing test file**
 
-Create `packages/alerting/src/__tests__/alerting.test.ts`:
+Create `packages/platform/alerting/src/__tests__/alerting.test.ts`:
 
 ```typescript
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
@@ -681,12 +681,12 @@ cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor
 pnpm --filter @nebutra/alerting vitest run 2>&1
 ```
 
-Expected: all tests PASS. If any fail, check that `clearChannels` / `resetErrorCounts` are exported from `packages/alerting/src/index.ts` (added in previous session).
+Expected: all tests PASS. If any fail, check that `clearChannels` / `resetErrorCounts` are exported from `packages/platform/alerting/src/index.ts` (added in previous session).
 
 **Step 4: Commit**
 
 ```bash
-git add packages/alerting/vitest.config.ts packages/alerting/src/__tests__/
+git add packages/platform/alerting/vitest.config.ts packages/platform/alerting/src/__tests__/
 git commit -m "test: add comprehensive test suite for alerting package"
 ```
 
@@ -696,9 +696,9 @@ git commit -m "test: add comprehensive test suite for alerting package"
 
 **Files:**
 
-- Modify: `packages/rate-limit/package.json` (add vitest)
-- Create: `packages/rate-limit/vitest.config.ts`
-- Create: `packages/rate-limit/src/__tests__/tokenBucket.test.ts`
+- Modify: `packages/platform/rate-limit/package.json` (add vitest)
+- Create: `packages/platform/rate-limit/vitest.config.ts`
+- Create: `packages/platform/rate-limit/src/__tests__/tokenBucket.test.ts`
 
 **Step 1: Add vitest**
 
@@ -708,7 +708,7 @@ pnpm add -D vitest --filter @nebutra/rate-limit
 
 **Step 2: Create vitest.config.ts**
 
-Create `packages/rate-limit/vitest.config.ts`:
+Create `packages/platform/rate-limit/vitest.config.ts`:
 
 ```typescript
 import { defineConfig } from "vitest/config";
@@ -728,7 +728,7 @@ export default defineConfig({
 
 **Step 3: Write test file**
 
-Create `packages/rate-limit/src/__tests__/tokenBucket.test.ts`:
+Create `packages/platform/rate-limit/src/__tests__/tokenBucket.test.ts`:
 
 ```typescript
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
@@ -889,7 +889,7 @@ Expected: all tests PASS.
 **Step 5: Commit**
 
 ```bash
-git add packages/rate-limit/
+git add packages/platform/rate-limit/
 git commit -m "test: add token bucket test suite for rate-limit package"
 ```
 

@@ -1,0 +1,138 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Nebutra primitive (core) tokens — W3C DTCG draft. SSOT for the design system. Edits here propagate to packages/design/tokens/styles.css, packages/design/theme/themes.css, and TS bridges via Style Dictionary.",
+  "color": {
+    "nebutra-blue": {
+      "50": { "$value": "#f0f4ff", "$type": "color" },
+      "100": { "$value": "#dbe4ff", "$type": "color" },
+      "200": { "$value": "#bac8ff", "$type": "color" },
+      "300": { "$value": "#91a7ff", "$type": "color" },
+      "400": { "$value": "#5c7cfa", "$type": "color" },
+      "500": {
+        "$value": "#0033fe",
+        "$type": "color",
+        "$description": "Base brand color — 云毓蓝",
+        "$extensions": {
+          "com.nebutra.display-p3": "color(display-p3 0.03 0.19 0.99)"
+        }
+      },
+      "600": { "$value": "#002ad4", "$type": "color" },
+      "700": { "$value": "#0021ab", "$type": "color" },
+      "800": { "$value": "#001882", "$type": "color" },
+      "900": { "$value": "#000f59", "$type": "color" },
+      "950": { "$value": "#000830", "$type": "color" }
+    },
+    "nebutra-cyan": {
+      "50": { "$value": "#e6fff8", "$type": "color" },
+      "100": { "$value": "#b3ffec", "$type": "color" },
+      "200": { "$value": "#80ffe0", "$type": "color" },
+      "300": { "$value": "#4dfcd4", "$type": "color" },
+      "400": { "$value": "#1af7c8", "$type": "color" },
+      "500": {
+        "$value": "#0bf1c3",
+        "$type": "color",
+        "$description": "Base brand accent — 云毓青",
+        "$extensions": {
+          "com.nebutra.display-p3": "color(display-p3 0.07 0.94 0.79)"
+        }
+      },
+      "600": { "$value": "#09c9a3", "$type": "color" },
+      "700": { "$value": "#07a183", "$type": "color" },
+      "800": { "$value": "#057963", "$type": "color" },
+      "900": { "$value": "#035143", "$type": "color" },
+      "950": { "$value": "#012923", "$type": "color" }
+    },
+    "nebutra-neutral": {
+      "$description": "Slate (Tailwind) — cool blue-undertone gray. SSOT decision: Slate over Zinc. See docs/design-system/token-drift-audit.md.",
+      "50": { "$value": "#f8fafc", "$type": "color" },
+      "100": { "$value": "#f1f5f9", "$type": "color" },
+      "200": { "$value": "#e2e8f0", "$type": "color" },
+      "300": { "$value": "#cbd5e1", "$type": "color" },
+      "400": { "$value": "#94a3b8", "$type": "color" },
+      "500": { "$value": "#64748b", "$type": "color" },
+      "600": { "$value": "#475569", "$type": "color" },
+      "700": { "$value": "#334155", "$type": "color" },
+      "800": { "$value": "#1e293b", "$type": "color" },
+      "900": { "$value": "#0f172a", "$type": "color" },
+      "950": { "$value": "#020617", "$type": "color" }
+    },
+    "white": { "$value": "#ffffff", "$type": "color" },
+    "black": { "$value": "#000000", "$type": "color" },
+    "tertiary-purple": {
+      "$value": "#8b5cf6",
+      "$type": "color",
+      "$description": "Tertiary accent — data viz, infrastructure tags"
+    },
+    "status": {
+      "danger": { "$value": "#ef4444", "$type": "color" },
+      "warning": { "$value": "#f59e0b", "$type": "color" },
+      "success": {
+        "$value": "#22c55e",
+        "$type": "color",
+        "$description": "Tailwind green-500 — VI manual canonical success color (replaces drifted #10b981 emerald)."
+      }
+    }
+  },
+  "size": {
+    "container": {
+      "text": {
+        "$value": "896px",
+        "$type": "dimension",
+        "$description": "Reading-focused (hero copy, FAQ)"
+      },
+      "content": { "$value": "1152px", "$type": "dimension", "$description": "Pricing, blog" },
+      "wide": { "$value": "1400px", "$type": "dimension", "$description": "Feature bento, navbar" }
+    },
+    "radius": {
+      "none": { "$value": "0", "$type": "dimension" },
+      "sm": { "$value": "0.25rem", "$type": "dimension" },
+      "md": { "$value": "0.375rem", "$type": "dimension" },
+      "lg": { "$value": "0.5rem", "$type": "dimension" },
+      "xl": { "$value": "0.75rem", "$type": "dimension" },
+      "2xl": { "$value": "1rem", "$type": "dimension" },
+      "3xl": { "$value": "1.5rem", "$type": "dimension" },
+      "full": { "$value": "9999px", "$type": "dimension" }
+    }
+  },
+  "duration": {
+    "fast": { "$value": "100ms", "$type": "duration" },
+    "normal": { "$value": "150ms", "$type": "duration" },
+    "slow": { "$value": "300ms", "$type": "duration" },
+    "slower": { "$value": "500ms", "$type": "duration" }
+  },
+  "easing": {
+    "in": { "$value": "cubic-bezier(0.4, 0, 1, 1)", "$type": "cubicBezier" },
+    "out": { "$value": "cubic-bezier(0, 0, 0.2, 1)", "$type": "cubicBezier" },
+    "in-out": { "$value": "cubic-bezier(0.4, 0, 0.2, 1)", "$type": "cubicBezier" },
+    "spring": { "$value": "cubic-bezier(0.175, 0.885, 0.32, 1.275)", "$type": "cubicBezier" }
+  },
+  "fontFamily": {
+    "$description": "Geist + Geist Mono primary (Vercel typography) with Noto Sans SC / PingFang SC / Microsoft YaHei CJK fallbacks. Replaces Poppins per VI 2026 update.",
+    "sans": {
+      "$value": "\"Geist\", \"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+      "$type": "fontFamily"
+    },
+    "cn": {
+      "$value": "\"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", \"vivo Sans\", sans-serif",
+      "$type": "fontFamily"
+    },
+    "display": { "$value": "\"Geist\", \"Noto Sans SC\", sans-serif", "$type": "fontFamily" },
+    "heading": { "$value": "\"Geist\", \"Noto Sans SC\", sans-serif", "$type": "fontFamily" },
+    "mono": {
+      "$value": "\"Geist Mono\", \"Fira Code\", ui-monospace, Consolas, \"Courier New\", monospace",
+      "$type": "fontFamily"
+    }
+  },
+  "transition": {
+    "$description": "Composite tokens (W3C DTCG composite type). Combine duration + easing into a single value for the `transition` shorthand and a multi-stop `focus-ring` recipe.",
+    "default": {
+      "$type": "transition",
+      "$value": {
+        "duration": "150ms",
+        "timingFunction": "ease-out",
+        "delay": "0ms"
+      },
+      "$description": "Standard 150ms ease-out — used by --transition shorthand."
+    }
+  }
+}

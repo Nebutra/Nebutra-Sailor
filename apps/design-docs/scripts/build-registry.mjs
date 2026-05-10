@@ -355,7 +355,7 @@ for (const basename of uniqueFileBasenames) {
 
 // ---------------------------------------------------------------------------
 // Merge with the TIER B Phase 1 index produced by
-// packages/ui/scripts/build-registry.ts (if it has already run).
+// packages/design/ui/scripts/build-registry.ts (if it has already run).
 // We never *overwrite* the canonical registry.json with only previews — the
 // shadcn-distributable components are the source of truth for ui.nebutra.com.
 // Demo previews are written to public/previews-index.json for internal use.

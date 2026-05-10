@@ -116,7 +116,7 @@
   },
   "overrides": [
     {
-      "includes": ["packages/cli/**", "scripts/**"],
+      "includes": ["packages/ops/cli/**", "scripts/**"],
       "linter": {
         "rules": {
           "suspicious": {

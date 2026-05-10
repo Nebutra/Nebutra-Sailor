@@ -6,7 +6,7 @@
  *
  * ── Secrets at rest ──────────────────────────────────────────────────────────
  * `credentials` and `settings` are ENCRYPTED AT REST via the @nebutra/vault
- * Prisma extension (see packages/db/src/client.ts). Routes work with plaintext
+ * Prisma extension (see packages/platform/db/src/client.ts). Routes work with plaintext
  * values — the extension transparently:
  *   - encrypts on create/update/upsert (tenant-bound ciphertext)
  *   - decrypts on findFirst/findMany/etc.

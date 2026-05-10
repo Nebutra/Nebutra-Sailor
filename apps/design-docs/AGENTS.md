@@ -67,7 +67,7 @@ This app double-serves as the public shadcn-style Registry for `@nebutra/ui`.
 
 ### Where the manifests come from
 
-- `packages/ui/scripts/build-registry.ts` — TIER B component manifests
+- `packages/design/ui/scripts/build-registry.ts` — TIER B component manifests
 - `apps/design-docs/scripts/build-registry.mjs` — preview-demo manifests
 - Both are wired into the `predev` and `prebuild` lifecycle scripts of this app.
 - Outputs:

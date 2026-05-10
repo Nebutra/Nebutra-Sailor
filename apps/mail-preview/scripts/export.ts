@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { EMAIL_TEMPLATE_CATALOG } from "../../../packages/email/src/index";
+import { EMAIL_TEMPLATE_CATALOG } from "../../../packages/integrations/email/src/index";
 
 const distDir = new URL("../dist/", import.meta.url);
 

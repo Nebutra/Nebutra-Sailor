@@ -596,10 +596,10 @@ The \`nebutra init\` command creates a \`nebutra.config.json\` file:
 \`\`\`json
 {
   "$schema": "https://nebutra.com/schema.json",
-  "componentsDirectory": "packages/ui/src/components",
+  "componentsDirectory": "packages/design/ui/src/components",
   "tailwind": {
     "config": "tailwind.config.ts",
-    "css": "packages/tokens/styles.css",
+    "css": "packages/design/tokens/styles.css",
     "baseColor": "slate",
     "cssVariables": true
   },

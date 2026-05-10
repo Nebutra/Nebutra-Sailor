@@ -24,7 +24,7 @@ Use these files as the canonical source before editing behavior:
 - `.storybook/preview.ts` and `.storybook/a11y-config.ts` for preview decorators
   and accessibility behavior
 - `src/stories/` for app-local docs and showcase stories
-- `packages/ui/src/**/*.stories.*` for component-co-located shared UI stories
+- `packages/design/ui/src/**/*.stories.*` for component-co-located shared UI stories
 
 Do not treat `dist/` or `.turbo/` logs as implementation truth.
 

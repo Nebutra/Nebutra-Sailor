@@ -42,7 +42,7 @@ Final state: **49 models in master schema** (from 61), of which **27 uncondition
 **Enums dropped:** `AIRequestType`, `NftStatus`, `FeatureFlagType`.
 **Enum kept:** `UsageType` — still used by `UsageLedgerEntry.type`.
 
-**Migration draft:** `packages/db/prisma/migrations/20260418120000_schema_orphan_cleanup/migration.sql` — **DRAFT**, awaits stakeholder review before running.
+**Migration draft:** `packages/platform/db/prisma/migrations/20260418120000_schema_orphan_cleanup/migration.sql` — **DRAFT**, awaits stakeholder review before running.
 
 ---
 
@@ -93,4 +93,4 @@ This is the meaning of "boundary is product" from the harness principles — eve
 
 ## TDD coverage
 
-Schema-prune logic has been tested in `packages/create-sailor/src/utils/prune-schema.test.ts` (pending implementation by separate subagent — see audit log). Once landed, all 7 conditional flags get snapshot tests.
+Schema-prune logic has been tested in `packages/ops/create-sailor/src/utils/prune-schema.test.ts` (pending implementation by separate subagent — see audit log). Once landed, all 7 conditional flags get snapshot tests.

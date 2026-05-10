@@ -281,7 +281,7 @@ export function createNextAuth(config: AuthConfig): AuthProvider {
 
 ### Phase 4: Clerk provider (extract existing)
 
-Move existing Clerk code into the new `packages/auth/providers/clerk.ts`:
+Move existing Clerk code into the new `packages/iam/auth/providers/clerk.ts`:
 
 ```ts
 import { clerkClient, clerkMiddleware, auth } from "@clerk/nextjs/server";
@@ -321,7 +321,7 @@ When `authProvider: "clerk"`, these are NOT rendered — Clerk's built-in compon
 ### Phase 6: Preset config integration
 
 ```ts
-// packages/preset/src/config.ts
+// packages/ops/preset/src/config.ts
 export const AuthProviderId = z.enum(["clerk", "better-auth", "nextauth"]);
 
 // Add to NebutraConfigSchema

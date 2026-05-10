@@ -1,0 +1,69 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Neon — default AI SaaS theme. Mirrors @theme block in packages/design/theme/themes.css. Dark surface + neon-blue primary.",
+  "theme": "neon",
+  "color": {
+    "primary": { "$value": "oklch(0.452 0.313 264.1)", "$type": "color" },
+    "primary-foreground": { "$value": "oklch(1 0 0)", "$type": "color" },
+    "secondary": { "$value": "oklch(0.715 0.143 215.2)", "$type": "color" },
+    "secondary-foreground": { "$value": "oklch(1 0 0)", "$type": "color" },
+    "accent": { "$value": "oklch(0.714 0.203 264.1)", "$type": "color" },
+    "accent-foreground": { "$value": "oklch(0.141 0.005 285.9)", "$type": "color" },
+    "background": { "$value": "oklch(0.141 0.005 285.9)", "$type": "color" },
+    "foreground": { "$value": "oklch(0.985 0 0)", "$type": "color" },
+    "card": { "$value": "oklch(0.212 0.006 285.9)", "$type": "color" },
+    "card-foreground": { "$value": "oklch(0.985 0 0)", "$type": "color" },
+    "popover": { "$value": "oklch(0.212 0.006 285.9)", "$type": "color" },
+    "popover-foreground": { "$value": "oklch(0.985 0 0)", "$type": "color" },
+    "muted": { "$value": "oklch(0.274 0.006 286)", "$type": "color" },
+    "muted-foreground": { "$value": "oklch(0.705 0.015 286)", "$type": "color" },
+    "border": { "$value": "oklch(0.274 0.006 286)", "$type": "color" },
+    "input": { "$value": "oklch(0.274 0.006 286)", "$type": "color" },
+    "ring": { "$value": "oklch(0.452 0.313 264.1)", "$type": "color" },
+    "destructive": { "$value": "oklch(0.577 0.245 27.3)", "$type": "color" },
+    "destructive-foreground": { "$value": "oklch(1 0 0)", "$type": "color" },
+    "success": { "$value": "oklch(0.723 0.219 149.6)", "$type": "color" },
+    "success-foreground": { "$value": "oklch(1 0 0)", "$type": "color" },
+    "warning": { "$value": "oklch(0.769 0.189 70.1)", "$type": "color" },
+    "warning-foreground": { "$value": "oklch(0.141 0.005 285.9)", "$type": "color" },
+    "info": { "$value": "oklch(0.623 0.214 259.1)", "$type": "color" },
+    "info-foreground": { "$value": "oklch(1 0 0)", "$type": "color" },
+    "primary-hover": {
+      "$value": "color-mix(in oklch, oklch(0.452 0.313 264.1), white 15%)",
+      "$type": "color"
+    },
+    "primary-active": {
+      "$value": "color-mix(in oklch, oklch(0.452 0.313 264.1), black 10%)",
+      "$type": "color"
+    }
+  },
+  "radius": {
+    "sm": { "$value": "0.25rem", "$type": "dimension" },
+    "md": { "$value": "0.375rem", "$type": "dimension" },
+    "lg": { "$value": "0.5rem", "$type": "dimension" },
+    "xl": { "$value": "0.75rem", "$type": "dimension" },
+    "full": { "$value": "9999px", "$type": "dimension" }
+  },
+  "fontFamily": {
+    "sans": { "$value": "\"Inter\", ui-sans-serif, system-ui, sans-serif", "$type": "fontFamily" },
+    "mono": {
+      "$value": "\"JetBrains Mono\", \"Fira Code\", ui-monospace, monospace",
+      "$type": "fontFamily"
+    },
+    "heading": {
+      "$value": "\"Inter\", ui-sans-serif, system-ui, sans-serif",
+      "$type": "fontFamily"
+    }
+  },
+  "shadow": {
+    "sm": { "$value": "0 1px 2px 0 rgb(0 0 0 / 0.5)", "$type": "shadow" },
+    "md": { "$value": "0 4px 6px -1px rgb(0 0 0 / 0.5)", "$type": "shadow" },
+    "lg": { "$value": "0 10px 15px -3px rgb(0 0 0 / 0.5)", "$type": "shadow" },
+    "xl": { "$value": "0 20px 25px -5px rgb(0 0 0 / 0.5)", "$type": "shadow" }
+  },
+  "transition": {
+    "fast": { "$value": "150ms cubic-bezier(0.4, 0, 0.2, 1)", "$type": "transition" },
+    "normal": { "$value": "250ms cubic-bezier(0.4, 0, 0.2, 1)", "$type": "transition" },
+    "slow": { "$value": "400ms cubic-bezier(0.4, 0, 0.2, 1)", "$type": "transition" }
+  }
+}

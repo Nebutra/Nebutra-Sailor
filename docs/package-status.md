@@ -80,7 +80,7 @@ If you want to take one of these packages to `stable`:
    - `packages/<name>/package.json` → set `nebutra.status = "stable"` and
      drop the `gaps` array (or leave it empty).
    - `packages/<name>/README.md` → remove the `Status:` banner.
-   - `packages/create-sailor/src/utils/package-status.ts` → remove the
+   - `packages/ops/create-sailor/src/utils/package-status.ts` → remove the
      entry (defaults to `stable`).
    - This doc.
 

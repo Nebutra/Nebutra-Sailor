@@ -2,9 +2,9 @@
 
 Event-driven business workflow definitions. Extracted from `infra/` at W2.3
 because these are **business logic**, not infrastructure — they share the same
-conceptual layer as [`packages/queue/`](../packages/queue/),
-[`packages/event-bus/`](../packages/event-bus/), and
-[`packages/saga/`](../packages/saga/).
+conceptual layer as [`packages/integrations/queue/`](../packages/integrations/queue/),
+[`packages/integrations/event-bus/`](../packages/integrations/event-bus/), and
+[`packages/integrations/saga/`](../packages/integrations/saga/).
 
 ## Structure
 
@@ -25,7 +25,7 @@ workflows/
 
 ## Related packages
 
-- [`@nebutra/queue`](../packages/queue/) — provider-agnostic queue interface (QStash + BullMQ)
-- [`@nebutra/event-bus`](../packages/event-bus/) — pub/sub abstraction
-- [`@nebutra/saga`](../packages/saga/) — long-running transaction orchestration
-- [`@nebutra/webhooks`](../packages/webhooks/) — outbound webhook delivery
+- [`@nebutra/queue`](../packages/integrations/queue/) — provider-agnostic queue interface (QStash + BullMQ)
+- [`@nebutra/event-bus`](../packages/integrations/event-bus/) — pub/sub abstraction
+- [`@nebutra/saga`](../packages/integrations/saga/) — long-running transaction orchestration
+- [`@nebutra/webhooks`](../packages/integrations/webhooks/) — outbound webhook delivery

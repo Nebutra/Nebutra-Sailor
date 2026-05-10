@@ -30,10 +30,10 @@ Five non-negotiable positioning constraints:
 - **Missing**: Showcase page, Ideas feed, Connections graph, Member profile page, engagement flywheel
 
 **License management stack**
-- `packages/license/` — `issueLicense` + `validateLicense` + `license.issued` event handler
+- `packages/commerce/license/` — `issueLicense` + `validateLicense` + `license.issued` event handler
 - `apps/landing-page/api/license/` — web REST colon POST issue + GET validate
 - `apps/landing-page/.../get-license/LicenseWizard.tsx` — 4-step web wizard (Clerk-gated)
-- `packages/cli/commands/license.ts` — `sailor license activate <key>` + `sailor license status`
+- `packages/ops/cli/commands/license.ts` — `sailor license activate <key>` + `sailor license status`
 - DB: `License` + `CommunityProfile` models
 
 **CLI flow** (current)
@@ -217,7 +217,7 @@ Instrument every step. Decisions driven by leaky-bucket data, not guesses.
 
 ### 4.2 Data model deltas
 
-All lives in `packages/db/prisma/schema.prisma`. **No new Nebutra-only models**; the `@conditional` mechanism is untouched.
+All lives in `packages/platform/db/prisma/schema.prisma`. **No new Nebutra-only models**; the `@conditional` mechanism is untouched.
 
 - **`CliDeviceAuth`** (new, always-on) — stores device_code / user_code / verification state, short TTL
 - **`License`** (existing) — add column `last_seen_cli_version` and `claimed_via` enum (`web_wizard` | `cli_device_flow`)
@@ -232,10 +232,10 @@ Migration naming: `20260418200000_cli_device_auth`.
 | Device code generation, polling, approval | `packages/auth` (new sub-module `device-flow/`) | Auth primitives live here |
 | License issuance + validation | `packages/license` | Existing — unchanged |
 | Event publication on issuance | `packages/event-bus` | Already the pattern |
-| CLI `sailor login` | `packages/cli/commands/login.ts` | New command |
+| CLI `sailor login` | `packages/ops/cli/commands/login.ts` | New command |
 | Web `/connect-cli` page | `apps/landing-page/src/app/[lang]/(marketing)/connect-cli/` | Lives next to existing `get-license` |
 | Sleptons Showcase page | `apps/sleptons/src/app/showcase/` | Nebutra-specific |
-| Generic "Showcase" pattern for template users | `packages/ui/patterns/showcase/` (future) | Extractable to template |
+| Generic "Showcase" pattern for template users | `packages/design/ui/patterns/showcase/` (future) | Extractable to template |
 
 ### 4.4 Security model
 
@@ -258,12 +258,12 @@ Threat model:
 
 **Infrastructure (self-hosted stack, no paid SaaS)**:
 - [ ] Add `packages/analytics` wrapper with PostHog CE client (server + browser) — default `@nebutra/analytics` used across apps
-- [ ] Add `packages/analytics/umami-proxy.ts` — server-side proxy so Umami works in CN and evades adblock
+- [ ] Add `packages/platform/analytics/umami-proxy.ts` — server-side proxy so Umami works in CN and evades adblock
 - [ ] `infra/docker-compose.analytics.yml` — PostHog CE + Umami + Metabase + shared Postgres
 - [ ] `apps/sleptons/src/app/layout.tsx` — inject PostHog + Umami tracking pixels
 - [ ] `apps/landing-page/src/app/[lang]/(marketing)/layout.tsx` — same
 
-**Event contracts** (defined in `packages/analytics/events.ts` with Zod schemas):
+**Event contracts** (defined in `packages/platform/analytics/events.ts` with Zod schemas):
 - [ ] `scaffold.completed` — emitted from `create-sailor` done hook (fire-and-forget HTTPS post)
 - [ ] `license.wizard.{started,step_completed,submitted,failed}` — web LicenseWizard
 - [ ] `license.cli.{activate_attempted,activated,failed}` — CLI license command
@@ -288,7 +288,7 @@ Threat model:
 ### Phase 1 — Post-install journey (P0 — this week, ~3h)
 **Goal**: Close the biggest gap — scaffold users discover Sleptons/license naturally.
 
-- [ ] Redesign `packages/create-sailor/src/ui/done.ts` with prominent Sleptons callout (bold color, specific CTA)
+- [ ] Redesign `packages/ops/create-sailor/src/ui/done.ts` with prominent Sleptons callout (bold color, specific CTA)
 - [ ] New CLI command `sailor community` (placeholder — opens `https://nebutra.com/community?ref=cli`)
 - [ ] New CLI command `sailor license claim` — opens browser to `/get-license?ref=cli&project=<detected>`
 - [ ] Web `get-license` page reads `?ref=cli` query → simplifies wizard to 2 steps (role + teamSize; rest opt-in)
@@ -299,13 +299,13 @@ Threat model:
 **Goal**: Eliminate copy-paste friction; match GitHub/Vercel CLI UX bar.
 
 - [ ] `packages/db` migration: `CliDeviceAuth` model + `License.claimed_via` column
-- [ ] `packages/auth/device-flow/` — issuer, verifier, token signer
+- [ ] `packages/iam/auth/device-flow/` — issuer, verifier, token signer
 - [ ] Backend endpoints:
   - `POST /api/cli/device-auth/start` — returns `{ device_code, user_code, verification_url, expires_in, interval }`
   - `POST /api/cli/device-auth/poll` — returns `{ status: "pending" | "approved" | "denied" }` and `access_token + license_key` when approved
   - `POST /api/cli/device-auth/approve` — called from web `/connect-cli` after Clerk auth + wizard completion
 - [ ] `apps/landing-page/src/app/[lang]/(marketing)/connect-cli/page.tsx` — reads `?user_code=`, guides through Clerk login + 2-step wizard + approve
-- [ ] `packages/cli/commands/login.ts` — new `sailor login` command implementing RFC 8628 client side
+- [ ] `packages/ops/cli/commands/login.ts` — new `sailor login` command implementing RFC 8628 client side
 - [ ] Migrate `sailor license activate` → deprecated but still works (copy-paste fallback)
 - [ ] E2E test: headless Playwright approves device code, CLI receives token
 - [ ] **Success metric**: `sailor login` p95 latency < 20s, success rate > 95%
@@ -313,7 +313,7 @@ Threat model:
 ### Phase 3 — Event wiring (P1 — parallelizable with Phase 2, ~4h)
 **Goal**: License issuance triggers a cascade of valuable actions.
 
-- [ ] Rewrite `packages/license/src/handlers/on-license-issued.ts` to publish domain event
+- [ ] Rewrite `packages/commerce/license/src/handlers/on-license-issued.ts` to publish domain event
 - [ ] New handlers (each small, independently deployable):
   - `sleptons-profile-handler.ts` — create CommunityProfile if missing (may already exist; idempotent)
   - `sleptons-showcase-stub-handler.ts` — create placeholder showcase entry for the user's project
@@ -329,7 +329,7 @@ Threat model:
 - [ ] `apps/sleptons/src/app/ideas/page.tsx` — ideas upvote feed (with `SleptonsUpvote` model)
 - [ ] `apps/sleptons/src/app/[slug]/page.tsx` — member profile with their projects + connections
 - [ ] `apps/sleptons/src/app/connections/page.tsx` — following/followers graph
-- [ ] Extract generic `Showcase` / `UpvoteFeed` patterns to `packages/ui/patterns/community/` (template users benefit)
+- [ ] Extract generic `Showcase` / `UpvoteFeed` patterns to `packages/design/ui/patterns/community/` (template users benefit)
 - [ ] API endpoints in `backends/gateway/src/routes/sleptons/` (but guarded so they're template-free — actually route through `apps/sleptons` directly since it's stripped from template)
 - [ ] **Success metric**: at least 100 Showcase entries in first 90 days
 
@@ -353,10 +353,10 @@ Principles from §2 encoded as **technical invariants**, not wiki pages:
 | Principle | Invariant | Enforcement |
 |-----------|-----------|-------------|
 | P1 License ≠ gate | `@nebutra/license` has NO `requireLicense()` export that throws | ESLint custom rule; CI grep `requireLicense\|licenseGate` fails build |
-| P2 Earn trust | `create-sailor` MUST NOT prompt for credentials of any kind | CI grep in `packages/create-sailor/src` for `p.password\|p.text.*password` fails build |
+| P2 Earn trust | `create-sailor` MUST NOT prompt for credentials of any kind | CI grep in `packages/ops/create-sailor/src` for `p.password\|p.text.*password` fails build |
 | P3 Two heads of one protocol | `sailor login` and `/get-license` wizard share the same Clerk org + write same License row | Integration test: start on CLI, complete on web, CLI gets same licenseKey as if wizard-only |
 | P4 Events, not coupling | `issueLicense()` never imports Sleptons, email, or analytics modules directly | Architecture test (vitest.arch.config.ts) verifies packages/license depends only on db + event-bus |
-| P5 Sleptons dogfoods | `apps/sleptons` extracts every reusable pattern into `packages/ui/patterns/community/*` | Review gate at PR time; knip scan confirms patterns are used by sleptons |
+| P5 Sleptons dogfoods | `apps/sleptons` extracts every reusable pattern into `packages/design/ui/patterns/community/*` | Review gate at PR time; knip scan confirms patterns are used by sleptons |
 | P6 Measure funnel | Every state transition emits `analytics.track()` with consistent event name prefix | ESLint rule: emitting from wrong prefix triggers warning; PostHog dashboard lives in repo as IaC |
 
 ---

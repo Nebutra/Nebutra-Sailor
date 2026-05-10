@@ -113,7 +113,7 @@ function copyCustomAssets(_config: BrandConfig): void {
 }
 
 /**
- * Update packages/brand/src/metadata.ts
+ * Update packages/design/brand/src/metadata.ts
  */
 function updateBrandMetadata(config: BrandConfig): void {
   logStep("Updating brand metadata");
@@ -226,7 +226,7 @@ export type LogoAssets = typeof logoAssets;
 `;
 
   fs.writeFileSync(metadataPath, newContent, "utf-8");
-  logSuccess("Updated packages/brand/src/metadata.ts");
+  logSuccess("Updated packages/design/brand/src/metadata.ts");
 }
 
 /**

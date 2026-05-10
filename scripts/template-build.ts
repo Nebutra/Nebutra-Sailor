@@ -16,7 +16,7 @@
  *   tsx scripts/template-build.ts --out=/tmp/sailor-template --git
  *
  * The mirror repo is consumed by create-sailor when `SAILOR_TEMPLATE_REPO` is
- * set (default: nebutra/sailor-template). See packages/create-sailor/src/utils/git.ts.
+ * set (default: nebutra/sailor-template). See packages/ops/create-sailor/src/utils/git.ts.
  */
 import { execSync } from "node:child_process";
 import fs from "node:fs";
@@ -336,18 +336,18 @@ const NEBUTRA_ONLY_MODELS = [
   "SleptonsUpvote",
   "SleptonsConnection",
   "CommunityProfile", // licensing/community table tied to Nebutra's OPC network
-  "License",          // Nebutra's license issuance table
+  "License", // Nebutra's license issuance table
 ];
 
 const NEBUTRA_ONLY_ENUMS = [
   "SleptonsTier",
-  "ProductStage",    // used only by Sleptons
+  "ProductStage", // used only by Sleptons
   "LicenseTier",
   "LicenseType",
 ];
 
 function stripNebutraOnlyModels(targetDir: string): number {
-  const schemaPath = path.join(targetDir, "packages/db/prisma/schema.prisma");
+  const schemaPath = path.join(targetDir, "packages/platform/db/prisma/schema.prisma");
   if (!fs.existsSync(schemaPath)) return 0;
 
   let src = fs.readFileSync(schemaPath, "utf8");

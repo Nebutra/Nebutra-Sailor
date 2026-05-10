@@ -50,7 +50,7 @@ No mechanism to activate/deactivate features per scenario. Switching = manual co
 nebutra.config.ts (root)
        │
        ▼
-packages/preset/
+packages/ops/preset/
   ├── src/config.ts         — defineConfig() + resolveConfig()
   ├── src/presets/*.ts      — 9 preset definitions
   ├── src/turbo-filter.ts   — generates turbo --filter args
@@ -66,7 +66,7 @@ turbo.json reads config → builds only selected apps
 ### Package: `packages/preset`
 
 ```
-packages/preset/
+packages/ops/preset/
   src/
     index.ts                 # Public API: defineConfig, resolveConfig, getPreset
     config.ts                # Config schema (Zod), merging logic
@@ -92,7 +92,7 @@ packages/preset/
 ### Core API
 
 ```typescript
-// packages/preset/src/config.ts
+// packages/ops/preset/src/config.ts
 import { z } from "zod";
 
 export const PresetId = z.enum([
@@ -176,7 +176,7 @@ export function resolveConfig(config: NebutraConfig): ResolvedConfig {
 ### Preset Definitions
 
 ```typescript
-// packages/preset/src/presets/ai-saas.ts
+// packages/ops/preset/src/presets/ai-saas.ts
 import type { PresetDefinition } from "../config";
 
 export const aiSaas: PresetDefinition = {
@@ -217,7 +217,7 @@ export const aiSaas: PresetDefinition = {
 ### Turbo Integration
 
 ```typescript
-// packages/preset/src/turbo-filter.ts
+// packages/ops/preset/src/turbo-filter.ts
 export function getTurboFilters(config: ResolvedConfig): string[] {
   const activeApps = Object.entries(config.apps)
     .filter(([, enabled]) => enabled)
@@ -239,7 +239,7 @@ export function getTurboFilters(config: ResolvedConfig): string[] {
 }
 
 // Usage in package.json scripts:
-// "build:preset": "tsx packages/preset/src/turbo-filter.ts | xargs turbo build"
+// "build:preset": "tsx packages/ops/preset/src/turbo-filter.ts | xargs turbo build"
 ```
 
 ### Root Config File
@@ -262,7 +262,7 @@ export default defineConfig({
 ### Integration with Feature Flags
 
 ```typescript
-// packages/preset/src/feature-map.ts
+// packages/ops/preset/src/feature-map.ts
 // Generates FEATURE_FLAG_* env vars from config
 export function getFeatureEnvVars(
   config: ResolvedConfig,
@@ -302,7 +302,7 @@ Design system has dark/light toggle only. Each scenario needs a distinct visual 
 ### Architecture
 
 ```
-packages/theme/
+packages/design/theme/
   ├── src/
   │   ├── index.ts              # Public API
   │   ├── tokens.ts             # Token interface + default values
@@ -324,7 +324,7 @@ packages/theme/
 ### Token System
 
 ```typescript
-// packages/theme/src/tokens.ts
+// packages/design/theme/src/tokens.ts
 export interface ThemeTokens {
   // Color primitives
   colors: {
@@ -399,7 +399,7 @@ export interface ThemeTokens {
 ### Theme Presets
 
 ```typescript
-// packages/theme/src/presets/neon.ts
+// packages/design/theme/src/presets/neon.ts
 import type { ThemeTokens } from "../tokens";
 
 export const neon: ThemeTokens = {
@@ -460,7 +460,7 @@ export const neon: ThemeTokens = {
 ### ThemeProvider
 
 ```typescript
-// packages/theme/src/provider.tsx
+// packages/design/theme/src/provider.tsx
 'use client'
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
@@ -526,7 +526,7 @@ export function useTheme(): ThemeContextValue {
 ### Tailwind CSS v4 Integration
 
 ```typescript
-// packages/theme/src/tailwind-plugin.ts
+// packages/design/theme/src/tailwind-plugin.ts
 // Generates @theme block for Tailwind CSS v4
 
 import type { ThemeTokens } from "./tokens";
@@ -968,7 +968,7 @@ packages/growth/
 ### New Database Models
 
 ```prisma
-// Add to packages/db/prisma/schema.prisma
+// Add to packages/platform/db/prisma/schema.prisma
 
 // ============================================
 // Growth & Viral Loop
@@ -1131,7 +1131,7 @@ Schema defines `ALIPAY`/`WECHAT_PAY` but no implementation. Chinese market needs
 Extend `packages/billing` with a payment gateway abstraction layer.
 
 ```
-packages/billing/src/
+packages/commerce/billing/src/
   gateways/
     index.ts                 # PaymentGateway interface + factory
     stripe.ts                # Stripe implementation (existing, refactored)
@@ -1145,7 +1145,7 @@ packages/billing/src/
 ### Payment Gateway Abstraction
 
 ```typescript
-// packages/billing/src/gateways/index.ts
+// packages/commerce/billing/src/gateways/index.ts
 export interface PaymentGateway {
   readonly provider: "stripe" | "alipay" | "wechat-pay";
 
@@ -1176,7 +1176,7 @@ export interface PaymentIntent {
 ### Stripe Gateway (existing, refactored)
 
 ```typescript
-// packages/billing/src/gateways/stripe.ts
+// packages/commerce/billing/src/gateways/stripe.ts
 import Stripe from "stripe";
 
 export class StripeGateway implements PaymentGateway {
@@ -1211,7 +1211,7 @@ export class StripeGateway implements PaymentGateway {
 ### Native Alipay Gateway
 
 ```typescript
-// packages/billing/src/gateways/alipay.ts
+// packages/commerce/billing/src/gateways/alipay.ts
 // Uses alipay-sdk (npm)
 
 import AlipaySdk from "alipay-sdk";
@@ -1256,7 +1256,7 @@ export class AlipayGateway implements PaymentGateway {
 ### Native WeChat Pay Gateway
 
 ```typescript
-// packages/billing/src/gateways/wechat-pay.ts
+// packages/commerce/billing/src/gateways/wechat-pay.ts
 // Uses wechatpay-node-v3 (npm)
 
 import WechatPay from "wechatpay-node-v3";
@@ -1299,7 +1299,7 @@ export class WechatPayGateway implements PaymentGateway {
 ### Gateway Factory
 
 ```typescript
-// packages/billing/src/gateways/index.ts
+// packages/commerce/billing/src/gateways/index.ts
 export function createPaymentGateway(
   provider: "stripe" | "alipay" | "wechat-pay",
 ): PaymentGateway {
@@ -1326,7 +1326,7 @@ export function createPaymentGateway(
 ### Region-Based Payment Method Suggestion
 
 ```typescript
-// packages/billing/src/utils/region-detector.ts
+// packages/commerce/billing/src/utils/region-detector.ts
 export function suggestPaymentMethods(
   locale: string,
   country?: string,
@@ -1485,7 +1485,7 @@ packages/community/
       sync.ts               # Sync DB records → Meilisearch index
   package.json
 
-packages/search/                  # New package: Meilisearch abstraction
+packages/integrations/search/                  # New package: Meilisearch abstraction
   src/
     index.ts                # Public API: search, index, sync
     client.ts               # Meilisearch client singleton
@@ -1497,7 +1497,7 @@ packages/search/                  # New package: Meilisearch abstraction
 ### New Database Models
 
 ```prisma
-// Add to packages/db/prisma/schema.prisma
+// Add to packages/platform/db/prisma/schema.prisma
 
 // ============================================
 // Community
@@ -1669,7 +1669,7 @@ model ModerationAction {
 ### Meilisearch Integration
 
 ```typescript
-// packages/search/src/client.ts
+// packages/integrations/search/src/client.ts
 import { MeiliSearch } from "meilisearch";
 
 let client: MeiliSearch | null = null;
@@ -1684,7 +1684,7 @@ export function getSearchClient(): MeiliSearch {
   return client;
 }
 
-// packages/search/src/indexes.ts
+// packages/integrations/search/src/indexes.ts
 export const INDEXES = {
   posts: {
     uid: "posts",
@@ -1777,7 +1777,7 @@ Clerk supports SAML SSO but it's not wired up. Enterprise B2B customers expect S
 Extend `packages/identity` with SSO configuration and SCIM sync.
 
 ```
-packages/identity/src/
+packages/iam/identity/src/
   sso/
     index.ts              # SSO configuration API
     saml.ts               # SAML metadata parsing + assertion validation
@@ -1794,7 +1794,7 @@ Clerk handles SAML/OIDC SSO at the platform level. Our code handles:
 3. SCIM user sync webhooks
 
 ```typescript
-// packages/identity/src/sso/index.ts
+// packages/iam/identity/src/sso/index.ts
 import { clerkClient } from "@clerk/backend";
 
 export interface SSOConfig {
@@ -1891,7 +1891,7 @@ app.get("/scim/v2/Groups", scimAuth, listGroups);
 ### MFA Enforcement
 
 ```typescript
-// packages/identity/src/sso/mfa.ts
+// packages/iam/identity/src/sso/mfa.ts
 export async function enforceMFA(organizationId: string): Promise<void> {
   // Set org metadata to require MFA for all members
   await clerkClient.organizations.updateOrganization(organizationId, {
@@ -1916,7 +1916,7 @@ export async function enforceMFA(organizationId: string): Promise<void> {
 New components in `packages/ui` + presigned URL flow via `packages/storage`.
 
 ```
-packages/ui/src/components/upload/
+packages/design/ui/src/components/upload/
   FileUpload.tsx              # Drag-and-drop upload zone
   FileUploadProgress.tsx      # Upload progress indicator
   ImageCropper.tsx            # Image crop/resize before upload
@@ -1924,7 +1924,7 @@ packages/ui/src/components/upload/
   FilePreview.tsx             # Preview thumbnails (image, video, doc)
   AvatarUpload.tsx            # Circular crop for profile pictures
 
-packages/storage/src/
+packages/integrations/storage/src/
   presigned.ts                # Generate presigned upload URLs
   upload-flow.ts              # Client-side upload orchestration
 ```
@@ -1958,7 +1958,7 @@ Client                    API Gateway              R2/S3
 ### FileUpload Component
 
 ```typescript
-// packages/ui/src/components/upload/FileUpload.tsx
+// packages/design/ui/src/components/upload/FileUpload.tsx
 'use client'
 
 import { useCallback, useState } from 'react'
@@ -2449,7 +2449,7 @@ export { discourseWebhook };
 Discourse content synced to shared Meilisearch for unified search across blog + forum + docs.
 
 ```typescript
-// packages/search/src/indexes.ts — add Discourse index
+// packages/integrations/search/src/indexes.ts — add Discourse index
 export const INDEXES = {
   // ... existing indexes
   forum: {

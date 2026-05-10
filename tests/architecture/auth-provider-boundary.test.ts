@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 describe("auth provider boundary", () => {
   it("lazy auth providers keep children inside an auth context while loading", async () => {
     const authProvider = await readFile(
-      join(process.cwd(), "packages/auth/src/react/auth-provider.tsx"),
+      join(process.cwd(), "packages/iam/auth/src/react/auth-provider.tsx"),
       "utf8",
     );
 
@@ -16,15 +16,15 @@ describe("auth provider boundary", () => {
 
   it("concrete auth providers do not render children outside AuthContextProvider during init", async () => {
     const betterAuthProvider = await readFile(
-      join(process.cwd(), "packages/auth/src/react/providers/better-auth-provider.tsx"),
+      join(process.cwd(), "packages/iam/auth/src/react/providers/better-auth-provider.tsx"),
       "utf8",
     );
     const clerkProvider = await readFile(
-      join(process.cwd(), "packages/auth/src/react/providers/clerk-provider.tsx"),
+      join(process.cwd(), "packages/iam/auth/src/react/providers/clerk-provider.tsx"),
       "utf8",
     );
     const nextAuthProvider = await readFile(
-      join(process.cwd(), "packages/auth/src/react/providers/nextauth-provider.tsx"),
+      join(process.cwd(), "packages/iam/auth/src/react/providers/nextauth-provider.tsx"),
       "utf8",
     );
 
@@ -34,14 +34,16 @@ describe("auth provider boundary", () => {
   });
 
   it("AuthProviderId includes clerk + better-auth + nextauth", async () => {
-    const types = await readFile(join(process.cwd(), "packages/auth/src/types.ts"), "utf8");
+    const types = await readFile(join(process.cwd(), "packages/iam/auth/src/types.ts"), "utf8");
 
     expect(types).toContain('export type AuthProviderId = "clerk" | "better-auth" | "nextauth";');
   });
 
   it("all three provider files exist in packages/auth", async () => {
-    const serverProviders = await readdir(join(process.cwd(), "packages/auth/src/providers"));
-    const reactProviders = await readdir(join(process.cwd(), "packages/auth/src/react/providers"));
+    const serverProviders = await readdir(join(process.cwd(), "packages/iam/auth/src/providers"));
+    const reactProviders = await readdir(
+      join(process.cwd(), "packages/iam/auth/src/react/providers"),
+    );
 
     expect(serverProviders).toEqual(
       expect.arrayContaining(["clerk.ts", "better-auth.ts", "nextauth.ts"]),
@@ -56,7 +58,7 @@ describe("auth provider boundary", () => {
   });
 
   it("@nebutra/auth declares next-auth as an optional peer dependency, not a hard dep", async () => {
-    const pkg = await readFile(join(process.cwd(), "packages/auth/package.json"), "utf8");
+    const pkg = await readFile(join(process.cwd(), "packages/iam/auth/package.json"), "utf8");
 
     const parsed = JSON.parse(pkg) as {
       dependencies?: Record<string, string>;

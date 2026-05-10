@@ -42,13 +42,13 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("provides display-p3 brand colors with sRGB fallback", () => {
-    const globals = readFromRepo("packages/theme/themes.css");
+    const globals = readFromRepo("packages/design/theme/themes.css");
     expect(globals).toContain("--color-primary");
     expect(globals).toContain("--color-secondary");
   });
 
   it("uses @nebutra/brand as the primitive token source of truth", () => {
-    const brandIndex = readFromRepo("packages/brand/src/index.ts");
+    const brandIndex = readFromRepo("packages/design/brand/src/index.ts");
     expect(brandIndex).toContain("colors");
     expect(brandIndex).toContain("brandMotion");
   });
@@ -92,7 +92,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("uses LazyMotion wrappers in shared animation primitives", () => {
-    const animateIn = readFromRepo("packages/ui/src/components/animate-in.tsx");
+    const animateIn = readFromRepo("packages/design/ui/src/components/animate-in.tsx");
 
     expect(animateIn).toContain("LazyMotion");
     expect(animateIn).toContain("domAnimation");

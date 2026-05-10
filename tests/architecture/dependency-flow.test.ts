@@ -52,7 +52,7 @@ interface DependencyRule {
 const DEPENDENCY_RULES: DependencyRule[] = [
   {
     name: "@nebutra/ui",
-    packageJsonPath: "packages/ui/package.json",
+    packageJsonPath: "packages/design/ui/package.json",
     allowedDeps: [],
   },
   {

@@ -23,7 +23,7 @@
 4. Post-install 三段卡片（Next / Customize / Ship faster）
 5. PM 自动检测 + `update-notifier`
 6. `.templateignore` 系统（71 规则，剥离 Nebutra 业务内容）
-7. `packages/ai-providers/` + 20 provider meta + `@sailor:*` marker 模板系统
+7. `packages/ai/ai-providers/` + 20 provider meta + `@sailor:*` marker 模板系统
 8. ~~NextAuth 彻底清除（Clerk + BetterAuth 双 provider）~~ → **撤销**：2026-05-10 重新引入 NextAuth 作为第三 provider，三选一 (`--auth=clerk|betterauth|nextauth|none`)
 9. 占位包：`nebutra` · `@nebutra/sailor` · `@nebutra/sailor-cli`
 
@@ -55,9 +55,9 @@ P2 生态建设（Gemini 第三批）
 ### 2.1 Provider flag → prompt 流程接入
 
 **现状**
-- `packages/create-sailor/src/utils/providers.ts` 的 `renderTemplate()` 已就绪
-- `packages/ai-providers/templates/registry.ts.template` 和 `.env.example.template` 已就绪
-- `packages/create-sailor/src/index.ts` 已定义 `--ai` flag 但**未串联到 prompt 流程**
+- `packages/ops/create-sailor/src/utils/providers.ts` 的 `renderTemplate()` 已就绪
+- `packages/ai/ai-providers/templates/registry.ts.template` 和 `.env.example.template` 已就绪
+- `packages/ops/create-sailor/src/index.ts` 已定义 `--ai` flag 但**未串联到 prompt 流程**
 
 **目标**
 用户执行：
@@ -99,10 +99,10 @@ npx create-sailor@latest my-app --ai=openai,deepseek,siliconflow
 - [ ] 运行 `pnpm --filter create-sailor build` + dry-run 验证
 
 **输入文件**
-- `packages/create-sailor/src/index.ts` (主流程)
-- `packages/create-sailor/src/utils/providers.ts` (渲染器)
-- `packages/ai-providers/src/meta.ts` (provider 元数据)
-- `packages/ai-providers/templates/*.template` (模板)
+- `packages/ops/create-sailor/src/index.ts` (主流程)
+- `packages/ops/create-sailor/src/utils/providers.ts` (渲染器)
+- `packages/ai/ai-providers/src/meta.ts` (provider 元数据)
+- `packages/ai/ai-providers/templates/*.template` (模板)
 
 **预期产出**
 - 用户 scaffold 后 `my-app/packages/ai/src/registry.ts` 可 `pnpm build` 直接通过
@@ -131,7 +131,7 @@ npx create-sailor@latest my-app --ai=openai,deepseek,siliconflow
 - `Dockerfile.web`
 
 **实施清单**
-- [ ] 新建 `packages/create-sailor/templates/deploy/` 目录，放 4 个子目录模板
+- [ ] 新建 `packages/ops/create-sailor/templates/deploy/` 目录，放 4 个子目录模板
 - [ ] 新建 `src/utils/deploy.ts`：
   ```ts
   export async function applyDeployTarget(
@@ -240,8 +240,8 @@ sailor add agents --example=chatbot       # Multi-Agent 编排示例
 ```
 
 **实施清单**
-- [ ] 新建 `packages/cli/src/commands/add.ts`（此命令属于 `packages/cli` 不是 `create-sailor`）
-- [ ] 注册到 `packages/cli/src/index.ts`
+- [ ] 新建 `packages/ops/cli/src/commands/add.ts`（此命令属于 `packages/cli` 不是 `create-sailor`）
+- [ ] 注册到 `packages/ops/cli/src/index.ts`
 - [ ] Feature registry JSON schema（每个 feature 一个 JSON）：
   ```json
   {
@@ -249,7 +249,7 @@ sailor add agents --example=chatbot       # Multi-Agent 编排示例
     "description": "Message queue (QStash + BullMQ)",
     "providers": ["upstash-qstash", "bullmq"],
     "files": [
-      { "path": "packages/queue/package.json", "content": "..." },
+      { "path": "packages/integrations/queue/package.json", "content": "..." },
       { "path": "apps/web/src/lib/queue.ts", "content": "..." }
     ],
     "envVars": ["QSTASH_TOKEN", "QSTASH_SIGNING_KEY"],
@@ -311,7 +311,7 @@ sailor add agents --example=chatbot       # Multi-Agent 编排示例
   - 替换 `brand.config.ts` 为占位模板
   - 替换所有 `Nebutra` / `nebutra.com` 为模板占位符
   - `git init` 新 repo 并 push
-- [ ] `packages/create-sailor/src/utils/git.ts` 改 `cloneTemplate()`：
+- [ ] `packages/ops/create-sailor/src/utils/git.ts` 改 `cloneTemplate()`：
   - 默认 clone `nebutra/sailor-template`（快，已剥离）
   - 保留 `--source=main` flag 可强制 clone 主仓（用于调试）
 - [ ] 删除 create-sailor 里的运行时 `.templateignore` 应用逻辑（现在预剥离了）
@@ -327,7 +327,7 @@ sailor add agents --example=chatbot       # Multi-Agent 编排示例
 ### 3.3 完整 provider 注册表扩展（20 → 60+）
 
 **现状**
-- `packages/ai-providers/src/meta.ts` 有 20 个
+- `packages/ai/ai-providers/src/meta.ts` 有 20 个
 - 用户之前提供了 60+ 完整 provider 列表
 
 **目标**
@@ -420,7 +420,7 @@ push tag → 自动 publish create-sailor + 占位包
 ## 5. 已知限制 / 已知债务（供 Gemini 注意）
 
 ### 5.1 `renderTemplate` marker 过滤有限
-- `packages/create-sailor/src/utils/providers.ts` 的 `filterRegistryEntries()` 是 stub
+- `packages/ops/create-sailor/src/utils/providers.ts` 的 `filterRegistryEntries()` 是 stub
 - `createProviderRegistry({ openai, anthropic, ... })` 对象字面量内的 key 没有真正按选择过滤
 - 暂靠 marker 先剥离 import/instance，registry 对象里保留全部 key 可能编译报错
 - **修复优先级：P0**（Gemini 第一批任务之一）
@@ -450,8 +450,8 @@ push tag → 自动 publish create-sailor + 占位包
    - `CLAUDE.md`（项目顶级说明）
    - `WHITELABEL.md`
    - `TEMPLATE.md`
-   - `packages/create-sailor/src/index.ts`（主流程）
-   - `packages/ai-providers/src/meta.ts`（provider 元数据）
+   - `packages/ops/create-sailor/src/index.ts`（主流程）
+   - `packages/ai/ai-providers/src/meta.ts`（provider 元数据）
 4. 修改任何包后**必须**运行：
    ```bash
    pnpm --filter <package> typecheck
@@ -499,8 +499,8 @@ pnpm --filter create-sailor build
 pnpm -r typecheck
 
 # 本地 dry-run 测 CLI
-node packages/create-sailor/dist/index.js --dry-run my-test -y
-NO_COLOR=1 node packages/create-sailor/dist/index.js --help
+node packages/ops/create-sailor/dist/index.js --dry-run my-test -y
+NO_COLOR=1 node packages/ops/create-sailor/dist/index.js --help
 
 # 发布（需 npm token 且必须 Bypass 2FA）
 npm config set //registry.npmjs.org/:_authToken=<TOKEN>

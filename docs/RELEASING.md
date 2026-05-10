@@ -12,7 +12,7 @@ No manual `npm publish`, no OTP typing, no juggling `.npmrc` with tokens. Everyt
 
 ```bash
 git checkout -b feat/my-change
-# edit packages/create-sailor/... or packages/cli/...
+# edit packages/ops/create-sailor/... or packages/ops/cli/...
 ```
 
 ### 2. Author a changeset

@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-09
 **Status:** Read-only audit
-**Source files inspected:** `packages/brand/`, `packages/tokens/`, `packages/theme/`, `packages/ui/`, `scripts/verify-brand-token-sync.ts`
+**Source files inspected:** `packages/design/brand/`, `packages/design/tokens/`, `packages/design/theme/`, `packages/design/ui/`, `scripts/verify-brand-token-sync.ts`
 
 ---
 
@@ -12,13 +12,13 @@
 
 | # | File | Line | Token Name | Raw Value |
 |---|------|------|-----------|-----------|
-| 1 | `packages/brand/src/guidelines/color.ts` | 18 | `nebutraBlue.hex` | `"#0033FE"` |
-| 2 | `packages/brand/src/guidelines/color.ts` | 197–209 | `nebutraBlueScale[500]` | `"#0033FE"` |
-| 3 | `packages/brand/src/metadata.ts` | 66 | `colors.primary[500]` | `"#0033FE"` |
-| 4 | `packages/tokens/styles.css` | 18 | `--nebutra-brand-blue` | `#0033fe` |
-| 5 | `packages/tokens/styles.css` | 379 | `--nebutra-brand-blue` (P3 override) | `color(display-p3 0.03 0.19 0.99)` |
-| 6 | `packages/brand/src/metadata.ts` | 96 | `colors.gradient.primary` (stop) | `"#0033FE"` |
-| 7 | `packages/brand/src/guidelines/color.ts` | 66 | `brandGradient.primary.stops[0].color` | `"#0033FE"` |
+| 1 | `packages/design/brand/src/guidelines/color.ts` | 18 | `nebutraBlue.hex` | `"#0033FE"` |
+| 2 | `packages/design/brand/src/guidelines/color.ts` | 197–209 | `nebutraBlueScale[500]` | `"#0033FE"` |
+| 3 | `packages/design/brand/src/metadata.ts` | 66 | `colors.primary[500]` | `"#0033FE"` |
+| 4 | `packages/design/tokens/styles.css` | 18 | `--nebutra-brand-blue` | `#0033fe` |
+| 5 | `packages/design/tokens/styles.css` | 379 | `--nebutra-brand-blue` (P3 override) | `color(display-p3 0.03 0.19 0.99)` |
+| 6 | `packages/design/brand/src/metadata.ts` | 96 | `colors.gradient.primary` (stop) | `"#0033FE"` |
+| 7 | `packages/design/brand/src/guidelines/color.ts` | 66 | `brandGradient.primary.stops[0].color` | `"#0033FE"` |
 
 **Verdict: 7 raw-value definition points across 2 files.** The `packages/ui` chain (`primitive.ts` → `tailwind.preset.ts`) delegates to `colors.primary[500]` from `@nebutra/brand`, so it adds no additional raw literal — it references the brand source.
 
@@ -26,7 +26,7 @@
 
 ### Blue Color Scale — Drift Analysis
 
-`packages/brand/src/guidelines/color.ts` (`nebutraBlueScale`) vs `packages/brand/src/metadata.ts` (`colors.primary`) — these are **two independent definitions of the same scale**:
+`packages/design/brand/src/guidelines/color.ts` (`nebutraBlueScale`) vs `packages/design/brand/src/metadata.ts` (`colors.primary`) — these are **two independent definitions of the same scale**:
 
 | Step | `guidelines/color.ts` `nebutraBlueScale` | `metadata.ts` `colors.primary` | Match? |
 |------|------------------------------------------|--------------------------------|--------|
@@ -42,7 +42,7 @@
 | 900 | `#000f59` | `#000a33` | **DRIFT** |
 | 950 | `#000830` | `#00051a` | **DRIFT** |
 
-**All 10 non-base steps drift.** `packages/tokens/styles.css` inherits values from its own hardcoded scale (lines 27–38), which matches `guidelines/color.ts`, not `metadata.ts`. But `packages/ui/src/tokens/primitive.ts` imports from `@nebutra/brand` which re-exports `metadata.ts` `colors` — so the TS primitive layer uses the `metadata.ts` scale, while the CSS layer uses the `guidelines/color.ts` scale.
+**All 10 non-base steps drift.** `packages/design/tokens/styles.css` inherits values from its own hardcoded scale (lines 27–38), which matches `guidelines/color.ts`, not `metadata.ts`. But `packages/design/ui/src/tokens/primitive.ts` imports from `@nebutra/brand` which re-exports `metadata.ts` `colors` — so the TS primitive layer uses the `metadata.ts` scale, while the CSS layer uses the `guidelines/color.ts` scale.
 
 ---
 
@@ -106,7 +106,7 @@ Three independent neutral scale definitions exist:
 `tokens/styles.css` line 204: `--primary: 228 85% 56%` resolves to approximately `#254bfa` (a softer brand blue).
 `themes.css` `@theme` block line 22: `--color-primary: oklch(0.452 0.313 264.1)` resolves to approximately `#2c2fbb` (a darker purple-blue).
 
-These are not the same color. The `packages/theme/themes.css` **overrides** `--color-primary` with an incompatible oklch value in its `@theme` block — any app importing both files has `themes.css` win the cascade.
+These are not the same color. The `packages/design/theme/themes.css` **overrides** `--color-primary` with an incompatible oklch value in its `@theme` block — any app importing both files has `themes.css` win the cascade.
 
 ---
 
@@ -196,7 +196,7 @@ Concept: "Brand Gradient"
 
 ## 4. Single-Source Recommendation — SSOT Format + Migration Path
 
-### Recommended SSOT: `packages/design-tokens/tokens/*.json` (W3C DTCG)
+### Recommended SSOT: `packages/design/design-tokens/tokens/*.json` (W3C DTCG)
 
 A new `@nebutra/design-tokens` package was scaffolded as a parallel SSOT alongside this audit. It uses W3C Design Tokens Community Group (DTCG) format with `$value` / `$type` schema. Style Dictionary 4 generates CSS / TS / Tailwind preset from this single source. The intermediate `metadata.ts` / `guidelines/color.ts` / `styles.css` layers should eventually be **generated artifacts**, not hand-edited.
 
@@ -209,29 +209,29 @@ A new `@nebutra/design-tokens` package was scaffolded as a parallel SSOT alongsi
 
 **Step 1 — Unify the color scales (highest priority)**
 
-`packages/brand/src/guidelines/color.ts:197–248` — Remove `nebutraBlueScale`, `nebutraCyanScale`, `nebutraNeutralScale`. Replace all consumers with imports from `metadata.ts`:
+`packages/design/brand/src/guidelines/color.ts:197–248` — Remove `nebutraBlueScale`, `nebutraCyanScale`, `nebutraNeutralScale`. Replace all consumers with imports from `metadata.ts`:
 - `guidelines/color.ts:316` uses `nebutraBlueScale[500]` → change to `colors.primary[500]`
 - `guidelines/color.ts:317` uses `nebutraCyanScale[500]` → change to `colors.accent[500]`
 
 **Step 2 — Add neutral to `metadata.ts`**
 
-`packages/brand/src/metadata.ts` currently has `colors.neutral` using Zinc. Decide which is correct (Zinc or Slate) and standardize. The VI manual uses blue-undertone grays → Slate is more defensible. Update `metadata.ts:109–122` to Slate values, then delete `guidelines/color.ts:236–248`.
+`packages/design/brand/src/metadata.ts` currently has `colors.neutral` using Zinc. Decide which is correct (Zinc or Slate) and standardize. The VI manual uses blue-undertone grays → Slate is more defensible. Update `metadata.ts:109–122` to Slate values, then delete `guidelines/color.ts:236–248`.
 
 **Step 3 — Fix `tokens/styles.css` to reference brand package values via a build step**
 
-`packages/tokens/styles.css:27–65` contains hardcoded scale values. Long-term: generate this block from the DTCG `tokens.json` via Style Dictionary (already scaffolded in `packages/design-tokens/`). Short-term: manually reconcile so all steps match `metadata.ts`.
+`packages/design/tokens/styles.css:27–65` contains hardcoded scale values. Long-term: generate this block from the DTCG `tokens.json` via Style Dictionary (already scaffolded in `packages/design/design-tokens/`). Short-term: manually reconcile so all steps match `metadata.ts`.
 
 **Step 4 — Resolve `--brand-gradient` / `--gradient-brand` duplicate**
 
-`packages/tokens/styles.css:68` defines `--brand-gradient`. `packages/tokens/styles.css:866` defines `--gradient-brand`. Pick one name. CLAUDE.md uses `--brand-gradient` in all examples → keep `--brand-gradient`, remove `--gradient-brand` from `@theme`, expose via Tailwind as `bg-[var(--brand-gradient)]` or add a dedicated alias.
+`packages/design/tokens/styles.css:68` defines `--brand-gradient`. `packages/design/tokens/styles.css:866` defines `--gradient-brand`. Pick one name. CLAUDE.md uses `--brand-gradient` in all examples → keep `--brand-gradient`, remove `--gradient-brand` from `@theme`, expose via Tailwind as `bg-[var(--brand-gradient)]` or add a dedicated alias.
 
 **Step 5 — Fix `--primary` token collision**
 
-`packages/theme/themes.css:22` defines `--color-primary: oklch(0.452 0.313 264.1)`. This overrides `packages/tokens/styles.css:204` `--primary: 228 85% 56%`. The `themes.css` values are multi-theme overrides (neon, gradient, etc.) and intentionally differ from brand tokens. Apps should import `tokens/styles.css` for brand use and `themes.css` only when activating the preset theme engine — they should not both be globally applied to `<html>` unless the cascade ordering is explicitly managed.
+`packages/design/theme/themes.css:22` defines `--color-primary: oklch(0.452 0.313 264.1)`. This overrides `packages/design/tokens/styles.css:204` `--primary: 228 85% 56%`. The `themes.css` values are multi-theme overrides (neon, gradient, etc.) and intentionally differ from brand tokens. Apps should import `tokens/styles.css` for brand use and `themes.css` only when activating the preset theme engine — they should not both be globally applied to `<html>` unless the cascade ordering is explicitly managed.
 
 **Step 6 — Resolve font stack**
 
-`packages/brand/src/metadata.ts:152` declares Geist as the new primary font. `packages/tokens/styles.css:858` still uses Poppins. `packages/ui/src/tokens/primitive.ts:185` uses Poppins. Update both to match `metadata.ts` typography.
+`packages/design/brand/src/metadata.ts:152` declares Geist as the new primary font. `packages/design/tokens/styles.css:858` still uses Poppins. `packages/design/ui/src/tokens/primitive.ts:185` uses Poppins. Update both to match `metadata.ts` typography.
 
 ---
 
@@ -259,17 +259,17 @@ A new `@nebutra/design-tokens` package was scaffolded as a parallel SSOT alongsi
 
 ### Existing parity verifier
 
-The new `packages/design-tokens/scripts/verify-parity.ts` already addresses several of these gaps for the CSS layer (currently 86.9% match against `tokens/styles.css`). The remaining 13% drift is documented in the design-tokens package README and represents genuine modeling gaps (Display-P3 wide-gamut overrides, oklch fallbacks, compound shorthand tokens) — not silent bugs.
+The new `packages/design/design-tokens/scripts/verify-parity.ts` already addresses several of these gaps for the CSS layer (currently 86.9% match against `tokens/styles.css`). The remaining 13% drift is documented in the design-tokens package README and represents genuine modeling gaps (Display-P3 wide-gamut overrides, oklch fallbacks, compound shorthand tokens) — not silent bugs.
 
 ---
 
 ## Essential Files
 
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/brand/src/metadata.ts` — designated SSOT by the verifier, contains competing neutral and color scales
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/brand/src/guidelines/color.ts` — diverged second definition of all scales (should be deleted after reconciliation)
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/tokens/styles.css` — CSS runtime layer (1564 lines); hardcodes scale values from `guidelines.ts` family; contains both `--brand-gradient` (line 68) and `--gradient-brand` (line 866) as duplicate gradient tokens
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/theme/themes.css` — multi-theme engine; its `@theme` block overrides `--color-primary`, `--font-sans`, and semantic tokens with values unrelated to the brand VI; creates cascade collision when both files are imported
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/tokens/primitive.ts` — TS primitive bridge; correctly imports from `@nebutra/brand` (`metadata.ts`), so gets Zinc neutrals; diverges from CSS layer which uses Slate
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/tailwind.preset.ts` — Tailwind preset consuming primitive.ts; exposes color palette with Zinc neutrals to legacy tailwind.config consumers
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/brand/src/metadata.ts` — designated SSOT by the verifier, contains competing neutral and color scales
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/brand/src/guidelines/color.ts` — diverged second definition of all scales (should be deleted after reconciliation)
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/tokens/styles.css` — CSS runtime layer (1564 lines); hardcodes scale values from `guidelines.ts` family; contains both `--brand-gradient` (line 68) and `--gradient-brand` (line 866) as duplicate gradient tokens
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/theme/themes.css` — multi-theme engine; its `@theme` block overrides `--color-primary`, `--font-sans`, and semantic tokens with values unrelated to the brand VI; creates cascade collision when both files are imported
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/ui/src/tokens/primitive.ts` — TS primitive bridge; correctly imports from `@nebutra/brand` (`metadata.ts`), so gets Zinc neutrals; diverges from CSS layer which uses Slate
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/ui/src/tailwind.preset.ts` — Tailwind preset consuming primitive.ts; exposes color palette with Zinc neutrals to legacy tailwind.config consumers
 - `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/scripts/verify-brand-token-sync.ts` — CI verifier; checks only 4 narrow assertions, misses all inter-file drift
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design-tokens/` — new W3C DTCG SSOT package (parallel, non-replacing)
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/design-tokens/` — new W3C DTCG SSOT package (parallel, non-replacing)

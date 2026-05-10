@@ -27,31 +27,31 @@
 
 "pkg: ui":
   - changed-files:
-      - any-glob-to-any-file: "packages/ui/**"
+      - any-glob-to-any-file: "packages/design/ui/**"
 
 "pkg: tokens":
   - changed-files:
-      - any-glob-to-any-file: "packages/tokens/**"
+      - any-glob-to-any-file: "packages/design/tokens/**"
 
 "pkg: db":
   - changed-files:
-      - any-glob-to-any-file: "packages/db/**"
+      - any-glob-to-any-file: "packages/platform/db/**"
 
 "pkg: logger":
   - changed-files:
-      - any-glob-to-any-file: "packages/logger/**"
+      - any-glob-to-any-file: "packages/platform/logger/**"
 
 "pkg: analytics":
   - changed-files:
-      - any-glob-to-any-file: "packages/analytics/**"
+      - any-glob-to-any-file: "packages/platform/analytics/**"
 
 "pkg: feature-flags":
   - changed-files:
-      - any-glob-to-any-file: "packages/feature-flags/**"
+      - any-glob-to-any-file: "packages/platform/feature-flags/**"
 
 "pkg: billing":
   - changed-files:
-      - any-glob-to-any-file: "packages/billing/**"
+      - any-glob-to-any-file: "packages/commerce/billing/**"
 
 # ── Services ──────────────────────────────────────────────────────────────────
 

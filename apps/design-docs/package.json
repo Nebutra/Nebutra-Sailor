@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/build-registry.mjs && tsx ../../packages/ui/scripts/build-registry.ts",
+    "predev": "node scripts/build-registry.mjs && tsx ../../packages/design/ui/scripts/build-registry.ts",
     "dev": "next dev --port 3003",
-    "prebuild": "node scripts/build-registry.mjs && tsx ../../packages/ui/scripts/build-registry.ts",
+    "prebuild": "node scripts/build-registry.mjs && tsx ../../packages/design/ui/scripts/build-registry.ts",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",

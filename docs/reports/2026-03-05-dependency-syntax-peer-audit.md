@@ -65,7 +65,7 @@ Implication:
   - `attribute="class"` in:
     - `apps/landing-page/src/app/providers.tsx`
     - `apps/web/src/app/providers/theme-provider.tsx`
-- But `packages/marketing/src/styles/tokens.css` still defines both:
+- But `packages/commerce/marketing/src/styles/tokens.css` still defines both:
   - `.dark`
   - `[data-theme="dark"]`
 
@@ -99,7 +99,7 @@ Should migrate to Next 16 `proxy` convention.
 - Legacy `ui` paths still appear in docs (not code imports):
   - `apps/landing-page/DESIGN.md`
 - `packages/theme` still exists and documents `data-theme` model, while apps use `@nebutra/tokens` + `.dark`.
-- `packages/ui/README.md` still references old exports like `@nebutra/ui/theme` and icons paths that no longer match current package surface.
+- `packages/design/ui/README.md` still references old exports like `@nebutra/ui/theme` and icons paths that no longer match current package surface.
 
 ### P3 - Deprecated dependencies in use
 
@@ -130,7 +130,7 @@ These constraints should be treated as hard requirements in migration:
 
 - Replace all `@nebutra/ui/src/*` imports with public exports.
 - Remove Storybook path alias hacks to source internals.
-- Ensure required exports exist in `packages/ui/package.json` and `packages/ui/src/index.ts`.
+- Ensure required exports exist in `packages/design/ui/package.json` and `packages/design/ui/src/index.ts`.
 
 ### Wave 2 - Theme unification completion
 

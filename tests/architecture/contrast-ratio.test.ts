@@ -1,7 +1,7 @@
 /**
  * WCAG 2.1 contrast ratio architecture tests.
  *
- * Reads the token source of truth (packages/tokens/styles.css), extracts
+ * Reads the token source of truth (packages/design/tokens/styles.css), extracts
  * key foreground/background color pairs, computes WCAG relative-luminance
  * contrast ratios, and asserts AA compliance:
  *   - Normal text: ≥ 4.5:1
@@ -18,7 +18,7 @@ import { describe, expect, it } from "vitest";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "../..");
-const TOKEN_FILE = resolve(ROOT, "packages/tokens/styles.css");
+const TOKEN_FILE = resolve(ROOT, "packages/design/tokens/styles.css");
 
 // ---------------------------------------------------------------------------
 // Helpers — WCAG 2.1 contrast computation

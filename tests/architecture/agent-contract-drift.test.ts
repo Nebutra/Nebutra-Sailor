@@ -19,12 +19,12 @@ type PackageJson = {
 describe("scoped AGENTS execution contracts", () => {
   it.each([
     {
-      scope: "packages/email",
+      scope: "packages/integrations/email",
       command: "pnpm --filter @nebutra/email test",
       script: "test",
     },
     {
-      scope: "packages/notifications",
+      scope: "packages/integrations/notifications",
       command: "pnpm --filter @nebutra/notifications test",
       script: "test",
     },
@@ -58,12 +58,12 @@ describe("scoped AGENTS execution contracts", () => {
   });
 
   it("email and mail-preview AGENTS describe the implemented catalog-first contract", async () => {
-    const emailAgents = await readFile(join(ROOT, "packages/email/AGENTS.md"), "utf8");
+    const emailAgents = await readFile(join(ROOT, "packages/integrations/email/AGENTS.md"), "utf8");
     const previewAgents = await readFile(join(ROOT, "apps/mail-preview/AGENTS.md"), "utf8");
 
     expect(emailAgents).toContain("EMAIL_TEMPLATE_CATALOG");
     expect(previewAgents).toContain("EMAIL_TEMPLATE_CATALOG");
     expect(emailAgents).not.toContain("src/emails/*.tsx");
-    expect(previewAgents).not.toContain("packages/email/src/emails");
+    expect(previewAgents).not.toContain("packages/integrations/email/src/emails");
   });
 });

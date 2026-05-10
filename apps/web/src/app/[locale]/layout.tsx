@@ -16,7 +16,7 @@ import "../globals.css";
 
 // GeistSans → --font-geist-sans (variable font, 100–900)
 // GeistMono → --font-geist-mono (variable font, 100–900)
-// Referenced in packages/ui/src/typography/fonts.css via var(--font-geist-sans/mono)
+// Referenced in packages/design/ui/src/typography/fonts.css via var(--font-geist-sans/mono)
 // CJK fallback is provided by @nebutra/tokens and @nebutra/ui without Google font fetches.
 
 export const viewport: Viewport = {

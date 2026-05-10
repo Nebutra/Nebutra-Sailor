@@ -15,7 +15,7 @@ export const metadata = {
  * Static plan catalogue rendered on /choose-plan.
  *
  * NOTE: Until the database-driven plan catalogue (see
- * `packages/billing/src/config/plan-config.ts`) is exposed via a public
+ * `packages/commerce/billing/src/config/plan-config.ts`) is exposed via a public
  * server-readable surface, the grid uses a hand-curated list mirroring the
  * supastarter reference. Replace with `getPlanConfig().getPlans({ publicOnly:
  * true })` once the billing service is wired into apps/web.

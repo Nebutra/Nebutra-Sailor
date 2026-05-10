@@ -14,7 +14,7 @@ import { describe, expect, it } from "vitest";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "../..");
-const DESIGN_SYSTEM_SRC = resolve(ROOT, "packages/ui/src");
+const DESIGN_SYSTEM_SRC = resolve(ROOT, "packages/design/ui/src");
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -53,15 +53,15 @@ type _RequiredSubdir = (typeof REQUIRED_SUBDIRS)[number];
  */
 const HARDCODED_HEX_EXEMPTIONS = new Set([
   // Syntax highlighting palette — language token colors cannot map to semantic UI tokens
-  resolve(ROOT, "packages/ui/src/primitives/code-block.tsx"),
+  resolve(ROOT, "packages/design/ui/src/primitives/code-block.tsx"),
   // Gauge — data viz component with color threshold API; hex values in JSDoc + stories
-  resolve(ROOT, "packages/ui/src/primitives/gauge.tsx"),
-  resolve(ROOT, "packages/ui/src/primitives/gauge.stories.tsx"),
+  resolve(ROOT, "packages/design/ui/src/primitives/gauge.tsx"),
+  resolve(ROOT, "packages/design/ui/src/primitives/gauge.stories.tsx"),
   // CardSpotlight — `color` prop demo passes hex to spotlight effect (component API, not inline CSS)
-  resolve(ROOT, "packages/ui/src/primitives/card-spotlight.stories.tsx"),
+  resolve(ROOT, "packages/design/ui/src/primitives/card-spotlight.stories.tsx"),
 ]);
 
-/** All TS/TSX files under packages/ui/src/ (excluding theme/tokens — those define primitives by design) */
+/** All TS/TSX files under packages/design/ui/src/ (excluding theme/tokens — those define primitives by design) */
 const ALL_COMPONENT_FILES = collectTsFiles(DESIGN_SYSTEM_SRC).filter(
   (f) => !f.includes(`${DESIGN_SYSTEM_SRC}/theme/`) && !f.includes(`${DESIGN_SYSTEM_SRC}/tokens/`),
 );
@@ -79,7 +79,7 @@ describe("Property 3a: Token Structure Completeness", () => {
         try {
           stat = statSync(full);
         } catch {
-          throw new Error(`Required directory "packages/ui/src/${subdir}" is missing.`);
+          throw new Error(`Required directory "packages/design/ui/src/${subdir}" is missing.`);
         }
         expect(stat.isDirectory()).toBe(true);
       }),
@@ -91,7 +91,10 @@ describe("Property 3a: Token Structure Completeness", () => {
     fc.assert(
       fc.property(fc.constantFrom(...REQUIRED_SUBDIRS), (subdir) => {
         const files = collectTsFiles(resolve(DESIGN_SYSTEM_SRC, subdir));
-        expect(files.length, `packages/ui/src/${subdir}/ has no .ts/.tsx files`).toBeGreaterThan(0);
+        expect(
+          files.length,
+          `packages/design/ui/src/${subdir}/ has no .ts/.tsx files`,
+        ).toBeGreaterThan(0);
       }),
       { numRuns: REQUIRED_SUBDIRS.length },
     );

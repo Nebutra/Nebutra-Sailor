@@ -72,7 +72,7 @@
     "build:ai-saas": "turbo run build --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/api-gateway --filter=@nebutra/studio --filter=@nebutra/admin --filter=@nebutra/design-docs",
     "build:marketing": "turbo run build --filter=@nebutra/landing-page --filter=@nebutra/blog --filter=@nebutra/studio",
     "build:dashboard": "turbo run build --filter=@nebutra/web --filter=@nebutra/admin --filter=@nebutra/api-gateway",
-    "preset:env": "tsx packages/preset/src/cli.ts",
+    "preset:env": "tsx packages/ops/preset/src/cli.ts",
     "generate:api-types": "tsx scripts/generate-api-types.ts",
     "size": "size-limit",
     "size:why": "size-limit --why",

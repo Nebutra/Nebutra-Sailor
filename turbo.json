@@ -11,10 +11,10 @@
     },
     "build:registry": {
       "inputs": [
-        "packages/ui/src/primitives/**",
-        "packages/ui/src/components/**",
-        "packages/ui/scripts/build-registry.ts",
-        "packages/design-tokens/build/ts/**"
+        "packages/design/ui/src/primitives/**",
+        "packages/design/ui/src/components/**",
+        "packages/design/ui/scripts/build-registry.ts",
+        "packages/design/design-tokens/build/ts/**"
       ],
       "outputs": [
         "apps/design-docs/public/r/**",
@@ -25,10 +25,10 @@
     "@nebutra/ui#build:registry": {
       "dependsOn": ["@nebutra/design-tokens#build"],
       "inputs": [
-        "packages/ui/src/primitives/**",
-        "packages/ui/src/components/**",
-        "packages/ui/scripts/build-registry.ts",
-        "packages/design-tokens/build/ts/**"
+        "packages/design/ui/src/primitives/**",
+        "packages/design/ui/src/components/**",
+        "packages/design/ui/scripts/build-registry.ts",
+        "packages/design/design-tokens/build/ts/**"
       ],
       "outputs": [
         "apps/design-docs/public/r/**",
@@ -80,17 +80,17 @@
     },
     "db:generate": {
       "cache": true,
-      "inputs": ["packages/db/prisma/schema.prisma"],
+      "inputs": ["packages/platform/db/prisma/schema.prisma"],
       "outputs": ["node_modules/.pnpm/@prisma+client*/**"]
     },
     "db:migrate": {
       "cache": false,
-      "inputs": ["packages/db/prisma/**"],
+      "inputs": ["packages/platform/db/prisma/**"],
       "env": ["DATABASE_URL"]
     },
     "db:push": {
       "cache": false,
-      "inputs": ["packages/db/prisma/**"],
+      "inputs": ["packages/platform/db/prisma/**"],
       "env": ["DATABASE_URL"]
     },
     "e2e": {

@@ -3,14 +3,14 @@
 ## Architecture
 
 ```
-packages/db/              → Prisma schema (single source of truth)
+packages/platform/db/              → Prisma schema (single source of truth)
 infra/data/database/           → Database-level configs (RLS, extensions)
 infra/iac/terraform/          → Cloud infrastructure provisioning
 ```
 
 ## Schema Management
 
-**All models defined in `packages/db/prisma/schema.prisma`**
+**All models defined in `packages/platform/db/prisma/schema.prisma`**
 
 ```bash
 pnpm db:generate    # Generate Prisma client

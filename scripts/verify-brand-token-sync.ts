@@ -20,8 +20,8 @@ import {
   nebutraBlueScale,
   nebutraCyanScale,
   nebutraNeutralScale,
-} from "../packages/brand/src/guidelines/color.ts";
-import { colors, typography } from "../packages/brand/src/metadata.ts";
+} from "../packages/design/brand/src/guidelines/color.ts";
+import { colors, typography } from "../packages/design/brand/src/metadata.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -69,11 +69,11 @@ interface DtcgCore {
   };
 }
 
-const core = readJson<DtcgCore>("packages/design-tokens/tokens/core.json");
+const core = readJson<DtcgCore>("packages/design/design-tokens/tokens/core.json");
 
-const tokensCss = read("packages/tokens/styles.css");
-const themesCss = read("packages/theme/themes.css");
-const primitiveTs = read("packages/ui/src/tokens/primitive.ts");
+const tokensCss = read("packages/design/tokens/styles.css");
+const themesCss = read("packages/design/theme/themes.css");
+const primitiveTs = read("packages/design/ui/src/tokens/primitive.ts");
 
 process.stdout.write("Verifying brand token sync against @nebutra/design-tokens SSOT...\n\n");
 

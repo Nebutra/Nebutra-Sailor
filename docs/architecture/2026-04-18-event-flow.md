@@ -121,8 +121,8 @@ The following invariants are enforced by automated tests in this repo:
 | Invariant | Test file |
 |---|---|
 | Publishing the same `event.id` twice results in one effective ledger row | `backends/gateway/src/__tests__/billing-idempotency.test.ts` |
-| Saga step wrapped with `idempotent(key, fn)` — `fn` runs exactly once for the same key | `packages/saga/src/__tests__/idempotency.test.ts` |
-| `UsageLedgerEntry.(organizationId, idempotencyKey)` is a unique constraint at the DB layer | `packages/db/prisma/schema.prisma` |
+| Saga step wrapped with `idempotent(key, fn)` — `fn` runs exactly once for the same key | `packages/integrations/saga/src/__tests__/idempotency.test.ts` |
+| `UsageLedgerEntry.(organizationId, idempotencyKey)` is a unique constraint at the DB layer | `packages/platform/db/prisma/schema.prisma` |
 | Different tenants may reuse the same idempotencyKey | `backends/gateway/src/__tests__/billing-idempotency.test.ts` |
 
 ## Consequences

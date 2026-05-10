@@ -2,7 +2,7 @@
  * Integration-credentials encryption round-trip tests.
  *
  * These tests exercise the `@nebutra/vault` JSON helpers that back the
- * Prisma extension in `packages/db/src/client.ts`. They verify that:
+ * Prisma extension in `packages/platform/db/src/client.ts`. They verify that:
  *
  *   1. `encryptJSON` produces an `EncryptedSecret` envelope that `isEncryptedSecret` accepts.
  *   2. Round-trip (encrypt → decrypt) returns the original value exactly.

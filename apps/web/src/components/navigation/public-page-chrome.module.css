@@ -6,9 +6,15 @@
   gap: 0.55rem;
   border-bottom: 1px solid var(--neutral-6, #e4e4e7);
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--blue-9, #0033fe) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--blue-9, #0033fe) 6%, transparent) 1px,
+      transparent 1px
+    ),
     linear-gradient(var(--neutral-1, #fff), var(--neutral-1, #fff));
-  background-size: 18px 18px, auto;
+  background-size:
+    18px 18px,
+    auto;
   color: var(--neutral-10, #52525b);
   font-size: 0.78rem;
   line-height: 1.35;

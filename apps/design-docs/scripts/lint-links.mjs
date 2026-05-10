@@ -17,7 +17,10 @@ for (const file of files) {
 
   docsRoutes.set(route, toPopulateValue(route));
 
-  const segments = route.replace(/^\/[^/]+\/docs\/?/, "").split("/").filter(Boolean);
+  const segments = route
+    .replace(/^\/[^/]+\/docs\/?/, "")
+    .split("/")
+    .filter(Boolean);
   const lang = route.split("/")[1];
   for (let index = 1; index < segments.length; index += 1) {
     const prefix = `/${lang}/docs/${segments.slice(0, index).join("/")}`;
@@ -62,6 +65,7 @@ const invalidFiles = results.filter((result) => result.errors.length > 0);
 const invalidLinks = invalidFiles.reduce((total, result) => total + result.errors.length, 0);
 
 if (invalidLinks === 0) {
+  // biome-ignore lint/suspicious/noConsole: CLI lint script — stdout is the expected output channel
   console.log(`design-docs link lint passed (${files.length} files scanned).`);
   process.exit(0);
 }

@@ -9,7 +9,7 @@
 
 ### 1.1 目录结构与组件统计
 
-`packages/ui/src/` 完整子目录清单与各层组件数：
+`packages/design/ui/src/` 完整子目录清单与各层组件数：
 
 | 子目录 | 描述 | 组件/导出数 |
 |--------|------|------------|
@@ -415,7 +415,7 @@ https://ui.nebutra.com/r/[component-name].json ← 单组件 manifest
 
 ### 4.4 组件文件生成流程
 
-`packages/ui/scripts/build-registry.ts` 读取 `primitives/*.tsx` → 输出 `registry/*.json`，通过 Turborepo pipeline 在 build 时自动运行，由 `apps/design-docs/public/r/` serve。
+`packages/design/ui/scripts/build-registry.ts` 读取 `primitives/*.tsx` → 输出 `registry/*.json`，通过 Turborepo pipeline 在 build 时自动运行，由 `apps/design-docs/public/r/` serve。
 
 ---
 
@@ -562,7 +562,7 @@ Registry 模式天然解决：copy `button.tsx` 后只需 `class-variance-author
 ## 9. 迁移步骤总清单
 
 ### Phase 1 — 基础设施（Month 0-1，~8 天）
-- [ ] `packages/ui/scripts/build-registry.ts` — 解析 primitives 输出 JSON
+- [ ] `packages/design/ui/scripts/build-registry.ts` — 解析 primitives 输出 JSON
 - [ ] 设计 registry JSON schema，扩展 shadcn 标准 + `meta.nebutraTokens` / `meta.nebutraLayer`
 - [ ] `apps/design-docs/public/r/` + `registry.json` index
 - [ ] Turborepo pipeline 自动生成
@@ -617,9 +617,9 @@ Registry 模式天然解决：copy `button.tsx` 后只需 `class-variance-author
 ---
 
 **文件路径参考：**
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/package.json` — 30+ deps
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/primitives/index.ts` — 140+ 组件
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/components/index.ts`
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/layouts/index.ts`
-- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/ui/src/layout/index.ts`
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/ui/package.json` — 30+ deps
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/ui/src/primitives/index.ts` — 140+ 组件
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/ui/src/components/index.ts`
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/ui/src/layouts/index.ts`
+- `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/packages/design/ui/src/layout/index.ts`
 - `/Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/CLAUDE.md` — Component Generation Rules（Phase 4 更新）

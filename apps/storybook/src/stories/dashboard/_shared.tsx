@@ -14,7 +14,7 @@ export const STORY_LOCALE = "en";
 
 /**
  * Curated messages for components covered by the dashboard stories.
- * Keep keys aligned with the live locale bundle in `packages/i18n/locales/en.json`.
+ * Keep keys aligned with the live locale bundle in `packages/platform/i18n/locales/en.json`.
  */
 export const STORY_MESSAGES = {
   account: {

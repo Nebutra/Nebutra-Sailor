@@ -99,7 +99,7 @@ Do NOT duplicate these — always import from `_shared/`.
 - Python services never accept public traffic directly. All requests flow through
   `backends/gateway`, which validates auth and tenancy.
 - Inter-service requests use HMAC-signed `x-service-token` (see
-  `packages/auth/src/s2s.ts`).
+  `packages/iam/auth/src/s2s.ts`).
 - Database access is RLS-scoped via `app.current_org_id` setting set per-request.
 
 ## License

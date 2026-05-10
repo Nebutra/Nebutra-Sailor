@@ -24,7 +24,7 @@ Replace all `console.log/error` throughout the monorepo with a structured, OTel-
 ### Package Structure
 
 ```
-packages/logger/
+packages/platform/logger/
 ├── src/
 │   ├── index.ts          # Public API: createLogger, initOtel, logger (default instance)
 │   ├── logger.ts         # Pino instance + Logger interface
@@ -124,7 +124,7 @@ Write tests that verify **behavior that would cause production incidents if brok
 
 ### Test Suite 1: packages/alerting
 
-**File:** `packages/alerting/src/__tests__/alerting.test.ts`
+**File:** `packages/platform/alerting/src/__tests__/alerting.test.ts`
 
 ```
 trackError() behavior:
@@ -153,7 +153,7 @@ setAlertErrorHandler():
 
 ### Test Suite 2: packages/rate-limit
 
-**File:** `packages/rate-limit/src/__tests__/tokenBucket.test.ts`
+**File:** `packages/platform/rate-limit/src/__tests__/tokenBucket.test.ts`
 
 ```
 TokenBucket.consume():

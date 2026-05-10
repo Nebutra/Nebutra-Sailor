@@ -5,7 +5,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 // next-intl v4 resolves this path via fs.existsSync (not Node module resolution),
 // so we must use a relative filesystem path, not a bare package specifier.
-const withNextIntl = createNextIntlPlugin("../../packages/i18n/src/request.ts");
+const withNextIntl = createNextIntlPlugin("../../packages/platform/i18n/src/request.ts");
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
