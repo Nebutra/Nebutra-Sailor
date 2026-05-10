@@ -32,7 +32,7 @@ The white-label system updates the following:
 | **README.zh-CN.md**                | Chinese version with same updates            |
 | **packages/brand/src/metadata.ts** | Brand constants, colors, domains             |
 | **packages/brand/assets/**         | Logo files, favicons                         |
-| **packages/design-system/**        | Typography, theme tokens, colors             |
+| **packages/design/tokens/**        | Typography, theme tokens, colors (CSS vars)  |
 | **package.json files**             | NPM scope (`@nebutra` → `@yourbrand`)        |
 | **.env.example**                   | Domain URLs                                  |
 
@@ -216,30 +216,21 @@ The design system uses open-source fonts by default:
 
 To replace with your own fonts:
 
-#### 1. Update Typography Tokens
+#### 1. Update CSS Font Variables (single source of truth)
 
-Edit `packages/design-system/src/typography/tokens.ts`:
-
-```typescript
-// Replace the font family constants
-export const FONT_FAMILY_PRIMARY =
-  '"YourBrandFont", "Inter", -apple-system, sans-serif';
-
-export const FONT_FAMILY_HEADING =
-  '"YourDisplayFont", "Inter", -apple-system, sans-serif';
-```
-
-#### 2. Update CSS Variables
-
-Edit `packages/design-system/src/typography/fonts.css`:
+Edit `packages/design/tokens/styles.css`:
 
 ```css
 :root {
-  --font-primary: "YourBrandFont", "Inter", -apple-system, sans-serif;
+  --font-sans: "YourBrandFont", "Inter", -apple-system, sans-serif;
   --font-heading: "YourDisplayFont", "Inter", -apple-system, sans-serif;
   /* ... */
 }
 ```
+
+> Typography is now CSS-only — there is no longer a TypeScript token file.
+> All font usage in components reads from these CSS variables via Tailwind
+> (`font-sans`, `font-heading`) or `var(--font-*)`.
 
 #### 3. Add Font Files (Self-Hosted)
 
@@ -285,37 +276,47 @@ The design system (`@nebutra/ui`) is the single source of truth for all UI styli
 ### Architecture
 
 ```
-design-system/
-├── theme/          # Colors, spacing, breakpoints (extend Primer)
-├── typography/     # Font families, type scale, presets
-├── primitives/     # Layout, accessibility patterns
-└── components/     # Primer re-exports + custom components
+packages/design/
+├── tokens/         # Runtime CSS variables (★ SOURCE OF TRUTH) — colors, spacing, typography
+├── brand/          # Brand constants, colors, motion language
+├── theme/          # Multi-theme presets (oklch, 6 variants — neon / dark-dense / etc.)
+├── ui/             # Component library — Radix + HeroUI + Lobe UI re-exports + layout
+└── icons/          # 541 Geist icons as tree-shakable TSX components
 ```
 
 ### Theme Overrides
 
-Create brand-specific theme overrides in `packages/design-system/src/theme/brand.ts`:
+Create brand-specific theme overrides in `packages/design/brand/src/metadata.ts`
+(brand constants) and `packages/design/tokens/styles.css` (runtime CSS variables):
 
-```typescript
-import { createTheme } from "./default";
-
-export const brandTheme = createTheme("light", {
-  colors: {
-    accent: {
-      fg: "#6366f1", // Your brand primary
-      emphasis: "#4f46e5",
-    },
-  },
-});
+```ts
+// packages/design/brand/src/metadata.ts
+export const BRAND_COLORS = {
+  primary: "#6366f1",   // Your brand primary
+  emphasis: "#4f46e5",
+};
 ```
+
+```css
+/* packages/design/tokens/styles.css */
+:root {
+  --brand-primary: #6366f1;
+  --brand-accent: #4f46e5;
+  --brand-gradient: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+}
+```
+
+For multi-theme presets (neon / dark-dense / minimal / vibrant / ocean), see
+`packages/design/theme/`.
 
 ### Component Layer Strategy
 
-| Layer            | Package                    | Purpose                               |
-| ---------------- | -------------------------- | ------------------------------------- |
-| **SSOT**         | `@yourbrand/design-system` | Base tokens, Primer components        |
-| **Brand**        | `@yourbrand/ui`     | Domain-specific, promoted components  |
-| **Experimental** | `@yourbrand/ui`     | Prototypes, external library wrappers |
+| Layer            | Package                  | Purpose                                       |
+| ---------------- | ------------------------ | --------------------------------------------- |
+| **SSOT**         | `@yourbrand/tokens`      | Runtime CSS variables, single source of truth |
+| **Brand**        | `@yourbrand/brand`       | Brand constants, colors, motion language      |
+| **Components**   | `@yourbrand/ui`          | Radix + HeroUI + Lobe UI re-exports + layout  |
+| **Themes**       | `@yourbrand/theme`       | Multi-theme presets (oklch, 6 variants)       |
 
 See [Component Library Policy](docs/COMPONENT-LIBRARY-POLICY.md) for governance rules.
 

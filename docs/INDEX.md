@@ -33,7 +33,6 @@ Complete navigation to all project documentation.
 | [config](../packages/platform/config/README.md)               | Shared configuration          |
 | [marketing](../packages/commerce/marketing/README.md)         | Conversion-optimized marketing UI  |
 | [db](../packages/platform/db/README.md)                       | Prisma schema and client      |
-| [design-system](../packages/design-system/README.md) | Primer-based UI system        |
 | [errors](../packages/platform/errors/README.md)               | Error handling                |
 | [event-bus](../packages/integrations/event-bus/README.md)         | Cross-service events          |
 | [feature-flags](../packages/platform/feature-flags/README.md) | Feature flag management       |
