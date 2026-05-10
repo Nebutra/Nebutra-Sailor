@@ -1,0 +1,24 @@
+/**
+ * @nebutra/mail-preview — globals
+ * Tailwind v4 + unified token system from @nebutra/tokens.
+ */
+
+@import "tailwindcss";
+@import "@nebutra/tokens/styles.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+  body {
+    font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  pre,
+  code {
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+  }
+}

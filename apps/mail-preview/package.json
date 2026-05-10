@@ -1,20 +1,34 @@
 {
-  "name": "mail-preview",
-  "version": "0.0.0",
+  "name": "@nebutra/mail-preview",
+  "version": "0.1.0",
   "private": true,
-  "description": "Local email preview and export surface for @nebutra/email",
-  "type": "module",
+  "description": "Live preview app for @nebutra/email — Next.js dev tool + static export scripts",
   "scripts": {
+    "dev": "next dev --port 3010",
+    "build": "next build --webpack",
+    "start": "next start --port 3010",
+    "typecheck": "tsc --noEmit",
     "check": "tsx scripts/check.ts",
     "export": "tsx scripts/export.ts",
     "render:react": "tsx scripts/render-react-templates.ts",
-    "clean": "rm -rf .react-email .turbo"
+    "clean": "rm -rf .next dist .turbo"
   },
   "dependencies": {
-    "@nebutra/email": "workspace:*"
+    "@nebutra/email": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "geist": "catalog:",
+    "lucide-react": "catalog:",
+    "next": "catalog:",
+    "next-themes": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "tailwindcss": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:"
   }
