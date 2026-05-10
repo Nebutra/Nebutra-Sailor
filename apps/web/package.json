@@ -22,6 +22,7 @@
     "@nebutra/auth": "workspace:*",
     "@nebutra/china-compliance": "workspace:*",
     "@nebutra/db": "workspace:*",
+    "@nebutra/email": "workspace:*",
     "@nebutra/feature-flags": "workspace:*",
     "@nebutra/i18n": "workspace:*",
     "@nebutra/icons": "workspace:*",

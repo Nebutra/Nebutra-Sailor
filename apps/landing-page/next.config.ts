@@ -61,11 +61,19 @@ const nextConfig: NextConfig = {
   // Workspace packages: src/-exporting packages need this for SWC to process
   // TypeScript; dist/-exporting packages need it for "use client" detection.
   transpilePackages: [
+    "@nebutra/agents",
+    "@nebutra/auth",
+    "@nebutra/billing",
     "@nebutra/brand",
-    "@nebutra/ui",
-    "@nebutra/tokens",
+    "@nebutra/db",
+    "@nebutra/icons",
+    "@nebutra/identity",
+    "@nebutra/license",
     "@nebutra/marketing",
+    "@nebutra/rls",
     "@nebutra/sanity",
+    "@nebutra/tokens",
+    "@nebutra/ui",
   ],
   reactCompiler: true,
 

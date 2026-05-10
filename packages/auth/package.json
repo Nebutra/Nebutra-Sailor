@@ -20,6 +20,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/email": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "better-auth": "^1.5.6"
   },

@@ -1189,6 +1189,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@nebutra/email':
+        specifier: workspace:*
+        version: link:../../packages/email
       '@nebutra/feature-flags':
         specifier: workspace:*
         version: link:../../packages/feature-flags
@@ -1445,6 +1448,9 @@ importers:
       '@clerk/nextjs':
         specifier: '>=6.0.0'
         version: 7.0.1(patch_hash=493352c9b78a3a06ba8d0d90f5f66a1de5de85ecb631a466c759bf802fb47b89)(next@16.2.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@nebutra/email':
+        specifier: workspace:*
+        version: link:../email
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../logger
