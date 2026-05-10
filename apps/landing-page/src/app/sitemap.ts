@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
+import { getAllPosts } from "@/lib/blog";
 
 const staticPaths = [
   // Core pages
@@ -36,7 +37,7 @@ function localizedUrl(base: string, locale: string, path: string): string {
   return locale === routing.defaultLocale ? `${base}${path}` : `${base}/${locale}${path}`;
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
 
   // Generate entries for all static pages across all locales
@@ -95,5 +96,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
   });
 
-  return [...staticEntries, ...docsEntries, ...changelogEntries];
+  // Dynamic blog post entries
+  const posts = await getAllPosts();
+  const blogEntries = posts.flatMap((post) => {
+    const languages = Object.fromEntries(
+      routing.locales.map((l) => [l, localizedUrl(baseUrl, l, `/blog/${post.slug}`)]),
+    );
+
+    return routing.locales.map((locale) => ({
+      url: localizedUrl(baseUrl, locale, `/blog/${post.slug}`),
+      lastModified: post.date ? new Date(post.date) : new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+      alternates: { languages },
+    }));
+  });
+
+  return [...staticEntries, ...docsEntries, ...changelogEntries, ...blogEntries];
 }
