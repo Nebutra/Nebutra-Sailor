@@ -16,9 +16,37 @@
  */
 
 import { logger } from "@nebutra/logger";
-import type { LanguageModel, ModelMessage } from "ai";
+import type { EmbeddingModel, LanguageModel, ModelMessage } from "ai";
 import { type FallbackProviderName, getAgentsEnv } from "./env";
 import { resolveModel } from "./sdk/models";
+
+// ────────────────────────────────────────────────────────────────────────────
+// Env-key lookup — used to filter the chain to providers that actually have
+// credentials present. This makes single-provider deploys "just work".
+// ────────────────────────────────────────────────────────────────────────────
+
+const ENV_KEY_BY_PROVIDER: Record<FallbackProviderName, string> = {
+  openrouter: "OPENROUTER_API_KEY",
+  anthropic: "ANTHROPIC".concat("_API_KEY"),
+  openai: "OPENAI".concat("_API_KEY"),
+};
+
+function hasProviderKey(provider: FallbackProviderName): boolean {
+  const k = ENV_KEY_BY_PROVIDER[provider];
+  return Boolean(globalThis.process?.env?.[k]);
+}
+
+/**
+ * Filter a chain to providers whose API key is present in env.
+ * Returns the original chain unchanged if NO providers have keys (so callers
+ * still see a meaningful error rather than an empty-chain throw).
+ */
+export function filterAvailableProviders(
+  chain: readonly FallbackProviderName[],
+): readonly FallbackProviderName[] {
+  const filtered = chain.filter(hasProviderKey);
+  return filtered.length > 0 ? filtered : chain;
+}
 
 // ────────────────────────────────────────────────────────────────────────────
 // Provider factory — lazy + dynamic to avoid hard dep on @ai-sdk/anthropic
@@ -38,14 +66,9 @@ async function buildModel(
 ): Promise<LanguageModel> {
   const modelId = resolveModel(modelOrPreset);
 
-  // Env-var name lookup table. Apps on Vercel should set provider="gateway"
-  // in NebutraAIConfig instead of using this direct-fallback chain.
-  const envKeyByProvider: Record<FallbackProviderName, string> = {
-    openrouter: "OPENROUTER_API_KEY",
-    anthropic: "ANTHROPIC".concat("_API_KEY"),
-    openai: "OPENAI".concat("_API_KEY"),
-  };
-  const envKey = envKeyByProvider[provider];
+  // Apps on Vercel should set provider="gateway" in NebutraAIConfig instead
+  // of using this direct-fallback chain.
+  const envKey = ENV_KEY_BY_PROVIDER[provider];
   const apiKey = globalThis.process?.env?.[envKey];
   if (!apiKey) throw new Error(`${envKey} missing`);
 
@@ -122,6 +145,12 @@ export interface CreateFallbackModelOptions {
   chain?: readonly FallbackProviderName[];
   /** Model preset / id passed to each provider in the chain. */
   model?: string;
+  /**
+   * If true (default), filter the chain to providers whose API key is present
+   * in env. Set false to keep the original chain (caller wants to surface
+   * "missing key" errors as fallback steps — useful for tests).
+   */
+  filterAvailable?: boolean;
 }
 
 /**
@@ -136,7 +165,9 @@ export async function runWithFallback<T>(
   options: CreateFallbackModelOptions = {},
 ): Promise<FallbackResult<T>> {
   const env = getAgentsEnv();
-  const chain = options.chain ?? env.LLM_FALLBACK_CHAIN;
+  const rawChain = options.chain ?? env.LLM_FALLBACK_CHAIN;
+  const chain =
+    options.filterAvailable === false ? rawChain : filterAvailableProviders(rawChain);
   const model = options.model ?? "flagship";
 
   let lastError: unknown;
@@ -215,6 +246,115 @@ export function buildSystemWithCache(systemPrompt: string): {
     content: systemPrompt,
     providerOptions: withAnthropicCacheControl(),
   };
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Embedding fallback — separate chain since not every chat provider exposes
+// embeddings (Anthropic notably does not).
+// ────────────────────────────────────────────────────────────────────────────
+
+/** Providers that currently expose embedding models via the AI SDK. */
+const EMBEDDING_CAPABLE: ReadonlySet<FallbackProviderName> = new Set<FallbackProviderName>([
+  "openrouter",
+  "openai",
+]);
+
+async function buildEmbeddingModel(
+  provider: FallbackProviderName,
+  modelOrPreset: string,
+): Promise<EmbeddingModel<string>> {
+  const modelId = resolveModel(modelOrPreset);
+  const envKey = ENV_KEY_BY_PROVIDER[provider];
+  const apiKey = globalThis.process?.env?.[envKey];
+  if (!apiKey) throw new Error(`${envKey} missing`);
+
+  switch (provider) {
+    case "openrouter": {
+      const { createOpenRouter } = await import("@openrouter/ai-sdk-provider");
+      return createOpenRouter({ apiKey }).textEmbeddingModel(modelId);
+    }
+    case "openai": {
+      const { createOpenAI } = await import("@ai-sdk/openai");
+      const openaiModelId = modelId.startsWith("openai/")
+        ? modelId.slice("openai/".length)
+        : modelId;
+      return createOpenAI({ apiKey }).textEmbeddingModel(openaiModelId);
+    }
+    case "anthropic": {
+      throw new Error("Anthropic does not expose embedding models");
+    }
+  }
+}
+
+export interface EmbeddingFallbackOptions {
+  chain?: readonly FallbackProviderName[];
+  model?: string;
+  filterAvailable?: boolean;
+}
+
+/**
+ * Run an AI SDK embedding call against the configured embedding fallback chain.
+ *
+ * The caller provides an `invoke(model)` function — usually a closure over
+ * `embed` or `embedMany` from the `ai` package — and this helper walks the
+ * embedding-capable chain, trying each provider until one succeeds.
+ */
+export async function runEmbedWithFallback<T>(
+  invoke: (model: EmbeddingModel<string>) => Promise<T>,
+  options: EmbeddingFallbackOptions = {},
+): Promise<FallbackResult<T>> {
+  const env = getAgentsEnv();
+  const rawChain = options.chain ?? env.LLM_EMBEDDING_FALLBACK_CHAIN;
+
+  // Filter to providers that (a) expose embeddings and (b) have keys present.
+  const capable = rawChain.filter((p) => EMBEDDING_CAPABLE.has(p));
+  const chain =
+    options.filterAvailable === false ? capable : capable.filter(hasProviderKey);
+
+  if (chain.length === 0) {
+    logger.warn("Embedding fallback chain is empty after filtering", {
+      raw: rawChain,
+      capable,
+    });
+    throw new Error(
+      "No embedding-capable providers available — set OPENROUTER_API_KEY or " +
+        "OPENAI_API_KEY (Anthropic does not expose embedding models).",
+    );
+  }
+
+  const model = options.model ?? "embedding";
+  let lastError: unknown;
+  let attempts = 0;
+
+  for (const provider of chain) {
+    attempts += 1;
+    try {
+      const em = await buildEmbeddingModel(provider, model);
+      const result = await invoke(em);
+      if (attempts > 1) {
+        logger.info("Embedding fallback succeeded", { provider, attempts });
+      }
+      return { result, provider, attempts };
+    } catch (error) {
+      lastError = error;
+
+      if (!isRetryableError(error)) {
+        logger.error("Embedding call failed (non-retryable)", { provider, error });
+        throw error;
+      }
+
+      logger.warn("Embedding provider failed — trying next in chain", {
+        provider,
+        nextIndex: attempts,
+        error,
+      });
+    }
+  }
+
+  throw new Error(
+    `All embedding providers in fallback chain [${chain.join(", ")}] failed. ` +
+      `Last error: ${String(lastError)}`,
+  );
 }
 
 export type { ModelMessage };

@@ -11,8 +11,11 @@ export {
 export {
   buildSystemWithCache,
   type CreateFallbackModelOptions,
+  type EmbeddingFallbackOptions,
   type FallbackResult,
+  filterAvailableProviders,
   isRetryableError,
+  runEmbedWithFallback,
   runWithFallback,
   withAnthropicCacheControl,
 } from "./fallback";

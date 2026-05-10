@@ -20,6 +20,7 @@ import {
   type ModelMessage,
   type StreamTextResult,
 } from "ai";
+import { runEmbedWithFallback } from "../fallback";
 import {
   type NebutraAIConfig,
   NebutraAIConfigSchema,
@@ -122,18 +123,29 @@ export interface EmbedOptions {
 
 /**
  * Generate an embedding vector for a single value.
+ *
+ * Uses `runEmbedWithFallback()` so retryable failures (429 / 5xx / network)
+ * automatically rotate to the next provider in `LLM_EMBEDDING_FALLBACK_CHAIN`.
  */
 export async function embed(value: string, options: EmbedOptions = {}) {
-  const model = createEmbeddingModel(options.model ?? "embedding", _resolved);
-  return await _embed({ model, value });
+  const { result } = await runEmbedWithFallback(
+    async (model) => _embed({ model, value }),
+    { model: options.model ?? "embedding" },
+  );
+  return result;
 }
 
 /**
  * Generate embedding vectors for multiple values in a single request.
+ *
+ * Uses `runEmbedWithFallback()` for provider rotation on retryable errors.
  */
 export async function embedMany(values: string[], options: EmbedOptions = {}) {
-  const model = createEmbeddingModel(options.model ?? "embedding", _resolved);
-  return await _embedMany({ model, values });
+  const { result } = await runEmbedWithFallback(
+    async (model) => _embedMany({ model, values }),
+    { model: options.model ?? "embedding" },
+  );
+  return result;
 }
 
 // ---------------------------------------------------------------------------
