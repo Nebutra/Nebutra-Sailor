@@ -39,6 +39,48 @@ Do not treat `.next/` output as implementation truth.
 - Avoid introducing parallel auth or token semantics here when the package-level
   contract already exists elsewhere in the repo.
 
+## Out Of Scope (Complexity Cap)
+
+This app and `@nebutra/oauth-server` exist to serve the **internal needs** of
+`apps/sleptons`, `apps/web`, and `apps/landing-page` — not to compete with
+Auth0 / Ory Hydra / Authentik. Building an OIDC-Certified server is an
+explicit non-goal: it's a 6+ engineer-year effort with no product return at
+the current stage.
+
+The following are **out of scope** until a real customer requirement says
+otherwise (and is documented in a follow-up ADR):
+
+- **OIDC certification suite** — we implement the subset our own apps use, not
+  the full spec
+- **Dynamic client registration** (`/register` endpoint) — clients are
+  configured statically in code/env
+- **External / third-party clients** — only Sailor-internal apps may register
+  as relying parties
+- **Grant types beyond `authorization_code` + `refresh_token`** — no
+  `client_credentials`, no `device_code`, no `password`, no `implicit`
+- **Custom scope vocabulary** — the scope list is frozen at what
+  `apps/sleptons` and `apps/web` currently consume
+- **JWT signing algorithms beyond RS256** — no ES256, no EdDSA, no HS\*
+- **Federated / social login flows inside this app** — those live in
+  `@nebutra/auth` (Better Auth providers), not here
+- **Session management UI for end users** — managed in the consuming app, not
+  in `idp`
+- **Admin UI for managing clients, scopes, or users** — clients are code,
+  users live in the consuming app's database
+
+If a feature request lands that touches any of the above, the reviewer
+**must** require either:
+
+1. A linked ADR explaining the customer-facing reason, **or**
+2. A redirect to use Clerk / Auth0 / Better Auth's hosted equivalent
+   instead.
+
+Rationale: `apps/idp` is a **leverage** app — its value comes from doing
+just enough auth so that Sailor doesn't need a third-party auth vendor for
+internal flows. Every feature added beyond the minimum dilutes that
+leverage and grows a maintenance surface that competes with the
+core product.
+
 ## Generated And Derived Files
 
 Treat these as derived artifacts:

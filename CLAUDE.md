@@ -21,9 +21,11 @@ apps/                  # User-facing apps (Next.js / Hono)
   sleptons/  idp/  mail-preview/  sailor-docs/  tsekaluk-dev/
 
 backends/              # No-UI backends (split by language à la vercel/vercel)
-  gateway/             # TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing
-  python/              # Python / FastAPI fleet
-    _shared/  ai/  billing/  content/  ecommerce/  event-ingest/  recsys/  third-party/  web3/
+  gateway/             # TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing — DEFAULT for new backend work
+  python/              # Python / FastAPI — only when batch / ML / specialized libs justify it (see ADR 2026-05-10)
+    _shared/  ai/                    # active — real callers
+    ecommerce/  event-ingest/  recsys/  # active — Inngest workflows / gateway routes
+    content/  third-party/  web3/    # stub — concept preserved, no implementation; activate by landing a real caller
 
 packages/              # Shared TypeScript libraries
   ui/             PRIMARY component library — Radix + HeroUI + Lobe UI + layout + framer-motion
@@ -725,3 +727,59 @@ pnpm --filter @nebutra/landing-page dev       # start landing page
 pnpm --filter @nebutra/web dev                # start dashboard
 node scripts/generate-palette.mjs --primary=#HEX --secondary=#HEX  # rebrand
 ```
+
+---
+
+## Backend Language Policy (TS-by-Default)
+
+> See full reasoning in [ADR 2026-05-10 — TS-by-Default, Python Only When Justified](docs/architecture/2026-05-10-ts-by-default-python-only-when-justified.md).
+
+### The rule
+
+New backend work goes in **TypeScript** (`backends/gateway/` or `packages/<category>/<name>/`) by default.
+
+A new Python service is acceptable **only** when its `README.md` cites at least one of:
+
+1. **Batch / queued work** that is too long for edge runtimes (>5s typical)
+2. **ML / scientific compute** that depends on the Python ecosystem (transformers, vLLM, etc.)
+3. **Specialized libraries** with no comparable TS port
+
+CRUD, webhooks, billing, content management, blockchain RPC reads, third-party API proxies — these go in **TS**, no exceptions.
+
+### Where the canonical implementations live
+
+| Domain | Canonical (use this) | Do not duplicate |
+|---|---|---|
+| Billing / subscriptions | `packages/commerce/billing` (TS) — multi-provider, full surface | ❌ no Python billing |
+| Content management | `apps/studio` (Sanity) | ❌ no Python content |
+| Auth / identity | `packages/iam/auth` + `apps/idp` | ❌ no Python auth |
+| Webhooks | `packages/integrations/webhooks` | ❌ no Python webhook receiver |
+| Edge AI (interactive) | `packages/ai/agents` (Vercel AI SDK) | use Python AI service only for batch/translate |
+
+If you find yourself writing Python code that does what one of the above already does, stop and read the ADR.
+
+### Three-tier module lifecycle
+
+Every module under `backends/python/` and `packages/` has exactly one tier:
+
+```
+active     — has real callers; participates in build, typecheck, tests, CI
+stub       — concept preserved (README + interface) but src/ is empty;
+             activate by landing a real caller in the same PR
+incubator  — moved to incubator/; excluded from workspaces and CI
+```
+
+Promotion rules:
+- `stub → active`: requires a real consumer landing in the same PR
+- `active → stub`: zero callers for one quarter (run quarterly caller-graph audit)
+- `stub → incubator`: untouched for two quarters
+
+### Caller-graph audit command
+
+```bash
+# Find external callers of a Python backend (by env-var URL)
+rg "<SERVICE_NAME>_SERVICE_URL" --type ts -g '!**/node_modules/**' -g '!**/dist/**'
+# Status-check probes and MCP registry entries do NOT count as real callers.
+```
+
+Status: as of 2026-05-10, the audit identified billing as a shadow clone of `packages/commerce/billing` and was deleted; content/web3/third-party were stubbed. See ADR for details.
