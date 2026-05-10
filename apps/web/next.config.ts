@@ -1,4 +1,5 @@
 import bundleAnalyzer from "@next/bundle-analyzer";
+import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
@@ -90,4 +91,22 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBundleAnalyzer(withNextIntl(nextConfig));
+// Sentry webpack plugin — only enabled when an auth token is provided so that
+// local dev and zero-config deployments don't fail at build time. Sourcemaps
+// are uploaded to Sentry only in CI environments where SENTRY_AUTH_TOKEN is set.
+const withSentry = (config: NextConfig): NextConfig => {
+  if (!process.env.SENTRY_AUTH_TOKEN) {
+    return config;
+  }
+  return withSentryConfig(config, {
+    org: process.env.SENTRY_ORG,
+    project: process.env.SENTRY_PROJECT,
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+    silent: !process.env.CI,
+    widenClientFileUpload: true,
+    disableLogger: true,
+    automaticVercelMonitors: false,
+  });
+};
+
+export default withSentry(withBundleAnalyzer(withNextIntl(nextConfig)));

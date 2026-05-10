@@ -18,29 +18,23 @@ export async function register() {
     }
 
     // ── Sentry server-side ──────────────────────────────────────────────────
-    if (process.env.SENTRY_DSN) {
-      try {
-        const Sentry = await import("@sentry/nextjs");
-        Sentry.init({
-          dsn: process.env.SENTRY_DSN,
-          environment: process.env.NODE_ENV ?? "development",
-          release: process.env.SENTRY_RELEASE,
-          // 10% of server-rendered requests sampled for performance monitoring
-          tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
-          beforeSend(event) {
-            // Strip PII from server-side errors before sending to Sentry
-            if (event.request?.headers) {
-              delete event.request.headers.cookie;
-              delete event.request.headers.authorization;
-            }
-            return event;
-          },
-        });
-      } catch (err) {
-        process.stderr.write(
-          `[web] Sentry initialization failed: ${err instanceof Error ? err.message : String(err)}\n`,
-        );
-      }
+    // Loaded from sentry.server.config.ts (canonical Next.js convention).
+    try {
+      await import("../sentry.server.config");
+    } catch (err) {
+      process.stderr.write(
+        `[web] Sentry server init failed: ${err instanceof Error ? err.message : String(err)}\n`,
+      );
+    }
+  }
+
+  if (process.env.NEXT_RUNTIME === "edge") {
+    try {
+      await import("../sentry.edge.config");
+    } catch (err) {
+      process.stderr.write(
+        `[web] Sentry edge init failed: ${err instanceof Error ? err.message : String(err)}\n`,
+      );
     }
   }
 }

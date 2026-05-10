@@ -1261,6 +1261,12 @@ importers:
       openapi-fetch:
         specifier: ^0.17.0
         version: 0.17.0
+      posthog-js:
+        specifier: ^1.360.1
+        version: 1.360.1
+      posthog-node:
+        specifier: ^4.18.0
+        version: 4.18.0
       react:
         specifier: 19.2.4
         version: 19.2.4
@@ -15051,6 +15057,10 @@ packages:
 
   posthog-js@1.360.1:
     resolution: {integrity: sha512-wtKZm0b0SLYLtk0T3SiyXn9cBhwE421fPcJUJ7cRpJmsysHKJcOJ9O/Q7nx7aDj6LvTFILuzjzYO3YTCjbWgqQ==}
+
+  posthog-node@4.18.0:
+    resolution: {integrity: sha512-XROs1h+DNatgKh/AlIlCtDxWzwrKdYDb2mOs58n4yN8BkGN9ewqeQwG5ApS4/IzwCb7HPttUkOVulkYatd2PIw==}
+    engines: {node: '>=15.0.0'}
 
   preact@10.29.0:
     resolution: {integrity: sha512-wSAGyk2bYR1c7t3SZ3jHcM6xy0lcBcDel6lODcs9ME6Th++Dx2KU+6D3HD8wMMKGA8Wpw7OMd3/4RGzYRpzwRg==}
@@ -32908,6 +32918,12 @@ snapshots:
       preact: 10.29.0
       query-selector-shadow-dom: 1.0.1
       web-vitals: 5.1.0
+
+  posthog-node@4.18.0:
+    dependencies:
+      axios: 1.13.6
+    transitivePeerDependencies:
+      - debug
 
   preact@10.29.0: {}
 

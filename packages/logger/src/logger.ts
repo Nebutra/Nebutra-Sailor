@@ -1,6 +1,7 @@
 import { context, trace } from "@opentelemetry/api";
 import pino from "pino";
-import type { Logger, Meta } from "./types";
+import { forwardErrorToSentry, forwardWarnToSentry } from "./sentry-transport.js";
+import type { Logger, Meta } from "./types.js";
 
 const isDev = process.env.NODE_ENV === "development";
 const isTest = process.env.NODE_ENV === "test";
@@ -77,10 +78,12 @@ function makeLogger(base: pino.Logger): Logger {
     warn(msg: string, meta?: Meta) {
       const traceId = getTraceId();
       base.warn({ ...meta, ...(traceId ? { traceId } : {}) }, msg);
+      forwardWarnToSentry(msg, meta);
     },
     error(msg: string, error?: unknown, meta?: Meta) {
       const traceId = getTraceId();
       base.error({ ...serializeError(error), ...meta, ...(traceId ? { traceId } : {}) }, msg);
+      forwardErrorToSentry(msg, error, meta);
     },
     child(bindings: Meta) {
       return makeLogger(base.child(bindings));
