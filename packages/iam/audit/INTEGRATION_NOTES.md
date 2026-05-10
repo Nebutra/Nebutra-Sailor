@@ -20,6 +20,10 @@ events in production.
 | `apps/web/src/app/api/auth/revoke-other-sessions/route.ts` (POST) | `auth.session.revoked_other` | severity `warning` |
 | `apps/web/src/app/api/admin/impersonate/route.ts` (POST) | `admin.impersonate.started` | severity **critical**; metadata includes admin user id |
 | `apps/web/src/app/api/admin/impersonate/route.ts` (DELETE) | `admin.impersonate.ended` | severity `warning` |
+| `apps/web/src/app/api/admin/users/[userId]/route.ts` (PATCH) | `admin.user.updated` | severity `warning`; `changes.before/after` for changed fields only; gated by `admin:manage_users` |
+| `apps/web/src/app/api/admin/users/[userId]/route.ts` (DELETE) | `admin.user.deleted` | severity **critical**; hard-delete (no soft-delete column on User yet); rejects self-delete |
+| `apps/web/src/app/api/admin/organizations/[orgId]/route.ts` (PATCH) | `admin.org.updated` | severity `warning`; `changes.before/after` for changed fields only; gated by `admin:manage_orgs` |
+| `apps/web/src/app/api/admin/organizations/[orgId]/route.ts` (DELETE) | `admin.org.deleted` | severity **critical**; hard-delete (cascades to OrganizationMember) |
 | `apps/web/src/app/api/organizations/route.ts` (POST) | `org.created` | severity `info` |
 | `apps/web/src/app/api/organizations/[orgId]/route.ts` (PATCH) | `org.updated` | severity `info`; `changes.before/after.name` |
 | `apps/web/src/app/api/organizations/[orgId]/route.ts` (DELETE) | `org.deleted` | severity **critical** |
@@ -35,9 +39,8 @@ These routes do not currently exist (or only expose read-only handlers) so
 there is nothing to audit. Wire when the route handler lands.
 
 - `apps/web/src/app/api/organizations/[orgId]/members/route.ts` (POST add member) — handler not implemented yet. When added, emit `org.member.added` (severity `warning`).
-- `apps/web/src/app/api/admin/users/route.ts` (PATCH/PUT/DELETE) — only `GET` exists today. When admin mutation handlers land, emit `admin.user.updated` (severity `warning`).
-- `apps/web/src/app/api/admin/organizations/route.ts` (PATCH/PUT/DELETE) — only `GET` exists today. When admin mutation handlers land, emit `admin.org.updated` (severity `warning`).
 - `auth.password.changed` / `auth.2fa.enabled` / `auth.2fa.disabled` — actions are reserved in the `ACTIONS` catalog. The Better Auth catch-all does not currently expose distinct paths for these, so they're left for a follow-up that taps Better Auth's hook surface directly.
+- **Soft-delete columns on `User` and `Organization`** — admin DELETE handlers currently hard-delete because the Prisma schema lacks `deletedAt` / `status`. When those columns land, swap to `update({ data: { deletedAt: new Date() } })` and keep the same `admin.user.deleted` / `admin.org.deleted` audit emission.
 
 ## How to wire a new route
 
