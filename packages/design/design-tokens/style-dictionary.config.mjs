@@ -632,7 +632,9 @@ await writeFile("build/css/theme-inline.css", tailwindBlock, "utf8");
 // Read the static base CSS (utilities, keyframes, body styles, CJK rules).
 const baseCss = await readFile("static/base.css", "utf8");
 
-const generatedHeader = `/**
+const generatedHeader = `/* biome-ignore-all lint/suspicious/noDuplicateCustomProperties: auto-generated from W3C DTCG tokens — primitive + semantic blocks intentionally redeclare aliases. Fix in tokens/*.json source if real, then re-run pnpm --filter @nebutra/design-tokens build. */
+
+/**
  * @nebutra/design-tokens — styles.generated.css
  * AUTO-GENERATED from packages/design/design-tokens/tokens/*.json — DO NOT EDIT.
  * Run \`pnpm --filter @nebutra/design-tokens build\` after editing tokens.
