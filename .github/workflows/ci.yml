@@ -452,11 +452,11 @@ jobs:
         run: pnpm --filter @nebutra/db db:generate
 
       - name: Validate Prisma schema syntax
-        working-directory: packages/db
+        working-directory: packages/platform/db
         run: pnpm exec prisma validate
 
       - name: Check migration history is consistent
-        working-directory: packages/db
+        working-directory: packages/platform/db
         # prisma migrate diff exits non-zero if schema is ahead of migrations —
         # catches "forgot to create a migration" before it reaches production.
         run: |

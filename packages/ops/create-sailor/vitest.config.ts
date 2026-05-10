@@ -7,7 +7,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   resolve: {
     alias: {
-      "@nebutra/analytics": path.resolve(__dirname, "../analytics/src/index.ts"),
+      // W3b layout: packages/ops/create-sailor/ → packages/platform/analytics/
+      // requires walking up 2 levels then into platform/analytics/.
+      "@nebutra/analytics": path.resolve(__dirname, "../../platform/analytics/src/index.ts"),
     },
     conditions: ["source"],
   },
