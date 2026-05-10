@@ -1,52 +1,32 @@
 import { describe, expect, it } from "vitest";
 import {
   EMAIL_TEMPLATE_CATALOG,
-  sendApiKeyCreatedEmail,
-  sendCheckoutCompletedEmail,
   sendContactFormReceivedEmail,
   sendInvitationEmail,
-  sendInviteEmail,
-  sendInvoicePaidEmail,
   sendLicenseCreatedEmail,
   sendMagicLinkEmail,
   sendOrderConfirmationEmail,
   sendPasswordResetEmail,
-  sendPaymentFailedEmail,
-  sendPlanChangedEmail,
-  sendQuotaWarningEmail,
   sendReceiptEmail,
-  sendSubscriptionCanceledEmail,
-  sendTrialEndingEmail,
-  sendUpcomingInvoiceEmail,
   sendWelcomeEmail,
   sendWelcomeReactEmail,
 } from "../index";
 
 const SEND_HELPERS = {
-  sendApiKeyCreatedEmail,
-  sendCheckoutCompletedEmail,
   sendContactFormReceivedEmail,
   sendInvitationEmail,
-  sendInviteEmail,
-  sendInvoicePaidEmail,
   sendLicenseCreatedEmail,
   sendMagicLinkEmail,
   sendOrderConfirmationEmail,
   sendPasswordResetEmail,
-  sendPaymentFailedEmail,
-  sendPlanChangedEmail,
-  sendQuotaWarningEmail,
   sendReceiptEmail,
-  sendSubscriptionCanceledEmail,
-  sendTrialEndingEmail,
-  sendUpcomingInvoiceEmail,
   sendWelcomeEmail,
   sendWelcomeReactEmail,
 } satisfies Record<string, unknown>;
 
 describe("@nebutra/email contract", () => {
   it("keeps every catalog entry backed by a public send helper", () => {
-    expect(EMAIL_TEMPLATE_CATALOG.length).toBeGreaterThanOrEqual(15);
+    expect(EMAIL_TEMPLATE_CATALOG.length).toBeGreaterThanOrEqual(9);
 
     for (const template of EMAIL_TEMPLATE_CATALOG) {
       expect(SEND_HELPERS).toHaveProperty(template.sendHelper);
