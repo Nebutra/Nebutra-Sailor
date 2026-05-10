@@ -7,9 +7,11 @@
     "status": "wip",
     "productionReady": false,
     "requires": [
+      "@nebutra/auth",
       "@nebutra/billing",
       "@nebutra/email",
-      "@nebutra/event-bus"
+      "@nebutra/event-bus",
+      "@nebutra/logger"
     ],
     "gaps": [
       "No production app integrations",
@@ -28,9 +30,11 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@nebutra/auth": "workspace:*",
     "@nebutra/billing": "workspace:*",
     "@nebutra/email": "workspace:*",
-    "@nebutra/event-bus": "workspace:*"
+    "@nebutra/event-bus": "workspace:*",
+    "@nebutra/logger": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",
