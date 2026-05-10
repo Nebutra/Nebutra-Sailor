@@ -290,23 +290,32 @@ export interface MeteringProvider {
 export interface ClickHouseProviderConfig {
   provider: "clickhouse";
 
-  /** ClickHouse HTTP API URL (defaults to `process.env.CLICKHOUSE_HTTP_URL`) */
+  /**
+   * ClickHouse HTTP URL (defaults to `process.env.CLICKHOUSE_URL`).
+   * Legacy `CLICKHOUSE_HTTP_URL` is also honoured for backwards compatibility.
+   */
+  url?: string;
+
+  /** Legacy alias for `url`. Prefer `url`. */
   httpUrl?: string;
 
-  /** ClickHouse username (defaults to `process.env.CLICKHOUSE_USER`) */
+  /** ClickHouse username (defaults to `process.env.CLICKHOUSE_USERNAME`, then `default`). */
   username?: string;
 
-  /** ClickHouse password (defaults to `process.env.CLICKHOUSE_PASSWORD`) */
+  /** ClickHouse password (defaults to `process.env.CLICKHOUSE_PASSWORD`). */
   password?: string;
 
-  /** Database name to use (default: "default") */
+  /** Database name (defaults to `process.env.CLICKHOUSE_DATABASE` or `nebutra_metering`). */
   database?: string;
 
-  /** Batch size for inserts (default: 1000) */
+  /** Batch size for inserts (default: 100). */
   batchSize?: number;
 
-  /** Batch flush interval in milliseconds (default: 5000) */
+  /** Batch flush interval in milliseconds (default: 1000). */
   flushIntervalMs?: number;
+
+  /** Skip auto-running schema bootstrap (default: false). Set true if migrations are managed externally. */
+  skipBootstrap?: boolean;
 }
 
 export interface MemoryProviderConfig {

@@ -23,7 +23,7 @@ let defaultProvider: MeteringProvider | null = null;
  * Detect which provider to use based on available environment variables.
  */
 function detectProvider(): MeteringProviderType {
-  if (process.env.CLICKHOUSE_HTTP_URL) return "clickhouse";
+  if (process.env.CLICKHOUSE_URL || process.env.CLICKHOUSE_HTTP_URL) return "clickhouse";
   return "memory";
 }
 
@@ -60,12 +60,14 @@ export async function createMetering(config?: MeteringConfig): Promise<MeteringP
       const { ClickHouseProvider } = await import("./providers/clickhouse");
       const chConfig = config as Exclude<MeteringConfig, { provider: "memory" }> | undefined;
       return new ClickHouseProvider({
+        url: chConfig?.url,
         httpUrl: chConfig?.httpUrl,
         username: chConfig?.username,
         password: chConfig?.password,
         database: chConfig?.database,
         batchSize: chConfig?.batchSize,
         flushIntervalMs: chConfig?.flushIntervalMs,
+        skipBootstrap: chConfig?.skipBootstrap,
       } as Omit<ClickHouseProviderConfig, "provider">);
     }
 

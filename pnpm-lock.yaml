@@ -543,9 +543,6 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/brand
-      '@nebutra/email':
-        specifier: workspace:*
-        version: link:../../packages/email
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/icons
@@ -2093,6 +2090,9 @@ importers:
 
   packages/metering:
     dependencies:
+      '@clickhouse/client':
+        specifier: ^1.12.0
+        version: 1.18.4
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../logger
@@ -2279,6 +2279,9 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
     devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(@swc/core@1.15.18(@swc/helpers@0.5.19))(jiti@2.6.1)(postcss@8.5.8)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -2555,6 +2558,9 @@ importers:
       storybook:
         specifier: ^8.6.17
         version: 8.6.17(prettier@3.8.1)
+      tsup:
+        specifier: 'catalog:'
+        version: 8.5.1(@swc/core@1.15.18(@swc/helpers@0.5.19))(jiti@2.6.1)(postcss@8.5.8)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
       tsx:
         specifier: 'catalog:'
         version: 4.21.0
@@ -4056,6 +4062,13 @@ packages:
         optional: true
       react-dom:
         optional: true
+
+  '@clickhouse/client-common@1.18.4':
+    resolution: {integrity: sha512-kPPtv8yQmplNAxfrAJvwBJq5dd+IWRewEbXSpUvtyEJXlrB8lt/ZH63jUS81Nmd+lK5MRvpOFXPoN3iogkvg+A==}
+
+  '@clickhouse/client@1.18.4':
+    resolution: {integrity: sha512-jjCrddI+e2OVXGh/MQY92K9r8Z/iwqaZtUXNI/MfZ/y9VGYwfbQsXRzp4Jv6w4Hgxvr4sLcz9YwIvkCBQ6X/mw==}
+    engines: {node: '>=16'}
 
   '@codemirror/autocomplete@6.20.1':
     resolution: {integrity: sha512-1cvg3Vz1dSSToCNlJfRA2WSI4ht3K+WplO0UMOgmUYPivCyy2oueZY6Lx7M9wThm7SDUBViRmuT+OG/i8+ON9A==}
@@ -20025,6 +20038,12 @@ snapshots:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
+  '@clickhouse/client-common@1.18.4': {}
+
+  '@clickhouse/client@1.18.4':
+    dependencies:
+      '@clickhouse/client-common': 1.18.4
+
   '@codemirror/autocomplete@6.20.1':
     dependencies:
       '@codemirror/language': 6.12.2
@@ -27276,7 +27295,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.0.1))(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+      vitest: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@25.3.5)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.0.1))(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
 
   '@vitest/expect@2.0.5':
     dependencies:
