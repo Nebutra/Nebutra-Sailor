@@ -4,15 +4,14 @@
   "private": true,
   "type": "module",
   "nebutra": {
-    "status": "foundation",
-    "productionReady": false,
+    "status": "production",
+    "productionReady": true,
     "requires": [
       "CLICKHOUSE_URL or in-memory provider for dev"
     ],
     "gaps": [
-      "ClickHouse provider is a stub — needs real client integration",
-      "Quota enforcement helper exists for billing-style limits, but consuming billing/API middleware wiring is pending",
-      "Aggregation rollups pending"
+      "Retention/TTL policy is operator-driven (apply per environment)",
+      "Sharded/replicated topology uses ReplicatedMergeTree — see README"
     ]
   },
   "main": "./src/index.ts",
@@ -28,6 +27,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@clickhouse/client": "^1.12.0",
     "@nebutra/logger": "workspace:*",
     "zod": "catalog:"
   },

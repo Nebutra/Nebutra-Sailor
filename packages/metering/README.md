@@ -1,8 +1,70 @@
-> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+> **Status: Production** — Real `ClickHouseProvider` backed by `@clickhouse/client`, with batched ingest, daily aggregate materialised view, and persisted quotas. The `MemoryProvider` is for dev/test only.
 
 # @nebutra/metering
 
 Provider-agnostic usage metering and billing pipeline for consumption-based SaaS billing.
+
+## Provider selection
+
+Auto-detection priority:
+
+| Priority | Condition | Provider |
+|----------|-----------|----------|
+| 1 | `METERING_PROVIDER` env var | as specified |
+| 2 | `CLICKHOUSE_URL` (or legacy `CLICKHOUSE_HTTP_URL`) | `clickhouse` |
+| 3 | fallback | `memory` (dev/test only) |
+
+### ClickHouse environment variables
+
+| Var | Default | Notes |
+|-----|---------|-------|
+| `CLICKHOUSE_URL` | — | **Required to activate.** e.g. `http://localhost:8123` |
+| `CLICKHOUSE_DATABASE` | `nebutra_metering` | Schema is auto-created on first use |
+| `CLICKHOUSE_USERNAME` | `default` | |
+| `CLICKHOUSE_PASSWORD` | _empty_ | |
+
+The provider is safe to instantiate without credentials — failures surface only on first use, matching the `@nebutra/queue` / `@nebutra/search` pattern.
+
+## Schema migration
+
+The provider auto-bootstraps the schema (idempotent `CREATE TABLE IF NOT EXISTS` + materialised view) on first use. For environments where DDL is managed externally, apply `sql/001_init.sql` and pass `skipBootstrap: true`:
+
+```bash
+clickhouse-client --database=nebutra_metering --multiquery < packages/metering/sql/001_init.sql
+# or via HTTP:
+curl -X POST "$CLICKHOUSE_URL/?database=nebutra_metering" --data-binary @packages/metering/sql/001_init.sql
+```
+
+## Quick start
+
+```ts
+import { getMetering, API_CALLS } from "@nebutra/metering";
+
+const metering = await getMetering();           // auto-detects provider
+await metering.defineMeter(API_CALLS);
+
+await metering.ingest({
+  meterId: "api_calls",
+  tenantId: "org_123",
+  value: 1,
+  properties: { endpoint: "/v1/chat" },
+});
+
+const quota = await metering.getQuota("org_123", "api_calls", "monthly");
+// → { limit, used, remaining, percentage, periodStart, periodEnd, ... }
+```
+
+## Production tuning
+
+- **Batch size / flush interval** — defaults are `100 events` / `1000 ms`. Tune via `batchSize` and `flushIntervalMs`. For very high throughput, raise to `1000 / 5000`.
+- **Retention** — apply per-environment via `ALTER TABLE usage_events MODIFY TTL ts + INTERVAL 90 DAY` (or whatever your contract requires). Rolled-up `usage_aggregates_daily` should outlive raw events.
+- **Sharding / replication** — replace `MergeTree` engines in `sql/001_init.sql` with their `Replicated*` variants and add a `Distributed` table on top for horizontal scaling.
+- **Graceful shutdown** — call `closeMetering()` on process exit; the provider also auto-drains on Node `beforeExit`.
+- **Idempotency** — pass `idempotencyKey` (or `id`) on each event; `usage_events` is `ReplacingMergeTree(version)` so duplicate inserts collapse on merge.
+
+---
+
+
 
 ## Overview
 
