@@ -2,14 +2,44 @@
  * Audit Logging System for Nebutra Services
  *
  * Records sensitive operations for:
- * - Security compliance
+ * - Security compliance (SOC 2, ISO 27001)
  * - Debugging
  * - User activity tracking
  * - Billing verification
+ *
+ * Exports:
+ *   - This module: legacy `audit()` API + Prisma storage adapter (stable for
+ *     internal callers; see `INTEGRATION_NOTES.md` for migration plan).
+ *   - `@nebutra/audit/schema`: Zod schemas + `defineAction` + `ACTIONS`
+ *   - `@nebutra/audit/middleware`: `auditLogger(req, ...)`, `withAudit(...)`
+ *   - `@nebutra/audit/providers`: `getAuditProvider()`, provider classes
  */
 
 import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
+
+export {
+  type AuditLoggerDefaults,
+  type AuditLoggerLogInput,
+  type AuditRequestContext,
+  auditLogger,
+  type BoundAuditLogger,
+  extractRequestContext,
+  type WithAuditOptions,
+  withAudit,
+} from "./middleware";
+export {
+  type AuditFactoryConfig,
+  type AuditProvider,
+  type AuditProviderType,
+  ClickHouseAuditProvider,
+  createAuditProvider,
+  getAuditProvider,
+  MemoryAuditProvider,
+  PostgresAuditProvider,
+} from "./providers";
+// Re-exports for the new schema/provider/middleware surface.
+export * from "./schema";
 
 export type AuditAction =
   | "user.login"
@@ -37,7 +67,14 @@ export type AuditAction =
   | "admin.settings_change"
   | "custom";
 
-export interface AuditEvent {
+/**
+ * Legacy audit event shape.
+ *
+ * Prefer the Zod-validated `AuditEvent` from `@nebutra/audit/schema` for new
+ * code. This interface is preserved for existing call sites and the legacy
+ * `audit()` helper. See `INTEGRATION_NOTES.md` for migration guidance.
+ */
+export interface LegacyAuditEvent {
   id?: string;
   action: AuditAction;
   actorId: string;
@@ -54,8 +91,8 @@ export interface AuditEvent {
 }
 
 export interface AuditStorage {
-  store: (event: AuditEvent) => Promise<void>;
-  query: (filter: AuditQueryFilter) => Promise<AuditEvent[]>;
+  store: (event: LegacyAuditEvent) => Promise<void>;
+  query: (filter: LegacyAuditQueryFilter) => Promise<LegacyAuditEvent[]>;
 }
 
 interface PrismaAuditLogClient {
@@ -65,7 +102,7 @@ interface PrismaAuditLogClient {
   };
 }
 
-export interface AuditQueryFilter {
+export interface LegacyAuditQueryFilter {
   tenantId?: string;
   actorId?: string;
   action?: AuditAction;
@@ -81,14 +118,14 @@ interface PrismaAuditLogRow {
   id?: string;
   action: AuditAction;
   userId: string;
-  actorType: AuditEvent["actorType"];
+  actorType: LegacyAuditEvent["actorType"];
   organizationId?: string | null;
   entityType?: string | null;
   entityId?: string | null;
   metadata?: string | Record<string, unknown> | null;
   ipAddress?: string | null;
   userAgent?: string | null;
-  outcome: AuditEvent["outcome"];
+  outcome: LegacyAuditEvent["outcome"];
   reason?: string | null;
   createdAt?: Date;
 }
@@ -109,7 +146,7 @@ function parseAuditMetadata(
   }
 }
 
-function mapPrismaAuditRow(row: PrismaAuditLogRow): AuditEvent {
+function mapPrismaAuditRow(row: PrismaAuditLogRow): LegacyAuditEvent {
   const metadata = parseAuditMetadata(row.metadata);
 
   return {
@@ -133,18 +170,26 @@ function mapPrismaAuditRow(row: PrismaAuditLogRow): AuditEvent {
 // In-Memory Storage (for development)
 // ============================================
 
-const memoryStorage: AuditEvent[] = [];
+const memoryStorage: LegacyAuditEvent[] = [];
+
+/** @internal — exposed for tests so they can reset the legacy in-memory buffer. */
+export function __resetLegacyMemoryStorage(): void {
+  memoryStorage.length = 0;
+}
 
 export const inMemoryStorage: AuditStorage = {
-  store: async (event: AuditEvent) => {
+  store: async (event: LegacyAuditEvent) => {
     memoryStorage.push({
       ...event,
       id: event.id || crypto.randomUUID(),
       timestamp: event.timestamp || new Date(),
     });
   },
-  query: async (filter: AuditQueryFilter) => {
-    let results = [...memoryStorage];
+  query: async (filter: LegacyAuditQueryFilter) => {
+    // Walk newest-to-oldest insertion order so that callers reading `logs[0]`
+    // always see the most recently inserted match, even when timestamps tie at
+    // millisecond resolution.
+    let results = [...memoryStorage].reverse();
 
     if (filter.tenantId) {
       results = results.filter((e) => e.tenantId === filter.tenantId);
@@ -172,7 +217,8 @@ export const inMemoryStorage: AuditStorage = {
       );
     }
 
-    // Sort by timestamp descending
+    // Sort by timestamp descending; with stable sort, ties retain the
+    // insertion-order-reversed sequence above (newest first).
     results.sort((a, b) => {
       const timeA = a.timestamp?.getTime() || 0;
       const timeB = b.timestamp?.getTime() || 0;
@@ -192,7 +238,7 @@ export const inMemoryStorage: AuditStorage = {
 
 export function createPrismaStorage(prisma: PrismaAuditLogClient): AuditStorage {
   return {
-    store: async (event: AuditEvent) => {
+    store: async (event: LegacyAuditEvent) => {
       // Field mapping: AuditEvent interface → Prisma AuditLog columns
       //   actorId    → userId          (Prisma model uses userId for the actor)
       //   tenantId   → organizationId  (Prisma model uses organizationId)
@@ -217,7 +263,7 @@ export function createPrismaStorage(prisma: PrismaAuditLogClient): AuditStorage 
         },
       });
     },
-    query: async (filter: AuditQueryFilter) => {
+    query: async (filter: LegacyAuditQueryFilter) => {
       const where: Record<string, unknown> = {};
 
       if (filter.tenantId) where.organizationId = filter.tenantId;
@@ -266,8 +312,8 @@ export function setAuditStorage(newStorage: AuditStorage): void {
   storage = newStorage;
 }
 
-export async function audit(event: Omit<AuditEvent, "id" | "timestamp">): Promise<void> {
-  const fullEvent: AuditEvent = {
+export async function audit(event: Omit<LegacyAuditEvent, "id" | "timestamp">): Promise<void> {
+  const fullEvent: LegacyAuditEvent = {
     ...event,
     id: crypto.randomUUID(),
     timestamp: new Date(),
@@ -281,7 +327,7 @@ export async function audit(event: Omit<AuditEvent, "id" | "timestamp">): Promis
   }
 }
 
-export async function queryAuditLogs(filter: AuditQueryFilter): Promise<AuditEvent[]> {
+export async function queryAuditLogs(filter: LegacyAuditQueryFilter): Promise<LegacyAuditEvent[]> {
   return storage.query(filter);
 }
 

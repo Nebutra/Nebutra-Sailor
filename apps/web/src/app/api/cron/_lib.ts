@@ -12,6 +12,7 @@
 // expose internal mutating endpoints to the public.
 // =============================================================================
 
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import {
   getScheduledJob,
@@ -62,16 +63,43 @@ export async function runCronRoute(request: Request, jobName: string): Promise<R
   const startedAt = Date.now();
   try {
     const result = await job.handler();
+    const durationMs = Date.now() - startedAt;
     const body: CronJsonBody = {
       job: jobName,
       ok: result.ok,
-      durationMs: Date.now() - startedAt,
+      durationMs,
     };
     if (result.details !== undefined) body.details = result.details;
+
+    // SOC 2 audit — every cron invocation is logged. Cron jobs run as the
+    // system actor and are not tenant-scoped (they iterate across tenants).
+    await auditLogger(request, {
+      actor: { id: "system", type: "system" },
+      tenantId: "system",
+    }).log({
+      action: "cron.run",
+      outcome: result.ok ? "success" : "failure",
+      resource: { type: "cron_job", id: jobName },
+      severity: result.ok ? "info" : "warning",
+      metadata: { durationMs },
+    });
+
     return Response.json(body, { status: 200 });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     logger.error("[cron] scheduled job handler threw", { job: jobName, error: message });
+
+    await auditLogger(request, {
+      actor: { id: "system", type: "system" },
+      tenantId: "system",
+    }).log({
+      action: "cron.run",
+      outcome: "failure",
+      resource: { type: "cron_job", id: jobName },
+      severity: "critical",
+      metadata: { error: message, durationMs: Date.now() - startedAt },
+    });
+
     return jsonError(500, jobName, message);
   }
 }

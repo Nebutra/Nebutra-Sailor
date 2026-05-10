@@ -20,15 +20,20 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts",
+    "./middleware": "./src/middleware.ts",
+    "./providers": "./src/providers/index.ts"
   },
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit"
   },
   "dependencies": {
     "@nebutra/db": "workspace:*",
-    "@nebutra/logger": "workspace:*"
+    "@nebutra/logger": "workspace:*",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/node": "^22.19.15",
