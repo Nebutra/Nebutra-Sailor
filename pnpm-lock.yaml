@@ -407,6 +407,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/db':
+        specifier: workspace:*
+        version: link:../../packages/platform/db
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons

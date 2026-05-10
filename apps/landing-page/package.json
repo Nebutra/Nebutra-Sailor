@@ -19,6 +19,7 @@
     "@nebutra/auth": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/billing": "workspace:*",
+    "@nebutra/db": "workspace:*",
     "@nebutra/license": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/logger": "workspace:*",
