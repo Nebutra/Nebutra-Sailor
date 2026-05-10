@@ -7,7 +7,7 @@ import type {
   SearchProvider,
   SearchQuery,
   SearchResult,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Algolia Provider — Managed SaaS, global CDN, zero-ops

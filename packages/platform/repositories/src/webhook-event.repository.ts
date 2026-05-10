@@ -1,6 +1,6 @@
 import { Prisma, type PrismaClient, type WebhookEvent } from "@nebutra/db";
-import type { CursorPaginationParams, CursorPaginationResult } from "./pagination.js";
-import { normalizePaginationParams } from "./pagination.js";
+import type { CursorPaginationParams, CursorPaginationResult } from "./pagination";
+import { normalizePaginationParams } from "./pagination";
 
 /**
  * A recursive JSON-compatible value type.

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { createQStashWebhookHandler } from "./qstash-verify.js";
+import { createQStashWebhookHandler } from "./qstash-verify";
 
 describe("createQStashWebhookHandler", () => {
   afterEach(() => {

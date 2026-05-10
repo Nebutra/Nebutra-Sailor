@@ -4,7 +4,7 @@ import {
   DEFAULT_PRICING,
   getModelPricing,
   type ModelPricing,
-} from "../cost-calculator.js";
+} from "../cost-calculator";
 
 describe("calculateCost", () => {
   const pricing: ModelPricing = {

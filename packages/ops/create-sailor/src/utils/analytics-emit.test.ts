@@ -12,7 +12,7 @@ vi.mock("@nebutra/analytics", () => ({
 }));
 
 // Import under test AFTER the mock is declared (vi.mock is hoisted).
-import { emitScaffoldCompleted, isTelemetryDisabled } from "./analytics-emit.js";
+import { emitScaffoldCompleted, isTelemetryDisabled } from "./analytics-emit";
 
 const baseProps = {
   template_version: "1.3.1",

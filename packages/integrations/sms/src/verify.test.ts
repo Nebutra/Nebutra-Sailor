@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { SmsProvider } from "./types.js";
-import { initSmsVerification, sendVerificationCode, verifyCode } from "./verify.js";
+import type { SmsProvider } from "./types";
+import { initSmsVerification, sendVerificationCode, verifyCode } from "./verify";
 
 class MemoryRedis {
   values = new Map<string, string>();

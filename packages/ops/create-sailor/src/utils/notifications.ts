@@ -1,5 +1,5 @@
-import { appendEnvBlock, removePackageDir, setEnvVar } from "./env-helpers.js";
-import { getNotificationsProvider, NOTIFICATIONS_PROVIDERS } from "./notifications-meta.js";
+import { appendEnvBlock, removePackageDir, setEnvVar } from "./env-helpers";
+import { getNotificationsProvider, NOTIFICATIONS_PROVIDERS } from "./notifications-meta";
 
 /**
  * Notifications selection applier for create-sailor (L2 depth).

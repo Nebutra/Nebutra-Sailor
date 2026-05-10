@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { invitationCleanup, runInvitationCleanup } from "../jobs/invitation-cleanup.js";
+import { invitationCleanup, runInvitationCleanup } from "../jobs/invitation-cleanup";
 
 interface FakeClient {
   organizationInvitation: {

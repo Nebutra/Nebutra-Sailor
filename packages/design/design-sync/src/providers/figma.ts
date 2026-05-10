@@ -1,12 +1,7 @@
 import { readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { logger } from "@nebutra/logger";
-import {
-  defaultTokensDir,
-  defaultTokensStudioDir,
-  readTokenSets,
-  validateDtcgTree,
-} from "../io.js";
+import { defaultTokensDir, defaultTokensStudioDir, readTokenSets, validateDtcgTree } from "../io";
 import type {
   DesignSyncProvider,
   FigmaProviderConfig,
@@ -15,7 +10,7 @@ import type {
   PullResult,
   PushOptions,
   PushResult,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Figma Provider — Figma + Tokens Studio

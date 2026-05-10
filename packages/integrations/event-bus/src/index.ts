@@ -1,6 +1,6 @@
-export { type BaseEvent, BaseEventSchema, EventBus, eventBus } from "./bus.js";
-export * from "./dlq.js";
-export { type EventType, EventTypes } from "./events/index.js";
+export { type BaseEvent, BaseEventSchema, EventBus, eventBus } from "./bus";
+export * from "./dlq";
+export { type EventType, EventTypes } from "./events/index";
 export {
   ClerkMembershipDataSchema,
   type ClerkOrganizationData,
@@ -14,4 +14,4 @@ export {
   type StripeSubscriptionData,
   StripeSubscriptionDataSchema,
   TenantProvisionedDataSchema,
-} from "./schemas/inngest.js";
+} from "./schemas/inngest";

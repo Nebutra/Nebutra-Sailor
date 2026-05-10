@@ -1,5 +1,5 @@
-import { appendEnvBlock, removePackageDir, setEnvVar } from "./env-helpers.js";
-import { getWebhooksProvider, WEBHOOKS_PROVIDERS } from "./webhooks-meta.js";
+import { appendEnvBlock, removePackageDir, setEnvVar } from "./env-helpers";
+import { getWebhooksProvider, WEBHOOKS_PROVIDERS } from "./webhooks-meta";
 
 /**
  * Webhooks selection applier for create-sailor (L2 depth).

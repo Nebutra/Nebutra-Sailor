@@ -4,7 +4,7 @@ import {
   createImageValidationRules,
   validateImageDimensions,
   validateUpload,
-} from "../validation.js";
+} from "../validation";
 
 describe("validateUpload", () => {
   it("returns null for valid files with default rules", () => {

@@ -1,8 +1,8 @@
 import type { Command } from "commander";
 import pc from "picocolors";
-import { delegate, findMonorepoRoot } from "../utils/delegate.js";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
+import { delegate, findMonorepoRoot } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
 
 interface AdminCommandOptions {
   dryRun?: boolean;

@@ -2,9 +2,9 @@ import { promises as fs } from "node:fs";
 import { join, resolve } from "node:path";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
-import { findMonorepoRoot } from "../utils/delegate.js";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
+import { findMonorepoRoot } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
 
 interface GenerateOptions {
   dryRun?: boolean;

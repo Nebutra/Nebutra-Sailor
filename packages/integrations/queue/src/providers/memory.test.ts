@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { createJob } from "../factory.js";
-import { MemoryProvider } from "./memory.js";
+import { createJob } from "../factory";
+import { MemoryProvider } from "./memory";
 
 describe("MemoryProvider dead-letter handling", () => {
   afterEach(() => {

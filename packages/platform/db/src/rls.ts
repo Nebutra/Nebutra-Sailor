@@ -19,7 +19,7 @@
  * no risk of context leaking across requests.
  */
 
-import type { PrismaClient } from "./generated/prisma/client.js";
+import type { PrismaClient } from "./generated/prisma/client";
 
 type InteractiveTransaction = Omit<
   PrismaClient,

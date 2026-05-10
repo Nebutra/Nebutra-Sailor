@@ -11,8 +11,8 @@ const {
   getTenantOrNull,
   requireTenant,
   runWithTenant,
-} = await import("../context.js");
-const { TenantRequiredError } = await import("../types.js");
+} = await import("../context");
+const { TenantRequiredError } = await import("../types");
 
 describe("runWithTenant / getCurrentTenant", () => {
   it("sets and retrieves tenant context within async scope", async () => {

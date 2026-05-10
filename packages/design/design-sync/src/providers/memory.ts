@@ -8,7 +8,7 @@ import type {
   PullResult,
   PushOptions,
   PushResult,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Memory Provider — in-memory test fixture

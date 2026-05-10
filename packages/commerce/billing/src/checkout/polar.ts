@@ -17,7 +17,7 @@ export class PolarCheckoutProvider implements CheckoutProvider {
       );
     }
 
-    const { createPolarCheckout } = await import("../polar/index.js");
+    const { createPolarCheckout } = await import("../polar/index");
 
     const metadata: Record<string, string> = {
       type: "credit_purchase",

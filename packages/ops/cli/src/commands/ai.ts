@@ -1,10 +1,10 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Command } from "commander";
-import type { DelegateResult } from "../utils/delegate.js";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
-import { createSailorValueDomains } from "./metadata.js";
+import type { DelegateResult } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
+import { createSailorValueDomains } from "./metadata";
 
 interface AiCommandOptions {
   dryRun?: boolean;

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { PermissionContext, RoleDefinition } from "../types.js";
-import { createCASLProvider } from "./casl.js";
+import type { PermissionContext, RoleDefinition } from "../types";
+import { createCASLProvider } from "./casl";
 
 const context: PermissionContext = {
   userId: "user_123",

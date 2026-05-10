@@ -1,5 +1,5 @@
-import type { NebutraConfig } from "./utils/config.js";
-import { pruneTemplate } from "./utils/prune.js";
+import type { NebutraConfig } from "./utils/config";
+import { pruneTemplate } from "./utils/prune";
 
 async function run() {
   const targetDir = "/tmp/sailor-test-3";

@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import type { ResolvedApiKey } from "../types.js";
+import type { ResolvedApiKey } from "../types";
 
 const API_KEY_PREFIX = "sk-sailor-";
 const REDIS_KEY_PREFIX = "apikey:";

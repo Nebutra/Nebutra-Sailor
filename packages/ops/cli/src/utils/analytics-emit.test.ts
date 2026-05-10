@@ -11,7 +11,7 @@ vi.mock("@nebutra/analytics", () => ({
   createAnalyticsClient: createAnalyticsClientMock,
 }));
 
-import { emitLicenseCliEvent, isTelemetryDisabled } from "./analytics-emit.js";
+import { emitLicenseCliEvent, isTelemetryDisabled } from "./analytics-emit";
 
 async function flushAsync() {
   for (let i = 0; i < 5; i++) {

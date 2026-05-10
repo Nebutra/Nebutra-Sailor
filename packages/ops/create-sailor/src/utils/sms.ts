@@ -7,7 +7,7 @@ import {
   type SmsProviderId,
   type SmsProviderMeta,
   type SmsRegion,
-} from "./sms-meta.js";
+} from "./sms-meta";
 
 /**
  * SMS selection applier for create-sailor.
@@ -92,7 +92,7 @@ export interface SendSmsResult {
 
 function indexForTwilio(): string {
   return `import twilio from "twilio";
-import type { SendSmsInput, SendSmsResult } from "./types.js";
+import type { SendSmsInput, SendSmsResult } from "./types";
 
 let client: ReturnType<typeof twilio> | null = null;
 
@@ -125,13 +125,13 @@ export async function sendSms(input: SendSmsInput): Promise<SendSmsResult> {
   return { messageId: message.sid, provider: "twilio", raw: message };
 }
 
-export type { SendSmsInput, SendSmsResult } from "./types.js";
+export type { SendSmsInput, SendSmsResult } from "./types";
 `;
 }
 
 function indexForMessageBird(): string {
   return `import messagebird from "messagebird";
-import type { SendSmsInput, SendSmsResult } from "./types.js";
+import type { SendSmsInput, SendSmsResult } from "./types";
 
 let client: ReturnType<typeof messagebird> | null = null;
 
@@ -167,13 +167,13 @@ export async function sendSms(input: SendSmsInput): Promise<SendSmsResult> {
   });
 }
 
-export type { SendSmsInput, SendSmsResult } from "./types.js";
+export type { SendSmsInput, SendSmsResult } from "./types";
 `;
 }
 
 function indexForPlivo(): string {
   return `import plivo from "plivo";
-import type { SendSmsInput, SendSmsResult } from "./types.js";
+import type { SendSmsInput, SendSmsResult } from "./types";
 
 let client: InstanceType<typeof plivo.Client> | null = null;
 
@@ -210,14 +210,14 @@ export async function sendSms(input: SendSmsInput): Promise<SendSmsResult> {
   };
 }
 
-export type { SendSmsInput, SendSmsResult } from "./types.js";
+export type { SendSmsInput, SendSmsResult } from "./types";
 `;
 }
 
 function indexForAliyunSms(): string {
   return `import Dysmsapi, { SendSmsRequest } from "@alicloud/dysmsapi20170525";
 import * as $OpenApi from "@alicloud/openapi-client";
-import type { SendSmsInput, SendSmsResult } from "./types.js";
+import type { SendSmsInput, SendSmsResult } from "./types";
 
 let client: Dysmsapi | null = null;
 
@@ -263,13 +263,13 @@ export async function sendSms(input: SendSmsInput): Promise<SendSmsResult> {
   };
 }
 
-export type { SendSmsInput, SendSmsResult } from "./types.js";
+export type { SendSmsInput, SendSmsResult } from "./types";
 `;
 }
 
 function indexForTencentSms(): string {
   return `import * as tencentcloud from "tencentcloud-sdk-nodejs-sms";
-import type { SendSmsInput, SendSmsResult } from "./types.js";
+import type { SendSmsInput, SendSmsResult } from "./types";
 
 const SmsClient = tencentcloud.sms.v20210111.Client;
 type SmsClientInstance = InstanceType<typeof SmsClient>;
@@ -332,14 +332,14 @@ export async function sendSms(input: SendSmsInput): Promise<SendSmsResult> {
   };
 }
 
-export type { SendSmsInput, SendSmsResult } from "./types.js";
+export type { SendSmsInput, SendSmsResult } from "./types";
 `;
 }
 
 function indexForYunpian(): string {
   return `// @ts-expect-error — yunpian-nodejs-sdk ships no type declarations
 import Yunpian from "yunpian-nodejs-sdk";
-import type { SendSmsInput, SendSmsResult } from "./types.js";
+import type { SendSmsInput, SendSmsResult } from "./types";
 
 let client: { sms: { single_send(opts: unknown): Promise<unknown>; tpl_single_send(opts: unknown): Promise<unknown> } } | null =
   null;
@@ -388,7 +388,7 @@ export async function sendSms(input: SendSmsInput): Promise<SendSmsResult> {
   return { provider: "yunpian", raw };
 }
 
-export type { SendSmsInput, SendSmsResult } from "./types.js";
+export type { SendSmsInput, SendSmsResult } from "./types";
 `;
 }
 

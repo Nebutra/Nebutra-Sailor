@@ -16,7 +16,7 @@ import type {
   UploadComplete,
   UploadProvider,
   UploadTarget,
-} from "../types.js";
+} from "../types";
 
 export class LocalUploadProvider implements UploadProvider {
   private config: Required<LocalProviderConfig>;

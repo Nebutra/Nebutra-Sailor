@@ -1,5 +1,5 @@
-import { serverRegistry } from "../registry/serverRegistry.js";
-import type { MCPServerConfig } from "../types.js";
+import { serverRegistry } from "../registry/serverRegistry";
+import type { MCPServerConfig } from "../types";
 
 /**
  * Register internal Nebutra services as MCP servers

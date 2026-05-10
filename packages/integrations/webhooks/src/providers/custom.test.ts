@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { CustomProvider } from "./custom.js";
+import { CustomProvider } from "./custom";
 
 async function waitForAttempts(
   provider: CustomProvider,

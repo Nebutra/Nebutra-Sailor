@@ -1,7 +1,7 @@
 import type { Command } from "commander";
 import pc from "picocolors";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
 
 const API_BASE_URL = process.env.NEBUTRA_API_URL || "http://localhost:3001/api";
 

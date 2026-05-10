@@ -16,7 +16,7 @@ describe("checkBalance", () => {
   it("returns void when cached balance > 0", async () => {
     mockRedisGet.mockResolvedValue("150.50");
 
-    const { checkBalance } = await import("../balance-guard.js");
+    const { checkBalance } = await import("../balance-guard");
     await expect(
       checkBalance("org_1", mockRedis as any, mockGetCreditBalance),
     ).resolves.toBeUndefined();
@@ -28,7 +28,7 @@ describe("checkBalance", () => {
     mockRedisGet.mockResolvedValue(null);
     mockGetCreditBalance.mockResolvedValue(42.0);
 
-    const { checkBalance } = await import("../balance-guard.js");
+    const { checkBalance } = await import("../balance-guard");
     await expect(
       checkBalance("org_2", mockRedis as any, mockGetCreditBalance),
     ).resolves.toBeUndefined();
@@ -42,7 +42,7 @@ describe("checkBalance", () => {
   it("throws when cached balance <= 0", async () => {
     mockRedisGet.mockResolvedValue("0");
 
-    const { checkBalance } = await import("../balance-guard.js");
+    const { checkBalance } = await import("../balance-guard");
     await expect(checkBalance("org_3", mockRedis as any, mockGetCreditBalance)).rejects.toThrow(
       "Insufficient credit balance",
     );
@@ -52,7 +52,7 @@ describe("checkBalance", () => {
     mockRedisGet.mockResolvedValue(null);
     mockGetCreditBalance.mockResolvedValue(-5);
 
-    const { checkBalance } = await import("../balance-guard.js");
+    const { checkBalance } = await import("../balance-guard");
     await expect(checkBalance("org_4", mockRedis as any, mockGetCreditBalance)).rejects.toThrow(
       "Insufficient credit balance",
     );
@@ -62,7 +62,7 @@ describe("checkBalance", () => {
     mockRedisGet.mockResolvedValue(null);
     mockGetCreditBalance.mockResolvedValue(0);
 
-    const { checkBalance } = await import("../balance-guard.js");
+    const { checkBalance } = await import("../balance-guard");
     await expect(checkBalance("org_5", mockRedis as any, mockGetCreditBalance)).rejects.toThrow(
       "Insufficient credit balance",
     );
@@ -76,7 +76,7 @@ describe("invalidateBalanceCache", () => {
   });
 
   it("deletes the Redis key for the given orgId", async () => {
-    const { invalidateBalanceCache } = await import("../balance-guard.js");
+    const { invalidateBalanceCache } = await import("../balance-guard");
     await invalidateBalanceCache("org_99", mockRedis as any);
 
     expect(mockRedisDel).toHaveBeenCalledOnce();

@@ -1,8 +1,8 @@
 import type { Command } from "commander";
 import pc from "picocolors";
-import { type DelegateResult, delegate, pnpmRun } from "../utils/delegate.js";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
+import { type DelegateResult, delegate, pnpmRun } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
 
 interface BrandCommandOptions {
   dryRun?: boolean;

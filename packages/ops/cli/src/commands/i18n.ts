@@ -3,9 +3,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { DelegateResult, delegate, pnpmRun } from "../utils/delegate.js";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
+import { DelegateResult, delegate, pnpmRun } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

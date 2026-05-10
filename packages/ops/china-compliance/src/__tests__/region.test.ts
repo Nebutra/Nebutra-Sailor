@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { detectChinaRegion, getCDNHints, isChinaRegion } from "../region.js";
+import { detectChinaRegion, getCDNHints, isChinaRegion } from "../region";
 
 const ENV_KEYS = ["NEBUTRA_REGION", "NEXT_PUBLIC_REGION"] as const;
 

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { NebutraConfig } from "./config.js";
-import type { WaveFeatureToggles } from "./wave-features.js";
+import type { NebutraConfig } from "./config";
+import type { WaveFeatureToggles } from "./wave-features";
 
 function walkDir(dir: string, callback: (filepath: string) => void) {
   if (!fs.existsSync(dir)) return;

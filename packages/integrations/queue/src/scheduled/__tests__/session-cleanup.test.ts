@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { runSessionCleanup, sessionCleanup } from "../jobs/session-cleanup.js";
+import { runSessionCleanup, sessionCleanup } from "../jobs/session-cleanup";
 
 interface FakeClient {
   authSession: {

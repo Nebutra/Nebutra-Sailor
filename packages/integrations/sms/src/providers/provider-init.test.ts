@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { createAliyunProvider } from "./aliyun.js";
-import { createTencentProvider } from "./tencent.js";
+import { createAliyunProvider } from "./aliyun";
+import { createTencentProvider } from "./tencent";
 
 describe("SMS provider initialization", () => {
   afterEach(() => {

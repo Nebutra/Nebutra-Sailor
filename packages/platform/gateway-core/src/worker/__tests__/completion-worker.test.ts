@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { CompletionEvent } from "../../types.js";
+import type { CompletionEvent } from "../../types";
 import {
   processCompletionEvent,
   registerCompletionWorker,
   type WorkerDeps,
-} from "../completion-worker.js";
+} from "../completion-worker";
 
 // ---------------------------------------------------------------------------
 // Helpers

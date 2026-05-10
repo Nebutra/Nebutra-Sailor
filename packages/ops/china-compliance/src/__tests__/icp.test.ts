@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatICPNumber, validateICPNumber } from "../icp.js";
+import { formatICPNumber, validateICPNumber } from "../icp";
 
 describe("formatICPNumber", () => {
   it("trims whitespace and upper-cases the ICP segment", () => {

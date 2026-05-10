@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { showDone } from "./done.js";
+import { showDone } from "./done";
 
 describe("showDone", () => {
   const originalNoColor = process.env.NO_COLOR;

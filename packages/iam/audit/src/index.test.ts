@@ -25,7 +25,7 @@ const {
   inMemoryStorage,
   queryAuditLogs,
   setAuditStorage,
-} = await import("./index.js");
+} = await import("./index");
 
 describe("createPrismaStorage", () => {
   it("maps Prisma audit rows back to the public AuditEvent query contract", async () => {

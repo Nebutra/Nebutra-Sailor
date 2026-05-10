@@ -1,6 +1,6 @@
 import { mkdir, readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { dirname, join, relative, sep } from "node:path";
-import { DesignTokenLeafSchema, type DesignTokenSet, type DesignTokenTree } from "./types.js";
+import { DesignTokenLeafSchema, type DesignTokenSet, type DesignTokenTree } from "./types";
 
 // =============================================================================
 // DTCG Filesystem I/O

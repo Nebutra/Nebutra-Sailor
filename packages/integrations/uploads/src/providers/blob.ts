@@ -16,7 +16,7 @@ import type {
   UploadComplete,
   UploadProvider,
   UploadTarget,
-} from "../types.js";
+} from "../types";
 
 export interface VercelBlobConfig {
   token?: string;

@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type { WebhookConfig, WebhookProvider, WebhookProviderType } from "./types.js";
+import type { WebhookConfig, WebhookProvider, WebhookProviderType } from "./types";
 
 // =============================================================================
 // Webhook Factory — Provider-agnostic webhook creation
@@ -54,7 +54,7 @@ export async function createWebhooks(config?: WebhookConfig): Promise<WebhookPro
 
   switch (providerType) {
     case "svix": {
-      const { SvixProvider } = await import("./providers/svix.js");
+      const { SvixProvider } = await import("./providers/svix");
       const svixConfig = config as Exclude<WebhookConfig, { provider: "custom" }> | undefined;
       return new SvixProvider({
         ...(svixConfig?.apiKey !== undefined ? { apiKey: svixConfig.apiKey } : {}),
@@ -65,7 +65,7 @@ export async function createWebhooks(config?: WebhookConfig): Promise<WebhookPro
     }
 
     case "custom": {
-      const { CustomProvider } = await import("./providers/custom.js");
+      const { CustomProvider } = await import("./providers/custom");
       const customConfig = config as Exclude<WebhookConfig, { provider: "svix" }> | undefined;
       return new CustomProvider({
         redisUrl: (customConfig as any)?.redisUrl,

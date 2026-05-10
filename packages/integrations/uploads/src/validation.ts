@@ -4,7 +4,7 @@
 
 import { logger } from "@nebutra/logger";
 import { z } from "zod";
-import type { ValidationRules } from "./types.js";
+import type { ValidationRules } from "./types";
 
 const DEFAULT_RULES: ValidationRules = {
   maxSize: 100 * 1024 * 1024, // 100MB default

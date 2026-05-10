@@ -3,29 +3,29 @@
 export type {
   CreateOrganizationData,
   UpdateOrganizationData,
-} from "./organization.repository.js";
+} from "./organization.repository";
 // Organization
-export { OrganizationRepository } from "./organization.repository.js";
-export type { UpsertMemberData } from "./organization-member.repository.js";
+export { OrganizationRepository } from "./organization.repository";
+export type { UpsertMemberData } from "./organization-member.repository";
 // OrganizationMember
-export { OrganizationMemberRepository } from "./organization-member.repository.js";
-export type { CursorPaginationParams, CursorPaginationResult } from "./pagination.js";
+export { OrganizationMemberRepository } from "./organization-member.repository";
+export type { CursorPaginationParams, CursorPaginationResult } from "./pagination";
 export type {
   ClaimUsageLedgerInput,
   ClaimUsageLedgerResult,
-} from "./usage-ledger.repository.js";
+} from "./usage-ledger.repository";
 // UsageLedger
-export { UsageLedgerRepository } from "./usage-ledger.repository.js";
+export { UsageLedgerRepository } from "./usage-ledger.repository";
 export type {
   CreateUserData,
   UpdateUserData,
   UpsertByClerkIdData,
-} from "./user.repository.js";
+} from "./user.repository";
 // User
-export { UserRepository } from "./user.repository.js";
+export { UserRepository } from "./user.repository";
 export type {
   JsonValue,
   UpsertWebhookEventData,
-} from "./webhook-event.repository.js";
+} from "./webhook-event.repository";
 // WebhookEvent
-export { WebhookEventRepository } from "./webhook-event.repository.js";
+export { WebhookEventRepository } from "./webhook-event.repository";

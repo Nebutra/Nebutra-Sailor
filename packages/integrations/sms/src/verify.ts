@@ -1,6 +1,6 @@
 import { createHash, randomBytes, randomInt, timingSafeEqual } from "node:crypto";
 import { logger } from "@nebutra/logger";
-import type { SmsConfig, SmsProvider } from "./types.js";
+import type { SmsConfig, SmsProvider } from "./types";
 
 const DEFAULT_CONFIG: Required<SmsConfig> = {
   provider: "aliyun",

@@ -1,6 +1,6 @@
 import { logger } from "@nebutra/logger";
 import { z } from "zod";
-import type { UsageResult } from "../types.js";
+import type { UsageResult } from "../types";
 
 /**
  * OpenAI-compatible usage schema.

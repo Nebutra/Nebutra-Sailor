@@ -11,7 +11,7 @@ import type {
   NotificationProviderType,
   NotificationResult,
   NovuProviderConfig,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Novu Provider — Managed notification infrastructure

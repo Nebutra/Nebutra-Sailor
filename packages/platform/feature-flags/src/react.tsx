@@ -18,7 +18,7 @@
 "use client";
 
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from "react";
-import { type FeatureFlag, FLAGS } from "./index.js";
+import { type FeatureFlag, FLAGS } from "./index";
 
 // ── Context ────────────────────────────────────────────────────────────────
 

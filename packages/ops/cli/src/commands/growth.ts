@@ -1,8 +1,8 @@
 import type { Command } from "commander";
 import pc from "picocolors";
-import { findMonorepoRoot } from "../utils/delegate.js";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
+import { findMonorepoRoot } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
 
 /**
  * Growth metrics dashboard — 2026 Silicon Valley growth engineering patterns

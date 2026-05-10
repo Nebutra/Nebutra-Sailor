@@ -4,7 +4,7 @@
  *
  * Usage: tsx packages/ops/create-sailor/src/utils/providers.test.ts
  */
-import { type ProviderSelection, renderTemplate } from "./providers.js";
+import { type ProviderSelection, renderTemplate } from "./providers";
 
 const sampleTemplate = `
 // @sailor:provider:openai

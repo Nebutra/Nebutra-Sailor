@@ -1,1 +1,1 @@
-export { MCPClient, mcpClient } from "./mcpClient.js";
+export { MCPClient, mcpClient } from "./mcpClient";

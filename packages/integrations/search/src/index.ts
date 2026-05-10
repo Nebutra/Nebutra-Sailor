@@ -15,12 +15,12 @@
 // =============================================================================
 
 // ── Factory ─────────────────────────────────────────────────────────────────
-export { closeSearch, createSearch, getSearch, setSearch } from "./factory.js";
+export { closeSearch, createSearch, getSearch, setSearch } from "./factory";
 
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
-export { AlgoliaProvider } from "./providers/algolia.js";
-export { MeilisearchProvider } from "./providers/meilisearch.js";
-export { TypesenseProvider } from "./providers/typesense.js";
+export { AlgoliaProvider } from "./providers/algolia";
+export { MeilisearchProvider } from "./providers/meilisearch";
+export { TypesenseProvider } from "./providers/typesense";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 export type {
@@ -35,5 +35,5 @@ export type {
   SearchQuery,
   SearchResult,
   TypesenseConfig,
-} from "./types.js";
-export { SearchDocumentSchema, SearchQuerySchema } from "./types.js";
+} from "./types";
+export { SearchDocumentSchema, SearchQuerySchema } from "./types";

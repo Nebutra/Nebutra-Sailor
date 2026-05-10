@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseBoolFlag, resolveWaveFeatureToggles } from "../wave-features.js";
+import { parseBoolFlag, resolveWaveFeatureToggles } from "../wave-features";
 
 describe("parseBoolFlag", () => {
   it("returns the fallback when the input is undefined", () => {

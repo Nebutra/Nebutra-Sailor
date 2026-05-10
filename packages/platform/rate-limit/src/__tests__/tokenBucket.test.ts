@@ -7,7 +7,7 @@ import {
   getRateLimiter,
   PLAN_LIMITS,
   TokenBucket,
-} from "../tokenBucket.js";
+} from "../tokenBucket";
 
 // ---------------------------------------------------------------------------
 // TokenBucket.consume()

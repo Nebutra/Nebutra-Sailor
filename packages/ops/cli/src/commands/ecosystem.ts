@@ -1,8 +1,8 @@
 import type { Command } from "commander";
 import pc from "picocolors";
-import { findMonorepoRoot } from "../utils/delegate.js";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
+import { findMonorepoRoot } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
 
 // Constants
 const ECOSYSTEM_API_BASE = process.env.NEBUTRA_ECOSYSTEM_URL || "https://api.nebutra.com/ecosystem";

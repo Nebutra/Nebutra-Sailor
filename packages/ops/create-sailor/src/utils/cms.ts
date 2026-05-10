@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { CMS_PROVIDERS, getCmsProvider } from "./cms-meta.js";
-import { appendEnvBlock, removePackageDir, setEnvVar } from "./env-helpers.js";
+import { CMS_PROVIDERS, getCmsProvider } from "./cms-meta";
+import { appendEnvBlock, removePackageDir, setEnvVar } from "./env-helpers";
 
 /**
  * CMS selection applier for create-sailor (L2 depth).

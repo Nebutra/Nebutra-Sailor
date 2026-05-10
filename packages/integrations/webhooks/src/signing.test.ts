@@ -4,7 +4,7 @@ import {
   parseWebhookSignatureHeader,
   signPayload,
   verifyPayload,
-} from "./signing.js";
+} from "./signing";
 
 describe("webhook signing", () => {
   const secret = Buffer.from("test-webhook-secret-32-bytes-min").toString("base64");

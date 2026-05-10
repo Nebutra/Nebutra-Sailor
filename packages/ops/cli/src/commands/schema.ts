@@ -1,10 +1,10 @@
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { EXIT_CODE_DESCRIPTIONS } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
-import { listFeatureDescriptors } from "../utils/registry.js";
-import { type CommandMeta, createSailorValueDomains, nebultraCommand } from "./metadata.js";
+import { EXIT_CODE_DESCRIPTIONS } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
+import { listFeatureDescriptors } from "../utils/registry";
+import { type CommandMeta, createSailorValueDomains, nebultraCommand } from "./metadata";
 
 const EXIT_CODES: Record<string, string> = Object.fromEntries(
   Object.entries(EXIT_CODE_DESCRIPTIONS).map(([code, description]) => [code, description]),

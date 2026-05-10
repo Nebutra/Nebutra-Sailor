@@ -7,7 +7,7 @@ import type {
   SearchProvider,
   SearchQuery,
   SearchResult,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Meilisearch Provider — Developer-friendly, typo-tolerant search

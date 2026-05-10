@@ -3,10 +3,10 @@
  */
 
 import { logger } from "@nebutra/logger";
-import { createVercelBlobProvider, VercelBlobProvider } from "./providers/blob.js";
-import { createLocalProvider, LocalUploadProvider } from "./providers/local.js";
-import { createS3Provider, S3UploadProvider } from "./providers/s3.js";
-import type { ProviderConfig, UploadProvider, UploadProviderType } from "./types.js";
+import { createVercelBlobProvider, VercelBlobProvider } from "./providers/blob";
+import { createLocalProvider, LocalUploadProvider } from "./providers/local";
+import { createS3Provider, S3UploadProvider } from "./providers/s3";
+import type { ProviderConfig, UploadProvider, UploadProviderType } from "./types";
 
 let instance: UploadProvider | null = null;
 

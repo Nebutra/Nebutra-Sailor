@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { VercelBlobProvider } from "../providers/blob.js";
+import { VercelBlobProvider } from "../providers/blob";
 
 // Mock the @vercel/blob module
 vi.mock("@vercel/blob", () => ({

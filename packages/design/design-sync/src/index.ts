@@ -17,17 +17,17 @@
 // =============================================================================
 
 // ── Detection helpers ───────────────────────────────────────────────────────
-export { describeEnv, detectProvider, readConfiguredProvider } from "./detect.js";
+export { describeEnv, detectProvider, readConfiguredProvider } from "./detect";
 // ── Factory ─────────────────────────────────────────────────────────────────
 export {
   createDesignSync,
   getDesignSync,
   resetDesignSync,
   setDesignSync,
-} from "./factory.js";
-export type { FigmaTokensStudioConfig } from "./figma-config/index.js";
+} from "./factory";
+export type { FigmaTokensStudioConfig } from "./figma-config/index";
 // ── Figma config snapshot ───────────────────────────────────────────────────
-export { FIGMA_TOKENS_STUDIO_CONFIG } from "./figma-config/index.js";
+export { FIGMA_TOKENS_STUDIO_CONFIG } from "./figma-config/index";
 // ── DTCG I/O helpers (re-exported for advanced consumers) ───────────────────
 export {
   defaultTokensDir,
@@ -35,12 +35,12 @@ export {
   readTokenSets,
   validateDtcgTree,
   writeTokenSet,
-} from "./io.js";
+} from "./io";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
-export { FigmaProvider } from "./providers/figma.js";
-export { GitOnlyProvider } from "./providers/git-only.js";
-export { MemoryProvider } from "./providers/memory.js";
-export { PenpotProvider } from "./providers/penpot.js";
+export { FigmaProvider } from "./providers/figma";
+export { GitOnlyProvider } from "./providers/git-only";
+export { MemoryProvider } from "./providers/memory";
+export { PenpotProvider } from "./providers/penpot";
 export type {
   BaseProviderConfig,
   DesignSyncConfig,
@@ -58,6 +58,6 @@ export type {
   PullResult,
   PushOptions,
   PushResult,
-} from "./types.js";
+} from "./types";
 // ── Types ───────────────────────────────────────────────────────────────────
-export { DesignTokenLeafSchema } from "./types.js";
+export { DesignTokenLeafSchema } from "./types";

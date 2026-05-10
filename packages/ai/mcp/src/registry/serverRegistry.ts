@@ -1,4 +1,4 @@
-import type { MCPContext, MCPServerConfig, ToolDefinition } from "../types.js";
+import type { MCPContext, MCPServerConfig, ToolDefinition } from "../types";
 
 /**
  * Registry for MCP servers and their tools

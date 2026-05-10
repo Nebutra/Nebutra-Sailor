@@ -1,4 +1,4 @@
-import type { RoleDefinition } from "./types.js";
+import type { RoleDefinition } from "./types";
 
 export const DEFAULT_ROLES: Record<string, RoleDefinition> = {
   owner: {

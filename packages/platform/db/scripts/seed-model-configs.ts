@@ -12,7 +12,7 @@
 
 import type { ProviderInfo, ProviderModel } from "@tokenlens/core";
 import { FetchModelsError, fetchModels } from "@tokenlens/fetch";
-import { prisma } from "../src/index.js";
+import { prisma } from "../src/index";
 
 type AIProvider = "OPENAI" | "ANTHROPIC" | "GOOGLE" | "SILICONFLOW" | "CUSTOM";
 

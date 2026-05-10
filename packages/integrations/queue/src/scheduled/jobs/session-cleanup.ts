@@ -10,7 +10,7 @@
 // =============================================================================
 
 import { logger } from "@nebutra/logger";
-import type { ScheduledJob, ScheduledJobResult } from "../scheduler.js";
+import type { ScheduledJob, ScheduledJobResult } from "../scheduler";
 
 interface SessionCleanupClient {
   authSession: {

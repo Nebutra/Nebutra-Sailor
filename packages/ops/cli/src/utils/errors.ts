@@ -15,7 +15,7 @@
 
 import { stderr } from "node:process";
 import picocolors from "picocolors";
-import { ExitCode, type ExitCodeValue } from "./exit-codes.js";
+import { ExitCode, type ExitCodeValue } from "./exit-codes";
 
 /**
  * Machine-readable error structure for non-TTY output

@@ -4,7 +4,7 @@ import {
   type AnalyticsProviderId,
   type AnalyticsRegion,
   getAnalyticsProvider,
-} from "./analytics-meta.js";
+} from "./analytics-meta";
 
 /**
  * Analytics selection applier for create-sailor.

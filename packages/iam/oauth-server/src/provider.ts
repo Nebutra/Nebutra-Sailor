@@ -13,8 +13,8 @@
 import type { PrismaClient } from "@nebutra/db";
 import type { Redis } from "ioredis";
 import Provider, { type AccountClaims } from "oidc-provider";
-import { createPrismaAdapter } from "./adapters/prisma-adapter.js";
-import { NEBUTRA_CLAIMS, SUPPORTED_SCOPES } from "./claims.js";
+import { createPrismaAdapter } from "./adapters/prisma-adapter";
+import { NEBUTRA_CLAIMS, SUPPORTED_SCOPES } from "./claims";
 
 export interface NebutraOIDCConfig {
   /** The issuer URL (e.g., "https://id.nebutra.com") */

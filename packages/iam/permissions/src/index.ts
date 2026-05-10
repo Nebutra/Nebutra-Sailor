@@ -3,12 +3,12 @@ export {
   getPermissions,
   PermissionsManager,
   resetPermissions,
-} from "./factory.js";
+} from "./factory";
 export {
   attachPermissionContext,
   type RequirePermissionOptions,
   requirePermission,
-} from "./middleware.js";
+} from "./middleware";
 
 export {
   buildAbilityFor,
@@ -16,7 +16,7 @@ export {
   createCASLProvider,
   createPrismaAbility,
   getPrismaQuery,
-} from "./providers/casl.js";
+} from "./providers/casl";
 
 export {
   createOpenFGAProvider,
@@ -26,7 +26,7 @@ export {
   OpenFGAProvider,
   type OpenFGATuple,
   type OpenFGAWriteRequest,
-} from "./providers/openfga.js";
+} from "./providers/openfga";
 export {
   Can,
   Cannot,
@@ -37,13 +37,13 @@ export {
   type UsePermissionOptions,
   usePermission,
   usePermissionContext,
-} from "./react.js";
+} from "./react";
 export {
   DEFAULT_ROLES,
   getDefaultRoles,
   getRoleDefinition,
   getRoleHierarchy,
-} from "./roles.js";
+} from "./roles";
 export {
   type AbilityOptions,
   type Action,
@@ -56,4 +56,4 @@ export {
   type Resource,
   type Role,
   type RoleDefinition,
-} from "./types.js";
+} from "./types";

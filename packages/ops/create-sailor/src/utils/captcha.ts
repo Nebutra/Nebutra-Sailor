@@ -1,5 +1,5 @@
-import { CAPTCHA_PROVIDERS, getCaptchaProvider } from "./captcha-meta.js";
-import { appendEnvBlock, removePackageDir, setEnvVar } from "./env-helpers.js";
+import { CAPTCHA_PROVIDERS, getCaptchaProvider } from "./captcha-meta";
+import { appendEnvBlock, removePackageDir, setEnvVar } from "./env-helpers";
 
 /**
  * Captcha selection applier for create-sailor (L2 depth).

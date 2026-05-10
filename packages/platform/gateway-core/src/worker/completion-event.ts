@@ -1,6 +1,6 @@
 import { logger } from "@nebutra/logger";
 import { createJob } from "@nebutra/queue";
-import { type CompletionEvent, CompletionEventSchema } from "../types.js";
+import { type CompletionEvent, CompletionEventSchema } from "../types";
 
 /**
  * Queue name for AI gateway billing closure.

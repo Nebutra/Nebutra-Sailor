@@ -40,6 +40,20 @@ function mapSession(
   };
 }
 
+/**
+ * Load an optional better-auth plugin by name.
+ *
+ * The plugin path is built from a parameter rather than a string literal so
+ * bundlers (Vite/Turbopack) skip static resolution — necessary because some
+ * plugins (e.g. `passkey`) aren't always present in the installed better-auth
+ * version's `exports` map. The runtime try/catch in callers handles a missing
+ * module gracefully.
+ */
+async function loadOptionalPlugin(name: string): Promise<unknown> {
+  const path = `better-auth/plugins/${name}`;
+  return import(/* @vite-ignore */ /* webpackIgnore: true */ path);
+}
+
 /** Map a Better Auth user record to our canonical User type. */
 function mapUser(raw: Record<string, unknown> | null): User | null {
   if (!raw) return null;
@@ -102,11 +116,17 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     const { betterAuth } = await import("better-auth");
     const { prismaAdapter } = await import("better-auth/adapters/prisma");
 
+    // Plugin paths are routed through `loadOptionalPlugin` so that bundlers
+    // (Vite/Turbopack) treat them as runtime-only — necessary because some
+    // plugin paths (e.g. `passkey`) may be missing from the installed
+    // better-auth's `exports` map. Static resolution would fail at build
+    // time even though the runtime try/catch is meant to handle it.
+
     // Dynamically import the organization plugin — it may not be available
     let orgPlugin: unknown | undefined;
     try {
-      const orgModule = await import("better-auth/plugins/organization");
-      orgPlugin = orgModule.organization();
+      const orgModule = await loadOptionalPlugin("organization");
+      orgPlugin = (orgModule as { organization: () => unknown }).organization();
     } catch {
       logger.warn(
         "Better Auth: organization plugin not available — multi-tenant features will be stubbed.",
@@ -116,8 +136,8 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     // Dynamically import the twoFactor plugin — gracefully degrade if absent
     let twoFactorPlugin: unknown | undefined;
     try {
-      const twoFactorModule = await import("better-auth/plugins/two-factor");
-      twoFactorPlugin = twoFactorModule.twoFactor();
+      const twoFactorModule = await loadOptionalPlugin("two-factor");
+      twoFactorPlugin = (twoFactorModule as { twoFactor: () => unknown }).twoFactor();
     } catch {
       logger.warn(
         "Better Auth: two-factor plugin not available — 2FA endpoints (/api/auth/two-factor/*) will not be exposed.",
@@ -126,14 +146,11 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
 
     // Dynamically import the passkey plugin — gracefully degrade if absent.
     // better-auth 1.5.6 does not ship `./plugins/passkey` in its `exports`
-    // map, so static resolution fails. The runtime try/catch handles the
-    // missing module and logs a warning. Suppress the static TS error since
-    // the import is intentionally optional.
+    // map, so the runtime try/catch handles the missing module and logs a warning.
     let passkeyPlugin: unknown | undefined;
     try {
-      // @ts-expect-error — passkey plugin path may not exist in installed better-auth version
-      const passkeyModule = await import("better-auth/plugins/passkey");
-      passkeyPlugin = passkeyModule.passkey();
+      const passkeyModule = await loadOptionalPlugin("passkey");
+      passkeyPlugin = (passkeyModule as { passkey: () => unknown }).passkey();
     } catch {
       logger.warn(
         "Better Auth: passkey plugin not available — WebAuthn endpoints (/api/auth/passkey/*) will not be exposed.",
@@ -143,7 +160,11 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     // Dynamically import the magic-link plugin — gracefully degrade if absent
     let magicLinkPlugin: unknown | undefined;
     try {
-      const magicLinkModule = await import("better-auth/plugins/magic-link");
+      const magicLinkModule = (await loadOptionalPlugin("magic-link")) as {
+        magicLink: (opts: {
+          sendMagicLink: (args: { email: string; url: string }) => Promise<void>;
+        }) => unknown;
+      };
       // The magic-link plugin requires a `sendMagicLink` callback. When not configured,
       // we register a no-op that logs a warning so endpoints still mount but operators
       // know to wire a real email transport.
@@ -179,7 +200,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     // that `auth.password.changed` / `auth.2fa.enabled` / `auth.2fa.disabled`
     // are emitted even though they aren't path-distinguishable at the
     // /api/auth/[...all] route. See packages/iam/auth/src/audit-events.ts.
-    const { buildAuditDatabaseHooks } = await import("../audit-events.js");
+    const { buildAuditDatabaseHooks } = await import("../audit-events");
     const databaseHooks = buildAuditDatabaseHooks() as Record<string, unknown>;
 
     const auth = betterAuth({

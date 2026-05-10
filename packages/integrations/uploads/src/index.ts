@@ -9,11 +9,11 @@ export {
   getActiveProviderType,
   getUploadProvider,
   resetUploadProvider,
-} from "./factory.js";
+} from "./factory";
 // Providers
-export { createVercelBlobProvider, VercelBlobProvider } from "./providers/blob.js";
-export { createLocalProvider, LocalUploadProvider } from "./providers/local.js";
-export { createS3Provider, S3UploadProvider } from "./providers/s3.js";
+export { createVercelBlobProvider, VercelBlobProvider } from "./providers/blob";
+export { createLocalProvider, LocalUploadProvider } from "./providers/local";
+export { createS3Provider, S3UploadProvider } from "./providers/s3";
 // Types
 export type {
   ACLType,
@@ -31,7 +31,7 @@ export type {
   UploadProviderType,
   UploadTarget,
   ValidationRules,
-} from "./types.js";
+} from "./types";
 // Validation
 export {
   createDocumentValidationRules,
@@ -40,4 +40,4 @@ export {
   type ValidationError,
   validateImageDimensions,
   validateUpload,
-} from "./validation.js";
+} from "./validation";

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildWeChatAuthUrl } from "../wechat.js";
+import { buildWeChatAuthUrl } from "../wechat";
 
 describe("buildWeChatAuthUrl", () => {
   const base = {

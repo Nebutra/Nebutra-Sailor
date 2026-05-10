@@ -7,4 +7,4 @@ export {
   type MCPMiddleware,
   type MCPMiddlewareContext,
   type MCPMiddlewareNext,
-} from "./mcpMiddleware.js";
+} from "./mcpMiddleware";

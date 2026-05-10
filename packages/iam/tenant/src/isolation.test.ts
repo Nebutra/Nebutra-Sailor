@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { generateRlsPolicySql } from "./isolation.js";
-import { TenantIsolationError } from "./types.js";
+import { generateRlsPolicySql } from "./isolation";
+import { TenantIsolationError } from "./types";
 
 describe("generateRlsPolicySql", () => {
   it("generates deterministic shared-schema RLS policy SQL for sorted tables", () => {

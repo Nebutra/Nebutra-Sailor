@@ -7,7 +7,7 @@ import type {
   SearchQuery,
   SearchResult,
   TypesenseConfig,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Typesense Provider — Optimised for geo search and instant faceting

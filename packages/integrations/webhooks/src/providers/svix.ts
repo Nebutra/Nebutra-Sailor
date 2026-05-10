@@ -1,13 +1,13 @@
 import { logger } from "@nebutra/logger";
 import { type ApplicationIn, Svix } from "svix";
-import { verifyPayload } from "../signing.js";
+import { verifyPayload } from "../signing";
 import type {
   WebhookDeadLetterDelivery,
   WebhookDeliveryAttempt,
   WebhookEndpoint,
   WebhookMessage,
   WebhookProvider,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Svix Webhook Provider — Managed webhook infrastructure

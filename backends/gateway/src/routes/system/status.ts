@@ -23,7 +23,6 @@ const statusResponseSchema = z.object({
     recsys: serviceStatusEnum,
     ecommerce: serviceStatusEnum,
     web3: serviceStatusEnum,
-    billing: serviceStatusEnum,
     eventIngest: serviceStatusEnum,
   }),
   uptime: z.number(),
@@ -88,13 +87,16 @@ statusRoutes.openapi(statusRoute, async (c) => {
   }
 
   // Check microservices (non-blocking)
+  // Note: billing is intentionally not probed here — it has no Python service.
+  // The TS @nebutra/billing package is invoked in-process; its Stripe wrapper
+  // health is surfaced separately via circuit-breaker:billing below.
+  // See ADR 2026-05-10-ts-by-default-python-only-when-justified.md.
   const serviceChecks = await Promise.allSettled([
     checkService("ai", process.env.AI_SERVICE_URL),
     checkService("content", process.env.CONTENT_SERVICE_URL),
     checkService("recsys", process.env.RECSYS_SERVICE_URL),
     checkService("ecommerce", process.env.ECOMMERCE_SERVICE_URL),
     checkService("web3", process.env.WEB3_SERVICE_URL),
-    checkService("billing", process.env.BILLING_SERVICE_URL),
     checkService("eventIngest", process.env.EVENT_INGEST_SERVICE_URL),
   ]);
 
@@ -104,20 +106,11 @@ statusRoutes.openapi(statusRoute, async (c) => {
     recsys: "unknown",
     ecommerce: "unknown",
     web3: "unknown",
-    billing: "unknown",
     eventIngest: "unknown",
   };
 
   serviceChecks.forEach((result, index) => {
-    const services = [
-      "ai",
-      "content",
-      "recsys",
-      "ecommerce",
-      "web3",
-      "billing",
-      "eventIngest",
-    ] as const;
+    const services = ["ai", "content", "recsys", "ecommerce", "web3", "eventIngest"] as const;
     const serviceName = services[index];
 
     if (!serviceName) return;

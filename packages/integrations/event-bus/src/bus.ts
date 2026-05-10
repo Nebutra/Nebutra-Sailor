@@ -95,7 +95,7 @@ export class EventBus {
         }
 
         // All retries exhausted — send to DLQ
-        const { recordDeadLetter } = await import("./dlq.js");
+        const { recordDeadLetter } = await import("./dlq");
         recordDeadLetter(validated, handler.name || "anonymous", lastError, MAX_ATTEMPTS);
       }),
     );

@@ -10,7 +10,7 @@ export {
   getTenantOrNull,
   requireTenant,
   runWithTenant,
-} from "./context.js";
+} from "./context";
 // Re-export resolvers
 export {
   compose,
@@ -19,7 +19,7 @@ export {
   fromJwtClaim,
   fromPath,
   fromSubdomain,
-} from "./resolvers.js";
+} from "./resolvers";
 // Re-export types
 export type {
   IsolationStrategy,
@@ -28,19 +28,19 @@ export type {
   TenantContext,
   TenantInfo,
   TenantResolver,
-} from "./types.js";
+} from "./types";
 export {
   TenantConfigSchema,
   TenantContextSchema,
   TenantInfoSchema,
   TenantIsolationError,
   TenantRequiredError,
-} from "./types.js";
+} from "./types";
 
 // Re-export middleware (as subpath export ./middleware)
 // These are exported via package.json "exports" for tree-shaking
 
-export type { RlsPolicyCommand, RlsPolicySqlOptions } from "./isolation.js";
+export type { RlsPolicyCommand, RlsPolicySqlOptions } from "./isolation";
 // Re-export isolation helpers
 export {
   createTenantPrismaProxy,
@@ -49,7 +49,7 @@ export {
   getTenantSchema,
   TenantAwarePrismaClient,
   withRls,
-} from "./isolation.js";
+} from "./isolation";
 
 // Re-export React hooks (as subpath export ./react)
 // These are exported via package.json "exports" for tree-shaking

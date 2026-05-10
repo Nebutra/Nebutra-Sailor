@@ -10,4 +10,4 @@ export {
   RedisTokenBucket,
   TokenBucket,
   type TokenBucketConfig,
-} from "./tokenBucket.js";
+} from "./tokenBucket";

@@ -12,7 +12,7 @@ export class StripeCheckoutProvider implements CheckoutProvider {
   readonly name = "stripe" as const;
 
   async createCreditPurchase(input: CreditPurchaseInput): Promise<CreditPurchaseSession> {
-    const { getStripe, getOrCreateCustomer } = await import("../stripe/index.js");
+    const { getStripe, getOrCreateCustomer } = await import("../stripe/index");
     const stripe = getStripe();
 
     // Resolve customer — prefer explicit customerId, else lookup/create by email.

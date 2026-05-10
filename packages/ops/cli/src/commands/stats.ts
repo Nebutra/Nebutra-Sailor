@@ -2,9 +2,9 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { DelegateResult, delegate, findMonorepoRoot } from "../utils/delegate.js";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
+import { DelegateResult, delegate, findMonorepoRoot } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
 
 interface StatsCommandOptions {
   dryRun?: boolean;

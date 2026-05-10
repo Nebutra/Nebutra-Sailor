@@ -1,2 +1,2 @@
-export * from "./r2.js";
-export { default as storage } from "./r2.js";
+export * from "./r2";
+export { default as storage } from "./r2";

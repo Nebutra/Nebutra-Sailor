@@ -1,7 +1,7 @@
 import { context, trace } from "@opentelemetry/api";
 import pino from "pino";
-import { forwardErrorToSentry, forwardWarnToSentry } from "./sentry-transport.js";
-import type { Logger, Meta } from "./types.js";
+import { forwardErrorToSentry, forwardWarnToSentry } from "./sentry-transport";
+import type { Logger, Meta } from "./types";
 
 const isDev = process.env.NODE_ENV === "development";
 const isTest = process.env.NODE_ENV === "test";

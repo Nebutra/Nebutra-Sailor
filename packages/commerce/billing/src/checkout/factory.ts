@@ -51,24 +51,24 @@ export async function getCheckout(config?: CheckoutConfig): Promise<CheckoutProv
 
   switch (provider) {
     case "stripe": {
-      const { StripeCheckoutProvider } = await import("./stripe.js");
+      const { StripeCheckoutProvider } = await import("./stripe");
       return new StripeCheckoutProvider();
     }
     case "polar": {
-      const { PolarCheckoutProvider } = await import("./polar.js");
+      const { PolarCheckoutProvider } = await import("./polar");
       return new PolarCheckoutProvider();
     }
     case "lemonsqueezy": {
-      const { LemonCheckoutProvider } = await import("./lemonsqueezy.js");
+      const { LemonCheckoutProvider } = await import("./lemonsqueezy");
       return new LemonCheckoutProvider();
     }
     case "chinapay": {
-      const { ChinaPayCheckoutProvider } = await import("./chinapay.js");
+      const { ChinaPayCheckoutProvider } = await import("./chinapay");
       return new ChinaPayCheckoutProvider();
     }
     case "manual":
     default: {
-      const { ManualCheckoutProvider } = await import("./manual.js");
+      const { ManualCheckoutProvider } = await import("./manual");
       return new ManualCheckoutProvider();
     }
   }

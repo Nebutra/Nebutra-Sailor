@@ -1,3 +1,3 @@
-export * from "./idempotency.js";
+export * from "./idempotency";
 export * from "./orchestrator";
 export * from "./workflows/orderSaga";

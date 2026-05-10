@@ -17,7 +17,7 @@ export class LemonCheckoutProvider implements CheckoutProvider {
       );
     }
 
-    const { createLemonCheckout } = await import("../lemonsqueezy/index.js");
+    const { createLemonCheckout } = await import("../lemonsqueezy/index");
 
     const customData: Record<string, string> = {
       type: "credit_purchase",

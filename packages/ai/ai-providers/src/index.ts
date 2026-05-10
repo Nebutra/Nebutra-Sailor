@@ -31,4 +31,4 @@ export {
   type ProviderCategory,
   type ProviderMeta,
   type ProviderStatus,
-} from "./meta.js";
+} from "./meta";

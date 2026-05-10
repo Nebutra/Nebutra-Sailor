@@ -7,64 +7,64 @@ import * as p from "@clack/prompts";
 import { Command } from "commander";
 import pc from "picocolors";
 import updateNotifier from "update-notifier";
-import { showBanner } from "./ui/banner.js";
-import { showDone } from "./ui/done.js";
-import { showHelp } from "./ui/help.js";
-import { printProgressLine } from "./ui/progress.js";
-import { PROVIDERS } from "./utils/ai-meta.js";
-import { type AiMode, resolveAiTopology } from "./utils/ai-topology.js";
-import { applyAnalyticsSelection } from "./utils/analytics.js";
-import { emitScaffoldCompleted } from "./utils/analytics-emit.js";
-import { type AuthChoice, applyAuthSelection } from "./utils/auth.js";
+import { showBanner } from "./ui/banner";
+import { showDone } from "./ui/done";
+import { showHelp } from "./ui/help";
+import { printProgressLine } from "./ui/progress";
+import { PROVIDERS } from "./utils/ai-meta";
+import { type AiMode, resolveAiTopology } from "./utils/ai-topology";
+import { applyAnalyticsSelection } from "./utils/analytics";
+import { emitScaffoldCompleted } from "./utils/analytics-emit";
+import { type AuthChoice, applyAuthSelection } from "./utils/auth";
 import {
   parseSocialLoginFlag,
   SOCIAL_LOGIN_PROVIDERS,
   type SocialLoginId,
-} from "./utils/auth-social.js";
-import { applySocialLoginProviders } from "./utils/auth-social-apply.js";
-import { applyCacheSelection } from "./utils/cache.js";
-import { applyCaptchaSelection } from "./utils/captcha.js";
-import { applyCmsSelection } from "./utils/cms.js";
-import { applyComplianceTemplates } from "./utils/compliance.js";
+} from "./utils/auth-social";
+import { applySocialLoginProviders } from "./utils/auth-social-apply";
+import { applyCacheSelection } from "./utils/cache";
+import { applyCaptchaSelection } from "./utils/captcha";
+import { applyCmsSelection } from "./utils/cms";
+import { applyComplianceTemplates } from "./utils/compliance";
 import {
   type DocsFramework,
   type NebutraConfig,
   type Region,
   writeNebutraConfig,
-} from "./utils/config.js";
-import { applyDatabaseSelection } from "./utils/database.js";
-import { applyDeployTarget } from "./utils/deploy.js";
-import { applyDocsTemplate } from "./utils/docs.js";
-import { applyEmailSelection } from "./utils/email.js";
-import { injectEnv } from "./utils/env.js";
-import { generateEnvSecrets } from "./utils/env-secrets.js";
-import { applyFeatureFlagsSelection } from "./utils/feature-flags.js";
-import { cloneTemplate } from "./utils/git.js";
-import { applyMcpSwitch } from "./utils/mcp.js";
-import { applyMeteringSwitch } from "./utils/metering.js";
-import { applyMonitoringSelection } from "./utils/monitoring.js";
-import { applyNotificationsSelection } from "./utils/notifications.js";
-import { updatePackageJson } from "./utils/npm.js";
+} from "./utils/config";
+import { applyDatabaseSelection } from "./utils/database";
+import { applyDeployTarget } from "./utils/deploy";
+import { applyDocsTemplate } from "./utils/docs";
+import { applyEmailSelection } from "./utils/email";
+import { injectEnv } from "./utils/env";
+import { generateEnvSecrets } from "./utils/env-secrets";
+import { applyFeatureFlagsSelection } from "./utils/feature-flags";
+import { cloneTemplate } from "./utils/git";
+import { applyMcpSwitch } from "./utils/mcp";
+import { applyMeteringSwitch } from "./utils/metering";
+import { applyMonitoringSelection } from "./utils/monitoring";
+import { applyNotificationsSelection } from "./utils/notifications";
+import { updatePackageJson } from "./utils/npm";
 import {
   collectPreviewSelections,
   describeStatus,
   formatStatusBadge,
   type PreviewSelection,
-} from "./utils/package-status.js";
-import { applyPaymentSelection, type PaymentChoice } from "./utils/payment.js";
-import { applyProviderSelection } from "./utils/providers.js";
-import { pruneTemplate, pruneWaveFeatures } from "./utils/prune.js";
-import { pruneSchemaByFlags } from "./utils/prune-schema.js";
-import { applyQueueSelection } from "./utils/queue.js";
-import { applySearchSelection } from "./utils/search.js";
-import { generateSeedData } from "./utils/seed.js";
-import { applySmsSelection } from "./utils/sms.js";
-import { applyStorageSelection } from "./utils/storage.js";
-import { normalizeStorageProviderId } from "./utils/storage-meta.js";
-import { resolveWaveFeatureToggles } from "./utils/wave-features.js";
-import { applyWebhooksSelection } from "./utils/webhooks.js";
-import { generateWelcomePage } from "./utils/welcome.js";
-import { VERSION } from "./version.js";
+} from "./utils/package-status";
+import { applyPaymentSelection, type PaymentChoice } from "./utils/payment";
+import { applyProviderSelection } from "./utils/providers";
+import { pruneTemplate, pruneWaveFeatures } from "./utils/prune";
+import { pruneSchemaByFlags } from "./utils/prune-schema";
+import { applyQueueSelection } from "./utils/queue";
+import { applySearchSelection } from "./utils/search";
+import { generateSeedData } from "./utils/seed";
+import { applySmsSelection } from "./utils/sms";
+import { applyStorageSelection } from "./utils/storage";
+import { normalizeStorageProviderId } from "./utils/storage-meta";
+import { resolveWaveFeatureToggles } from "./utils/wave-features";
+import { applyWebhooksSelection } from "./utils/webhooks";
+import { generateWelcomePage } from "./utils/welcome";
+import { VERSION } from "./version";
 
 const PKG_NAME = "create-sailor";
 

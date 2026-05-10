@@ -1,4 +1,4 @@
-import type { CustomEndpoint } from "./config.js";
+import type { CustomEndpoint } from "./config";
 
 export type AiMode = "gateway" | "direct" | "custom" | "none";
 

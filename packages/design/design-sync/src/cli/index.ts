@@ -15,9 +15,9 @@
 //   --json           Emit machine-readable JSON instead of human text
 // =============================================================================
 
-import { describeEnv } from "../detect.js";
-import { createDesignSync } from "../factory.js";
-import type { DesignSyncProviderType } from "../types.js";
+import { describeEnv } from "../detect";
+import { createDesignSync } from "../factory";
+import type { DesignSyncProviderType } from "../types";
 
 interface ParsedArgs {
   command: string;

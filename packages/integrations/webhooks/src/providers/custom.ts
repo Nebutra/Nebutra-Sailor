@@ -5,14 +5,14 @@ import {
   parseWebhookSignatureHeader,
   signPayload,
   verifyPayload,
-} from "../signing.js";
+} from "../signing";
 import type {
   WebhookDeadLetterDelivery,
   WebhookDeliveryAttempt,
   WebhookEndpoint,
   WebhookMessage,
   WebhookProvider,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Custom Webhook Provider — Self-hosted delivery with exponential backoff

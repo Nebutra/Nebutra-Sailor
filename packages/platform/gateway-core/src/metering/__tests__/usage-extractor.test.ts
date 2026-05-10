@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createStreamingUsageExtractor, extractUsageFromJson } from "../usage-extractor.js";
+import { createStreamingUsageExtractor, extractUsageFromJson } from "../usage-extractor";
 
 describe("extractUsageFromJson", () => {
   it("returns a UsageResult from a valid OpenAI-shape response", () => {

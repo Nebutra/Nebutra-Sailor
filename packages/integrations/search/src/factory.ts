@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type { SearchConfig, SearchProvider, SearchProviderType } from "./types.js";
+import type { SearchConfig, SearchProvider, SearchProviderType } from "./types";
 
 // =============================================================================
 // Search Factory — Provider-agnostic search creation
@@ -57,7 +57,7 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
 
   switch (providerType) {
     case "meilisearch": {
-      const { MeilisearchProvider } = await import("./providers/meilisearch.js");
+      const { MeilisearchProvider } = await import("./providers/meilisearch");
       const meilisearchConfig = config as
         | Exclude<SearchConfig, { provider: "typesense" | "algolia" }>
         | undefined;
@@ -69,7 +69,7 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
     }
 
     case "typesense": {
-      const { TypesenseProvider } = await import("./providers/typesense.js");
+      const { TypesenseProvider } = await import("./providers/typesense");
       const typesenseConfig = config as
         | Exclude<SearchConfig, { provider: "meilisearch" | "algolia" }>
         | undefined;
@@ -81,7 +81,7 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
     }
 
     case "algolia": {
-      const { AlgoliaProvider } = await import("./providers/algolia.js");
+      const { AlgoliaProvider } = await import("./providers/algolia");
       const algoliaConfig = config as
         | Exclude<SearchConfig, { provider: "meilisearch" | "typesense" }>
         | undefined;

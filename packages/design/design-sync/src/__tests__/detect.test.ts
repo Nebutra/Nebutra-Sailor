@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { describeEnv, detectProvider, readConfiguredProvider } from "../detect.js";
+import { describeEnv, detectProvider, readConfiguredProvider } from "../detect";
 
 describe("detect.readConfiguredProvider", () => {
   it("returns undefined when DESIGN_SYNC_PROVIDER is unset", () => {

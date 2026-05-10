@@ -23,7 +23,7 @@ describe("resolveApiKey", () => {
   });
 
   it("rejects tokens without sk-sailor- prefix", async () => {
-    const { resolveApiKey } = await import("../api-key-resolver.js");
+    const { resolveApiKey } = await import("../api-key-resolver");
     await expect(resolveApiKey("sk-openai-xxx", mockDeps as any)).rejects.toThrow(
       "Invalid API key format",
     );
@@ -40,7 +40,7 @@ describe("resolveApiKey", () => {
     });
     mockRedisGet.mockResolvedValue(cached);
 
-    const { resolveApiKey } = await import("../api-key-resolver.js");
+    const { resolveApiKey } = await import("../api-key-resolver");
     const result = await resolveApiKey("sk-sailor-abc123def456", mockDeps as any);
 
     expect(result.id).toBe("key_1");
@@ -61,7 +61,7 @@ describe("resolveApiKey", () => {
       organization: { plan: "ENTERPRISE" },
     });
 
-    const { resolveApiKey } = await import("../api-key-resolver.js");
+    const { resolveApiKey } = await import("../api-key-resolver");
     const result = await resolveApiKey("sk-sailor-xyz789", mockDeps as any);
 
     expect(result.id).toBe("key_2");
@@ -79,7 +79,7 @@ describe("resolveApiKey", () => {
       organization: { plan: "FREE" },
     });
 
-    const { resolveApiKey } = await import("../api-key-resolver.js");
+    const { resolveApiKey } = await import("../api-key-resolver");
     await expect(resolveApiKey("sk-sailor-revoked", mockDeps as any)).rejects.toThrow(
       "API key has been revoked",
     );
@@ -94,7 +94,7 @@ describe("resolveApiKey", () => {
       organization: { plan: "FREE" },
     });
 
-    const { resolveApiKey } = await import("../api-key-resolver.js");
+    const { resolveApiKey } = await import("../api-key-resolver");
     await expect(resolveApiKey("sk-sailor-expired", mockDeps as any)).rejects.toThrow(
       "API key has expired",
     );
@@ -104,7 +104,7 @@ describe("resolveApiKey", () => {
     mockRedisGet.mockResolvedValue(null);
     mockPrismaFindUnique.mockResolvedValue(null);
 
-    const { resolveApiKey } = await import("../api-key-resolver.js");
+    const { resolveApiKey } = await import("../api-key-resolver");
     await expect(resolveApiKey("sk-sailor-unknown", mockDeps as any)).rejects.toThrow(
       "Invalid API key",
     );
@@ -123,7 +123,7 @@ describe("resolveApiKey", () => {
       organization: { plan: "PRO" },
     });
 
-    const { resolveApiKey } = await import("../api-key-resolver.js");
+    const { resolveApiKey } = await import("../api-key-resolver");
     await resolveApiKey("sk-sailor-fresh", mockDeps as any);
 
     // lastUsedAt update is fire-and-forget, give it a tick

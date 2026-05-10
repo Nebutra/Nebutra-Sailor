@@ -14,11 +14,11 @@
 // =============================================================================
 
 // ── Factory ─────────────────────────────────────────────────────────────────
-export { closeWebhooks, createWebhooks, getWebhooks, setWebhooks } from "./factory.js";
+export { closeWebhooks, createWebhooks, getWebhooks, setWebhooks } from "./factory";
 
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
-export { CustomProvider } from "./providers/custom.js";
-export { SvixProvider } from "./providers/svix.js";
+export { CustomProvider } from "./providers/custom";
+export { SvixProvider } from "./providers/svix";
 
 // ── Signing ─────────────────────────────────────────────────────────────────
 export {
@@ -27,7 +27,7 @@ export {
   parseWebhookSignatureHeader,
   signPayload,
   verifyPayload,
-} from "./signing.js";
+} from "./signing";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 export {
@@ -46,4 +46,4 @@ export {
   WebhookMessageSchema,
   type WebhookProvider,
   type WebhookProviderType,
-} from "./types.js";
+} from "./types";

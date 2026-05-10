@@ -1,7 +1,7 @@
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
-import { prismaRun } from "../utils/delegate.js";
-import { debug, status } from "../utils/output.js";
+import { prismaRun } from "../utils/delegate";
+import { debug, status } from "../utils/output";
 
 interface DbCommandOptions {
   dryRun?: boolean;

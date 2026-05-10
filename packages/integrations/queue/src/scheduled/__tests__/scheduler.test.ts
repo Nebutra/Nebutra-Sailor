@@ -5,7 +5,7 @@ import {
   listScheduledJobs,
   registerScheduledJob,
   type ScheduledJob,
-} from "../scheduler.js";
+} from "../scheduler";
 
 const noopJob = (overrides?: Partial<ScheduledJob>): ScheduledJob => ({
   name: "test.job",

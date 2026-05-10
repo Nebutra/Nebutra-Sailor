@@ -6,7 +6,7 @@ import {
   QUEUE_PROVIDERS,
   type QueueProviderId,
   type QueueProviderMeta,
-} from "./queue-meta.js";
+} from "./queue-meta";
 
 /**
  * Queue selection applier for create-sailor.

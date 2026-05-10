@@ -26,7 +26,7 @@ import type {
   UploadComplete,
   UploadProvider,
   UploadTarget,
-} from "../types.js";
+} from "../types";
 
 export class S3UploadProvider implements UploadProvider {
   private client: S3Client;

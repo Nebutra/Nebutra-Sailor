@@ -7,7 +7,7 @@ import {
   type StorageProviderId,
   type StorageProviderMeta,
   type StorageRegion,
-} from "./storage-meta.js";
+} from "./storage-meta";
 
 /**
  * Storage selection applier for create-sailor.
@@ -94,7 +94,7 @@ import type {
   SignedUrlOptions,
   UploadFileInput,
   UploadFileResult,
-} from "./types.js";
+} from "./types";
 
 const accountId = process.env.R2_ACCOUNT_ID;
 const accessKeyId = process.env.R2_ACCESS_KEY_ID;
@@ -141,7 +141,7 @@ export async function getSignedUrl(
   return awsGetSignedUrl(client, command, { expiresIn });
 }
 
-export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types.js";
+export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types";
 `;
 }
 
@@ -162,7 +162,7 @@ import type {
   SignedUrlOptions,
   UploadFileInput,
   UploadFileResult,
-} from "./types.js";
+} from "./types";
 
 const region = process.env.AWS_S3_REGION;
 const bucket = process.env.S3_BUCKET;
@@ -210,7 +210,7 @@ export async function getSignedUrl(
   return awsGetSignedUrl(client, command, { expiresIn });
 }
 
-export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types.js";
+export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types";
 `;
 }
 
@@ -226,7 +226,7 @@ import type {
   SignedUrlOptions,
   UploadFileInput,
   UploadFileResult,
-} from "./types.js";
+} from "./types";
 
 const url = process.env.SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -277,7 +277,7 @@ export async function getSignedUrl(
   return data.signedUrl;
 }
 
-export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types.js";
+export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types";
 `;
 }
 
@@ -293,7 +293,7 @@ import type {
   SignedUrlOptions,
   UploadFileInput,
   UploadFileResult,
-} from "./types.js";
+} from "./types";
 
 const accessKeyId = process.env.ALIYUN_OSS_ACCESS_KEY;
 const accessKeySecret = process.env.ALIYUN_OSS_ACCESS_SECRET;
@@ -328,7 +328,7 @@ export async function getSignedUrl(
   });
 }
 
-export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types.js";
+export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types";
 `;
 }
 
@@ -344,7 +344,7 @@ import type {
   SignedUrlOptions,
   UploadFileInput,
   UploadFileResult,
-} from "./types.js";
+} from "./types";
 
 const secretId = process.env.TENCENT_COS_SECRET_ID;
 const secretKey = process.env.TENCENT_COS_SECRET_KEY;
@@ -387,7 +387,7 @@ export async function getSignedUrl(
   return url as unknown as string;
 }
 
-export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types.js";
+export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types";
 `;
 }
 
@@ -403,7 +403,7 @@ import type {
   SignedUrlOptions,
   UploadFileInput,
   UploadFileResult,
-} from "./types.js";
+} from "./types";
 
 const accessKey = process.env.QINIU_ACCESS_KEY;
 const secretKey = process.env.QINIU_SECRET_KEY;
@@ -459,7 +459,7 @@ export async function getSignedUrl(
   return bucketManager.privateDownloadUrl(domain, key, deadline);
 }
 
-export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types.js";
+export type { UploadFileInput, UploadFileResult, SignedUrlOptions } from "./types";
 `;
 }
 

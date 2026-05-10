@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type { NotificationProviderRuntimeMetadata } from "../runtime.js";
+import type { NotificationProviderRuntimeMetadata } from "../runtime";
 import type {
   ChannelResult,
   ChatDispatcher,
@@ -18,7 +18,7 @@ import type {
   PreferenceStore,
   PushDispatcher,
   SMSDispatcher,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Direct Provider — Self-hosted notification dispatchers

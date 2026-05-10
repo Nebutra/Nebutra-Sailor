@@ -1,9 +1,9 @@
 import * as p from "@clack/prompts";
 import type { Command, OptionValues } from "commander";
 import pc from "picocolors";
-import { dockerCompose } from "../utils/delegate.js";
-import { logger } from "../utils/logger.js";
-import { debug, output, status } from "../utils/output.js";
+import { dockerCompose } from "../utils/delegate";
+import { logger } from "../utils/logger";
+import { debug, output, status } from "../utils/output";
 
 interface InfraCommandOptions {
   dryRun?: boolean;

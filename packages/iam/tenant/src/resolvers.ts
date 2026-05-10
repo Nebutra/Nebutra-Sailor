@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type { TenantResolver } from "./types.js";
+import type { TenantResolver } from "./types";
 
 // =============================================================================
 // Tenant Resolution Strategies

@@ -2,43 +2,43 @@ import { AppError, ERROR_CODES } from "@nebutra/errors";
 import { logger } from "@nebutra/logger";
 import type { MiddlewareHandler } from "hono";
 import { streamSSE } from "hono/streaming";
-import { resolveApiKey } from "./auth/api-key-resolver.js";
-import { checkBalance } from "./auth/balance-guard.js";
+import { resolveApiKey } from "./auth/api-key-resolver";
+import { checkBalance } from "./auth/balance-guard";
 
-export { resolveApiKey } from "./auth/api-key-resolver.js";
-export { checkBalance, invalidateBalanceCache } from "./auth/balance-guard.js";
+export { resolveApiKey } from "./auth/api-key-resolver";
+export { checkBalance, invalidateBalanceCache } from "./auth/balance-guard";
 export {
   calculateCost,
   DEFAULT_PRICING,
   getModelPricing,
   type ModelConfigDeps,
   type ModelPricing,
-} from "./metering/cost-calculator.js";
-export type { MessageForCounting } from "./metering/tiktoken-fallback.js";
-export { countTokens, estimateUsage } from "./metering/tiktoken-fallback.js";
+} from "./metering/cost-calculator";
+export type { MessageForCounting } from "./metering/tiktoken-fallback";
+export { countTokens, estimateUsage } from "./metering/tiktoken-fallback";
 // Token metering — extract usage from upstream, count tokens locally, compute cost.
 export {
   createStreamingUsageExtractor,
   extractUsageFromJson,
   OpenAIUsageSchema,
-} from "./metering/usage-extractor.js";
+} from "./metering/usage-extractor";
 export {
   createGatewayAuthMiddleware as createGatewayPipelineMiddleware,
   type GatewayContextVars,
   type GatewayMiddlewareConfig,
-} from "./middleware.js";
-export type { CompletionEvent, GatewayConfig, ResolvedApiKey, UsageResult } from "./types.js";
-export { CompletionEventSchema } from "./types.js";
+} from "./middleware";
+export type { CompletionEvent, GatewayConfig, ResolvedApiKey, UsageResult } from "./types";
+export { CompletionEventSchema } from "./types";
 export {
   COMPLETION_QUEUE,
   COMPLETION_TYPE,
   enqueueCompletion,
-} from "./worker/completion-event.js";
+} from "./worker/completion-event";
 export {
   processCompletionEvent,
   registerCompletionWorker,
   type WorkerDeps,
-} from "./worker/completion-worker.js";
+} from "./worker/completion-worker";
 
 // TODO: These will be moved to @nebutra/provider-adapters later
 interface UpstreamProviderConfig {

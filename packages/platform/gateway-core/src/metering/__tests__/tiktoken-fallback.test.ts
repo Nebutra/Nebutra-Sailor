@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { countTokens, estimateUsage } from "../tiktoken-fallback.js";
+import { countTokens, estimateUsage } from "../tiktoken-fallback";
 
 describe("countTokens", () => {
   it("returns a reasonable positive integer for plain text on gpt-4o", () => {

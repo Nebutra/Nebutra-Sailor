@@ -90,7 +90,7 @@ export function recordUsage(input: RecordUsageInput): void {
  * NOTE (schema-orphan-cleanup): The `UsageRecord` Prisma model was deleted.
  * Usage is now written to the metering pipeline (`@nebutra/metering`) and,
  * for billing, to the `UsageLedgerEntry` table via
- * {@link import("./ledger.js").appendUsageLedgerEntry}.
+ * {@link import("./ledger").appendUsageLedgerEntry}.
  *
  * This function still drains the in-memory buffer so that in-flight callers
  * do not accumulate unbounded memory, but no longer persists to Prisma.

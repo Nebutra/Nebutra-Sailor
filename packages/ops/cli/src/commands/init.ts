@@ -2,8 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
 
 interface InitOptions {
   dryRun?: boolean;

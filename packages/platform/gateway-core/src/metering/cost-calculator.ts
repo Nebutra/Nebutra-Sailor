@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type { UsageResult } from "../types.js";
+import type { UsageResult } from "../types";
 
 const REDIS_KEY_PREFIX = "model:pricing:";
 const CACHE_TTL_SECONDS = 3600;

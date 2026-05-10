@@ -1,8 +1,8 @@
 import { logger } from "@nebutra/logger";
 import type { Context, Next } from "hono";
-import { getPermissions } from "./factory.js";
-import type { Action, PermissionContext, Resource } from "./types.js";
-import { ForbiddenError } from "./types.js";
+import { getPermissions } from "./factory";
+import type { Action, PermissionContext, Resource } from "./types";
+import { ForbiddenError } from "./types";
 
 export interface RequirePermissionOptions {
   onDenied?: (c: Context, error: ForbiddenError) => Response | Promise<Response>;

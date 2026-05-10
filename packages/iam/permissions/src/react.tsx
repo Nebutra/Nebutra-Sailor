@@ -7,7 +7,7 @@ import type {
   PermissionProvider as IPermissionProvider,
   PermissionContext,
   Resource,
-} from "./types.js";
+} from "./types";
 
 interface PermissionContextValue {
   provider: IPermissionProvider;

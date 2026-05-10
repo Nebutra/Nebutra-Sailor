@@ -1,4 +1,4 @@
-import type { CompletionEvent } from "../types.js";
+import type { CompletionEvent } from "../types";
 
 // ---------------------------------------------------------------------------
 // Dependency interfaces

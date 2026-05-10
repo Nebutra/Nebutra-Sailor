@@ -1,7 +1,7 @@
 import * as p from "@clack/prompts";
 import pc from "picocolors";
-import { pnpmRun, turboRun } from "../utils/delegate.js";
-import { ExitCode } from "../utils/exit-codes.js";
+import { pnpmRun, turboRun } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
 
 interface TestOptions {
   watch?: boolean;

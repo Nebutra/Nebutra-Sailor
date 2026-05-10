@@ -1726,6 +1726,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../brand
+      '@nebutra/design-tokens':
+        specifier: workspace:*
+        version: link:../design-tokens
       '@number-flow/react':
         specifier: ^0.5.5
         version: 0.5.14(react-dom@19.2.4(react@19.2.4))(react@19.2.4)

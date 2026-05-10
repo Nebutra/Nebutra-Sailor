@@ -6,7 +6,7 @@ import {
   type CacheProviderId,
   type CacheProviderMeta,
   getCacheProvider,
-} from "./cache-meta.js";
+} from "./cache-meta";
 
 /**
  * Cache selection applier for create-sailor.

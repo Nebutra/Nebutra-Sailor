@@ -1,9 +1,5 @@
 import pc from "picocolors";
-import {
-  describeStatus,
-  formatStatusBadge,
-  type PreviewSelection,
-} from "../utils/package-status.js";
+import { describeStatus, formatStatusBadge, type PreviewSelection } from "../utils/package-status";
 
 export interface WaveFeatureSummary {
   cronJobs?: boolean;

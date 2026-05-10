@@ -1,6 +1,6 @@
 import { logger } from "@nebutra/logger";
-import type { IsolationStrategy } from "./types.js";
-import { TenantIsolationError } from "./types.js";
+import type { IsolationStrategy } from "./types";
+import { TenantIsolationError } from "./types";
 
 // =============================================================================
 // Lightweight Prisma-compatible types (avoids hard dependency on "@prisma/client")

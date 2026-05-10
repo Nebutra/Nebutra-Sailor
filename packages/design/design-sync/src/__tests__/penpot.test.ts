@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
-import { PenpotProvider } from "../providers/penpot.js";
+import { PenpotProvider } from "../providers/penpot";
 
 async function makeFixture(): Promise<{ tokensDir: string; tokensStudioDir: string }> {
   const root = await mkdtemp(join(tmpdir(), "design-sync-penpot-"));

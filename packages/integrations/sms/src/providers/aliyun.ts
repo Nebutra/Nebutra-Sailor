@@ -1,6 +1,6 @@
 import { createHmac } from "node:crypto";
 import { logger } from "@nebutra/logger";
-import type { SmsProvider } from "../types.js";
+import type { SmsProvider } from "../types";
 
 export interface AliyunSmsConfig {
   accessKeyId: string;

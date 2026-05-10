@@ -1,8 +1,8 @@
 import { getRateLimiter } from "@nebutra/rate-limit";
 import type { MiddlewareHandler } from "hono";
-import { resolveApiKey } from "./auth/api-key-resolver.js";
-import { checkBalance } from "./auth/balance-guard.js";
-import type { ResolvedApiKey } from "./types.js";
+import { resolveApiKey } from "./auth/api-key-resolver";
+import { checkBalance } from "./auth/balance-guard";
+import type { ResolvedApiKey } from "./types";
 
 // ---------------------------------------------------------------------------
 // Config — dependency-injected, no global singletons

@@ -3,7 +3,7 @@ export {
   captchaMiddleware,
   default,
   getCaptchaResult,
-} from "./middleware.js";
+} from "./middleware";
 export {
   getTurnstileErrorMessage,
   isTurnstileValid,
@@ -11,4 +11,4 @@ export {
   type TurnstileVerifyResult,
   type VerifyOptions,
   verifyTurnstile,
-} from "./turnstile.js";
+} from "./turnstile";

@@ -1,6 +1,6 @@
 import { logger } from "@nebutra/logger";
-import { detectProvider } from "./detect.js";
-import type { DesignSyncConfig, DesignSyncProvider, DesignSyncProviderType } from "./types.js";
+import { detectProvider } from "./detect";
+import type { DesignSyncConfig, DesignSyncProvider, DesignSyncProviderType } from "./types";
 
 // =============================================================================
 // Design-Sync Factory — Provider-agnostic creation
@@ -48,25 +48,25 @@ export async function createDesignSync(config?: DesignSyncConfig): Promise<Desig
 
   switch (providerType) {
     case "figma": {
-      const { FigmaProvider } = await import("./providers/figma.js");
+      const { FigmaProvider } = await import("./providers/figma");
       const figmaConfig = config?.provider === "figma" ? config : undefined;
       return new FigmaProvider(figmaConfig ?? { provider: "figma" });
     }
 
     case "penpot": {
-      const { PenpotProvider } = await import("./providers/penpot.js");
+      const { PenpotProvider } = await import("./providers/penpot");
       const penpotConfig = config?.provider === "penpot" ? config : undefined;
       return new PenpotProvider(penpotConfig ?? { provider: "penpot" });
     }
 
     case "git-only": {
-      const { GitOnlyProvider } = await import("./providers/git-only.js");
+      const { GitOnlyProvider } = await import("./providers/git-only");
       const gitConfig = config?.provider === "git-only" ? config : undefined;
       return new GitOnlyProvider(gitConfig ?? { provider: "git-only" });
     }
 
     case "memory": {
-      const { MemoryProvider } = await import("./providers/memory.js");
+      const { MemoryProvider } = await import("./providers/memory");
       const memConfig = config?.provider === "memory" ? config : undefined;
       return new MemoryProvider(memConfig ?? { provider: "memory" });
     }

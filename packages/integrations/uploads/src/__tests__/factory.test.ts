@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { createUploadProvider, getActiveProviderType, resetUploadProvider } from "../factory.js";
-import { LocalUploadProvider } from "../providers/local.js";
+import { createUploadProvider, getActiveProviderType, resetUploadProvider } from "../factory";
+import { LocalUploadProvider } from "../providers/local";
 
 describe("createUploadProvider", () => {
   const originalEnv = process.env;

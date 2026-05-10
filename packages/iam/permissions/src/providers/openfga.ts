@@ -6,7 +6,7 @@ import type {
   PermissionRule,
   Resource,
   RoleDefinition,
-} from "../types.js";
+} from "../types";
 
 export interface OpenFGATuple {
   user: string;

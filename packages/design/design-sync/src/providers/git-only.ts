@@ -6,7 +6,7 @@ import {
   readTokenSets,
   validateDtcgTree,
   writeTokenSet,
-} from "../io.js";
+} from "../io";
 import type {
   DesignSyncProvider,
   GitOnlyProviderConfig,
@@ -15,7 +15,7 @@ import type {
   PullResult,
   PushOptions,
   PushResult,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Git-Only Provider — DTCG-only, no design tool

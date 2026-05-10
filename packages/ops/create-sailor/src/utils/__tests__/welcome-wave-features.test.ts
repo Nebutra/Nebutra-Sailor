@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { generateWelcomePage } from "../welcome.js";
+import { generateWelcomePage } from "../welcome";
 
 describe("generateWelcomePage — wave 3-5 hints", () => {
   const tempDirs: string[] = [];

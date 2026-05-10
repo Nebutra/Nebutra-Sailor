@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { AuthChoice } from "./auth.js";
+import type { AuthChoice } from "./auth";
 import {
   getSocialLoginProvider,
   SOCIAL_LOGIN_PROVIDERS,
   type SocialLoginId,
   type SocialLoginMeta,
-} from "./auth-social.js";
+} from "./auth-social";
 
 /**
  * Apply China-region social login providers to a scaffolded project.

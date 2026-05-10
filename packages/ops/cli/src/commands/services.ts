@@ -1,9 +1,9 @@
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { delegate, findMonorepoRoot } from "../utils/delegate.js";
-import { ExitCode } from "../utils/exit-codes.js";
-import { debug, output, status } from "../utils/output.js";
+import { delegate, findMonorepoRoot } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
+import { debug, output, status } from "../utils/output";
 
 interface ServiceCommandOptions {
   dryRun?: boolean;

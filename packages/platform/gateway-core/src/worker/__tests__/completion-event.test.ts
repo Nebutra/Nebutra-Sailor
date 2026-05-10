@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { CompletionEvent } from "../../types.js";
-import { COMPLETION_QUEUE, COMPLETION_TYPE, enqueueCompletion } from "../completion-event.js";
+import type { CompletionEvent } from "../../types";
+import { COMPLETION_QUEUE, COMPLETION_TYPE, enqueueCompletion } from "../completion-event";
 
 // ---------------------------------------------------------------------------
 // Helpers

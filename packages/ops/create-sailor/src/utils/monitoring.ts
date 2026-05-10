@@ -4,7 +4,7 @@ import {
   getMonitoringProvider,
   type MonitoringProviderId,
   type MonitoringRegion,
-} from "./monitoring-meta.js";
+} from "./monitoring-meta";
 
 /**
  * Monitoring selection applier for create-sailor.

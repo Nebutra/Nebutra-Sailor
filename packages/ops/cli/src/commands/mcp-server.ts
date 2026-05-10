@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { logger } from "../utils/logger.js";
+import { logger } from "../utils/logger";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { GitOnlyProvider } from "../providers/git-only.js";
+import { GitOnlyProvider } from "../providers/git-only";
 
 async function makeFixture(): Promise<{ tokensDir: string; tokensStudioDir: string }> {
   const root = await mkdtemp(join(tmpdir(), "design-sync-git-only-"));

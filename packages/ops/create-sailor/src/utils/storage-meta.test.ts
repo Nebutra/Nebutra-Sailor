@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getStorageProvider, normalizeStorageProviderId } from "./storage-meta.js";
+import { getStorageProvider, normalizeStorageProviderId } from "./storage-meta";
 
 describe("storage provider metadata", () => {
   it("keeps supabase-storage as the canonical provider id", () => {

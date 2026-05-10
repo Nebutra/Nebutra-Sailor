@@ -11,7 +11,7 @@
  */
 
 import { logger } from "@nebutra/logger";
-import type { BaseEvent } from "./bus.js";
+import type { BaseEvent } from "./bus";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 

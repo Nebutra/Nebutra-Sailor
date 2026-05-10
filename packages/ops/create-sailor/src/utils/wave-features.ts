@@ -9,7 +9,7 @@
  * scripts without touching the interactive prompt path.
  */
 
-import type { Region } from "./config.js";
+import type { Region } from "./config";
 
 export interface WaveFeatureFlagInputs {
   cronJobs?: string;

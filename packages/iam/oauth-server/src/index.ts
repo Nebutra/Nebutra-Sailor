@@ -19,11 +19,11 @@
 export {
   createPrismaAdapter,
   EPHEMERAL_MODELS,
-} from "./adapters/prisma-adapter.js";
+} from "./adapters/prisma-adapter";
 export {
   NEBUTRA_CLAIMS,
   SCOPE_DESCRIPTIONS,
   SUPPORTED_SCOPES,
-} from "./claims.js";
-export type { NebutraOIDCConfig } from "./provider.js";
-export { createNebutraOIDCProvider } from "./provider.js";
+} from "./claims";
+export type { NebutraOIDCConfig } from "./provider";
+export { createNebutraOIDCProvider } from "./provider";

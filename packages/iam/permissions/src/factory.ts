@@ -1,7 +1,7 @@
 import { logger } from "@nebutra/logger";
-import { CASLProvider } from "./providers/casl.js";
-import { OpenFGAProvider } from "./providers/openfga.js";
-import { getDefaultRoles } from "./roles.js";
+import { CASLProvider } from "./providers/casl";
+import { OpenFGAProvider } from "./providers/openfga";
+import { getDefaultRoles } from "./roles";
 import type {
   Action,
   PermissionConfig,
@@ -11,7 +11,7 @@ import type {
   PermissionRule,
   Resource,
   RoleDefinition,
-} from "./types.js";
+} from "./types";
 
 let permissionsInstance: PermissionsManager | null = null;
 

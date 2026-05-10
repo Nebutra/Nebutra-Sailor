@@ -4,8 +4,8 @@ import path from "node:path";
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { emitLicenseCliEvent } from "../utils/analytics-emit.js";
-import { logger } from "../utils/logger.js";
+import { emitLicenseCliEvent } from "../utils/analytics-emit";
+import { logger } from "../utils/logger";
 
 // Configurable base URL: falls back to production landing-page origin.
 // Override with NEBUTRA_LICENSE_API_URL for self-hosted / local dev.

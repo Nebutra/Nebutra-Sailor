@@ -1,10 +1,5 @@
 import { logger } from "@nebutra/logger";
-import {
-  defaultTokensDir,
-  defaultTokensStudioDir,
-  readTokenSets,
-  validateDtcgTree,
-} from "../io.js";
+import { defaultTokensDir, defaultTokensStudioDir, readTokenSets, validateDtcgTree } from "../io";
 import type {
   DesignSyncProvider,
   HealthStatus,
@@ -13,7 +8,7 @@ import type {
   PullResult,
   PushOptions,
   PushResult,
-} from "../types.js";
+} from "../types";
 
 // =============================================================================
 // Penpot Provider — China-friendly + self-hostable Figma alternative

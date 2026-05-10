@@ -1,4 +1,4 @@
-import type { DesignSyncProviderType } from "./types.js";
+import type { DesignSyncProviderType } from "./types";
 
 // =============================================================================
 // Provider Auto-Detection

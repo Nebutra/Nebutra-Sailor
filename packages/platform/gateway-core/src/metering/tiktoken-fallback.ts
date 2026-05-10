@@ -1,6 +1,6 @@
 import { logger } from "@nebutra/logger";
 import { getEncoding, type TiktokenModel } from "js-tiktoken";
-import type { UsageResult } from "../types.js";
+import type { UsageResult } from "../types";
 
 const CHAR_PER_TOKEN_HEURISTIC = 3.5;
 

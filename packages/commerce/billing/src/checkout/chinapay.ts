@@ -12,7 +12,7 @@ export class ChinaPayCheckoutProvider implements CheckoutProvider {
   readonly name = "chinapay" as const;
 
   async createCreditPurchase(input: CreditPurchaseInput): Promise<CreditPurchaseSession> {
-    const { createChinaPayOrder } = await import("../chinapay/index.js");
+    const { createChinaPayOrder } = await import("../chinapay/index");
 
     const method: "alipay" | "wechat" =
       process.env.CHINAPAY_METHOD === "wechat" ? "wechat" : "alipay";

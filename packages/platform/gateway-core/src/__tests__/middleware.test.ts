@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { GatewayMiddlewareConfig } from "../middleware.js";
-import { createGatewayAuthMiddleware } from "../middleware.js";
-import type { ResolvedApiKey } from "../types.js";
+import type { GatewayMiddlewareConfig } from "../middleware";
+import { createGatewayAuthMiddleware } from "../middleware";
+import type { ResolvedApiKey } from "../types";
 
 // ---------------------------------------------------------------------------
 // Mocks
@@ -21,8 +21,8 @@ vi.mock("@nebutra/rate-limit", () => ({
 }));
 
 import { getRateLimiter } from "@nebutra/rate-limit";
-import { resolveApiKey } from "../auth/api-key-resolver.js";
-import { checkBalance } from "../auth/balance-guard.js";
+import { resolveApiKey } from "../auth/api-key-resolver";
+import { checkBalance } from "../auth/balance-guard";
 
 // ---------------------------------------------------------------------------
 // Helpers

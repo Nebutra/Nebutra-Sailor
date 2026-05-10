@@ -7,7 +7,7 @@ import {
   type EmailProviderMeta,
   type EmailRegion,
   getEmailProvider,
-} from "./email-meta.js";
+} from "./email-meta";
 
 /**
  * Email selection applier for create-sailor.
@@ -84,7 +84,7 @@ function indexForResend(): string {
  */
 import { Resend } from "resend";
 
-import type { SendEmailInput, SendEmailResult } from "./types.js";
+import type { SendEmailInput, SendEmailResult } from "./types";
 
 const apiKey = process.env.RESEND_API_KEY;
 if (!apiKey) {
@@ -115,7 +115,7 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
   return { id: data?.id, raw: data };
 }
 
-export type { SendEmailInput, SendEmailResult } from "./types.js";
+export type { SendEmailInput, SendEmailResult } from "./types";
 `;
 }
 
@@ -127,7 +127,7 @@ function indexForPostmark(): string {
  */
 import { ServerClient } from "postmark";
 
-import type { SendEmailInput, SendEmailResult } from "./types.js";
+import type { SendEmailInput, SendEmailResult } from "./types";
 
 const apiKey = process.env.POSTMARK_API_KEY;
 if (!apiKey) {
@@ -157,7 +157,7 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
   return { id: response.MessageID, raw: response };
 }
 
-export type { SendEmailInput, SendEmailResult } from "./types.js";
+export type { SendEmailInput, SendEmailResult } from "./types";
 `;
 }
 
@@ -172,7 +172,7 @@ import {
   SESv2Client,
 } from "@aws-sdk/client-sesv2";
 
-import type { SendEmailInput, SendEmailResult } from "./types.js";
+import type { SendEmailInput, SendEmailResult } from "./types";
 
 const region = process.env.AWS_SES_REGION;
 if (!region) {
@@ -217,7 +217,7 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
   return { id: response.MessageId, raw: response };
 }
 
-export type { SendEmailInput, SendEmailResult } from "./types.js";
+export type { SendEmailInput, SendEmailResult } from "./types";
 `;
 }
 
@@ -230,7 +230,7 @@ function indexForAliyunDm(): string {
 import Dm20151123, * as $Dm20151123 from "@alicloud/dm20151123";
 import * as $OpenApi from "@alicloud/openapi-client";
 
-import type { SendEmailInput, SendEmailResult } from "./types.js";
+import type { SendEmailInput, SendEmailResult } from "./types";
 
 const accessKeyId = process.env.ALIYUN_DM_ACCESS_KEY;
 const accessKeySecret = process.env.ALIYUN_DM_ACCESS_SECRET;
@@ -271,7 +271,7 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
   return { id: response.body?.requestId, raw: response };
 }
 
-export type { SendEmailInput, SendEmailResult } from "./types.js";
+export type { SendEmailInput, SendEmailResult } from "./types";
 `;
 }
 
@@ -283,7 +283,7 @@ function indexForTencentSes(): string {
  */
 import tencentcloud from "tencentcloud-sdk-nodejs-ses";
 
-import type { SendEmailInput, SendEmailResult } from "./types.js";
+import type { SendEmailInput, SendEmailResult } from "./types";
 
 const secretId = process.env.TENCENT_SECRET_ID;
 const secretKey = process.env.TENCENT_SECRET_KEY;
@@ -323,7 +323,7 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
   return { id: response.MessageId, raw: response };
 }
 
-export type { SendEmailInput, SendEmailResult } from "./types.js";
+export type { SendEmailInput, SendEmailResult } from "./types";
 `;
 }
 
@@ -335,7 +335,7 @@ function indexForNetease(): string {
  */
 import nodemailer from "nodemailer";
 
-import type { SendEmailInput, SendEmailResult } from "./types.js";
+import type { SendEmailInput, SendEmailResult } from "./types";
 
 const user = process.env.NETEASE_USER;
 const pass = process.env.NETEASE_PASS;
@@ -365,7 +365,7 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
   return { id: response.messageId, raw: response };
 }
 
-export type { SendEmailInput, SendEmailResult } from "./types.js";
+export type { SendEmailInput, SendEmailResult } from "./types";
 `;
 }
 

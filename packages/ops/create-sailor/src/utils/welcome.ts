@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { describeStatus, formatStatusBadge, type PreviewSelection } from "./package-status.js";
+import { describeStatus, formatStatusBadge, type PreviewSelection } from "./package-status";
 
 /**
  * Welcome page generator for create-sailor.

@@ -14,7 +14,7 @@
  */
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { InMemoryIdempotencyStore, idempotent } from "../idempotency.js";
+import { InMemoryIdempotencyStore, idempotent } from "../idempotency";
 
 describe("InMemoryIdempotencyStore", () => {
   it("round-trips set → has → get for the same key", async () => {

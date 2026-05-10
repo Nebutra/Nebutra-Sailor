@@ -3,15 +3,15 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
-import { ExitCode } from "../utils/exit-codes.js";
-import { logger } from "../utils/logger.js";
+import { ExitCode } from "../utils/exit-codes";
+import { logger } from "../utils/logger";
 import {
   type FeatureDependency,
   type FeatureDescriptor,
   type FeatureEnv,
   type FeatureProviderDescriptor,
   getFeatureDescriptor,
-} from "../utils/registry.js";
+} from "../utils/registry";
 
 interface AddOptions {
   "21st"?: string;

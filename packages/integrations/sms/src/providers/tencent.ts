@@ -1,6 +1,6 @@
 import { createHash, createHmac } from "node:crypto";
 import { logger } from "@nebutra/logger";
-import type { SmsProvider } from "../types.js";
+import type { SmsProvider } from "../types";
 
 export interface TencentSmsConfig {
   secretId: string;

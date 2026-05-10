@@ -1,5 +1,5 @@
-import { appendEnvBlock, removePackageDir, setEnvVar } from "./env-helpers.js";
-import { FEATURE_FLAGS_PROVIDERS, getFeatureFlagsProvider } from "./feature-flags-meta.js";
+import { appendEnvBlock, removePackageDir, setEnvVar } from "./env-helpers";
+import { FEATURE_FLAGS_PROVIDERS, getFeatureFlagsProvider } from "./feature-flags-meta";
 
 /**
  * Feature Flags selection applier for create-sailor (L2 depth).

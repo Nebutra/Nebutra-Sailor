@@ -1,5 +1,5 @@
-import { serverRegistry } from "../registry/serverRegistry.js";
-import type { MCPContext, MCPServerConfig, ToolExecutionResult } from "../types.js";
+import { serverRegistry } from "../registry/serverRegistry";
+import type { MCPContext, MCPServerConfig, ToolExecutionResult } from "../types";
 
 /**
  * MCP Client for executing tools across registered servers

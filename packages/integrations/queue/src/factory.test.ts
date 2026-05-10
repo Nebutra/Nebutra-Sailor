@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { closeQueue, createQueue } from "./factory.js";
+import { closeQueue, createQueue } from "./factory";
 
 describe("queue provider factory", () => {
   afterEach(async () => {

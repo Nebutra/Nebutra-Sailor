@@ -1,1 +1,1 @@
-export { MCPServerRegistry, serverRegistry } from "./serverRegistry.js";
+export { MCPServerRegistry, serverRegistry } from "./serverRegistry";

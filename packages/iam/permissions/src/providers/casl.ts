@@ -5,7 +5,7 @@ import {
   createMongoAbility,
 } from "@casl/ability";
 import { accessibleBy, type PrismaQuery } from "@casl/prisma";
-import { getDefaultRoles } from "../roles.js";
+import { getDefaultRoles } from "../roles";
 import type {
   Action,
   PermissionContext,
@@ -13,7 +13,7 @@ import type {
   PermissionRule,
   Resource,
   RoleDefinition,
-} from "../types.js";
+} from "../types";
 
 type AppAbility = Ability<[Action, Resource]>;
 

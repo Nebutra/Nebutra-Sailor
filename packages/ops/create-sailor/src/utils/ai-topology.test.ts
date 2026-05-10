@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { resolveAiTopology } from "./ai-topology.js";
+import { resolveAiTopology } from "./ai-topology";
 
 describe("AI topology resolution", () => {
   it("uses gateway as the interactive default without requiring provider-by-provider selection", () => {

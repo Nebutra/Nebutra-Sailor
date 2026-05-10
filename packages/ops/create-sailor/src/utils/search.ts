@@ -6,7 +6,7 @@ import {
   SEARCH_PROVIDERS,
   type SearchProviderId,
   type SearchProviderMeta,
-} from "./search-meta.js";
+} from "./search-meta";
 
 /**
  * Search selection applier for create-sailor.

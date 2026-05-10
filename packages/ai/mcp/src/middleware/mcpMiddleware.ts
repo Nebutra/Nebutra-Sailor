@@ -1,4 +1,4 @@
-import type { MCPContext, ToolExecutionResult } from "../types.js";
+import type { MCPContext, ToolExecutionResult } from "../types";
 
 /**
  * MCP Middleware for rate limiting, audit logging, and access control

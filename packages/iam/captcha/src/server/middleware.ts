@@ -4,7 +4,7 @@
  */
 
 import type { Context, MiddlewareHandler, Next } from "hono";
-import { getTurnstileErrorMessage, verifyTurnstile } from "./turnstile.js";
+import { getTurnstileErrorMessage, verifyTurnstile } from "./turnstile";
 
 export interface CaptchaMiddlewareOptions {
   /** Field name in request body containing the CAPTCHA token */
