@@ -34,13 +34,13 @@ infra/
 pnpm db:migrate
 
 # Apply RLS policies
-psql $DATABASE_URL -f infra/database/policies/rls.sql
+psql $DATABASE_URL -f infra/data/database/policies/rls.sql
 ```
 
 ### Terraform
 
 ```bash
-cd infra/terraform
+cd infra/iac/terraform
 
 # Initialize
 terraform init
@@ -56,10 +56,10 @@ terraform apply -var-file="environments/dev/terraform.tfvars"
 
 ```bash
 # Preview manifests
-kubectl kustomize infra/k8s/overlays/prod
+kubectl kustomize infra/iac/k8s/overlays/prod
 
 # Apply
-kubectl apply -k infra/k8s/overlays/prod
+kubectl apply -k infra/iac/k8s/overlays/prod
 ```
 
 ## Environments

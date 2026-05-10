@@ -16,7 +16,7 @@
 # Prerequisites on the VM:
 #   - Docker >= 24.x and Docker Compose V2 (docker compose, not docker-compose)
 #   - SSL certificate at /etc/ssl/nebutra/fullchain.pem + privkey.pem
-#     (see infra/nginx/README.md for initial certificate setup)
+#     (see infra/runtime/nginx/README.md for initial certificate setup)
 #   - .env file with production secrets in the repo root
 #
 # NOTE: Services `web`, `landing-page`, and `api-gateway` are defined here as
@@ -52,8 +52,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./infra/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./infra/runtime/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./infra/runtime/nginx/conf.d:/etc/nginx/conf.d:ro
       # SSL certificate directory — provision via certbot or commercial CA
       # The host path /etc/ssl/nebutra must contain fullchain.pem + privkey.pem
       - /etc/ssl/nebutra:/etc/ssl/nebutra:ro

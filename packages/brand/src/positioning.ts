@@ -105,7 +105,7 @@ export const positioning = {
         "Supply chain security: SHA-pinned Docker images and GitHub Actions",
         "CSP nonce-based headers, rate limiting, and structured error handling",
       ],
-      packages: ["packages/logger", "packages/rate-limit", "infra/k8s"],
+      packages: ["packages/logger", "packages/rate-limit", "infra/iac/k8s"],
     },
   ],
 

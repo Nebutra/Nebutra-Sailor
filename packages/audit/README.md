@@ -118,4 +118,4 @@ Audit logs are stored in:
 ## Related
 
 - [Database package](../db/)
-- [Observability](../../infra/observability/)
+- [Observability](../../infra/ops/observability/)

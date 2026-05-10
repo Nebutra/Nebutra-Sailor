@@ -223,7 +223,7 @@ jobs:
   # ============================================================================
   # Job: build-push-python-services
   # Builds multi-platform images for Python FastAPI microservices.
-  # All services share a single Dockerfile (infra/docker/Dockerfile.python)
+  # All services share a single Dockerfile (infra/runtime/docker/Dockerfile.python)
   # and are differentiated via the SERVICE build argument.
   # ============================================================================
   build-push-python-services:
@@ -330,7 +330,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: infra/docker/Dockerfile.python
+          file: infra/runtime/docker/Dockerfile.python
           platforms: linux/amd64,linux/arm64
           push: true
           build-args: |

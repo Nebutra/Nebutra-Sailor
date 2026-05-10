@@ -17,7 +17,7 @@ name: Deploy
 #   SLACK_WEBHOOK_URL  — Incoming Webhook URL for a Slack channel
 #
 # Directory convention:
-#   infra/k8s/overlays/<env>/   — kustomize overlay per environment
+#   infra/iac/k8s/overlays/<env>/   — kustomize overlay per environment
 
 on:
   # Trigger automatically once images have been built and pushed
@@ -116,12 +116,12 @@ jobs:
         run: kubectl cluster-info
 
       # ── Apply kustomize overlay ──────────────────────────────────────────────
-      # Each environment has its own overlay directory under infra/k8s/overlays/.
+      # Each environment has its own overlay directory under infra/iac/k8s/overlays/.
       # kustomize reads the base manifests and merges environment-specific patches.
       - name: Apply kustomize overlay
         run: |
           echo "Applying kustomize overlay for environment: $DEPLOY_ENV"
-          kubectl apply -k "infra/k8s/overlays/$DEPLOY_ENV"
+          kubectl apply -k "infra/iac/k8s/overlays/$DEPLOY_ENV"
 
       # ── Update image tags ─────────────────────────────────────────────────────
       # Roll out the freshly built images by updating the image tag on every
@@ -201,7 +201,7 @@ jobs:
       # deployment is actually serving traffic.  Fails the job (and triggers
       # Slack failure notification) if any check returns non-2xx.
       #
-      # URL mapping (from infra/k8s/base/ingress):
+      # URL mapping (from infra/iac/k8s/base/ingress):
       #   staging → *.staging.nebutra.com
       #   prod    → *.nebutra.com
       - name: Smoke test — API Gateway

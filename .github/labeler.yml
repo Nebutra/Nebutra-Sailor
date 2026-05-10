@@ -75,11 +75,11 @@
 
 "infra: k8s":
   - changed-files:
-      - any-glob-to-any-file: "infra/k8s/**"
+      - any-glob-to-any-file: "infra/iac/k8s/**"
 
 "infra: terraform":
   - changed-files:
-      - any-glob-to-any-file: "infra/terraform/**"
+      - any-glob-to-any-file: "infra/iac/terraform/**"
 
 "infra: docker":
   - changed-files:

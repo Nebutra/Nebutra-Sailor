@@ -100,4 +100,4 @@ try {
 ## Related
 
 - [API Gateway](../../apps/api-gateway/)
-- [Observability](../../infra/observability/)
+- [Observability](../../infra/ops/observability/)

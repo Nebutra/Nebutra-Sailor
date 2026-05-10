@@ -55,7 +55,7 @@ services:
       - CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1
     volumes:
       - clickhouse_data:/var/lib/clickhouse
-      - ./infra/clickhouse/init:/docker-entrypoint-initdb.d
+      - ./infra/data/clickhouse/init:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD-SHELL", "clickhouse-client --query 'SELECT 1'"]
       interval: 10s
@@ -135,7 +135,7 @@ services:
   ai-service:
     build:
       context: .
-      dockerfile: infra/docker/Dockerfile.python
+      dockerfile: infra/runtime/docker/Dockerfile.python
       args:
         SERVICE: ai
     container_name: nebutra-ai
@@ -155,7 +155,7 @@ services:
   content-service:
     build:
       context: .
-      dockerfile: infra/docker/Dockerfile.python
+      dockerfile: infra/runtime/docker/Dockerfile.python
       args:
         SERVICE: content
     container_name: nebutra-content
@@ -174,7 +174,7 @@ services:
   recsys-service:
     build:
       context: .
-      dockerfile: infra/docker/Dockerfile.python
+      dockerfile: infra/runtime/docker/Dockerfile.python
       args:
         SERVICE: recsys
     container_name: nebutra-recsys
@@ -193,7 +193,7 @@ services:
   ecommerce-service:
     build:
       context: .
-      dockerfile: infra/docker/Dockerfile.python
+      dockerfile: infra/runtime/docker/Dockerfile.python
       args:
         SERVICE: ecommerce
     container_name: nebutra-ecommerce
@@ -214,7 +214,7 @@ services:
   web3-service:
     build:
       context: .
-      dockerfile: infra/docker/Dockerfile.python
+      dockerfile: infra/runtime/docker/Dockerfile.python
       args:
         SERVICE: web3
     container_name: nebutra-web3
@@ -234,7 +234,7 @@ services:
   billing-service:
     build:
       context: .
-      dockerfile: infra/docker/Dockerfile.python
+      dockerfile: infra/runtime/docker/Dockerfile.python
       args:
         SERVICE: billing
     container_name: nebutra-billing
@@ -259,7 +259,7 @@ services:
   event-ingest-service:
     build:
       context: .
-      dockerfile: infra/docker/Dockerfile.python
+      dockerfile: infra/runtime/docker/Dockerfile.python
       args:
         SERVICE: event-ingest
     container_name: nebutra-event-ingest
@@ -284,7 +284,7 @@ services:
   idp:
     build:
       context: .
-      dockerfile: infra/docker/Dockerfile.node
+      dockerfile: infra/runtime/docker/Dockerfile.node
       args:
         APP: idp
     container_name: nebutra-idp
