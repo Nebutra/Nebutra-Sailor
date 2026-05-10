@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -150,12 +151,24 @@ export async function POST(request: Request) {
     targetId: target.id,
   });
 
+  // SOC 2: impersonation events are CRITICAL — every start/stop is audited.
+  await auditLogger(request, {
+    actor: { id: auth.userId, type: "user" },
+    tenantId: auth.orgId ?? auth.userId,
+  }).log({
+    action: "admin.impersonate.started",
+    outcome: "success",
+    resource: { type: "user", id: target.id },
+    severity: "critical",
+    metadata: { adminUserId: auth.userId },
+  });
+
   const response = NextResponse.json({ ok: true });
   response.headers.append("set-cookie", buildSetCookie(cookieValue, IMPERSONATE_MAX_AGE_SECONDS));
   return response;
 }
 
-export async function DELETE(_request: Request) {
+export async function DELETE(request: Request) {
   const auth = await getAuth();
 
   if (!auth.isSignedIn || !auth.userId) {
@@ -163,6 +176,17 @@ export async function DELETE(_request: Request) {
   }
 
   logger.info("[admin.impersonate] Impersonation cleared", { actorId: auth.userId });
+
+  await auditLogger(request, {
+    actor: { id: auth.userId, type: "user" },
+    tenantId: auth.orgId ?? auth.userId,
+  }).log({
+    action: "admin.impersonate.ended",
+    outcome: "success",
+    resource: { type: "user", id: auth.userId },
+    severity: "warning",
+    metadata: { adminUserId: auth.userId },
+  });
 
   const response = NextResponse.json({ ok: true });
   response.headers.append("set-cookie", buildSetCookie("", 0));

@@ -25,6 +25,9 @@
  * ```
  */
 
+// Auditable context resolver (used by @nebutra/audit consumers)
+export type { AuditableActor, AuditableContext } from "./audit-context";
+export { getAuditableContext } from "./audit-context";
 // Middleware factory
 export { createAuthMiddleware } from "./middleware";
 // Service-to-service HMAC helpers

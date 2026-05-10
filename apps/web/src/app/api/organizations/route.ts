@@ -1,3 +1,4 @@
+import { auditLogger } from "@nebutra/audit";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
@@ -86,7 +87,7 @@ async function getOrganizationsForRequest(request: Request): Promise<Organizatio
 async function createOrganizationForRequest(
   request: Request,
   input: z.infer<typeof CreateOrganizationSchema>,
-): Promise<OrganizationSummary | null> {
+): Promise<{ organization: OrganizationSummary; creatorUserId: string } | null> {
   if (provider === "clerk") {
     const { auth, clerkClient } = await import("@clerk/nextjs/server");
     const { userId } = await auth();
@@ -100,10 +101,13 @@ async function createOrganizationForRequest(
     });
 
     return {
-      id: organization.id,
-      name: organization.name,
-      slug: organization.slug ?? input.slug,
-      image: organization.imageUrl ?? null,
+      organization: {
+        id: organization.id,
+        name: organization.name,
+        slug: organization.slug ?? input.slug,
+        image: organization.imageUrl ?? null,
+      },
+      creatorUserId: userId,
     };
   }
 
@@ -118,10 +122,13 @@ async function createOrganizationForRequest(
   });
 
   return {
-    id: organization.id,
-    name: organization.name,
-    slug: organization.slug,
-    image: null,
+    organization: {
+      id: organization.id,
+      name: organization.name,
+      slug: organization.slug,
+      image: null,
+    },
+    creatorUserId: session.userId,
   };
 }
 
@@ -159,11 +166,24 @@ export async function POST(request: Request) {
   }
 
   try {
-    const organization = await createOrganizationForRequest(request, parsed.data);
+    const created = await createOrganizationForRequest(request, parsed.data);
 
-    if (!organization) {
+    if (!created) {
       return NextResponse.json({ error: "Authentication required." }, { status: 401 });
     }
+
+    const { organization, creatorUserId } = created;
+
+    await auditLogger(request, {
+      actor: { id: creatorUserId, type: "user" },
+      tenantId: organization.id,
+    }).log({
+      action: "org.created",
+      outcome: "success",
+      resource: { type: "organization", id: organization.id, name: organization.name },
+      severity: "info",
+      metadata: { slug: organization.slug },
+    });
 
     const response = NextResponse.json(
       {

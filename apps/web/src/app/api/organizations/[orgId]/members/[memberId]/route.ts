@@ -1,3 +1,4 @@
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -134,6 +135,20 @@ export async function PATCH(request: Request, context: RouteContext) {
       select: { id: true, role: true },
     });
 
+    await auditLogger(request, {
+      actor: { id: authorization.authState.userId as string, type: "user" },
+      tenantId: orgId,
+    }).log({
+      action: "org.member.role_changed",
+      outcome: "success",
+      resource: { type: "user", id: targetMembership.userId },
+      severity: "warning",
+      changes: {
+        before: { role: targetMembership.role },
+        after: { role: member.role },
+      },
+    });
+
     return NextResponse.json({
       member: {
         id: member.id,
@@ -151,7 +166,7 @@ export async function PATCH(request: Request, context: RouteContext) {
   }
 }
 
-export async function DELETE(_request: Request, context: RouteContext) {
+export async function DELETE(request: Request, context: RouteContext) {
   const { orgId, memberId } = await context.params;
 
   try {
@@ -186,6 +201,17 @@ export async function DELETE(_request: Request, context: RouteContext) {
     }
 
     await db.organizationMember.delete({ where: { id: memberId } });
+
+    await auditLogger(request, {
+      actor: { id: authorization.authState.userId as string, type: "user" },
+      tenantId: orgId,
+    }).log({
+      action: "org.member.removed",
+      outcome: "success",
+      resource: { type: "user", id: targetMembership.userId },
+      severity: "warning",
+      metadata: { memberId, role: targetMembership.role, self: isSelf },
+    });
 
     return NextResponse.json({ ok: true, action: isSelf ? "left" : "removed" });
   } catch (error) {

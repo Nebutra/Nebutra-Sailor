@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -146,6 +147,25 @@ export async function POST(request: Request) {
     logger.info("[account/email-change] Verification requested", {
       userId: authState.userId,
       newEmail,
+    });
+
+    // Note: this is the *initiation* of the change — the address is only
+    // updated when the user confirms via the link. We log here because the
+    // request itself is security-relevant (initiation requires the current
+    // session, attackers will trigger this).
+    await auditLogger(request, {
+      actor: { id: authState.userId, type: "user" },
+      tenantId: authState.orgId ?? authState.userId,
+    }).log({
+      action: "account.email.changed",
+      outcome: "success",
+      resource: { type: "user", id: authState.userId },
+      severity: "warning",
+      changes: {
+        before: { email: currentUser.email },
+        after: { email: newEmail },
+      },
+      metadata: { state: "verification_pending" },
     });
 
     return NextResponse.json({ ok: true, verificationSent: true, newEmail }, { status: 202 });
