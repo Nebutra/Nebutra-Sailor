@@ -1,3 +1,4 @@
+import { CommandPaletteMount } from "@/app/[locale]/providers/command-palette-mount";
 import { ShellNotificationCenter } from "@/components/notifications/shell-notification-center";
 import { requireAuth } from "@/lib/auth";
 import { resolveWebProductCapabilities } from "@/lib/product-capabilities";
@@ -14,11 +15,13 @@ export default async function AppLayout({
   await requireAuth();
 
   return (
-    <DesignSystemShell
-      notificationCenter={<ShellNotificationCenter locale={locale} />}
-      productCapabilities={resolveWebProductCapabilities()}
-    >
-      {children}
-    </DesignSystemShell>
+    <CommandPaletteMount>
+      <DesignSystemShell
+        notificationCenter={<ShellNotificationCenter locale={locale} />}
+        productCapabilities={resolveWebProductCapabilities()}
+      >
+        {children}
+      </DesignSystemShell>
+    </CommandPaletteMount>
   );
 }

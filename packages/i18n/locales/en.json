@@ -538,10 +538,18 @@
         }
       },
       "channels": {
-        "in_app": { "label": "In-app" },
-        "email": { "label": "Email" },
-        "push": { "label": "Push" },
-        "sms": { "label": "SMS" }
+        "in_app": {
+          "label": "In-app"
+        },
+        "email": {
+          "label": "Email"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
       }
     },
     "webhooks": {
@@ -671,6 +679,35 @@
       "marketing": {
         "label": "Marketing",
         "description": "Personalized advertising and retargeting on third-party platforms."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Notifications",
+      "description": "All your notifications in one place.",
+      "filter": {
+        "all": "All",
+        "unread": "Unread"
+      },
+      "actions": {
+        "markAllRead": "Mark all as read",
+        "markRead": "Mark as read",
+        "archive": "Archive",
+        "loadMore": "Load more",
+        "loading": "Loading...",
+        "selected": "{count} selected"
+      },
+      "empty": {
+        "all": "You're all caught up.",
+        "unread": "No unread notifications."
+      },
+      "errors": {
+        "load": "Failed to load notifications.",
+        "network": "Network error. Please try again.",
+        "markRead": "Failed to mark notification as read.",
+        "archive": "Failed to archive notification.",
+        "bulkMarkRead": "Some notifications could not be marked as read."
       }
     }
   }

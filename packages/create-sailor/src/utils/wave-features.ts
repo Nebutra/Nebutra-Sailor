@@ -15,6 +15,7 @@ export interface WaveFeatureFlagInputs {
   cronJobs?: string;
   auditLog?: string;
   apiKeys?: string;
+  webhooks?: string;
   commandPalette?: string;
   cookieConsent?: string;
   legalPages?: string;
@@ -25,6 +26,14 @@ export interface WaveFeatureToggles {
   cronJobs: boolean;
   auditLog: boolean;
   apiKeys: boolean;
+  /**
+   * Outbound webhook **UI surface** (settings page, dispatcher API route,
+   * `@nebutra/webhooks` package). Distinct from the `--webhooks <id>` CLI
+   * flag which selects a *provider* (svix | custom | none). When this is
+   * `false`, `pruneWaveFeatures` removes the entire webhook surface even if
+   * a provider was selected.
+   */
+  webhooks: boolean;
   commandPalette: boolean;
   cookieConsent: boolean;
   legalPages: boolean;
@@ -61,6 +70,7 @@ export function resolveWaveFeatureToggles(
     cronJobs: parseBoolFlag(flags.cronJobs, true),
     auditLog: parseBoolFlag(flags.auditLog, true),
     apiKeys: parseBoolFlag(flags.apiKeys, true),
+    webhooks: parseBoolFlag(flags.webhooks, true),
     commandPalette: parseBoolFlag(flags.commandPalette, true),
     cookieConsent: parseBoolFlag(flags.cookieConsent, true),
     legalPages: parseBoolFlag(flags.legalPages, true),

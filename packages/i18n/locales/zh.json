@@ -691,5 +691,34 @@
       "signIn": "使用微信登录",
       "notConfigured": "微信登录未配置"
     }
+  },
+  "notifications": {
+    "page": {
+      "title": "消息中心",
+      "description": "你的所有通知，一处管理。",
+      "filter": {
+        "all": "全部",
+        "unread": "未读"
+      },
+      "actions": {
+        "markAllRead": "全部标记为已读",
+        "markRead": "标记为已读",
+        "archive": "归档",
+        "loadMore": "加载更多",
+        "loading": "加载中…",
+        "selected": "已选 {count} 条"
+      },
+      "empty": {
+        "all": "你已经处理完了 ✨",
+        "unread": "没有未读通知。"
+      },
+      "errors": {
+        "load": "加载通知失败。",
+        "network": "网络错误，请重试。",
+        "markRead": "标记已读失败。",
+        "archive": "归档失败。",
+        "bulkMarkRead": "部分通知未能标记为已读。"
+      }
+    }
   }
 }

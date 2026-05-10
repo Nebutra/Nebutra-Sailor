@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { NebutraConfig } from "./config.js";
+import type { WaveFeatureToggles } from "./wave-features.js";
 
 function walkDir(dir: string, callback: (filepath: string) => void) {
   if (!fs.existsSync(dir)) return;
@@ -307,4 +308,146 @@ export { default } from './mock-i18n';
 
   // Save the pruned root package.json back
   fs.writeFileSync(rootPkgPath, JSON.stringify(rootPkg, null, 2) + "\n");
+}
+
+/**
+ * Idempotent silent remove. Best-effort: any error (incl. ENOENT) is
+ * swallowed so prune passes can be re-run safely without throwing on
+ * already-removed paths.
+ */
+function safeRm(p: string): void {
+  try {
+    fs.rmSync(p, { recursive: true, force: true });
+  } catch {
+    // ignore — best-effort cleanup
+  }
+}
+
+/**
+ * Remove the `@nebutra/<name>` dependency entry from a workspace
+ * `package.json` if present. Re-serialises with 2-space indentation and a
+ * trailing newline (matching this repo's Prettier convention). No-op if
+ * the file or dep is missing — keeps callers idempotent.
+ */
+function removeDependencyFromPkg(pkgPath: string, depName: string): void {
+  if (!fs.existsSync(pkgPath)) return;
+  let pkg: { dependencies?: Record<string, string>; devDependencies?: Record<string, string> };
+  try {
+    pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+  } catch {
+    // Malformed package.json — leave it alone.
+    return;
+  }
+
+  let changed = false;
+  if (pkg.dependencies && depName in pkg.dependencies) {
+    const { [depName]: _removed, ...rest } = pkg.dependencies;
+    pkg = { ...pkg, dependencies: rest };
+    changed = true;
+  }
+  if (pkg.devDependencies && depName in pkg.devDependencies) {
+    const { [depName]: _removed, ...rest } = pkg.devDependencies;
+    pkg = { ...pkg, devDependencies: rest };
+    changed = true;
+  }
+
+  if (changed) {
+    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
+  }
+}
+
+/**
+ * Prune wave 3-5 cross-cutting feature surfaces from a scaffolded project.
+ *
+ * Each toggle, when `false`, removes the corresponding files / directories
+ * in the scaffolded `targetDir`. Silent-skip semantics: paths that don't
+ * exist (e.g. because the upstream template moved them, or the user pruned
+ * a parent earlier in the chain) are skipped without error.
+ *
+ * Order matches the documented spec table: cronJobs → auditLog → apiKeys
+ * → webhooks → commandPalette → cookieConsent → legalPages →
+ * chinaCompliance. The function is **idempotent** — running it twice is
+ * the same as running it once.
+ *
+ * Caveat: `commandPalette=false` is a best-effort prune. The mount
+ * provider file is removed but integrators may still need to manually
+ * un-import it from `apps/web/src/app/[locale]/layout.tsx` if their
+ * downstream layout grew custom references. The cleanup is documented in
+ * `.sailor/next-steps.md` via the welcome page generator.
+ *
+ * Immutability: returns void. Does not mutate the toggles object.
+ */
+export function pruneWaveFeatures(targetDir: string, toggles: WaveFeatureToggles): void {
+  // 1. cronJobs
+  if (!toggles.cronJobs) {
+    safeRm(path.join(targetDir, "apps/web/src/app/api/cron"));
+    safeRm(path.join(targetDir, "packages/queue/src/scheduled"));
+  }
+
+  // 2. auditLog
+  if (!toggles.auditLog) {
+    safeRm(path.join(targetDir, "apps/web/src/app/[locale]/(app)/settings/audit-log"));
+    safeRm(path.join(targetDir, "apps/web/src/app/api/audit-logs"));
+    safeRm(path.join(targetDir, "apps/web/src/components/audit"));
+  }
+
+  // 3. apiKeys
+  if (!toggles.apiKeys) {
+    safeRm(path.join(targetDir, "apps/web/src/app/[locale]/(app)/settings/api-keys"));
+    safeRm(path.join(targetDir, "apps/web/src/app/api/api-keys"));
+    safeRm(path.join(targetDir, "apps/web/src/components/api-keys"));
+  }
+
+  // 4. webhooks (UI surface — distinct from the --webhooks provider flag)
+  if (!toggles.webhooks) {
+    safeRm(path.join(targetDir, "apps/web/src/app/[locale]/(app)/settings/webhooks"));
+    safeRm(path.join(targetDir, "apps/web/src/app/api/webhooks"));
+    safeRm(path.join(targetDir, "apps/web/src/components/webhooks"));
+    safeRm(path.join(targetDir, "packages/webhooks"));
+  }
+
+  // 5. commandPalette
+  if (!toggles.commandPalette) {
+    safeRm(path.join(targetDir, "apps/web/src/components/command-palette"));
+    safeRm(path.join(targetDir, "apps/web/src/app/[locale]/providers/command-palette-mount.tsx"));
+    // NOTE: layout.tsx may still import the mount component. We do not
+    // mutate it here — integrators should run `pnpm typecheck` and remove
+    // any stale imports manually. Documented in welcome next-steps.md.
+  }
+
+  // 6. cookieConsent
+  if (!toggles.cookieConsent) {
+    safeRm(path.join(targetDir, "apps/landing-page/src/components/cookie-consent-banner.tsx"));
+    safeRm(
+      path.join(
+        targetDir,
+        "apps/landing-page/src/components/__tests__/cookie-consent-banner.test.tsx",
+      ),
+    );
+    safeRm(path.join(targetDir, "apps/landing-page/src/lib/cookie-consent.ts"));
+    safeRm(path.join(targetDir, "apps/landing-page/src/lib/__tests__/cookie-consent.test.ts"));
+    safeRm(path.join(targetDir, "apps/web/src/app/api/cookie-consent"));
+  }
+
+  // 7. legalPages
+  if (!toggles.legalPages) {
+    safeRm(path.join(targetDir, "apps/landing-page/src/app/[lang]/(legal)/legal"));
+    safeRm(path.join(targetDir, "apps/landing-page/src/lib/legal-documents.ts"));
+    safeRm(path.join(targetDir, "apps/landing-page/src/lib/__tests__/legal-documents.test.ts"));
+  }
+
+  // 8. chinaCompliance — also removes the dep from apps/web/package.json
+  if (!toggles.chinaCompliance) {
+    safeRm(path.join(targetDir, "packages/china-compliance"));
+    safeRm(path.join(targetDir, "apps/landing-page/src/components/icp-footer.tsx"));
+    safeRm(path.join(targetDir, "apps/landing-page/src/components/__tests__/icp-footer.test.tsx"));
+    safeRm(path.join(targetDir, "apps/web/src/components/auth/wechat-login-button.tsx"));
+    safeRm(
+      path.join(targetDir, "apps/web/src/components/auth/__tests__/wechat-login-button.test.tsx"),
+    );
+    removeDependencyFromPkg(
+      path.join(targetDir, "apps/web/package.json"),
+      "@nebutra/china-compliance",
+    );
+  }
 }

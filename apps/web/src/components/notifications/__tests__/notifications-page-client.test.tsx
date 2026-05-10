@@ -3,6 +3,20 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+// next-intl mock — return the namespaced key (with optional ICU substitution).
+vi.mock("next-intl", () => ({
+  useTranslations: (namespace: string) => (key: string, vars?: Record<string, unknown>) => {
+    if (vars && Object.keys(vars).length > 0) {
+      const params = Object.entries(vars)
+        .map(([k, v]) => `${k}=${String(v)}`)
+        .join(",");
+      return `${namespace}.${key}(${params})`;
+    }
+    return `${namespace}.${key}`;
+  },
+}));
+
 import type { InboxNotification } from "../inbox-list";
 import { NotificationsPageClient } from "../notifications-page-client";
 
@@ -199,7 +213,7 @@ describe("NotificationsPageClient", () => {
     await user.click(screen.getByRole("checkbox", { name: /Bulk two/i }));
 
     const bulkActions = await screen.findByTestId("bulk-actions");
-    await user.click(within(bulkActions).getByRole("button", { name: /mark as read/i }));
+    await user.click(within(bulkActions).getByRole("button", { name: /actions\.markRead/i }));
 
     await waitFor(() => {
       const patchCalls = fetcher.mock.calls.filter(
@@ -235,7 +249,7 @@ describe("NotificationsPageClient", () => {
       expect(screen.getByText("Unread one")).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole("button", { name: /mark all as read/i }));
+    await user.click(screen.getByRole("button", { name: /actions\.markAllRead/i }));
 
     await waitFor(() => {
       const patchCalls = fetcher.mock.calls.filter(
@@ -278,7 +292,7 @@ describe("NotificationsPageClient", () => {
       expect(screen.getByText("Page one item")).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole("button", { name: /load more/i }));
+    await user.click(screen.getByRole("button", { name: /actions\.loadMore/i }));
 
     await waitFor(() => {
       expect(screen.getByText("Page one item")).toBeInTheDocument();
@@ -289,7 +303,7 @@ describe("NotificationsPageClient", () => {
       fetcher.mock.calls.some((call: unknown[]) => String(call[0]).includes("cursor=10")),
     ).toBe(true);
 
-    expect(screen.queryByRole("button", { name: /load more/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /actions\.loadMore/i })).not.toBeInTheDocument();
   });
 
   it("reverts optimistic mark-as-read when the PATCH call fails", async () => {
@@ -314,7 +328,7 @@ describe("NotificationsPageClient", () => {
 
     await user.click(screen.getByRole("checkbox", { name: /Will fail/i }));
     const bulkActions = await screen.findByTestId("bulk-actions");
-    await user.click(within(bulkActions).getByRole("button", { name: /mark as read/i }));
+    await user.click(within(bulkActions).getByRole("button", { name: /actions\.markRead/i }));
 
     // After failure, the unread dot should remain (i.e. read state reverted).
     await waitFor(() => {

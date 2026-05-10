@@ -10,6 +10,20 @@ import { InboxList, type InboxNotification } from "./inbox-list";
 // =============================================================================
 // Polls /api/notifications/inbox every 30s; refetches on window focus.
 // Click notification → marks as read + navigates to data.href if present.
+//
+// Mount choice:
+//   • In Nebutra-Sailor's apps/web, the canonical bell is
+//     <ShellNotificationCenter /> — server-rendered snapshot via
+//     loadNotificationSettingsSnapshot from @nebutra/notifications.
+//     It ships pre-wired in apps/web/src/app/[locale]/(app)/layout.tsx
+//     and is preferred when the full @nebutra/notifications stack is wired.
+//   • <InboxBell /> is the lightweight, client-only alternative that
+//     hits /api/notifications/inbox directly. Use it in scaffolded
+//     downstream apps (via create-sailor) where the heavyweight snapshot
+//     helper isn't desired, or when you want a route-level <Suspense>
+//     boundary instead of a server fetch on every nav.
+//
+// Do not mount both at the same time — they render the same UX surface.
 // =============================================================================
 
 const POLL_INTERVAL_MS = 30_000;

@@ -53,7 +53,7 @@ import {
 } from "./utils/package-status.js";
 import { applyPaymentSelection, type PaymentChoice } from "./utils/payment.js";
 import { applyProviderSelection } from "./utils/providers.js";
-import { pruneTemplate } from "./utils/prune.js";
+import { pruneTemplate, pruneWaveFeatures } from "./utils/prune.js";
 import { pruneSchemaByFlags } from "./utils/prune-schema.js";
 import { applyQueueSelection } from "./utils/queue.js";
 import { applySearchSelection } from "./utils/search.js";
@@ -1055,6 +1055,17 @@ async function run(): Promise<void> {
 
     await applyMeteringSwitch(resolvedTarget, metering, payment);
     if (useJson) emitJson(true, { event: "step", step: "metering", mode: metering, status: "ok" });
+
+    // Wave 3-5 feature pruning — physically remove files/dirs for any
+    // toggle set to `false`. Idempotent + safe-on-missing-paths.
+    emitJson(useJson, { event: "step", step: "prune-wave-features", status: "start" });
+    pruneWaveFeatures(resolvedTarget, waveToggles);
+    emitJson(useJson, {
+      event: "step",
+      step: "prune-wave-features",
+      status: "ok",
+      toggles: waveToggles,
+    });
 
     // Schema prune — strip @conditional model blocks that don't match the selection.
     // Covers: auth, payment, billing-mode, idp, template.

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { InboxList, type InboxNotification } from "./inbox-list";
 
@@ -11,8 +12,7 @@ import { InboxList, type InboxNotification } from "./inbox-list";
 // actions, "mark all as read", cursor pagination ("Load more"), optimistic
 // updates with revert-on-error, and an initial loading skeleton.
 //
-// English literals are used inline for now; once shared i18n keys are added
-// (notifications.page.*) these strings can be replaced with `useTranslations`.
+// All UI strings live under `notifications.page.*` in @nebutra/i18n.
 // =============================================================================
 
 const PAGE_LIMIT = 50;
@@ -54,6 +54,7 @@ export function NotificationsPageClient({
   apiBase = "/api/notifications",
   fetcher,
 }: NotificationsPageClientProps): React.ReactElement {
+  const t = useTranslations("notifications.page");
   const fetchImpl = fetcher ?? (typeof fetch !== "undefined" ? fetch : undefined);
 
   const [filter, setFilter] = useState<FilterTab>("all");
@@ -85,12 +86,12 @@ export function NotificationsPageClient({
           credentials: "same-origin",
         });
         if (!response.ok) {
-          setErrorMessage("Failed to load notifications.");
+          setErrorMessage(t("errors.load"));
           return null;
         }
         const json = (await response.json()) as InboxApiResponse;
         if (!json.success) {
-          setErrorMessage("Failed to load notifications.");
+          setErrorMessage(t("errors.load"));
           return null;
         }
         return {
@@ -100,7 +101,7 @@ export function NotificationsPageClient({
           nextCursor: json.data.nextCursor,
         };
       } catch {
-        setErrorMessage("Network error. Please try again.");
+        setErrorMessage(t("errors.network"));
         return null;
       }
     },
@@ -178,7 +179,7 @@ export function NotificationsPageClient({
       const ok = await patchRead(id);
       if (!ok) {
         setState(previous);
-        setErrorMessage("Failed to mark notification as read.");
+        setErrorMessage(t("errors.markRead"));
       }
     },
     [patchRead, state],
@@ -196,7 +197,7 @@ export function NotificationsPageClient({
       const ok = await archiveOne(id);
       if (!ok) {
         setState(previous);
-        setErrorMessage("Failed to archive notification.");
+        setErrorMessage(t("errors.archive"));
       }
     },
     [archiveOne, state],
@@ -220,7 +221,7 @@ export function NotificationsPageClient({
     const results = await Promise.all(ids.map((id) => patchRead(id)));
     if (results.some((ok) => !ok)) {
       setState(previous);
-      setErrorMessage("Some notifications could not be marked as read.");
+      setErrorMessage(t("errors.bulkMarkRead"));
     }
   }, [patchRead, selectedIds, state]);
 
@@ -239,7 +240,7 @@ export function NotificationsPageClient({
     const results = await Promise.all(ids.map((id) => archiveOne(id)));
     if (results.some((ok) => !ok)) {
       setState(previous);
-      setErrorMessage("Some notifications could not be archived.");
+      setErrorMessage(t("errors.archive"));
     }
   }, [archiveOne, selectedIds, state]);
 
@@ -261,7 +262,7 @@ export function NotificationsPageClient({
     const results = await Promise.all(unreadIds.map((id) => patchRead(id)));
     if (results.some((ok) => !ok)) {
       setState(previous);
-      setErrorMessage("Some notifications could not be marked as read.");
+      setErrorMessage(t("errors.bulkMarkRead"));
     }
   }, [patchRead, state]);
 
@@ -316,11 +317,15 @@ export function NotificationsPageClient({
       {/* Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--neutral-7)] pb-3">
         <div role="tablist" aria-label="Notification filter" className="flex gap-1">
-          <FilterTabButton active={filter === "all"} onClick={() => setFilter("all")} label="All" />
+          <FilterTabButton
+            active={filter === "all"}
+            onClick={() => setFilter("all")}
+            label={t("filter.all")}
+          />
           <FilterTabButton
             active={filter === "unread"}
             onClick={() => setFilter("unread")}
-            label="Unread"
+            label={t("filter.unread")}
             count={state.unreadCount}
           />
         </div>
@@ -330,7 +335,7 @@ export function NotificationsPageClient({
           disabled={!hasUnread}
           className="text-xs font-medium text-[var(--blue-9)] hover:underline disabled:cursor-not-allowed disabled:opacity-50"
         >
-          Mark all as read
+          {t("actions.markAllRead")}
         </button>
       </div>
 
@@ -340,21 +345,23 @@ export function NotificationsPageClient({
           data-testid="bulk-actions"
           className="flex items-center justify-between rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2"
         >
-          <span className="text-sm text-[var(--neutral-11)]">{selectedIds.size} selected</span>
+          <span className="text-sm text-[var(--neutral-11)]">
+            {t("actions.selected", { count: selectedIds.size })}
+          </span>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => void bulkMarkRead()}
               className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
             >
-              Mark as read
+              {t("actions.markRead")}
             </button>
             <button
               type="button"
               onClick={() => void bulkArchive()}
               className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
             >
-              Archive
+              {t("actions.archive")}
             </button>
           </div>
         </div>
@@ -381,7 +388,7 @@ export function NotificationsPageClient({
           selectedIds={selectedIds}
           onToggleSelect={toggleSelect}
           variant="full"
-          emptyMessage={filter === "unread" ? "No unread notifications." : "You're all caught up."}
+          emptyMessage={filter === "unread" ? t("empty.unread") : t("empty.all")}
         />
       </div>
 
@@ -394,7 +401,7 @@ export function NotificationsPageClient({
             disabled={loadingMore}
             className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {loadingMore ? "Loading..." : "Load more"}
+            {loadingMore ? t("actions.loading") : t("actions.loadMore")}
           </button>
         </div>
       ) : null}
