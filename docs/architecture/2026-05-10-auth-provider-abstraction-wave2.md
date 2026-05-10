@@ -5,13 +5,13 @@
 - **Owner**: tseka_luk
 - **Supersedes**: nothing — first formal ADR for `@nebutra/auth`
 - **Guiding principle**: [Hard-but-right for UX/DX](~/.claude/projects/-Users-tseka-luk-Documents-Nebutra-SaaS-Lab-Nebutra-Sailor/memory/feedback_hard_but_right_ux_dx.md) — speed is not a tiebreaker; for user/dev-facing surfaces, correctness wins
-- **Related**: `packages/auth/AGENTS.md`, `packages/identity/AGENTS.md`
+- **Related**: `packages/iam/auth/AGENTS.md`, `packages/iam/identity/AGENTS.md`
 
 ---
 
 ## Context
 
-`@nebutra/auth` already ships a provider-agnostic abstraction with three concrete providers (Better Auth, Clerk, NextAuth) and 27 consumer files across `apps/web`, `apps/landing-page`, `backends/gateway`, plus a surprise consumer at `packages/saga/src/workflows/orderSaga.ts`. The abstraction is **functional but incomplete**:
+`@nebutra/auth` already ships a provider-agnostic abstraction with three concrete providers (Better Auth, Clerk, NextAuth) and 27 consumer files across `apps/web`, `apps/landing-page`, `backends/gateway`, plus a surprise consumer at `packages/integrations/saga/src/workflows/orderSaga.ts`. The abstraction is **functional but incomplete**:
 
 - `AuthProvider` interface omits `signIn`/`signOut` despite being foundational
 - Better Auth plugins (organizations, passkeys, twoFactor, magicLink) load dynamically but their methods are not exposed through the canonical interface
@@ -149,7 +149,7 @@ Per project workflow ([feedback_main_only_workflow.md](~/.claude/projects/-Users
 | Phase | Scope | Commits (target) | Risk | Reversible |
 |---|---|---|---|---|
 | **Phase 1 — Foundation** (schema + API surface) | (a) `auth` Postgres schema + 4 new BA-plugin tables (`organization`/`member`/`invitation`/`passkey`) + `active_organization_id` column on `public.auth_sessions`; (b) `app.user_profile` table FK to `auth_users.id` + nullable `external_id` columns on existing `User`/`Organization`; (c) `AuthProvider` interface gains `signIn`/`signOut` + `capabilities` runtime probe + optional `organizations`/`passkeys`/`twoFactor`/`magicLink` capability shapes; (d) Better Auth provider wires up plugin methods through canonical interface; Clerk + NextAuth providers report `capabilities.* = false` for unsupported features | 4-6 commits | Low–Medium | Yes (drop schema + drop columns + revert package) |
-| **Phase 2 — Dev opt-in** (apps/web in dev only) | Tenant bridge middleware (`session.activeOrganizationId` → `runWithTenant(...)`); passkeys/orgs UI in `apps/web` gated by `NEXT_PUBLIC_AUTH_FEATURES` env flag; E2E tests for new flows; update `packages/auth/AGENTS.md` + `packages/identity/AGENTS.md` boundary docs | 3-5 commits | Medium | Yes (env flag off) |
+| **Phase 2 — Dev opt-in** (apps/web in dev only) | Tenant bridge middleware (`session.activeOrganizationId` → `runWithTenant(...)`); passkeys/orgs UI in `apps/web` gated by `NEXT_PUBLIC_AUTH_FEATURES` env flag; E2E tests for new flows; update `packages/iam/auth/AGENTS.md` + `packages/iam/identity/AGENTS.md` boundary docs | 3-5 commits | Medium | Yes (env flag off) |
 | **Phase 3 — Prod rollout + cleanup** | Production feature flag (`@nebutra/feature-flags`) for gradual % rollout; rewire `@nebutra/oauth-server` to consume `@nebutra/identity`; absorb the 5 Clerk-direct-import files in `apps/web` into the canonical interface where possible | 3-5 commits | Medium | Yes (flag off + revert) |
 
 **Hard rules (D6 invariants — apply per-commit, not per-phase)**:
@@ -168,7 +168,7 @@ Per project workflow ([feedback_main_only_workflow.md](~/.claude/projects/-Users
 
 ### D7 — Capabilities probe is runtime, not static
 
-The probe inspects the actual `auth.api` surface after `initAuth()` completes, not config intent. Reasoning: Better Auth plugin loading is dynamic (`packages/auth/src/providers/better-auth.ts:106-114`) and can fail silently. The probe must reflect reality, not promises.
+The probe inspects the actual `auth.api` surface after `initAuth()` completes, not config intent. Reasoning: Better Auth plugin loading is dynamic (`packages/iam/auth/src/providers/better-auth.ts:106-114`) and can fail silently. The probe must reflect reality, not promises.
 
 ```ts
 // providers/better-auth.ts (PR 2 sketch)
@@ -243,11 +243,11 @@ This section makes the project's TDD principle concrete for the auth refactor. E
 
 ### Test layers required for Wave 2
 
-**1. Schema migration tests** (`packages/db/__tests__/migrations/`)
+**1. Schema migration tests** (`packages/platform/db/__tests__/migrations/`)
 - For each migration: spin up an empty Postgres in CI (Testcontainers or pglite), run migration up, assert table/column existence + constraints, run migration down, assert rollback clean
 - PR 1 ships with `2026-05-10-add-ba-orgs-passkeys.test.ts`
 
-**2. Provider contract tests** (`packages/auth/__tests__/contracts/`)
+**2. Provider contract tests** (`packages/iam/auth/__tests__/contracts/`)
 - One test file per canonical method: `getSession.contract.test.ts`, `signIn.contract.test.ts`, etc.
 - Each test imports ALL three providers via `createAuth({ provider })` and runs the same assertions
 - Capability-gated methods (orgs/passkeys/2FA/magicLink) have contract tests that:
@@ -255,11 +255,11 @@ This section makes the project's TDD principle concrete for the auth refactor. E
   - Assert clean throw with specific error class when `capabilities.X === false`
 - New provider added later → drops into the contract suite, must pass without test changes
 
-**3. Capabilities probe tests** (`packages/auth/__tests__/capabilities.test.ts`)
+**3. Capabilities probe tests** (`packages/iam/auth/__tests__/capabilities.test.ts`)
 - For each provider × each capability: assert probe matches reality (mount plugin → expect `true`; omit plugin → expect `false`)
 - Catches plugin-loaded-but-not-exposed bugs (the silent failure mode flagged in gap analysis)
 
-**4. Tenant-bridge integration tests** (`packages/auth/__tests__/tenant-bridge.test.ts`)
+**4. Tenant-bridge integration tests** (`packages/iam/auth/__tests__/tenant-bridge.test.ts`)
 - Test: user signs in with Better Auth → orgs plugin sets `activeOrganizationId` on session → middleware calls `runWithTenant({ id: session.activeOrganizationId }, ...)` → `getCurrentTenant()` returns expected org → RLS-protected query returns only org-scoped rows
 - Single test exercises the whole vertical slice (PR 3)
 
@@ -269,9 +269,9 @@ This section makes the project's TDD principle concrete for the auth refactor. E
 - Required for production rollout in PR 4
 
 **6. Coverage gates**
-- `packages/auth`: ≥ 80% line, ≥ 75% branch
-- `packages/db` (migration code): ≥ 90% (tight)
-- `packages/tenant`: ≥ 80%
+- `packages/iam/auth`: ≥ 80% line, ≥ 75% branch
+- `packages/platform/db` (migration code): ≥ 90% (tight)
+- `packages/iam/tenant`: ≥ 80%
 - Coverage report attached to PR description; CI fails if regression
 
 ### Tests-first workflow per commit (direct-to-main)
@@ -281,7 +281,7 @@ Every behavior-changing commit message must include a "Tests" trailer block:
 ```
 Tests:
 - Added: <test file>::<test name> (RED → GREEN at this commit)
-- Coverage: packages/auth +X.X% (now Y.Y%)
+- Coverage: packages/iam/auth +X.X% (now Y.Y%)
 - Probe: { passkeys: T/F, organizations: T/F, twoFactor: T/F, magicLink: T/F } per provider
 - Kill-switch: AUTH_FEATURE_X (default: off)
 - Smoke: <one-line manual verification done>
@@ -295,7 +295,7 @@ If a commit can't articulate the tests-first ordering, it's reverted. Same stand
 - Postgres in tests: **Testcontainers** (preferred, real Postgres) for schema/migration/RLS tests; **pglite** for fast unit tests
 - E2E: **Playwright** (per project rules)
 - Coverage: **@vitest/coverage-v8**
-- CI: extend `.github/workflows/ci.yml` with a `auth-contract-tests` job that runs on every PR touching `packages/auth/**`, `packages/db/**`, `packages/tenant/**`
+- CI: extend `.github/workflows/ci.yml` with a `auth-contract-tests` job that runs on every PR touching `packages/iam/auth/**`, `packages/platform/db/**`, `packages/iam/tenant/**`
 
 ---
 
@@ -317,7 +317,7 @@ If a commit can't articulate the tests-first ordering, it's reverted. Same stand
 
 ### Risks
 - **R1 — Better Auth/Prisma 7 generated-client caveat** (likelihood: low; gap analysis found this is workable). Mitigation: PR 1 typecheck verifies `@nebutra/db` re-exports the generated client correctly
-- **R2 — `packages/saga/orderSaga.ts` surprise consumer** (likelihood: low). Mitigation: gap-analysis follow-up audits its `@nebutra/auth` surface area before PR 2
+- **R2 — `packages/integrations/saga/orderSaga.ts` surprise consumer** (likelihood: low). Mitigation: gap-analysis follow-up audits its `@nebutra/auth` surface area before PR 2
 - **R3 — User-table cutover (PR 1.5 → eventual data migration) is not yet designed** (likelihood: medium — this is real future work). Mitigation: PR 1.5 only ships structural FKs + nullable columns; data movement is a separate ADR after Wave 2 ships
 - **R4 — Testcontainers slow down CI** (likelihood: certain; ~30-60s/job). Mitigation: cache Postgres image; run BA-touching tests on a separate parallel job
 
