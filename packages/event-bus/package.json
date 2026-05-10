@@ -6,9 +6,11 @@
   "nebutra": {
     "status": "wip",
     "productionReady": false,
-    "requires": ["Inngest event key (INNGEST_EVENT_KEY, INNGEST_SIGNING_KEY)"],
+    "requires": [
+      "Inngest event key (INNGEST_EVENT_KEY, INNGEST_SIGNING_KEY)"
+    ],
     "gaps": [
-      "Partially integrated (consumed by @nebutra/saga and infra/pusher)",
+      "Partially integrated (consumed by @nebutra/saga and workflows/pusher)",
       "No production app integrations",
       "Cross-service pub/sub guarantees not verified"
     ]

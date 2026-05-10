@@ -61,7 +61,7 @@ docker run -p 8003:8003 --env-file .env nebutra-recsys
 Model refresh jobs are scheduled via Inngest:
 
 ```typescript
-// infra/inngest/recsys_refresh.ts
+// workflows/inngest/recsys_refresh.ts
 export const recsysRefresh = inngest.createFunction(
   { id: "recsys-refresh" },
   { cron: "0 3 * * *" }, // Daily at 3 AM

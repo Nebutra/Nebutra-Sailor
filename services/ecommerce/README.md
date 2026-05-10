@@ -69,7 +69,7 @@ docker run -p 8004:8004 --env-file .env nebutra-ecommerce
 Scheduled sync jobs:
 
 ```typescript
-// infra/inngest/ecommerce_sync.ts
+// workflows/inngest/ecommerce_sync.ts
 export const ecommerceSync = inngest.createFunction(
   { id: "ecommerce-sync" },
   { cron: "*/15 * * * *" }, // Every 15 minutes

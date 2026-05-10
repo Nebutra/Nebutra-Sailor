@@ -58,7 +58,7 @@ const DEFAULT_FAQS: FAQItem[] = [
   {
     question: "How do background jobs work?",
     answer:
-      "We use Inngest for serverless workflows and cron jobs. Define workflows in `infra/inngest/` - they handle retries, scheduling, and event-driven processing automatically.",
+      "We use Inngest for serverless workflows and cron jobs. Define workflows in `workflows/inngest/` - they handle retries, scheduling, and event-driven processing automatically.",
   },
 ];
 
