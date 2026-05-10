@@ -14,7 +14,10 @@
     "./sdk": "./src/sdk/index.ts",
     "./sdk/config": "./src/sdk/config.ts",
     "./sdk/models": "./src/sdk/models.ts",
-    "./sdk/provider": "./src/sdk/provider.ts"
+    "./sdk/provider": "./src/sdk/provider.ts",
+    "./env": "./src/env.ts",
+    "./observability": "./src/observability.ts",
+    "./fallback": "./src/fallback.ts"
   },
   "scripts": {
     "build": "tsup",
@@ -23,11 +26,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.76",
     "@ai-sdk/openai": "^3.0.41",
     "@nebutra/billing": "workspace:*",
     "@nebutra/cache": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@openrouter/ai-sdk-provider": "^2.3.3",
+    "langfuse": "^3.38.20",
+    "langfuse-vercel": "^3.38.20",
     "zod": "catalog:"
   },
   "peerDependencies": {
