@@ -32,13 +32,17 @@
   "peerDependencies": {
     "react": "^19.0.0",
     "@clerk/nextjs": ">=6.0.0",
-    "next-auth": "^5.0.0-beta.20"
+    "next-auth": "^5.0.0-beta.20",
+    "@nebutra/db": "workspace:*"
   },
   "peerDependenciesMeta": {
     "@clerk/nextjs": {
       "optional": true
     },
     "next-auth": {
+      "optional": true
+    },
+    "@nebutra/db": {
       "optional": true
     }
   }
