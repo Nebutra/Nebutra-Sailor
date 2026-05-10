@@ -113,6 +113,7 @@
     "three": "^0.183.2"
   },
   "devDependencies": {
+    "@nebutra/design-tokens": "workspace:*",
     "@storybook/test": "^8.6.17",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^22.19.15",

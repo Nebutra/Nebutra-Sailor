@@ -1686,6 +1686,9 @@ importers:
 
   packages/design/tokens:
     dependencies:
+      '@nebutra/design-tokens':
+        specifier: workspace:*
+        version: link:../design-tokens
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1726,9 +1729,6 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../brand
-      '@nebutra/design-tokens':
-        specifier: workspace:*
-        version: link:../design-tokens
       '@number-flow/react':
         specifier: ^0.5.5
         version: 0.5.14(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1826,6 +1826,9 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     devDependencies:
+      '@nebutra/design-tokens':
+        specifier: workspace:*
+        version: link:../design-tokens
       '@storybook/test':
         specifier: ^8.6.17
         version: 8.6.17(storybook@8.6.17(prettier@3.8.1))
