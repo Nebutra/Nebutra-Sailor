@@ -12,15 +12,26 @@ export interface FaqEntry {
   readonly id: string;
 }
 
+// Two former subsections — the high-level "Questions, answered straight" and the
+// engineering "Evaluating the stack" — are merged into a single accordion. Order
+// flows from product/commercial → operations → engineering depth so a casual
+// visitor sees their concerns first, while an engineer can scroll into detail.
 export const FAQS: readonly FaqEntry[] = [
+  // Product / commercial
   { id: "what-is-sailor" },
   { id: "who-is-it-for" },
   { id: "free-or-paid" },
-  { id: "china-friendly" },
-  { id: "deployment" },
-  { id: "security" },
-  { id: "support" },
-  { id: "byo-provider" },
-  { id: "tech-stack" },
   { id: "license" },
+  { id: "paid-updates" },
+  { id: "support" },
+  // Operations
+  { id: "deployment" },
+  { id: "china-friendly" },
+  // Engineering depth
+  { id: "tech-stack" },
+  { id: "why-turborepo" },
+  { id: "multi-tenancy" },
+  { id: "swap-clerk" },
+  { id: "byo-provider" },
+  { id: "security" },
 ] as const;

@@ -1833,27 +1833,43 @@
         },
         "deployment": {
           "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 20+ runs. First-class support for Vercel, Cloudflare Workers, and self-hosted Docker. Enterprise customers also deploy inside customer VPCs."
+          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
         },
         "security": {
           "question": "How is security handled?",
-          "answer": "Application-layer envelope encryption for secrets, RLS-backed multi-tenancy, RBAC/ABAC via CASL or OpenFGA, signed webhooks, and a SOC2-aligned audit pipeline on Pro and Enterprise plans."
+          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), Postgres RLS for tenant isolation, RBAC/ABAC via CASL or OpenFGA (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks, and a SOC 2-aligned audit pipeline (@nebutra/audit) included in every plan. Pro and Enterprise add SOC 2 attestation support, dedicated incident response, and longer audit-log retention."
         },
         "support": {
           "question": "What support do I get?",
-          "answer": "Free customers get community Discord + GitHub. Pro tier adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and onboarding engineer."
+          "answer": "Free customers get community Discord + GitHub Issues. Pro adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and an onboarding engineer."
         },
         "byo-provider": {
           "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage) is provider-agnostic — swap Clerk for Better Auth, QStash for BullMQ, Resend for SES with a single config change."
+          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing, search) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth or NextAuth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
         },
         "tech-stack": {
           "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router), React 19, TypeScript, Tailwind v4, Drizzle ORM, Postgres, and a curated set of Radix + HeroUI primitives. AI features are wired through the Vercel AI SDK with provider portability."
+          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix + Lobe UI primitives with framer-motion. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
         },
         "license": {
           "question": "What is the license?",
-          "answer": "Sailor uses a fair-source license: free for personal and internal use, paid commercial license for production SaaS. Source code is included on every plan."
+          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+        },
+        "paid-updates": {
+          "question": "Do I need to pay for updates?",
+          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+        },
+        "why-turborepo": {
+          "question": "Why Turborepo over a standard Next.js app?",
+          "answer": "Sailor is 11 apps + 55 shared packages + a polyglot backend (Hono BFF + FastAPI fleet) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+        },
+        "multi-tenancy": {
+          "question": "How is multi-tenancy handled?",
+          "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) bound to a session-local app.current_org_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
+        },
+        "swap-clerk": {
+          "question": "Can I swap Clerk for another auth provider?",
+          "answer": "Yes for the built-in set: @nebutra/auth ships first-class adapters for Clerk, Better Auth, and NextAuth (Auth.js v5). Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Supabase Auth isn't a built-in adapter today; adding one means implementing the same IdentityAdapter interface (~80 LOC). Nothing in the surrounding code couples to a specific provider."
         }
       }
     },

@@ -1838,27 +1838,43 @@
         },
         "deployment": {
           "question": "可以部署到哪些环境？",
-          "answer": "任何支持 Node 20+ 的环境。原生支持 Vercel、Cloudflare Workers 与自托管 Docker。企业客户还可部署在客户自有的 VPC 内。"
+          "answer": "任何支持 Node 22+ 的环境。营销站默认部署到 Vercel；后台、网关与 Python 服务通过 Docker / PM2 部署（我们目前在阿里云 ECS 上运行，infra/iac/k8s/ 提供完整的 Kubernetes 清单可用于集群）。企业客户还可部署在客户自有的 VPC 内。"
         },
         "security": {
           "question": "安全性如何保障？",
-          "answer": "应用层信封加密保管密钥、基于 RLS 的多租户隔离、CASL / OpenFGA 的 RBAC/ABAC、签名 Webhook，以及面向 Pro 与企业版的 SOC2 兼容审计管道。"
+          "answer": "应用层信封加密保管密钥（@nebutra/vault）、Postgres RLS 强制租户隔离、CASL/OpenFGA 实现的 RBAC/ABAC（@nebutra/permissions）、HMAC 签名的服务间令牌、签名出站 Webhook，以及所有套餐都内置的 SOC 2 对齐审计管道（@nebutra/audit）。Pro 与企业版额外提供 SOC 2 认证支持、专属事件响应与更长的审计日志保留。"
         },
         "support": {
           "question": "支持服务包括哪些？",
-          "answer": "免费用户享受社区 Discord 与 GitHub 支持。Pro 版增加 1 个工作日响应的优先邮件支持。企业版提供专属 Slack 频道与 onboarding 工程师。"
+          "answer": "免费用户享受社区 Discord 与 GitHub Issues 支持。Pro 版增加 1 个工作日响应的优先邮件支持。企业版提供专属 Slack 频道与专属 onboarding 工程师。"
         },
         "byo-provider": {
           "question": "可以接入我自己的供应商吗？",
-          "answer": "可以。所有集成（认证、队列、搜索、邮件、支付、存储）均为 provider-agnostic：一行配置即可把 Clerk 换成 Better Auth、把 QStash 换成 BullMQ、把 Resend 换成 SES。"
+          "answer": "可以。所有集成（认证、队列、搜索、邮件、支付、存储、计费）均为 provider-agnostic。每个包内的工厂方法根据单个环境变量挑选适配器——把 Clerk 换成 Better Auth 或 NextAuth、把 QStash 换成 BullMQ、把 Resend 换成 SES、把 Stripe 换成 Polar / LemonSqueezy / 国内支付——业务代码无需改动。"
         },
         "tech-stack": {
           "question": "技术栈是什么？",
-          "answer": "Next.js 16 (App Router)、React 19、TypeScript、Tailwind v4、Drizzle ORM、Postgres，以及精选的 Radix + HeroUI 原语。AI 能力通过 Vercel AI SDK 接入，可自由切换提供商。"
+          "answer": "Next.js 16 (App Router) + React 19、TypeScript 5.9、Tailwind v4、Prisma 7 + Postgres（含 pgvector + RLS）、Hono 作为 BFF 网关、FastAPI 承载 ML 与重型服务，组件库基于 Radix + Lobe UI 原语 + framer-motion。AI 能力通过 Vercel AI SDK 接入，可在 OpenAI / OpenRouter / SiliconFlow / Azure / 本地模型间自由切换。"
         },
         "license": {
           "question": "授权方式是什么？",
-          "answer": "Sailor 使用 fair-source 协议：个人与内部使用免费，生产 SaaS 使用需要付费商业授权。所有套餐都包含完整源码。"
+          "answer": "AGPL-3.0 + 商业例外条款（Commercial Exception）。个人使用、内部工具与 AGPL 兼容的开源项目可免费使用；要在闭源 SaaS 中按现状商用需购买商业授权。所有套餐都包含完整源码。"
+        },
+        "paid-updates": {
+          "question": "升级是否需要再付费？",
+          "answer": "不需要。每份商业授权都包含源码更新——随时从 main 拉取并 rebase 你的 fork 即可。付费购买的是在商业生产环境中使用 Sailor 的权利，而不是获取代码的权利。每个 minor 版本都附带 CHANGELOG 与升级指南，破坏性变更会专门提示。"
+        },
+        "why-turborepo": {
+          "question": "为什么用 Turborepo 而不是单一 Next.js 项目？",
+          "answer": "Sailor 由 11 个应用 + 55 个共享包 + 一套多语言后端（Hono BFF + FastAPI 集群）组成，单一 Next.js 巨型应用早就维护不过来。Turborepo 提供 affected-only 增量构建、透明的远程缓存，以及共享设计 token / 认证 / 计费 / 可观测性的单一来源——而不需要把所有团队塞进同一个 Next.js 进程。"
+        },
+        "multi-tenancy": {
+          "question": "多租户怎么实现？",
+          "answer": "两层。请求级租户上下文通过 @nebutra/tenant 实现（AsyncLocalStorage 在每次服务端调用中传播当前组织，含 DB 查询与出站 Webhook）；数据库级隔离通过 Postgres Row-Level Security 策略（infra/data/database/policies/rls.sql）绑定到 session-local 的 app.current_org_id。Service-role 连接仅在受信任的内部服务中绕过 RLS；所有面向用户的路由都走 tenant-scoped 客户端。"
+        },
+        "swap-clerk": {
+          "question": "可以把 Clerk 换成其他认证服务吗？",
+          "answer": "内置支持的可以：@nebutra/auth 一等支持 Clerk、Better Auth、NextAuth (Auth.js v5) 三套适配器。通过 AUTH_PROVIDER 环境变量切换，或在 create-sailor --auth=... 脚手架时选择——server / React / middleware 接口在不同 provider 下完全一致。Supabase Auth 暂未内置；要加入只需实现同一 IdentityAdapter 接口（约 80 行代码）。周边代码不耦合到任何具体 provider。"
         }
       }
     },

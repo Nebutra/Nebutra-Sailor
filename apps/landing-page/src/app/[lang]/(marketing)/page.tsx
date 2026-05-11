@@ -79,10 +79,7 @@ const SEOGEOSection = dynamic(
   { loading: () => <SectionSkeleton minH="48rem" /> },
 );
 
-const SocialProofBar = dynamic(
-  () => import("@/components/landing/social-proof-bar").then((m) => m.SocialProofBar),
-  { loading: () => <SectionSkeleton minH="14rem" /> },
-);
+// SocialProofBar moved to /about page — see about/page.tsx
 
 const LandingTestimonialsSection = dynamic(
   () => import("@/components/landing/testimonials-section").then((m) => m.TestimonialsSection),
@@ -216,8 +213,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
         {/* 4.5 Pricing Comparison Table — feature-by-feature breakdown */}
         <PricingComparisonTable />
 
-        {/* 4.7 Social Proof Bar — logos + headline metrics */}
-        <SocialProofBar />
+        {/* 4.7 Social Proof Bar — moved to /about */}
 
         {/* 4.8 Landing Testimonials Grid — 3-col responsive */}
         <LandingTestimonialsSection />

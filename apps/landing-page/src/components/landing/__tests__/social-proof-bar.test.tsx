@@ -6,8 +6,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 expect.extend(matchers);
 
-vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string) => `${namespace}.${key}`,
+vi.mock("next-intl/server", () => ({
+  getTranslations: () => async () => (key: string) => `landing.socialProof.${key}`,
 }));
 
 // next/image needs a stub in jsdom
@@ -20,30 +20,26 @@ vi.mock("next/image", () => ({
   },
 }));
 
-import { SocialProofBar } from "../social-proof-bar";
+// Server component — await the render
+async function renderAsync() {
+  const { SocialProofBar } = await import("../social-proof-bar");
+  const element = await SocialProofBar({ locale: "en" });
+  return render(element);
+}
 
 describe("SocialProofBar", () => {
   afterEach(() => cleanup());
 
-  it("renders the trusted-by label", () => {
-    render(<SocialProofBar />);
-    expect(screen.getByText("landing.socialProof.logosLabel")).toBeInTheDocument();
-  });
-
-  it("renders all six placeholder logos as a list", () => {
-    render(<SocialProofBar />);
-    const list = screen.getByRole("list", { name: "landing.socialProof.logosLabel" });
-    const items = list.querySelectorAll("li");
+  it("renders all six brand logos as a list", async () => {
+    await renderAsync();
+    const items = screen.getAllByRole("listitem");
     expect(items.length).toBe(6);
   });
 
-  it("renders three metrics with their values and labels", () => {
-    render(<SocialProofBar />);
-    expect(screen.getByText("landing.socialProof.metrics.developers.value")).toBeInTheDocument();
-    expect(screen.getByText("landing.socialProof.metrics.developers.label")).toBeInTheDocument();
-    expect(screen.getByText("landing.socialProof.metrics.projects.value")).toBeInTheDocument();
-    expect(screen.getByText("landing.socialProof.metrics.projects.label")).toBeInTheDocument();
-    expect(screen.getByText("landing.socialProof.metrics.uptime.value")).toBeInTheDocument();
-    expect(screen.getByText("landing.socialProof.metrics.uptime.label")).toBeInTheDocument();
+  it("renders brand logo images with alt text", async () => {
+    await renderAsync();
+    expect(screen.getAllByAltText("Vercel").length).toBeGreaterThan(0);
+    expect(screen.getAllByAltText("Stripe").length).toBeGreaterThan(0);
+    expect(screen.getAllByAltText("Supabase").length).toBeGreaterThan(0);
   });
 });

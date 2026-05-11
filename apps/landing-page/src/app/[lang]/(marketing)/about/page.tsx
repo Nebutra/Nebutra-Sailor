@@ -5,6 +5,7 @@ import { Button } from "@nebutra/ui/primitives";
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { SocialProofBar } from "@/components/landing/social-proof-bar";
 import { Link } from "@/i18n/navigation";
 
 import type { Locale } from "@/i18n/routing";
@@ -93,6 +94,9 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           </div>
         </div>
       </section>
+
+      {/* 1.5 Social Proof — real brand icons + metrics */}
+      <SocialProofBar locale={lang as Locale} />
 
       {/* 2. Massive Mission Text & Office Photo */}
       <section className="py-24 md:py-32 bg-muted/20">

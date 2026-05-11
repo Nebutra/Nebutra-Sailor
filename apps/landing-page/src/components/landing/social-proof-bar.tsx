@@ -1,26 +1,42 @@
-import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 
-const LOGO_KEYS = ["lumen", "northwind", "helix", "ravensteel", "atlas", "boreal"] as const;
+const SVGL_BASE = "https://svgl.app/library";
+
+/**
+ * Real integration partners / tech stack brands.
+ * Uses SVGL CDN — same source as LogoStrip, zero licensing risk.
+ */
+const BRANDS = [
+  { name: "Vercel", light: "vercel.svg", dark: "vercel_dark.svg" },
+  { name: "Stripe", light: "stripe.svg", dark: "stripe.svg" },
+  { name: "Supabase", light: "supabase.svg", dark: "supabase.svg" },
+  { name: "Clerk", light: "clerk.svg", dark: "clerk.svg" },
+  { name: "Resend", light: "resend.svg", dark: "resend_dark.svg" },
+  { name: "Cloudflare", light: "cloudflare.svg", dark: "cloudflare.svg" },
+] as const;
+
 const METRIC_KEYS = ["developers", "projects", "uptime"] as const;
 
 /**
- * Social proof strip for the marketing landing page.
+ * Social proof strip — real brand icons + headline metrics.
  *
- * Renders a "trusted by" logo row (text-only placeholders so integrators can
- * see exactly which slots to fill with real customer logos) followed by three
- * headline metrics. Uses semantic neutral tokens so it works on any background.
+ * Renders logos of real integration partners (Vercel, Stripe, etc.)
+ * followed by three headline metrics. Server component — uses
+ * getTranslations instead of useTranslations.
  */
-export function SocialProofBar() {
-  const t = useTranslations("landing.socialProof");
+export async function SocialProofBar({ locale }: { locale: Locale }) {
+  const t = await getTranslations({ locale, namespace: "landing.socialProof" });
 
   return (
     <section
       className="relative w-full border-y border-[var(--neutral-6)] bg-[var(--neutral-1)] py-16 md:py-20"
-      aria-labelledby="landing-social-proof-title"
+      aria-labelledby="social-proof-title"
     >
       <div className="mx-auto max-w-[1400px] px-4 md:px-6">
         <h2
-          id="landing-social-proof-title"
+          id="social-proof-title"
           className="text-center text-sm font-semibold uppercase tracking-[0.2em] text-[var(--neutral-11)]"
         >
           {t("title")}
@@ -28,19 +44,33 @@ export function SocialProofBar() {
 
         <ul
           aria-label={t("logosLabel")}
-          className="mt-8 grid grid-cols-2 items-center justify-items-center gap-x-8 gap-y-6 sm:grid-cols-3 lg:grid-cols-6"
+          className="mt-10 grid grid-cols-2 items-center justify-items-center gap-x-10 gap-y-8 sm:grid-cols-3 lg:grid-cols-6"
         >
-          {LOGO_KEYS.map((key) => (
-            <li
-              key={key}
-              className="flex h-10 items-center text-sm font-bold uppercase tracking-wider text-[var(--neutral-9)] grayscale transition-colors hover:text-[var(--neutral-12)]"
-            >
-              {t(`logos.${key}`)}
+          {BRANDS.map((brand) => (
+            <li key={brand.name} className="flex h-10 items-center">
+              <Image
+                src={`${SVGL_BASE}/${brand.light}`}
+                alt={brand.name}
+                width={0}
+                height={28}
+                className="h-7 w-auto opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 dark:hidden"
+                style={{ width: "auto" }}
+                unoptimized={false}
+                draggable={false}
+              />
+              <Image
+                src={`${SVGL_BASE}/${brand.dark}`}
+                alt={brand.name}
+                width={0}
+                height={28}
+                className="hidden h-7 w-auto opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 dark:block"
+                style={{ width: "auto" }}
+                unoptimized={false}
+                draggable={false}
+              />
             </li>
           ))}
         </ul>
-
-        <p className="sr-only">{t("logosLabel")}</p>
 
         <div className="mt-12 grid grid-cols-1 gap-8 border-t border-[var(--neutral-6)] pt-12 sm:grid-cols-3">
           {METRIC_KEYS.map((key) => (
@@ -67,4 +97,4 @@ export function SocialProofBar() {
   );
 }
 
-SocialProofBar.displayName = "LandingSocialProofBar";
+SocialProofBar.displayName = "SocialProofBar";
