@@ -61,20 +61,19 @@ describe("POST /api/organizations/active", () => {
   });
 
   it("rejects selecting an organization the user does not belong to", async () => {
+    // Phase 2.5: membership validation now happens inside
+    // `auth.organizations.setActive(...)` (Better Auth). When the user is
+    // not a member, BA throws → route surfaces 4xx with an explicit error.
+    const setActive = vi
+      .fn()
+      .mockRejectedValue(new Error("Better Auth: user is not a member of this organization."));
+
     createAuthMock.mockResolvedValue({
       getSession: vi.fn().mockResolvedValue({
         userId: "user_123",
         expiresAt: new Date("2026-04-23T00:00:00.000Z"),
       }),
-      getUserOrganizations: vi.fn().mockResolvedValue([
-        {
-          id: "org_beta",
-          name: "Beta",
-          slug: "beta",
-          plan: "FREE",
-          createdAt: new Date("2026-04-23T00:00:00.000Z"),
-        },
-      ]),
+      organizations: { setActive },
     });
 
     const { POST } = await loadRoute();
@@ -86,25 +85,28 @@ describe("POST /api/organizations/active", () => {
       }),
     );
 
-    expect(response.status).toBe(404);
-    await expect(response.json()).resolves.toEqual({ error: "Organization not found." });
+    expect(response.status).toBeGreaterThanOrEqual(400);
+    expect(response.status).toBeLessThan(500);
+    const body = (await response.json()) as { error: string };
+    expect(body.error).toBeTruthy();
   });
 
-  it("sets the active-organization cookie after validating membership", async () => {
+  it("forwards setActive's Set-Cookie headers and mirrors the first-party active-org cookie", async () => {
+    // Phase 2.5: route consumes the new `SetActiveResult` (phase 2.3),
+    // forwards BA's `Set-Cookie` (session rotation) AND also writes the
+    // first-party `nebutra_active_org` cookie used by the server resolver.
+    const setActive = vi.fn().mockResolvedValue({
+      headers: new Headers({
+        "set-cookie": "better-auth.session=rotated; Path=/; HttpOnly",
+      }),
+    });
+
     createAuthMock.mockResolvedValue({
       getSession: vi.fn().mockResolvedValue({
         userId: "user_123",
         expiresAt: new Date("2026-04-23T00:00:00.000Z"),
       }),
-      getUserOrganizations: vi.fn().mockResolvedValue([
-        {
-          id: "org_alpha",
-          name: "Alpha",
-          slug: "alpha",
-          plan: "FREE",
-          createdAt: new Date("2026-04-23T00:00:00.000Z"),
-        },
-      ]),
+      organizations: { setActive },
     });
 
     const { POST } = await loadRoute();
@@ -117,11 +119,9 @@ describe("POST /api/organizations/active", () => {
     );
 
     expect(response.status).toBe(200);
-    await expect(response.json()).resolves.toEqual({
-      organizationId: "org_alpha",
-      name: "Alpha",
-      slug: "alpha",
-    });
-    expect(response.headers.get("set-cookie")).toContain("nebutra_active_org=org_alpha");
+    expect(setActive).toHaveBeenCalledTimes(1);
+    const setCookie = response.headers.get("set-cookie") ?? "";
+    expect(setCookie).toContain("better-auth.session=rotated");
+    expect(setCookie).toContain("nebutra_active_org=org_alpha");
   });
 });
