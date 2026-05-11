@@ -108,6 +108,15 @@ for p in procs:
     pm2 start "$PM2_CONFIG" --only "$pm2_name"
   fi
 
+  # Surface PM2 status + recent logs so CI can see crash reasons. Without
+  # this, deploys that succeed at the SSH level but crash at startup return
+  # exit 0 here and only fail later in the workflow's HTTP smoke test —
+  # without any clue why.
+  log "pm2 status for $pm2_name (post start/reload):"
+  pm2 list --no-color 2>&1 | grep -E "$pm2_name|App name" || true
+  log "pm2 logs for $pm2_name (last 40 lines, no stream):"
+  pm2 logs "$pm2_name" --nostream --lines 40 --raw --no-color 2>&1 | tail -50 || true
+
   # Retention — keep latest N, drop the rest. find sorts by mtime via -printf
   # to avoid SC2012 issues with `ls`. Release names are timestamped so this is
   # equivalent to lexical sort.
