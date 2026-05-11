@@ -56,13 +56,20 @@ export async function generateMetadata({ params }: LegalSlugPageProps): Promise<
   return buildLegalMetadata(slug, lang);
 }
 
-export default async function LegalSlugPage({ params }: LegalSlugPageProps) {
-  const { lang, slug } = await params;
-  setRequestLocale(lang as Locale);
-
+export default function LegalSlugPage({ params }: LegalSlugPageProps) {
+  // Next.js 16 cacheComponents requires all uncached data access (including
+  // `await params` and `setRequestLocale`) to be wrapped in <Suspense>.
+  // Pushing the param resolution into LegalDocumentLoader keeps the page
+  // shell synchronous so the streaming boundary fires immediately.
   return (
     <Suspense fallback={<LegalDocumentSkeleton />}>
-      <LegalDocumentContent slug={slug} lang={lang} />
+      <LegalDocumentLoader params={params} />
     </Suspense>
   );
+}
+
+async function LegalDocumentLoader({ params }: LegalSlugPageProps) {
+  const { lang, slug } = await params;
+  setRequestLocale(lang as Locale);
+  return <LegalDocumentContent slug={slug} lang={lang} />;
 }
