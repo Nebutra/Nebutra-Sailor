@@ -20,6 +20,8 @@ export {
   fromPath,
   fromSubdomain,
 } from "./resolvers";
+export type { AuthSessionLike, SessionGetter } from "./resolvers/from-auth-session";
+export { fromAuthSession } from "./resolvers/from-auth-session";
 // Re-export types
 export type {
   IsolationStrategy,
