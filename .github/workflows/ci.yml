@@ -172,7 +172,10 @@ jobs:
             exit 0
           fi
 
-          pnpm biome ci $BIOME_FILES
+          # --no-errors-on-unmatched: when the changed-file set contains only
+          # paths Biome ignores (e.g. README*.md after a docs-only commit),
+          # Biome would otherwise exit 1 with "No files were processed".
+          pnpm biome ci --no-errors-on-unmatched $BIOME_FILES
 
       - name: Lint whole repo (advisory)
         run: pnpm biome ci .
