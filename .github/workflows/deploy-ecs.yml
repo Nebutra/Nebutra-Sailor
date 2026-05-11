@@ -426,11 +426,16 @@ jobs:
 
       - name: Summary
         if: always()
+        # Note: GitHub Actions runs `bash --noprofile --norc -eo pipefail`, so
+        # `[ -n "" ] && echo ...` exits 1 when the reason is empty (push events).
+        # Use an explicit if-block to keep the step's exit code at 0.
         run: |
           {
             echo "## ECS deploy summary"
             echo "- Commit: \`${{ github.sha }}\`"
             echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }}"
             echo "- Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
-            [ -n "${{ github.event.inputs.reason }}" ] && echo "- Reason: ${{ github.event.inputs.reason }}"
+            if [ -n "${{ github.event.inputs.reason }}" ]; then
+              echo "- Reason: ${{ github.event.inputs.reason }}"
+            fi
           } >> "$GITHUB_STEP_SUMMARY"
