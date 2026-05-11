@@ -27,28 +27,56 @@ backends/              # No-UI backends (split by language à la vercel/vercel)
     ecommerce/  event-ingest/  recsys/  # active — Inngest workflows / gateway routes
     content/  third-party/  web3/    # stub — concept preserved, no implementation; activate by landing a real caller
 
-packages/              # Shared TypeScript libraries
-  ui/             PRIMARY component library — Radix + HeroUI + Lobe UI + layout + framer-motion
-  tokens/         Runtime design tokens (CSS variables) + next-themes ThemeProvider  ★ SOURCE OF TRUTH
-  brand/          Brand colors, gradients, motion language (VI manual)
-  theme/          CSS-only multi-theme engine (data-theme attribute, 6 oklch themes)
-  icons/          541 Geist icons as tree-shakable TSX components
-  preset/         Feature-based SaaS starter config system
-  queue/          Provider-agnostic message queue — QStash (serverless) + BullMQ (self-hosted Redis)
-  search/         Full-text search — Meilisearch (self-hosted) + Typesense + Algolia (managed)
-  notifications/  Multi-channel notification center — Novu (managed) + direct dispatchers
-  permissions/    RBAC/ABAC permissions engine — CASL (in-process) + OpenFGA (Zanzibar)
-  webhooks/       Outbound webhook management — Svix (managed) + custom (self-hosted)
-  metering/       Usage metering pipeline — ClickHouse real-time aggregation for billing
-  uploads/        Large file uploads — S3/R2 multipart + Tus resumable + presigned URLs
-  vault/          Application-layer secrets — envelope encryption (AWS KMS + local HKDF)
-  tenant/         Multi-tenancy context — AsyncLocalStorage + RLS + schema isolation
-  (+ ~40 more)
+packages/              # Shared TypeScript libraries — categorized layout: <category>/<name>
+  design/
+    ui/                PRIMARY component library — Lobe UI + custom primitives + layout + framer-motion
+    tokens/            Runtime design tokens (CSS variables) + next-themes ThemeProvider  ★ SOURCE OF TRUTH
+    design-tokens/     W3C DTCG ($value/$type) tokens — Style Dictionary 4 pipeline
+    brand/             Brand colors, gradients, motion language (VI manual)
+    theme/             CSS-only multi-theme engine (data-theme attribute, 6 oklch themes)
+    icons/             541 Geist icons as tree-shakable TSX components
+    design-sync/       Provider-agnostic design-tool sync (Figma | Penpot | git-only)
+  iam/
+    auth/              Multi-provider auth (Clerk | Better Auth | NextAuth)
+    audit/             SOC 2-grade audit logging
+    vault/             Application-layer secrets — envelope encryption (AWS KMS + local HKDF)
+    tenant/            Multi-tenancy context — AsyncLocalStorage + RLS + schema isolation
+    permissions/       RBAC/ABAC engine — CASL (in-process) + OpenFGA (Zanzibar)
+    identity/          Shared identity primitives
+  commerce/
+    billing/           Multi-provider billing (Stripe | Polar | LemonSqueezy | ChinaPay | Manual)
+    contracts/         Cross-package event/identity/billing/notification contracts
+    license/           License key generation + validation
+    marketing/         Marketing-site shared components/hooks/utils
+    metering/          Usage metering pipeline — ClickHouse real-time aggregation
+    waitlist/          Pre-launch waitlist (foundation tier)
+  integrations/
+    queue/             Provider-agnostic message queue — QStash + BullMQ
+    search/            Full-text search — Meilisearch + Typesense + Algolia
+    notifications/     Multi-channel notification center — Novu + direct dispatchers
+    webhooks/          Outbound webhook management — Svix + custom
+    uploads/           Large file uploads — S3/R2 multipart + Tus resumable + presigned URLs
+    storage/           Lower-tier object storage (L3 simpler tier vs L4 uploads)
+    email/             Email rendering + send (React Email + Resend/SES/SMTP)
+    saga/              Distributed transactions (WIP — not yet integrated)
+  platform/
+    db/                Prisma client wrapper
+    logger/            Structured logging (pino + Sentry transport)
+    config/            Shared config utilities
+  ops/
+    cli/               `nebutra` CLI (npm-published)
+    create-sailor/     `create-sailor` scaffold CLI (npm-published)
+    sanity/            Sanity Studio v4 helpers
+    preset/            Feature-based SaaS starter config system
+  ai/
+    mcp/               MCP server primitives
+    ai-providers/      AI provider metadata (consumed by @nebutra/agents)
+  (+ ~30 more under platform/, ai/, ops/)
 
 infra/                 # iac/ + runtime/ + data/ + ops/  (W2.2)
 workflows/             # inngest/ + n8n/ + pusher/  (W2.3)
 e2e/                   # smoke/ + golden/ + sleptons/ + 3 playwright configs  (W2.1)
-tests/                 # architecture/ + load/ + governance/  (vitest + k6)
+tests/                 # architecture/ + load/  (vitest + k6)
 ```
 
 ---
@@ -58,7 +86,9 @@ tests/                 # architecture/ + load/ + governance/  (vitest + k6)
 ### 1. Always import from the right package
 
 ```tsx
-// UI components (Lobe UI re-exports + Radix + HeroUI)
+// UI components (Lobe UI re-exports + custom primitives)
+// Note: many primitives also live under @nebutra/ui/primitives — prefer
+// /primitives for low-level building blocks, /components for composed patterns.
 import { Button, Input, Card } from "@nebutra/ui/components";
 
 // Layout wrapper components (merged from design-system)
@@ -163,7 +193,7 @@ import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 
 **Presets:** `emerge` (default, blur+rise), `flow` (slide left), `fade`, `fadeUp`, `scale`
 
-**Never use raw `motion.div` with hardcoded values.** Always use `AnimateIn` or import from `packages/brand/src/motion.ts`.
+**Never use raw `motion.div` with hardcoded values.** Always use `AnimateIn` or import from `packages/design/brand/src/motion.ts`.
 
 ### 5. Component variants — use CVA
 
@@ -267,7 +297,7 @@ export const AllVariants: Story = { render: () => ( /* showcase */ ) };
 
 ### Step 4: Export from index.ts
 
-After creating the component, add to `packages/ui/src/components/index.ts`:
+After creating the component, add to `packages/design/ui/src/components/index.ts`:
 ```ts
 export { MyComponent, type MyComponentProps } from "./my-component";
 ```
@@ -277,9 +307,9 @@ export { MyComponent, type MyComponentProps } from "./my-component";
 ## Rebranding (no Figma required)
 
 To change the brand colors:
-1. Edit `packages/tokens/styles.css` — the runtime token source of truth
-2. Edit `packages/brand/src/` — the brand primitive definitions
-3. Optionally edit `packages/theme/themes.css` — for multi-theme presets
+1. Edit `packages/design/tokens/styles.css` — the runtime token source of truth
+2. Edit `packages/design/brand/src/` — the brand primitive definitions
+3. Optionally edit `packages/design/theme/themes.css` — for multi-theme presets
 
 Or use the palette generator:
 ```bash
@@ -412,7 +442,7 @@ PENPOT_TEAM_ID=""
 
 ### Safety
 
-`figma.push()` and `penpot.push()` default to **dry-run** until the operator opts in by providing credentials AND omitting `dryRun: true`. The package never silently writes to a remote design tool. CI workflow: `.github/workflows/design-sync.yml` (replaces the legacy `tokens-sync.yml`).
+`figma.push()` and `penpot.push()` default to **dry-run** until the operator opts in by providing credentials AND omitting `dryRun: true`. The package never silently writes to a remote design tool. CI workflow: `.github/workflows/design-sync.yml`.
 
 ---
 
