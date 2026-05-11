@@ -1,7 +1,11 @@
 import { type Meter, metrics } from "@opentelemetry/api";
-import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
 import { OTLPMetricExporter } from "@opentelemetry/exporter-metrics-otlp-http";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
+import { HttpInstrumentation } from "@opentelemetry/instrumentation-http";
+import { IORedisInstrumentation } from "@opentelemetry/instrumentation-ioredis";
+import { PgInstrumentation } from "@opentelemetry/instrumentation-pg";
+import { PinoInstrumentation } from "@opentelemetry/instrumentation-pino";
+import { UndiciInstrumentation } from "@opentelemetry/instrumentation-undici";
 import { PeriodicExportingMetricReader } from "@opentelemetry/sdk-metrics";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { ParentBasedSampler, TraceIdRatioBasedSampler } from "@opentelemetry/sdk-trace-node";
@@ -58,11 +62,26 @@ export function initOtel(opts: { serviceName: string }): void {
     sampler,
     traceExporter: new OTLPTraceExporter(),
     metricReader,
+    // Explicit instrumentation list (NOT getNodeAutoInstrumentations()).
+    //
+    // Rationale: auto-instrumentations-node statically pulls in 30+ instrumentations,
+    // several of which (winston, mongodb, kafkajs, aws-sdk, mysql, express, fastify,
+    // nestjs-core, …) have peer-dep imports we never satisfy because the codebase
+    // doesn't use those runtimes. The most painful instance: instrumentation-winston
+    // imports `@opentelemetry/winston-transport`, which is not in our dep tree —
+    // Next.js webpack walks that static import graph during bundling and fails with
+    // `Module not found: Can't resolve '@opentelemetry/winston-transport'`.
+    //
+    // Listing only what we actually instrument (http, undici-fetch, postgres,
+    // ioredis, pino) keeps the bundler graph clean and the runtime overhead small.
+    // Add a new instrumentation here ONLY when a corresponding runtime library is
+    // imported somewhere in the codebase.
     instrumentations: [
-      getNodeAutoInstrumentations({
-        // fs instrumentation is extremely noisy — generates spans for every file read
-        "@opentelemetry/instrumentation-fs": { enabled: false },
-      }),
+      new HttpInstrumentation(),
+      new UndiciInstrumentation(),
+      new PgInstrumentation(),
+      new IORedisInstrumentation(),
+      new PinoInstrumentation(),
     ],
   });
 

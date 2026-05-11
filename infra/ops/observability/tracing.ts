@@ -1,6 +1,10 @@
-import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
 import { OTLPMetricExporter } from "@opentelemetry/exporter-metrics-otlp-http";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
+import { HttpInstrumentation } from "@opentelemetry/instrumentation-http";
+import { IORedisInstrumentation } from "@opentelemetry/instrumentation-ioredis";
+import { PgInstrumentation } from "@opentelemetry/instrumentation-pg";
+import { PinoInstrumentation } from "@opentelemetry/instrumentation-pino";
+import { UndiciInstrumentation } from "@opentelemetry/instrumentation-undici";
 import { Resource } from "@opentelemetry/resources";
 import { PeriodicExportingMetricReader } from "@opentelemetry/sdk-metrics";
 import { NodeSDK } from "@opentelemetry/sdk-node";
@@ -41,17 +45,24 @@ const metricReader = new PeriodicExportingMetricReader({
 });
 
 // Create SDK
+//
+// Explicit instrumentation list — see packages/platform/logger/src/otel.ts for
+// the full rationale. Short version: getNodeAutoInstrumentations() statically
+// pulls in 30+ instrumentations with unsatisfiable peer-dep imports (notably
+// instrumentation-winston → winston-transport) that break Next.js webpack
+// bundling. We list only the runtimes actually present in this codebase.
 const sdk = new NodeSDK({
   resource,
   traceExporter,
   metricReader,
   instrumentations: [
-    getNodeAutoInstrumentations({
-      "@opentelemetry/instrumentation-fs": { enabled: false },
-      "@opentelemetry/instrumentation-http": {
-        ignoreIncomingPaths: ["/health", "/misc/health", "/system/status"],
-      },
+    new HttpInstrumentation({
+      ignoreIncomingPaths: ["/health", "/misc/health", "/system/status"],
     }),
+    new UndiciInstrumentation(),
+    new PgInstrumentation(),
+    new IORedisInstrumentation(),
+    new PinoInstrumentation(),
   ],
 });
 
