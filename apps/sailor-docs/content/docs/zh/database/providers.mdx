@@ -48,7 +48,7 @@ Neon 和 Supabase 都是 PostgreSQL。`pnpm db:migrate` 生成的迁移在任一
 
     ### schema.prisma 数据源
 
-    ```prisma packages/db/prisma/schema.prisma
+    ```prisma packages/platform/db/prisma/schema.prisma
     datasource db {
       provider  = "postgresql"
       url       = env("DATABASE_URL")
@@ -121,7 +121,7 @@ Neon 和 Supabase 都是 PostgreSQL。`pnpm db:migrate` 生成的迁移在任一
 
     ### schema.prisma 数据源
 
-    ```prisma packages/db/prisma/schema.prisma
+    ```prisma packages/platform/db/prisma/schema.prisma
     datasource db {
       provider  = "postgresql"
       url       = env("DATABASE_URL")

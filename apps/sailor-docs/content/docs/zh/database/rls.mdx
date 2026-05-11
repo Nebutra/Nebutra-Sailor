@@ -43,7 +43,7 @@ SELECT * FROM projects;  -- RLS 策略自动过滤
 
 ## RLS 策略示例
 
-这些是应用于租户作用域表的 SQL 策略。`packages/db/prisma/migrations/` 中的迁移会自动应用它们。
+这些是应用于租户作用域表的 SQL 策略。`packages/platform/db/prisma/migrations/` 中的迁移会自动应用它们。
 
 ### SELECT 策略（读取隔离）
 
@@ -92,7 +92,7 @@ CREATE POLICY "tenant_isolation_delete"
 
 存储租户特定数据的每个表都必须包含 `tenantId` 列。Prisma 架构约定：
 
-```prisma packages/db/prisma/schema.prisma
+```prisma packages/platform/db/prisma/schema.prisma
 model Project {
   id          String   @id @default(cuid())
   name        String
@@ -113,7 +113,7 @@ model Project {
 
 某些操作 — 例如跨租户分析、计费任务或管理员控制台 — 需要查询所有租户。为这些操作使用具有 `BYPASSRLS` 权限的单独数据库角色，而不是应用程序服务角色。
 
-```typescript packages/db/src/admin.ts
+```typescript packages/platform/db/src/admin.ts
 // 管理员客户端 — 完全绕过 RLS
 // 仅用于内部后台任务和管理工具
 export const adminDb = new PrismaClient({

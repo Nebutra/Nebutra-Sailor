@@ -9,12 +9,12 @@ Nebutra-Sailor 在应用启动时通过 `@nebutra/config` 包对每个环境变�
 
 ```
 Error: [config] Missing required environment variable: DATABASE_URL
-  at validateConfig (packages/config/src/index.ts:42)
+  at validateConfig (packages/platform/config/src/index.ts:42)
 ```
 
 这种快速失败的模式确保部署问题在数秒内暴露，而不是在生产环境运行数小时后才出现运行时错误。
 
-验证的唯一来源位于 `packages/config/src/index.ts`。每个应用都从此包导入，因此配置变更会自动同步到所有应用。
+验证的唯一来源位于 `packages/platform/config/src/index.ts`。每个应用都从此包导入，因此配置变更会自动同步到所有应用。
 
 ## 三类变量
 

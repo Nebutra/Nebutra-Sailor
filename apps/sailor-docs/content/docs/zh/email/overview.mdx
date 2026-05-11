@@ -4,7 +4,7 @@ description: Nebutra 事务邮件 — catalog 化的发送函数、本地预览�
 ---
 
 Nebutra 通过 `@nebutra/email` 发送事务邮件。当前实现以
-`packages/email/src/index.ts` 里的 `EMAIL_TEMPLATE_CATALOG` 为中心：它把每个公开发送函数映射到对应的预览产物；Resend 客户端只在真正发送邮件时才懒加载。
+`packages/integrations/email/src/index.ts` 里的 `EMAIL_TEMPLATE_CATALOG` 为中心：它把每个公开发送函数映射到对应的预览产物；Resend 客户端只在真正发送邮件时才懒加载。
 
 ## 架构
 

@@ -5,7 +5,7 @@ description: 如何在服务端组件、API 路由和多租户上下文中通过
 
 Nebutra 从 `@nebutra/db` 导出一个预配置的 Prisma 客户端。始终从该包导入 — 永远不要在应用程序代码中直接实例化 `PrismaClient`。
 
-```typescript packages/db/src/index.ts
+```typescript packages/platform/db/src/index.ts
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 

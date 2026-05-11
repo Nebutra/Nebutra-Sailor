@@ -16,7 +16,7 @@ User
                          └─▶ @nebutra/metering enforces quotas
 ```
 
-All Stripe integration code lives in `packages/billing/`. Application code calls helpers from `@nebutra/billing` — it never touches the Stripe SDK directly.
+All Stripe integration code lives in `packages/commerce/billing/`. Application code calls helpers from `@nebutra/billing` — it never touches the Stripe SDK directly.
 
 ## Plans
 
@@ -68,11 +68,11 @@ All Stripe integration code lives in `packages/billing/`. Application code calls
 
 | Location | Purpose |
 |----------|---------|
-| `packages/billing/src/stripe.ts` | Stripe client initialization |
-| `packages/billing/src/plans.ts` | Plan definitions and limit constants |
-| `packages/billing/src/handlers/` | Webhook event handlers |
-| `packages/billing/src/checkout.ts` | Checkout session creation helpers |
-| `packages/billing/src/portal.ts` | Stripe Customer Portal session helpers |
+| `packages/commerce/billing/src/stripe.ts` | Stripe client initialization |
+| `packages/commerce/billing/src/plans.ts` | Plan definitions and limit constants |
+| `packages/commerce/billing/src/handlers/` | Webhook event handlers |
+| `packages/commerce/billing/src/checkout.ts` | Checkout session creation helpers |
+| `packages/commerce/billing/src/portal.ts` | Stripe Customer Portal session helpers |
 
 ## Environment variables
 

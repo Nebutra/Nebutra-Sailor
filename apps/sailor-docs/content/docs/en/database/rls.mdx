@@ -43,7 +43,7 @@ SELECT * FROM projects;  -- RLS policy filters automatically
 
 ## RLS policy examples
 
-These are the SQL policies applied to tenant-scoped tables. Migrations in `packages/db/prisma/migrations/` apply them automatically.
+These are the SQL policies applied to tenant-scoped tables. Migrations in `packages/platform/db/prisma/migrations/` apply them automatically.
 
 ### SELECT policy (read isolation)
 
@@ -92,7 +92,7 @@ CREATE POLICY "tenant_isolation_delete"
 
 Every table that stores tenant-specific data must include a `tenantId` column. The Prisma schema convention:
 
-```prisma packages/db/prisma/schema.prisma
+```prisma packages/platform/db/prisma/schema.prisma
 model Project {
   id          String   @id @default(cuid())
   name        String
@@ -113,7 +113,7 @@ Never omit `@@index([tenantId])` on large tables. Without an index, PostgreSQL p
 
 Some operations — such as cross-tenant analytics, billing jobs, or admin dashboards — need to query across all tenants. Use a separate database role with `BYPASSRLS` for these, not the application service role.
 
-```typescript packages/db/src/admin.ts
+```typescript packages/platform/db/src/admin.ts
 // Admin client — bypasses RLS entirely
 // ONLY for internal background jobs and admin tooling
 export const adminDb = new PrismaClient({

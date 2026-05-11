@@ -27,7 +27,7 @@ Add the `UsageSnapshot` model to the Prisma schema. This stores pre-aggregated d
 <Steps>
   <Step title="Add the model to the schema">
     ```prisma
-    // packages/database/prisma/schema.prisma
+    // packages/platform/db/prisma/schema.prisma
 
     model UsageSnapshot {
       id         String   @id @default(cuid())
@@ -348,7 +348,7 @@ The chart component is a Client Component (Recharts requires the browser). It re
 <Steps>
   <Step title="Add the analytics:read scope to the RBAC matrix">
     ```typescript
-    // packages/permissions/src/roles.ts
+    // packages/iam/permissions/src/roles.ts
     export const ROLE_PERMISSIONS = {
       OWNER:  ["*"],
       ADMIN:  ["analytics:read", "analytics:export", /* …other admin scopes */],

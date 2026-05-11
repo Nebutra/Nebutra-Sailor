@@ -5,7 +5,7 @@ description: Complete reference for every environment variable in Nebutra-Sailor
 
 ## Validation
 
-All variables are validated by `@nebutra/config` at startup (`packages/config/src/index.ts`). Required variables that are absent or empty cause an immediate, descriptive startup error. Optional variables that are absent fall back to the documented default.
+All variables are validated by `@nebutra/config` at startup (`packages/platform/config/src/index.ts`). Required variables that are absent or empty cause an immediate, descriptive startup error. Optional variables that are absent fall back to the documented default.
 
 <Note>
   Variables prefixed with `NEXT_PUBLIC_` are bundled into the client-side JavaScript and are visible to end users. Never put secrets in `NEXT_PUBLIC_` variables.

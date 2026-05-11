@@ -16,7 +16,7 @@ Nebutra 的账单流水线由三层协同工作，根据计划控制访问权限
                          └─▶ @nebutra/metering 执行配额限制
 ```
 
-所有 Stripe 集成代码位于 `packages/billing/`。应用代码调用 `@nebutra/billing` 中的辅助函数——不直接使用 Stripe SDK。
+所有 Stripe 集成代码位于 `packages/commerce/billing/`。应用代码调用 `@nebutra/billing` 中的辅助函数——不直接使用 Stripe SDK。
 
 ## 计划
 
@@ -68,11 +68,11 @@ Nebutra 的账单流水线由三层协同工作，根据计划控制访问权限
 
 | 位置 | 用途 |
 |------|------|
-| `packages/billing/src/stripe.ts` | Stripe 客户端初始化 |
-| `packages/billing/src/plans.ts` | 计划定义和限额常量 |
-| `packages/billing/src/handlers/` | Webhook 事件处理程序 |
-| `packages/billing/src/checkout.ts` | 结账会话创建辅助函数 |
-| `packages/billing/src/portal.ts` | Stripe 客户门户会话辅助函数 |
+| `packages/commerce/billing/src/stripe.ts` | Stripe 客户端初始化 |
+| `packages/commerce/billing/src/plans.ts` | 计划定义和限额常量 |
+| `packages/commerce/billing/src/handlers/` | Webhook 事件处理程序 |
+| `packages/commerce/billing/src/checkout.ts` | 结账会话创建辅助函数 |
+| `packages/commerce/billing/src/portal.ts` | Stripe 客户门户会话辅助函数 |
 
 ## 环境变量
 

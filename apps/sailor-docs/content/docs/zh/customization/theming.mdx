@@ -16,7 +16,7 @@ Nebutra-Sailor 的主题系统由三个独立的层级组合而成：
 所有设计 token 存储在单一文件中，可直接编辑：
 
 ```
-packages/tokens/styles.css
+packages/design/tokens/styles.css
 ```
 
 ### 关键 Token 参考
@@ -72,7 +72,7 @@ packages/tokens/styles.css
 
 ## 使用调色板生成器重新品牌化
 
-更改整个品牌调色板最快的方式是使用生成器脚本。它会重写 `packages/tokens/styles.css` 中的所有 token 别名：
+更改整个品牌调色板最快的方式是使用生成器脚本。它会重写 `packages/design/tokens/styles.css` 中的所有 token 别名：
 
 <Steps>
   <Step title="运行调色板生成器">
@@ -102,7 +102,7 @@ packages/tokens/styles.css
 如果您更倾向于手动编辑 token：
 
 ```css
-/* packages/tokens/styles.css */
+/* packages/design/tokens/styles.css */
 :root {
   --brand-primary:   #7C3AED;   /* 紫色 */
   --brand-accent:    #F59E0B;   /* 琥珀色 */
@@ -229,14 +229,14 @@ export function ThemePresetSelector() {
 <Steps>
   <Step title="打开主题文件">
     ```
-    packages/theme/themes.css
+    packages/design/theme/themes.css
     ```
   </Step>
   <Step title="添加新的 data-theme 代码块">
     复制一个现有的预设代码块并修改 oklch 值。主题名称必须为小写短横线命名。
 
     ```css
-    /* packages/theme/themes.css */
+    /* packages/design/theme/themes.css */
     [data-theme="forest"] {
       --brand-primary:   oklch(45% 0.18 145);   /* 森林绿 */
       --brand-accent:    oklch(75% 0.15 80);    /* 暖金色 */
@@ -267,14 +267,14 @@ export function ThemePresetSelector() {
 字体通过 `next/font` 加载并注入为 CSS 变量，无外部字体请求。
 
 ```css
-/* packages/tokens/styles.css */
+/* packages/design/tokens/styles.css */
 :root {
   --font-geist-sans: "Geist", system-ui, sans-serif;   /* UI 文本 */
   --font-geist-mono: "Geist Mono", monospace;           /* 代码、指标 */
 }
 ```
 
-如需更换字体族，请更新 `apps/web/src/app/layout.tsx` 和 `apps/landing-page/src/app/layout.tsx` 中的 `next/font` 配置，然后同步更新 `packages/tokens/styles.css` 中的 CSS 变量备用字体。
+如需更换字体族，请更新 `apps/web/src/app/layout.tsx` 和 `apps/landing-page/src/app/layout.tsx` 中的 `next/font` 配置，然后同步更新 `packages/design/tokens/styles.css` 中的 CSS 变量备用字体。
 
 ## Storybook Design Tokens 参考
 

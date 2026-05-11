@@ -16,7 +16,7 @@ Nebutra-Sailor's theming system has three independent layers that compose togeth
 All design tokens live in a single file. Open it and edit directly:
 
 ```
-packages/tokens/styles.css
+packages/design/tokens/styles.css
 ```
 
 ### Key token reference
@@ -72,7 +72,7 @@ packages/tokens/styles.css
 
 ## Rebrand with the palette generator
 
-The fastest way to change the entire brand palette is the generator script. It rewrites all token aliases in `packages/tokens/styles.css`:
+The fastest way to change the entire brand palette is the generator script. It rewrites all token aliases in `packages/design/tokens/styles.css`:
 
 <Steps>
   <Step title="Run the palette generator">
@@ -102,7 +102,7 @@ The fastest way to change the entire brand palette is the generator script. It r
 If you prefer to edit tokens by hand:
 
 ```css
-/* packages/tokens/styles.css */
+/* packages/design/tokens/styles.css */
 :root {
   --brand-primary:   #7C3AED;   /* purple */
   --brand-accent:    #F59E0B;   /* amber */
@@ -229,14 +229,14 @@ export function ThemePresetSelector() {
 <Steps>
   <Step title="Open the themes file">
     ```
-    packages/theme/themes.css
+    packages/design/theme/themes.css
     ```
   </Step>
   <Step title="Add a new data-theme block">
     Copy an existing preset block and modify the oklch values. Theme names must be lowercase kebab-case.
 
     ```css
-    /* packages/theme/themes.css */
+    /* packages/design/theme/themes.css */
     [data-theme="forest"] {
       --brand-primary:   oklch(45% 0.18 145);   /* forest green */
       --brand-accent:    oklch(75% 0.15 80);    /* warm gold */
@@ -267,14 +267,14 @@ export function ThemePresetSelector() {
 Fonts are loaded via `next/font` and injected as CSS variables. No external font requests.
 
 ```css
-/* packages/tokens/styles.css */
+/* packages/design/tokens/styles.css */
 :root {
   --font-geist-sans: "Geist", system-ui, sans-serif;   /* UI text */
   --font-geist-mono: "Geist Mono", monospace;           /* Code, metrics */
 }
 ```
 
-To change the font family, update the `next/font` configuration in `apps/web/src/app/layout.tsx` and `apps/landing-page/src/app/layout.tsx`, then update the CSS variable fallbacks in `packages/tokens/styles.css`.
+To change the font family, update the `next/font` configuration in `apps/web/src/app/layout.tsx` and `apps/landing-page/src/app/layout.tsx`, then update the CSS variable fallbacks in `packages/design/tokens/styles.css`.
 
 ## Storybook Design Tokens reference
 

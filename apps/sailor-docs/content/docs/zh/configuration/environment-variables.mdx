@@ -5,7 +5,7 @@ description: Nebutra-Sailor 中所有环境变量的完整参考——必填级�
 
 ## 验证机制
 
-所有变量在启动时由 `@nebutra/config` 进行验证（`packages/config/src/index.ts`）。缺失或为空的必填变量会导致立即退出，并输出描述性错误信息。缺失的可选变量将使用文档中记录的默认值。
+所有变量在启动时由 `@nebutra/config` 进行验证（`packages/platform/config/src/index.ts`）。缺失或为空的必填变量会导致立即退出，并输出描述性错误信息。缺失的可选变量将使用文档中记录的默认值。
 
 <Note>
   以 `NEXT_PUBLIC_` 为前缀的变量会被打包进客户端 JavaScript 中，对终端用户可见。切勿在 `NEXT_PUBLIC_` 变量中存放密钥。

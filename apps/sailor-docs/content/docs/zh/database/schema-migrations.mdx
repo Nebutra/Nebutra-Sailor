@@ -3,12 +3,12 @@ title: 架构与迁移
 description: 如何在开发、CI 和生产环境中安全地演进 Prisma 架构并运行数据库迁移。
 ---
 
-Prisma 架构是数据库结构的唯一事实来源。对表、列、索引和关系的所有更改都通过 `packages/db/prisma/schema.prisma` 进行。迁移是由 Prisma 生成的版本化 SQL 文件，与架构一起存储。
+Prisma 架构是数据库结构的唯一事实来源。对表、列、索引和关系的所有更改都通过 `packages/platform/db/prisma/schema.prisma` 进行。迁移是由 Prisma 生成的版本化 SQL 文件，与架构一起存储。
 
 ## 文件位置
 
 ```
-packages/db/
+packages/platform/db/
   prisma/
     schema.prisma          ← 编辑此文件以更改数据模型
     migrations/            ← 生成的迁移文件（提交这些文件）
@@ -27,9 +27,9 @@ packages/db/
 
 <Steps>
   <Step title="编辑架构">
-    打开 `packages/db/prisma/schema.prisma` 并进行更改 — 添加模型、添加列、创建索引等。
+    打开 `packages/platform/db/prisma/schema.prisma` 并进行更改 — 添加模型、添加列、创建索引等。
 
-    ```prisma packages/db/prisma/schema.prisma
+    ```prisma packages/platform/db/prisma/schema.prisma
     model Project {
       id          String   @id @default(cuid())
       name        String
@@ -69,7 +69,7 @@ packages/db/
     生成的迁移文件必须与架构更改一起提交。这是 CI/CD 和生产数据库接收更新的方式。
 
     ```bash
-    git add packages/db/prisma/
+    git add packages/platform/db/prisma/
     git commit -m "feat(db): add Project model"
     ```
   </Step>
@@ -180,7 +180,7 @@ Prisma 不提供自动回滚。要回滚迁移：
 
     ```bash
     # 删除不需要的迁移目录
-    rm -rf packages/db/prisma/migrations/20240215_add_display_name
+    rm -rf packages/platform/db/prisma/migrations/20240215_add_display_name
 
     # 将本地数据库重置到上一个良好迁移状态
     pnpm --filter @nebutra/db exec prisma migrate reset

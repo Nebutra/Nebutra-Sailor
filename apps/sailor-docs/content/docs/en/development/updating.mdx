@@ -23,13 +23,13 @@ Run these commands whenever you pull new commits from the main branch:
     ```bash
     pnpm db:migrate
     ```
-    Run this whenever `packages/db/prisma/migrations/` has new migration files. It is safe to run even when there are no pending migrations.
+    Run this whenever `packages/platform/db/prisma/migrations/` has new migration files. It is safe to run even when there are no pending migrations.
   </Step>
   <Step title="Regenerate the Prisma client">
     ```bash
     pnpm db:generate
     ```
-    Required whenever `packages/db/prisma/schema.prisma` has changed. The generated client is gitignored and must be regenerated locally.
+    Required whenever `packages/platform/db/prisma/schema.prisma` has changed. The generated client is gitignored and must be regenerated locally.
   </Step>
 </Steps>
 
@@ -57,15 +57,15 @@ Common breaking change categories:
 
 Regenerate the Prisma client whenever any of these change:
 
-- `packages/db/prisma/schema.prisma`
-- `packages/db/prisma/migrations/` (new migration file)
-- The `prisma` version in `packages/db/package.json`
+- `packages/platform/db/prisma/schema.prisma`
+- `packages/platform/db/prisma/migrations/` (new migration file)
+- The `prisma` version in `packages/platform/db/package.json`
 
 ```bash
 pnpm db:generate
 ```
 
-You do **not** need to regenerate the client after pulling if the schema file has not changed. Check `git diff packages/db/prisma/schema.prisma` if unsure.
+You do **not** need to regenerate the client after pulling if the schema file has not changed. Check `git diff packages/platform/db/prisma/schema.prisma` if unsure.
 
 ## When to re-run `pnpm generate:api-types`
 

@@ -53,9 +53,9 @@ STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
 
 ## 第三步：在代码中配置计划限额
 
-计划限额定义在 `packages/billing/src/plans.ts` 中。每个条目将计划名称映射到其资源配额。
+计划限额定义在 `packages/commerce/billing/src/plans.ts` 中。每个条目将计划名称映射到其资源配额。
 
-```typescript packages/billing/src/plans.ts
+```typescript packages/commerce/billing/src/plans.ts
 export const PLANS = {
   free: {
     id: "free",
@@ -128,7 +128,7 @@ const limit = plan.limits.apiCallsPerMonth;
     ```
   </Step>
   <Step title="在 PLANS 中添加计划条目">
-    ```typescript packages/billing/src/plans.ts
+    ```typescript packages/commerce/billing/src/plans.ts
     teams: {
       id: "teams",
       name: "TEAMS",
@@ -151,7 +151,7 @@ const limit = plan.limits.apiCallsPerMonth;
 
 ## 更新计划限额
 
-编辑 `packages/billing/src/plans.ts` 中相应计划的 `limits` 对象。修改在下次部署后立即生效——无需数据库迁移，因为限额在每次请求时动态解析。
+编辑 `packages/commerce/billing/src/plans.ts` 中相应计划的 `limits` 对象。修改在下次部署后立即生效——无需数据库迁移，因为限额在每次请求时动态解析。
 
 <Note>
 数据库中的计划变更在收到并处理 Stripe Webhook 后立即生效，不存在轮询延迟。配额执行在每次请求时使用最新的计划记录。

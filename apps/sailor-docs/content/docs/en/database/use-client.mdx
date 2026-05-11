@@ -5,7 +5,7 @@ description: How to query PostgreSQL via the Prisma v7 client in server componen
 
 Nebutra exports a single, pre-configured Prisma client from `@nebutra/db`. Always import from this package — never instantiate `PrismaClient` directly in application code.
 
-```typescript packages/db/src/index.ts
+```typescript packages/platform/db/src/index.ts
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 

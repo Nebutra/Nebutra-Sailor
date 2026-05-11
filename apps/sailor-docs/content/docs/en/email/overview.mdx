@@ -5,7 +5,7 @@ description: Transactional email for Nebutra — cataloged sender helpers, local
 
 Nebutra sends transactional emails through the `@nebutra/email` package. The
 current implementation is catalog-first: `EMAIL_TEMPLATE_CATALOG` in
-`packages/email/src/index.ts` maps every public sender helper to its preview
+`packages/integrations/email/src/index.ts` maps every public sender helper to its preview
 artifact, while Resend is loaded lazily only when an email is actually sent.
 
 ## Architecture

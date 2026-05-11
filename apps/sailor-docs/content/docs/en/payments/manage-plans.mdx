@@ -53,9 +53,9 @@ STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
 
 ## Step 3: Configure plan limits in code
 
-Plan limits are defined in `packages/billing/src/plans.ts`. Each entry maps a plan name to its resource quotas.
+Plan limits are defined in `packages/commerce/billing/src/plans.ts`. Each entry maps a plan name to its resource quotas.
 
-```typescript packages/billing/src/plans.ts
+```typescript packages/commerce/billing/src/plans.ts
 export const PLANS = {
   free: {
     id: "free",
@@ -128,7 +128,7 @@ const limit = plan.limits.apiCallsPerMonth;
     ```
   </Step>
   <Step title="Add the plan entry to PLANS">
-    ```typescript packages/billing/src/plans.ts
+    ```typescript packages/commerce/billing/src/plans.ts
     teams: {
       id: "teams",
       name: "TEAMS",
@@ -151,7 +151,7 @@ const limit = plan.limits.apiCallsPerMonth;
 
 ## Updating plan limits
 
-Edit the `limits` object for the relevant plan in `packages/billing/src/plans.ts`. Changes take effect immediately after the next deployment — no database migration required, since limits are resolved at request time.
+Edit the `limits` object for the relevant plan in `packages/commerce/billing/src/plans.ts`. Changes take effect immediately after the next deployment — no database migration required, since limits are resolved at request time.
 
 <Note>
 Plan changes in the database take effect as soon as the Stripe webhook is received and processed. There is no polling delay. Quota enforcement uses the latest plan record on every request.

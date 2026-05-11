@@ -27,7 +27,7 @@ description: 端到端实战指南——从 Prisma 模式到已部署功能。�
 <Steps>
   <Step title="向模式添加模型">
     ```prisma
-    // packages/database/prisma/schema.prisma
+    // packages/platform/db/prisma/schema.prisma
 
     model UsageSnapshot {
       id         String   @id @default(cuid())
@@ -348,7 +348,7 @@ import { apiClient } from "@/lib/api-client";
 <Steps>
   <Step title="将 analytics:read 权限范围添加到 RBAC 矩阵">
     ```typescript
-    // packages/permissions/src/roles.ts
+    // packages/iam/permissions/src/roles.ts
     export const ROLE_PERMISSIONS = {
       OWNER:  ["*"],
       ADMIN:  ["analytics:read", "analytics:export", /* …其他管理员权限 */],

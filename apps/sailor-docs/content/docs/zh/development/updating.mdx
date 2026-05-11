@@ -23,13 +23,13 @@ description: 如何从上游拉取最新更改、重新运行代码生成器以�
     ```bash
     pnpm db:migrate
     ```
-    当 `packages/db/prisma/migrations/` 中有新的迁移文件时运行此命令。即使没有待执行的迁移，运行也是安全的。
+    当 `packages/platform/db/prisma/migrations/` 中有新的迁移文件时运行此命令。即使没有待执行的迁移，运行也是安全的。
   </Step>
   <Step title="重新生成 Prisma 客户端">
     ```bash
     pnpm db:generate
     ```
-    当 `packages/db/prisma/schema.prisma` 发生变化时需要运行此命令。生成的客户端已被 gitignore，必须在本地重新生成。
+    当 `packages/platform/db/prisma/schema.prisma` 发生变化时需要运行此命令。生成的客户端已被 gitignore，必须在本地重新生成。
   </Step>
 </Steps>
 
@@ -57,15 +57,15 @@ description: 如何从上游拉取最新更改、重新运行代码生成器以�
 
 当以下任一内容发生变化时，需要重新生成 Prisma 客户端：
 
-- `packages/db/prisma/schema.prisma`
-- `packages/db/prisma/migrations/`（新迁移文件）
-- `packages/db/package.json` 中的 `prisma` 版本
+- `packages/platform/db/prisma/schema.prisma`
+- `packages/platform/db/prisma/migrations/`（新迁移文件）
+- `packages/platform/db/package.json` 中的 `prisma` 版本
 
 ```bash
 pnpm db:generate
 ```
 
-如果 Schema 文件没有变化，则拉取代码后**不需要**重新生成客户端。如果不确定，可以运行 `git diff packages/db/prisma/schema.prisma` 查看。
+如果 Schema 文件没有变化，则拉取代码后**不需要**重新生成客户端。如果不确定，可以运行 `git diff packages/platform/db/prisma/schema.prisma` 查看。
 
 ## 何时需要重新运行 `pnpm generate:api-types`
 

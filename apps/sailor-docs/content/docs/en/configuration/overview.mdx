@@ -9,12 +9,12 @@ Nebutra-Sailor validates every environment variable at application startup throu
 
 ```
 Error: [config] Missing required environment variable: DATABASE_URL
-  at validateConfig (packages/config/src/index.ts:42)
+  at validateConfig (packages/platform/config/src/index.ts:42)
 ```
 
 This fail-fast pattern means broken deployments surface in seconds rather than producing runtime errors hours later in production.
 
-The validation source of truth lives at `packages/config/src/index.ts`. Every app imports from this package, so config changes propagate to all apps automatically.
+The validation source of truth lives at `packages/platform/config/src/index.ts`. Every app imports from this package, so config changes propagate to all apps automatically.
 
 ## Three categories of variables
 

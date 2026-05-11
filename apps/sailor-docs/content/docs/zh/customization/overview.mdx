@@ -35,7 +35,7 @@ apps/web          ← 仪表板页面组合组件
 apps/landing-page ← 营销网站组合组件
 ```
 
-由于 `@nebutra/ui` 中的每个颜色和间距值都是 CSS 变量引用（而非硬编码的十六进制值），更新 `packages/tokens/styles.css`——或运行调色板脚本——就能级联影响整个产品。
+由于 `@nebutra/ui` 中的每个颜色和间距值都是 CSS 变量引用（而非硬编码的十六进制值），更新 `packages/design/tokens/styles.css`——或运行调色板脚本——就能级联影响整个产品。
 
 ## 快速上手（5 分钟以内）
 
@@ -46,7 +46,7 @@ apps/landing-page ← 营销网站组合组件
 node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
 ```
 
-该脚本会重写 `packages/tokens/styles.css` 及所有下游 token 别名。重启开发服务器即可看到更改效果。
+该脚本会重写 `packages/design/tokens/styles.css` 及所有下游 token 别名。重启开发服务器即可看到更改效果。
 
 ### 切换活跃主题预设
 
@@ -68,18 +68,18 @@ setTheme("dark"); // "light" | "dark" | "system"
 
 | 目标 | 从哪里开始 |
 |------|-----------|
-| 新建多主题预设 | `packages/theme/themes.css` |
-| 新建 UI 原语组件 | `packages/ui/src/components/` + Storybook 故事 |
+| 新建多主题预设 | `packages/design/theme/themes.css` |
+| 新建 UI 原语组件 | `packages/design/ui/src/components/` + Storybook 故事 |
 | 新建仪表板板块 | `apps/web/src/app/(dashboard)/[section]/page.tsx` |
 | 修改引导步骤 | `apps/web/src/app/(onboarding)/` |
 | 重写调色板生成器 | `scripts/generate-palette.mjs` |
 
 ## Token 架构一览
 
-所有运行时 CSS 变量均定义在单一文件中：`packages/tokens/styles.css`。这是**唯一真实来源**——任何地方都不要硬编码十六进制值。
+所有运行时 CSS 变量均定义在单一文件中：`packages/design/tokens/styles.css`。这是**唯一真实来源**——任何地方都不要硬编码十六进制值。
 
 ```css
-/* packages/tokens/styles.css — 摘录 */
+/* packages/design/tokens/styles.css — 摘录 */
 :root {
   --brand-primary:   var(--blue-9);     /* #0033FE */
   --brand-accent:    var(--cyan-9);     /* #0BF1C3 */

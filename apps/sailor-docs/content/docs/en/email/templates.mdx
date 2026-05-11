@@ -3,7 +3,7 @@ title: Email Templates
 description: Nebutra email catalog entries, public sender helpers, and preview artifacts.
 ---
 
-Email template ownership is centralized in `packages/email/src/index.ts`.
+Email template ownership is centralized in `packages/integrations/email/src/index.ts`.
 `EMAIL_TEMPLATE_CATALOG` defines the catalog ID, public sender helper, and
 preview filename for every template.
 
@@ -44,10 +44,10 @@ await sendInvoicePaidEmail({
 
 ## Adding or changing a template
 
-1. Add or update the public sender helper in `packages/email/src/index.ts`.
+1. Add or update the public sender helper in `packages/integrations/email/src/index.ts`.
 2. Add or update the matching `EMAIL_TEMPLATE_CATALOG` entry.
 3. Regenerate or validate the preview output in `apps/mail-preview/dist`.
-4. Update `packages/email/src/__tests__/email-contract.test.ts` when the public
+4. Update `packages/integrations/email/src/__tests__/email-contract.test.ts` when the public
    surface changes.
 5. Run the validation commands:
 

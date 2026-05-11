@@ -35,7 +35,7 @@ apps/web          ← Dashboard pages compose components
 apps/landing-page ← Marketing site composes components
 ```
 
-Because every color and spacing value in `@nebutra/ui` is a CSS variable reference (never a hardcoded hex), updating `packages/tokens/styles.css` — or running the palette script — cascades through the entire product.
+Because every color and spacing value in `@nebutra/ui` is a CSS variable reference (never a hardcoded hex), updating `packages/design/tokens/styles.css` — or running the palette script — cascades through the entire product.
 
 ## Quick wins (under 5 minutes)
 
@@ -46,7 +46,7 @@ Because every color and spacing value in `@nebutra/ui` is a CSS variable referen
 node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
 ```
 
-The script rewrites `packages/tokens/styles.css` and all downstream token aliases. Restart the dev server to see the change.
+The script rewrites `packages/design/tokens/styles.css` and all downstream token aliases. Restart the dev server to see the change.
 
 ### Switch the active theme preset
 
@@ -68,18 +68,18 @@ setTheme("dark"); // "light" | "dark" | "system"
 
 | Goal | Where to start |
 |------|---------------|
-| New multi-theme preset | `packages/theme/themes.css` |
-| New UI primitive | `packages/ui/src/components/` + Storybook story |
+| New multi-theme preset | `packages/design/theme/themes.css` |
+| New UI primitive | `packages/design/ui/src/components/` + Storybook story |
 | New dashboard section | `apps/web/src/app/(dashboard)/[section]/page.tsx` |
 | Modify onboarding steps | `apps/web/src/app/(onboarding)/` |
 | Rewrite the palette generator | `scripts/generate-palette.mjs` |
 
 ## Token architecture at a glance
 
-All runtime CSS variables are defined in a single file: `packages/tokens/styles.css`. This is the **single source of truth** — never hardcode hex values anywhere else in the codebase.
+All runtime CSS variables are defined in a single file: `packages/design/tokens/styles.css`. This is the **single source of truth** — never hardcode hex values anywhere else in the codebase.
 
 ```css
-/* packages/tokens/styles.css — excerpt */
+/* packages/design/tokens/styles.css — excerpt */
 :root {
   --brand-primary:   var(--blue-9);     /* #0033FE */
   --brand-accent:    var(--cyan-9);     /* #0BF1C3 */

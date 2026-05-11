@@ -3,7 +3,7 @@ title: 邮件模板
 description: Nebutra 邮件目录项、公开发送函数和预览产物。
 ---
 
-邮件模板的所有权集中在 `packages/email/src/index.ts`。
+邮件模板的所有权集中在 `packages/integrations/email/src/index.ts`。
 `EMAIL_TEMPLATE_CATALOG` 定义每个模板的 catalog ID、公开发送函数和预览文件名。
 
 ## 模板参考
@@ -43,10 +43,10 @@ await sendInvoicePaidEmail({
 
 ## 新增或修改模板
 
-1. 在 `packages/email/src/index.ts` 新增或更新公开发送函数。
+1. 在 `packages/integrations/email/src/index.ts` 新增或更新公开发送函数。
 2. 新增或更新匹配的 `EMAIL_TEMPLATE_CATALOG` 项。
 3. 重新生成或校验 `apps/mail-preview/dist` 里的预览产物。
-4. 公开接口变化时更新 `packages/email/src/__tests__/email-contract.test.ts`。
+4. 公开接口变化时更新 `packages/integrations/email/src/__tests__/email-contract.test.ts`。
 5. 运行验证：
 
 ```bash
