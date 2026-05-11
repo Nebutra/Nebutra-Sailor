@@ -16,6 +16,14 @@ vi.mock("next/navigation", () => ({
   }),
 }));
 
+// "use cache" + cacheLife are gated on cacheComponents config (only loaded by
+// next build/dev). In vitest, no-op the cache directives so the wrapped
+// functions can be called directly.
+vi.mock("next/cache", () => ({
+  cacheLife: vi.fn(),
+  cacheTag: vi.fn(),
+}));
+
 vi.mock("@/lib/legal-documents", () => ({
   getLegalDocument: vi.fn(),
 }));
