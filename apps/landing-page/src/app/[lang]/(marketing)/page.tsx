@@ -81,10 +81,7 @@ const SEOGEOSection = dynamic(
 
 // SocialProofBar moved to /about page — see about/page.tsx
 
-const LandingTestimonialsSection = dynamic(
-  () => import("@/components/landing/testimonials-section").then((m) => m.TestimonialsSection),
-  { loading: () => <SectionSkeleton minH="40rem" /> },
-);
+// LandingTestimonialsSection removed — fake testimonials cleaned up
 
 const PricingSection = dynamic(
   () => import("@/components/landing/PricingSection").then((m) => m.PricingSection),
@@ -210,8 +207,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
         {/* 4.7 Social Proof Bar — moved to /about */}
 
-        {/* 4.8 Landing Testimonials Grid — 3-col responsive */}
-        <LandingTestimonialsSection />
+        {/* 4.8 Landing Testimonials — removed (fake data) */}
 
         {/* 4.9 Landing FAQ Section — extended Q&A accordion */}
         <FAQSection />
