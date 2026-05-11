@@ -1883,46 +1883,34 @@
       "title": "Pick the plan that fits the stage you are in",
       "subtitle": "Every plan includes the full source code and lifetime updates inside its release line.",
       "plan": {
-        "free": "Free",
-        "pro": "Pro",
-        "enterprise": "Enterprise"
+        "individual": "Individual",
+        "startup": "Startup",
+        "agency": "Agency"
       },
       "feature": {
-        "auth": {
-          "label": "Authentication",
-          "providers": "Auth providers",
-          "rbac": "Role-based access (RBAC)",
-          "audit": "Audit log"
+        "license": {
+          "label": "License",
+          "type": "License type",
+          "closed-source": "Closed-source use",
+          "white-label": "White-label rights"
         },
-        "tenancy": {
-          "label": "Multi-tenancy",
-          "workspaces": "Workspaces",
-          "rls": "Row-level security",
-          "byo-db": "Bring-your-own database"
+        "team": {
+          "label": "Team",
+          "seats": "Developer seats",
+          "projects": "Projects"
         },
-        "ai": {
-          "label": "AI",
-          "providers": "Model providers",
-          "gateway": "AI gateway routing",
-          "metering": "Usage metering"
-        },
-        "storage": {
-          "label": "Storage",
-          "uploads": "File storage",
-          "s3-compatible": "S3-compatible buckets",
-          "resumable": "Resumable uploads"
-        },
-        "email": {
-          "label": "Email",
-          "transactional": "Transactional volume",
-          "templates": "React Email templates",
-          "domains": "Verified domains"
+        "source": {
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "lifetime-updates": "Lifetime updates"
         },
         "support": {
           "label": "Support",
-          "channel": "Channel",
-          "sla": "Uptime SLA",
-          "onboarding": "Onboarding engineer"
+          "channel": "Support channel",
+          "onboarding": "Onboarding call",
+          "architecture-consult": "Architecture consult",
+          "sla": "Uptime SLA"
         }
       },
       "ariaTable": "Plan and feature comparison"

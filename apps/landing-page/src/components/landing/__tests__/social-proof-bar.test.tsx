@@ -7,10 +7,14 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 expect.extend(matchers);
 
 vi.mock("next-intl/server", () => ({
-  getTranslations: () => async () => (key: string) => `landing.socialProof.${key}`,
+  getTranslations: () =>
+    Promise.resolve(
+      Object.assign((key: string) => `landing.socialProof.${key}`, {
+        rich: (key: string) => `landing.socialProof.${key}`,
+      }),
+    ),
 }));
 
-// next/image needs a stub in jsdom
 vi.mock("next/image", () => ({
   __esModule: true,
   default: (props: Record<string, unknown>) => {
@@ -20,26 +24,23 @@ vi.mock("next/image", () => ({
   },
 }));
 
-// Server component — await the render
-async function renderAsync() {
-  const { SocialProofBar } = await import("../social-proof-bar");
-  const element = await SocialProofBar({ locale: "en" });
-  return render(element);
-}
-
 describe("SocialProofBar", () => {
   afterEach(() => cleanup());
 
-  it("renders all six brand logos as a list", async () => {
-    await renderAsync();
+  it("renders all six brand logos", async () => {
+    const { SocialProofBar } = await import("../social-proof-bar");
+    const el = await SocialProofBar({ locale: "en" });
+    render(el);
     const items = screen.getAllByRole("listitem");
     expect(items.length).toBe(6);
   });
 
-  it("renders brand logo images with alt text", async () => {
-    await renderAsync();
-    expect(screen.getAllByAltText("Vercel").length).toBeGreaterThan(0);
-    expect(screen.getAllByAltText("Stripe").length).toBeGreaterThan(0);
-    expect(screen.getAllByAltText("Supabase").length).toBeGreaterThan(0);
+  it("renders brand logo images", async () => {
+    const { SocialProofBar } = await import("../social-proof-bar");
+    const el = await SocialProofBar({ locale: "en" });
+    render(el);
+    // Each brand has 2 images (light + dark variant)
+    expect(screen.getAllByAltText("Vercel").length).toBe(2);
+    expect(screen.getAllByAltText("Stripe").length).toBe(2);
   });
 });

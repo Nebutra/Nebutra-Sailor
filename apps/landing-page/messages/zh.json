@@ -1888,46 +1888,34 @@
       "title": "按当前阶段选择最合适的套餐",
       "subtitle": "所有套餐都包含完整源代码以及对应版本线的终身更新。",
       "plan": {
-        "free": "免费版",
-        "pro": "专业版",
-        "enterprise": "企业版"
+        "individual": "个人版",
+        "startup": "初创版",
+        "agency": "商业版"
       },
       "feature": {
-        "auth": {
-          "label": "认证",
-          "providers": "认证提供商",
-          "rbac": "基于角色的访问控制 (RBAC)",
-          "audit": "审计日志"
+        "license": {
+          "label": "许可证",
+          "type": "许可类型",
+          "closed-source": "闭源使用",
+          "white-label": "白标权利"
         },
-        "tenancy": {
-          "label": "多租户",
-          "workspaces": "工作空间",
-          "rls": "行级安全 (RLS)",
-          "byo-db": "自带数据库"
+        "team": {
+          "label": "团队",
+          "seats": "开发者席位",
+          "projects": "项目数"
         },
-        "ai": {
-          "label": "AI",
-          "providers": "模型提供商",
-          "gateway": "AI 网关路由",
-          "metering": "用量计量"
-        },
-        "storage": {
-          "label": "存储",
-          "uploads": "文件存储",
-          "s3-compatible": "S3 兼容存储桶",
-          "resumable": "断点续传上传"
-        },
-        "email": {
-          "label": "邮件",
-          "transactional": "事务邮件额度",
-          "templates": "React Email 模板",
-          "domains": "已验证域名"
+        "source": {
+          "label": "源代码",
+          "full-source": "完整源代码",
+          "all-packages": "全部包与模块",
+          "lifetime-updates": "终身更新"
         },
         "support": {
           "label": "支持",
-          "channel": "渠道",
-          "sla": "可用性 SLA",
-          "onboarding": "上手工程师"
+          "channel": "支持渠道",
+          "onboarding": "新手引导",
+          "architecture-consult": "架构咨询",
+          "sla": "可用性 SLA"
         }
       },
       "ariaTable": "套餐与功能对比"

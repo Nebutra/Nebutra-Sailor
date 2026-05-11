@@ -1,17 +1,19 @@
 /**
  * Pricing comparison matrix for the marketing landing page.
  *
+ * Columns map to Sailor's **template license tiers**, NOT end-user SaaS
+ * billing plans. Every license tier ships the full source code — the
+ * differences are rights, seats, and support, not features.
+ *
+ * The billing system's FREE/PRO/ENTERPRISE plans are a configurable demo
+ * for products built with Sailor and are intentionally not shown here.
+ *
  * Each row's `label` is rendered via i18n key
  *   landing.comparison.feature.{groupId}.{rowId}
  * Each plan column header via
  *   landing.comparison.plan.{planId}
- *
- * Cell values:
- *   - boolean `true`  → ✓ (included)
- *   - boolean `false` → — (not included)
- *   - string         → rendered verbatim (e.g. "10 GB")
  */
-export type PlanId = "free" | "pro" | "enterprise";
+export type PlanId = "individual" | "startup" | "agency";
 
 export type ComparisonCell = boolean | string;
 
@@ -25,65 +27,49 @@ export interface ComparisonGroup {
   readonly rows: readonly ComparisonRow[];
 }
 
-export const PLAN_IDS: readonly PlanId[] = ["free", "pro", "enterprise"] as const;
+export const PLAN_IDS: readonly PlanId[] = ["individual", "startup", "agency"] as const;
 
 export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
   {
-    id: "auth",
+    id: "license",
     rows: [
       {
-        id: "providers",
-        values: { free: "1 provider", pro: "All providers", enterprise: "All + SSO" },
-      },
-      { id: "rbac", values: { free: false, pro: true, enterprise: true } },
-      { id: "audit", values: { free: false, pro: false, enterprise: true } },
-    ],
-  },
-  {
-    id: "tenancy",
-    rows: [
-      {
-        id: "workspaces",
-        values: { free: "1", pro: "Unlimited", enterprise: "Unlimited + isolation" },
-      },
-      { id: "rls", values: { free: false, pro: true, enterprise: true } },
-      { id: "byo-db", values: { free: false, pro: false, enterprise: true } },
-    ],
-  },
-  {
-    id: "ai",
-    rows: [
-      {
-        id: "providers",
-        values: { free: "OpenAI only", pro: "All providers", enterprise: "BYO models" },
+        id: "type",
+        values: { individual: "AGPL-3.0", startup: "Commercial", agency: "Commercial" },
       },
       {
-        id: "gateway",
-        values: { free: false, pro: true, enterprise: true },
-      },
-      { id: "metering", values: { free: false, pro: true, enterprise: true } },
-    ],
-  },
-  {
-    id: "storage",
-    rows: [
-      { id: "uploads", values: { free: "1 GB", pro: "100 GB", enterprise: "Unlimited" } },
-      {
-        id: "s3-compatible",
-        values: { free: false, pro: true, enterprise: true },
+        id: "closed-source",
+        values: { individual: false, startup: true, agency: true },
       },
       {
-        id: "resumable",
-        values: { free: false, pro: true, enterprise: true },
+        id: "white-label",
+        values: { individual: false, startup: false, agency: true },
       },
     ],
   },
   {
-    id: "email",
+    id: "team",
     rows: [
-      { id: "transactional", values: { free: "100/mo", pro: "100K/mo", enterprise: "Unlimited" } },
-      { id: "templates", values: { free: true, pro: true, enterprise: true } },
-      { id: "domains", values: { free: "1", pro: "10", enterprise: "Unlimited" } },
+      {
+        id: "seats",
+        values: { individual: "1", startup: "5", agency: "10" },
+      },
+      {
+        id: "projects",
+        values: {
+          individual: "Unlimited personal",
+          startup: "Unlimited team",
+          agency: "Unlimited client",
+        },
+      },
+    ],
+  },
+  {
+    id: "source",
+    rows: [
+      { id: "full-source", values: { individual: true, startup: true, agency: true } },
+      { id: "all-packages", values: { individual: true, startup: true, agency: true } },
+      { id: "lifetime-updates", values: { individual: true, startup: true, agency: true } },
     ],
   },
   {
@@ -91,10 +77,14 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
     rows: [
       {
         id: "channel",
-        values: { free: "Community", pro: "Priority email", enterprise: "Dedicated Slack" },
+        values: { individual: "Community", startup: "Priority email", agency: "Private Discord" },
       },
-      { id: "sla", values: { free: false, pro: false, enterprise: "99.99%" } },
-      { id: "onboarding", values: { free: false, pro: false, enterprise: true } },
+      {
+        id: "onboarding",
+        values: { individual: false, startup: "30-min call", agency: "30-min call" },
+      },
+      { id: "architecture-consult", values: { individual: false, startup: true, agency: true } },
+      { id: "sla", values: { individual: false, startup: false, agency: "99.99%" } },
     ],
   },
 ] as const;
