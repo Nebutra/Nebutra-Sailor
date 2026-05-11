@@ -699,7 +699,7 @@ export function LicenseWizard() {
                       highlighted={true}
                       selected={step3.tier === "ENTERPRISE"}
                       onClick={() => setStep3((prev) => ({ ...prev, tier: "ENTERPRISE" }))}
-                      cta="Contact enterprise@nebutra.dev"
+                      cta="Contact enterprise@nebutra.com"
                     />
                   </div>
                 )}

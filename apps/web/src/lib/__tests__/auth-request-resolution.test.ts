@@ -4,14 +4,14 @@ import { createServerRequestFromHeaders, resolveServerRequestOrigin } from "@/li
 describe("server request resolution", () => {
   it("prefers forwarded host/proto when rebuilding a Request", () => {
     const requestHeaders = new Headers({
-      "x-forwarded-host": "workspace.nebutra.dev",
+      "x-forwarded-host": "workspace.nebutra.com",
       "x-forwarded-proto": "http",
       cookie: "session=abc123",
     });
 
     const request = createServerRequestFromHeaders(requestHeaders, "https://fallback.example");
 
-    expect(request.url).toBe("http://workspace.nebutra.dev/");
+    expect(request.url).toBe("http://workspace.nebutra.com/");
     expect(request.headers.get("cookie")).toBe("session=abc123");
   });
 

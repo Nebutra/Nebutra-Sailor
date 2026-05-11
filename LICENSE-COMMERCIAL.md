@@ -23,14 +23,14 @@ This exception is designed to support individual developers, bootstrapped founde
 
 ### Requirements
 
-1. **Obtain a free license key** by registering at [nebutra.dev/get-license](https://nebutra.dev/get-license)
+1. **Obtain a free license key** by registering at [nebutra.com/get-license](https://nebutra.com/get-license)
    - License key must be kept private (do not commit to public repos)
    - Register with your actual name or legal entity name
 
 2. **Credit Nebutra-Sailor in your product or documentation**
    - Add "Built with Nebutra-Sailor" to your product's about page, README, or footer
    - Or: "Powered by Nebutra-Sailor" in documentation
-   - Hyperlink to [nebutra.dev](https://nebutra.dev) preferred but not required
+   - Hyperlink to [nebutra.com](https://nebutra.com) preferred but not required
 
 3. **Team size must remain ≤ 1 FTE** during the license period
    - This applies to your commercial product team
@@ -40,7 +40,7 @@ This exception is designed to support individual developers, bootstrapped founde
 ### Duration
 
 - Free licenses renew annually
-- Renew at [nebutra.dev/get-license](https://nebutra.dev/get-license)
+- Renew at [nebutra.com/get-license](https://nebutra.com/get-license)
 
 ---
 
@@ -64,7 +64,7 @@ This exception is designed to support individual developers, bootstrapped founde
 
 ### Purchase & activation
 
-- Purchase at [nebutra.dev/get-license](https://nebutra.dev/get-license)
+- Purchase at [nebutra.com/get-license](https://nebutra.com/get-license)
 - Receive a commercial license key (keep private)
 - License grants rights for 12 calendar months from purchase date
 
@@ -98,7 +98,7 @@ This exception is designed to support individual developers, bootstrapped founde
 
 ### Purchase & support
 
-- **Contact:** enterprise@nebutra.dev
+- **Contact:** enterprise@nebutra.com
 - Schedule a call with our enterprise team to discuss your needs
 - Typical contract negotiation: 2–4 weeks
 
@@ -141,13 +141,13 @@ For significant contributions (100+ lines of code), a separate CLA signature via
 
 - Licenses are revoked if you violate Section 4 (prohibited uses)
 - Breach of license terms is governed by the laws of Delaware, USA
-- For disputes, contact legal@nebutra.dev
+- For disputes, contact legal@nebutra.com
 
 ---
 
 ## Disclaimer
 
-**This Commercial License Exception is provided as-is without warranty.** While we've worked to make the terms clear and fair, this is not a substitute for legal review by your own counsel. If you have questions about whether your use case qualifies for a specific tier, contact licensing@nebutra.dev.
+**This Commercial License Exception is provided as-is without warranty.** While we've worked to make the terms clear and fair, this is not a substitute for legal review by your own counsel. If you have questions about whether your use case qualifies for a specific tier, contact licensing@nebutra.com.
 
 ---
 

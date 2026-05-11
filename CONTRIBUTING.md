@@ -49,8 +49,8 @@ We're not asking you to transfer copyright—**you keep it**. We're simply askin
 
 If you have concerns about licensing your contributions, please reach out:
 
-- **Email:** contributors@nebutra.dev
-- **Discord:** [discord.nebutra.dev](https://discord.nebutra.dev) → #contributors
+- **Email:** contributors@nebutra.com
+- **Discord:** [nebutra.com/discord](https://nebutra.com/discord) → #contributors
 
 We're happy to discuss custom terms for significant contributions.
 
@@ -165,7 +165,7 @@ Structure your integration following the existing provider pattern in [CLAUDE.md
 - Agent frameworks
 - Multi-model support
 
-Start a discussion in [Discord](https://discord.nebutra.dev) before investing time—we want to make sure your idea aligns with the roadmap.
+Start a discussion in [Discord](https://nebutra.com/discord) before investing time—we want to make sure your idea aligns with the roadmap.
 
 ### Documentation Improvements
 - Clarify confusing sections
@@ -278,16 +278,16 @@ git push origin feat/my-feature
 
 ### Get help
 
-- **Discord:** [discord.nebutra.dev](https://discord.nebutra.dev) → #contributors, #general, #questions
+- **Discord:** [nebutra.com/discord](https://nebutra.com/discord) → #contributors, #general, #questions
 - **GitHub Discussions:** [github.com/nebutra/nebutra-sailor/discussions](https://github.com/nebutra/nebutra-sailor/discussions)
-- **Email:** contributors@nebutra.dev
+- **Email:** contributors@nebutra.com
 
 ### Stay in the loop
 
-- **Changelog:** [nebutra.dev/changelog](https://nebutra.dev/changelog)
+- **Changelog:** [nebutra.com/changelog](https://nebutra.com/changelog)
 - **Roadmap:** [github.com/nebutra/nebutra-sailor/projects](https://github.com/nebutra/nebutra-sailor/projects)
 - **Twitter:** [@nebutra_ai](https://twitter.com/nebutra_ai)
-- **Updates:** Subscribe to the mailing list at [nebutra.dev](https://nebutra.dev)
+- **Updates:** Subscribe to the mailing list at [nebutra.com](https://nebutra.com)
 
 ### Code of Conduct
 
@@ -313,7 +313,7 @@ Contributors are recognized in:
 
 - **GitHub:** Automatically via commit history
 - **Changelog:** Major contributors listed in release notes
-- **Docs:** Contributor page at nebutra.dev/contributors
+- **Docs:** Contributor page at nebutra.com/contributors
 - **Hall of Fame:** Top contributors featured on our website
 
 We're grateful for your work.
@@ -322,8 +322,8 @@ We're grateful for your work.
 
 ## Questions?
 
-- 💬 Ask in [Discord](https://discord.nebutra.dev)
-- 📧 Email: contributors@nebutra.dev
+- 💬 Ask in [Discord](https://nebutra.com/discord)
+- 📧 Email: contributors@nebutra.com
 - 🐦 Tweet [@nebutra_ai](https://twitter.com/nebutra_ai)
 
 Thank you for contributing to the OPC revolution.
