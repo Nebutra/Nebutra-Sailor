@@ -12,6 +12,7 @@
  * the page can render its own "not found" UI without crashing.
  */
 
+import { cacheLife } from "next/cache";
 import { z } from "zod";
 
 const LEGAL_DOCUMENT_TYPES = [
@@ -46,8 +47,18 @@ export type LegalDocumentFetcher = (slug: string, locale: string) => Promise<unk
 
 const DEFAULT_API_BASE = process.env.NEXT_PUBLIC_LEGAL_API_BASE ?? "";
 
-/** Default fetcher: GET /api/legal/[slug]?locale=... and parse JSON. */
+/**
+ * Default fetcher: GET /api/legal/[slug]?locale=... and parse JSON.
+ *
+ * Short-circuits to `null` when `NEXT_PUBLIC_LEGAL_API_BASE` is unset — this
+ * happens at build time (the /web API isn't reachable from the
+ * landing-page's prerender sandbox) and would otherwise stall Next.js 16's
+ * `"use cache"` filling phase until it hits `USE_CACHE_TIMEOUT`. Pages
+ * gracefully render their `notFound()` fallback in that case.
+ */
 export const defaultLegalDocumentFetcher: LegalDocumentFetcher = async (slug, locale) => {
+  if (!DEFAULT_API_BASE) return null;
+
   const url = `${DEFAULT_API_BASE}/api/legal/${encodeURIComponent(slug)}?locale=${encodeURIComponent(locale)}`;
   const response = await fetch(url, {
     method: "GET",
@@ -68,13 +79,45 @@ function safeParse(payload: unknown): LegalDocument | null {
 /**
  * Fetch the active LegalDocument for `slug` + `locale`.
  *
- * If the locale-specific document is missing, falls back to English once. All
- * exceptions and validation failures resolve to `null`.
+ * Production callers omit the third argument and go through the
+ * `'use cache'` path so Next.js 16 cacheComponents-aware pages can render
+ * inside `generateMetadata` / Suspense boundaries without tripping the
+ * "uncached data outside <Suspense>" prerender guard. Tests pass an explicit
+ * fetcher and skip the cache (the `'use cache'` directive rejects function-
+ * typed arguments as cache keys, so the test path must bypass it).
+ *
+ * Notes on the cache contract:
+ *  - `cacheLife("hours")` matches the legacy `next.revalidate: 300` window;
+ *    the underlying fetcher is left tag-aware so /web's webhook tag-invalidate
+ *    still works once we plumb it through.
+ *  - `notFound()` is intentionally NOT called here — `'use cache'` rejects
+ *    non-deterministic navigation side effects. Callers receive `null` and
+ *    decide whether to render a 404 themselves.
+ *
+ * If the locale-specific document is missing, falls back to English once.
+ * All exceptions and validation failures resolve to `null`.
  */
 export async function getLegalDocument(
   slug: string,
   locale: string,
-  fetcher: LegalDocumentFetcher = defaultLegalDocumentFetcher,
+  fetcher?: LegalDocumentFetcher,
+): Promise<LegalDocument | null> {
+  if (!fetcher) {
+    return cachedGetLegalDocument(slug, locale);
+  }
+  return resolveLegalDocument(slug, locale, fetcher);
+}
+
+async function cachedGetLegalDocument(slug: string, locale: string): Promise<LegalDocument | null> {
+  "use cache";
+  cacheLife("hours");
+  return resolveLegalDocument(slug, locale, defaultLegalDocumentFetcher);
+}
+
+async function resolveLegalDocument(
+  slug: string,
+  locale: string,
+  fetcher: LegalDocumentFetcher,
 ): Promise<LegalDocument | null> {
   const direct = await tryFetch(slug, locale, fetcher);
   if (direct) return direct;

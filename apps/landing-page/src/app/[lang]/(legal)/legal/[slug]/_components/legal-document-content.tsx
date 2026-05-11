@@ -7,6 +7,12 @@ import { getLegalDocument } from "@/lib/legal-documents";
  * Lives in a `_components/` directory so the parent `page.tsx` can keep
  * its strict Next.js 16 export shape (only default + generateMetadata).
  * Tests import this directly to bypass the page-level Suspense boundary.
+ *
+ * Cache contract: `getLegalDocument(slug, lang)` (no third arg) routes
+ * through the `"use cache"` path defined in `@/lib/legal-documents`, so this
+ * component itself stays a plain async server component — needed because
+ * `notFound()` (a non-deterministic navigation side effect) is forbidden
+ * inside `"use cache"` functions.
  */
 export async function LegalDocumentContent({ slug, lang }: { slug: string; lang: string }) {
   const doc = await getLegalDocument(slug, lang);
