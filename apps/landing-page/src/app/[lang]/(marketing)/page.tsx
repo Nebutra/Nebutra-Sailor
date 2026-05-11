@@ -91,11 +91,7 @@ const PricingSection = dynamic(
   { loading: () => <SectionSkeleton minH="56rem" /> },
 );
 
-const PricingComparisonTable = dynamic(
-  () =>
-    import("@/components/landing/pricing-comparison-table").then((m) => m.PricingComparisonTable),
-  { loading: () => <SectionSkeleton minH="56rem" /> },
-);
+// PricingComparisonTable moved to /pricing page
 
 const FAQSection = dynamic(
   () => import("@/components/landing/faq-section").then((m) => m.FAQSection),
@@ -210,8 +206,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
         {/* 4. High-Contrast Pricing Investment Section */}
         <PricingSection />
 
-        {/* 4.5 Pricing Comparison Table — feature-by-feature breakdown */}
-        <PricingComparisonTable />
+        {/* 4.5 Pricing Comparison Table — moved to /pricing */}
 
         {/* 4.7 Social Proof Bar — moved to /about */}
 

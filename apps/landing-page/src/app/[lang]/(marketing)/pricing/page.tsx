@@ -5,6 +5,7 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar, PricingSection } from "@/components/landing";
+import { PricingComparisonTable } from "@/components/landing/pricing-comparison-table";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 
@@ -138,6 +139,9 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
             <PricingSection hideHeader />
           </Suspense>
         </div>
+
+        {/* Comparison Table — license tier breakdown */}
+        <PricingComparisonTable />
 
         {/* FAQ section */}
         <div className="mt-24">
