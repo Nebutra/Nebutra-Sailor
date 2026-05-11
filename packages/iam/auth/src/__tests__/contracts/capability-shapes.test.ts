@@ -119,16 +119,68 @@ describe("buildOrganizationsCapability — routes to auth.api.* endpoints", () =
     expect(result[1]?.slug).toBe("two");
   });
 
-  it("setActive() forwards headers and organizationId to auth.api.setActiveOrganization", async () => {
-    const setActiveOrganization = vi.fn(async () => undefined);
+  it("setActive() forwards headers + organizationId and requests returnHeaders from BA", async () => {
+    const setActiveOrganization = vi.fn(async () => ({
+      headers: new Headers({ "set-cookie": "better-auth.session_token=NEW; Path=/; HttpOnly" }),
+      response: { id: "org_42", name: "Acme", slug: "acme" },
+    }));
     const { buildOrganizationsCapability } = await import("../../providers/better-auth");
     const orgs = buildOrganizationsCapability(apiOf({ setActiveOrganization }));
     const req = new Request("http://x/test", { headers: { cookie: "session=abc" } });
-    await orgs.setActive(req, "org_42");
+    const result = await orgs.setActive(req, "org_42");
     expect(setActiveOrganization).toHaveBeenCalledWith({
       headers: req.headers,
       body: { organizationId: "org_42" },
+      returnHeaders: true,
     });
+    // Result shape: SetActiveResult { headers: Headers }
+    expect(result.headers).toBeInstanceOf(Headers);
+    expect(result.headers.get("set-cookie")).toBe(
+      "better-auth.session_token=NEW; Path=/; HttpOnly",
+    );
+  });
+
+  it("setActive() normalizes plain-object headers from BA into a Headers instance", async () => {
+    // Some BA versions / internal transports surface headers as a plain
+    // record rather than a Headers instance. The capability must normalize.
+    const setActiveOrganization = vi.fn(async () => ({
+      headers: { "set-cookie": "better-auth.session_token=PLAIN" },
+      response: { id: "org_1" },
+    }));
+    const { buildOrganizationsCapability } = await import("../../providers/better-auth");
+    const orgs = buildOrganizationsCapability(apiOf({ setActiveOrganization }));
+    const req = new Request("http://x/test");
+    const result = await orgs.setActive(req, "org_1");
+    expect(result.headers).toBeInstanceOf(Headers);
+    expect(result.headers.get("set-cookie")).toBe("better-auth.session_token=PLAIN");
+  });
+
+  it("setActive() returns an empty Headers instance when BA emits no Set-Cookie", async () => {
+    // BA can return null headers / no headers when the active org didn't change.
+    // The contract still requires a valid Headers instance (never null / undefined).
+    const setActiveOrganization = vi.fn(async () => ({
+      headers: new Headers(),
+      response: { id: "org_3" },
+    }));
+    const { buildOrganizationsCapability } = await import("../../providers/better-auth");
+    const orgs = buildOrganizationsCapability(apiOf({ setActiveOrganization }));
+    const req = new Request("http://x/test");
+    const result = await orgs.setActive(req, "org_3");
+    expect(result.headers).toBeInstanceOf(Headers);
+    expect(result.headers.get("set-cookie")).toBeNull();
+  });
+
+  it("setActive() propagates BA errors (e.g. user is not a member) without swallowing", async () => {
+    // BA throws APIError when the user isn't a member of the target org.
+    // Capability must let it propagate — callers need to surface 403 / etc.
+    const apiErr = new Error("user is not a member of the organization");
+    const setActiveOrganization = vi.fn(async () => {
+      throw apiErr;
+    });
+    const { buildOrganizationsCapability } = await import("../../providers/better-auth");
+    const orgs = buildOrganizationsCapability(apiOf({ setActiveOrganization }));
+    const req = new Request("http://x/test");
+    await expect(orgs.setActive(req, "org_forbidden")).rejects.toThrow(/not a member/);
   });
 
   it("invite() returns the invitationId from auth.api.createInvitation", async () => {

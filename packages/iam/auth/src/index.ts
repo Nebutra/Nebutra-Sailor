@@ -48,6 +48,7 @@ export type {
   CreateUserInput,
   Organization,
   Session,
+  SetActiveResult,
   SignInMethod,
   User,
 } from "./types";

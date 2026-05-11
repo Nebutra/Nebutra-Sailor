@@ -24,6 +24,7 @@ import type {
   OrganizationCapability,
   PasskeyCapability,
   Session,
+  SetActiveResult,
   SignInMethod,
   SignInResult,
   TwoFactorCapability,
@@ -186,14 +187,31 @@ export function buildOrganizationsCapability(
       return raw.map(normalizeOrganization);
     },
 
-    async setActive(req, organizationId) {
+    async setActive(req, organizationId): Promise<SetActiveResult> {
       const api = await getApi();
       const fn = api.setActiveOrganization;
       if (!fn) {
         throw new Error("Better Auth: setActiveOrganization endpoint missing.");
       }
       // BA expects headers for session resolution and body for the org id.
-      await fn({ headers: req.headers, body: { organizationId } });
+      // `returnHeaders: true` flips BA's API into the `{ headers, response }`
+      // shape so we can forward its `Set-Cookie` (rotating the session token
+      // to bind it to the new active org) up to the HTTP layer.
+      const raw = (await fn({
+        headers: req.headers,
+        body: { organizationId },
+        returnHeaders: true,
+      })) as { headers?: unknown; response?: unknown } | null | undefined;
+
+      // Normalize: BA returns a Headers instance in normal builds, but some
+      // transports / older versions surface a plain record. Either way we
+      // hand back a real Headers so callers can `new Response(..., result)`.
+      const rawHeaders = raw?.headers;
+      const headers =
+        rawHeaders instanceof Headers
+          ? rawHeaders
+          : new Headers((rawHeaders as Record<string, string> | undefined) ?? {});
+      return { headers };
     },
 
     async invite({ email, organizationId, role }) {

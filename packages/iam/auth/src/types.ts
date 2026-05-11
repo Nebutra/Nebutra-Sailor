@@ -152,6 +152,31 @@ export interface CreateOrgInput {
 // `undefined` — consumers go through `@clerk/nextjs` directly. NextAuth's
 // capabilities are all false; its shapes are likewise undefined.
 
+/**
+ * Result of {@link OrganizationCapability.setActive}.
+ *
+ * Callers MUST forward `headers` (typically a `Set-Cookie` rotating the
+ * Better Auth session token to bind it to the new active org) onto the
+ * outgoing HTTP response. Without this, the active organization selection
+ * will not persist across subsequent requests.
+ *
+ * @example
+ * ```ts
+ * const result = await auth.organizations!.setActive(req, orgId);
+ * return new Response(JSON.stringify({ ok: true }), { headers: result.headers });
+ * ```
+ *
+ * Design note (Phase 2.3 / ADR D6): we surface this as an explicit return
+ * value rather than hiding the cookie write inside middleware because there
+ * is exactly ONE consumer of `setActive` in the codebase (the org-switcher
+ * route). Following the Linear / Vercel SDK convention for low-consumer
+ * APIs, explicit beats magical.
+ */
+export interface SetActiveResult {
+  /** Response headers from the provider — forward to the outgoing HTTP response. */
+  headers: Headers;
+}
+
 /** Multi-tenant organization management. */
 export interface OrganizationCapability {
   /** Create a new organization. */
@@ -164,9 +189,15 @@ export interface OrganizationCapability {
   list(userId: string): Promise<Organization[]>;
   /**
    * Set the active organization on a request's session.
-   * Providers may write Set-Cookie headers via the request's underlying transport.
+   *
+   * Returns a {@link SetActiveResult} carrying the provider's response
+   * headers — callers MUST forward these (typically `Set-Cookie`) onto the
+   * outgoing HTTP response, otherwise the selection will not persist.
+   *
+   * Throws when the user is not a member of the target organization,
+   * the org does not exist, or the provider rejects the request.
    */
-  setActive(req: Request, organizationId: string): Promise<void>;
+  setActive(req: Request, organizationId: string): Promise<SetActiveResult>;
   /** Invite a user to an organization by email. */
   invite(input: {
     email: string;
