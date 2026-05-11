@@ -55,8 +55,9 @@ describe("/api/account/export", () => {
     mockedMembers.mockReset();
     mockedAudit.mockReset();
     mockedInvitations.mockReset();
-    const mod = await loadRoute();
-    mod.__resetExportStoreForTests();
+    await loadRoute();
+    const { __resetExportStoreForTests } = await import("@/app/api/account/export/_store");
+    __resetExportStoreForTests();
   });
 
   afterEach(() => {

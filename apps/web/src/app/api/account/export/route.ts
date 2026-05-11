@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { type ExportRecord, exportStore } from "./_store";
 
 /**
  * GDPR Article 20 + PIPL Article 45 — right to data portability.
@@ -21,20 +22,6 @@ import { db } from "@/lib/db";
  */
 
 const INLINE_LIMIT_BYTES = 500 * 1024; // 500 KB
-
-interface ExportRecord {
-  exportId: string;
-  userId: string;
-  status: "pending" | "ready" | "failed";
-  estimatedReadyAt: string;
-  createdAt: string;
-  data?: unknown;
-  downloadUrl?: string;
-  sizeBytes: number;
-}
-
-// In-memory store — replaced by durable storage when wired to a queue.
-const exportStore = new Map<string, ExportRecord>();
 
 async function buildExportPayload(userId: string) {
   const [user, memberships, auditEvents, invitations] = await Promise.all([
@@ -194,9 +181,4 @@ export async function GET(request: Request) {
     });
     return NextResponse.json({ error: "Failed to fetch export." }, { status: 500 });
   }
-}
-
-/** @internal — exposed for tests so they can clear in-memory state. */
-export function __resetExportStoreForTests() {
-  exportStore.clear();
 }
