@@ -38,10 +38,11 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  // `output: "standalone"` removed — only consumed by the Docker path
-  // (apps/landing-page/Dockerfile sets it via env at build time if needed).
-  // Vercel ignores it, and emitting a standalone trace adds material work
-  // to every build. See git history if Docker self-hosting is reactivated.
+  // `output: "standalone"` is gated by env so Vercel builds (which ignore it)
+  // skip the standalone trace cost, while Docker / ECS deploys can opt in by
+  // setting NEXT_OUTPUT=standalone. The ECS workflow at .github/workflows/
+  // deploy-ecs.yml relies on .next/standalone/ existing.
+  output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
 
   // Enable Partial Prerendering — Next.js 16 merged experimental.ppr into cacheComponents.
   cacheComponents: true,

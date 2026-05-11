@@ -196,6 +196,10 @@ jobs:
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
+          # Force standalone output for ECS — landing-page's next.config gates
+          # `output: "standalone"` on this env so Vercel builds skip the trace
+          # cost. ECS workflow needs the standalone bundle for assembly below.
+          NEXT_OUTPUT: standalone
         run: pnpm --filter ${{ matrix.package }} build
 
       # Next standalone output is at <workspace>/.next/standalone/. We need to
