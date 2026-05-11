@@ -1,5 +1,6 @@
 "use client";
 
+import { isAuthFeatureEnabledSync } from "@nebutra/auth";
 import { useUser } from "@nebutra/auth/client";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -102,9 +103,21 @@ export function SecuritySettingsClient() {
     void refreshSecurityState();
   }, [refreshSecurityState]);
 
+  // Phase 2.4 dev rollout gates — read once at render via the sync flag layer.
+  // Env-only resolution keeps this SSR/RSC-safe; prod rollout switches to
+  // `@nebutra/feature-flags` via the async sibling, but the security area
+  // renders top-down so the sync read is sufficient here.
+  const passkeysFlag = isAuthFeatureEnabledSync("passkeys");
+  const twoFactorFlag = isAuthFeatureEnabledSync("twoFactor");
+
   const capabilities = useMemo(
-    () => buildSecurityCapabilities({ accounts, authProvider }),
-    [accounts, authProvider],
+    () =>
+      buildSecurityCapabilities({
+        accounts,
+        authProvider,
+        featureFlags: { passkeys: passkeysFlag, twoFactor: twoFactorFlag },
+      }),
+    [accounts, authProvider, passkeysFlag, twoFactorFlag],
   );
 
   if (!isLoaded) {

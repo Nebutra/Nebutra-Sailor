@@ -96,4 +96,59 @@ describe("buildSecurityCapabilities", () => {
       expect(oauthOnlyCaps.activeSessions.available).toBe(true);
     });
   });
+
+  describe("Phase 2.4 feature-flag gating", () => {
+    it("keeps passkeys unavailable when featureFlags.passkeys is omitted (legacy default)", () => {
+      const caps = buildSecurityCapabilities({
+        accounts: [credentialAccount],
+        authProvider: "better-auth",
+      });
+
+      expect(caps.passkeys.available).toBe(false);
+      expect(caps.passkeys.reason).toMatch(/feature flag|not exposed/i);
+    });
+
+    it("flips passkeys available when featureFlags.passkeys is true", () => {
+      const caps = buildSecurityCapabilities({
+        accounts: [credentialAccount],
+        authProvider: "better-auth",
+        featureFlags: { passkeys: true },
+      });
+
+      expect(caps.passkeys.available).toBe(true);
+      expect(caps.passkeys.reason).toMatch(/passkey/i);
+    });
+
+    it("gates twoFactor on the feature flag in addition to credential account", () => {
+      const flagOff = buildSecurityCapabilities({
+        accounts: [credentialAccount],
+        authProvider: "better-auth",
+        featureFlags: { twoFactor: false },
+      });
+
+      expect(flagOff.twoFactor.available).toBe(false);
+      expect(flagOff.twoFactor.reason).toMatch(/feature flag/i);
+    });
+
+    it("keeps twoFactor available with explicit flag-on + credential account", () => {
+      const caps = buildSecurityCapabilities({
+        accounts: [credentialAccount],
+        authProvider: "better-auth",
+        featureFlags: { twoFactor: true },
+      });
+
+      expect(caps.twoFactor.available).toBe(true);
+    });
+
+    it("keeps twoFactor unavailable when flag is on but no credential account", () => {
+      const caps = buildSecurityCapabilities({
+        accounts: [googleAccount],
+        authProvider: "better-auth",
+        featureFlags: { twoFactor: true },
+      });
+
+      expect(caps.twoFactor.available).toBe(false);
+      expect(caps.twoFactor.requiresPasswordAccount).toBe(true);
+    });
+  });
 });
