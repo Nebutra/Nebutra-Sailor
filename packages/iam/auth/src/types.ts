@@ -137,6 +137,87 @@ export interface CreateOrgInput {
   createdByUserId: string;
 }
 
+// ─── Optional Capability Shapes (per ADR D5 / Phase 1.3) ───
+//
+// These are typed groupings of related methods that providers MAY implement.
+// They are **optional properties** on AuthProvider — apps MUST type-narrow via
+// the `capabilities` probe before calling, e.g.:
+//
+//   if (auth.capabilities.organizations && auth.organizations) {
+//     await auth.organizations.create({ name: "Acme" });
+//   }
+//
+// Per ADR D2, Better Auth is the only provider that exposes these shapes.
+// Clerk reports `capabilities.passkeys === true` but `provider.passkeys` is
+// `undefined` — consumers go through `@clerk/nextjs` directly. NextAuth's
+// capabilities are all false; its shapes are likewise undefined.
+
+/** Multi-tenant organization management. */
+export interface OrganizationCapability {
+  /** Create a new organization. */
+  create(input: {
+    name: string;
+    slug?: string;
+    metadata?: Record<string, unknown>;
+  }): Promise<Organization>;
+  /** List organizations a user belongs to. */
+  list(userId: string): Promise<Organization[]>;
+  /**
+   * Set the active organization on a request's session.
+   * Providers may write Set-Cookie headers via the request's underlying transport.
+   */
+  setActive(req: Request, organizationId: string): Promise<void>;
+  /** Invite a user to an organization by email. */
+  invite(input: {
+    email: string;
+    organizationId: string;
+    role?: string;
+  }): Promise<{ invitationId: string }>;
+  /** Accept a pending invitation. */
+  acceptInvite(invitationId: string, userId: string): Promise<{ organizationId: string }>;
+  /** List members of an organization. */
+  members(organizationId: string): Promise<Array<{ userId: string; role: string; joinedAt: Date }>>;
+  /** Remove a member from an organization. */
+  removeMember(organizationId: string, userId: string): Promise<void>;
+  /** Change a member's role. */
+  updateMemberRole(organizationId: string, userId: string, role: string): Promise<void>;
+}
+
+/** WebAuthn / passkey enrollment + authentication. */
+export interface PasskeyCapability {
+  /** Begin passkey registration — returns a challenge for the browser to sign. */
+  register(input: {
+    userId: string;
+    name?: string;
+  }): Promise<{ challenge: string; options: unknown }>;
+  /** Complete passkey authentication using the signed challenge response. */
+  authenticate(input: { challenge: string; response: unknown }): Promise<SignInResult>;
+  /** List a user's registered passkeys. */
+  list(userId: string): Promise<Array<{ id: string; name?: string; createdAt: Date }>>;
+  /** Revoke a passkey by id. */
+  revoke(passkeyId: string): Promise<void>;
+}
+
+/** TOTP / authenticator-app second factor. */
+export interface TwoFactorCapability {
+  /** Enroll a user — returns TOTP secret + provisioning URI + backup codes. */
+  enroll(userId: string): Promise<{ secret: string; otpauthUrl: string; backupCodes: string[] }>;
+  /** Verify a TOTP / backup code. */
+  verify(input: { userId: string; code: string }): Promise<{ ok: boolean }>;
+  /** Regenerate (or view current) backup codes. */
+  backupCodes(userId: string): Promise<{ codes: string[] }>;
+  /** Disable 2FA for a user. */
+  disable(userId: string): Promise<void>;
+}
+
+/** Passwordless email magic-link sign-in. */
+export interface MagicLinkCapability {
+  /** Send a magic link to the given email. */
+  send(input: { email: string; redirectTo?: string }): Promise<{ ok: boolean }>;
+  /** Verify the token from a clicked magic link and return a sign-in result. */
+  verify(token: string): Promise<SignInResult>;
+}
+
 // ─── Provider Interface ───
 
 /**
@@ -200,4 +281,30 @@ export interface AuthProvider {
 
   /** Handle an incoming webhook from the auth provider. */
   handleWebhook(request: Request): Promise<void>;
+
+  // ── Optional capability shapes (per ADR D5) ──
+  //
+  // Present only when the underlying provider plugin / SDK exposes the
+  // feature at runtime. Apps must type-narrow via `capabilities.<feature>`
+  // before calling — see the docs on each interface above.
+
+  // Note: the explicit `| undefined` on each optional capability is required
+  // because tsconfig.base sets `exactOptionalPropertyTypes: true`. With that
+  // flag, `foo?: T` means "either omitted OR of exactly type T" — providers
+  // that opt out of a capability by writing `{ organizations: undefined }`
+  // would otherwise be rejected. Adding `| undefined` keeps the optional
+  // semantics for consumers (narrow via `capabilities.<feature>`) while
+  // letting providers be explicit about which capabilities they don't ship.
+
+  /** Organization management — present when `capabilities.organizations === true`. */
+  readonly organizations?: OrganizationCapability | undefined;
+
+  /** Passkey / WebAuthn flows — present when `capabilities.passkeys === true`. */
+  readonly passkeys?: PasskeyCapability | undefined;
+
+  /** TOTP / 2FA flows — present when `capabilities.twoFactor === true`. */
+  readonly twoFactor?: TwoFactorCapability | undefined;
+
+  /** Magic-link sign-in — present when `capabilities.magicLink === true`. */
+  readonly magicLink?: MagicLinkCapability | undefined;
 }
