@@ -1906,6 +1906,9 @@ importers:
       '@nebutra/email':
         specifier: workspace:*
         version: link:../../integrations/email
+      '@nebutra/feature-flags':
+        specifier: workspace:*
+        version: link:../../platform/feature-flags
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../platform/logger

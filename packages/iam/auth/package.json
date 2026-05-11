@@ -34,7 +34,8 @@
     "react": "^19.0.0",
     "@clerk/nextjs": ">=6.0.0",
     "next-auth": "^5.0.0-beta.20",
-    "@nebutra/db": "workspace:*"
+    "@nebutra/db": "workspace:*",
+    "@nebutra/feature-flags": "workspace:*"
   },
   "peerDependenciesMeta": {
     "@clerk/nextjs": {
@@ -44,6 +45,9 @@
       "optional": true
     },
     "@nebutra/db": {
+      "optional": true
+    },
+    "@nebutra/feature-flags": {
       "optional": true
     }
   }
