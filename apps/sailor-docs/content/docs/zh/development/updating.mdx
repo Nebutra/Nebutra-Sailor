@@ -75,11 +75,11 @@ pnpm db:generate
 pnpm generate:api-types
 ```
 
-生成的类型位于 `packages/api-types/src/generated/`，供 `apps/web` 用于类型安全的 API 调用。这些文件已被 gitignore，在 API 路由变更后必须在本地重新生成。
+生成的类型位于 `apps/web/src/lib/api/types.generated.ts`，通过 `apps/web/src/lib/api/client.ts` 中的 `openapi-fetch` 消费（`getTypedApi` / `browserApiClient`）。仓库中提交了 stub 以便生成前也能通过 typecheck，CI 会覆盖它。
 
 需要重新生成的信号：
 - 关于缺少 API 请求/响应类型的 TypeScript 错误
-- `apps/api-gateway/src/routes/` 中新增了端点
+- `backends/gateway/src/routes/` 中新增了端点
 - 现有端点的签名发生了变更
 
 ## Turborepo 缓存失效

@@ -157,7 +157,7 @@ GitHub Copilot reads `.github/copilot-instructions.md` in Copilot Chat for repos
 ```bash
 # Use GitHub Copilot CLI for terminal-native AI assistance
 gh copilot suggest "create a pnpm script that seeds test data"
-gh copilot explain "$(cat apps/api-gateway/src/middleware/rate-limit.ts)"
+gh copilot explain "$(cat backends/gateway/src/middleware/rate-limit.ts)"
 ```
 
 ---
@@ -365,7 +365,7 @@ and @nebutra/ui/components. Use AnimateIn for the dropdown entrance."
 
 ```
 # ✅ Good
-"Add a Hono route in apps/api-gateway/src/routes/billing.ts that
+"Add a Hono route in backends/gateway/src/routes/billing.ts that
 returns the current quota usage. Use @nebutra/metering and require
 the billing:read permission via requirePermission middleware."
 

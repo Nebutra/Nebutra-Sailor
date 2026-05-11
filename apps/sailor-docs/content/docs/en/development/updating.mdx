@@ -75,11 +75,11 @@ Regenerate the OpenAPI TypeScript types whenever the API gateway's OpenAPI spec 
 pnpm generate:api-types
 ```
 
-The generated types live in `packages/api-types/src/generated/` and are used by `apps/web` for type-safe API calls. They are gitignored and must be regenerated locally after API route changes.
+The generated types live in `apps/web/src/lib/api/types.generated.ts` and are consumed via `openapi-fetch` from `apps/web/src/lib/api/client.ts` (`getTypedApi` / `browserApiClient`). A stub is committed so the project typechecks before generation; CI overwrites it.
 
 Signs you need to regenerate:
 - TypeScript errors about missing API request/response types
-- New endpoints added to `apps/api-gateway/src/routes/`
+- New endpoints added to `backends/gateway/src/routes/`
 - Existing endpoint signatures changed
 
 ## Turborepo cache invalidation

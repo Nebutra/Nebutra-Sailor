@@ -11,7 +11,7 @@ Nebutra-Sailor deploys as **three separate Vercel projects** — one for each pu
 |---------------|-----|-------------------|
 | `nebutra-web` | `apps/web` | `app.yourdomain.com` |
 | `nebutra-landing` | `apps/landing-page` | `yourdomain.com` |
-| `nebutra-api` | `apps/api-gateway` | `api.yourdomain.com` |
+| `nebutra-api` | `backends/gateway` | `api.yourdomain.com` |
 
 ## Prerequisites
 
@@ -83,11 +83,11 @@ Nebutra-Sailor deploys as **three separate Vercel projects** — one for each pu
 
 Each app includes a `vercel.json` that configures build commands, output directories, and headers. Do not delete these files.
 
-Key settings in `apps/api-gateway/vercel.json`:
+Key settings in `backends/gateway/vercel.json`:
 
 ```json
 {
-  "buildCommand": "pnpm turbo run build --filter=apps/api-gateway",
+  "buildCommand": "pnpm turbo run build --filter=backends/gateway",
   "outputDirectory": "dist",
   "functions": {
     "src/index.ts": {

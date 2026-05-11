@@ -118,7 +118,7 @@ export async function GET() {
 
 当多个写操作必须一起成功或失败时，使用 Prisma 交互式事务：
 
-```typescript apps/api-gateway/src/routes/organizations.ts
+```typescript backends/gateway/src/routes/organizations.ts
 import { db } from "@nebutra/db";
 
 async function createOrganizationWithOwner(name: string, userId: string) {
@@ -152,7 +152,7 @@ async function createOrganizationWithOwner(name: string, userId: string) {
 
 Prisma 抛出类型化错误。显式处理它们以返回有意义的响应：
 
-```typescript apps/api-gateway/src/lib/db-errors.ts
+```typescript backends/gateway/src/lib/db-errors.ts
 import { Prisma } from "@prisma/client";
 
 export function handlePrismaError(error: unknown): never {

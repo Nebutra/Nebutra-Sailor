@@ -51,7 +51,7 @@ The infrastructure-only stack (`docker-compose.infra.yml`) contains only `postgr
       <Tab title="Individual app">
         ```bash
         docker build -f apps/web/Dockerfile -t nebutra/web .
-        docker build -f apps/api-gateway/Dockerfile -t nebutra/api-gateway .
+        docker build -f backends/gateway/Dockerfile -t nebutra/api-gateway .
         docker build -f apps/landing-page/Dockerfile -t nebutra/landing-page .
         ```
         Build context must be the repo root (`.`) so that Turborepo can access shared packages.

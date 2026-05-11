@@ -49,7 +49,7 @@ Plan hierarchy is `free < pro < enterprise`. `requirePlan("pro")` allows both `p
 
 Protect API routes with `requirePlan` as middleware:
 
-```typescript apps/api-gateway/src/routes/exports.ts
+```typescript backends/gateway/src/routes/exports.ts
 import { requirePlan } from "@nebutra/billing";
 import { getCurrentTenant } from "@nebutra/tenant";
 

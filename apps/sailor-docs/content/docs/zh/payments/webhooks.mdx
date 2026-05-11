@@ -11,7 +11,7 @@ description: 处理 Stripe Webhook 事件，实现订阅生命周期管理、发
 POST /api/v1/webhooks/stripe
 ```
 
-该端点已预置于 `apps/api-gateway/src/routes/webhooks/stripe.ts`。您无需编写路由逻辑——仅在需要处理新事件时添加对应的处理程序。
+该端点已预置于 `backends/gateway/src/routes/webhooks/stripe.ts`。您无需编写路由逻辑——仅在需要处理新事件时添加对应的处理程序。
 
 ## 签名验证
 
@@ -21,7 +21,7 @@ POST /api/v1/webhooks/stripe
 
 Stripe 使用 `Stripe-Signature` 请求头对每个请求进行签名。处理程序使用 `STRIPE_WEBHOOK_SECRET` 进行验证：
 
-```typescript apps/api-gateway/src/routes/webhooks/stripe.ts
+```typescript backends/gateway/src/routes/webhooks/stripe.ts
 import Stripe from "stripe";
 import { PLANS } from "@nebutra/billing";
 import { db } from "@nebutra/db";

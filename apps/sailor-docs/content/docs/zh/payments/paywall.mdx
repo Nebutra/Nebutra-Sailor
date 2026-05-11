@@ -49,7 +49,7 @@ export default async function AnalyticsPage() {
 
 使用 `requirePlan` 作为中间件保护 API 路由：
 
-```typescript apps/api-gateway/src/routes/exports.ts
+```typescript backends/gateway/src/routes/exports.ts
 import { requirePlan } from "@nebutra/billing";
 import { getCurrentTenant } from "@nebutra/tenant";
 

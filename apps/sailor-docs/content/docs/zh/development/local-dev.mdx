@@ -60,7 +60,7 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
     为您计划运行的每个应用复制示例文件：
     ```bash
     cp apps/web/.env.example           apps/web/.env.local
-    cp apps/api-gateway/.env.example   apps/api-gateway/.env.local
+    cp backends/gateway/.env.example   backends/gateway/.env.local
     cp apps/landing-page/.env.example  apps/landing-page/.env.local
     ```
     然后打开每个 `.env.local` 文件并填写您的密钥。完整的变量参考请参阅下方的[环境变量](#环境变量)章节。
@@ -95,7 +95,7 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
         ```bash
         pnpm dev:dashboard
         ```
-        启动 `apps/web`（端口 3000）和 `apps/api-gateway`（端口 3001）。
+        启动 `apps/web`（端口 3000）和 `backends/gateway`（端口 3001）。
       </Tab>
       <Tab title="仅营销网站">
         ```bash
@@ -124,7 +124,7 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
 
 ## 环境变量
 
-### `apps/api-gateway`
+### `backends/gateway`
 
 | 变量 | 是否必填 | 说明 |
 |------|---------|------|

@@ -11,7 +11,7 @@ Nebutra-Sailor 以**三个独立 Vercel 项目**的形式部署 — 每个公开
 |------------|------|---------|
 | `nebutra-web` | `apps/web` | `app.yourdomain.com` |
 | `nebutra-landing` | `apps/landing-page` | `yourdomain.com` |
-| `nebutra-api` | `apps/api-gateway` | `api.yourdomain.com` |
+| `nebutra-api` | `backends/gateway` | `api.yourdomain.com` |
 
 ## 前置条件
 
@@ -83,11 +83,11 @@ Nebutra-Sailor 以**三个独立 Vercel 项目**的形式部署 — 每个公开
 
 每个应用都包含一个 `vercel.json`，用于配置构建命令、输出目录和请求头。请勿删除这些文件。
 
-`apps/api-gateway/vercel.json` 中的关键配置：
+`backends/gateway/vercel.json` 中的关键配置：
 
 ```json
 {
-  "buildCommand": "pnpm turbo run build --filter=apps/api-gateway",
+  "buildCommand": "pnpm turbo run build --filter=backends/gateway",
   "outputDirectory": "dist",
   "functions": {
     "src/index.ts": {

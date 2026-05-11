@@ -55,7 +55,7 @@ nebutra-sailor/
 |-----|------|------|---------|
 | `apps/landing-page` | 3002 | Next.js 16 + Tailwind v4 | next-intl、Sanity 客户端、@nebutra/ui |
 | `apps/web` | 3000 | Next.js 16 + Tailwind v4 | Clerk、@nebutra/billing、@nebutra/permissions |
-| `apps/api-gateway` | 3001 | Hono + TypeScript | @hono/zod-openapi、@nebutra/tenant、@nebutra/metering |
+| `backends/gateway` | 3001 | Hono + TypeScript | @hono/zod-openapi、@nebutra/tenant、@nebutra/metering |
 | `apps/storybook` | 6006 | Storybook 8.x | @nebutra/ui、@nebutra/tokens、@nebutra/icons |
 | `apps/design-docs` | 3003 | Next.js 16 + Fumadocs | @nebutra/ui、@nebutra/tokens |
 | `apps/studio` | 3333 | Sanity Studio v5 | sanity、@sanity/vision |
@@ -107,7 +107,7 @@ nebutra-sailor/
 |-----------|---------|
 | 添加新的控制台页面 | `apps/web/src/app/(dashboard)/` |
 | 添加新的营销页面 | `apps/landing-page/src/app/[lang]/` |
-| 添加新的 API 路由 | `apps/api-gateway/src/routes/` |
+| 添加新的 API 路由 | `backends/gateway/src/routes/` |
 | 添加新的 UI 组件 | `packages/design/ui/src/components/` + `apps/storybook/` 中的故事文件 |
 | 添加新的布局封装组件 | `packages/design/ui/src/layout/` |
 | 添加新的设计 Token | `packages/design/tokens/styles.css` |

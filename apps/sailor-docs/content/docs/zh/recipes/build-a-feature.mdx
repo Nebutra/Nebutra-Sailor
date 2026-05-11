@@ -63,7 +63,7 @@ description: 端到端实战指南——从 Prisma 模式到已部署功能。�
 <Steps>
   <Step title="创建路由文件">
     ```typescript
-    // apps/api-gateway/src/routes/analytics.ts
+    // backends/gateway/src/routes/analytics.ts
     import { Hono } from "hono";
     import { zValidator } from "@hono/zod-validator";
     import { z } from "zod";
@@ -115,7 +115,7 @@ description: 端到端实战指南——从 Prisma 模式到已部署功能。�
   </Step>
   <Step title="注册路由">
     ```typescript
-    // apps/api-gateway/src/index.ts
+    // backends/gateway/src/index.ts
     import { analyticsRouter } from "./routes/analytics";
 
     app.route("/api/v1/analytics", analyticsRouter);
@@ -137,10 +137,15 @@ description: 端到端实战指南——从 Prisma 模式到已部署功能。�
 pnpm generate:api-types
 ```
 
-这会运行 OpenAPI 到 TypeScript 的生成流水线，并将更新后的类型写入 `packages/api-client/src/types.gen.ts`。有类型的客户端可通过以下方式使用：
+这会运行 `openapi-typescript` 流水线（脚本：`scripts/generate-api-types.ts`），从 `backends/gateway/openapi.json` 读取规范，写入 `apps/web/src/lib/api/types.generated.ts`。基于 `openapi-fetch` 的有类型客户端可通过以下方式使用：
 
 ```typescript
-import { apiClient } from "@/lib/api-client";
+// Server Components / route handlers（自动转发 Clerk JWT）：
+import { getTypedApi } from "@/lib/api/client";
+const api = await getTypedApi();
+
+// Client Components：
+import { browserApiClient } from "@/lib/api/client";
 ```
 
 ---
@@ -160,24 +165,25 @@ import { apiClient } from "@/lib/api-client";
     import { PageHeader } from "@nebutra/ui/layout";
     import { LoadingState, ErrorState } from "@nebutra/ui/layout";
     import { requireAuth, getTenantContext } from "@/lib/auth";
-    import { apiClient } from "@/lib/api-client";
+    import { getTypedApi } from "@/lib/api/client";
     import { AnalyticsChart } from "./_components/analytics-chart";
 
     export const metadata = { title: "分析" };
 
     async function AnalyticsData() {
       const { tenantId } = await getTenantContext();
+      const api = await getTypedApi();
 
-      const response = await apiClient.get("/api/v1/analytics/usage", {
+      const { data, error } = await api.GET("/api/v1/analytics/usage", {
         params: { query: { meterId: "api_calls", days: 30 } },
         next: { revalidate: 300 },   // 缓存 5 分钟
       });
 
-      if (!response.data.success) {
+      if (error || !data?.success) {
         return <ErrorState message="加载分析数据失败" />;
       }
 
-      return <AnalyticsChart series={response.data.data.series} />;
+      return <AnalyticsChart series={data.data.series} />;
     }
 
     export default async function AnalyticsPage() {
@@ -410,7 +416,7 @@ export const mainNavItems: NavItem[] = [
 ### Vitest 单元测试——API 处理器
 
 ```typescript
-// apps/api-gateway/src/routes/analytics.test.ts
+// backends/gateway/src/routes/analytics.test.ts
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { testClient } from "hono/testing";
 import { analyticsRouter } from "./analytics";
@@ -455,7 +461,7 @@ describe("GET /usage", () => {
 运行命令：
 
 ```bash
-pnpm --filter @nebutra/api-gateway test
+pnpm --filter @nebutra/gateway test
 ```
 
 ### Playwright E2E 测试

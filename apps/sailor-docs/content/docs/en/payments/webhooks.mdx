@@ -11,7 +11,7 @@ All Stripe events are delivered to a single endpoint on the API gateway:
 POST /api/v1/webhooks/stripe
 ```
 
-This endpoint is pre-built in `apps/api-gateway/src/routes/webhooks/stripe.ts`. You do not need to write the routing logic — only add handlers for new events if needed.
+This endpoint is pre-built in `backends/gateway/src/routes/webhooks/stripe.ts`. You do not need to write the routing logic — only add handlers for new events if needed.
 
 ## Signature verification
 
@@ -21,7 +21,7 @@ Always verify the Stripe webhook signature before processing any event. Skipping
 
 Stripe signs every request with the `Stripe-Signature` header. The handler verifies this against `STRIPE_WEBHOOK_SECRET`:
 
-```typescript apps/api-gateway/src/routes/webhooks/stripe.ts
+```typescript backends/gateway/src/routes/webhooks/stripe.ts
 import Stripe from "stripe";
 import { PLANS } from "@nebutra/billing";
 import { db } from "@nebutra/db";

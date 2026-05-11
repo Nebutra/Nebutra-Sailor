@@ -70,14 +70,14 @@ nebutra add button --if-not-exists        # 如已安装则跳过
     在 `packages/integrations/notifications/` 中创建 `package.json`、`tsconfig.json` 和 `src/index.ts`。
   </Tab>
   <Tab title="route">
-    在 `apps/api-gateway` 中创建 Hono API 路由：
+    在 `backends/gateway` 中创建 Hono API 路由：
 
     ```bash
     nebutra generate route projects
     nebutra gen route projects/members
     ```
 
-    创建 `apps/api-gateway/src/routes/projects.ts`，包含 GET 和 POST 处理器。
+    创建 `backends/gateway/src/routes/projects.ts`，包含 GET 和 POST 处理器。
   </Tab>
   <Tab title="component">
     创建带 Storybook Story 的 UI 组件：

@@ -51,7 +51,7 @@ Docker 部署将所有服务 — 应用、数据库和支撑服务 — 运行在
       <Tab title="单独构建某个应用">
         ```bash
         docker build -f apps/web/Dockerfile -t nebutra/web .
-        docker build -f apps/api-gateway/Dockerfile -t nebutra/api-gateway .
+        docker build -f backends/gateway/Dockerfile -t nebutra/api-gateway .
         docker build -f apps/landing-page/Dockerfile -t nebutra/landing-page .
         ```
         构建上下文必须是仓库根目录（`.`），以便 Turborepo 能访问共享包。

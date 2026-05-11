@@ -63,7 +63,7 @@ Create the analytics route in the api-gateway. The endpoint reads the last 30 da
 <Steps>
   <Step title="Create the route file">
     ```typescript
-    // apps/api-gateway/src/routes/analytics.ts
+    // backends/gateway/src/routes/analytics.ts
     import { Hono } from "hono";
     import { zValidator } from "@hono/zod-validator";
     import { z } from "zod";
@@ -115,7 +115,7 @@ Create the analytics route in the api-gateway. The endpoint reads the last 30 da
   </Step>
   <Step title="Register the router">
     ```typescript
-    // apps/api-gateway/src/index.ts
+    // backends/gateway/src/index.ts
     import { analyticsRouter } from "./routes/analytics";
 
     app.route("/api/v1/analytics", analyticsRouter);
@@ -137,10 +137,15 @@ After adding the endpoint, regenerate the typed API client so the frontend gets 
 pnpm generate:api-types
 ```
 
-This runs the OpenAPI-to-TypeScript pipeline and writes updated types to `packages/api-client/src/types.gen.ts`. The typed client is available via:
+This runs the `openapi-typescript` pipeline (script: `scripts/generate-api-types.ts`), reading `backends/gateway/openapi.json` and writing `apps/web/src/lib/api/types.generated.ts`. The typed client (built on `openapi-fetch`) is available from:
 
 ```typescript
-import { apiClient } from "@/lib/api-client";
+// Server Components / route handlers (with Clerk JWT forwarded):
+import { getTypedApi } from "@/lib/api/client";
+const api = await getTypedApi();
+
+// Client Components:
+import { browserApiClient } from "@/lib/api/client";
 ```
 
 ---
@@ -160,24 +165,25 @@ import { apiClient } from "@/lib/api-client";
     import { PageHeader } from "@nebutra/ui/layout";
     import { LoadingState, ErrorState } from "@nebutra/ui/layout";
     import { requireAuth, getTenantContext } from "@/lib/auth";
-    import { apiClient } from "@/lib/api-client";
+    import { getTypedApi } from "@/lib/api/client";
     import { AnalyticsChart } from "./_components/analytics-chart";
 
     export const metadata = { title: "Analytics" };
 
     async function AnalyticsData() {
       const { tenantId } = await getTenantContext();
+      const api = await getTypedApi();
 
-      const response = await apiClient.get("/api/v1/analytics/usage", {
+      const { data, error } = await api.GET("/api/v1/analytics/usage", {
         params: { query: { meterId: "api_calls", days: 30 } },
         next: { revalidate: 300 },   // cache for 5 minutes
       });
 
-      if (!response.data.success) {
+      if (error || !data?.success) {
         return <ErrorState message="Failed to load analytics data" />;
       }
 
-      return <AnalyticsChart series={response.data.data.series} />;
+      return <AnalyticsChart series={data.data.series} />;
     }
 
     export default async function AnalyticsPage() {
@@ -410,7 +416,7 @@ export const mainNavItems: NavItem[] = [
 ### Vitest unit test — API handler
 
 ```typescript
-// apps/api-gateway/src/routes/analytics.test.ts
+// backends/gateway/src/routes/analytics.test.ts
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { testClient } from "hono/testing";
 import { analyticsRouter } from "./analytics";
@@ -455,7 +461,7 @@ describe("GET /usage", () => {
 Run with:
 
 ```bash
-pnpm --filter @nebutra/api-gateway test
+pnpm --filter @nebutra/gateway test
 ```
 
 ### Playwright E2E test

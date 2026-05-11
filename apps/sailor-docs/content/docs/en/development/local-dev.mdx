@@ -60,7 +60,7 @@ Make sure the following are installed before you begin:
     Copy the example files for each app you plan to run:
     ```bash
     cp apps/web/.env.example           apps/web/.env.local
-    cp apps/api-gateway/.env.example   apps/api-gateway/.env.local
+    cp backends/gateway/.env.example   backends/gateway/.env.local
     cp apps/landing-page/.env.example  apps/landing-page/.env.local
     ```
     Then open each `.env.local` and fill in your secrets. See the [Environment variables](#environment-variables) section below for a full reference.
@@ -95,7 +95,7 @@ Make sure the following are installed before you begin:
         ```bash
         pnpm dev:dashboard
         ```
-        Starts `apps/web` (port 3000) and `apps/api-gateway` (port 3001).
+        Starts `apps/web` (port 3000) and `backends/gateway` (port 3001).
       </Tab>
       <Tab title="Marketing only">
         ```bash
@@ -124,7 +124,7 @@ Make sure the following are installed before you begin:
 
 ## Environment variables
 
-### `apps/api-gateway`
+### `backends/gateway`
 
 | Variable | Required | Description |
 |----------|----------|-------------|

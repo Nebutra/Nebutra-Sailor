@@ -85,7 +85,7 @@ For simple scheduled tasks that just need to hit an endpoint, configure Vercel c
 The Vercel cron runner calls your endpoint via an authenticated GET request. Verify the request is from Vercel using the `Authorization` header:
 
 ```typescript
-// apps/api-gateway/src/routes/cron.ts
+// backends/gateway/src/routes/cron.ts
 import { Hono } from "hono";
 
 const cron = new Hono();

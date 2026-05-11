@@ -85,7 +85,7 @@ export const weeklyUsageReport = inngest.createFunction(
 Vercel Cron 运行器通过带认证的 GET 请求调用你的接口。使用 `Authorization` 请求头验证请求来自 Vercel：
 
 ```typescript
-// apps/api-gateway/src/routes/cron.ts
+// backends/gateway/src/routes/cron.ts
 import { Hono } from "hono";
 
 const cron = new Hono();
