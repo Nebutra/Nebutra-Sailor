@@ -81,9 +81,10 @@ export async function isAuthFeatureEnabled(
   if (envValue !== undefined) return envValue;
 
   // 2. defer to @nebutra/feature-flags (optional peer — dynamic import)
+  // The package is resolvable at type-check time via the workspace, so no
+  // suppression is needed. At runtime the dynamic import is wrapped in
+  // try/catch so missing deps fall through to step 3.
   try {
-    // @ts-expect-error — optional peer, not declared in this package's deps.
-    // Resolved at runtime if the host app has @nebutra/feature-flags installed.
     const ff: unknown = await import("@nebutra/feature-flags");
     const flagName = `auth.${name}`;
     const context = {
