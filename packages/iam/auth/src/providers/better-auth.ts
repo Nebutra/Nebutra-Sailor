@@ -14,14 +14,67 @@
 
 import { logger } from "@nebutra/logger";
 import type {
+  AuthCapabilities,
   AuthConfig,
   AuthProvider,
   CreateOrgInput,
   CreateUserInput,
   Organization,
   Session,
+  SignInMethod,
+  SignInResult,
   User,
 } from "../types";
+
+/**
+ * Sentinel auth.api method names mapped to capabilities.
+ *
+ * Better Auth surfaces plugin functionality as additional methods on
+ * `auth.api` after plugins are registered. We probe by checking for the
+ * presence of one canonical method per plugin. If you add a new plugin
+ * and want to flip a capability, extend this map.
+ *
+ * Exported for tests so the probe contract is documented + verifiable.
+ */
+export const BETTER_AUTH_CAPABILITY_PROBES = {
+  organizations: ["listOrganizations", "createOrganization", "getFullOrganization"],
+  passkeys: ["signInPasskey", "generatePasskeyAuthenticationOptions", "verifyPasskey"],
+  twoFactor: ["verifyTwoFactor", "enableTwoFactor", "disableTwoFactor", "verifyTOTP"],
+  magicLink: ["signInMagicLink", "verifyMagicLink"],
+} as const;
+
+/**
+ * Probe a live Better Auth instance to see which plugins actually mounted.
+ *
+ * Better Auth's plugin loading is best-effort — if a plugin module is missing
+ * (e.g. `better-auth/plugins/passkey` not in the `exports` map) we log a
+ * warning and continue. The probe checks `auth.api` for the presence of
+ * sentinel method names so the resulting `AuthCapabilities` reflects the
+ * actual runtime surface, not config intent. Impersonation is currently not
+ * available as a first-class Better Auth plugin → always `false`.
+ */
+export function probeBetterAuthCapabilities(
+  auth: { api?: Record<string, unknown> } | null | undefined,
+): AuthCapabilities {
+  const api = (auth?.api ?? {}) as Record<string, unknown>;
+  const has = (names: readonly string[]): boolean =>
+    names.some((name) => typeof api[name] === "function");
+  return {
+    organizations: has(BETTER_AUTH_CAPABILITY_PROBES.organizations),
+    passkeys: has(BETTER_AUTH_CAPABILITY_PROBES.passkeys),
+    twoFactor: has(BETTER_AUTH_CAPABILITY_PROBES.twoFactor),
+    magicLink: has(BETTER_AUTH_CAPABILITY_PROBES.magicLink),
+    impersonation: false,
+  };
+}
+
+const ALL_FALSE_CAPABILITIES: AuthCapabilities = Object.freeze({
+  passkeys: false,
+  organizations: false,
+  twoFactor: false,
+  magicLink: false,
+  impersonation: false,
+});
 
 // ─── Helpers ───
 
@@ -241,8 +294,32 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     return authInstance;
   }
 
+  // Capabilities are cached after the first successful initAuth() so reads are
+  // synchronous. Before init runs we return the all-false default — apps must
+  // tolerate that and re-read after the first server-side call. Storybook /
+  // build-time imports therefore never trip lazy DB resolution just to read
+  // capabilities.
+  let cachedCapabilities: AuthCapabilities = ALL_FALSE_CAPABILITIES;
+
+  // Best-effort eager probe: fire-and-forget so the first network call
+  // doesn't pay the latency cost of init. Failures are intentionally
+  // swallowed — capabilities stays at the safe default and we'll try again
+  // on the next read path that calls getAuth().
+  void (async () => {
+    try {
+      const auth = await getAuth();
+      cachedCapabilities = Object.freeze(probeBetterAuthCapabilities(auth));
+    } catch {
+      // Build/test environments without a DB hit this path — that's fine.
+    }
+  })();
+
   return {
     provider: "better-auth",
+
+    get capabilities(): Readonly<AuthCapabilities> {
+      return cachedCapabilities;
+    },
 
     async getSession(request) {
       const auth = await getAuth();
@@ -425,6 +502,115 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         throw error instanceof Error
           ? error
           : new Error("Failed to create organization via Better Auth");
+      }
+    },
+
+    async signIn(method: SignInMethod): Promise<SignInResult> {
+      try {
+        const auth = await getAuth();
+        // Refresh the cached probe now that the api surface is materialized.
+        cachedCapabilities = Object.freeze(probeBetterAuthCapabilities(auth));
+        const api = auth.api as Record<
+          string,
+          ((...args: unknown[]) => Promise<unknown>) | undefined
+        >;
+
+        switch (method.type) {
+          case "email-password": {
+            const signInEmail = api.signInEmail;
+            if (!signInEmail) {
+              return {
+                ok: false,
+                error: {
+                  code: "unsupported",
+                  message: "Better Auth: signInEmail endpoint not available on auth.api.",
+                },
+              };
+            }
+            const raw = (await signInEmail({
+              body: { email: method.email, password: method.password },
+            })) as { user?: { id?: string }; redirect?: string } | null;
+            const userId = raw?.user?.id;
+            return {
+              ok: true,
+              ...(userId ? { userId } : {}),
+              ...(raw?.redirect ? { redirectTo: raw.redirect } : {}),
+            };
+          }
+          case "oauth": {
+            const signInSocial = api.signInSocial;
+            if (!signInSocial) {
+              return {
+                ok: false,
+                error: {
+                  code: "unsupported",
+                  message: "Better Auth: social sign-in not configured.",
+                },
+              };
+            }
+            const raw = (await signInSocial({
+              body: {
+                provider: method.provider,
+                callbackURL: method.redirectUrl,
+              },
+            })) as { url?: string; redirect?: string } | null;
+            const redirectTo = raw?.url ?? raw?.redirect;
+            return {
+              ok: true,
+              ...(redirectTo ? { redirectTo } : {}),
+            };
+          }
+          case "phone": {
+            return {
+              ok: false,
+              error: {
+                code: "unsupported",
+                message:
+                  "Better Auth: phone sign-in is not wired in this build. " +
+                  "Add the phone plugin and re-attempt.",
+              },
+            };
+          }
+          default: {
+            // Exhaustiveness guard
+            const _exhaustive: never = method;
+            return {
+              ok: false,
+              error: {
+                code: "unsupported",
+                message: `Unknown sign-in method: ${String(_exhaustive)}`,
+              },
+            };
+          }
+        }
+      } catch (error) {
+        logger.error("Better Auth signIn failed", { type: method.type, error });
+        const message = error instanceof Error ? error.message : "Sign-in failed";
+        return {
+          ok: false,
+          error: {
+            code: /password|credential/i.test(message) ? "invalid-credentials" : "unknown",
+            message,
+          },
+        };
+      }
+    },
+
+    async signOut(request: Request): Promise<void> {
+      try {
+        const auth = await getAuth();
+        const api = auth.api as Record<
+          string,
+          ((...args: unknown[]) => Promise<unknown>) | undefined
+        >;
+        const signOutFn = api.signOut;
+        if (!signOutFn) {
+          logger.warn("Better Auth: signOut endpoint not available on auth.api.");
+          return;
+        }
+        await signOutFn({ headers: request.headers });
+      } catch (error) {
+        logger.error("Better Auth signOut failed", { error });
       }
     },
 

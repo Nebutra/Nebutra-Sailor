@@ -18,14 +18,35 @@
 
 import { logger } from "@nebutra/logger";
 import type {
+  AuthCapabilities,
   AuthConfig,
   AuthProvider,
   CreateOrgInput,
   CreateUserInput,
   Organization,
   Session,
+  SignInMethod,
+  SignInResult,
   User,
 } from "../types";
+
+/**
+ * Clerk's platform capabilities, hardcoded per ADR D2.
+ *
+ * Clerk supports passkeys, organizations, two-factor, and magic-link as
+ * first-class platform features. Impersonation exists in dashboard but is
+ * not exposed through the SDK in a way we can bridge through this layer.
+ *
+ * This is a static probe — Clerk does not have a runtime plugin model, so
+ * we don't need to inspect anything at request time.
+ */
+const CLERK_CAPABILITIES: AuthCapabilities = Object.freeze({
+  passkeys: true,
+  organizations: true,
+  twoFactor: true,
+  magicLink: true,
+  impersonation: false,
+});
 
 /**
  * Create a Clerk auth provider instance.
@@ -44,6 +65,8 @@ import type {
 export function createClerkAuth(_config: AuthConfig): AuthProvider {
   return {
     provider: "clerk",
+
+    capabilities: CLERK_CAPABILITIES,
 
     /**
      * Resolve the current session from an incoming request.
@@ -169,6 +192,55 @@ export function createClerkAuth(_config: AuthConfig): AuthProvider {
           "Use <CreateOrganization /> component or " +
           "clerkClient().organizations.createOrganization() for programmatic creation. " +
           "See: https://clerk.com/docs/references/backend/organization/create-organization",
+      );
+    },
+
+    /**
+     * Attempt a server-side sign-in.
+     *
+     * **Clerk semantics:** Sign-in is overwhelmingly a client-side concern in
+     * Clerk — the `<SignIn />` component owns OAuth redirects, MFA flows, and
+     * session bootstrapping. The server-side surface (`clerkClient().users.*`)
+     * exists for verification, not for "log this user in."
+     *
+     * - `oauth` / `phone` → return `{ ok: false, code: "client-side-only" }`
+     *   so callers know to redirect to the Clerk-hosted flow.
+     * - `email-password` → also client-side in normal usage; we return the
+     *   same `client-side-only` signal so apps don't accidentally try to
+     *   bridge passwords through this layer.
+     *
+     * Apps that need server-driven email/password auth should pick Better
+     * Auth or NextAuth instead.
+     */
+    async signIn(method: SignInMethod): Promise<SignInResult> {
+      logger.warn(
+        "Clerk auth: signIn is client-driven. Use <SignIn /> or clerk-js on the client. " +
+          "This server method intentionally short-circuits.",
+        { type: method.type },
+      );
+      return {
+        ok: false,
+        error: {
+          code: "client-side-only",
+          message:
+            "Clerk sign-in must run on the client (use <SignIn /> or clerk-js). " +
+            "If you need server-driven sign-in, use Better Auth or NextAuth.",
+        },
+      };
+    },
+
+    /**
+     * End the active Clerk session.
+     *
+     * **Clerk-native approach:** Use `signOut` from `@clerk/nextjs` on the client
+     * or revoke the session via `clerkClient().sessions.revokeSession()` server-side.
+     * This abstraction logs guidance — it cannot reach into Clerk's session store
+     * without the Clerk SDK installed in the consuming app.
+     */
+    async signOut(_request: Request): Promise<void> {
+      logger.warn(
+        "Clerk auth: use signOut() from @clerk/nextjs or clerkClient().sessions.revokeSession(). " +
+          "This abstraction is a documentation bridge.",
       );
     },
 

@@ -71,6 +71,53 @@ export type SignInMethod =
   | { type: "oauth"; provider: string; redirectUrl?: string }
   | { type: "phone"; phone: string; code: string };
 
+/**
+ * Result of an attempted sign-in.
+ *
+ * Providers should never throw on auth failures — return a normalized
+ * `{ ok: false, error: { code, message } }` so call sites can branch on
+ * `result.ok` without try/catch. Reserved error codes:
+ *   • "invalid-credentials" — bad email/password
+ *   • "client-side-only"    — method requires browser-side completion
+ *                              (Clerk OAuth redirects, etc.)
+ *   • "unsupported"         — provider does not support this method
+ *   • "unknown"             — anything else; `message` carries detail
+ */
+export interface SignInResult {
+  ok: boolean;
+  userId?: string;
+  organizationId?: string;
+  /** For OAuth / magic-link flows where the browser must be redirected. */
+  redirectTo?: string;
+  error?: { code: string; message: string };
+}
+
+// ─── Capabilities (runtime probe) ───
+
+/**
+ * Runtime probe of what an auth provider instance actually supports.
+ *
+ * The probe reflects **runtime reality**, not config intent. For Better Auth,
+ * plugin loading can fail silently — `capabilities` must reflect whether
+ * the methods actually mounted on `auth.api`, not which plugins the operator
+ * tried to enable.
+ *
+ * Apps should use this to gate UI affordances (e.g. only show the "Sign in
+ * with passkey" button if `auth.capabilities.passkeys === true`).
+ */
+export interface AuthCapabilities {
+  /** WebAuthn / passkey sign-in is available. */
+  passkeys: boolean;
+  /** Multi-tenant organizations (create, list, switch active org). */
+  organizations: boolean;
+  /** TOTP / authenticator-app second factor. */
+  twoFactor: boolean;
+  /** Passwordless email magic-link sign-in. */
+  magicLink: boolean;
+  /** Admin can impersonate another user. */
+  impersonation: boolean;
+}
+
 // ─── Mutation Inputs ───
 
 /** Input for creating a new user. */
@@ -123,6 +170,28 @@ export interface AuthProvider {
 
   /** Create a new organization. */
   createOrganization(data: CreateOrgInput): Promise<Organization>;
+
+  // ── Sign-in / Sign-out ──
+
+  /**
+   * Attempt a sign-in using the given method.
+   *
+   * Returns a normalized {@link SignInResult}. Implementations must NOT throw
+   * on authentication failures — return `{ ok: false, error }` instead so
+   * callers can branch on `result.ok` without try/catch.
+   */
+  signIn(method: SignInMethod): Promise<SignInResult>;
+
+  /** End the current session associated with the incoming request. */
+  signOut(request: Request): Promise<void>;
+
+  // ── Capabilities ──
+
+  /**
+   * Runtime probe of which features this provider instance actually supports.
+   * Reflects mounted plugins / live API surface — not config intent.
+   */
+  readonly capabilities: Readonly<AuthCapabilities>;
 
   // ── Middleware & Webhooks ──
 

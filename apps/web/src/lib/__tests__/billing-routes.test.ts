@@ -4,6 +4,11 @@ vi.mock("@/lib/api/client", () => ({
   API_BASE_URL: "http://api.local",
 }));
 
+// Mock auth so getAuth() in the route doesn't try to spin up Better Auth + Prisma
+vi.mock("@/lib/auth", () => ({
+  getAuth: vi.fn().mockResolvedValue({ userId: null, orgId: null, isSignedIn: false }),
+}));
+
 const originalStripeSecret = process.env.STRIPE_SECRET_KEY;
 const originalFetch = globalThis.fetch;
 const fetchMock = vi.fn();

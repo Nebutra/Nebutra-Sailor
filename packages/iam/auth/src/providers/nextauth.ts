@@ -32,14 +32,35 @@
 
 import { logger } from "@nebutra/logger";
 import type {
+  AuthCapabilities,
   AuthConfig,
   AuthProvider,
   CreateOrgInput,
   CreateUserInput,
   Organization,
   Session,
+  SignInMethod,
+  SignInResult,
   User,
 } from "../types";
+
+/**
+ * NextAuth/Auth.js capabilities, all `false` per ADR D2.
+ *
+ * NextAuth deliberately keeps its scope narrow — passkeys, multi-tenant
+ * organizations, TOTP 2FA, and magic-link are not first-class features of
+ * the framework. Operators bolt them on at the application layer (custom
+ * session callbacks + Prisma). Reporting them as `true` here would be a
+ * speculative implementation that the consumer-facing API can't actually
+ * satisfy, so we stay honest.
+ */
+const NEXTAUTH_CAPABILITIES: AuthCapabilities = Object.freeze({
+  passkeys: false,
+  organizations: false,
+  twoFactor: false,
+  magicLink: false,
+  impersonation: false,
+});
 
 // ─── Types from next-auth (declared loosely to avoid hard dep at type-check time) ───
 
@@ -201,6 +222,99 @@ export function createNextAuthProvider(config: AuthConfig): AuthProvider {
 
   return {
     provider: "nextauth",
+
+    capabilities: NEXTAUTH_CAPABILITIES,
+
+    async signIn(method: SignInMethod): Promise<SignInResult> {
+      try {
+        const r = await getRuntime();
+        switch (method.type) {
+          case "email-password": {
+            // Auth.js v5 expects credential payload as the second arg.
+            // We pass `redirect: false` so the call resolves with a result
+            // object instead of throwing a redirect.
+            const raw = (await r.signIn("credentials", {
+              email: method.email,
+              password: method.password,
+              redirect: false,
+            })) as { ok?: boolean; url?: string; error?: string } | undefined;
+
+            if (!raw || raw.error) {
+              return {
+                ok: false,
+                error: {
+                  code: "invalid-credentials",
+                  message: raw?.error ?? "Credentials sign-in failed.",
+                },
+              };
+            }
+            return {
+              ok: true,
+              ...(raw.url ? { redirectTo: raw.url } : {}),
+            };
+          }
+          case "oauth": {
+            const raw = (await r.signIn(method.provider, {
+              redirect: false,
+              ...(method.redirectUrl ? { redirectTo: method.redirectUrl } : {}),
+            })) as { url?: string; error?: string } | undefined;
+            if (raw?.error) {
+              return {
+                ok: false,
+                error: { code: "unknown", message: raw.error },
+              };
+            }
+            return {
+              ok: true,
+              ...(raw?.url ? { redirectTo: raw.url } : {}),
+            };
+          }
+          case "phone": {
+            return {
+              ok: false,
+              error: {
+                code: "unsupported",
+                message:
+                  "NextAuth: phone sign-in is not a first-class Auth.js provider. " +
+                  "Wire it via a custom credentials provider if needed.",
+              },
+            };
+          }
+          default: {
+            const _exhaustive: never = method;
+            return {
+              ok: false,
+              error: {
+                code: "unsupported",
+                message: `Unknown sign-in method: ${String(_exhaustive)}`,
+              },
+            };
+          }
+        }
+      } catch (error) {
+        logger.error("NextAuth signIn failed", { type: method.type, error });
+        const message = error instanceof Error ? error.message : "Sign-in failed";
+        return {
+          ok: false,
+          error: {
+            code: /credential|password/i.test(message) ? "invalid-credentials" : "unknown",
+            message,
+          },
+        };
+      }
+    },
+
+    async signOut(_request: Request): Promise<void> {
+      try {
+        const r = await getRuntime();
+        // Auth.js v5 signOut accepts `{ redirect: false }` to suppress
+        // the framework's automatic redirect response. We're calling from
+        // server code that handles its own response.
+        await r.signOut({ redirect: false });
+      } catch (error) {
+        logger.error("NextAuth signOut failed", { error });
+      }
+    },
 
     async getSession(request) {
       try {

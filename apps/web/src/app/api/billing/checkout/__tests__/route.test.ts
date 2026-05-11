@@ -81,6 +81,10 @@ describe("POST /api/billing/checkout", () => {
   });
 
   it("forwards a non-seat-based checkout without a quantity field", async () => {
+    // Route now calls getAuth() for audit logging — return anonymous shape
+    // so destructuring works and audit is skipped (no tenant).
+    mockedGetAuth.mockResolvedValue(buildAuth(null));
+
     const { POST } = await loadRoute();
 
     const response = await POST(jsonRequest({ priceId: "price_pro_month" }));

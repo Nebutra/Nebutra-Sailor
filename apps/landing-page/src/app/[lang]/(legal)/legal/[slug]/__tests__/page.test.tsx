@@ -22,7 +22,8 @@ vi.mock("@/lib/legal-documents", () => ({
 
 import { notFound } from "next/navigation";
 import { getLegalDocument, type LegalDocument } from "@/lib/legal-documents";
-import LegalSlugPage, { generateMetadata } from "../page";
+import { LegalDocumentContent } from "../_components/legal-document-content";
+import { generateMetadata } from "../page";
 
 const mockedGet = vi.mocked(getLegalDocument);
 const mockedNotFound = vi.mocked(notFound);
@@ -46,14 +47,15 @@ describe("/legal/[slug] page", () => {
   afterEach(() => {
     cleanup();
     vi.clearAllMocks();
+    mockedGet.mockReset();
   });
 
   it("renders the document title, summary, and body", async () => {
-    mockedGet.mockResolvedValueOnce(sample);
+    mockedGet.mockResolvedValue(sample);
 
-    const ui = await LegalSlugPage({
-      params: Promise.resolve({ lang: "en", slug: "privacy-policy" }),
-    });
+    // The page wraps content in <Suspense>; the async inner component is what
+    // actually performs the fetch + render. Test it directly to bypass Suspense.
+    const ui = await LegalDocumentContent({ slug: "privacy-policy", lang: "en" });
     render(ui as React.ReactElement);
 
     expect(screen.getByRole("heading", { level: 1, name: "Privacy Policy" })).toBeInTheDocument();
@@ -62,18 +64,16 @@ describe("/legal/[slug] page", () => {
   });
 
   it("calls notFound when the document is missing", async () => {
-    mockedGet.mockResolvedValueOnce(null);
+    mockedGet.mockResolvedValue(null);
 
-    await expect(
-      LegalSlugPage({
-        params: Promise.resolve({ lang: "en", slug: "missing" }),
-      }),
-    ).rejects.toThrow("NEXT_NOT_FOUND");
+    await expect(LegalDocumentContent({ slug: "missing", lang: "en" })).rejects.toThrow(
+      "NEXT_NOT_FOUND",
+    );
     expect(mockedNotFound).toHaveBeenCalled();
   });
 
   it("returns SEO metadata derived from the document", async () => {
-    mockedGet.mockResolvedValueOnce(sample);
+    mockedGet.mockResolvedValue(sample);
     const meta = await generateMetadata({
       params: Promise.resolve({ lang: "en", slug: "privacy-policy" }),
     });
@@ -82,7 +82,7 @@ describe("/legal/[slug] page", () => {
   });
 
   it("returns empty metadata when document missing (graceful)", async () => {
-    mockedGet.mockResolvedValueOnce(null);
+    mockedGet.mockResolvedValue(null);
     const meta = await generateMetadata({
       params: Promise.resolve({ lang: "en", slug: "nope" }),
     });
