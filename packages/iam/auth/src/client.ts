@@ -21,10 +21,15 @@
  * ```
  */
 
+// Feature flag helpers — pure / client-safe (no server-only deps).
+// Re-exported here so client components can stay on the /client subpath
+// instead of pulling the root entrypoint (which transitively imports
+// middleware → @clerk/nextjs/server → 'server-only').
+export type { AuthFeature, AuthFeatureContext } from "./features";
+export { isAuthFeatureEnabled, isAuthFeatureEnabledSync } from "./features";
 // Re-export context for advanced use cases
 export { type AuthContextValue, useAuthContext } from "./react/context";
 // Re-export auth hooks from react subpackage
 export { useAuth, useOrganization, useSession, useUser } from "./react/hooks";
-
 // Re-export sign-in method type for convenience
 export type { SignInMethod } from "./types";

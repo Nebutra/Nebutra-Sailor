@@ -1,7 +1,7 @@
 "use client";
 
-import { isAuthFeatureEnabledSync } from "@nebutra/auth";
-import { useAuth } from "@nebutra/auth/client";
+// Use /client subpath — root entrypoint pulls server-only middleware.
+import { isAuthFeatureEnabledSync, useAuth } from "@nebutra/auth/client";
 import { usePathname } from "next/navigation";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";

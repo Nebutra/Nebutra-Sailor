@@ -1,7 +1,9 @@
 "use client";
 
-import { isAuthFeatureEnabledSync } from "@nebutra/auth";
-import { useUser } from "@nebutra/auth/client";
+// Use the /client subpath for both — the root entrypoint transitively
+// imports server-only middleware (Clerk's server SDK), which webpack
+// rejects when reached from a "use client" boundary.
+import { isAuthFeatureEnabledSync, useUser } from "@nebutra/auth/client";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { type ActiveSession, ActiveSessionsBlock } from "./active-sessions-block";
