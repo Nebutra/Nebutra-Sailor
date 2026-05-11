@@ -352,7 +352,10 @@ If a commit can't articulate the tests-first ordering, it's reverted. Same stand
 - [x] Open questions O1–O5 resolved by gap analysis
 - [x] D6 revised to direct-to-main 3-phase model per project workflow preference
 - [x] Phase 1.1 schema additive landed (see Audit Log below)
-- [ ] Phase 1.2 dispatched (blocked on resolving concurrent-agent collision)
+- [x] Phase 1.2 API surface landed — `e00476ee` + concurrent fix `6fb3cbcb`
+- [x] Phase 1.3 capability shapes landed — `823b92df`
+- [x] **Phase 1 COMPLETE** — 90 tests passing in `@nebutra/auth` (was 43 pre-Wave 2; +47 net new contract tests)
+- [ ] Phase 2 dispatched (tenant bridge + dev opt-in)
 
 ---
 
@@ -395,3 +398,70 @@ If a commit can't articulate the tests-first ordering, it's reverted. Same stand
 4. **`public.OrganizationInvitation` (old Clerk-shaped) duplicates `auth.invitation` (new BA) in purpose** but with different shape (token, acceptedAt, etc.). They coexist intentionally per D3, but Phase 3 should produce a separate consolidation ADR before deleting the legacy table. Add this to the Phase 3 scope.
 5. **Better Auth passkey table**: Prisma auto-mapped `credentialID` → `credential_i_d` column (literal underscore split). Better Auth's adapter expects this exact name; the 1.1 test asserts it explicitly so accidental rename is caught.
 6. **`pnpm install` triggers postinstall side-effects** in design packages (writes to `packages/design/brand/scripts/sync-assets.ts` etc.). Phase 1.2 should run `pnpm install` once at start, then `git status` to confirm no uncommitted side-effects, then proceed.
+
+### Phase 1.2 — landed in commit `e00476ee` + concurrent fix `6fb3cbcb`
+
+**Date**: 2026-05-11
+**Status**: Clean commit attribution
+
+`AuthProvider` interface gains `signIn`, `signOut`, `capabilities`. All 3 providers implement; 16 contract tests RED→GREEN. 27 consumers continue to typecheck — additive changes only.
+
+**Probe values verified at this commit:**
+- `better-auth` (no plugins): all `false`
+- `better-auth` (orgs+passkeys plugins mounted): `passkeys: true, organizations: true, twoFactor: false, magicLink: false, impersonation: false`
+- `clerk`: `passkeys: true, organizations: true, twoFactor: true, magicLink: true, impersonation: false` (hardcoded per D2)
+- `nextauth`: all `false` (hardcoded per D2)
+
+**Follow-up commit `6fb3cbcb`** by a concurrent agent: relaxed optional capability shape types to allow `T | undefined` for `exactOptionalPropertyTypes`. Acceptable patch; no semantic change.
+
+**Surprises that informed 1.3:**
+- Clerk's `signIn` returns `{ ok: false, code: "client-side-only" }` for **all** methods (including email-password). Clerk SDK has no clean server-side login path without `@clerk/backend`. This deviates slightly from initial ADR ("implement email-password server-side") but is the honest position per D2 ("we don't expose Clerk-specific methods through the canonical interface").
+- NextAuth v5 server-side `signIn({ redirect: false })` returns a plain result object; works as the bridge implementation.
+- Better Auth probe is cached + refreshed on `signIn`; eager fire-and-forget probe runs in the provider constructor.
+
+### Phase 1.3 — landed in commit `823b92df`
+
+**Date**: 2026-05-11
+**Status**: Clean commit attribution
+
+4 optional capability shapes (`organizations`, `passkeys`, `twoFactor`, `magicLink`) added to `AuthProvider` interface. Better Auth's plugins are wired through. Clerk and NextAuth explicitly return `undefined` for all shapes per D2. 31 new tests; 90 total in `@nebutra/auth`.
+
+**Canonical → BA 1.5.6 method-name mapping** (verified in `node_modules/better-auth/dist/plugins/<plugin>/index.d.ts`):
+
+| Canonical | BA method |
+|---|---|
+| `organizations.create` | `createOrganization` |
+| `organizations.list` | `listOrganizations` |
+| `organizations.setActive` | `setActiveOrganization` (takes `headers` + `body`) |
+| `organizations.invite` | `createInvitation` |
+| `organizations.acceptInvite` | `acceptInvitation` |
+| `organizations.members` | `listMembers` |
+| `organizations.removeMember` | `removeMember` |
+| `organizations.updateMemberRole` | `updateMemberRole` |
+| `passkeys.register` | `generatePasskeyRegistrationOptions` |
+| `passkeys.authenticate` | `verifyPasskey` (fallback `signInPasskey`) |
+| `passkeys.list` / `revoke` | `listPasskeys` / `deletePasskey` |
+| `twoFactor.enroll` | `enableTwoFactor` (returns `totpURI`+`secret`+`backupCodes`) |
+| `twoFactor.verify` | `verifyTOTP` (fallback `verifyTwoFactor`) |
+| `twoFactor.backupCodes` | `generateBackupCodes` (fallback `viewBackupCodes`) |
+| `twoFactor.disable` | `disableTwoFactor` |
+| `magicLink.send` | `signInMagicLink` (passes `redirectTo` as `callbackURL`) |
+| `magicLink.verify` | `magicLinkVerify` |
+
+**Concurrent collision repeated**: `packages/iam/auth/src/types.ts` was touched by another agent (commit `6fb3cbcb`) during Phase 1.3 work. The agent handled it by scoping its commit to providers + tests only, letting the concurrent commit own `types.ts`. **The collision-prone surface (TS type files in `iam/auth`) is now identified as a serialization hotspot — Phase 2 must enforce serialization or coordinate.**
+
+**Surprises that inform Phase 2:**
+- **BA 1.5.6 doesn't ship a `passkey` plugin in its exports map.** Capability probe will report `passkeys: false` at runtime even on BA-backed apps until a future BA version ships it. Builder uses fallback chains (`verifyPasskey ?? signInPasskey`) so it'll pick up automatically when BA adds it.
+- **BA `setActiveOrganization` cookie propagation**: the canonical `organizations.setActive(req, organizationId)` forwards `req.headers` to BA, but BA's response writes `Set-Cookie` headers that need to reach the *outgoing* response. The tenant-bridge middleware in Phase 2 must capture BA's response, extract `Set-Cookie`, and merge into the Next.js / Hono response. Current canonical shape returns `void` so that adapter layer lives in middleware, not in `@nebutra/auth`.
+- **`build*Capability` functions are exported** from `providers/better-auth.ts` for unit testing but NOT re-exported from `src/index.ts`. If Phase 2 wants them user-callable, re-export; otherwise mark `@internal`.
+
+### Phase 1 closeout
+
+| Phase | Commit(s) | Tests added | Result |
+|---|---|---|---|
+| 1.1 schema | `61f656a0` (polluted title) | 19 | ✅ work correct |
+| 1.2 API surface | `e00476ee` + `6fb3cbcb` | 16 | ✅ clean |
+| 1.3 capability shapes | `823b92df` | 31 | ✅ clean |
+| **Total** | 4 commits | **+66 tests** (43 → 90 in `@nebutra/auth` + 19 in `@nebutra/db`) | ✅ Phase 1 done |
+
+Net result: `AuthProvider` is now feature-complete for the ADR D5 surface; Better Auth is the only provider that fully implements the optional shapes (per D2 design); 27 consumers continue to typecheck unchanged. Ready for Phase 2 (tenant bridge + dev opt-in in `apps/web`).
