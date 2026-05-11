@@ -10,40 +10,26 @@
       "env": ["CLERK_SECRET_KEY", "NEXT_PUBLIC_SITE_URL"]
     },
     "build:registry": {
-      "inputs": [
-        "packages/design/ui/src/primitives/**",
-        "packages/design/ui/src/components/**",
-        "packages/design/ui/scripts/build-registry.ts",
-        "packages/design/design-tokens/build/ts/**"
-      ],
+      "dependsOn": ["@nebutra/design-tokens#build"],
+      "inputs": ["src/primitives/**", "src/components/**", "scripts/build-registry.ts"],
       "outputs": [
-        "apps/design-docs/public/r/**",
-        "apps/design-docs/public/registry.json",
-        "apps/design-docs/public/previews-index.json"
+        "../../../apps/design-docs/public/r/**",
+        "../../../apps/design-docs/public/registry.json",
+        "../../../apps/design-docs/public/previews-index.json"
       ]
     },
     "@nebutra/ui#build:registry": {
       "dependsOn": ["@nebutra/design-tokens#build"],
-      "inputs": [
-        "packages/design/ui/src/primitives/**",
-        "packages/design/ui/src/components/**",
-        "packages/design/ui/scripts/build-registry.ts",
-        "packages/design/design-tokens/build/ts/**"
-      ],
+      "inputs": ["src/primitives/**", "src/components/**", "scripts/build-registry.ts"],
       "outputs": [
-        "apps/design-docs/public/r/**",
-        "apps/design-docs/public/registry.json",
-        "apps/design-docs/public/previews-index.json"
+        "../../../apps/design-docs/public/r/**",
+        "../../../apps/design-docs/public/registry.json",
+        "../../../apps/design-docs/public/previews-index.json"
       ]
     },
     "@nebutra/design-tokens#build": {
-      "inputs": [
-        "packages/design/design-tokens/tokens/**",
-        "packages/design/design-tokens/style-dictionary.config.mjs",
-        "packages/design/design-tokens/tsconfig.json",
-        "packages/design/design-tokens/package.json"
-      ],
-      "outputs": ["packages/design/design-tokens/build/**"]
+      "inputs": ["tokens/**", "style-dictionary.config.mjs", "tsconfig.json", "package.json"],
+      "outputs": ["build/**"]
     },
     "dev": {
       "cache": false,
