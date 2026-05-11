@@ -355,7 +355,14 @@ If a commit can't articulate the tests-first ordering, it's reverted. Same stand
 - [x] Phase 1.2 API surface landed — `e00476ee` + concurrent fix `6fb3cbcb`
 - [x] Phase 1.3 capability shapes landed — `823b92df`
 - [x] **Phase 1 COMPLETE** — 90 tests passing in `@nebutra/auth` (was 43 pre-Wave 2; +47 net new contract tests)
-- [ ] Phase 2 dispatched (tenant bridge + dev opt-in)
+- [x] Phase 2.1 tenant `fromAuthSession` resolver — `9230c87a`
+- [x] Phase 2.2 dual-source feature flag — `cc3cda44` + fixes `40288bee` / `6acc7c92`
+- [x] Phase 2.3 `setActive` returns `{ headers }` — `419d29f2`
+- [x] Phase 2.4 security UI flag gating — `494210fd`
+- [x] Phase 2.5 org switcher + members + first `setActive` consumer — `9911e6b5`
+- [x] Phase 2.6 OrgSwitcher mount + stale test cleanup — `2490d8c5`
+- [x] **Phase 2 COMPLETE** — 698 tests passing in `@nebutra/web` (+55 net new since Phase 2 start)
+- [ ] Phase 3 dispatched (prod rollout via @nebutra/feature-flags + Clerk direct-import absorption + auth/identity consolidation ADR)
 
 ---
 
@@ -465,3 +472,25 @@ If a commit can't articulate the tests-first ordering, it's reverted. Same stand
 | **Total** | 4 commits | **+66 tests** (43 → 90 in `@nebutra/auth` + 19 in `@nebutra/db`) | ✅ Phase 1 done |
 
 Net result: `AuthProvider` is now feature-complete for the ADR D5 surface; Better Auth is the only provider that fully implements the optional shapes (per D2 design); 27 consumers continue to typecheck unchanged. Ready for Phase 2 (tenant bridge + dev opt-in in `apps/web`).
+
+### Phase 2 closeout
+
+| Phase | Commit | Tests added | Result |
+|---|---|---|---|
+| 2.1 tenant `fromAuthSession` resolver | `9230c87a` | +7 | ✅ dependency-free callback design (no `@nebutra/auth` import in tenant) |
+| 2.2 dual-source feature flag | `cc3cda44` + `40288bee` + `6acc7c92` | +17 | ✅ env first, `@nebutra/feature-flags` second, safe-false fallback |
+| 2.3 `setActive` returns `{ headers }` | `419d29f2` | +3 net | ✅ BA's `returnHeaders: true` API used; explicit caller-forward |
+| 2.4 security UI flag gating | `494210fd` | +5 | ✅ legacy defaults preserved for non-opted-in callers |
+| 2.5 switcher + members + setActive consumer | `9911e6b5` | +23 | ✅ NextResponse cookie-merge ordering bug caught + fixed |
+| 2.6 OrgSwitcher mount + stale test cleanup | `2490d8c5` | -2 stale | ✅ header mount only; sidebar `<select>` stays as flag-off fallback |
+| **Total** | 6 commits + 2 follow-up fixes | **+53 net new tests** | ✅ Phase 2 done — 698 passing in `@nebutra/web`, 110 in `@nebutra/auth`, 25 in `@nebutra/tenant` |
+
+**Patterns to reuse / lessons:**
+- **Dependency-free bridge resolver** (Phase 2.1): when integrating two unidirectional packages, pass a getter callback instead of importing. Keeps lower-level packages neutral and avoids circular install.
+- **Dual-source flag** (Phase 2.2): env wins, async fallback to feature-flag service, **always safe-default false on error**. Never throw from a flag check.
+- **Explicit headers for low-consumer APIs** (Phase 2.3): when only 1-2 consumers need response-side data, returning structured result beats hiding magic in middleware. Stripe/Linear/Vercel SDK pattern.
+- **NextResponse cookie merge ordering trap** (Phase 2.5): `response.cookies.set(...)` rewrites the `set-cookie` header from its internal cookie list and clobbers any prior `headers.append("set-cookie", ...)`. Pattern: write first-party cookies via NextResponse API FIRST, then `append` external (BA) Set-Cookie SECOND.
+- **Feature-flag gate + product-capability gate are different concepts** (Phase 2.6): `supportsWorkspaceSwitching` = "this product allows orgs at all"; `isAuthFeatureEnabledSync("organizations")` = "the new BA-backed UX is shipped". Both must be true for new UI to mount. Legacy native `<select>` covers the (true && false) case.
+- **Concurrent agent staging contamination** (Phases 1.1, 1.3, 2.2): explicit `git add <path>` only, never `-A`/`.`/`-a`. Verify `git status --short` before commit. If a sibling commit absorbs your staged files, `git reset --soft HEAD~1` and re-attribute.
+
+Ready for Phase 3 (prod rollout, Clerk direct-import absorption, auth/identity consolidation ADR).
