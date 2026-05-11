@@ -1,19 +1,31 @@
 "use client";
 
+import { isAuthFeatureEnabledSync } from "@nebutra/auth";
 import { useAuth } from "@nebutra/auth/client";
 import { usePathname } from "next/navigation";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
+import { OrgSwitcher } from "@/components/navigation/org-switcher";
 import { UserMenu } from "@/components/navigation/user-menu";
 
-function HeaderAuthControls() {
+function HeaderAuthControls({
+  supportsWorkspaceSwitching,
+}: {
+  supportsWorkspaceSwitching: boolean;
+}) {
   const { isSignedIn } = useAuth();
+  // Phase 2 dev rollout: gate the polished OrgSwitcher behind the
+  // `organizations` auth feature flag. When off, the legacy native <select>
+  // in the sidebar remains the only switcher (it still calls
+  // /api/organizations/active correctly).
+  const showOrgSwitcher = supportsWorkspaceSwitching && isAuthFeatureEnabledSync("organizations");
 
   return (
     <div className="hidden items-center gap-2 sm:flex">
       {isSignedIn ? (
         <>
+          {showOrgSwitcher && <OrgSwitcher />}
           <LocaleSwitcher />
           <UserMenu />
         </>
@@ -412,7 +424,7 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
 
               <div className="flex items-center gap-2">
                 {notificationCenter}
-                <HeaderAuthControls />
+                <HeaderAuthControls supportsWorkspaceSwitching={supportsWorkspaceSwitching} />
               </div>
             </div>
           </header>
