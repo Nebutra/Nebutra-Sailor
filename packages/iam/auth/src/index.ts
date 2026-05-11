@@ -28,6 +28,9 @@
 // Auditable context resolver (used by @nebutra/audit consumers)
 export type { AuditableActor, AuditableContext } from "./audit-context";
 export { getAuditableContext } from "./audit-context";
+// Feature-flag layer (dual-source: env + @nebutra/feature-flags)
+export type { AuthFeature, AuthFeatureContext } from "./features";
+export { isAuthFeatureEnabled, isAuthFeatureEnabledSync } from "./features";
 // Middleware factory
 export { createAuthMiddleware } from "./middleware";
 // Service-to-service HMAC helpers
