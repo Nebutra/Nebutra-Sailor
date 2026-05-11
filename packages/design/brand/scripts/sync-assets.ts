@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const brandRoot = resolve(__dirname, "..");
-const monorepoRoot = resolve(brandRoot, "../..");
+const monorepoRoot = resolve(brandRoot, "../../..");
 
 // Apps to sync brand assets to
 const apps = ["apps/landing-page", "apps/web", "apps/studio", "apps/tsekaluk-dev"];
