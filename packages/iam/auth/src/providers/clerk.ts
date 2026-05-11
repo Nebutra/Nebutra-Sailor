@@ -286,5 +286,26 @@ export function createClerkAuth(_config: AuthConfig): AuthProvider {
           "See: https://clerk.com/docs/webhooks/overview",
       );
     },
+
+    // ── Optional capability shapes (per ADR D2) ──
+    //
+    // Clerk is "Maintain" tier — we report `capabilities.passkeys`,
+    // `organizations`, `twoFactor`, and `magicLink` as `true` because Clerk
+    // genuinely supports them, but we DO NOT expose canonical capability
+    // shapes (`provider.passkeys`, `.organizations`, etc.). Applications that
+    // need these features go directly through `@clerk/nextjs` / `@clerk/backend`
+    // SDKs, which already provide ergonomic, framework-integrated APIs.
+    //
+    // Bridging Clerk's surface through our canonical shape would force a lossy
+    // adaptation (request/response objects, hosted-component flows) without
+    // delivering meaningful value — apps already import `@clerk/*` directly.
+    //
+    // The optional properties below are intentionally left as `undefined`.
+    // See docs/architecture/2026-05-10-auth-provider-abstraction-wave2.md
+    // section D2 for the full rationale.
+    organizations: undefined,
+    passkeys: undefined,
+    twoFactor: undefined,
+    magicLink: undefined,
   };
 }

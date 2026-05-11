@@ -19,12 +19,21 @@ import type {
   AuthProvider,
   CreateOrgInput,
   CreateUserInput,
+  MagicLinkCapability,
   Organization,
+  OrganizationCapability,
+  PasskeyCapability,
   Session,
   SignInMethod,
   SignInResult,
+  TwoFactorCapability,
   User,
 } from "../types";
+
+// Loose alias used inside builders — Better Auth's `auth.api` is a record of
+// dynamically generated endpoint handlers; the precise types vary per plugin
+// and are bridged at runtime.
+type BetterAuthApi = Record<string, ((...args: unknown[]) => Promise<unknown>) | undefined>;
 
 /**
  * Sentinel auth.api method names mapped to capabilities.
@@ -117,6 +126,316 @@ function mapUser(raw: Record<string, unknown> | null): User | null {
     name: (raw.name as string) ?? undefined,
     imageUrl: (raw.image as string) ?? undefined,
     createdAt: raw.createdAt ? new Date(raw.createdAt as string | number) : new Date(),
+  };
+}
+
+/**
+ * Normalize a Better Auth organization record to our canonical Organization.
+ *
+ * Better Auth's org plugin returns records with optional `metadata` blobs
+ * that some installs use to carry plan info. We treat that as a string when
+ * present, falling back to "FREE".
+ */
+function normalizeOrganization(raw: Record<string, unknown>): Organization {
+  return {
+    id: String(raw.id),
+    name: String(raw.name ?? ""),
+    slug: String(raw.slug ?? ""),
+    plan:
+      typeof raw.metadata === "string"
+        ? raw.metadata
+        : typeof raw.plan === "string"
+          ? raw.plan
+          : "FREE",
+    createdAt: raw.createdAt ? new Date(raw.createdAt as string | number) : new Date(),
+  };
+}
+
+// ─── Capability builders (Phase 1.3) ───
+//
+// Each builder maps the canonical AuthProvider capability shape onto Better
+// Auth's plugin endpoints surfaced via `auth.api`. The builders are called
+// only when the capability probe confirmed the corresponding plugin is
+// mounted, so callers can assume the named endpoints exist.
+
+export function buildOrganizationsCapability(
+  getApi: () => Promise<BetterAuthApi>,
+): OrganizationCapability {
+  return {
+    async create({ name, slug, metadata }) {
+      const api = await getApi();
+      const fn = api.createOrganization;
+      if (!fn) throw new Error("Better Auth: createOrganization endpoint missing.");
+      const raw = (await fn({
+        body: {
+          name,
+          slug: slug ?? name.toLowerCase().replace(/\s+/g, "-"),
+          ...(metadata !== undefined ? { metadata } : {}),
+        },
+      })) as Record<string, unknown> | null;
+      if (!raw) throw new Error("Better Auth: createOrganization returned null.");
+      return normalizeOrganization(raw);
+    },
+
+    async list(userId) {
+      const api = await getApi();
+      const fn = api.listOrganizations;
+      if (!fn) return [];
+      const raw = (await fn({ query: { userId } })) as Array<Record<string, unknown>> | null;
+      if (!raw) return [];
+      return raw.map(normalizeOrganization);
+    },
+
+    async setActive(req, organizationId) {
+      const api = await getApi();
+      const fn = api.setActiveOrganization;
+      if (!fn) {
+        throw new Error("Better Auth: setActiveOrganization endpoint missing.");
+      }
+      // BA expects headers for session resolution and body for the org id.
+      await fn({ headers: req.headers, body: { organizationId } });
+    },
+
+    async invite({ email, organizationId, role }) {
+      const api = await getApi();
+      const fn = api.createInvitation;
+      if (!fn) {
+        throw new Error("Better Auth: createInvitation endpoint missing.");
+      }
+      const raw = (await fn({
+        body: {
+          email,
+          organizationId,
+          ...(role ? { role } : {}),
+        },
+      })) as { id?: string; invitationId?: string } | null;
+      const invitationId = raw?.id ?? raw?.invitationId;
+      if (!invitationId) {
+        throw new Error("Better Auth: createInvitation returned no invitation id.");
+      }
+      return { invitationId: String(invitationId) };
+    },
+
+    async acceptInvite(invitationId, userId) {
+      const api = await getApi();
+      const fn = api.acceptInvitation;
+      if (!fn) {
+        throw new Error("Better Auth: acceptInvitation endpoint missing.");
+      }
+      const raw = (await fn({
+        body: { invitationId, userId },
+      })) as { organizationId?: string; organization?: { id?: string } } | null;
+      const organizationId = raw?.organizationId ?? raw?.organization?.id;
+      if (!organizationId) {
+        throw new Error("Better Auth: acceptInvitation returned no organizationId.");
+      }
+      return { organizationId: String(organizationId) };
+    },
+
+    async members(organizationId) {
+      const api = await getApi();
+      const fn = api.listMembers;
+      if (!fn) return [];
+      const raw = (await fn({ query: { organizationId } })) as Array<
+        Record<string, unknown>
+      > | null;
+      if (!raw) return [];
+      return raw.map((m) => ({
+        userId: String(m.userId ?? m.id ?? ""),
+        role: String(m.role ?? ""),
+        joinedAt: m.createdAt
+          ? new Date(m.createdAt as string | number)
+          : m.joinedAt
+            ? new Date(m.joinedAt as string | number)
+            : new Date(),
+      }));
+    },
+
+    async removeMember(organizationId, userId) {
+      const api = await getApi();
+      const fn = api.removeMember;
+      if (!fn) throw new Error("Better Auth: removeMember endpoint missing.");
+      await fn({ body: { organizationId, userId, memberIdOrEmail: userId } });
+    },
+
+    async updateMemberRole(organizationId, userId, role) {
+      const api = await getApi();
+      const fn = api.updateMemberRole;
+      if (!fn) throw new Error("Better Auth: updateMemberRole endpoint missing.");
+      await fn({ body: { organizationId, userId, role, memberId: userId } });
+    },
+  };
+}
+
+export function buildPasskeysCapability(getApi: () => Promise<BetterAuthApi>): PasskeyCapability {
+  return {
+    async register({ userId, name }) {
+      const api = await getApi();
+      // Better Auth's passkey plugin exposes `generatePasskeyRegistrationOptions`
+      // for enrollment; fall back to `generatePasskeyAuthenticationOptions` for
+      // older builds that conflate the two.
+      const fn = api.generatePasskeyRegistrationOptions ?? api.generatePasskeyAuthenticationOptions;
+      if (!fn) throw new Error("Better Auth: passkey registration endpoint missing.");
+      const raw = (await fn({
+        body: { userId, ...(name ? { name } : {}) },
+      })) as { challenge?: string; options?: unknown } | null;
+      if (!raw?.challenge) {
+        throw new Error("Better Auth: passkey registration returned no challenge.");
+      }
+      return { challenge: String(raw.challenge), options: raw.options ?? raw };
+    },
+
+    async authenticate({ challenge, response }) {
+      const api = await getApi();
+      const fn = api.verifyPasskey ?? api.signInPasskey;
+      if (!fn) {
+        return {
+          ok: false,
+          error: { code: "unsupported", message: "Better Auth: verifyPasskey endpoint missing." },
+        };
+      }
+      try {
+        const raw = (await fn({
+          body: { challenge, response },
+        })) as { user?: { id?: string } } | null;
+        const userId = raw?.user?.id;
+        return {
+          ok: true,
+          ...(userId ? { userId: String(userId) } : {}),
+        };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Passkey authentication failed";
+        return { ok: false, error: { code: "unknown", message } };
+      }
+    },
+
+    async list(userId) {
+      const api = await getApi();
+      const fn = api.listPasskeys;
+      if (!fn) return [];
+      const raw = (await fn({ query: { userId } })) as Array<Record<string, unknown>> | null;
+      if (!raw) return [];
+      return raw.map((p) => {
+        const name = typeof p.name === "string" ? p.name : undefined;
+        return {
+          id: String(p.id),
+          ...(name !== undefined ? { name } : {}),
+          createdAt: p.createdAt ? new Date(p.createdAt as string | number) : new Date(),
+        };
+      });
+    },
+
+    async revoke(passkeyId) {
+      const api = await getApi();
+      const fn = api.deletePasskey ?? api.revokePasskey;
+      if (!fn) throw new Error("Better Auth: deletePasskey endpoint missing.");
+      await fn({ body: { passkeyId, id: passkeyId } });
+    },
+  };
+}
+
+export function buildTwoFactorCapability(
+  getApi: () => Promise<BetterAuthApi>,
+): TwoFactorCapability {
+  return {
+    async enroll(userId) {
+      const api = await getApi();
+      const fn = api.enableTwoFactor;
+      if (!fn) throw new Error("Better Auth: enableTwoFactor endpoint missing.");
+      const raw = (await fn({
+        body: { userId },
+      })) as {
+        totpURI?: string;
+        otpauthUrl?: string;
+        secret?: string;
+        backupCodes?: string[];
+      } | null;
+      const otpauthUrl = raw?.totpURI ?? raw?.otpauthUrl ?? "";
+      return {
+        secret: raw?.secret ?? "",
+        otpauthUrl,
+        backupCodes: raw?.backupCodes ?? [],
+      };
+    },
+
+    async verify({ userId, code }) {
+      const api = await getApi();
+      const fn = api.verifyTOTP ?? api.verifyTwoFactor;
+      if (!fn) return { ok: false };
+      try {
+        const raw = (await fn({
+          body: { userId, code, totpCode: code },
+        })) as { success?: boolean; ok?: boolean } | null;
+        return { ok: raw?.success ?? raw?.ok ?? true };
+      } catch {
+        return { ok: false };
+      }
+    },
+
+    async backupCodes(userId) {
+      const api = await getApi();
+      const fn = api.generateBackupCodes ?? api.viewBackupCodes;
+      if (!fn) return { codes: [] };
+      const raw = (await fn({ body: { userId } })) as {
+        backupCodes?: string[];
+        codes?: string[];
+      } | null;
+      return { codes: raw?.backupCodes ?? raw?.codes ?? [] };
+    },
+
+    async disable(userId) {
+      const api = await getApi();
+      const fn = api.disableTwoFactor;
+      if (!fn) throw new Error("Better Auth: disableTwoFactor endpoint missing.");
+      await fn({ body: { userId } });
+    },
+  };
+}
+
+export function buildMagicLinkCapability(
+  getApi: () => Promise<BetterAuthApi>,
+): MagicLinkCapability {
+  return {
+    async send({ email, redirectTo }) {
+      const api = await getApi();
+      const fn = api.signInMagicLink ?? api.sendMagicLink;
+      if (!fn) return { ok: false };
+      try {
+        await fn({
+          body: { email, ...(redirectTo ? { callbackURL: redirectTo } : {}) },
+        });
+        return { ok: true };
+      } catch (error) {
+        logger.error("Better Auth magicLink.send failed", { email, error });
+        return { ok: false };
+      }
+    },
+
+    async verify(token) {
+      const api = await getApi();
+      const fn = api.magicLinkVerify ?? api.verifyMagicLink;
+      if (!fn) {
+        return {
+          ok: false,
+          error: { code: "unsupported", message: "Better Auth: magicLinkVerify endpoint missing." },
+        };
+      }
+      try {
+        const raw = (await fn({ query: { token } })) as {
+          user?: { id?: string };
+          redirect?: string;
+        } | null;
+        const userId = raw?.user?.id;
+        return {
+          ok: true,
+          ...(userId ? { userId: String(userId) } : {}),
+          ...(raw?.redirect ? { redirectTo: raw.redirect } : {}),
+        };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Magic link verification failed";
+        return { ok: false, error: { code: "unknown", message } };
+      }
+    },
   };
 }
 
@@ -314,11 +633,52 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     }
   })();
 
+  // Helper used by capability builders to reach the BA api surface.
+  async function getApi(): Promise<BetterAuthApi> {
+    const auth = await getAuth();
+    return auth.api as BetterAuthApi;
+  }
+
+  // Lazy singletons for the capability shapes — built once when the eager
+  // probe confirms the corresponding plugin is mounted, then memoized.
+  let orgsShape: OrganizationCapability | undefined;
+  let passkeysShape: PasskeyCapability | undefined;
+  let twoFactorShape: TwoFactorCapability | undefined;
+  let magicLinkShape: MagicLinkCapability | undefined;
+
   return {
     provider: "better-auth",
 
     get capabilities(): Readonly<AuthCapabilities> {
       return cachedCapabilities;
+    },
+
+    // Optional capability shapes — present only when the probe confirms the
+    // corresponding plugin is mounted on `auth.api`. Consumers must
+    // type-narrow via `capabilities.<feature>` first.
+
+    get organizations(): OrganizationCapability | undefined {
+      if (!cachedCapabilities.organizations) return undefined;
+      if (!orgsShape) orgsShape = buildOrganizationsCapability(getApi);
+      return orgsShape;
+    },
+
+    get passkeys(): PasskeyCapability | undefined {
+      if (!cachedCapabilities.passkeys) return undefined;
+      if (!passkeysShape) passkeysShape = buildPasskeysCapability(getApi);
+      return passkeysShape;
+    },
+
+    get twoFactor(): TwoFactorCapability | undefined {
+      if (!cachedCapabilities.twoFactor) return undefined;
+      if (!twoFactorShape) twoFactorShape = buildTwoFactorCapability(getApi);
+      return twoFactorShape;
+    },
+
+    get magicLink(): MagicLinkCapability | undefined {
+      if (!cachedCapabilities.magicLink) return undefined;
+      if (!magicLinkShape) magicLinkShape = buildMagicLinkCapability(getApi);
+      return magicLinkShape;
     },
 
     async getSession(request) {

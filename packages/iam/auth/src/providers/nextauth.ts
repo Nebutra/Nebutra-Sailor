@@ -393,6 +393,23 @@ export function createNextAuthProvider(config: AuthConfig): AuthProvider {
           "If you proxy events from an OAuth provider (Google/GitHub), handle them in your own route.",
       );
     },
+
+    // ── Optional capability shapes (per ADR D2) ──
+    //
+    // NextAuth is "Maintain (core only)" tier. Its capabilities are all
+    // `false` (see NEXTAUTH_CAPABILITIES) — passkeys, organizations, 2FA, and
+    // magic-link are not first-class Auth.js features. Apps that need any of
+    // these wire them at the application layer (Prisma + custom session
+    // callbacks). We therefore leave every canonical capability shape
+    // undefined; consumers type-narrowing via `capabilities` will naturally
+    // skip these branches.
+    //
+    // See docs/architecture/2026-05-10-auth-provider-abstraction-wave2.md
+    // section D2.
+    organizations: undefined,
+    passkeys: undefined,
+    twoFactor: undefined,
+    magicLink: undefined,
   };
 }
 
