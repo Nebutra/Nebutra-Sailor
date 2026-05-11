@@ -41,7 +41,7 @@ Sub-specs (per package):
 | Field | English | 中文 |
 |------|--------|------|
 | Brand name | Nebutra | 云毓智能 |
-| Legal entity | Wuxi Nebutra Intelligent Technology Co., Ltd. | 无锡云毓智能科技有限公司 |
+| Legal entity | Wuxi Nebutra Intelligence Technology Co., Ltd. | 无锡云毓智能科技有限公司 |
 | Tagline | Ship AI products, not boilerplate. | AI原生·快速出海·即刻交付 |
 | Voice | Confident, technical, founder-empathic — never marketing-fluffy | — |
 | Audience (ICP) | AI founders & SaaS teams (1–10 engineers) | — |

@@ -10,7 +10,8 @@ export const brand = {
   name: "Nebutra",
   nameCn: "云毓智能",
   nameFull: "无锡云毓智能科技有限公司",
-  nameFullEn: "Wuxi Nebutra Intelligent Technology Co., Ltd.",
+  nameFullEn: "Wuxi Nebutra Intelligence Technology Co., Ltd.",
+  nameShortEn: "Nebutra Co., Ltd",
 
   tagline: "Ship AI products, not boilerplate.",
   taglineCn: "AI原生·快速出海·即刻交付",

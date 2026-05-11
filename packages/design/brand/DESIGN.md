@@ -19,7 +19,7 @@
 | Field | English | 中文 |
 |------|---------|------|
 | Brand name | Nebutra | 云毓智能 |
-| Legal entity | Wuxi Nebutra Intelligent Technology Co., Ltd. | 无锡云毓智能科技有限公司 |
+| Legal entity | Wuxi Nebutra Intelligence Technology Co., Ltd. | 无锡云毓智能科技有限公司 |
 | Tagline | Ship AI products, not boilerplate. | AI原生·快速出海·即刻交付 |
 | Repo description (≤160 chars) | "AI-native SaaS monorepo: Next.js 16 + Hono + Python services · Clerk · Stripe · multi-tenancy · K8s · OTel · design system" | — |
 

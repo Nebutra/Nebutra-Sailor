@@ -137,7 +137,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-balance leading-[1.1]">
                 {lang === "zh"
                   ? "创业,应该智能化、轻量化、民主化"
-                  : "Entrepreneurship should be Intelligent, Lightweight, and Democratic"}
+                  : "Entrepreneurship should be AI-Native, Lightweight, and Democratic"}
               </h2>
             </div>
           </AnimateIn>

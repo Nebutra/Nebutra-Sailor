@@ -536,7 +536,7 @@ export const TRIPLE_VISION: ReadonlyArray<Bilingual<{ keyword: string; statement
       statement: "让 AI-Native 基础设施成为创业者的默认生产力，而非奢侈品。",
     },
     en: {
-      keyword: "Intelligent",
+      keyword: "AI-Native",
       statement:
         "Make AI-native infrastructure the default productivity layer for founders, not a luxury.",
     },
