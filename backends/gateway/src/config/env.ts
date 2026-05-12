@@ -49,7 +49,6 @@ const baseSchema = z.object({
 
   // Python service URLs (TS-by-default — see ADR 2026-05-10)
   AI_SERVICE_URL: z.string().optional(),
-  RECSYS_SERVICE_URL: z.string().optional(),
   ECOMMERCE_SERVICE_URL: z.string().optional(),
   EVENT_INGEST_SERVICE_URL: z.string().optional(),
   INTERNAL_API_KEY: z.string().optional(),

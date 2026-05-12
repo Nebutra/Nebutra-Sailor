@@ -19,7 +19,6 @@ const statusResponseSchema = z.object({
   redis: z.enum(["connected", "disconnected"]),
   services: z.object({
     ai: serviceStatusEnum,
-    recsys: serviceStatusEnum,
     ecommerce: serviceStatusEnum,
     eventIngest: serviceStatusEnum,
   }),
@@ -90,20 +89,18 @@ statusRoutes.openapi(statusRoute, async (c) => {
   // third-party are stubbed — see ADR 2026-05-10.
   const serviceChecks = await Promise.allSettled([
     checkService("ai", process.env.AI_SERVICE_URL),
-    checkService("recsys", process.env.RECSYS_SERVICE_URL),
     checkService("ecommerce", process.env.ECOMMERCE_SERVICE_URL),
     checkService("eventIngest", process.env.EVENT_INGEST_SERVICE_URL),
   ]);
 
   const serviceStatuses: StatusResponse["services"] = {
     ai: "unknown",
-    recsys: "unknown",
     ecommerce: "unknown",
     eventIngest: "unknown",
   };
 
   serviceChecks.forEach((result, index) => {
-    const services = ["ai", "recsys", "ecommerce", "eventIngest"] as const;
+    const services = ["ai", "ecommerce", "eventIngest"] as const;
     const serviceName = services[index];
 
     if (!serviceName) return;

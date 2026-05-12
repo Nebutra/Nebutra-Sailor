@@ -29,15 +29,6 @@ export const dailyDigestEmail = inngest.createFunction(
       await step.run(`send-digest-batch-${i}`, async () => {
         const results = await Promise.allSettled(
           batch.map(async (user: { id: string; email: string }) => {
-            // Get personalized recommendations for user
-            const recommendations = await fetch(
-              `${process.env.RECSYS_SERVICE_URL}/recommend/${user.id}?limit=5`,
-              {
-                headers: { "x-organization-id": user.tenantId },
-              },
-            ).then((r) => r.json());
-
-            // Get recent activity summary
             const activity = await fetch(
               `${process.env.API_GATEWAY_URL}/users/${user.id}/activity/summary?since=24h`,
               {
@@ -45,7 +36,6 @@ export const dailyDigestEmail = inngest.createFunction(
               },
             ).then((r) => r.json());
 
-            // Send email
             await fetch(`${process.env.API_GATEWAY_URL}/email/send`, {
               method: "POST",
               headers: {
@@ -55,11 +45,7 @@ export const dailyDigestEmail = inngest.createFunction(
               body: JSON.stringify({
                 template: "daily-digest",
                 to: user.email,
-                data: {
-                  user,
-                  recommendations,
-                  activity,
-                },
+                data: { user, activity },
               }),
             });
           }),

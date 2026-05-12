@@ -26,7 +26,6 @@ Complete navigation to all project documentation.
 | Service                                              | Port | Description                             |
 | ---------------------------------------------------- | ---- | --------------------------------------- |
 | [ai](../backends/python/ai/README.md)                | 8001 | Batch translation, embeddings, generation |
-| [recsys](../backends/python/recsys/README.md)        | 8003 | Recommendation engine                   |
 | [ecommerce](../backends/python/ecommerce/README.md)  | 8004 | Shopify/Shopline sync                   |
 | [event-ingest](../backends/python/event-ingest/README.md) | 8008 | High-throughput event ingestion       |
 

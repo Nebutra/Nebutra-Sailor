@@ -52,38 +52,6 @@ export const INTERNAL_SERVERS: MCPServerConfig[] = [
     rateLimit: { maxRequests: 100, windowMs: 60000 },
   },
 
-  // Recommendation Service
-  {
-    id: "nebutra-recsys",
-    name: "Nebutra Recommendation Service",
-    description: "AI-powered content recommendations",
-    endpoint: process.env.RECSYS_SERVICE_URL || "http://localhost:8003",
-    transport: "http",
-    tools: [
-      {
-        name: "get_recommendations",
-        description: "Get personalized content recommendations",
-        parameters: {
-          user_id: { type: "string", description: "User ID" },
-          limit: { type: "number", description: "Number of recommendations", default: 10 },
-          context: { type: "object", description: "Additional context" },
-        },
-        returns: "Recommended items array",
-      },
-      {
-        name: "similar_items",
-        description: "Find similar items to a given item",
-        parameters: {
-          item_id: { type: "string", description: "Item ID", required: true },
-          limit: { type: "number", description: "Number of similar items", default: 5 },
-        },
-        returns: "Similar items array",
-      },
-    ],
-    allowedPlans: ["PRO", "ENTERPRISE"],
-    rateLimit: { maxRequests: 50, windowMs: 60000 },
-  },
-
   // E-commerce Service
   {
     id: "nebutra-ecommerce",
