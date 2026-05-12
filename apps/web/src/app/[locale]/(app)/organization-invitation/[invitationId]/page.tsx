@@ -1,10 +1,11 @@
-import { getSystemDb, type Prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { OrganizationInvitationModal } from "@/components/organizations/organization-invitation-modal";
 import { getAuth, getUser } from "@/lib/auth";
+import { findInvitationById, type NormalizedInvitation } from "@/lib/invitations";
 
-type InvitationRecord = Prisma.OrganizationInvitationGetPayload<Record<string, never>>;
+type InvitationRecord = NormalizedInvitation;
 
 interface OrganizationInvitationPageProps {
   params: Promise<{ locale: string; invitationId: string }>;
@@ -42,9 +43,8 @@ export default async function OrganizationInvitationPage({
   }
 
   const db = getSystemDb();
-  const invitation = await db.organizationInvitation.findUnique({
-    where: { id: invitationId },
-  });
+  // ADR-12 Phase 3b — dual-read: auth.invitation (BA) first, legacy fallback.
+  const invitation = await findInvitationById(invitationId, db);
 
   return (
     <main

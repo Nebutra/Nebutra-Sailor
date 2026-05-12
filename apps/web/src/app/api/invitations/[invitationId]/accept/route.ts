@@ -2,6 +2,7 @@ import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { getAuth, getUser } from "@/lib/auth";
+import { findInvitationById, updateInvitationStatus } from "@/lib/invitations";
 
 type RouteContext = { params: Promise<{ invitationId: string }> };
 
@@ -36,9 +37,8 @@ export async function POST(request: Request, context: RouteContext) {
     }
 
     const db = getSystemDb();
-    const invitation = await db.organizationInvitation.findUnique({
-      where: { id: invitationId },
-    });
+    // ADR-12 Phase 3b — dual-read: auth.invitation (BA) first, legacy fallback.
+    const invitation = await findInvitationById(invitationId, db);
 
     if (!invitation) {
       return NextResponse.json({ error: "Invitation not found." }, { status: 404 });
@@ -51,11 +51,9 @@ export async function POST(request: Request, context: RouteContext) {
     if (invitation.expiresAt.getTime() <= Date.now()) {
       // Lazy state transition: surface as expired so the client can render a
       // friendly view without our cron job needing to run first.
-      await db.organizationInvitation
-        .update({ where: { id: invitation.id }, data: { status: "expired" } })
-        .catch(() => {
-          // Best effort; do not fail the user-facing response on a race.
-        });
+      await updateInvitationStatus(invitation, { status: "expired" }, db).catch(() => {
+        // Best effort; do not fail the user-facing response on a race.
+      });
       return NextResponse.json({ error: "Invitation has expired." }, { status: 410 });
     }
 
@@ -90,10 +88,7 @@ export async function POST(request: Request, context: RouteContext) {
       });
     }
 
-    await db.organizationInvitation.update({
-      where: { id: invitation.id },
-      data: { status: "accepted", acceptedAt: new Date() },
-    });
+    await updateInvitationStatus(invitation, { status: "accepted", acceptedAt: new Date() }, db);
 
     return NextResponse.json({ ok: true, organizationId: invitation.organizationId });
   } catch (error) {

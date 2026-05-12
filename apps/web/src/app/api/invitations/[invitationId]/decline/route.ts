@@ -2,6 +2,7 @@ import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { getAuth } from "@/lib/auth";
+import { findInvitationById, updateInvitationStatus } from "@/lib/invitations";
 
 type RouteContext = { params: Promise<{ invitationId: string }> };
 
@@ -22,9 +23,8 @@ export async function POST(request: Request, context: RouteContext) {
     }
 
     const db = getSystemDb();
-    const invitation = await db.organizationInvitation.findUnique({
-      where: { id: invitationId },
-    });
+    // ADR-12 Phase 3b — dual-read: auth.invitation (BA) first, legacy fallback.
+    const invitation = await findInvitationById(invitationId, db);
 
     if (!invitation) {
       return NextResponse.json({ error: "Invitation not found." }, { status: 404 });
@@ -34,10 +34,7 @@ export async function POST(request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Invitation is no longer pending." }, { status: 410 });
     }
 
-    await db.organizationInvitation.update({
-      where: { id: invitation.id },
-      data: { status: "declined", declinedAt: new Date() },
-    });
+    await updateInvitationStatus(invitation, { status: "declined", declinedAt: new Date() }, db);
 
     return NextResponse.json({ ok: true });
   } catch (error) {

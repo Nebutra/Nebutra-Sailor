@@ -9,6 +9,11 @@ const systemDbMock = {
     findUnique: vi.fn(),
     update: vi.fn(),
   },
+  // ADR-12 Phase 3b dual-read: BA table is consulted first.
+  bAInvitation: {
+    findUnique: vi.fn(),
+    update: vi.fn(),
+  },
 };
 
 vi.mock("@/lib/auth", () => ({
@@ -43,6 +48,9 @@ describe("POST /api/invitations/[invitationId]/decline", () => {
     loggerErrorMock.mockReset();
     systemDbMock.organizationInvitation.findUnique.mockReset();
     systemDbMock.organizationInvitation.update.mockReset().mockResolvedValue({});
+    // BA tier defaults to "no row" so legacy-only tests keep their semantics.
+    systemDbMock.bAInvitation.findUnique.mockReset().mockResolvedValue(null);
+    systemDbMock.bAInvitation.update.mockReset().mockResolvedValue({});
   });
 
   it("rejects unauthenticated callers with 401", async () => {
@@ -104,5 +112,29 @@ describe("POST /api/invitations/[invitationId]/decline", () => {
 
     expect(response.status).toBe(410);
     expect(systemDbMock.organizationInvitation.update).not.toHaveBeenCalled();
+  });
+
+  it("ADR-12 phase 3b — declines a BA-sourced invitation and writes back to auth.invitation", async () => {
+    getAuthMock.mockResolvedValue({ userId: "user_ada" });
+    // BA hit; legacy is NOT consulted.
+    systemDbMock.bAInvitation.findUnique.mockResolvedValue({
+      id: "inv_ba_1",
+      email: "ada@example.com",
+      organizationId: "org_alpha",
+      role: "member",
+      status: "pending",
+      expiresAt: new Date(Date.now() + 60_000),
+    });
+    const { POST } = await loadRoute();
+
+    const response = await POST(makeRequest(), makeContext("inv_ba_1"));
+
+    expect(response.status).toBe(200);
+    expect(systemDbMock.organizationInvitation.findUnique).not.toHaveBeenCalled();
+    expect(systemDbMock.organizationInvitation.update).not.toHaveBeenCalled();
+    expect(systemDbMock.bAInvitation.update).toHaveBeenCalledWith({
+      where: { id: "inv_ba_1" },
+      data: expect.objectContaining({ status: "declined" }),
+    });
   });
 });
