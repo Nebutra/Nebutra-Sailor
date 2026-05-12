@@ -21,7 +21,11 @@ set -euo pipefail
 
 DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
 APPS="${APPS:-landing web api}"
-KEEP_RELEASES="${KEEP_RELEASES:-5}"
+# Default 2 (was 5). Each release holds ~1 GB of node_modules; on the 2C4G
+# Aliyun Lite instance, 5 × 3 apps ≈ 15 GB already overflowed the disk and
+# caused the May 12 deploy chain to fail at scp. Override per-deploy with
+# the ECS_KEEP_RELEASES repository variable if you need more rollback depth.
+KEEP_RELEASES="${KEEP_RELEASES:-2}"
 PM2_CONFIG="${PM2_CONFIG:-$DEPLOY_ROOT/ecosystem.config.cjs}"
 SHA="${SHA:?SHA env var required}"
 

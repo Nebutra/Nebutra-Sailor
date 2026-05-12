@@ -20,7 +20,10 @@ name: Deploy to ECS (PM2)
 #
 # OPTIONAL REPOSITORY VARIABLES:
 #   ECS_SSH_PORT         — defaults to 22.
-#   ECS_KEEP_RELEASES    — past releases to retain (default 5).
+#   ECS_KEEP_RELEASES    — past releases to retain (default 2; reduced from 5
+#                          after the May 12 disk-full incident — 3 apps × 5
+#                          releases × ~1 GB node_modules overflowed the 2C4G
+#                          Aliyun Lite box and blocked every deploy).
 #
 # CONNECTIVITY NOTE:
 # GH-hosted runners sit in US/EU. SSH to Aliyun ECS in mainland China usually
@@ -86,6 +89,11 @@ jobs:
         id: filter
         uses: dorny/paths-filter@v3
         with:
+          # NOTE: include `.github/workflows/deploy-ecs.yml` in every app's
+          # filter. Without it, edits to this workflow (e.g. build env, deploy
+          # script, smoke-test logic) don't trigger any app rebuild, leaving
+          # the new workflow behaviour live but the apps it deploys stale.
+          # That bit us during the May 12 /sign-in outage — see commit history.
           filters: |
             landing:
               - 'apps/landing-page/**'
@@ -93,18 +101,21 @@ jobs:
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - '.github/workflows/deploy-ecs.yml'
             web:
               - 'apps/web/**'
               - 'packages/**'
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - '.github/workflows/deploy-ecs.yml'
             api:
               - 'backends/gateway/**'
               - 'packages/**'
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - '.github/workflows/deploy-ecs.yml'
 
       - name: Resolve target apps
         id: resolve
@@ -301,7 +312,7 @@ jobs:
       ECS_USER:          ${{ vars.ECS_USER }}
       ECS_SSH_PORT:      ${{ vars.ECS_SSH_PORT || '22' }}
       ECS_DEPLOY_ROOT:   ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
-      ECS_KEEP_RELEASES: ${{ vars.ECS_KEEP_RELEASES || '5' }}
+      ECS_KEEP_RELEASES: ${{ vars.ECS_KEEP_RELEASES || '2' }}
     steps:
       - name: Verify deploy targets configured
         run: |
