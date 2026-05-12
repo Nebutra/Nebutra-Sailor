@@ -1012,7 +1012,11 @@ export const BAInvitationScalarFieldEnum = {
   organizationId: 'organizationId',
   role: 'role',
   status: 'status',
-  expiresAt: 'expiresAt'
+  expiresAt: 'expiresAt',
+  token: 'token',
+  acceptedAt: 'acceptedAt',
+  declinedAt: 'declinedAt',
+  createdAt: 'createdAt'
 } as const
 
 export type BAInvitationScalarFieldEnum = (typeof BAInvitationScalarFieldEnum)[keyof typeof BAInvitationScalarFieldEnum]
