@@ -12,6 +12,12 @@ dependencies = [
     "httpx>=0.28.0",
     "redis>=5.2.0",
     "python-dotenv>=1.0.0",
+    "structlog>=24.4.0",
+    "opentelemetry-api>=1.27.0",
+    "opentelemetry-sdk>=1.27.0",
+    "opentelemetry-exporter-otlp-proto-grpc>=1.27.0",
+    "opentelemetry-instrumentation-fastapi>=0.48b0",
+    "e2b-code-interpreter>=1.0.0",
 ]
 
 [tool.uv]
@@ -29,9 +35,12 @@ asyncio_mode = "auto"
 testpaths = ["tests"]
 addopts = "--cov=app --cov=services --cov-report=term-missing --cov-fail-under=70"
 
+[tool.hatch.build.targets.wheel]
+packages = ["app", "providers", "services"]
+
 [build-system]
 requires = ["hatchling"]
-build-backend = "hatchling.backends"
+build-backend = "hatchling.build"
 
 [tool.ruff]
 line-length = 88
