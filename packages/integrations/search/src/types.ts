@@ -10,8 +10,12 @@ import { z } from "zod";
  * - `meilisearch` — Self-hosted, developer-friendly, typo-tolerant
  * - `typesense`   — Self-hosted, optimised for geo search and faceting
  * - `algolia`     — Managed SaaS, zero-ops, global CDN
+ * - `pgvector`    — Postgres + pgvector extension; BM25 keyword + vector
+ *                   cosine search. Choose this when AI/RAG over your own
+ *                   Postgres is the primary use case (no external search
+ *                   infra to operate).
  */
-export type SearchProviderType = "meilisearch" | "typesense" | "algolia";
+export type SearchProviderType = "meilisearch" | "typesense" | "algolia" | "pgvector";
 
 // ── Search Document ────────────────────────────────────────────────────────
 
@@ -229,4 +233,23 @@ export interface AlgoliaConfig {
   adminKey?: string;
 }
 
-export type SearchConfig = MeilisearchConfig | TypesenseConfig | AlgoliaConfig;
+export interface PgvectorConfig {
+  provider: "pgvector";
+
+  /** Postgres connection string (defaults to `process.env.DATABASE_URL`) */
+  connectionString?: string;
+
+  /**
+   * Embedding vector dimension. All documents indexed under this provider
+   * must use the same dimension. Defaults to 1536 (OpenAI text-embedding-3-small).
+   */
+  embeddingDim?: number;
+
+  /**
+   * Optional table-name prefix. Each index becomes a table named
+   * `<prefix>_<index>`. Defaults to `nebutra_search`.
+   */
+  tablePrefix?: string;
+}
+
+export type SearchConfig = MeilisearchConfig | TypesenseConfig | AlgoliaConfig | PgvectorConfig;

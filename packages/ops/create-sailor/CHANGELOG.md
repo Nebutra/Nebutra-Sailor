@@ -1,5 +1,34 @@
 # create-sailor
 
+## 1.4.3
+
+### Patch Changes
+
+- **Implement pgvector search provider** — Real `PgvectorProvider` in
+  `@nebutra/search/src/providers/pgvector.ts`. Creates `vector` extension,
+  bootstraps per-index tables with GIN (tsvector) + ivfflat (vector cosine)
+  indexes. Routes between BM25 keyword and vector cosine search based on
+  whether the query passes `filters._embedding`. Tenant-scoped via
+  `tenant_id` column. Configurable embedding dim + table prefix.
+- **Implement Knock notifications provider** — Real `KnockProvider` in
+  `@nebutra/notifications/src/providers/knock.ts`. Uses Knock's HTTP API
+  directly (no SDK dep) so it doesn't drift with `@knocklabs/node` releases.
+  Covers send / sendBatch / getInAppNotifications / mark-as-read /
+  preferences. Per-channel overrides passed through `data.__nebutra_overrides`
+  so workflow templates can read them.
+- **--orm help text honesty** — `--orm` now says `prisma (default)` and
+  explicitly notes drizzle / none are not yet implemented. The scaffold
+  always uses Prisma regardless of this flag's value; full Drizzle support
+  is its own scope and deferred.
+
+### Deferred to 1.4.4+
+
+- `@nebutra/cache` multi-backend refactor (currently Upstash-only; the
+  CLI's `--cache=vercel-kv|redis|dragonfly` options set the env var but
+  the package's client.ts + strategies hardcode the `@upstash/redis`
+  client). Real fix requires interface design + wrapping `ioredis` to
+  match the methods used by strategies + downstream consumer updates.
+
 ## 1.4.2
 
 ### Patch Changes

@@ -21,6 +21,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./novu": "./src/providers/novu.ts",
+    "./knock": "./src/providers/knock.ts",
     "./direct": "./src/providers/direct.ts"
   },
   "scripts": {

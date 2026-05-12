@@ -28,7 +28,7 @@ const ErrorResponseSchema = z.object({
 });
 
 const RuntimeStatusSchema = z.object({
-  provider: z.enum(["novu", "direct"]),
+  provider: z.enum(["novu", "knock", "direct"]),
   providerLabel: z.string(),
   mode: z.enum(["managed", "self_hosted", "preview", "degraded"]),
   canManagePreferences: z.boolean(),

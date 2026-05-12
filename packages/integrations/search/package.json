@@ -9,11 +9,11 @@
     "requires": [
       "MEILISEARCH_URL + MEILISEARCH_MASTER_KEY",
       "or TYPESENSE_HOST + TYPESENSE_API_KEY",
-      "or ALGOLIA_APP_ID + ALGOLIA_ADMIN_API_KEY"
+      "or ALGOLIA_APP_ID + ALGOLIA_ADMIN_API_KEY",
+      "or DATABASE_URL (Postgres + pgvector extension)"
     ],
     "gaps": [
       "Provider adapters are stubs — need bulk index + faceted search",
-      "pgvector adapter not implemented",
       "Tenant-scoped index isolation not enforced"
     ]
   },
@@ -23,7 +23,8 @@
     ".": "./src/index.ts",
     "./meilisearch": "./src/providers/meilisearch.ts",
     "./typesense": "./src/providers/typesense.ts",
-    "./algolia": "./src/providers/algolia.ts"
+    "./algolia": "./src/providers/algolia.ts",
+    "./pgvector": "./src/providers/pgvector.ts"
   },
   "scripts": {
     "build": "tsc",
@@ -34,9 +35,11 @@
     "meilisearch": "^0.44.1",
     "typesense": "^2.0.0",
     "algoliasearch": "^5.20.0",
+    "pg": "^8.13.1",
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@types/pg": "^8.11.10",
     "typescript": "catalog:"
   }
 }

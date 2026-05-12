@@ -368,7 +368,10 @@ async function run(): Promise<void> {
     .argument("[name]", "project directory", undefined)
     .option("-p, --pm <id>", "npm | pnpm | yarn | bun")
     .option("--region <id>", "global | cn | hybrid")
-    .option("--orm <id>", "prisma | drizzle | none")
+    .option(
+      "--orm <id>",
+      "prisma (default) — drizzle and 'none' are not yet implemented; the scaffold always uses Prisma",
+    )
     .option("--db <id>", "postgres | mysql | sqlite | none")
     .option("--auth <id>", "clerk | betterauth | nextauth | none")
     .option(

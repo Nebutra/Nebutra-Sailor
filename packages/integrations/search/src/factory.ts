@@ -21,7 +21,10 @@ function detectProvider(): SearchProviderType {
   if (process.env.MEILISEARCH_URL) return "meilisearch";
   if (process.env.TYPESENSE_URL) return "typesense";
   if (process.env.ALGOLIA_APP_ID) return "algolia";
-  return "meilisearch"; // Default fallback
+  // Only fall back to pgvector when DATABASE_URL is set — otherwise default to
+  // meilisearch (developer-friendly local default).
+  if (process.env.SEARCH_PROVIDER === "pgvector" && process.env.DATABASE_URL) return "pgvector";
+  return "meilisearch";
 }
 
 /**
@@ -59,7 +62,7 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
     case "meilisearch": {
       const { MeilisearchProvider } = await import("./providers/meilisearch");
       const meilisearchConfig = config as
-        | Exclude<SearchConfig, { provider: "typesense" | "algolia" }>
+        | Exclude<SearchConfig, { provider: "typesense" | "algolia" | "pgvector" }>
         | undefined;
       const configObj: any = { provider: "meilisearch" };
       if (meilisearchConfig?.url !== undefined) configObj.url = meilisearchConfig.url;
@@ -71,7 +74,7 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
     case "typesense": {
       const { TypesenseProvider } = await import("./providers/typesense");
       const typesenseConfig = config as
-        | Exclude<SearchConfig, { provider: "meilisearch" | "algolia" }>
+        | Exclude<SearchConfig, { provider: "meilisearch" | "algolia" | "pgvector" }>
         | undefined;
       const configObj: any = { provider: "typesense" };
       if (typesenseConfig?.url !== undefined) configObj.url = typesenseConfig.url;
@@ -83,13 +86,32 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
     case "algolia": {
       const { AlgoliaProvider } = await import("./providers/algolia");
       const algoliaConfig = config as
-        | Exclude<SearchConfig, { provider: "meilisearch" | "typesense" }>
+        | Exclude<SearchConfig, { provider: "meilisearch" | "typesense" | "pgvector" }>
         | undefined;
       const configObj: any = { provider: "algolia" };
       if (algoliaConfig?.appId !== undefined) configObj.appId = algoliaConfig.appId;
       if (algoliaConfig?.searchKey !== undefined) configObj.searchKey = algoliaConfig.searchKey;
       if (algoliaConfig?.adminKey !== undefined) configObj.adminKey = algoliaConfig.adminKey;
       return new AlgoliaProvider(configObj);
+    }
+
+    case "pgvector": {
+      const { PgvectorProvider } = await import("./providers/pgvector");
+      const pgvectorConfig = config as
+        | Exclude<SearchConfig, { provider: "meilisearch" | "typesense" | "algolia" }>
+        | undefined;
+      return new PgvectorProvider({
+        provider: "pgvector",
+        ...(pgvectorConfig?.connectionString !== undefined
+          ? { connectionString: pgvectorConfig.connectionString }
+          : {}),
+        ...(pgvectorConfig?.embeddingDim !== undefined
+          ? { embeddingDim: pgvectorConfig.embeddingDim }
+          : {}),
+        ...(pgvectorConfig?.tablePrefix !== undefined
+          ? { tablePrefix: pgvectorConfig.tablePrefix }
+          : {}),
+      });
     }
 
     default:

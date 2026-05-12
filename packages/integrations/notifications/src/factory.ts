@@ -19,6 +19,7 @@ let defaultProvider: NotificationProvider | null = null;
  */
 function detectProvider(): NotificationProviderType {
   if (process.env.NOVU_API_KEY) return "novu";
+  if (process.env.KNOCK_API_KEY) return "knock";
   return "direct";
 }
 
@@ -65,7 +66,9 @@ export async function createNotificationProvider(
   switch (providerType) {
     case "novu": {
       const { NovuProvider } = await import("./providers/novu");
-      const novuConfig = config as Exclude<NotificationConfig, { provider: "direct" }> | undefined;
+      const novuConfig = config as
+        | Exclude<NotificationConfig, { provider: "knock" | "direct" }>
+        | undefined;
       return new NovuProvider({
         provider: "novu",
         ...(novuConfig?.apiKey !== undefined ? { apiKey: novuConfig.apiKey } : {}),
@@ -73,9 +76,22 @@ export async function createNotificationProvider(
       });
     }
 
+    case "knock": {
+      const { KnockProvider } = await import("./providers/knock");
+      const knockConfig = config as
+        | Exclude<NotificationConfig, { provider: "novu" | "direct" }>
+        | undefined;
+      return new KnockProvider({
+        provider: "knock",
+        ...(knockConfig?.apiKey !== undefined ? { apiKey: knockConfig.apiKey } : {}),
+      });
+    }
+
     case "direct": {
       const { DirectProvider } = await import("./providers/direct");
-      const directConfig = config as Exclude<NotificationConfig, { provider: "novu" }> | undefined;
+      const directConfig = config as
+        | Exclude<NotificationConfig, { provider: "novu" | "knock" }>
+        | undefined;
       if (!shouldAllowMemoryDirectProvider(directConfig)) {
         throw new Error(
           "Refusing to use in-memory notification stores in production. Configure Novu, inject durable direct provider stores, or set ALLOW_MEMORY_NOTIFICATIONS_IN_PRODUCTION=true for an explicit temporary override.",
