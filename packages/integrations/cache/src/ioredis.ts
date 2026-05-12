@@ -1,5 +1,5 @@
 import IORedis, { type Redis as IORedisClient } from "ioredis";
-import type { CacheClient, SetOptions } from "./types";
+import type { CacheClient, ScanOptions, SetOptions } from "./types";
 
 /**
  * ioredis adapter — wraps a standard TCP Redis client (self-hosted Redis,
@@ -76,6 +76,42 @@ export class IoredisCacheClient implements CacheClient {
   async del(...keys: string[]): Promise<number> {
     if (keys.length === 0) return 0;
     return await this.client.del(...keys);
+  }
+
+  async ping(): Promise<string> {
+    return await this.client.ping();
+  }
+
+  async scan(cursor: string | number, options?: ScanOptions): Promise<[string, string[]]> {
+    const args: Array<string | number> = [];
+    if (options?.match) args.push("MATCH", options.match);
+    if (options?.count !== undefined) args.push("COUNT", options.count);
+    if (options?.type) args.push("TYPE", options.type);
+    const [next, keys] = (await (
+      this.client.scan as (...a: unknown[]) => Promise<[string, string[]]>
+    )(String(cursor), ...args)) as [string, string[]];
+    return [next, keys];
+  }
+
+  async incr(key: string): Promise<number> {
+    return await this.client.incr(key);
+  }
+
+  async incrby(key: string, n: number): Promise<number> {
+    return await this.client.incrby(key, n);
+  }
+
+  async expire(key: string, seconds: number): Promise<number> {
+    return await this.client.expire(key, seconds);
+  }
+
+  async eval(script: string, keys: string[], args: Array<string | number>): Promise<unknown> {
+    return await (this.client.eval as (...a: unknown[]) => Promise<unknown>)(
+      script,
+      keys.length,
+      ...keys,
+      ...args,
+    );
   }
 
   /**

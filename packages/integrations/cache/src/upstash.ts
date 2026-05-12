@@ -1,6 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { getRedisConfig } from "./env";
-import type { CacheClient, SetOptions } from "./types";
+import type { CacheClient, ScanOptions, SetOptions } from "./types";
 
 /**
  * Upstash Redis adapter — wraps the @upstash/redis HTTP client.
@@ -30,6 +30,34 @@ export class UpstashRedisCacheClient implements CacheClient {
     if (keys.length === 0) return 0;
     return await this.client.del(...keys);
   }
-}
 
-export { Redis };
+  async ping(): Promise<string> {
+    return (await (this.client as unknown as { ping: () => Promise<string> }).ping()) ?? "PONG";
+  }
+
+  async scan(cursor: string | number, options?: ScanOptions): Promise<[string, string[]]> {
+    const result = await (
+      this.client.scan as (
+        c: string | number,
+        o?: ScanOptions,
+      ) => Promise<[string | number, string[]]>
+    )(cursor, options);
+    return [String(result[0]), result[1]];
+  }
+
+  async incr(key: string): Promise<number> {
+    return await this.client.incr(key);
+  }
+
+  async incrby(key: string, n: number): Promise<number> {
+    return await this.client.incrby(key, n);
+  }
+
+  async expire(key: string, seconds: number): Promise<number> {
+    return await this.client.expire(key, seconds);
+  }
+
+  async eval(script: string, keys: string[], args: Array<string | number>): Promise<unknown> {
+    return await this.client.eval(script, keys, args as never);
+  }
+}

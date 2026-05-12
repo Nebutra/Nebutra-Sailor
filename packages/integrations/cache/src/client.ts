@@ -1,4 +1,3 @@
-import { Redis } from "@upstash/redis";
 import { IoredisCacheClient } from "./ioredis";
 import type { CacheBackend, CacheClient } from "./types";
 import { UpstashRedisCacheClient } from "./upstash";
@@ -86,6 +85,6 @@ export const redis = new Proxy({} as CacheClient, {
   },
 });
 
-// Keep the Redis type re-export for callers that imported it from this module.
-// New code should depend on CacheClient instead.
-export { Redis };
+// Keep the `Redis` type re-export for callers that imported it from this
+// module pre-multi-backend. Now an alias for CacheClient (see types.ts).
+export type { Redis } from "./types";

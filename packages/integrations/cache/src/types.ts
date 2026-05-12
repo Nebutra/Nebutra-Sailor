@@ -21,6 +21,12 @@ export interface SetOptions {
   xx?: boolean;
 }
 
+export interface ScanOptions {
+  match?: string;
+  count?: number;
+  type?: string;
+}
+
 export interface CacheClient {
   /**
    * Read a value. Returns null if the key doesn't exist or has expired.
@@ -44,6 +50,52 @@ export interface CacheClient {
    * Delete one or more keys. Returns the number of keys actually removed.
    */
   del(...keys: string[]): Promise<number>;
+
+  /**
+   * Liveness check. Returns "PONG" on healthy connection.
+   */
+  ping(): Promise<string>;
+
+  /**
+   * Cursor-based key iteration. Signature mirrors `@upstash/redis`'s
+   * `scan(cursor, { match, count })` and returns `[nextCursor, keys]`.
+   * The ioredis adapter translates to the variadic command form internally.
+   */
+  scan(cursor: string | number, options?: ScanOptions): Promise<[string, string[]]>;
+
+  /**
+   * Atomically increment a counter by 1. Creates the key (initialised to 0)
+   * if it doesn't exist. Returns the post-increment value.
+   */
+  incr(key: string): Promise<number>;
+
+  /**
+   * Atomically increment a counter by `n`. Returns the post-increment value.
+   */
+  incrby(key: string, n: number): Promise<number>;
+
+  /**
+   * Set a TTL (seconds) on an existing key. Returns 1 if applied, 0 if the
+   * key didn't exist.
+   */
+  expire(key: string, seconds: number): Promise<number>;
+
+  /**
+   * Execute a Lua script server-side. Both Upstash REST and ioredis support
+   * EVAL — this is the cheapest way to run an atomic multi-key transaction
+   * without RTT-per-command.
+   *
+   * Signature follows `@upstash/redis`: keys and args are passed as separate
+   * arrays. ioredis variadic translation is internal.
+   */
+  eval(script: string, keys: string[], args: Array<string | number>): Promise<unknown>;
 }
 
 export type CacheBackend = "upstash-redis" | "ioredis";
+
+/**
+ * @deprecated Use `CacheClient` directly. Kept as an alias so existing
+ * `import { Redis } from "@nebutra/cache"` doesn't break — the underlying
+ * client is now multi-backend, not specifically `@upstash/redis`.
+ */
+export type Redis = CacheClient;
