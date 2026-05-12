@@ -11,9 +11,18 @@
     "roadmap": "路线图",
     "resources": "资源",
     "signIn": "登录控制台",
-    "getStarted": "免费部署",
+    "getStarted": "起航",
     "changelog": "更新日志",
-    "impact": "宣言 (Impact)"
+    "impact": "宣言 (Impact)",
+    "avatarMenu": {
+      "ariaLabel": "账户菜单",
+      "loadingName": "加载中…",
+      "dashboard": "控制台",
+      "account": "账户设置",
+      "billing": "账单",
+      "docs": "文档",
+      "signOut": "退出登录"
+    }
   },
   "hero": {
     "badge": "Nebutra Intelligence · 领先的 AI SaaS 基础架构",

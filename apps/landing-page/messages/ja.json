@@ -13,7 +13,16 @@
     "signIn": "ログイン",
     "getStarted": "無料開始",
     "changelog": "更新履歴",
-    "impact": "マニフェスト"
+    "impact": "マニフェスト",
+    "avatarMenu": {
+      "ariaLabel": "アカウントメニュー",
+      "loadingName": "読み込み中…",
+      "dashboard": "ダッシュボード",
+      "account": "アカウント設定",
+      "billing": "請求",
+      "docs": "ドキュメント",
+      "signOut": "ログアウト"
+    }
   },
   "hero": {
     "badge": "Nebutra Intelligence · 先進AIインフラストラクチャ",

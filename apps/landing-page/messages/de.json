@@ -13,7 +13,16 @@
     "roadmap": "Produktplan",
     "resources": "Ressourcen",
     "changelog": "Änderungsprotokoll",
-    "impact": "Manifest"
+    "impact": "Manifest",
+    "avatarMenu": {
+      "ariaLabel": "Kontomenü",
+      "loadingName": "Wird geladen…",
+      "dashboard": "Dashboard",
+      "account": "Konto",
+      "billing": "Abrechnung",
+      "docs": "Dokumentation",
+      "signOut": "Abmelden"
+    }
   },
   "hero": {
     "badge": "Nebutra Intelligence · Führende KI-Infrastruktur",

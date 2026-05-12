@@ -12,6 +12,7 @@ import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 import { DesktopNav } from "./navbar/DesktopNav";
 import { MobileDrawer } from "./navbar/MobileDrawer";
+import { UserAvatarMenu } from "./navbar/UserAvatarMenu";
 
 const APP_URL = env.NEXT_PUBLIC_APP_URL;
 
@@ -58,6 +59,20 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
         <div className="hidden lg:flex items-center gap-3 xl:gap-5">
           <LocaleSwitcher />
           <ThemeSwitcher />
+
+          {/*
+            Closed-loop signed-in indicator. UserAvatarMenu only mounts when
+            the `nebutra_session_hint` cookie is present AND the /api/me/public
+            fetch succeeds — otherwise renders null, and the Sign-In + CTA
+            below remain the visible affordance.
+
+            We don't conditionally hide Sign-In / Get-Sailed: showing both is
+            harmless when the avatar is mounted (avatar gets clicked first
+            anyway), and avoids a flash-of-anonymous-CTA during avatar
+            hydration. The avatar sits left of the CTAs so it's the first
+            element a returning user sees.
+          */}
+          <UserAvatarMenu />
 
           <a
             href={`${APP_URL}/sign-in`}

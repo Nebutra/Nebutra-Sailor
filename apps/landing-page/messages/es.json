@@ -13,7 +13,16 @@
     "roadmap": "Hoja de Ruta",
     "resources": "Recursos",
     "changelog": "Registro de cambios",
-    "impact": "Manifiesto"
+    "impact": "Manifiesto",
+    "avatarMenu": {
+      "ariaLabel": "Menú de cuenta",
+      "loadingName": "Cargando…",
+      "dashboard": "Panel",
+      "account": "Cuenta",
+      "billing": "Facturación",
+      "docs": "Documentación",
+      "signOut": "Cerrar sesión"
+    }
   },
   "hero": {
     "badge": "Nebutra Intelligence · Infraestructura líder para IA",

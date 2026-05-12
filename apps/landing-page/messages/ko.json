@@ -13,7 +13,16 @@
     "roadmap": "로드맵",
     "resources": "리소스",
     "changelog": "변경 이력",
-    "impact": "매니페스토"
+    "impact": "매니페스토",
+    "avatarMenu": {
+      "ariaLabel": "계정 메뉴",
+      "loadingName": "로딩 중…",
+      "dashboard": "대시보드",
+      "account": "계정 설정",
+      "billing": "결제",
+      "docs": "문서",
+      "signOut": "로그아웃"
+    }
   },
   "hero": {
     "badge": "Nebutra Intelligence · 선도적인 AI 인프라",
