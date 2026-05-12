@@ -590,8 +590,18 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     // that `auth.password.changed` / `auth.2fa.enabled` / `auth.2fa.disabled`
     // are emitted even though they aren't path-distinguishable at the
     // /api/auth/[...all] route. See packages/iam/auth/src/audit-events.ts.
+    //
+    // Invitation hooks (ADR-12 Phase 2) — populate the additive Phase 1 fields
+    // (`token`, `expiresAt`) on `auth.invitation` rows BA's `organization`
+    // plugin doesn't supply. See packages/iam/auth/src/invitation-hooks.ts.
     const { buildAuditDatabaseHooks } = await import("../audit-events");
-    const databaseHooks = buildAuditDatabaseHooks() as Record<string, unknown>;
+    const { buildInvitationDatabaseHooks, mergeDatabaseHooks } = await import(
+      "../invitation-hooks"
+    );
+    const databaseHooks = mergeDatabaseHooks(
+      buildAuditDatabaseHooks(),
+      buildInvitationDatabaseHooks(),
+    ) as Record<string, unknown>;
 
     const auth = betterAuth({
       secret,
