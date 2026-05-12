@@ -106,8 +106,7 @@ export function MonorepoFileTree() {
 
   return (
     <article className="group relative flex h-full flex-col rounded-[2.5rem] border border-border/40 bg-[var(--color-glass-panel,rgba(255,255,255,0.6))] dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.6))] p-8 md:p-10 shadow-elevation-high dark:shadow-2xl overflow-hidden backdrop-blur-2xl transition-all hover:border-primary/40">
-      {/* Top accent line */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
 
       {/* Subtle grid bg */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />

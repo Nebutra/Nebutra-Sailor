@@ -146,7 +146,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
           <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.2)_1px,transparent_1.4px)] bg-[size:20px_20px] opacity-25 [mask-image:linear-gradient(90deg,transparent_0%,#000_14%,#000_86%,transparent_100%)]" />
           <div className="absolute -left-32 top-24 h-64 w-[48rem] -rotate-12 rounded-full bg-[linear-gradient(90deg,rgba(11,241,195,0.24),rgba(0,51,254,0.14),transparent)] blur-3xl" />
           <div className="absolute right-[-18rem] top-[-12rem] h-[34rem] w-[34rem] rounded-full bg-[var(--blue-9)]/25 blur-[130px]" />
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
           <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[var(--neutral-1)] dark:to-black" />
         </div>
 

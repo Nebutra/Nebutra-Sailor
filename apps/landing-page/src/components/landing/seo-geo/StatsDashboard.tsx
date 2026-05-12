@@ -13,8 +13,7 @@ export function StatsDashboard({ stats, t }: StatsDashboardProps) {
   return (
     <AnimateIn preset="fadeUp" inView className="mt-16 sm:mt-24 w-full">
       <div className="mx-auto w-full rounded-[2rem] border border-border/50 bg-background/50 backdrop-blur-2xl p-1.5 shadow-2xl relative overflow-hidden ring-1 ring-border/10">
-        {/* Top highlight line */}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
         <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-border/60 bg-border/60 gap-px rounded-[1.75rem] overflow-hidden">
           {stats.map((stat) => (

@@ -51,11 +51,6 @@ export default async function LegalLayout({ children, params }: LegalLayoutProps
 
       {/* Footer */}
       <footer className="relative border-t border-[var(--neutral-7)]">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-px"
-          style={{ background: "var(--brand-gradient)" }}
-        />
         <div className="mx-auto max-w-7xl px-6 py-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <nav className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px]">

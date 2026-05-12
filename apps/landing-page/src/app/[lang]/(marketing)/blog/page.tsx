@@ -75,7 +75,7 @@ function PostCard({ post, lang }: { post: SanityPost; lang: string }) {
           />
         </div>
       ) : (
-        <div className="h-48 w-full" style={{ background: "var(--brand-gradient)" }} aria-hidden />
+        <div className="h-48 w-full bg-[var(--neutral-3)]" aria-hidden />
       )}
 
       <div className="flex flex-1 flex-col p-5">

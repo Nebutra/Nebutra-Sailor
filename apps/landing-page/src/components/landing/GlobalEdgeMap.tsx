@@ -28,8 +28,7 @@ const CDN_NODES = [
 export function GlobalEdgeMap() {
   return (
     <article className="group relative flex h-full flex-col rounded-[2.5rem] border border-border/40 bg-background/60 dark:bg-zinc-950/60 p-8 md:p-10 transition-all hover:border-primary/40 shadow-[0_20px_60px_rgba(0,0,0,0.06)] dark:shadow-2xl overflow-hidden backdrop-blur-2xl">
-      {/* Top accent line */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
 
       {/* Radial glow behind map */}
       <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/[0.04] dark:bg-primary/[0.08] blur-[80px] rounded-full pointer-events-none" />

@@ -102,14 +102,6 @@ export function FooterMinimal() {
       data-testid="footer-minimal"
       className="relative w-full overflow-hidden bg-[color:var(--neutral-1)] dark:bg-black"
     >
-      {/* Gradient top border */}
-      <div
-        aria-hidden="true"
-        data-testid="footer-gradient-line"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px"
-        style={{ background: "var(--brand-gradient)" }}
-      />
-
       <div className="mx-auto max-w-[1400px] px-6 pt-16 pb-8">
         {/* Main grid: Brand + Navigation */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,4fr)] lg:gap-12">
