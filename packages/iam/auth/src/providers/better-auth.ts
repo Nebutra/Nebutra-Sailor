@@ -13,6 +13,7 @@
  */
 
 import { logger } from "@nebutra/logger";
+import type { BetterAuthPlugin } from "better-auth/types";
 import type {
   AuthCapabilities,
   AuthConfig,
@@ -513,10 +514,10 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     // time even though the runtime try/catch is meant to handle it.
 
     // Dynamically import the organization plugin — it may not be available
-    let orgPlugin: unknown | undefined;
+    let orgPlugin: BetterAuthPlugin | undefined;
     try {
       const orgModule = await loadOptionalPlugin("organization");
-      orgPlugin = (orgModule as { organization: () => unknown }).organization();
+      orgPlugin = (orgModule as { organization: () => BetterAuthPlugin }).organization();
     } catch {
       logger.warn(
         "Better Auth: organization plugin not available — multi-tenant features will be stubbed.",
@@ -524,10 +525,10 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     }
 
     // Dynamically import the twoFactor plugin — gracefully degrade if absent
-    let twoFactorPlugin: unknown | undefined;
+    let twoFactorPlugin: BetterAuthPlugin | undefined;
     try {
       const twoFactorModule = await loadOptionalPlugin("two-factor");
-      twoFactorPlugin = (twoFactorModule as { twoFactor: () => unknown }).twoFactor();
+      twoFactorPlugin = (twoFactorModule as { twoFactor: () => BetterAuthPlugin }).twoFactor();
     } catch {
       logger.warn(
         "Better Auth: two-factor plugin not available — 2FA endpoints (/api/auth/two-factor/*) will not be exposed.",
@@ -537,10 +538,10 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     // Dynamically import the passkey plugin — gracefully degrade if absent.
     // better-auth 1.5.6 does not ship `./plugins/passkey` in its `exports`
     // map, so the runtime try/catch handles the missing module and logs a warning.
-    let passkeyPlugin: unknown | undefined;
+    let passkeyPlugin: BetterAuthPlugin | undefined;
     try {
       const passkeyModule = await loadOptionalPlugin("passkey");
-      passkeyPlugin = (passkeyModule as { passkey: () => unknown }).passkey();
+      passkeyPlugin = (passkeyModule as { passkey: () => BetterAuthPlugin }).passkey();
     } catch {
       logger.warn(
         "Better Auth: passkey plugin not available — WebAuthn endpoints (/api/auth/passkey/*) will not be exposed.",
@@ -548,12 +549,12 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     }
 
     // Dynamically import the magic-link plugin — gracefully degrade if absent
-    let magicLinkPlugin: unknown | undefined;
+    let magicLinkPlugin: BetterAuthPlugin | undefined;
     try {
       const magicLinkModule = (await loadOptionalPlugin("magic-link")) as {
         magicLink: (opts: {
           sendMagicLink: (args: { email: string; url: string }) => Promise<void>;
-        }) => unknown;
+        }) => BetterAuthPlugin;
       };
       // The magic-link plugin requires a `sendMagicLink` callback. When not configured,
       // we register a no-op that logs a warning so endpoints still mount but operators
@@ -577,8 +578,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const plugins: any[] = [];
+    const plugins: BetterAuthPlugin[] = [];
     if (orgPlugin) plugins.push(orgPlugin);
     if (twoFactorPlugin) plugins.push(twoFactorPlugin);
     if (passkeyPlugin) plugins.push(passkeyPlugin);

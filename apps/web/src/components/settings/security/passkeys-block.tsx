@@ -102,7 +102,7 @@ export function PasskeysBlock({ capability, onList, onAdd, onRemove }: PasskeysB
             <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
           </div>
           <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
-            Not wired
+            {t("unavailableBadge")}
           </span>
         </div>
         <p className="text-sm text-[var(--neutral-11)]">{capability.reason}</p>
