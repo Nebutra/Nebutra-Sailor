@@ -270,6 +270,7 @@
       "title": "Log in to Nebutra",
       "subtitle": "Choose how you want to sign in.",
       "continueWith": "Continue with",
+      "continueWithProvider": "Continue with {provider}",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -292,11 +293,42 @@
       "submitLoading": "Signing in…",
       "useMagicLink": "Send me a magic link instead",
       "usePasskey": "Sign in with a passkey",
+      "passkeyTitle": "Sign in with your passkey",
+      "passkeyDescription": "Use Face ID, Touch ID, or your security key. No password needed.",
+      "passkeyButton": "Continue with passkey",
+      "passkeyCancelled": "Passkey prompt cancelled.",
+      "passkeyUnsupported": "This browser does not support passkeys.",
+      "passkeyError": "Passkey sign-in failed. Try another method.",
       "newToProduct": "New to Nebutra?",
       "signUpLink": "Sign up",
       "homeLink": "Home",
       "signInFailed": "Sign in failed",
-      "genericError": "An error occurred. Please try again."
+      "genericError": "An error occurred. Please try again.",
+      "captchaError": "Bot verification failed. Refresh the page and try again."
+    },
+    "passkeys": {
+      "title": "Passkeys",
+      "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",
+      "addButton": "Add a passkey",
+      "adding": "Setting up…",
+      "namePlaceholder": "e.g. MacBook Pro",
+      "nameLabel": "Name (optional)",
+      "registerSuccess": "Passkey added.",
+      "registerCancelled": "Setup cancelled.",
+      "registerUnsupported": "This browser does not support passkeys.",
+      "registerError": "Failed to register passkey.",
+      "empty": "No passkeys yet.",
+      "loadError": "Failed to load passkeys.",
+      "revoke": "Remove",
+      "revoking": "Removing…",
+      "revokeConfirm": "Remove this passkey? You won't be able to sign in with it anymore.",
+      "revokeSuccess": "Passkey removed.",
+      "revokeError": "Failed to remove passkey.",
+      "device": {
+        "singleDevice": "Device-bound",
+        "multiDevice": "Synced across devices"
+      },
+      "addedOn": "Added {date}"
     },
     "magicLink": {
       "title": "Sign in with a magic link",

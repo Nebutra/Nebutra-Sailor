@@ -5,56 +5,47 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
+import {
+  listPasskeys,
+  type PasskeyDescriptor,
+  registerPasskey,
+  revokePasskey,
+} from "@/lib/auth/passkey-client";
 import type { SecurityCapabilities } from "./security-capabilities";
 
-export interface PasskeyRecord {
+export type PasskeyRecord = {
   id: string;
   name: string;
   deviceType?: string;
   createdAt?: string;
-}
+};
 
 export interface PasskeysBlockProps {
   capability: SecurityCapabilities["passkeys"];
-  /** List registered passkeys. Defaults to GET /api/auth/passkey/list. */
+  /** Override list — defaults to passkey-client.listPasskeys(). */
   onList?: () => Promise<PasskeyRecord[]>;
-  /** Trigger WebAuthn registration. Defaults to POST /api/auth/passkey/register. */
+  /** Override add — defaults to passkey-client.registerPasskey() (full WebAuthn ceremony). */
   onAdd?: () => Promise<void>;
-  /** Remove a passkey by id. Defaults to DELETE /api/auth/passkey/{id}. */
+  /** Override remove — defaults to passkey-client.revokePasskey(). */
   onRemove?: (id: string) => Promise<void>;
 }
 
 async function defaultList(): Promise<PasskeyRecord[]> {
-  const response = await fetch("/api/auth/passkey/list", { credentials: "include" });
-  if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as Record<string, unknown> | null;
-    throw payload ?? { code: "UNKNOWN" };
-  }
-  const data = (await response.json()) as unknown;
-  return Array.isArray(data) ? (data as PasskeyRecord[]) : [];
+  const records = await listPasskeys();
+  return records.map((r: PasskeyDescriptor) => ({
+    id: r.id,
+    name: r.name ?? r.deviceType,
+    ...(r.deviceType ? { deviceType: r.deviceType } : {}),
+    ...(r.createdAt ? { createdAt: r.createdAt } : {}),
+  }));
 }
 
 async function defaultAdd(): Promise<void> {
-  const response = await fetch("/api/auth/passkey/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-  });
-  if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as Record<string, unknown> | null;
-    throw payload ?? { code: "UNKNOWN" };
-  }
+  await registerPasskey({});
 }
 
 async function defaultRemove(id: string): Promise<void> {
-  const response = await fetch(`/api/auth/passkey/${id}`, {
-    method: "DELETE",
-    credentials: "include",
-  });
-  if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as Record<string, unknown> | null;
-    throw payload ?? { code: "UNKNOWN" };
-  }
+  await revokePasskey(id);
 }
 
 function formatDate(value: string | undefined): string {

@@ -297,6 +297,7 @@
       "title": "登录 Nebutra",
       "subtitle": "选择你想用的登录方式。",
       "continueWith": "使用",
+      "continueWithProvider": "使用 {provider} 继续",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -319,11 +320,42 @@
       "submitLoading": "登录中…",
       "useMagicLink": "改用魔法链接登录",
       "usePasskey": "使用 Passkey 登录",
+      "passkeyTitle": "使用 Passkey 登录",
+      "passkeyDescription": "用 Face ID、Touch ID 或安全密钥登录,无需密码。",
+      "passkeyButton": "使用 Passkey 继续",
+      "passkeyCancelled": "已取消 Passkey 操作。",
+      "passkeyUnsupported": "当前浏览器不支持 Passkey。",
+      "passkeyError": "Passkey 登录失败,请换一种方式。",
       "newToProduct": "还没有账号?",
       "signUpLink": "注册",
       "homeLink": "主页",
       "signInFailed": "登录失败",
-      "genericError": "出现错误,请重试。"
+      "genericError": "出现错误,请重试。",
+      "captchaError": "机器人校验失败,请刷新页面后重试。"
+    },
+    "passkeys": {
+      "title": "Passkey",
+      "description": "用 Face ID、Touch ID、Windows Hello 或安全密钥代替密码登录。每台设备有独立的 Passkey。",
+      "addButton": "添加 Passkey",
+      "adding": "正在创建…",
+      "namePlaceholder": "例:MacBook Pro",
+      "nameLabel": "名称(可选)",
+      "registerSuccess": "Passkey 已添加。",
+      "registerCancelled": "已取消创建。",
+      "registerUnsupported": "当前浏览器不支持 Passkey。",
+      "registerError": "添加 Passkey 失败。",
+      "empty": "暂无 Passkey。",
+      "loadError": "加载 Passkey 失败。",
+      "revoke": "删除",
+      "revoking": "正在删除…",
+      "revokeConfirm": "删除此 Passkey?之后将无法用它登录。",
+      "revokeSuccess": "Passkey 已删除。",
+      "revokeError": "删除 Passkey 失败。",
+      "device": {
+        "singleDevice": "设备绑定",
+        "multiDevice": "多端同步"
+      },
+      "addedOn": "添加于 {date}"
     },
     "magicLink": {
       "title": "使用魔法链接登录",

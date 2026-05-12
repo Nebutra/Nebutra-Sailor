@@ -1,11 +1,17 @@
 "use client";
 
+import { Turnstile } from "@marsidev/react-turnstile";
 import { Button, Input, Label, Separator } from "@nebutra/ui/primitives";
 import { AlertTriangle, Eye, EyeOff, Key, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+  enablePasskeyConditionalUI,
+  isPasskeySupported,
+  signInWithPasskey,
+} from "@/lib/auth/passkey-client";
 import { OAuthButtons, type OAuthProvider } from "./oauth-buttons";
 import { useCapsLock } from "./use-caps-lock";
 
@@ -14,16 +20,12 @@ interface SignInFormProps {
   enabledOAuthProviders?: readonly OAuthProvider[];
   /** Server-sanitized returnUrl to land on after successful sign-in. */
   returnUrl?: string;
-  /**
-   * Whether to offer the magic-link route. Gate this on
-   * `isAuthFeatureEnabled("magicLink")` server-side.
-   */
+  /** Whether the magic-link route is enabled (feature flag `magicLink`). */
   magicLinkEnabled?: boolean;
-  /**
-   * Whether to offer the passkey route. Gate this on
-   * `isAuthFeatureEnabled("passkey")` server-side.
-   */
+  /** Whether passkeys are enabled (feature flag `passkeys`). */
   passkeyEnabled?: boolean;
+  /** Cloudflare Turnstile site key — if missing, the widget is not rendered. */
+  turnstileSiteKey?: string;
 }
 
 export function SignInForm({
@@ -31,6 +33,7 @@ export function SignInForm({
   returnUrl,
   magicLinkEnabled = false,
   passkeyEnabled = false,
+  turnstileSiteKey,
 }: SignInFormProps) {
   const router = useRouter();
   const t = useTranslations("auth.signIn");
@@ -39,38 +42,87 @@ export function SignInForm({
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [passkeyLoading, setPasskeyLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [passkeyAvailable, setPasskeyAvailable] = useState(false);
   const { capsLockOn, onKeyEvent } = useCapsLock();
+  const conditionalUIStartedRef = useRef(false);
 
   const fallbackTarget = returnUrl ?? "/";
 
+  // Browser passkey availability — only render the explicit button if so.
+  useEffect(() => {
+    setPasskeyAvailable(isPasskeySupported());
+  }, []);
+
+  // WebAuthn Conditional UI — let the browser autofill passkeys on the
+  // email field. Standard 2026 SV pattern (Stripe / Linear / GitHub).
+  useEffect(() => {
+    if (!passkeyEnabled || conditionalUIStartedRef.current) return;
+    conditionalUIStartedRef.current = true;
+    const controller = new AbortController();
+    void enablePasskeyConditionalUI({
+      signal: controller.signal,
+      onSuccess: () => router.push(fallbackTarget),
+      onError: () => {
+        // Silent — conditional UI errors are not surfaced (user can still
+        // type credentials normally).
+      },
+    });
+    return () => controller.abort();
+  }, [passkeyEnabled, router, fallbackTarget]);
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
     setLoading(true);
     setError("");
 
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (turnstileToken) headers["x-captcha-response"] = turnstileToken;
+
     void fetch("/api/auth/sign-in/email", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       body: JSON.stringify({ email, password, returnUrl: fallbackTarget }),
     })
       .then(async (response) => {
         if (!response.ok) {
-          const data = await response
-            .json()
-            .catch((): { error?: string } => ({ error: undefined }));
-          setError(data.error ?? t("signInFailed"));
+          const data = await response.json().catch((): { error?: string; code?: string } => ({}));
+          const code = data.code ?? data.error;
+          if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
+            setError(t("captchaError"));
+          } else {
+            setError(data.error ?? t("signInFailed"));
+          }
           setLoading(false);
           return;
         }
-
         router.push(fallbackTarget);
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : t("genericError"));
         setLoading(false);
       });
+  }
+
+  async function handlePasskey() {
+    setPasskeyLoading(true);
+    setError("");
+    try {
+      await signInWithPasskey(email ? { email } : undefined);
+      router.push(fallbackTarget);
+    } catch (err) {
+      const code = (err as { code?: string }).code;
+      if (code === "cancelled") {
+        // Silent — user closed the prompt.
+      } else if (code === "unsupported") {
+        setError(t("passkeyUnsupported"));
+      } else {
+        setError(t("passkeyError"));
+      }
+      setPasskeyLoading(false);
+    }
   }
 
   function buildAltLink(path: string): string {
@@ -114,7 +166,9 @@ export function SignInForm({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            autoComplete="email"
+            // Conditional UI: the browser uses these hints to surface passkey
+            // suggestions in the autocomplete dropdown.
+            autoComplete={passkeyEnabled ? "username webauthn" : "email"}
           />
         </div>
 
@@ -166,6 +220,16 @@ export function SignInForm({
           )}
         </div>
 
+        {turnstileSiteKey && (
+          <Turnstile
+            siteKey={turnstileSiteKey}
+            options={{ size: "invisible", appearance: "interaction-only" }}
+            onSuccess={setTurnstileToken}
+            onError={() => setTurnstileToken(null)}
+            onExpire={() => setTurnstileToken(null)}
+          />
+        )}
+
         {error && (
           <p
             id="sign-in-error"
@@ -186,8 +250,19 @@ export function SignInForm({
         </Button>
       </form>
 
-      {(magicLinkEnabled || passkeyEnabled) && (
+      {(magicLinkEnabled || (passkeyEnabled && passkeyAvailable)) && (
         <div className="mt-4 flex flex-col gap-2">
+          {passkeyEnabled && passkeyAvailable && (
+            <button
+              type="button"
+              onClick={handlePasskey}
+              disabled={passkeyLoading}
+              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)] disabled:opacity-60"
+            >
+              <Key aria-hidden className="h-4 w-4" />
+              {passkeyLoading ? t("providerLoading") : t("usePasskey")}
+            </button>
+          )}
           {magicLinkEnabled && (
             <Link
               href={buildAltLink("/sign-in/magic-link")}
@@ -195,15 +270,6 @@ export function SignInForm({
             >
               <Mail aria-hidden className="h-4 w-4" />
               {t("useMagicLink")}
-            </Link>
-          )}
-          {passkeyEnabled && (
-            <Link
-              href={buildAltLink("/sign-in/passkey")}
-              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
-            >
-              <Key aria-hidden className="h-4 w-4" />
-              {t("usePasskey")}
             </Link>
           )}
         </div>

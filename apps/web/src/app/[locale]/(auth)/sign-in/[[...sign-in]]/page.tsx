@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { MagicLinkPanel } from "@/components/auth/magic-link-panel";
 import type { OAuthProvider } from "@/components/auth/oauth-buttons";
+import { PasskeyPanel } from "@/components/auth/passkey-panel";
 import { SignInForm } from "@/components/auth/sign-in-form";
 
 /**
@@ -37,10 +38,20 @@ async function SignInPageContent({
   const returnUrl = sanitized === "/" ? undefined : sanitized;
   const subroute = slug?.[0];
 
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined;
+
   if (subroute === "magic-link") {
     return (
       <AuthSplitLayout>
-        <MagicLinkPanel returnUrl={returnUrl} />
+        <MagicLinkPanel returnUrl={returnUrl} turnstileSiteKey={turnstileSiteKey} />
+      </AuthSplitLayout>
+    );
+  }
+
+  if (subroute === "passkey") {
+    return (
+      <AuthSplitLayout>
+        <PasskeyPanel returnUrl={returnUrl} />
       </AuthSplitLayout>
     );
   }
@@ -57,6 +68,7 @@ async function SignInPageContent({
         returnUrl={returnUrl}
         magicLinkEnabled={magicLinkEnabled}
         passkeyEnabled={passkeyEnabled}
+        turnstileSiteKey={turnstileSiteKey}
       />
     </AuthSplitLayout>
   );
