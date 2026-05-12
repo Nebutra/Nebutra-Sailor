@@ -3,11 +3,15 @@
    This file is concatenated into styles.generated.css after the @theme block.
    ============================================ */
 
-* ,
+*,
 *::before,
 *::after {
-  border-color: hsl(240 5.9% 90%);
-  /* precise neutral — Geist-matching */
+  /* Token-aware default border — resolves via cascade:
+     :root → light (hsl 240 5.9% 90% ≈ #e4e4e7)
+     .dark → dark  (hsl 0 0% 14.9%  ≈ #262626)
+     Previously hardcoded to the light value, which leaked a near-white border
+     into every element in dark mode regardless of component. See ADR 2026-05-11. */
+  border-color: hsl(var(--border));
 }
 
 body {

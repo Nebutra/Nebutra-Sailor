@@ -58,6 +58,17 @@
   --nebutra-neutral-800: #1e293b;
   --nebutra-neutral-900: #0f172a;
   --nebutra-neutral-950: #020617;
+  --nebutra-gray-50: #fafafa;
+  --nebutra-gray-100: #f5f5f5;
+  --nebutra-gray-200: #e5e5e5;
+  --nebutra-gray-300: #d4d4d4;
+  --nebutra-gray-400: #a3a3a3;
+  --nebutra-gray-500: #737373;
+  --nebutra-gray-600: #525252;
+  --nebutra-gray-700: #404040;
+  --nebutra-gray-800: #262626;
+  --nebutra-gray-900: #171717;
+  --nebutra-gray-950: #0a0a0a;
   --brand-tertiary: #8b5cf6; /** Tertiary accent — data viz, infrastructure tags */
   --status-danger: #ef4444;
   --status-warning: #f59e0b;
@@ -306,6 +317,17 @@
   --nebutra-neutral-800: #1e293b;
   --nebutra-neutral-900: #0f172a;
   --nebutra-neutral-950: #020617;
+  --nebutra-gray-50: #fafafa;
+  --nebutra-gray-100: #f5f5f5;
+  --nebutra-gray-200: #e5e5e5;
+  --nebutra-gray-300: #d4d4d4;
+  --nebutra-gray-400: #a3a3a3;
+  --nebutra-gray-500: #737373;
+  --nebutra-gray-600: #525252;
+  --nebutra-gray-700: #404040;
+  --nebutra-gray-800: #262626;
+  --nebutra-gray-900: #171717;
+  --nebutra-gray-950: #0a0a0a;
   --brand-tertiary: #8b5cf6; /** Tertiary accent — data viz, infrastructure tags */
   --status-danger: #ef4444;
   --status-warning: #f59e0b;
@@ -357,9 +379,9 @@
   --neutral-3: #1e293b;
   --neutral-4: #334155;
   --neutral-5: #475569;
-  --neutral-6: #1e293b;
-  --neutral-7: #334155;
-  --neutral-8: #475569;
+  --neutral-6: #171717;
+  --neutral-7: #262626;
+  --neutral-8: #404040;
   --neutral-9: #94a3b8;
   --neutral-10: #cbd5e1;
   --neutral-11: #e2e8f0;
@@ -410,8 +432,8 @@
   --warning-foreground: 222 47% 4%;
   --info: 228 95% 67%;
   --info-foreground: 222 47% 4%;
-  --border: 217 33% 17%;
-  --input: 217 33% 17%;
+  --border: 0 0% 14.9%;
+  --input: 0 0% 14.9%;
   --ring: 228 95% 67%;
   --sidebar: 222 47% 6%;
   --sidebar-foreground: 210 40% 96%;
@@ -419,7 +441,7 @@
   --sidebar-primary-foreground: 222 47% 4%;
   --sidebar-accent: 228 100% 12%;
   --sidebar-accent-foreground: 228 95% 67%;
-  --sidebar-border: 217 33% 17%;
+  --sidebar-border: 0 0% 14.9%;
   --sidebar-ring: 228 95% 67%;
   --chart-1: 228 95% 67%;
   --chart-2: 168 96% 54%;
@@ -705,11 +727,15 @@
    This file is concatenated into styles.generated.css after the @theme block.
    ============================================ */
 
-* ,
+*,
 *::before,
 *::after {
-  border-color: hsl(240 5.9% 90%);
-  /* precise neutral — Geist-matching */
+  /* Token-aware default border — resolves via cascade:
+     :root → light (hsl 240 5.9% 90% ≈ #e4e4e7)
+     .dark → dark  (hsl 0 0% 14.9%  ≈ #262626)
+     Previously hardcoded to the light value, which leaked a near-white border
+     into every element in dark mode regardless of component. See ADR 2026-05-11. */
+  border-color: hsl(var(--border));
 }
 
 body {
