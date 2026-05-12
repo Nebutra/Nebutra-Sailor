@@ -21,6 +21,8 @@
  * ```
  */
 
+// Provider configuration helpers — also pure (env-read only).
+export { getConfiguredAuthProvider, isClerkProvider } from "./config";
 // Feature flag helpers — pure / client-safe (no server-only deps).
 // Re-exported here so client components can stay on the /client subpath
 // instead of pulling the root entrypoint (which transitively imports

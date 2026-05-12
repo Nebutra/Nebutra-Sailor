@@ -3,7 +3,7 @@
 // Use the /client subpath for both — the root entrypoint transitively
 // imports server-only middleware (Clerk's server SDK), which webpack
 // rejects when reached from a "use client" boundary.
-import { isAuthFeatureEnabledSync, useUser } from "@nebutra/auth/client";
+import { getConfiguredAuthProvider, isAuthFeatureEnabledSync, useUser } from "@nebutra/auth/client";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { type ActiveSession, ActiveSessionsBlock } from "./active-sessions-block";
@@ -34,7 +34,7 @@ export function SecuritySettingsClient() {
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
 
-  const authProvider = process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? "better-auth";
+  const authProvider = getConfiguredAuthProvider();
   const isBetterAuth = authProvider === "better-auth";
 
   const refreshSecurityState = useCallback(async () => {

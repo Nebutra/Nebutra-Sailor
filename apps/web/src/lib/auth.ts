@@ -1,11 +1,11 @@
 import type { Session, User } from "@nebutra/auth";
+import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { ACTIVE_ORG_COOKIE, resolveActiveOrganizationSelection } from "./active-organization";
 import { getDefaultPublicUrls } from "./public-url-defaults";
 
-type WebAuthProvider = "clerk" | "better-auth" | "nextauth";
 type ServerSessionClaims = Record<string, unknown> & {
   org_plan?: string;
   org_role?: string;
@@ -21,12 +21,6 @@ interface ServerAuthState {
 // Singleton auth instance — lazily initialized
 let authInstance: Awaited<ReturnType<typeof createAuth>> | null = null;
 const defaultPublicUrls = getDefaultPublicUrls(process.env.NODE_ENV);
-
-function getConfiguredAuthProvider(): WebAuthProvider {
-  return (process.env.AUTH_PROVIDER ||
-    process.env.NEXT_PUBLIC_AUTH_PROVIDER ||
-    "better-auth") as WebAuthProvider;
-}
 
 /**
  * Get or create the singleton auth instance.

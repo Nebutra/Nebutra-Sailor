@@ -17,6 +17,7 @@
  *   const { data } = await browserApiClient.GET("/api/v1/ai/models");
  */
 
+import { getConfiguredAuthProvider } from "@nebutra/auth";
 import createClient, { type Middleware } from "openapi-fetch";
 
 // `types.generated.ts` is produced by `pnpm generate:api-types`.
@@ -60,9 +61,7 @@ export const browserApiClient = createClient<paths>({
  * const { data, error } = await api.GET("/api/v1/ai/models");
  */
 export async function getTypedApi() {
-  const provider = (process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth") as
-    | "clerk"
-    | "better-auth";
+  const provider = getConfiguredAuthProvider();
 
   const client = createClient<paths>({ baseUrl: API_BASE_URL });
   let token: string | null = null;

@@ -1,12 +1,12 @@
 import { auditLogger } from "@nebutra/audit";
+import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { setActiveOrganizationCookie } from "@/lib/active-organization";
 
-const provider =
-  process.env.AUTH_PROVIDER || process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
+const provider = getConfiguredAuthProvider();
 
 const CreateOrganizationSchema = z.object({
   name: z.string().trim().min(1).max(80),

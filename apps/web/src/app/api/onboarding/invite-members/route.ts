@@ -1,3 +1,4 @@
+import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
@@ -15,10 +16,6 @@ const inviteSchema = z.object({
 type InviteRole = z.infer<typeof inviteSchema>["role"];
 
 const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
-
-function getConfiguredAuthProvider() {
-  return process.env.AUTH_PROVIDER || process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
-}
 
 function normalizeClerkRole(role: InviteRole): "org:admin" | "org:member" | "org:viewer" {
   switch (role) {

@@ -1,3 +1,4 @@
+import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
 import { Analytics } from "@vercel/analytics/react";
@@ -57,9 +58,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   // Detect auth provider from environment
-  const authProvider = (process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth") as
-    | "clerk"
-    | "better-auth";
+  const authProvider = getConfiguredAuthProvider();
 
   // Prepare provider config based on selected provider
   const authProviderConfig: Record<string, unknown> = {};

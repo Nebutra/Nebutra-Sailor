@@ -16,8 +16,8 @@
  */
 
 import { auditLogger } from "@nebutra/audit";
-import { getAuditableContext } from "@nebutra/auth";
 import type { AuthProvider, AuthProviderId } from "@nebutra/auth";
+import { getAuditableContext, getConfiguredAuthProvider } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 
@@ -29,9 +29,7 @@ const PROVIDERS_USING_THIS_ROUTE: ReadonlySet<AuthProviderId> = new Set([
   "nextauth",
 ]);
 
-const rawProvider =
-  process.env.AUTH_PROVIDER || process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
-const provider = rawProvider as AuthProviderId;
+const provider = getConfiguredAuthProvider();
 
 let authInstance: AuthProvider | null = null;
 

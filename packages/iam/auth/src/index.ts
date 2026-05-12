@@ -28,6 +28,8 @@
 // Auditable context resolver (used by @nebutra/audit consumers)
 export type { AuditableActor, AuditableContext } from "./audit-context";
 export { getAuditableContext } from "./audit-context";
+// Provider config helpers (single source of truth for env-driven selection)
+export { getConfiguredAuthProvider, isClerkProvider } from "./config";
 // Feature-flag layer (dual-source: env + @nebutra/feature-flags)
 export type { AuthFeature, AuthFeatureContext } from "./features";
 export { isAuthFeatureEnabled, isAuthFeatureEnabledSync } from "./features";

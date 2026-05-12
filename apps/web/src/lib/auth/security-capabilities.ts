@@ -1,4 +1,7 @@
-export type AuthProviderId = "clerk" | "better-auth" | "nextauth";
+import type { AuthProviderId } from "@nebutra/auth";
+import { getConfiguredAuthProvider } from "@nebutra/auth";
+
+export type { AuthProviderId };
 
 export interface SecurityCapabilities {
   provider: AuthProviderId;
@@ -13,17 +16,8 @@ export interface SecurityCapabilities {
   providerProfileUrl: string | null;
 }
 
-const ENV_PROVIDER =
-  process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? process.env.AUTH_PROVIDER ?? "better-auth";
-
-function readProvider(): AuthProviderId {
-  if (ENV_PROVIDER === "clerk") return "clerk";
-  if (ENV_PROVIDER === "nextauth") return "nextauth";
-  return "better-auth";
-}
-
 export function getSecurityCapabilities(): SecurityCapabilities {
-  const provider = readProvider();
+  const provider = getConfiguredAuthProvider();
 
   if (provider === "clerk") {
     const configuredProfileUrl = process.env.NEXT_PUBLIC_CLERK_USER_PROFILE_URL;

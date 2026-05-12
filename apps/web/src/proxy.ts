@@ -1,3 +1,4 @@
+import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { routing } from "@nebutra/i18n/routing";
 import { logger } from "@nebutra/logger";
 import type { NextFetchEvent, NextRequest } from "next/server";
@@ -20,7 +21,7 @@ const publicRoutePaths = [
   "/api/webhook",
 ];
 
-const authProvider = process.env.NEXT_PUBLIC_AUTH_PROVIDER || "better-auth";
+const authProvider = getConfiguredAuthProvider();
 
 // Only require Clerk key if using Clerk provider
 const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
