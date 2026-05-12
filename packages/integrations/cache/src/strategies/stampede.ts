@@ -1,14 +1,9 @@
-import { Redis } from "@upstash/redis";
-import { getRedisConfig } from "../env";
+import { getCacheClient } from "../client";
+import type { CacheClient } from "../types";
 import { createLock } from "./lockCache";
 
-let redis: Redis | null = null;
-
-function getRedis(): Redis {
-  if (!redis) {
-    redis = new Redis(getRedisConfig());
-  }
-  return redis;
+function getRedis(): CacheClient {
+  return getCacheClient();
 }
 
 export interface StampedeOptions {

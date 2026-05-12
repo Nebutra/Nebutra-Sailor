@@ -1,13 +1,8 @@
-import { Redis } from "@upstash/redis";
-import { getRedisConfig } from "../env";
+import { getCacheClient } from "../client";
+import type { CacheClient } from "../types";
 
-let redis: Redis | null = null;
-
-function getRedis(): Redis {
-  if (!redis) {
-    redis = new Redis(getRedisConfig());
-  }
-  return redis;
+function getRedis(): CacheClient {
+  return getCacheClient();
 }
 
 interface CachedValue<T> {

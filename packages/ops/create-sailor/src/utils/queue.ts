@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { resolvePackageDir } from "./env-helpers";
 
 import {
   getQueueProvider,
@@ -70,11 +71,11 @@ export async function applyQueueSelection(
   queueId: QueueProviderId | string,
   _region: string,
 ): Promise<void> {
-  const queuePkgDir = path.join(targetDir, "packages", "queue");
+  // Categorized monorepo: packages/integrations/queue (post W3b).
+  const queuePkgDir = resolvePackageDir(targetDir, "queue");
 
   if (queueId === "none") {
-    // Remove the package entirely.
-    if (fs.existsSync(queuePkgDir)) {
+    if (queuePkgDir) {
       fs.rmSync(queuePkgDir, { recursive: true, force: true });
     }
     return;
@@ -89,8 +90,7 @@ export async function applyQueueSelection(
     );
   }
 
-  // Silent skip if the template doesn't ship the queue package at all.
-  if (!fs.existsSync(queuePkgDir)) return;
+  if (!queuePkgDir) return;
 
   appendEnvBlock(targetDir, provider);
   upsertEnvVar(targetDir, "QUEUE_PROVIDER", queueId);

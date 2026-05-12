@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
-
 import {
   CACHE_PROVIDERS,
   type CacheProviderId,
   type CacheProviderMeta,
   getCacheProvider,
 } from "./cache-meta";
+import { resolvePackageDir } from "./env-helpers";
 
 /**
  * Cache selection applier for create-sailor.
@@ -70,10 +70,11 @@ export async function applyCacheSelection(
   cacheId: CacheProviderId | string,
   _region: string,
 ): Promise<void> {
-  const cachePkgDir = path.join(targetDir, "packages", "cache");
+  // Categorized monorepo: packages/integrations/cache (post W3b).
+  const cachePkgDir = resolvePackageDir(targetDir, "cache");
 
   if (cacheId === "none") {
-    if (fs.existsSync(cachePkgDir)) {
+    if (cachePkgDir) {
       fs.rmSync(cachePkgDir, { recursive: true, force: true });
     }
     return;
@@ -88,7 +89,7 @@ export async function applyCacheSelection(
     );
   }
 
-  if (!fs.existsSync(cachePkgDir)) return;
+  if (!cachePkgDir) return;
 
   appendEnvBlock(targetDir, provider);
   upsertEnvVar(targetDir, "CACHE_PROVIDER", cacheId);

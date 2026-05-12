@@ -1,5 +1,52 @@
 # create-sailor
 
+## 1.4.4
+
+### Minor Changes
+
+- **NEW: `--db-host` flag** — splits the database decision into two axes:
+  `--db` chooses the ENGINE (postgresql / mysql / sqlite), `--db-host` chooses
+  WHO operates it (supabase / neon / vercel-postgres / planetscale / railway /
+  aliyun-rds / tencent-cdb / local / none). Each host has its own env-var
+  block, Prisma datasource extras (e.g. PlanetScale's relationMode = "prisma"),
+  and forced-engine override (PlanetScale = mysql regardless of --db). Smart
+  defaults: region=global → supabase, region=cn → local. Previously the CLI
+  pretended `--db=postgres` was a complete decision — but Supabase, Neon,
+  Vercel Postgres etc. differ at the env-var and datasource level.
+
+- **CacheClient interface + multi-backend** — `@nebutra/cache` was hardcoded
+  to `@upstash/redis`. New `CacheClient` interface (get / set / del — the
+  audited surface) with two adapters: `UpstashRedisCacheClient` (HTTP REST,
+  default) and `IoredisCacheClient` (TCP, for self-hosted Redis / Dragonfly /
+  Vercel KV / Redis Cloud). Auto-detects backend from `UPSTASH_REDIS_REST_URL`
+  vs `REDIS_URL`, override via `CACHE_BACKEND`. ioredis adapter does
+  JSON-(de)serialization so callers see the same structured-value contract.
+  All four strategies (ttlCache / lockCache / stampede / lazyRefresh) updated
+  to use `CacheClient`. Downstream typecheck verified (gateway-core /
+  feature-flags / rate-limit).
+
+### Patch Changes
+
+- **Fix `removePackageDir` static-path bug** — `env-helpers.ts:removePackageDir`
+  was hardcoded to `packages/<pkgName>` flat. Categorized monorepo means every
+  applier using it (notifications / webhooks / feature-flags / captcha / cms)
+  silently no-op'd. New `resolvePackageDir(targetDir, pkgName)` scans
+  packages/{design,iam,commerce,integrations,platform,ops,ai}/<pkgName> +
+  legacy flat fallback. Same fix applied to search.ts / queue.ts / cache.ts
+  apply functions (each had their own hardcoded flat path).
+- **Drizzle scope honesty** — `--orm` accepts any value but normalises to
+  `prisma`. Help text now says "prisma (only — the scaffold uses Prisma)".
+  Removed pretense that drizzle/none silently work; real Drizzle support is
+  on the roadmap as a separate ~400 LOC piece.
+
+### Net effect
+
+After 1.4.4 publishes, the previously-silent appliers (notifications, webhooks,
+feature-flags, captcha, cms) actually mutate the scaffold. The `--db-host`
+question moves from invisible-default to explicit user choice. And the
+`@nebutra/cache` package can run against any Redis-protocol backend, not just
+Upstash.
+
 ## 1.4.3
 
 ### Patch Changes

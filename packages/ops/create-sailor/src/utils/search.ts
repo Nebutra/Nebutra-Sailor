@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { resolvePackageDir } from "./env-helpers";
 
 import {
   getSearchProvider,
@@ -70,10 +71,12 @@ export async function applySearchSelection(
   searchId: SearchProviderId | string,
   _region: string,
 ): Promise<void> {
-  const searchPkgDir = path.join(targetDir, "packages", "search");
+  // Categorized monorepo: packages/integrations/search (post W3b). Falls back
+  // to the legacy flat path for older scaffolds.
+  const searchPkgDir = resolvePackageDir(targetDir, "search");
 
   if (searchId === "none") {
-    if (fs.existsSync(searchPkgDir)) {
+    if (searchPkgDir) {
       fs.rmSync(searchPkgDir, { recursive: true, force: true });
     }
     return;
@@ -88,7 +91,7 @@ export async function applySearchSelection(
     );
   }
 
-  if (!fs.existsSync(searchPkgDir)) return;
+  if (!searchPkgDir) return;
 
   appendEnvBlock(targetDir, provider);
   upsertEnvVar(targetDir, "SEARCH_PROVIDER", searchId);

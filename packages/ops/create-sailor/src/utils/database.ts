@@ -1,14 +1,26 @@
 import fs from "node:fs";
 import path from "node:path";
+import { type DatabaseHostMeta, getDatabaseHost } from "./database-host-meta";
 
 /**
  * Database selection applier for create-sailor.
  *
- * Maps the `--db` CLI flag to concrete filesystem mutations:
- *  - `postgres` → keep Prisma schema as-is, set Postgres DATABASE_URL
- *  - `mysql`    → rewrite `provider = "mysql"`, set MySQL DATABASE_URL
- *  - `sqlite`   → rewrite `provider = "sqlite"`, drop `directUrl`, use file URL
- *  - `none`     → delete the entire `packages/db` directory
+ * Two orthogonal axes:
+ *
+ *   --db          ENGINE choice  (postgresql | mysql | sqlite | none)
+ *   --db-host     HOST choice    (supabase | neon | vercel-postgres | planetscale
+ *                                | railway | aliyun-rds | tencent-cdb | local | none)
+ *
+ * `applyDatabaseSelection` handles the engine (Prisma `provider`,
+ * provider-specific schema cleanup like dropping `extensions`/`directUrl`).
+ *
+ * `applyDatabaseHostSelection` handles the host (multi-env-var blocks,
+ * datasource extras like PlanetScale's relationMode, keeping directUrl when
+ * the host uses pooler+direct split like Neon/Supabase).
+ *
+ * The two are applied in sequence: engine first, then host. A host with a
+ * `forcedEngine` (e.g. PlanetScale = mysql) is the source of truth — the CLI
+ * normalises `--db` to that engine before calling applyDatabaseSelection.
  */
 
 export type DatabaseChoice = "postgresql" | "mysql" | "sqlite" | "none";
@@ -90,3 +102,91 @@ export async function applyDatabaseSelection(
     fs.writeFileSync(schemaPath, next);
   }
 }
+
+// ── Host applier ────────────────────────────────────────────────────────────
+
+function envFileContent(targetDir: string): string {
+  const p = path.join(targetDir, ".env.example");
+  return fs.existsSync(p) ? fs.readFileSync(p, "utf8") : "";
+}
+
+function setOrAppendEnvVar(targetDir: string, name: string, value: string, comment?: string): void {
+  const envPath = path.join(targetDir, ".env.example");
+  const existing = envFileContent(targetDir);
+  const line = comment ? `# ${comment}\n${name}="${value}"\n` : `${name}="${value}"\n`;
+
+  // Replace existing assignment if present
+  const re = new RegExp(`^\\s*${name}\\s*=.*$`, "m");
+  if (re.test(existing)) {
+    fs.writeFileSync(envPath, existing.replace(re, `${name}="${value}"`));
+    return;
+  }
+  if (existing) {
+    fs.appendFileSync(envPath, `\n${line}`);
+  } else {
+    fs.writeFileSync(envPath, line);
+  }
+}
+
+function injectDatasourceExtras(targetDir: string, extras: string[]): void {
+  const schemaPath = path.join(targetDir, "packages", "platform", "db", "prisma", "schema.prisma");
+  if (!fs.existsSync(schemaPath)) return;
+  const src = fs.readFileSync(schemaPath, "utf8");
+  const datasourceRegex = /(datasource\s+db\s*\{[^}]*?)(\n})/;
+  const match = src.match(datasourceRegex);
+  if (!match) return;
+
+  // Avoid duplicate injection: skip if any of the extras already present.
+  const filteredExtras = extras.filter((line) => !src.includes(line.trim()));
+  if (filteredExtras.length === 0) return;
+
+  const block = filteredExtras.map((line) => `  ${line}`).join("\n");
+  const patched = src.replace(datasourceRegex, `$1\n${block}$2`);
+  fs.writeFileSync(schemaPath, patched);
+}
+
+function ensureDirectUrlInDatasource(targetDir: string): void {
+  const schemaPath = path.join(targetDir, "packages", "platform", "db", "prisma", "schema.prisma");
+  if (!fs.existsSync(schemaPath)) return;
+  const src = fs.readFileSync(schemaPath, "utf8");
+  if (/directUrl\s*=\s*env\(/.test(src)) return; // already present
+  const datasourceRegex =
+    /(datasource\s+db\s*\{[\s\S]*?url\s*=\s*env\(\s*"DATABASE_URL"\s*\)[^\n]*\n)/;
+  if (!datasourceRegex.test(src)) return;
+  fs.writeFileSync(schemaPath, src.replace(datasourceRegex, `$1  directUrl = env("DIRECT_URL")\n`));
+}
+
+/**
+ * Apply database HOST (managed-provider) configuration.
+ *
+ * Idempotent: replaces existing DATABASE_URL line rather than appending a
+ * second copy. Should run AFTER applyDatabaseSelection so the engine is
+ * already correct for the host.
+ */
+export async function applyDatabaseHostSelection(
+  targetDir: string,
+  host: DatabaseHostMeta,
+  projectName: string,
+): Promise<void> {
+  if (host.id === "none" || host.id === "local") {
+    // local default already handled by applyDatabaseSelection; nothing host-specific to do.
+    return;
+  }
+
+  // Inject env vars, with the project-name placeholder substituted.
+  for (const env of host.envVars) {
+    const value = env.placeholder.replace(/\$PROJECT/g, projectName);
+    setOrAppendEnvVar(targetDir, env.name, value, env.comment);
+  }
+
+  // Schema mutations for hosts that need them.
+  if (host.prismaDatasourceExtras && host.prismaDatasourceExtras.length > 0) {
+    injectDatasourceExtras(targetDir, host.prismaDatasourceExtras);
+  }
+  if (host.keepDirectUrl) {
+    ensureDirectUrlInDatasource(targetDir);
+  }
+}
+
+export type { DatabaseHostMeta };
+export { getDatabaseHost };

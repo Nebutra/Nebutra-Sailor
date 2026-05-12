@@ -32,7 +32,13 @@ import {
   type Region,
   writeNebutraConfig,
 } from "./utils/config";
-import { applyDatabaseSelection } from "./utils/database";
+import { applyDatabaseHostSelection, applyDatabaseSelection } from "./utils/database";
+import {
+  DATABASE_HOSTS,
+  type DatabaseHostId,
+  defaultDatabaseHost,
+  getDatabaseHost,
+} from "./utils/database-host-meta";
 import { applyDeployTarget } from "./utils/deploy";
 import { applyDocsTemplate } from "./utils/docs";
 import { applyEmailSelection } from "./utils/email";
@@ -73,6 +79,7 @@ interface CliOptions {
   region?: string;
   orm?: string;
   db?: string;
+  dbHost?: string;
   auth?: string;
   socialLogin?: string;
   payment?: string;
@@ -167,9 +174,42 @@ function mapDb(d: string | undefined): NebutraConfig["database"] {
   }
 }
 
+/**
+ * Resolve --db-host from CLI input + region fallback. If the host pins an
+ * engine (PlanetScale = mysql), this returns BOTH host id and the engine
+ * override the caller should apply to mapDb's result.
+ */
+function resolveDatabaseHost(
+  hostArg: string | undefined,
+  region: string,
+  engineFromDb: NebutraConfig["database"],
+): {
+  hostId: DatabaseHostId;
+  engine: NebutraConfig["database"];
+} {
+  const candidateId = hostArg?.trim().toLowerCase() ?? defaultDatabaseHost(region);
+  const meta = getDatabaseHost(candidateId);
+  if (!meta) {
+    const validIds = DATABASE_HOSTS.map((h) => h.id).join(", ");
+    throw new Error(`Unknown --db-host="${candidateId}". Valid: ${validIds}`);
+  }
+
+  // Host forces engine? Override engineFromDb.
+  let engine = engineFromDb;
+  if (meta.forcedEngine && engine !== "none" && engine !== meta.forcedEngine) {
+    engine = meta.forcedEngine;
+  }
+  return { hostId: meta.id, engine };
+}
+
 function mapOrm(o: string | undefined): NebutraConfig["orm"] {
-  if (o === "drizzle") return "drizzle";
-  if (o === "none") return "none";
+  // Drizzle scaffolding is on the roadmap; for now every value resolves to
+  // Prisma. We accept --orm=drizzle without erroring so users from a future
+  // Drizzle-supporting version don't break, but we don't pretend it works.
+  if (o && o !== "prisma") {
+    // Could warn here in non-JSON mode; silent fallback keeps CI scripts working.
+    return "prisma";
+  }
   return "prisma";
 }
 
@@ -370,9 +410,13 @@ async function run(): Promise<void> {
     .option("--region <id>", "global | cn | hybrid")
     .option(
       "--orm <id>",
-      "prisma (default) — drizzle and 'none' are not yet implemented; the scaffold always uses Prisma",
+      "prisma (only — the scaffold uses Prisma. Drizzle support is on the roadmap)",
     )
-    .option("--db <id>", "postgres | mysql | sqlite | none")
+    .option("--db <id>", "postgres | mysql | sqlite | none — engine (Prisma provider)")
+    .option(
+      "--db-host <id>",
+      "local | supabase | neon | vercel-postgres | planetscale | railway | aliyun-rds | tencent-cdb | none — managed-provider (region default: supabase global, local cn)",
+    )
     .option("--auth <id>", "clerk | betterauth | nextauth | none")
     .option(
       "--social-login <ids>",
@@ -525,6 +569,7 @@ async function run(): Promise<void> {
   let region: Region;
   let orm: NebutraConfig["orm"];
   let database: NebutraConfig["database"];
+  let databaseHost: DatabaseHostId = "local";
   let payment: NebutraConfig["payment"];
   let paymentChoice: PaymentChoice;
   let auth: AuthChoice;
@@ -540,7 +585,12 @@ async function run(): Promise<void> {
   if (nonInteractive) {
     region = resolveRegion(opts.region);
     orm = mapOrm(opts.orm);
-    database = mapDb(opts.db);
+    {
+      const engineFromDb = mapDb(opts.db);
+      const resolved = resolveDatabaseHost(opts.dbHost, region, engineFromDb);
+      database = resolved.engine;
+      databaseHost = resolved.hostId;
+    }
     const rawPayment = hasPayment ? opts.payment : defaultPaymentForRegion(region);
     payment = mapPayment(rawPayment);
     paymentChoice = resolvePaymentChoice(rawPayment);
@@ -689,7 +739,12 @@ async function run(): Promise<void> {
 
     // Everything below is flag-only (no prompt); defaults are region-based.
     orm = mapOrm(opts.orm);
-    database = mapDb(opts.db);
+    {
+      const engineFromDb = mapDb(opts.db);
+      const resolved = resolveDatabaseHost(opts.dbHost, region, engineFromDb);
+      database = resolved.engine;
+      databaseHost = resolved.hostId;
+    }
     const rawPayment = hasPayment ? opts.payment : defaultPaymentForRegion(region);
     payment = mapPayment(rawPayment);
     paymentChoice = resolvePaymentChoice(rawPayment);
@@ -1041,6 +1096,18 @@ async function run(): Promise<void> {
 
     emitJson(useJson, { event: "step", step: "db", choice: database, status: "start" });
     await applyDatabaseSelection(resolvedTarget, database, projectName);
+    if (database !== "none") {
+      const hostMeta = getDatabaseHost(databaseHost);
+      if (hostMeta) {
+        await applyDatabaseHostSelection(resolvedTarget, hostMeta, projectName);
+        emitJson(useJson, {
+          event: "step",
+          step: "db-host",
+          choice: databaseHost,
+          status: "ok",
+        });
+      }
+    }
     emitJson(useJson, { event: "step", step: "db", choice: database, status: "ok" });
 
     emitJson(useJson, {

@@ -65,12 +65,44 @@ export function setEnvVar(targetDir: string, key: string, value: string): void {
 }
 
 /**
- * Remove `packages/<pkgName>` from the scaffolded project. Silent no-op when
- * the directory does not exist.
+ * Categorized monorepo layout (post W3b): every package lives under one of
+ * these top-level category dirs. Older scaffolds may still use the flat
+ * `packages/<name>` layout, so we check both.
+ */
+const PACKAGE_CATEGORIES = [
+  "design",
+  "iam",
+  "commerce",
+  "integrations",
+  "platform",
+  "ops",
+  "ai",
+] as const;
+
+/**
+ * Resolve a package's directory regardless of categorized vs flat layout.
+ * Looks under each known category in order, then falls back to flat
+ * `packages/<pkgName>`. Returns null when nothing exists — caller silent-skips.
+ */
+export function resolvePackageDir(targetDir: string, pkgName: string): string | null {
+  for (const category of PACKAGE_CATEGORIES) {
+    const categorized = path.join(targetDir, "packages", category, pkgName);
+    if (fs.existsSync(categorized)) return categorized;
+  }
+  const flat = path.join(targetDir, "packages", pkgName);
+  if (fs.existsSync(flat)) return flat;
+  return null;
+}
+
+/**
+ * Remove a package directory regardless of layout. Silent no-op when missing.
+ *
+ * Post W3b reorg: scans packages/{design,iam,commerce,integrations,platform,
+ * ops,ai}/<pkgName> before falling back to flat packages/<pkgName>.
  */
 export function removePackageDir(targetDir: string, pkgName: string): void {
-  const pkgPath = path.join(targetDir, "packages", pkgName);
-  if (fs.existsSync(pkgPath)) {
+  const pkgPath = resolvePackageDir(targetDir, pkgName);
+  if (pkgPath) {
     fs.rmSync(pkgPath, { recursive: true, force: true });
   }
 }
