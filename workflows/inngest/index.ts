@@ -4,7 +4,6 @@ import { autoTranslate } from "./auto_translate";
 import { dailyDigestEmail, weeklyTenantReport } from "./daily_digest_email";
 import { dailyDbBackup, onDemandBackup } from "./db_backup";
 import { inventorySync, processShopifyOrder } from "./ecommerce_sync";
-import { phCacheWarm, phFullSync, phTopicsSync, phTrendingSync } from "./producthunt_sync";
 import { recsysRefresh, userProfileUpdate } from "./recsys_refresh";
 
 // Re-export all functions
@@ -14,10 +13,6 @@ export {
   dailyDigestEmail,
   inventorySync,
   onDemandBackup,
-  phCacheWarm,
-  phFullSync,
-  phTopicsSync,
-  phTrendingSync,
   processShopifyOrder,
   recsysRefresh,
   userProfileUpdate,
@@ -40,9 +35,4 @@ export const functions = [
   // Infrastructure
   dailyDbBackup,
   onDemandBackup,
-  // Third-party
-  phTrendingSync,
-  phTopicsSync,
-  phCacheWarm,
-  phFullSync,
 ];

@@ -544,10 +544,8 @@ Nebutra-Sailor/
 <td><strong>微服务</strong></td>
 <td>
   <a href="backends/python/ai/">AI</a> · 
-  <a href="backends/python/content/">内容</a> · 
   <a href="backends/python/recsys/">推荐</a> · 
-  <a href="backends/python/ecommerce/">电商</a> · 
-  <a href="backends/python/web3/">Web3</a>
+  <a href="backends/python/ecommerce/">电商</a>
 </td>
 </tr>
 <tr>

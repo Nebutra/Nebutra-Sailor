@@ -109,4 +109,3 @@ Files are automatically scoped by tenant:
 ## Related
 
 - [API Gateway](../../backends/gateway/)
-- [Content service](../../backends/python/content/)

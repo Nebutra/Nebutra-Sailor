@@ -30,14 +30,6 @@ Complete navigation to all project documentation.
 | [ecommerce](../backends/python/ecommerce/README.md)  | 8004 | Shopify/Shopline sync                   |
 | [event-ingest](../backends/python/event-ingest/README.md) | 8008 | High-throughput event ingestion       |
 
-### Python — stub (concept preserved, no implementation)
-
-| Service                                                       | Activation criteria |
-| ------------------------------------------------------------- | -------------------- |
-| [content](../backends/python/content/README.md)               | Batch content moderation / ML feed materialization |
-| [web3](../backends/python/web3/README.md)                     | Long-running blockchain indexing / batch backfills |
-| [third-party](../backends/python/third-party/README.md)       | Heavy multi-page external-data sync |
-
 ## Packages
 
 | Package                                              | Description                   |

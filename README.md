@@ -536,10 +536,8 @@ Each component has its own README with setup instructions and API documentation:
 <td><strong>Services</strong></td>
 <td>
   <a href="backends/python/ai/">AI</a> · 
-  <a href="backends/python/content/">Content</a> · 
   <a href="backends/python/recsys/">RecSys</a> · 
-  <a href="backends/python/ecommerce/">E-commerce</a> · 
-  <a href="backends/python/web3/">Web3</a>
+  <a href="backends/python/ecommerce/">E-commerce</a>
 </td>
 </tr>
 <tr>
