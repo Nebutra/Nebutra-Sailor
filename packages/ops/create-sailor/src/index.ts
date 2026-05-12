@@ -51,6 +51,7 @@ import { applyMeteringSwitch } from "./utils/metering";
 import { applyMonitoringSelection } from "./utils/monitoring";
 import { applyNotificationsSelection } from "./utils/notifications";
 import { updatePackageJson } from "./utils/npm";
+import { applyOrmSelection } from "./utils/orm";
 import {
   collectPreviewSelections,
   describeStatus,
@@ -203,13 +204,13 @@ function resolveDatabaseHost(
 }
 
 function mapOrm(o: string | undefined): NebutraConfig["orm"] {
-  // Drizzle scaffolding is on the roadmap; for now every value resolves to
-  // Prisma. We accept --orm=drizzle without erroring so users from a future
-  // Drizzle-supporting version don't break, but we don't pretend it works.
-  if (o && o !== "prisma") {
-    // Could warn here in non-JSON mode; silent fallback keeps CI scripts working.
-    return "prisma";
-  }
+  // `prisma` (default) = Prisma only, the historical scaffold shape.
+  // `drizzle`          = dual-ORM mode — Prisma stays primary, a second
+  //                      `db-drizzle` package is added alongside for new
+  //                      code that prefers the Drizzle DSL. See
+  //                      packages/ops/create-sailor/src/utils/orm.ts.
+  // `none`             = treated as prisma; we don't ship a no-ORM variant.
+  if (o === "drizzle") return "drizzle";
   return "prisma";
 }
 
@@ -410,7 +411,7 @@ async function run(): Promise<void> {
     .option("--region <id>", "global | cn | hybrid")
     .option(
       "--orm <id>",
-      "prisma (only — the scaffold uses Prisma. Drizzle support is on the roadmap)",
+      "prisma (default, primary) | drizzle (dual-ORM: adds db-drizzle alongside Prisma — Postgres only)",
     )
     .option("--db <id>", "postgres | mysql | sqlite | none — engine (Prisma provider)")
     .option(
@@ -1109,6 +1110,18 @@ async function run(): Promise<void> {
       }
     }
     emitJson(useJson, { event: "step", step: "db", choice: database, status: "ok" });
+
+    if (orm === "drizzle") {
+      emitJson(useJson, { event: "step", step: "orm", choice: "drizzle", status: "start" });
+      const result = await applyOrmSelection(resolvedTarget, "drizzle", database);
+      emitJson(useJson, {
+        event: "step",
+        step: "orm",
+        choice: "drizzle",
+        status: result.applied ? "ok" : "skip",
+        ...(result.reason ? { reason: result.reason } : {}),
+      });
+    }
 
     emitJson(useJson, {
       event: "step",
