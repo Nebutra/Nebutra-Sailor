@@ -1526,6 +1526,12 @@ model BAInvitation {
   role           String?
   status         String    @default("pending")
   expiresAt      DateTime? @map("expires_at")
+  // ADR-12 phase 1 — additive fields, nullable / defaulted during dual-write.
+  // Phase 3 will tighten `token` to UNIQUE NOT NULL and `expiresAt` to NOT NULL.
+  token          String?
+  acceptedAt     DateTime? @map("accepted_at")
+  declinedAt     DateTime? @map("declined_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
 
   organization BAOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
