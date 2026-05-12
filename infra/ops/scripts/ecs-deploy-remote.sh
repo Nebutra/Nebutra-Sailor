@@ -121,12 +121,45 @@ for p in procs:
     fi
   fi
 
-  if [ -n "$pm_cwd" ] && [[ "$pm_cwd" == "$app_root/"* ]]; then
+  # `pm2 reload` is zero-downtime BUT keeps the resolved cwd from the
+  # process's original start — it does NOT re-read the `current` symlink.
+  # That's a problem because the pre-extract prune at the top of this
+  # function can delete the old release directory that pm2 is still pointing
+  # at. After symlink swap + reload, Node ends up trying to resolve modules
+  # (e.g. `tsx`, `@nebutra/*` workspace deps) from a path that no longer
+  # exists → ERR_MODULE_NOT_FOUND at startup.
+  #
+  # Only reload when ALL of these hold:
+  #   1. pm2 was already running this process
+  #   2. its cwd is under our managed app root
+  #   3. that cwd directory still exists on disk
+  #   4. it dereferences to the SAME path as the current `current` symlink
+  #
+  # Otherwise force-recreate so pm2 re-reads the ecosystem (which uses
+  # `cwd: <app>/current`) and lands on the freshly-swapped release.
+  local current_target=""
+  if [ -L "$app_root/current" ]; then
+    current_target="$(readlink -f "$app_root/current" 2>/dev/null || true)"
+  fi
+  local can_reload="no"
+  if [ -n "$pm_cwd" ] && [[ "$pm_cwd" == "$app_root/"* ]] && [ -d "$pm_cwd" ]; then
+    if [ -n "$current_target" ] && [ "$pm_cwd" = "$current_target" ]; then
+      can_reload="yes"
+    fi
+  fi
+
+  if [ "$can_reload" = "yes" ]; then
     log "reload pm2 $pm2_name (cwd=$pm_cwd, zero-downtime)"
     pm2 reload "$pm2_name" --update-env
   else
     if [ -n "$pm_cwd" ]; then
-      log "pm2 $pm2_name has cwd=$pm_cwd, not under $app_root — force-recreating"
+      if [ ! -d "$pm_cwd" ]; then
+        log "pm2 $pm2_name cwd=$pm_cwd no longer exists (prior release pruned) — force-recreating"
+      elif [ "$pm_cwd" != "$current_target" ]; then
+        log "pm2 $pm2_name cwd=$pm_cwd does not match current → $current_target — force-recreating"
+      else
+        log "pm2 $pm2_name has cwd=$pm_cwd, not under $app_root — force-recreating"
+      fi
     else
       log "pm2 process $pm2_name not registered — starting from ecosystem"
     fi
