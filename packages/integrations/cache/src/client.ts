@@ -49,12 +49,27 @@ export async function getCacheClient(): Promise<CacheClient> {
 
   resolving = (async () => {
     const backend = detectBackend();
+    // `webpackIgnore: true` is critical — without it Next.js webpack still
+    // bundles the target module into an async chunk, dragging `ioredis`'s
+    // Node-only deps (`net`, `dns`, `tls`) into every client bundle that
+    // transitively reaches `@nebutra/cache` (e.g. through
+    // @nebutra/auth/client → features.ts → @nebutra/feature-flags → here).
+    // With the magic comment, webpack leaves the `import()` as-is; only the
+    // Node runtime resolves it. Client-side bundles never actually execute
+    // this code path because `detectBackend()` requires server env vars.
     if (backend === "ioredis") {
-      const { IoredisCacheClient } = await import("./ioredis");
-      cacheInstance = new IoredisCacheClient();
+      // Bare specifier (resolved via package.json `exports`) lets Node's
+      // module resolver locate the file at runtime when webpack leaves the
+      // import as-is.
+      const mod = (await import(
+        /* webpackIgnore: true */ "@nebutra/cache/ioredis"
+      )) as typeof import("./ioredis");
+      cacheInstance = new mod.IoredisCacheClient();
     } else {
-      const { UpstashRedisCacheClient } = await import("./upstash");
-      cacheInstance = new UpstashRedisCacheClient();
+      const mod = (await import(
+        /* webpackIgnore: true */ "@nebutra/cache/upstash"
+      )) as typeof import("./upstash");
+      cacheInstance = new mod.UpstashRedisCacheClient();
     }
     backendDetected = backend;
     return cacheInstance;

@@ -85,7 +85,13 @@ export async function isAuthFeatureEnabled(
   // resolve the module name without making it a hard build-time requirement.
   // The runtime try/catch handles the missing-installation case.
   try {
-    const ff: unknown = await import("@nebutra/feature-flags");
+    // `webpackIgnore: true` — keep the import opaque to webpack so it never
+    // bundles `@nebutra/feature-flags` (which transitively imports
+    // `@nebutra/cache` with its Node-only ioredis backend) into client
+    // chunks. This file is re-exported from `@nebutra/auth/client`, so any
+    // `"use client"` component touching `isAuthFeatureEnabled` would
+    // otherwise drag the entire cache stack into the browser bundle.
+    const ff: unknown = await import(/* webpackIgnore: true */ "@nebutra/feature-flags");
     const flagName = `auth.${name}`;
     const context = {
       ...(ctx?.userId !== undefined ? { userId: ctx.userId } : {}),
