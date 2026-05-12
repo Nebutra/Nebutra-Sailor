@@ -100,13 +100,7 @@ const FooterMinimal = dynamic(
   { loading: () => <SectionSkeleton minH="20rem" /> },
 );
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-  Button,
-} from "@nebutra/ui/primitives";
+import { Button } from "@nebutra/ui/primitives";
 
 import type { Locale } from "@/i18n/routing";
 
@@ -211,54 +205,6 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
         {/* 4.9 Landing FAQ Section — extended Q&A accordion */}
         <FAQSection />
-
-        {/* 9. Objection Elimination */}
-        <section className="py-24 bg-muted/30">
-          <div className="container mx-auto px-4 max-w-[1400px]">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-black tracking-tight mb-4">{t("faq.title")}</h2>
-              <p className="text-muted-foreground text-xl">{t("faq.description")}</p>
-            </div>
-
-            {/* FAQ Accordion — full width */}
-            <div className="max-w-3xl mx-auto">
-              <Accordion className="w-full bg-background rounded-3xl border border-border/50 shadow-sm p-4 md:p-8">
-                <AccordionItem value="item-1" className="border-b border-border/50 text-lg">
-                  <AccordionTrigger className="py-6 font-semibold">
-                    {t("faq.q1.q")}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-base leading-relaxed pb-6">
-                    {t("faq.q1.a")}
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-2" className="border-b border-border/50 text-lg">
-                  <AccordionTrigger className="py-6 font-semibold">
-                    {t("faq.q2.q")}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-base leading-relaxed pb-6">
-                    {t("faq.q2.a")}
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-3" className="border-b border-border/50 text-lg">
-                  <AccordionTrigger className="py-6 font-semibold">
-                    {t("faq.q3.q")}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-base leading-relaxed pb-6">
-                    {t("faq.q3.a")}
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-4" className="border-none text-lg">
-                  <AccordionTrigger className="py-6 font-semibold">
-                    {t("faq.q4.q")}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-base leading-relaxed pb-6">
-                    {t("faq.q4.a")}
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-          </div>
-        </section>
 
         {/* 6. Grand Finale CTA */}
         <section className="py-32 relative overflow-hidden bg-background">
