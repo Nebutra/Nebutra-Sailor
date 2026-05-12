@@ -25,13 +25,12 @@
     }
   },
   "hero": {
-    "badge": "Nebutra Intelligence · Führende KI-Infrastruktur",
-    "headline1": "Die Engineering-Grundlage",
-    "headline2": "für produktionsreife KI.",
-    "subheadline": "Nebutra Sailor ist ein Next.js-SaaS-Framework für KI-Gründer. Es integriert Agenten-Orchestrierung, multimodale Fähigkeiten und eine Monetarisierungssuite auf Enterprise-Niveau, damit aus KI-Konzepten skalierbare kommerzielle Produkte werden, nicht nur technische Demos.",
+    "headline1": "Bring dein Startup an den Start —",
+    "headline2": "powered by Nebutra Agent OS.",
+    "subheadline": "Überspringe wochenlange Plattformarbeit mit einer <highlight>produktionsreifen</highlight> Grundlage und <highlight>geprüfter Architektur</highlight>, gebaut für <highlight>AI-Coding-Agents und global agierende Gründer</highlight>.",
     "copyLabel": "Befehl kopieren",
     "copiedLabel": "Kopiert",
-    "ctaGetAccess": "Lifetime-Zugang erhalten",
+    "ctaGetAccess": "Startup starten",
     "ctaExploreDemo": "Demo ansehen",
     "pillCopied": "Kopiert"
   },
@@ -1130,8 +1129,8 @@
     }
   },
   "metadata": {
-    "title": "Nebutra Intelligence | AI-Native- und SaaS-Architektur",
-    "description": "Engineering-Framework der nächsten Generation für KI-Startups und Unternehmen. Mit striktem Berechtigungsmodell entwickelt und als sofort nutzbare kommerzielle Plattform ausgelegt."
+    "title": "Nebutra Agent OS | Das Startup Agent OS",
+    "description": "Das Startup Agent OS für global agierende Gründer. Produktionsreifes Next.js-Fundament mit geprüfter Architektur, Auth, Billing, Agents und i18n — gebaut für AI-Coding-Agents und ernsthafte Teams."
   },
   "marketing": {
     "pricing": {

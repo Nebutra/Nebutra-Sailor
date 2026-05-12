@@ -25,13 +25,12 @@
     }
   },
   "hero": {
-    "badge": "Nebutra Intelligence · Infraestructura líder para IA",
-    "headline1": "La base de ingeniería",
-    "headline2": "para IA de producción.",
-    "subheadline": "Nebutra Sailor es un framework SaaS de Next.js diseñado para fundadores de IA. Integra de forma nativa orquestación de agentes, capacidades multimodales y una suite de monetización empresarial para convertir ideas de IA en productos comerciales escalables, no solo en demos técnicas.",
+    "headline1": "Lanza tu Startup,",
+    "headline2": "impulsada por Nebutra Agent OS.",
+    "subheadline": "Sáltate semanas de trabajo de infraestructura con una base <highlight>lista para producción</highlight> y una <highlight>arquitectura gobernada</highlight>, hecha para <highlight>agentes de código IA y fundadores con visión global</highlight>.",
     "copyLabel": "Copiar comando",
     "copiedLabel": "Copiado",
-    "ctaGetAccess": "Obtener acceso de por vida",
+    "ctaGetAccess": "Lanzar mi startup",
     "ctaExploreDemo": "Explorar demo",
     "pillCopied": "Copiado"
   },
@@ -1130,8 +1129,8 @@
     }
   },
   "metadata": {
-    "title": "Nebutra Intelligence | Arquitectura AI Native y SaaS",
-    "description": "Framework de ingeniería de nueva generación para startups y empresas de IA. Diseñado con un modelo de permisos estricto, ofrece una plataforma comercial lista para usar."
+    "title": "Nebutra Agent OS | El Startup Agent OS",
+    "description": "El Startup Agent OS para fundadores con visión global. Base Next.js lista para producción, arquitectura gobernada, auth, facturación, agentes e i18n incluidos —— hecho para agentes de código IA y equipos serios."
   },
   "marketing": {
     "pricing": {

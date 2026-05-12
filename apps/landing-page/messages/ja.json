@@ -25,13 +25,12 @@
     }
   },
   "hero": {
-    "badge": "Nebutra Intelligence · 先進AIインフラストラクチャ",
-    "headline1": "エンジニアリング基盤",
-    "headline2": "本番品質のAIのために。",
-    "subheadline": "Nebutra Sailorは、AI創業者のために設計されたNext.js SaaSフレームワークです。エージェントオーケストレーション、マルチモーダル機能、エンタープライズ級の収益化スイートを標準統合し、AIの構想を技術デモではなく、拡張可能な商用プロダクトへ変えます。",
+    "headline1": "あなたのスタートアップを、",
+    "headline2": "Nebutra Agent OS で出航させよう。",
+    "subheadline": "<highlight>本番運用可能</highlight> な基盤と <highlight>ガバナンス設計</highlight> 上で開発し、数週間のプラットフォーム作業をスキップ。<highlight>AI コーディングエージェントとグローバル展開を目指す創業者</highlight> のために最適化。",
     "copyLabel": "コマンドをコピー",
     "copiedLabel": "コピーしました",
-    "ctaGetAccess": "ライフタイムアクセスを取得",
+    "ctaGetAccess": "スタートアップを起動",
     "ctaExploreDemo": "デモを見る",
     "pillCopied": "コピー済み"
   },
@@ -1130,8 +1129,8 @@
     }
   },
   "metadata": {
-    "title": "Nebutra Intelligence | AI Native & SaaSアーキテクチャ",
-    "description": "主流のAIスタートアップと企業に向けた次世代エンジニアリングフレームワーク。厳格な権限モデルと商用価値を備えた、すぐに使えるプラットフォームを提供します。"
+    "title": "Nebutra Agent OS | スタートアップ向け Agent OS",
+    "description": "グローバル展開を目指す創業者のための Startup Agent OS。本番運用可能な Next.js 基盤、ガバナンス設計、認証、課金、エージェント、i18n を標準装備 —— AI コーディングエージェントと真剣なチームのために。"
   },
   "marketing": {
     "pricing": {

@@ -25,13 +25,12 @@
     }
   },
   "hero": {
-    "badge": "Nebutra Intelligence · 领先的 AI SaaS 基础架构",
-    "headline1": "专为严肃创客打造的",
-    "headline2": "Next.js AI SaaS 框架。",
-    "subheadline": "基于 <highlight>生产就绪</highlight> 的底座与 <highlight>受治理的架构</highlight> 进行开发，跳过数周重复平台工作。专为 <highlight>AI 编程智能体及开发者</highlight> 优化。",
+    "headline1": "启航你的创业,",
+    "headline2": "由 Nebutra Agent OS 驱动。",
+    "subheadline": "基于 <highlight>生产就绪</highlight> 的底座与 <highlight>受治理的架构</highlight> 开发，跳过数周平台工作。专为 <highlight>AI 编程智能体与出海创始人</highlight> 优化。",
     "copyLabel": "复制环境配置",
     "copiedLabel": "代码已复制",
-    "ctaGetAccess": "获取终身访问权限",
+    "ctaGetAccess": "启动我的创业",
     "ctaExploreDemo": "探索演示 Demo",
     "pillCopied": "已复制"
   },
@@ -1130,8 +1129,8 @@
     }
   },
   "metadata": {
-    "title": "Nebutra Intelligence | AI Native与全栈SaaS底层架构",
-    "description": "专为主流 AI 初创公司和企业准备的新一代工程化开发框架。基于高度严密的权限安全标准设计与强大的技术模块封装、提供即装即用的全领域开箱即用商用价值平台赋能。"
+    "title": "Nebutra Agent OS | 出海创业的起点",
+    "description": "面向出海创始人的 Startup Agent OS。生产就绪的 Next.js 底座，受治理的架构，内置鉴权、计费、智能体与 i18n —— 为 AI 编程智能体与严肃团队打造。"
   },
   "marketing": {
     "pricing": {

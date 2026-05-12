@@ -71,7 +71,7 @@ const jsonLd = [
     name: "Nebutra Sailor",
     applicationCategory: "DeveloperApplication",
     url: "https://github.com/Nebutra/Nebutra-Sailor",
-    description: "Production-ready Next.js monorepo template for AI SaaS products",
+    description: "The Startup Agent OS — ship global SaaS in days, not months",
     author: { "@id": "https://nebutra.com/#organization" },
     offers: {
       "@type": "Offer",
