@@ -22,7 +22,8 @@
     "copyLabel": "명령어 복사",
     "copiedLabel": "복사됨",
     "ctaGetAccess": "평생 액세스 받기",
-    "ctaExploreDemo": "데모 보기"
+    "ctaExploreDemo": "데모 보기",
+    "pillCopied": "복사됨"
   },
   "features": {
     "sectionTitle": "프로토타입에서 확장까지, 즉시 사용 가능한 인프라.",

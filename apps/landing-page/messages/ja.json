@@ -22,7 +22,8 @@
     "copyLabel": "コマンドをコピー",
     "copiedLabel": "コピーしました",
     "ctaGetAccess": "ライフタイムアクセスを取得",
-    "ctaExploreDemo": "デモを見る"
+    "ctaExploreDemo": "デモを見る",
+    "pillCopied": "コピー済み"
   },
   "features": {
     "sectionTitle": "プロトタイプからスケールまでの即戦力インフラストラクチャ。",

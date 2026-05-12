@@ -22,7 +22,8 @@
     "copyLabel": "Copier la commande",
     "copiedLabel": "Copié",
     "ctaGetAccess": "Obtenir l’accès à vie",
-    "ctaExploreDemo": "Explorer la démo"
+    "ctaExploreDemo": "Explorer la démo",
+    "pillCopied": "Copié"
   },
   "features": {
     "sectionTitle": "Infrastructure prête à l'emploi, du prototype à l'échelle.",

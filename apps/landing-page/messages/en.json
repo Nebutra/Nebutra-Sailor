@@ -22,7 +22,8 @@
     "copyLabel": "Copy Command",
     "copiedLabel": "Copied",
     "ctaGetAccess": "Get Your Free License",
-    "ctaExploreDemo": "Explore demo"
+    "ctaExploreDemo": "Explore demo",
+    "pillCopied": "Copied"
   },
   "features": {
     "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",

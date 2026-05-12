@@ -22,7 +22,8 @@
     "copyLabel": "Befehl kopieren",
     "copiedLabel": "Kopiert",
     "ctaGetAccess": "Lifetime-Zugang erhalten",
-    "ctaExploreDemo": "Demo ansehen"
+    "ctaExploreDemo": "Demo ansehen",
+    "pillCopied": "Kopiert"
   },
   "features": {
     "sectionTitle": "Sofort einsatzbereite Infrastruktur, vom Prototyp bis zur Skalierung.",

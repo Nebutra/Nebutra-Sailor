@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 import { HeroBackgroundVideo } from "./HeroBackgroundVideo";
+import { HeroInstallPill } from "./HeroInstallPill";
 
 /**
  * HeroSection — Conversion-first hero.
@@ -16,7 +17,6 @@ import { HeroBackgroundVideo } from "./HeroBackgroundVideo";
  */
 export async function HeroSection() {
   const t = await getTranslations("hero");
-  const badgeAfterDot = t("badge").split("·")[1];
 
   return (
     <section className="relative isolate w-full overflow-visible bg-transparent pb-8 pt-24 lg:pt-32">
@@ -29,14 +29,7 @@ export async function HeroSection() {
             className="flex flex-col items-center justify-center space-y-6 md:space-y-7 w-full"
           >
             <AnimateIn preset="fadeUp">
-              <div className="mx-auto flex w-fit cursor-default items-center justify-center gap-2 rounded-full border border-black/5 bg-white/60 py-1 pr-4 pl-2 text-xs font-semibold text-foreground shadow-sm backdrop-blur-xl transition-all hover:bg-white/75 dark:border-white/10 dark:bg-white/8 dark:hover:bg-white/12">
-                <span className="flex h-5 items-center justify-center rounded-full bg-black dark:bg-white px-2 text-[10px] text-white dark:text-black">
-                  Next.js
-                </span>
-                <span className="flex h-5 items-center justify-center text-[10px] opacity-70">
-                  {badgeAfterDot}
-                </span>
-              </div>
+              <HeroInstallPill command="npx create-sailor@latest" copiedLabel={t("pillCopied")} />
             </AnimateIn>
 
             {/* H1 paints at full opacity from first frame so the LCP API can

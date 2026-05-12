@@ -22,7 +22,8 @@
     "copyLabel": "Copiar comando",
     "copiedLabel": "Copiado",
     "ctaGetAccess": "Obtener acceso de por vida",
-    "ctaExploreDemo": "Explorar demo"
+    "ctaExploreDemo": "Explorar demo",
+    "pillCopied": "Copiado"
   },
   "features": {
     "sectionTitle": "Infraestructura lista para usar, desde prototipos hasta escalar.",

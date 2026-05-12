@@ -22,7 +22,8 @@
     "copyLabel": "复制环境配置",
     "copiedLabel": "代码已复制",
     "ctaGetAccess": "获取终身访问权限",
-    "ctaExploreDemo": "探索演示 Demo"
+    "ctaExploreDemo": "探索演示 Demo",
+    "pillCopied": "已复制"
   },
   "features": {
     "sectionTitle": "开箱即用的基础设施，从原型直到海量扩张。",
