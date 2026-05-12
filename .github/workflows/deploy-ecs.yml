@@ -196,6 +196,14 @@ jobs:
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
+          # Build-time placeholder for server env validation. Next.js collects
+          # page data by loading each route module at build time, which triggers
+          # @t3-oss/env-nextjs Zod validation (`DATABASE_URL: z.string().url()`).
+          # Without a value the build crashes with "Invalid environment variables"
+          # while inspecting routes like /api/me/public. Real DATABASE_URL lives
+          # in /var/www/nebutra/web/current/.env on the ECS box and is read at
+          # runtime by the standalone server.
+          DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
           # Force standalone output for ECS — landing-page's next.config gates
           # `output: "standalone"` on this env so Vercel builds skip the trace
           # cost. ECS workflow needs the standalone bundle for assembly below.
