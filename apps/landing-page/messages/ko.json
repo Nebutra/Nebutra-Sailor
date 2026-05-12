@@ -1331,7 +1331,8 @@
       "presetHint": {
         "badge": "Nebutra 프리셋",
         "message": "@nebutra/preset을 통해 초기화된 SaaS 아키텍처",
-        "detail": "14개의 패키지가 기본적으로 통합되었습니다."
+        "detail": "14개의 패키지가 기본적으로 통합되었습니다.",
+        "readyStatus": "프리셋 시스템 준비 완료"
       }
     },
     "productDemo": {

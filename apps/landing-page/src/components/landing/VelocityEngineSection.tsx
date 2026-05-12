@@ -76,7 +76,7 @@ export function VelocityEngineSection() {
             <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-background/50 px-6 py-3 backdrop-blur-sm shadow-sm">
               <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
               <span className="text-sm font-semibold text-foreground tracking-wide">
-                预设系统准备就绪
+                {t("presetHint.readyStatus")}
               </span>
             </div>
           </div>

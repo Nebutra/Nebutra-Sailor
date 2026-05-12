@@ -1331,7 +1331,8 @@
       "presetHint": {
         "badge": "Preset System",
         "message": "One config. Every feature. Pick your preset and ship.",
-        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config."
+        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
+        "readyStatus": "Preset system ready"
       }
     },
     "productDemo": {

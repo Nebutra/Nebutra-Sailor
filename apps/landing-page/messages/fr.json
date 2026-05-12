@@ -1331,7 +1331,8 @@
       "presetHint": {
         "badge": "Préréglage Nebutra",
         "message": "Architecture SaaS initialisée via @nebutra/preset",
-        "detail": "14 paquets intégrés nativement."
+        "detail": "14 paquets intégrés nativement.",
+        "readyStatus": "Système de préréglages prêt"
       }
     },
     "productDemo": {

@@ -1331,7 +1331,8 @@
       "presetHint": {
         "badge": "Nebutraプリセット",
         "message": "@nebutra/preset経由で初期化されたSaaSアーキテクチャ",
-        "detail": "14のパッケージがネイティブに統合されています。"
+        "detail": "14のパッケージがネイティブに統合されています。",
+        "readyStatus": "プリセットシステム準備完了"
       }
     },
     "productDemo": {
