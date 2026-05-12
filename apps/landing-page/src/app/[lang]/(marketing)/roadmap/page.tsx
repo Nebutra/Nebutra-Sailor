@@ -47,7 +47,10 @@ const PHASES: Phase[] = [
     vision:
       "Establish the governed baseline: shared packages, typed contracts, auth, data, and operational primitives.",
     milestones: [
-      { label: "Monorepo topology — Turborepo, 33 interconnected packages" },
+      {
+        label:
+          "Categorized monorepo — Turborepo with packages grouped by domain (design / iam / commerce / integrations / platform / ops / ai)",
+      },
       { label: "Hono API Gateway — OpenAPI, oRPC, tRPC with middleware composition" },
       { label: "Database foundation — Prisma + Supabase (PostgreSQL + pgvector)" },
       { label: "Absolute Identity — Multi-tenant auth with Clerk + org membership" },

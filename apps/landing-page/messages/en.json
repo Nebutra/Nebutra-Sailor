@@ -74,7 +74,7 @@
       "orgRbacIsolation": "Orgs + RBAC + row isolation",
       "orgRolesSeat": "Orgs + roles + seat billing",
       "manualSetup": "Manual setup",
-      "multiProviderGateway": "Vercel AI SDK + 20+ providers",
+      "multiProviderGateway": "Vercel AI SDK + 47 providers",
       "vercelAiSdk": "Vercel AI SDK",
       "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
       "clerkOnly": "Clerk",
@@ -1221,27 +1221,27 @@
       "startup": {
         "badge": "STARTUP",
         "price": "$799",
-        "period": "lifetime",
+        "period": "/ year",
         "desc": "For small teams building on the Nebutra platform baseline.",
         "cta": "Get Nebutra for Startups",
-        "f1": "Up to 5 Developer Seats",
+        "f1": "Closed-source use (commercial license)",
         "f2": "Unlimited Team Projects",
-        "f3": "30-min Architecture Consult (Onboarding Call)",
-        "f4": "Priority Support",
+        "f3": "12 months of updates included",
+        "f4": "Email support",
         "f5": "Everything in Solo"
       },
       "agency": {
         "badge": "AGENCY",
         "price": "$1,499",
-        "period": "lifetime",
+        "period": "/ year",
         "desc": "For agencies and operators shipping repeatable client platforms.",
         "cta": "Get Nebutra for Agencies",
-        "f1": "Up to 10 Developer Seats",
+        "f1": "White-label rights (commercial license)",
         "f2": "Unlimited Client Projects",
-        "f3": "30-min Architecture Consult (Onboarding Call)",
+        "f3": "12 months of updates included",
         "f4": "White-label potential",
         "f5": "Everything in Startup",
-        "f6": "Private Discord support channel"
+        "f6": "Everything in Startup"
       }
     },
     "faq": {
@@ -1257,16 +1257,16 @@
       },
       "q3": {
         "q": "Can I swap Clerk for Supabase Auth?",
-        "a": "Absolutely. Our authentication layer is abstracted via @nebutra/identity, meaning you can hot-swap identity providers with minimal refactoring."
+        "a": "Absolutely. Our authentication layer is abstracted via @nebutra/auth, meaning you can hot-swap identity providers with minimal refactoring."
       },
       "q4": {
         "q": "Do I need to pay for updates?",
-        "a": "No, commercial licenses include lifetime access to the repository and all future updates and architectural improvements."
+        "a": "Commercial licenses include 12 months of updates from the date of purchase. The AGPL-3.0 individual tier is perpetual."
       }
     },
     "cta": {
       "title": "Stop configuring. Start building.",
-      "description": "Initialize your scalable SaaS architecture locally within 3 minutes using the Nebutra CLI.",
+      "description": "Initialize a scalable SaaS architecture locally with the Nebutra CLI.",
       "button": "Deploy Architecture",
       "license": "Open source under AGPL-3.0 license. No credit card required."
     },
@@ -1317,7 +1317,7 @@
         "number": "10",
         "unit": "mins",
         "subtitle": "TIME TO MARKET",
-        "comparison": "99% faster than building an internal platform team.",
+        "comparison": "Skip months of platform work.",
         "phases": {
           "scaffold": "Init",
           "wire": "Core",
@@ -1353,7 +1353,7 @@
     "harness": {
       "badge": "HARNESS ENGINEERING",
       "headline": "Engineering that enforces itself.",
-      "subheadline": "Architecture tests, governance ratchets, and 15 CI workflows ensure code quality can only improve — never regress.",
+      "subheadline": "Architecture tests, governance ratchets, and 19 CI workflows ensure code quality can only improve — never regress.",
       "stat1Value": "19",
       "stat1Label": "CI Workflows",
       "stat2Value": "13",
@@ -1363,7 +1363,7 @@
       "card1Title": "Architecture Tests",
       "card1Desc": "13 architecture tests covering dependency flow, token usage, WCAG contrast, API contracts, and Storybook coverage — 4 use fast-check for property-based proofs.",
       "card2Title": "Governance Ratchets",
-      "card2Desc": "Token budgets that only tighten: zero raw color classes on landing page, oklch floor 120+, hex ceiling 40, motion imports whitelisted to 2 files.",
+      "card2Desc": "Token budgets that only tighten: raw-color budget ratchets downward per surface, oklch floor at 120 literals, hex ceiling at 40, motion imports confined to an allow-list.",
       "card3Title": "CI Pipeline Depth",
       "card3Desc": "CodeQL SAST, Gitleaks, cosign signing, SBOM/SLSA provenance, Lighthouse ≥0.95, OpenAPI backward compatibility, k6 load tests, Chromatic visual regression."
     }
@@ -1383,12 +1383,12 @@
       "ai_f2_title": "Semantic embeddings",
       "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
       "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Track token consumption per tenant per billing period. Set per-plan quotas and auto-notify on 80% / 100% burn.",
+      "ai_f3_desc": "Per-plan quotas with usage tracking — meter AI tokens, API calls, and storage against ClickHouse-backed real-time aggregates.",
       "multi_category": "Multi-tenant Platform",
       "multi_f1_title": "Organisation-level isolation",
       "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
       "multi_f2_title": "Multi-provider auth (Clerk / Better Auth)",
-      "multi_f2_desc": "Switch auth providers via preset config. Clerk for managed, Better Auth for self-hosted. Phone + SMS login for China market via Aliyun/Tencent Cloud.",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link via Clerk or Better Auth — choose per deployment.",
       "multi_f3_title": "Automatic tenant provisioning",
       "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
       "dx_category": "Developer Experience",
@@ -1407,7 +1407,7 @@
       "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
       "rel_category": "Reliability",
       "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "Every Python microservice uses a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
+      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
       "rel_f2_title": "Dead letter queue",
       "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
       "rel_f3_title": "SLO burn-rate alerts",
@@ -1423,7 +1423,7 @@
       "obs_f1_title": "OpenTelemetry tracing",
       "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
       "obs_f2_title": "Grafana dashboards",
-      "obs_f2_desc": "32-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
+      "obs_f2_desc": "Multi-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
       "obs_f3_title": "Sentry error tracking",
       "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
       "data_category": "Data & Analytics",
@@ -1432,7 +1432,7 @@
       "data_f2_title": "Funnel analytics",
       "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
       "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion service decouples your application from your data warehouse. Schema validation at the edge.",
+      "data_f3_desc": "High-throughput event ingestion via Inngest into ClickHouse bronze, with in-memory dedup and schema validation at the gateway edge.",
       "infra_category": "Infrastructure",
       "infra_f1_title": "GitOps with ArgoCD",
       "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
@@ -1542,7 +1542,7 @@
         "title": "SEO & GEO Growth Engine",
         "desc": "Beyond traditional search. Built-in SEO fundamentals plus Generative Engine Optimization to ensure your product is discoverable by both Google and AI search engines like ChatGPT, Perplexity, and Gemini.",
         "features": {
-          "f1": "Lighthouse 99+ Scores",
+          "f1": "Core Web Vitals optimized",
           "f2": "AI Search Indexed"
         }
       }
@@ -1590,8 +1590,8 @@
     "subheadline": "Every page ships with production-grade SEO and Generative Engine Optimization. Your product appears in Google, Perplexity, ChatGPT Search, and Bing Copilot — out of the box.",
     "stat1Value": "100",
     "stat1Label": "Lighthouse SEO",
-    "stat2Value": "99",
-    "stat2Label": "Performance",
+    "stat2Value": "Core Web Vitals",
+    "stat2Label": "optimized",
     "stat3Value": "7",
     "stat3Label": "Languages",
     "stat4Value": "6+",
@@ -1605,11 +1605,11 @@
     "card3Title": "Multi-Language SEO (hreflang)",
     "card3Desc": "next-intl auto-generates hreflang alternates for 7 languages with locale-prefixed routing. Each language gets its own sitemap entries.",
     "card4Title": "Core Web Vitals First",
-    "card4Desc": "Server components, dynamic imports, image optimization, and edge caching deliver 99+ Lighthouse scores. LCP under 1.2s on mobile.",
+    "card4Desc": "Optimized for Core Web Vitals — Next.js Image, font preloading, and route-level code splitting from day one.",
     "card5Title": "AI Citation Signals",
     "card5Desc": "Structured data, authoritative content patterns, and E-E-A-T signals that Perplexity, ChatGPT Search, and Google SGE use to decide which sources to cite.",
     "card6Title": "Global Edge Distribution",
-    "card6Desc": "ISR + edge middleware on 300+ Vercel PoPs. Geo-targeted content, multi-currency pricing, and locale-aware routing at the edge.",
+    "card6Desc": "ISR + edge middleware on Vercel's global edge network. Reach users with low TTFB from any region.",
     "compTraditionalLabel": "Traditional SEO",
     "compTraditional": "Manual meta tags → slow crawling → invisible to AI search",
     "compSailor": "Automated schema → instant indexing → cited by AI engines → global reach"
@@ -1867,7 +1867,7 @@
     "comparison": {
       "badge": "Compare plans",
       "title": "Pick the plan that fits the stage you are in",
-      "subtitle": "Every plan includes the full source code and lifetime updates inside its release line.",
+      "subtitle": "Every plan includes the full source code. Commercial licenses include 12 months of updates.",
       "plan": {
         "individual": "Individual",
         "startup": "Startup",

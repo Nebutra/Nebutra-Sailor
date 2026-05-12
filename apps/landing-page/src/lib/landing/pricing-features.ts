@@ -38,23 +38,6 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
         values: { individual: "AGPL-3.0", startup: "Commercial", agency: "Commercial" },
       },
       {
-        id: "closed-source",
-        values: { individual: false, startup: true, agency: true },
-      },
-      {
-        id: "white-label",
-        values: { individual: false, startup: false, agency: true },
-      },
-    ],
-  },
-  {
-    id: "team",
-    rows: [
-      {
-        id: "seats",
-        values: { individual: "1", startup: "5", agency: "10" },
-      },
-      {
         id: "projects",
         values: {
           individual: "Unlimited personal",
@@ -69,7 +52,10 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
     rows: [
       { id: "full-source", values: { individual: true, startup: true, agency: true } },
       { id: "all-packages", values: { individual: true, startup: true, agency: true } },
-      { id: "lifetime-updates", values: { individual: true, startup: true, agency: true } },
+      {
+        id: "update-window",
+        values: { individual: "Perpetual", startup: "12 months", agency: "12 months" },
+      },
     ],
   },
   {
@@ -77,14 +63,8 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
     rows: [
       {
         id: "channel",
-        values: { individual: "Community", startup: "Priority email", agency: "Private Discord" },
+        values: { individual: "Community", startup: "Email", agency: "Email" },
       },
-      {
-        id: "onboarding",
-        values: { individual: false, startup: "30-min call", agency: "30-min call" },
-      },
-      { id: "architecture-consult", values: { individual: false, startup: true, agency: true } },
-      { id: "sla", values: { individual: false, startup: false, agency: "99.99%" } },
     ],
   },
 ] as const;

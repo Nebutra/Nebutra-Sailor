@@ -82,15 +82,16 @@ function IconChip({ icon, name }: AiIcon) {
 /**
  * AIConstellationMarquee — ML-2.2
  *
- * Infinite marquee rows showing all 22+ AI integrations.
+ * Marquee rows showing a curated subset of AI integrations.
  * Two rows: row 1 scrolls forward, row 2 scrolls reverse.
+ * Provider count is sourced from @nebutra/ai-providers (47 entries).
  */
 export function AIConstellationMarquee() {
   return (
     <div className="w-full mt-14 overflow-hidden">
       <AnimateIn preset="emerge" inView>
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground mb-8 text-center">
-          INTEGRATED WITH 22+ AI MODELS &amp; AGENT TOOLS
+          INTEGRATED WITH 47 AI PROVIDERS
         </p>
       </AnimateIn>
 

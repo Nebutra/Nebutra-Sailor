@@ -1257,16 +1257,16 @@
       },
       "q3": {
         "q": "Can I swap Clerk for Supabase Auth?",
-        "a": "Absolutely. Our authentication layer is abstracted via @nebutra/identity, meaning you can hot-swap identity providers with minimal refactoring."
+        "a": "Absolutely. Our authentication layer is abstracted via @nebutra/auth, meaning you can hot-swap identity providers with minimal refactoring."
       },
       "q4": {
         "q": "Do I need to pay for updates?",
-        "a": "No, commercial licenses include lifetime access to the repository and all future updates and architectural improvements."
+        "a": "Commercial licenses include 12 months of updates from the date of purchase. The AGPL-3.0 individual tier is perpetual."
       }
     },
     "cta": {
       "title": "Stop configuring. Start building.",
-      "description": "Initialize your scalable SaaS architecture locally within 3 minutes using the Nebutra CLI.",
+      "description": "Initialize a scalable SaaS architecture locally with the Nebutra CLI.",
       "button": "Deploy Architecture",
       "license": "Open source sous AGPL-3.0. Pas de carte bancaire requise."
     },
@@ -1317,7 +1317,7 @@
         "number": "10",
         "unit": "mins",
         "subtitle": "TIME TO MARKET",
-        "comparison": "99% faster than building an internal platform team.",
+        "comparison": "Skip months of platform work.",
         "phases": {
           "scaffold": "Init",
           "wire": "Core",

@@ -45,60 +45,41 @@ const TAG_COLORS: Record<string, string> = {
 
 const FALLBACK_RELEASE_IMAGE = "/screenshots/demo-dashboard-command.webp";
 
-// Static fallback data used when Sanity CMS has no entries yet
-// Only includes user/developer-visible changes — pure infra ops entries are omitted
+// Static fallback. Real entries are sourced from Sanity (`getChangelogEntries`);
+// this list backs the fallback render when CMS returns empty. Items below mirror
+// landed ADRs and major refactors — see docs/architecture/* and CHANGELOG.md.
 const STATIC_RELEASES = [
   {
-    version: "1.2.0",
-    date: "2026-04-12",
-    tag: "Feat",
+    version: "1.7",
+    date: "2026-05-12",
+    tag: "Refactor",
     tagColor: "var(--cyan-9)",
     highlights: [
-      "Sleptons Matchmaker Beta — Pure Proof-of-Work visual verification enabled",
-      "Agent Orchestration Engine — Drag-and-drop workflow hooks for 100% operational autonomy",
-      "Algorithmic MRR Trackers — Automatic execution metric profiling for OPC members",
+      "TS-by-default backend audit — Python fleet collapsed to _shared + ai; event-ingest migrated in-process; ecommerce/recsys/content/third-party/web3 removed (ADR 2026-05-10)",
+      "Dark border token system — pure-neutral nebutra-gray palette + token-aware * wildcard rule fixes high-saturation borders across all surfaces (ADR 2026-05-11)",
+      "Marketing copy honesty audit — fictional testimonials, fabricated developer counts, hallucinated AI model names, and unenforced pricing claims all corrected",
     ],
   },
   {
-    version: "1.0.0",
-    date: "2026-03-30",
+    version: "1.5",
+    date: "2026-04",
     tag: "Feat",
     tagColor: "var(--cyan-9)",
     highlights: [
-      "Meta-Unicorn Impact Manifesto — The foundational 4 pillars fully implemented",
-      "Builder Core Baseline — 50+ enterprise SaaS modules assembled into one initialization block",
-      "Frictionless Payment Routing — Advanced automated billing tiers mapped directly to Agent consumption",
+      "Categorized monorepo layout — packages grouped by domain (design / iam / commerce / integrations / platform / ops / ai)",
+      "Multi-provider auth — Clerk, Better Auth, NextAuth via @nebutra/auth provider abstraction",
+      "Multi-provider billing — Stripe, Polar, LemonSqueezy, ChinaPay, Manual via @nebutra/billing",
     ],
   },
   {
-    version: "0.8.0",
-    date: "2026-03-03",
+    version: "1.0",
+    date: "2026-02",
     tag: "Feat",
     tagColor: "var(--cyan-9)",
     highlights: [
-      "RBAC permission matrix — Re-designed strictly around programmatic (Code is Law) scoping",
-      "Transactional telemetry — Sentry error tracking + Resend email automation",
-    ],
-  },
-  {
-    version: "0.5.0",
-    date: "2026-01-25",
-    tag: "Feat",
-    tagColor: "var(--cyan-9)",
-    highlights: [
-      "Multi-tenant auth — Clerk with embedded enterprise team configurations",
-      "AI service proxy routes — /api/v1/ai/chat, embeddings, models",
-    ],
-  },
-  {
-    version: "0.4.0",
-    date: "2026-01-10",
-    tag: "Feat",
-    tagColor: "var(--cyan-9)",
-    highlights: [
-      "Turborepo monorepo — pnpm workspaces, 33 packages, Node 22",
-      "Hono API gateway with OpenAPI + idiomatic middleware stack",
-      "Prisma + Supabase (PostgreSQL + pgvector)",
+      "Hono API gateway — OpenAPI, oRPC, tRPC with middleware composition",
+      "Prisma + Supabase foundation (PostgreSQL + pgvector)",
+      "Multi-tenant primitives — @nebutra/tenant (AsyncLocalStorage + RLS), @nebutra/permissions (CASL + OpenFGA)",
     ],
   },
 ] as const;

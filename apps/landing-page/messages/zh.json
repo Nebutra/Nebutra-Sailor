@@ -74,7 +74,7 @@
       "orgRbacIsolation": "组织 + RBAC + 行级隔离",
       "orgRolesSeat": "组织 + 角色 + 席位计费",
       "manualSetup": "需手动搭建",
-      "multiProviderGateway": "Vercel AI SDK + 20+ 提供商",
+      "multiProviderGateway": "Vercel AI SDK + 47 个提供商",
       "vercelAiSdk": "Vercel AI SDK",
       "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
       "clerkOnly": "Clerk",
@@ -1226,27 +1226,27 @@
       "startup": {
         "badge": "STARTUP / 敏捷初创",
         "price": "$799",
-        "period": "终身授权",
+        "period": "/ 年",
         "desc": "适合建立在 Nebutra 平台基线之上的小团队。",
         "cta": "购买 Startup 商业授权",
-        "f1": "多达 5 名团队成员的联合研制并发访问席位",
+        "f1": "闭源商用授权",
         "f2": "团队主体无界限商用的企业级应用下放额度",
-        "f3": "30 分钟由核心作者亲自辅导的高阶部署集成审查会议",
-        "f4": "直通内网的高优先级工单处置渠道",
+        "f3": "12 个月更新覆盖",
+        "f4": "邮件支持",
         "f5": "包含 Solo 架构下的全额度能力特权"
       },
       "agency": {
         "badge": "AGENCY / 商业工坊",
         "price": "$1,499",
-        "period": "终身授权",
+        "period": "/ 年",
         "desc": "适合交付可重复客户平台的代理商与运营团队。",
         "cta": "购买 Agency 商业授权",
-        "f1": "满载配额！最多 10 席架构师研发权限同步分发",
+        "f1": "白标商用授权",
         "f2": "支持向乙方客户无限量出售产品闭源程序的再分发许可",
-        "f3": "30 分钟由核心作者亲自辅导的高阶部署集成审查会议",
+        "f3": "12 个月更新覆盖",
         "f4": "准许白标去 Logo 操作的深度视觉定制与二创潜能",
         "f5": "继承 Startup 管线所构建的全部底座生态和技术特征",
-        "f6": "免排队登入最高保密级别的专属 Discord 私域技术攻坚频道"
+        "f6": "包含 Startup 的所有内容"
       }
     },
     "faq": {
@@ -1262,7 +1262,7 @@
       },
       "q3": {
         "q": "我可以将 Clerk 替换为 Supabase Auth 吗？",
-        "a": "当然可以。我们的认证层通过 @nebutra/identity 进行了高度抽象封装，这意味着您只需极少的重构即可完成身份提供商的热替换。"
+        "a": "当然可以。我们的认证层通过 @nebutra/auth 进行了高度抽象封装，这意味着您只需极少的重构即可完成身份提供商的热替换。"
       },
       "q4": {
         "q": "我需要为后续的更新付费吗？",
@@ -1271,7 +1271,7 @@
     },
     "cta": {
       "title": "停止折腾配置，立即开始构建",
-      "description": "使用 Nebutra CLI 在 3 分钟内即可在本地初始化您的高可用可扩展 SaaS 架构。",
+      "description": "使用 Nebutra CLI 即可在本地初始化您的高可用可扩展 SaaS 架构。",
       "button": "部署云端架构",
       "license": "基于 AGPL-3.0 开源协议。无需信用卡。"
     },
@@ -1358,7 +1358,7 @@
     "harness": {
       "badge": "工程治理",
       "headline": "自我约束的工程体系。",
-      "subheadline": "架构测试、治理棘轮和 15 条 CI 工作流确保代码质量只升不降。",
+      "subheadline": "架构测试、治理棘轮和 19 个 CI 工作流确保代码质量只升不降。",
       "stat1Value": "19",
       "stat1Label": "CI 工作流",
       "stat2Value": "13",
@@ -1368,7 +1368,7 @@
       "card1Title": "架构测试",
       "card1Desc": "13 项架构测试覆盖依赖流向、Token 使用、WCAG 对比、API 契约、Storybook 覆盖 —— 其中 4 项基于 fast-check 进行属性化证明。",
       "card2Title": "治理棘轮",
-      "card2Desc": "令牌预算只紧不松：Landing page 原始色彩类为零，oklch 下限 120+，hex 上限 40，动画导入白名单仅 2 个文件。",
+      "card2Desc": "Token 预算只收紧不放宽：原始颜色按 surface 单调下行、oklch 文字下限 120 处、hex 上限 40 处、motion 导入限制在 allow-list 内。",
       "card3Title": "CI 管线深度",
       "card3Desc": "CodeQL SAST、Gitleaks、cosign 签名、SBOM/SLSA 溯源、Lighthouse ≥0.95、OpenAPI 向后兼容、k6 负载测试、Chromatic 视觉回归。"
     }
@@ -1388,12 +1388,12 @@
       "ai_f2_title": "语义向量检索 (RAG)",
       "ai_f2_desc": "利用 pgvector 生成和存储高维向量。为您的语义搜索、检索增强生成 (RAG) 和推荐引擎注入动力。",
       "ai_f3_title": "AI 推理用量计量",
-      "ai_f3_desc": "精确跟踪每个计费周期各租户的 Token 消耗。可自由设定层级配额并在到达 80% / 100% 消耗阈值时自动拦截告警。",
+      "ai_f3_desc": "按计划配额追踪用量 —— AI tokens、API 调用、存储,基于 ClickHouse 实时聚合。",
       "multi_category": "多租户管控中枢",
       "multi_f1_title": "租户级数据隔离墙",
       "multi_f1_desc": "基于 Postgres 的行级安全控制 (RLS) 确保租户之间的数据物理隔离——在数据库最底层强制执行，超越应用层限制。",
       "multi_f2_title": "多供应商认证（Clerk / Better Auth）",
-      "multi_f2_desc": "通过 preset 配置切换认证供应商。Clerk 用于托管，Better Auth 用于自部署。中国市场支持阿里云/腾讯云手机号短信登录。",
+      "multi_f2_desc": "多 provider OAuth(Google、GitHub 等)加邮箱/密码和魔法链接 —— 由 Clerk 或 Better Auth 承载,按部署选用。",
       "multi_f3_title": "自动化租户编排",
       "multi_f3_desc": "当新企业机构通过 Clerk 注册入驻，系统会自动分配首组 API 密钥并下发定制化欢迎函——剔除所有手工步骤。",
       "dx_category": "开发者使用体验",
@@ -1412,7 +1412,7 @@
       "billing_f3_desc": "来自 Stripe 的订阅信标事件将会通过 Inngest 的调度，实现对底层组织状态的无缝自愈式同步更新——免除繁琐配置与冗余的轮询作业。",
       "rel_category": "高可用架构",
       "rel_f1_title": "熔断器守护机制",
-      "rel_f1_desc": "每一次微服务间的高负荷 RPC 都在状态型熔断控制器下受控运作，彻底抹杀连锁系统的雪崩瘫痪风险。",
+      "rel_f1_desc": "Gateway 和 AI 服务使用 CLOSED/OPEN/HALF_OPEN 熔断器,带指数退避与抖动 —— 杜绝级联故障。",
       "rel_f2_title": "死信队列 (DLQ)",
       "rel_f2_desc": "由于未知异常消耗完自动重试极值的事件序列会被安全地放逐在死信栈中。管理层人员可以借助后端管控面一键重放修复。",
       "rel_f3_title": "SLO 损耗告警",
@@ -1428,7 +1428,7 @@
       "obs_f1_title": "OpenTelemetry 全分布式追踪",
       "obs_f1_desc": "透视前台 Next.js 穿越 API 到微服务的底层全息追踪，兼容标准的 OpenTelemetry 协议向云端面板发送指标数据流。",
       "obs_f2_title": "全景 Grafana 监控",
-      "obs_f2_desc": "开箱即用的预设看盘面板：多达数十个关联服务器瓶颈健康以及业务 API 拥塞波峰的指标供您指挥并决策您的架构负载动态。",
+      "obs_f2_desc": "多面板平台总览：SLO 可用性、错误预算剩余、HPA 饱和度、Pod 重启、CPU 节流。",
       "obs_f3_title": "Sentry 下钻级错误追捕",
       "obs_f3_desc": "错误追溯伴随着请求专属 ID 及多租户会话定位信标，方便直接捕捉到任何故障链底层执行错误的完整环境上下文。",
       "data_category": "数据与增长管理",
@@ -1437,7 +1437,7 @@
       "data_f2_title": "漏斗与归类追踪",
       "data_f2_desc": "将用户的留存活跃按队列进行切分聚类，让收入贡献的衡量维度精确穿过复杂逻辑下落到单个动作的影响效果归因评判中去。",
       "data_f3_title": "消息网关解耦",
-      "data_f3_desc": "复杂繁重的读写依赖项都转为强校验结构的异步消息，在边缘被精准拆解后才下发给核心逻辑完成去状态化的解脱以适应高可用弹性伸缩。",
+      "data_f3_desc": "通过 Inngest 高吞吐事件管道进入 ClickHouse bronze 层,在 gateway 边缘进行内存去重和 schema 校验。",
       "infra_category": "弹性基础设施",
       "infra_f1_title": "伴随 GitOps 的自动集群治理",
       "infra_f1_desc": "任何修改均需代码库确认才投放到正式机房。拒绝线上的孤岛式后门变更污染你的产品可靠度；更自带无感知平稳灰度部署策略设计。",
@@ -1547,7 +1547,7 @@
         "title": "SEO & GEO 增长引擎",
         "desc": "超越传统搜索。内置 SEO 基础设施与生成式引擎优化 (GEO)，让你的产品同时被 Google 和 ChatGPT、Perplexity、Gemini 等 AI 搜索引擎发现和引用。",
         "features": {
-          "f1": "Lighthouse 99+ 分数",
+          "f1": "为 Core Web Vitals 优化",
           "f2": "AI 搜索引擎已索引"
         }
       }
@@ -1595,8 +1595,8 @@
     "subheadline": "每一个页面都内置生产级 SEO 和生成式引擎优化 (GEO)。你的产品开箱即被 Google、Perplexity、ChatGPT Search 和 Bing Copilot 收录。",
     "stat1Value": "100",
     "stat1Label": "Lighthouse SEO",
-    "stat2Value": "99",
-    "stat2Label": "性能得分",
+    "stat2Value": "Core Web Vitals",
+    "stat2Label": "已优化",
     "stat3Value": "7",
     "stat3Label": "语言支持",
     "stat4Value": "6+",
@@ -1610,11 +1610,11 @@
     "card3Title": "多语言 SEO (hreflang)",
     "card3Desc": "next-intl 自动为 7 种语言生成 hreflang 替代链接，配合语言前缀路由。每种语言独立 sitemap 条目。",
     "card4Title": "Core Web Vitals 优先",
-    "card4Desc": "服务端组件、动态导入、图片优化和边缘缓存交付 99+ Lighthouse 分数。移动端 LCP 低于 1.2 秒。",
+    "card4Desc": "为 Core Web Vitals 而优化 —— Next.js Image、字体预加载、路由级代码分割开箱即用。",
     "card5Title": "AI 引用信号",
     "card5Desc": "结构化数据、权威内容模式和 E-E-A-T 信号，这是 Perplexity、ChatGPT Search 和 Google SGE 决定引用哪些来源的关键因素。",
     "card6Title": "全球边缘分发",
-    "card6Desc": "ISR + 边缘中间件部署在 300+ Vercel PoP 节点。地理定向内容、多币种定价和语言感知路由在边缘完成。",
+    "card6Desc": "ISR + 边缘中间件运行在 Vercel 全球边缘网络上,任意地区低 TTFB 访问。",
     "compTraditionalLabel": "传统 SEO",
     "compTraditional": "手动 meta 标签 → 缓慢爬取 → AI 搜索不可见",
     "compSailor": "自动化 schema → 即时索引 → 被 AI 引擎引用 → 全球覆盖"
