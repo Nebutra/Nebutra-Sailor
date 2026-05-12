@@ -13,6 +13,7 @@
 
 export * from "./client";
 export * from "./env";
+export * from "./strategies/bloom";
 export * from "./strategies/lazyRefresh";
 export * from "./strategies/lockCache";
 export * from "./strategies/stampede";

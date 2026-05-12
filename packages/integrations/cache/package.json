@@ -17,6 +17,7 @@
   "dependencies": {
     "@nebutra/logger": "workspace:*",
     "@upstash/redis": "^1.36.3",
+    "bloom-filters": "^3.0.4",
     "ioredis": "^5.4.2"
   },
   "devDependencies": {

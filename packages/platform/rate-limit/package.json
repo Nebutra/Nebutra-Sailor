@@ -18,5 +18,9 @@
     "@vitest/coverage-v8": "^4.0.18",
     "typescript": "catalog:",
     "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.36.3"
   }
 }
