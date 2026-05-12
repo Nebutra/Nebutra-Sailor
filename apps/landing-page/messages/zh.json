@@ -1908,6 +1908,7 @@
     },
     "socialProof": {
       "title": "建立在你能信赖的技术栈之上",
+      "logosLabel": "集成合作伙伴",
       "metrics": {
         "developers": {
           "value": "47+",

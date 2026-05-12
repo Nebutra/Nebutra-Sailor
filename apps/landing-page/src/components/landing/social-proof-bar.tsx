@@ -2,19 +2,22 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 
-const SVGL_BASE = "https://svgl.app/library";
-
 /**
  * Real integration partners / tech stack brands.
- * Uses SVGL CDN — same source as LogoStrip, zero licensing risk.
+ *
+ * Logos are served from `apps/landing-page/public/logos/` (downloaded
+ * from svgl.app once at commit time). We do NOT pull from svgl's CDN at
+ * request time — their filenames drift (clerk.svg / resend.svg were
+ * renamed in 2026, breaking the marketing strip until this commit). The
+ * tradeoff: re-download manually when a brand updates its mark.
  */
 const BRANDS = [
-  { name: "Vercel", light: "vercel.svg", dark: "vercel_dark.svg" },
-  { name: "Stripe", light: "stripe.svg", dark: "stripe.svg" },
-  { name: "Supabase", light: "supabase.svg", dark: "supabase.svg" },
-  { name: "Clerk", light: "clerk.svg", dark: "clerk.svg" },
-  { name: "Resend", light: "resend.svg", dark: "resend_dark.svg" },
-  { name: "Cloudflare", light: "cloudflare.svg", dark: "cloudflare.svg" },
+  { name: "Vercel", light: "/logos/vercel-light.svg", dark: "/logos/vercel-dark.svg" },
+  { name: "Stripe", light: "/logos/stripe.svg", dark: "/logos/stripe.svg" },
+  { name: "Supabase", light: "/logos/supabase.svg", dark: "/logos/supabase.svg" },
+  { name: "Clerk", light: "/logos/clerk-light.svg", dark: "/logos/clerk-dark.svg" },
+  { name: "Resend", light: "/logos/resend-light.svg", dark: "/logos/resend-dark.svg" },
+  { name: "Cloudflare", light: "/logos/cloudflare.svg", dark: "/logos/cloudflare.svg" },
 ] as const;
 
 const METRIC_KEYS = ["developers", "projects", "uptime"] as const;
@@ -49,23 +52,23 @@ export async function SocialProofBar({ locale }: { locale: Locale }) {
           {BRANDS.map((brand) => (
             <li key={brand.name} className="flex h-10 items-center">
               <Image
-                src={`${SVGL_BASE}/${brand.light}`}
+                src={brand.light}
                 alt={brand.name}
                 width={0}
                 height={28}
                 className="h-7 w-auto opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 dark:hidden"
                 style={{ width: "auto" }}
-                unoptimized={false}
+                unoptimized
                 draggable={false}
               />
               <Image
-                src={`${SVGL_BASE}/${brand.dark}`}
+                src={brand.dark}
                 alt={brand.name}
                 width={0}
                 height={28}
                 className="hidden h-7 w-auto opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 dark:block"
                 style={{ width: "auto" }}
-                unoptimized={false}
+                unoptimized
                 draggable={false}
               />
             </li>
