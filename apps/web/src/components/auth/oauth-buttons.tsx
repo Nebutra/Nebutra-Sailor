@@ -1,10 +1,25 @@
 "use client";
 
 import { Button } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
+
+export type OAuthProvider = "google" | "github" | "apple" | "microsoft";
 
 interface OAuthButtonsProps {
   mode: "signIn" | "signUp";
+  /**
+   * Providers that are actually configured server-side. Pass from the page
+   * server component so we don't render buttons that would 404 on the
+   * `/api/auth/oauth/:provider` route. Falls back to all four when omitted —
+   * useful in Storybook / tests.
+   */
+  providers?: readonly OAuthProvider[];
+  /**
+   * Pre-sanitized returnUrl to forward through OAuth round-trip. Must already
+   * have passed through `sanitizeReturnUrl()` server-side.
+   */
+  returnUrl?: string;
 }
 
 function GoogleIcon() {
@@ -40,39 +55,69 @@ function GitHubIcon() {
   );
 }
 
-export function OAuthButtons({ mode }: OAuthButtonsProps) {
-  const [loadingProvider, setLoadingProvider] = useState<string | null>(null);
+function AppleIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <title>Apple</title>
+      <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+    </svg>
+  );
+}
 
-  function handleOAuth(provider: "google" | "github") {
+function MicrosoftIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
+      <title>Microsoft</title>
+      <path fill="#F25022" d="M11.4 11.4H1V1h10.4z" />
+      <path fill="#7FBA00" d="M23 11.4H12.6V1H23z" />
+      <path fill="#00A4EF" d="M11.4 23H1V12.6h10.4z" />
+      <path fill="#FFB900" d="M23 23H12.6V12.6H23z" />
+    </svg>
+  );
+}
+
+const PROVIDER_ICON: Record<OAuthProvider, () => React.ReactElement> = {
+  google: GoogleIcon,
+  github: GitHubIcon,
+  apple: AppleIcon,
+  microsoft: MicrosoftIcon,
+};
+
+const ALL_PROVIDERS: readonly OAuthProvider[] = ["google", "github", "apple", "microsoft"];
+
+export function OAuthButtons({ mode, providers = ALL_PROVIDERS, returnUrl }: OAuthButtonsProps) {
+  const t = useTranslations("auth.signIn");
+  const [loadingProvider, setLoadingProvider] = useState<OAuthProvider | null>(null);
+
+  function handleOAuth(provider: OAuthProvider) {
     setLoadingProvider(provider);
-    const callbackUrl = mode === "signIn" ? "/" : "/onboarding";
-    window.location.href = `/api/auth/oauth/${provider}?callback=${encodeURIComponent(callbackUrl)}`;
+    const callback = returnUrl ?? (mode === "signIn" ? "/" : "/onboarding");
+    const params = new URLSearchParams({ callback });
+    window.location.href = `/api/auth/oauth/${provider}?${params.toString()}`;
   }
 
+  if (providers.length === 0) return null;
+
   return (
-    <div className="grid gap-3 sm:grid-cols-2">
-      <Button
-        type="button"
-        variant="outline"
-        className="h-10 w-full justify-center gap-2.5 border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 text-[var(--neutral-12)] shadow-none hover:bg-[var(--neutral-2)]"
-        disabled={loadingProvider !== null}
-        aria-label="Continue with Google"
-        onClick={() => handleOAuth("google")}
-      >
-        <GoogleIcon />
-        {loadingProvider === "google" ? "Redirecting…" : "Google"}
-      </Button>
-      <Button
-        type="button"
-        variant="outline"
-        className="h-10 w-full justify-center gap-2.5 border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 text-[var(--neutral-12)] shadow-none hover:bg-[var(--neutral-2)]"
-        disabled={loadingProvider !== null}
-        aria-label="Continue with GitHub"
-        onClick={() => handleOAuth("github")}
-      >
-        <GitHubIcon />
-        {loadingProvider === "github" ? "Redirecting…" : "GitHub"}
-      </Button>
+    <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+      {providers.map((provider) => {
+        const Icon = PROVIDER_ICON[provider];
+        const label = t(`providers.${provider}`);
+        return (
+          <Button
+            key={provider}
+            type="button"
+            variant="outline"
+            className="h-10 w-full justify-center gap-2.5 border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 text-[var(--neutral-12)] shadow-none hover:bg-[var(--neutral-2)]"
+            disabled={loadingProvider !== null}
+            aria-label={`${t("continueWith")} ${label}`}
+            onClick={() => handleOAuth(provider)}
+          >
+            <Icon />
+            {loadingProvider === provider ? t("providerLoading") : label}
+          </Button>
+        );
+      })}
     </div>
   );
 }

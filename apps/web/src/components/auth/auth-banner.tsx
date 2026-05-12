@@ -1,11 +1,14 @@
 import { cn } from "@nebutra/ui/utils";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface AuthBannerProps {
   className?: string;
 }
 
 export function AuthBanner({ className }: AuthBannerProps) {
+  const t = useTranslations("auth.banner");
+
   return (
     <aside
       className={cn(
@@ -55,15 +58,44 @@ export function AuthBanner({ className }: AuthBannerProps) {
       <div className="relative z-10 flex w-full flex-col items-center justify-center px-12 text-center">
         <Image
           src="/brand/logo-color.svg"
-          alt="Nebutra"
+          alt={t("logoAlt")}
           width={68}
           height={64}
           className="mb-8 h-20 w-auto drop-shadow-[0_20px_54px_color-mix(in_srgb,var(--blue-9)_24%,transparent)]"
           priority
         />
-        <h2 className="max-w-[20rem] text-balance text-3xl font-semibold leading-tight tracking-tight text-[var(--neutral-12)]">
-          Build governed AI products without slowing down.
+        <h2 className="max-w-[24rem] text-balance text-3xl font-semibold leading-tight tracking-tight text-[var(--neutral-12)]">
+          {t("slogan")}
         </h2>
+        <p className="mt-4 max-w-[22rem] text-balance text-sm leading-relaxed text-[var(--neutral-10)]">
+          {t("tagline")}
+        </p>
+        <ul
+          className="mt-10 flex flex-col gap-2.5 text-[13px] text-[var(--neutral-10)]"
+          aria-label={t("trustLabel")}
+        >
+          <li className="flex items-center gap-2">
+            <span
+              aria-hidden
+              className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--cyan-9)]"
+            />
+            {t("trust.soc2")}
+          </li>
+          <li className="flex items-center gap-2">
+            <span
+              aria-hidden
+              className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--cyan-9)]"
+            />
+            {t("trust.gdpr")}
+          </li>
+          <li className="flex items-center gap-2">
+            <span
+              aria-hidden
+              className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--cyan-9)]"
+            />
+            {t("trust.governance")}
+          </li>
+        </ul>
       </div>
     </aside>
   );

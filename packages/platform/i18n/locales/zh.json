@@ -282,6 +282,49 @@
         "sentMessage": "我们已向你的邮箱发送了密码设置链接。"
       }
     },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "你的创业,值得一套 OS。",
+      "tagline": "多区域智能体,多租户开箱即用。不需要平台团队。",
+      "trustLabel": "信任与合规",
+      "trust": {
+        "soc2": "SOC 2 Type II — 进行中",
+        "gdpr": "GDPR 合规",
+        "governance": "受治理的架构、行级隔离"
+      }
+    },
+    "signIn": {
+      "title": "登录 Nebutra",
+      "subtitle": "选择你想用的登录方式。",
+      "continueWith": "使用",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft"
+      },
+      "providerLoading": "正在跳转…",
+      "dividerOr": "或使用邮箱继续",
+      "emailLabel": "邮箱",
+      "emailPlaceholder": "you@example.com",
+      "continue": "继续",
+      "back": "返回",
+      "passwordLabel": "密码",
+      "passwordPlaceholder": "请输入密码",
+      "showPassword": "显示密码",
+      "hidePassword": "隐藏密码",
+      "capsLockOn": "大写锁定已开启",
+      "forgotPassword": "忘记密码?",
+      "submit": "登录",
+      "submitLoading": "登录中…",
+      "useMagicLink": "改用魔法链接登录",
+      "usePasskey": "使用 Passkey 登录",
+      "newToProduct": "还没有账号?",
+      "signUpLink": "注册",
+      "homeLink": "主页",
+      "signInFailed": "登录失败",
+      "genericError": "出现错误,请重试。"
+    },
     "magicLink": {
       "title": "使用魔法链接登录",
       "description": "输入邮箱，我们将向你发送 6 位验证码用于登录。",

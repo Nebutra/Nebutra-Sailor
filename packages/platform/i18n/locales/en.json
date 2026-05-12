@@ -255,6 +255,49 @@
         "sentMessage": "We've sent a password setup link to your email."
       }
     },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Ship your Startup, governed from day one.",
+      "tagline": "Multi-region agents, multi-tenant by default. No platform team required.",
+      "trustLabel": "Trust & compliance",
+      "trust": {
+        "soc2": "SOC 2 Type II — in progress",
+        "gdpr": "GDPR ready",
+        "governance": "Governed architecture, row-level isolation"
+      }
+    },
+    "signIn": {
+      "title": "Log in to Nebutra",
+      "subtitle": "Choose how you want to sign in.",
+      "continueWith": "Continue with",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft"
+      },
+      "providerLoading": "Redirecting…",
+      "dividerOr": "Or continue with email",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Continue",
+      "back": "Back",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "capsLockOn": "Caps Lock is on",
+      "forgotPassword": "Forgot password?",
+      "submit": "Log in",
+      "submitLoading": "Signing in…",
+      "useMagicLink": "Send me a magic link instead",
+      "usePasskey": "Sign in with a passkey",
+      "newToProduct": "New to Nebutra?",
+      "signUpLink": "Sign up",
+      "homeLink": "Home",
+      "signInFailed": "Sign in failed",
+      "genericError": "An error occurred. Please try again."
+    },
     "magicLink": {
       "title": "Sign in with a magic link",
       "description": "Enter your email and we'll send you a 6-digit code to sign in.",

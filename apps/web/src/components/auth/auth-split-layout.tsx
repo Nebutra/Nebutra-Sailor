@@ -1,6 +1,8 @@
 import { cn } from "@nebutra/ui/utils";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { AuthBanner } from "./auth-banner";
 
 interface AuthSplitLayoutProps {
@@ -9,6 +11,8 @@ interface AuthSplitLayoutProps {
 }
 
 export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
+  const t = useTranslations("auth.signIn");
+
   return (
     <div
       className={cn(
@@ -26,8 +30,11 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
           className="absolute left-5 top-6 inline-flex items-center gap-2 text-sm font-medium text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--blue-9)] sm:left-8 lg:left-12 lg:top-10"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden />
-          Home
+          {t("homeLink")}
         </Link>
+        <div className="absolute right-5 top-6 sm:right-8 lg:right-12 lg:top-10">
+          <LocaleSwitcher />
+        </div>
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--neutral-2)_80%,transparent),transparent)] lg:hidden"
