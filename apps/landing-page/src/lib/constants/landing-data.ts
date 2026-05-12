@@ -32,6 +32,7 @@ import {
   Mail,
   Megaphone,
   MonitorDot,
+  Package,
   Paintbrush,
   Palette,
   PenTool,
@@ -382,6 +383,11 @@ export const NAV_LINKS = [
       { labelKey: "roadmap", href: "/roadmap", icon: Route },
       { labelKey: "docs", href: createPublicDocsUrl(), icon: BookOpenNebutra },
     ],
+  },
+  {
+    labelKey: "npm",
+    href: "https://www.npmjs.com/package/create-sailor",
+    icon: Package,
   },
   {
     labelKey: "github",
