@@ -50,7 +50,8 @@ export async function applyDatabaseSelection(
   db: DatabaseChoice,
   projectName: string,
 ): Promise<void> {
-  const dbPkgDir = path.join(targetDir, "packages", "db");
+  // Categorized monorepo: packages/platform/db (post W3b). Old layout was packages/db.
+  const dbPkgDir = path.join(targetDir, "packages", "platform", "db");
 
   if (db === "none") {
     safeRm(dbPkgDir);

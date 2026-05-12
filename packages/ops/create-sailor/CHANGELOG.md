@@ -1,5 +1,23 @@
 # create-sailor
 
+## 1.4.2
+
+### Patch Changes
+
+- **Fix `--auth=*` silently no-op'd against categorized monorepo** — `applyAuthSelection` was still looking for `packages/auth` but the W3b reorg moved it to `packages/iam/auth`. Same fix for `--payment=*` (`packages/billing` → `packages/commerce/billing`) and `--db=*` (`packages/db` → `packages/platform/db`). All three CORE-STACK pickers now actually mutate the scaffold.
+- **Fix `--ai=gateway` mapping** — the topology shorthand strings (`gateway` / `direct` / `custom` / `none`) were being silently parsed as provider IDs, producing a registry with a fake provider named "gateway". Now correctly routed to `resolveAiTopology({mode})` with the right default seed.
+- **Add SQS queue provider** — real adapter using `@aws-sdk/client-sqs` for enqueue + long-poll receive + handler dispatch + DeleteMessage. Previously `--queue=sqs` was a vapor option that would crash at runtime.
+- **Remove Upstash Kafka** — Upstash discontinued the Kafka product in 2024. Removed from the queue meta + CLI `--queue` enum.
+
+### Deferred to 1.4.3+
+
+These vapor-or-incomplete options were flagged in the audit but NOT fixed in this release; they remain in the CLI with caveats:
+
+- `--search=pgvector` — needs a real adapter in `@nebutra/search/src/providers/pgvector.ts`
+- `--notifications=knock` — needs a real adapter in `@nebutra/notifications/src/providers/knock.ts`
+- `--cache={vercel-kv,redis,dragonfly}` — `@nebutra/cache` is hardcoded to Upstash; only `upstash-redis` actually works today
+- `--orm=drizzle` / `--orm=none` — Prisma is the only working ORM; these flags are silently ignored
+
 ## 1.4.1
 
 ### Patch Changes

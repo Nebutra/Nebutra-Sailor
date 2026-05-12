@@ -9,9 +9,10 @@ import { z } from "zod";
  *
  * - `qstash`  — Upstash QStash (serverless, HTTP-based, zero infra)
  * - `bullmq`  — BullMQ over self-hosted Redis (full-featured, self-managed)
+ * - `sqs`     — AWS SQS (managed, pull-based, ideal for AWS-native deployments)
  * - `memory`  — In-memory queue for local dev & testing (NOT for production)
  */
-export type QueueProviderType = "qstash" | "bullmq" | "memory";
+export type QueueProviderType = "qstash" | "bullmq" | "sqs" | "memory";
 
 // ── Job Schema ──────────────────────────────────────────────────────────────
 
@@ -207,4 +208,33 @@ export interface MemoryProviderConfig {
   provider: "memory";
 }
 
-export type QueueConfig = QStashProviderConfig | BullMQProviderConfig | MemoryProviderConfig;
+export interface SQSProviderConfig {
+  provider: "sqs";
+
+  /** AWS region (defaults to `process.env.AWS_REGION`) */
+  region?: string;
+
+  /** SQS queue URL (defaults to `process.env.AWS_SQS_QUEUE_URL`) */
+  queueUrl?: string;
+
+  /** AWS access key (defaults to `process.env.AWS_ACCESS_KEY_ID`) */
+  accessKeyId?: string;
+
+  /** AWS secret key (defaults to `process.env.AWS_SECRET_ACCESS_KEY`) */
+  secretAccessKey?: string;
+
+  /** Long-poll wait time in seconds when receiving (1-20, default 20) */
+  waitTimeSeconds?: number;
+
+  /** Max messages per receive call (1-10, default 10) */
+  maxMessages?: number;
+
+  /** Visibility timeout in seconds — how long a received message is hidden (default 30) */
+  visibilityTimeoutSeconds?: number;
+}
+
+export type QueueConfig =
+  | QStashProviderConfig
+  | BullMQProviderConfig
+  | SQSProviderConfig
+  | MemoryProviderConfig;

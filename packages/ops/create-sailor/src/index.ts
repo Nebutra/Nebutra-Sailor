@@ -208,8 +208,19 @@ function resolveAuthChoice(raw: string | undefined): AuthChoice {
   return "clerk";
 }
 
+const AI_TOPOLOGY_MODES = new Set(["gateway", "direct", "custom", "none"]);
+
+/** Topology shorthand: `--ai=gateway|direct|custom|none` map to a mode, not provider IDs. */
+function isAiTopologyShorthand(value: string | undefined): boolean {
+  if (!value) return false;
+  const trimmed = value.trim().toLowerCase();
+  return AI_TOPOLOGY_MODES.has(trimmed);
+}
+
 function mapAi(ids: string | undefined): string[] {
   if (!ids) return ["openai"];
+  // Topology shorthand: let resolveAiTopology pick the seed from defaults.
+  if (isAiTopologyShorthand(ids)) return [];
   const list = ids.split(",").map((s) => s.trim().toLowerCase());
   if (list.includes("none")) return [];
   return list;
@@ -365,7 +376,10 @@ async function run(): Promise<void> {
       "CN social login providers — wechat | qq | dingtalk | workweixin | feishu | weibo (comma-separated)",
     )
     .option("--payment <id>", "stripe | lemon | wechat | alipay | none")
-    .option("--ai <ids>", "expert: comma-separated provider ids used as an AI provider seed")
+    .option(
+      "--ai <mode-or-ids>",
+      "topology shorthand (gateway | direct | custom | none) OR comma-separated provider ids (e.g. openai,anthropic)",
+    )
     .option("--deploy <target>", "vercel | railway | cloudflare | selfhost")
     .option("--docs <id>", "fumadocs | mintlify | docusaurus | nextra | vitepress | none")
     .option("--email <id>", "resend | postmark | ses | aliyun-dm | tencent-ses | netease | none")
@@ -376,7 +390,7 @@ async function run(): Promise<void> {
     .option("--monitoring <id>", "sentry | datadog | aliyun-arms | tingyun | none")
     .option("--analytics <id>", "posthog | plausible | umami | baidu | sensors | none")
     .option("--sms <id>", "twilio | aliyun-sms | tencent-sms | yunpian | none")
-    .option("--queue <id>", "qstash | bullmq | upstash | sqs | none")
+    .option("--queue <id>", "qstash | bullmq | sqs | none")
     .option("--search <id>", "meilisearch | typesense | algolia | pgvector | none")
     .option("--cache <id>", "upstash-redis | vercel-kv | redis | dragonfly | none")
     .option("--notifications <id>", "novu | knock | custom | none")
@@ -528,8 +542,21 @@ async function run(): Promise<void> {
     payment = mapPayment(rawPayment);
     paymentChoice = resolvePaymentChoice(rawPayment);
     auth = resolveAuthChoice(opts.auth);
+    // Resolve AI mode from --ai flag:
+    //  - omitted → gateway (recommended default)
+    //  - "gateway"/"direct"/"custom"/"none" → that topology with default provider seed
+    //  - any other comma-separated string → direct mode with explicit providers
+    let aiResolvedMode: AiMode = "gateway";
+    if (hasAi) {
+      const rawAi = opts.ai?.trim().toLowerCase() ?? "";
+      if (isAiTopologyShorthand(rawAi)) {
+        aiResolvedMode = rawAi as AiMode;
+      } else {
+        aiResolvedMode = "direct";
+      }
+    }
     const topology = resolveAiTopology({
-      mode: hasAi ? (opts.ai?.trim().toLowerCase() === "none" ? "none" : "direct") : "gateway",
+      mode: aiResolvedMode,
       providerIds: hasAi ? mapAi(opts.ai) : undefined,
     });
     aiMode = topology.mode;

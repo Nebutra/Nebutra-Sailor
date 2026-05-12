@@ -8,12 +8,12 @@
     "productionReady": false,
     "requires": [
       "QSTASH_TOKEN (+ signing keys) for serverless",
-      "or REDIS_URL for BullMQ self-hosted"
+      "REDIS_URL for BullMQ self-hosted",
+      "AWS_SQS_QUEUE_URL (+ AWS credentials) for SQS"
     ],
     "gaps": [
       "QStash provider dead letter retrieval not implemented",
-      "Worker auto-scaling TODO",
-      "SQS and Upstash Kafka adapters not started"
+      "Worker auto-scaling TODO"
     ]
   },
   "main": "./src/index.ts",
@@ -21,7 +21,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./qstash": "./src/providers/qstash.ts",
-    "./bullmq": "./src/providers/bullmq.ts"
+    "./bullmq": "./src/providers/bullmq.ts",
+    "./sqs": "./src/providers/sqs.ts"
   },
   "scripts": {
     "build": "tsc",
@@ -29,6 +30,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.700.0",
     "@nebutra/db": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@upstash/qstash": "^2.7.17",

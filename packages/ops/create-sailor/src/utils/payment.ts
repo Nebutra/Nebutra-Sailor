@@ -64,7 +64,8 @@ export async function applyPaymentSelection(
   targetDir: string,
   payment: PaymentChoice,
 ): Promise<void> {
-  const billingPkgDir = path.join(targetDir, "packages", "billing");
+  // Categorized monorepo: packages/commerce/billing (post W3b). Old layout was packages/billing.
+  const billingPkgDir = path.join(targetDir, "packages", "commerce", "billing");
   if (!fs.existsSync(billingPkgDir)) return;
 
   if (payment === "none") {

@@ -20,6 +20,7 @@ let defaultProvider: QueueProvider | null = null;
 function detectProvider(): QueueProviderType {
   if (process.env.QSTASH_TOKEN) return "qstash";
   if (process.env.REDIS_URL) return "bullmq";
+  if (process.env.AWS_SQS_QUEUE_URL) return "sqs";
   return "memory";
 }
 
@@ -69,7 +70,7 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
     case "qstash": {
       const { QStashProvider } = await import("./providers/qstash");
       const qstashConfig = config as
-        | Exclude<QueueConfig, { provider: "bullmq" | "memory" }>
+        | Exclude<QueueConfig, { provider: "bullmq" | "sqs" | "memory" }>
         | undefined;
       return new QStashProvider({
         callbackBaseUrl:
@@ -90,12 +91,34 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
     case "bullmq": {
       const { BullMQProvider } = await import("./providers/bullmq");
       const bullConfig = config as
-        | Exclude<QueueConfig, { provider: "qstash" | "memory" }>
+        | Exclude<QueueConfig, { provider: "qstash" | "sqs" | "memory" }>
         | undefined;
       return new BullMQProvider({
         ...(bullConfig?.redisUrl !== undefined ? { redisUrl: bullConfig.redisUrl } : {}),
         ...(bullConfig?.concurrency !== undefined ? { concurrency: bullConfig.concurrency } : {}),
         ...(bullConfig?.prefix !== undefined ? { prefix: bullConfig.prefix } : {}),
+      });
+    }
+
+    case "sqs": {
+      const { SQSProvider } = await import("./providers/sqs");
+      const sqsConfig = config as
+        | Exclude<QueueConfig, { provider: "qstash" | "bullmq" | "memory" }>
+        | undefined;
+      return new SQSProvider({
+        ...(sqsConfig?.region !== undefined ? { region: sqsConfig.region } : {}),
+        ...(sqsConfig?.queueUrl !== undefined ? { queueUrl: sqsConfig.queueUrl } : {}),
+        ...(sqsConfig?.accessKeyId !== undefined ? { accessKeyId: sqsConfig.accessKeyId } : {}),
+        ...(sqsConfig?.secretAccessKey !== undefined
+          ? { secretAccessKey: sqsConfig.secretAccessKey }
+          : {}),
+        ...(sqsConfig?.waitTimeSeconds !== undefined
+          ? { waitTimeSeconds: sqsConfig.waitTimeSeconds }
+          : {}),
+        ...(sqsConfig?.maxMessages !== undefined ? { maxMessages: sqsConfig.maxMessages } : {}),
+        ...(sqsConfig?.visibilityTimeoutSeconds !== undefined
+          ? { visibilityTimeoutSeconds: sqsConfig.visibilityTimeoutSeconds }
+          : {}),
       });
     }
 

@@ -60,7 +60,8 @@ function appendReadmeNote(targetDir: string, note: string): void {
 }
 
 export async function applyAuthSelection(targetDir: string, auth: AuthChoice): Promise<void> {
-  const authPkgDir = path.join(targetDir, "packages", "auth");
+  // Categorized monorepo: packages/iam/auth (post W3b). Old layout was packages/auth.
+  const authPkgDir = path.join(targetDir, "packages", "iam", "auth");
   if (!fs.existsSync(authPkgDir)) return;
 
   if (auth === "none") {

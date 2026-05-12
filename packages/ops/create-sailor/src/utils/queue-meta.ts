@@ -6,7 +6,7 @@
  * and env-var injection — it does NOT generate wrapper code.
  */
 
-export type QueueProviderId = "qstash" | "bullmq" | "upstash" | "sqs" | "none";
+export type QueueProviderId = "qstash" | "bullmq" | "sqs" | "none";
 
 export type QueueRegion = "global" | "cn" | "both";
 
@@ -35,18 +35,6 @@ export const QUEUE_PROVIDERS: QueueProviderMeta[] = [
     envVars: ["REDIS_URL"],
     docs: "https://docs.bullmq.io",
     description: "Redis-backed job queue",
-  },
-  {
-    id: "upstash",
-    name: "Upstash Kafka",
-    region: "both",
-    envVars: [
-      "UPSTASH_KAFKA_REST_URL",
-      "UPSTASH_KAFKA_REST_USERNAME",
-      "UPSTASH_KAFKA_REST_PASSWORD",
-    ],
-    docs: "https://upstash.com/docs/kafka",
-    description: "Serverless Kafka",
   },
   {
     id: "sqs",
