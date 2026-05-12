@@ -362,7 +362,13 @@ If a commit can't articulate the tests-first ordering, it's reverted. Same stand
 - [x] Phase 2.5 org switcher + members + first `setActive` consumer — `9911e6b5`
 - [x] Phase 2.6 OrgSwitcher mount + stale test cleanup — `2490d8c5`
 - [x] **Phase 2 COMPLETE** — 698 tests passing in `@nebutra/web` (+55 net new since Phase 2 start)
-- [ ] Phase 3 dispatched (prod rollout via @nebutra/feature-flags + Clerk direct-import absorption + auth/identity consolidation ADR)
+- [x] Phase 3.1 feature-flags AUTH_* registered — `587b5cb4`
+- [x] Phase 3.2 D4 contract test (oauth-server ⇄ identity, first real consumer of @nebutra/identity) — `f8b0d76c`
+- [x] Phase 3.3 Clerk direct-import audit + provider env centralization — `b27f8aa1` (11 call sites collapsed to `getConfiguredAuthProvider()`)
+- [x] Phase 3.4 Invitation consolidation ADR-12 — `fc7fe60b` (separate ADR file)
+- [x] **Phase 3 COMPLETE** — 117 tests in `@nebutra/auth` (+7 config), 698 in `@nebutra/web`, 7 in `@nebutra/oauth-server` (was 0, identity now has its first consumer)
+- [ ] Phase 3.5 — production gradual rollout: configure real `@nebutra/feature-flags` evaluator (Redis or DB-backed) and flip `auth.organizations` to a small % cohort — pending operations decision
+- [ ] ADR-12 invitation migration Phase 1+2 dispatched (additive schema + BA databaseHooks) — see `2026-05-12-invitation-table-consolidation.md`
 
 ---
 
@@ -493,4 +499,30 @@ Net result: `AuthProvider` is now feature-complete for the ADR D5 surface; Bette
 - **Feature-flag gate + product-capability gate are different concepts** (Phase 2.6): `supportsWorkspaceSwitching` = "this product allows orgs at all"; `isAuthFeatureEnabledSync("organizations")` = "the new BA-backed UX is shipped". Both must be true for new UI to mount. Legacy native `<select>` covers the (true && false) case.
 - **Concurrent agent staging contamination** (Phases 1.1, 1.3, 2.2): explicit `git add <path>` only, never `-A`/`.`/`-a`. Verify `git status --short` before commit. If a sibling commit absorbs your staged files, `git reset --soft HEAD~1` and re-attribute.
 
-Ready for Phase 3 (prod rollout, Clerk direct-import absorption, auth/identity consolidation ADR).
+### Phase 3 closeout
+
+| Phase | Commit | Tests added | Result |
+|---|---|---|---|
+| 3.1 feature-flags AUTH_* | `587b5cb4` | 0 (typed registry) | ✅ flags registered in `FLAGS` constant; consumed by `features.ts` via `isFeatureEnabled` |
+| 3.2 oauth-server ⇄ identity D4 contract | `f8b0d76c` | +7 | ✅ `@nebutra/identity` no longer an orphan — first real consumer (oauth-server) validates the boundary at CI time |
+| 3.3 Clerk direct-import audit + provider centralization | `b27f8aa1` | +7 (config) | ✅ 11 duplicated env reads → single `getConfiguredAuthProvider()` helper. Clerk-direct imports confirmed D2-compliant (already gated by `if (provider === "clerk")`). Helper exported on both root + `/client` subpaths. |
+| 3.4 Invitation consolidation ADR-12 | `fc7fe60b` | — (docs only) | ✅ separate ADR: `auth.invitation` canonical, 5-phase migration plan; awaiting sign-off |
+| **Total** | 4 commits | **+14 net new tests** | ✅ Phase 3 functional cleanup complete |
+
+**Discoveries during Phase 3:**
+
+1. **The "5 Clerk direct imports" from the original gap analysis was misleading.** By 2026-05-12, all 11 production-code Clerk imports across `apps/web/**` were already correctly gated by `if (provider === "clerk")` branches per ADR D2's "Maintain" tier. There was nothing to **absorb** — Clerk is the explicit fallback path. What needed cleanup was the **provider-detection duplication** (11 hand-rolled `process.env.AUTH_PROVIDER || ...` chains), which Phase 3.3 collapsed.
+2. **`@nebutra/feature-flags` already exposes a real `dbProvider`** (Redis-cached, env-fallback) — not a stub as the original ADR suggested. The Phase 2.2 `features.ts` was already calling the correct `isFeatureEnabled` entry point. Phase 3.1's contribution: register the `auth.*` flag names in the canonical `FLAGS` constant so the prod path is honest about which flags exist.
+3. **D4 contract test exposes a real gap**: `NEBUTRA_CLAIMS["organization:read"]` emits `nebutra:organization_name` + `nebutra:organization_slug`, but `NebutraIdentityAdapter.mapToCanonical()` drops them. Two acceptable resolutions: (a) widen `CanonicalIdentity` to carry org name/slug; (b) trim oauth-server's emitted claims. Test pins the gap so the next mover wakes up. Decision deferred — neither side has a customer yet.
+4. **`@nebutra/auth` config helper needs both root + `/client` subpath exports**: client components like `security-settings-client.tsx` must import from `/client` to avoid pulling `createAuth`'s server-only transitives (Clerk's server SDK + `server-only` marker). Phase 3.3 added the helper to both subpaths from day one.
+
+### Phase 3.5 — production rollout (not yet dispatched)
+
+The pieces are in place; flipping the switch is an operations call:
+
+1. **Configure `@nebutra/feature-flags` dbProvider in prod** — needs Redis URL (already in env via `@nebutra/cache`) and a flag-management surface (DB row, admin UI, or just direct Redis writes for now).
+2. **Pick a starter cohort for `auth.organizations`** — e.g. internal staff org `org_nebutra_team` only, soak 7 days, watch for `Set-Cookie` propagation issues and BA `setActiveOrganization` errors.
+3. **Open the percentage gates** — `isEnabledForPercentage(flag, context)` already exists in feature-flags; flip from 0 → 10 → 50 → 100 over 2-3 weeks.
+4. **Retire `NEXT_PUBLIC_AUTH_*` env flags** once prod-managed flags are stable (move from dual-source to single-source).
+
+This is the only Phase 3 item that **needs explicit human authorization** because it changes the production user experience for the first time. Not auto-dispatchable.
