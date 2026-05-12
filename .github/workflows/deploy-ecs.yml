@@ -341,6 +341,55 @@ jobs:
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/id_deploy ~/.ssh/known_hosts
 
+      - name: Pre-flight disk cleanup on ECS
+        # The ECS box is a 2C4G Aliyun Lite instance. Each release directory
+        # holds ~1 GB of node_modules, so KEEP_RELEASES=5 × 3 apps fills the
+        # disk and even scp-to-/tmp fails before the remote helper can run.
+        # This step SSHes in BEFORE upload and prunes:
+        #   1. Stale /tmp/nebutra-*.tar.gz from prior failed runs
+        #   2. All but the latest 2 releases per app
+        #   3. Old pnpm store / apt caches as a last resort
+        # so the box has enough headroom for the new bundle (~250 MB) + the
+        # extracted node_modules tree.
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "bash -s" <<'PREFLIGHT'
+          set -euo pipefail
+          echo "--- disk before cleanup ---"
+          df -h / 2>/dev/null || df -h
+          echo "--- /tmp tarballs ---"
+          find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -ls 2>/dev/null || true
+          find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -delete 2>/dev/null || true
+          echo "--- pruning old releases (keep latest 2 per app) ---"
+          for app in landing web api; do
+            dir="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/$app/releases"
+            [ -d "$dir" ] || continue
+            extra=$(find "$dir" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' 2>/dev/null \
+                      | sort -nr | tail -n +3 | cut -d' ' -f2- || true)
+            if [ -n "$extra" ]; then
+              echo "$app:"; echo "$extra"
+              echo "$extra" | xargs -r rm -rf
+            fi
+          done
+          echo "--- clear pnpm store cache (safe — pnpm rebuilds on next install) ---"
+          rm -rf ~/.local/share/pnpm/store 2>/dev/null || true
+          rm -rf ~/.pnpm-store 2>/dev/null || true
+          echo "--- clear apt + journal as last resort ---"
+          command -v apt-get >/dev/null 2>&1 && apt-get clean 2>/dev/null || true
+          command -v journalctl >/dev/null 2>&1 && journalctl --vacuum-time=2d 2>/dev/null || true
+          echo "--- disk after cleanup ---"
+          df -h / 2>/dev/null || df -h
+          PREFLIGHT
+        env:
+          ECS_HOST:        ${{ vars.ECS_HOST }}
+          ECS_USER:        ${{ vars.ECS_USER }}
+          ECS_SSH_PORT:    ${{ vars.ECS_SSH_PORT || '22' }}
+          ECS_DEPLOY_ROOT: ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+
       - name: Upload bundles + helper to ECS
         run: |
           set -euo pipefail
