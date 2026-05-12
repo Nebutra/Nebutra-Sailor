@@ -32,12 +32,21 @@ async function loadSentry(): Promise<SentryLike | null> {
   if (process.env.LOGGER_SENTRY_ENABLED !== "true") return null;
   if (!process.env.SENTRY_DSN) return null;
 
+  // Only attempt the import on the server. `globalThis.window` is undefined on
+  // server runtimes (Node + edge); on the browser it's defined. This guard is
+  // verifiable at bundle time but is preserved across builds, so the dynamic
+  // import below is effectively dead code for client bundles.
+  if (typeof globalThis !== "undefined" && "window" in globalThis) return null;
+
   try {
-    // Use a runtime require-style dynamic import so bundlers don't try to
-    // resolve @sentry/node when the host app hasn't installed it.
-    const mod = (await import(/* @vite-ignore */ "@sentry/node").catch(
-      () => null,
-    )) as SentryLike | null;
+    // Defeat bundler static analysis with a Function-built dynamic specifier.
+    // Turbopack/webpack will trace `await import("@sentry/node")` even when
+    // wrapped in `await import(stringVar)` because they do flow analysis on
+    // const assignments. Using `Function` to build the call at runtime makes
+    // the import target invisible to the bundler. `@sentry/node` then stays
+    // out of client and edge bundles where `async_hooks` doesn't exist.
+    const dynImport = new Function("p", "return import(p)") as (p: string) => Promise<unknown>;
+    const mod = (await dynImport("@sentry/node").catch(() => null)) as SentryLike | null;
     if (mod && typeof mod.captureException === "function") {
       sentryRef = mod;
       return mod;
