@@ -54,6 +54,28 @@ deploy_one() {
   stamp="$(date -u +%Y%m%d-%H%M%S)-${SHA:0:7}"
   local release="$releases/$stamp"
 
+  # PRE-EXTRACTION CLEANUP: drop old releases BEFORE we try to write the new
+  # one. The post-extraction prune at the bottom of this function only fires
+  # AFTER tar succeeds, so when the box is already at disk-pressure (this app
+  # alone is ~1 GB/release × KEEP_RELEASES) the new tar errors out with
+  # "No space left on device" and the deploy never lands. Pruning here keeps
+  # the latest (KEEP_RELEASES - 1) so the incoming release becomes Nth.
+  if [ "$KEEP_RELEASES" -gt 0 ] && [ -d "$releases" ]; then
+    local pre_keep=$((KEEP_RELEASES - 1))
+    [ "$pre_keep" -lt 1 ] && pre_keep=1
+    local pre_extra
+    pre_extra=$(find "$releases" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' 2>/dev/null \
+                  | sort -nr | tail -n +"$((pre_keep + 1))" | cut -d' ' -f2- || true)
+    if [ -n "$pre_extra" ]; then
+      log "pre-extract prune (keeping $pre_keep older releases):"
+      echo "$pre_extra" | xargs -r rm -rf
+    fi
+  fi
+
+  # Also reclaim any free space hiding in /tmp from earlier failed runs.
+  find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' \
+       ! -name "nebutra-${app}-${SHA}.tar.gz" -mmin +5 -delete 2>/dev/null || true
+
   mkdir -p "$release"
   log "extract $tarball -> $release"
   tar -xzf "$tarball" -C "$release"
