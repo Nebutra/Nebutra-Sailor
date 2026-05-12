@@ -50,6 +50,7 @@ const nextConfig: NextConfig = {
     "@nebutra/china-compliance",
     "@nebutra/db",
     "@nebutra/feature-flags",
+    "@nebutra/i18n",
     "@nebutra/icons",
     "@nebutra/logger",
     "@nebutra/notifications",
