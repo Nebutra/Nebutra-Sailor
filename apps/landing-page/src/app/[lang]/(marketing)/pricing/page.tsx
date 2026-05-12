@@ -71,7 +71,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
             </h1>
             <p className="mt-4 text-lg text-[var(--neutral-11)]">{pricing("description")}</p>
 
-            {/* Social Proof & Framework Switcher */}
+            {/* Social Proof */}
             <div className="mt-8 flex flex-col items-center justify-center gap-6">
               {/* Avatar Group */}
               <div className="flex flex-col sm:flex-row items-center gap-4">

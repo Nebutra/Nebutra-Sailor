@@ -1,5 +1,35 @@
 # create-sailor
 
+## 1.5.0
+
+### Minor Changes
+
+- **NEW: `--orm=drizzle` dual-ORM mode** — closes out the roadmap item from
+  1.4.3 / 1.4.4. When the user picks `--orm=drizzle`, the scaffold adds a
+  second package, `packages/platform/db-drizzle`, alongside the primary
+  Prisma `packages/platform/db`. Both connect to the same `DATABASE_URL`;
+  new code can opt into Drizzle's SQL-shaped query builder while existing
+  auth / billing / audit / oauth flows keep working against Prisma. The
+  Drizzle package ships with:
+  - `drizzle.config.ts` targeting Postgres
+  - `src/schema/{auth,tenant,billing}.ts` — read-mostly mirrors of the core
+    Better Auth (user/session/account/verification/organization/member/
+    invitation) + commerce (subscriptions/usage_ledger) tables
+  - `db:generate` / `db:migrate` / `db:push` / `db:studio` scripts
+  - A README that's explicit about the dual-ORM contract: **Prisma owns the
+    schema and writes; Drizzle is for new code, read-mostly until enough
+    consumers migrate to make a one-way swap worthwhile.**
+
+  **What this is NOT:** a one-way swap of the scaffold to Drizzle. ~60
+  files across `apps/web` / `backends/gateway` / `packages/commerce/*` /
+  `packages/iam/*` / `packages/platform/repositories` were built on
+  `PrismaClient` and would break wholesale. A real Drizzle-primary scaffold
+  would require rewriting all of them; that's a separate ~3000-LOC effort
+  with its own release.
+
+  Postgres-only for now — `--orm=drizzle --db=mysql` (or sqlite) skips with
+  a clear reason rather than shipping a broken adapter.
+
 ## 1.4.4
 
 ### Minor Changes
