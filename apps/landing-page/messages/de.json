@@ -1333,25 +1333,6 @@
         "detail": "14 Pakete nativ integriert."
       }
     },
-    "testimonials": {
-      "badge": "Developers",
-      "title": "Trusted by engineers globally.",
-      "t1": {
-        "quote": "Nebutra saved us six months of platform engineering. We shipped our MVP on day 10.",
-        "author": "Sarah Chen",
-        "role": "CTO, DataFlow"
-      },
-      "t2": {
-        "quote": "The Turborepo setup is phenomenal. Testing, linting, and building are instantly cached.",
-        "author": "Marcus Dev",
-        "role": "Product Engineer"
-      },
-      "t3": {
-        "quote": "Finally, a platform foundation that doesn't feel like a black box. The code quality is immaculate.",
-        "author": "Emma Founder",
-        "role": "Engineering Lead"
-      }
-    },
     "productDemo": {
       "badge": "Interactive Demo",
       "title": "Experience the real-time velocity.",

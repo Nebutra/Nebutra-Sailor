@@ -1338,25 +1338,6 @@
         "detail": "一次配置，自动生成一切——计费、认证、AI、国际化——全部来自单一预设文件。"
       }
     },
-    "testimonials": {
-      "badge": "开发者社区",
-      "title": "深受全球顶级工程师的信赖",
-      "t1": {
-        "quote": "Nebutra 至少为我们节省了半年的平台工程搭建时间。我们在第 10 天就顺利交付了 MVP 核心版本。",
-        "author": "Sarah Chen",
-        "role": "DataFlow 联合创始人兼 CTO"
-      },
-      "t2": {
-        "quote": "这种企业级 Turborepo 脚手架简直太棒了。类型检查、Lint 与构建任务都可以瞬间完成缓存命中，开发体验极佳。",
-        "author": "Marcus Dev",
-        "role": "产品工程师"
-      },
-      "t3": {
-        "quote": "终于找到了一个不像是黑盒的架构级脚手盘。极高的代码整洁度与极佳的设计品味让我惊叹。",
-        "author": "Emma Founder",
-        "role": "工程负责人"
-      }
-    },
     "productDemo": {
       "badge": "交互式演示",
       "title": "立即体验实时研发加速",
@@ -1927,15 +1908,6 @@
     },
     "socialProof": {
       "title": "建立在你能信赖的技术栈之上",
-      "logosLabel": "他们都在用",
-      "logos": {
-        "lumen": "Lumen Labs",
-        "northwind": "Northwind AI",
-        "helix": "Helix Health",
-        "ravensteel": "Ravensteel",
-        "atlas": "Atlas Foundry",
-        "boreal": "Boreal Insights"
-      },
       "metrics": {
         "developers": {
           "value": "47+",

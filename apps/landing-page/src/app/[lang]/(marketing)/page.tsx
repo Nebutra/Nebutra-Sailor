@@ -38,11 +38,6 @@ const VelocityEngineSection = dynamic(
   { loading: () => <SectionSkeleton minH="36rem" /> },
 );
 
-const TestimonialsSection = dynamic(
-  () => import("@/components/landing/TestimonialsSection").then((m) => m.TestimonialsSection),
-  { loading: () => <SectionSkeleton minH="40rem" /> },
-);
-
 const AlternativeComparison = dynamic(
   () => import("@/components/landing/AlternativeComparison").then((m) => m.AlternativeComparison),
   { loading: () => <SectionSkeleton minH="44rem" /> },
@@ -177,9 +172,6 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
         {/* 6. Harness Engineering */}
         <HarnessEngineeringSection />
-
-        {/* 7. Testimonials */}
-        <TestimonialsSection />
 
         {/* 7.8 Design System */}
         <DesignSystemSection />
