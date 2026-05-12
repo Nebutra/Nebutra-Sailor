@@ -245,7 +245,8 @@
         "addPasskey": "Add passkey",
         "remove": "Remove",
         "successAdded": "Passkey added.",
-        "successRemoved": "Passkey removed."
+        "successRemoved": "Passkey removed.",
+        "unavailableBadge": "Unavailable"
       },
       "setPassword": {
         "title": "Set a password",

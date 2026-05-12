@@ -272,7 +272,8 @@
         "addPasskey": "添加通行密钥",
         "remove": "移除",
         "successAdded": "通行密钥已添加。",
-        "successRemoved": "通行密钥已移除。"
+        "successRemoved": "通行密钥已移除。",
+        "unavailableBadge": "未启用"
       },
       "setPassword": {
         "title": "设置密码",
