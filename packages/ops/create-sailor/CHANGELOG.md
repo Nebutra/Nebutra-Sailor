@@ -1,5 +1,14 @@
 # create-sailor
 
+## 1.4.1
+
+### Patch Changes
+
+- **Fix `ENOENT: .env.example.template`** — `git add -A` in the mirror sync workflow was silently filtering out `.env.example.template` because the root `.gitignore`'s `.env.*` rule matched it. Added `!*.template` exemption so all `.template` files reach the mirror. Without this fix, every `npx create-sailor@latest` run crashed during AI provider scaffolding.
+- **Fix categorized-layout path drift in dist** — the published `1.4.0` dist still referenced the pre-categorization `packages/ai-providers/` path. Source was correct since the W3b layout migration but dist wasn't rebuilt. Now rebuilt against `packages/ai/ai-providers/templates`.
+- **Add pnpm pre-check** — CLI now refuses to scaffold if pnpm is unavailable and prints the install command instead of failing mid-scaffold.
+- **Improve post-scaffold next-steps** — final hint now shows `pnpm install && pnpm db:migrate && pnpm db:seed && pnpm dev` as one block so users don't have to copy four separate snippets.
+
 ## 1.3.6
 
 ### Minor Changes

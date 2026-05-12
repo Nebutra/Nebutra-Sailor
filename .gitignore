@@ -15,6 +15,7 @@ out
 .env
 .env.*
 !.env.example
+!*.template
 
 # IDE
 .idea

@@ -5,13 +5,31 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+/**
+ * Resolve the deploy templates directory in both dev (src/) and built (dist/)
+ * layouts. tsup bundles to a single dist/index.js so the relative depth
+ * differs between modes; check both.
+ */
+function resolveDeployTemplatesDir(): string {
+  const candidates = [
+    // dist/index.js → ../templates/deploy
+    path.join(__dirname, "..", "templates", "deploy"),
+    // src/utils/deploy.ts → ../../templates/deploy
+    path.join(__dirname, "..", "..", "templates", "deploy"),
+  ];
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
+  return candidates[0];
+}
+
 export async function applyDeployTarget(
   targetDir: string,
   target: "vercel" | "railway" | "cloudflare" | "selfhost" | "none",
 ) {
   if (target === "none") return;
 
-  const templatesDir = path.join(__dirname, "../../templates/deploy");
+  const templatesDir = resolveDeployTemplatesDir();
 
   if (target === "vercel") {
     await fs.promises.copyFile(

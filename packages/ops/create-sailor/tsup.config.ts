@@ -6,5 +6,7 @@ export default defineConfig({
   target: "node18",
   clean: true,
   minify: true,
-  dts: true,
+  // CLI is a binary, not a library — no consumer imports types from it.
+  // DTS generation also fails on some upstream type drift that would block publish.
+  dts: false,
 });
