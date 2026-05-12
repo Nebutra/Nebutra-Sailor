@@ -1217,10 +1217,6 @@
       "title": "一次买断。终身访问。",
       "description": "告别续订焦虑。选择最适合您团队的并发方案，即刻开始构建。",
       "socialProofText": "开源 AGPL-3.0 · 提供商业授权选项。",
-      "frameworkText": "核心引擎切换:",
-      "frameworkNext": "Next.js 16",
-      "frameworkNuxt": "Nuxt (开发中)",
-      "frameworkTanStack": "TanStack (内测)",
       "solo": {
         "badge": "INDIVIDUAL / 个人",
         "price": "免费",

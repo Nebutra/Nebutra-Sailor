@@ -1212,10 +1212,6 @@
       "title": "Accelerate your development cycle.",
       "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
       "socialProofText": "Código abierto AGPL-3.0 · licencia comercial disponible.",
-      "frameworkText": "Choose your framework:",
-      "frameworkNext": "Next.js",
-      "frameworkNuxt": "Nuxt",
-      "frameworkTanStack": "TanStack (Soon)",
       "solo": {
         "badge": "INDIVIDUAL",
         "price": "Free",

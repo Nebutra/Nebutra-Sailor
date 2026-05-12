@@ -100,35 +100,6 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
                   </p>
                 </div>
               </div>
-
-              {/* Framework Switcher */}
-              <div className="mt-2 flex flex-col items-center gap-3">
-                <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-                  {pricing("frameworkText")}
-                </p>
-                <div className="inline-flex items-center rounded-full border border-border/40 bg-muted/20 p-1 backdrop-blur-sm shadow-sm">
-                  <span className="flex items-center gap-2 rounded-full bg-background/90 dark:bg-zinc-800 px-4 py-1.5 text-sm font-medium text-foreground shadow-sm">
-                    {/* SVG inline for Next.js to avoid external loads */}
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      viewBox="0 0 180 180"
-                      width="16"
-                      height="16"
-                      className="dark:invert"
-                    >
-                      <path d="M90 0C40.294 0 0 40.294 0 90s40.294 90 90 90 90-40.294 90-90S139.706 0 90 0zm43.376 137.986l-39.77-62.115v56.772h-12.793V49.076h11.967l40.16 62.72v-62.72h12.792v88.91zM90 166.402c-42.197 0-76.402-34.205-76.402-76.402S47.803 13.598 90 13.598 166.402 47.803 166.402 90s-34.205 76.402-76.402 76.402z" />
-                    </svg>
-                    {pricing("frameworkNext")}
-                  </span>
-                  <span className="flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground grayscale cursor-not-allowed">
-                    {pricing("frameworkNuxt")}
-                  </span>
-                  <span className="flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground opacity-50 cursor-not-allowed">
-                    {pricing("frameworkTanStack")}
-                  </span>
-                </div>
-              </div>
             </div>
           </div>
         </AnimateIn>
