@@ -86,7 +86,8 @@ function checkCache() {
   // which correctly marks cache as "down" → pod shows "degraded", not "unhealthy".
   return withTimeout(async () => {
     const { getRedis } = await import("@nebutra/cache");
-    await getRedis().ping();
+    const r = await getRedis();
+    await r.ping();
   });
 }
 

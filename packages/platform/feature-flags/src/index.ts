@@ -36,7 +36,7 @@ const dbProvider: FeatureFlagProvider = {
 
     try {
       // 2. CHECK CACHE
-      const redis = getRedis();
+      const redis = await getRedis();
       const cacheKey = `sailor:ff:${flag}`;
       const cached = await redis.get<boolean>(cacheKey);
       if (cached !== null) {
@@ -70,7 +70,7 @@ const dbProvider: FeatureFlagProvider = {
     }
 
     try {
-      const redis = getRedis();
+      const redis = await getRedis();
       const cacheKey = `sailor:ff:${flag}:variant`;
       const cached = await redis.get<T>(cacheKey);
       if (cached !== null) return cached;

@@ -1,7 +1,7 @@
 import { getCacheClient } from "../client";
 import type { CacheClient } from "../types";
 
-function getRedis(): CacheClient {
+async function getRedis(): Promise<CacheClient> {
   return getCacheClient();
 }
 
@@ -28,7 +28,7 @@ export class DistributedLock {
    * Acquire a lock
    */
   async acquire(lockKey: string, options: LockOptions): Promise<string | null> {
-    const redis = getRedis();
+    const redis = await getRedis();
     const lockId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     const retries = options.retries || 0;
     const retryDelay = options.retryDelay || 100;
@@ -56,7 +56,7 @@ export class DistributedLock {
    * Release a lock (only if we own it)
    */
   async release(lockKey: string, lockId: string): Promise<boolean> {
-    const redis = getRedis();
+    const redis = await getRedis();
     const currentLockId = await redis.get(this.key(lockKey));
 
     if (currentLockId === lockId) {

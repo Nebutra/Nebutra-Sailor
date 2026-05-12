@@ -43,7 +43,7 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
       throw new Error("Redis rate limit store is not configured");
     }
 
-    const redisClient = getRedis();
+    const redisClient = await getRedis();
     const redisAdapter = {
       get: (key: string) => redisClient.get(key),
       set: (key: string, value: unknown, opts?: { ex?: number }) =>

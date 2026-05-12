@@ -36,7 +36,7 @@ function hashKey(fullKey: string): string {
  */
 async function invalidateKeyCache(keyHash: string): Promise<void> {
   try {
-    const redis = getRedis();
+    const redis = await getRedis();
     await redis.del(`${KEY_CACHE_PREFIX}${keyHash}`);
   } catch (err) {
     log.warn("Failed to invalidate API key cache", {

@@ -1,7 +1,7 @@
 import { getCacheClient } from "../client";
 import type { CacheClient } from "../types";
 
-function getRedis(): CacheClient {
+async function getRedis(): Promise<CacheClient> {
   return getCacheClient();
 }
 
@@ -48,7 +48,7 @@ export class LazyRefreshCache {
     fetcher: () => Promise<T>,
     options?: Partial<LazyRefreshOptions>,
   ): Promise<T> {
-    const redis = getRedis();
+    const redis = await getRedis();
     const cacheKey = this.key(key);
     const ttl = options?.ttl || this.ttl;
     const softTTL = options?.softTTL || this.softTTL;
@@ -82,7 +82,7 @@ export class LazyRefreshCache {
     ttl: number,
     softTTL: number,
   ): Promise<T> {
-    const redis = getRedis();
+    const redis = await getRedis();
     const value = await fetcher();
     const now = Date.now();
 
@@ -100,7 +100,7 @@ export class LazyRefreshCache {
    * Invalidate cache entry
    */
   async invalidate(key: string): Promise<void> {
-    const redis = getRedis();
+    const redis = await getRedis();
     await redis.del(this.key(key));
   }
 }

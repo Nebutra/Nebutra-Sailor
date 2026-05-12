@@ -277,7 +277,7 @@ async function checkRedis(): Promise<StatusResponse["checks"][0]> {
   try {
     // Dynamic import to avoid issues when Redis is not configured
     const { getRedis } = await import("@nebutra/cache");
-    const redis = getRedis();
+    const redis = await getRedis();
     if (redis) {
       await redis.ping();
     } else {

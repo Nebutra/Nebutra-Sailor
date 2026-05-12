@@ -187,7 +187,7 @@ export class CircuitBreaker {
   async getStatus(): Promise<BreakerStatus> {
     const keys = this.keys();
     try {
-      const redis = getRedis();
+      const redis = await getRedis();
       const result = (await redis.eval(
         GET_STATE_SCRIPT,
         [keys.state, keys.failures, keys.successes, keys.openedAt],
@@ -231,7 +231,7 @@ export class CircuitBreaker {
     this.localState.openedAt = null;
 
     try {
-      const redis = getRedis();
+      const redis = await getRedis();
       const keys = this.keys();
       await redis.del(keys.state, keys.failures, keys.successes, keys.openedAt);
     } catch (err) {
@@ -264,7 +264,7 @@ export class CircuitBreaker {
   private async onSuccess(): Promise<void> {
     const keys = this.keys();
     try {
-      const redis = getRedis();
+      const redis = await getRedis();
       const result = (await redis.eval(
         RECORD_SUCCESS_SCRIPT,
         [keys.state, keys.failures, keys.successes, keys.openedAt],
@@ -307,7 +307,7 @@ export class CircuitBreaker {
     const now = Date.now();
 
     try {
-      const redis = getRedis();
+      const redis = await getRedis();
       const result = (await redis.eval(
         RECORD_FAILURE_SCRIPT,
         [keys.state, keys.failures, keys.successes, keys.openedAt],

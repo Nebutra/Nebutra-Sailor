@@ -2,7 +2,7 @@ import { getCacheClient } from "../client";
 import type { CacheClient } from "../types";
 import { createLock } from "./lockCache";
 
-function getRedis(): CacheClient {
+async function getRedis(): Promise<CacheClient> {
   return getCacheClient();
 }
 
@@ -40,7 +40,7 @@ export class StampedeCache {
    * Get or set with stampede prevention
    */
   async getOrSet<T>(key: string, fetcher: () => Promise<T>, ttl?: number): Promise<T> {
-    const redis = getRedis();
+    const redis = await getRedis();
     const cacheKey = this.key(key);
 
     // Try to get from cache first

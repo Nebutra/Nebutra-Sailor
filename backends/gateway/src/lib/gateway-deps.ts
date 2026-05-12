@@ -40,7 +40,7 @@ export interface GatewayDeps {
  * wrap this in a try/catch so a missing queue / Redis does not block boot.
  */
 export async function buildGatewayDeps(): Promise<GatewayDeps> {
-  const redis = getRedis();
+  const redis = await getRedis();
 
   const redisAdapter: GatewayRedisAdapter = {
     get: async (key) => {

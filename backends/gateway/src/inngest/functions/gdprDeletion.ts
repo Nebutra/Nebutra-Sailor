@@ -108,7 +108,7 @@ export const processGdprDeletion: InngestFunction.Any = inngest.createFunction(
     // ── Step 4.5: Purge Redis State (GDPR Article 17) ──────────────────────
     await step.run("purge-redis-state", async () => {
       try {
-        const redis = getRedis();
+        const redis = await getRedis();
         // Since user keys are scoped to `sailor:*:${userId}*`, we scan and del
         let cursor = "0";
         let deletedCount = 0;

@@ -2,7 +2,7 @@ import { logger } from "@nebutra/logger";
 import { getCacheClient } from "../client";
 import type { CacheClient } from "../types";
 
-function getRedis(): CacheClient {
+async function getRedis(): Promise<CacheClient> {
   return getCacheClient();
 }
 
@@ -34,7 +34,7 @@ export class TTLCache {
    */
   async get<T>(key: string): Promise<T | null> {
     try {
-      const redis = getRedis();
+      const redis = await getRedis();
       return await redis.get<T>(this.key(key));
     } catch (err) {
       logger.warn("[cache] Redis get failed — treating as cache miss", { key, err });
@@ -47,7 +47,7 @@ export class TTLCache {
    */
   async set<T>(key: string, value: T, ttl?: number): Promise<void> {
     try {
-      const redis = getRedis();
+      const redis = await getRedis();
       await redis.set(this.key(key), value, { ex: ttl || this.defaultTTL });
     } catch (err) {
       logger.warn("[cache] Redis set failed — skipping cache write", { key, err });
@@ -59,7 +59,7 @@ export class TTLCache {
    */
   async delete(key: string): Promise<void> {
     try {
-      const redis = getRedis();
+      const redis = await getRedis();
       await redis.del(this.key(key));
     } catch (err) {
       logger.warn("[cache] Redis delete failed", { key, err });

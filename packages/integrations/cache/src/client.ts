@@ -1,8 +1,7 @@
-import { IoredisCacheClient } from "./ioredis";
 import type { CacheBackend, CacheClient } from "./types";
-import { UpstashRedisCacheClient } from "./upstash";
 
 let cacheInstance: CacheClient | null = null;
+let resolving: Promise<CacheClient> | null = null;
 let backendDetected: CacheBackend | null = null;
 
 /**
@@ -31,20 +30,37 @@ function detectBackend(): CacheBackend {
 }
 
 /**
- * Get the active cache client. Lazy-initialised on first call so importing
- * @nebutra/cache during build-time route analysis (no env) doesn't crash.
+ * Get the active cache client. Lazy-initialised on first call.
+ *
+ * Backend modules (`./ioredis`, `./upstash`) are loaded via dynamic
+ * `import()` so they remain server-only — webpack/Next.js will NOT bundle
+ * `ioredis`'s Node-only deps (`net`, `tls`, etc.) into client bundles
+ * that transitively reach this file through the @nebutra/cache barrel.
+ *
+ * Originally `getCacheClient()` was synchronous and imported both
+ * backends at the top of this file. That pulled `ioredis` into any
+ * `"use client"` component reachable from a chain like
+ * `@nebutra/auth/client → features.ts → @nebutra/feature-flags → @nebutra/cache`
+ * and broke Next.js builds with `Module not found: Can't resolve 'net'`.
  */
-export function getCacheClient(): CacheClient {
+export async function getCacheClient(): Promise<CacheClient> {
   if (cacheInstance) return cacheInstance;
+  if (resolving) return resolving;
 
-  const backend = detectBackend();
-  if (backend === "ioredis") {
-    cacheInstance = new IoredisCacheClient();
-  } else {
-    cacheInstance = new UpstashRedisCacheClient();
-  }
-  backendDetected = backend;
-  return cacheInstance;
+  resolving = (async () => {
+    const backend = detectBackend();
+    if (backend === "ioredis") {
+      const { IoredisCacheClient } = await import("./ioredis");
+      cacheInstance = new IoredisCacheClient();
+    } else {
+      const { UpstashRedisCacheClient } = await import("./upstash");
+      cacheInstance = new UpstashRedisCacheClient();
+    }
+    backendDetected = backend;
+    return cacheInstance;
+  })();
+
+  return resolving;
 }
 
 /** Report which backend the singleton resolved to (or null pre-init). */
@@ -55,33 +71,39 @@ export function getCacheBackend(): CacheBackend | null {
 /**
  * Back-compat alias for the previous `getRedis()` API.
  *
- * Old call sites:
+ * NOTE — now async. Old call sites:
  *
  *   const redis = getRedis();
  *   await redis.get("key");
- *   await redis.set("key", val, { ex: 60 });
  *
- * Still work because CacheClient exposes get / set / del with the same
- * signatures the Upstash client used. Strategies that imported `Redis` for
- * its type now see CacheClient.
+ * Update to:
+ *
+ *   const redis = await getRedis();
+ *   await redis.get("key");
+ *
+ * Or use the `redis` Proxy below for transparent lazy-init.
  */
-export function getRedis(): CacheClient {
+export async function getRedis(): Promise<CacheClient> {
   return getCacheClient();
 }
 
 /**
  * Redis client proxy — lazy-initialised, safe to import at module top level.
  *
- * Typed as CacheClient (not the raw @upstash/redis Redis) so consumers stay
- * inside the audited method surface (get/set/del). Code that needs protocol-
- * level commands should construct an IoredisCacheClient and call
- * `unsafeUnderlying()` explicitly.
+ * Every method call awaits the backend resolution on first use, then calls
+ * through. Callers write `await redis.get(key)` exactly as before — the
+ * Promise the Proxy returns transparently chains backend init + method call.
  */
 export const redis = new Proxy({} as CacheClient, {
-  get(_target, prop) {
-    const client = getCacheClient();
-    const value = Reflect.get(client, prop, client);
-    return typeof value === "function" ? value.bind(client) : value;
+  get(_target, prop: string | symbol) {
+    return async (...args: unknown[]) => {
+      const client = await getCacheClient();
+      const fn = (client as unknown as Record<string | symbol, unknown>)[prop];
+      if (typeof fn !== "function") {
+        throw new Error(`Cache client has no method '${String(prop)}'`);
+      }
+      return (fn as (...a: unknown[]) => unknown).apply(client, args);
+    };
   },
 });
 

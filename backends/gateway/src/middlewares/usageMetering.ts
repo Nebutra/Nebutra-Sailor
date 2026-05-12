@@ -29,11 +29,11 @@ let cachedRedis: Redis | null | undefined;
  * Wraps @nebutra/cache's getRedis() which throws on missing credentials.
  * Result is cached so the singleton is resolved at most once.
  */
-function getRedisOptional(): Redis | null {
+async function getRedisOptional(): Promise<Redis | null> {
   if (cachedRedis !== undefined) return cachedRedis;
 
   try {
-    cachedRedis = getRedis();
+    cachedRedis = await getRedis();
   } catch {
     cachedRedis = null;
   }
@@ -92,7 +92,7 @@ export async function usageMeteringMiddleware(c: Context, next: Next) {
   // Best-effort: fire and forget
   void (async () => {
     try {
-      const r = getRedisOptional();
+      const r = await getRedisOptional();
       if (!r) return;
 
       await r.incr(apiCallKey);
@@ -129,7 +129,7 @@ export async function getUsageSnapshot(orgId: string, period?: string): Promise<
   const p = period ?? billingPeriod();
 
   try {
-    const r = getRedisOptional();
+    const r = await getRedisOptional();
     if (!r) {
       return { orgId, period: p, apiCalls: 0, aiTokens: 0 };
     }

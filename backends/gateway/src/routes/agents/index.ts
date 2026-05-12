@@ -275,7 +275,7 @@ agentRoutes.openapi(conversationsRoute, async (c) => {
     let redis: Awaited<ReturnType<typeof import("@nebutra/cache").getRedis>> | null = null;
     try {
       const { getRedis } = await import("@nebutra/cache");
-      redis = getRedis();
+      redis = await getRedis();
     } catch {
       // Redis unavailable
     }
