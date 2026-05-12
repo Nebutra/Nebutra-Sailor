@@ -11,12 +11,16 @@
  *                  `config.options.authorize` callback)
  *  - Google OAuth (when GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET set)
  *  - GitHub OAuth (when GITHUB_CLIENT_ID + GITHUB_CLIENT_SECRET set)
+ *  - Apple OAuth  (when APPLE_CLIENT_ID + APPLE_CLIENT_SECRET set)
+ *  - Microsoft Entra ID (when MICROSOFT_CLIENT_ID + MICROSOFT_CLIENT_SECRET set)
  *
  * Environment variables:
  *  - AUTH_SECRET or NEXTAUTH_SECRET (required) — JWT signing key
  *  - NEXTAUTH_URL or AUTH_URL (optional in v5 when behind a known host)
  *  - GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET (optional)
  *  - GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET (optional)
+ *  - APPLE_CLIENT_ID / APPLE_CLIENT_SECRET (optional)
+ *  - MICROSOFT_CLIENT_ID / MICROSOFT_CLIENT_SECRET (optional)
  *
  * Notes vs Better Auth:
  *  - NextAuth does not expose CRUD APIs for users/orgs by design — its surface
@@ -128,15 +132,18 @@ export function createNextAuthProvider(config: AuthConfig): AuthProvider {
   async function getRuntime(): Promise<NextAuthRuntime> {
     if (runtime) return runtime;
 
-    const [{ default: NextAuth }, googleMod, githubMod, credentialsMod] = await Promise.all([
-      // `next-auth` is a peer dep — when not installed, this import throws at
-      // runtime in the worker that selected this provider. The typecheck path
-      // resolves it via the workspace install.
-      import("next-auth"),
-      tryImport("next-auth/providers/google"),
-      tryImport("next-auth/providers/github"),
-      tryImport("next-auth/providers/credentials"),
-    ]);
+    const [{ default: NextAuth }, googleMod, githubMod, appleMod, microsoftMod, credentialsMod] =
+      await Promise.all([
+        // `next-auth` is a peer dep — when not installed, this import throws at
+        // runtime in the worker that selected this provider. The typecheck path
+        // resolves it via the workspace install.
+        import("next-auth"),
+        tryImport("next-auth/providers/google"),
+        tryImport("next-auth/providers/github"),
+        tryImport("next-auth/providers/apple"),
+        tryImport("next-auth/providers/microsoft-entra-id"),
+        tryImport("next-auth/providers/credentials"),
+      ]);
 
     const providers: unknown[] = [];
 
@@ -185,6 +192,30 @@ export function createNextAuthProvider(config: AuthConfig): AuthProvider {
         GitHub({
           clientId: process.env.GITHUB_CLIENT_ID,
           clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        }),
+      );
+    }
+
+    if (appleMod && process.env.APPLE_CLIENT_ID && process.env.APPLE_CLIENT_SECRET) {
+      const Apple =
+        (appleMod.default as unknown as (opts: unknown) => unknown) ??
+        (appleMod.Apple as unknown as (opts: unknown) => unknown);
+      providers.push(
+        Apple({
+          clientId: process.env.APPLE_CLIENT_ID,
+          clientSecret: process.env.APPLE_CLIENT_SECRET,
+        }),
+      );
+    }
+
+    if (microsoftMod && process.env.MICROSOFT_CLIENT_ID && process.env.MICROSOFT_CLIENT_SECRET) {
+      const MicrosoftEntraID =
+        (microsoftMod.default as unknown as (opts: unknown) => unknown) ??
+        (microsoftMod.MicrosoftEntraID as unknown as (opts: unknown) => unknown);
+      providers.push(
+        MicrosoftEntraID({
+          clientId: process.env.MICROSOFT_CLIENT_ID,
+          clientSecret: process.env.MICROSOFT_CLIENT_SECRET,
         }),
       );
     }

@@ -54,3 +54,16 @@ export type {
   SignInMethod,
   User,
 } from "./types";
+// Utilities (returnUrl sanitization, Turnstile verification)
+export type {
+  SanitizeReturnUrlOptions,
+  VerifyTurnstileOptions,
+  VerifyTurnstileResult,
+} from "./utils";
+export {
+  getSanitizedReturnUrl,
+  isTurnstileConfigured,
+  sanitizeReturnUrl,
+  verifyTurnstileOrThrow,
+  verifyTurnstileToken,
+} from "./utils";

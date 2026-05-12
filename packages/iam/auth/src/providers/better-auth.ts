@@ -10,6 +10,8 @@
  * - BETTER_AUTH_URL (optional, base URL for auth endpoints)
  * - GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET (optional, enables Google OAuth)
  * - GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET (optional, enables GitHub OAuth)
+ * - APPLE_CLIENT_ID / APPLE_CLIENT_SECRET (optional, enables Sign in with Apple — App Store compliance for SaaS apps that ship Google/Facebook login)
+ * - MICROSOFT_CLIENT_ID / MICROSOFT_CLIENT_SECRET (optional, enables Microsoft OAuth — required for enterprise / EDU customers)
  */
 
 import { logger } from "@nebutra/logger";
@@ -491,10 +493,24 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     };
   }
 
+  if (process.env.APPLE_CLIENT_ID && process.env.APPLE_CLIENT_SECRET) {
+    socialProviders.apple = {
+      clientId: process.env.APPLE_CLIENT_ID,
+      clientSecret: process.env.APPLE_CLIENT_SECRET,
+    };
+  }
+
+  if (process.env.MICROSOFT_CLIENT_ID && process.env.MICROSOFT_CLIENT_SECRET) {
+    socialProviders.microsoft = {
+      clientId: process.env.MICROSOFT_CLIENT_ID,
+      clientSecret: process.env.MICROSOFT_CLIENT_SECRET,
+    };
+  }
+
   if (Object.keys(socialProviders).length === 0) {
     logger.info(
       "Better Auth: no OAuth providers configured — only email/password login is available. " +
-        "Set GOOGLE_CLIENT_ID/SECRET or GITHUB_CLIENT_ID/SECRET to enable social login.",
+        "Set GOOGLE_CLIENT_ID/SECRET, GITHUB_CLIENT_ID/SECRET, APPLE_CLIENT_ID/SECRET, or MICROSOFT_CLIENT_ID/SECRET to enable social login.",
     );
   }
 
