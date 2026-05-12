@@ -246,6 +246,15 @@ export const FLAGS = {
   // Beta
   BETA_FEATURES: "beta-features",
   EXPERIMENTAL_UI: "experimental-ui",
+
+  // Auth — Wave 2 dev/prod rollout gates.
+  // Consumed via `@nebutra/auth/features.ts` (env first, this service second).
+  // Names mirror AuthCapabilities in `packages/iam/auth/src/types.ts`.
+  AUTH_PASSKEYS: "auth.passkeys",
+  AUTH_ORGANIZATIONS: "auth.organizations",
+  AUTH_TWO_FACTOR: "auth.twoFactor",
+  AUTH_MAGIC_LINK: "auth.magicLink",
+  AUTH_IMPERSONATION: "auth.impersonation",
 } as const;
 
 export type FeatureFlag = (typeof FLAGS)[keyof typeof FLAGS];
