@@ -28,13 +28,20 @@ import { getAuth } from "@/lib/auth";
 import { env } from "@/lib/env";
 
 const ALLOWED_ORIGIN = (() => {
-  // Strip trailing slash for exact-match CORS comparison.
-  return env.NEXT_PUBLIC_SITE_URL.replace(/\/+$/, "");
+  // CORS allowlist is the LANDING origin (nebutra.com), NOT
+  // NEXT_PUBLIC_SITE_URL — that variable in apps/web means "this web app's
+  // own URL" (app.nebutra.com), which is same-origin and doesn't need CORS.
+  // Unset in dev/preview → no Origin echoed → browser blocks any cross-origin
+  // probe by default. Production: NEBUTRA_LANDING_ORIGIN=https://nebutra.com.
+  const raw = env.NEBUTRA_LANDING_ORIGIN;
+  return raw ? raw.replace(/\/+$/, "") : null;
 })();
 
 function buildCorsHeaders(origin: string | null): HeadersInit {
   // Only echo back the origin if it matches our allowlist — never reflect
-  // arbitrary Origin headers (would defeat the CORS check).
+  // arbitrary Origin headers (would defeat the CORS check). If
+  // NEBUTRA_LANDING_ORIGIN is unset (dev/preview), no headers are emitted.
+  if (!ALLOWED_ORIGIN) return {};
   const allowed = origin && origin.replace(/\/+$/, "") === ALLOWED_ORIGIN ? origin : null;
   if (!allowed) return {};
   return {

@@ -26,6 +26,15 @@ export const env = createEnv({
 
     // Logger Sentry transport — opt-in to avoid double-capturing errors
     LOGGER_SENTRY_ENABLED: z.enum(["true", "false"]).optional().default("false"),
+
+    // Cross-subdomain session-hint cookie + landing-origin CORS allowlist.
+    // Both are unset in dev/preview so cookies stay host-scoped (no traversal
+    // between localhost:3000 ↔ localhost:3001) and CORS rejects cross-origin
+    // probes by default. Production: set NEBUTRA_LANDING_ORIGIN to the
+    // landing-page URL (https://nebutra.com) and NEBUTRA_SESSION_HINT_DOMAIN
+    // to the shared parent (.nebutra.com).
+    NEBUTRA_LANDING_ORIGIN: z.string().url().optional(),
+    NEBUTRA_SESSION_HINT_DOMAIN: z.string().optional(),
   },
 
   client: {
