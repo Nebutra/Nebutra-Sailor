@@ -149,11 +149,11 @@
     "newsletterError": "Une erreur est survenue"
   },
   "logoStrip": {
-    "tagline": "Conçu sur les technologies majeures qui propulsent le web moderne"
+    "tagline": "CONSTRUIT AVEC LA STACK QUE VOUS AIMEZ."
   },
   "monorepoTree": {
     "badge": "STRUCTURE TURBOREPO",
-    "title": "6 apps. 5 packages. Un monorepo.",
+    "title": "10 apps. 55 packages. Un monorepo.",
     "description": "Code partagé, builds parallèles, zéro duplication. Typage end-to-end complet de la base de données au frontend.",
     "cta": "Explorer l’architecture du monorepo"
   },
@@ -1201,7 +1201,7 @@
     "pricing": {
       "title": "Accelerate your development cycle.",
       "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
-      "socialProofText": "trusted by <highlight>1276 developers</highlight>",
+      "socialProofText": "Open source AGPL-3.0 · licence commerciale disponible.",
       "frameworkText": "Choose your framework:",
       "frameworkNext": "Next.js",
       "frameworkNuxt": "Nuxt",
@@ -1373,14 +1373,14 @@
       "badge": "HARNESS ENGINEERING",
       "headline": "Engineering that enforces itself.",
       "subheadline": "Architecture tests, governance ratchets, and 15 CI workflows ensure code quality can only improve — never regress.",
-      "stat1Value": "15",
+      "stat1Value": "19",
       "stat1Label": "CI Workflows",
-      "stat2Value": "43",
+      "stat2Value": "13",
       "stat2Label": "Architecture Tests",
       "stat3Value": "0",
       "stat3Label": "Token Violations",
       "card1Title": "Architecture Tests",
-      "card1Desc": "7 property-based tests with fast-check enforce dependency flow, token usage, WCAG contrast ratios, API version prefixes, and story coverage.",
+      "card1Desc": "13 tests d'architecture couvrent flux de dépendances, usage des tokens, contraste WCAG, contrats API et couverture Storybook — 4 utilisent fast-check pour preuves basées sur les propriétés.",
       "card2Title": "Governance Ratchets",
       "card2Desc": "Token budgets that only tighten: zero raw color classes on landing page, oklch floor 120+, hex ceiling 40, motion imports whitelisted to 2 files.",
       "card3Title": "CI Pipeline Depth",
@@ -1398,7 +1398,7 @@
       "exploreFeature": "Explorer la fonctionnalité",
       "ai_category": "AI & Intelligence",
       "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to GPT-5.4, Claude Opus 4, Gemini 3.1, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
+      "ai_f1_desc": "Acheminez les requêtes vers Anthropic, OpenAI, Google ou vos propres modèles affinés. Streaming, vision et appels de fonction pris en charge de base.",
       "ai_f2_title": "Semantic embeddings",
       "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
       "ai_f3_title": "AI usage metering",

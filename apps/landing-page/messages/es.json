@@ -149,11 +149,11 @@
     "newsletterError": "Algo salió mal"
   },
   "logoStrip": {
-    "tagline": "Diseñado sobre las tecnologías clave que impulsan la web moderna"
+    "tagline": "CONSTRUIDO CON EL STACK QUE AMAS."
   },
   "monorepoTree": {
     "badge": "ESTRUCTURA TURBOREPO",
-    "title": "6 apps. 5 paquetes. Un monorepo.",
+    "title": "10 apps. 55 paquetes. Un monorepo.",
     "description": "Código compartido, builds paralelos y cero duplicación. Tipado end-to-end completo desde la base de datos hasta el frontend.",
     "cta": "Explorar la arquitectura del monorepo"
   },
@@ -1201,7 +1201,7 @@
     "pricing": {
       "title": "Accelerate your development cycle.",
       "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
-      "socialProofText": "trusted by <highlight>1276 developers</highlight>",
+      "socialProofText": "Código abierto AGPL-3.0 · licencia comercial disponible.",
       "frameworkText": "Choose your framework:",
       "frameworkNext": "Next.js",
       "frameworkNuxt": "Nuxt",
@@ -1373,14 +1373,14 @@
       "badge": "HARNESS ENGINEERING",
       "headline": "Engineering that enforces itself.",
       "subheadline": "Architecture tests, governance ratchets, and 15 CI workflows ensure code quality can only improve — never regress.",
-      "stat1Value": "15",
+      "stat1Value": "19",
       "stat1Label": "CI Workflows",
-      "stat2Value": "43",
+      "stat2Value": "13",
       "stat2Label": "Architecture Tests",
       "stat3Value": "0",
       "stat3Label": "Token Violations",
       "card1Title": "Architecture Tests",
-      "card1Desc": "7 property-based tests with fast-check enforce dependency flow, token usage, WCAG contrast ratios, API version prefixes, and story coverage.",
+      "card1Desc": "13 pruebas de arquitectura cubren flujo de dependencias, uso de tokens, contraste WCAG, contratos API y cobertura Storybook — 4 usan fast-check para pruebas basadas en propiedades.",
       "card2Title": "Governance Ratchets",
       "card2Desc": "Token budgets that only tighten: zero raw color classes on landing page, oklch floor 120+, hex ceiling 40, motion imports whitelisted to 2 files.",
       "card3Title": "CI Pipeline Depth",
@@ -1398,7 +1398,7 @@
       "exploreFeature": "Explorar función",
       "ai_category": "AI & Intelligence",
       "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to GPT-5.4, Claude Opus 4, Gemini 3.1, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
+      "ai_f1_desc": "Enruta solicitudes a Anthropic, OpenAI, Google o tus propios modelos afinados. Streaming, visión y llamadas a funciones admitidos de fábrica.",
       "ai_f2_title": "Semantic embeddings",
       "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
       "ai_f3_title": "AI usage metering",

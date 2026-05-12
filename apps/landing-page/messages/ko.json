@@ -149,11 +149,11 @@
     "newsletterError": "문제가 발생했습니다"
   },
   "logoStrip": {
-    "tagline": "현대 웹을 이끄는 핵심 기술 위에 구축"
+    "tagline": "사랑하는 스택으로 구축됨."
   },
   "monorepoTree": {
     "badge": "TURBOREPO 구조",
-    "title": "6개 앱. 5개 패키지. 하나의 모노레포.",
+    "title": "10개 앱 · 55개 패키지 · 하나의 monorepo.",
     "description": "공유 코드, 병렬 빌드, 중복 제거. 데이터베이스부터 프론트엔드까지 완전한 엔드투엔드 타입 안정성을 제공합니다.",
     "cta": "모노레포 아키텍처 살펴보기"
   },
@@ -1201,7 +1201,7 @@
     "pricing": {
       "title": "Accelerate your development cycle.",
       "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
-      "socialProofText": "trusted by <highlight>1276 developers</highlight>",
+      "socialProofText": "오픈소스 AGPL-3.0 · 상업용 라이선스 사용 가능.",
       "frameworkText": "Choose your framework:",
       "frameworkNext": "Next.js",
       "frameworkNuxt": "Nuxt",
@@ -1373,14 +1373,14 @@
       "badge": "HARNESS ENGINEERING",
       "headline": "Engineering that enforces itself.",
       "subheadline": "Architecture tests, governance ratchets, and 15 CI workflows ensure code quality can only improve — never regress.",
-      "stat1Value": "15",
+      "stat1Value": "19",
       "stat1Label": "CI Workflows",
-      "stat2Value": "43",
+      "stat2Value": "13",
       "stat2Label": "Architecture Tests",
       "stat3Value": "0",
       "stat3Label": "Token Violations",
       "card1Title": "Architecture Tests",
-      "card1Desc": "7 property-based tests with fast-check enforce dependency flow, token usage, WCAG contrast ratios, API version prefixes, and story coverage.",
+      "card1Desc": "13개 아키텍처 테스트가 의존성 흐름, 토큰 사용, WCAG 대비, API 계약, Storybook 커버리지를 검증 — 그중 4개는 fast-check 속성 기반 증명을 사용.",
       "card2Title": "Governance Ratchets",
       "card2Desc": "Token budgets that only tighten: zero raw color classes on landing page, oklch floor 120+, hex ceiling 40, motion imports whitelisted to 2 files.",
       "card3Title": "CI Pipeline Depth",
@@ -1398,7 +1398,7 @@
       "exploreFeature": "기능 살펴보기",
       "ai_category": "AI & Intelligence",
       "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to GPT-5.4, Claude Opus 4, Gemini 3.1, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
+      "ai_f1_desc": "요청을 Anthropic, OpenAI, Google 또는 자체 파인튜닝된 모델로 라우팅. 스트리밍, 비전, 함수 호출 기본 지원.",
       "ai_f2_title": "Semantic embeddings",
       "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
       "ai_f3_title": "AI usage metering",

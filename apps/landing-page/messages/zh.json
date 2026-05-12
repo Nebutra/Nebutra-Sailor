@@ -149,11 +149,11 @@
     "newsletterError": "出了些问题"
   },
   "logoStrip": {
-    "tagline": "深受 <dot>•</dot> 1276 位开发者信赖。基于您热爱的技术栈构建。"
+    "tagline": "基于您热爱的技术栈构建。"
   },
   "monorepoTree": {
     "badge": "TURBOREPO 架构",
-    "title": "6 个应用 · 5 个包 · 一体化 Monorepo",
+    "title": "10 个应用 · 55 个包 · 单一 monorepo",
     "description": "共享代码、并行构建、零冗余。从数据库到前端的完整端到端类型安全。",
     "cta": "探索 Monorepo 架构"
   },
@@ -1206,7 +1206,7 @@
     "pricing": {
       "title": "一次买断。终身访问。",
       "description": "告别续订焦虑。选择最适合您团队的并发方案，即刻开始构建。",
-      "socialProofText": "已有 <highlight>1276 名极客</highlight> 强力推荐",
+      "socialProofText": "开源 AGPL-3.0 · 提供商业授权选项。",
       "frameworkText": "核心引擎切换:",
       "frameworkNext": "Next.js 16",
       "frameworkNuxt": "Nuxt (开发中)",
@@ -1378,14 +1378,14 @@
       "badge": "工程治理",
       "headline": "自我约束的工程体系。",
       "subheadline": "架构测试、治理棘轮和 15 条 CI 工作流确保代码质量只升不降。",
-      "stat1Value": "15",
+      "stat1Value": "19",
       "stat1Label": "CI 工作流",
-      "stat2Value": "43",
+      "stat2Value": "13",
       "stat2Label": "架构测试",
       "stat3Value": "0",
       "stat3Label": "令牌违规",
       "card1Title": "架构测试",
-      "card1Desc": "7 个属性测试（fast-check）强制执行依赖流向、令牌使用、WCAG 对比度、API 版本前缀和 Story 覆盖率。",
+      "card1Desc": "13 项架构测试覆盖依赖流向、Token 使用、WCAG 对比、API 契约、Storybook 覆盖 —— 其中 4 项基于 fast-check 进行属性化证明。",
       "card2Title": "治理棘轮",
       "card2Desc": "令牌预算只紧不松：Landing page 原始色彩类为零，oklch 下限 120+，hex 上限 40，动画导入白名单仅 2 个文件。",
       "card3Title": "CI 管线深度",
@@ -1403,7 +1403,7 @@
       "exploreFeature": "探索功能",
       "ai_category": "AI 与智能体引擎",
       "ai_f1_title": "多模型会话代理",
-      "ai_f1_desc": "将请求极速路由至 GPT-5.4、Claude Opus 4、Gemini 3.1 或您微调的私有模型。开箱即用的流式传输、视觉处理以及函数调用机制。",
+      "ai_f1_desc": "将请求路由到 Anthropic、OpenAI、Google 或您自己微调的模型。开箱即用支持流式、视觉与函数调用。",
       "ai_f2_title": "语义向量检索 (RAG)",
       "ai_f2_desc": "利用 pgvector 生成和存储高维向量。为您的语义搜索、检索增强生成 (RAG) 和推荐引擎注入动力。",
       "ai_f3_title": "AI 推理用量计量",
@@ -1871,7 +1871,7 @@
         },
         "why-turborepo": {
           "question": "为什么用 Turborepo 而不是单一 Next.js 项目？",
-          "answer": "Sailor 由 11 个应用 + 55 个共享包 + 一套多语言后端（Hono BFF + FastAPI 集群）组成，单一 Next.js 巨型应用早就维护不过来。Turborepo 提供 affected-only 增量构建、透明的远程缓存，以及共享设计 token / 认证 / 计费 / 可观测性的单一来源——而不需要把所有团队塞进同一个 Next.js 进程。"
+          "answer": "Sailor 由 10 个应用 + 55 个共享包 + 一套多语言后端（Hono BFF + FastAPI 集群）组成，单一 Next.js 巨型应用早就维护不过来。Turborepo 提供 affected-only 增量构建、透明的远程缓存，以及共享设计 token / 认证 / 计费 / 可观测性的单一来源——而不需要把所有团队塞进同一个 Next.js 进程。"
         },
         "multi-tenancy": {
           "question": "多租户怎么实现？",
@@ -1926,7 +1926,7 @@
       "ariaTable": "套餐与功能对比"
     },
     "socialProof": {
-      "title": "各种规模的团队都在使用 Sailor 出货",
+      "title": "建立在你能信赖的技术栈之上",
       "logosLabel": "他们都在用",
       "logos": {
         "lumen": "Lumen Labs",
@@ -1938,16 +1938,16 @@
       },
       "metrics": {
         "developers": {
-          "value": "10K+",
-          "label": "位开发者基于 Sailor 构建"
+          "value": "47+",
+          "label": "AI 提供商支持"
         },
         "projects": {
-          "value": "500+",
-          "label": "个生产 SaaS 项目上线"
+          "value": "55",
+          "label": "monorepo 包"
         },
         "uptime": {
-          "value": "99.99%",
-          "label": "托管区域的可用性"
+          "value": "7",
+          "label": "种 i18n 语言开箱即用"
         }
       }
     }

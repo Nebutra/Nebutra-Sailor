@@ -149,11 +149,11 @@
     "newsletterError": "Something went wrong"
   },
   "logoStrip": {
-    "tagline": "TRUSTED BY <dot>•</dot> 1276 DEVELOPERS. BUILT WITH THE STACK YOU LOVE."
+    "tagline": "BUILT WITH THE STACK YOU LOVE."
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUCTURE",
-    "title": "6 apps. 5 packages. One monorepo.",
+    "title": "10 apps. 55 packages. One monorepo.",
     "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
     "cta": "Explore the monorepo architecture"
   },
@@ -1201,7 +1201,7 @@
     "pricing": {
       "title": "One-time purchase. Lifetime access.",
       "description": "No subscriptions. No recurring fees. Pick the plan that fits your team and start building today.",
-      "socialProofText": "trusted by <highlight>1276 developers</highlight>",
+      "socialProofText": "Open-source AGPL-3.0 · commercial license available.",
       "frameworkText": "Choose your framework:",
       "frameworkNext": "Next.js",
       "frameworkNuxt": "Nuxt",
@@ -1373,14 +1373,14 @@
       "badge": "HARNESS ENGINEERING",
       "headline": "Engineering that enforces itself.",
       "subheadline": "Architecture tests, governance ratchets, and 15 CI workflows ensure code quality can only improve — never regress.",
-      "stat1Value": "15",
+      "stat1Value": "19",
       "stat1Label": "CI Workflows",
-      "stat2Value": "43",
+      "stat2Value": "13",
       "stat2Label": "Architecture Tests",
       "stat3Value": "0",
       "stat3Label": "Token Violations",
       "card1Title": "Architecture Tests",
-      "card1Desc": "7 property-based tests with fast-check enforce dependency flow, token usage, WCAG contrast ratios, API version prefixes, and story coverage.",
+      "card1Desc": "13 architecture tests covering dependency flow, token usage, WCAG contrast, API contracts, and Storybook coverage — 4 use fast-check for property-based proofs.",
       "card2Title": "Governance Ratchets",
       "card2Desc": "Token budgets that only tighten: zero raw color classes on landing page, oklch floor 120+, hex ceiling 40, motion imports whitelisted to 2 files.",
       "card3Title": "CI Pipeline Depth",
@@ -1398,7 +1398,7 @@
       "exploreFeature": "Explore feature",
       "ai_category": "AI & Intelligence",
       "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to GPT-5.4, Claude Opus 4, Gemini 3.1, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
+      "ai_f1_desc": "Route requests to Anthropic, OpenAI, Google, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
       "ai_f2_title": "Semantic embeddings",
       "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
       "ai_f3_title": "AI usage metering",
@@ -1866,7 +1866,7 @@
         },
         "why-turborepo": {
           "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 11 apps + 55 shared packages + a polyglot backend (Hono BFF + FastAPI fleet) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "answer": "Sailor is 10 apps + 55 shared packages + a polyglot backend (Hono BFF + FastAPI fleet) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
         },
         "multi-tenancy": {
           "question": "How is multi-tenancy handled?",
@@ -1921,7 +1921,7 @@
       "ariaTable": "Plan and feature comparison"
     },
     "socialProof": {
-      "title": "Trusted by teams shipping at every scale",
+      "title": "Built on a stack you can trust",
       "logosLabel": "Trusted by",
       "logos": {
         "lumen": "Lumen Labs",
@@ -1933,16 +1933,16 @@
       },
       "metrics": {
         "developers": {
-          "value": "10K+",
-          "label": "developers building with Sailor"
+          "value": "47+",
+          "label": "AI providers supported"
         },
         "projects": {
-          "value": "500+",
-          "label": "production SaaS projects shipped"
+          "value": "55",
+          "label": "monorepo packages"
         },
         "uptime": {
-          "value": "99.99%",
-          "label": "uptime across managed regions"
+          "value": "7",
+          "label": "i18n locales out of the box"
         }
       }
     }
