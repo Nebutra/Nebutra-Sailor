@@ -551,17 +551,50 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       );
     }
 
-    // Dynamically import the passkey plugin — gracefully degrade if absent.
-    // better-auth 1.5.6 does not ship `./plugins/passkey` in its `exports`
-    // map, so the runtime try/catch handles the missing module and logs a warning.
+    // Passkey — uses our own plugin backed by @simplewebauthn/server because
+    // better-auth 1.5.6 does NOT ship `./plugins/passkey` in its `exports`
+    // map. Credentials persist into the existing `auth.passkey` Prisma table
+    // already present in the schema.
+    //
+    // Skip if BETTER_AUTH_URL is not set — the rpID needs a real domain.
     let passkeyPlugin: BetterAuthPlugin | undefined;
     try {
-      const passkeyModule = await loadOptionalPlugin("passkey");
-      passkeyPlugin = (passkeyModule as { passkey: () => BetterAuthPlugin }).passkey();
-    } catch {
+      const { passkey } = await import("../plugins/passkey-plugin");
+      const baseUrl = process.env.BETTER_AUTH_URL ?? "http://localhost:3000";
+      const parsed = new URL(baseUrl);
+      passkeyPlugin = passkey({
+        rpName: process.env.PASSKEY_RP_NAME ?? "Nebutra",
+        rpID: process.env.PASSKEY_RP_ID ?? parsed.hostname,
+        origin: process.env.PASSKEY_ORIGIN ?? parsed.origin,
+      });
+    } catch (error) {
       logger.warn(
-        "Better Auth: passkey plugin not available — WebAuthn endpoints (/api/auth/passkey/*) will not be exposed.",
+        "Better Auth: failed to load Nebutra passkey plugin — WebAuthn endpoints will be unavailable.",
+        { error: error instanceof Error ? error.message : String(error) },
       );
+    }
+
+    // Captcha — uses Better Auth's built-in `captcha` plugin with Cloudflare
+    // Turnstile when `TURNSTILE_SECRET_KEY` is set. The plugin intercepts
+    // sensitive endpoints (sign-in, sign-up, password reset) and rejects
+    // requests without a valid token. Header name: `x-captcha-response`.
+    let captchaPlugin: BetterAuthPlugin | undefined;
+    if (process.env.TURNSTILE_SECRET_KEY) {
+      try {
+        const captchaModule = (await loadOptionalPlugin("captcha")) as {
+          captcha: (opts: {
+            provider: "cloudflare-turnstile";
+            secretKey: string;
+            endpoints?: string[];
+          }) => BetterAuthPlugin;
+        };
+        captchaPlugin = captchaModule.captcha({
+          provider: "cloudflare-turnstile",
+          secretKey: process.env.TURNSTILE_SECRET_KEY,
+        });
+      } catch {
+        logger.warn("Better Auth: captcha plugin not available — bot verification will not run.");
+      }
     }
 
     // Dynamically import the magic-link plugin — gracefully degrade if absent
@@ -599,6 +632,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     if (twoFactorPlugin) plugins.push(twoFactorPlugin);
     if (passkeyPlugin) plugins.push(passkeyPlugin);
     if (magicLinkPlugin) plugins.push(magicLinkPlugin);
+    if (captchaPlugin) plugins.push(captchaPlugin);
 
     const prismaClient = await getPrismaClient(config);
 
