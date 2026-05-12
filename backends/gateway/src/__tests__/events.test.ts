@@ -11,18 +11,14 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// ---------------------------------------------------------------------------
-// Mocks — declared BEFORE any route/middleware imports so Vitest hoists them.
-// ---------------------------------------------------------------------------
-
-// Mock the env module so the route picks up the test service URL.
 vi.mock("@/config/env.js", () => ({
-  env: {
-    EVENT_INGEST_SERVICE_URL: "http://event-ingest.test",
-  },
+  env: {},
 }));
 
-// Mock @nebutra/auth/server so JWT verification never makes real network calls.
+vi.mock("@/services/event-ingest.js", () => ({
+  ingestEvents: vi.fn().mockResolvedValue({ accepted: 0, duplicated: 0 }),
+}));
+
 vi.mock("@nebutra/auth/server", () => ({
   createAuth: vi.fn().mockResolvedValue({
     provider: "better-auth",
@@ -30,7 +26,6 @@ vi.mock("@nebutra/auth/server", () => ({
   }),
 }));
 
-// Mock @nebutra/logger to suppress log output during tests.
 vi.mock("@nebutra/logger", () => ({
   logger: {
     warn: vi.fn(),
@@ -40,8 +35,11 @@ vi.mock("@nebutra/logger", () => ({
 }));
 
 import { tenantContextMiddleware } from "@/middlewares/tenantContext.js";
+import { ingestEvents } from "@/services/event-ingest.js";
 import { eventRoutes } from "../routes/events/ingest.js";
 import { s2sHeaders, TEST_SERVICE_SECRET } from "./helpers/s2s-token.js";
+
+const mockIngest = vi.mocked(ingestEvents);
 
 // ---------------------------------------------------------------------------
 // Minimal wrapper app — mirrors how index.ts mounts eventRoutes
@@ -93,7 +91,8 @@ const validEvent = {
 // ---------------------------------------------------------------------------
 
 beforeEach(() => {
-  vi.restoreAllMocks();
+  mockIngest.mockReset();
+  mockIngest.mockResolvedValue({ accepted: 0, duplicated: 0 });
   process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
 });
 
@@ -202,94 +201,55 @@ describe("POST /ingest — body validation", () => {
 });
 
 // ===========================================================================
-// POST /ingest — Upstream proxy
+// POST /ingest — In-process ingestion
 // ===========================================================================
 
-describe("POST /ingest — upstream proxy", () => {
-  it("returns 200 when valid payload and auth header are provided and upstream returns 200", async () => {
-    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
-      new Response(JSON.stringify({ accepted: 1 }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }),
-    );
+describe("POST /ingest — ingestion", () => {
+  it("returns 200 with accepted/duplicated counts on success", async () => {
+    mockIngest.mockResolvedValueOnce({ accepted: 1, duplicated: 0 });
 
     const res = await authedJsonRequest("/ingest", { events: [validEvent] });
 
     expect(res.status).toBe(200);
-    const body = await res.json();
-    expect(body).toBeDefined();
+    expect(await res.json()).toEqual({ accepted: 1, duplicated: 0 });
   });
 
-  it("calls the upstream URL from the env config", async () => {
-    const fetchSpy = vi
-      .spyOn(globalThis, "fetch")
-      .mockResolvedValueOnce(new Response(JSON.stringify({}), { status: 200 }));
-
-    await authedJsonRequest("/ingest", { events: [validEvent] });
-
-    expect(fetchSpy).toHaveBeenCalledOnce();
-    const calledUrl = fetchSpy.mock.calls[0]?.[0] as string;
-    expect(calledUrl).toContain("http://event-ingest.test");
-  });
-
-  it("forwards x-organization-id header to upstream when provided", async () => {
-    const fetchSpy = vi
-      .spyOn(globalThis, "fetch")
-      .mockResolvedValueOnce(new Response(JSON.stringify({}), { status: 200 }));
-
+  it("invokes the service module with the resolved tenant organizationId", async () => {
     await jsonRequest(
       "/ingest",
       { events: [validEvent] },
       s2sHeaders({ userId: "user-123", orgId: "org-789" }),
     );
 
-    expect(fetchSpy).toHaveBeenCalledOnce();
-    // fetch(url, init) — init.headers contains the forwarded org header
-    const calledInit = fetchSpy.mock.calls[0]?.[1] as RequestInit;
-    const forwardedHeaders = calledInit.headers as Record<string, string>;
-    expect(forwardedHeaders["x-organization-id"]).toBe("org-789");
+    expect(mockIngest).toHaveBeenCalledOnce();
+    const [, options] = mockIngest.mock.calls[0] ?? [];
+    expect(options?.organizationId).toBe("org-789");
   });
 
-  it("proxies the upstream status code when upstream returns a non-200", async () => {
-    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
-      new Response(JSON.stringify({ error: "service down" }), {
-        status: 503,
-        headers: { "Content-Type": "application/json" },
-      }),
+  it("returns 400 when service raises a tenant mismatch", async () => {
+    mockIngest.mockRejectedValueOnce(
+      new Error("x-organization-id does not match event tenantId (other-tenant)"),
     );
 
     const res = await authedJsonRequest("/ingest", { events: [validEvent] });
 
-    // The handler proxies the upstream status code directly (503 in this case)
-    expect(res.status).toBe(503);
+    expect(res.status).toBe(400);
+    const body = await res.json();
+    expect(body.error).toBe("Tenant mismatch");
   });
 
-  it("returns 502 when fetch throws a network error", async () => {
-    vi.spyOn(globalThis, "fetch").mockRejectedValueOnce(new TypeError("Failed to fetch"));
+  it("returns 502 when the service module throws a generic error", async () => {
+    mockIngest.mockRejectedValueOnce(new Error("ClickHouse unreachable"));
 
     const res = await authedJsonRequest("/ingest", { events: [validEvent] });
 
     expect(res.status).toBe(502);
     const body = await res.json();
-    expect(body.error).toBeDefined();
-    expect(typeof body.message).toBe("string");
-  });
-
-  it("returns 502 with the original error message when fetch throws an Error", async () => {
-    vi.spyOn(globalThis, "fetch").mockRejectedValueOnce(new Error("ECONNREFUSED"));
-
-    const res = await authedJsonRequest("/ingest", { events: [validEvent] });
-
-    expect(res.status).toBe(502);
-    const body = await res.json();
-    expect(body.message).toBe("ECONNREFUSED");
+    expect(body.message).toBe("ClickHouse unreachable");
   });
 
   it("accepts a batch of exactly 1000 events and returns 200", async () => {
-    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
-      new Response(JSON.stringify({ accepted: 1000 }), { status: 200 }),
-    );
+    mockIngest.mockResolvedValueOnce({ accepted: 1000, duplicated: 0 });
 
     const maxBatch = Array.from({ length: 1000 }, (_, i) => ({
       ...validEvent,

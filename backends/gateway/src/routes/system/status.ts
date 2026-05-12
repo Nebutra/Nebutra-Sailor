@@ -19,8 +19,6 @@ const statusResponseSchema = z.object({
   redis: z.enum(["connected", "disconnected"]),
   services: z.object({
     ai: serviceStatusEnum,
-    ecommerce: serviceStatusEnum,
-    eventIngest: serviceStatusEnum,
   }),
   uptime: z.number(),
   checks: z.array(checkSchema),
@@ -83,24 +81,16 @@ statusRoutes.openapi(statusRoute, async (c) => {
     overallStatus = "degraded";
   }
 
-  // Probe only active Python services. Billing runs in-process via
-  // @nebutra/billing (its Stripe wrapper health is surfaced via the
-  // circuit-breaker:billing observability below). content, web3, and
-  // third-party are stubbed — see ADR 2026-05-10.
-  const serviceChecks = await Promise.allSettled([
-    checkService("ai", process.env.AI_SERVICE_URL),
-    checkService("ecommerce", process.env.ECOMMERCE_SERVICE_URL),
-    checkService("eventIngest", process.env.EVENT_INGEST_SERVICE_URL),
-  ]);
+  // Only `ai` runs out-of-process (legitimate Python for ML/LLM batch work).
+  // Everything else is in-process TS per ADR 2026-05-10.
+  const serviceChecks = await Promise.allSettled([checkService("ai", process.env.AI_SERVICE_URL)]);
 
   const serviceStatuses: StatusResponse["services"] = {
     ai: "unknown",
-    ecommerce: "unknown",
-    eventIngest: "unknown",
   };
 
   serviceChecks.forEach((result, index) => {
-    const services = ["ai", "ecommerce", "eventIngest"] as const;
+    const services = ["ai"] as const;
     const serviceName = services[index];
 
     if (!serviceName) return;

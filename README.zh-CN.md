@@ -511,9 +511,7 @@ Nebutra-Sailor/
 │   ├── gateway/           # TypeScript / Hono — BFF、auth、租户、路由
 │   └── python/            # FastAPI — 仅当 ML/批处理/专用库无法用 TS 时启用
 │       ├── _shared/       # 跨服务原语（auth、db、queue 客户端）
-│       ├── ai/            # LLM、Embeddings、Agent 编排
-│       ├── ecommerce/     # Shopify/Shopline 同步、订单
-│       └── event-ingest/  # 高吞吐事件管线
+│       └── ai/            # LLM、Embeddings、Agent 编排
 ├── infra/                     # 基础设施（W2.2 按职责拆分）
 │   ├── iac/               # terraform + k8s + ecs + cloudflare + railway
 │   ├── runtime/           # nginx + docker + analytics + compose 文件
@@ -538,8 +536,7 @@ Nebutra-Sailor/
 <tr>
 <td><strong>微服务</strong></td>
 <td>
-  <a href="backends/python/ai/">AI</a> · 
-  <a href="backends/python/ecommerce/">电商</a>
+  <a href="backends/python/ai/">AI</a>
 </td>
 </tr>
 <tr>

@@ -33,8 +33,8 @@ apps/                  # User-facing apps (Next.js / Storybook / Mintlify)
 
 backends/              # No-UI backends (split by language à la vercel/vercel)
   gateway/             # TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing
-  python/              # Python / FastAPI fleet
-    _shared/  ai/  billing/  content/  ecommerce/  event-ingest/  recsys/  third-party/  web3/
+  python/              # Python / FastAPI — only for ML/LLM batch work (see ADR 2026-05-10)
+    _shared/  ai/
 
 packages/
   ui/             Component library (Radix + HeroUI + Lobe UI + framer-motion)
@@ -221,7 +221,7 @@ pnpm generate:api-types                             # Generate TypeScript types
 
 - **ORM**: Prisma v7 with PostgreSQL adapter
 - **Schema**: `packages/db/prisma/schema.prisma` (~1,400 lines)
-- **Schemas**: `public`, `ecommerce`, `recsys`, `web3`
+- **Schemas**: `public`, `auth`
 - **Extensions**: pgvector, RLS
 - **Key models**: Organization, User, Subscription, AuditLog, ApiKey, Content, Integration
 

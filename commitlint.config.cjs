@@ -55,12 +55,6 @@ const config = {
         "contracts",
         // Services
         "ai",
-        "content",
-        "recsys",
-        "ecommerce",
-        "web3",
-        "event-ingest",
-        "third-party",
         // Infrastructure
         "infra",
         "inngest",

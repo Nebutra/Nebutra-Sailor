@@ -51,44 +51,6 @@ export const INTERNAL_SERVERS: MCPServerConfig[] = [
     ],
     rateLimit: { maxRequests: 100, windowMs: 60000 },
   },
-
-  // E-commerce Service
-  {
-    id: "nebutra-ecommerce",
-    name: "Nebutra E-commerce Service",
-    description: "E-commerce operations and Shopify integration",
-    endpoint: process.env.ECOMMERCE_SERVICE_URL || "http://localhost:8004",
-    transport: "http",
-    tools: [
-      {
-        name: "get_products",
-        description: "Get product catalog",
-        parameters: {
-          limit: { type: "number", description: "Number of products", default: 20 },
-          category: { type: "string", description: "Filter by category" },
-        },
-        returns: "Products array",
-      },
-      {
-        name: "get_order",
-        description: "Get order details",
-        parameters: {
-          order_id: { type: "string", description: "Order ID", required: true },
-        },
-        returns: "Order object",
-      },
-      {
-        name: "sync_inventory",
-        description: "Sync inventory with Shopify",
-        parameters: {
-          force: { type: "boolean", description: "Force full sync", default: false },
-        },
-        returns: "Sync status",
-      },
-    ],
-    allowedPlans: ["PRO", "ENTERPRISE"],
-    rateLimit: { maxRequests: 100, windowMs: 60000 },
-  },
 ];
 
 /**

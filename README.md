@@ -189,7 +189,7 @@ Nebula • Nurture • Ultra • Future
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Docker" /><br />
       <strong>Modular Local DX</strong>
-      <br />Docker Compose profiles (<code>ai</code>, <code>ecommerce</code>) to boot only what's needed.
+      <br />Docker Compose profiles (<code>ai</code>) to boot only what's needed.
     </td>
   </tr>
   <tr>
@@ -503,9 +503,7 @@ Nebutra-Sailor/
 │   ├── gateway/               # TypeScript / Hono — BFF, auth, tenancy, routing
 │   └── python/                # FastAPI — only when ML/batch/specialized libs justify
 │       ├── _shared/           # Cross-service primitives (auth, db, queue client)
-│       ├── ai/                # LLM, embeddings, agent orchestration
-│       ├── ecommerce/         # Shopify/Shopline sync, orders
-│       └── event-ingest/      # High-throughput event pipeline
+│       └── ai/                # LLM, embeddings, agent orchestration
 ├── infra/                     # Infrastructure (split by concern in W2.2)
 │   ├── iac/                   # terraform + k8s + ecs + cloudflare + railway
 │   ├── runtime/               # nginx + docker + analytics + compose files
@@ -530,8 +528,7 @@ Each component has its own README with setup instructions and API documentation:
 <tr>
 <td><strong>Services</strong></td>
 <td>
-  <a href="backends/python/ai/">AI</a> · 
-  <a href="backends/python/ecommerce/">E-commerce</a>
+  <a href="backends/python/ai/">AI</a>
 </td>
 </tr>
 <tr>

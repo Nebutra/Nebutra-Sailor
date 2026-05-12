@@ -49,9 +49,13 @@ const baseSchema = z.object({
 
   // Python service URLs (TS-by-default — see ADR 2026-05-10)
   AI_SERVICE_URL: z.string().optional(),
-  ECOMMERCE_SERVICE_URL: z.string().optional(),
-  EVENT_INGEST_SERVICE_URL: z.string().optional(),
   INTERNAL_API_KEY: z.string().optional(),
+
+  // ClickHouse — used by event-ingest service module (in-process)
+  CLICKHOUSE_URL: z.string().optional(),
+  CLICKHOUSE_USERNAME: z.string().optional(),
+  CLICKHOUSE_PASSWORD: z.string().optional(),
+  CLICKHOUSE_DATABASE: z.string().optional(),
 
   // Frontend URLs
   LANDING_URL: z.string().optional(),

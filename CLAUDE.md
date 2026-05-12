@@ -23,9 +23,7 @@ apps/                  # User-facing apps (Next.js / Hono)
 backends/              # No-UI backends (split by language à la vercel/vercel)
   gateway/             # TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing — DEFAULT for new backend work
   python/              # Python / FastAPI — only when batch / ML / specialized libs justify it (see ADR 2026-05-10)
-    _shared/  ai/                    # active — real callers
-    ecommerce/  event-ingest/  recsys/  # active — Inngest workflows / gateway routes
-    content/  third-party/  web3/    # stub — concept preserved, no implementation; activate by landing a real caller
+    _shared/  ai/        # active — real callers (LLM, embeddings, agent orchestration)
 
 packages/              # Shared TypeScript libraries — categorized layout: <category>/<name>
   design/
@@ -812,4 +810,4 @@ rg "<SERVICE_NAME>_SERVICE_URL" --type ts -g '!**/node_modules/**' -g '!**/dist/
 # Status-check probes and MCP registry entries do NOT count as real callers.
 ```
 
-Status: as of 2026-05-10, the audit identified billing as a shadow clone of `packages/commerce/billing` and was deleted; content/web3/third-party were stubbed. See ADR for details.
+Status: as of 2026-05-12, after a follow-up audit, `backends/python/` contains only `_shared` + `ai`. recsys/ecommerce (mock data / broken callers), event-ingest (migrated in-process to gateway), content/web3/third-party (empty stubs) — all removed. The Three-Tier Lifecycle is now structurally enforced, not just documented.
