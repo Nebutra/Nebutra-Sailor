@@ -6,6 +6,33 @@ import { createDocsRedirectUrl } from "./lib/docs-routing";
 const intlMiddleware = createMiddleware(routing);
 const STATUS_HOST = "status.nebutra.com";
 
+/**
+ * Cross-subdomain "user is signed in somewhere" hint.
+ *
+ * The real HttpOnly session cookie lives on `app.nebutra.com` (host-scoped
+ * for defense-in-depth). This non-sensitive flag cookie is set/cleared by
+ * apps/web's auth catchall on the wider `.nebutra.com` domain so this
+ * landing-page proxy can read it and redirect signed-in users to the app
+ * without leaking real session material.
+ *
+ * Pattern: Notion-style. Flag only encodes "session exists somewhere",
+ * never the session itself.
+ */
+const SESSION_HINT_COOKIE = "nebutra_session_hint";
+const APP_REDIRECT_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.nebutra.com";
+
+/**
+ * Does the request live on a path that should redirect signed-in users
+ * straight to the product? Only the absolute root + bare-locale roots.
+ * Specific marketing pages (/pricing, /features, etc.) always render
+ * regardless of session state — they're intentional marketing visits.
+ */
+function isAppRedirectablePath(pathname: string): boolean {
+  if (pathname === "/" || pathname === "") return true;
+  // Bare locale roots like `/en`, `/zh`, `/ja` — same semantics as `/`.
+  return routing.locales.some((locale) => pathname === `/${locale}`);
+}
+
 function withSecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("X-Frame-Options", "DENY");
@@ -58,6 +85,22 @@ export default function proxy(request: NextRequest): NextResponse {
 
   if (pathname === "/status.json") {
     return withSecurityHeaders(NextResponse.next());
+  }
+
+  // Status-aware root: if the user has a session hint cookie from app.nebutra.com,
+  // root + bare-locale roots redirect into the product. Marketing sub-pages always
+  // render (signed-in users still want to read /pricing, /changelog, etc.).
+  //
+  // The response is intentionally `Cache-Control: private, no-store` because the
+  // body varies per-cookie — never cache at the edge.
+  if (
+    host !== STATUS_HOST &&
+    isAppRedirectablePath(pathname) &&
+    request.cookies.get(SESSION_HINT_COOKIE)?.value === "1"
+  ) {
+    const redirect = NextResponse.redirect(new URL("/dashboard", APP_REDIRECT_URL), 302);
+    redirect.headers.set("Cache-Control", "private, no-store");
+    return withSecurityHeaders(redirect);
   }
 
   if (

@@ -20,6 +20,7 @@ import type { AuthProvider, AuthProviderId } from "@nebutra/auth";
 import { getAuditableContext, getConfiguredAuthProvider } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
+import { applySessionHint } from "@/lib/session-hint";
 
 type AuditableMaybe = Awaited<ReturnType<typeof getAuditableContext>>;
 type LogInput = Parameters<ReturnType<typeof auditLogger>["log"]>[0];
@@ -149,6 +150,8 @@ async function handler(request: Request): Promise<Response> {
       headers: { "Content-Type": "application/json" },
     });
   }
+
+  response = applySessionHint(request, response);
 
   try {
     const descriptor = deriveAuditFromRequest(request, response.status);
