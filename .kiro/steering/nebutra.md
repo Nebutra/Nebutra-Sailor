@@ -14,7 +14,7 @@ This document is always included in Kiro's context window. It provides the found
 | Styling | Tailwind CSS v4 + `@nebutra/tokens` |
 | Linter | Biome (NOT ESLint) |
 | Testing | Vitest + Playwright |
-| Auth | Clerk (`@clerk/nextjs`) |
+| Auth | `@nebutra/auth` — Clerk \| Better Auth \| NextAuth \| Supabase (env-swappable) |
 | Database | Prisma v7 + PostgreSQL (pgvector, RLS) |
 | Monorepo | Turborepo + pnpm workspaces |
 
@@ -25,11 +25,18 @@ This document is always included in Kiro's context window. It provides the found
 | App | Port | Purpose |
 |-----|------|---------|
 | `apps/landing-page` | 3002 | Public marketing site (next-intl, 7 locales) |
-| `apps/web` | 3000 | Authenticated SaaS dashboard (Clerk auth) |
-| `apps/api-gateway` | 3001 | Hono + OpenAPI backend |
+| `apps/web` | 3000 | Authenticated SaaS dashboard |
 | `apps/storybook` | 6006 | Component documentation |
 | `apps/studio` | 3333 | Sanity CMS |
 | `apps/docs` | — | Mintlify product docs |
+
+### Backends (non-UI services)
+
+| Backend | Language | Purpose |
+|---------|----------|---------|
+| `backends/gateway/` | TypeScript / Hono | BFF, auth, tenancy, rate-limit, routing — **default for new backend work** |
+| `backends/python/ai/` | Python / FastAPI | LLM completions, embeddings, E2B sandbox, agent orchestration |
+| `backends/go/event-ingest/` | Go / chi | High-throughput usage event ingestion (202 Accepted stub → ClickHouse) |
 
 ### Key Packages
 
@@ -39,8 +46,8 @@ This document is always included in Kiro's context window. It provides the found
 | `@nebutra/tokens` | CSS variables — color scales, brand, theming |
 | `@nebutra/icons` | 541 Geist icons as TSX components |
 | `@nebutra/db` | Prisma v7 + PostgreSQL client |
-| `@nebutra/billing` | Stripe subscriptions + usage metering |
-| `@nebutra/identity` | Auth abstraction (Clerk adapter) |
+| `@nebutra/billing` | Multi-provider billing (Stripe \| Polar \| LemonSqueezy \| ChinaPay) |
+| `@nebutra/auth` | Auth abstraction — Clerk \| Better Auth \| NextAuth \| Supabase (`packages/iam/auth/`) |
 | `@nebutra/email` | Resend transactional email |
 | `@nebutra/agents` | AI runtime: Vercel AI SDK helpers + multi-agent orchestration |
 | `@nebutra/ai-providers` | Provider registry metadata (meta-only) |
@@ -115,10 +122,10 @@ async function createProject(formData: FormData) {
 const { data } = useQuery({ queryKey: ["projects"], queryFn: fetchProjects });
 ```
 
-### API Gateway (Hono)
+### BFF Gateway (Hono)
 
 ```typescript
-// apps/api-gateway/src/routes/
+// backends/gateway/src/routes/
 import { requirePermission } from "@nebutra/permissions";
 import { getCurrentTenant } from "@nebutra/tenant";
 
@@ -204,6 +211,26 @@ pnpm infra:lite           # PostgreSQL only (fast start)
 pnpm brand:sync           # sync brand assets
 pnpm generate:api-types   # regenerate TypeScript types from OpenAPI
 ```
+
+## Auth Pattern
+
+```typescript
+// Select provider via AUTH_PROVIDER env var (or create-sailor --auth=...)
+import { createAuth } from "@nebutra/auth/server";
+
+const auth = await createAuth({ provider: process.env.AUTH_PROVIDER ?? "clerk" });
+// Providers: "clerk" | "better-auth" | "nextauth" | "supabase"
+
+const session = await auth.getSession(request);
+if (!session) return new Response(null, { status: 401 });
+```
+
+## Backend Language Policy
+
+- New backend work → **TypeScript** in `backends/gateway/` by default
+- Python (`backends/python/`) only for: batch/ML/LLM work, E2B sandboxes, or libs with no TS equivalent
+- Go (`backends/go/`) only for: high-throughput I/O, event pipelines
+- CRUD, webhooks, billing, auth → always TS, no exceptions
 
 ## Hard Rules
 

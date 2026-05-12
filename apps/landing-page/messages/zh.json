@@ -25,8 +25,8 @@
     }
   },
   "hero": {
-    "headline1": "启航你的创业,",
-    "headline2": "由 Nebutra Agent OS 驱动。",
+    "headline1": "睡前的一个念头，",
+    "headline2": "也可能是下一个独角兽。",
     "subheadline": "基于 <highlight>生产就绪</highlight> 的底座与 <highlight>受治理的架构</highlight> 开发，跳过数周平台工作。专为 <highlight>AI 编程智能体与出海创始人</highlight> 优化。",
     "copyLabel": "复制环境配置",
     "copiedLabel": "代码已复制",
@@ -86,7 +86,7 @@
       "manualSetup": "需手动搭建",
       "multiProviderGateway": "Vercel AI SDK + 47 个提供商",
       "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
+      "clerkCustomIdp": "Clerk / Better Auth / NextAuth / Supabase",
       "clerkOnly": "Clerk",
       "betterAuth": "Better Auth",
       "stripeUsage": "5 个供应商 + 用量计费",
@@ -1399,8 +1399,8 @@
       "multi_category": "多租户管控中枢",
       "multi_f1_title": "租户级数据隔离墙",
       "multi_f1_desc": "基于 Postgres 的行级安全控制 (RLS) 确保租户之间的数据物理隔离——在数据库最底层强制执行，超越应用层限制。",
-      "multi_f2_title": "多供应商认证（Clerk / Better Auth）",
-      "multi_f2_desc": "多 provider OAuth(Google、GitHub 等)加邮箱/密码和魔法链接 —— 由 Clerk 或 Better Auth 承载,按部署选用。",
+      "multi_f2_title": "多供应商认证（Clerk / Better Auth / NextAuth / Supabase）",
+      "multi_f2_desc": "多 provider OAuth（Google、GitHub 等）加邮箱/密码与魔法链接 —— 通过单个环境变量在 Clerk、Better Auth、NextAuth 或 Supabase Auth 间切换。",
       "multi_f3_title": "自动化租户编排",
       "multi_f3_desc": "当新企业机构通过 Clerk 注册入驻，系统会自动分配首组 API 密钥并下发定制化欢迎函——剔除所有手工步骤。",
       "dx_category": "开发者使用体验",
@@ -1843,7 +1843,7 @@
         },
         "byo-provider": {
           "question": "可以接入我自己的供应商吗？",
-          "answer": "可以。所有集成（认证、队列、搜索、邮件、支付、存储、计费）均为 provider-agnostic。每个包内的工厂方法根据单个环境变量挑选适配器——把 Clerk 换成 Better Auth 或 NextAuth、把 QStash 换成 BullMQ、把 Resend 换成 SES、把 Stripe 换成 Polar / LemonSqueezy / 国内支付——业务代码无需改动。"
+          "answer": "可以。所有集成（认证、队列、搜索、邮件、支付、存储、计费）均为 provider-agnostic。每个包内的工厂方法根据单个环境变量挑选适配器——把 Clerk 换成 Better Auth、NextAuth 或 Supabase Auth、把 QStash 换成 BullMQ、把 Resend 换成 SES、把 Stripe 换成 Polar / LemonSqueezy / 国内支付——业务代码无需改动。"
         },
         "tech-stack": {
           "question": "技术栈是什么？",
@@ -1867,7 +1867,7 @@
         },
         "swap-clerk": {
           "question": "可以把 Clerk 换成其他认证服务吗？",
-          "answer": "内置支持的可以：@nebutra/auth 一等支持 Clerk、Better Auth、NextAuth (Auth.js v5) 三套适配器。通过 AUTH_PROVIDER 环境变量切换，或在 create-sailor --auth=... 脚手架时选择——server / React / middleware 接口在不同 provider 下完全一致。Supabase Auth 暂未内置；要加入只需实现同一 IdentityAdapter 接口（约 80 行代码）。周边代码不耦合到任何具体 provider。"
+          "answer": "可以。@nebutra/auth 内置 Clerk、Better Auth、NextAuth (Auth.js v5) 与 Supabase Auth 四套一等适配器。通过 AUTH_PROVIDER 环境变量切换，或在 create-sailor --auth=... 脚手架时选择——server / React / middleware 接口在不同 provider 下完全一致。要接入第五套只需实现同一接口（约 80 行代码），周边代码不耦合到任何具体 provider。"
         }
       }
     },

@@ -86,7 +86,7 @@
       "manualSetup": "Manual setup",
       "multiProviderGateway": "Vercel AI SDK + 47 providers",
       "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk / Better Auth / NextAuth",
+      "clerkCustomIdp": "Clerk / Better Auth / NextAuth / Supabase",
       "clerkOnly": "Clerk",
       "betterAuth": "Better Auth",
       "stripeUsage": "5 providers + usage metering",
@@ -1394,8 +1394,8 @@
       "multi_category": "Multi-tenant Platform",
       "multi_f1_title": "Organisation-level isolation",
       "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link via Clerk or Better Auth — choose per deployment.",
+      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
       "multi_f3_title": "Automatic tenant provisioning",
       "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
       "dx_category": "Developer Experience",
@@ -1838,7 +1838,7 @@
         },
         "byo-provider": {
           "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing, search) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth or NextAuth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
         },
         "tech-stack": {
           "question": "What is the tech stack?",
@@ -1862,7 +1862,7 @@
         },
         "swap-clerk": {
           "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes for the built-in set: @nebutra/auth ships first-class adapters for Clerk, Better Auth, and NextAuth (Auth.js v5). Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Supabase Auth isn't a built-in adapter today; adding one means implementing the same IdentityAdapter interface (~80 LOC). Nothing in the surrounding code couples to a specific provider."
+          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
         }
       }
     },
