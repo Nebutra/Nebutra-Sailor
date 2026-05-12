@@ -1,108 +1,134 @@
 # backends/
 
-> **All "no-UI" backends** for Nebutra-Sailor — the TypeScript API gateway and
-> the Python microservice fleet. Layout follows
-> [vercel/vercel](https://github.com/vercel/vercel) (api/ TS + python/ +
-> crates/): **split by language, unified by concern**.
+> **All "no-UI" backends** for Nebutra-Sailor. Split by language, unified by concern.
+> Each language is used for what it's genuinely best at — not by habit.
+
+## Language assignment
+
+| Language | Why | Services |
+|----------|-----|----------|
+| **TypeScript** | Default — full-stack cohesion, shared types with `apps/` | `gateway/` |
+| **Python** | ML/AI ecosystem (Transformers, vLLM, E2B, LangGraph) | `python/ai/` |
+| **Go** | High-throughput I/O (goroutine fan-out, ClickHouse batching) | `go/event-ingest/` |
+| **Rust** | Safety-critical isolation (Wasm sandbox, crypto paths) | `rust/sandbox/` |
+
+Decision rule (saves every future debate):
+```
+Needs PyTorch / HuggingFace / LangGraph?  → Python
+Needs >1k concurrent connections or >10k QPS?  → Go
+Touches user code execution or encryption?  → Rust
+Everything else?  → TypeScript
+```
 
 ## Structure
 
 ```
 backends/
-├── gateway/                # TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing
-└── python/                 # Python / FastAPI fleet
-    ├── _shared/            # Cross-service primitives (auth, db, logging, queue client)
-    ├── ai/                 # AI gateway — provider abstraction, agents, embeddings
-    ├── billing/            # Usage ingestion, invoice generation, settlement
-    ├── content/            # Content ingestion, chunking, embeddings, vector indexing
-    ├── ecommerce/          # Order lifecycle, inventory, fulfilment
-    ├── event-ingest/       # High-throughput event/analytics ingestion (>10k/s)
-    ├── recsys/             # Recommendation engine — embeddings + vector search
-    ├── third-party/        # Outbound integrations (webhooks, SaaS sync, scrapers)
-    └── web3/               # Web3/Blockchain integrations (opt-in)
+├── gateway/               # TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing
+│
+├── python/
+│   ├── _shared/           # Cross-service primitives (auth, contracts, usage, health, otel…)
+│   └── ai/                # FastAPI — provider abstraction, streaming, E2B sandbox, agents
+│
+├── go/
+│   ├── _shared/auth/      # service_token.go — mirrors packages/iam/auth/src/s2s.ts
+│   └── event-ingest/      # chi — receives UsageEvent batches → ClickHouse (phase 2)
+│
+└── rust/
+    └── sandbox/           # axum — Wasmtime/Firecracker code isolation (phase 2)
 ```
 
-Future-proofed: `backends/go/` and `backends/rust/` reserved for high-concurrency
-or ML-inference workloads if the need arises.
-
-## Architecture (BFF separation preserved)
+## Data flow
 
 ```
-Client ─► backends/gateway (TS, Hono) ─► backends/python/* (FastAPI)
-              │
-              ├─ auth / permissions / rate-limit  (centralized in gateway)
-              └─ proxy domain logic to Python services via internal HTTP / queue
+User request
+  → gateway (TS/Hono)   — auth, tenant context, rate-limit
+  → python/ai           — LLM, embedding, E2B, agents
+  → [fire-and-forget]
+      → go/event-ingest — batch insert UsageEvent → ClickHouse
 ```
 
-The TypeScript **gateway** owns auth, tenancy, rate-limiting, and routing.
-The **Python services** own heavy domain logic that benefits from Python libs
-(PyTorch, Transformers, vLLM, LangChain, web3.py, etc.). This separation is
-intentional and load-bearing — do **not** flatten gateway logic into the
-Python services or vice-versa.
+## Service registry
 
-> Why not a single `backends/all/`? Different languages have different
-> toolchains (pnpm vs uv), independent deployment lifecycles, and their own
-> Docker base images. Splitting by language at the directory level makes the
-> right tool obvious from the path.
-
-## TypeScript-only teams
-
-Safely ignore `backends/python/` — none of `apps/` or `packages/` depend on it
-at build time. Each Python service is independently deployable (Dockerfile per
-service via the shared `infra/runtime/docker/Dockerfile.python`).
+| Service | Language | Default port | Status |
+|---------|----------|-------------|--------|
+| `gateway` | TypeScript | 3002 | Active |
+| `python/ai` | Python | 8001 | Active |
+| `go/event-ingest` | Go | 8010 | Stub (ClickHouse phase 2) |
+| `rust/sandbox` | Rust | 8020 | Stub (Wasmtime phase 2) |
 
 ## Running locally
 
-### TypeScript gateway
-
 ```bash
-pnpm --filter @nebutra/gateway dev   # localhost:3002
-```
+# TypeScript gateway
+pnpm --filter @nebutra/gateway dev
 
-### Python services
-
-```bash
-# Bring up all backends (with Postgres, Redis, Kafka)
-docker compose up -d
-
-# Or run a single Python service for development
+# Python AI service
 cd backends/python/ai
-uv pip install -e .
-uvicorn app.main:app --reload --port 8001
+uv sync                              # install deps into .venv
+uv run uvicorn app.main:app --reload --port 8001
+
+# Go event-ingest
+cd backends/go/event-ingest
+go run . &                           # listens :8010
+
+# Rust sandbox (phase 2 — only needed when replacing E2B)
+cd backends/rust/sandbox
+cargo run                            # listens :8020
 ```
+
+## Shared primitives
+
+### Python (`backends/python/_shared/`)
+
+| Module | Purpose |
+|--------|---------|
+| `auth.py` | `get_tenant()` — HMAC service-token validation, `TenantContext` FastAPI dep |
+| `contracts.py` | `UsageEvent` — cross-language event contract (Python ↔ Go ↔ TS) |
+| `usage.py` | `dispatch_usage()` — fire-and-forget asyncio queue → go/event-ingest |
+| `middleware.py` | Request logging, request-id propagation |
+| `health.py` | `/health`, `/ready`, `/livez`, `/readyz` probes |
+| `resilience.py` | `retry()`, `CircuitBreaker`, `timeout()` decorators |
+| `queue.py` | QStash / arq / memory queue provider |
+| `otel.py` | OpenTelemetry instrumentation bootstrap |
+| `env.py` | Required env-var validation |
+| `errors.py` | Standard error response shape |
+
+### Go (`backends/go/_shared/`)
+
+| Module | Purpose |
+|--------|---------|
+| `auth/service_token.go` | `VerifyServiceToken()` — mirrors `s2s.ts` exactly |
+
+## Service authentication
+
+All inter-service traffic uses HMAC-signed `x-service-token` (see `packages/iam/auth/src/s2s.ts`).
+Secret: `SERVICE_SECRET` env var — must be identical across all services.
+
+```
+canonical = "{userId}:{orgId}:{role}:{plan}"
+token     = HMAC-SHA256(canonical, SERVICE_SECRET).hexdigest()
+```
+
+Python services validate this via `Depends(get_tenant)` on route handlers.
+Go services validate via `auth.VerifyServiceToken(...)`.
 
 ## Adding a new Python service
 
-1. Create `backends/python/<name>/` with:
-   - `pyproject.toml` (uv)
-   - `Dockerfile` (or rely on shared `infra/runtime/docker/Dockerfile.python` via build arg)
-   - `app/main.py` — FastAPI entry
-   - `README.md` — purpose, endpoints, env vars
-2. Add to root `docker-compose.yml` and `docker-compose.prod.yml`
-3. If the gateway should route to it, register in `backends/gateway/src/config/services.ts`
-4. Add to the Python build matrix in `.github/workflows/docker-build-push.yml`
+1. Create `backends/python/<name>/` from the `python/ai/` template
+2. Copy `pyproject.toml`, `Dockerfile`, `app/main.py` — adjust service name
+3. Import `_shared.*` (already on sys.path via `main.py` bootstrap)
+4. Register in `backends/gateway/src/config/services.ts`
+5. Add `pyrightconfig.json` with `"extraPaths": [".."]`
 
-## Shared primitives (`backends/python/_shared/`)
+## Lifecycle tiers (per CLAUDE.md ADR 2026-05-10)
 
-All Python services import from `_shared/`:
-- Database client (async SQLAlchemy/SQLModel)
-- Authentication middleware (validates `x-service-token` HMAC from gateway)
-- Tenant context propagation (`x-organization-id`)
-- Structured logging + OpenTelemetry tracing
-- Queue client (QStash/BullMQ compat)
-- Error hierarchy
+```
+active     — has real callers; in CI
+stub       — HTTP harness only; no real logic; 501 on business routes
+incubator  — excluded from workspaces and CI
+```
 
-Do NOT duplicate these — always import from `_shared/`.
-
-## Security
-
-- Python services never accept public traffic directly. All requests flow through
-  `backends/gateway`, which validates auth and tenancy.
-- Inter-service requests use HMAC-signed `x-service-token` (see
-  `packages/iam/auth/src/s2s.ts`).
-- Database access is RLS-scoped via `app.current_org_id` setting set per-request.
-
-## License
-
-Same as the root project — AGPL-3.0 with Commercial Exception. See root
-`LICENSE` and `LICENSE-COMMERCIAL.md`.
+`go/event-ingest` and `rust/sandbox` are both **stubs**.
+Promote to active by landing a real ClickHouse/Wasmtime implementation
+in the same PR as the first real caller.
