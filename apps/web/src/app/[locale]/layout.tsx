@@ -1,5 +1,6 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
+import { ThemeScript } from "@nebutra/tokens";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
 import { Toaster } from "@nebutra/ui/primitives";
 import { Analytics } from "@vercel/analytics/react";
@@ -68,20 +69,26 @@ export default async function RootLayout({
   }
 
   return (
-    <AuthProvider provider={authProvider} config={authProviderConfig}>
-      <html
-        lang={locale}
-        className={`${GeistSans.variable} ${GeistMono.variable}`}
-        suppressHydrationWarning
-      >
-        <body className="antialiased">
-          <a
-            href="#main-content"
-            className="fixed left-3 top-3 z-[100] -translate-y-20 rounded-[var(--radius-md)] bg-[var(--blue-9)] px-3 py-2 text-sm font-medium text-white opacity-0 transition focus:translate-y-0 focus:opacity-100"
-          >
-            Skip to content
-          </a>
+    <html
+      lang={locale}
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="antialiased">
+        {/* FOUC-prevention: rendered DIRECTLY from this Server Component
+            (outside <AuthProvider>'s Client boundary) so its <script> stays
+            in the SSR HTML and is NEVER re-rendered on the client — which
+            is what triggers the React 19 "scripts inside React components"
+            warning. Order matters: must be first child of <body>. */}
+        <ThemeScript nonce={nonce} />
+        <a
+          href="#main-content"
+          className="fixed left-3 top-3 z-[100] -translate-y-20 rounded-[var(--radius-md)] bg-[var(--blue-9)] px-3 py-2 text-sm font-medium text-white opacity-0 transition focus:translate-y-0 focus:opacity-100"
+        >
+          Skip to content
+        </a>
 
+        <AuthProvider provider={authProvider} config={authProviderConfig}>
           <ThemeShell nonce={nonce}>
             <NextIntlClientProvider messages={messages}>
               <DesignSystemProvider>
@@ -95,10 +102,10 @@ export default async function RootLayout({
               <Toaster />
             </NextIntlClientProvider>
           </ThemeShell>
-          <SpeedInsights />
-          <Analytics />
-        </body>
-      </html>
-    </AuthProvider>
+        </AuthProvider>
+        <SpeedInsights />
+        <Analytics />
+      </body>
+    </html>
   );
 }

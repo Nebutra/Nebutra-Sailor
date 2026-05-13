@@ -11,8 +11,11 @@
  *   → Display-P3 wide gamut with sRGB fallback
  *   → Tailwind v4 @theme integration
  *
- * JS exports:  ThemeProvider, useTheme (from next-themes)
+ * JS exports:  ThemeProvider, useTheme, ThemeScript (custom — no next-themes)
  *   → App-level light/dark mode switching
+ *   → ThemeScript renders the FOUC-prevention inline script from a Server
+ *     Component, sidestepping the React 19 + Next.js 16 console warning
+ *     about scripts inside Client Components.
  *
  * Related packages:
  *   @nebutra/brand  → brand primitives (color definitions, motion language)
@@ -20,8 +23,13 @@
  *   @nebutra/ui     → component library (consumes tokens via CSS variables)
  */
 
-export type { ThemeProviderProps } from "next-themes";
-export { ThemeProvider, useTheme } from "next-themes";
+export {
+  THEME_STORAGE_KEY,
+  ThemeProvider,
+  type ThemeProviderProps,
+  useTheme,
+} from "./theme-provider";
+export { ThemeScript, type ThemeScriptProps } from "./theme-script";
 
 export const THEME_IDS = ["light", "dark"] as const;
 export type ThemeId = (typeof THEME_IDS)[number];

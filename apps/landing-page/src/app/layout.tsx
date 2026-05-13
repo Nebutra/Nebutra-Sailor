@@ -1,3 +1,4 @@
+import { ThemeScript } from "@nebutra/tokens";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
@@ -65,7 +66,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${GeistSans.variable} ${GeistMono.variable} min-h-screen antialiased`}
       suppressHydrationWarning
     >
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {/* FOUC-prevention: applies the saved theme to <html> before first
+            paint. Rendered from this Server Component to avoid the React 19
+            + Next.js 16 script-in-client-component warning. */}
+        <ThemeScript />
+        {children}
+      </body>
     </html>
   );
 }
