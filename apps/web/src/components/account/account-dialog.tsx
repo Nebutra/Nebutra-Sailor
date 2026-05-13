@@ -17,6 +17,7 @@ import {
   Sparkles,
   Sun,
   User,
+  Wand2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -29,8 +30,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { PlanBadge } from "@/components/billing/plan-badge";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
+import { PersonalizationTab } from "@/components/personalization/personalization-tab";
 
 /**
  * AccountDialog — unified account modal (Profile / Subscription / Billing / Preferences).
@@ -45,7 +46,7 @@ import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provide
  * Keyboard shortcut: ⌘, opens / toggles.
  */
 
-type TabId = "profile" | "subscription" | "billing" | "preferences";
+type TabId = "profile" | "personalization" | "subscription" | "billing" | "preferences";
 
 interface AccountDialogContextValue {
   open: boolean;
@@ -104,6 +105,7 @@ interface TabConfig {
 
 const TABS: ReadonlyArray<TabConfig> = [
   { id: "profile", labelKey: "tabs.profile", icon: User },
+  { id: "personalization", labelKey: "tabs.personalization", icon: Wand2 },
   { id: "subscription", labelKey: "tabs.subscription", icon: Sparkles },
   { id: "billing", labelKey: "tabs.billing", icon: Receipt },
   { id: "preferences", labelKey: "tabs.preferences", icon: SettingsIcon },
@@ -117,7 +119,7 @@ function initialsFor(name?: string | null, email?: string | null): string {
   return source.slice(0, 2).toUpperCase();
 }
 
-export function AccountDialog() {
+export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
   const t = useTranslations("account");
   const { open, activeTab, setActiveTab, setOpen, closeDialog } = useAccountDialog();
   const { user } = useAuth();
@@ -193,10 +195,13 @@ export function AccountDialog() {
                 />
               )}
 
+              {activeTab === "personalization" && <PersonalizationTab />}
+
               {activeTab === "subscription" && (
                 <SubscriptionPanel
                   onUpgrade={() => go("/choose-plan")}
                   onManage={() => go("/billing")}
+                  planBadge={planBadge}
                   t={t}
                 />
               )}
@@ -291,10 +296,12 @@ export function AccountDialog() {
   function SubscriptionPanel({
     onUpgrade,
     onManage,
+    planBadge,
     t,
   }: {
     onUpgrade: () => void;
     onManage: () => void;
+    planBadge?: ReactNode;
     t: ReturnType<typeof useTranslations>;
   }) {
     return (
@@ -305,9 +312,7 @@ export function AccountDialog() {
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/40">
                 {t("subscription.currentPlan")}
               </p>
-              <div className="mt-2">
-                <PlanBadge />
-              </div>
+              <div className="mt-2">{planBadge}</div>
             </div>
             <BrandMark size="md" variant="gradient" halo>
               <Sparkles className="h-4 w-4" aria-hidden="true" />
@@ -466,11 +471,23 @@ export function AccountDialog() {
  *   <AccountDialogMount>
  *     <FeedbackMount>...
  */
-export function AccountDialogMount({ children }: { children: ReactNode }) {
+export function AccountDialogMount({
+  children,
+  planBadge,
+}: {
+  children: ReactNode;
+  /**
+   * Server-rendered slot for the subscription tab's plan badge.
+   * Pass `<PlanBadge />` from a Server Component (e.g. the app layout) —
+   * client code MUST NOT import `PlanBadge` directly, since it pulls in
+   * server-only modules (`next/headers`, Prisma, Clerk).
+   */
+  planBadge?: ReactNode;
+}) {
   return (
     <AccountDialogProvider>
       {children}
-      <AccountDialog />
+      <AccountDialog planBadge={planBadge} />
     </AccountDialogProvider>
   );
 }

@@ -1,3 +1,5 @@
+import "server-only";
+
 import type { Session, User } from "@nebutra/auth";
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
