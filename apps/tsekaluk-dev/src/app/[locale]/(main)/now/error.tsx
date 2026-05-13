@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimateIn } from "@nebutra/ui/components";
+import { PageStatus } from "@/components/ui/PageStatus";
 import { Link } from "@/i18n/navigation";
 
 export default function RouteError({
@@ -11,26 +11,12 @@ export default function RouteError({
   reset: () => void;
 }) {
   return (
-    <section className="mx-auto grid min-h-[100dvh] max-w-3xl place-items-center px-6 py-32 text-center">
-      <AnimateIn preset="fade">
-        <p className="font-serif italic text-8xl text-gray-200 dark:text-gray-800">Error</p>
-        <p className="mt-4 text-lg text-gray-500 dark:text-gray-400">Something went wrong.</p>
-        <div className="mt-8 flex items-center justify-center gap-4">
-          <button
-            type="button"
-            onClick={reset}
-            className="inline-block rounded-full border border-gray-300 dark:border-gray-700 px-6 py-2.5 text-sm font-medium text-foreground transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
-          >
-            Try again
-          </button>
-          <Link
-            href="/"
-            className="inline-block rounded-full bg-gray-900 dark:bg-white px-6 py-2.5 text-sm font-medium text-white dark:text-gray-900 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
-          >
-            Go home
-          </Link>
-        </div>
-      </AnimateIn>
-    </section>
+    <PageStatus
+      kind="error"
+      label="Error"
+      message="Something went wrong."
+      reset={reset}
+      LocaleLink={Link}
+    />
   );
 }
