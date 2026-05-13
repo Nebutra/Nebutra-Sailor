@@ -785,5 +785,57 @@
         "bulkMarkRead": "Some notifications could not be marked as read."
       }
     }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "commandSurface": {
+      "noAuth": "Auth is not configured. Set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY to enable user sessions."
+    },
+    "workspaceSnapshot": {
+      "title": "Workspace Snapshot",
+      "description": "Latest warehouse day · {day}",
+      "viewAnalytics": "View analytics →",
+      "metrics": {
+        "activeUsers": "Active Users",
+        "totalEvents": "Total Events",
+        "conversions": "Conversions",
+        "revenue": "Revenue"
+      }
+    },
+    "recentSessions": {
+      "title": "Continue where you left off",
+      "subtitle": "{count, plural, =0 {No sessions} =1 {1 recent session} other {# recent sessions}}",
+      "viewAll": "View all →",
+      "newChat": "New chat",
+      "untitled": "Untitled session",
+      "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
+    },
+    "gettingStarted": {
+      "title": "Getting Started",
+      "description": "{done} of {total} complete · finish setup to unlock the full workspace",
+      "progressLabel": "Setup progress",
+      "tasks": {
+        "team": {
+          "label": "Invite a teammate",
+          "description": "Bring at least one collaborator into your workspace."
+        },
+        "api": {
+          "label": "Generate an API key",
+          "description": "Programmatic access to your workspace endpoints."
+        },
+        "integration": {
+          "label": "Connect an integration",
+          "description": "Stripe, Slack, webhooks, queues, and more."
+        },
+        "ai": {
+          "label": "Open Sailor AI",
+          "description": "Try chat, data, or workflow mode."
+        }
+      }
+    }
   }
 }

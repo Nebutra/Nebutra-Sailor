@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -67,36 +68,37 @@ export async function GettingStarted() {
   if (!orgId || !userId) return null;
 
   const state = await readOrgState(orgId, userId);
+  const t = await getTranslations("dashboard.gettingStarted");
 
   const tasks: OnboardingTask[] = [
     {
       id: "team",
-      label: "Invite a teammate",
-      description: "Bring at least one collaborator into your workspace.",
+      label: t("tasks.team.label"),
+      description: t("tasks.team.description"),
       href: "/settings/team",
       icon: Users,
       done: state.members > 1,
     },
     {
       id: "api",
-      label: "Generate an API key",
-      description: "Programmatic access to your workspace endpoints.",
+      label: t("tasks.api.label"),
+      description: t("tasks.api.description"),
       href: "/settings/api-keys",
       icon: ShieldCheck,
       done: state.apiKeys > 0,
     },
     {
       id: "integration",
-      label: "Connect an integration",
-      description: "Stripe, Slack, webhooks, queues, and more.",
+      label: t("tasks.integration.label"),
+      description: t("tasks.integration.description"),
       href: "/integrations",
       icon: Plug,
       done: state.integrations > 0,
     },
     {
       id: "ai",
-      label: "Open Sailor AI",
-      description: "Try chat, data, or workflow mode.",
+      label: t("tasks.ai.label"),
+      description: t("tasks.ai.description"),
       href: "/chat",
       icon: MessageSquare,
       // Sessions persisted via ChatSession table — real done signal now.
@@ -117,11 +119,9 @@ export async function GettingStarted() {
       <AnimateIn preset="fadeUp">
         <div className="mb-3 flex items-center justify-between gap-4">
           <div className="min-w-0">
-            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
-              Getting Started
-            </h2>
+            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">{t("title")}</h2>
             <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/40">
-              {doneCount} of {total} complete · finish setup to unlock the full workspace
+              {t("description", { done: doneCount, total })}
             </p>
           </div>
 
@@ -133,7 +133,7 @@ export async function GettingStarted() {
               aria-valuenow={percent}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-label="Setup progress"
+              aria-label={t("progressLabel")}
             >
               <div
                 className="h-full rounded-full transition-all duration-500"

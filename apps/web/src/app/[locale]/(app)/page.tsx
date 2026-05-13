@@ -1,6 +1,7 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Activity, CreditCard, Rocket, Users } from "lucide-react";
 import { connection } from "next/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { CommandModeProvider } from "@/components/command-palette/command-mode-context";
 import { CommandSurfaceButton } from "@/components/command-palette/command-surface-button";
@@ -22,25 +23,28 @@ const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-function getGreeting() {
+type GreetingKey = "morning" | "afternoon" | "evening";
+
+function getGreetingKey(): GreetingKey {
   const h = new Date().getHours();
-  if (h >= 5 && h < 12) return "Good morning";
-  if (h >= 12 && h < 18) return "Good afternoon";
-  return "Good evening";
+  if (h >= 5 && h < 12) return "morning";
+  if (h >= 12 && h < 18) return "afternoon";
+  return "evening";
 }
 
-function fmt(n: number) {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
-  return n.toLocaleString();
+function fmtCompact(n: number, locale: string) {
+  return new Intl.NumberFormat(locale, {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(n);
 }
 
-function fmtUSD(n: number) {
-  return n.toLocaleString(undefined, {
+function fmtUSD(n: number, locale: string) {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: 0,
-  });
+  }).format(n);
 }
 
 // ── Streaming server components ───────────────────────────────────────────────
@@ -48,6 +52,8 @@ function fmtUSD(n: number) {
 async function GreetingShell() {
   await connection();
 
+  const t = await getTranslations("dashboard");
+  const locale = await getLocale();
   let userName = "there";
 
   if (hasClerkKey) {
@@ -59,12 +65,12 @@ async function GreetingShell() {
     }
   }
 
-  const greeting = getGreeting();
-  const dateLabel = new Date().toLocaleDateString("en", {
+  const greeting = t(`greeting.${getGreetingKey()}`);
+  const dateLabel = new Intl.DateTimeFormat(locale, {
     weekday: "long",
     month: "long",
     day: "numeric",
-  });
+  }).format(new Date());
 
   return (
     <div className="relative">
@@ -115,6 +121,8 @@ async function GreetingShell() {
 }
 
 async function WorkspaceMetrics() {
+  const t = await getTranslations("dashboard.workspaceSnapshot");
+  const locale = await getLocale();
   let tenantId = process.env.DEFAULT_DASHBOARD_TENANT_ID || "demo_org";
 
   if (hasClerkKey) {
@@ -131,10 +139,22 @@ async function WorkspaceMetrics() {
   if (!summary?.day) return null;
 
   const metrics = [
-    { label: "Active Users", value: fmt(summary.activeUsers), icon: Users },
-    { label: "Total Events", value: fmt(summary.totalEvents), icon: Activity },
-    { label: "Conversions", value: fmt(summary.conversions), icon: Rocket },
-    { label: "Revenue", value: fmtUSD(summary.revenue), icon: CreditCard },
+    {
+      label: t("metrics.activeUsers"),
+      value: fmtCompact(summary.activeUsers, locale),
+      icon: Users,
+    },
+    {
+      label: t("metrics.totalEvents"),
+      value: fmtCompact(summary.totalEvents, locale),
+      icon: Activity,
+    },
+    {
+      label: t("metrics.conversions"),
+      value: fmtCompact(summary.conversions, locale),
+      icon: Rocket,
+    },
+    { label: t("metrics.revenue"), value: fmtUSD(summary.revenue, locale), icon: CreditCard },
   ];
 
   return (
@@ -142,18 +162,16 @@ async function WorkspaceMetrics() {
       <AnimateIn preset="fadeUp">
         <div className="mb-3 flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
-              Workspace Snapshot
-            </h2>
+            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">{t("title")}</h2>
             <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/40">
-              Latest warehouse day · {summary.day}
+              {t("description", { day: summary.day })}
             </p>
           </div>
           <ViewTransitionLink
             href="/analytics"
             className="text-xs font-medium text-blue-11 transition-colors hover:text-blue-12 dark:text-blue-9 dark:hover:text-blue-8"
           >
-            View analytics →
+            {t("viewAnalytics")}
           </ViewTransitionLink>
         </div>
       </AnimateIn>
@@ -209,13 +227,16 @@ export default function DashboardPage() {
         <WorkspaceMetrics />
       </Suspense>
 
-      {!hasClerkKey && (
-        <div className="rounded-xl border border-amber-6 bg-amber-2 px-4 py-3 text-sm text-amber-11">
-          Auth is not configured. Set{" "}
-          <code className="font-mono text-xs">NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY</code> to enable
-          user sessions.
-        </div>
-      )}
+      {!hasClerkKey && <NoAuthNotice />}
     </section>
+  );
+}
+
+async function NoAuthNotice() {
+  const t = await getTranslations("dashboard.commandSurface");
+  return (
+    <div className="rounded-xl border border-amber-6 bg-amber-2 px-4 py-3 text-sm text-amber-11">
+      {t("noAuth")}
+    </div>
   );
 }

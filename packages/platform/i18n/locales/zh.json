@@ -795,5 +795,57 @@
         "bulkMarkRead": "部分通知未能标记为已读。"
       }
     }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "早上好",
+      "afternoon": "下午好",
+      "evening": "晚上好"
+    },
+    "commandSurface": {
+      "noAuth": "未配置认证。设置 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY 以启用用户会话。"
+    },
+    "workspaceSnapshot": {
+      "title": "工作区快照",
+      "description": "最新仓库日期 · {day}",
+      "viewAnalytics": "查看分析 →",
+      "metrics": {
+        "activeUsers": "活跃用户",
+        "totalEvents": "总事件",
+        "conversions": "转化",
+        "revenue": "收入"
+      }
+    },
+    "recentSessions": {
+      "title": "继续之前的工作",
+      "subtitle": "{count, plural, =0 {无会话} other {# 个最近会话}}",
+      "viewAll": "查看全部 →",
+      "newChat": "新建对话",
+      "untitled": "未命名会话",
+      "messageCount": "{count, plural, =1 {1 条消息} other {# 条消息}}"
+    },
+    "gettingStarted": {
+      "title": "入门指引",
+      "description": "{done} / {total} 已完成 · 完成设置以解锁完整功能",
+      "progressLabel": "设置进度",
+      "tasks": {
+        "team": {
+          "label": "邀请团队成员",
+          "description": "至少邀请一位协作者加入您的工作区。"
+        },
+        "api": {
+          "label": "生成 API 密钥",
+          "description": "通过编程接入您的工作区端点。"
+        },
+        "integration": {
+          "label": "连接集成",
+          "description": "Stripe、Slack、Webhook、队列等。"
+        },
+        "ai": {
+          "label": "打开 Sailor AI",
+          "description": "尝试 Chat、Data 或 Workflow 模式。"
+        }
+      }
+    }
   }
 }

@@ -1,6 +1,7 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import type { LucideIcon } from "lucide-react";
 import { Code2, Database, MessageSquare, Plus, Search, Workflow } from "lucide-react";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -22,8 +23,8 @@ const REL_TIME_THRESHOLDS: Array<[number, Intl.RelativeTimeFormatUnit]> = [
   [12, "month"],
 ];
 
-function formatRelative(date: Date): string {
-  const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+function formatRelative(date: Date, locale: string): string {
+  const formatter = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
   let diff = (date.getTime() - Date.now()) / 1000;
   for (const [threshold, unit] of REL_TIME_THRESHOLDS) {
     if (Math.abs(diff) < threshold) {
@@ -57,6 +58,9 @@ export async function RecentSessions() {
   }
   if (!orgId || !userId) return null;
 
+  const t = await getTranslations("dashboard.recentSessions");
+  const locale = await getLocale();
+
   const sessions = await db.chatSession
     .findMany({
       where: { organizationId: orgId, userId },
@@ -79,11 +83,9 @@ export async function RecentSessions() {
       <AnimateIn preset="fadeUp">
         <div className="mb-3 flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
-              Continue where you left off
-            </h2>
+            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">{t("title")}</h2>
             <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/40">
-              {sessions.length} recent session{sessions.length === 1 ? "" : "s"}
+              {t("subtitle", { count: sessions.length })}
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -91,14 +93,14 @@ export async function RecentSessions() {
               href="/chat/history"
               className="text-xs font-medium text-neutral-10 transition-colors hover:text-neutral-12 dark:text-white/50 dark:hover:text-white"
             >
-              View all →
+              {t("viewAll")}
             </ViewTransitionLink>
             <ViewTransitionLink
               href="/chat"
               className="inline-flex items-center gap-1 text-xs font-medium text-blue-11 transition-colors hover:text-blue-12 dark:text-blue-9 dark:hover:text-blue-8"
             >
               <Plus className="h-3 w-3" />
-              New chat
+              {t("newChat")}
             </ViewTransitionLink>
           </div>
         </div>
@@ -121,14 +123,14 @@ export async function RecentSessions() {
                       {meta.label}
                     </span>
                     <span className="text-[10px] text-neutral-10 dark:text-white/40">
-                      {formatRelative(new Date(session.lastMessageAt))}
+                      {formatRelative(new Date(session.lastMessageAt), locale)}
                     </span>
                   </div>
                   <p className="line-clamp-2 text-sm font-medium text-neutral-12 dark:text-white">
-                    {session.title || "Untitled session"}
+                    {session.title || t("untitled")}
                   </p>
                   <p className="mt-auto pt-2 text-[11px] text-neutral-10 dark:text-white/50">
-                    {session.messageCount} message{session.messageCount === 1 ? "" : "s"}
+                    {t("messageCount", { count: session.messageCount })}
                   </p>
                 </div>
               </ViewTransitionLink>
