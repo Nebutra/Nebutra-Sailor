@@ -95,9 +95,69 @@ interface FooterMinimalProps {
    * with a misplaced product pitch.
    */
   showFinalCta?: boolean;
+  /**
+   * Visual variant.
+   * - `"default"`: full 4-column footer + brand block + newsletter.
+   * - `"legal"`: single row of privacy/terms/cookies/refund + copyright,
+   *   optimized for reading-focused legal documents. Pairs with the shared
+   *   `<Navbar>` so the brand experience stays consistent across the site.
+   */
+  variant?: "default" | "legal";
 }
 
-export function FooterMinimal({ showFinalCta = false }: FooterMinimalProps = {}) {
+export function FooterMinimal({
+  showFinalCta = false,
+  variant = "default",
+}: FooterMinimalProps = {}) {
+  if (variant === "legal") {
+    return <LegalFooter />;
+  }
+  return <DefaultFooter showFinalCta={showFinalCta} />;
+}
+
+function LegalFooter() {
+  const t = useTranslations("footer");
+  return (
+    <footer className="border-t border-[var(--neutral-7)] bg-[var(--neutral-1)] dark:border-white/[0.08] dark:bg-black">
+      <div className="mx-auto max-w-[1400px] px-6 py-8">
+        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <nav
+            aria-label="Legal"
+            className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px]"
+          >
+            <Link
+              href="/privacy"
+              className="text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)]"
+            >
+              {t("links.privacy")}
+            </Link>
+            <Link
+              href="/terms"
+              className="text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)]"
+            >
+              {t("links.terms")}
+            </Link>
+            <Link
+              href="/cookies"
+              className="text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)]"
+            >
+              {t("links.cookies")}
+            </Link>
+            <Link
+              href="/refund"
+              className="text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)]"
+            >
+              {t("links.refund")}
+            </Link>
+          </nav>
+          <p className="text-[13px] text-[var(--neutral-10)]">{t("copyright")}</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
   const t = useTranslations("footer");
   const tCta = useTranslations("microLanding.cta");
   type FooterTranslationKey = Parameters<typeof t>[0];
