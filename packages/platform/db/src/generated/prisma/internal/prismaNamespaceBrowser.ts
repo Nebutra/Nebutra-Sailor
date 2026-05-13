@@ -93,6 +93,10 @@ export const ModelName = {
   OAuthAccessToken: 'OAuthAccessToken',
   AuthUser: 'AuthUser',
   ChatSession: 'ChatSession',
+  UserProfile: 'UserProfile',
+  Skill: 'Skill',
+  UserSkill: 'UserSkill',
+  Connector: 'Connector',
   Referral: 'Referral',
   RedemptionCode: 'RedemptionCode',
   CodeRedemption: 'CodeRedemption',
@@ -848,6 +852,69 @@ export const ChatSessionScalarFieldEnum = {
 } as const
 
 export type ChatSessionScalarFieldEnum = (typeof ChatSessionScalarFieldEnum)[keyof typeof ChatSessionScalarFieldEnum]
+
+
+export const UserProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  nickname: 'nickname',
+  occupation: 'occupation',
+  bio: 'bio',
+  customInstructions: 'customInstructions',
+  preferences: 'preferences',
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
+
+
+export const SkillScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  isOfficial: 'isOfficial',
+  version: 'version',
+  tags: 'tags',
+  iconUrl: 'iconUrl',
+  config: 'config',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SkillScalarFieldEnum = (typeof SkillScalarFieldEnum)[keyof typeof SkillScalarFieldEnum]
+
+
+export const UserSkillScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  organizationId: 'organizationId',
+  skillId: 'skillId',
+  enabled: 'enabled',
+  config: 'config',
+  installedAt: 'installedAt'
+} as const
+
+export type UserSkillScalarFieldEnum = (typeof UserSkillScalarFieldEnum)[keyof typeof UserSkillScalarFieldEnum]
+
+
+export const ConnectorScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  organizationId: 'organizationId',
+  type: 'type',
+  name: 'name',
+  iconUrl: 'iconUrl',
+  config: 'config',
+  isActive: 'isActive',
+  lastUsedAt: 'lastUsedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConnectorScalarFieldEnum = (typeof ConnectorScalarFieldEnum)[keyof typeof ConnectorScalarFieldEnum]
 
 
 export const ReferralScalarFieldEnum = {

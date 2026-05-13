@@ -228,6 +228,26 @@ export type AuthUser = Prisma.AuthUserModel
  */
 export type ChatSession = Prisma.ChatSessionModel
 /**
+ * Model UserProfile
+ * 
+ */
+export type UserProfile = Prisma.UserProfileModel
+/**
+ * Model Skill
+ * 
+ */
+export type Skill = Prisma.SkillModel
+/**
+ * Model UserSkill
+ * 
+ */
+export type UserSkill = Prisma.UserSkillModel
+/**
+ * Model Connector
+ * 
+ */
+export type Connector = Prisma.ConnectorModel
+/**
  * Model Referral
  * 
  */

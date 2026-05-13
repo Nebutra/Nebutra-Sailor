@@ -1266,6 +1266,94 @@ model ChatSession {
   @@schema("public")
 }
 
+// ── User Profile / Personalization (TEMPLATE — schema ready) ─────────────────
+// Memory-style personalization. Inject `customInstructions` into the chat
+// system prompt to shape Sailor's behavior per user. `preferences` JSONB is
+// the catch-all for communication toggles (productUpdates, taskAlerts, ads)
+// so adding a new preference doesn't require a migration.
+//
+// One row per user (unique constraint on userId). Created lazily on first
+// edit — we don't pre-create empty rows.
+model UserProfile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique @map("user_id")
+  nickname           String?  @db.VarChar(80)
+  occupation         String?  @db.VarChar(120)
+  bio                String?
+  customInstructions String?  @map("custom_instructions")
+  preferences        Json     @default("{}")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@map("user_profiles")
+  @@schema("public")
+}
+
+// ── Skills Marketplace (TEMPLATE — schema ready) ─────────────────────────────
+// Modular agent capabilities. `Skill` is the catalogue entry (official or
+// community); `UserSkill` is a user's installation + config + enabled state.
+// Skill activation is checked when building the chat agent's tool list.
+model Skill {
+  id          String   @id @default(cuid())
+  slug        String   @unique @db.VarChar(80)
+  name        String   @db.VarChar(120)
+  description String
+  category    String?  @db.VarChar(40)
+  isOfficial  Boolean  @default(false) @map("is_official")
+  version     String   @db.VarChar(20)
+  tags        String[] @default([])
+  iconUrl     String?  @map("icon_url")
+  config      Json     @default("{}")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  installations UserSkill[]
+
+  @@index([isOfficial, category])
+  @@map("skills")
+  @@schema("public")
+}
+
+model UserSkill {
+  id             String   @id @default(cuid())
+  userId         String   @map("user_id")
+  organizationId String?  @map("organization_id")
+  skillId        String   @map("skill_id")
+  enabled        Boolean  @default(true)
+  config         Json     @default("{}")
+  installedAt    DateTime @default(now()) @map("installed_at")
+
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, skillId])
+  @@index([userId, enabled])
+  @@map("user_skills")
+  @@schema("public")
+}
+
+// ── Connectors (TEMPLATE — schema ready) ─────────────────────────────────────
+// User-level external integrations: MCP servers, OAuth apps, custom APIs.
+// `config` MUST be encrypted via @nebutra/vault before persistence — the
+// model schema doesn't enforce this; the calling code does.
+model Connector {
+  id             String    @id @default(cuid())
+  userId         String    @map("user_id")
+  organizationId String?   @map("organization_id")
+  type           String    @db.VarChar(40)
+  name           String    @db.VarChar(120)
+  iconUrl        String?   @map("icon_url")
+  config         Json
+  isActive       Boolean   @default(true) @map("is_active")
+  lastUsedAt     DateTime? @map("last_used_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  @@index([userId, isActive, lastUsedAt(sort: Desc)])
+  @@map("connectors")
+  @@schema("public")
+}
+
 // ── Referrals (TEMPLATE — schema ready, no UI yet) ───────────────────────────
 // Invite-to-earn loop. Single-source-of-truth for codes the referrer can
 // share. `referredUserId` is null until claim; `referredEmail` is captured

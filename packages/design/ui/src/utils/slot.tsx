@@ -13,9 +13,15 @@ export interface SlotProps extends React.HTMLAttributes<HTMLElement> {
  */
 export const Slot = React.forwardRef<HTMLElement, SlotProps>(
   ({ children, className, style, ...props }, ref) => {
-    if (React.Children.count(children) !== 1) {
-      // If there are multiple children or no children, we wrap them in a span
-      // but ideally Slot is used with exactly one React Element child
+    // Resolve the single child without using React.Children.only — which throws
+    // when children is a single-element array, fragment, or a string. Prerender
+    // pipelines sometimes wrap JSX children in arrays of length 1, which passes
+    // React.Children.count(=== 1) but trips React.Children.only.
+    const childArray = React.Children.toArray(children);
+    const child = childArray.length === 1 ? childArray[0] : null;
+
+    if (child == null || !React.isValidElement(child)) {
+      // 0 / 2+ / non-element child — graceful span wrapper instead of throwing.
       return (
         <span ref={ref} className={className} style={style} {...props}>
           {children}
@@ -23,30 +29,23 @@ export const Slot = React.forwardRef<HTMLElement, SlotProps>(
       );
     }
 
-    const child = React.Children.only(children);
+    const childProps = child.props as React.HTMLAttributes<HTMLElement>;
+    return React.cloneElement(child, {
+      ...props,
+      ...childProps,
+      ref: (node: HTMLElement | null) => {
+        if (typeof ref === "function") ref(node);
+        else if (ref) ref.current = node;
 
-    if (React.isValidElement(child)) {
-      const childProps = child.props as React.HTMLAttributes<HTMLElement>;
-      return React.cloneElement(child, {
-        ...props,
-        ...childProps,
-        ref: (node: HTMLElement | null) => {
-          // Merge refs
-          if (typeof ref === "function") ref(node);
-          else if (ref) ref.current = node;
-
-          const childRef = (child as React.ReactElement & { ref?: React.Ref<HTMLElement> }).ref;
-          if (typeof childRef === "function") childRef(node);
-          else if (childRef && "current" in childRef) {
-            (childRef as React.MutableRefObject<HTMLElement | null>).current = node;
-          }
-        },
-        className: cn(className, childProps.className),
-        style: { ...style, ...childProps.style },
-      } as React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement>);
-    }
-
-    return null;
+        const childRef = (child as React.ReactElement & { ref?: React.Ref<HTMLElement> }).ref;
+        if (typeof childRef === "function") childRef(node);
+        else if (childRef && "current" in childRef) {
+          (childRef as React.MutableRefObject<HTMLElement | null>).current = node;
+        }
+      },
+      className: cn(className, childProps.className),
+      style: { ...style, ...childProps.style },
+    } as React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement>);
   },
 );
 
