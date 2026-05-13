@@ -418,13 +418,12 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
             const harnessLayer = pick(lang, HARNESS_TIMELINE[2]);
 
             return (
-              <AnimateInGroup
-                stagger="normal"
-                className="relative rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background p-6 md:p-10 lg:p-14"
-                style={{ boxShadow: "var(--ring-hairline)" }}
-              >
+              <AnimateInGroup stagger="normal">
                 <AnimateIn preset="fadeUp">
-                  <div className="relative">
+                  <div
+                    className="relative rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background p-6 md:p-10 lg:p-14"
+                    style={{ boxShadow: "var(--ring-hairline)" }}
+                  >
                     {/* Harness (outermost, highlighted) */}
                     <div className="flex flex-wrap items-baseline justify-between gap-3 mb-5">
                       <div className="flex items-baseline gap-4">

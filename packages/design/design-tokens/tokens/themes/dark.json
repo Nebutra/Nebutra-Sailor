@@ -28,6 +28,13 @@
       "$description": "Hairline override — more visible on dark background"
     }
   },
+  "overlay": {
+    "faint": {
+      "$value": "rgb(255 255 255 / 0.06)",
+      "$type": "color",
+      "$description": "Dark-mode faint overlay (6% white) — inverted from light"
+    }
+  },
   "scale": {
     "neutral": {
       "1": { "$value": "{color.nebutra-neutral.950}", "$type": "color" },

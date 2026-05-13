@@ -563,7 +563,10 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
 
           {/* The Launchpad submodule — explicit expansion */}
           <AnimateIn preset="fadeUp">
-            <div className="mt-16 md:mt-20 rounded-3xl border border-border/60 bg-muted/20 p-8 md:p-12">
+            <div
+              className="mt-16 md:mt-20 rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-muted/20 p-8 md:p-12"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            >
               <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                 <div className="lg:col-span-5">
                   <div className="flex items-center gap-3 mb-5">
@@ -572,7 +575,10 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                       {labels.launchpadKicker}
                     </span>
                   </div>
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-foreground leading-tight mb-5">
+                  <h3
+                    className="text-2xl md:text-3xl font-semibold text-foreground leading-tight mb-5"
+                    style={{ letterSpacing: "var(--tracking-heading)" }}
+                  >
                     {labels.launchpadTitle}
                   </h3>
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -583,12 +589,18 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                   <AnimateInGroup stagger="normal" className="grid grid-cols-1 gap-3 md:gap-4">
                     {labels.launchpadBullets.map((bullet, index) => (
                       <AnimateIn key={bullet.metric} preset="fadeUp">
-                        <article className="flex items-start gap-5 rounded-2xl border border-border/60 bg-background p-5 md:p-6 transition-all duration-500 hover:border-border hover:shadow-md">
+                        <article
+                          className="flex items-start gap-5 rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background p-5 md:p-6 hover:border-border hover:-translate-y-px transition-transform duration-150"
+                          style={{ boxShadow: "var(--ring-hairline)" }}
+                        >
                           <span className="shrink-0 font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mt-1">
                             LP-{String(index + 1).padStart(2, "0")}
                           </span>
                           <div className="flex-1">
-                            <h4 className="text-base md:text-lg font-bold tracking-tight text-foreground mb-1.5">
+                            <h4
+                              className="text-base md:text-lg font-semibold text-foreground mb-1.5"
+                              style={{ letterSpacing: "var(--tracking-tight)" }}
+                            >
                               {bullet.metric}
                             </h4>
                             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -616,7 +628,13 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               </span>
             </AnimateIn>
             <AnimateIn preset="emerge">
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter text-balance mb-10 text-foreground">
+              <h2
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10 text-foreground"
+                style={{
+                  letterSpacing: "var(--tracking-display)",
+                  lineHeight: "var(--leading-display)",
+                }}
+              >
                 {labels.whyTitle}
               </h2>
             </AnimateIn>
@@ -633,7 +651,10 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
             className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12"
           >
             <AnimateIn preset="fadeUp">
-              <article className="group h-full rounded-3xl border border-border/60 bg-background p-10 md:p-12 transition-all duration-500 hover:border-border hover:shadow-xl">
+              <article
+                className="group h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background p-10 md:p-12 hover:border-border hover:-translate-y-px transition-transform duration-150"
+                style={{ boxShadow: "var(--ring-hairline)" }}
+              >
                 <div className="flex items-center gap-3 mb-6">
                   <Layers className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
                   <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
@@ -653,7 +674,10 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
             </AnimateIn>
 
             <AnimateIn preset="fadeUp">
-              <article className="group h-full rounded-3xl border border-border/60 bg-background p-10 md:p-12 transition-all duration-500 hover:border-border hover:shadow-xl">
+              <article
+                className="group h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background p-10 md:p-12 hover:border-border hover:-translate-y-px transition-transform duration-150"
+                style={{ boxShadow: "var(--ring-hairline)" }}
+              >
                 <div className="flex items-center gap-3 mb-6">
                   <Network className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
                   <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">

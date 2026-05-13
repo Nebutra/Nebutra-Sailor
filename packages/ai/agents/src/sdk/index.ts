@@ -59,6 +59,24 @@ export function getConfig(): Readonly<ResolvedNebutraAIConfig> {
 // Core generation helpers
 // ---------------------------------------------------------------------------
 
+/**
+ * Stream-completion event passed to {@link StreamOptions.onFinish}.
+ * Mirrors the AI SDK's `streamText.onFinish` event shape but is decoupled
+ * from the SDK internals so consumers don't break on SDK version bumps.
+ */
+export interface StreamFinishEvent {
+  /** Final accumulated text of the model's response. */
+  text: string;
+  /** Reason the stream terminated (e.g. "stop", "length", "tool-calls"). */
+  finishReason: string;
+  /** Token usage for the request (best-effort; provider-dependent). */
+  usage: {
+    inputTokens: number | undefined;
+    outputTokens: number | undefined;
+    totalTokens: number | undefined;
+  };
+}
+
 export interface GenerateOptions {
   /** Model ID or preset alias (e.g. "flagship", "fast", "anthropic/claude-sonnet-4"). */
   model?: string;
@@ -68,6 +86,23 @@ export interface GenerateOptions {
   maxTokens?: number;
   /** OpenRouter-specific provider options (reasoning, cacheControl, etc.). */
   providerOptions?: Record<string, JSONValue | undefined>;
+}
+
+/**
+ * Options accepted by {@link streamText}. Adds the durable `onFinish` hook on
+ * top of {@link GenerateOptions}.
+ */
+export interface StreamOptions extends GenerateOptions {
+  /**
+   * Invoked once the model has finished streaming, regardless of whether the
+   * client kept the response connection open. Use this for server-side
+   * persistence (e.g. saving chat sessions to a database) — it is the durable
+   * hook for write-once side-effects.
+   *
+   * Errors thrown inside the callback are caught by the AI SDK and logged;
+   * they do not surface to the streaming client.
+   */
+  onFinish?: (event: StreamFinishEvent) => void | Promise<void>;
 }
 
 /**
@@ -96,9 +131,10 @@ export async function generateText(
  */
 export async function streamText(
   messages: ModelMessage[],
-  options: GenerateOptions = {},
+  options: StreamOptions = {},
 ): Promise<StreamTextResult<Record<string, never>, never>> {
   const model = createModel(options.model ?? _resolved.defaultModel, _resolved);
+  const userOnFinish = options.onFinish;
 
   return _streamText({
     model,
@@ -108,6 +144,22 @@ export async function streamText(
     ...(options.maxTokens ? { maxTokens: options.maxTokens } : {}),
     ...(options.providerOptions
       ? { providerOptions: { openrouter: options.providerOptions } }
+      : {}),
+    ...(userOnFinish
+      ? {
+          onFinish: ({ text, finishReason, totalUsage }) => {
+            const event: StreamFinishEvent = {
+              text,
+              finishReason: String(finishReason),
+              usage: {
+                inputTokens: totalUsage?.inputTokens,
+                outputTokens: totalUsage?.outputTokens,
+                totalTokens: totalUsage?.totalTokens,
+              },
+            };
+            return userOnFinish(event);
+          },
+        }
       : {}),
   });
 }

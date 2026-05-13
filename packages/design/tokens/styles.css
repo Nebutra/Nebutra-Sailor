@@ -101,6 +101,7 @@
   --leading-display: 1.05;
   --leading-heading: 1.15;
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.04); /** Etched-glass hairline (light mode value, dark mode override in themes/dark.json) */
+  --overlay-faint: rgb(0 0 0 / 0.06); /** Light-mode faint overlay (6% black) */
   --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
   --font-display: "Geist", "Noto Sans SC", sans-serif;
@@ -369,6 +370,7 @@
   --leading-display: 1.05;
   --leading-heading: 1.15;
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.06); /** Hairline override — more visible on dark background */
+  --overlay-faint: rgb(255 255 255 / 0.06); /** Dark-mode faint overlay (6% white) — inverted from light */
   --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
   --font-display: "Geist", "Noto Sans SC", sans-serif;

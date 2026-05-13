@@ -150,6 +150,14 @@
       "$description": "Etched-glass hairline (light mode value, dark mode override in themes/dark.json)"
     }
   },
+  "overlay": {
+    "$description": "Translucent surface overlays — used for dot patterns, subtle mesh tints, glass effects. Already-resolved color values (not aliases) so they work in any rgb()/rgba()/style context.",
+    "faint": {
+      "$value": "rgb(0 0 0 / 0.06)",
+      "$type": "color",
+      "$description": "Light-mode faint overlay (6% black)"
+    }
+  },
   "fontFamily": {
     "$description": "Geist + Geist Mono primary (Vercel typography) with Noto Sans SC / PingFang SC / Microsoft YaHei CJK fallbacks. Replaces Poppins per VI 2026 update.",
     "sans": {

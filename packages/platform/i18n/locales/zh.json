@@ -285,13 +285,7 @@
     "banner": {
       "logoAlt": "Nebutra",
       "slogan": "你的创业,值得一套 OS。",
-      "tagline": "多区域智能体,多租户开箱即用。不需要平台团队。",
-      "trustLabel": "信任与合规",
-      "trust": {
-        "soc2": "SOC 2 Type II — 进行中",
-        "gdpr": "GDPR 合规",
-        "governance": "受治理的架构、行级隔离"
-      }
+      "tagline": "多区域智能体,多租户开箱即用。不需要平台团队。"
     },
     "signIn": {
       "title": "登录 Nebutra",
