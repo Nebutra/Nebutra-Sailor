@@ -1,5 +1,11 @@
 // ─── Core ─────────────────────────────────────────────────────────────────────
 export { BaseAgent } from "./agent";
+// ─── User context (personalization) ───────────────────────────────────────────
+export {
+  buildPersonalizedSystemPrompt,
+  renderUserContextBlock,
+  type UserContext,
+} from "./context";
 // ─── Env / Observability / Fallback ─────────────────────────────────────────
 export {
   type AgentsEnv,

@@ -172,7 +172,8 @@
       "profile": "个人资料",
       "subscription": "订阅",
       "billing": "账单",
-      "preferences": "偏好设置"
+      "preferences": "偏好设置",
+      "personalization": "个性化"
     },
     "subscription": {
       "title": "订阅",
@@ -200,6 +201,10 @@
       "help": "帮助",
       "reportIssue": "反馈问题",
       "shortcuts": "键盘快捷键"
+    },
+    "personalization": {
+      "title": "个性化",
+      "subtitle": "告诉 Sailor 你是谁，以及希望它如何回应。"
     }
   },
   "impact": {

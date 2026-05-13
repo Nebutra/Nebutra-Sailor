@@ -172,7 +172,8 @@
       "profile": "Profile",
       "subscription": "Subscription",
       "billing": "Billing",
-      "preferences": "Preferences"
+      "preferences": "Preferences",
+      "personalization": "Personalization"
     },
     "subscription": {
       "title": "Subscription",
@@ -200,6 +201,10 @@
       "help": "Help",
       "reportIssue": "Report an issue",
       "shortcuts": "Keyboard shortcuts"
+    },
+    "personalization": {
+      "title": "Personalization",
+      "subtitle": "Tell Sailor who you are and how to respond."
     }
   },
   "impact": {
