@@ -190,7 +190,7 @@ export function AvatarUploadForm({
           />
           <label
             htmlFor="account-avatar-input"
-            className={`inline-flex cursor-pointer items-center justify-center rounded-md border border-[var(--neutral-7)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 ${
+            className={`inline-flex cursor-pointer items-center justify-center rounded-md border border-[var(--neutral-7)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] ${
               pending ? "cursor-not-allowed opacity-50" : ""
             }`}
           >

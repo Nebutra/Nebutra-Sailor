@@ -163,7 +163,7 @@ function Tabs({ current, onChange }: { current: Tab; onChange: (tab: Tab) => voi
             onClick={() => onChange(t.id)}
             className={[
               "rounded-t-md px-3 py-2 text-sm transition-colors",
-              "focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1",
+              "focus:outline-none focus:ring-2 focus:ring-offset-1",
               active
                 ? "border-b-2 border-[var(--blue-9)] font-medium text-[var(--neutral-12)]"
                 : "border-b-2 border-transparent text-[var(--neutral-11)] hover:text-[var(--neutral-12)]",
@@ -247,7 +247,7 @@ function PropsEditor({
           spellCheck={false}
           className={[
             "h-[55vh] w-full rounded-md border bg-[var(--neutral-2)] p-3 font-mono text-xs",
-            "focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]",
+            "focus:outline-none focus:ring-2",
             parseError ? "border-[color:var(--status-danger)]" : "border-[var(--neutral-6)]",
           ].join(" ")}
         />
@@ -323,7 +323,7 @@ function SendTestPanel({
           onChange={(event) => setTo(event.target.value)}
           placeholder="you@example.com"
           aria-label="Recipient email address"
-          className="min-w-[240px] flex-1 rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+          className="min-w-[240px] flex-1 rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2 text-sm"
         />
         <button
           type="button"

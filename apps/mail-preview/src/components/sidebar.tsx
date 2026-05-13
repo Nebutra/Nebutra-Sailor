@@ -46,7 +46,7 @@ export function Sidebar({ templates, selectedId, onSelect }: SidebarProps) {
                       onClick={() => onSelect(tpl.id)}
                       className={[
                         "w-full rounded-md px-3 py-2 text-left text-sm transition-colors",
-                        "focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1",
+                        "focus:outline-none focus:ring-2 focus:ring-offset-1",
                         active
                           ? "bg-[var(--blue-3)] text-[var(--blue-11)] font-medium"
                           : "text-[var(--neutral-11)] hover:bg-[var(--neutral-4)]",

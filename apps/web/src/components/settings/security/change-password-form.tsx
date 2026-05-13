@@ -152,7 +152,7 @@ export function ChangePasswordForm({
             aria-describedby={errorMessage ? errorId : undefined}
             aria-invalid={Boolean(errorMessage)}
             autoComplete="current-password"
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             id="change-password-current"
             name="currentPassword"
             onChange={(event) => setCurrentPassword(event.target.value)}
@@ -173,7 +173,7 @@ export function ChangePasswordForm({
             aria-describedby={errorMessage ? errorId : undefined}
             aria-invalid={Boolean(errorMessage)}
             autoComplete="new-password"
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             id="change-password-new"
             minLength={MIN_PASSWORD_LENGTH}
             name="newPassword"
@@ -195,7 +195,7 @@ export function ChangePasswordForm({
             aria-describedby={errorMessage ? errorId : undefined}
             aria-invalid={Boolean(errorMessage)}
             autoComplete="new-password"
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             id="change-password-confirm"
             minLength={MIN_PASSWORD_LENGTH}
             name="confirmPassword"
@@ -212,7 +212,7 @@ export function ChangePasswordForm({
         >
           <input
             checked={revokeOtherSessions}
-            className="h-4 w-4 rounded border-[var(--neutral-7)] text-[var(--blue-9)] focus:ring-[var(--blue-9)]"
+            className="h-4 w-4 rounded border-[var(--neutral-7)] text-[var(--blue-9)]"
             id="change-password-revoke"
             name="revokeOtherSessions"
             onChange={(event) => setRevokeOtherSessions(event.target.checked)}

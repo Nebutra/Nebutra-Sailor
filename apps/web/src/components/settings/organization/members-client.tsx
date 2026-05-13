@@ -236,7 +236,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
                             onChange={(event) =>
                               void handleRoleChange(member.id, event.target.value as Role)
                             }
-                            className="h-8 rounded-md border border-neutral-7 bg-neutral-1 px-2 text-xs focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                            className="h-8 rounded-md border border-neutral-7 bg-neutral-1 px-2 text-xs dark:border-white/10 dark:bg-white/5 dark:text-white"
                           >
                             <option value="admin">{t("role.admin")}</option>
                             <option value="member">{t("role.member")}</option>
@@ -257,7 +257,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
                             type="button"
                             aria-label={`${t("remove")} ${displayName}`}
                             onClick={() => setConfirmRemoveId(member.id)}
-                            className="inline-flex items-center gap-1 rounded-sm px-2 py-1 text-xs text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+                            className="inline-flex items-center gap-1 rounded-sm px-2 py-1 text-xs text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
                           >
                             <Trash2 className="h-3.5 w-3.5" aria-hidden />
                             <span>{t("remove")}</span>

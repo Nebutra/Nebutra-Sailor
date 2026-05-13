@@ -158,7 +158,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
         <AnimateIn preset="fade" inView>
           <Link
             href={`/${lang}/blog`}
-            className="mb-8 inline-flex items-center gap-1.5 text-sm text-[var(--neutral-11)] hover:text-[var(--blue-9)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 rounded"
+            className="mb-8 inline-flex items-center gap-1.5 text-sm text-[var(--neutral-11)] hover:text-[var(--blue-9)] transition-colors rounded"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
             All posts

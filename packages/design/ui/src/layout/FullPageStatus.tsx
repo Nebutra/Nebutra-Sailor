@@ -120,8 +120,8 @@ function ActionButton({
 }) {
   const className =
     variant === "primary"
-      ? "inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium text-white transition-transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-9 focus:ring-offset-2 focus:ring-offset-neutral-1"
-      : "inline-flex items-center rounded-lg border border-neutral-7 px-5 py-2.5 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-2 focus:outline-none focus:ring-2 focus:ring-blue-9 focus:ring-offset-2 focus:ring-offset-neutral-1";
+      ? "inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium text-white transition-transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-1"
+      : "inline-flex items-center rounded-lg border border-neutral-7 px-5 py-2.5 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-1";
 
   const style = variant === "primary" ? { background: "var(--brand-gradient)" } : undefined;
 

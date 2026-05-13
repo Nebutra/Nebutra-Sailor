@@ -66,8 +66,8 @@
   "focusRing": {
     "default": {
       "$type": "string",
-      "$value": "0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring))",
-      "$description": "Composite focus ring — 2px ring color over 2px background gap. Consumed via --focus-ring."
+      "$value": "0 0 0 2px hsl(var(--ring) / 0.4)",
+      "$description": "Single-layer translucent focus ring (2026 pattern). Legacy box-shadow consumers stay compatible; modern surfaces should prefer the global :focus-visible outline rule in static/base.css."
     }
   }
 }

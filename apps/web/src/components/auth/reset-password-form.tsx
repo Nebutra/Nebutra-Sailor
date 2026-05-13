@@ -121,7 +121,7 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
             aria-describedby={errorMessage ? errorId : undefined}
             aria-invalid={Boolean(errorMessage)}
             autoComplete="new-password"
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             id="reset-password-new"
             minLength={MIN_PASSWORD_LENGTH}
             name="newPassword"
@@ -143,7 +143,7 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
             aria-describedby={errorMessage ? errorId : undefined}
             aria-invalid={Boolean(errorMessage)}
             autoComplete="new-password"
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             id="reset-password-confirm"
             minLength={MIN_PASSWORD_LENGTH}
             name="confirmPassword"

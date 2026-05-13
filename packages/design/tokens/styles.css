@@ -124,7 +124,7 @@
   --container-content: 1152px;
   --container-wide: 1400px;
   --radius: 0.375rem; /** Geist-matching 6px */
-  --focus-ring: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring)); /** Composite focus ring — 2px ring color over 2px background gap. Consumed via --focus-ring. */
+  --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4); /** Single-layer translucent focus ring (2026 pattern). Legacy box-shadow consumers stay compatible; modern surfaces should prefer the global :focus-visible outline rule in static/base.css. */
   --neutral-1: #ffffff; /** app background */
   --neutral-2: #f8fafc; /** subtle background */
   --neutral-3: #f1f5f9; /** component bg default */
@@ -262,7 +262,7 @@
 :root {
   /* Composite tokens — combine duration + easing for shorthand use. */
   --transition: 150ms ease-out;
-  --focus-ring: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
+  --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4);
 }
 
 @supports (color: color(display-p3 1 1 1)) {
@@ -393,7 +393,7 @@
   --container-content: 1152px;
   --container-wide: 1400px;
   --radius: 0.375rem; /** Geist-matching 6px */
-  --focus-ring: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring)); /** Composite focus ring — 2px ring color over 2px background gap. Consumed via --focus-ring. */
+  --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4); /** Single-layer translucent focus ring (2026 pattern). Legacy box-shadow consumers stay compatible; modern surfaces should prefer the global :focus-visible outline rule in static/base.css. */
   --neutral-1: #020617;
   --neutral-2: #0f172a;
   --neutral-3: #1e293b;
@@ -772,8 +772,9 @@ html {
 }
 
 :focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  outline: 2px solid hsl(var(--ring) / 0.5);
+  outline-offset: 2px;
+  border-radius: inherit;
 }
 
 ::selection {

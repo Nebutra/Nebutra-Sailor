@@ -61,7 +61,7 @@ function PostCard({ post, lang }: { post: SanityPost; lang: string }) {
   return (
     <Link
       href={`/${lang}/blog/${post.slug.current}`}
-      className="group flex flex-col overflow-hidden rounded-xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2"
+      className="group flex flex-col overflow-hidden rounded-xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-shadow hover:shadow-md"
     >
       {/* Cover image */}
       {imageUrl ? (
@@ -159,13 +159,13 @@ export default async function BlogPage({ params }: { params: Promise<{ lang: str
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
                   href={`/${lang}/changelog`}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                 >
                   📜 Read our changelog
                 </Link>
                 <a
                   href="/api/changelog/rss"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                 >
                   📡 Subscribe via RSS
                 </a>
@@ -173,7 +173,7 @@ export default async function BlogPage({ params }: { params: Promise<{ lang: str
                   href="https://x.com/nebutra_ai"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                 >
                   𝕏 Follow @nebutra_ai
                 </a>

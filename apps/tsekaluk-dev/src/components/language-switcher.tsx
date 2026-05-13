@@ -33,7 +33,7 @@ export function LanguageSwitcher() {
             onClick={() => switchLocale(loc.code)}
             aria-pressed={isActive}
             aria-label={`Switch to ${loc.label}`}
-            className="relative px-3 py-1 text-xs font-medium rounded-full transition-transform duration-150 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-9)] focus-visible:ring-offset-1"
+            className="relative px-3 py-1 text-xs font-medium rounded-full transition-transform duration-150 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-1"
           >
             {isActive && (
               <motion.div

@@ -352,14 +352,14 @@ export function NotificationsPageClient({
             <button
               type="button"
               onClick={() => void bulkMarkRead()}
-              className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+              className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
             >
               {t("actions.markRead")}
             </button>
             <button
               type="button"
               onClick={() => void bulkArchive()}
-              className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+              className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
             >
               {t("actions.archive")}
             </button>
@@ -399,7 +399,7 @@ export function NotificationsPageClient({
             type="button"
             onClick={() => void loadMore()}
             disabled={loadingMore}
-            className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loadingMore ? t("actions.loading") : t("actions.loadMore")}
           </button>
@@ -432,7 +432,7 @@ function FilterTabButton({
       role="tab"
       aria-selected={active}
       onClick={onClick}
-      className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] ${
+      className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
         active
           ? "bg-[var(--neutral-3)] text-[var(--neutral-12)]"
           : "text-[var(--neutral-11)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"

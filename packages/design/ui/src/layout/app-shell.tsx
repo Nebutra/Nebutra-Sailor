@@ -133,7 +133,7 @@ export function AppShell({
               className={cn(
                 "inline-flex h-9 w-9 items-center justify-center rounded-md text-foreground/80",
                 "hover:bg-muted hover:text-foreground md:hidden",
-                "focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1",
+                "focus:outline-none focus:ring-2 focus:ring-offset-1",
               )}
             >
               <Menu className="h-5 w-5" aria-hidden="true" />
@@ -152,7 +152,7 @@ export function AppShell({
               className={cn(
                 "inline-flex h-9 w-9 items-center justify-center rounded-md text-foreground/80",
                 "hover:bg-muted hover:text-foreground",
-                "focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1",
+                "focus:outline-none focus:ring-2 focus:ring-offset-1",
               )}
             >
               <Menu className="h-5 w-5" aria-hidden="true" />

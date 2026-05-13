@@ -28,8 +28,9 @@ html {
 }
 
 :focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  outline: 2px solid hsl(var(--ring) / 0.5);
+  outline-offset: 2px;
+  border-radius: inherit;
 }
 
 ::selection {

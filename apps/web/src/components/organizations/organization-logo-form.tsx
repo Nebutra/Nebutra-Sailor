@@ -175,7 +175,7 @@ export function OrganizationLogoForm({
           />
           <label
             htmlFor="organization-logo-input"
-            className={`inline-flex cursor-pointer items-center justify-center rounded-md border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 ${
+            className={`inline-flex cursor-pointer items-center justify-center rounded-md border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] ${
               pending ? "cursor-not-allowed opacity-50" : ""
             }`}
           >

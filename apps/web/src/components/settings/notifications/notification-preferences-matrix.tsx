@@ -200,7 +200,7 @@ export function NotificationPreferencesMatrix({
           <button
             type="button"
             onClick={handleResetAll}
-            className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-11)] hover:bg-[var(--neutral-2)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]"
           >
             {t("settings.notifications.actions.resetAll")}
           </button>

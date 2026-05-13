@@ -129,7 +129,7 @@ export function FeedbackDialog() {
                 value={area}
                 onChange={(e) => setArea(e.target.value)}
                 disabled={submitting}
-                className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 focus:border-blue-9 focus:outline-none focus:ring-1 focus:ring-blue-9 disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white"
+                className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white"
               >
                 {AREAS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -151,7 +151,7 @@ export function FeedbackDialog() {
                 value={mode}
                 onChange={(e) => setMode(e.target.value)}
                 disabled={submitting}
-                className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 focus:border-blue-9 focus:outline-none focus:ring-1 focus:ring-blue-9 disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white"
+                className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white"
               >
                 {MODES.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -186,7 +186,7 @@ export function FeedbackDialog() {
               onChange={(e) => setDescription(e.target.value)}
               disabled={submitting}
               placeholder="What did you expect? What actually happened? If you can, list the steps to reproduce."
-              className="w-full resize-none rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-blue-9 focus:outline-none focus:ring-1 focus:ring-blue-9 disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/50"
+              className="w-full resize-none rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/50"
             />
             <p className="mt-1 text-[11px] text-neutral-10 dark:text-white/40">
               Minimum {MIN_DESCRIPTION} characters · maximum {MAX_DESCRIPTION}
@@ -204,7 +204,7 @@ export function FeedbackDialog() {
               checked={followUp}
               onChange={(e) => setFollowUp(e.target.checked)}
               disabled={submitting}
-              className="h-3.5 w-3.5 rounded border-neutral-7 text-blue-9 focus:ring-blue-8 dark:border-white/30 dark:bg-black/40"
+              className="h-3.5 w-3.5 rounded border-neutral-7 text-blue-9 dark:border-white/30 dark:bg-black/40"
             />
             Allow us to follow up via the email on your account.
           </label>

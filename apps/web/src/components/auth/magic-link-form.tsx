@@ -166,7 +166,7 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
               aria-describedby={errorMessage ? errorId : undefined}
               aria-invalid={Boolean(errorMessage)}
               autoComplete="email"
-              className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+              className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
               id="magic-link-email"
               name="email"
               onChange={(event) => setEmail(event.target.value)}
@@ -197,7 +197,7 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
               aria-describedby={errorMessage ? errorId : undefined}
               aria-invalid={Boolean(errorMessage)}
               autoComplete="one-time-code"
-              className="block w-40 rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-center font-mono text-base tracking-[0.4em] text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+              className="block w-40 rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-center font-mono text-base tracking-[0.4em] text-[var(--neutral-12)]"
               id="magic-link-code"
               inputMode="numeric"
               maxLength={VERIFICATION_CODE_LENGTH}

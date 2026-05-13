@@ -87,7 +87,7 @@ export function ChangelogWidget({
         aria-label="View changelog"
         aria-expanded={isOpen}
         onClick={() => setIsOpen(!isOpen)}
-        className="relative inline-flex items-center justify-center rounded-lg p-2 transition-colors hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2"
+        className="relative inline-flex items-center justify-center rounded-lg p-2 transition-colors hover:bg-[var(--neutral-3)]"
       >
         <Bell className="h-5 w-5 text-[var(--neutral-11)]" />
         {unreadCount > 0 && (

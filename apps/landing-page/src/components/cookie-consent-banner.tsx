@@ -156,7 +156,7 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
           <button
             type="button"
             onClick={handleAcceptAll}
-            className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-semibold text-white"
             style={{ background: "var(--brand-gradient)" }}
           >
             {t("button.acceptAll")}
@@ -164,7 +164,7 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
           <button
             type="button"
             onClick={handleSavePreferences}
-            className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 dark:text-white"
+            className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] dark:text-white"
           >
             {t("button.savePreferences")}
           </button>

@@ -251,7 +251,7 @@ export function TeamMemberList({ orgId }: Props) {
                       disabled={!canChangeRole}
                       onChange={(event) => handleRoleChange(member, event.target.value as TeamRole)}
                       aria-label={`Role for ${memberDisplayName(member)}`}
-                      className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] disabled:cursor-not-allowed disabled:bg-[var(--neutral-2)] disabled:text-[var(--neutral-10)]"
+                      className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] disabled:cursor-not-allowed disabled:bg-[var(--neutral-2)] disabled:text-[var(--neutral-10)]"
                     >
                       {isOwner && <option value="owner">Owner</option>}
                       {editableRoles.map((role) => (

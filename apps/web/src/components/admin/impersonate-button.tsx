@@ -55,7 +55,7 @@ export function ImpersonateButton({ userId, userLabel, className }: ImpersonateB
         onClick={handleClick}
         disabled={pending}
         aria-label={`Impersonate ${userLabel ?? userId}`}
-        className="rounded-md border border-neutral-7 bg-neutral-2 px-2.5 py-1 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-3 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 disabled:opacity-50 dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+        className="rounded-md border border-neutral-7 bg-neutral-2 px-2.5 py-1 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-3 disabled:opacity-50 dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
       >
         {pending ? "Starting…" : "Impersonate"}
       </button>

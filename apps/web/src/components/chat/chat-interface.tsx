@@ -457,7 +457,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
             onKeyDown={handleKeyDown}
             placeholder={`Type a message… (${currentMeta.label} mode)`}
             disabled={isStreaming || isLoadingSession}
-            className="flex-1 resize-none rounded-lg border border-neutral-7 bg-neutral-2 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-[var(--blue-9)] focus:outline-none focus:ring-1 focus:ring-[var(--blue-9)] disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/50 dark:focus:border-cyan-9 dark:focus:ring-cyan-9"
+            className="flex-1 resize-none rounded-lg border border-neutral-7 bg-neutral-2 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 transition-colors focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/50"
           />
           <button
             type="submit"

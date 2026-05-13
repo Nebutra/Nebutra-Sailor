@@ -105,7 +105,7 @@ export function OrganizationInvitationModal({
         <button
           type="button"
           onClick={() => router.push("/")}
-          className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[var(--neutral-12)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-1)] transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+          className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[var(--neutral-12)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-1)] transition hover:opacity-90"
         >
           {t("backToDashboard")}
         </button>
@@ -166,7 +166,7 @@ export function OrganizationInvitationModal({
           type="button"
           onClick={handleDecline}
           disabled={!!submitting}
-          className="inline-flex flex-1 items-center justify-center rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-3)] disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+          className="inline-flex flex-1 items-center justify-center rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-3)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitting === "decline" ? t("declining") : t("decline")}
         </button>
@@ -174,7 +174,7 @@ export function OrganizationInvitationModal({
           type="button"
           onClick={handleAccept}
           disabled={!!submitting}
-          className="inline-flex flex-1 items-center justify-center rounded-lg bg-[var(--neutral-12)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-1)] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+          className="inline-flex flex-1 items-center justify-center rounded-lg bg-[var(--neutral-12)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-1)] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitting === "accept" ? t("accepting") : t("accept")}
         </button>

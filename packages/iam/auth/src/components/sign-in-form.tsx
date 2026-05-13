@@ -64,7 +64,7 @@ export function SignInForm({
                 key={p.id}
                 type="button"
                 onClick={() => handleOAuth(p.id)}
-                className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+                className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)]"
               >
                 {p.name}
               </button>
@@ -91,7 +91,7 @@ export function SignInForm({
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[var(--blue-9)]"
           />
         </div>
 
@@ -106,7 +106,7 @@ export function SignInForm({
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="current-password"
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[var(--blue-9)]"
           />
         </div>
 
@@ -119,7 +119,7 @@ export function SignInForm({
         <button
           type="submit"
           disabled={loading}
-          className="rounded-lg bg-[var(--blue-9)] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 disabled:opacity-50"
+          className="rounded-lg bg-[var(--blue-9)] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:opacity-90 disabled:opacity-50"
         >
           {loading ? "Signing in\u2026" : "Sign In"}
         </button>

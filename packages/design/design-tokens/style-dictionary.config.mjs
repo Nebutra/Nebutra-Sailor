@@ -341,7 +341,7 @@ function buildExtras({ selector, p3Map, oklchMap, includeBrandBridge, isDark }) 
       `${selector} {`,
       `  /* Composite tokens — combine duration + easing for shorthand use. */`,
       `  --transition: 150ms ease-out;`,
-      `  --focus-ring: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));`,
+      `  --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4);`,
       `}`,
       ``,
     );

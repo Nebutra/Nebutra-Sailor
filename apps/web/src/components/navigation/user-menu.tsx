@@ -82,7 +82,7 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-neutral-7 bg-neutral-2 text-xs font-semibold text-neutral-12 transition-colors hover:bg-neutral-3 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
+        className="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-neutral-7 bg-neutral-2 text-xs font-semibold text-neutral-12 transition-colors hover:bg-neutral-3 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
       >
         {user.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element

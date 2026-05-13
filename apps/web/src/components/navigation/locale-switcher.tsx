@@ -56,7 +56,7 @@ export function LocaleSwitcher() {
         aria-expanded={open}
         disabled={isPending}
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex items-center gap-2 rounded-md px-2.5 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+        className="inline-flex items-center gap-2 rounded-md px-2.5 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
       >
         <Globe className="h-4 w-4" aria-hidden />
         <span className="uppercase">{locale}</span>

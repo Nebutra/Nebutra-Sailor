@@ -147,7 +147,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex items-center gap-2 rounded-full border border-neutral-7/60 bg-neutral-2/60 px-1.5 py-1 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-3/80 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+        className="inline-flex items-center gap-2 rounded-full border border-neutral-7/60 bg-neutral-2/60 px-1.5 py-1 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-3/80 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
       >
         <span
           aria-hidden
@@ -222,7 +222,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
             onClick={() => {
               void handleSignOut();
             }}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
           >
             <LogOut className="h-4 w-4" aria-hidden />
             <span>{t("signOut")}</span>
@@ -243,7 +243,7 @@ interface MenuLinkProps {
 function MenuLink({ href, icon: Icon, label, external = true }: MenuLinkProps) {
   const isExternal = external && href.startsWith("http");
   const className =
-    "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-2 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 dark:text-white dark:hover:bg-white/5";
+    "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/5";
   return (
     <a
       role="menuitem"

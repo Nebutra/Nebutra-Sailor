@@ -38,7 +38,7 @@ function AuthIndicator() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="gap-1.5 text-sm flex items-center text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 rounded-full"
+          className="gap-1.5 text-sm flex items-center text-muted-foreground transition-colors hover:text-foreground rounded-full"
           aria-label="Account menu"
           aria-expanded={open}
           title={`Signed in as ${session.user.name ?? session.user.email}`}
@@ -211,7 +211,7 @@ export function Header() {
           <button
             type="button"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            className="p-2 md:hidden rounded-md text-muted-foreground transition-colors hover:text-foreground focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 focus:outline-none"
+            className="p-2 md:hidden rounded-md text-muted-foreground transition-colors hover:text-foreground focus:ring-2 focus:ring-offset-1 focus:outline-none"
             onClick={() => setMobileOpen((prev) => !prev)}
           >
             {mobileOpen ? <Cross className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

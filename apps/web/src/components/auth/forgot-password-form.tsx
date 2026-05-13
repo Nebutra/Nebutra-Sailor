@@ -105,7 +105,7 @@ export function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps) {
             aria-describedby={errorMessage ? errorId : undefined}
             aria-invalid={Boolean(errorMessage)}
             autoComplete="email"
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             id="forgot-password-email"
             name="email"
             onChange={(event) => setEmail(event.target.value)}

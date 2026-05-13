@@ -100,7 +100,7 @@ export function ApiKeysList({
         <button
           type="button"
           onClick={onCreate}
-          className="rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+          className="rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
           style={{ background: "var(--brand-gradient)" }}
         >
           {emptyCta}

@@ -89,7 +89,7 @@ export function EmailChangeForm({
             value={value}
             onChange={(event) => setValue(event.target.value)}
             placeholder={t("newEmailPlaceholder")}
-            className="mt-1 w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="mt-1 w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
           />
         </div>
 

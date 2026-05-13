@@ -310,7 +310,7 @@ export function CookieBanner() {
             <button
               type="button"
               onClick={saveCustom}
-              className="rounded-md bg-[var(--blue-9)] px-4 py-2 text-sm font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+              className="rounded-md bg-[var(--blue-9)] px-4 py-2 text-sm font-medium text-white hover:opacity-90"
             >
               Save Preferences / 保存偏好
             </button>
@@ -318,7 +318,7 @@ export function CookieBanner() {
             <button
               type="button"
               onClick={() => setShowCustomize(true)}
-              className="rounded-md border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+              className="rounded-md border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
             >
               Customize / 自定义
             </button>
@@ -326,14 +326,14 @@ export function CookieBanner() {
           <button
             type="button"
             onClick={rejectNonEssential}
-            className="rounded-md border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="rounded-md border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
           >
             Reject Non-Essential / 拒绝非必要
           </button>
           <button
             type="button"
             onClick={acceptAll}
-            className="rounded-md bg-[var(--blue-9)] px-4 py-2 text-sm font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+            className="rounded-md bg-[var(--blue-9)] px-4 py-2 text-sm font-medium text-white hover:opacity-90"
           >
             Accept All / 全部接受
           </button>

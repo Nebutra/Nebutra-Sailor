@@ -189,7 +189,7 @@ export function InboxList({
                   e.stopPropagation();
                   void onArchive(item.id);
                 }}
-                className="rounded-md p-1 text-[var(--neutral-11)] hover:bg-[var(--neutral-3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+                className="rounded-md p-1 text-[var(--neutral-11)] hover:bg-[var(--neutral-3)]"
               >
                 <Trash2 className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -205,7 +205,7 @@ export function InboxList({
                 onClick={() => {
                   if (!item.read) void onMarkRead?.(item.id);
                 }}
-                className="block focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+                className="block"
               >
                 {itemContent}
               </Link>
@@ -215,7 +215,7 @@ export function InboxList({
                 onClick={() => {
                   if (!item.read) void onMarkRead?.(item.id);
                 }}
-                className="block w-full text-left focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+                className="block w-full text-left"
               >
                 {itemContent}
               </button>

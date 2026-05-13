@@ -84,7 +84,7 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
             type="button"
             aria-label={t("title")}
             onClick={onClose}
-            className="rounded-md p-1 text-neutral-11 transition-colors hover:bg-neutral-2 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 dark:hover:bg-white/10"
+            className="rounded-md p-1 text-neutral-11 transition-colors hover:bg-neutral-2 dark:hover:bg-white/10"
           >
             <X className="h-4 w-4" aria-hidden />
           </button>
@@ -124,7 +124,7 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
               name="role"
               value={role}
               onChange={(event) => setRole(event.target.value as Role)}
-              className="h-9 w-full rounded-md border border-neutral-7 bg-neutral-1 px-2 text-sm text-neutral-12 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 dark:border-white/10 dark:bg-white/5 dark:text-white"
+              className="h-9 w-full rounded-md border border-neutral-7 bg-neutral-1 px-2 text-sm text-neutral-12 dark:border-white/10 dark:bg-white/5 dark:text-white"
               aria-label={t("roleLabel")}
             >
               <option value="admin">Admin</option>

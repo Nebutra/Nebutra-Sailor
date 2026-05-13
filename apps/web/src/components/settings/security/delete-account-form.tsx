@@ -129,7 +129,7 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               disabled={pending}
-              className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+              className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             />
           </div>
 

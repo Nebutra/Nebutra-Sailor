@@ -133,7 +133,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
             onChange={(e) => update("nickname", e.target.value.slice(0, NICKNAME_MAX))}
             placeholder="What should Sailor call you?"
             disabled={submitting}
-            className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-blue-9 focus:outline-none focus:ring-1 focus:ring-blue-9 disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
+            className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
           />
         </Field>
         <Field
@@ -148,7 +148,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
             onChange={(e) => update("occupation", e.target.value.slice(0, OCCUPATION_MAX))}
             placeholder="e.g. Product Designer, Software Engineer"
             disabled={submitting}
-            className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-blue-9 focus:outline-none focus:ring-1 focus:ring-blue-9 disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
+            className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
           />
         </Field>
       </div>
@@ -167,7 +167,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
           onChange={(e) => update("bio", e.target.value)}
           placeholder="I work in fintech, building infra for embedded payments. I prefer direct, technical answers without too many caveats…"
           disabled={submitting}
-          className="w-full resize-none rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-blue-9 focus:outline-none focus:ring-1 focus:ring-blue-9 disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
+          className="w-full resize-none rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
         />
       </Field>
 
@@ -185,7 +185,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
           onChange={(e) => update("customInstructions", e.target.value)}
           placeholder={`e.g. "Focus on TypeScript best practices", "Maintain a professional tone", "Always cite sources for important conclusions"`}
           disabled={submitting}
-          className="w-full resize-none rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-blue-9 focus:outline-none focus:ring-1 focus:ring-blue-9 disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
+          className="w-full resize-none rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
         />
       </Field>
 

@@ -44,12 +44,12 @@ export function NewsletterForm() {
         placeholder={t("newsletterPlaceholder")}
         aria-label={t("newsletterPlaceholder")}
         required
-        className="w-full rounded-lg border border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] px-3 py-2 text-sm text-[color:var(--neutral-12)] placeholder:text-[color:var(--neutral-10)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 sm:w-48 sm:py-1.5 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-white/50"
+        className="w-full rounded-lg border border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] px-3 py-2 text-sm text-[color:var(--neutral-12)] placeholder:text-[color:var(--neutral-10)] sm:w-48 sm:py-1.5 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-white/50"
       />
       <button
         type="submit"
         disabled={status === "loading"}
-        className="rounded-lg bg-[image:var(--brand-gradient)] px-3 py-1.5 text-sm font-medium text-white transition-opacity focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 disabled:opacity-50"
+        className="rounded-lg bg-[image:var(--brand-gradient)] px-3 py-1.5 text-sm font-medium text-white transition-opacity disabled:opacity-50"
       >
         {status === "loading" ? "..." : t("newsletterSubscribe")}
       </button>

@@ -179,7 +179,7 @@ export function InboxBell({
         aria-expanded={open}
         aria-haspopup="dialog"
         onClick={() => setOpen((current) => !current)}
-        className="relative inline-flex h-9 w-9 items-center justify-center rounded-md text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+        className="relative inline-flex h-9 w-9 items-center justify-center rounded-md text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
         data-testid="inbox-bell-trigger"
       >
         <Bell className="h-5 w-5" aria-hidden="true" />

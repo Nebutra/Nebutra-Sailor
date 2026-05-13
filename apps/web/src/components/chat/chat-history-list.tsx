@@ -184,7 +184,7 @@ export function ChatHistoryList({ initialSessions }: Props) {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search sessions by title or mode…"
           aria-label="Search chat history"
-          className="w-full rounded-xl border border-neutral-7 bg-neutral-1 py-2 pl-9 pr-3 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-blue-9 focus:outline-none focus:ring-1 focus:ring-blue-9 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
+          className="w-full rounded-xl border border-neutral-7 bg-neutral-1 py-2 pl-9 pr-3 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
         />
         {query && (
           <p className="mt-1.5 text-[11px] text-neutral-10 dark:text-white/40">

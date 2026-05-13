@@ -543,7 +543,7 @@ export function LicenseWizard() {
                     }))
                   }
                   placeholder="e.g. A financial management platform for freelancers…"
-                  className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
+                  className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:ring-offset-[var(--neutral-1)]"
                   rows={4}
                 />
                 <p className="mt-1 text-xs text-[var(--neutral-11)]">
@@ -567,7 +567,7 @@ export function LicenseWizard() {
                   value={step2.industry}
                   onChange={(e) => setStep2((prev) => ({ ...prev, industry: e.target.value }))}
                   placeholder="e.g. Fintech, Healthcare, Dev Tools…"
-                  className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
+                  className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:ring-offset-[var(--neutral-1)]"
                 />
               </div>
 
@@ -759,7 +759,7 @@ export function LicenseWizard() {
                         setStep3((prev) => ({ ...prev, githubHandle: e.target.value }))
                       }
                       placeholder="your-github-username…"
-                      className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
+                      className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:ring-offset-[var(--neutral-1)]"
                     />
                   </div>
 
@@ -781,7 +781,7 @@ export function LicenseWizard() {
                         setStep3((prev) => ({ ...prev, twitterHandle: e.target.value }))
                       }
                       placeholder="your-twitter-handle…"
-                      className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
+                      className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[var(--blue-9)] focus:ring-offset-[var(--neutral-1)]"
                     />
                   </div>
 
@@ -804,7 +804,7 @@ export function LicenseWizard() {
                           referralSource: value === "" ? null : value,
                         }));
                       }}
-                      className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] focus:border-[var(--blue-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 focus:ring-offset-[var(--neutral-1)]"
+                      className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] focus:border-[var(--blue-9)] focus:ring-offset-[var(--neutral-1)]"
                     >
                       <option value="">{t("referralSource.selectPlaceholder")}</option>
                       {REFERRAL_SOURCE_OPTIONS.map((option) => (

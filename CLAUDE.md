@@ -237,17 +237,25 @@ Every interactive component must have:
 - `type="button"` on all `<button>` elements
 - `aria-label` on icon-only buttons
 - `role` attribute where semantic HTML isn't possible
-- Keyboard navigation support (focus rings via `focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1`)
+- Keyboard navigation support — **do NOT add component-level focus rings**. The global `:focus-visible` rule in [packages/design/design-tokens/static/base.css](packages/design/design-tokens/static/base.css) supplies a translucent 2px outline (`hsl(var(--ring) / 0.5)`) with 2px offset for every focusable element. Keyboard users get the ring; mouse users don't.
 
 ```tsx
-// ✅ Accessible icon button
+// ✅ Accessible icon button — no focus classes needed
 <button
   type="button"
   aria-label="Close dialog"
-  className="rounded-md p-1 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+  className="rounded-md p-1"
 >
   <X className="h-4 w-4" />
 </button>
+
+// ✅ Input — keep border-color change for mouse focus feedback, use --ring token
+<input
+  className="rounded-md border border-neutral-7 focus:border-[hsl(var(--ring))] focus:outline-none"
+/>
+
+// ❌ Never reintroduce hardcoded brand-blue rings
+// focus:ring-[var(--blue-9)] focus:ring-offset-1 — 100% saturation, double-rings with global rule
 ```
 
 ---

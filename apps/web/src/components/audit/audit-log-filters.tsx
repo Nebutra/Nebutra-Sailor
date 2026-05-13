@@ -93,7 +93,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           value={filters.action ?? ""}
           onChange={(e) => setField("action", e.target.value)}
           placeholder={t("actionPlaceholder")}
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
         />
       </div>
 
@@ -109,7 +109,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           data-testid="audit-filter-entity"
           value={filters.entityType ?? ""}
           onChange={(e) => setField("entityType", e.target.value || undefined)}
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
         >
           <option value="">{t("all")}</option>
           {ENTITY_TYPES.map((entity) => (
@@ -134,7 +134,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           onChange={(e) =>
             setField("outcome", (e.target.value || undefined) as AuditLogFilterValues["outcome"])
           }
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
         >
           <option value="">{t("all")}</option>
           <option value="success">{t("outcomeSuccess")}</option>
@@ -156,7 +156,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           type="date"
           value={filters.startDate ?? ""}
           onChange={(e) => setField("startDate", e.target.value || undefined)}
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
         />
       </div>
 
@@ -173,7 +173,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           type="date"
           value={filters.endDate ?? ""}
           onChange={(e) => setField("endDate", e.target.value || undefined)}
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)]"
+          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
         />
       </div>
 

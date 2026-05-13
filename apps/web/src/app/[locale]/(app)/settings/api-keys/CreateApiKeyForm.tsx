@@ -50,7 +50,7 @@ export function CreateApiKeyForm({ orgId }: Props) {
         required
         placeholder="e.g. Production backend"
         disabled={isPending}
-        className="flex-1 rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 disabled:opacity-50"
+        className="flex-1 rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] disabled:opacity-50"
       />
       <button
         type="submit"

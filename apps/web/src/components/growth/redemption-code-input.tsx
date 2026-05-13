@@ -94,7 +94,7 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
           onChange={(e) => setCode(e.target.value.toUpperCase().slice(0, 40))}
           disabled={state === "submitting"}
           placeholder="ENTER-CODE"
-          className="flex-1 rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-1.5 font-mono text-sm uppercase tracking-wider text-neutral-12 placeholder:text-neutral-9 focus:border-blue-9 focus:outline-none focus:ring-1 focus:ring-blue-9 disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/30"
+          className="flex-1 rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-1.5 font-mono text-sm uppercase tracking-wider text-neutral-12 placeholder:text-neutral-9 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/30"
           aria-describedby={message ? `${inputId}-message` : undefined}
         />
         <button

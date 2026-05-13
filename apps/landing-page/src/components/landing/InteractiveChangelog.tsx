@@ -182,7 +182,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                 placeholder="Search releases..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] placeholder-[var(--neutral-11)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 dark:bg-[var(--neutral-2)] dark:border-[var(--neutral-3)]"
+                className="w-full pl-10 pr-4 py-2 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] placeholder-[var(--neutral-11)] transition-colors dark:bg-[var(--neutral-2)] dark:border-[var(--neutral-3)]"
               />
             </div>
 
@@ -196,7 +196,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                   activeFilter === null
                     ? "bg-[var(--blue-9)] text-white"
                     : "bg-[var(--neutral-2)] text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] dark:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)]"
-                } focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1`}
+                }`}
               >
                 All
               </button>
@@ -209,7 +209,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                     activeFilter === tag
                       ? "text-white"
                       : "bg-[var(--neutral-2)] text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] dark:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)]"
-                  } focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1`}
+                  }`}
                   style={activeFilter === tag ? { background: "var(--brand-gradient)" } : undefined}
                 >
                   {tag}
@@ -393,7 +393,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                                 key={emoji}
                                 type="button"
                                 onClick={() => handleReaction(item.version, emoji)}
-                                className="flex items-center gap-1 px-2 py-1 rounded-full bg-[var(--neutral-2)] dark:bg-[var(--neutral-3)] hover:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)] transition-colors text-xs font-medium text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
+                                className="flex items-center gap-1 px-2 py-1 rounded-full bg-[var(--neutral-2)] dark:bg-[var(--neutral-3)] hover:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)] transition-colors text-xs font-medium text-[var(--neutral-12)]"
                                 aria-label={`React with ${label}`}
                               >
                                 <span>{emoji}</span>
@@ -409,7 +409,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                           {/* View details link */}
                           <Link
                             href={`/changelog/${item.version}`}
-                            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--blue-9)] hover:text-[var(--blue-8)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2 rounded px-1"
+                            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--blue-9)] hover:text-[var(--blue-8)] transition-colors rounded px-1"
                           >
                             View details
                             <ChevronDown className="size-4 -rotate-90" />
