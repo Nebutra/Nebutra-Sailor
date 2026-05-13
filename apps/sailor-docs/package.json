@@ -6,7 +6,7 @@
     "dev": "next dev --port 3004",
     "build": "next build",
     "start": "next start",
-    "typecheck": "next typegen && tsc --noEmit",
+    "typecheck": "fumadocs-mdx && next typegen && tsc --noEmit",
     "clean": "rm -rf .next"
   },
   "dependencies": {

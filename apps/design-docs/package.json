@@ -8,7 +8,7 @@
     "prebuild": "node scripts/build-registry.mjs && tsx ../../packages/design/ui/scripts/build-registry.ts",
     "build": "next build",
     "start": "next start",
-    "typecheck": "next typegen && tsc --noEmit",
+    "typecheck": "fumadocs-mdx && next typegen && tsc --noEmit",
     "lint:links": "node ./scripts/lint-links.mjs",
     "sync-obsidian": "tsx scripts/sync-obsidian.ts",
     "sync-python": "node scripts/generate-python-docs.mjs",
