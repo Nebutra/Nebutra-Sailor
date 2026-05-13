@@ -8,7 +8,7 @@
 // ─── Provider ID ───
 
 /** Supported auth provider identifiers. */
-export type AuthProviderId = "clerk" | "better-auth" | "nextauth" | "supabase";
+export type AuthProviderId = "clerk" | "better-auth" | "nextauth" | "supabase" | "dev";
 
 // ─── Configuration ───
 

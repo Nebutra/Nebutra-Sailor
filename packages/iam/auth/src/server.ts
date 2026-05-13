@@ -28,6 +28,8 @@ export async function createAuth(config: AuthConfig): Promise<AuthProvider> {
       return (await import("./providers/nextauth")).createNextAuthProvider(config);
     case "supabase":
       return (await import("./providers/supabase")).createSupabaseAuthProvider(config);
+    case "dev":
+      return (await import("./providers/dev")).createDevAuthProvider(config);
     default:
       throw new Error(`Unknown auth provider: ${String((config as AuthConfig).provider)}`);
   }

@@ -1,11 +1,11 @@
 "use client";
 
 // Use /client subpath — root entrypoint pulls server-only middleware.
-import { isAuthFeatureEnabledSync, useAuth } from "@nebutra/auth/client";
+import { getConfiguredAuthProvider, isAuthFeatureEnabledSync, useAuth } from "@nebutra/auth/client";
 import { AppShell } from "@nebutra/ui/layout";
 import type { SidebarNavRenderLinkProps, SidebarNavSection, Workspace } from "@nebutra/ui/patterns";
 import { SidebarNav, WorkspaceSwitcher } from "@nebutra/ui/patterns";
-import { ChevronRight, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { AlertTriangle, ChevronRight, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type React from "react";
@@ -315,6 +315,9 @@ function DesignSystemShellInner({
     />
   );
 
+  // ─── Dev-mode banner (only when @nebutra/auth is running the fixture provider) ─
+  const isDevAuth = getConfiguredAuthProvider() === "dev";
+
   // ─── Header slot — breadcrumbs + quick links + auth controls ─────────────
   const headerContent = (
     <div className="flex w-full items-center justify-between gap-3">
@@ -369,6 +372,22 @@ function DesignSystemShellInner({
 
   return (
     <AppShell sidebar={sidebar} header={headerContent} collapsed={collapsed}>
+      {isDevAuth ? (
+        <div
+          role="alert"
+          aria-live="polite"
+          className="-mx-4 mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-amber-900 sm:-mx-6 md:-mx-8 dark:bg-amber-950/40 dark:text-amber-200"
+        >
+          <AlertTriangle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          <span>
+            DEV AUTH ACTIVE — synthetic "Dev User", no DB writes. Set{" "}
+            <code className="rounded bg-amber-200/50 px-1 font-mono text-[10px] dark:bg-amber-900/40">
+              NEXT_PUBLIC_AUTH_PROVIDER
+            </code>{" "}
+            to a real provider to disable.
+          </span>
+        </div>
+      ) : null}
       <div id="main-content" aria-label="Main content" className="content-area">
         {children}
       </div>

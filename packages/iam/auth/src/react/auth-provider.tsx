@@ -20,6 +20,10 @@ type NextAuthProviderLazyComponent = React.ComponentType<{
   children: ReactNode;
 }>;
 
+type DevProviderLazyComponent = React.ComponentType<{
+  children: ReactNode;
+}>;
+
 /**
  * Props for the root AuthProvider component.
  */
@@ -79,6 +83,10 @@ export function AuthProvider({ provider, children, config }: AuthProviderProps) 
   if (provider === "nextauth") {
     const basePath = (config?.basePath as string) || "/api/auth";
     return <NextAuthProviderLazy basePath={basePath}>{children}</NextAuthProviderLazy>;
+  }
+
+  if (provider === "dev") {
+    return <DevProviderLazy>{children}</DevProviderLazy>;
   }
 
   console.error(`Unknown auth provider: ${String(provider)}`);
@@ -178,4 +186,29 @@ function NextAuthProviderLazy({ basePath, children }: { basePath?: string; child
   if (basePath) props.basePath = basePath;
 
   return <NextAuthProvider {...props} />;
+}
+
+/**
+ * Lazy-loaded dev fixture provider. Mounts an authenticated AuthContext
+ * with a synthetic user. Production loading is hard-blocked inside the
+ * provider module itself.
+ */
+function DevProviderLazy({ children }: { children: ReactNode }) {
+  const [DevProvider, setDevProvider] = useState<DevProviderLazyComponent | null>(null);
+
+  useEffect(() => {
+    import("./providers/dev-provider").then((mod) => {
+      setDevProvider(() => mod.DevProvider);
+    });
+  }, []);
+
+  if (!DevProvider) {
+    return (
+      <AuthContextProvider value={createUnauthenticatedAuthContext("dev", false)}>
+        {children}
+      </AuthContextProvider>
+    );
+  }
+
+  return <DevProvider>{children}</DevProvider>;
 }
