@@ -28,7 +28,7 @@ export const ExpandingTextarea = React.forwardRef<HTMLTextAreaElement, Expanding
       <textarea
         ref={textareaRef}
         className={cn(
-          "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden resize-none",
+          "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30 aria-invalid:border-destructive/60 aria-invalid:ring-destructive/10 disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden resize-none",
           className,
         )}
         onInput={handleInput}

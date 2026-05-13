@@ -33,11 +33,11 @@ const sizeStyles = {
 } as const;
 
 const inputBase = [
-  "flex w-full rounded-[var(--radius-md)] border border-input bg-background",
-  "ring-offset-background",
+  "flex w-full rounded-[var(--radius-md)] border border-input bg-background transition-colors",
   "file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground",
   "placeholder:text-muted-foreground",
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+  "focus-visible:outline-hidden focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30",
+  "aria-invalid:border-destructive/60 aria-invalid:ring-destructive/10",
   "disabled:cursor-not-allowed disabled:opacity-50",
 ].join(" ");
 

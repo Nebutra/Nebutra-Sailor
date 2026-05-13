@@ -142,7 +142,7 @@ export function AssistedPasswordConfirmation({
         animate={matchAnimation}
       >
         <motion.input
-          className="h-full w-full rounded-[var(--radius-xl)] border-2 border-border bg-background px-3.5 py-3 tracking-[0.4em] text-foreground outline-none placeholder:tracking-normal focus:border-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="h-full w-full rounded-[var(--radius-xl)] border-2 border-border bg-background px-3.5 py-3 tracking-[0.4em] text-foreground outline-none transition-colors placeholder:tracking-normal focus-visible:outline-hidden focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30"
           type="password"
           placeholder={placeholder}
           value={confirmPassword}
