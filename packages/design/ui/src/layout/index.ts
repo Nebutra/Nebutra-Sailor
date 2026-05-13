@@ -8,6 +8,7 @@
 // Custom Component Wrappers
 // ============================================
 
+export { AppShell, type AppShellProps } from "./app-shell";
 export { Card, type CardProps } from "./Card";
 export { Container, type ContainerProps, type ContainerSize } from "./Container";
 export { DesignSystemProvider } from "./DesignSystemProvider";

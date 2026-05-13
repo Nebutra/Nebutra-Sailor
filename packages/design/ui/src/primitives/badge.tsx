@@ -46,6 +46,13 @@ const badgeVariants = cva(
         trial: "bg-gradient-to-br from-trial-start to-trial-end text-white fill-white",
         turbo: "bg-gradient-to-br from-turbo-start to-turbo-end text-white fill-white",
         pill: "bg-background text-foreground fill-foreground !border-gray-alpha-400 dark:!border-border",
+        // ─── Semantic tone variants (nav badges, ownership, featured) ─────────
+        beta: "border-transparent bg-muted text-muted-foreground",
+        new: "border-transparent bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300",
+        owner: "border-border bg-transparent text-foreground",
+        featured:
+          "border-transparent text-white bg-[image:var(--brand-gradient)] [text-shadow:0_0_1px_rgba(0,0,0,0.2)]",
+        "coming-soon": "border-transparent bg-muted/60 text-muted-foreground italic",
       },
       size: {
         sm: "text-[11px] h-5 px-1.5 tracking-[0.2px] gap-[3px] [&_svg]:h-[11px] [&_svg]:w-[11px]",

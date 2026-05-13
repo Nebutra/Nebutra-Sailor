@@ -175,9 +175,12 @@ export * from "./feature-arrow-card";
  */
 export * from "./feature-card";
 export * from "./feature-check-item";
+export * from "./feature-gate";
 export * from "./feature-icon-item";
 export * from "./feedback";
 export * from "./field";
+// Pill-style category filter (MiniMax / GPT Store discovery row)
+export * from "./filter-pills";
 export * from "./flex";
 export * from "./flickering-grid";
 export * from "./form";
@@ -325,6 +328,7 @@ export {
   TooltipTrigger,
 } from "./tooltip";
 export * from "./tree";
+export * from "./upgrade-banner";
 export * from "./video-player";
 export * from "./video-text";
 export * from "./warp-background";
