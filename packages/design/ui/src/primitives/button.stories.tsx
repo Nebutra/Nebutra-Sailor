@@ -20,6 +20,7 @@ const meta = {
       control: "select",
       options: [
         "default",
+        "ink",
         "destructive",
         "outline",
         "secondary",
@@ -63,6 +64,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: { children: "Button", variant: "default", size: "default" },
+};
+
+export const Ink: Story = {
+  args: { variant: "ink", children: "Ship to production" },
 };
 
 export const Outline: Story = {

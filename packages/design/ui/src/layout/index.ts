@@ -13,6 +13,12 @@ export { Container, type ContainerProps, type ContainerSize } from "./Container"
 export { DesignSystemProvider } from "./DesignSystemProvider";
 export { EmptyState, type EmptyStateProps } from "./EmptyState";
 export { ErrorState, type ErrorStateProps } from "./ErrorState";
+export {
+  FullPageStatus,
+  type FullPageStatusAction,
+  type FullPageStatusMeta,
+  type FullPageStatusProps,
+} from "./FullPageStatus";
 export { LoadingState, type LoadingStateProps } from "./LoadingState";
 export { PageHeader, type PageHeaderProps } from "./PageHeader";
 export { Section, type SectionProps } from "./Section";

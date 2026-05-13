@@ -37,6 +37,7 @@ export * from "./announcement";
 export * from "./apple-liquid-glass-switcher";
 export * from "./aspect-ratio";
 export * from "./assisted-password-confirmation";
+export * from "./aurora-background";
 export * from "./aurora-text";
 export {
   Avatar,
