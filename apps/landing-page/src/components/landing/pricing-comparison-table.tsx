@@ -89,7 +89,8 @@ function GroupBlock({ group, plans, t }: GroupBlockProps) {
           colSpan={plans.length + 1}
           className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-[var(--brand-primary)]"
         >
-          {t(`feature.${group.id}.label`)}
+          {/* biome-ignore lint/suspicious/noExplicitAny: dynamic i18n key, ids tracked in COMPARISON_GROUPS; next-intl union is TS2590-complex */}
+          {t(`feature.${group.id}.label` as any)}
         </th>
       </tr>
       {group.rows.map((row) => (
@@ -101,7 +102,8 @@ function GroupBlock({ group, plans, t }: GroupBlockProps) {
             scope="row"
             className="px-6 py-4 text-left text-sm font-medium text-[var(--neutral-12)]"
           >
-            {t(`feature.${group.id}.${row.id}`)}
+            {/* biome-ignore lint/suspicious/noExplicitAny: dynamic i18n key, ids tracked in COMPARISON_GROUPS; next-intl union is TS2590-complex */}
+            {t(`feature.${group.id}.${row.id}` as any)}
           </th>
           {plans.map((plan) => (
             <td key={plan} className="px-6 py-4 text-center text-sm text-[var(--neutral-11)]">

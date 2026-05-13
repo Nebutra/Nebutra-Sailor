@@ -1059,68 +1059,6 @@
     "title": "Nebutra Agent OS | Das Startup Agent OS",
     "description": "Das Startup Agent OS für global agierende Gründer. Produktionsreifes Next.js-Fundament mit geprüfter Architektur, Auth, Billing, Agents und i18n — gebaut für AI-Coding-Agents und ernsthafte Teams."
   },
-  "marketing": {
-    "pricing": {
-      "hobby": {
-        "name": "Hobby",
-        "price": "Kostenlos",
-        "description": "Für Nebenprojekte",
-        "features": ["1 Projekt", "Community-Support", "Basis-Analytics"],
-        "ctaText": "Kostenlos starten"
-      },
-      "pro": {
-        "name": "Pro",
-        "price": "$29",
-        "description": "Für Startups",
-        "isPopular": true,
-        "features": ["Unbegrenzte Projekte", "Priority-Support", "Custom Domain", "Erweitertes KI"],
-        "ctaText": "Pro holen"
-      },
-      "enterprise": {
-        "name": "Enterprise",
-        "price": "Individuell",
-        "description": "Für große Teams",
-        "features": ["SSO", "Dedizierter Slack-Kanal", "SLA 99,9 %", "White-label"],
-        "ctaText": "Kontakt aufnehmen"
-      }
-    },
-    "faq": {
-      "q1": {
-        "q": "Ist das ein Abonnement?",
-        "a": "Ja, unser Pro-Plan wird monatlich abgerechnet. Sie können jederzeit kündigen, ohne versteckte Gebühren."
-      },
-      "q2": {
-        "q": "Bieten Sie Erstattungen an?",
-        "a": "Wir bieten eine 14-tägige Geld-zurück-Garantie ohne Rückfragen."
-      },
-      "q3": {
-        "q": "Kann ich das für Kundenprojekte nutzen?",
-        "a": "Absolut. Die kommerzielle Lizenz gilt für unbegrenzte Kundenprojekte."
-      }
-    },
-    "pricingHeader": {
-      "title": "Einfache, transparente Preise",
-      "description": "Keine versteckten Gebühren. Keine Überraschungen. Jederzeit kündbar.",
-      "mostPopular": "Beliebteste",
-      "perMonth": "/Mo."
-    },
-    "faqHeader": {
-      "title": "Häufig gestellte Fragen",
-      "description": "Keine Antwort gefunden? Wenden Sie sich an unser Support-Team."
-    },
-    "waitlist": {
-      "title": "Frühzeitigen Zugang erhalten",
-      "description": "Tragen Sie sich in die Warteliste ein, um bei unserem Launch benachrichtigt zu werden.",
-      "placeholder": "name@beispiel.com",
-      "buttonText": "In Warteliste eintragen",
-      "loadingText": "Wird eingetragen…",
-      "successText": "Eingetragen!",
-      "successMessage": "Danke für Ihre Anmeldung! Wir melden uns bald.",
-      "socialProofPrefix": "Schließen Sie sich",
-      "socialProofSuffix": "anderen auf der Liste an",
-      "emailAriaLabel": "E-Mail-Adresse"
-    }
-  },
   "microLanding": {
     "architecture": {
       "badge": "SYSTEMTOPOLOGIE",
@@ -1178,23 +1116,19 @@
       }
     },
     "faq": {
-      "title": "Den Stack evaluieren.",
-      "description": "Detaillierte Engineering-Antworten zur Beschleunigung Ihrer Architekturentscheidungen.",
+      "title": "FAQ zu Preisen & Lizenzen",
+      "description": "Häufige Fragen zu Abonnement, Rückerstattung und kommerzieller Lizenz.",
       "q1": {
-        "q": "Warum Turborepo statt einer Standard-Next.js-App?",
-        "a": "Turborepo isoliert Ihre UI-Komponenten, Datenbank-Schemas und gemeinsamen Utilities und ermöglicht unvergleichliche Skalierung, wenn Ihr SaaS über eine einzelne Frontend-Anwendung hinauswächst."
+        "q": "Ist das ein Abonnement?",
+        "a": "Ja, unser Pro-Plan wird monatlich abgerechnet. Sie können jederzeit kündigen, ohne versteckte Gebühren."
       },
       "q2": {
-        "q": "Wie wird Multi-Tenancy gehandhabt?",
-        "a": "Wir nutzen die B2B-Organisationsstruktur von Clerk, tief integriert mit Prisma-Middleware, um strikte Row-Level-Isolierung zwischen Organisationen sicherzustellen."
+        "q": "Bieten Sie Erstattungen an?",
+        "a": "Wir bieten eine 14-tägige Geld-zurück-Garantie ohne Rückfragen."
       },
       "q3": {
-        "q": "Kann ich Clerk gegen Supabase Auth tauschen?",
-        "a": "Absolut. Unsere Authentifizierungsschicht ist über @nebutra/auth abstrahiert — Identity-Provider lassen sich mit minimalem Refactoring austauschen."
-      },
-      "q4": {
-        "q": "Muss ich für Updates bezahlen?",
-        "a": "Kommerzielle Lizenzen enthalten 12 Monate Updates ab Kaufdatum. Die individuelle AGPL-3.0-Stufe ist unbegrenzt gültig."
+        "q": "Kann ich das für Kundenprojekte nutzen?",
+        "a": "Absolut. Die kommerzielle Lizenz gilt für unbegrenzte Kundenprojekte."
       },
       "contactNudge": "Noch Fragen? Sprechen Sie mit unserem Engineering-Team →"
     },

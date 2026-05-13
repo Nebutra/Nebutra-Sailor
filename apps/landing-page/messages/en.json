@@ -1059,68 +1059,6 @@
     "title": "Nebutra Agent OS | The Startup Agent OS",
     "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
   },
-  "marketing": {
-    "pricing": {
-      "hobby": {
-        "name": "Hobby",
-        "price": "Free",
-        "description": "For side projects",
-        "features": ["1 Project", "Community Support", "Basic Analytics"],
-        "ctaText": "Start Free"
-      },
-      "pro": {
-        "name": "Pro",
-        "price": "$29",
-        "description": "For startups",
-        "isPopular": true,
-        "features": ["Unlimited Projects", "Priority Support", "Custom Domain", "Advanced AI"],
-        "ctaText": "Get Pro"
-      },
-      "enterprise": {
-        "name": "Enterprise",
-        "price": "Custom",
-        "description": "For large teams",
-        "features": ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
-        "ctaText": "Contact Us"
-      }
-    },
-    "faq": {
-      "q1": {
-        "q": "Is this a subscription?",
-        "a": "Yes, our Pro plan is billed monthly. You can cancel at any time with no hidden fees."
-      },
-      "q2": {
-        "q": "Do you offer refunds?",
-        "a": "We offer a 14-day no-questions-asked money-back guarantee."
-      },
-      "q3": {
-        "q": "Can I use this for client work?",
-        "a": "Absolutely. The commercial license covers unlimited client projects."
-      }
-    },
-    "pricingHeader": {
-      "title": "Simple, transparent pricing",
-      "description": "No hidden fees. No surprises. Cancel anytime.",
-      "mostPopular": "Most Popular",
-      "perMonth": "/mo"
-    },
-    "faqHeader": {
-      "title": "Frequently Asked Questions",
-      "description": "Can't find the answer you're looking for? Reach out to our support team."
-    },
-    "waitlist": {
-      "title": "Get Early Access",
-      "description": "Join the waitlist to be notified when we launch. Be the first to try out the new features.",
-      "placeholder": "name@example.com",
-      "buttonText": "Join Waitlist",
-      "loadingText": "Joining...",
-      "successText": "Joined!",
-      "successMessage": "Thanks for joining! We'll be in touch soon.",
-      "socialProofPrefix": "Join",
-      "socialProofSuffix": "others on the list",
-      "emailAriaLabel": "Email address"
-    }
-  },
   "microLanding": {
     "architecture": {
       "badge": "SYSTEM TOPOLOGY",
@@ -1178,23 +1116,19 @@
       }
     },
     "faq": {
-      "title": "Evaluating the stack.",
-      "description": "Detailed engineering answers to accelerate your architectural decisions.",
+      "title": "Pricing & licensing FAQ",
+      "description": "Common questions about subscription, refunds and commercial licensing.",
       "q1": {
-        "q": "Why Turborepo over a standard Next.js app?",
-        "a": "Turborepo isolates your UI components, database schemas, and shared utilities, allowing unparalleled scale when your SaaS outgrows a single frontend application."
+        "q": "Is this a subscription?",
+        "a": "Yes, our Pro plan is billed monthly. You can cancel at any time with no hidden fees."
       },
       "q2": {
-        "q": "How is multi-tenancy handled?",
-        "a": "We use Clerk's B2B organizational structure deeply integrated with Prisma middleware to ensure strict row-level isolation between organizations."
+        "q": "Do you offer refunds?",
+        "a": "We offer a 14-day no-questions-asked money-back guarantee."
       },
       "q3": {
-        "q": "Can I swap Clerk for Supabase Auth?",
-        "a": "Absolutely. Our authentication layer is abstracted via @nebutra/auth, meaning you can hot-swap identity providers with minimal refactoring."
-      },
-      "q4": {
-        "q": "Do I need to pay for updates?",
-        "a": "Commercial licenses include 12 months of updates from the date of purchase. The AGPL-3.0 individual tier is perpetual."
+        "q": "Can I use this for client work?",
+        "a": "Absolutely. The commercial license covers unlimited client projects."
       },
       "contactNudge": "Still have questions? Talk to our engineering team →"
     },

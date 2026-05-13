@@ -1059,73 +1059,6 @@
     "title": "Nebutra Agent OS | El Startup Agent OS",
     "description": "El Startup Agent OS para fundadores con visión global. Base Next.js lista para producción, arquitectura gobernada, auth, facturación, agentes e i18n incluidos — hecho para agentes de código IA y equipos serios."
   },
-  "marketing": {
-    "pricing": {
-      "hobby": {
-        "name": "Hobby",
-        "price": "Gratis",
-        "description": "Para proyectos personales",
-        "features": ["1 Proyecto", "Soporte de la comunidad", "Análisis básico"],
-        "ctaText": "Comenzar gratis"
-      },
-      "pro": {
-        "name": "Pro",
-        "price": "$29",
-        "description": "Para startups",
-        "isPopular": true,
-        "features": [
-          "Proyectos ilimitados",
-          "Soporte prioritario",
-          "Dominio personalizado",
-          "IA Avanzada"
-        ],
-        "ctaText": "Obtener Pro"
-      },
-      "enterprise": {
-        "name": "Enterprise",
-        "price": "Personalizado",
-        "description": "Para equipos grandes",
-        "features": ["SSO", "Canal Slack dedicado", "SLA 99.9%", "White-label"],
-        "ctaText": "Contáctenos"
-      }
-    },
-    "faq": {
-      "q1": {
-        "q": "¿Es una suscripción?",
-        "a": "Sí, nuestro plan Pro se factura mensualmente. Puede cancelar en cualquier momento sin tarifas ocultas."
-      },
-      "q2": {
-        "q": "¿Ofrecen reembolsos?",
-        "a": "Ofrecemos una garantía de devolución de dinero de 14 días sin preguntas."
-      },
-      "q3": {
-        "q": "¿Puedo usarlo para trabajo de clientes?",
-        "a": "Por supuesto. La licencia comercial cubre proyectos de clientes ilimitados."
-      }
-    },
-    "pricingHeader": {
-      "title": "Precios simples y transparentes",
-      "description": "Sin tarifas ocultas. Sin sorpresas. Cancele en cualquier momento.",
-      "mostPopular": "Más popular",
-      "perMonth": "/mes"
-    },
-    "faqHeader": {
-      "title": "Preguntas Frecuentes",
-      "description": "¿No encuentra la respuesta que busca? Contacte a nuestro equipo de soporte."
-    },
-    "waitlist": {
-      "title": "Obtener Acceso Anticipado",
-      "description": "Únase a la lista de espera para ser notificado cuando lancemos. Sea el primero en probar las nuevas funciones.",
-      "placeholder": "nombre@ejemplo.com",
-      "buttonText": "Unirse a la lista de espera",
-      "loadingText": "Uniéndose...",
-      "successText": "¡Unido!",
-      "successMessage": "¡Gracias por unirse! Estaremos en contacto pronto.",
-      "socialProofPrefix": "Únase a",
-      "socialProofSuffix": "personas más en la lista",
-      "emailAriaLabel": "Dirección de correo electrónico"
-    }
-  },
   "microLanding": {
     "architecture": {
       "badge": "TOPOLOGÍA DEL SISTEMA",
@@ -1183,23 +1116,19 @@
       }
     },
     "faq": {
-      "title": "Evaluando el stack.",
-      "description": "Respuestas de ingeniería detalladas para acelerar sus decisiones arquitectónicas.",
+      "title": "FAQ de precios y licencias",
+      "description": "Preguntas frecuentes sobre suscripción, reembolsos y licencia comercial.",
       "q1": {
-        "q": "¿Por qué Turborepo en lugar de una aplicación Next.js estándar?",
-        "a": "Turborepo aísla sus componentes de UI, esquemas de base de datos y utilidades compartidas, permitiendo una escala sin precedentes cuando su SaaS supera una sola aplicación frontend."
+        "q": "¿Es una suscripción?",
+        "a": "Sí, nuestro plan Pro se factura mensualmente. Puede cancelar en cualquier momento sin tarifas ocultas."
       },
       "q2": {
-        "q": "¿Cómo se gestiona el multi-tenancy?",
-        "a": "Usamos la estructura organizacional B2B de Clerk profundamente integrada con el middleware de Prisma para garantizar un aislamiento estricto a nivel de fila entre organizaciones."
+        "q": "¿Ofrecen reembolsos?",
+        "a": "Ofrecemos una garantía de devolución de dinero de 14 días sin preguntas."
       },
       "q3": {
-        "q": "¿Puedo cambiar Clerk por Supabase Auth?",
-        "a": "Por supuesto. Nuestra capa de autenticación está abstraída a través de @nebutra/auth, lo que significa que puede intercambiar proveedores de identidad con una refactorización mínima."
-      },
-      "q4": {
-        "q": "¿Necesito pagar por las actualizaciones?",
-        "a": "Las licencias comerciales incluyen 12 meses de actualizaciones desde la fecha de compra. El nivel individual AGPL-3.0 es perpetuo."
+        "q": "¿Puedo usarlo para trabajo de clientes?",
+        "a": "Por supuesto. La licencia comercial cubre proyectos de clientes ilimitados."
       },
       "contactNudge": "¿Tienes más preguntas? Habla con nuestro equipo de ingeniería →"
     },

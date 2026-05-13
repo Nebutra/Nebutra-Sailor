@@ -127,7 +127,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
             stagger="normal"
             className="mx-auto mt-12 max-w-3xl divide-y divide-[var(--neutral-7)]"
           >
-            {(["q1", "q2", "q3", "q4"] as const).map((qKey) => (
+            {(["q1", "q2", "q3"] as const).map((qKey) => (
               <AnimateIn key={qKey} preset="fadeUp">
                 <details className="group py-6">
                   <summary className="flex cursor-pointer items-center justify-between text-left font-medium text-[var(--neutral-12)]">
