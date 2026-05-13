@@ -1,7 +1,8 @@
-import { ThemeScript } from "@nebutra/tokens";
+import { buildThemeInitScript } from "@nebutra/tokens";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { seoContent } from "@/lib/landing-content";
 import "./globals.css";
 
@@ -67,10 +68,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body className="antialiased">
-        {/* FOUC-prevention: applies the saved theme to <html> before first
-            paint. Rendered from this Server Component to avoid the React 19
-            + Next.js 16 script-in-client-component warning. */}
-        <ThemeScript />
+        {/* FOUC-prevention: see apps/web layout for the full rationale.
+            next/script `beforeInteractive` is the only injection path that
+            React 19 + Turbopack don't warn about. */}
+        <Script id="theme-init" strategy="beforeInteractive">
+          {buildThemeInitScript()}
+        </Script>
         {children}
       </body>
     </html>

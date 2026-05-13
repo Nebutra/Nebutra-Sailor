@@ -1,6 +1,6 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
-import { ThemeScript } from "@nebutra/tokens";
+import { buildThemeInitScript } from "@nebutra/tokens";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
 import { Toaster } from "@nebutra/ui/primitives";
 import { Analytics } from "@vercel/analytics/react";
@@ -8,6 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -75,12 +76,15 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="antialiased">
-        {/* FOUC-prevention: rendered DIRECTLY from this Server Component
-            (outside <AuthProvider>'s Client boundary) so its <script> stays
-            in the SSR HTML and is NEVER re-rendered on the client — which
-            is what triggers the React 19 "scripts inside React components"
-            warning. Order matters: must be first child of <body>. */}
-        <ThemeScript nonce={nonce} />
+        {/* FOUC-prevention: Next.js next/script `beforeInteractive`
+            strategy injects the inline script into the HTML response
+            itself, bypassing React's render pipeline — which is what
+            makes the React 19 "scripts inside React components" warning
+            actually go away (it fires for any <script> JSX, Server or
+            Client). Runs synchronously before hydration. */}
+        <Script id="theme-init" strategy="beforeInteractive" nonce={nonce}>
+          {buildThemeInitScript()}
+        </Script>
         <a
           href="#main-content"
           className="fixed left-3 top-3 z-[100] -translate-y-20 rounded-[var(--radius-md)] bg-[var(--blue-9)] px-3 py-2 text-sm font-medium text-white opacity-0 transition focus:translate-y-0 focus:opacity-100"
