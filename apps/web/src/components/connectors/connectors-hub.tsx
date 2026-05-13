@@ -1,5 +1,6 @@
 "use client";
 
+import { ConfirmDialog, toast } from "@nebutra/ui/primitives";
 import { Cable, ExternalLink, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
@@ -53,16 +54,21 @@ interface Props {
 
 export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [pendingRemove, setPendingRemove] = useState<ConnectorRow | null>(null);
 
-  async function handleRemove(connector: ConnectorRow) {
+  async function performRemove(connector: ConnectorRow) {
     if (!onRemove) return;
-    const ok =
-      typeof window !== "undefined" &&
-      window.confirm(`Remove "${connector.name}"? Any agents using it will lose access.`);
-    if (!ok) return;
     setBusyId(connector.id);
     try {
       await onRemove(connector);
+      toast.success("Connector removed", {
+        description: `"${connector.name}" was disconnected.`,
+      });
+      setPendingRemove(null);
+    } catch (err) {
+      toast.error("Failed to remove connector", {
+        description: err instanceof Error ? err.message : "Please try again.",
+      });
     } finally {
       setBusyId(null);
     }
@@ -156,10 +162,11 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
                   </span>
                 </div>
                 <span
+                  role="img"
+                  aria-label={connector.isActive ? "Active" : "Inactive"}
                   className={`h-1.5 w-1.5 shrink-0 rounded-full ${
                     connector.isActive ? "bg-green-9" : "bg-neutral-9 dark:bg-white/30"
                   }`}
-                  aria-label={connector.isActive ? "Active" : "Inactive"}
                 />
               </div>
 
@@ -172,7 +179,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
               {onRemove && (
                 <button
                   type="button"
-                  onClick={() => handleRemove(connector)}
+                  onClick={() => setPendingRemove(connector)}
                   disabled={isBusy}
                   aria-label={`Remove ${connector.name}`}
                   className="absolute right-3 top-3 rounded-md p-1 text-neutral-9 opacity-0 transition-all group-hover:opacity-100 hover:bg-red-2 hover:text-red-11 focus-visible:opacity-100 disabled:cursor-not-allowed dark:text-white/30 dark:hover:bg-red-2/30"
@@ -184,6 +191,26 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
           );
         })}
       </div>
+
+      {/* Branded delete confirmation */}
+      <ConfirmDialog
+        open={!!pendingRemove}
+        onOpenChange={(open) => {
+          if (!open) setPendingRemove(null);
+        }}
+        title="Remove this connector?"
+        description={
+          pendingRemove
+            ? `"${pendingRemove.name}" will be disconnected. Any agents using it will lose access immediately.`
+            : undefined
+        }
+        variant="destructive"
+        confirmText="Remove"
+        loading={busyId === pendingRemove?.id}
+        onConfirm={() => {
+          if (pendingRemove) void performRemove(pendingRemove);
+        }}
+      />
 
       <div className="border-t border-neutral-7 pt-3 dark:border-white/10">
         <a

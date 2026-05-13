@@ -91,7 +91,6 @@ export {
   type ButtonProps,
   buttonVariants,
 } from "./button";
-
 export * from "./canvas-reveal-effect";
 export * from "./card";
 export * from "./card-spotlight";
@@ -138,7 +137,6 @@ export * from "./confirm-dialog";
 export * from "./context-card";
 export * from "./context-menu";
 export * from "./copy-button";
-
 export * from "./description";
 export {
   Dialog,
@@ -201,7 +199,6 @@ export * from "./grid-feature-card";
 export * from "./grid-pattern-card";
 export * from "./grid-system";
 export * from "./heading";
-
 export * from "./hex-grid";
 export * from "./highlighter";
 export * from "./hover-card";
@@ -236,6 +233,9 @@ export * from "./magic-card";
 export * from "./material";
 export * from "./menubar";
 export * from "./mesh-gradient-bg";
+// Streaming-aware markdown renderer for AI responses. Wraps Streamdown with
+// our prose tokens — single source-of-truth for chat text rendering.
+export * from "./message-content";
 /**
  * @deprecated Available via the registry copy:
  *   `npx shadcn@latest add https://ui.nebutra.com/r/metric-card.json`
@@ -286,7 +286,6 @@ export * from "./shine-border";
 export * from "./skeleton";
 export * from "./slider";
 export * from "./slider-number-flow";
-
 export * from "./spacing";
 export * from "./spinner";
 export * from "./stack";
@@ -315,6 +314,8 @@ export * from "./text-scramble";
 export * from "./text-shimmer";
 export * from "./textarea";
 export * from "./theme-switcher";
+// Sonner-backed toaster + `toast` API. Mount `<Toaster />` once at app root.
+export * from "./toaster";
 export * from "./toggle";
 export * from "./toggle-group";
 export {

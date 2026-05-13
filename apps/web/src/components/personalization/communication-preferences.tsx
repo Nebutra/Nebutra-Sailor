@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "@nebutra/ui/primitives";
 import type { LucideIcon } from "lucide-react";
 import { Loader2, Mail, Megaphone, Sparkles } from "lucide-react";
 import { useCallback, useState } from "react";
@@ -78,7 +79,6 @@ export function CommunicationPreferences({
 }: Props) {
   const [current, setCurrent] = useState<CommunicationPreferenceValue>(value);
   const [busyKey, setBusyKey] = useState<keyof CommunicationPreferenceValue | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
   const handleToggle = useCallback(
     async (key: keyof CommunicationPreferenceValue) => {
@@ -86,13 +86,15 @@ export function CommunicationPreferences({
       // Optimistic update.
       setCurrent(next);
       setBusyKey(key);
-      setError(null);
       try {
         await onSave(next);
+        toast.success("Preference updated");
       } catch (err) {
         // Rollback on failure.
         setCurrent(current);
-        setError(err instanceof Error ? err.message : "Failed to save preference");
+        toast.error("Failed to save preference", {
+          description: err instanceof Error ? err.message : "Please try again.",
+        });
       } finally {
         setBusyKey(null);
       }
@@ -110,12 +112,6 @@ export function CommunicationPreferences({
           Decide what reaches your inbox. You can change these anytime.
         </p>
       </header>
-
-      {error && (
-        <div className="rounded-lg border border-red-6 bg-red-2 px-3 py-2 text-xs text-red-11">
-          {error}
-        </div>
-      )}
 
       <div className="overflow-hidden rounded-xl border border-neutral-7 dark:border-white/10">
         <ul className="divide-y divide-neutral-6 dark:divide-white/10">

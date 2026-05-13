@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "@nebutra/ui/primitives";
 import { Loader2, Save, Sparkles } from "lucide-react";
 import { useEffect, useId, useState, useTransition } from "react";
 
@@ -59,7 +60,6 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
 
   const [value, setValue] = useState<ProfileFormValue>(initialValue ?? EMPTY_VALUE);
   const [savedValue, setSavedValue] = useState<ProfileFormValue>(initialValue ?? EMPTY_VALUE);
-  const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const [submitting, setSubmitting] = useState(false);
   const [savedAt, setSavedAt] = useState<number | null>(null);
@@ -86,7 +86,6 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
     event.preventDefault();
     if (!dirty || submitting) return;
     setSubmitting(true);
-    setError(null);
 
     try {
       await onSave(value);
@@ -94,8 +93,13 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
         setSavedValue(value);
         setSavedAt(Date.now());
       });
+      toast.success("Profile saved", {
+        description: "Sailor will use these in future conversations.",
+      });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save profile");
+      toast.error("Failed to save profile", {
+        description: err instanceof Error ? err.message : "Please try again.",
+      });
     } finally {
       setSubmitting(false);
     }
@@ -103,7 +107,6 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
 
   function handleReset() {
     setValue(savedValue);
-    setError(null);
   }
 
   return (
@@ -185,12 +188,6 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
           className="w-full resize-none rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-blue-9 focus:outline-none focus:ring-1 focus:ring-blue-9 disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
         />
       </Field>
-
-      {error && (
-        <div className="rounded-lg border border-red-6 bg-red-2 px-3 py-2 text-sm text-red-11">
-          {error}
-        </div>
-      )}
 
       <div className="flex items-center justify-between gap-3 border-t border-neutral-7 pt-4 dark:border-white/10">
         <p className="text-xs text-neutral-10 dark:text-white/50">

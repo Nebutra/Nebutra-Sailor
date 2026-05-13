@@ -1,6 +1,7 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
+import { Toaster } from "@nebutra/ui/primitives";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistMono } from "geist/font/mono";
@@ -90,6 +91,8 @@ export default async function RootLayout({
                   </PostHogProvider>
                 </QueryProvider>
               </DesignSystemProvider>
+              {/* Global toast outlet — every app surface can call `toast.*` */}
+              <Toaster />
             </NextIntlClientProvider>
           </ThemeShell>
           <SpeedInsights />

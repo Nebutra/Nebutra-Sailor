@@ -2,15 +2,19 @@
 
 import { useChat } from "@ai-sdk/react";
 import { AnimateIn } from "@nebutra/ui/components";
+import { MessageContent, toast } from "@nebutra/ui/primitives";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import {
+  AlertCircle,
   Bot,
-  Code2,
+  Check,
+  Copy,
   Database,
   Loader2,
   type LucideIcon,
   MessageSquare,
   Plus,
+  RotateCcw,
   Search,
   Send,
   Trash2,
@@ -19,7 +23,6 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Streamdown } from "streamdown";
 import { PromptSuggestions } from "./prompt-suggestions";
 
 const MAX_TEXTAREA_ROWS = 5;
@@ -82,26 +85,48 @@ function MessageBody({ message }: { message: UIMessage }) {
       {message.parts.map((part, i) => {
         if (part.type !== "text") return null;
         if (isUser) {
+          // User messages are plain text — they don't author markdown.
           return (
             <div key={i} className="whitespace-pre-wrap leading-relaxed">
               {part.text}
             </div>
           );
         }
-        return (
-          <div key={i} className="prose prose-sm dark:prose-invert max-w-none leading-relaxed">
-            <Streamdown>{part.text}</Streamdown>
-          </div>
-        );
+        // AI messages flow through the source-level streaming markdown renderer.
+        return <MessageContent key={i}>{part.text}</MessageContent>;
       })}
     </>
   );
 }
 
+function extractText(message: UIMessage): string {
+  return message.parts
+    .map((p) => (p.type === "text" ? p.text : ""))
+    .filter(Boolean)
+    .join("\n\n");
+}
+
 function ChatMessage({ message }: { message: UIMessage }) {
   const isUser = message.role === "user";
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    const text = extractText(message);
+    if (!text) return;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      toast.success("Copied to clipboard");
+      setTimeout(() => setCopied(false), 1600);
+    } catch {
+      toast.error("Couldn't copy", {
+        description: "Clipboard access was denied by the browser.",
+      });
+    }
+  }
+
   return (
-    <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
+    <div className={`group flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
       <div
         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
           isUser
@@ -111,14 +136,29 @@ function ChatMessage({ message }: { message: UIMessage }) {
       >
         {isUser ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
       </div>
-      <div
-        className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${
-          isUser
-            ? "bg-blue-9 text-white dark:bg-blue-9"
-            : "bg-neutral-3 text-neutral-12 dark:bg-white/10 dark:text-white"
-        }`}
-      >
-        <MessageBody message={message} />
+      <div className={`flex max-w-[80%] flex-col ${isUser ? "items-end" : "items-start"}`}>
+        <div
+          className={`rounded-2xl px-4 py-2.5 text-sm ${
+            isUser
+              ? "bg-blue-9 text-white dark:bg-blue-9"
+              : "bg-neutral-3 text-neutral-12 dark:bg-white/10 dark:text-white"
+          }`}
+        >
+          <MessageBody message={message} />
+        </div>
+        {!isUser && (
+          <div className="mt-1.5 flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
+            <button
+              type="button"
+              onClick={handleCopy}
+              aria-label="Copy message"
+              className="inline-flex items-center gap-1 rounded-md border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 text-[10px] font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/10 dark:bg-black/40 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              {copied ? <Check className="h-3 w-3 text-green-9" /> : <Copy className="h-3 w-3" />}
+              {copied ? "Copied" : "Copy"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -130,6 +170,8 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
   const [sessionId, setSessionId] = useState<string | undefined>(initialSessionId);
   const [mode, setMode] = useState<ChatMode>(resolveMode(initialMode));
   const [isLoadingSession, setIsLoadingSession] = useState(!!initialSessionId);
+  const [sessionLoadError, setSessionLoadError] = useState<string | null>(null);
+  const [loadAttempt, setLoadAttempt] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -143,24 +185,35 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
   const isStreaming = status === "streaming" || status === "submitted";
 
   // Load existing session messages when initialSessionId is provided.
+  // Visible failure: if the load errors or returns non-2xx, we surface a
+  // retry banner instead of silently rendering an empty chat (the previous
+  // behavior hid data-loss / network errors from the user).
   useEffect(() => {
     if (!initialSessionId) return;
     let cancelled = false;
+    setIsLoadingSession(true);
+    setSessionLoadError(null);
+
     (async () => {
       try {
         const res = await fetch(`/api/chat/sessions/${initialSessionId}`);
-        if (!cancelled && res.ok) {
-          const data = (await res.json()) as { session?: { messages?: unknown; mode?: string } };
-          const raw = data?.session?.messages;
-          if (Array.isArray(raw)) {
-            setMessages(raw as UIMessage[]);
-          }
-          if (data?.session?.mode) {
-            setMode(resolveMode(data.session.mode));
-          }
+        if (cancelled) return;
+        if (!res.ok) {
+          const data = (await res.json().catch(() => ({}))) as { error?: string };
+          throw new Error(data.error || `Server returned ${res.status}`);
         }
-      } catch {
-        // Empty chat is the natural fallback.
+        const data = (await res.json()) as { session?: { messages?: unknown; mode?: string } };
+        const raw = data?.session?.messages;
+        if (Array.isArray(raw)) {
+          setMessages(raw as UIMessage[]);
+        }
+        if (data?.session?.mode) {
+          setMode(resolveMode(data.session.mode));
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setSessionLoadError(err instanceof Error ? err.message : "Failed to load session");
+        }
       } finally {
         if (!cancelled) setIsLoadingSession(false);
       }
@@ -168,7 +221,11 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
     return () => {
       cancelled = true;
     };
-  }, [initialSessionId, setMessages]);
+  }, [initialSessionId, loadAttempt, setMessages]);
+
+  const handleRetryLoad = useCallback(() => {
+    setLoadAttempt((n) => n + 1);
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -276,6 +333,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
             const ModeIcon = meta.icon;
             const isActive = m === mode;
             return (
+              // biome-ignore lint/a11y/useSemanticElements: visual pill group — input[type=radio] cannot host icon+label children with styled focus ring
               <button
                 key={m}
                 type="button"
@@ -322,7 +380,27 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
 
       {/* Messages */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4">
-        {isLoadingSession ? (
+        {sessionLoadError ? (
+          <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
+            <AlertCircle className="h-8 w-8 text-red-11" />
+            <div>
+              <p className="text-sm font-medium text-neutral-12 dark:text-white">
+                Couldn't load this session
+              </p>
+              <p className="mt-0.5 max-w-sm text-xs text-neutral-10 dark:text-white/50">
+                {sessionLoadError}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleRetryLoad}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-2 dark:border-white/15 dark:bg-black/40 dark:text-white dark:hover:bg-white/10"
+            >
+              <RotateCcw className="h-3 w-3" />
+              Try again
+            </button>
+          </div>
+        ) : isLoadingSession ? (
           <div className="flex h-full items-center justify-center">
             <Loader2 className="h-5 w-5 animate-spin text-neutral-10 dark:text-white/40" />
           </div>
