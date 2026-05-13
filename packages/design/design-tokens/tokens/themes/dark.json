@@ -21,6 +21,13 @@
       "$description": "Dark-mode info color — equals dark brand-primary."
     }
   },
+  "ring": {
+    "hairline": {
+      "$value": "inset 0 0 0 1px rgb(255 255 255 / 0.06)",
+      "$type": "string",
+      "$description": "Hairline override — more visible on dark background"
+    }
+  },
   "scale": {
     "neutral": {
       "1": { "$value": "{color.nebutra-neutral.950}", "$type": "color" },

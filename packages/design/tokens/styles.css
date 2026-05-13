@@ -84,6 +84,9 @@
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
   --radius-full: 9999px;
+  --radius-button: 0.5rem; /** 2026 button radius — Vercel/Linear/Cursor consensus */
+  --radius-card: 0.75rem; /** 2026 card radius */
+  --radius-panel: 1rem; /** 2026 bento/hero panel radius */
   --duration-fast: 100ms;
   --duration-normal: 150ms;
   --duration-slow: 300ms;
@@ -92,6 +95,12 @@
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --tracking-display: -0.04em; /** Hero H1 */
+  --tracking-heading: -0.03em; /** Section H2/H3 */
+  --tracking-tight: -0.015em; /** Body emphasis */
+  --leading-display: 1.05;
+  --leading-heading: 1.15;
+  --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.04); /** Etched-glass hairline (light mode value, dark mode override in themes/dark.json) */
   --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
   --font-display: "Geist", "Noto Sans SC", sans-serif;
@@ -164,7 +173,7 @@
   --muted: 210 40% 96%;
   --muted-foreground: 215 25% 45%;
   --accent: 228 100% 97%;
-  --accent-foreground: 228 85% 56%;
+  --accent-foreground: 228 85% 56%; /** Softer brand blue — desaturated to match --primary, avoids 100% saturation glare on focus/accent */
   --destructive: 0 84% 45%;
   --destructive-foreground: 0 0% 100%;
   --success: 142 71% 29%;
@@ -175,7 +184,7 @@
   --info-foreground: 0 0% 100%;
   --border: 240 5.9% 90%;
   --input: 240 5.9% 90%;
-  --ring: 228 85% 56%;
+  --ring: 228 85% 56%; /** Focus ring — desaturated brand blue. Pair with ring-[3px] ring-ring/30 (shadcn 2025 pattern), not legacy ring-2 ring-offset-2. */
   --sidebar: 210 40% 98%;
   --sidebar-foreground: 215 25% 27%;
   --sidebar-primary: 228 85% 56%;
@@ -343,6 +352,9 @@
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
   --radius-full: 9999px;
+  --radius-button: 0.5rem; /** 2026 button radius — Vercel/Linear/Cursor consensus */
+  --radius-card: 0.75rem; /** 2026 card radius */
+  --radius-panel: 1rem; /** 2026 bento/hero panel radius */
   --duration-fast: 100ms;
   --duration-normal: 150ms;
   --duration-slow: 300ms;
@@ -351,6 +363,12 @@
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --tracking-display: -0.04em; /** Hero H1 */
+  --tracking-heading: -0.03em; /** Section H2/H3 */
+  --tracking-tight: -0.015em; /** Body emphasis */
+  --leading-display: 1.05;
+  --leading-heading: 1.15;
+  --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.06); /** Hairline override — more visible on dark background */
   --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
   --font-display: "Geist", "Noto Sans SC", sans-serif;
@@ -1329,22 +1347,18 @@ html {
 @utility font-cn {
   font-family: var(--font-cn);
   line-height: 1.75;
-  /* Modern browsers break CJK at character boundaries with word-break: normal.
-     overflow-wrap handles long unbreakable strings (URLs, codes) without
-     shattering Latin words like CJK + `break-all` would. */
+  word-break: break-all;
   overflow-wrap: break-word;
 }
 
 /* ─── CJK Auto-Activation via :lang() ───────────────────────
    When <html lang="zh|ja|ko"> is set by app layouts, body
    automatically switches to the CJK font stack.
-
-   Do NOT apply `word-break: break-all` body-wide — it shatters mixed-script
-   text (e.g. English brand names embedded in Chinese copy break mid-word).
    ─────────────────────────────────────────────────────────── */
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) body {
   font-family: var(--font-cn);
   line-height: 1.75;
+  word-break: break-all;
   overflow-wrap: break-word;
 }
 

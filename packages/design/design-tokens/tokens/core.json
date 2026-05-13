@@ -105,7 +105,18 @@
       "xl": { "$value": "0.75rem", "$type": "dimension" },
       "2xl": { "$value": "1rem", "$type": "dimension" },
       "3xl": { "$value": "1.5rem", "$type": "dimension" },
-      "full": { "$value": "9999px", "$type": "dimension" }
+      "full": { "$value": "9999px", "$type": "dimension" },
+      "button": {
+        "$value": "0.5rem",
+        "$type": "dimension",
+        "$description": "2026 button radius — Vercel/Linear/Cursor consensus"
+      },
+      "card": { "$value": "0.75rem", "$type": "dimension", "$description": "2026 card radius" },
+      "panel": {
+        "$value": "1rem",
+        "$type": "dimension",
+        "$description": "2026 bento/hero panel radius"
+      }
     }
   },
   "duration": {
@@ -119,6 +130,25 @@
     "out": { "$value": "cubic-bezier(0, 0, 0.2, 1)", "$type": "cubicBezier" },
     "in-out": { "$value": "cubic-bezier(0.4, 0, 0.2, 1)", "$type": "cubicBezier" },
     "spring": { "$value": "cubic-bezier(0.175, 0.885, 0.32, 1.275)", "$type": "cubicBezier" }
+  },
+  "tracking": {
+    "$description": "Letter-spacing tokens — 2026 SaaS hero typography (Vercel Geist consensus).",
+    "display": { "$value": "-0.04em", "$type": "string", "$description": "Hero H1" },
+    "heading": { "$value": "-0.03em", "$type": "string", "$description": "Section H2/H3" },
+    "tight": { "$value": "-0.015em", "$type": "string", "$description": "Body emphasis" }
+  },
+  "leading": {
+    "$description": "Line-height tokens.",
+    "display": { "$value": "1.05", "$type": "string" },
+    "heading": { "$value": "1.15", "$type": "string" }
+  },
+  "ring": {
+    "$description": "Inset ring shorthand recipes — replaces shadow-2xl elevation per 2026 convention.",
+    "hairline": {
+      "$value": "inset 0 0 0 1px rgb(255 255 255 / 0.04)",
+      "$type": "string",
+      "$description": "Etched-glass hairline (light mode value, dark mode override in themes/dark.json)"
+    }
   },
   "fontFamily": {
     "$description": "Geist + Geist Mono primary (Vercel typography) with Noto Sans SC / PingFang SC / Microsoft YaHei CJK fallbacks. Replaces Poppins per VI 2026 update.",
