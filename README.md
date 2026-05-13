@@ -472,6 +472,7 @@ Sailor is **provider-agnostic**: every platform package below auto-detects its b
 <tr><td>Feature flags</td><td><code>@nebutra/feature-flags</code></td><td>Database-backed with env-driven overrides</td></tr>
 <tr><td>Design tokens</td><td><code>@nebutra/design-sync</code></td><td>W3C DTCG ↔ Figma · Penpot · git-only</td></tr>
 <tr><td>Status aggregation</td><td><code>@nebutra/status</code></td><td>OpenStatus · Atlassian StatusPage</td></tr>
+<tr><td>Admin tooling</td><td><code>@nebutra/admin-tooling</code></td><td>Thin admin (dashboard + impersonate only) + integration recipes for Retool, Metabase, Hex — Sailor expects you to use best-of-breed internal tools instead of self-building. See <a href="./docs/admin/">docs/admin/</a>.</td></tr>
 </table>
 
 <br />

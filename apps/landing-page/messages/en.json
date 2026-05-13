@@ -1085,7 +1085,7 @@
         "cta": "Clone Repository",
         "f1": "Complete Next.js 16 SaaS core",
         "f2": "Unlimited Personal Projects (Commercial use allowed)",
-        "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Admin UI, Email, i18n, Background Jobs, Storage & more",
+        "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more — plus thin admin + Retool/Metabase recipes (we don't ship bloated CRUD; we ship the integration patterns top SaaS use)",
         "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
         "f5": "AGPLv3 Open Source License"
       },

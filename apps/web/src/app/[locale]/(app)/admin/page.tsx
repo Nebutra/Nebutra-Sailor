@@ -1,102 +1,125 @@
-import { Shield, UserSettings, Users } from "@nebutra/icons";
+import "server-only";
+import { Sparkles } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card } from "@nebutra/ui/layout";
-import { Building2 } from "lucide-react";
-import { Suspense } from "react";
-import { ExternalAvatar } from "@/components/ui/external-avatar";
-import { db } from "@/lib/db";
+import { Activity, DollarSign, ExternalLink } from "lucide-react";
 
-async function AdminOverviewContent() {
-  const [totalUsers, totalOrgs, recentUsers] = await Promise.all([
-    db.user.count(),
-    db.organization.count(),
-    db.user.findMany({
-      take: 5,
-      orderBy: { createdAt: "desc" },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        avatarUrl: true,
-        createdAt: true,
-      },
-    }),
-  ]);
+/**
+ * Minimal admin dashboard.
+ *
+ * This page is deliberately thin. Per Silicon Valley best practice, full
+ * user/org CRUD and customer-support flows belong in Retool/Metabase wired
+ * to the internal API — not in self-built UI. See docs/admin/retool-recipe.md.
+ *
+ * What lives here: high-leverage, at-a-glance product signals.
+ *   - MRR / ARR
+ *   - AI cost (last 7d)
+ *   - Active users
+ *
+ * Wire real values via @nebutra/metering + @nebutra/billing aggregations.
+ */
 
-  const stats = [
-    { label: "Total Users", value: totalUsers, icon: Users },
-    { label: "Organizations", value: totalOrgs, icon: Building2 },
-    { label: "Admin Users", value: "—", icon: Shield },
-    { label: "Active Sessions", value: "—", icon: UserSettings },
-  ];
+const STATS: ReadonlyArray<{
+  label: string;
+  hint: string;
+  value: string;
+  icon: typeof DollarSign;
+}> = [
+  {
+    label: "MRR / ARR",
+    hint: "Recurring revenue — wire from @nebutra/billing",
+    value: "—",
+    icon: DollarSign,
+  },
+  {
+    label: "AI cost (last 7d)",
+    hint: "Provider spend — wire from @nebutra/metering",
+    value: "—",
+    icon: Sparkles,
+  },
+  {
+    label: "Active users (7d)",
+    hint: "DAU/WAU — wire from session events",
+    value: "—",
+    icon: Activity,
+  },
+];
 
+function RetoolBanner() {
+  return (
+    <div
+      className="mb-6 rounded-xl border p-4"
+      style={{
+        background: "var(--brand-gradient)",
+      }}
+    >
+      <div className="rounded-lg bg-[var(--neutral-1)] p-4 dark:bg-neutral-12">
+        <div className="flex items-start gap-3">
+          <ExternalLink
+            aria-hidden="true"
+            className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--brand-primary)]"
+          />
+          <p className="text-sm text-neutral-12 dark:text-white">
+            This is a deliberately minimal admin. For user/org CRUD, customer support flows, and
+            content ops, see{" "}
+            <code className="rounded bg-neutral-3 px-1.5 py-0.5 font-mono text-xs text-neutral-12 dark:bg-white/10 dark:text-white">
+              docs/admin/retool-recipe.md
+            </code>{" "}
+            — wire Retool to the internal API in 30 minutes.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ChartPlaceholder({ label }: { label: string }) {
+  return (
+    <div
+      aria-label={`${label} chart placeholder`}
+      className="mt-4 flex h-24 items-center justify-center rounded-md border border-dashed border-neutral-7 bg-neutral-2 text-xs text-neutral-10 dark:border-white/10 dark:bg-white/5 dark:text-white/40"
+    >
+      chart — wire real data
+    </div>
+  );
+}
+
+export default function AdminPage() {
   return (
     <>
-      <AnimateInGroup stagger="fast" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {stats.map(({ label, value, icon: Icon }) => (
+      <RetoolBanner />
+
+      <AnimateInGroup stagger="fast" className="grid gap-4 md:grid-cols-3">
+        {STATS.map(({ label, hint, value, icon: Icon }) => (
           <AnimateIn key={label} preset="fadeUp">
             <Card className="p-4 sm:p-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-medium text-neutral-11 dark:text-white/70">{label}</h3>
-                <Icon className="h-4 w-4 text-blue-10 dark:text-cyan-9" />
+                <Icon className="h-4 w-4 text-[color:var(--brand-primary)]" />
               </div>
-              <p className="mt-3 text-3xl font-semibold text-neutral-12 dark:text-white">
-                {typeof value === "number" ? value.toLocaleString() : value}
-              </p>
+              <p className="mt-3 text-3xl font-semibold text-neutral-12 dark:text-white">{value}</p>
+              <p className="mt-1 text-xs text-neutral-10 dark:text-white/50">{hint}</p>
+              <ChartPlaceholder label={label} />
             </Card>
           </AnimateIn>
         ))}
       </AnimateInGroup>
 
       <AnimateIn preset="fadeUp">
-        <Card className="mt-6 p-0 overflow-hidden">
-          <div className="border-b border-neutral-7 bg-neutral-2 px-4 py-3 dark:border-white/10 dark:bg-white/5">
-            <h3 className="text-sm font-medium text-neutral-12 dark:text-white">Recent Signups</h3>
-          </div>
-          <div className="divide-y divide-neutral-7 dark:divide-white/10">
-            {recentUsers.map((user) => (
-              <div key={user.id} className="flex items-center gap-4 px-4 py-3">
-                <ExternalAvatar
-                  src={user.avatarUrl}
-                  alt={user.name ?? "User"}
-                  size={32}
-                  className="h-8 w-8"
-                  fallbackInitial={(user.name?.[0] ?? user.email?.[0] ?? "?").toUpperCase()}
-                />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-neutral-12 dark:text-white">
-                    {user.name}
-                  </p>
-                  <p className="truncate text-xs text-neutral-10 dark:text-white/60">
-                    {user.email}
-                  </p>
-                </div>
-                <time className="text-xs text-neutral-10 dark:text-white/60">
-                  {new Date(user.createdAt).toLocaleDateString()}
-                </time>
-              </div>
-            ))}
-          </div>
+        <Card className="mt-6 p-4 sm:p-6">
+          <h3 className="text-sm font-medium text-neutral-12 dark:text-white">Escape hatches</h3>
+          <p className="mt-1 text-xs text-neutral-10 dark:text-white/60">
+            Debug-only utilities. Not a substitute for Retool flows.
+          </p>
+          <ul className="mt-3 space-y-1.5 text-sm text-neutral-11 dark:text-white/70">
+            <li>
+              <code className="font-mono text-xs">POST /api/admin/impersonate</code>
+              {" — "}
+              start a session as another user (signed cookie, audited)
+            </li>
+          </ul>
         </Card>
       </AnimateIn>
     </>
-  );
-}
-
-export default function AdminPage() {
-  return (
-    <Suspense
-      fallback={
-        <AnimateInGroup stagger="fast" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <AnimateIn key={i} preset="fadeUp">
-              <div className="h-28 rounded-xl border border-[var(--neutral-7)] bg-[var(--neutral-2)] dark:border-white/10 dark:bg-white/5" />
-            </AnimateIn>
-          ))}
-        </AnimateInGroup>
-      }
-    >
-      <AdminOverviewContent />
-    </Suspense>
   );
 }
