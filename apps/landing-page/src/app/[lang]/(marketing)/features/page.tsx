@@ -117,7 +117,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
         </AnimateInGroup>
       </section>
 
-      <FooterMinimal />
+      <FooterMinimal showFinalCta />
     </main>
   );
 }

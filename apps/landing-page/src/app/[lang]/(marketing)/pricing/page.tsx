@@ -158,7 +158,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
         </AnimateIn>
       </section>
 
-      <FooterMinimal />
+      <FooterMinimal showFinalCta />
     </main>
   );
 }

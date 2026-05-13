@@ -133,7 +133,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
         <FAQSection />
 
         {/* Footer (includes Final CTA at top) */}
-        <FooterMinimal />
+        <FooterMinimal showFinalCta />
       </main>
     </Suspense>
   );
