@@ -1,156 +1,221 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Card, EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-
-import { Activity, BarChart3, Coins, Database, Rocket, UserPlus } from "lucide-react";
+import { Activity, CreditCard, Rocket, Users } from "lucide-react";
 import { connection } from "next/server";
 import { Suspense } from "react";
+import { CommandModeProvider } from "@/components/command-palette/command-mode-context";
+import { CommandSurfaceButton } from "@/components/command-palette/command-surface-button";
+import { ModePills } from "@/components/command-palette/mode-pills";
+import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
+import { DashboardHint } from "@/components/onboarding/dashboard-hint";
+import { GettingStarted } from "@/components/onboarding/getting-started";
+import { RecentSessions } from "@/components/onboarding/recent-sessions";
 import { getAuth, getUser } from "@/lib/auth";
-import { getQueryClient } from "@/lib/query-client";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
+import {
+  CommandSkeleton,
+  MetricsSkeleton,
+  OnboardingSkeleton,
+  RecentSessionsSkeleton,
+} from "./_dashboard-skeletons";
 
 const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
-const METRICS = [
-  { key: "totalEvents", label: "Total Events", icon: Database },
-  { key: "activeUsers", label: "Active Users", icon: BarChart3 },
-  { key: "signups", label: "Signups", icon: UserPlus },
-  { key: "activations", label: "Activations", icon: Activity },
-  { key: "conversions", label: "Conversions", icon: Rocket },
-] as const;
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
-function formatValue(value: number) {
-  return value.toLocaleString();
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h >= 5 && h < 12) return "Good morning";
+  if (h >= 12 && h < 18) return "Good afternoon";
+  return "Good evening";
 }
 
-async function DashboardContent() {
+function fmt(n: number) {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return n.toLocaleString();
+}
+
+function fmtUSD(n: number) {
+  return n.toLocaleString(undefined, {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  });
+}
+
+// ── Streaming server components ───────────────────────────────────────────────
+
+async function GreetingShell() {
   await connection();
 
-  let userName = "User";
-  let orgName = "";
-  let tenantId = process.env.DEFAULT_DASHBOARD_TENANT_ID || "demo_org";
+  let userName = "there";
 
   if (hasClerkKey) {
-    const [authState, user] = await Promise.all([getAuth(), getUser()]);
-    userName = user?.name?.split(" ")[0] || "User";
-    orgName = ((authState.sessionClaims as Record<string, unknown>)?.org_name as string) || "";
-    tenantId = authState.orgId || tenantId;
+    try {
+      const user = await getUser();
+      userName = user?.name?.split(" ")[0] || "there";
+    } catch {
+      // graceful fallback
+    }
   }
 
-  const queryClient = getQueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: ["growth-summary", tenantId],
-    queryFn: () => getGrowthSummary(tenantId),
+  const greeting = getGreeting();
+  const dateLabel = new Date().toLocaleDateString("en", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
   });
 
-  const summary = queryClient.getQueryData<Awaited<ReturnType<typeof getGrowthSummary>>>([
-    "growth-summary",
-    tenantId,
-  ]);
-
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <AnimateIn preset="fadeUp">
-        <PageHeader
-          title="Dashboard"
-          description={
-            orgName
-              ? `${orgName} · Gold snapshot ${summary?.day ?? "N/A"}`
-              : `Gold snapshot ${summary?.day ?? "N/A"}`
-          }
-          actions={
-            <span className="max-w-full truncate rounded-full border border-neutral-7 bg-neutral-1 px-3 py-1 text-xs text-neutral-11 dark:border-white/10 dark:bg-black/40 dark:text-white/70">
-              Tenant: {summary?.tenantId ?? tenantId}
-            </span>
-          }
-        />
-      </AnimateIn>
+    <div className="relative">
+      {/* Atmospheric brand glow — decorative only */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-0 h-56 w-[640px] -translate-x-1/2 -translate-y-10 opacity-[0.055] blur-3xl dark:opacity-[0.09]"
+        style={{ background: "var(--brand-gradient)" }}
+      />
 
-      {!summary ? (
-        <AnimateIn preset="fadeUp">
-          <ErrorState title="Unable to load dashboard data" message="Please refresh to retry." />
-        </AnimateIn>
-      ) : !summary.day ? (
-        <AnimateIn preset="fadeUp">
-          <Card className="p-8">
-            <EmptyState
-              title="No growth data yet"
-              description="Events will appear here after your first ingestion cycle."
-            />
-          </Card>
-        </AnimateIn>
-      ) : (
-        <>
+      <CommandModeProvider>
+        <AnimateInGroup
+          stagger="normal"
+          className="relative mx-auto flex max-w-2xl flex-col items-center gap-4 text-center"
+        >
           <AnimateIn preset="fadeUp">
-            <Card className="mb-6 p-4 sm:p-6">
-              <h2 className="text-lg font-semibold text-neutral-12 dark:text-white">
-                Welcome back, {userName}.
-              </h2>
-              <p className="mt-2 text-sm text-neutral-11 dark:text-white/70">
-                Your operational summary for {summary.day} is ready.
-              </p>
-            </Card>
+            <p className="text-xs font-medium text-neutral-10 dark:text-white/40">{dateLabel}</p>
           </AnimateIn>
 
-          <AnimateInGroup stagger="fast" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {METRICS.map(({ key, label, icon: Icon }) => (
-              <AnimateIn key={key} preset="fadeUp">
-                <Card className="p-4 sm:p-6">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-medium text-neutral-11 dark:text-white/70">
-                      {label}
-                    </h3>
-                    <Icon className="h-4 w-4 text-blue-10 dark:text-cyan-9" />
-                  </div>
-                  <p className="mt-3 text-3xl font-semibold text-neutral-12 dark:text-white">
-                    {formatValue(summary[key])}
-                  </p>
-                  <p className="mt-1 text-xs text-neutral-10 dark:text-white/60">Latest day</p>
-                </Card>
-              </AnimateIn>
-            ))}
+          <AnimateIn preset="fadeUp">
+            <h1 className="text-2xl font-semibold tracking-tight text-neutral-12 dark:text-white">
+              {greeting},{" "}
+              <span
+                style={{
+                  background: "var(--brand-gradient)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                {userName}
+              </span>
+              .
+            </h1>
+          </AnimateIn>
 
-            <AnimateIn preset="fadeUp">
-              <Card className="p-4 sm:p-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-medium text-neutral-11 dark:text-white/70">
-                    Revenue
-                  </h3>
-                  <Coins className="h-4 w-4 text-blue-10 dark:text-cyan-9" />
-                </div>
-                <p className="mt-3 text-3xl font-semibold text-neutral-12 dark:text-white">
-                  $
-                  {summary.revenue.toLocaleString(undefined, {
-                    maximumFractionDigits: 2,
-                  })}
-                </p>
-                <p className="mt-1 text-xs text-neutral-10 dark:text-white/60">Latest day (USD)</p>
-              </Card>
-            </AnimateIn>
-          </AnimateInGroup>
-        </>
-      )}
+          <AnimateIn preset="fadeUp" className="w-full">
+            <CommandSurfaceButton />
+          </AnimateIn>
 
-      {!hasClerkKey && (
-        <AnimateIn preset="fadeUp">
-          <Card className="mt-6 border-[hsl(var(--warning)/0.35)] bg-[hsl(var(--warning)/0.12)] p-4 text-warning-foreground">
-            <p className="text-sm">
-              Clerk authentication is not configured. Set `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and
-              `CLERK_SECRET_KEY` to enable auth.
-            </p>
-          </Card>
-        </AnimateIn>
-      )}
-    </HydrationBoundary>
+          <AnimateIn preset="fadeUp" className="w-full">
+            <ModePills />
+          </AnimateIn>
+        </AnimateInGroup>
+      </CommandModeProvider>
+    </div>
   );
 }
 
-export default async function DashboardPage() {
+async function WorkspaceMetrics() {
+  let tenantId = process.env.DEFAULT_DASHBOARD_TENANT_ID || "demo_org";
+
+  if (hasClerkKey) {
+    try {
+      const authState = await getAuth();
+      tenantId = authState.orgId || tenantId;
+    } catch {
+      // graceful fallback
+    }
+  }
+
+  const summary = await getGrowthSummary(tenantId).catch(() => null);
+
+  if (!summary?.day) return null;
+
+  const metrics = [
+    { label: "Active Users", value: fmt(summary.activeUsers), icon: Users },
+    { label: "Total Events", value: fmt(summary.totalEvents), icon: Activity },
+    { label: "Conversions", value: fmt(summary.conversions), icon: Rocket },
+    { label: "Revenue", value: fmtUSD(summary.revenue), icon: CreditCard },
+  ];
+
   return (
-    <section className="mx-auto w-full max-w-7xl">
-      <Suspense fallback={<LoadingState message="Loading dashboard data…" />}>
-        <DashboardContent />
+    <div>
+      <AnimateIn preset="fadeUp">
+        <div className="mb-3 flex items-center justify-between">
+          <div>
+            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
+              Workspace Snapshot
+            </h2>
+            <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/40">
+              Latest warehouse day · {summary.day}
+            </p>
+          </div>
+          <ViewTransitionLink
+            href="/analytics"
+            className="text-xs font-medium text-blue-11 transition-colors hover:text-blue-12 dark:text-blue-9 dark:hover:text-blue-8"
+          >
+            View analytics →
+          </ViewTransitionLink>
+        </div>
+      </AnimateIn>
+
+      <AnimateInGroup stagger="fast" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {metrics.map(({ label, value, icon: Icon }) => (
+          <AnimateIn key={label} preset="fadeUp">
+            <ViewTransitionLink href="/analytics" className="block">
+              <div className="rounded-xl border border-neutral-6 bg-neutral-1 p-4 transition-all duration-200 hover:border-neutral-8 hover:shadow-md dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-white/20 dark:hover:shadow-none">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-neutral-10 dark:text-white/50">
+                    {label}
+                  </span>
+                  <Icon className="h-3.5 w-3.5 text-neutral-9 dark:text-white/25" />
+                </div>
+                <p className="mt-2 text-2xl font-semibold tabular-nums text-neutral-12 dark:text-white">
+                  {value}
+                </p>
+              </div>
+            </ViewTransitionLink>
+          </AnimateIn>
+        ))}
+      </AnimateInGroup>
+    </div>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+
+export default function DashboardPage() {
+  return (
+    <section className="mx-auto w-full max-w-7xl space-y-12">
+      {/* First-visit hint — cookie-gated; renders null for returning users */}
+      <DashboardHint />
+
+      {/* Fast: auth greeting + command surface + mode pills */}
+      <Suspense fallback={<CommandSkeleton />}>
+        <GreetingShell />
       </Suspense>
+
+      {/* Fast: 1 indexed query on chat_sessions; renders null when empty */}
+      <Suspense fallback={<RecentSessionsSkeleton />}>
+        <RecentSessions />
+      </Suspense>
+
+      {/* Medium: 4 parallel DB count queries derive real onboarding state */}
+      <Suspense fallback={<OnboardingSkeleton />}>
+        <GettingStarted />
+      </Suspense>
+
+      {/* Slow: warehouse metrics query */}
+      <Suspense fallback={<MetricsSkeleton />}>
+        <WorkspaceMetrics />
+      </Suspense>
+
+      {!hasClerkKey && (
+        <div className="rounded-xl border border-amber-6 bg-amber-2 px-4 py-3 text-sm text-amber-11">
+          Auth is not configured. Set{" "}
+          <code className="font-mono text-xs">NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY</code> to enable
+          user sessions.
+        </div>
+      )}
     </section>
   );
 }

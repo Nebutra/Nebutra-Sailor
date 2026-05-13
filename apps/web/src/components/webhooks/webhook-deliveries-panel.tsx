@@ -33,9 +33,9 @@ async function defaultLoad(endpointId: string): Promise<WebhookDeliveryView[]> {
 
 function StatusPill({ status }: { status: WebhookDeliveryView["status"] }) {
   const styles: Record<WebhookDeliveryView["status"], string> = {
-    success: "bg-emerald-100 text-emerald-700",
-    failed: "bg-red-100 text-red-700",
-    retrying: "bg-amber-100 text-amber-800",
+    success: "bg-green-3 text-green-11",
+    failed: "bg-red-3 text-red-11",
+    retrying: "bg-amber-3 text-amber-11",
   };
   return (
     <span
@@ -118,7 +118,7 @@ export function WebhookDeliveriesPanel({
         </p>
       )}
       {error && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="text-sm text-red-11">
           {error}
         </p>
       )}

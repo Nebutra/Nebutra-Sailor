@@ -3,20 +3,80 @@
 import { useChat } from "@ai-sdk/react";
 import { AnimateIn } from "@nebutra/ui/components";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { Bot, Loader2, Send, Trash2, User } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import {
+  Bot,
+  Code2,
+  Database,
+  Loader2,
+  type LucideIcon,
+  MessageSquare,
+  Plus,
+  Search,
+  Send,
+  Trash2,
+  User,
+  Workflow,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Streamdown } from "streamdown";
 import { PromptSuggestions } from "./prompt-suggestions";
 
 const MAX_TEXTAREA_ROWS = 5;
-// Tailwind text-sm leading-relaxed ≈ 22px. Used as a fallback when scrollHeight
-// math is not available (e.g. SSR / first paint). Real height clamping happens
-// against `scrollHeight` measured at runtime.
 const APPROX_LINE_HEIGHT_PX = 22;
+
+type ChatMode = "chat" | "data" | "workflow" | "search";
+
+const MODE_META: Record<ChatMode, { label: string; icon: LucideIcon; accentClass: string }> = {
+  chat: {
+    label: "Chat",
+    icon: MessageSquare,
+    accentClass:
+      "border-blue-7 bg-blue-2 text-blue-11 dark:border-blue-7/60 dark:bg-blue-2/25 dark:text-blue-9",
+  },
+  data: {
+    label: "Data",
+    icon: Database,
+    accentClass:
+      "border-cyan-7 bg-cyan-2 text-cyan-11 dark:border-cyan-7/60 dark:bg-cyan-2/25 dark:text-cyan-9",
+  },
+  workflow: {
+    label: "Workflow",
+    icon: Workflow,
+    accentClass:
+      "border-green-7 bg-green-2 text-green-11 dark:border-green-7/60 dark:bg-green-2/25 dark:text-green-9",
+  },
+  search: {
+    label: "Search",
+    icon: Search,
+    accentClass:
+      "border-neutral-8 bg-neutral-2 text-neutral-12 dark:border-white/30 dark:bg-white/10 dark:text-white",
+  },
+};
+
+const KNOWN_MODES: ReadonlySet<string> = new Set(Object.keys(MODE_META));
+
+function resolveMode(input: string | null | undefined): ChatMode {
+  if (!input || !KNOWN_MODES.has(input)) return "chat";
+  return input as ChatMode;
+}
+
+function generateSessionId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  // Fallback for older runtimes; the server upserts by id so collisions are
+  // detected (and 403'd) on the way through.
+  return `s_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+}
+
+interface ChatInterfaceProps {
+  initialSessionId?: string;
+  initialMode?: string;
+}
 
 function MessageBody({ message }: { message: UIMessage }) {
   const isUser = message.role === "user";
-
   return (
     <>
       {message.parts.map((part, i) => {
@@ -40,7 +100,6 @@ function MessageBody({ message }: { message: UIMessage }) {
 
 function ChatMessage({ message }: { message: UIMessage }) {
   const isUser = message.role === "user";
-
   return (
     <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
       <div
@@ -65,16 +124,51 @@ function ChatMessage({ message }: { message: UIMessage }) {
   );
 }
 
-export function ChatInterface() {
+export function ChatInterface({ initialSessionId, initialMode }: ChatInterfaceProps = {}) {
+  const router = useRouter();
   const [inputValue, setInputValue] = useState("");
+  const [sessionId, setSessionId] = useState<string | undefined>(initialSessionId);
+  const [mode, setMode] = useState<ChatMode>(resolveMode(initialMode));
+  const [isLoadingSession, setIsLoadingSession] = useState(!!initialSessionId);
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const { messages, sendMessage, status, setMessages } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
-  });
+  // The server reads mode + sessionId from the request body it receives via
+  // the AI SDK transport. We keep the transport stable; per-request body
+  // injection happens in `sendMessage` callsites.
+  const transport = useMemo(() => new DefaultChatTransport({ api: "/api/chat" }), []);
+
+  const { messages, sendMessage, status, setMessages } = useChat({ transport });
 
   const isStreaming = status === "streaming" || status === "submitted";
+
+  // Load existing session messages when initialSessionId is provided.
+  useEffect(() => {
+    if (!initialSessionId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/chat/sessions/${initialSessionId}`);
+        if (!cancelled && res.ok) {
+          const data = (await res.json()) as { session?: { messages?: unknown; mode?: string } };
+          const raw = data?.session?.messages;
+          if (Array.isArray(raw)) {
+            setMessages(raw as UIMessage[]);
+          }
+          if (data?.session?.mode) {
+            setMode(resolveMode(data.session.mode));
+          }
+        }
+      } catch {
+        // Empty chat is the natural fallback.
+      } finally {
+        if (!cancelled) setIsLoadingSession(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [initialSessionId, setMessages]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -82,7 +176,6 @@ export function ChatInterface() {
     }
   }, []);
 
-  // Auto-resize the textarea up to MAX_TEXTAREA_ROWS, clamping height.
   useEffect(() => {
     const ta = textareaRef.current;
     if (!ta) return;
@@ -94,65 +187,155 @@ export function ChatInterface() {
     ta.style.overflowY = ta.scrollHeight > maxHeight ? "auto" : "hidden";
   }, [inputValue]);
 
-  function submit() {
-    const text = inputValue.trim();
-    if (!text || isStreaming) return;
-    setInputValue("");
-    sendMessage({ text });
-  }
+  const reflectSessionInUrl = useCallback(
+    (nextId: string, nextMode: ChatMode) => {
+      const url = new URL(window.location.href);
+      url.searchParams.set("sessionId", nextId);
+      url.searchParams.set("mode", nextMode);
+      router.replace(`${url.pathname}${url.search}`);
+    },
+    [router],
+  );
+
+  const dispatch = useCallback(
+    (text: string) => {
+      if (!text || isStreaming) return;
+      // Ensure we have a sessionId before sending so the server can persist
+      // under a stable key (even if the client disconnects mid-stream).
+      let activeSessionId = sessionId;
+      if (!activeSessionId) {
+        activeSessionId = generateSessionId();
+        setSessionId(activeSessionId);
+        reflectSessionInUrl(activeSessionId, mode);
+      }
+      // biome-ignore lint/suspicious/noExplicitAny: AI SDK send body type is loose
+      sendMessage({ text }, { body: { mode, sessionId: activeSessionId } as any });
+    },
+    [isStreaming, mode, reflectSessionInUrl, sendMessage, sessionId],
+  );
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    submit();
+    const text = inputValue.trim();
+    setInputValue("");
+    dispatch(text);
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    // Enter alone → submit; Shift+Enter → newline (default behavior).
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      submit();
+      const text = inputValue.trim();
+      setInputValue("");
+      dispatch(text);
     }
   }
 
   function handleSuggestionSelect(prompt: string) {
-    if (isStreaming) return;
-    sendMessage({ text: prompt });
+    dispatch(prompt);
   }
+
+  function handleNewChat() {
+    setMessages([]);
+    setSessionId(undefined);
+    const url = new URL(window.location.href);
+    url.searchParams.delete("sessionId");
+    router.replace(`${url.pathname}${url.search}`);
+  }
+
+  function handleModeChange(next: ChatMode) {
+    if (next === mode || isStreaming) return;
+    setMode(next);
+    if (sessionId) {
+      reflectSessionInUrl(sessionId, next);
+    } else {
+      const url = new URL(window.location.href);
+      url.searchParams.set("mode", next);
+      router.replace(`${url.pathname}${url.search}`);
+    }
+  }
+
+  const currentMeta = MODE_META[mode];
 
   return (
     <div className="flex h-[calc(100vh-12rem)] flex-col rounded-xl border border-neutral-7 bg-neutral-1 dark:border-white/10 dark:bg-black/30">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-neutral-7 px-4 py-3 dark:border-white/10">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-7 px-4 py-3 dark:border-white/10">
         <div className="flex items-center gap-2">
           <Bot className="h-5 w-5 text-blue-10 dark:text-cyan-9" />
           <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
             Sailor AI Assistant
           </h2>
         </div>
-        {messages.length > 0 && (
-          <button
-            type="button"
-            aria-label="Clear conversation"
-            onClick={() => setMessages([])}
-            className="rounded-md p-1.5 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
-          >
-            <Trash2 className="h-4 w-4" />
-          </button>
-        )}
+        <div
+          role="radiogroup"
+          aria-label="Chat mode"
+          className="flex flex-wrap items-center gap-1.5"
+        >
+          {(Object.keys(MODE_META) as ChatMode[]).map((m) => {
+            const meta = MODE_META[m];
+            const ModeIcon = meta.icon;
+            const isActive = m === mode;
+            return (
+              <button
+                key={m}
+                type="button"
+                role="radio"
+                aria-checked={isActive}
+                disabled={isStreaming}
+                title={meta.label}
+                onClick={() => handleModeChange(m)}
+                className={`flex items-center gap-1 whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-medium transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50 ${
+                  isActive
+                    ? meta.accentClass
+                    : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/10 dark:bg-white/[0.04] dark:text-white/60 dark:hover:bg-white/[0.08] dark:hover:text-white"
+                }`}
+              >
+                <ModeIcon className="h-3 w-3" />
+                {meta.label}
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex items-center gap-1">
+          {messages.length > 0 && (
+            <button
+              type="button"
+              aria-label="Start a new chat"
+              onClick={handleNewChat}
+              className="rounded-md p-1.5 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              <Plus className="h-4 w-4" />
+            </button>
+          )}
+          {messages.length > 0 && (
+            <button
+              type="button"
+              aria-label="Clear conversation (does not delete session)"
+              onClick={() => setMessages([])}
+              className="rounded-md p-1.5 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              <Trash2 className="h-4 w-4" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Messages */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4">
-        {messages.length === 0 ? (
+        {isLoadingSession ? (
+          <div className="flex h-full items-center justify-center">
+            <Loader2 className="h-5 w-5 animate-spin text-neutral-10 dark:text-white/40" />
+          </div>
+        ) : messages.length === 0 ? (
           <AnimateIn preset="fade">
             <div className="flex h-full flex-col items-center justify-center gap-6 text-center">
               <div className="flex flex-col items-center">
-                <Bot className="h-12 w-12 text-neutral-7 dark:text-white/20" />
+                <currentMeta.icon className="h-12 w-12 text-neutral-7 dark:text-white/20" />
                 <h3 className="mt-4 text-sm font-medium text-neutral-12 dark:text-white">
-                  How can I help you?
+                  {currentMeta.label} mode — how can I help?
                 </h3>
                 <p className="mt-1 max-w-sm text-sm text-neutral-11 dark:text-white/70">
-                  Ask me anything about your SaaS platform, data, or features.
+                  Ask anything about your SaaS platform. The mode shapes what Sailor focuses on.
                 </p>
               </div>
               <div className="w-full max-w-2xl">
@@ -194,13 +377,13 @@ export function ChatInterface() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type a message..."
-            disabled={isStreaming}
+            placeholder={`Type a message… (${currentMeta.label} mode)`}
+            disabled={isStreaming || isLoadingSession}
             className="flex-1 resize-none rounded-lg border border-neutral-7 bg-neutral-2 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-[var(--blue-9)] focus:outline-none focus:ring-1 focus:ring-[var(--blue-9)] disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/50 dark:focus:border-cyan-9 dark:focus:ring-cyan-9"
           />
           <button
             type="submit"
-            disabled={!inputValue.trim() || isStreaming}
+            disabled={!inputValue.trim() || isStreaming || isLoadingSession}
             aria-label="Send message"
             className="rounded-lg bg-blue-9 px-3 py-2 text-white transition-colors hover:bg-blue-10 disabled:opacity-50 dark:bg-cyan-9 dark:text-black dark:hover:bg-cyan-10"
           >

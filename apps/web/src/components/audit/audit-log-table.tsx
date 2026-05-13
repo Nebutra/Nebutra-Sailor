@@ -43,13 +43,13 @@ function formatRelative(iso: string): string {
 function outcomePillClass(outcome: string | null): string {
   switch (outcome) {
     case "success":
-      return "bg-green-100 text-green-800 border-green-200";
+      return "bg-green-3 text-green-11 border-green-6";
     case "failure":
-      return "bg-red-100 text-red-800 border-red-200";
+      return "bg-red-3 text-red-11 border-red-6";
     case "pending":
-      return "bg-amber-100 text-amber-800 border-amber-200";
+      return "bg-amber-3 text-amber-11 border-amber-6";
     default:
-      return "bg-gray-100 text-gray-700 border-gray-200";
+      return "bg-neutral-3 text-neutral-11 border-neutral-6";
   }
 }
 

@@ -27,8 +27,8 @@ function toCurrency(value: number) {
 function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
   const tone =
     notice.tone === "success"
-      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100"
-      : "border-amber-500/30 bg-amber-500/10 text-amber-950 dark:text-amber-100";
+      ? "border-green-6 bg-green-2 text-green-11"
+      : "border-amber-6 bg-amber-2 text-amber-11";
 
   return (
     <div className={`rounded-2xl border p-4 ${tone}`}>

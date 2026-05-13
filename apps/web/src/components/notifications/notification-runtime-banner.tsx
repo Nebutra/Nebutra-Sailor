@@ -25,11 +25,11 @@ function getModeLabel(runtime: NotificationRuntimeStatus): string {
 function getModeClasses(runtime: NotificationRuntimeStatus): string {
   switch (runtime.mode) {
     case "managed":
-      return "border-emerald-200 bg-emerald-50 text-emerald-800";
+      return "border-green-6 bg-green-2 text-green-11";
     case "self_hosted":
-      return "border-blue-200 bg-blue-50 text-blue-800";
+      return "border-blue-6 bg-blue-2 text-blue-11";
     default:
-      return "border-amber-200 bg-amber-50 text-amber-800";
+      return "border-amber-6 bg-amber-2 text-amber-11";
   }
 }
 

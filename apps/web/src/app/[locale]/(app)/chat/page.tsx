@@ -2,7 +2,12 @@ import { AnimateIn } from "@nebutra/ui/components";
 import { PageHeader } from "@nebutra/ui/layout";
 import { ChatInterface } from "@/components/chat/chat-interface";
 
-export default function ChatPage() {
+interface ChatPageProps {
+  searchParams?: Promise<{ sessionId?: string; mode?: string }>;
+}
+
+export default async function ChatPage({ searchParams }: ChatPageProps) {
+  const resolved = searchParams ? await searchParams : {};
   return (
     <section className="mx-auto w-full max-w-4xl">
       <AnimateIn preset="fadeUp">
@@ -12,7 +17,7 @@ export default function ChatPage() {
         />
       </AnimateIn>
       <AnimateIn preset="fadeUp">
-        <ChatInterface />
+        <ChatInterface initialSessionId={resolved.sessionId} initialMode={resolved.mode} />
       </AnimateIn>
     </section>
   );

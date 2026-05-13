@@ -75,7 +75,7 @@ export function WebhooksList({
 
   if (error) {
     return (
-      <p className="py-4 text-sm text-center text-red-600" role="alert">
+      <p className="py-4 text-center text-sm text-red-11" role="alert">
         {error}
       </p>
     );
@@ -183,7 +183,7 @@ export function WebhooksList({
                   <button
                     type="button"
                     onClick={() => handleDelete(endpoint)}
-                    className="text-red-500 hover:text-red-700"
+                    className="text-red-11 hover:text-red-12"
                   >
                     Delete
                   </button>

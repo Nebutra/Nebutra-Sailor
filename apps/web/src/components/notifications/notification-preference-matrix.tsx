@@ -21,7 +21,7 @@ function getCellButtonClasses(enabled: boolean, editable: boolean): string {
   }
 
   if (enabled) {
-    return "border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100";
+    return "border-green-6 bg-green-2 text-green-11 hover:bg-green-3";
   }
 
   return "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]";
@@ -47,9 +47,7 @@ export function NotificationPreferenceMatrix({
 
         <div
           className={`inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-medium ${
-            runtime.canManagePreferences
-              ? "bg-emerald-50 text-emerald-800"
-              : "bg-amber-50 text-amber-800"
+            runtime.canManagePreferences ? "bg-green-2 text-green-11" : "bg-amber-2 text-amber-11"
           }`}
         >
           {runtime.canManagePreferences ? (

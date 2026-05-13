@@ -159,7 +159,7 @@ export function SecuritySettingsClient() {
       </section>
 
       {error && (
-        <section className="rounded-lg border border-red-200 bg-red-50/60 p-4 text-sm text-red-700">
+        <section className="rounded-lg border border-red-6 bg-red-2 p-4 text-sm text-red-11">
           {error}
         </section>
       )}

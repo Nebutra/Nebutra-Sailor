@@ -6,6 +6,12 @@ interface AuthBannerProps {
   className?: string;
 }
 
+/**
+ * Sign-in left panel — Pattern A (editorial silence).
+ * Brand mark + slogan + tagline anchored top-left, footer mark bottom-left.
+ * The gradient + dot grid carry the visual weight; no trust-badge checklist,
+ * no compliance acronyms. Inspired by Vercel / Plain / Notion 2026.
+ */
 export function AuthBanner({ className }: AuthBannerProps) {
   const t = useTranslations("auth.banner");
 
@@ -30,72 +36,43 @@ export function AuthBanner({ className }: AuthBannerProps) {
         style={{
           background:
             "radial-gradient(120% 92% at -18% 0%, color-mix(in srgb, var(--cyan-9) 30%, transparent) 0%, transparent 62%), radial-gradient(118% 96% at 112% 104%, color-mix(in srgb, var(--blue-9) 18%, transparent) 0%, transparent 64%), linear-gradient(145deg, color-mix(in srgb, var(--blue-9) 9%, transparent), transparent 48%, color-mix(in srgb, var(--cyan-9) 12%, transparent))",
-          opacity: 1,
         }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.24]"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.22]"
         style={{
           backgroundImage:
             "radial-gradient(circle, color-mix(in srgb, var(--neutral-12) 46%, transparent) 1px, transparent 1.5px), linear-gradient(90deg, color-mix(in srgb, var(--neutral-12) 8%, transparent) 1px, transparent 1px), linear-gradient(0deg, color-mix(in srgb, var(--neutral-12) 8%, transparent) 1px, transparent 1px)",
-          backgroundSize: "18px 18px, 92px 92px, 92px 92px",
+          backgroundSize: "20px 20px, 100px 100px, 100px 100px",
           maskImage:
-            "linear-gradient(90deg, black 0%, rgba(0,0,0,0.92) 58%, rgba(0,0,0,0.36) 100%)",
+            "linear-gradient(180deg, black 0%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 100%)",
           WebkitMaskImage:
-            "linear-gradient(90deg, black 0%, rgba(0,0,0,0.92) 58%, rgba(0,0,0,0.36) 100%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent 0%, transparent 58%, color-mix(in srgb, var(--neutral-1) 34%, transparent) 100%), linear-gradient(0deg, color-mix(in srgb, var(--neutral-1) 24%, transparent) 0%, transparent 40%, color-mix(in srgb, var(--neutral-1) 12%, transparent) 100%)",
+            "linear-gradient(180deg, black 0%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 100%)",
         }}
       />
 
-      <div className="relative z-10 flex w-full flex-col items-center justify-center px-12 text-center">
-        <Image
-          src="/brand/logo-color.svg"
-          alt={t("logoAlt")}
-          width={68}
-          height={64}
-          className="mb-8 h-20 w-auto drop-shadow-[0_20px_54px_color-mix(in_srgb,var(--blue-9)_24%,transparent)]"
-          priority
-        />
-        <h2 className="max-w-[24rem] text-balance text-3xl font-semibold leading-tight tracking-tight text-[var(--neutral-12)]">
-          {t("slogan")}
-        </h2>
-        <p className="mt-4 max-w-[22rem] text-balance text-sm leading-relaxed text-[var(--neutral-10)]">
-          {t("tagline")}
-        </p>
-        <ul
-          className="mt-10 flex flex-col gap-2.5 text-[13px] text-[var(--neutral-10)]"
-          aria-label={t("trustLabel")}
-        >
-          <li className="flex items-center gap-2">
-            <span
-              aria-hidden
-              className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--cyan-9)]"
-            />
-            {t("trust.soc2")}
-          </li>
-          <li className="flex items-center gap-2">
-            <span
-              aria-hidden
-              className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--cyan-9)]"
-            />
-            {t("trust.gdpr")}
-          </li>
-          <li className="flex items-center gap-2">
-            <span
-              aria-hidden
-              className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--cyan-9)]"
-            />
-            {t("trust.governance")}
-          </li>
-        </ul>
+      <div className="relative z-10 flex w-full flex-col items-start justify-between px-14 py-20 xl:px-20 xl:py-24">
+        <div className="flex max-w-[28rem] flex-col items-start">
+          <Image
+            src="/brand/logo-color.svg"
+            alt={t("logoAlt")}
+            width={72}
+            height={72}
+            className="mb-10 h-12 w-auto drop-shadow-[0_18px_44px_color-mix(in_srgb,var(--blue-9)_22%,transparent)]"
+            priority
+          />
+          <h2 className="text-balance text-[clamp(28px,3.2vw,40px)] font-semibold leading-[1.15] tracking-[-0.02em] text-[var(--neutral-12)]">
+            {t("slogan")}
+          </h2>
+          <p className="mt-4 max-w-[24rem] text-balance text-[15px] leading-[1.6] text-[var(--neutral-11)]">
+            {t("tagline")}
+          </p>
+        </div>
+
+        <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--neutral-10)]">
+          © {new Date().getFullYear()} Nebutra
+        </div>
       </div>
     </aside>
   );

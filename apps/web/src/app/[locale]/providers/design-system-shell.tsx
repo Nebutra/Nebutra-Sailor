@@ -67,6 +67,7 @@ import {
 interface Props {
   children: React.ReactNode;
   notificationCenter?: React.ReactNode;
+  planBadge?: React.ReactNode;
   productCapabilities?: WebProductCapabilities;
 }
 
@@ -141,7 +142,12 @@ export function DesignSystemShell(props: Props) {
   );
 }
 
-function DesignSystemShellInner({ children, notificationCenter, productCapabilities }: Props) {
+function DesignSystemShellInner({
+  children,
+  notificationCenter,
+  planBadge,
+  productCapabilities,
+}: Props) {
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
   const { collapsed, toggle: toggleSidebar } = useSidebar();
@@ -423,6 +429,7 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
               </div>
 
               <div className="flex items-center gap-2">
+                {planBadge}
                 {notificationCenter}
                 <HeaderAuthControls supportsWorkspaceSwitching={supportsWorkspaceSwitching} />
               </div>

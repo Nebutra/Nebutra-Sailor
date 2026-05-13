@@ -28,7 +28,7 @@ function cellClasses(enabled: boolean, busy: boolean): string {
     return "border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[var(--neutral-9)] cursor-progress";
   }
   if (enabled) {
-    return "border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100";
+    return "border-green-6 bg-green-2 text-green-11 hover:bg-green-3";
   }
   return "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]";
 }

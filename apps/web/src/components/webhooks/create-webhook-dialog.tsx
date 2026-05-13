@@ -185,7 +185,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
       </fieldset>
 
       {status.kind === "error" && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="text-sm text-red-11">
           {status.message}
         </p>
       )}

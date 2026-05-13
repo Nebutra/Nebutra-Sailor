@@ -63,9 +63,7 @@ vi.mock("@ai-sdk/react", () => ({
 }));
 
 vi.mock("ai", () => ({
-  DefaultChatTransport: class {
-    constructor(_opts: unknown) {}
-  },
+  DefaultChatTransport: vi.fn(),
 }));
 
 // Now import the component under test (after mocks are registered)

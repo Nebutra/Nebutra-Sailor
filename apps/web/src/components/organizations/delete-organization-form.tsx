@@ -82,9 +82,9 @@ export function DeleteOrganizationForm({
   }
 
   return (
-    <section className="rounded-lg border border-red-200 bg-red-50/30 p-6">
+    <section className="rounded-lg border border-red-6 bg-red-2 p-6">
       <div className="mb-4">
-        <h3 className="text-sm font-semibold text-red-700">{t("title")}</h3>
+        <h3 className="text-sm font-semibold text-red-11">{t("title")}</h3>
         <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
       </div>
 
@@ -109,7 +109,7 @@ export function DeleteOrganizationForm({
               autoComplete="off"
               aria-invalid={Boolean(error) || undefined}
               aria-describedby={error ? "delete-org-error" : undefined}
-              className="mt-1 block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+              className="mt-1 block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:border-red-8 focus:outline-none focus:ring-1 focus:ring-red-8"
               disabled={pending}
             />
             <p className="mt-1 text-xs text-[var(--neutral-11)]">
@@ -118,7 +118,7 @@ export function DeleteOrganizationForm({
           </div>
 
           {error && (
-            <p id="delete-org-error" role="alert" className="text-sm text-red-700">
+            <p id="delete-org-error" role="alert" className="text-sm text-red-11">
               {error}
             </p>
           )}

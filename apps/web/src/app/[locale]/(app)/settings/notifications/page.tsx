@@ -40,13 +40,13 @@ export default async function NotificationSettingsPage({ params, searchParams }:
       </div>
 
       {query.notice ? (
-        <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+        <div className="rounded-lg border border-green-6 bg-green-2 px-4 py-3 text-sm text-green-11">
           {query.notice}
         </div>
       ) : null}
 
       {query.error ? (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+        <div className="rounded-lg border border-red-6 bg-red-2 px-4 py-3 text-sm text-red-11">
           {query.error}
         </div>
       ) : null}

@@ -62,7 +62,7 @@ export function CreateApiKeyForm({ orgId }: Props) {
       </button>
 
       {state.status === "error" && (
-        <p className="self-center text-sm text-red-600">{state.message}</p>
+        <p className="self-center text-sm text-red-11">{state.message}</p>
       )}
     </form>
   );

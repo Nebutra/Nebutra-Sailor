@@ -29,6 +29,7 @@
     "@nebutra/i18n": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/logger": "workspace:*",
+    "@nebutra/metering": "workspace:*",
     "@nebutra/notifications": "workspace:*",
     "@nebutra/queue": "workspace:*",
     "@nebutra/tokens": "workspace:*",

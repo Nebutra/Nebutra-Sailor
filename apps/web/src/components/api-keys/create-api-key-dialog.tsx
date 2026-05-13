@@ -226,7 +226,7 @@ export function CreateApiKeyDialog({
               </div>
             </fieldset>
 
-            {error ? <p className="text-sm text-red-600">{error}</p> : null}
+            {error ? <p className="text-sm text-red-11">{error}</p> : null}
 
             <div className="flex items-center justify-end gap-2">
               <button

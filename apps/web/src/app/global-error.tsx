@@ -3,11 +3,9 @@
 /**
  * global-error.tsx — root-level Next.js error boundary.
  *
- * Catches catastrophic errors that bubble past all segment-level error.tsx
- * boundaries (RSC errors, layout crashes, hydration mismatches).
- * Must render its own <html> and <body> since the root layout is bypassed.
- *
- * Docs: https://nextjs.org/docs/app/api-reference/file-conventions/error#global-errorjs
+ * Renders outside the root layout: no globals.css, no design tokens, no @nebutra/ui.
+ * Inline styles only. light-dark() handles theme without media queries.
+ * Hardcoded hex is permitted here per CLAUDE.md "Exception: global-error.tsx".
  */
 
 import * as Sentry from "@sentry/nextjs";
@@ -17,6 +15,10 @@ interface GlobalErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
 }
+
+const SYSTEM_STACK =
+  '-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+const MONO_STACK = 'ui-monospace, "SF Mono", Menlo, Consolas, "Roboto Mono", monospace';
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
   useEffect(() => {
@@ -28,63 +30,119 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
       <body
         style={{
           margin: 0,
-          fontFamily: "system-ui, sans-serif",
-          background: "var(--background, #09090b)",
-          color: "var(--foreground, #fafafa)",
+          minHeight: "100vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "100vh",
+          fontFamily: SYSTEM_STACK,
+          background: "light-dark(#fafafa, #0a0a0a)",
+          color: "light-dark(#0a0a0a, #fafafa)",
+          colorScheme: "light dark",
+          padding: "24px",
+          WebkitFontSmoothing: "antialiased",
+          MozOsxFontSmoothing: "grayscale",
         }}
       >
-        <div style={{ textAlign: "center", maxWidth: 480, padding: "2rem" }}>
+        <main role="alert" style={{ width: "100%", maxWidth: 480 }}>
           <div
             style={{
-              fontSize: "3rem",
-              marginBottom: "1rem",
-              background: "var(--brand-gradient, linear-gradient(135deg, #0033FE, #0BF1C3))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
+              fontSize: 12,
+              fontWeight: 500,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              opacity: 0.5,
+              marginBottom: 16,
+              fontFamily: MONO_STACK,
             }}
           >
-            Nebutra
+            Error 500
           </div>
-          <h1 style={{ fontSize: "1.5rem", fontWeight: 600, marginBottom: "0.75rem" }}>
-            Something went wrong
-          </h1>
-          <p style={{ color: "var(--neutral-11, #a1a1aa)", marginBottom: "2rem", lineHeight: 1.6 }}>
-            An unexpected error occurred. Our team has been notified automatically.
-            {error.digest && (
-              <span
-                style={{
-                  display: "block",
-                  marginTop: "0.5rem",
-                  fontSize: "0.75rem",
-                  fontFamily: "monospace",
-                }}
-              >
-                Error ID: {error.digest}
-              </span>
-            )}
-          </p>
-          <button
-            type="button"
-            onClick={reset}
+
+          <h1
             style={{
-              background: "var(--brand-gradient, linear-gradient(135deg, #0033FE, #0BF1C3))",
-              color: "var(--neutral-1, #ffffff)",
-              border: "none",
-              borderRadius: "8px",
-              padding: "0.625rem 1.5rem",
-              fontSize: "0.875rem",
+              fontSize: "clamp(28px, 5vw, 36px)",
               fontWeight: 600,
-              cursor: "pointer",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.15,
+              margin: "0 0 12px",
             }}
           >
-            Try again
-          </button>
-        </div>
+            Something went wrong.
+          </h1>
+
+          <p
+            style={{
+              fontSize: 16,
+              lineHeight: 1.6,
+              opacity: 0.7,
+              margin: "0 0 32px",
+              maxWidth: "52ch",
+            }}
+          >
+            An unexpected error occurred. Our team has been notified automatically. You can try
+            again, or return to the dashboard.
+          </p>
+
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <button
+              type="button"
+              onClick={reset}
+              style={{
+                background: "linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%)",
+                color: "#ffffff",
+                border: 0,
+                padding: "10px 20px",
+                borderRadius: 8,
+                fontSize: 14,
+                fontWeight: 500,
+                cursor: "pointer",
+                fontFamily: "inherit",
+              }}
+            >
+              Try again
+            </button>
+            <a
+              href="/"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "10px 20px",
+                borderRadius: 8,
+                fontSize: 14,
+                fontWeight: 500,
+                color: "inherit",
+                textDecoration: "none",
+                border: "1px solid light-dark(rgba(0,0,0,0.12), rgba(255,255,255,0.16))",
+                background: "transparent",
+              }}
+            >
+              Return home
+            </a>
+          </div>
+
+          <div
+            style={{
+              marginTop: 40,
+              paddingTop: 20,
+              borderTop: "1px solid light-dark(rgba(0,0,0,0.08), rgba(255,255,255,0.1))",
+              fontSize: 12,
+              fontFamily: MONO_STACK,
+              opacity: 0.55,
+              display: "flex",
+              justifyContent: "space-between",
+              gap: 16,
+              flexWrap: "wrap",
+            }}
+          >
+            <span>{error.digest ? `Error ID: ${error.digest}` : "Error ID: unavailable"}</span>
+            <a
+              href="https://status.nebutra.com"
+              style={{ color: "inherit", textDecoration: "none", opacity: 0.8 }}
+            >
+              status.nebutra.com →
+            </a>
+          </div>
+        </main>
       </body>
     </html>
   );

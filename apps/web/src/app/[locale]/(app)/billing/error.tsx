@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimateIn } from "@nebutra/ui/components";
-import { ErrorState } from "@nebutra/ui/layout";
+import { FullPageStatus } from "@nebutra/ui/layout";
+import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 
 interface ErrorProps {
@@ -10,17 +10,22 @@ interface ErrorProps {
 }
 
 export default function BillingError({ error, reset }: ErrorProps) {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    Sentry.captureException(error);
+  }, [error]);
 
   return (
-    <section className="mx-auto w-full max-w-7xl" role="alert" aria-label="Billing error">
-      <AnimateIn preset="fadeUp">
-        <ErrorState
-          title="Failed to load billing"
-          message={error.message || "An unexpected error occurred. Please try again."}
-          onRetry={reset}
-        />
-      </AnimateIn>
-    </section>
+    <FullPageStatus
+      variant="section"
+      code="Error · Billing"
+      title="Failed to load billing."
+      description={
+        error.message ||
+        "An unexpected error occurred while loading your billing data. Try again, or return to the dashboard."
+      }
+      primaryAction={{ label: "Try again", onClick: reset }}
+      secondaryAction={{ label: "Go to dashboard", href: "/" }}
+      meta={error.digest ? { errorId: error.digest } : undefined}
+    />
   );
 }
