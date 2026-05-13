@@ -81,3 +81,8 @@ apps/api-gateway/openapi.json
 **/.npmrc
 !.npmrc
 !.npmrc.example
+
+# Fumadocs generated content — never commit. Empty stubs in this dir block
+# subsequent fumadocs-mdx regeneration (it skips files that already exist),
+# which silently broke design-docs typecheck for weeks.
+apps/*/.source/
