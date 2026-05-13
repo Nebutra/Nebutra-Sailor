@@ -34,7 +34,7 @@ interface ScopedTokens {
 }
 
 const PROJECT_ROOT = resolve(import.meta.dirname, "..");
-const REPO_ROOT = resolve(PROJECT_ROOT, "..", "..");
+const REPO_ROOT = resolve(PROJECT_ROOT, "..", "..", "..");
 const LEGACY_CSS = resolve(REPO_ROOT, "packages/design/tokens/styles.css");
 const GENERATED_CSS = resolve(PROJECT_ROOT, "build/css/styles.generated.css");
 

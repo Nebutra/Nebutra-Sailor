@@ -6,7 +6,11 @@ pre-commit:
   commands:
     biome-check:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
-      run: pnpm biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      # Call the local binary directly. `pnpm exec biome` is intercepted in some
+      # dev shells (Antigravity/rtk-style wrappers that try ESLint first and OOM
+      # when this repo has no ESLint installed). The direct binary path is fast,
+      # deterministic, and bypasses any per-shell wrapper.
+      run: ./node_modules/.bin/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
       stage_fixed: true
     secrets-scan:
       run: gitleaks protect --staged --no-banner
@@ -14,7 +18,10 @@ pre-commit:
 pre-push:
   commands:
     typecheck:
-      run: pnpm turbo typecheck --affected
+      # `--affected` resolves to empty when pushing main→main (no diff base).
+      # Use the explicit since-ref so turbo compares against the upstream HEAD
+      # and actually typechecks packages touched in the unpushed commits.
+      run: ./node_modules/.bin/turbo typecheck --filter="...[origin/main]"
     i18n-check:
       # Only runs when landing-page locale files are part of the push.
       glob: "apps/landing-page/messages/*.json"
