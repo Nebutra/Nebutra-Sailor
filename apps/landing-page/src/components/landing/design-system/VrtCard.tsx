@@ -55,7 +55,8 @@ export function VrtCard() {
               <div className="absolute -inset-1.5 border border-emerald-500/40 bg-emerald-500/5 rounded-xl border-dashed animate-pulse" />
               <button
                 type="button"
-                className="px-6 py-2.5 bg-primary text-primary-foreground rounded-full text-sm font-bold shadow-xl shadow-primary/20 pointer-events-none whitespace-nowrap scale-105 relative z-10"
+                className="px-6 py-2.5 bg-primary text-primary-foreground rounded-full text-sm font-bold border border-[var(--neutral-6)] pointer-events-none whitespace-nowrap relative z-10"
+                style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 {"<Button />"}
               </button>

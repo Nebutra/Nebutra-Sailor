@@ -84,7 +84,7 @@ function PipelineStep({
         isLeft ? "justify-start" : "justify-end",
       )}
     >
-      <div className="absolute left-1/2 top-1/2 w-2.5 h-2.5 bg-background border-[2px] border-primary rounded-full -translate-x-1/2 -translate-y-1/2 z-10 shadow-[0_0_8px_rgba(var(--primary),0.8)] transition-transform hover:scale-125" />
+      <div className="absolute left-1/2 top-1/2 w-2.5 h-2.5 bg-background border-[2px] border-primary rounded-full -translate-x-1/2 -translate-y-1/2 z-10 shadow-[0_0_8px_rgba(var(--primary),0.8)] transition-all duration-150 hover:-translate-y-0.5 hover:opacity-80" />
 
       <div
         className={cn(

@@ -66,7 +66,10 @@ export function LiveMetricsChart() {
           </div>
         </div>
         <div className="text-right">
-          <div className="text-2xl font-black text-foreground font-mono tracking-tighter">
+          <div
+            className="text-2xl font-semibold text-foreground font-mono"
+            style={{ letterSpacing: "var(--tracking-tight)" }}
+          >
             <NumberFlow value={value} trend={(prev, curr) => (curr > prev ? 1 : -1)} />
           </div>
           <p className="text-[10px] text-muted-foreground">Requests / sec</p>

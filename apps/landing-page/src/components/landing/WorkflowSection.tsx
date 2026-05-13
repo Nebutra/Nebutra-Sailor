@@ -48,7 +48,10 @@ export function WorkflowSection() {
           <p className="text-sm font-bold tracking-[0.2em] text-primary uppercase mb-4">
             {t("badge")}
           </p>
-          <h2 className="text-4xl font-black tracking-tight text-foreground md:text-5xl text-balance">
+          <h2
+            className="text-3xl font-semibold text-foreground md:text-4xl lg:text-5xl text-balance"
+            style={{ letterSpacing: "var(--tracking-heading)" }}
+          >
             {t("title")}
           </h2>
         </AnimateIn>
@@ -56,7 +59,8 @@ export function WorkflowSection() {
         {/* Timeline Container */}
         <div
           ref={containerRef}
-          className="relative flex flex-col md:flex-row items-center md:items-start justify-between w-full min-h-[400px] mx-auto p-8 md:p-12 rounded-[2.5rem] border border-border/50 bg-background/50 backdrop-blur-xl shadow-2xl shadow-primary/5"
+          className="relative flex flex-col md:flex-row items-center md:items-start justify-between w-full min-h-[400px] mx-auto p-8 md:p-12 rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 backdrop-blur-xl"
+          style={{ boxShadow: "var(--ring-hairline)" }}
         >
           {/* Animated Beams connecting nodes */}
           <AnimatedBeam
@@ -64,8 +68,8 @@ export function WorkflowSection() {
             fromRef={ref1}
             toRef={ref2}
             pathColor="hsl(var(--muted-foreground) / 0.15)"
-            gradientStartColor="#38bdf8"
-            gradientStopColor="#818cf8"
+            gradientStartColor="var(--brand-primary)"
+            gradientStopColor="var(--brand-accent)"
             duration={3}
             delay={0}
           />
@@ -74,8 +78,8 @@ export function WorkflowSection() {
             fromRef={ref2}
             toRef={ref3}
             pathColor="hsl(var(--muted-foreground) / 0.15)"
-            gradientStartColor="#818cf8"
-            gradientStopColor="#c084fc"
+            gradientStartColor="var(--brand-accent)"
+            gradientStopColor="var(--brand-tertiary)"
             duration={3}
             delay={1}
           />
@@ -84,8 +88,8 @@ export function WorkflowSection() {
             fromRef={ref3}
             toRef={ref4}
             pathColor="hsl(var(--muted-foreground) / 0.15)"
-            gradientStartColor="#c084fc"
-            gradientStopColor="#e879f9"
+            gradientStartColor="var(--brand-tertiary)"
+            gradientStopColor="var(--brand-primary)"
             duration={3}
             delay={2}
           />
@@ -106,7 +110,8 @@ export function WorkflowSection() {
                   {/* The Node that the beam connects to */}
                   <div
                     ref={step.ref}
-                    className="flex h-16 w-16 items-center justify-center rounded-2xl bg-background border border-border shadow-xl mb-8 relative z-20 group hover:scale-110 transition-transform duration-500"
+                    className="flex h-16 w-16 items-center justify-center rounded-[var(--radius-card)] bg-background border border-[var(--neutral-6)] mb-8 relative z-20 group hover:-translate-y-px transition-transform duration-150"
+                    style={{ boxShadow: "var(--ring-hairline)" }}
                   >
                     <Icon className="h-7 w-7 text-primary relative z-10 group-hover:text-foreground transition-colors" />
                     {/* Glowing pulse behind the icon */}

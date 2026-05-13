@@ -59,7 +59,10 @@ export function VelocitySignalStrip() {
 
               <div className="flex flex-col items-start text-left">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-black text-foreground tracking-tight tabular-nums">
+                  <span
+                    className="text-2xl font-semibold text-foreground tabular-nums"
+                    style={{ letterSpacing: "var(--tracking-tight)" }}
+                  >
                     {stat.value}
                   </span>
                 </div>

@@ -661,7 +661,10 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                     BUILDER CORE / L0
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-3 text-foreground">
+                <h3
+                  className="text-2xl md:text-3xl font-semibold mb-3 text-foreground"
+                  style={{ letterSpacing: "var(--tracking-heading)" }}
+                >
                   {labels.whyBuilderHead}
                 </h3>
                 <p className="text-sm md:text-base font-mono tracking-tight text-primary mb-5">
@@ -684,7 +687,10 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                     SLEPTONS / L1
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-3 text-foreground">
+                <h3
+                  className="text-2xl md:text-3xl font-semibold mb-3 text-foreground"
+                  style={{ letterSpacing: "var(--tracking-heading)" }}
+                >
                   {labels.whySleptonsHead}
                 </h3>
                 <p className="text-sm md:text-base font-mono tracking-tight text-primary mb-5">
@@ -715,7 +721,13 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               </span>
             </AnimateIn>
             <AnimateIn preset="fadeUp">
-              <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-6 text-foreground">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 text-foreground"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {labels.pillarsTitle}
               </h2>
             </AnimateIn>
@@ -734,14 +746,21 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               const content = pick(lang, pillar);
               return (
                 <AnimateIn key={content.number} preset="fadeUp">
-                  <article className="group h-full flex flex-col rounded-3xl border border-border/60 bg-muted/20 p-8 md:p-10 transition-all duration-500 hover:border-border hover:bg-muted/40 hover:shadow-2xl">
+                  <article
+                    className="group h-full flex flex-col rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/20 p-8 md:p-10 hover:border-border hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150"
+                    style={{ boxShadow: "var(--ring-hairline)" }}
+                  >
                     <span
-                      className="font-black text-7xl md:text-8xl tracking-tighter text-foreground/10 mb-6 leading-none select-none group-hover:text-foreground/20 transition-colors"
+                      className="text-2xl md:text-3xl font-semibold text-foreground/30 mb-6 leading-none select-none group-hover:text-foreground/50 transition-colors"
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
                       aria-hidden="true"
                     >
                       {content.number}
                     </span>
-                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-5 text-foreground">
+                    <h3
+                      className="text-2xl md:text-3xl font-semibold mb-5 text-foreground"
+                      style={{ letterSpacing: "var(--tracking-heading)" }}
+                    >
                       {content.title}
                     </h3>
                     <p className="text-base text-muted-foreground leading-relaxed">
@@ -756,8 +775,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
       </section>
 
       {/* ─── 6. Closing CTA ─────────────────────────────────────────────── */}
-      <section className="py-32 md:py-48 border-t border-border/50 bg-background">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
+      <section className="relative py-32 md:py-48 border-t border-border/50 bg-background overflow-hidden">
+        <AuroraBackground variant="vivid" position="center" intensity={0.4} />
+        <div className="container mx-auto px-4 max-w-4xl text-center relative">
           <AnimateIn preset="fadeUp">
             <div className="inline-block mb-8 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
               <span className="text-xs md:text-sm font-mono tracking-[0.25em] uppercase text-primary">
@@ -766,7 +786,13 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
             </div>
           </AnimateIn>
           <AnimateIn preset="emerge">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-balance mb-8 text-foreground">
+            <h2
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-8 text-foreground"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               {labels.ctaTitle}
             </h2>
           </AnimateIn>
@@ -777,35 +803,24 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
           </AnimateIn>
           <AnimateIn preset="fadeUp">
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="#">
-                <Button
-                  size="lg"
-                  className="rounded-full h-14 px-10 text-base font-bold shadow-xl bg-foreground text-background hover:scale-105 transition-transform"
-                >
+              <Button asChild variant="ink" size="lg">
+                <Link href="#">
                   <Sparkles className="mr-2 h-4 w-4" />
                   {labels.ctaDocs}
-                </Button>
-              </Link>
-              <Link href="#">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full h-14 px-10 text-base font-bold border-border hover:bg-muted/60 transition-colors"
-                >
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link href="#">
                   {labels.ctaSleptons}
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="/about/whitepaper">
-                <Button
-                  size="lg"
-                  variant="ghost"
-                  className="rounded-full h-14 px-10 text-base font-bold hover:bg-muted/60 transition-colors"
-                >
+                </Link>
+              </Button>
+              <Button asChild variant="ghost" size="lg">
+                <Link href="/about/whitepaper">
                   <FileText className="mr-2 h-4 w-4" />
                   {labels.ctaWhitepaper}
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </AnimateIn>
         </div>

@@ -11,7 +11,7 @@ export function InfrastructureGrid() {
 
   return (
     <section className="relative w-full bg-zinc-950 py-24 md:py-32 px-4 md:px-10">
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-[1400px]">
         <div className="mb-16 flex flex-col items-center justify-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -45,7 +45,7 @@ export function InfrastructureGrid() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[320px]">
           {/* Card 1: The Builder Core */}
           <BentoCard className="md:col-span-2 lg:col-span-2 md:row-span-1 border-white/10 bg-white/5 overflow-hidden group">
-            <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_100%_0%,rgba(120,119,198,0.1)_0%,rgba(0,0,0,0)_50%)] transition-transform duration-700 ease-out group-hover:scale-110" />
+            <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_100%_0%,rgba(120,119,198,0.1)_0%,rgba(0,0,0,0)_50%)] transition-transform duration-150 ease-out group-hover:-translate-y-px" />
             <div className="relative z-10 flex h-full flex-col justify-between p-8">
               <Boxes className="h-8 w-8 text-neutral-300" />
               <div>
@@ -143,11 +143,11 @@ function BentoCard({
       onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative rounded-3xl transition-colors ${className}`}
+      className={`relative rounded-[var(--radius-card)] transition-colors ${className}`}
     >
       {/* Mobile touch fallback glow */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-10 rounded-3xl sm:hidden block"
+        className="pointer-events-none absolute inset-0 opacity-10 rounded-[var(--radius-card)] sm:hidden block"
         style={{
           background: `radial-gradient(400px circle at 50% 50%, rgba(255,255,255,0.15), transparent 60%)`,
         }}
@@ -155,7 +155,7 @@ function BentoCard({
 
       {/* Precision mouse hover glow */}
       <div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 rounded-3xl hidden sm:block"
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 rounded-[var(--radius-card)] hidden sm:block"
         style={{
           opacity,
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.08), transparent 40%)`,

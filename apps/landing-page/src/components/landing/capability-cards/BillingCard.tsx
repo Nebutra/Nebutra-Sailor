@@ -60,7 +60,10 @@ export function BillingCard() {
               +14.2%
             </span>
           </div>
-          <p className="text-2xl font-black text-foreground dark:text-white tabular-nums tracking-tighter mb-3">
+          <p
+            className="text-2xl font-semibold text-foreground dark:text-white tabular-nums mb-3"
+            style={{ letterSpacing: "var(--tracking-tight)" }}
+          >
             $12,400
           </p>
           {/* CSS-only sparkline chart */}
@@ -136,7 +139,10 @@ export function BillingCard() {
               <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-zinc-500 mb-1">
                 {metric.label}
               </p>
-              <p className="text-lg font-black text-foreground dark:text-white tabular-nums tracking-tighter mb-1">
+              <p
+                className="text-lg font-semibold text-foreground dark:text-white tabular-nums mb-1"
+                style={{ letterSpacing: "var(--tracking-tight)" }}
+              >
                 {metric.value}
               </p>
               <span

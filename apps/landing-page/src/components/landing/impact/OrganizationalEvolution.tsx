@@ -58,7 +58,7 @@ export function OrganizationalEvolution() {
       const currentText = RAW_CODE.substring(0, charCount);
 
       ctx.clearRect(0, 0, rect.width, rect.height);
-      ctx.fillStyle = "#d4d4d4"; // neutral-300
+      ctx.fillStyle = "#cbd5e1"; // matches var(--neutral-7) / slate-300 — Canvas 2D doesn't support CSS variables
       ctx.font = fontStr;
 
       if (currentText.length > 0) {
@@ -103,9 +103,9 @@ export function OrganizationalEvolution() {
 
   return (
     <section className="relative w-full bg-zinc-950 py-24 md:py-32 px-4 md:px-10 overflow-hidden pb-48">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <div className="mx-auto max-w-7xl flex flex-col lg:flex-row items-center gap-16">
+      <div className="mx-auto max-w-[1400px] flex flex-col lg:flex-row items-center gap-16">
         <div className="flex-1 w-full lg:w-1/2 pl-0 md:pl-8">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -131,7 +131,8 @@ export function OrganizationalEvolution() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="rounded-2xl border border-white/10 bg-zinc-950 shadow-2xl overflow-hidden relative"
+            className="rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-zinc-950 overflow-hidden relative"
+            style={{ boxShadow: "var(--ring-hairline)" }}
           >
             {/* Window Chrome */}
             <div className="flex items-center px-4 py-3 border-b border-white/10 bg-white/5">

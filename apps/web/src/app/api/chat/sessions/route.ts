@@ -1,3 +1,4 @@
+import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getAuth } from "@/lib/auth";
@@ -44,21 +45,34 @@ export async function GET() {
     return NextResponse.json({ sessions: [] });
   }
 
-  const sessions = await db.chatSession.findMany({
-    where: { organizationId: auth.orgId, userId: auth.userId },
-    orderBy: { lastMessageAt: "desc" },
-    take: 20,
-    select: {
-      id: true,
-      title: true,
-      mode: true,
-      messageCount: true,
-      lastMessageAt: true,
-      createdAt: true,
-    },
-  });
-
-  return NextResponse.json({ sessions });
+  try {
+    const sessions = await db.chatSession.findMany({
+      where: { organizationId: auth.orgId, userId: auth.userId },
+      orderBy: { lastMessageAt: "desc" },
+      take: 20,
+      select: {
+        id: true,
+        title: true,
+        mode: true,
+        messageCount: true,
+        lastMessageAt: true,
+        createdAt: true,
+      },
+    });
+    logger.debug("[chat.sessions.GET] Listed sessions", {
+      count: sessions.length,
+      orgId: auth.orgId,
+      userId: auth.userId,
+    });
+    return NextResponse.json({ sessions });
+  } catch (err) {
+    logger.error("[chat.sessions.GET] Failed to list sessions", {
+      error: err instanceof Error ? err.message : String(err),
+      orgId: auth.orgId,
+      userId: auth.userId,
+    });
+    return NextResponse.json({ error: "Failed to load sessions" }, { status: 500 });
+  }
 }
 
 /**
@@ -85,6 +99,10 @@ export async function POST(request: Request) {
     body = UpsertBody.parse(await request.json());
   } catch (err) {
     const message = err instanceof Error ? err.message : "Invalid request body";
+    logger.warn("[chat.sessions.POST] Invalid body", {
+      error: message,
+      userId: auth.userId,
+    });
     return NextResponse.json({ error: message }, { status: 400 });
   }
 
@@ -102,6 +120,14 @@ export async function POST(request: Request) {
     if (existing && (existing.userId !== auth.userId || existing.organizationId !== auth.orgId)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
+
+    logger.info("[chat.sessions.POST] Upserting session", {
+      sessionId: body.id,
+      mode,
+      messageCount,
+      orgId: auth.orgId,
+      userId: auth.userId,
+    });
 
     const upserted = await db.chatSession.upsert({
       where: { id: body.id },

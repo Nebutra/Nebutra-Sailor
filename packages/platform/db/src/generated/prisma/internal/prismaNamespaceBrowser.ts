@@ -93,6 +93,10 @@ export const ModelName = {
   OAuthAccessToken: 'OAuthAccessToken',
   AuthUser: 'AuthUser',
   ChatSession: 'ChatSession',
+  Referral: 'Referral',
+  RedemptionCode: 'RedemptionCode',
+  CodeRedemption: 'CodeRedemption',
+  FeedbackReport: 'FeedbackReport',
   AuthAccount: 'AuthAccount',
   AuthSession: 'AuthSession',
   AuthVerification: 'AuthVerification',
@@ -844,6 +848,70 @@ export const ChatSessionScalarFieldEnum = {
 } as const
 
 export type ChatSessionScalarFieldEnum = (typeof ChatSessionScalarFieldEnum)[keyof typeof ChatSessionScalarFieldEnum]
+
+
+export const ReferralScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  referrerUserId: 'referrerUserId',
+  referredEmail: 'referredEmail',
+  referredUserId: 'referredUserId',
+  status: 'status',
+  rewardCredits: 'rewardCredits',
+  level: 'level',
+  expiresAt: 'expiresAt',
+  claimedAt: 'claimedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ReferralScalarFieldEnum = (typeof ReferralScalarFieldEnum)[keyof typeof ReferralScalarFieldEnum]
+
+
+export const RedemptionCodeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  type: 'type',
+  rewardAmount: 'rewardAmount',
+  rewardPayload: 'rewardPayload',
+  maxRedemptions: 'maxRedemptions',
+  redemptionCount: 'redemptionCount',
+  expiresAt: 'expiresAt',
+  campaignName: 'campaignName',
+  createdAt: 'createdAt'
+} as const
+
+export type RedemptionCodeScalarFieldEnum = (typeof RedemptionCodeScalarFieldEnum)[keyof typeof RedemptionCodeScalarFieldEnum]
+
+
+export const CodeRedemptionScalarFieldEnum = {
+  id: 'id',
+  codeId: 'codeId',
+  userId: 'userId',
+  organizationId: 'organizationId',
+  redeemedAt: 'redeemedAt',
+  ipAddress: 'ipAddress'
+} as const
+
+export type CodeRedemptionScalarFieldEnum = (typeof CodeRedemptionScalarFieldEnum)[keyof typeof CodeRedemptionScalarFieldEnum]
+
+
+export const FeedbackReportScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  area: 'area',
+  mode: 'mode',
+  description: 'description',
+  contactEmail: 'contactEmail',
+  sessionId: 'sessionId',
+  userAgent: 'userAgent',
+  pageUrl: 'pageUrl',
+  resolved: 'resolved',
+  resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type FeedbackReportScalarFieldEnum = (typeof FeedbackReportScalarFieldEnum)[keyof typeof FeedbackReportScalarFieldEnum]
 
 
 export const AuthAccountScalarFieldEnum = {

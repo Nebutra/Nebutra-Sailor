@@ -33,7 +33,10 @@ export function CapabilityCard({
       <div className="px-8 pt-10 sm:px-10 flex-none z-10 relative">
         <div className="flex items-center gap-3 mb-4">
           <div className="flex items-center justify-center text-primary w-8 h-8">{icon}</div>
-          <h3 className="text-[26px] sm:text-[32px] font-black tracking-tight text-foreground dark:text-white leading-tight">
+          <h3
+            className="text-[26px] sm:text-[32px] font-semibold text-foreground dark:text-white leading-tight"
+            style={{ letterSpacing: "var(--tracking-heading)" }}
+          >
             {title}
           </h3>
         </div>

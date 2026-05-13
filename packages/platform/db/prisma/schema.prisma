@@ -1266,6 +1266,99 @@ model ChatSession {
   @@schema("public")
 }
 
+// ── Referrals (TEMPLATE — schema ready, no UI yet) ───────────────────────────
+// Invite-to-earn loop. Single-source-of-truth for codes the referrer can
+// share. `referredUserId` is null until claim; `referredEmail` is captured
+// as a non-binding contact hint during invitation. Status transitions:
+//   pending → claimed (on signup)
+//   pending → expired (after expiresAt)
+// Reward credits land in @nebutra/metering once metering grows a credits API
+// — for now this is just provenance.
+model Referral {
+  id             String    @id @default(cuid())
+  code           String    @unique @db.VarChar(20)
+  referrerUserId String    @map("referrer_user_id")
+  referredEmail  String?   @map("referred_email") @db.VarChar(254)
+  referredUserId String?   @map("referred_user_id")
+  status         String    @default("pending") @db.VarChar(20)
+  rewardCredits  Int       @default(0) @map("reward_credits")
+  level          Int       @default(0)
+  expiresAt      DateTime? @map("expires_at")
+  claimedAt      DateTime? @map("claimed_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  @@index([referrerUserId, status, createdAt(sort: Desc)])
+  @@index([referredUserId])
+  @@map("referrals")
+  @@schema("public")
+}
+
+// ── Redemption Codes (TEMPLATE — schema ready, no UI yet) ────────────────────
+// Promotional / gift code system. Each `RedemptionCode` is a campaign-level
+// definition; each `CodeRedemption` is a user's claim of it. The unique
+// (codeId, userId) constraint enforces "one claim per user per code", even
+// when maxRedemptions > 1 (i.e. the code is shareable but personal).
+model RedemptionCode {
+  id              String    @id @default(cuid())
+  code            String    @unique @db.VarChar(40)
+  type            String    @db.VarChar(20)
+  rewardAmount    Int       @default(0) @map("reward_amount")
+  rewardPayload   Json      @default("{}") @map("reward_payload")
+  maxRedemptions  Int       @default(1) @map("max_redemptions")
+  redemptionCount Int       @default(0) @map("redemption_count")
+  expiresAt       DateTime? @map("expires_at")
+  campaignName    String?   @map("campaign_name") @db.VarChar(80)
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  redemptions CodeRedemption[]
+
+  @@index([campaignName, createdAt(sort: Desc)])
+  @@map("redemption_codes")
+  @@schema("public")
+}
+
+model CodeRedemption {
+  id             String   @id @default(cuid())
+  codeId         String   @map("code_id")
+  userId         String   @map("user_id")
+  organizationId String?  @map("organization_id")
+  redeemedAt     DateTime @default(now()) @map("redeemed_at")
+  ipAddress      String?  @map("ip_address") @db.VarChar(45)
+
+  code RedemptionCode @relation(fields: [codeId], references: [id], onDelete: Cascade)
+
+  @@unique([codeId, userId])
+  @@index([userId, redeemedAt(sort: Desc)])
+  @@map("code_redemptions")
+  @@schema("public")
+}
+
+// ── Feedback Reports ─────────────────────────────────────────────────────────
+// In-app issue / feedback submissions. Lightweight — no relations, soft-typed
+// `area` and `mode` so adding new surfaces doesn't require a migration.
+// `resolved` defaults to false so unread reports surface naturally in queries
+// `ORDER BY resolved ASC, created_at DESC`.
+model FeedbackReport {
+  id             String    @id @default(cuid())
+  organizationId String?   @map("organization_id")
+  userId         String?   @map("user_id")
+  area           String    @db.VarChar(40)
+  mode           String?   @db.VarChar(20)
+  description    String
+  contactEmail   String?   @map("contact_email") @db.VarChar(254)
+  sessionId      String?   @map("session_id")
+  userAgent      String?   @map("user_agent") @db.VarChar(500)
+  pageUrl        String?   @map("page_url") @db.VarChar(500)
+  resolved       Boolean   @default(false)
+  resolvedAt     DateTime? @map("resolved_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  @@index([organizationId, createdAt(sort: Desc)])
+  @@index([resolved, createdAt(sort: Desc)])
+  @@map("feedback_reports")
+  @@schema("public")
+}
+
 /// @conditional(auth=betterauth)
 model AuthAccount {
   id                    String    @id @default(cuid())

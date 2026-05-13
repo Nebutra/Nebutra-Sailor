@@ -74,7 +74,13 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
             <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
               AI Providers
             </p>
-            <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6 text-balance">
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6 text-balance"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               {total} AI providers. One adapter.
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">

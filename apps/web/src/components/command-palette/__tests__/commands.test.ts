@@ -14,12 +14,13 @@ function makeContext(overrides: Partial<CommandContext> = {}): CommandContext {
     setTheme: vi.fn(),
     signOut: vi.fn(),
     switchOrganization: vi.fn(),
+    openFeedback: vi.fn(),
     ...overrides,
   };
 }
 
 describe("commands registry", () => {
-  it("contains all five sections", () => {
+  it("contains all six sections", () => {
     const sections = new Set(COMMANDS.map((c) => c.section));
     for (const section of SECTION_ORDER) {
       expect(sections.has(section)).toBe(true);

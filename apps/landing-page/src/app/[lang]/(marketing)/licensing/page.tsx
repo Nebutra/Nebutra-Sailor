@@ -1,6 +1,6 @@
 import { CheckCircle, LogoGithub as Github } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Badge, Button, Card } from "@nebutra/ui/primitives";
+import { AuroraBackground, Badge, Button, Card } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -108,11 +108,17 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative mx-auto max-w-5xl px-4 pt-32 pb-20 text-center sm:px-6 lg:px-8 mt-16">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
+      <section className="relative mx-auto max-w-4xl px-4 pt-32 pb-20 text-center sm:px-6 lg:px-8 mt-16">
+        <AuroraBackground variant="subtle" />
 
         <AnimateIn preset="emerge" inView>
-          <h1 className="text-5xl font-black tracking-tighter sm:text-7xl mb-8 leading-[1.1]">
+          <h1
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-8"
+            style={{
+              letterSpacing: "var(--tracking-display)",
+              lineHeight: "var(--leading-display)",
+            }}
+          >
             {t.rich("hero.title", {
               hl: (chunks) => (
                 <span
@@ -143,7 +149,10 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
         >
           {/* Card 1: AGPL-3.0 */}
           <AnimateIn preset="fadeUp" inView>
-            <Card className="p-8 relative flex flex-col overflow-hidden rounded-[2.5rem] transition-all hover:shadow-xl border-border/50 bg-background/50 backdrop-blur-md h-full">
+            <Card
+              className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-all border-[var(--neutral-6)] bg-background/50 backdrop-blur-md h-full"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            >
               <Badge
                 className="mb-6 w-fit bg-muted text-muted-foreground border-border"
                 variant="outline"
@@ -152,7 +161,12 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </Badge>
 
               <div className="mb-6">
-                <h3 className="text-2xl font-black tracking-tight mb-2">{t("plans.agpl.title")}</h3>
+                <h3
+                  className="text-2xl font-semibold mb-2"
+                  style={{ letterSpacing: "var(--tracking-tight)" }}
+                >
+                  {t("plans.agpl.title")}
+                </h3>
                 <p className="text-sm font-medium text-muted-foreground">
                   {t("plans.agpl.subtitle")}
                 </p>
@@ -205,7 +219,10 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
 
           {/* Card 2: Free Commercial Exception (Highlighted) */}
           <AnimateIn preset="fadeUp" inView>
-            <Card className="p-8 relative flex flex-col overflow-hidden rounded-[2.5rem] transition-all hover:shadow-xl border-primary/50 bg-background/80 backdrop-blur-xl shadow-2xl shadow-primary/10 h-full">
+            <Card
+              className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-all border-primary/50 bg-background/80 backdrop-blur-xl h-full"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            >
               <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
 
               <Badge
@@ -216,7 +233,10 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </Badge>
 
               <div className="mb-6">
-                <h3 className="text-2xl font-black tracking-tight mb-2">
+                <h3
+                  className="text-2xl font-semibold mb-2"
+                  style={{ letterSpacing: "var(--tracking-tight)" }}
+                >
                   {t("plans.freeCommercial.title")}
                 </h3>
                 <p className="text-sm font-medium text-muted-foreground">
@@ -267,7 +287,10 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
 
           {/* Card 3: Startup / Enterprise */}
           <AnimateIn preset="fadeUp" inView>
-            <Card className="p-8 relative flex flex-col overflow-hidden rounded-[2.5rem] transition-all hover:shadow-xl border-border/50 bg-background/50 backdrop-blur-md h-full">
+            <Card
+              className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-all border-[var(--neutral-6)] bg-background/50 backdrop-blur-md h-full"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            >
               <Suspense
                 fallback={
                   <CommercialPriceBadgeFallback
@@ -280,7 +303,10 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </Suspense>
 
               <div className="mb-6">
-                <h3 className="text-2xl font-black tracking-tight mb-2">
+                <h3
+                  className="text-2xl font-semibold mb-2"
+                  style={{ letterSpacing: "var(--tracking-tight)" }}
+                >
                   {t("plans.commercial.title")}
                 </h3>
                 <p className="text-sm font-medium text-muted-foreground">
@@ -334,7 +360,15 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
       {/* FAQ Section */}
       <section className="relative z-10 mx-auto max-w-4xl px-4 pb-32 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
-          <h2 className="text-4xl font-black tracking-tight mb-12 text-center">{t("faq.title")}</h2>
+          <h2
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-12 text-center"
+            style={{
+              letterSpacing: "var(--tracking-heading)",
+              lineHeight: "var(--leading-heading)",
+            }}
+          >
+            {t("faq.title")}
+          </h2>
         </AnimateIn>
 
         <div className="space-y-8">

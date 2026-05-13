@@ -9,7 +9,10 @@ interface FeatureSmallCardProps {
 export function FeatureSmallCard({ icon: Icon, title, description }: FeatureSmallCardProps) {
   return (
     <AnimateIn preset="fadeUp" className="h-full">
-      <div className="group relative h-full w-full overflow-hidden rounded-3xl border border-border/40 bg-background/40 backdrop-blur-md p-8 transition-all duration-300 hover:bg-muted/20 hover:border-border/80 hover:shadow-xl hover:-translate-y-1">
+      <div
+        className="group relative h-full w-full overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/40 backdrop-blur-md p-8 transition-transform duration-150 hover:bg-muted/20 hover:border-border/80 hover:-translate-y-px"
+        style={{ boxShadow: "var(--ring-hairline)" }}
+      >
         <div className="flex items-center gap-3 mb-4">
           <Icon className="h-5 w-5 text-primary opacity-80" />
           <h3 className="relative z-10 text-lg font-bold tracking-tight text-foreground">

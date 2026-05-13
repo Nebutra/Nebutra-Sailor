@@ -1,3 +1,4 @@
+import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -13,10 +14,15 @@ interface RouteContext {
 export async function GET(_request: Request, context: RouteContext) {
   const auth = await getAuth();
   if (!auth.userId) {
+    logger.warn("[chat.sessions.GET/id] Unauthorized access attempt", {});
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const { id } = await context.params;
+  logger.debug("[chat.sessions.GET/id] Loading session", {
+    sessionId: id,
+    userId: auth.userId,
+  });
 
   const session = await db.chatSession.findUnique({
     where: { id },
@@ -49,10 +55,15 @@ export async function GET(_request: Request, context: RouteContext) {
 export async function DELETE(_request: Request, context: RouteContext) {
   const auth = await getAuth();
   if (!auth.userId) {
+    logger.warn("[chat.sessions.DELETE] Unauthorized delete attempt", {});
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const { id } = await context.params;
+  logger.debug("[chat.sessions.DELETE] Attempting delete", {
+    sessionId: id,
+    userId: auth.userId,
+  });
 
   const existing = await db.chatSession.findUnique({
     where: { id },
@@ -65,6 +76,20 @@ export async function DELETE(_request: Request, context: RouteContext) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  await db.chatSession.delete({ where: { id } });
-  return NextResponse.json({ ok: true });
+  try {
+    await db.chatSession.delete({ where: { id } });
+    logger.info("[chat.sessions.DELETE] Session deleted", {
+      sessionId: id,
+      userId: auth.userId,
+      orgId: auth.orgId,
+    });
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    logger.error("[chat.sessions.DELETE] Failed to delete session", {
+      error: err instanceof Error ? err.message : String(err),
+      sessionId: id,
+      userId: auth.userId,
+    });
+    return NextResponse.json({ error: "Failed to delete session" }, { status: 500 });
+  }
 }

@@ -3,7 +3,9 @@ import {
   CreditCard,
   FileText,
   Home,
+  Keyboard,
   KeyRound,
+  LifeBuoy,
   LogOut,
   Moon,
   Plus,
@@ -17,7 +19,7 @@ import {
 import type { ComponentType, SVGProps } from "react";
 import type { Scope } from "@/lib/permissions";
 
-export type CommandSection = "navigation" | "actions" | "settings" | "account" | "admin";
+export type CommandSection = "navigation" | "actions" | "settings" | "account" | "admin" | "help";
 
 /**
  * Single command-palette entry. Handlers receive the host context
@@ -33,6 +35,8 @@ export interface CommandContext {
   signOut: () => void;
   /** Trigger the organization switcher modal. */
   switchOrganization: () => void;
+  /** Open the global feedback / "report an issue" dialog. */
+  openFeedback: () => void;
 }
 
 export interface CommandDefinition {
@@ -197,6 +201,23 @@ export const COMMANDS: ReadonlyArray<CommandDefinition> = [
     tags: ["logout", "exit"],
     handler: ({ signOut }) => signOut(),
   },
+  // ── Help ──────────────────────────────────────────────────────────────
+  {
+    id: "help.reportIssue",
+    titleKey: "help.reportIssue",
+    section: "help",
+    icon: LifeBuoy,
+    tags: ["feedback", "bug", "issue", "support"],
+    handler: ({ openFeedback }) => openFeedback(),
+  },
+  {
+    id: "help.shortcuts",
+    titleKey: "help.shortcuts",
+    section: "help",
+    icon: Keyboard,
+    tags: ["keyboard", "hotkeys", "shortcuts"],
+    handler: ({ navigate }) => navigate("/settings/shortcuts"),
+  },
 ];
 
 /** Sections in the order they should render. */
@@ -205,6 +226,7 @@ export const SECTION_ORDER: ReadonlyArray<CommandSection> = [
   "actions",
   "settings",
   "account",
+  "help",
   "admin",
 ];
 

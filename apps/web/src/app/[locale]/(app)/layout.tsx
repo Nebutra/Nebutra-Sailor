@@ -1,5 +1,6 @@
 import { CommandPaletteMount } from "@/app/[locale]/providers/command-palette-mount";
 import { PlanBadge } from "@/components/billing/plan-badge";
+import { FeedbackMount } from "@/components/feedback/feedback-mount";
 import { ShellNotificationCenter } from "@/components/notifications/shell-notification-center";
 import { requireAuth } from "@/lib/auth";
 import { resolveWebProductCapabilities } from "@/lib/product-capabilities";
@@ -16,14 +17,16 @@ export default async function AppLayout({
   await requireAuth();
 
   return (
-    <CommandPaletteMount>
-      <DesignSystemShell
-        notificationCenter={<ShellNotificationCenter locale={locale} />}
-        planBadge={<PlanBadge />}
-        productCapabilities={resolveWebProductCapabilities()}
-      >
-        {children}
-      </DesignSystemShell>
-    </CommandPaletteMount>
+    <FeedbackMount>
+      <CommandPaletteMount>
+        <DesignSystemShell
+          notificationCenter={<ShellNotificationCenter locale={locale} />}
+          planBadge={<PlanBadge />}
+          productCapabilities={resolveWebProductCapabilities()}
+        >
+          {children}
+        </DesignSystemShell>
+      </CommandPaletteMount>
+    </FeedbackMount>
   );
 }

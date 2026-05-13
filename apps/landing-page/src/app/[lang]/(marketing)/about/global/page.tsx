@@ -1,5 +1,5 @@
 import { ArrowRight } from "@nebutra/icons";
-import { Button } from "@nebutra/ui/primitives";
+import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { AnimateIn, AnimateInGroup } from "@/components/landing/AnimateIn";
@@ -185,13 +185,20 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
       <Navbar />
 
       {/* 1. Hero — Day 1 Global */}
-      <section className="pt-32 md:pt-48 pb-24 md:pb-32 overflow-hidden">
+      <section className="relative pt-32 md:pt-48 pb-24 md:pb-32 overflow-hidden">
+        <AuroraBackground variant="subtle" />
         <div className="container mx-auto px-4 max-w-[1400px]">
           <AnimateIn preset="emerge" className="max-w-4xl mx-auto text-center">
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
               {pick(lang, EYEBROW)}
             </span>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-balance mb-10">
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               {pick(lang, HERO_TITLE)}
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed text-balance">
@@ -205,7 +212,13 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
       <section className="py-24 md:py-32 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
               {pick(lang, PILLARS_TITLE)}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
@@ -221,7 +234,10 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
               const p = pick(lang, point);
               return (
                 <AnimateIn key={`pillar-${i}`} preset="fadeUp">
-                  <div className="group h-full bg-muted/20 border border-border/50 rounded-3xl p-8 hover:shadow-2xl hover:border-border transition-all duration-500 flex flex-col">
+                  <div
+                    className="group h-full bg-muted/20 border border-[var(--neutral-6)] rounded-[var(--radius-card)] p-8 hover:border-border transition-all duration-500 flex flex-col"
+                    style={{ boxShadow: "var(--ring-hairline)" }}
+                  >
                     <div className="text-6xl mb-8" aria-hidden="true">
                       {p.icon}
                     </div>
@@ -244,7 +260,13 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
               i18n · l10n
             </span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
               {pick(lang, LANG_TITLE)}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
@@ -287,7 +309,13 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
               Compliance
             </span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
               {pick(lang, COMPLIANCE_TITLE)}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
@@ -296,7 +324,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
           </AnimateIn>
 
           <AnimateIn preset="fadeUp">
-            <div className="overflow-hidden rounded-3xl border border-border/50 bg-background">
+            <div className="overflow-hidden rounded-[var(--radius-card)] border border-border/50 bg-background">
               {/* Header row — hidden on mobile */}
               <div className="hidden md:grid md:grid-cols-[1.2fr_1.5fr_1fr] gap-6 px-8 py-5 bg-muted/40 border-b border-border/50">
                 <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
@@ -364,7 +392,13 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
               Payments
             </span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
               {pick(lang, PAYMENTS_TITLE)}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
@@ -379,7 +413,10 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
             {PAYMENT_GATEWAYS.map((gw) => (
               <AnimateIn key={gw.name} preset="fadeUp">
                 <div className="group h-full bg-background border border-border/50 rounded-2xl p-6 hover:border-foreground/30 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center">
-                  <span className="text-lg md:text-xl font-black tracking-tight text-foreground mb-2">
+                  <span
+                    className="text-lg md:text-xl font-semibold text-foreground mb-2"
+                    style={{ letterSpacing: "var(--tracking-tight)" }}
+                  >
                     {gw.name}
                   </span>
                   <span className="text-[11px] font-mono tracking-wider uppercase text-muted-foreground">
@@ -401,20 +438,23 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                 {pick(lang, CTA_EYEBROW)}
               </span>
             </div>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-balance mb-8">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
               {pick(lang, CTA_TITLE)}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-balance mb-12 max-w-2xl mx-auto">
               {pick(lang, CTA_SUB)}
             </p>
-            <Link href="/contact">
-              <Button
-                size="lg"
-                className="rounded-full h-16 px-10 text-lg font-bold shadow-xl border-border bg-foreground text-background hover:scale-105 transition-transform"
-              >
+            <Button asChild variant="ink" size="lg">
+              <Link href="/contact">
                 {pick(lang, CTA_BUTTON)} <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </AnimateIn>
         </div>
       </section>

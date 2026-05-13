@@ -119,7 +119,13 @@ async function StatusPageContent() {
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-[color:var(--neutral-9)] dark:text-white/45">
               Nebutra status
             </p>
-            <h1 className="max-w-3xl text-balance text-5xl font-black tracking-[-0.06em] md:text-7xl">
+            <h1
+              className="max-w-3xl text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               {overall.title}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-[color:var(--neutral-10)] dark:text-white/58">
@@ -229,7 +235,9 @@ function Metric({ label, value }: { label: string; value: string }) {
       <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--neutral-9)] dark:text-white/35">
         {label}
       </p>
-      <p className="mt-2 text-2xl font-black tracking-[-0.05em]">{value}</p>
+      <p className="mt-2 text-2xl font-semibold" style={{ letterSpacing: "var(--tracking-tight)" }}>
+        {value}
+      </p>
     </div>
   );
 }

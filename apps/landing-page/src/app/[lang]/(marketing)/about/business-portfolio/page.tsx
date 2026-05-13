@@ -124,7 +124,13 @@ export default async function BusinessPortfolioPage({
           </AnimateIn>
 
           <AnimateIn preset="fadeUp">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-balance mb-8 max-w-5xl">
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-8 max-w-4xl"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               {hero.heading}
             </h1>
           </AnimateIn>
@@ -143,7 +149,10 @@ export default async function BusinessPortfolioPage({
             {stats.map((s) => (
               <AnimateIn key={s.key} preset="fadeUp">
                 <div className="flex flex-col gap-2">
-                  <span className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
+                  <span
+                    className="text-2xl md:text-3xl font-semibold text-foreground"
+                    style={{ letterSpacing: "var(--tracking-tight)" }}
+                  >
                     {s.count}
                   </span>
                   <span className="text-xs md:text-sm font-mono tracking-wider uppercase text-muted-foreground">
@@ -194,7 +203,13 @@ export default async function BusinessPortfolioPage({
                   </AnimateIn>
 
                   <AnimateIn preset="fadeUp">
-                    <h2 className="text-3xl md:text-5xl font-black tracking-tight text-balance mb-4">
+                    <h2
+                      className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-4"
+                      style={{
+                        letterSpacing: "var(--tracking-heading)",
+                        lineHeight: "var(--leading-heading)",
+                      }}
+                    >
                       {meta.title}
                     </h2>
                   </AnimateIn>
@@ -260,7 +275,13 @@ export default async function BusinessPortfolioPage({
               </span>
             </AnimateIn>
             <AnimateIn preset="fadeUp">
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance mb-6">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-6"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {copy.matrixHeading}
               </h2>
             </AnimateIn>
@@ -327,7 +348,13 @@ export default async function BusinessPortfolioPage({
           </AnimateIn>
 
           <AnimateIn preset="fadeUp">
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-balance mb-8">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
               {copy.ctaHeading}
             </h2>
           </AnimateIn>
@@ -339,15 +366,12 @@ export default async function BusinessPortfolioPage({
           </AnimateIn>
 
           <AnimateIn preset="fade">
-            <Link href="/contact">
-              <Button
-                size="lg"
-                className="rounded-full h-14 px-8 text-base font-bold bg-foreground text-background hover:bg-foreground/90 hover:scale-105 transition-transform"
-              >
+            <Button asChild variant="ink" size="lg">
+              <Link href="/contact">
                 {copy.ctaButton}
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </AnimateIn>
         </div>
       </section>

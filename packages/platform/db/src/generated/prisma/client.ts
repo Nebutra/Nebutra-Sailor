@@ -252,6 +252,26 @@ export type AuthUser = Prisma.AuthUserModel
  */
 export type ChatSession = Prisma.ChatSessionModel
 /**
+ * Model Referral
+ * 
+ */
+export type Referral = Prisma.ReferralModel
+/**
+ * Model RedemptionCode
+ * 
+ */
+export type RedemptionCode = Prisma.RedemptionCodeModel
+/**
+ * Model CodeRedemption
+ * 
+ */
+export type CodeRedemption = Prisma.CodeRedemptionModel
+/**
+ * Model FeedbackReport
+ * 
+ */
+export type FeedbackReport = Prisma.FeedbackReportModel
+/**
  * Model AuthAccount
  * @conditional(auth=betterauth)
  */

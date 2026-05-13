@@ -51,11 +51,11 @@ export function ThemeSelectorCard() {
             {/* Emerald (Active) */}
             <div className="h-4 w-4 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] ring-2 ring-emerald-500/30 transition-transform scale-110 cursor-pointer" />
             {/* Violet */}
-            <div className="h-4 w-4 rounded-full bg-violet-500 opacity-40 hover:opacity-100 hover:scale-110 transition-all cursor-pointer" />
+            <div className="h-4 w-4 rounded-full bg-violet-500 opacity-40 hover:opacity-100 hover:-translate-y-px transition-transform duration-150 cursor-pointer" />
             {/* Blue */}
-            <div className="h-4 w-4 rounded-full bg-blue-500 opacity-40 hover:opacity-100 hover:scale-110 transition-all cursor-pointer" />
+            <div className="h-4 w-4 rounded-full bg-blue-500 opacity-40 hover:opacity-100 hover:-translate-y-px transition-transform duration-150 cursor-pointer" />
             {/* Rose */}
-            <div className="h-4 w-4 rounded-full bg-rose-500 opacity-40 hover:opacity-100 hover:scale-110 transition-all cursor-pointer" />
+            <div className="h-4 w-4 rounded-full bg-rose-500 opacity-40 hover:opacity-100 hover:-translate-y-px transition-transform duration-150 cursor-pointer" />
           </div>
 
           {/* Mini dashboard Dashboard preview */}
@@ -76,7 +76,10 @@ export function ThemeSelectorCard() {
               {/* Chart Block 1 */}
               <div className="h-full rounded bg-emerald-500/90 shadow-inner flex flex-col justify-end p-1.5 items-end gap-0.5 overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                <div className="font-mono text-[8px] text-white/90 z-10 font-bold tracking-tighter">
+                <div
+                  className="font-mono text-[8px] text-white/90 z-10 font-bold"
+                  style={{ letterSpacing: "var(--tracking-tight)" }}
+                >
                   84%
                 </div>
               </div>

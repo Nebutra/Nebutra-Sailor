@@ -214,7 +214,9 @@ export function GlobeStickers({
           }}
           className="group absolute left-0 top-0 cursor-pointer text-[1.75rem] leading-none opacity-0 transition-[filter,transform] duration-300 [filter:url(#sticker-outline)_drop-shadow(0_2px_3px_rgba(0,0,0,0.15))]"
         >
-          <div className="group-hover:scale-125 transition-transform duration-300">{m.sticker}</div>
+          <div className="group-hover:-translate-y-px transition-transform duration-150">
+            {m.sticker}
+          </div>
         </div>
       ))}
     </div>

@@ -34,7 +34,8 @@ export function MobileDrawer() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-x-0 top-[64px] z-50 h-[calc(100vh-64px)] overflow-y-auto border-t border-neutral-7 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-border dark:bg-background/95"
+            className="fixed inset-x-0 top-[64px] z-50 h-[calc(100vh-64px)] overflow-y-auto border-t border-[var(--neutral-6)] bg-white/95 backdrop-blur-xl dark:border-border dark:bg-background/95"
+            style={{ boxShadow: "var(--ring-hairline)" }}
           >
             <div className="flex flex-col gap-4 px-6 py-6 pb-24 h-full">
               <div className="flex-1 flex flex-col gap-4">

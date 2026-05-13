@@ -26,7 +26,7 @@ export function ImpactHero() {
 
       <motion.div
         style={{ scale, opacity, y }}
-        className="z-10 flex flex-col items-center justify-center gap-8 px-4 text-center md:px-10 max-w-5xl"
+        className="z-10 flex flex-col items-center justify-center gap-8 px-4 text-center md:px-10 max-w-4xl"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -42,7 +42,8 @@ export function ImpactHero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl font-black tracking-tighter sm:text-7xl md:text-8xl leading-[1.1]"
+          className="text-4xl font-semibold sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1]"
+          style={{ letterSpacing: "var(--tracking-display)" }}
         >
           <span className="block pb-2 text-white">{t("hero_title")}</span>
         </motion.h1>

@@ -18,7 +18,8 @@ export function InvoiceCard() {
       initial={{ opacity: 0, y: 20, rotateX: 10 }}
       animate={{ opacity: 1, y: 0, rotateX: 0 }}
       transition={{ delay: 2.2, duration: 0.8, type: "spring", bounce: 0.4 }}
-      className="relative w-full max-w-sm mx-auto rounded-2xl bg-white/90 dark:bg-[var(--neutral-2)]/90 border border-border/50 shadow-2xl backdrop-blur-xl p-5"
+      className="relative w-full max-w-sm mx-auto rounded-[var(--radius-card)] bg-white/90 dark:bg-[var(--neutral-2)]/90 border border-[var(--neutral-6)] backdrop-blur-xl p-5"
+      style={{ boxShadow: "var(--ring-hairline)" }}
     >
       {/* Top Section */}
       <div className="flex justify-between items-start mb-6">
@@ -27,7 +28,10 @@ export function InvoiceCard() {
           <p className="font-mono text-[10px] text-muted-foreground mt-1">Acme Corporation</p>
         </div>
         <div className="text-right">
-          <p className="font-sans text-2xl font-black tracking-tighter text-foreground">
+          <p
+            className="font-sans text-2xl font-semibold text-foreground tabular-nums"
+            style={{ letterSpacing: "var(--tracking-tight)" }}
+          >
             $4,200<span className="text-muted-foreground/50">.00</span>
           </p>
           <p className="font-mono text-[10px] text-muted-foreground mt-1 tracking-widest uppercase">

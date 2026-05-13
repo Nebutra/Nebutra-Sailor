@@ -105,7 +105,10 @@ export function MonorepoFileTree() {
   const t = useTranslations("monorepoTree");
 
   return (
-    <article className="group relative flex h-full flex-col rounded-[2.5rem] border border-border/40 bg-[var(--color-glass-panel,rgba(255,255,255,0.6))] dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.6))] p-8 md:p-10 shadow-elevation-high dark:shadow-2xl overflow-hidden backdrop-blur-2xl transition-all hover:border-primary/40">
+    <article
+      className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-[var(--color-glass-panel,rgba(255,255,255,0.6))] dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.6))] p-8 md:p-10 overflow-hidden backdrop-blur-2xl transition-all hover:border-primary/40"
+      style={{ boxShadow: "var(--ring-hairline)" }}
+    >
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
 
       {/* Subtle grid bg */}
@@ -119,13 +122,18 @@ export function MonorepoFileTree() {
               {t("badge")}
             </p>
           </div>
-          <p className="text-2xl font-black text-foreground tracking-tight mb-2">{t("title")}</p>
+          <p
+            className="text-2xl font-semibold text-foreground mb-2"
+            style={{ letterSpacing: "var(--tracking-heading)" }}
+          >
+            {t("title")}
+          </p>
           <p className="text-[15px] text-muted-foreground mb-8 leading-relaxed">
             {t("description")}
           </p>
         </AnimateIn>
 
-        <div className="flex-1 overflow-hidden flex flex-col rounded-2xl border border-border/50 bg-background/40 dark:bg-[#0a0a0a]/80 shadow-inner backdrop-blur-sm relative">
+        <div className="flex-1 overflow-hidden flex flex-col rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/40 dark:bg-[var(--neutral-2)]/80 shadow-inner backdrop-blur-sm relative">
           <div className="flex flex-none items-center px-4 h-[42px] border-b border-black/5 dark:border-white/5 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md z-20">
             <div className="flex gap-1.5 items-center">
               <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] shadow-sm"></div>

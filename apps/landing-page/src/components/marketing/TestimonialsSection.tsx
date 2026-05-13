@@ -40,7 +40,7 @@ export function TestimonialsSection({
 
   return (
     <section className={className}>
-      <div className="mx-auto max-w-7xl px-4 py-16">
+      <div className="mx-auto max-w-[1400px] px-4 py-16">
         {/* Header */}
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl font-bold text-[var(--neutral-12)] dark:text-white sm:text-4xl">

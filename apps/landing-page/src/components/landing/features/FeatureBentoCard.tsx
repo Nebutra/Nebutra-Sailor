@@ -23,13 +23,19 @@ export function FeatureBentoCard({
 }: FeatureBentoCardProps) {
   return (
     <AnimateIn preset="fadeUp" className="h-full">
-      <div className="group relative flex h-full w-full flex-col overflow-hidden rounded-[2rem] border border-border/60 bg-background transition-all duration-500 hover:border-foreground/20 hover:shadow-2xl dark:bg-background dark:hover:border-border dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <div
+        className="group relative flex h-full w-full flex-col overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background transition-all duration-500 hover:border-foreground/20 dark:bg-background dark:hover:border-border"
+        style={{ boxShadow: "var(--ring-hairline)" }}
+      >
         {/* Subtle Ambient Background */}
         <div className="absolute inset-0 z-0 bg-[radial-gradient(#0000001a_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff1a_1px,transparent_1px)] [background-size:24px_24px] opacity-20 dark:opacity-5 pointer-events-none" />
 
         {/* Top Text Area - Vercel Style Minimal */}
         <div className="px-8 pt-10 sm:px-10 flex-none z-10 relative">
-          <h2 className="text-[26px] sm:text-[32px] font-black tracking-tight text-foreground dark:text-white leading-tight">
+          <h2
+            className="text-[26px] sm:text-[32px] font-semibold text-foreground dark:text-white leading-tight"
+            style={{ letterSpacing: "var(--tracking-heading)" }}
+          >
             {title}
           </h2>
           <p className="mt-4 text-[15px] sm:text-base text-muted-foreground dark:text-zinc-400 font-medium leading-relaxed max-w-sm">

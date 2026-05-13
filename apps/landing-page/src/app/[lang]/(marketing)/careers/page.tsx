@@ -66,7 +66,13 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
             <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
               Careers
             </p>
-            <h1 className="text-5xl md:text-6xl font-black tracking-tight text-foreground mb-6">
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-6"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               Signal over credentials.
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed mb-16 max-w-3xl">
@@ -78,7 +84,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
           <AnimateInGroup stagger="normal" className="grid gap-4">
             {ROLES.map((role) => (
               <AnimateIn key={role.title} preset="fadeUp">
-                <article className="rounded-3xl border border-border bg-card/30 p-8 hover:border-primary/40 hover:bg-card/50 transition-colors">
+                <article className="rounded-[var(--radius-card)] border border-border bg-card/30 p-8 hover:border-primary/40 hover:bg-card/50 transition-colors">
                   <div className="flex items-start justify-between gap-4 mb-3 flex-wrap">
                     <div>
                       <h2 className="text-2xl font-bold tracking-tight text-foreground">
@@ -109,7 +115,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
           </AnimateInGroup>
 
           <AnimateIn preset="fadeUp" className="mt-12">
-            <div className="rounded-3xl border border-border bg-muted/30 p-10 text-center">
+            <div className="rounded-[var(--radius-card)] border border-border bg-muted/30 p-10 text-center">
               <Sparkles className="h-8 w-8 mx-auto text-primary mb-4" />
               <h3 className="text-2xl font-bold tracking-tight mb-3">Don&apos;t see your role?</h3>
               <p className="text-muted-foreground mb-6 max-w-xl mx-auto">

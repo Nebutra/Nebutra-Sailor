@@ -21,7 +21,7 @@ export default async function LegalLayout({ children, params }: LegalLayoutProps
     <div className="min-h-screen bg-[var(--neutral-1)] dark:bg-black">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-[var(--neutral-7)] bg-[var(--neutral-1)]/80 backdrop-blur-md dark:bg-black/80">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6">
           <Link href="/">
             <LegalLogo />
           </Link>
@@ -51,7 +51,7 @@ export default async function LegalLayout({ children, params }: LegalLayoutProps
 
       {/* Footer */}
       <footer className="relative border-t border-[var(--neutral-7)]">
-        <div className="mx-auto max-w-7xl px-6 py-8">
+        <div className="mx-auto max-w-[1400px] px-6 py-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <nav className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px]">
               <Link

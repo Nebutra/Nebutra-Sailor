@@ -6,6 +6,7 @@ import { Command } from "cmdk";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
 import { usePermission } from "@/hooks/usePermission";
 import { useCommandPalette } from "./command-palette-provider";
 import {
@@ -36,6 +37,7 @@ export function CommandPalette({
   onSwitchOrganization,
 }: CommandPaletteProps = {}) {
   const { open, setOpen } = useCommandPalette();
+  const { openDialog: openFeedback } = useFeedbackDialog();
   const { setTheme } = useTheme();
   const { signOut } = useAuth();
   const { can } = usePermission();
@@ -69,8 +71,9 @@ export function CommandPalette({
         // Default fallback: navigate to org settings.
         router.push("/settings/organization");
       },
+      openFeedback,
     }),
-    [onNavigate, onSignOut, onSwitchOrganization, router, setTheme, signOut],
+    [onNavigate, onSignOut, onSwitchOrganization, openFeedback, router, setTheme, signOut],
   );
 
   // Visible commands respect permissions; recompute when permissions change.

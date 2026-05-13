@@ -695,7 +695,8 @@
       "actions": "Actions",
       "settings": "Settings",
       "account": "Account",
-      "admin": "Admin"
+      "admin": "Admin",
+      "help": "Help"
     },
     "commands": {
       "nav": {
@@ -721,6 +722,10 @@
       },
       "account": {
         "signOut": "Sign out"
+      },
+      "help": {
+        "reportIssue": "Report an issue",
+        "shortcuts": "Keyboard shortcuts"
       }
     }
   },

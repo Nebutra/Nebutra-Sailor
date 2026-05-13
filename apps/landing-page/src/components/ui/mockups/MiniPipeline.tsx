@@ -11,7 +11,7 @@ export function MiniPipeline() {
           <div key={step} className="flex items-center flex-1">
             <div className="flex flex-col items-center flex-1">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/20 dark:border-emerald-400/20 mb-2">
-                <span className="text-emerald-600 dark:text-emerald-400 text-sm font-black">
+                <span className="text-emerald-600 dark:text-emerald-400 text-sm font-semibold">
                   {"\u2713"}
                 </span>
               </div>

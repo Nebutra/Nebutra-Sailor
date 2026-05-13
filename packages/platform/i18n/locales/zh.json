@@ -695,7 +695,8 @@
       "actions": "操作",
       "settings": "设置",
       "account": "账号",
-      "admin": "管理"
+      "admin": "管理",
+      "help": "帮助"
     },
     "commands": {
       "nav": {
@@ -721,6 +722,10 @@
       },
       "account": {
         "signOut": "登出"
+      },
+      "help": {
+        "reportIssue": "报告问题",
+        "shortcuts": "键盘快捷键"
       }
     }
   },

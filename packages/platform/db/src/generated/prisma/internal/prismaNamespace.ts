@@ -426,6 +426,10 @@ export const ModelName = {
   OAuthAccessToken: 'OAuthAccessToken',
   AuthUser: 'AuthUser',
   ChatSession: 'ChatSession',
+  Referral: 'Referral',
+  RedemptionCode: 'RedemptionCode',
+  CodeRedemption: 'CodeRedemption',
+  FeedbackReport: 'FeedbackReport',
   AuthAccount: 'AuthAccount',
   AuthSession: 'AuthSession',
   AuthVerification: 'AuthVerification',
@@ -454,7 +458,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey"
+    modelProps: "organization" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3550,6 +3554,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Referral: {
+      payload: Prisma.$ReferralPayload<ExtArgs>
+      fields: Prisma.ReferralFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReferralFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReferralFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        findFirst: {
+          args: Prisma.ReferralFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReferralFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        findMany: {
+          args: Prisma.ReferralFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>[]
+        }
+        create: {
+          args: Prisma.ReferralCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        createMany: {
+          args: Prisma.ReferralCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReferralCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>[]
+        }
+        delete: {
+          args: Prisma.ReferralDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        update: {
+          args: Prisma.ReferralUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReferralDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReferralUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReferralUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReferralUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        aggregate: {
+          args: Prisma.ReferralAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReferral>
+        }
+        groupBy: {
+          args: Prisma.ReferralGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReferralGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReferralCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReferralCountAggregateOutputType> | number
+        }
+      }
+    }
+    RedemptionCode: {
+      payload: Prisma.$RedemptionCodePayload<ExtArgs>
+      fields: Prisma.RedemptionCodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RedemptionCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RedemptionCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload>
+        }
+        findFirst: {
+          args: Prisma.RedemptionCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RedemptionCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload>
+        }
+        findMany: {
+          args: Prisma.RedemptionCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload>[]
+        }
+        create: {
+          args: Prisma.RedemptionCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload>
+        }
+        createMany: {
+          args: Prisma.RedemptionCodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RedemptionCodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload>[]
+        }
+        delete: {
+          args: Prisma.RedemptionCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload>
+        }
+        update: {
+          args: Prisma.RedemptionCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload>
+        }
+        deleteMany: {
+          args: Prisma.RedemptionCodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RedemptionCodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RedemptionCodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload>[]
+        }
+        upsert: {
+          args: Prisma.RedemptionCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionCodePayload>
+        }
+        aggregate: {
+          args: Prisma.RedemptionCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRedemptionCode>
+        }
+        groupBy: {
+          args: Prisma.RedemptionCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RedemptionCodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RedemptionCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RedemptionCodeCountAggregateOutputType> | number
+        }
+      }
+    }
+    CodeRedemption: {
+      payload: Prisma.$CodeRedemptionPayload<ExtArgs>
+      fields: Prisma.CodeRedemptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CodeRedemptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CodeRedemptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload>
+        }
+        findFirst: {
+          args: Prisma.CodeRedemptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CodeRedemptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload>
+        }
+        findMany: {
+          args: Prisma.CodeRedemptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload>[]
+        }
+        create: {
+          args: Prisma.CodeRedemptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload>
+        }
+        createMany: {
+          args: Prisma.CodeRedemptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CodeRedemptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload>[]
+        }
+        delete: {
+          args: Prisma.CodeRedemptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload>
+        }
+        update: {
+          args: Prisma.CodeRedemptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.CodeRedemptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CodeRedemptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CodeRedemptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.CodeRedemptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeRedemptionPayload>
+        }
+        aggregate: {
+          args: Prisma.CodeRedemptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCodeRedemption>
+        }
+        groupBy: {
+          args: Prisma.CodeRedemptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CodeRedemptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CodeRedemptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CodeRedemptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    FeedbackReport: {
+      payload: Prisma.$FeedbackReportPayload<ExtArgs>
+      fields: Prisma.FeedbackReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FeedbackReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FeedbackReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload>
+        }
+        findFirst: {
+          args: Prisma.FeedbackReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FeedbackReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload>
+        }
+        findMany: {
+          args: Prisma.FeedbackReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload>[]
+        }
+        create: {
+          args: Prisma.FeedbackReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload>
+        }
+        createMany: {
+          args: Prisma.FeedbackReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FeedbackReportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload>[]
+        }
+        delete: {
+          args: Prisma.FeedbackReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload>
+        }
+        update: {
+          args: Prisma.FeedbackReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.FeedbackReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FeedbackReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FeedbackReportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload>[]
+        }
+        upsert: {
+          args: Prisma.FeedbackReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackReportPayload>
+        }
+        aggregate: {
+          args: Prisma.FeedbackReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFeedbackReport>
+        }
+        groupBy: {
+          args: Prisma.FeedbackReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeedbackReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FeedbackReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeedbackReportCountAggregateOutputType> | number
+        }
+      }
+    }
     AuthAccount: {
       payload: Prisma.$AuthAccountPayload<ExtArgs>
       fields: Prisma.AuthAccountFieldRefs
@@ -5273,6 +5573,70 @@ export const ChatSessionScalarFieldEnum = {
 export type ChatSessionScalarFieldEnum = (typeof ChatSessionScalarFieldEnum)[keyof typeof ChatSessionScalarFieldEnum]
 
 
+export const ReferralScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  referrerUserId: 'referrerUserId',
+  referredEmail: 'referredEmail',
+  referredUserId: 'referredUserId',
+  status: 'status',
+  rewardCredits: 'rewardCredits',
+  level: 'level',
+  expiresAt: 'expiresAt',
+  claimedAt: 'claimedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ReferralScalarFieldEnum = (typeof ReferralScalarFieldEnum)[keyof typeof ReferralScalarFieldEnum]
+
+
+export const RedemptionCodeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  type: 'type',
+  rewardAmount: 'rewardAmount',
+  rewardPayload: 'rewardPayload',
+  maxRedemptions: 'maxRedemptions',
+  redemptionCount: 'redemptionCount',
+  expiresAt: 'expiresAt',
+  campaignName: 'campaignName',
+  createdAt: 'createdAt'
+} as const
+
+export type RedemptionCodeScalarFieldEnum = (typeof RedemptionCodeScalarFieldEnum)[keyof typeof RedemptionCodeScalarFieldEnum]
+
+
+export const CodeRedemptionScalarFieldEnum = {
+  id: 'id',
+  codeId: 'codeId',
+  userId: 'userId',
+  organizationId: 'organizationId',
+  redeemedAt: 'redeemedAt',
+  ipAddress: 'ipAddress'
+} as const
+
+export type CodeRedemptionScalarFieldEnum = (typeof CodeRedemptionScalarFieldEnum)[keyof typeof CodeRedemptionScalarFieldEnum]
+
+
+export const FeedbackReportScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  area: 'area',
+  mode: 'mode',
+  description: 'description',
+  contactEmail: 'contactEmail',
+  sessionId: 'sessionId',
+  userAgent: 'userAgent',
+  pageUrl: 'pageUrl',
+  resolved: 'resolved',
+  resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type FeedbackReportScalarFieldEnum = (typeof FeedbackReportScalarFieldEnum)[keyof typeof FeedbackReportScalarFieldEnum]
+
+
 export const AuthAccountScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -6071,6 +6435,10 @@ export type GlobalOmitConfig = {
   oAuthAccessToken?: Prisma.OAuthAccessTokenOmit
   authUser?: Prisma.AuthUserOmit
   chatSession?: Prisma.ChatSessionOmit
+  referral?: Prisma.ReferralOmit
+  redemptionCode?: Prisma.RedemptionCodeOmit
+  codeRedemption?: Prisma.CodeRedemptionOmit
+  feedbackReport?: Prisma.FeedbackReportOmit
   authAccount?: Prisma.AuthAccountOmit
   authSession?: Prisma.AuthSessionOmit
   authVerification?: Prisma.AuthVerificationOmit

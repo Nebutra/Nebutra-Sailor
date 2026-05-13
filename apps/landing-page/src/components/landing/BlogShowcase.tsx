@@ -31,7 +31,10 @@ export function BlogShowcase({ posts }: BlogShowcaseProps) {
           <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
             {t("badge")}
           </p>
-          <h2 className="text-4xl font-black tracking-tight text-foreground md:text-5xl text-balance">
+          <h2
+            className="text-3xl font-semibold text-foreground md:text-4xl lg:text-5xl text-balance"
+            style={{ letterSpacing: "var(--tracking-heading)" }}
+          >
             {t("title")}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">{t("subtitle")}</p>
@@ -43,7 +46,8 @@ export function BlogShowcase({ posts }: BlogShowcaseProps) {
             <AnimateIn key={post.slug} preset="fadeUp">
               <a
                 href={`/blog/${post.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border/50 bg-background/50 backdrop-blur-xl transition-all hover:bg-muted/40 hover:border-primary/20 shadow-xl shadow-primary/5"
+                className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/50 backdrop-blur-xl transition-colors hover:bg-muted/40 hover:border-primary/20"
+                style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 {/* Thumbnail */}
                 {post.imageUrl ? (
@@ -52,7 +56,7 @@ export function BlogShowcase({ posts }: BlogShowcaseProps) {
                       src={post.imageUrl}
                       alt={post.title}
                       fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-150 group-hover:-translate-y-px"
                     />
                   </div>
                 ) : (

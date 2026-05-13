@@ -90,9 +90,13 @@ export function AIGatewayCard() {
           {/* Source Node */}
           <div
             ref={appRef}
-            className="flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-3xl bg-background border border-border/80 shadow-lg dark:bg-zinc-950 dark:border-white/10 dark:shadow-[0_0_30px_rgba(255,255,255,0.05)] z-10"
+            className="flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-[var(--radius-card)] bg-background border border-[var(--neutral-6)] dark:bg-zinc-950 dark:border-white/10 z-10"
+            style={{ boxShadow: "var(--ring-hairline)" }}
           >
-            <span className="text-[11px] font-semibold text-foreground dark:text-white leading-tight text-center tracking-tighter">
+            <span
+              className="text-[11px] font-semibold text-foreground dark:text-white leading-tight text-center"
+              style={{ letterSpacing: "var(--tracking-tight)" }}
+            >
               Your
               <br />
               SaaS

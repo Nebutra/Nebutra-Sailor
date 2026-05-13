@@ -19,7 +19,10 @@ const DATA_BARS = [
 
 export function MultiTenantMockup() {
   return (
-    <div className="relative top-4 w-full max-w-[340px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-border/60 bg-background font-mono text-[11px] leading-relaxed shadow-2xl transition-all duration-700 group-hover:top-2 dark:bg-background">
+    <div
+      className="relative top-4 w-full max-w-[340px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background font-mono text-[11px] leading-relaxed transition-all duration-700 group-hover:top-2 dark:bg-background"
+      style={{ boxShadow: "var(--ring-hairline)" }}
+    >
       <div className="flex items-center gap-1.5 border-b border-border/60 bg-muted/30 px-4 py-3 dark:bg-muted/30">
         <div className="h-2.5 w-2.5 rounded-full bg-border dark:bg-zinc-700"></div>
         <div className="h-2.5 w-2.5 rounded-full bg-border dark:bg-zinc-700"></div>
@@ -101,7 +104,10 @@ export function AIMockup() {
 
 export function SecurityMockup() {
   return (
-    <div className="relative top-6 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-border/60 bg-background font-mono shadow-2xl transition-all duration-700 group-hover:top-4 dark:bg-background">
+    <div
+      className="relative top-6 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background font-mono transition-all duration-700 group-hover:top-4 dark:bg-background"
+      style={{ boxShadow: "var(--ring-hairline)" }}
+    >
       <div className="flex items-center gap-2 border-b border-border/60 bg-muted/20 px-5 py-4 text-[10px] font-bold uppercase tracking-widest text-muted-foreground dark:bg-muted/20 dark:text-zinc-500">
         <Fingerprint className="w-3.5 h-3.5" />
         Permission Matrix
@@ -142,12 +148,18 @@ export function SecurityMockup() {
 
 export function BillingMockup() {
   return (
-    <div className="relative top-4 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-border/60 bg-background shadow-2xl transition-all duration-700 group-hover:top-2 dark:bg-background">
+    <div
+      className="relative top-4 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background transition-all duration-700 group-hover:top-2 dark:bg-background"
+      style={{ boxShadow: "var(--ring-hairline)" }}
+    >
       <div className="border-b border-border/60 bg-gradient-to-b from-emerald-500/5 to-transparent p-6 pb-8">
         <div className="text-[11px] text-muted-foreground dark:text-zinc-500 font-semibold mb-1 uppercase tracking-wider">
           Monthly Recurring Revenue
         </div>
-        <div className="text-4xl font-black text-foreground dark:text-white tracking-tighter">
+        <div
+          className="text-2xl md:text-3xl font-semibold text-foreground dark:text-white tabular-nums"
+          style={{ letterSpacing: "var(--tracking-tight)" }}
+        >
           $12,400
           <span className="text-sm text-emerald-600 dark:text-emerald-400 font-bold ml-2 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 align-middle">
             +12%
@@ -158,7 +170,10 @@ export function BillingMockup() {
         <div className="text-[11px] text-muted-foreground dark:text-zinc-500 font-semibold mb-1 uppercase tracking-wider">
           Active Subscribers
         </div>
-        <div className="text-2xl font-black text-foreground dark:text-white tracking-tighter">
+        <div
+          className="text-2xl font-semibold text-foreground dark:text-white tabular-nums"
+          style={{ letterSpacing: "var(--tracking-tight)" }}
+        >
           847
         </div>
       </div>
@@ -168,7 +183,10 @@ export function BillingMockup() {
 
 export function DXMockup() {
   return (
-    <div className="relative top-4 w-full max-w-[360px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-border/60 bg-background font-mono text-[11px] leading-relaxed shadow-2xl transition-all duration-700 group-hover:top-2 dark:bg-background">
+    <div
+      className="relative top-4 w-full max-w-[360px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background font-mono text-[11px] leading-relaxed transition-all duration-700 group-hover:top-2 dark:bg-background"
+      style={{ boxShadow: "var(--ring-hairline)" }}
+    >
       <div className="flex items-center gap-4 border-b border-border/60 bg-muted/30 px-5 py-3 dark:bg-muted/30">
         <Terminal className="w-3.5 h-3.5 text-muted-foreground dark:text-zinc-500" />
         <span className="text-muted-foreground dark:text-zinc-500 text-[10px] uppercase font-bold tracking-widest">

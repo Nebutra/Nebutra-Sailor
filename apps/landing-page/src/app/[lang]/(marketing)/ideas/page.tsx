@@ -1,4 +1,4 @@
-import { AnimatedGradientText } from "@nebutra/ui/primitives";
+import { AnimatedGradientText, Button } from "@nebutra/ui/primitives";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
@@ -33,7 +33,10 @@ export default async function IdeasPage(props: { params: Promise<{ lang: string 
           </span>
         </AnimatedGradientText>
 
-        <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 bg-gradient-to-br from-foreground to-foreground/40 bg-clip-text text-transparent drop-shadow-sm">
+        <h1
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-6 bg-gradient-to-br from-foreground to-foreground/40 bg-clip-text text-transparent"
+          style={{ letterSpacing: "var(--tracking-display)", lineHeight: "var(--leading-display)" }}
+        >
           {tNav("ideas")}
         </h1>
 
@@ -41,13 +44,9 @@ export default async function IdeasPage(props: { params: Promise<{ lang: string 
           {t("description.ideas")}
         </p>
 
-        <Link
-          href="/"
-          className="group relative inline-flex h-12 w-fit items-center justify-center overflow-hidden rounded-xl bg-primary px-8 text-sm font-bold text-primary-foreground shadow-[0_0_40px_-10px_rgba(0,0,0,0.4)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)] active:scale-95"
-        >
-          <span className="relative z-10 flex items-center gap-2">{t("returnBtn")}</span>
-          <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-        </Link>
+        <Button asChild variant="ink" size="lg">
+          <Link href="/">{t("returnBtn")}</Link>
+        </Button>
       </main>
       <FooterMinimal />
     </>

@@ -70,7 +70,7 @@ function PostCard({ post, lang }: { post: SanityPost; lang: string }) {
             src={imageUrl}
             alt={post.title}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-cover transition-transform duration-150 group-hover:-translate-y-px"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
@@ -133,7 +133,7 @@ export default async function BlogPage({ params }: { params: Promise<{ lang: str
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
       <Navbar />
 
-      <section className="mx-auto max-w-5xl px-4 py-24 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8">
         {/* Header */}
         <AnimateIn preset="emerge" inView>
           <div className="mb-16">

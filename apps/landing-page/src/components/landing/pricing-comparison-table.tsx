@@ -25,7 +25,11 @@ export function PricingComparisonTable() {
           </p>
           <h2
             id="landing-comparison-title"
-            className="text-balance text-4xl font-black tracking-tight text-[var(--neutral-12)] md:text-5xl"
+            className="text-balance text-3xl md:text-4xl lg:text-5xl font-semibold text-[var(--neutral-12)]"
+            style={{
+              letterSpacing: "var(--tracking-heading)",
+              lineHeight: "var(--leading-heading)",
+            }}
           >
             {t("title")}
           </h2>

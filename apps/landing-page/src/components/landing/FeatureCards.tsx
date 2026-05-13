@@ -1,6 +1,7 @@
 "use client";
 
 import { CreditCard, Servers as Server, Lightning as Zap } from "@nebutra/icons";
+import { AuroraBackground } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 
@@ -47,12 +48,15 @@ export function FeatureCards() {
   return (
     <section id="features" className="w-full bg-muted/20 py-24 md:py-32 relative overflow-hidden">
       {/* Decorative background glows */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/5 blur-[120px] pointer-events-none" />
+      <AuroraBackground variant="subtle" />
 
       <div className="feature-cards-cq mx-auto max-w-[1400px] px-6 md:px-12 relative z-10">
         <AnimateIn preset="emerge" inView>
           <div className="flex justify-center mb-16">
-            <h2 className="text-center text-4xl md:text-5xl font-black tracking-tight text-foreground max-w-3xl text-balance leading-tight">
+            <h2
+              className="text-center text-4xl md:text-5xl font-semibold text-foreground max-w-3xl text-balance leading-tight"
+              style={{ letterSpacing: "var(--tracking-heading)" }}
+            >
               {t("sectionTitle")}
             </h2>
           </div>
@@ -67,7 +71,10 @@ export function FeatureCards() {
             const Icon = feature.icon;
             return (
               <AnimateIn key={idx} preset="fadeUp" className="h-full">
-                <article className="group flex h-full flex-col rounded-[2.5rem] border border-border/40 bg-background/60 dark:bg-background/40 backdrop-blur-2xl p-8 md:p-10 transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:border-primary/20 hover:-translate-y-1">
+                <article
+                  className="group flex h-full flex-col rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/60 dark:bg-background/40 backdrop-blur-2xl p-8 md:p-10 transition-all duration-500 hover:border-primary/20 hover:-translate-y-px"
+                  style={{ boxShadow: "var(--ring-hairline)" }}
+                >
                   <div className="h-14 w-14 rounded-2xl bg-primary/5 dark:bg-primary/10 flex items-center justify-center mb-8 ring-1 ring-primary/20 shadow-inner">
                     <Icon className="h-7 w-7 text-primary" />
                   </div>

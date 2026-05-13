@@ -245,7 +245,13 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           </AnimateIn>
 
           <AnimateIn preset="emerge">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter text-balance leading-[1.05] text-foreground mb-14">
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance text-foreground mb-14"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               {hero.title}
             </h1>
           </AnimateIn>
@@ -304,7 +310,8 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           <div className="relative mb-14 md:mb-20">
             <span
               aria-hidden="true"
-              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-black leading-none tracking-tighter text-muted-foreground/10 select-none pointer-events-none"
+              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground/10 select-none pointer-events-none"
+              style={{ letterSpacing: "var(--tracking-display)" }}
             >
               Ⅰ
             </span>
@@ -317,7 +324,13 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               </div>
             </AnimateIn>
             <AnimateIn preset="emerge">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-balance leading-[1.08] text-foreground">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {thesis.headline}
               </h2>
             </AnimateIn>
@@ -372,7 +385,8 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           <div className="relative mb-14 md:mb-20">
             <span
               aria-hidden="true"
-              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-black leading-none tracking-tighter text-muted-foreground/10 select-none pointer-events-none"
+              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground/10 select-none pointer-events-none"
+              style={{ letterSpacing: "var(--tracking-display)" }}
             >
               Ⅱ
             </span>
@@ -385,7 +399,13 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               </div>
             </AnimateIn>
             <AnimateIn preset="emerge">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-balance leading-[1.08] text-foreground mb-8">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground mb-8"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {lang === "zh" ? "超级要素路由协议" : "Omni-Factor Routing Protocol"}
               </h2>
             </AnimateIn>
@@ -407,7 +427,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               const content = pick(lang, group);
               return (
                 <AnimateIn key={content.subtitle} preset="fadeUp">
-                  <article className="group h-full rounded-3xl border border-border/60 bg-muted/20 p-8 md:p-10 transition-all duration-500 hover:border-border hover:bg-muted/40">
+                  <article className="group h-full rounded-[var(--radius-card)] border border-border/60 bg-muted/20 p-8 md:p-10 transition-all duration-500 hover:border-border hover:bg-muted/40">
                     <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
                       0{idx + 1} / 03
                     </span>
@@ -437,7 +457,8 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           <div className="relative mb-14 md:mb-20">
             <span
               aria-hidden="true"
-              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-black leading-none tracking-tighter text-muted-foreground/10 select-none pointer-events-none"
+              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground/10 select-none pointer-events-none"
+              style={{ letterSpacing: "var(--tracking-display)" }}
             >
               Ⅲ
             </span>
@@ -450,7 +471,13 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               </div>
             </AnimateIn>
             <AnimateIn preset="emerge">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-balance leading-[1.08] text-foreground mb-8">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground mb-8"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {lang === "zh" ? "全链路 AI 原生基建" : "The AI-Native Convergence"}
               </h2>
             </AnimateIn>
@@ -470,14 +497,20 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           >
             {/* Builder Core */}
             <AnimateIn preset="fadeUp">
-              <article className="h-full rounded-3xl border border-border/60 bg-background p-8 md:p-10 flex flex-col">
+              <article className="h-full rounded-[var(--radius-card)] border border-border/60 bg-background p-8 md:p-10 flex flex-col">
                 <div className="flex items-center gap-3 mb-6">
                   <Layers className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
                   <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
                     {iiiCopy.builderEyebrow}
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-foreground mb-4 leading-[1.1]">
+                <h3
+                  className="text-2xl md:text-3xl font-semibold text-foreground mb-4"
+                  style={{
+                    letterSpacing: "var(--tracking-heading)",
+                    lineHeight: "var(--leading-heading)",
+                  }}
+                >
                   {builder.name}
                 </h3>
                 <p className="text-base md:text-lg font-medium text-foreground/90 leading-relaxed mb-6">
@@ -515,14 +548,20 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
 
             {/* Sleptons */}
             <AnimateIn preset="fadeUp">
-              <article className="h-full rounded-3xl border border-border/60 bg-background p-8 md:p-10 flex flex-col">
+              <article className="h-full rounded-[var(--radius-card)] border border-border/60 bg-background p-8 md:p-10 flex flex-col">
                 <div className="flex items-center gap-3 mb-6">
                   <Network className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
                   <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
                     {iiiCopy.sleptonsEyebrow}
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-foreground mb-4 leading-[1.1]">
+                <h3
+                  className="text-2xl md:text-3xl font-semibold text-foreground mb-4"
+                  style={{
+                    letterSpacing: "var(--tracking-heading)",
+                    lineHeight: "var(--leading-heading)",
+                  }}
+                >
                   {sleptons.name}
                 </h3>
                 <p className="text-base md:text-lg font-medium text-foreground/90 leading-relaxed mb-6">
@@ -570,7 +609,8 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           <div className="relative mb-14 md:mb-20">
             <span
               aria-hidden="true"
-              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-black leading-none tracking-tighter text-muted-foreground/10 select-none pointer-events-none"
+              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground/10 select-none pointer-events-none"
+              style={{ letterSpacing: "var(--tracking-display)" }}
             >
               Ⅳ
             </span>
@@ -583,7 +623,13 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               </div>
             </AnimateIn>
             <AnimateIn preset="emerge">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-balance leading-[1.08] text-foreground mb-8">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground mb-8"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {lang === "zh"
                   ? "组织演进准则 · AI 杠杆对抗人治腐化"
                   : "Organizational Principles · AI Leverage over Human Corrosion"}
@@ -606,10 +652,11 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               const content = pick(lang, principle);
               return (
                 <AnimateIn key={content.number} preset="fadeUp">
-                  <article className="relative h-full rounded-3xl border border-border/60 bg-muted/20 p-8 md:p-10 border-l-4 border-l-foreground overflow-hidden">
+                  <article className="relative h-full rounded-[var(--radius-card)] border border-border/60 bg-muted/20 p-8 md:p-10 border-l-4 border-l-foreground overflow-hidden">
                     <span
                       aria-hidden="true"
-                      className="absolute -top-4 right-4 text-[7rem] md:text-[8rem] font-black leading-none tracking-tighter text-muted-foreground/15 select-none pointer-events-none"
+                      className="absolute -top-4 right-4 text-[7rem] md:text-[8rem] font-semibold leading-none text-muted-foreground/15 select-none pointer-events-none"
+                      style={{ letterSpacing: "var(--tracking-display)" }}
                     >
                       {content.number}
                     </span>

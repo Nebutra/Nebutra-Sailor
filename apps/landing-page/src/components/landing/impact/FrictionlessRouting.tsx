@@ -1,28 +1,18 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { AuroraBackground } from "@nebutra/ui/primitives";
+import { motion } from "framer-motion";
 import { MoveRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function FrictionlessRouting() {
   const t = useTranslations("impact");
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section className="relative w-full bg-zinc-950 py-32 md:py-48 px-4 md:px-10 overflow-hidden">
-      {/* Super-neural network mesh visualization */}
-      <div className="absolute inset-0 z-0">
-        <motion.div
-          animate={{
-            scale: shouldReduceMotion ? 1 : [1, 1.1, 1],
-            opacity: shouldReduceMotion ? 0.2 : [0.1, 0.3, 0.1],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--cyan-9)]/10 rounded-full blur-[150px]"
-        />
-      </div>
+      <AuroraBackground variant="subtle" />
 
-      <div className="relative z-10 mx-auto max-w-5xl text-center">
+      <div className="relative z-10 mx-auto max-w-4xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
