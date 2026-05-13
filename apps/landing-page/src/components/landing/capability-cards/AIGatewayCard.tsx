@@ -44,14 +44,17 @@ export function AIGatewayCard() {
         className="w-full max-w-[380px] mt-auto relative flex flex-col items-center justify-center gap-8 py-8"
       >
         {/* Code Window Mockup */}
-        <div className="w-full max-w-[340px] bg-background dark:bg-[#080809] border border-border/50 dark:border-white/10 rounded-xl overflow-hidden shadow-2xl z-20 transition-transform hover:scale-[1.02] duration-500">
+        <div
+          style={{ boxShadow: "var(--ring-hairline)" }}
+          className="w-full max-w-[340px] bg-background dark:bg-[var(--neutral-2)] border border-[var(--neutral-6)] rounded-[var(--radius-button)] overflow-hidden z-20 transition-transform duration-150 hover:-translate-y-px"
+        >
           <div className="flex items-center px-4 py-2.5 bg-muted/30 dark:bg-white/[0.02] border-b border-border/50 dark:border-white/5">
             <div className="flex gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700" />
               <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700" />
               <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700" />
             </div>
-            <span className="ml-3 text-muted-foreground dark:text-zinc-500 text-[10px] uppercase font-bold tracking-widest">
+            <span className="ml-3 text-muted-foreground dark:text-zinc-500 text-[10px] uppercase font-semibold tracking-widest">
               endpoint.ts
             </span>
           </div>
@@ -89,7 +92,7 @@ export function AIGatewayCard() {
             ref={appRef}
             className="flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-3xl bg-background border border-border/80 shadow-lg dark:bg-zinc-950 dark:border-white/10 dark:shadow-[0_0_30px_rgba(255,255,255,0.05)] z-10"
           >
-            <span className="text-[11px] font-black text-foreground dark:text-white leading-tight text-center tracking-tighter">
+            <span className="text-[11px] font-semibold text-foreground dark:text-white leading-tight text-center tracking-tighter">
               Your
               <br />
               SaaS
@@ -103,7 +106,7 @@ export function AIGatewayCard() {
               className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
             >
               <OpenAIIcon size={14} className="h-3.5 w-3.5 shrink-0" />
-              <span className="text-[11px] font-bold text-foreground/80 dark:text-zinc-300 tracking-wide">
+              <span className="text-[11px] font-semibold text-foreground/80 dark:text-zinc-300 tracking-wide">
                 OpenAI
               </span>
             </div>
@@ -112,7 +115,7 @@ export function AIGatewayCard() {
               className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
             >
               <AnthropicIcon size={14} className="h-3.5 w-3.5 shrink-0" />
-              <span className="text-[11px] font-bold text-foreground/80 dark:text-zinc-300 tracking-wide">
+              <span className="text-[11px] font-semibold text-foreground/80 dark:text-zinc-300 tracking-wide">
                 Anthropic
               </span>
             </div>
@@ -121,7 +124,7 @@ export function AIGatewayCard() {
               className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
             >
               <GeminiIcon size={14} className="h-3.5 w-3.5 shrink-0" />
-              <span className="text-[11px] font-bold text-foreground/80 dark:text-zinc-300 tracking-wide">
+              <span className="text-[11px] font-semibold text-foreground/80 dark:text-zinc-300 tracking-wide">
                 Gemini
               </span>
             </div>
@@ -130,7 +133,7 @@ export function AIGatewayCard() {
               className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
             >
               <DeepSeekIcon size={14} className="h-3.5 w-3.5 shrink-0" />
-              <span className="text-[11px] font-bold text-foreground/80 dark:text-zinc-300 tracking-wide">
+              <span className="text-[11px] font-semibold text-foreground/80 dark:text-zinc-300 tracking-wide">
                 DeepSeek
               </span>
             </div>
@@ -149,7 +152,7 @@ export function AIGatewayCard() {
           className="text-border dark:text-white/10"
           pathWidth={1}
           pathOpacity={0.8}
-          gradientStartColor="var(--color-primary, #0033FE)"
+          gradientStartColor="var(--brand-primary)"
           gradientStopColor="var(--brand-accent)"
         />
         <AnimatedBeam
@@ -163,7 +166,7 @@ export function AIGatewayCard() {
           className="text-border dark:text-white/10"
           pathWidth={1}
           pathOpacity={0.8}
-          gradientStartColor="var(--color-primary, #0033FE)"
+          gradientStartColor="var(--brand-primary)"
           gradientStopColor="var(--brand-accent)"
         />
         <AnimatedBeam
@@ -177,7 +180,7 @@ export function AIGatewayCard() {
           className="text-border dark:text-white/10"
           pathWidth={1}
           pathOpacity={0.8}
-          gradientStartColor="var(--color-primary, #0033FE)"
+          gradientStartColor="var(--brand-primary)"
           gradientStopColor="var(--brand-accent)"
         />
         <AnimatedBeam
@@ -191,7 +194,7 @@ export function AIGatewayCard() {
           className="text-border dark:text-white/10"
           pathWidth={1}
           pathOpacity={0.8}
-          gradientStartColor="var(--color-primary, #0033FE)"
+          gradientStartColor="var(--brand-primary)"
           gradientStopColor="var(--brand-accent)"
         />
       </div>

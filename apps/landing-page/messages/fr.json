@@ -56,69 +56,6 @@
     "copiedLabel": "Copié",
     "startBuilding": "Commencer à construire"
   },
-  "comparison": {
-    "badge": "COMPARATIF SAILOR",
-    "title": "Sailor vs. les alternatives.",
-    "columns": {
-      "feature": "Fonctionnalité",
-      "sailor": "Nebutra Sailor",
-      "nextForge": "next-forge",
-      "supastarter": "Supastarter"
-    },
-    "features": {
-      "multiTenant": "Multi-tenant",
-      "aiGateway": "Intégration IA",
-      "auth": "Authentification",
-      "billing": "Facturation et paiements",
-      "i18n": "Internationalisation",
-      "frameworks": "Support frameworks",
-      "monorepo": "Échelle du monorepo",
-      "api": "Framework API",
-      "e2eTests": "Tests E2E",
-      "archTests": "Tests d'architecture",
-      "designSystem": "Système de design",
-      "bgJobs": "Tâches en arrière-plan",
-      "license": "Licence"
-    },
-    "values": {
-      "orgRbacIsolation": "Orgs + RBAC + isolation",
-      "orgRolesSeat": "Orgs + rôles + facturation par siège",
-      "manualSetup": "Config. manuelle",
-      "multiProviderGateway": "Vercel AI SDK + 20+ fournisseurs",
-      "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk / Better Auth / NextAuth / Supabase",
-      "clerkOnly": "Clerk",
-      "betterAuth": "Better Auth",
-      "stripeUsage": "5 fournisseurs + comptage",
-      "stripeOnly": "Stripe",
-      "fiveProviders": "5 fournisseurs de paiement",
-      "sevenLangs": "7 langues",
-      "nextjsOnly": "Next.js uniquement",
-      "nextNuxtTanstack": "Next.js + Nuxt + TanStack",
-      "turboNineApps": "Turborepo · 10 apps",
-      "turboSevenApps": "Turborepo · 6 apps",
-      "turboFiveApps": "Turborepo · 5 apps",
-      "honoOpenapi": "Hono + OpenAPI + oRPC + tRPC",
-      "trpc": "tRPC",
-      "honoOrpc": "Hono + oRPC",
-      "playwrightSharded": "Playwright · 4 shards",
-      "playwrightGha": "Playwright + GH Actions",
-      "sevenPropertyBased": "13 tests d'architecture",
-      "fourLayerTokens": "Moteur de tokens à 4 couches",
-      "shadcn": "shadcn/ui",
-      "radixShadcn": "Radix + shadcn/ui",
-      "inngest": "Inngest",
-      "triggerQstash": "trigger.dev + QStash",
-      "agpl": "AGPL-3.0 (gratuit)",
-      "mit": "MIT (gratuit)",
-      "paidFrom349": "À partir de $349",
-      "aiPackage": "Module IA",
-      "i18nPackage": "Module i18n",
-      "nextjsRoutes": "Routes Next.js",
-      "cronOnly": "Cron uniquement",
-      "twoLangs": "2 langues (en, de)"
-    }
-  },
   "footer": {
     "brandDescription": "Expédiez votre SaaS en semaines, pas en mois. Multi-tenancy, facturation, auth et IA — prêt pour la production dès le premier jour.",
     "columns": {
@@ -138,6 +75,9 @@
       "docs": "Documentation",
       "ideas": "Idées",
       "opc": "Plateforme",
+      "careers": "Carrières",
+      "security": "Sécurité",
+      "dpa": "DPA",
       "privacy": "Confidentialité",
       "terms": "Conditions",
       "cookies": "Cookies",
@@ -147,8 +87,8 @@
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)",
-      "product": "Product",
-      "licensing": "Licensing"
+      "product": "Produit",
+      "licensing": "Licences"
     },
     "copyright": "© 2026 Nebutra Intelligence. Tous droits réservés.",
     "statusOnline": "Tous les systèmes opérationnels",
@@ -180,952 +120,952 @@
   },
   "legal": {
     "nav": {
-      "home": "Home",
+      "home": "Accueil",
       "contact": "Contact"
     },
     "footer": {
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service",
-      "cookies": "Cookie Policy",
-      "refund": "Refund Policy",
-      "copyright": "© Nebutra. All rights reserved."
+      "privacy": "Politique de confidentialité",
+      "terms": "Conditions d'utilisation",
+      "cookies": "Politique relative aux cookies",
+      "refund": "Politique de remboursement",
+      "copyright": "© Nebutra. Tous droits réservés."
     }
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and core engineering principles driving Nebutra Intelligence.",
-      "heading": "The Era of Super Individuals",
-      "subheading": "Terminate human-wave bureaucratic expansion. Equip the creative super individual with maximal algorithmic leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "Nebutra is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce is merely the restructuring of production elements—but historically riddled with hierarchical frictions. In Nebutra's neural network, any independent builder shipping verifiable Proof of Work receives automatic routing of top talent, institutional trust, and algorithmic capital via our Sleptons matchmaker, democratizing entrepreneurship into a highly certain, standardized track.",
-      "missionP3": "We fundamentally reject scaling by adding middle management. Agents handle 100% of operational workflows. We do not hire passive cogs; we invest in, cultivate, and elevate literal creators.",
+      "title": "À propos — La plateforme IA gouvernée",
+      "description": "Découvrez la vision commerciale et les principes d'ingénierie de la plateforme IA gouvernée de Nebutra.",
+      "heading": "L'ère des équipes produit lean",
+      "subheading": "Remplacez le travail de plateforme répétitif par une infrastructure gouvernée, une automatisation poussée et un solide levier d'ingénierie.",
+      "missionTitle": "Un nouvel ordre résistant à l'entropie administrative",
+      "missionP1": "Nebutra construit une plateforme IA gouvernée pour les équipes qui ont besoin d'une infrastructure durable plutôt que de starters éphémères. La scalabilité traditionnelle s'accompagne souvent de bureaucratie et d'entropie ; nous y répondons par la gouvernance du code, l'automatisation et une base de plateforme qui reste auditable au fil de sa croissance.",
+      "missionP2": "Le commerce souffre encore d'une surcharge de coordination, d'outils fragmentés et de chemins de mise à niveau fragiles. Nous cherchons à réduire ces frictions grâce à des contrats de plateforme plus clairs, de meilleures primitives de livraison et un comportement à l'exécution que les équipes peuvent réellement observer et faire confiance.",
+      "missionP3": "Nous rejetons l'habitude de résoudre les problèmes de scalabilité en ajoutant plus de poids organisationnel. L'automatisation, les tests et la gouvernance doivent absorber le travail opérationnel répétitif afin que les équipes restent concentrées sur le produit, l'architecture et les résultats clients.",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "Les quatre piliers",
       "values": {
         "0": {
-          "title": "Infinite Fission (Philosophy)",
-          "description": "Rejecting the bloated myth of horizontal expansion. Every micro-entity hatched here is designed to leverage billions in value with ultra-low headcount."
+          "title": "Scalabilité gouvernée (Philosophie)",
+          "description": "La croissance doit venir de systèmes plus solides, d'un meilleur levier et de règles de fonctionnement plus claires — pas d'une accumulation de poids organisationnel."
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "Transcending simple boilerplates. An arsenal of enterprise multi-tenant isolation, automated MRR billing, shipped by solo founders in one week."
+          "title": "Le cœur bâtisseur (Infrastructure)",
+          "description": "Une base de plateforme réutilisable pour la multi-location, la facturation, l'authentification, la conformité et les intégrations IA que les équipes peuvent auditer, étendre et livrer de façon répétée."
         },
         "2": {
-          "title": "Frictionless Flow (Routing)",
-          "description": "Algorithms dismantle HR and VC logic. Execution metrics and git commit velocity dictate purely where capital and talent flow."
+          "title": "Discipline de mise à niveau (Routage)",
+          "description": "Les systèmes sains évoluent grâce à des vérifications de compatibilité, des migrations et des contrats d'exécution observables — pas par la dérive, l'héroïsme et les réécritures ad hoc."
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Eradicate office politics. Provide architectural proofs and the algorithms will automatically elevate your systemic authority."
+          "title": "Le code fait loi (Organisation)",
+          "description": "La discipline opérationnelle doit être encodée dans des tests, des workflows et des règles de gouvernance afin que les équipes puissent améliorer la plateforme sans dépendre de la politique ou de la mémoire institutionnelle."
         }
       },
-      "jobsTitle": "Eradicating JD/CV Recruitment",
-      "jobsDescription": "We ignore degrees and pedigrees. Pass the Sleptons machine vision and topological checks via sheer Proof of Work, and shape the ecosystem.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "Signaux d'ingénierie plutôt que diplômes",
+      "jobsDescription": "Nous nous intéressons davantage à la production d'ingénierie vérifiable, à la clarté de pensée et au jugement système qu'aux titres ou à la réputation.",
+      "jobsButton": "Soumettre un profil GitHub",
+      "companyInfoTitle": "Conformité organisationnelle",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "Enregistrement de l'entité juridique",
+        "founded": "Date d'enregistrement",
+        "headquarters": "Centre d'opérations mondial",
+        "jurisdiction": "Juridiction compétente"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "Besoin d'une évaluation technique approfondie ?",
+      "ctaDescription": "Contactez nos spécialistes en ingénierie pour une évaluation d'intégration en entreprise ou consultez la documentation de déploiement.",
+      "ctaButton": "Prendre contact"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — Nebutra Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "Demande technique & commerciale — Nebutra Intelligence",
+      "description": "Le canal de communication dédié aux licences commerciales, à l'auto-hébergement en entreprise et au support technique avancé.",
+      "heading": "Établir une connexion de support",
+      "subheading": "Nous enverrons un spécialiste technique ou un architecte dédié pour évaluer vos exigences précises.",
       "contacts": {
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "Consultation en entreprise",
+          "description": "Discussions préliminaires concernant les partenariats stratégiques et l'évolution architecturale globale."
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "Déploiement commercial",
+          "description": "Négociation relative aux licences à code fermé et aux détails des déploiements en cluster privé."
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "Support expert",
+          "description": "Conseils architecturaux ciblés et services de dépannage pour les intégrations métier actives et le débogage des systèmes cœur."
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "Juridique & conformité",
+          "description": "Demandes relatives aux définitions des limites open source, aux audits de conformité en entreprise et aux conditions contractuelles."
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "Confidentialité du centre de données",
+          "description": "Vérification technique et directives de conformité concernant le RGPD et les lois internationales successives sur la protection des données."
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "Divulgations de sécurité",
+          "description": "Soumettez de façon sécurisée des rapports de reproduction technique concernant les vulnérabilités logicielles potentielles directement à notre équipe infrastructure."
         },
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "Contact direct du fondateur",
+          "description": "Canal de communication direct pour les alignements stratégiques essentiels et les demandes au niveau exécutif."
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "Portail de soumission",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "Nom du demandeur",
+        "email": "Adresse e-mail officielle",
+        "company": "Organisation affiliée",
+        "category": "Domaine de besoin",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "Consultation d'entreprise",
+          "sales": "Licences & architecture",
+          "support": "Assistance développeur",
+          "legal": "Juridique & limites de conformité",
+          "privacy": "Politiques de traitement des données",
+          "partnership": "Intégrations écosystème",
+          "press": "Relations publiques"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "Résumé du problème principal",
+        "message": "Spécifications techniques/commerciales détaillées",
+        "submit": "Transmettre",
+        "privacyNotice": "En soumettant ce formulaire, vous reconnaissez avoir lu et accepté notre",
+        "privacyLink": "Politique de confidentialité",
+        "submitting": "Envoi en cours...",
+        "successMessage": "Données transmises avec succès. L'équipe opérationnelle responsable fournira une réponse détaillée dans un délai de 1 à 2 jours ouvrés."
       },
-      "companyInfoTitle": "Operational Telemetry",
-      "socialMedia": "Primary Network Links",
+      "companyInfoTitle": "Télémétrie opérationnelle",
+      "socialMedia": "Liens réseau principaux",
       "companyNameChinese": "无锡云毓智能科技有限公司",
       "companyNameEnglish": "Wuxi Nebutra Intelligence Technology Co., Ltd.",
-      "companyAddress": "Wuxi, Jiangsu Province, China"
+      "companyAddress": "Wuxi, province du Jiangsu, Chine"
     },
     "cookies": {
-      "title": "Data Retention Protocols — Nebutra",
-      "description": "Elucidating the platform's execution of necessary technical storage mechanics to maintain session states and platform analytics.",
-      "heading": "Technical Tracking Mechanics",
-      "effectiveDate": "Mandatory Enforcement Date",
-      "lastUpdated": "Latest Technical Revision",
+      "title": "Politique relative aux cookies — Nebutra",
+      "description": "Comment Nebutra utilise les cookies et technologies de suivi similaires sur notre site web et nos services.",
+      "heading": "Politique relative aux cookies",
+      "effectiveDate": "Date d'entrée en vigueur",
+      "lastUpdated": "Dernière mise à jour",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1er janvier 2025",
+        "updated": "1er janvier 2025"
       },
-      "intro": "This Cookie Policy explains how Nebutra Co., Ltd. (\"Nebutra,\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "La présente Politique relative aux cookies explique comment Nebutra Co., Ltd. (« Nebutra », « nous » ou « notre ») utilise les cookies et les technologies de suivi similaires sur notre site web et nos services.",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "Que sont les cookies ?",
+        "content": "Les cookies sont de petits fichiers texte déposés sur votre appareil lorsque vous visitez un site web. Ils sont largement utilisés pour faire fonctionner les sites web plus efficacement et fournir des informations aux propriétaires du site."
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "Comment nous utilisons les cookies",
+        "intro": "Nous utilisons les cookies pour :",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "Activer les fonctionnalités essentielles",
+            "desc": "Fournir les fonctionnalités de base telles que l'authentification des utilisateurs et la sécurité"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "Mémoriser vos préférences",
+            "desc": "Enregistrer votre langue, votre thème et d'autres paramètres"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "Améliorer les performances",
+            "desc": "Comprendre comment les visiteurs interagissent avec nos services"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "Personnaliser l'expérience",
+            "desc": "Fournir du contenu et des recommandations pertinents"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "Mesurer le marketing",
+            "desc": "Suivre l'efficacité de nos campagnes marketing"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "Types de cookies que nous utilisons",
       "tableHeaders": {
         "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "provider": "Fournisseur",
+        "purpose": "Finalité",
+        "duration": "Durée"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "Cookies strictement nécessaires",
+        "description": "Ces cookies sont essentiels au bon fonctionnement du site web. Ils ne peuvent pas être désactivés.",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "Nebutra",
-            "purpose": "User authentication session",
+            "purpose": "Session d'authentification utilisateur",
             "duration": "Session"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "Jeton d'authentification",
+            "duration": "7 jours"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "Nebutra",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "Enregistre les préférences de consentement aux cookies",
+            "duration": "1 an"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "Cookies fonctionnels",
+        "description": "Ces cookies permettent des fonctionnalités personnalisées et mémorisent vos préférences.",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "Nebutra",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "Enregistre la préférence de langue",
+            "duration": "1 an"
           },
           "1": {
             "name": "theme",
             "provider": "Nebutra",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "Enregistre la préférence de thème",
+            "duration": "1 an"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "Cookies analytiques",
+        "description": "Ces cookies nous aident à comprendre comment les visiteurs interagissent avec notre site web.",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "Distingue les utilisateurs uniques",
+            "duration": "2 ans"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "Analyse produit",
+            "duration": "1 an"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "Cookies marketing",
+        "description": "Ces cookies sont utilisés à des fins publicitaires et pour mesurer la performance des campagnes.",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "Suit les visites pour les annonces Facebook",
+            "duration": "3 mois"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "Suivi des conversions",
+            "duration": "3 mois"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "Gérer vos préférences en matière de cookies",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "Bannière de consentement aux cookies",
+        "intro": "Lors de votre première visite sur notre site, une bannière de consentement aux cookies vous permettra de :",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "Tout accepter",
+            "desc": "Activer toutes les catégories de cookies"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "Tout refuser",
+            "desc": "Désactiver tous les cookies optionnels (les cookies nécessaires restent actifs)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "Personnaliser",
+            "desc": "Choisir les catégories de cookies spécifiques à activer"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "Vous pouvez modifier vos préférences à tout moment en cliquant sur « Paramètres des cookies » dans le pied de page."
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "Paramètres du navigateur",
+        "intro": "La plupart des navigateurs web vous permettent de contrôler les cookies via leurs paramètres :",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "Paramètres > Confidentialité et sécurité > Cookies"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "Paramètres > Vie privée et sécurité > Cookies"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "Préférences > Confidentialité > Cookies"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "Paramètres > Confidentialité, recherche et services > Cookies"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "Le blocage de certains cookies peut avoir un impact sur les fonctionnalités du site web."
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "Technologies similaires",
+        "intro": "En plus des cookies, nous pouvons utiliser :",
         "items": {
           "0": {
-            "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "label": "Stockage local",
+            "desc": "Pour stocker des préférences et mettre en cache des données localement"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "Stockage de session",
+            "desc": "Pour les données temporaires pendant votre session de navigation"
           },
           "2": {
-            "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "label": "Balises pixel",
+            "desc": "Petites images pour suivre les ouvertures d'e-mails et les visites sur le site"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "Nous N'utilisons PAS la prise d'empreintes du navigateur à des fins de suivi."
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "Mises à jour de cette politique",
+        "content": "Nous pouvons mettre à jour cette Politique relative aux cookies de temps en temps. Nous vous informerons de tout changement important en publiant la politique mise à jour sur notre site web."
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "Nous contacter",
+        "intro": "Pour toute question concernant notre utilisation des cookies, veuillez nous contacter :",
         "company": "Nebutra Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "Pour plus d'informations sur la façon dont nous collectons et traitons vos données, veuillez consulter notre",
+        "privacyLink": "Politique de confidentialité"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — Nebutra",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "Conseils d'ingénierie & FAQ — Nebutra",
+      "description": "Analyse approfondie de l'architecture du framework, des topologies de base et des stratégies de déploiement commercial.",
+      "heading": "Analyse approfondie pour dirigeants",
+      "subheading": "Matériel d'appui optimisé pour l'intégration en ingénierie systèmes et la prise de décision commerciale au niveau exécutif.",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "Vue d'ensemble architecturale",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of Nebutra Sailor?",
-              "a": "Nebutra Sailor is a highly structured, production-ready Next.js AI SaaS framework. It bundles microservice functionalities, including corporate billing, multi-factor authentication, and multi-tenant isolation, eliminating boilerplate development overhead and allowing teams to hyper-focus on core structural AI implementation."
+              "q": "Quel est l'objectif opérationnel explicite de Nebutra Sailor ?",
+              "a": "Nebutra Sailor est un framework SaaS Next.js AI hautement structuré et prêt pour la production. Il intègre la facturation d'entreprise, l'authentification multi-facteurs et l'isolation multi-tenant dans une base de plateforme gouvernée, permettant aux équipes de se concentrer sur l'implémentation IA spécifique au produit."
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "Comment la structure de licence du dépôt est-elle organisée ?",
+              "a": "L'infrastructure sous-jacente applique strictement l'accord OSS AGPLv3, garantissant transparence et utilisation sans coût. Pour les organisations nécessitant une obfuscation propriétaire et des garanties de réécriture élevées, des contrats commerciaux à code fermé explicites sont disponibles."
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "Quelle est la rapidité de l'évaluation commerciale initiale ?",
+              "a": "Extrêmement rapide. En utilisant notre chaîne d'outils CLI Node personnalisée et la spécification technique précise, un ingénieur junior peut mettre en place une instance MVP locale autonome en quelques minutes."
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "Opérations commerciales",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "Quelle est la tolérance à la montée en charge commerciale ?",
+              "a": "Conçu sur des paradigmes de micro-composants, la capacité de charge structurelle s'adapte sans heurts depuis les niveaux gratuits à demande nulle jusqu'aux seuils Enterprise servant des millions de requêtes mensuelles, entièrement configuré via les contraintes du tableau de bord."
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "Comment la volatilité des abonnements affecte-t-elle la comptabilité standard ?",
+              "a": "Nous opérons avec une journalisation structurelle précise au niveau de la seconde des ressources et du débit API. La modification des contraintes se réconcilie instantanément avec la couche comptable — en remboursant les différentiels au prorata ou en émettant des crédits automatiques. Il n'y a absolument aucune période de gel de niveau."
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "Quelle infrastructure de traitement isole les vecteurs de paiement ?",
+              "a": "L'acheminement mondial des paiements s'appuie fondamentalement sur les interfaces serveur Stripe, garantissant une télémétrie PCI-DSS stricte et l'intégrité du traitement. Les déploiements Enterprise peuvent intégrer des pipelines d'audit financier privés régis par des engagements SLA personnalisés."
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "Couche d'ingénierie système",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "Quelles abstractions d'intelligence fondamentales sont supportées nativement ?",
+              "a": "La logique d'interaction principale impose une interopérabilité native avec les spécifications standard OpenAI, Anthropic et Gemini. Cela offre une flexibilité massive pour permuter efficacement les points de terminaison de raisonnement via le mappage de variables, sans dégradation de la logique commerciale en amont."
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "Comment le risque d'obfuscation de base de données est-il adressé ?",
+              "a": "Les paramètres d'implémentation déploient intrinsèquement des politiques Postgres Row-Level Security (RLS) étroitement couplées à nos primitives de routage de résolution de tenant sans serveur. Cela garantit que les partitions strictes empêchent activement la contamination de données critique au niveau applicatif et les chevauchements d'exécution."
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "Existe-t-il des restrictions architecturales pour les déploiements auto-gérés ?",
+              "a": "Absolument aucune. La topologie est entièrement découplée. Si l'environnement exécute des runtimes Node.js indépendants avec des clusters PostgreSQL sains, toutes les fonctionnalités sont préservées."
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "Intégrité systémique",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "Quels protocoles déterminent la défense mécanique du périmètre ?",
+              "a": "Les mécanismes appliquent le chiffrement TLS obligatoire pendant la transmission, des algorithmes de hachage déterministes pour le mappage des secrets, et l'enregistrement universel des événements de mutation dans des registres de suivi de séries temporelles internes."
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "La topologie respecte-t-elle les grandes lois internationales sur la confidentialité ?",
+              "a": "Oui, pleinement. Les modules métier fournissent des implémentations algorithmiques prêtes à l'emploi ciblant les états de retrait du consentement, la logique de suppression définitive et les requêtes d'exportation approfondie conformes au RGPD et aux cadres réglementaires localisés."
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "Que se passe-t-il en cas d'incident catastrophique anormal ?",
+              "a": "Des sentinelles automatisées alertent instantanément les vecteurs d'ingénierie principaux qui imposent des coupures de circuit et mettent en œuvre un triage rapide. Régis par un manuel de résolution avancé, des post-mortems d'incident entièrement transparents sont diffusés universellement dans une fenêtre absolue de 72 heures."
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "Directives d'assistance technique",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "Comment le dépannage des goulots d'étranglement opérationnels est-il résolu ?",
+              "a": "Les vecteurs de triage initiaux ciblent la matrice de documentation rigoureusement maintenue et validée par les pairs, ainsi que les interactions communautaires vérifiées. L'obtention d'une licence standard ou enterprise déverrouille l'accès à des files d'escalade privées résolvant via des nœuds d'ingénierie internes directs."
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "Proposez-vous des opérations d'intégration physique ou dans des environnements spécialisés ?",
+              "a": "Cela relève de notre niveau d'exécution premium sur mesure pour les grands conglomérats d'entreprise. Nos architectes les plus seniors se déploient sur site pour effectuer des audits de code sur des architectures legacy, gérer des migrations cloud délicates et valider des partitions réseau hautement isolées."
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "Besoin d'une synchronisation technique immédiate ?",
+      "ctaDescription": "Que vous validiez un schéma de comportement d'API spécifique ou que vous exécutiez des accords d'intégration à long terme, interfacez directement avec la hiérarchie d'ingénierie.",
+      "ctaButton": "Recevoir les instructions d'intégration",
+      "ctaEmail": "Envoyer un message direct"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — Nebutra",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Enforcement Epoch",
-      "lastUpdated": "Latest Structural Revision",
+      "title": "Politique de confidentialité — Nebutra",
+      "description": "Documentation détaillée sur la façon dont notre infrastructure régit l'autonomie des utilisateurs et l'isolation des données.",
+      "heading": "Directives de protection des informations",
+      "effectiveDate": "Date d'entrée en vigueur",
+      "lastUpdated": "Dernière mise à jour",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1er janvier 2025",
+        "updated": "1er janvier 2025"
       },
-      "intro": "At Nebutra (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "Chez Nebutra (« Société », « nous » ou « notre »), nous nous engageons à protéger votre vie privée. Cette Politique de confidentialité explique comment nous collectons, utilisons, divulguons et protégeons vos informations lorsque vous utilisez notre site web, nos applications et nos services (collectivement, les « Services »).",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. Informations que nous collectons",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 Informations que vous fournissez",
+          "intro": "Nous collectons les informations que vous nous fournissez directement, notamment :",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "Informations de compte",
+              "desc": "Nom, adresse e-mail, mot de passe et détails de l'organisation lors de la création de votre compte."
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "Informations de profil",
+              "desc": "Photo de profil, titre du poste, nom de l'entreprise et autres informations optionnelles."
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "Informations de paiement",
+              "desc": "Adresse de facturation et détails du moyen de paiement (traitement sécurisé via Stripe)."
             },
             "3": {
               "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "desc": "Messages, retours et autres communications que vous nous envoyez."
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "Contenu",
+              "desc": "Tout contenu que vous créez, téléchargez ou stockez à l'aide de nos Services."
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 Informations collectées automatiquement",
+          "intro": "Lorsque vous utilisez nos Services, nous collectons automatiquement certaines informations :",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "Informations sur l'appareil",
+              "desc": "Type d'appareil, système d'exploitation, type de navigateur et identifiants uniques de l'appareil."
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "Informations d'utilisation",
+              "desc": "Pages consultées, fonctionnalités utilisées, actions effectuées et temps passé sur les Services."
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "Données de journal",
+              "desc": "Adresse IP, heures d'accès, URL de référence et journaux d'activité système."
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "Informations de localisation",
+              "desc": "Localisation générale basée sur l'adresse IP (nous ne collectons pas de géolocalisation précise)."
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. Comment nous utilisons vos informations",
+        "intro": "Nous utilisons les informations collectées pour :",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "Fournir les Services",
+            "desc": "Exploiter, maintenir et améliorer nos Services."
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "Traiter les transactions",
+            "desc": "Gérer les paiements, la facturation et les opérations associées."
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "Communiquer",
+            "desc": "Envoyer des annonces de service, des mises à jour et des communications marketing (avec consentement)."
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "Personnaliser",
+            "desc": "Personnaliser votre expérience et fournir des recommandations pertinentes."
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "Analyser",
+            "desc": "Comprendre les modèles d'utilisation et améliorer nos Services."
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "Protéger",
+            "desc": "Détecter, prévenir et répondre aux fraudes, abus et incidents de sécurité."
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. Comment nous partageons vos informations",
+        "intro": "Nous pouvons partager vos informations dans les circonstances suivantes :",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 Prestataires de services",
+          "intro": "Nous partageons des informations avec des prestataires tiers qui fournissent des services en notre nom, notamment :",
           "items": {
             "0": {
               "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "desc": "Hébergement cloud (Vercel, Supabase), services de base de données"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "Traitement des paiements",
+              "desc": "Stripe pour le traitement sécurisé des paiements"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "Authentification",
+              "desc": "Clerk pour la gestion des identités"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "Analytique",
+              "desc": "PostHog, Vercel Analytics pour les insights d'utilisation"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 Transferts d'entreprise",
+          "content": "Si nous sommes impliqués dans une fusion, une acquisition ou une vente d'actifs, vos informations peuvent être transférées dans le cadre de cette transaction."
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 Exigences légales",
+          "content": "Nous pouvons divulguer des informations lorsque la loi, un processus judiciaire ou une demande gouvernementale l'exige, ou pour protéger nos droits, notre confidentialité, notre sécurité ou nos biens."
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. Vos droits et choix",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 Accès et portabilité",
+          "content": "Vous pouvez accéder à vos informations personnelles via les paramètres de votre compte et demander une copie de vos données dans un format portable."
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 Rectification",
+          "content": "Vous pouvez mettre à jour les informations de votre compte à tout moment via le tableau de bord."
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 Suppression",
+          "content": "Vous pouvez demander la suppression de votre compte et des données associées via les paramètres ou en nous contactant."
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 Communications marketing",
+          "content": "Vous pouvez vous désabonner des e-mails marketing en cliquant sur « se désabonner » dans n'importe quel e-mail marketing ou en mettant à jour vos préférences."
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. Sécurité des données",
+        "intro": "Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos informations, notamment :",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "Chiffrement des données en transit (TLS) et au repos",
+          "1": "Évaluations de sécurité régulières et tests de pénétration",
+          "2": "Contrôles d'accès et exigences d'authentification",
+          "3": "Surveillance et journalisation de l'activité système"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. Droits à la vie privée en Californie (CCPA)",
+        "intro": "Si vous résidez en Californie, vous disposez de droits spécifiques concernant vos informations personnelles :",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "Droit à l'information",
+            "desc": "Demander la divulgation des informations que nous collectons, utilisons et partageons."
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "Droit à la suppression",
+            "desc": "Demander la suppression de vos informations personnelles."
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "Droit d'opposition à la vente",
+            "desc": "S'opposer à la vente d'informations personnelles (nous ne vendons pas vos données)."
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "Droit à la non-discrimination",
+            "desc": "Nous ne vous discriminerons pas pour l'exercice de vos droits."
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. Droits à la vie privée en Europe (RGPD)",
+        "intro": "Si vous vous trouvez dans l'EEE, au Royaume-Uni ou en Suisse, vous bénéficiez de droits supplémentaires en vertu du RGPD :",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "Base légale",
+            "desc": "Nous traitons vos données sur la base de l'exécution du contrat, des intérêts légitimes ou du consentement."
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "Droits",
+            "desc": "Accès, rectification, effacement, portabilité, limitation et opposition."
           },
           "2": {
             "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "desc": "Vous pouvez contacter notre délégué à la protection des données à dpo@nebutra.com."
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "title": "8. Nous contacter",
+        "intro": "Pour toute question concernant cette Politique de confidentialité, veuillez nous contacter :",
         "company": "Nebutra Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — Nebutra",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "Politique de remboursement — Nebutra",
+      "description": "Délimitation rigoureuse des paramètres de remboursement selon les différents modèles d'engagement.",
+      "heading": "Cadre de résolution des litiges",
+      "effectiveDate": "Date d'entrée en vigueur",
+      "lastUpdated": "Dernière mise à jour",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1er janvier 2025",
+        "updated": "1er janvier 2025"
       },
-      "intro": "At Nebutra, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "Chez Nebutra, nous souhaitons que vous soyez entièrement satisfait de nos services. Cette Politique de remboursement précise les circonstances dans lesquelles des remboursements sont disponibles et la procédure pour les demander.",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "Plans d'abonnement",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "Abonnements mensuels",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "Résiliation",
+              "desc": "Vous pouvez résilier votre abonnement mensuel à tout moment"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "Remboursements au prorata",
+              "desc": "Nous n'offrons pas de remboursements au prorata pour les mois partiels"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "Accès",
+              "desc": "Vous conservez l'accès aux fonctionnalités payantes jusqu'à la fin de votre période de facturation"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "Renouvellement automatique",
+              "desc": "Les abonnements se renouvellent automatiquement sauf résiliation"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "Abonnements annuels",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "Garantie satisfait ou remboursé de 14 jours",
+              "desc": "Les nouveaux abonnés annuels peuvent demander un remboursement intégral dans les 14 jours suivant leur premier achat"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "Après 14 jours",
+              "desc": "Les remboursements ne sont généralement pas disponibles après la période de 14 jours"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "Résiliation",
+              "desc": "Vous pouvez résilier à tout moment, mais votre abonnement restera actif jusqu'à la fin de la période annuelle"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "Pas de remboursement au prorata",
+              "desc": "Nous n'offrons pas de remboursements partiels pour les mois non utilisés"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "Scénarios de remboursement éligibles",
+        "intro": "Nous examinerons les demandes de remboursement dans les circonstances suivantes :",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. Problèmes de service",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "Pannes de service importantes affectant votre capacité à utiliser les fonctionnalités principales",
+            "1": "Problèmes techniques que nous ne sommes pas en mesure de résoudre dans un délai raisonnable",
+            "2": "Fonctionnalités significativement différentes de ce qui a été annoncé"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. Erreurs de facturation",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "Doubles facturation",
+            "1": "Montants facturés incorrects",
+            "2": "Frais non autorisés (après vérification)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. Circonstances exceptionnelles",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "Urgences médicales documentées",
+            "1": "Catastrophes naturelles affectant votre activité",
+            "2": "Autres circonstances évaluées au cas par cas"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "Articles non remboursables",
+        "intro": "Les éléments suivants ne sont généralement pas éligibles aux remboursements :",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "Frais basés sur l'utilisation",
+            "desc": "Appels API, consommation de tokens IA ou stockage utilisé"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "Modules complémentaires",
+            "desc": "Achats ponctuels ou services complémentaires"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "Contrats Enterprise",
+            "desc": "Les accords personnalisés ont leurs propres conditions"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "Résiliations volontaires",
+            "desc": "Après la période d'éligibilité au remboursement"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "Violations des conditions",
+            "desc": "Comptes résiliés pour violation de la politique"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "Comment demander un remboursement",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "Étape 1 : Contacter le support",
+          "intro": "Envoyez-nous un e-mail à billing@nebutra.com avec :",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "L'adresse e-mail de votre compte",
+            "1": "Le plan d'abonnement et la période de facturation",
+            "2": "La raison de votre demande de remboursement",
+            "3": "Toute documentation pertinente"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "Étape 2 : Processus de révision",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "Nous examinerons votre demande dans les 5 jours ouvrés",
+            "1": "Nous pourrions demander des informations supplémentaires",
+            "2": "Vous recevrez une décision écrite par e-mail"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "Étape 3 : Traitement du remboursement",
+          "intro": "Si approuvé :",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "Les remboursements sont traités vers le moyen de paiement d'origine",
+            "1": "Les remboursements par carte de crédit apparaissent généralement dans les 5 à 10 jours ouvrés",
+            "2": "Les délais de traitement bancaire peuvent varier"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "Modifications de plan",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "Améliorations",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "Les améliorations prennent effet immédiatement",
+            "1": "La différence au prorata pour le reste de votre période de facturation vous est facturée",
+            "2": "Aucun remboursement n'est accordé pour le plan précédent"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "Rétrogradations",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "Les rétrogradations prennent effet à la prochaine période de facturation",
+            "1": "Vous conservez l'accès aux fonctionnalités actuelles jusqu'à cette date",
+            "2": "Aucun remboursement partiel pour la période en cours"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "Essai gratuit",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "Les essais gratuits ne nécessitent pas d'informations de paiement",
+          "1": "Aucun frais n'est engagé pendant la période d'essai",
+          "2": "Vous serez informé avant tout début de facturation"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "Résolution des litiges",
+        "intro": "Si vous n'êtes pas d'accord avec notre décision de remboursement :",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "Répondez à l'e-mail de décision avec des informations supplémentaires",
+          "1": "Demandez une escalade à un superviseur",
+          "2": "Contactez-nous à legal@nebutra.com pour un examen supplémentaire"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "Nous contacter",
+        "intro": "Pour les demandes de remboursement ou les questions sur cette politique :",
         "company": "Nebutra Co., Ltd.",
-        "billingLabel": "Billing",
+        "billingLabel": "Facturation",
         "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using Nebutra, you agree to these refund terms."
+        "legalLabel": "Juridique",
+        "responseNote": "Nous nous efforçons de répondre à toutes les demandes de remboursement dans les 5 jours ouvrés.",
+        "termsNote": "Cette politique fait partie de nos",
+        "termsLink": "Conditions d'utilisation",
+        "termsAgreement": "En utilisant Nebutra, vous acceptez ces conditions de remboursement."
       }
     },
     "terms": {
-      "title": "Platform Interaction Treaty — Nebutra",
-      "description": "The exact defining technical guidelines outlining the required engagement behaviors between the software framework provider and executing agents.",
-      "heading": "Software Supply License Mechanics (Terms)",
-      "effectiveDate": "Execution Enforcement Date",
-      "lastUpdated": "Final Network Update",
+      "title": "Conditions d'utilisation — Nebutra",
+      "description": "Les Conditions d'utilisation régissant votre accès et l'utilisation du site web, des applications, des API et des services de Nebutra.",
+      "heading": "Conditions d'utilisation",
+      "effectiveDate": "Date d'entrée en vigueur",
+      "lastUpdated": "Dernière mise à jour",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1er janvier 2025",
+        "updated": "1er janvier 2025"
       },
-      "intro1": "Welcome to Nebutra! These Terms of Service (\"Terms\") govern your access to and use of Nebutra's website, applications, APIs, and services (collectively, the \"Services\") provided by Nebutra Co., Ltd. (\"Nebutra,\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "Bienvenue chez Nebutra ! Ces Conditions d'utilisation (« Conditions ») régissent votre accès et l'utilisation du site web, des applications, des API et des services de Nebutra (collectivement, les « Services ») fournis par Nebutra Co., Ltd. (« Nebutra », « Société », « nous » ou « notre »).",
+      "intro2": "En accédant à nos Services ou en les utilisant, vous acceptez d'être lié par ces Conditions et notre",
+      "intro2PrivacyLink": "Politique de confidentialité",
+      "intro2End": ". Si vous n'acceptez pas ces Conditions, n'utilisez pas nos Services.",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. Acceptation des conditions",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 Éligibilité",
+          "intro": "Pour utiliser nos Services, vous devez :",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "Avoir au moins 18 ans ou l'âge de la majorité légale dans votre juridiction",
+            "1": "Avoir l'autorité de vous engager dans ces Conditions en votre nom propre ou au nom de votre organisation",
+            "2": "Ne pas être interdit d'utiliser nos Services en vertu de la loi applicable"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 Comptes d'organisation",
+          "content": "Si vous utilisez nos Services au nom d'une organisation, vous déclarez avoir l'autorité de lier cette organisation à ces Conditions."
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "Nebutra provides a SaaS platform that includes:",
+        "title": "2. Description des services",
+        "intro": "Nebutra fournit une plateforme SaaS qui comprend :",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "Fonctionnalités alimentées par l'IA et génération de contenu",
+          "1": "Gestion de contenu et outils communautaires",
+          "2": "Systèmes de recommandation",
+          "3": "Intégrations e-commerce",
+          "4": "Capacités Web3",
+          "5": "Analytique et rapports"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. Inscription au compte",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 Création de compte",
+          "intro": "Pour accéder à certaines fonctionnalités, vous devez créer un compte. Vous vous engagez à :",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "Fournir des informations exactes et complètes",
+            "1": "Maintenir la sécurité des identifiants de votre compte",
+            "2": "Mettre à jour rapidement vos informations en cas de modification",
+            "3": "Accepter la responsabilité de toutes les activités sous votre compte"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. Abonnement et facturation",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 Tarification",
+          "content": "Nos Services sont proposés sous différents plans d'abonnement décrits sur notre page Tarifs. Les prix sont susceptibles de changer avec un préavis de 30 jours."
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 Paiement",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "Les abonnements sont facturés à l'avance sur une base mensuelle ou annuelle",
+            "1": "Tous les frais sont non remboursables sauf disposition contraire dans notre",
+            "2": "Vous nous autorisez à débiter votre moyen de paiement pour les frais applicables",
+            "3": "Nous utilisons Stripe pour le traitement sécurisé des paiements",
+            "1RefundLink": "Politique de remboursement"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. Utilisation acceptable",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 Activités interdites",
+          "intro": "Vous vous engagez à NE PAS :",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "Violer toute loi, réglementation ou droit de tiers applicable",
+            "1": "Utiliser les Services pour transmettre des logiciels malveillants, du spam ou du contenu nuisible",
+            "2": "Tenter d'obtenir un accès non autorisé à nos systèmes",
+            "3": "Interférer avec ou perturber l'intégrité ou les performances de nos Services",
+            "4": "Utiliser des outils automatisés pour extraire, copier ou extraire des données sans autorisation",
+            "5": "Rétroconcevoir, décompiler ou désassembler nos Services",
+            "6": "Utiliser nos fonctionnalités IA pour générer du contenu illégal, nuisible ou trompeur"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. Propriété intellectuelle",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "Nebutra and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 Notre propriété intellectuelle",
+          "content": "Nebutra et ses concédants détiennent tous les droits, titres et intérêts dans les Services, y compris tous les logiciels, designs, marques et contenus créés par nous."
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 Votre contenu",
+          "content": "Vous conservez la propriété du contenu que vous créez ou téléchargez (« Votre Contenu »). En utilisant nos Services, vous nous accordez une licence mondiale, non exclusive et libre de redevances pour utiliser, stocker, traiter et afficher Votre Contenu uniquement pour vous fournir les Services."
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. Exclusion de garanties",
+        "content": "LES SERVICES SONT FOURNIS « EN L'ÉTAT » ET « SELON DISPONIBILITÉ » SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU IMPLICITE, Y COMPRIS MAIS SANS SE LIMITER AUX GARANTIES IMPLICITES DE QUALITÉ MARCHANDE, D'ADÉQUATION À UN USAGE PARTICULIER, DE TITRE ET DE NON-CONTREFAÇON."
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. Limitation de responsabilité",
+        "para1": "DANS TOUTE LA MESURE PERMISE PAR LA LOI, NEBUTRA NE SERA PAS RESPONSABLE DES DOMMAGES INDIRECTS, ACCESSOIRES, SPÉCIAUX, CONSÉCUTIFS OU PUNITIFS, NI DE LA PERTE DE PROFITS, DE DONNÉES, D'UTILISATION OU DE CLIENTÈLE.",
+        "para2": "EN AUCUN CAS, NOTRE RESPONSABILITÉ TOTALE NE DÉPASSERA LE PLUS ÉLEVÉ DES MONTANTS SUIVANTS : (A) LE MONTANT QUE VOUS NOUS AVEZ PAYÉ AU COURS DES 12 MOIS PRÉCÉDANT LA RÉCLAMATION, OU (B) 100 USD."
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. Résiliation",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 Par vous",
+          "content": "Vous pouvez résilier votre compte à tout moment via les paramètres de votre compte. Lors de la résiliation, vous perdrez l'accès aux Services."
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 Par nous",
+          "intro": "Nous pouvons suspendre ou résilier votre compte si vous :",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "Violez ces Conditions",
+            "1": "Vous engagez dans une activité frauduleuse ou illégale",
+            "2": "Manquez de payer les frais applicables",
+            "3": "Créez un risque ou une exposition juridique pour nous"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. Résolution des litiges",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 Résolution informelle",
+          "content": "Avant d'initier une procédure formelle, vous vous engagez à nous contacter à legal@nebutra.com pour tenter de résoudre les litiges de manière informelle."
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 Droit applicable",
+          "content": "Ces Conditions sont régies par les lois de l'État du Delaware, sans égard aux principes de conflit de lois."
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. Nous contacter",
+        "intro": "Pour toute question concernant ces Conditions, veuillez nous contacter :",
         "company": "Nebutra Co., Ltd.",
-        "emailLabel": "Email",
+        "emailLabel": "E-mail",
         "supportLabel": "Support"
       },
-      "acknowledgement": "By using Nebutra, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "En utilisant Nebutra, vous reconnaissez avoir lu, compris et accepté d'être lié par ces Conditions d'utilisation."
     }
   },
   "metadata": {
@@ -1136,336 +1076,316 @@
     "pricing": {
       "hobby": {
         "name": "Hobby",
-        "price": "Free",
-        "description": "For side projects",
-        "features": ["1 Project", "Community Support", "Basic Analytics"],
-        "ctaText": "Start Free"
+        "price": "Gratuit",
+        "description": "Pour les projets personnels",
+        "features": ["1 projet", "Support communautaire", "Analytique de base"],
+        "ctaText": "Commencer gratuitement"
       },
       "pro": {
         "name": "Pro",
-        "price": "$29",
-        "description": "For startups",
+        "price": "29 $",
+        "description": "Pour les startups",
         "isPopular": true,
-        "features": ["Unlimited Projects", "Priority Support", "Custom Domain", "Advanced AI"],
-        "ctaText": "Get Pro"
+        "features": [
+          "Projets illimités",
+          "Support prioritaire",
+          "Domaine personnalisé",
+          "IA avancée"
+        ],
+        "ctaText": "Obtenir Pro"
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "Custom",
-        "description": "For large teams",
-        "features": ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
-        "ctaText": "Contact Us"
+        "price": "Sur devis",
+        "description": "Pour les grandes équipes",
+        "features": ["SSO", "Canal Slack dédié", "SLA 99,9 %", "Marque blanche"],
+        "ctaText": "Nous contacter"
       }
     },
     "faq": {
       "q1": {
-        "q": "Is this a subscription?",
-        "a": "Yes, our Pro plan is billed monthly. You can cancel at any time with no hidden fees."
+        "q": "Est-ce un abonnement ?",
+        "a": "Oui, notre plan Pro est facturé mensuellement. Vous pouvez annuler à tout moment sans frais cachés."
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "We offer a 14-day no-questions-asked money-back guarantee."
+        "q": "Proposez-vous des remboursements ?",
+        "a": "Nous offrons une garantie satisfait ou remboursé de 14 jours sans questions."
       },
       "q3": {
-        "q": "Can I use this for client work?",
-        "a": "Absolutely. The commercial license covers unlimited client projects."
+        "q": "Puis-je l'utiliser pour des projets clients ?",
+        "a": "Absolument. La licence commerciale couvre des projets clients illimités."
       }
     },
     "pricingHeader": {
-      "title": "Simple, transparent pricing",
-      "description": "No hidden fees. No surprises. Cancel anytime.",
-      "mostPopular": "Most Popular",
-      "perMonth": "/mo"
+      "title": "Tarification simple et transparente",
+      "description": "Aucun frais caché. Aucune surprise. Annulez à tout moment.",
+      "mostPopular": "Le plus populaire",
+      "perMonth": "/mois"
     },
     "faqHeader": {
-      "title": "Frequently Asked Questions",
-      "description": "Can't find the answer you're looking for? Reach out to our support team."
+      "title": "Questions fréquentes",
+      "description": "Vous ne trouvez pas la réponse que vous cherchez ? Contactez notre équipe de support."
     },
     "waitlist": {
-      "title": "Get Early Access",
-      "description": "Join the waitlist to be notified when we launch. Be the first to try out the new features.",
-      "placeholder": "name@example.com",
-      "buttonText": "Join Waitlist",
-      "loadingText": "Joining...",
-      "successText": "Joined!",
-      "successMessage": "Thanks for joining! We'll be in touch soon.",
-      "socialProofPrefix": "Join",
-      "socialProofSuffix": "others on the list",
-      "emailAriaLabel": "Email address"
+      "title": "Accès anticipé",
+      "description": "Rejoignez la liste d'attente pour être informé lors du lancement. Soyez parmi les premiers à essayer les nouvelles fonctionnalités.",
+      "placeholder": "nom@exemple.com",
+      "buttonText": "Rejoindre la liste d'attente",
+      "loadingText": "Inscription...",
+      "successText": "Inscrit !",
+      "successMessage": "Merci d'avoir rejoint la liste ! Nous vous contacterons bientôt.",
+      "socialProofPrefix": "Rejoignez",
+      "socialProofSuffix": "autres personnes sur la liste",
+      "emailAriaLabel": "Adresse e-mail"
     }
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "Nebutra Sailor is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "TOPOLOGIE SYSTÈME",
+      "title": "Architecture transparente, sans boîtes noires.",
+      "description": "Nebutra Sailor est conçu avec une structure Turborepo hyper-modulaire, vous donnant une propriété complète de l'ensemble de votre cycle de vie logiciel.",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "ORM entièrement typé avec des politiques Row-Level Security (RLS) intégrées nativement."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "title": "Clerk Multi-Tenant / Identité personnalisée",
+        "desc": "Passerelle d'authentification prête SOC2 supportant le changement d'organisation B2B et le RBAC."
       }
     },
     "pricing": {
-      "title": "Accelerate your development cycle.",
-      "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
+      "title": "Achat unique. Accès à vie.",
+      "description": "Pas d'abonnements. Pas de frais récurrents. Choisissez le plan adapté à votre équipe et commencez à construire aujourd'hui.",
       "socialProofText": "Open source AGPL-3.0 · licence commerciale disponible.",
       "solo": {
-        "badge": "INDIVIDUAL",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Best for individual builders validating products on the AGPL foundation.",
-        "cta": "Clone Repository",
-        "f1": "Complete Next.js 16 SaaS core",
-        "f2": "Unlimited Personal Projects (Commercial use allowed)",
-        "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Admin UI, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "AGPLv3 Open Source License"
+        "badge": "INDIVIDUEL",
+        "price": "Gratuit",
+        "period": "pour toujours",
+        "desc": "Idéal pour les développeurs solo qui valident des produits sur la base AGPL.",
+        "cta": "Cloner le dépôt",
+        "f1": "Cœur SaaS Next.js 16 complet",
+        "f2": "Projets personnels illimités (usage commercial autorisé)",
+        "f3": "Stack SaaS complète : Auth, Paiements, Organisations, API, Admin UI, E-mail, i18n, Jobs en arrière-plan, Stockage et plus",
+        "f4": "Fonctionnalités marketing : Blog, Page d'accueil, SEO, Analytique",
+        "f5": "Licence Open Source AGPLv3"
       },
       "startup": {
         "badge": "STARTUP",
-        "price": "$799",
-        "period": "lifetime",
-        "desc": "For small teams building on the Nebutra platform baseline.",
-        "cta": "Get Nebutra for Startups",
-        "f1": "Up to 5 Developer Seats",
-        "f2": "Unlimited Team Projects",
-        "f3": "30-min Architecture Consult (Onboarding Call)",
-        "f4": "Priority Support",
-        "f5": "Everything in Solo"
+        "price": "799 $",
+        "period": "/ an",
+        "desc": "Pour les petites équipes construisant sur la base de plateforme Nebutra.",
+        "cta": "Obtenir Nebutra pour Startups",
+        "f1": "Usage en code fermé (licence commerciale)",
+        "f2": "Projets d'équipe illimités",
+        "f3": "12 mois de mises à jour incluses",
+        "f4": "Support par e-mail",
+        "f5": "Tout ce qu'inclut Solo"
       },
       "agency": {
-        "badge": "AGENCY",
-        "price": "$1,499",
-        "period": "lifetime",
-        "desc": "For agencies and operators shipping repeatable client platforms.",
-        "cta": "Get Nebutra for Agencies",
-        "f1": "Up to 10 Developer Seats",
-        "f2": "Unlimited Client Projects",
-        "f3": "30-min Architecture Consult (Onboarding Call)",
-        "f4": "White-label potential",
-        "f5": "Everything in Startup",
-        "f6": "Private Discord support channel"
+        "badge": "AGENCE",
+        "price": "1 499 $",
+        "period": "/ an",
+        "desc": "Pour les agences et opérateurs livrant des plateformes clients réutilisables.",
+        "cta": "Obtenir Nebutra pour Agences",
+        "f1": "Droits de marque blanche (licence commerciale)",
+        "f2": "Projets clients illimités",
+        "f3": "12 mois de mises à jour incluses",
+        "f4": "Potentiel marque blanche",
+        "f5": "Tout ce qu'inclut Startup",
+        "f6": "Tout ce qu'inclut Startup"
       }
     },
     "faq": {
-      "title": "Evaluating the stack.",
-      "description": "Detailed engineering answers to accelerate your architectural decisions.",
+      "title": "Évaluer la stack.",
+      "description": "Réponses d'ingénierie détaillées pour accélérer vos décisions architecturales.",
       "q1": {
-        "q": "Why Turborepo over a standard Next.js app?",
-        "a": "Turborepo isolates your UI components, database schemas, and shared utilities, allowing unparalleled scale when your SaaS outgrows a single frontend application."
+        "q": "Pourquoi Turborepo plutôt qu'une application Next.js standard ?",
+        "a": "Turborepo isole vos composants UI, schémas de base de données et utilitaires partagés, permettant une scalabilité sans précédent lorsque votre SaaS dépasse une seule application frontend."
       },
       "q2": {
-        "q": "How is multi-tenancy handled?",
-        "a": "We use Clerk's B2B organizational structure deeply integrated with Prisma middleware to ensure strict row-level isolation between organizations."
+        "q": "Comment la multi-location est-elle gérée ?",
+        "a": "Nous utilisons la structure organisationnelle B2B de Clerk profondément intégrée avec le middleware Prisma pour garantir une isolation stricte au niveau des lignes entre les organisations."
       },
       "q3": {
-        "q": "Can I swap Clerk for Supabase Auth?",
-        "a": "Absolutely. Our authentication layer is abstracted via @nebutra/auth, meaning you can hot-swap identity providers with minimal refactoring."
+        "q": "Puis-je remplacer Clerk par Supabase Auth ?",
+        "a": "Absolument. Notre couche d'authentification est abstraite via @nebutra/auth, ce qui signifie que vous pouvez permuter les fournisseurs d'identité avec un minimum de refactorisation."
       },
       "q4": {
-        "q": "Do I need to pay for updates?",
-        "a": "Commercial licenses include 12 months of updates from the date of purchase. The AGPL-3.0 individual tier is perpetual."
+        "q": "Dois-je payer pour les mises à jour ?",
+        "a": "Les licences commerciales incluent 12 mois de mises à jour à partir de la date d'achat. Le niveau individuel AGPL-3.0 est perpétuel."
       }
     },
     "cta": {
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the Nebutra CLI.",
-      "button": "Deploy Architecture",
-      "license": "Open source sous AGPL-3.0. Pas de carte bancaire requise."
+      "eyebrow": "Commencer",
+      "title": "Arrêtez de configurer. Commencez à construire.",
+      "description": "Initialisez une architecture SaaS scalable localement avec le Nebutra CLI.",
+      "button": "Déployer l'architecture",
+      "license": "Open source sous licence AGPL-3.0. Pas de carte bancaire requise."
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "Capacités Enterprise",
+      "title": "Un cœur entièrement typé et extensible.",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "Row-Level Security native",
+        "desc": "Chaque requête de base de données est strictement délimitée par le contexte du tenant actuel.",
+        "cta": "Lire la philosophie de base de données"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "Passerelle IA universelle",
+        "desc": "Acheminez sans friction les prompts vers OpenAI, Anthropic ou des modèles open source.",
+        "cta": "Explorer le gestionnaire AI SDK"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with zero boilerplate.",
-        "cta": "View RBAC documentation"
+        "title": "Contrôle d'accès granulaire",
+        "desc": "Définissez des rôles admin, membre et lecteur avec une structure de politique intégrée.",
+        "cta": "Voir la documentation RBAC"
       },
       "billing": {
-        "title": "Stripe Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
-      }
-    },
-    "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
-      "step1": {
-        "title": "1. Clone",
-        "desc": "Instantly clone the Nebutra monorepo and run pnpm install."
-      },
-      "step2": {
-        "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
-      },
-      "step3": {
-        "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
-      },
-      "step4": {
-        "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
-      },
-      "speedometer": {
-        "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
-        "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
-          "ongoing": "∞"
-        },
-        "cta": "Start your timer"
-      },
-      "presetHint": {
-        "badge": "Préréglage Nebutra",
-        "message": "Architecture SaaS initialisée via @nebutra/preset",
-        "detail": "14 paquets intégrés nativement.",
-        "readyStatus": "Système de préréglages prêt"
+        "title": "Infrastructure de facturation multi-fournisseurs",
+        "desc": "Usage mesuré, webhooks d'abonnement et portails clients en libre-service.",
+        "cta": "Voir l'architecture de facturation"
       }
     },
     "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "badge": "Démo interactive",
+      "title": "Vivez la vélocité en temps réel.",
+      "description": "Découvrez l'interface de ligne de commande, le tunneling des webhooks Stripe et le provisionnement local de base de données multi-tenant.",
       "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
+        "label": "Télémétrie en direct",
+        "desc": "Diffusez les données d'utilisation de production directement dans votre terminal."
       },
       "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
+        "label": "Événements de facturation",
+        "desc": "Regardez les webhooks Stripe s'exécuter via un tunnel local."
       },
       "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+        "label": "Initialisation d'espace de travail",
+        "desc": "Provisionnez des schémas PostgreSQL B2B isolés instantanément."
       }
     },
-    "harness": {
-      "badge": "HARNESS ENGINEERING",
-      "headline": "Engineering that enforces itself.",
-      "subheadline": "Architecture tests, governance ratchets, and 15 CI workflows ensure code quality can only improve — never regress.",
-      "stat1Value": "19",
-      "stat1Label": "CI Workflows",
-      "stat2Value": "13",
-      "stat2Label": "Architecture Tests",
-      "stat3Value": "0",
-      "stat3Label": "Token Violations",
-      "card1Title": "Architecture Tests",
-      "card1Desc": "13 tests d'architecture couvrent flux de dépendances, usage des tokens, contraste WCAG, contrats API et couverture Storybook — 4 utilisent fast-check pour preuves basées sur les propriétés.",
-      "card2Title": "Governance Ratchets",
-      "card2Desc": "Token budgets that only tighten: zero raw color classes on landing page, oklch floor 120+, hex ceiling 40, motion imports whitelisted to 2 files.",
-      "card3Title": "CI Pipeline Depth",
-      "card3Desc": "CodeQL SAST, Gitleaks, cosign signing, SBOM/SLSA provenance, Lighthouse ≥0.95, OpenAPI backward compatibility, k6 load tests, Chromatic visual regression."
+    "workflow": {
+      "badge": "Vélocité",
+      "title": "De zéro à la production en un temps record.",
+      "step1": {
+        "title": "1. Cloner",
+        "desc": "Clonez instantanément le monorepo Nebutra et exécutez pnpm install."
+      },
+      "step2": {
+        "title": "2. Configurer",
+        "desc": "Configurez Prisma, Clerk et Stripe via le CLI interactif en quelques minutes."
+      },
+      "step3": {
+        "title": "3. Construire",
+        "desc": "Concentrez-vous sur la logique produit et l'interface utilisateur pendant que la base de plateforme est déjà câblée."
+      },
+      "step4": {
+        "title": "4. Déployer",
+        "desc": "Poussez vers Vercel et AWS pour une distribution mondiale instantanée."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "min",
+        "subtitle": "DÉLAI DE MISE SUR LE MARCHÉ",
+        "comparison": "Gagnez des mois de travail d'infrastructure.",
+        "phases": {
+          "scaffold": "Init",
+          "wire": "Cœur",
+          "ship": "Déployer",
+          "scale": "Scaler",
+          "ongoing": "∞"
+        },
+        "cta": "Démarrez votre chrono"
+      },
+      "presetHint": {
+        "badge": "Système de préréglages",
+        "message": "Une config. Toutes les fonctionnalités. Choisissez votre préréglage et lancez-vous.",
+        "detail": "Configurez une fois, générez tout — facturation, auth, IA, i18n — depuis une seule config de préréglage.",
+        "readyStatus": "Système de préréglages prêt"
+      }
     }
   },
   "featuresPage": {
     "hero": {
       "badge": "Capacités de la plateforme",
       "headlinePrefix": "Tout ce dont vous avez besoin pour ",
-      "headlineHighlight": "lancer une licorne.",
-      "description": "Nebutra est une plateforme SaaS full-stack : IA, facturation, multi-tenancy, observabilité et sécurité intégrées dès le premier jour. Arrêtez de réinventer la roue."
+      "headlineHighlight": "livrer avec confiance.",
+      "description": "Nebutra est une plateforme SaaS full-stack — IA, facturation, multi-tenancy, observabilité et sécurité intégrées dès le premier jour. Arrêtez de reconstruire la couche plateforme."
     },
     "sections": {
       "exploreFeature": "Explorer la fonctionnalité",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
+      "ai_category": "IA & Intelligence",
+      "ai_f1_title": "Complétions de chat multi-modèles",
       "ai_f1_desc": "Acheminez les requêtes vers Anthropic, OpenAI, Google ou vos propres modèles affinés. Streaming, vision et appels de fonction pris en charge de base.",
-      "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Track token consumption per tenant per billing period. Set per-plan quotas and auto-notify on 80% / 100% burn.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Switch auth providers via preset config. Clerk for managed, Better Auth for self-hosted. Phone + SMS login for China market via Aliyun/Tencent Cloud.",
-      "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
+      "ai_f2_title": "Embeddings sémantiques",
+      "ai_f2_desc": "Générez et stockez des embeddings vectoriels avec pgvector. Alimentez la recherche sémantique, les pipelines RAG et les moteurs de recommandation.",
+      "ai_f3_title": "Comptage d'utilisation IA",
+      "ai_f3_desc": "Quotas par plan avec suivi d'utilisation — mesurez les tokens IA, les appels API et le stockage par rapport aux agrégats en temps réel ClickHouse.",
+      "multi_category": "Plateforme multi-tenant",
+      "multi_f1_title": "Isolation au niveau organisation",
+      "multi_f1_desc": "La sécurité au niveau des lignes dans Postgres garantit que les tenants ne peuvent jamais accéder aux données des autres — appliquée au niveau de la base de données, pas seulement de l'application.",
+      "multi_f2_title": "Auth multi-fournisseurs (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "OAuth multi-fournisseurs (Google, GitHub, etc.) plus e-mail/mot de passe et lien magique — passez de Clerk à Better Auth, NextAuth ou Supabase Auth via une seule variable d'environnement.",
+      "multi_f3_title": "Provisionnement automatique de tenants",
+      "multi_f3_desc": "Lorsqu'une nouvelle organisation s'inscrit via Clerk, nous générons automatiquement leur première clé API et envoyons un e-mail de bienvenue personnalisé — aucune étape manuelle.",
+      "dx_category": "Expérience développeur",
+      "dx_f1_title": "Clés API hachées",
+      "dx_f1_desc": "Clés hachées SHA-256 avec affichage du préfixe (nbtr_live_…). Affichées en clair exactement une fois lors de la création — sécurité sans friction.",
+      "dx_f2_title": "Middleware d'idempotence",
+      "dx_f2_desc": "Passez un en-tête Idempotency-Key et toute requête POST devient sécurisée à réessayer. Supporté par Redis, cache de 24 heures, conforme au brouillon IETF.",
+      "dx_f3_title": "API multi-protocoles (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI pour les API publiques, oRPC pour les appels frontend typés, tRPC pour la compatibilité T3-stack. Tous les protocoles partagent les mêmes contrats Zod et la même pile de middleware. Activez par protocole via la config de préréglage.",
+      "billing_category": "Facturation & Monétisation",
       "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
-      "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "Every Python microservice uses a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
-      "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
-      "sec_f2_title": "ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      "sec_f3_title": "SBOM + SLSA provenance",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
-      "obs_f1_title": "OpenTelemetry tracing",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      "obs_f2_title": "Grafana dashboards",
-      "obs_f2_desc": "32-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      "obs_f3_title": "Sentry error tracking",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion service decouples your application from your data warehouse. Schema validation at the edge.",
+      "billing_f1_desc": "Choisissez votre fournisseur de paiement : Stripe pour l'enterprise mondial, LemonSqueezy pour les développeurs indépendants, Polar pour l'OSS, ou Alipay/WeChat Pay pour le marché chinois. Paiement en un clic et portail de facturation en libre-service.",
+      "billing_f2_title": "Application des quotas basée sur l'utilisation",
+      "billing_f2_desc": "Les compteurs Redis en temps réel suivent les appels API et l'utilisation des tokens par tenant. Les requêtes sont bloquées à la passerelle lorsque les limites sont atteintes.",
+      "billing_f3_title": "Synchronisation du cycle de vie des webhooks",
+      "billing_f3_desc": "Les événements d'abonnement Stripe mettent automatiquement à jour les plans d'organisation dans votre base de données via Inngest — pas de tâches cron, pas de polling.",
+      "rel_category": "Fiabilité",
+      "rel_f1_title": "Disjoncteur + nouvelle tentative",
+      "rel_f1_desc": "La passerelle et le service IA utilisent un disjoncteur FERMÉ/OUVERT/SEMI-OUVERT avec backoff exponentiel et gigue — pas de pannes en cascade.",
+      "rel_f2_title": "File de lettres mortes",
+      "rel_f2_desc": "Les gestionnaires d'événements qui épuisent 3 tentatives de réessai atterrissent dans la DLQ. Rejouez-les individuellement depuis l'API admin sans redéploiement.",
+      "rel_f3_title": "Alertes de taux de consommation SLO",
+      "rel_f3_desc": "Les alertes de style Google SRE multi-fenêtres se déclenchent à 14,4×, 6× et 3× avant que votre budget d'erreur soit épuisé.",
+      "sec_category": "Sécurité",
+      "sec_f1_title": "En-têtes CSP basés sur les nonces",
+      "sec_f1_desc": "Content Security Policy strict-dynamic avec des nonces par requête générés dans le middleware Clerk — pas d'unsafe-inline nulle part.",
+      "sec_f2_title": "WAF ModSecurity",
+      "sec_f2_desc": "Ensemble de règles OWASP Core en mode DetectionOnly sur chaque ingress. Limitation de débit à 30 RPS avec tolérance aux pics via les annotations nginx.",
+      "sec_f3_title": "SBOM + provenance SLSA",
+      "sec_f3_desc": "Chaque version génère une nomenclature logicielle CycloneDX et une attestation de provenance SLSA, téléchargées dans la GitHub Release.",
+      "obs_category": "Observabilité",
+      "obs_f1_title": "Traçage OpenTelemetry",
+      "obs_f1_desc": "Les traces distribuées circulent de Next.js → Hono → microservices Python via OTLP. Exportées vers Jaeger (dev) et Grafana Tempo (prod).",
+      "obs_f2_title": "Tableaux de bord Grafana",
+      "obs_f2_desc": "Vue d'ensemble de la plateforme multi-panneaux : disponibilité SLO, budget d'erreur restant, saturation HPA, redémarrages de pods et limitation CPU.",
+      "obs_f3_title": "Suivi des erreurs Sentry",
+      "obs_f3_desc": "Erreurs côté serveur et côté client capturées avec le contexte tenant, l'ID de requête et l'ID de trace pour la corrélation inter-systèmes.",
+      "data_category": "Données & Analytique",
+      "data_f1_title": "Entrepôt OLAP ClickHouse",
+      "data_f1_desc": "Les événements atterrissent dans ClickHouse pour des requêtes analytiques rapides. dbt transforme les événements bruts en métriques de croissance de couche gold visibles dans le tableau de bord.",
+      "data_f2_title": "Analytique d'entonnoir",
+      "data_f2_desc": "Suivez les inscriptions → activations → conversions avec attribution au niveau de la cohorte. Revenu par utilisateur actif calculé depuis la couche gold.",
+      "data_f3_title": "Kafka / ingestion d'événements",
+      "data_f3_desc": "Ingestion d'événements à haut débit via Inngest dans ClickHouse bronze, avec déduplication en mémoire et validation de schéma à la périphérie de la passerelle.",
       "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "infra_f1_title": "GitOps avec ArgoCD",
+      "infra_f1_desc": "Les changements de branche principale sont automatiquement réconciliés avec le cluster. L'auto-réparation annule les modifications kubectl manuelles. Les fenêtres de synchronisation imposent des heures de déploiement sécurisées.",
+      "infra_f2_title": "Pooling de connexions PgBouncer",
+      "infra_f2_desc": "PgBouncer en mode transaction devant Supabase gère 1 000 connexions applicatives sur 20 connexions Postgres. HA avec 2 réplicas.",
+      "infra_f3_title": "Mise à l'échelle automatique horizontale + verticale",
+      "infra_f3_desc": "HPA s'adapte sur CPU/mémoire. VPA fonctionne en mode Off fournissant des recommandations de dimensionnement. Les métriques personnalisées KEDA sont prévues pour la v2."
     }
   },
   "comingSoon": {
     "badge": "🚧 En construction",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
+      "ideas": "Nous concevons actuellement une expérience incroyable pour cette section. Elle sera lancée avec la prochaine mise à jour majeure du pipeline d'architecture.",
+      "opc": "Une présentation plus approfondie de la plateforme est en cours. Suivez le changelog et la feuille de route pour les prochaines versions.",
       "roadmap": "De l'infrastructure à l'entreprise — nos phases produit, jalons de versions et vision de financement."
     },
     "returnBtn": "Retour à l'accueil"
-  },
-  "showcase": {
-    "badge": "EN ACTION",
-    "headline": "Conçu pour la production, pas seulement pour les démos.",
-    "tabs": {
-      "dashboard": "Dashboard",
-      "billing": "Billing",
-      "ai-chat": "AI Chat"
-    }
   },
   "blogShowcase": {
     "badge": "DEPUIS LE BLOG",
@@ -1474,99 +1394,77 @@
     "readMore": "Lire la suite"
   },
   "useCases": {
-    "badge": "SCÉNARIOS DE DÉPLOIEMENT",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "Nebutra Sailor powers the next generation of SaaS products across global markets.",
+    "badge": "SCÉNARIOS ÉVOLUTIFS",
+    "title": "Une seule base. Des possibilités infinies.",
+    "description": "Nebutra Sailor propulse la prochaine génération de produits SaaS sur les marchés mondiaux.",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets",
-      "seoGeo": "Moteur SEO & GEO"
+      "opc": "Opérations agentiques",
+      "ip": "Matrice IP personnelle",
+      "multimodal": "SaaS IA multimodal",
+      "enterprise": "Enterprise moderne (CN)",
+      "export": "Export logiciel mondial",
+      "design": "Moteur de système de design",
+      "edam": "Gestion d'actifs numériques d'entreprise"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "Hub d'opérations natif IA",
+        "desc": "Exécutez des workflows d'agents, des outils internes et des surfaces d'intégration sur une base de plateforme gouvernée. Les extensions pilotées par registre, les portails d'opérateurs et les patterns d'exécution réutilisables restent alignés à mesure que le système évolue.",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "Registre d'outils & surface d'intégration",
+          "f2": "Portail opérateur & console interne"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence. High-conversion blog, portfolio, and profile templates optimized for personal brand monetization.",
+        "title": "Matrice de croissance IP personnelle & portfolio",
+        "desc": "Établissez une présence de fondateur de classe mondiale avec un blog MDX haute conversion, des pages de portfolio et de profil. Newsletter intégrée, analytique et SEO assurent la croissance de votre marque personnelle.",
         "features": {
-          "f1": "MDX Blog Engine",
-          "f2": "Newsletter Integration"
+          "f1": "Blog MDX + Moteur de newsletter",
+          "f2": "SEO & Social Graph optimisés"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Launch complete Chatbot, Text-to-Image, or Video generation SaaS with integrated Vercel AI SDK, streaming, and prompt gateways.",
+        "title": "SaaS IA multimodal innovant",
+        "desc": "Lancez des produits SaaS d'orchestration Multi-Agent, Chatbot, Texte-vers-Image, Image-vers-Texte et Texte-vers-Vidéo avec une UI de streaming leader en UX, un routage de modèles intelligent et la mesure d'utilisation.",
         "features": {
-          "f1": "Streaming UI",
-          "f2": "Model Routing"
+          "f1": "UI de streaming Multi-Agent",
+          "f2": "Routeur de modèles + Mesure d'utilisation"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Context (CN)",
-        "desc": "Tailored for the domestic market with ultra-fast local CDN support, WeChat ecosystem integration readiness, and localized compliance.",
+        "title": "Site web d'entreprise moderne (CN)",
+        "desc": "Adapté aux scénarios commerciaux chinois — CDN domestique ultra-rapide, intégration de l'écosystème WeChat, design responsive mobile-first et conformité localisée de base.",
         "features": {
-          "f1": "Local Compliance",
-          "f2": "High Performance"
+          "f1": "CDN local + Conformité",
+          "f2": "Compatible écosystème WeChat"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Designed for cross-border SaaS. Built-in multi-currency Stripe checkout, next-intl i18n routing, and GDPR compliance.",
+        "title": "Pages d'accueil d'export logiciel mondial",
+        "desc": "Conçu pour le SaaS mondial. Paiement Stripe multi-devises, routage i18n automatique next-intl en 7 langues, conformité RGPD/CCPA et contenu géociblé.",
         "features": {
-          "f1": "Global Payments",
-          "f2": "7 Languages Auto-routing"
+          "f1": "Paiements mondiaux multi-devises",
+          "f2": "7 langues + Prêt RGPD"
         }
       },
       "design": {
-        "title": "Leading Modern Component Library System",
-        "desc": "A beautiful, token-driven architecture using Radix + framer-motion. Perfect for teams building their own opinionated UI libraries.",
+        "title": "Système de design & bibliothèque de composants leader",
+        "desc": "Une architecture à 4 couches pilotée par tokens : Marque → Tokens → Thème → UI. Construite sur Radix + framer-motion avec thème oklch multi-preset, docs Storybook et tests de régression visuelle.",
         "features": {
-          "f1": "4-Layer Tokens",
-          "f2": "CSS Variables"
+          "f1": "Gouvernance de tokens à 4 couches",
+          "f2": "Multi-thème oklch + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "Gestion d'actifs numériques d'entreprise",
+        "desc": "Lacs de données structurés et topologies de tableaux de bord complexes utilisant des architectures PostgreSQL évolutives et un RBAC granulaire.",
         "features": {
           "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
-        }
-      },
-      "seoGeo": {
-        "title": "Moteur de Croissance SEO & GEO",
-        "desc": "Au-delà du SEO traditionnel. SEO intégré plus Optimisation pour Moteurs Génératifs pour que votre produit soit découvert par Google et par les moteurs IA comme ChatGPT, Perplexity et Gemini.",
-        "features": {
-          "f1": "Lighthouse 99+ Points",
-          "f2": "Indexé par l'IA"
+          "f2": "Requêtes complexes",
+          "f3": "Gestion des rôles"
         }
       }
     }
-  },
-  "agentic": {
-    "badge": "INGÉNIERIE AGENTIQUE",
-    "headline": "Conçu pour les agents de code IA.",
-    "subheadline": "Chaque fichier, chaque règle, chaque test est conçu pour que Claude Code, Cursor et Codex comprennent l’ensemble du code et livrent de manière autonome.",
-    "card1Title": "Contexte Structuré",
-    "card1Desc": "CLAUDE.md fournit les règles de composants, la gouvernance des tokens et les limites d’import — les agents ne devinent jamais.",
-    "card2Title": "Garde-fous Architecturaux",
-    "card2Desc": "7 tests de propriétés vérifient le flux de dépendances, l’utilisation des tokens et le contraste WCAG — les agents ne peuvent pas briser les invariants.",
-    "card3Title": "Livraison Autonome",
-    "card3Desc": "Les agents lisent le contexte, écrivent le code, exécutent les tests, passent la CI — du prompt à la production sans intervention manuelle.",
-    "compTraditional": "IA devine → casse le code → corrections manuelles",
-    "compSailor": "IA lit les règles → suit les contraintes → CI valide → livre"
   },
   "designSystem": {
     "badge": "SYSTÈME DE DESIGN",
@@ -1591,36 +1489,6 @@
     "card5Title": "Documentation interactive",
     "card5Desc": "Site de documentation de design avec Fumadocs. Documentation API bilingue des composants, galeries de tokens et guides de patterns."
   },
-  "seoGeo": {
-    "badge": "SEO & GEO",
-    "headline": "Trouvé par les humains. Cité par l'IA.",
-    "subheadline": "Chaque page est livrée avec un SEO de niveau production et une Optimisation pour Moteurs Génératifs. Votre produit apparaît dans Google, Perplexity, ChatGPT Search et Bing Copilot — prêt à l'emploi.",
-    "stat1Value": "100",
-    "stat1Label": "Lighthouse SEO",
-    "stat2Value": "99",
-    "stat2Label": "Performance",
-    "stat3Value": "7",
-    "stat3Label": "Langues",
-    "stat4Value": "6+",
-    "stat4Label": "Types de Schema",
-    "seoLabel": "Optimisation pour Moteurs de Recherche",
-    "geoLabel": "Optimisation pour Moteurs Génératifs",
-    "card1Title": "Méta Automatisée & Données Structurées",
-    "card1Desc": "Schema JSON-LD, Open Graph, Twitter Cards, URLs canoniques et sitemaps XML générés depuis votre modèle de contenu. Zéro configuration manuelle.",
-    "card2Title": "Architecture Contenu Optimisée pour l'IA",
-    "card2Desc": "HTML5 sémantique, schema FAQ, balisage HowTo et formatage prêt pour la citation que les moteurs IA préfèrent lors de la génération de réponses.",
-    "card3Title": "SEO Multilingue (hreflang)",
-    "card3Desc": "next-intl génère automatiquement les alternates hreflang pour 7 langues avec routage préfixé par locale. Chaque langue obtient ses propres entrées sitemap.",
-    "card4Title": "Core Web Vitals en Premier",
-    "card4Desc": "Composants serveur, imports dynamiques, optimisation d'images et caching edge délivrent des scores Lighthouse 99+. LCP inférieur à 1.2s sur mobile.",
-    "card5Title": "Signaux de Citation par l'IA",
-    "card5Desc": "Données structurées, patterns de contenu autoritaires et signaux E-E-A-T que Perplexity, ChatGPT Search et Google SGE utilisent pour décider des sources à citer.",
-    "card6Title": "Distribution Edge Mondiale",
-    "card6Desc": "ISR + middleware edge sur 300+ PoPs Vercel. Contenu ciblé géographiquement, tarification multi-devises et routage conscient de la locale en edge.",
-    "compTraditionalLabel": "SEO Traditionnel",
-    "compTraditional": "Tags meta manuels → crawling lent → invisible pour recherche IA",
-    "compSailor": "Schema automatisé → indexation instantanée → cité par moteurs IA → portée mondiale"
-  },
   "notFound": {
     "title": "Page non trouvée",
     "desc": "La page que vous recherchez a peut-être été supprimée ou est temporairement indisponible.",
@@ -1628,29 +1496,29 @@
     "docs": "Lire la documentation"
   },
   "impact": {
-    "hero_eyebrow": "Nebutra Core Vision Whitepaper",
-    "hero_title": "The Governed AI Platform",
-    "hero_subtitle": "We build the platform baseline, governance model, and Harness layer for teams shipping AI-native products.",
-    "phil_title": "Ⅰ. Philosophy",
-    "phil_headline": "Governance over Glue Code",
-    "phil_desc": "Teams should not have to rebuild the same platform layer every time they start an AI-native product. Nebutra focuses on turning that repeated platform work into a governed, reusable baseline that stays auditable, extensible, and fast to ship.",
+    "hero_eyebrow": "Livre blanc Vision Nebutra",
+    "hero_title": "La plateforme IA gouvernée",
+    "hero_subtitle": "Nous construisons la base de plateforme, le modèle de gouvernance et la couche Harness pour les équipes livrant des produits natifs IA.",
+    "phil_title": "Ⅰ. Philosophie",
+    "phil_headline": "Gouvernance plutôt que code de collage",
+    "phil_desc": "Les équipes ne devraient pas avoir à reconstruire la même couche de plateforme à chaque fois qu'elles démarrent un produit natif IA. Nebutra se concentre sur la transformation de ce travail de plateforme répétitif en une base gouvernée et réutilisable qui reste auditable, extensible et rapide à livrer.",
     "infra_title": "Ⅱ. Infrastructure",
-    "infra_headline": "The AI-Native Platform Layer",
-    "infra_desc": "Nebutra is not a stitched-together starter. It is a production platform layer spanning scaffolding, runtime integrations, governance, and delivery.",
-    "infra_1_title": "The Builder Core",
-    "infra_1_desc": "A governed monorepo baseline with tenant isolation, billing, auth, docs, and AI integrations already wired.",
-    "infra_2_title": "The Launchpad",
-    "infra_2_desc": "Verified scaffolding, reproducible delivery, and operator-facing tooling that reduce platform risk from day zero.",
-    "infra_3_title": "Sleptons Router",
-    "infra_3_desc": "Registry-driven extensions and integration surfaces keep teams moving without fragmenting the codebase.",
-    "infra_4_title": "Algorithmic Capital",
-    "infra_4_desc": "Harness primitives, MCP interoperability, and workflow orchestration position the stack for the next generation of AI-native software.",
-    "route_title": "Ⅲ. Routing",
-    "route_headline": "A Clear Upgrade Path",
-    "route_desc": "The platform should grow through compatibility checks, migrations, and observable runtime behavior, not through one-off rewrites and hidden drift.",
-    "org_title": "Ⅳ. Organization",
-    "org_headline": "Operational Discipline at Scale",
-    "org_desc": "We use automation, tests, and governance ratchets to keep the platform improving as teams and workloads grow. Human attention stays on product decisions, not repeated infrastructure cleanup."
+    "infra_headline": "La couche de plateforme native IA",
+    "infra_desc": "Nebutra n'est pas un starter assemblé à la hâte. C'est une couche de plateforme de production couvrant l'échafaudage, les intégrations à l'exécution, la gouvernance et la livraison.",
+    "infra_1_title": "Cœur bâtisseur",
+    "infra_1_desc": "Une base monorepo gouvernée avec isolation des tenants, facturation, auth, docs et intégrations IA déjà câblées.",
+    "infra_2_title": "Livraison vérifiée",
+    "infra_2_desc": "Échafaudage vérifié, livraison reproductible et outillage orienté opérateur qui réduisent le risque de plateforme dès le premier jour.",
+    "infra_3_title": "Registre d'extensions",
+    "infra_3_desc": "Les extensions pilotées par registre et les surfaces d'intégration maintiennent les équipes en mouvement sans fragmenter la base de code.",
+    "infra_4_title": "Runtime Harness",
+    "infra_4_desc": "Les primitives Harness, l'interopérabilité MCP et l'orchestration de workflows positionnent la stack pour la prochaine génération de logiciels natifs IA.",
+    "route_title": "Ⅲ. Routage",
+    "route_headline": "Un chemin de mise à niveau clair",
+    "route_desc": "La plateforme devrait croître à travers des vérifications de compatibilité, des migrations et un comportement à l'exécution observable, pas à travers des réécritures ad hoc et une dérive cachée.",
+    "org_title": "Ⅳ. Organisation",
+    "org_headline": "Discipline opérationnelle à l'échelle",
+    "org_desc": "Nous utilisons l'automatisation, les tests et les cliquets de gouvernance pour maintenir l'amélioration de la plateforme à mesure que les équipes et les charges de travail augmentent. L'attention humaine reste sur les décisions produit, pas sur le nettoyage répété de l'infrastructure."
   },
   "ui": {
     "search": {
@@ -1763,8 +1631,8 @@
     "versionTitleSuffix": "Changelog Nebutra"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — Nebutra",
-    "description": "The roadmap for Nebutra's governed platform baseline, Harness runtime, and upgrade path."
+    "title": "Feuille de route de la plateforme — Nebutra",
+    "description": "La feuille de route pour la base de plateforme gouvernée de Nebutra, le runtime Harness et le chemin de mise à niveau."
   },
   "blogMeta": {
     "title": "Blog — Nebutra",
@@ -1772,6 +1640,169 @@
   },
   "getLicenseMeta": {
     "title": "Obtenez votre licence — Nebutra",
-    "description": "Get your Nebutra license and platform access in 2 minutes."
+    "description": "Obtenez votre licence Nebutra et accès à la plateforme en 2 minutes."
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Vos choix en matière de confidentialité",
+      "description": "Nous utilisons des cookies pour améliorer votre expérience, analyser le trafic du site et personnaliser le contenu. Choisissez les catégories que vous souhaitez autoriser."
+    },
+    "button": {
+      "acceptAll": "Tout accepter",
+      "savePreferences": "Enregistrer les préférences"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Nécessaires",
+        "description": "Requis pour le bon fonctionnement du site. Ne peut pas être désactivé."
+      },
+      "functional": {
+        "label": "Fonctionnels",
+        "description": "Mémorisent vos préférences (langue, thème, mise en page)."
+      },
+      "analytics": {
+        "label": "Analytique",
+        "description": "Données d'utilisation anonymes pour améliorer le produit."
+      },
+      "marketing": {
+        "label": "Marketing",
+        "description": "Publicité personnalisée et reciblage sur des plateformes tierces."
+      }
+    }
+  },
+  "landing": {
+    "faq": {
+      "badge": "FAQ",
+      "title": "Questions, réponses directes",
+      "subtitle": "Tout ce que vous devez savoir avant de vous lancer.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Qu'est-ce exactement que Nebutra Sailor ?",
+          "answer": "Sailor est une base SaaS Next.js + Tailwind v4 opiniâtre avec auth, facturation, multi-tenancy, IA, files d'attente, recherche et e-mail déjà câblés. Vous le clonez, configurez les fournisseurs et lancez — généralement en une semaine."
+        },
+        "who-is-it-for": {
+          "question": "Pour qui Sailor est-il conçu ?",
+          "answer": "Les fondateurs et ingénieurs produit qui veulent consacrer leur temps au différenciateur — pas à reconstruire la même plomberie auth/facturation/tenancy pour la cinquième fois."
+        },
+        "free-or-paid": {
+          "question": "Est-ce gratuit ou payant ?",
+          "answer": "Le code source complet est livré sous AGPL-3.0 — gratuit pour les projets personnels, les outils internes et les travaux open source compatibles AGPL. Une licence commerciale déverrouille le droit de livrer Sailor dans un SaaS propriétaire à code fermé. Chaque plan inclut l'ensemble complet des fonctionnalités (auth, facturation, multi-tenancy, IA, audit) ; les niveaux diffèrent dans les conditions de licence et le SLA de support, pas dans les fonctionnalités."
+        },
+        "china-friendly": {
+          "question": "Fonctionne-t-il en Chine ?",
+          "answer": "Oui. Nous livrons une configuration d'infrastructure parallèle (CDN compatible Aliyun, domaines compatibles ICP, Penpot optionnel à la place de Figma) pour que la même base de code se déploie proprement derrière le Grand Pare-feu."
+        },
+        "deployment": {
+          "question": "Où puis-je le déployer ?",
+          "answer": "Partout où Node 22+ s'exécute. Le site marketing est livré sur Vercel ; le tableau de bord, la passerelle et les services Python fonctionnent sur Docker / PM2 (nous les faisons tourner sur Aliyun ECS aujourd'hui, avec des manifestes Kubernetes complets sous infra/iac/k8s/ pour les clusters). Les clients Enterprise déploient également dans leurs propres VPCs."
+        },
+        "security": {
+          "question": "Comment la sécurité est-elle gérée ?",
+          "answer": "Chiffrement d'enveloppe au niveau applicatif pour les secrets (@nebutra/vault), Postgres RLS pour l'isolation des tenants, RBAC/ABAC via CASL ou OpenFGA (@nebutra/permissions), tokens inter-services signés HMAC, webhooks sortants signés et un pipeline d'audit aligné SOC 2 (@nebutra/audit) inclus dans chaque plan. Pro et Enterprise ajoutent le support d'attestation SOC 2, une réponse aux incidents dédiée et une rétention des journaux d'audit plus longue."
+        },
+        "support": {
+          "question": "Quel support est inclus ?",
+          "answer": "Les clients gratuits ont accès au Discord communautaire + GitHub Issues. Pro ajoute l'e-mail prioritaire avec un SLA de réponse d'1 jour ouvré. Enterprise dispose d'un canal Slack dédié et d'un ingénieur d'intégration."
+        },
+        "byo-provider": {
+          "question": "Puis-je apporter mon propre fournisseur ?",
+          "answer": "Oui. Chaque intégration (auth, file d'attente, recherche, e-mail, paiements, stockage, facturation) est indépendante du fournisseur. La fabrique dans chaque package sélectionne le bon adaptateur depuis une seule variable d'environnement — permutez Clerk pour Better Auth, NextAuth ou Supabase Auth, QStash pour BullMQ, Resend pour SES, Stripe pour Polar / LemonSqueezy / ChinaPay — sans toucher au code applicatif."
+        },
+        "tech-stack": {
+          "question": "Quelle est la stack technologique ?",
+          "answer": "Next.js 16 (App Router) sur React 19, TypeScript 5.9, Tailwind v4, Prisma 7 sur Postgres (avec pgvector + RLS), Hono pour la passerelle BFF, FastAPI pour les services ML/lourds, et une bibliothèque de composants sélectionnée sur Radix + primitives Lobe UI avec framer-motion. Les fonctionnalités IA passent par le Vercel AI SDK avec portabilité de fournisseur (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+        },
+        "license": {
+          "question": "Quelle est la licence ?",
+          "answer": "AGPL-3.0 avec une exception commerciale. Gratuit pour usage personnel, outils internes et OSS compatible AGPL. Une licence commerciale payante déverrouille le droit de livrer Sailor tel quel dans un SaaS propriétaire. Le code source complet est inclus dans chaque plan."
+        },
+        "paid-updates": {
+          "question": "Dois-je payer pour les mises à jour ?",
+          "answer": "Non. Les mises à jour de source sont incluses avec chaque licence commerciale — tirez depuis main quand vous voulez et rebasez votre fork. Le niveau payant correspond au droit d'utiliser Sailor en production commerciale, pas au droit de recevoir du code. Chaque version mineure livre un CHANGELOG et un guide de mise à niveau pour tout changement cassant."
+        },
+        "why-turborepo": {
+          "question": "Pourquoi Turborepo plutôt qu'une application Next.js standard ?",
+          "answer": "Sailor comprend 10 apps + 55 packages partagés + un backend polyglotte (Hono BFF + flotte FastAPI) — bien au-delà du point où une seule mega-app Next.js reste maintenable. Turborepo nous donne des builds affectés uniquement, un cache distant transparent et une source de vérité unique pour les design tokens partagés, auth, facturation et observabilité — sans forcer chaque équipe dans le même processus Next.js."
+        },
+        "multi-tenancy": {
+          "question": "Comment la multi-tenancy est-elle gérée ?",
+          "answer": "Deux couches. Contexte de tenant limité à la requête via @nebutra/tenant (AsyncLocalStorage propage l'org active dans chaque appel serveur, y compris les requêtes DB et les webhooks sortants), et isolation appliquée par la base de données via les politiques Postgres Row-Level Security (infra/data/database/policies/rls.sql) liées à un app.current_org_id local à la session. Les connexions de rôle service contournent RLS uniquement dans des services internes de confiance ; toutes les routes orientées utilisateur passent par le client limité au tenant."
+        },
+        "swap-clerk": {
+          "question": "Puis-je remplacer Clerk par un autre fournisseur d'auth ?",
+          "answer": "Oui. @nebutra/auth livre des adaptateurs de première classe pour Clerk, Better Auth, NextAuth (Auth.js v5) et Supabase Auth. Changez via la variable d'environnement AUTH_PROVIDER ou choisissez lors de l'échafaudage avec create-sailor --auth=... — les surfaces serveur, React et middleware restent identiques quel que soit le fournisseur. Ajouter un cinquième adaptateur signifie implémenter une seule interface (~80 LOC) ; rien dans le code environnant n'est couplé à un fournisseur spécifique."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Apprécié des bâtisseurs",
+      "title": "Ce que disent les fondateurs après avoir lancé avec Sailor",
+      "subtitle": "Les témoignages clients de notre cohorte bêta arrivent bientôt — soyez parmi les premiers."
+    },
+    "comparison": {
+      "badge": "Comparer les plans",
+      "title": "Choisissez le plan adapté à votre étape",
+      "subtitle": "Chaque plan inclut le code source complet. Les licences commerciales incluent 12 mois de mises à jour.",
+      "plan": {
+        "individual": "Individuel",
+        "startup": "Startup",
+        "agency": "Agence"
+      },
+      "feature": {
+        "license": {
+          "label": "Licence",
+          "type": "Type de licence",
+          "closed-source": "Usage en code fermé",
+          "white-label": "Droits de marque blanche"
+        },
+        "team": {
+          "label": "Équipe",
+          "seats": "Sièges développeur",
+          "projects": "Projets"
+        },
+        "source": {
+          "label": "Code source",
+          "full-source": "Code source complet",
+          "all-packages": "Tous les packages & modules",
+          "lifetime-updates": "Mises à jour à vie"
+        },
+        "support": {
+          "label": "Support",
+          "channel": "Canal de support",
+          "onboarding": "Appel d'intégration",
+          "architecture-consult": "Consultation architecturale",
+          "sla": "SLA de disponibilité"
+        }
+      },
+      "ariaTable": "Comparaison des plans et fonctionnalités"
+    },
+    "socialProof": {
+      "title": "Construit sur une stack en laquelle vous pouvez avoir confiance",
+      "logosLabel": "Partenaires d'intégration",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Fournisseurs IA supportés"
+        },
+        "projects": {
+          "value": "55",
+          "label": "Packages monorepo"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "Locales i18n prêtes à l'emploi"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Enregistrement ICP",
+      "publicSecurity": "Sécurité publique"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "Enregistrement ICP",
+    "publicSecurity": "Enregistrement de sécurité publique"
   }
 }

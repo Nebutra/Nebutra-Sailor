@@ -370,7 +370,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                                       aria-label="Open in new tab"
                                     >
                                       <a
-                                        href={`#${slug}`}
+                                        href={`/changelog/${item.version}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                       >

@@ -1,5 +1,6 @@
 import { ArrowRight } from "@nebutra/icons";
-import { ExternalLink } from "lucide-react";
+import { AuroraBackground, Button } from "@nebutra/ui/primitives";
+import { Play } from "lucide-react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
@@ -21,9 +22,10 @@ export async function HeroSection() {
   return (
     <section className="relative isolate w-full overflow-visible bg-transparent pb-8 pt-24 lg:pt-32">
       <HeroBackgroundVideo />
+      <AuroraBackground variant="vivid" position="top" intensity={0.6} />
 
       <div className="relative z-10 w-full px-4">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-center text-center">
+        <div className="mx-auto flex max-w-[1400px] flex-col items-center justify-center text-center">
           <AnimateInGroup
             stagger="normal"
             className="flex flex-col items-center justify-center space-y-6 md:space-y-7 w-full"
@@ -35,7 +37,13 @@ export async function HeroSection() {
             {/* H1 paints at full opacity from first frame so the LCP API can
                 attribute it. AnimateIn would inline `opacity:0` server-side
                 and disqualify the element. */}
-            <h1 className="mx-auto max-w-[900px] text-[clamp(2.75rem,8vw,5rem)] leading-none font-bold tracking-normal text-zinc-950 dark:text-zinc-50">
+            <h1
+              className="mx-auto max-w-[900px] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance text-zinc-950 dark:text-zinc-50"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               {t("headline1")}{" "}
               <span className="text-zinc-950 dark:text-zinc-50">{t("headline2")}</span>
             </h1>
@@ -61,21 +69,18 @@ export async function HeroSection() {
 
             <AnimateIn preset="fadeUp">
               <div className="flex flex-col items-center gap-3 sm:flex-row mt-4">
-                <Link
-                  href="/get-license"
-                  className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-foreground/10 bg-foreground px-8 py-3.5 text-[15px] font-semibold text-background shadow-xl shadow-primary/10 transition-all hover:scale-[1.02] active:scale-95"
-                >
-                  <div className="absolute inset-0 bg-[var(--brand-gradient)] opacity-0 transition-opacity duration-300 pointer-events-none group-hover:opacity-10" />
-                  {t("ctaGetAccess")}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-                <a
-                  href="https://demo.nebutra.com"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-7 py-3 text-[15px] font-semibold text-zinc-700 shadow-sm backdrop-blur-xl transition-all hover:bg-white active:scale-95 dark:border-zinc-800 dark:bg-zinc-950/70 dark:text-zinc-300 dark:hover:bg-zinc-900"
-                >
-                  <ExternalLink aria-hidden="true" className="h-4 w-4 opacity-70" />
-                  {t("ctaExploreDemo")}
-                </a>
+                <Button asChild variant="ink" size="lg">
+                  <Link href="/get-license" className="inline-flex items-center gap-2">
+                    {t("ctaGetAccess")}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link href="#demo" className="inline-flex items-center gap-2">
+                    <Play aria-hidden="true" className="h-4 w-4 opacity-70" />
+                    {t("ctaExploreDemo")}
+                  </Link>
+                </Button>
               </div>
             </AnimateIn>
           </AnimateInGroup>

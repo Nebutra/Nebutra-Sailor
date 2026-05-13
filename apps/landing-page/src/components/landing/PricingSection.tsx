@@ -1,5 +1,5 @@
 import { CheckCircle } from "@nebutra/icons";
-import { Badge, Button, Card } from "@nebutra/ui/primitives";
+import { AuroraBackground, Badge, Button, Card } from "@nebutra/ui/primitives";
 import { headers } from "next/headers";
 import { getLocale, getTranslations } from "next-intl/server";
 import { getExchangeRate } from "@/lib/pricing/exchange-rates";
@@ -55,14 +55,21 @@ export async function PricingSection({
 
   return (
     <section className="py-24 md:py-32 bg-background relative overflow-hidden">
-      {/* Subtle background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-[400px] bg-primary/20 blur-[150px] pointer-events-none rounded-full" />
+      <AuroraBackground variant="subtle" position="center" intensity={0.4} />
 
       <div className="container relative mx-auto px-4 max-w-[1400px]">
         {!hideHeader && (
           <div className="text-center mb-16 md:mb-24">
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">{t("title")}</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
+              {t("title")}
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-4xl mx-auto text-balance">
               {t("description")}
             </p>
           </div>
@@ -73,11 +80,12 @@ export async function PricingSection({
             <Card
               key={tier.key}
               className={[
-                "p-8 relative flex flex-col overflow-hidden rounded-[2.5rem] transition-all hover:shadow-xl",
+                "p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-transform duration-150 hover:-translate-y-px",
                 tier.highlighted
-                  ? "border-primary/50 bg-background/80 backdrop-blur-xl shadow-2xl shadow-primary/10 transform lg:-translate-y-2 z-10"
-                  : "border-border/50 bg-background/50 backdrop-blur-md",
+                  ? "border border-[var(--blue-9)]/40 bg-background/80 backdrop-blur-xl lg:-translate-y-2 z-10"
+                  : "border border-[var(--neutral-6)] bg-background/50 backdrop-blur-md",
               ].join(" ")}
+              style={{ boxShadow: "var(--ring-hairline)" }}
             >
               {tier.highlighted && (
                 <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
@@ -96,7 +104,12 @@ export async function PricingSection({
               </Badge>
 
               <div className="mb-6 flex items-baseline">
-                <span className="text-4xl font-black tracking-tight">{tier.dynamicPrice}</span>
+                <span
+                  className="text-4xl md:text-5xl font-semibold"
+                  style={{ letterSpacing: "var(--tracking-heading)" }}
+                >
+                  {tier.dynamicPrice}
+                </span>
                 <span className="text-muted-foreground font-medium ml-2">
                   / {t(`${tier.key}.period` as PricingTranslationKey)}
                 </span>
@@ -118,11 +131,8 @@ export async function PricingSection({
               </div>
 
               <Button
-                className={[
-                  "w-full h-12 text-base font-bold rounded-xl",
-                  tier.highlighted ? "shadow-lg shadow-primary/20" : "",
-                ].join(" ")}
-                variant={tier.highlighted ? "default" : "secondary"}
+                className="w-full h-12 text-base font-semibold rounded-[var(--radius-button)]"
+                variant={tier.highlighted ? "ink" : "outline"}
                 asChild
               >
                 <a href={tier.ctaHref}>{t(`${tier.key}.cta` as PricingTranslationKey)}</a>

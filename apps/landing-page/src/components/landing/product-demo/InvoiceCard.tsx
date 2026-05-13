@@ -18,7 +18,7 @@ export function InvoiceCard() {
       initial={{ opacity: 0, y: 20, rotateX: 10 }}
       animate={{ opacity: 1, y: 0, rotateX: 0 }}
       transition={{ delay: 2.2, duration: 0.8, type: "spring", bounce: 0.4 }}
-      className="relative w-full max-w-sm mx-auto rounded-2xl bg-white/90 dark:bg-[#111]/90 border border-border/50 shadow-2xl backdrop-blur-xl p-5"
+      className="relative w-full max-w-sm mx-auto rounded-2xl bg-white/90 dark:bg-[var(--neutral-2)]/90 border border-border/50 shadow-2xl backdrop-blur-xl p-5"
     >
       {/* Top Section */}
       <div className="flex justify-between items-start mb-6">

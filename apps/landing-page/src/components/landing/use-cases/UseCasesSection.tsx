@@ -1,5 +1,6 @@
 "use client";
 
+import { AuroraBackground } from "@nebutra/ui/primitives";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -20,6 +21,8 @@ export function UseCasesSection() {
 
   return (
     <section className="py-24 md:py-32 bg-muted/20 relative overflow-hidden">
+      {/* Ambient aurora background */}
+      <AuroraBackground variant="subtle" position="center" intensity={0.4} />
       <div className="container relative z-10 mx-auto px-4 max-w-[1400px]">
         {/* Header section */}
         <div className="text-center mb-16 md:mb-24">
@@ -29,7 +32,13 @@ export function UseCasesSection() {
             </p>
           </AnimateIn>
           <AnimateIn preset="fadeUp" delay={100}>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-6 text-balance leading-tight">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 text-balance"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
               {t("title")}
             </h2>
           </AnimateIn>
@@ -54,11 +63,12 @@ export function UseCasesSection() {
                   key={uc.key}
                   aria-pressed={isActive}
                   onClick={() => setActiveTab(i)}
-                  className={`group relative flex items-start text-left gap-5 p-5 md:p-6 rounded-[2rem] transition-all duration-500 overflow-hidden ${
+                  className={`group relative flex items-start text-left gap-5 p-5 md:p-6 rounded-[var(--radius-card)] transition-transform duration-150 overflow-hidden hover:-translate-y-px ${
                     isActive
-                      ? "bg-background shadow-xl border border-border/60"
-                      : "hover:bg-muted/50 border border-transparent"
+                      ? "bg-background border border-[var(--neutral-6)]"
+                      : "hover:bg-[var(--neutral-3)] border border-transparent"
                   }`}
+                  style={isActive ? { boxShadow: "var(--ring-hairline)" } : undefined}
                 >
                   {/* Subtle active state background glow */}
                   {isActive && (
@@ -71,14 +81,15 @@ export function UseCasesSection() {
                   )}
 
                   <div
-                    className={`relative z-10 p-3 rounded-2xl shrink-0 transition-colors duration-500 ${isActive ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "bg-muted/50 text-muted-foreground group-hover:bg-muted group-hover:text-foreground"}`}
+                    className={`relative z-10 p-3 rounded-[var(--radius-button)] shrink-0 transition-colors duration-500 ${isActive ? "bg-primary text-primary-foreground" : "bg-muted/50 text-muted-foreground group-hover:bg-muted group-hover:text-foreground"}`}
                   >
                     <Icon className="h-6 w-6" />
                   </div>
 
                   <div className="relative z-10 flex-1 pt-1">
                     <h3
-                      className={`text-xl font-bold tracking-tight transition-colors duration-500 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
+                      className={`text-xl font-semibold transition-colors duration-500 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
                     >
                       {t(`tabs.${uc.key}` as UseCasesTranslationKey)}
                     </h3>
@@ -125,11 +136,13 @@ export function UseCasesSection() {
 
           {/* Right Column: Sticky Mockup Viewport */}
           <div className="w-full lg:w-8/12 relative order-1 lg:order-2">
-            <div className="sticky top-32 w-full aspect-square lg:aspect-auto lg:h-[700px] rounded-[3rem] bg-background border border-border/80 shadow-2xl overflow-hidden flex items-center justify-center p-6 lg:p-8 group">
+            <div
+              className="sticky top-32 w-full aspect-square lg:aspect-auto lg:h-[700px] rounded-[var(--radius-panel)] bg-background border border-[var(--neutral-6)] overflow-hidden flex items-center justify-center p-6 lg:p-8 group"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            >
               {/* Internal Glass glare reflection */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_2px_at_center,var(--neutral-5)_1px,transparent_1px)] bg-[length:24px_24px] opacity-30 dark:opacity-20 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
               <div className="absolute inset-x-0 -top-px h-px w-full bg-gradient-to-r from-transparent via-foreground/10 to-transparent opacity-50" />
-              <div className="absolute -inset-x-32 -top-32 h-[300px] w-[200%] bg-gradient-to-b from-primary/5 to-transparent blur-3xl opacity-50 -rotate-12 transform-gpu" />
 
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div

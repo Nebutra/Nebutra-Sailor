@@ -1,4 +1,5 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { CheckCircle, Circle, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
@@ -154,11 +155,12 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
   setRequestLocale(lang as Locale);
 
   return (
-    <main id="main-content" className="min-h-screen bg-[var(--neutral-1)]">
+    <main id="main-content" className="min-h-screen bg-[var(--neutral-1)] relative overflow-hidden">
       <Navbar />
 
       {/* Hero */}
-      <section className="mx-auto max-w-[1400px] px-4 pt-32 pb-16 md:px-6 text-center">
+      <section className="relative mx-auto max-w-[1400px] px-4 pt-32 pb-16 md:px-6 text-center">
+        <AuroraBackground variant="vivid" position="top" intensity={0.5} />
         <AnimateIn preset="fade">
           <span
             className="mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-widest"
@@ -173,7 +175,13 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
         </AnimateIn>
 
         <AnimateIn preset="emerge">
-          <h1 className="mt-4 text-5xl font-black tracking-tight text-[var(--neutral-12)] md:text-7xl">
+          <h1
+            className="mt-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[var(--neutral-12)]"
+            style={{
+              letterSpacing: "var(--tracking-display)",
+              lineHeight: "var(--leading-display)",
+            }}
+          >
             Where we&apos;re{" "}
             <span
               style={{
@@ -215,7 +223,7 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
                   {/* Phase icon */}
                   <div className="relative z-10 flex-shrink-0">
                     <div
-                      className="flex h-14 w-14 items-center justify-center rounded-full border-2 text-sm font-black"
+                      className="flex h-14 w-14 items-center justify-center rounded-full border-2 text-sm font-semibold"
                       style={{
                         background: cfg.bg || "var(--neutral-2)",
                         borderColor: cfg.border,
@@ -232,10 +240,11 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
 
                   {/* Phase card */}
                   <div
-                    className="flex-1 rounded-2xl border p-6"
+                    className="flex-1 rounded-[var(--radius-card)] border p-6"
                     style={{
-                      borderColor: phase.status === "active" ? "var(--blue-6)" : "var(--neutral-5)",
+                      borderColor: phase.status === "active" ? "var(--blue-6)" : "var(--neutral-6)",
                       background: phase.status === "active" ? cfg.bg : "var(--neutral-1)",
+                      boxShadow: "var(--ring-hairline)",
                     }}
                   >
                     {/* Header */}
@@ -257,7 +266,13 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
                             {cfg.label}
                           </span>
                         </div>
-                        <h2 className="text-2xl font-black text-[var(--neutral-12)]">
+                        <h2
+                          className="text-2xl md:text-3xl font-semibold text-[var(--neutral-12)]"
+                          style={{
+                            letterSpacing: "var(--tracking-heading)",
+                            lineHeight: "var(--leading-heading)",
+                          }}
+                        >
                           {phase.name}
                         </h2>
                       </div>
@@ -329,8 +344,12 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
         {/* Footer CTA */}
         <AnimateIn preset="fade" inView>
           <div
-            className="mt-8 rounded-2xl border p-8 text-center"
-            style={{ borderColor: "var(--neutral-5)", background: "var(--neutral-2)" }}
+            className="mt-8 rounded-[var(--radius-card)] border p-8 text-center"
+            style={{
+              borderColor: "var(--neutral-6)",
+              background: "var(--neutral-2)",
+              boxShadow: "var(--ring-hairline)",
+            }}
           >
             <p className="mb-2 text-sm font-semibold text-[var(--neutral-12)]">
               Build on the current baseline
@@ -339,13 +358,9 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
               Start with the governed platform today, then adopt new capabilities through verified
               upgrades instead of one-off rewrites.
             </p>
-            <a
-              href={`/${lang}/get-license`}
-              className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white"
-              style={{ background: "var(--brand-gradient)" }}
-            >
-              Explore licensing →
-            </a>
+            <Button asChild variant="ink" size="lg">
+              <a href={`/${lang}/get-license`}>Explore licensing →</a>
+            </Button>
           </div>
         </AnimateIn>
       </section>

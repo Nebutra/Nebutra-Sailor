@@ -1,5 +1,6 @@
 "use client";
 
+import { AuroraBackground } from "@nebutra/ui/primitives";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -30,8 +31,8 @@ export function ProductDemoSection() {
 
   return (
     <section id="product" className="relative w-full overflow-hidden bg-background py-24 md:py-32">
-      {/* Decorative Background Blur */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
+      {/* Ambient aurora background */}
+      <AuroraBackground variant="monochrome" position="center" intensity={0.4} />
 
       <div className="container mx-auto px-4 max-w-[1400px] relative z-10">
         {/* Header */}
@@ -41,7 +42,13 @@ export function ProductDemoSection() {
               {t("badge")}
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-balance text-foreground mb-6 max-w-4xl">
+          <h2
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground mb-6 max-w-4xl"
+            style={{
+              letterSpacing: "var(--tracking-heading)",
+              lineHeight: "var(--leading-heading)",
+            }}
+          >
             {t("title")}
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground text-balance max-w-2xl leading-relaxed font-medium">
@@ -72,7 +79,8 @@ export function ProductDemoSection() {
                     {isActive && (
                       <motion.div
                         layoutId="activeDemoTab"
-                        className="absolute inset-0 rounded-full bg-foreground shadow-elevation-high dark:shadow-[0_0_30px_rgba(255,255,255,0.2)] border-2 border-background dark:border-[#0A0A0B]"
+                        className="absolute inset-0 rounded-full bg-foreground border-2 border-background dark:border-[#0A0A0B]"
+                        style={{ boxShadow: "var(--ring-hairline)" }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                       />
                     )}
@@ -93,7 +101,8 @@ export function ProductDemoSection() {
                   {/* Content Fragment */}
                   <div className="flex-1 pt-1">
                     <h3
-                      className={`text-xl md:text-2xl font-bold mb-3 tracking-tight transition-colors duration-400 ${isActive ? "text-foreground" : "text-muted-foreground"}`}
+                      className={`text-xl md:text-2xl font-semibold mb-3 transition-colors duration-400 ${isActive ? "text-foreground" : "text-muted-foreground"}`}
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
                     >
                       {t(tab.labelKey as ProductDemoTranslationKey)}
                     </h3>

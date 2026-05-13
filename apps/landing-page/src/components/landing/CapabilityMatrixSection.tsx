@@ -1,5 +1,6 @@
 "use client";
 
+import { AuroraBackground } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 import { AIGatewayCard, BillingCard, MultiTenantCard, RBACCard } from "./capability-cards";
@@ -12,8 +13,8 @@ export function CapabilityMatrixSection() {
       id="capabilities"
       className="w-full bg-background py-24 md:py-32 relative overflow-hidden"
     >
-      {/* Subtle Glows */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      {/* Ambient aurora background */}
+      <AuroraBackground variant="subtle" position="center" intensity={0.4} />
 
       <div className="mx-auto max-w-[1400px] px-4 md:px-6 relative z-10">
         {/* Section header */}
@@ -23,7 +24,13 @@ export function CapabilityMatrixSection() {
               {t("badge")}
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-foreground text-balance">
+          <h2
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground text-balance"
+            style={{
+              letterSpacing: "var(--tracking-heading)",
+              lineHeight: "var(--leading-heading)",
+            }}
+          >
             {t("title")}
           </h2>
         </AnimateIn>

@@ -41,8 +41,8 @@
       "description": "엔터프라이즈급 에이전트 프레임워크가 내장되어 있습니다. 복잡한 추상화를 우회하고 즉시 개발을 시작하십시오."
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "거버넌스 기반 플랫폼 베이스라인",
+      "description": "AI 네이티브 SaaS를 출시하는 팀을 위한 거버넌스된 플랫폼 베이스라인입니다. 임시방편 도구를 짜깁기하지 않고 스캐폴딩, 런타임 프리미티브, 배포 인터페이스를 정합시킵니다."
     },
     "item2": {
       "title": "엔터프라이즈 SaaS 자동화",
@@ -55,69 +55,6 @@
     "copyLabel": "명령어 복사",
     "copiedLabel": "복사됨",
     "startBuilding": "구축 시작"
-  },
-  "comparison": {
-    "badge": "SAILOR 비교",
-    "title": "Sailor와 경쟁 제품 비교",
-    "columns": {
-      "feature": "기능",
-      "sailor": "Nebutra Sailor",
-      "nextForge": "next-forge",
-      "supastarter": "Supastarter"
-    },
-    "features": {
-      "multiTenant": "멀티테넌트",
-      "aiGateway": "AI 통합",
-      "auth": "인증",
-      "billing": "결제 및 청구",
-      "i18n": "국제화",
-      "frameworks": "프레임워크 지원",
-      "monorepo": "Monorepo 규모",
-      "api": "API 프레임워크",
-      "e2eTests": "E2E 테스트",
-      "archTests": "아키텍처 테스트",
-      "designSystem": "디자인 시스템",
-      "bgJobs": "백그라운드 작업",
-      "license": "라이선스"
-    },
-    "values": {
-      "orgRbacIsolation": "조직 + RBAC + 행 수준 격리",
-      "orgRolesSeat": "조직 + 역할 + 좌석 과금",
-      "manualSetup": "수동 설정",
-      "multiProviderGateway": "Vercel AI SDK + 20+ 프로바이더",
-      "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk / Better Auth / NextAuth / Supabase",
-      "clerkOnly": "Clerk",
-      "betterAuth": "Better Auth",
-      "stripeUsage": "5개 제공업체 + 사용량 과금",
-      "stripeOnly": "Stripe",
-      "fiveProviders": "5개 결제 제공업체",
-      "sevenLangs": "7개 언어",
-      "nextjsOnly": "Next.js만",
-      "nextNuxtTanstack": "Next.js + Nuxt + TanStack",
-      "turboNineApps": "Turborepo · 10개 앱",
-      "turboSevenApps": "Turborepo · 6개 앱",
-      "turboFiveApps": "Turborepo · 5개 앱",
-      "honoOpenapi": "Hono + OpenAPI + oRPC + tRPC",
-      "trpc": "tRPC",
-      "honoOrpc": "Hono + oRPC",
-      "playwrightSharded": "Playwright · 4 샤드",
-      "playwrightGha": "Playwright + GH Actions",
-      "sevenPropertyBased": "13개 아키텍처 테스트",
-      "fourLayerTokens": "4계층 토큰 엔진",
-      "shadcn": "shadcn/ui",
-      "radixShadcn": "Radix + shadcn/ui",
-      "inngest": "Inngest",
-      "triggerQstash": "trigger.dev + QStash",
-      "agpl": "AGPL-3.0 (무료)",
-      "mit": "MIT (무료)",
-      "paidFrom349": "$349부터",
-      "aiPackage": "AI 패키지",
-      "i18nPackage": "i18n 패키지",
-      "nextjsRoutes": "Next.js 라우트",
-      "cronOnly": "Cron 전용",
-      "twoLangs": "2개 언어 (en, de)"
-    }
   },
   "footer": {
     "brandDescription": "몇 주 만에 SaaS를 출시하세요. 멀티테넌트, 결제, 인증, AI — 첫날부터 프로덕션 준비 완료.",
@@ -138,6 +75,9 @@
       "docs": "문서",
       "ideas": "아이디어",
       "opc": "플랫폼",
+      "careers": "채용",
+      "security": "보안",
+      "dpa": "DPA",
       "privacy": "개인정보처리방침",
       "terms": "이용약관",
       "cookies": "쿠키 정책",
@@ -147,8 +87,8 @@
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)",
-      "product": "Product",
-      "licensing": "Licensing"
+      "product": "제품",
+      "licensing": "라이선스"
     },
     "copyright": "© 2026 Nebutra Intelligence. 모든 권리 보유.",
     "statusOnline": "모든 시스템 정상 작동 중",
@@ -180,952 +120,952 @@
   },
   "legal": {
     "nav": {
-      "home": "Home",
-      "contact": "Contact"
+      "home": "홈",
+      "contact": "문의"
     },
     "footer": {
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service",
-      "cookies": "Cookie Policy",
-      "refund": "Refund Policy",
-      "copyright": "© Nebutra. All rights reserved."
+      "privacy": "개인정보 처리방침",
+      "terms": "이용약관",
+      "cookies": "쿠키 정책",
+      "refund": "환불 정책",
+      "copyright": "© Nebutra. 모든 권리 보유."
     }
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and core engineering principles driving Nebutra Intelligence.",
-      "heading": "The Era of Super Individuals",
-      "subheading": "Terminate human-wave bureaucratic expansion. Equip the creative super individual with maximal algorithmic leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "Nebutra is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce is merely the restructuring of production elements—but historically riddled with hierarchical frictions. In Nebutra's neural network, any independent builder shipping verifiable Proof of Work receives automatic routing of top talent, institutional trust, and algorithmic capital via our Sleptons matchmaker, democratizing entrepreneurship into a highly certain, standardized track.",
-      "missionP3": "We fundamentally reject scaling by adding middle management. Agents handle 100% of operational workflows. We do not hire passive cogs; we invest in, cultivate, and elevate literal creators.",
+      "title": "회사 소개 — 거버넌스 기반 AI 플랫폼",
+      "description": "Nebutra의 거버넌스 기반 AI 플랫폼을 뒷받침하는 상업적 비전과 엔지니어링 원칙을 알아보십시오.",
+      "heading": "린(Lean) 제품 팀의 시대",
+      "subheading": "반복되는 플랫폼 작업을 거버넌스 기반 인프라, 강력한 자동화, 그리고 지속 가능한 엔지니어링 레버리지로 대체하십시오.",
+      "missionTitle": "행정적 쇠퇴에 저항하는 새로운 질서",
+      "missionP1": "Nebutra는 단명하는 스타터 스택이 아닌, 지속 가능한 인프라가 필요한 팀을 위해 거버넌스 기반 AI 플랫폼을 구축하고 있습니다. 전통적인 확장에는 관료주의와 엔트로피가 따르기 마련이지만, 저희는 코드 거버넌스, 자동화, 그리고 성장하면서도 감사(audit) 가능한 상태를 유지하는 플랫폼 기반으로 대응합니다.",
+      "missionP2": "상거래는 여전히 조정 오버헤드, 파편화된 도구, 그리고 취약한 업그레이드 경로로 인해 어려움을 겪고 있습니다. 저희는 더 명확한 플랫폼 계약, 더 강력한 전달 프리미티브, 그리고 팀이 실제로 관찰하고 신뢰할 수 있는 런타임 동작을 통해 이러한 마찰을 줄이는 데 주력합니다.",
+      "missionP3": "저희는 확장 문제를 더 많은 조직적 부담으로 해결하려는 관행을 거부합니다. 자동화, 테스트, 그리고 거버넌스가 반복적인 운영 업무를 흡수함으로써 팀이 제품, 아키텍처, 그리고 고객 성과에 집중할 수 있도록 해야 합니다.",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "네 가지 핵심 기둥",
       "values": {
         "0": {
-          "title": "Infinite Fission (Philosophy)",
-          "description": "Rejecting the bloated myth of horizontal expansion. Every micro-entity hatched here is designed to leverage billions in value with ultra-low headcount."
+          "title": "거버넌스 기반 확장 (철학)",
+          "description": "확장은 더 무거운 조직적 부담이 아닌, 더 강력한 시스템, 더 나은 레버리지, 그리고 더 명확한 운영 규칙에서 비롯되어야 합니다."
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "Transcending simple boilerplates. An arsenal of enterprise multi-tenant isolation, automated MRR billing, shipped by solo founders in one week."
+          "title": "빌더 코어 (인프라)",
+          "description": "팀이 감사하고, 확장하며, 반복적으로 출시할 수 있는 멀티 테넌시, 결제, 인증, 컴플라이언스, AI 통합을 위한 재사용 가능한 플랫폼 기반입니다."
         },
         "2": {
-          "title": "Frictionless Flow (Routing)",
-          "description": "Algorithms dismantle HR and VC logic. Execution metrics and git commit velocity dictate purely where capital and talent flow."
+          "title": "업그레이드 규율 (라우팅)",
+          "description": "건강한 시스템은 표류, 영웅적 노력, 일회성 재작성 대신 호환성 검사, 마이그레이션, 그리고 관측 가능한 런타임 계약을 통해 성장합니다."
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Eradicate office politics. Provide architectural proofs and the algorithms will automatically elevate your systemic authority."
+          "title": "코드가 곧 법 (조직)",
+          "description": "운영 규율은 테스트, 워크플로우, 거버넌스 규칙으로 인코딩되어야 하며, 이를 통해 팀은 정치나 조직적 기억에 의존하지 않고도 플랫폼을 개선할 수 있습니다."
         }
       },
-      "jobsTitle": "Eradicating JD/CV Recruitment",
-      "jobsDescription": "We ignore degrees and pedigrees. Pass the Sleptons machine vision and topological checks via sheer Proof of Work, and shape the ecosystem.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "이력보다 엔지니어링 시그널",
+      "jobsDescription": "저희는 학력이나 직함 인플레이션보다 검증 가능한 엔지니어링 결과물, 사고의 명료함, 그리고 시스템에 대한 판단력을 더 중시합니다.",
+      "jobsButton": "Github 프로필 제출",
+      "companyInfoTitle": "조직 컴플라이언스",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "법인 등록 명칭",
+        "founded": "등록 일자",
+        "headquarters": "글로벌 운영 센터",
+        "jurisdiction": "관할 사법권"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "더 깊은 기술 평가가 필요하십니까?",
+      "ctaDescription": "엔터프라이즈 통합 평가를 위해 저희 엔지니어링 전문가에게 문의하시거나 배포 문서를 검토해 보십시오.",
+      "ctaButton": "연락 시작하기"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — Nebutra Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "기술 및 상업 문의 — Nebutra Intelligence",
+      "description": "상업적 라이선싱, 엔터프라이즈 셀프 호스팅, 그리고 고급 기술 지원을 위한 전용 커뮤니케이션 채널입니다.",
+      "heading": "지원 연결 수립",
+      "subheading": "명시적인 요구사항을 평가하기 위해 전담 기술 전문가 또는 아키텍트를 배정해 드립니다.",
       "contacts": {
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "엔터프라이즈 컨설팅",
+          "description": "생태계 전략적 파트너십 및 전반적인 아키텍처 진화에 관한 사전 논의입니다."
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "상업적 배포",
+          "description": "비공개 소스 라이선싱 및 프라이빗 클러스터 환경 배포에 관한 세부 사항 협상입니다."
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "전문가 수준 지원",
+          "description": "활성 비즈니스 통합 및 핵심 시스템 디버깅을 위한 대상별 아키텍처 가이드 및 문제 해결 서비스입니다."
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "법무 및 컴플라이언스",
+          "description": "오픈소스 경계 정의, 엔터프라이즈 컴플라이언스 감사, 그리고 계약 조건과 관련된 문의입니다."
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "데이터 센터 프라이버시",
+          "description": "GDPR 및 후속 국제 데이터 보호법에 관한 기술적 검증과 컴플라이언스 지침입니다."
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "보안 취약점 신고",
+          "description": "잠재적 소프트웨어 취약점에 관한 기술적 재현 보고서를 저희 인프라 팀에 직접 안전하게 제출하십시오."
         },
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "창업자 직통",
+          "description": "핵심 전략 정렬 및 경영진 수준의 문의를 위한 직접 커뮤니케이션 채널입니다."
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "제출 포털",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "제출자 명칭",
+        "email": "공식 이메일 주소",
+        "company": "소속 조직",
+        "category": "요구사항 영역",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "기업 컨설팅",
+          "sales": "라이선싱 및 아키텍처",
+          "support": "개발자 지원",
+          "legal": "법무 및 컴플라이언스 경계",
+          "privacy": "데이터 처리 정책",
+          "partnership": "생태계 통합",
+          "press": "홍보"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "핵심 이슈 요약",
+        "message": "상세 기술/상업 사양",
+        "submit": "백엔드로 전송",
+        "privacyNotice": "이 네트워크 요청을 실행하는 것은 다음을 읽고 동의함을 의미합니다",
+        "privacyLink": "시스템 프라이버시 인프라",
+        "submitting": "처리 대기열 진입 중...",
+        "successMessage": "데이터가 성공적으로 전송되었습니다. 담당 운영 팀이 표준 영업일 기준 1~2일 이내에 상세 회신을 드리겠습니다."
       },
-      "companyInfoTitle": "Operational Telemetry",
-      "socialMedia": "Primary Network Links",
+      "companyInfoTitle": "운영 텔레메트리",
+      "socialMedia": "주요 네트워크 링크",
       "companyNameChinese": "无锡云毓智能科技有限公司",
       "companyNameEnglish": "Wuxi Nebutra Intelligence Technology Co., Ltd.",
-      "companyAddress": "Wuxi, Jiangsu Province, China"
+      "companyAddress": "중국 장쑤성 우시시"
     },
     "cookies": {
-      "title": "Data Retention Protocols — Nebutra",
-      "description": "Elucidating the platform's execution of necessary technical storage mechanics to maintain session states and platform analytics.",
-      "heading": "Technical Tracking Mechanics",
-      "effectiveDate": "Mandatory Enforcement Date",
-      "lastUpdated": "Latest Technical Revision",
+      "title": "쿠키 정책 — Nebutra",
+      "description": "Nebutra가 웹사이트 및 서비스에서 쿠키와 유사한 추적 기술을 사용하는 방식입니다.",
+      "heading": "쿠키 정책",
+      "effectiveDate": "시행일",
+      "lastUpdated": "최종 업데이트",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "2025년 1월 1일",
+        "updated": "2025년 1월 1일"
       },
-      "intro": "This Cookie Policy explains how Nebutra Co., Ltd. (\"Nebutra,\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "본 쿠키 정책은 Nebutra Co., Ltd.(\"Nebutra\", \"저희\", \"우리\")가 웹사이트 및 서비스에서 쿠키 및 유사한 추적 기술을 사용하는 방식을 설명합니다.",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "쿠키란 무엇입니까?",
+        "content": "쿠키는 귀하가 웹사이트를 방문할 때 기기에 저장되는 작은 텍스트 파일입니다. 쿠키는 웹사이트가 보다 효율적으로 작동하고 웹사이트 소유자에게 정보를 제공하기 위해 널리 사용됩니다."
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "쿠키 사용 방식",
+        "intro": "저희는 다음 목적으로 쿠키를 사용합니다:",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "필수 기능 활성화",
+            "desc": "사용자 인증 및 보안과 같은 핵심 기능 제공"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "환경설정 기억",
+            "desc": "언어, 테마 및 기타 설정 저장"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "성능 개선",
+            "desc": "방문자가 저희 서비스와 어떻게 상호작용하는지 이해"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "개인 맞춤형 경험 제공",
+            "desc": "관련 콘텐츠 및 추천 제공"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "마케팅 측정",
+            "desc": "마케팅 캠페인의 효과 추적"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "저희가 사용하는 쿠키 유형",
       "tableHeaders": {
-        "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "cookie": "쿠키",
+        "provider": "제공자",
+        "purpose": "목적",
+        "duration": "지속 기간"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "필수 쿠키",
+        "description": "이 쿠키는 웹사이트가 올바르게 작동하는 데 필수적입니다. 비활성화할 수 없습니다.",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "Nebutra",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "사용자 인증 세션",
+            "duration": "세션"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "인증 토큰",
+            "duration": "7일"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "Nebutra",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "쿠키 동의 환경설정 저장",
+            "duration": "1년"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "기능성 쿠키",
+        "description": "이 쿠키는 개인 맞춤형 기능을 활성화하고 환경설정을 기억합니다.",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "Nebutra",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "언어 환경설정 저장",
+            "duration": "1년"
           },
           "1": {
             "name": "theme",
             "provider": "Nebutra",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "테마 환경설정 저장",
+            "duration": "1년"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "분석 쿠키",
+        "description": "이 쿠키는 방문자가 저희 웹사이트와 어떻게 상호작용하는지 이해하는 데 도움을 줍니다.",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "고유 사용자 구분",
+            "duration": "2년"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "제품 분석",
+            "duration": "1년"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "마케팅 쿠키",
+        "description": "이 쿠키는 광고 및 광고 캠페인 성과 추적에 사용됩니다.",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "Facebook 광고를 위한 방문 추적",
+            "duration": "3개월"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "전환 추적",
+            "duration": "3개월"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "쿠키 환경설정 관리",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "쿠키 동의 배너",
+        "intro": "처음 저희 웹사이트를 방문하시면, 다음을 가능하게 하는 쿠키 동의 배너가 표시됩니다:",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "모두 수락",
+            "desc": "모든 쿠키 카테고리 활성화"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "모두 거부",
+            "desc": "선택적 쿠키 모두 비활성화 (필수 쿠키는 유지됨)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "맞춤 설정",
+            "desc": "활성화할 특정 쿠키 카테고리 선택"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "푸터의 \"쿠키 설정\"을 클릭하여 언제든지 환경설정을 변경하실 수 있습니다."
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "브라우저 설정",
+        "intro": "대부분의 웹 브라우저는 설정을 통해 쿠키를 제어할 수 있도록 허용합니다:",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "설정 > 개인 정보 및 보안 > 쿠키"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "설정 > 개인 정보 및 보안 > 쿠키"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "환경설정 > 개인 정보 > 쿠키"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "설정 > 개인 정보, 검색 및 서비스 > 쿠키"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "특정 쿠키를 차단하면 웹사이트 기능에 영향을 줄 수 있습니다."
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "유사 기술",
+        "intro": "쿠키 외에도 저희는 다음을 사용할 수 있습니다:",
         "items": {
           "0": {
-            "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "label": "로컬 스토리지",
+            "desc": "환경설정 저장 및 데이터 로컬 캐싱"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "세션 스토리지",
+            "desc": "브라우징 세션 동안의 임시 데이터"
           },
           "2": {
-            "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "label": "픽셀 태그",
+            "desc": "이메일 열람 및 웹사이트 방문 추적을 위한 작은 이미지"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "저희는 추적을 위해 브라우저 핑거프린팅을 사용하지 않습니다."
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "본 정책 업데이트",
+        "content": "저희는 본 쿠키 정책을 수시로 업데이트할 수 있습니다. 중대한 변경 사항은 업데이트된 정책을 웹사이트에 게시함으로써 알려드리겠습니다."
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "문의하기",
+        "intro": "쿠키 사용에 관해 질문이 있으시면 연락해 주십시오:",
         "company": "Nebutra Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "저희가 귀하의 데이터를 수집하고 처리하는 방식에 대한 자세한 내용은 다음을 참조하십시오",
+        "privacyLink": "개인정보 처리방침"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — Nebutra",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "엔지니어링 가이드 및 FAQ — Nebutra",
+      "description": "프레임워크 아키텍처, 기준 토폴로지, 그리고 상업적 배포 전략에 대한 종합 분석입니다.",
+      "heading": "임원진 심층 분석",
+      "subheading": "시스템 엔지니어링 통합 및 임원진의 상업적 의사결정에 최적화된 보조 자료입니다.",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "아키텍처 개요",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of Nebutra Sailor?",
-              "a": "Nebutra Sailor is a highly structured, production-ready Next.js AI SaaS framework. It bundles microservice functionalities, including corporate billing, multi-factor authentication, and multi-tenant isolation, eliminating boilerplate development overhead and allowing teams to hyper-focus on core structural AI implementation."
+              "q": "Nebutra Sailor의 명시적 운영 목적은 무엇입니까?",
+              "a": "Nebutra Sailor는 고도로 구조화된, 프로덕션 준비가 완료된 Next.js AI SaaS 프레임워크입니다. 기업용 결제, 다단계 인증, 멀티 테넌트 격리를 거버넌스 기반 플랫폼 기반에 통합하여, 팀이 제품별 AI 구현에 집중할 수 있도록 합니다."
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "리포지토리 라이선싱은 어떻게 구성되어 있습니까?",
+              "a": "기반 인프라는 OSS AGPLv3 계약을 엄격히 적용하여 투명성과 무료 사용을 보장합니다. 독점적 난독화 및 향상된 재작성 보증이 필요한 조직을 위해, 명시적인 비공개 소스 상업 계약도 제공됩니다."
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "초기 상업 평가 속도는 어느 정도입니까?",
+              "a": "매우 빠릅니다. 저희의 맞춤형 Node CLI 툴체인과 정확한 기술 사양을 사용하면, 주니어 엔지니어도 단 몇 분 이내에 독립적인 로컬 MVP(최소 기능 제품) 인스턴스를 구축할 수 있습니다."
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "상업 운영",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "상업적 확장에 대한 허용 범위는 얼마나 넓습니까?",
+              "a": "마이크로 컴포넌트 패러다임을 기반으로 광범위하게 설계되었으며, 구조적 부하 용량은 수요가 없는 프리 티어에서부터 월 수백만 건의 요청을 처리하는 엔터프라이즈 임계값까지 동적으로 매끄럽게 매핑되며, 모두 대시보드 제약 조건을 통해 구성됩니다."
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "구독 변동성은 표준 회계에 어떤 영향을 미칩니까?",
+              "a": "저희는 리소스와 API 처리량에 대한 정밀한 초 단위 구조적 로깅을 사용하여 운영합니다. 제약 조건 변경은 즉시 회계 계층과 정산되며, 비례 차액을 환불하거나 자동 크레딧을 발행합니다. 티어 동결 기간은 절대 존재하지 않습니다."
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "결제 벡터를 격리하는 처리 인프라는 무엇입니까?",
+              "a": "글로벌 현금 라우팅은 근본적으로 Stripe 서버 인터페이스에 위임되어, 엄격한 PCI-DSS 텔레메트리와 처리 무결성을 보장합니다. 엔터프라이즈 배포에서는 맞춤형 SLA 약정에 따라 관리되는 프라이빗 재무 감사 파이프라인을 통합할 수 있습니다."
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "시스템 엔지니어링 계층",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "어떤 기본 인텔리전스 추상화가 기본적으로 지원됩니까?",
+              "a": "기본 상호작용 로직은 OpenAI, Anthropic, Gemini 표준 사양에 대한 네이티브 상호운용성을 결정합니다. 이를 통해 상위 상업 로직의 저하 없이 변수 매핑을 통해 추론 엔드포인트를 효율적으로 핫스왑할 수 있는 막대한 유연성이 제공됩니다."
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "데이터베이스 난독화 위험은 어떻게 해결됩니까?",
+              "a": "구현 기본값은 본질적으로 저희의 서버리스 테넌트 해결 라우팅 프리미티브와 긴밀하게 결합된 Postgres RLS(행 수준 보안) 정책을 배포합니다. 이를 통해 하드 파티션이 중대한 애플리케이션 수준의 데이터 오염 및 실행 중첩을 적극적으로 방지합니다."
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "자체 관리 배포에 아키텍처적 제한이 있습니까?",
+              "a": "전혀 없습니다. 토폴로지는 완전히 분리되어 있습니다. 환경이 독립적인 Node.js 런타임과 정상적인 PostgreSQL 클러스터를 실행한다면, 모든 기능이 본질적으로 보존됩니다."
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "시스템 무결성",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "어떤 프로토콜이 경계의 기계적 방어를 결정합니까?",
+              "a": "메커니즘은 전송 시 의무적인 TLS 암호화, 시크릿 매핑을 위한 결정론적 해싱 알고리즘, 그리고 변경 이벤트를 내부 시계열 추적 원장에 엄격히 기록하는 보편적 기록을 실행합니다."
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "토폴로지가 주요 국제 개인정보 보호 법규를 준수합니까?",
+              "a": "예, 깊이 있게 준수합니다. 비즈니스 모듈은 동의 철회 상태, 하드 삭제 로직, 그리고 GDPR 및 현지 규제 프레임워크에 최적으로 부합하는 심층 내보내기 쿼리를 대상으로 하는 즉시 사용 가능한 알고리즘 구현을 제공합니다."
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "이상 재난 사건 발생 시 무엇이 실행됩니까?",
+              "a": "자동화된 센티넬이 즉시 핵심 엔지니어링 벡터에 경보를 발령하고, 회로 차단을 강제하며 신속한 분류를 구현합니다. 고급 해결 핸드북에 따라 관리되며, 완전히 투명한 사후 보고서가 절대적인 72시간 이내에 보편적으로 배포됩니다."
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "기술 지원 지침",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "운영상의 병목 현상 문제 해결은 어떻게 처리됩니까?",
+              "a": "초기 분류 벡터는 엄격하게 유지되고 동료 검토를 거친 문서 매트릭스와 검증된 커뮤니티 상호작용을 대상으로 합니다. 표준 또는 엔터프라이즈 수준 라이선스를 확보하면 직접 내부 엔지니어링 노드를 통해 해결되는 비공개 에스컬레이션 큐에 대한 액세스가 해독됩니다."
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "물리적 또는 특수 환경 통합 운영도 지원합니까?",
+              "a": "이는 최상위 기업 대상의 맞춤형 프리미엄 실행 등급에 해당합니다. 저희의 가장 수석급 아키텍트가 직접 출장하여 레거시 아키텍처에 대한 코드 감사를 수행하고, 민감한 클라우드 이전을 관리하며, 고도로 격리된 네트워크 파티션을 검증합니다."
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "즉각적인 기술 동기화가 필요하십니까?",
+      "ctaDescription": "특정 API 동작 스키마를 검증하거나 장기 통합 계약을 실행하든, 엔지니어링 계층과 직접 연결하십시오.",
+      "ctaButton": "통합 지침 받기",
+      "ctaEmail": "다이렉트 메시지 전송"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — Nebutra",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Enforcement Epoch",
-      "lastUpdated": "Latest Structural Revision",
+      "title": "개인정보 처리방침 및 정보 보호 프로토콜 — Nebutra",
+      "description": "인프라 메커니즘이 사용자 자율성과 머신 데이터 격리를 어떻게 관리하는지 상세히 문서화합니다.",
+      "heading": "정보 보호 지침",
+      "effectiveDate": "시행일",
+      "lastUpdated": "최종 업데이트",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "2025년 1월 1일",
+        "updated": "2025년 1월 1일"
       },
-      "intro": "At Nebutra (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "Nebutra(\"회사\", \"당사\", \"우리\")는 귀하의 개인정보 보호에 최선을 다하고 있습니다. 본 개인정보 처리방침은 귀하가 당사의 웹사이트, 애플리케이션 및 서비스(이하 \"서비스\")를 이용할 때 당사가 정보를 수집, 사용, 공개 및 보호하는 방법을 설명합니다.",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. 수집하는 정보",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 귀하가 제공하는 정보",
+          "intro": "당사는 귀하가 직접 제공하는 정보를 수집하며, 이에는 다음이 포함됩니다:",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "계정 정보",
+              "desc": "계정 생성 시 이름, 이메일 주소, 비밀번호 및 조직 세부 정보."
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "프로필 정보",
+              "desc": "프로필 사진, 직책, 회사명 및 기타 선택적 정보."
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "결제 정보",
+              "desc": "청구지 주소 및 결제 수단 세부 정보(Stripe를 통해 안전하게 처리)."
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "커뮤니케이션",
+              "desc": "귀하가 당사에 보내는 메시지, 피드백 및 기타 커뮤니케이션."
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "콘텐츠",
+              "desc": "당사 서비스를 이용하여 생성, 업로드 또는 저장한 모든 콘텐츠."
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 자동으로 수집되는 정보",
+          "intro": "귀하가 당사 서비스를 이용할 때 당사는 특정 정보를 자동으로 수집합니다:",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "기기 정보",
+              "desc": "기기 유형, 운영체제, 브라우저 유형 및 고유 기기 식별자."
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "이용 정보",
+              "desc": "조회한 페이지, 사용한 기능, 수행한 작업 및 서비스 이용 시간."
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "로그 데이터",
+              "desc": "IP 주소, 접속 시각, 참조 URL 및 시스템 활동 로그."
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "위치 정보",
+              "desc": "IP 주소를 기반으로 한 일반적 위치(정밀 위치정보는 수집하지 않습니다)."
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. 정보 이용 방법",
+        "intro": "당사는 수집한 정보를 다음 목적으로 이용합니다:",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "서비스 제공",
+            "desc": "당사 서비스의 운영, 유지 및 개선."
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "거래 처리",
+            "desc": "결제, 청구 및 관련 업무 처리."
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "커뮤니케이션",
+            "desc": "서비스 공지, 업데이트 및 마케팅 커뮤니케이션 발송(동의를 받은 경우)."
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "개인화",
+            "desc": "귀하의 경험을 맞춤화하고 관련 추천 제공."
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "분석",
+            "desc": "이용 패턴 이해 및 서비스 개선."
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "보호",
+            "desc": "사기, 남용 및 보안 사고 탐지, 예방 및 대응."
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. 정보 공유 방법",
+        "intro": "당사는 다음과 같은 경우에 귀하의 정보를 공유할 수 있습니다:",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 서비스 제공자",
+          "intro": "당사는 다음을 포함하여 당사를 대신하여 서비스를 제공하는 제3자 공급업체와 정보를 공유합니다:",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "인프라",
+              "desc": "클라우드 호스팅(Vercel, Supabase), 데이터베이스 서비스"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "결제 처리",
+              "desc": "안전한 결제 처리를 위한 Stripe"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "인증",
+              "desc": "ID 관리를 위한 Clerk"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "분석",
+              "desc": "이용 인사이트를 위한 PostHog, Vercel Analytics"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 사업 양도",
+          "content": "당사가 합병, 인수 또는 자산 매각에 관여하는 경우, 귀하의 정보는 해당 거래의 일부로 이전될 수 있습니다."
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 법적 요구사항",
+          "content": "당사는 법률, 법적 절차 또는 정부 요청에 의해 요구되는 경우, 또는 당사의 권리, 프라이버시, 안전 또는 재산을 보호하기 위해 정보를 공개할 수 있습니다."
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. 귀하의 권리 및 선택권",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 접근 및 이동성",
+          "content": "귀하는 계정 설정을 통해 개인정보에 접근할 수 있으며, 이동 가능한 형식으로 데이터 사본을 요청할 수 있습니다."
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 정정",
+          "content": "귀하는 언제든지 대시보드를 통해 계정 정보를 업데이트할 수 있습니다."
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 삭제",
+          "content": "귀하는 설정을 통하거나 당사에 문의하여 계정 및 관련 데이터의 삭제를 요청할 수 있습니다."
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 마케팅 커뮤니케이션",
+          "content": "귀하는 마케팅 이메일의 \"수신 거부\"를 클릭하거나 환경설정을 업데이트하여 마케팅 이메일 수신을 거부할 수 있습니다."
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. 데이터 보안",
+        "intro": "당사는 귀하의 정보를 보호하기 위해 다음을 포함한 적절한 기술적 및 관리적 조치를 시행합니다:",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "전송 중(TLS) 및 저장 시 데이터 암호화",
+          "1": "정기적인 보안 평가 및 침투 테스트",
+          "2": "접근 통제 및 인증 요구사항",
+          "3": "시스템 활동 모니터링 및 로깅"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. 캘리포니아 개인정보 권리(CCPA)",
+        "intro": "귀하가 캘리포니아 거주자인 경우, 귀하의 개인정보에 관한 특정한 권리를 가집니다:",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "알 권리",
+            "desc": "당사가 수집, 이용, 공유하는 정보의 공개를 요청할 권리."
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "삭제 권리",
+            "desc": "귀하의 개인정보 삭제를 요청할 권리."
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "거부 권리",
+            "desc": "개인정보 판매 거부(당사는 귀하의 데이터를 판매하지 않습니다)."
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "비차별 권리",
+            "desc": "당사는 귀하의 권리 행사를 이유로 차별하지 않습니다."
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. 유럽 개인정보 권리(GDPR)",
+        "intro": "귀하가 EEA, 영국 또는 스위스에 있는 경우, GDPR에 따라 추가 권리를 가집니다:",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "법적 근거",
+            "desc": "당사는 계약 이행, 정당한 이익 또는 동의를 근거로 데이터를 처리합니다."
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "권리",
+            "desc": "접근, 정정, 삭제, 이동, 제한 및 이의 제기."
           },
           "2": {
             "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "desc": "dpo@nebutra.com으로 당사의 개인정보 보호 책임자에게 문의할 수 있습니다."
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "title": "8. 문의처",
+        "intro": "본 개인정보 처리방침에 관한 문의사항이 있으시면 다음으로 연락해 주십시오:",
         "company": "Nebutra Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — Nebutra",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "거래 이상 프로토콜 — Nebutra",
+      "description": "다양한 구조적 참여 모델 전반에 걸친 정확한 자본 환급 매개변수에 대한 엄격한 규정.",
+      "heading": "분쟁 처리 체계",
+      "effectiveDate": "시행일",
+      "lastUpdated": "개정 추적일",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "2025년 1월 1일",
+        "updated": "2025년 1월 1일"
       },
-      "intro": "At Nebutra, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "Nebutra는 귀하가 당사 서비스에 완전히 만족하시기를 바랍니다. 본 환불 정책은 환불이 가능한 상황과 환불 요청 절차를 설명합니다.",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "구독 플랜",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "월간 구독",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "해지",
+              "desc": "월간 구독은 언제든지 해지할 수 있습니다"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "일할 환불",
+              "desc": "월 중간에 대한 일할 환불은 제공되지 않습니다"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "이용 권한",
+              "desc": "결제 기간이 종료될 때까지 유료 기능을 이용할 수 있습니다"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "자동 갱신",
+              "desc": "구독은 해지하지 않는 한 자동으로 갱신됩니다"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "연간 구독",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "14일 환불 보증",
+              "desc": "신규 연간 구독자는 최초 구매 후 14일 이내에 전액 환불을 요청할 수 있습니다"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "14일 이후",
+              "desc": "14일 기간 이후에는 일반적으로 환불이 제공되지 않습니다"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "해지",
+              "desc": "언제든지 해지할 수 있으나, 구독은 연간 기간이 종료될 때까지 유효합니다"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "일할 환불 없음",
+              "desc": "사용하지 않은 개월에 대한 부분 환불은 제공되지 않습니다"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "환불 대상 사유",
+        "intro": "당사는 다음과 같은 상황에서 환불 요청을 검토합니다:",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. 서비스 문제",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "핵심 기능 이용에 영향을 미치는 중대한 서비스 중단",
+            "1": "합리적인 기간 내에 당사가 해결할 수 없는 기술적 문제",
+            "2": "광고된 내용과 현저히 다른 기능"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. 청구 오류",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "중복 청구",
+            "1": "잘못된 청구 금액",
+            "2": "무단 청구(검증 후)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. 예외적 상황",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "증빙된 의료 응급 상황",
+            "1": "사업에 영향을 미치는 자연재해",
+            "2": "사안별로 평가되는 기타 상황"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "환불 불가 항목",
+        "intro": "다음 항목은 일반적으로 환불 대상이 아닙니다:",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "이용량 기반 요금",
+            "desc": "API 호출, AI 토큰 소비 또는 사용된 저장 공간"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "부가 서비스 및 추가 항목",
+            "desc": "일회성 구매 또는 부가 서비스"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "엔터프라이즈 계약",
+            "desc": "맞춤 계약에는 자체 조건이 적용됩니다"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "자발적 해지",
+            "desc": "환불 가능 기간 이후"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "약관 위반",
+            "desc": "정책 위반으로 종료된 계정"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "환불 요청 방법",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "1단계: 지원팀 문의",
+          "intro": "billing@nebutra.com으로 다음 내용과 함께 이메일을 보내주십시오:",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "계정 이메일 주소",
+            "1": "구독 플랜 및 결제 기간",
+            "2": "환불 요청 사유",
+            "3": "관련 증빙 자료"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "2단계: 검토 절차",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "당사는 영업일 기준 5일 이내에 요청을 검토합니다",
+            "1": "추가 정보를 요청할 수 있습니다",
+            "2": "이메일로 서면 결정을 받게 됩니다"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "3단계: 환불 처리",
+          "intro": "승인된 경우:",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "환불은 원래 결제 수단으로 처리됩니다",
+            "1": "신용카드 환불은 일반적으로 영업일 기준 5~10일 이내에 표시됩니다",
+            "2": "은행 처리 시간은 다를 수 있습니다"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "플랜 변경",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "업그레이드",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "업그레이드는 즉시 적용됩니다",
+            "1": "결제 기간의 잔여 기간에 대해 일할 계산된 차액이 청구됩니다",
+            "2": "이전 플랜에 대한 환불은 제공되지 않습니다"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "다운그레이드",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "다운그레이드는 다음 결제 기간부터 적용됩니다",
+            "1": "그때까지는 현재 기능에 대한 이용 권한이 유지됩니다",
+            "2": "현재 기간에 대한 부분 환불은 제공되지 않습니다"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "무료 체험",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "무료 체험에는 결제 정보가 필요하지 않습니다",
+          "1": "체험 기간 동안 요금이 청구되지 않습니다",
+          "2": "요금 청구가 시작되기 전에 알림을 받게 됩니다"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "분쟁 해결",
+        "intro": "당사의 환불 결정에 동의하지 않으시는 경우:",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "결정 이메일에 추가 정보와 함께 회신",
+          "1": "관리자에게 에스컬레이션 요청",
+          "2": "추가 검토를 위해 legal@nebutra.com으로 문의"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "문의처",
+        "intro": "환불 요청 또는 본 정책에 관한 문의:",
         "company": "Nebutra Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using Nebutra, you agree to these refund terms."
+        "billingLabel": "결제",
+        "supportLabel": "지원",
+        "legalLabel": "법무",
+        "responseNote": "당사는 모든 환불 요청에 대해 영업일 기준 5일 이내에 답변하기 위해 노력합니다.",
+        "termsNote": "본 정책은 다음의 일부입니다:",
+        "termsLink": "이용약관",
+        "termsAgreement": "Nebutra를 이용함으로써 귀하는 본 환불 약관에 동의하는 것입니다."
       }
     },
     "terms": {
-      "title": "Platform Interaction Treaty — Nebutra",
-      "description": "The exact defining technical guidelines outlining the required engagement behaviors between the software framework provider and executing agents.",
-      "heading": "Software Supply License Mechanics (Terms)",
-      "effectiveDate": "Execution Enforcement Date",
-      "lastUpdated": "Final Network Update",
+      "title": "이용약관 — Nebutra",
+      "description": "Nebutra의 웹사이트, 애플리케이션, API 및 서비스에 대한 귀하의 접근 및 이용을 규율하는 이용약관입니다.",
+      "heading": "이용약관",
+      "effectiveDate": "시행일",
+      "lastUpdated": "최종 업데이트",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "2025년 1월 1일",
+        "updated": "2025년 1월 1일"
       },
-      "intro1": "Welcome to Nebutra! These Terms of Service (\"Terms\") govern your access to and use of Nebutra's website, applications, APIs, and services (collectively, the \"Services\") provided by Nebutra Co., Ltd. (\"Nebutra,\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "Nebutra에 오신 것을 환영합니다! 본 이용약관(\"약관\")은 Nebutra Co., Ltd.(\"Nebutra\", \"회사\", \"당사\", \"우리\")가 제공하는 Nebutra의 웹사이트, 애플리케이션, API 및 서비스(이하 \"서비스\")에 대한 귀하의 접근 및 이용을 규율합니다.",
+      "intro2": "당사 서비스에 접근하거나 이용함으로써, 귀하는 본 약관 및 당사의 다음에 동의하는 것이 됩니다:",
+      "intro2PrivacyLink": "개인정보 처리방침",
+      "intro2End": ". 본 약관에 동의하지 않는 경우, 당사 서비스를 이용하지 마십시오.",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. 약관의 동의",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 자격 요건",
+          "intro": "당사 서비스를 이용하려면 귀하는 다음 조건을 충족해야 합니다:",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "만 18세 이상이거나 귀하의 관할권에서 법적 성년 연령에 도달할 것",
+            "1": "본인 또는 소속 조직을 대신하여 본 약관을 체결할 권한이 있을 것",
+            "2": "관련 법률에 따라 당사 서비스 이용이 금지되지 않을 것"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 조직 계정",
+          "content": "조직을 대신하여 당사 서비스를 이용하는 경우, 귀하는 해당 조직을 본 약관에 구속할 권한이 있음을 진술합니다."
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "Nebutra provides a SaaS platform that includes:",
+        "title": "2. 서비스 설명",
+        "intro": "Nebutra는 다음을 포함하는 SaaS 플랫폼을 제공합니다:",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "AI 기반 기능 및 콘텐츠 생성",
+          "1": "콘텐츠 관리 및 커뮤니티 도구",
+          "2": "추천 시스템",
+          "3": "전자상거래 통합",
+          "4": "Web3 기능",
+          "5": "분석 및 리포팅"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. 계정 등록",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 계정 생성",
+          "intro": "특정 기능에 접근하려면 계정을 생성해야 합니다. 귀하는 다음에 동의합니다:",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "정확하고 완전한 정보를 제공할 것",
+            "1": "계정 자격증명의 보안을 유지할 것",
+            "2": "정보가 변경되는 경우 신속히 업데이트할 것",
+            "3": "귀하의 계정에서 이루어지는 모든 활동에 대해 책임질 것"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. 구독 및 청구",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 가격",
+          "content": "당사 서비스는 가격 페이지에 명시된 다양한 구독 플랜으로 제공됩니다. 가격은 30일 사전 통지로 변경될 수 있습니다."
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 결제",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "구독은 월간 또는 연간 기준으로 선불로 청구됩니다",
+            "1": "모든 요금은 다음에 명시된 경우를 제외하고 환불되지 않습니다:",
+            "2": "귀하는 당사가 적용 요금을 결제 수단에 청구하는 것을 승인합니다",
+            "3": "당사는 안전한 결제 처리를 위해 Stripe를 사용합니다",
+            "1RefundLink": "환불 정책"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. 허용되는 이용",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 금지 행위",
+          "intro": "귀하는 다음 행위를 하지 않을 것에 동의합니다:",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "관련 법률, 규정 또는 제3자 권리 위반",
+            "1": "악성코드, 스팸 또는 유해 콘텐츠 전송을 위한 서비스 이용",
+            "2": "당사 시스템에 대한 무단 접근 시도",
+            "3": "당사 서비스의 무결성 또는 성능 방해 또는 중단",
+            "4": "허가 없이 데이터를 스크래핑, 복사 또는 추출하는 자동화 도구 사용",
+            "5": "당사 서비스의 리버스 엔지니어링, 디컴파일 또는 분해",
+            "6": "불법, 유해 또는 기만적인 콘텐츠 생성을 위한 당사 AI 기능 이용"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. 지식재산권",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "Nebutra and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 당사의 지식재산권",
+          "content": "Nebutra와 그 라이선스 제공자는 당사가 만든 모든 소프트웨어, 디자인, 상표 및 콘텐츠를 포함한 서비스에 대한 모든 권리, 권원 및 이익을 소유합니다."
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 귀하의 콘텐츠",
+          "content": "귀하는 귀하가 생성하거나 업로드한 콘텐츠(\"귀하의 콘텐츠\")에 대한 소유권을 보유합니다. 당사 서비스를 이용함으로써, 귀하는 당사가 귀하에게 서비스를 제공하기 위한 목적으로만 귀하의 콘텐츠를 이용, 저장, 처리 및 표시할 수 있는 전 세계적이고 비독점적이며 로열티 없는 라이선스를 당사에 부여합니다."
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. 보증의 부인",
+        "content": "본 서비스는 상품성, 특정 목적 적합성, 권원 및 비침해에 대한 묵시적 보증을 포함하되 이에 한정되지 않는 명시적 또는 묵시적 어떠한 종류의 보증도 없이 \"있는 그대로\" 그리고 \"가용한 상태로\" 제공됩니다."
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. 책임의 제한",
+        "para1": "법률이 허용하는 최대 범위 내에서, Nebutra는 간접적, 부수적, 특별, 결과적 또는 징벌적 손해 또는 이익, 데이터, 사용 또는 영업권의 상실에 대해 책임을 지지 않습니다.",
+        "para2": "어떠한 경우에도 당사의 총 책임은 (A) 청구 직전 12개월 동안 귀하가 당사에 지불한 금액 또는 (B) 미화 100달러 중 큰 금액을 초과하지 않습니다."
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. 해지",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 귀하에 의한 해지",
+          "content": "귀하는 계정 설정을 통해 언제든지 계정을 해지할 수 있습니다. 해지 시 귀하는 서비스에 대한 접근 권한을 상실합니다."
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 당사에 의한 해지",
+          "intro": "당사는 귀하가 다음에 해당하는 경우 계정을 정지하거나 해지할 수 있습니다:",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "본 약관 위반",
+            "1": "사기성 또는 불법 활동 수행",
+            "2": "적용 요금 미납",
+            "3": "당사에 대한 위험 또는 법적 노출 야기"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. 분쟁 해결",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 비공식 해결",
+          "content": "공식 절차를 시작하기 전, 귀하는 분쟁을 비공식적으로 해결하기 위해 legal@nebutra.com으로 당사에 연락하는 것에 동의합니다."
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 준거법",
+          "content": "본 약관은 법률 충돌 원칙에 관계없이 미국 델라웨어주 법률에 따라 규율됩니다."
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. 문의처",
+        "intro": "본 약관에 관한 문의사항이 있으시면 다음으로 연락해 주십시오:",
         "company": "Nebutra Co., Ltd.",
-        "emailLabel": "Email",
-        "supportLabel": "Support"
+        "emailLabel": "이메일",
+        "supportLabel": "지원"
       },
-      "acknowledgement": "By using Nebutra, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "Nebutra를 이용함으로써 귀하는 본 이용약관을 읽고 이해하였으며 이에 구속되는 것에 동의함을 확인합니다."
     }
   },
   "metadata": {
@@ -1136,76 +1076,76 @@
     "pricing": {
       "hobby": {
         "name": "Hobby",
-        "price": "Free",
-        "description": "For side projects",
-        "features": ["1 Project", "Community Support", "Basic Analytics"],
-        "ctaText": "Start Free"
+        "price": "무료",
+        "description": "사이드 프로젝트용",
+        "features": ["프로젝트 1개", "커뮤니티 지원", "기본 분석"],
+        "ctaText": "무료로 시작하기"
       },
       "pro": {
         "name": "Pro",
         "price": "$29",
-        "description": "For startups",
+        "description": "스타트업용",
         "isPopular": true,
-        "features": ["Unlimited Projects", "Priority Support", "Custom Domain", "Advanced AI"],
-        "ctaText": "Get Pro"
+        "features": ["무제한 프로젝트", "우선 지원", "맞춤 도메인", "고급 AI"],
+        "ctaText": "Pro 시작하기"
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "Custom",
-        "description": "For large teams",
-        "features": ["SSO", "Dedicated Slack Channel", "SLA 99.9%", "White-label"],
-        "ctaText": "Contact Us"
+        "price": "맞춤",
+        "description": "대규모 팀용",
+        "features": ["SSO", "전용 Slack 채널", "SLA 99.9%", "화이트라벨"],
+        "ctaText": "문의하기"
       }
     },
     "faq": {
       "q1": {
-        "q": "Is this a subscription?",
-        "a": "Yes, our Pro plan is billed monthly. You can cancel at any time with no hidden fees."
+        "q": "구독제인가요?",
+        "a": "네, Pro 플랜은 월 단위로 청구됩니다. 숨겨진 비용 없이 언제든지 해지하실 수 있습니다."
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "We offer a 14-day no-questions-asked money-back guarantee."
+        "q": "환불이 가능한가요?",
+        "a": "14일 이내 묻지도 따지지도 않는 환불 보장을 제공합니다."
       },
       "q3": {
-        "q": "Can I use this for client work?",
-        "a": "Absolutely. The commercial license covers unlimited client projects."
+        "q": "클라이언트 작업에 사용할 수 있나요?",
+        "a": "물론입니다. 상업용 라이선스는 무제한 클라이언트 프로젝트를 포함합니다."
       }
     },
     "pricingHeader": {
-      "title": "Simple, transparent pricing",
-      "description": "No hidden fees. No surprises. Cancel anytime.",
-      "mostPopular": "Most Popular",
-      "perMonth": "/mo"
+      "title": "간단하고 투명한 가격",
+      "description": "숨겨진 비용 없습니다. 놀랄 일도 없습니다. 언제든지 해지 가능합니다.",
+      "mostPopular": "가장 인기",
+      "perMonth": "/월"
     },
     "faqHeader": {
-      "title": "Frequently Asked Questions",
-      "description": "Can't find the answer you're looking for? Reach out to our support team."
+      "title": "자주 묻는 질문",
+      "description": "원하는 답변을 찾지 못하셨나요? 지원팀으로 문의해 주십시오."
     },
     "waitlist": {
-      "title": "Get Early Access",
-      "description": "Join the waitlist to be notified when we launch. Be the first to try out the new features.",
+      "title": "얼리 액세스 받기",
+      "description": "출시 알림을 받으려면 대기자 명단에 가입하십시오. 새로운 기능을 가장 먼저 사용해 보실 수 있습니다.",
       "placeholder": "name@example.com",
-      "buttonText": "Join Waitlist",
-      "loadingText": "Joining...",
-      "successText": "Joined!",
-      "successMessage": "Thanks for joining! We'll be in touch soon.",
-      "socialProofPrefix": "Join",
-      "socialProofSuffix": "others on the list",
-      "emailAriaLabel": "Email address"
+      "buttonText": "대기자 명단 가입",
+      "loadingText": "가입 중...",
+      "successText": "가입 완료!",
+      "successMessage": "가입해 주셔서 감사합니다! 곧 연락드리겠습니다.",
+      "socialProofPrefix": "이미",
+      "socialProofSuffix": "명이 함께하고 있습니다",
+      "emailAriaLabel": "이메일 주소"
     }
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "Nebutra Sailor is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "시스템 토폴로지",
+      "title": "투명한 아키텍처, 블랙박스는 없습니다.",
+      "description": "Nebutra Sailor는 초모듈형 Turborepo 구조로 설계되어 소프트웨어 라이프사이클 전반을 완전히 소유할 수 있도록 합니다.",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "행 수준 보안(RLS) 정책이 네이티브로 내장된 완전 타입 지원 ORM입니다."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "title": "Clerk 멀티 테넌트 / 커스텀 아이덴티티",
+        "desc": "B2B 조직 전환과 RBAC을 지원하는 SOC2 대응 인증 게이트웨이입니다."
       }
     },
     "pricing": {
@@ -1213,125 +1153,143 @@
       "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
       "socialProofText": "오픈소스 AGPL-3.0 · 상업용 라이선스 사용 가능.",
       "solo": {
-        "badge": "INDIVIDUAL",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Best for individual builders validating products on the AGPL foundation.",
-        "cta": "Clone Repository",
-        "f1": "Complete Next.js 16 SaaS core",
-        "f2": "Unlimited Personal Projects (Commercial use allowed)",
-        "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Admin UI, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "AGPLv3 Open Source License"
+        "badge": "개인",
+        "price": "무료",
+        "period": "영구",
+        "desc": "AGPL 기반 위에서 제품을 검증하는 개인 빌더에게 가장 적합합니다.",
+        "cta": "저장소 복제",
+        "f1": "완전한 Next.js 16 SaaS 코어",
+        "f2": "무제한 개인 프로젝트 (상업적 이용 허용)",
+        "f3": "전체 SaaS 스택: 인증, 결제, 조직, API, 관리자 UI, 이메일, 다국어, 백그라운드 작업, 스토리지 등",
+        "f4": "마케팅 기능: 블로그, 랜딩 페이지, SEO, 분석",
+        "f5": "AGPLv3 오픈소스 라이선스"
       },
       "startup": {
-        "badge": "STARTUP",
+        "badge": "스타트업",
         "price": "$799",
         "period": "lifetime",
-        "desc": "For small teams building on the Nebutra platform baseline.",
-        "cta": "Get Nebutra for Startups",
+        "desc": "Nebutra 플랫폼 베이스라인 위에서 구축하는 소규모 팀을 위한 플랜입니다.",
+        "cta": "스타트업용 Nebutra 받기",
         "f1": "Up to 5 Developer Seats",
-        "f2": "Unlimited Team Projects",
+        "f2": "무제한 팀 프로젝트",
         "f3": "30-min Architecture Consult (Onboarding Call)",
         "f4": "Priority Support",
-        "f5": "Everything in Solo"
+        "f5": "Solo의 모든 기능 포함"
       },
       "agency": {
-        "badge": "AGENCY",
+        "badge": "에이전시",
         "price": "$1,499",
         "period": "lifetime",
-        "desc": "For agencies and operators shipping repeatable client platforms.",
-        "cta": "Get Nebutra for Agencies",
+        "desc": "반복 가능한 클라이언트 플랫폼을 출시하는 에이전시 및 운영자를 위한 플랜입니다.",
+        "cta": "에이전시용 Nebutra 받기",
         "f1": "Up to 10 Developer Seats",
-        "f2": "Unlimited Client Projects",
+        "f2": "무제한 클라이언트 프로젝트",
         "f3": "30-min Architecture Consult (Onboarding Call)",
-        "f4": "White-label potential",
-        "f5": "Everything in Startup",
+        "f4": "화이트 라벨 가능",
+        "f5": "Startup의 모든 기능 포함",
         "f6": "Private Discord support channel"
       }
     },
     "faq": {
-      "title": "Evaluating the stack.",
-      "description": "Detailed engineering answers to accelerate your architectural decisions.",
+      "title": "스택 평가하기.",
+      "description": "아키텍처 결정을 가속화하는 상세한 엔지니어링 답변입니다.",
       "q1": {
-        "q": "Why Turborepo over a standard Next.js app?",
-        "a": "Turborepo isolates your UI components, database schemas, and shared utilities, allowing unparalleled scale when your SaaS outgrows a single frontend application."
+        "q": "왜 표준 Next.js 앱이 아닌 Turborepo인가요?",
+        "a": "Turborepo는 UI 컴포넌트, 데이터베이스 스키마, 공유 유틸리티를 분리하여, SaaS가 단일 프런트엔드 애플리케이션을 넘어 확장될 때 비할 데 없는 규모를 제공합니다."
       },
       "q2": {
-        "q": "How is multi-tenancy handled?",
-        "a": "We use Clerk's B2B organizational structure deeply integrated with Prisma middleware to ensure strict row-level isolation between organizations."
+        "q": "멀티 테넌시는 어떻게 처리되나요?",
+        "a": "Clerk의 B2B 조직 구조를 Prisma 미들웨어와 깊이 통합하여, 조직 간 엄격한 행 수준 격리를 보장합니다."
       },
       "q3": {
-        "q": "Can I swap Clerk for Supabase Auth?",
-        "a": "Absolutely. Our authentication layer is abstracted via @nebutra/auth, meaning you can hot-swap identity providers with minimal refactoring."
+        "q": "Clerk를 Supabase Auth로 교체할 수 있나요?",
+        "a": "물론입니다. 인증 레이어는 @nebutra/auth를 통해 추상화되어 있어 최소한의 리팩터링으로 아이덴티티 제공자를 교체할 수 있습니다."
       },
       "q4": {
-        "q": "Do I need to pay for updates?",
-        "a": "Commercial licenses include 12 months of updates from the date of purchase. The AGPL-3.0 individual tier is perpetual."
+        "q": "업데이트는 유료인가요?",
+        "a": "상업용 라이선스에는 구매일로부터 12개월간 업데이트가 포함됩니다. AGPL-3.0 개인 등급은 영구입니다."
       }
     },
     "cta": {
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the Nebutra CLI.",
-      "button": "Deploy Architecture",
+      "eyebrow": "시작하기",
+      "title": "설정은 그만, 이제 빌드할 시간입니다.",
+      "description": "Nebutra CLI로 확장 가능한 SaaS 아키텍처를 로컬에서 초기화하십시오.",
+      "button": "아키텍처 배포",
       "license": "AGPL-3.0 오픈소스 라이선스. 신용카드 불필요."
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "엔터프라이즈 역량",
+      "title": "완전 타입 지원, 확장 가능한 코어.",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "네이티브 행 수준 보안",
+        "desc": "모든 데이터베이스 쿼리는 현재 테넌트 컨텍스트로 엄격하게 범위가 지정됩니다.",
+        "cta": "데이터베이스 철학 읽기"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "통합 AI 게이트웨이",
+        "desc": "OpenAI, Anthropic 또는 오픈소스 모델로 프롬프트를 매끄럽게 라우팅합니다.",
+        "cta": "AI SDK 핸들러 살펴보기"
       },
       "rbac": {
-        "title": "Granular Access Control",
+        "title": "세분화된 접근 제어",
         "desc": "Define admin, member, and viewer roles with zero boilerplate.",
-        "cta": "View RBAC documentation"
+        "cta": "RBAC 문서 보기"
       },
       "billing": {
         "title": "Stripe Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "desc": "사용량 기반 미터링, 구독 웹훅, 셀프 서비스 고객 포털입니다.",
+        "cta": "결제 아키텍처 보기"
+      }
+    },
+    "productDemo": {
+      "badge": "인터랙티브 데모",
+      "title": "실시간 속도를 경험하십시오.",
+      "description": "커맨드라인 인터페이스, Stripe 웹훅 터널링, 로컬 멀티 테넌트 데이터베이스 프로비저닝을 직접 체험해 보십시오.",
+      "analytics": {
+        "label": "실시간 텔레메트리",
+        "desc": "프로덕션 사용 데이터를 곧바로 터미널로 스트리밍합니다."
+      },
+      "billing": {
+        "label": "결제 이벤트",
+        "desc": "Stripe 웹훅이 로컬 터널링을 통해 실행되는 과정을 확인하십시오."
+      },
+      "workspaces": {
+        "label": "워크스페이스 초기화",
+        "desc": "격리된 B2B PostgreSQL 스키마를 즉시 프로비저닝합니다."
       }
     },
     "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "badge": "속도",
+      "title": "제로에서 프로덕션까지, 기록적인 시간 안에.",
       "step1": {
-        "title": "1. Clone",
-        "desc": "Instantly clone the Nebutra monorepo and run pnpm install."
+        "title": "1. 복제",
+        "desc": "Nebutra 모노레포를 즉시 복제하고 pnpm install을 실행하십시오."
       },
       "step2": {
-        "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "title": "2. 구성",
+        "desc": "인터랙티브 CLI로 Prisma, Clerk, Stripe를 몇 분 만에 설정하십시오."
       },
       "step3": {
-        "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "title": "3. 빌드",
+        "desc": "플랫폼 베이스라인이 이미 연결되어 있으니, 제품 로직과 UI에만 집중하십시오."
       },
       "step4": {
-        "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "title": "4. 배포",
+        "desc": "Vercel과 AWS로 푸시하여 즉각적인 전 세계 배포를 실현하십시오."
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "unit": "분",
+        "subtitle": "출시 소요 시간",
+        "comparison": "수 개월의 플랫폼 작업을 건너뛰십시오.",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
+          "scaffold": "초기화",
+          "wire": "코어",
+          "ship": "배포",
+          "scale": "확장",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "타이머 시작"
       },
       "presetHint": {
         "badge": "Nebutra 프리셋",
@@ -1339,40 +1297,6 @@
         "detail": "14개의 패키지가 기본적으로 통합되었습니다.",
         "readyStatus": "프리셋 시스템 준비 완료"
       }
-    },
-    "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
-      "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
-      },
-      "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
-      },
-      "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
-      }
-    },
-    "harness": {
-      "badge": "HARNESS ENGINEERING",
-      "headline": "Engineering that enforces itself.",
-      "subheadline": "Architecture tests, governance ratchets, and 15 CI workflows ensure code quality can only improve — never regress.",
-      "stat1Value": "19",
-      "stat1Label": "CI Workflows",
-      "stat2Value": "13",
-      "stat2Label": "Architecture Tests",
-      "stat3Value": "0",
-      "stat3Label": "Token Violations",
-      "card1Title": "Architecture Tests",
-      "card1Desc": "13개 아키텍처 테스트가 의존성 흐름, 토큰 사용, WCAG 대비, API 계약, Storybook 커버리지를 검증 — 그중 4개는 fast-check 속성 기반 증명을 사용.",
-      "card2Title": "Governance Ratchets",
-      "card2Desc": "Token budgets that only tighten: zero raw color classes on landing page, oklch floor 120+, hex ceiling 40, motion imports whitelisted to 2 files.",
-      "card3Title": "CI Pipeline Depth",
-      "card3Desc": "CodeQL SAST, Gitleaks, cosign signing, SBOM/SLSA provenance, Lighthouse ≥0.95, OpenAPI backward compatibility, k6 load tests, Chromatic visual regression."
     }
   },
   "featuresPage": {
@@ -1384,88 +1308,79 @@
     },
     "sections": {
       "exploreFeature": "기능 살펴보기",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
+      "ai_category": "AI 및 인텔리전스",
+      "ai_f1_title": "멀티 모델 채팅 컴플리션",
       "ai_f1_desc": "요청을 Anthropic, OpenAI, Google 또는 자체 파인튜닝된 모델로 라우팅. 스트리밍, 비전, 함수 호출 기본 지원.",
-      "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      "ai_f3_title": "AI usage metering",
+      "ai_f2_title": "시맨틱 임베딩",
+      "ai_f2_desc": "pgvector로 벡터 임베딩을 생성하고 저장하십시오. 시맨틱 검색, RAG 파이프라인, 추천 엔진을 구동합니다.",
+      "ai_f3_title": "AI 사용량 미터링",
       "ai_f3_desc": "Track token consumption per tenant per billing period. Set per-plan quotas and auto-notify on 80% / 100% burn.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_category": "멀티 테넌트 플랫폼",
+      "multi_f1_title": "조직 단위 격리",
+      "multi_f1_desc": "Postgres의 행 수준 보안이 테넌트 간 데이터 접근을 원천 차단합니다. 애플리케이션이 아닌 데이터베이스 계층에서 적용됩니다.",
+      "multi_f2_title": "멀티 프로바이더 인증 (Clerk / Better Auth / NextAuth / Supabase)",
       "multi_f2_desc": "Switch auth providers via preset config. Clerk for managed, Better Auth for self-hosted. Phone + SMS login for China market via Aliyun/Tencent Cloud.",
-      "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
-      "rel_f1_title": "Circuit breaker + retry",
+      "multi_f3_title": "자동 테넌트 프로비저닝",
+      "multi_f3_desc": "새 조직이 Clerk를 통해 가입하면, 최초 API 키를 자동 생성하고 브랜드화된 환영 이메일을 발송합니다. 수동 단계가 전혀 없습니다.",
+      "dx_category": "개발자 경험",
+      "dx_f1_title": "해시 처리된 API 키",
+      "dx_f1_desc": "SHA-256으로 해시 처리되고 프리픽스(nbtr_live_…)가 표시되는 키입니다. 생성 시 평문으로 단 한 번만 표시되어 마찰 없이 보안을 확보합니다.",
+      "dx_f2_title": "멱등성 미들웨어",
+      "dx_f2_desc": "Idempotency-Key 헤더를 전달하면 모든 POST 요청을 안전하게 재시도할 수 있습니다. Redis 기반, 24시간 캐시, IETF 초안 준수.",
+      "dx_f3_title": "멀티 프로토콜 API (REST + oRPC + tRPC)",
+      "dx_f3_desc": "공개 API용 REST/OpenAPI, 타입 안전 프런트엔드 호출용 oRPC, T3 스택 호환용 tRPC. 모든 프로토콜이 동일한 Zod 계약과 미들웨어 스택을 공유합니다. 프리셋 구성으로 프로토콜별 활성화가 가능합니다.",
+      "billing_category": "결제 및 수익화",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar 및 China Pay",
+      "billing_f1_desc": "결제 프로바이더를 선택하십시오. 글로벌 엔터프라이즈용 Stripe, 인디 개발자용 LemonSqueezy, OSS용 Polar, 중국 시장용 Alipay/WeChat Pay. 원클릭 체크아웃과 셀프 서비스 결제 포털을 제공합니다.",
+      "billing_f2_title": "사용량 기반 할당량 적용",
+      "billing_f2_desc": "실시간 Redis 카운터가 테넌트별 API 호출과 토큰 사용량을 추적합니다. 한도에 도달하면 게이트웨이에서 요청이 차단됩니다.",
+      "billing_f3_title": "웹훅 라이프사이클 동기화",
+      "billing_f3_desc": "Stripe 구독 이벤트가 Inngest를 통해 데이터베이스의 조직 플랜을 자동 업데이트합니다. 크론 작업이나 폴링이 필요 없습니다.",
+      "rel_category": "신뢰성",
+      "rel_f1_title": "서킷 브레이커 + 재시도",
       "rel_f1_desc": "Every Python microservice uses a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
-      "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
+      "rel_f2_title": "데드 레터 큐",
+      "rel_f2_desc": "3회 재시도를 모두 소진한 이벤트 핸들러는 DLQ로 이동합니다. 재배포 없이 관리자 API에서 개별적으로 재실행할 수 있습니다.",
+      "rel_f3_title": "SLO 소진율 알림",
+      "rel_f3_desc": "Google SRE 방식의 다중 윈도우 알림이 오류 예산 소진 전 14.4배, 6배, 3배 소진율에서 발동합니다.",
+      "sec_category": "보안",
+      "sec_f1_title": "CSP 논스 기반 헤더",
+      "sec_f1_desc": "Clerk 미들웨어에서 요청별 논스를 생성하는 strict-dynamic 콘텐츠 보안 정책입니다. unsafe-inline은 어디에도 사용되지 않습니다.",
       "sec_f2_title": "ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      "sec_f3_title": "SBOM + SLSA provenance",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
-      "obs_f1_title": "OpenTelemetry tracing",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      "obs_f2_title": "Grafana dashboards",
+      "sec_f2_desc": "모든 인그레스에서 DetectionOnly 모드로 OWASP 코어 룰셋을 적용합니다. nginx 어노테이션을 통한 버스트 허용과 함께 초당 30 요청으로 속도 제한합니다.",
+      "sec_f3_title": "SBOM + SLSA 출처 증명",
+      "sec_f3_desc": "모든 릴리스에서 CycloneDX 소프트웨어 자재 명세서와 SLSA 출처 증명을 생성하여 GitHub Release에 업로드합니다.",
+      "obs_category": "관측 가능성",
+      "obs_f1_title": "OpenTelemetry 트레이싱",
+      "obs_f1_desc": "Next.js → Hono → Python 마이크로서비스로 이어지는 분산 트레이스가 OTLP를 통해 흐릅니다. Jaeger(개발) 및 Grafana Tempo(프로덕션)로 내보내집니다.",
+      "obs_f2_title": "Grafana 대시보드",
       "obs_f2_desc": "32-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      "obs_f3_title": "Sentry error tracking",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      "data_f3_title": "Kafka / event ingestion",
+      "obs_f3_title": "Sentry 오류 추적",
+      "obs_f3_desc": "서버 및 클라이언트 측 오류를 테넌트 컨텍스트, 요청 ID, 트레이스 ID와 함께 캡처하여 시스템 간 상관 분석을 지원합니다.",
+      "data_category": "데이터 및 분석",
+      "data_f1_title": "ClickHouse OLAP 웨어하우스",
+      "data_f1_desc": "이벤트가 ClickHouse로 적재되어 빠른 분석 쿼리를 지원합니다. dbt가 원시 이벤트를 골드 레이어 성장 지표로 변환하여 대시보드에서 확인할 수 있습니다.",
+      "data_f2_title": "퍼널 분석",
+      "data_f2_desc": "가입 → 활성화 → 전환을 코호트 단위 어트리뷰션으로 추적합니다. 활성 사용자당 매출은 골드 레이어에서 계산됩니다.",
+      "data_f3_title": "Kafka / 이벤트 수집",
       "data_f3_desc": "High-throughput event ingestion service decouples your application from your data warehouse. Schema validation at the edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "infra_category": "인프라",
+      "infra_f1_title": "ArgoCD 기반 GitOps",
+      "infra_f1_desc": "Main 브랜치의 변경 사항이 클러스터로 자동 조정됩니다. 자가 치유 기능이 수동 kubectl 편집을 되돌립니다. 동기화 윈도우로 안전한 배포 시간을 강제합니다.",
+      "infra_f2_title": "PgBouncer 커넥션 풀링",
+      "infra_f2_desc": "Supabase 앞단에 위치한 트랜잭션 모드 PgBouncer가 20개의 Postgres 커넥션으로 1,000개의 앱 커넥션을 처리합니다. 2개 레플리카로 HA 구성됩니다.",
+      "infra_f3_title": "수평 + 수직 오토스케일링",
+      "infra_f3_desc": "HPA가 CPU/메모리에 따라 스케일링합니다. VPA는 Off 모드에서 라이트사이징 권장 사항을 제공합니다. KEDA 커스텀 메트릭은 v2에서 계획되어 있습니다."
     }
   },
   "comingSoon": {
     "badge": "🚧 준비 중",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
+      "ideas": "이 섹션을 위한 놀라운 긱 중심 경험을 현재 제작 중입니다. 차기 주요 아키텍처 파이프라인 업데이트와 함께 공개될 예정입니다.",
+      "opc": "더 심층적인 플랫폼 개요를 준비하고 있습니다. 향후 릴리스에 관한 정보는 변경 로그와 로드맵을 참고해 주십시오.",
       "roadmap": "인프라 기반부터 엔터프라이즈 규모까지 — 제품 단계, 버전 마일스톤, 투자 유치 비전."
     },
     "returnBtn": "홈으로 돌아가기"
-  },
-  "showcase": {
-    "badge": "실제 동작",
-    "headline": "데모가 아닌 프로덕션을 위해 구축.",
-    "tabs": {
-      "dashboard": "Dashboard",
-      "billing": "Billing",
-      "ai-chat": "AI Chat"
-    }
   },
   "blogShowcase": {
     "badge": "블로그에서",
@@ -1475,29 +1390,28 @@
   },
   "useCases": {
     "badge": "배포 시나리오",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "Nebutra Sailor powers the next generation of SaaS products across global markets.",
+    "title": "하나의 기반. 무한한 가능성.",
+    "description": "Nebutra Sailor는 글로벌 시장에서 차세대 SaaS 제품을 지원합니다.",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets",
-      "seoGeo": "SEO & GEO 엔진"
+      "opc": "Agentic 운영",
+      "ip": "개인 IP 매트릭스",
+      "multimodal": "멀티모달 AI SaaS",
+      "enterprise": "현대 기업 (중국)",
+      "export": "글로벌 소프트웨어 수출",
+      "design": "디자인 시스템 엔진",
+      "edam": "엔터프라이즈 디지털 자산"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "AI 네이티브 운영 허브",
+        "desc": "에이전트 워크플로, 내부 도구, 통합 인터페이스를 하나의 거버넌스된 플랫폼 베이스라인에서 운영합니다. 레지스트리 기반 확장, 운영자 포털, 재사용 가능한 런타임 패턴이 시스템 확장과 함께 정합성을 유지합니다.",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "도구 레지스트리 및 통합 인터페이스",
+          "f2": "운영자 포털 및 내부 콘솔"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
+        "title": "개인 IP 성장 및 포트폴리오 매트릭스",
         "desc": "Establish a world-class founder presence. High-conversion blog, portfolio, and profile templates optimized for personal brand monetization.",
         "features": {
           "f1": "MDX Blog Engine",
@@ -1505,7 +1419,7 @@
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
+        "title": "혁신적 멀티모달 AI SaaS",
         "desc": "Launch complete Chatbot, Text-to-Image, or Video generation SaaS with integrated Vercel AI SDK, streaming, and prompt gateways.",
         "features": {
           "f1": "Streaming UI",
@@ -1521,7 +1435,7 @@
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
+        "title": "글로벌 소프트웨어 수출 랜딩 페이지",
         "desc": "Designed for cross-border SaaS. Built-in multi-currency Stripe checkout, next-intl i18n routing, and GDPR compliance.",
         "features": {
           "f1": "Global Payments",
@@ -1537,36 +1451,15 @@
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "엔터프라이즈 디지털 자산 관리",
+        "desc": "확장 가능한 PostgreSQL 아키텍처와 세분화된 RBAC를 활용한 구조화된 데이터 레이크와 복잡한 대시보드 토폴로지를 제공합니다.",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
-        }
-      },
-      "seoGeo": {
-        "title": "SEO & GEO 성장 엔진",
-        "desc": "전통적 검색을 넘어서. 내장 SEO 기반과 생성 엔진 최적화로 Google과 ChatGPT, Perplexity, Gemini 등 AI 검색 엔진에서 동시에 발견됩니다.",
-        "features": {
-          "f1": "Lighthouse 99+ 점수",
-          "f2": "AI 검색 인덱싱"
+          "f1": "행 수준 보안",
+          "f2": "복잡한 쿼리",
+          "f3": "역할 관리"
         }
       }
     }
-  },
-  "agentic": {
-    "badge": "AGENTIC 엔지니어링",
-    "headline": "AI 코딩 에이전트를 위해 설계.",
-    "subheadline": "모든 파일, 모든 규칙, 모든 테스트가 Claude Code, Cursor, Codex가 전체 코드베이스를 이해하고 자율적으로 배포할 수 있도록 설계되었습니다.",
-    "card1Title": "구조화된 컨텍스트",
-    "card1Desc": "CLAUDE.md가 컴포넌트 규칙, 토큰 거버넌스, 임포트 경계를 제공—에이전트가 추측할 필요 없습니다.",
-    "card2Title": "아키텍처 가드레일",
-    "card2Desc": "7개의 속성 테스트가 의존성 흐름, 토큰 사용, WCAG 대비를 강제—에이전트는 불변성을 깨뜨릴 수 없습니다.",
-    "card3Title": "자율 배포",
-    "card3Desc": "에이전트가 컨텍스트를 읽고, 코드를 작성하고, 테스트를 실행하고, CI를 통과—프롬프트에서 프로덕션까지 수동 개입 없이.",
-    "compTraditional": "AI 추측 → 코드 손상 → 수동 수정",
-    "compSailor": "AI 규칙 읽기 → 제약 준수 → CI 검증 → 배포"
   },
   "designSystem": {
     "badge": "디자인 시스템",
@@ -1591,36 +1484,6 @@
     "card5Title": "인터랙티브 문서",
     "card5Desc": "Fumadocs 기반 디자인 문서 사이트. 이중 언어 컴포넌트 API 문서, 토큰 갤러리, 레이아웃 패턴 가이드."
   },
-  "seoGeo": {
-    "badge": "SEO & GEO",
-    "headline": "사람에게 발견되다. AI에게 인용되다.",
-    "subheadline": "모든 페이지에 프로덕션급 SEO와 생성 엔진 최적화가 내장되어 있습니다. Google, Perplexity, ChatGPT Search, Bing Copilot에 바로 노출됩니다.",
-    "stat1Value": "100",
-    "stat1Label": "Lighthouse SEO",
-    "stat2Value": "99",
-    "stat2Label": "성능",
-    "stat3Value": "7",
-    "stat3Label": "언어",
-    "stat4Value": "6+",
-    "stat4Label": "스키마 타입",
-    "seoLabel": "검색 엔진 최적화",
-    "geoLabel": "생성 엔진 최적화",
-    "card1Title": "자동화된 메타 & 구조화된 데이터",
-    "card1Desc": "JSON-LD 스키마, Open Graph, Twitter Cards, 정규 URL, XML 사이트맵을 콘텐츠 모델에서 자동 생성. 수동 설정 없음.",
-    "card2Title": "AI 최적화 콘텐츠 아키텍처",
-    "card2Desc": "시맨틱 HTML5, FAQ 스키마, HowTo 마크업 및 AI 검색 엔진이 답변 생성 시 선호하는 인용 가능 형식.",
-    "card3Title": "다국어 SEO (hreflang)",
-    "card3Desc": "next-intl은 로케일 기반 라우팅을 사용하여 7개 언어에 대한 hreflang 대체 항목을 자동 생성합니다. 각 언어는 자체 사이트맵 항목을 가집니다.",
-    "card4Title": "Core Web Vitals 우선",
-    "card4Desc": "서버 컴포넌트, 동적 임포트, 이미지 최적화 및 엣지 캐싱으로 99+ Lighthouse 점수 달성. 모바일에서 LCP 1.2초 이하.",
-    "card5Title": "AI 인용 신호",
-    "card5Desc": "구조화된 데이터, 권위 있는 콘텐츠 패턴 및 E-E-A-T 신호. Perplexity, ChatGPT Search 및 Google SGE가 인용 소스를 결정할 때 사용.",
-    "card6Title": "글로벌 엣지 배포",
-    "card6Desc": "ISR + 300+ Vercel PoP상의 엣지 미들웨어. 지역별 타겟팅 콘텐츠, 다중 통화 가격 책정 및 엣지에서의 로케일 인식 라우팅.",
-    "compTraditionalLabel": "전통적 SEO",
-    "compTraditional": "수동 메타 태그 → 느린 크롤링 → AI 검색에서 보이지 않음",
-    "compSailor": "자동화된 스키마 → 즉시 인덱싱 → AI 엔진에서 인용 → 글로벌 도달"
-  },
   "notFound": {
     "title": "페이지를 찾을 수 없습니다",
     "desc": "찾으시는 페이지가 삭제되었거나 일시적으로 사용할 수 없습니다.",
@@ -1628,29 +1491,29 @@
     "docs": "문서 읽기"
   },
   "impact": {
-    "hero_eyebrow": "Nebutra Core Vision Whitepaper",
-    "hero_title": "The Governed AI Platform",
-    "hero_subtitle": "We build the platform baseline, governance model, and Harness layer for teams shipping AI-native products.",
-    "phil_title": "Ⅰ. Philosophy",
-    "phil_headline": "Governance over Glue Code",
-    "phil_desc": "Teams should not have to rebuild the same platform layer every time they start an AI-native product. Nebutra focuses on turning that repeated platform work into a governed, reusable baseline that stays auditable, extensible, and fast to ship.",
-    "infra_title": "Ⅱ. Infrastructure",
-    "infra_headline": "The AI-Native Platform Layer",
-    "infra_desc": "Nebutra is not a stitched-together starter. It is a production platform layer spanning scaffolding, runtime integrations, governance, and delivery.",
+    "hero_eyebrow": "Nebutra 핵심 비전 백서",
+    "hero_title": "거버넌스 기반 AI 플랫폼",
+    "hero_subtitle": "AI 네이티브 제품을 출시하는 팀을 위한 플랫폼 베이스라인, 거버넌스 모델, Harness 레이어를 구축합니다.",
+    "phil_title": "Ⅰ. 철학",
+    "phil_headline": "글루 코드보다 거버넌스",
+    "phil_desc": "AI 네이티브 제품을 시작할 때마다 동일한 플랫폼 레이어를 재구축할 필요는 없습니다. Nebutra는 그 반복되는 플랫폼 작업을 감사 가능하고 확장 가능하며 빠르게 출시할 수 있는 거버넌스된 재사용 베이스라인으로 전환하는 데 집중합니다.",
+    "infra_title": "Ⅱ. 인프라스트럭처",
+    "infra_headline": "AI 네이티브 플랫폼 레이어",
+    "infra_desc": "Nebutra는 짜깁기한 스타터가 아닙니다. 스캐폴딩, 런타임 통합, 거버넌스, 배포를 아우르는 프로덕션급 플랫폼 레이어입니다.",
     "infra_1_title": "The Builder Core",
-    "infra_1_desc": "A governed monorepo baseline with tenant isolation, billing, auth, docs, and AI integrations already wired.",
+    "infra_1_desc": "테넌트 격리, 빌링, 인증, 문서, AI 통합이 이미 연결된 거버넌스된 모노레포 베이스라인입니다.",
     "infra_2_title": "The Launchpad",
-    "infra_2_desc": "Verified scaffolding, reproducible delivery, and operator-facing tooling that reduce platform risk from day zero.",
+    "infra_2_desc": "검증된 스캐폴딩, 재현 가능한 배포, 운영자 친화적 도구로 0일차부터 플랫폼 리스크를 줄입니다.",
     "infra_3_title": "Sleptons Router",
-    "infra_3_desc": "Registry-driven extensions and integration surfaces keep teams moving without fragmenting the codebase.",
+    "infra_3_desc": "레지스트리 기반 확장과 통합 인터페이스를 통해 코드베이스 분열 없이 팀이 계속 전진할 수 있습니다.",
     "infra_4_title": "Algorithmic Capital",
-    "infra_4_desc": "Harness primitives, MCP interoperability, and workflow orchestration position the stack for the next generation of AI-native software.",
-    "route_title": "Ⅲ. Routing",
-    "route_headline": "A Clear Upgrade Path",
-    "route_desc": "The platform should grow through compatibility checks, migrations, and observable runtime behavior, not through one-off rewrites and hidden drift.",
-    "org_title": "Ⅳ. Organization",
-    "org_headline": "Operational Discipline at Scale",
-    "org_desc": "We use automation, tests, and governance ratchets to keep the platform improving as teams and workloads grow. Human attention stays on product decisions, not repeated infrastructure cleanup."
+    "infra_4_desc": "Harness 프리미티브, MCP 상호운용성, 워크플로 오케스트레이션이 차세대 AI 네이티브 소프트웨어를 위한 스택을 자리매김합니다.",
+    "route_title": "Ⅲ. 라우팅",
+    "route_headline": "명확한 업그레이드 경로",
+    "route_desc": "플랫폼은 일회성 재작성과 숨겨진 드리프트가 아니라 호환성 검사, 마이그레이션, 관측 가능한 런타임 동작을 통해 성장해야 합니다.",
+    "org_title": "Ⅳ. 조직",
+    "org_headline": "규모에 걸맞는 운영 규율",
+    "org_desc": "자동화, 테스트, 거버넌스 래칫을 활용하여 팀과 워크로드가 성장함에 따라 플랫폼이 지속적으로 개선되도록 합니다. 인적 주의는 반복적인 인프라 정리가 아닌 제품 의사결정에 집중됩니다."
   },
   "ui": {
     "search": {
@@ -1763,8 +1626,8 @@
     "versionTitleSuffix": "Nebutra 업데이트 로그"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — Nebutra",
-    "description": "The roadmap for Nebutra's governed platform baseline, Harness runtime, and upgrade path."
+    "title": "플랫폼 로드맵 — Nebutra",
+    "description": "Nebutra의 거버넌스된 플랫폼 베이스라인, Harness 런타임, 업그레이드 경로에 대한 로드맵입니다."
   },
   "blogMeta": {
     "title": "블로그 — Nebutra",
@@ -1772,6 +1635,169 @@
   },
   "getLicenseMeta": {
     "title": "라이선스 받기 — Nebutra",
-    "description": "Get your Nebutra license and platform access in 2 minutes."
+    "description": "2분 안에 Nebutra 라이선스와 플랫폼 액세스를 받으세요."
+  },
+  "compliance": {
+    "icp": {
+      "publicSecurity": "공안비안",
+      "recordNumber": "ICP 등록"
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "개인정보 설정",
+      "description": "사용자 경험 개선, 사이트 트래픽 분석, 콘텐츠 맞춤화를 위해 쿠키를 사용합니다. 허용할 카테고리를 선택해 주십시오."
+    },
+    "button": {
+      "acceptAll": "모두 수락",
+      "savePreferences": "설정 저장"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "필수",
+        "description": "사이트 기능에 필수적이며 비활성화할 수 없습니다."
+      },
+      "functional": {
+        "label": "기능",
+        "description": "언어, 테마, 레이아웃 등 사용자 설정을 기억합니다."
+      },
+      "analytics": {
+        "label": "분석",
+        "description": "익명 사용 데이터로 제품을 개선합니다."
+      },
+      "marketing": {
+        "label": "마케팅",
+        "description": "타사 플랫폼에서의 맞춤형 광고 및 리타겟팅에 사용됩니다."
+      }
+    }
+  },
+  "icpFooter": {
+    "publicSecurity": "공안비안 번호",
+    "recordNumber": "ICP 등록"
+  },
+  "landing": {
+    "comparison": {
+      "ariaTable": "요금제 및 기능 비교",
+      "badge": "요금제 비교",
+      "title": "현재 단계에 맞는 요금제를 선택하십시오",
+      "subtitle": "모든 요금제에 전체 소스 코드가 포함됩니다. 상용 라이선스는 12개월의 업데이트를 포함합니다.",
+      "plan": {
+        "individual": "개인",
+        "startup": "스타트업",
+        "agency": "에이전시"
+      },
+      "feature": {
+        "license": {
+          "label": "라이선스",
+          "type": "라이선스 유형",
+          "closed-source": "비공개 소스 사용",
+          "white-label": "화이트 라벨 권한"
+        },
+        "source": {
+          "label": "소스 코드",
+          "full-source": "전체 소스 코드",
+          "all-packages": "모든 패키지 및 모듈",
+          "lifetime-updates": "평생 업데이트"
+        },
+        "support": {
+          "label": "지원",
+          "channel": "지원 채널",
+          "onboarding": "온보딩 콜",
+          "sla": "가동률 SLA",
+          "architecture-consult": "아키텍처 컨설팅"
+        },
+        "team": {
+          "label": "팀",
+          "seats": "개발자 좌석",
+          "projects": "프로젝트"
+        }
+      }
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "솔직하게 답해 드립니다",
+      "subtitle": "출시 전 알아두셔야 할 모든 것.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Nebutra Sailor는 정확히 무엇입니까?",
+          "answer": "Sailor는 인증, 결제, 멀티테넌시, AI, 큐, 검색, 이메일이 이미 연결된 Next.js + Tailwind v4 기반의 의견 있는 SaaS 파운데이션입니다. 복제하고 공급자를 구성한 다음 출시하면 — 보통 일주일 이내에 가능합니다."
+        },
+        "who-is-it-for": {
+          "question": "Sailor는 누구를 위해 만들어졌습니까?",
+          "answer": "차별화 요소에 시간을 쓰고 싶은 — 같은 인증/결제/테넌시 배관을 다섯 번째로 재구축하지 않고 싶은 — 창업자와 제품 엔지니어를 위한 것입니다."
+        },
+        "tech-stack": {
+          "question": "기술 스택은 무엇입니까?",
+          "answer": "React 19 기반의 Next.js 16(App Router), TypeScript 5.9, Tailwind v4, Postgres 위의 Prisma 7(pgvector + RLS 포함), BFF 게이트웨이용 Hono, ML/대규모 서비스용 FastAPI, Radix + Lobe UI 프리미티브와 framer-motion으로 큐레이팅된 컴포넌트 라이브러리. AI 기능은 공급자 이식성(OpenAI / OpenRouter / SiliconFlow / Azure / 로컬)을 갖춘 Vercel AI SDK를 통해 처리됩니다."
+        },
+        "license": {
+          "question": "라이선스는 무엇입니까?",
+          "answer": "상용 예외 조항이 있는 AGPL-3.0입니다. 개인 사용, 사내 도구 및 AGPL 호환 OSS에는 무료입니다. 유료 상용 라이선스는 Sailor를 독점 SaaS에 그대로 사용할 권한을 부여합니다. 전체 소스 코드는 모든 요금제에 포함됩니다."
+        },
+        "free-or-paid": {
+          "question": "무료입니까, 유료입니까?",
+          "answer": "전체 소스는 AGPL-3.0으로 제공됩니다 — 개인 프로젝트, 사내 도구, AGPL 호환 오픈소스 작업에 무료입니다. 상용 라이선스는 Sailor를 비공개 독점 SaaS에 출시할 권한을 잠금 해제합니다. 모든 요금제에는 전체 기능 세트(인증, 결제, 멀티테넌시, AI, 감사)가 포함됩니다. 등급은 기능이 아니라 라이선스 조건과 지원 SLA에서 차이가 있습니다."
+        },
+        "paid-updates": {
+          "question": "업데이트를 위해 비용을 지불해야 합니까?",
+          "answer": "아니요. 소스 업데이트는 모든 상용 라이선스에 포함됩니다 — 언제든지 main에서 풀하고 포크를 리베이스할 수 있습니다. 유료 등급은 Sailor를 상업적 프로덕션에서 사용할 권한이지, 코드를 받을 권한이 아닙니다. 각 마이너 릴리스에는 변경 로그와 호환성 깨짐에 대한 업그레이드 가이드가 함께 제공됩니다."
+        },
+        "deployment": {
+          "question": "어디에 배포할 수 있습니까?",
+          "answer": "Node 22+ 이 실행되는 모든 곳입니다. 마케팅 사이트는 Vercel에 배포되며, 대시보드, 게이트웨이, Python 서비스는 Docker / PM2에서 실행됩니다(현재 Aliyun ECS에서 운영 중이며, 클러스터용 Kubernetes 매니페스트는 infra/iac/k8s/에 포함). 엔터프라이즈 고객은 자체 VPC 내부에도 배포합니다."
+        },
+        "china-friendly": {
+          "question": "중국에서 작동합니까?",
+          "answer": "예. 동일한 코드베이스가 만리장성 안에서도 깔끔하게 배포되도록 병렬 인프라 구성(Aliyun 호환 CDN, ICP 친화 도메인, Figma 대신 선택적 Penpot)을 제공합니다."
+        },
+        "swap-clerk": {
+          "question": "Clerk을 다른 인증 공급자로 교체할 수 있습니까?",
+          "answer": "예. @nebutra/auth는 Clerk, Better Auth, NextAuth(Auth.js v5), Supabase Auth용 일등급 어댑터를 제공합니다. AUTH_PROVIDER 환경 변수로 전환하거나 스캐폴드 시점에 create-sailor --auth=...로 선택하십시오 — 공급자에 관계없이 서버, React, 미들웨어 표면이 동일하게 유지됩니다. 다섯 번째 어댑터를 추가하는 것은 단일 인터페이스(~80 LOC)를 구현하는 것을 의미하며, 주변 코드의 어떤 부분도 특정 공급자에 결합되지 않습니다."
+        },
+        "byo-provider": {
+          "question": "자체 공급자를 가져올 수 있습니까?",
+          "answer": "예. 모든 통합(인증, 큐, 검색, 이메일, 결제, 스토리지, 빌링)은 공급자 독립적입니다. 각 패키지의 팩토리는 단일 환경 변수에서 적합한 어댑터를 선택합니다 — Clerk을 Better Auth, NextAuth, Supabase Auth로, QStash를 BullMQ로, Resend를 SES로, Stripe를 Polar / LemonSqueezy / ChinaPay로 — 애플리케이션 코드를 건드리지 않고 교체할 수 있습니다."
+        },
+        "multi-tenancy": {
+          "question": "멀티테넌시는 어떻게 처리됩니까?",
+          "answer": "두 가지 레이어가 있습니다. @nebutra/tenant를 통한 요청 범위 테넌트 컨텍스트(AsyncLocalStorage가 DB 쿼리 및 아웃바운드 웹훅을 포함한 모든 서버 호출에서 활성 조직을 전파), 그리고 세션 로컬 app.current_org_id에 바인딩된 Postgres Row-Level Security 정책(infra/data/database/policies/rls.sql)을 통한 데이터베이스 강제 격리. 서비스 역할 연결은 신뢰할 수 있는 내부 서비스 내부에서만 RLS를 우회하며, 모든 사용자 대면 라우트는 테넌트 범위 클라이언트를 통과합니다."
+        },
+        "security": {
+          "question": "보안은 어떻게 처리됩니까?",
+          "answer": "비밀에 대한 애플리케이션 레이어 엔벨로프 암호화(@nebutra/vault), 테넌트 격리를 위한 Postgres RLS, CASL 또는 OpenFGA(@nebutra/permissions)를 통한 RBAC/ABAC, HMAC 서명 서비스 간 토큰, 서명된 아웃바운드 웹훅, 그리고 모든 요금제에 포함된 SOC 2 정렬 감사 파이프라인(@nebutra/audit). Pro와 Enterprise는 SOC 2 인증 지원, 전담 사고 대응, 더 긴 감사 로그 보존 기간을 추가합니다."
+        },
+        "support": {
+          "question": "어떤 지원을 받을 수 있습니까?",
+          "answer": "무료 고객은 커뮤니티 Discord + GitHub Issues를 사용합니다. Pro는 1영업일 응답 SLA가 있는 우선 이메일을 추가합니다. Enterprise는 전용 Slack 채널과 온보딩 엔지니어를 제공합니다."
+        },
+        "why-turborepo": {
+          "question": "표준 Next.js 앱 대신 왜 Turborepo입니까?",
+          "answer": "Sailor는 10개 앱 + 55개 공유 패키지 + 다중 언어 백엔드(Hono BFF + FastAPI 플릿)로 — 단일 Next.js 메가 앱이 유지 관리 가능한 시점을 훨씬 넘어섰습니다. Turborepo는 영향받은 부분만 빌드, 투명한 원격 캐싱, 공유 디자인 토큰/인증/결제/관측성에 대한 단일 소스를 제공합니다 — 모든 팀을 동일한 Next.js 프로세스에 강제하지 않으면서."
+        }
+      }
+    },
+    "socialProof": {
+      "title": "신뢰할 수 있는 스택 위에 구축",
+      "logosLabel": "통합 파트너",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "지원 AI 공급자"
+        },
+        "projects": {
+          "value": "55",
+          "label": "모노레포 패키지"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "기본 제공 i18n 로케일"
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "빌더들이 사랑하는",
+      "title": "Sailor로 출시한 후 창업자들이 말하는 것",
+      "subtitle": "베타 코호트 고객 스토리가 곧 도착합니다 — 가장 먼저 만나보십시오."
+    }
   }
 }

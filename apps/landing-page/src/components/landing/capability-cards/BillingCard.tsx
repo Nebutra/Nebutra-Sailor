@@ -46,11 +46,14 @@ export function BillingCard() {
       icon={<CreditCard />}
     >
       {/* Mini Billing Dashboard */}
-      <div className="w-full max-w-[400px] mt-auto relative top-4 group-hover:top-2 transition-all duration-700 overflow-hidden rounded-t-[1.5rem] border-x border-t border-border/60 bg-background dark:bg-[#0A0A0A] dark:border-white/10 shadow-2xl scale-105 origin-bottom">
+      <div
+        style={{ boxShadow: "var(--ring-hairline)" }}
+        className="w-full max-w-[400px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-[var(--neutral-6)] bg-background dark:bg-[var(--neutral-2)] transition-transform duration-150 group-hover:-translate-y-px origin-bottom"
+      >
         {/* MRR Sparkline Area */}
         <div className="px-5 pt-5 pb-3">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground dark:text-zinc-500">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-zinc-500">
               Monthly Recurring Revenue
             </span>
             <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 dark:border-emerald-400/20">
@@ -67,8 +70,7 @@ export function BillingCard() {
               className="absolute inset-0"
               style={{
                 clipPath: `polygon(${sparklineClip})`,
-                background:
-                  "linear-gradient(to bottom, var(--brand-accent, #0BF1C3) 0%, transparent 100%)",
+                background: "linear-gradient(to bottom, var(--brand-accent) 0%, transparent 100%)",
                 opacity: 0.15,
               }}
             />
@@ -89,7 +91,7 @@ export function BillingCard() {
             >
               <polyline
                 fill="none"
-                stroke="var(--brand-accent, #0BF1C3)"
+                stroke="var(--brand-accent)"
                 strokeWidth="2"
                 vectorEffect="non-scaling-stroke"
                 points={SPARKLINE_POINTS.map((val, i) => {
@@ -111,7 +113,7 @@ export function BillingCard() {
                   return 100 - ((last - minVal) / (maxVal - minVal)) * 100;
                 })()}
                 r="3"
-                fill="var(--brand-accent, #0BF1C3)"
+                fill="var(--brand-accent)"
                 className="drop-shadow-sm"
               />
             </svg>
@@ -129,16 +131,16 @@ export function BillingCard() {
           {BILLING_METRICS.map((metric) => (
             <div
               key={metric.label}
-              className="flex flex-col items-center py-4 px-2 bg-background dark:bg-[#0A0A0A]"
+              className="flex flex-col items-center py-4 px-2 bg-background dark:bg-[var(--neutral-2)]"
             >
-              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground dark:text-zinc-500 mb-1">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-zinc-500 mb-1">
                 {metric.label}
               </p>
               <p className="text-lg font-black text-foreground dark:text-white tabular-nums tracking-tighter mb-1">
                 {metric.value}
               </p>
               <span
-                className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${
                   metric.delta.startsWith("-") && !metric.positive
                     ? "text-rose-600 bg-rose-50 dark:text-rose-400 dark:bg-rose-500/10"
                     : "text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10"

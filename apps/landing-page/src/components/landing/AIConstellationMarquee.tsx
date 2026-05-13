@@ -70,9 +70,12 @@ const AI_ICONS_ROW2: AiIcon[] = [
 function IconChip({ icon, name }: AiIcon) {
   const Component = icon.Color ?? icon;
   return (
-    <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-border/50 bg-background/80 backdrop-blur-sm hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 group select-none shadow-sm">
+    <div
+      style={{ boxShadow: "var(--ring-hairline)" }}
+      className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-[var(--neutral-6)] bg-background/80 backdrop-blur-sm hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px transition-all duration-150 group select-none"
+    >
       <Component size={20} className="h-5 w-5 shrink-0" />
-      <span className="text-sm font-semibold text-foreground/80 group-hover:text-foreground transition-colors whitespace-nowrap">
+      <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors whitespace-nowrap">
         {name}
       </span>
     </div>
@@ -88,9 +91,9 @@ function IconChip({ icon, name }: AiIcon) {
  */
 export function AIConstellationMarquee() {
   return (
-    <div className="w-full mt-14 overflow-hidden">
+    <div className="w-full max-w-[1400px] mx-auto mt-14 overflow-hidden">
       <AnimateIn preset="emerge" inView>
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground mb-8 text-center">
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground mb-8 text-center">
           INTEGRATED WITH 47 AI PROVIDERS
         </p>
       </AnimateIn>

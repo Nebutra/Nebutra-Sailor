@@ -1,5 +1,6 @@
 "use client";
 
+import { AuroraBackground } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 import { ColorScaleCard } from "./design-system/ColorScaleCard";
@@ -14,8 +15,8 @@ export function DesignSystemSection() {
 
   return (
     <section className="w-full bg-muted/20 py-24 md:py-32 relative overflow-hidden">
-      {/* Subtle glow */}
-      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      {/* Ambient aurora background */}
+      <AuroraBackground variant="subtle" position="center" intensity={0.4} />
 
       <div className="mx-auto max-w-[1400px] px-4 md:px-6 relative z-10">
         {/* Section Header */}
@@ -25,7 +26,13 @@ export function DesignSystemSection() {
               {t("badge")}
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black tracking-tight text-foreground text-balance opacity-0 translate-y-4 animate-[fade-in_0.7s_ease-out_0.2s_forwards]">
+          <h2
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground text-balance opacity-0 translate-y-4 animate-[fade-in_0.7s_ease-out_0.2s_forwards]"
+            style={{
+              letterSpacing: "var(--tracking-heading)",
+              lineHeight: "var(--leading-heading)",
+            }}
+          >
             {t("headline")}
           </h2>
           <p className="mt-4 md:mt-6 text-sm md:text-lg text-muted-foreground text-center max-w-xl text-balance opacity-0 translate-y-4 animate-[fade-in_0.7s_ease-out_0.4s_forwards]">
@@ -42,21 +49,21 @@ export function DesignSystemSection() {
             {/* Top Row: 3-5-4 Split */}
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 xl:col-span-3 h-[400px] rounded-3xl border border-border/50 bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:border-primary/30 group transition-colors overflow-hidden"
+              className="md:col-span-12 lg:col-span-4 xl:col-span-3 h-[400px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <ColorScaleCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-8 xl:col-span-4 h-[400px] rounded-3xl border border-border/50 bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:border-primary/30 group transition-colors overflow-hidden"
+              className="md:col-span-12 lg:col-span-8 xl:col-span-4 h-[400px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <PipelineCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-12 xl:col-span-5 h-[400px] rounded-3xl border border-border/50 bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:border-primary/30 group transition-colors overflow-hidden"
+              className="md:col-span-12 lg:col-span-12 xl:col-span-5 h-[400px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <InteractiveDocsCard />
             </AnimateIn>
@@ -64,21 +71,21 @@ export function DesignSystemSection() {
             {/* Bottom Row: 4-4-4 Split */}
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-3xl border border-border/50 bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:border-primary/30 group transition-colors overflow-hidden"
+              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <VrtCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-3xl border border-border/50 bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:border-primary/30 group transition-colors overflow-hidden"
+              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <TokenGovernanceCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-3xl border border-border/50 bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:border-primary/30 group transition-colors overflow-hidden"
+              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <ThemeSelectorCard />
             </AnimateIn>

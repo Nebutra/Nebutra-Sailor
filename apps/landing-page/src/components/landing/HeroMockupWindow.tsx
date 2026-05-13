@@ -94,8 +94,11 @@ function renderHighlightedLine(line: string) {
 
 export function HeroMockupWindow() {
   return (
-    <AnimateIn preset="fadeUp" className="w-full max-w-[1080px] mx-auto relative z-20 px-4 group">
-      <div className="relative rounded-xl border border-border/30 bg-background/95 dark:bg-zinc-950/95 shadow-2xl dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden backdrop-blur-2xl transition-all duration-500">
+    <AnimateIn preset="fadeUp" className="w-full max-w-[1400px] mx-auto relative z-20 px-4 group">
+      <div
+        style={{ boxShadow: "var(--ring-hairline)" }}
+        className="relative rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/95 dark:bg-zinc-950/95 overflow-hidden backdrop-blur-2xl transition-all duration-500"
+      >
         {/* Top highlight line */}
         <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 

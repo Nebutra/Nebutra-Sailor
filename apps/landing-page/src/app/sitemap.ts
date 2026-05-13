@@ -8,13 +8,16 @@ const staticPaths = [
   { path: "/features", changeFreq: "weekly" as const, priority: 0.9 },
   { path: "/pricing", changeFreq: "weekly" as const, priority: 0.9 },
   { path: "/about", changeFreq: "monthly" as const, priority: 0.7 },
+  { path: "/careers", changeFreq: "weekly" as const, priority: 0.6 },
   { path: "/get-license", changeFreq: "weekly" as const, priority: 0.9 },
   { path: "/licensing", changeFreq: "monthly" as const, priority: 0.7 },
+
+  // AI / capability surface
+  { path: "/ai/models", changeFreq: "monthly" as const, priority: 0.8 },
 
   // Content pages
   { path: "/blog", changeFreq: "weekly" as const, priority: 0.8 },
   { path: "/changelog", changeFreq: "weekly" as const, priority: 0.6 },
-  { path: "/showcase", changeFreq: "weekly" as const, priority: 0.7 },
   { path: "/roadmap", changeFreq: "monthly" as const, priority: 0.5 },
   { path: "/status", changeFreq: "always" as const, priority: 0.5 },
 
@@ -26,11 +29,13 @@ const staticPaths = [
   { path: "/contact", changeFreq: "monthly" as const, priority: 0.4 },
   { path: "/faq", changeFreq: "monthly" as const, priority: 0.4 },
 
-  // Legal
+  // Trust & legal
+  { path: "/security", changeFreq: "monthly" as const, priority: 0.7 },
   { path: "/privacy", changeFreq: "monthly" as const, priority: 0.2 },
   { path: "/terms", changeFreq: "monthly" as const, priority: 0.2 },
   { path: "/cookies", changeFreq: "monthly" as const, priority: 0.2 },
   { path: "/refund", changeFreq: "monthly" as const, priority: 0.2 },
+  { path: "/dpa", changeFreq: "monthly" as const, priority: 0.2 },
 ];
 
 function localizedUrl(base: string, locale: string, path: string): string {

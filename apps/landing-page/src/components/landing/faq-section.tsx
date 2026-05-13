@@ -21,21 +21,28 @@ export function FAQSection() {
       className="relative w-full bg-[var(--neutral-1)] py-24 md:py-32"
       aria-labelledby="landing-faq-title"
     >
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-[var(--brand-primary)]">
+      <div className="mx-auto max-w-4xl px-4 md:px-6">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--brand-primary)]">
             {t("badge")}
           </p>
           <h2
             id="landing-faq-title"
-            className="text-balance text-4xl font-black tracking-tight text-[var(--neutral-12)] md:text-5xl"
+            className="text-balance text-3xl md:text-4xl lg:text-5xl font-semibold text-[var(--neutral-12)]"
+            style={{
+              letterSpacing: "var(--tracking-heading)",
+              lineHeight: "var(--leading-heading)",
+            }}
           >
             {t("title")}
           </h2>
           <p className="mt-4 text-lg text-[var(--neutral-11)]">{t("subtitle")}</p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-3xl divide-y divide-[var(--neutral-6)] rounded-2xl border border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 backdrop-blur">
+        <div
+          className="mx-auto mt-12 max-w-4xl divide-y divide-[var(--neutral-6)] rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 backdrop-blur"
+          style={{ boxShadow: "var(--ring-hairline)" }}
+        >
           {FAQS.map((entry) => {
             const isOpen = openId === entry.id;
             const panelId = `faq-panel-${entry.id}`;

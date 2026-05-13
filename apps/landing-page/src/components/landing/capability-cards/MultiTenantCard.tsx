@@ -24,10 +24,10 @@ const CODE_LINES = [
 
 function getLineClass(type: string, text: string): string {
   if (type === "key") {
-    return "text-emerald-700 dark:text-emerald-300 font-bold bg-emerald-50 dark:bg-emerald-500/10";
+    return "text-emerald-700 dark:text-emerald-300 font-semibold bg-emerald-50 dark:bg-emerald-500/10";
   }
   if (type === "import") {
-    return "text-primary dark:text-cyan-400";
+    return "text-primary dark:text-[var(--cyan-9)]";
   }
   if (type === "comment") {
     return "text-muted-foreground dark:text-zinc-500";
@@ -38,7 +38,7 @@ function getLineClass(type: string, text: string): string {
     text.includes("export") ||
     text.includes("async")
   ) {
-    return "text-primary dark:text-cyan-400";
+    return "text-primary dark:text-[var(--cyan-9)]";
   }
   if (text.includes("'@nebutra/rls'")) {
     return "text-amber-600 dark:text-amber-400";
@@ -58,7 +58,10 @@ export function MultiTenantCard() {
       icon={<Database />}
     >
       {/* High-Fidelity Code Editor with tabs, line numbers, and terminal */}
-      <div className="w-full max-w-[420px] mt-auto relative top-4 group-hover:top-2 transition-all duration-700 overflow-hidden rounded-t-[1.5rem] border-x border-t border-border/60 bg-background dark:bg-[#0A0A0A] dark:border-white/10 shadow-2xl scale-105 origin-bottom">
+      <div
+        style={{ boxShadow: "var(--ring-hairline)" }}
+        className="w-full max-w-[420px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-[var(--neutral-6)] bg-background dark:bg-[var(--neutral-2)] transition-transform duration-150 group-hover:-translate-y-px origin-bottom"
+      >
         {/* Window Chrome */}
         <div className="flex items-center gap-1.5 px-5 py-3 border-b border-border/60 dark:border-white/5 bg-muted/30 dark:bg-white/5">
           <div className="w-2.5 h-2.5 rounded-full bg-border dark:bg-zinc-700" />
@@ -68,7 +71,7 @@ export function MultiTenantCard() {
 
         {/* File Tabs */}
         <div className="flex border-b border-border/60 dark:border-white/5 bg-muted/10 dark:bg-white/[0.02]">
-          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-bold text-foreground dark:text-white bg-background dark:bg-[#0A0A0A] border-b-2 border-primary dark:border-cyan-400">
+          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-semibold text-foreground dark:text-white bg-background dark:bg-[var(--neutral-2)] border-b-2 border-primary dark:border-[var(--cyan-9)]">
             <span className="w-2 h-2 rounded-sm bg-blue-500/60" />
             query.ts
           </div>
@@ -102,7 +105,7 @@ export function MultiTenantCard() {
         {/* Mini Terminal Output */}
         <div className="border-t border-border/60 dark:border-white/5 bg-muted/20 dark:bg-white/[0.02] px-4 py-3">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground dark:text-zinc-500">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-zinc-500">
               Terminal
             </span>
             <span className="text-[10px] text-muted-foreground dark:text-zinc-400">

@@ -13,7 +13,7 @@ export function RoleSwitcher() {
   }, []);
 
   return (
-    <div className="flex items-center gap-4 bg-background dark:bg-[#0A0A0A] border border-border/50 rounded-xl p-3 shadow-elevation-high">
+    <div className="flex items-center gap-4 bg-background dark:bg-[var(--neutral-2)] border border-border/50 rounded-xl p-3 shadow-elevation-high">
       {/* Fake User Avatar */}
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-violet-500 to-fuchsia-500 ring-2 ring-background overflow-hidden relative">

@@ -1,5 +1,5 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Button } from "@nebutra/ui/primitives";
+import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import {
   ArrowRight,
   type Code,
@@ -350,15 +350,22 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       <Navbar />
 
       {/* 1. Hero — R&D Manifesto */}
-      <section className="pt-32 md:pt-48 pb-24 md:pb-32">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+      <section className="relative pt-32 md:pt-48 pb-24 md:pb-32 overflow-hidden">
+        <AuroraBackground variant="vivid" position="top" intensity={0.6} />
+        <div className="relative container mx-auto px-4 max-w-[1400px]">
           <AnimateIn preset="emerge">
-            <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
+            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
               {hero.eyebrow}
             </span>
           </AnimateIn>
           <AnimateIn preset="fadeUp">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-balance mb-10 max-w-5xl">
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10 max-w-4xl"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               {hero.heading}
             </h1>
           </AnimateIn>
@@ -376,8 +383,9 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       </section>
 
       {/* 2. Harness Timeline — AI Stack 三层演化 (Russian-doll nested layers) */}
-      <section className="py-24 md:py-32 border-y border-border/50 bg-muted/10">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+      <section className="relative py-24 md:py-32 border-y border-border/50 bg-muted/10 overflow-hidden">
+        <AuroraBackground variant="subtle" position="center" intensity={0.4} />
+        <div className="relative container mx-auto px-4 max-w-[1400px]">
           <div className="max-w-3xl mb-16 md:mb-20">
             <AnimateIn preset="fadeUp">
               <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
@@ -385,7 +393,13 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               </span>
             </AnimateIn>
             <AnimateIn preset="fadeUp">
-              <h2 className="text-4xl md:text-6xl font-black tracking-tight text-balance mb-8">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {harnessCopy.heading}
               </h2>
             </AnimateIn>
@@ -406,7 +420,8 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
             return (
               <AnimateInGroup
                 stagger="normal"
-                className="relative rounded-[32px] border-2 border-foreground bg-background p-6 md:p-10 lg:p-14 shadow-xl"
+                className="relative rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background p-6 md:p-10 lg:p-14"
+                style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <AnimateIn preset="fadeUp">
                   <div className="relative">
@@ -424,7 +439,13 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                         {harnessCopy.battlefieldTag}
                       </span>
                     </div>
-                    <h3 className="text-3xl md:text-5xl font-black tracking-tighter text-foreground mb-5">
+                    <h3
+                      className="text-2xl md:text-3xl font-semibold text-foreground mb-5"
+                      style={{
+                        letterSpacing: "var(--tracking-heading)",
+                        lineHeight: "var(--leading-heading)",
+                      }}
+                    >
                       {harnessLayer.layer}
                     </h3>
                     <div className="flex flex-wrap gap-2 mb-8">
@@ -439,13 +460,19 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                     </div>
 
                     {/* Context (middle) */}
-                    <div className="rounded-[24px] border border-border bg-muted/30 p-5 md:p-8 lg:p-10">
+                    <div className="rounded-[var(--radius-card)] border border-border bg-muted/30 p-5 md:p-8 lg:p-10">
                       <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4">
                         <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
                           Layer 02 · {contextLayer.year}
                         </span>
                       </div>
-                      <h3 className="text-2xl md:text-3xl font-black tracking-tight text-foreground/90 mb-4">
+                      <h3
+                        className="text-xl md:text-2xl font-semibold text-foreground/90 mb-4"
+                        style={{
+                          letterSpacing: "var(--tracking-heading)",
+                          lineHeight: "var(--leading-heading)",
+                        }}
+                      >
                         {contextLayer.layer}
                       </h3>
                       <div className="flex flex-wrap gap-2 mb-6">
@@ -460,13 +487,16 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                       </div>
 
                       {/* Weights (innermost) */}
-                      <div className="rounded-[18px] border border-border/70 bg-background p-4 md:p-6">
+                      <div className="rounded-[var(--radius-card)] border border-border/70 bg-background p-4 md:p-6">
                         <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
                           <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
                             Layer 01 · {weightsLayer.year}
                           </span>
                         </div>
-                        <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground/70 mb-3">
+                        <h3
+                          className="text-lg md:text-xl font-semibold text-foreground/70 mb-3"
+                          style={{ letterSpacing: "var(--tracking-tight)" }}
+                        >
                           {weightsLayer.layer}
                         </h3>
                         <div className="flex flex-wrap gap-1.5">
@@ -506,7 +536,13 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 </span>
               </AnimateIn>
               <AnimateIn preset="fadeUp">
-                <h2 className="text-4xl md:text-6xl font-black tracking-tight text-balance mb-8">
+                <h2
+                  className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                  style={{
+                    letterSpacing: "var(--tracking-heading)",
+                    lineHeight: "var(--leading-heading)",
+                  }}
+                >
                   {aiNativePillar.title}
                 </h2>
               </AnimateIn>
@@ -524,14 +560,20 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   const Icon = itemBi.icon;
                   return (
                     <AnimateIn key={item.name} preset="fadeUp">
-                      <div className="h-full rounded-2xl border border-border/60 bg-muted/20 p-6 hover:border-border hover:bg-muted/40 transition-colors">
+                      <div
+                        className="h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/20 p-6 hover:border-border hover:bg-muted/40 hover:-translate-y-px transition-all duration-150"
+                        style={{ boxShadow: "var(--ring-hairline)" }}
+                      >
                         <div className="flex items-center justify-between mb-4">
                           <Icon className="h-6 w-6 text-foreground" strokeWidth={1.5} />
                           <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
                             H{(i + 1).toString().padStart(2, "0")}
                           </span>
                         </div>
-                        <h3 className="text-lg font-bold tracking-tight text-foreground mb-2">
+                        <h3
+                          className="text-lg font-semibold text-foreground mb-2"
+                          style={{ letterSpacing: "var(--tracking-tight)" }}
+                        >
                           {item.name}
                         </h3>
                         <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
@@ -556,7 +598,13 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 </span>
               </AnimateIn>
               <AnimateIn preset="fadeUp">
-                <h2 className="text-4xl md:text-6xl font-black tracking-tight text-balance mb-8">
+                <h2
+                  className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                  style={{
+                    letterSpacing: "var(--tracking-heading)",
+                    lineHeight: "var(--leading-heading)",
+                  }}
+                >
                   {ossPillar.title}
                 </h2>
               </AnimateIn>
@@ -578,8 +626,14 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   const stat = pick(lang, statBi);
                   return (
                     <AnimateIn key={stat.label} preset="fadeUp">
-                      <div className="rounded-2xl border border-border/60 bg-muted/10 p-8 md:p-10 h-full flex flex-col justify-between">
-                        <span className="text-5xl md:text-6xl font-black tracking-tighter text-foreground">
+                      <div
+                        className="rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/10 p-8 md:p-10 h-full flex flex-col justify-between"
+                        style={{ boxShadow: "var(--ring-hairline)" }}
+                      >
+                        <span
+                          className="text-2xl md:text-3xl font-semibold text-foreground"
+                          style={{ letterSpacing: "var(--tracking-tight)" }}
+                        >
                           {stat.value}
                         </span>
                         <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mt-6">
@@ -605,7 +659,13 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               </span>
             </AnimateIn>
             <AnimateIn preset="fadeUp">
-              <h2 className="text-4xl md:text-6xl font-black tracking-tight text-balance mb-8">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {bestPracticesPillar.title}
               </h2>
             </AnimateIn>
@@ -625,14 +685,20 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               const Icon = principleBi.icon;
               return (
                 <AnimateIn key={principle.name} preset="fadeUp">
-                  <div className="h-full rounded-2xl border border-border/60 bg-background p-7 hover:border-border hover:shadow-sm transition-all">
+                  <div
+                    className="h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background p-7 hover:border-border hover:-translate-y-px transition-all duration-150"
+                    style={{ boxShadow: "var(--ring-hairline)" }}
+                  >
                     <div className="flex items-center justify-between mb-5">
                       <Icon className="h-6 w-6 text-foreground" strokeWidth={1.5} />
                       <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
                         P{(i + 1).toString().padStart(2, "0")}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold tracking-tight text-foreground mb-2">
+                    <h3
+                      className="text-xl font-semibold text-foreground mb-2"
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
+                    >
                       {principle.name}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
@@ -656,7 +722,13 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               </span>
             </AnimateIn>
             <AnimateIn preset="fadeUp">
-              <h2 className="text-4xl md:text-6xl font-black tracking-tight text-balance mb-8">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {orgPrinciplesCopy.heading}
               </h2>
             </AnimateIn>
@@ -678,7 +750,8 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   <article className="relative h-full border-l-2 border-foreground bg-muted/20 pl-6 md:pl-8 pr-6 py-8 md:py-10 overflow-hidden">
                     <span
                       aria-hidden
-                      className="absolute right-4 top-2 text-[7rem] md:text-[9rem] font-black leading-none tracking-tighter text-foreground/5 select-none pointer-events-none"
+                      className="absolute right-4 top-2 text-[5rem] md:text-[7rem] font-semibold text-foreground/5 select-none pointer-events-none"
+                      style={{ letterSpacing: "var(--tracking-display)", lineHeight: "1" }}
                     >
                       {principle.number}
                     </span>
@@ -686,7 +759,10 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                       <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
                         Principle {principle.number}
                       </span>
-                      <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground mb-4 text-balance">
+                      <h3
+                        className="text-xl md:text-2xl font-semibold text-foreground mb-4 text-balance"
+                        style={{ letterSpacing: "var(--tracking-heading)" }}
+                      >
                         {principle.title}
                       </h3>
                       <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
@@ -711,7 +787,13 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               </span>
             </AnimateIn>
             <AnimateIn preset="fadeUp">
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {lang === "zh"
                   ? "我们走过的路与即将抵达的站台"
                   : "The road walked and stations ahead"}
@@ -741,7 +823,10 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                         {ms.date}
                       </span>
                       <div className="md:pl-8 flex-1">
-                        <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground mb-2">
+                        <h3
+                          className="text-xl md:text-2xl font-semibold text-foreground mb-2"
+                          style={{ letterSpacing: "var(--tracking-tight)" }}
+                        >
                           {ms.title}
                         </h3>
                         <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
@@ -758,29 +843,33 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       </section>
 
       {/* 8. CTA */}
-      <section className="py-32 md:py-48 border-t border-border/50">
-        <div className="container mx-auto px-4 text-center max-w-4xl">
+      <section className="relative py-32 md:py-48 border-t border-border/50 overflow-hidden">
+        <AuroraBackground variant="vivid" position="bottom" intensity={0.7} />
+        <div className="relative container mx-auto px-4 text-center max-w-4xl">
           <AnimateIn preset="emerge">
             <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-              <span className="text-sm font-bold tracking-widest uppercase text-primary">
+              <span className="text-sm font-semibold tracking-widest uppercase text-primary">
                 {cta.eyebrow}
               </span>
             </div>
           </AnimateIn>
           <AnimateIn preset="fadeUp">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-balance mb-12">
+            <h2
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-12"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               {cta.heading}
             </h2>
           </AnimateIn>
           <AnimateIn preset="fade">
-            <Link href="mailto:careers@nebutra.com">
-              <Button
-                size="lg"
-                className="rounded-full h-16 px-10 text-lg font-bold shadow-xl bg-foreground text-background hover:bg-foreground/90 hover:scale-105 transition-transform"
-              >
+            <Button asChild variant="ink" size="lg">
+              <Link href="mailto:careers@nebutra.com">
                 {cta.button} <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </AnimateIn>
         </div>
       </section>

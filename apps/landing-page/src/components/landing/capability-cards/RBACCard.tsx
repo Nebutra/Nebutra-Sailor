@@ -48,9 +48,12 @@ export function RBACCard() {
       icon={<Shield />}
     >
       {/* High-Fidelity Matrix Table Bleed */}
-      <div className="w-full max-w-[440px] mt-auto relative top-6 group-hover:top-4 transition-all duration-700 overflow-hidden rounded-t-[1.5rem] border-x border-t border-border/60 bg-background dark:bg-[#0A0A0A] dark:border-white/10 shadow-2xl scale-105 origin-bottom flex flex-col">
+      <div
+        style={{ boxShadow: "var(--ring-hairline)" }}
+        className="w-full max-w-[440px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-[var(--neutral-6)] bg-background dark:bg-[var(--neutral-2)] transition-transform duration-150 group-hover:-translate-y-px origin-bottom flex flex-col"
+      >
         {/* Header */}
-        <div className="flex items-center gap-2 px-6 py-4 border-b border-border/60 dark:border-white/5 text-[11px] uppercase tracking-widest text-muted-foreground dark:text-zinc-500 font-bold bg-muted/20 dark:bg-white/[0.02]">
+        <div className="flex items-center gap-2 px-6 py-4 border-b border-border/60 dark:border-white/5 text-[11px] uppercase tracking-widest text-muted-foreground dark:text-zinc-500 font-semibold bg-muted/20 dark:bg-white/[0.02]">
           <Fingerprint className="w-4 h-4" />
           Access Matrix
           <span className="ml-auto text-[10px] font-semibold normal-case tracking-normal text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 dark:border-emerald-400/20">
@@ -61,7 +64,7 @@ export function RBACCard() {
         <table className="w-full text-sm text-left flex-1 border-collapse">
           <thead className="bg-transparent">
             <tr className="border-b border-border/50 dark:border-white/5">
-              <th className="py-3 px-6 text-[10px] font-bold text-muted-foreground/80 dark:text-zinc-500 uppercase tracking-widest w-[38%]">
+              <th className="py-3 px-6 text-[10px] font-semibold text-muted-foreground/80 dark:text-zinc-500 uppercase tracking-widest w-[38%]">
                 Resource
               </th>
               {ROLES.map((role) => (
@@ -77,7 +80,7 @@ export function RBACCard() {
                         </AvatarFallback>
                       </Avatar>
                     </div>
-                    <span className="text-[10px] font-bold text-muted-foreground/80 dark:text-zinc-500 uppercase tracking-widest">
+                    <span className="text-[10px] font-semibold text-muted-foreground/80 dark:text-zinc-500 uppercase tracking-widest">
                       {role.name}
                     </span>
                   </div>

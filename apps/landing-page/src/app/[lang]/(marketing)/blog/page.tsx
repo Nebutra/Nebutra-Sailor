@@ -147,20 +147,37 @@ export default async function BlogPage({ params }: { params: Promise<{ lang: str
         {/* Post grid */}
         {posts.length === 0 ? (
           <AnimateIn preset="fadeUp" inView>
-            <div className="flex flex-col items-center gap-3 py-24 text-center">
-              <p className="text-lg font-medium text-[var(--neutral-12)]">Coming soon</p>
-              <p className="text-sm text-[var(--neutral-11)]">
-                Our first articles are on the way. Follow{" "}
+            <div className="flex flex-col items-center gap-6 py-24 text-center">
+              <div>
+                <p className="text-lg font-medium text-[var(--neutral-12)]">
+                  No posts yet — our first articles are on the way.
+                </p>
+                <p className="mt-2 text-sm text-[var(--neutral-11)]">
+                  In the meantime, here are three ways to follow what we're shipping.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href={`/${lang}/changelog`}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2"
+                >
+                  📜 Read our changelog
+                </Link>
+                <a
+                  href="/api/changelog/rss"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2"
+                >
+                  📡 Subscribe via RSS
+                </a>
                 <a
                   href="https://x.com/nebutra_ai"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-[var(--blue-9)] underline-offset-4 hover:underline"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-2"
                 >
-                  @nebutra_ai
-                </a>{" "}
-                for updates.
-              </p>
+                  𝕏 Follow @nebutra_ai
+                </a>
+              </div>
             </div>
           </AnimateIn>
         ) : (

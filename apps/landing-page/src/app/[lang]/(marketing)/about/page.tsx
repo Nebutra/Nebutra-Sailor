@@ -1,7 +1,7 @@
 import { LogomarkSVG } from "@nebutra/brand";
 import { ArrowRight } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Button } from "@nebutra/ui/primitives";
+import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
@@ -55,15 +55,22 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
       <Navbar />
 
       {/* 1. Hero Section (Asymmetrical Text + Abstract Art) */}
-      <section className="pt-32 md:pt-48 pb-20 overflow-hidden">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <section className="relative pt-32 md:pt-48 pb-20 overflow-hidden">
+        <AuroraBackground variant="subtle" position="top" intensity={0.5} />
+        <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
             {/* Text Content */}
             <div className="flex-1 w-full text-left">
-              <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
+              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
                 {t("title").split("—")[0].trim()}
               </span>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-balance mb-8">
+              <h1
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-8"
+                style={{
+                  letterSpacing: "var(--tracking-display)",
+                  lineHeight: "var(--leading-display)",
+                }}
+              >
                 {t("heading")}
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-xl">
@@ -80,13 +87,16 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             </div>
             {/* Image */}
             <div className="flex-1 w-full">
-              <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden bg-muted/30 shadow-2xl">
+              <div
+                className="relative aspect-square md:aspect-[4/3] rounded-[var(--radius-panel)] overflow-hidden bg-muted/30 border border-[var(--neutral-6)]"
+                style={{ boxShadow: "var(--ring-hairline)" }}
+              >
                 <Image
                   src="/images/about/hero-premium.png"
                   alt="Abstract Art"
                   fill
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover hover:scale-105 transition-transform duration-700"
+                  className="object-cover transition-transform duration-700"
                   priority
                 />
               </div>
@@ -102,10 +112,16 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
       <section className="py-24 md:py-32 bg-muted/20">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="max-w-4xl mx-auto text-center mb-16 md:mb-24">
-            <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
+            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
               {lang === "zh" ? "我们的宣言" : "Our Manifesto"}
             </span>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-balance leading-[1.15] text-foreground mb-8">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground mb-8"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
               {pick(lang, META_UNICORN_THESIS).headline}
             </h2>
             <div className="space-y-6 max-w-3xl mx-auto">
@@ -118,13 +134,16 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             </div>
           </div>
 
-          <div className="relative w-full aspect-video max-h-[700px] overflow-hidden rounded-[2.5rem] shadow-2xl group">
+          <div
+            className="relative w-full aspect-video max-h-[700px] overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-6)] group"
+            style={{ boxShadow: "var(--ring-hairline)" }}
+          >
             <Image
               src="/images/about/office.png"
               alt="Office Collaboration"
               fill
               sizes="(min-width: 1024px) 1024px, 100vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
+              className="object-cover transition-transform duration-1000 ease-out"
             />
           </div>
         </div>
@@ -135,10 +154,16 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         <div className="container mx-auto px-4 max-w-[1400px]">
           <AnimateIn preset="fadeUp" inView>
             <div className="mb-16 md:mb-24 text-center md:text-left max-w-4xl">
-              <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
+              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
                 {lang === "zh" ? "我们的愿景" : "Our Vision"}
               </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-balance leading-[1.1]">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {lang === "zh"
                   ? "创业,应该智能化、轻量化、民主化"
                   : "Entrepreneurship should be AI-Native, Lightweight, and Democratic"}
@@ -158,11 +183,15 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                   <div className="relative flex flex-col border-t border-border pt-8">
                     <span
                       aria-hidden="true"
-                      className="text-[6rem] md:text-[7rem] font-black leading-none tracking-tighter text-muted-foreground/15 select-none mb-4"
+                      className="text-2xl md:text-3xl font-semibold leading-none text-muted-foreground/40 select-none mb-4"
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
                     >
                       {num}
                     </span>
-                    <h3 className="text-3xl md:text-4xl font-black tracking-tight text-foreground mb-6">
+                    <h3
+                      className="text-2xl md:text-3xl font-semibold text-foreground mb-6"
+                      style={{ letterSpacing: "var(--tracking-heading)" }}
+                    >
                       {content.keyword}
                     </h3>
                     <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -176,7 +205,10 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
           <AnimateIn preset="fadeUp" inView>
             <div className="max-w-3xl">
-              <p className="text-xl md:text-2xl font-semibold tracking-tight text-foreground leading-relaxed text-balance">
+              <p
+                className="text-xl md:text-2xl font-semibold text-foreground leading-relaxed text-balance"
+                style={{ letterSpacing: "var(--tracking-tight)" }}
+              >
                 {lang === "zh"
                   ? "这不是口号——这是我们对产品、制度与生态的工程化承诺。"
                   : "This isn't a slogan — it's our engineering commitment to product, institution, and ecosystem."}
@@ -191,12 +223,18 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         <div className="container mx-auto px-4 max-w-[1400px]">
           <AnimateIn preset="fadeUp" inView>
             <div className="mb-16 md:mb-20 max-w-4xl">
-              <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
+              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
                 {lang === "zh"
                   ? "OMNI-FACTOR ROUTING / 超级要素路由"
                   : "OMNI-FACTOR ROUTING / 超级要素路由"}
               </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-balance leading-[1.1] mb-8">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {lang === "zh" ? "让生产要素去到最适合的地方" : "Route Every Factor of Production"}
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-balance max-w-3xl">
@@ -216,7 +254,10 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               return (
                 <AnimateIn key={content.category} preset="fadeUp">
                   <div className="flex flex-col h-full border-t border-border pt-8">
-                    <h3 className="text-2xl md:text-3xl font-black tracking-tight text-foreground mb-3">
+                    <h3
+                      className="text-2xl md:text-3xl font-semibold text-foreground mb-3"
+                      style={{ letterSpacing: "var(--tracking-heading)" }}
+                    >
                       {content.category}
                     </h3>
                     <p className="text-[11px] font-mono tracking-widest uppercase text-muted-foreground mb-6">
@@ -251,15 +292,19 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           <div className="inline-flex items-center justify-center mb-8">
             <LogomarkSVG className="h-16 w-16 text-foreground" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6">{t("jobsTitle")}</h2>
+          <h2
+            className="text-3xl md:text-4xl font-semibold mb-6"
+            style={{ letterSpacing: "var(--tracking-heading)" }}
+          >
+            {t("jobsTitle")}
+          </h2>
           <p className="text-lg md:text-xl text-muted-foreground mb-10 text-balance">
             {t("jobsDescription")}
           </p>
-          <Button
-            size="lg"
-            className="rounded-full px-8 font-semibold h-14 bg-foreground text-background hover:bg-foreground/90 hover:scale-105 transition-transform"
-          >
-            {t("jobsButton")} <ArrowRight className="ml-2 h-4 w-4" />
+          <Button asChild variant="ink" size="lg">
+            <Link href="/careers">
+              {t("jobsButton")} <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </section>
@@ -268,7 +313,13 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
       <section className="py-32 bg-background relative">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="mb-20 text-center md:text-left">
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
               {t("valuesTitle")}
             </h2>
           </div>
@@ -284,7 +335,8 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               return (
                 <div
                   key={item.id}
-                  className="group relative bg-muted/20 border border-border/50 rounded-3xl overflow-hidden hover:shadow-2xl hover:border-border transition-all duration-500 flex flex-col h-full"
+                  className="group relative bg-muted/20 border border-[var(--neutral-6)] rounded-[var(--radius-card)] overflow-hidden hover:border-border hover:-translate-y-px transition-transform duration-150 flex flex-col h-full"
+                  style={{ boxShadow: "var(--ring-hairline)" }}
                 >
                   {/* Top Image Slab */}
                   <div className="relative aspect-square w-full bg-muted/30 overflow-hidden">
@@ -293,12 +345,15 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                       alt={zhText}
                       fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="object-cover transition-transform duration-700"
                     />
                   </div>
                   {/* Content Slab */}
                   <div className="p-8 flex-1 flex flex-col justify-start">
-                    <h4 className="text-xl font-bold tracking-tight mb-2 text-foreground group-hover:text-primary transition-colors">
+                    <h4
+                      className="text-xl font-semibold mb-2 text-foreground group-hover:text-primary transition-colors"
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
+                    >
                       {zhText}
                     </h4>
                     {enText && (
@@ -319,24 +374,30 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
       {/* 5. Organization & Architecture Philosophy (50/50 Split) */}
       <section className="py-24 md:py-32 overflow-hidden bg-muted/30 border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-7xl">
+        <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             {/* Left: Text */}
             <div className="flex-1 w-full text-left order-2 lg:order-1">
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-8">
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-8"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
                 {t("companyInfoTitle")}
               </h2>
               <div className="space-y-6 text-[1.1rem] text-muted-foreground leading-relaxed max-w-xl">
                 <p>{t("missionP2")}</p>
                 <div className="pt-8 mt-8 border-t border-border/50 grid grid-cols-2 gap-8">
                   <div>
-                    <h5 className="text-[11px] font-bold tracking-[0.2em] uppercase text-foreground mb-3">
+                    <h5 className="text-[11px] font-semibold tracking-[0.2em] uppercase text-foreground mb-3">
                       {t("companyInfo.legalName")}
                     </h5>
                     <p className="text-muted-foreground font-mono text-sm">WUXI NEBUTRA</p>
                   </div>
                   <div>
-                    <h5 className="text-[11px] font-bold tracking-[0.2em] uppercase text-foreground mb-3">
+                    <h5 className="text-[11px] font-semibold tracking-[0.2em] uppercase text-foreground mb-3">
                       {t("companyInfo.founded")}
                     </h5>
                     <p className="text-muted-foreground font-mono text-sm">EST. 2025</p>
@@ -346,13 +407,16 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             </div>
             {/* Right: Landscape Image */}
             <div className="flex-1 w-full order-1 lg:order-2">
-              <div className="relative aspect-square md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl">
+              <div
+                className="relative aspect-square md:aspect-[4/5] rounded-[var(--radius-panel)] overflow-hidden border border-[var(--neutral-6)]"
+                style={{ boxShadow: "var(--ring-hairline)" }}
+              >
                 <Image
                   src="/images/about/landscape.png"
                   alt="Organization Philosophy"
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover hover:scale-105 transition-transform duration-1000"
+                  className="object-cover transition-transform duration-1000"
                 />
               </div>
             </div>
@@ -364,10 +428,16 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
       <section className="py-24 md:py-32 bg-background">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="mb-16 text-center md:text-left">
-            <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-4 block">
+            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-4 block">
               {lang === "zh" ? "深入了解" : "Explore More"}
             </span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance">
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance"
+              style={{
+                letterSpacing: "var(--tracking-heading)",
+                lineHeight: "var(--leading-heading)",
+              }}
+            >
               {lang === "zh" ? "走进云毓的不同维度" : "Dimensions of Nebutra"}
             </h2>
           </div>
@@ -423,13 +493,17 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               <Link
                 key={card.href}
                 href={card.href}
-                className="group relative flex flex-col justify-between bg-muted/20 hover:bg-muted/40 border border-border/50 hover:border-border rounded-3xl p-10 md:p-12 transition-all duration-500 min-h-[260px]"
+                className="group relative flex flex-col justify-between bg-muted/20 hover:bg-muted/40 border border-[var(--neutral-6)] hover:border-border rounded-[var(--radius-card)] p-10 md:p-12 hover:-translate-y-px transition-transform duration-150 min-h-[260px]"
+                style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <div>
                   <span className="text-[11px] font-mono tracking-widest uppercase text-primary/60 mb-6 block">
                     {card.kicker}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-foreground group-hover:text-primary transition-colors">
+                  <h3
+                    className="text-2xl md:text-3xl font-semibold mb-4 text-foreground group-hover:text-primary transition-colors"
+                    style={{ letterSpacing: "var(--tracking-heading)" }}
+                  >
                     {card.title}
                   </h3>
                   <p className="text-base text-muted-foreground leading-relaxed">{card.desc}</p>
@@ -445,26 +519,28 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
       </section>
 
       {/* 6. Massive Footer Join Us CTA */}
-      <section className="py-32 md:py-48 bg-muted/20">
-        <div className="container mx-auto px-4 text-center max-w-4xl">
+      <section className="relative py-32 md:py-48 bg-muted/20 overflow-hidden">
+        <AuroraBackground variant="vivid" position="center" intensity={0.4} />
+        <div className="container mx-auto px-4 text-center max-w-4xl relative">
           <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-            <span className="text-sm font-bold tracking-widest uppercase text-primary">
+            <span className="text-sm font-semibold tracking-widest uppercase text-primary">
               {lang === "zh" ? "加入我们的愿景" : "Join Our Vision"}
             </span>
           </div>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-balance mb-12">
+          <h2
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-12"
+            style={{
+              letterSpacing: "var(--tracking-display)",
+              lineHeight: "var(--leading-display)",
+            }}
+          >
             {lang === "zh"
               ? "加入我们，共创科技未来"
               : "Join us to co-create the technological future"}
           </h2>
-          <Link href="/contact">
-            <Button
-              size="lg"
-              className="rounded-full h-16 w-56 text-lg font-bold shadow-xl border-border bg-foreground text-background hover:scale-105 transition-transform"
-            >
-              {t("ctaButton")}
-            </Button>
-          </Link>
+          <Button asChild variant="ink" size="lg">
+            <Link href="/contact">{t("ctaButton")}</Link>
+          </Button>
         </div>
       </section>
 

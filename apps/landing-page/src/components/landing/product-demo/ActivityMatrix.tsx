@@ -66,11 +66,11 @@ export function ActivityMatrix() {
               colorScheme={theme === "dark" ? "dark" : "light"}
               theme={{
                 light: [
-                  "#f0fdf4", // emerald-50
-                  "#dcfce7", // emerald-100
-                  "#6ee7b7", // emerald-300
-                  "#10b981", // emerald-500
-                  "#047857", // emerald-700
+                  "var(--ds-green-200)", // lowest activity
+                  "color-mix(in oklch, var(--ds-green-700) 35%, var(--ds-green-200))",
+                  "var(--ds-green-700)",
+                  "color-mix(in oklch, var(--ds-green-900) 70%, var(--ds-green-700))",
+                  "var(--ds-green-900)",
                 ],
                 dark: [
                   "rgba(255, 255, 255, 0.05)",

@@ -1,4 +1,5 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AuroraBackground } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -42,14 +43,20 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
       <Navbar />
 
       {/* Hero */}
-      <section className="relative mx-auto max-w-5xl px-4 pt-32 pb-20 text-center sm:px-6 lg:px-8 mt-16">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
+      <section className="relative mx-auto max-w-4xl px-4 pt-32 pb-20 text-center sm:px-6 lg:px-8 mt-16">
+        <AuroraBackground variant="vivid" position="top" intensity={0.5} />
 
         <AnimateIn preset="emerge" inView>
           <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary mb-8 tracking-wider uppercase backdrop-blur-md">
             {t("hero.badge")}
           </div>
-          <h1 className="text-5xl font-black tracking-tighter sm:text-7xl mb-8 leading-[1.1]">
+          <h1
+            className="text-4xl font-semibold sm:text-5xl md:text-6xl lg:text-7xl mb-8"
+            style={{
+              letterSpacing: "var(--tracking-display)",
+              lineHeight: "var(--leading-display)",
+            }}
+          >
             {t("hero.headlinePrefix")}
             <span className="text-primary">{t("hero.headlineHighlight")}</span>
           </h1>
@@ -92,7 +99,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
       </section>
 
       {/* Small Feature Grid */}
-      <section className="relative z-10 mx-auto max-w-7xl px-4 pb-32 sm:px-6 lg:px-8">
+      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-32 sm:px-6 lg:px-8">
         <AnimateInGroup
           stagger="fast"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"

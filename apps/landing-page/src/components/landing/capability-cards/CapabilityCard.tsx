@@ -22,9 +22,12 @@ export function CapabilityCard({
   children,
 }: CapabilityCardProps) {
   return (
-    <article className="group relative flex flex-col h-full w-full overflow-hidden rounded-[2rem] border border-border/60 dark:border-white/10 bg-background dark:bg-[#0A0A0B] transition-all duration-500 hover:border-foreground/20 dark:hover:border-white/20 hover:shadow-2xl dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+    <article
+      style={{ boxShadow: "var(--ring-hairline)" }}
+      className="group relative flex flex-col h-full w-full overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background dark:bg-[var(--neutral-2)] transition-all duration-500 hover:border-foreground/20 dark:hover:border-white/20"
+    >
       {/* Subtle Ambient Background */}
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(#0000001a_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff1a_1px,transparent_1px)] [background-size:24px_24px] opacity-20 dark:opacity-5 pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(var(--overlay-faint)_1px,transparent_1px)] [background-size:24px_24px] opacity-20 dark:opacity-5 pointer-events-none" />
 
       {/* Top Text Area - Vercel Style Minimal */}
       <div className="px-8 pt-10 sm:px-10 flex-none z-10 relative">

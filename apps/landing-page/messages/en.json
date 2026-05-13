@@ -56,69 +56,6 @@
     "copiedLabel": "Copied",
     "startBuilding": "Start Building"
   },
-  "comparison": {
-    "badge": "HOW SAILOR COMPARES",
-    "title": "Sailor vs. the alternatives.",
-    "columns": {
-      "feature": "Feature",
-      "sailor": "Nebutra Sailor",
-      "nextForge": "next-forge",
-      "supastarter": "Supastarter"
-    },
-    "features": {
-      "multiTenant": "Multi-tenancy",
-      "aiGateway": "AI integration",
-      "auth": "Authentication",
-      "billing": "Billing & payments",
-      "i18n": "Internationalization",
-      "frameworks": "Framework support",
-      "monorepo": "Monorepo scale",
-      "api": "API framework",
-      "e2eTests": "E2E testing",
-      "archTests": "Architecture tests",
-      "designSystem": "Design system",
-      "bgJobs": "Background jobs",
-      "license": "License"
-    },
-    "values": {
-      "orgRbacIsolation": "Orgs + RBAC + row isolation",
-      "orgRolesSeat": "Orgs + roles + seat billing",
-      "manualSetup": "Manual setup",
-      "multiProviderGateway": "Vercel AI SDK + 47 providers",
-      "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk / Better Auth / NextAuth / Supabase",
-      "clerkOnly": "Clerk",
-      "betterAuth": "Better Auth",
-      "stripeUsage": "5 providers + usage metering",
-      "stripeOnly": "Stripe",
-      "fiveProviders": "5 providers",
-      "sevenLangs": "7 languages",
-      "nextjsOnly": "Next.js",
-      "nextNuxtTanstack": "Next.js + Nuxt + TanStack",
-      "turboNineApps": "Turborepo · 10 apps",
-      "turboSevenApps": "Turborepo · 6 apps",
-      "turboFiveApps": "Turborepo · 5 apps",
-      "honoOpenapi": "Hono + OpenAPI + oRPC + tRPC",
-      "trpc": "tRPC",
-      "honoOrpc": "Hono + oRPC",
-      "playwrightSharded": "Playwright · 4 shards",
-      "playwrightGha": "Playwright + GH Actions",
-      "sevenPropertyBased": "13 architecture tests",
-      "fourLayerTokens": "4-layer token engine",
-      "shadcn": "shadcn/ui",
-      "radixShadcn": "Radix + shadcn/ui",
-      "inngest": "Inngest",
-      "triggerQstash": "trigger.dev + QStash",
-      "agpl": "AGPL-3.0 (free)",
-      "mit": "MIT (free)",
-      "paidFrom349": "From $349",
-      "aiPackage": "AI package",
-      "i18nPackage": "i18n package",
-      "nextjsRoutes": "Next.js routes",
-      "cronOnly": "Cron only",
-      "twoLangs": "2 languages (en, de)"
-    }
-  },
   "footer": {
     "brandDescription": "Ship your SaaS in weeks, not months. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
     "columns": {
@@ -139,6 +76,9 @@
       "docs": "Docs",
       "ideas": "Ideas",
       "opc": "Platform",
+      "careers": "Careers",
+      "security": "Security",
+      "dpa": "DPA",
       "privacy": "Privacy",
       "terms": "Terms",
       "cookies": "Cookies",
@@ -1271,6 +1211,7 @@
       }
     },
     "cta": {
+      "eyebrow": "Get Started",
       "title": "Stop configuring. Start building.",
       "description": "Initialize a scalable SaaS architecture locally with the Nebutra CLI.",
       "button": "Deploy Architecture",
@@ -1298,6 +1239,23 @@
         "title": "Multi-Provider Billing Infrastructure",
         "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
         "cta": "See billing architecture"
+      }
+    },
+    "productDemo": {
+      "badge": "Interactive Demo",
+      "title": "Experience the real-time velocity.",
+      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "analytics": {
+        "label": "Live Telemetry",
+        "desc": "Stream production usage data straight into your terminal."
+      },
+      "billing": {
+        "label": "Billing Events",
+        "desc": "Watch Stripe webhooks execute via local tunneling."
+      },
+      "workspaces": {
+        "label": "Workspace Init",
+        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
       }
     },
     "workflow": {
@@ -1339,40 +1297,6 @@
         "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
         "readyStatus": "Preset system ready"
       }
-    },
-    "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
-      "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
-      },
-      "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
-      },
-      "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
-      }
-    },
-    "harness": {
-      "badge": "HARNESS ENGINEERING",
-      "headline": "Engineering that enforces itself.",
-      "subheadline": "Architecture tests, governance ratchets, and 19 CI workflows ensure code quality can only improve — never regress.",
-      "stat1Value": "19",
-      "stat1Label": "CI Workflows",
-      "stat2Value": "13",
-      "stat2Label": "Architecture Tests",
-      "stat3Value": "0",
-      "stat3Label": "Token Violations",
-      "card1Title": "Architecture Tests",
-      "card1Desc": "13 architecture tests covering dependency flow, token usage, WCAG contrast, API contracts, and Storybook coverage — 4 use fast-check for property-based proofs.",
-      "card2Title": "Governance Ratchets",
-      "card2Desc": "Token budgets that only tighten: raw-color budget ratchets downward per surface, oklch floor at 120 literals, hex ceiling at 40, motion imports confined to an allow-list.",
-      "card3Title": "CI Pipeline Depth",
-      "card3Desc": "CodeQL SAST, Gitleaks, cosign signing, SBOM/SLSA provenance, Lighthouse ≥0.95, OpenAPI backward compatibility, k6 load tests, Chromatic visual regression."
     }
   },
   "featuresPage": {
@@ -1458,15 +1382,6 @@
     },
     "returnBtn": "Return to Hub"
   },
-  "showcase": {
-    "badge": "SEE IT IN ACTION",
-    "headline": "Built for production, not just demos.",
-    "tabs": {
-      "dashboard": "Dashboard",
-      "billing": "Billing",
-      "ai-chat": "AI Chat"
-    }
-  },
   "blogShowcase": {
     "badge": "FROM THE BLOG",
     "title": "Engineering Insights",
@@ -1484,8 +1399,7 @@
       "enterprise": "Modern Enterprise (CN)",
       "export": "Global Software Export",
       "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets",
-      "seoGeo": "SEO & GEO Engine"
+      "edam": "Enterprise Digital Assets"
     },
     "content": {
       "opc": {
@@ -1544,29 +1458,8 @@
           "f2": "Complex Queries",
           "f3": "Role Management"
         }
-      },
-      "seoGeo": {
-        "title": "SEO & GEO Growth Engine",
-        "desc": "Beyond traditional search. Built-in SEO fundamentals plus Generative Engine Optimization to ensure your product is discoverable by both Google and AI search engines like ChatGPT, Perplexity, and Gemini.",
-        "features": {
-          "f1": "Core Web Vitals optimized",
-          "f2": "AI Search Indexed"
-        }
       }
     }
-  },
-  "agentic": {
-    "badge": "AGENTIC ENGINEERING",
-    "headline": "Built for AI coding agents.",
-    "subheadline": "Every file, every rule, every test is designed so Claude Code, Cursor, and Codex can understand your entire codebase and ship autonomously.",
-    "card1Title": "Structured Context",
-    "card1Desc": "CLAUDE.md provides component rules, token governance, and import boundaries — so agents never guess.",
-    "card2Title": "Architecture Guardrails",
-    "card2Desc": "7 property-based tests enforce dependency flow, token usage, and WCAG contrast — agents can't break invariants.",
-    "card3Title": "Autonomous Shipping",
-    "card3Desc": "Agents read context, write code, run tests, pass CI — from prompt to production without manual intervention.",
-    "compTraditional": "AI guesses → breaks things → manual fixes",
-    "compSailor": "AI reads rules → follows constraints → CI validates → ships"
   },
   "designSystem": {
     "badge": "DESIGN SYSTEM",
@@ -1590,36 +1483,6 @@
     "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
     "card5Title": "Interactive Documentation",
     "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
-  },
-  "seoGeo": {
-    "badge": "SEO & GEO",
-    "headline": "Found by humans. Cited by AI.",
-    "subheadline": "Every page ships with production-grade SEO and Generative Engine Optimization. Your product appears in Google, Perplexity, ChatGPT Search, and Bing Copilot — out of the box.",
-    "stat1Value": "100",
-    "stat1Label": "Lighthouse SEO",
-    "stat2Value": "Core Web Vitals",
-    "stat2Label": "optimized",
-    "stat3Value": "7",
-    "stat3Label": "Languages",
-    "stat4Value": "6+",
-    "stat4Label": "Schema Types",
-    "seoLabel": "Search Engine Optimization",
-    "geoLabel": "Generative Engine Optimization",
-    "card1Title": "Automated Meta & Structured Data",
-    "card1Desc": "JSON-LD schema, Open Graph, Twitter Cards, canonical URLs, and XML sitemaps generated from your content model. Zero manual configuration.",
-    "card2Title": "AI-Optimized Content Architecture",
-    "card2Desc": "Semantic HTML5, FAQ schema, HowTo markup, and citation-ready formatting that AI search engines prefer when generating answers.",
-    "card3Title": "Multi-Language SEO (hreflang)",
-    "card3Desc": "next-intl auto-generates hreflang alternates for 7 languages with locale-prefixed routing. Each language gets its own sitemap entries.",
-    "card4Title": "Core Web Vitals First",
-    "card4Desc": "Optimized for Core Web Vitals — Next.js Image, font preloading, and route-level code splitting from day one.",
-    "card5Title": "AI Citation Signals",
-    "card5Desc": "Structured data, authoritative content patterns, and E-E-A-T signals that Perplexity, ChatGPT Search, and Google SGE use to decide which sources to cite.",
-    "card6Title": "Global Edge Distribution",
-    "card6Desc": "ISR + edge middleware on Vercel's global edge network. Reach users with low TTFB from any region.",
-    "compTraditionalLabel": "Traditional SEO",
-    "compTraditional": "Manual meta tags → slow crawling → invisible to AI search",
-    "compSailor": "Automated schema → instant indexing → cited by AI engines → global reach"
   },
   "notFound": {
     "title": "Page Not Found",
@@ -1818,7 +1681,7 @@
         },
         "free-or-paid": {
           "question": "Is it free or paid?",
-          "answer": "There is a free tier you can use to evaluate the framework end-to-end. Pro and Enterprise unlock production features like SSO, audit trails, and dedicated support."
+          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
         },
         "china-friendly": {
           "question": "Does it work in China?",

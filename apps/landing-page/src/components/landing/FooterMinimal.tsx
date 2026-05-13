@@ -2,10 +2,12 @@
 
 import { Logo } from "@nebutra/brand";
 import {
+  ArrowRight,
   LogoGithub as Github,
   Message as MessageCircle,
   LogoTwitterX as Twitter,
 } from "@nebutra/icons";
+import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useMount } from "@/hooks/useMount";
@@ -43,7 +45,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
       { labelKey: "features", href: "/features" },
       { labelKey: "pricing", href: "/pricing" },
       { labelKey: "about", href: "/about" },
-      { labelKey: "showcase", href: "/showcase" },
+      { labelKey: "careers", href: "/careers" },
     ],
   },
   {
@@ -60,9 +62,11 @@ const FOOTER_COLUMNS: FooterColumn[] = [
   {
     titleKey: "legal",
     links: [
+      { labelKey: "security", href: "/security" },
       { labelKey: "privacy", href: "/privacy" },
       { labelKey: "terms", href: "/terms" },
       { labelKey: "cookies", href: "/cookies" },
+      { labelKey: "dpa", href: "/dpa" },
       { labelKey: "refund", href: "/refund" },
       { labelKey: "licensing", href: "/licensing" },
       { labelKey: "contact", href: "/contact" },
@@ -85,6 +89,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
 
 export function FooterMinimal() {
   const t = useTranslations("footer");
+  const tCta = useTranslations("microLanding.cta");
   type FooterTranslationKey = Parameters<typeof t>[0];
   const { resolvedTheme } = useTheme();
   const isMounted = useMount();
@@ -102,6 +107,40 @@ export function FooterMinimal() {
       data-testid="footer-minimal"
       className="relative w-full overflow-hidden bg-[color:var(--neutral-1)] dark:bg-black"
     >
+      {/* Final CTA — sits at the top of the footer so the homepage closes on action */}
+      <section
+        data-testid="footer-final-cta"
+        className="relative overflow-hidden border-b border-[color:var(--neutral-4)] dark:border-white/[0.06]"
+      >
+        <AuroraBackground variant="vivid" position="bottom" intensity={0.5} />
+        <div className="relative mx-auto max-w-[1400px] px-6 py-24 text-center">
+          <p className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-[color:var(--neutral-11)] dark:text-white/60">
+            {tCta("eyebrow")}
+          </p>
+          <h2
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground text-balance"
+            style={{
+              letterSpacing: "var(--tracking-heading)",
+              lineHeight: "var(--leading-heading)",
+            }}
+          >
+            {tCta("title")}
+          </h2>
+          <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+            {tCta("description")}
+          </p>
+          <div className="mt-8">
+            <Button asChild variant="ink" size="lg">
+              <Link href="/get-license">
+                {tCta("button")}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+          <p className="mt-6 text-sm text-muted-foreground">{tCta("license")}</p>
+        </div>
+      </section>
+
       <div className="mx-auto max-w-[1400px] px-6 pt-16 pb-8">
         {/* Main grid: Brand + Navigation */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,4fr)] lg:gap-12">

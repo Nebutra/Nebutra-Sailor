@@ -48,7 +48,7 @@ export function LiveMetricsChart() {
   return (
     <div className="relative w-full rounded-xl border border-border/40 bg-background/50 dark:bg-zinc-950/50 p-4 shadow-elevation-high backdrop-blur-md overflow-hidden">
       {/* Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--neutral-6)_1px,transparent_1px),linear-gradient(to_bottom,var(--neutral-6)_1px,transparent_1px)] bg-[size:24px_24px] opacity-50 pointer-events-none" />
 
       <div className="relative z-10 flex items-center justify-between mb-4">
         <div>

@@ -1,5 +1,5 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Button } from "@nebutra/ui/primitives";
+import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import {
   ArrowRight,
   BookOpen,
@@ -244,7 +244,8 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
       <Navbar />
 
       {/* ─── 1. Hero — Dual Flagship ───────────────────────────────────── */}
-      <section className="pt-32 md:pt-48 pb-20 md:pb-28 overflow-hidden">
+      <section className="relative pt-32 md:pt-48 pb-20 md:pb-28 overflow-hidden">
+        <AuroraBackground variant="subtle" position="top" intensity={0.5} />
         <div className="container mx-auto px-4 max-w-[1400px]">
           <AnimateIn preset="fadeUp">
             <span className="text-xs md:text-sm font-mono tracking-[0.25em] uppercase text-muted-foreground mb-8 block">
@@ -253,7 +254,13 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
           </AnimateIn>
 
           <AnimateIn preset="emerge">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-balance mb-10 text-foreground max-w-5xl">
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10 text-foreground max-w-4xl"
+              style={{
+                letterSpacing: "var(--tracking-display)",
+                lineHeight: "var(--leading-display)",
+              }}
+            >
               {hero.heading}
             </h1>
           </AnimateIn>
@@ -270,14 +277,23 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
             className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8"
           >
             <AnimateIn preset="fadeUp">
-              <article className="group relative h-full rounded-3xl border border-border/60 bg-muted/20 p-10 md:p-12 transition-all duration-500 hover:border-border hover:bg-muted/40 hover:shadow-2xl overflow-hidden">
+              <article
+                className="group relative h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/20 p-10 md:p-12 hover:border-border hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150 overflow-hidden"
+                style={{ boxShadow: "var(--ring-hairline)" }}
+              >
                 <div className="flex items-center gap-3 mb-8">
                   <Layers className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
                   <span className="text-[10px] md:text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
                     {hero.builderLabel}
                   </span>
                 </div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-foreground mb-6 leading-[1.05]">
+                <h2
+                  className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-6"
+                  style={{
+                    letterSpacing: "var(--tracking-heading)",
+                    lineHeight: "var(--leading-heading)",
+                  }}
+                >
                   {builderCore.name}
                 </h2>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -290,14 +306,23 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
             </AnimateIn>
 
             <AnimateIn preset="fadeUp">
-              <article className="group relative h-full rounded-3xl border border-border/60 bg-muted/20 p-10 md:p-12 transition-all duration-500 hover:border-border hover:bg-muted/40 hover:shadow-2xl overflow-hidden">
+              <article
+                className="group relative h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/20 p-10 md:p-12 hover:border-border hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150 overflow-hidden"
+                style={{ boxShadow: "var(--ring-hairline)" }}
+              >
                 <div className="flex items-center gap-3 mb-8">
                   <Network className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
                   <span className="text-[10px] md:text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
                     {hero.sleptonsLabel}
                   </span>
                 </div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-foreground mb-6 leading-[1.05]">
+                <h2
+                  className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-6"
+                  style={{
+                    letterSpacing: "var(--tracking-heading)",
+                    lineHeight: "var(--leading-heading)",
+                  }}
+                >
                   {sleptons.name}
                 </h2>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -322,7 +347,13 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               </span>
             </AnimateIn>
             <AnimateIn preset="emerge">
-              <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-balance mb-8 text-foreground leading-[1.02]">
+              <h2
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-8 text-foreground"
+                style={{
+                  letterSpacing: "var(--tracking-display)",
+                  lineHeight: "var(--leading-display)",
+                }}
+              >
                 {builderCore.name}
               </h2>
             </AnimateIn>
@@ -348,25 +379,18 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               </AnimateIn>
               <AnimateIn preset="fadeUp">
                 <div className="flex flex-wrap gap-3">
-                  <Link href="#">
-                    <Button
-                      size="lg"
-                      className="rounded-full px-6 h-11 font-semibold bg-foreground text-background hover:bg-foreground/90 hover:scale-105 transition-transform"
-                    >
+                  <Button asChild variant="ink" size="lg">
+                    <Link href="#">
                       <BookOpen className="mr-2 h-4 w-4" />
                       {labels.docsLabel}
-                    </Button>
-                  </Link>
-                  <Link href="#">
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="rounded-full px-6 h-11 font-semibold border-border hover:bg-muted/60 transition-colors"
-                    >
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg">
+                    <Link href="#">
                       <Github className="mr-2 h-4 w-4" />
                       {labels.githubLabel}
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                 </div>
               </AnimateIn>
             </div>
@@ -384,14 +408,20 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               >
                 {builderCore.highlights.map((highlight, index) => (
                   <AnimateIn key={highlight.title} preset="fadeUp">
-                    <article className="group h-full rounded-2xl border border-border/60 bg-background p-6 md:p-7 transition-all duration-500 hover:border-border hover:shadow-lg">
+                    <article
+                      className="group h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background p-6 md:p-7 hover:border-border hover:-translate-y-px transition-transform duration-150"
+                      style={{ boxShadow: "var(--ring-hairline)" }}
+                    >
                       <div className="mb-5 flex items-center justify-between">
                         <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
                           S{String(index + 1).padStart(2, "0")}
                         </span>
                         <span className="h-px flex-1 ml-4 bg-border/70" />
                       </div>
-                      <h3 className="text-lg md:text-xl font-bold tracking-tight mb-3 text-foreground group-hover:text-primary transition-colors">
+                      <h3
+                        className="text-lg md:text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors"
+                        style={{ letterSpacing: "var(--tracking-tight)" }}
+                      >
                         {highlight.title}
                       </h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">
@@ -406,13 +436,19 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
 
           {/* Builder Core × Sailor relationship — one-face-of-two-identities block */}
           <AnimateIn preset="fadeUp">
-            <div className="mt-16 md:mt-20 rounded-3xl border border-border/60 bg-background p-8 md:p-12">
+            <div
+              className="mt-16 md:mt-20 rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background p-8 md:p-12"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            >
               <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                 <div className="lg:col-span-4">
                   <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-4 block">
                     {labels.builderCoreRelationKicker}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground leading-tight">
+                  <h3
+                    className="text-2xl md:text-3xl font-semibold text-foreground leading-tight"
+                    style={{ letterSpacing: "var(--tracking-heading)" }}
+                  >
                     {labels.builderCoreRelationTitle}
                   </h3>
                 </div>
@@ -444,7 +480,13 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               </span>
             </AnimateIn>
             <AnimateIn preset="emerge">
-              <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-balance mb-8 text-foreground leading-[1.02]">
+              <h2
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-8 text-foreground"
+                style={{
+                  letterSpacing: "var(--tracking-display)",
+                  lineHeight: "var(--leading-display)",
+                }}
+              >
                 {sleptons.name}
               </h2>
             </AnimateIn>
@@ -469,14 +511,20 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               >
                 {sleptons.highlights.map((highlight, index) => (
                   <AnimateIn key={highlight.title} preset="fadeUp">
-                    <article className="group h-full rounded-2xl border border-border/60 bg-muted/20 p-6 md:p-7 transition-all duration-500 hover:border-border hover:bg-muted/40 hover:shadow-lg">
+                    <article
+                      className="group h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/20 p-6 md:p-7 hover:border-border hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150"
+                      style={{ boxShadow: "var(--ring-hairline)" }}
+                    >
                       <div className="mb-5 flex items-center justify-between">
                         <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
                           L{String(index + 1).padStart(2, "0")}
                         </span>
                         <span className="h-px flex-1 ml-4 bg-border/70" />
                       </div>
-                      <h3 className="text-lg md:text-xl font-bold tracking-tight mb-3 text-foreground group-hover:text-primary transition-colors">
+                      <h3
+                        className="text-lg md:text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors"
+                        style={{ letterSpacing: "var(--tracking-tight)" }}
+                      >
                         {highlight.title}
                       </h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">
@@ -502,15 +550,12 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               </AnimateIn>
               <AnimateIn preset="fadeUp">
                 <div className="flex flex-wrap gap-3">
-                  <Link href="#">
-                    <Button
-                      size="lg"
-                      className="rounded-full px-6 h-11 font-semibold bg-foreground text-background hover:bg-foreground/90 hover:scale-105 transition-transform"
-                    >
+                  <Button asChild variant="ink" size="lg">
+                    <Link href="#">
                       <Users className="mr-2 h-4 w-4" />
                       {labels.exploreLabel}
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                 </div>
               </AnimateIn>
             </div>

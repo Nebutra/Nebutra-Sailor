@@ -37,16 +37,16 @@
   "features": {
     "sectionTitle": "プロトタイプからスケールまでの即戦力インフラストラクチャ。",
     "item0": {
-      "title": "AIアプリケーション基盤",
-      "description": "自動化されたフレームワークとLLMエンジンを内蔵。複雑な抽象化をバイパスし、構造化AIと直接連携します。"
+      "title": "AI アプリケーション基盤",
+      "description": "自動化されたエージェントフレームワークと LLM オーケストレーションエンジンを内蔵。複雑な抽象化をバイパスし、構造化インテリジェンス API と直接連携します。"
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "ガバナンスプラットフォームベースライン",
+      "description": "AI ネイティブ SaaS を出荷するチームのためのガバナンスプラットフォームベースライン。スキャフォールディング、ランタイムプリミティブ、デリバリーサーフェスをアドホックツールの組み合わせなしに整合させます。"
     },
     "item2": {
-      "title": "エンタープライズSaaS自動化",
-      "description": "Vercel、Supabase、Stripeを深く統合。行レベルのセキュリティ、マルチテナント分離、グローバル課金を標準装備。"
+      "title": "エンタープライズ SaaS 自動化",
+      "description": "Vercel、Supabase、Stripe を深く統合。行レベルのセキュリティ、複雑なマルチテナント分離、グローバルサブスクリプション課金を標準装備で提供します。"
     }
   },
   "cta": {
@@ -55,69 +55,6 @@
     "copyLabel": "コマンドをコピー",
     "copiedLabel": "コピーしました",
     "startBuilding": "構築を開始"
-  },
-  "comparison": {
-    "badge": "SAILOR 比較",
-    "title": "Sailor と競合製品の比較",
-    "columns": {
-      "feature": "機能",
-      "sailor": "Nebutra Sailor",
-      "nextForge": "next-forge",
-      "supastarter": "Supastarter"
-    },
-    "features": {
-      "multiTenant": "マルチテナント",
-      "aiGateway": "AI統合",
-      "auth": "認証",
-      "billing": "課金・決済",
-      "i18n": "国際化",
-      "frameworks": "フレームワーク対応",
-      "monorepo": "Monorepo規模",
-      "api": "APIフレームワーク",
-      "e2eTests": "E2Eテスト",
-      "archTests": "アーキテクチャテスト",
-      "designSystem": "デザインシステム",
-      "bgJobs": "バックグラウンドジョブ",
-      "license": "ライセンス"
-    },
-    "values": {
-      "orgRbacIsolation": "組織 + RBAC + 行レベル分離",
-      "orgRolesSeat": "組織 + ロール + シート課金",
-      "manualSetup": "手動構築",
-      "multiProviderGateway": "Vercel AI SDK + 20+ プロバイダ",
-      "vercelAiSdk": "Vercel AI SDK",
-      "clerkCustomIdp": "Clerk / Better Auth / NextAuth / Supabase",
-      "clerkOnly": "Clerk",
-      "betterAuth": "Better Auth",
-      "stripeUsage": "5プロバイダー + 従量課金",
-      "stripeOnly": "Stripe",
-      "fiveProviders": "5つの決済プロバイダー",
-      "sevenLangs": "7言語",
-      "nextjsOnly": "Next.jsのみ",
-      "nextNuxtTanstack": "Next.js + Nuxt + TanStack",
-      "turboNineApps": "Turborepo · 10 アプリ",
-      "turboSevenApps": "Turborepo · 6 アプリ",
-      "turboFiveApps": "Turborepo · 5アプリ",
-      "honoOpenapi": "Hono + OpenAPI + oRPC + tRPC",
-      "trpc": "tRPC",
-      "honoOrpc": "Hono + oRPC",
-      "playwrightSharded": "Playwright · 4シャード",
-      "playwrightGha": "Playwright + GH Actions",
-      "sevenPropertyBased": "13 アーキテクチャテスト",
-      "fourLayerTokens": "4層トークンエンジン",
-      "shadcn": "shadcn/ui",
-      "radixShadcn": "Radix + shadcn/ui",
-      "inngest": "Inngest",
-      "triggerQstash": "trigger.dev + QStash",
-      "agpl": "AGPL-3.0（無料）",
-      "mit": "MIT（無料）",
-      "paidFrom349": "$349から",
-      "aiPackage": "AI パッケージ",
-      "i18nPackage": "i18n パッケージ",
-      "nextjsRoutes": "Next.js ルート",
-      "cronOnly": "Cron のみ",
-      "twoLangs": "2 言語 (en, de)"
-    }
   },
   "footer": {
     "brandDescription": "数週間でSaaSを出荷。マルチテナント、課金、認証、AI——初日から本番対応。",
@@ -128,7 +65,7 @@
       "community": "コミュニティ"
     },
     "links": {
-      "product": "Product",
+      "product": "プロダクト",
       "features": "機能",
       "pricing": "料金プラン",
       "about": "会社概要",
@@ -139,11 +76,14 @@
       "docs": "ドキュメント",
       "ideas": "アイデア",
       "opc": "プラットフォーム",
+      "careers": "採用情報",
+      "security": "セキュリティ",
+      "dpa": "DPA",
       "privacy": "プライバシー",
       "terms": "利用規約",
       "cookies": "Cookie ポリシー",
       "refund": "返金ポリシー",
-      "licensing": "Licensing",
+      "licensing": "ライセンス",
       "contact": "お問い合わせ",
       "faq": "よくある質問",
       "github": "GitHub",
@@ -180,952 +120,952 @@
   },
   "legal": {
     "nav": {
-      "home": "Home",
-      "contact": "Contact"
+      "home": "ホーム",
+      "contact": "お問い合わせ"
     },
     "footer": {
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service",
-      "cookies": "Cookie Policy",
-      "refund": "Refund Policy",
-      "copyright": "© Nebutra. All rights reserved."
+      "privacy": "プライバシーポリシー",
+      "terms": "利用規約",
+      "cookies": "Cookie ポリシー",
+      "refund": "返金ポリシー",
+      "copyright": "© Nebutra. 無断複写・転載を禁じます。"
     }
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and core engineering principles driving Nebutra Intelligence.",
-      "heading": "The Era of Super Individuals",
-      "subheading": "Terminate human-wave bureaucratic expansion. Equip the creative super individual with maximal algorithmic leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "Nebutra is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce is merely the restructuring of production elements—but historically riddled with hierarchical frictions. In Nebutra's neural network, any independent builder shipping verifiable Proof of Work receives automatic routing of top talent, institutional trust, and algorithmic capital via our Sleptons matchmaker, democratizing entrepreneurship into a highly certain, standardized track.",
-      "missionP3": "We fundamentally reject scaling by adding middle management. Agents handle 100% of operational workflows. We do not hire passive cogs; we invest in, cultivate, and elevate literal creators.",
+      "title": "会社情報 — ガバナンス AI プラットフォーム",
+      "description": "Nebutra のガバナンス AI プラットフォームの商業ビジョンとエンジニアリング原則をご紹介します。",
+      "heading": "リーン・プロダクトチームの時代",
+      "subheading": "繰り返されるプラットフォーム作業をガバナンスインフラ、強力な自動化、永続的なエンジニアリングレバレッジに置き換えます。",
+      "missionTitle": "管理的腐敗に抵抗する新秩序",
+      "missionP1": "Nebutra は、一時的なスターターキットではなく永続的なインフラを必要とするチームのためのガバナンス AI プラットフォームを構築しています。従来のスケールはしばしば官僚主義とエントロピーを伴いますが、私たちはコードガバナンス、自動化、および成長しても監査可能であり続けるプラットフォームベースラインで応えます。",
+      "missionP2": "コマーシャルは依然として調整のオーバーヘッド、断片化されたツール、脆弱なアップグレードパスに悩まされています。私たちはより明確なプラットフォームコントラクト、より強力なデリバリープリミティブ、チームが実際に観察・信頼できるランタイム動作を通じてそれらの摩擦を減らすことを目指しています。",
+      "missionP3": "組織的な重みを増やすことでスケール問題を解決するという習慣を私たちは拒否します。自動化、テスト、ガバナンスが繰り返しの運用作業を吸収し、チームがプロダクト・アーキテクチャ・顧客の成果に集中できるようにすべきです。",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "4 つの柱",
       "values": {
         "0": {
-          "title": "Infinite Fission (Philosophy)",
-          "description": "Rejecting the bloated myth of horizontal expansion. Every micro-entity hatched here is designed to leverage billions in value with ultra-low headcount."
+          "title": "ガバナンスによるスケール（哲学）",
+          "description": "スケールは組織的な重みを増やすことではなく、より強いシステム、より良いレバレッジ、より明確なオペレーションルールから生まれるべきです。"
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "Transcending simple boilerplates. An arsenal of enterprise multi-tenant isolation, automated MRR billing, shipped by solo founders in one week."
+          "title": "ビルダーコア（インフラ）",
+          "description": "マルチテナント、課金、認証、コンプライアンス、AI 統合のための再利用可能なプラットフォームベースライン。チームが監査・拡張・繰り返し出荷できます。"
         },
         "2": {
-          "title": "Frictionless Flow (Routing)",
-          "description": "Algorithms dismantle HR and VC logic. Execution metrics and git commit velocity dictate purely where capital and talent flow."
+          "title": "アップグレード規律（ルーティング）",
+          "description": "健全なシステムは、ドリフトや英雄的な一人対応ではなく、互換性チェック、マイグレーション、観測可能なランタイムコントラクトを通じて成長します。"
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Eradicate office politics. Provide architectural proofs and the algorithms will automatically elevate your systemic authority."
+          "title": "コードは法（組織）",
+          "description": "運用規律はテスト、ワークフロー、ガバナンスルールに落とし込まれるべきです。チームが政治的駆け引きや組織的記憶に依存せずにプラットフォームを改善できます。"
         }
       },
-      "jobsTitle": "Eradicating JD/CV Recruitment",
-      "jobsDescription": "We ignore degrees and pedigrees. Pass the Sleptons machine vision and topological checks via sheer Proof of Work, and shape the ecosystem.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "資格より実績を重視",
+      "jobsDescription": "私たちは学歴や肩書きよりも、検証可能なエンジニアリングの成果、思考の明確さ、システム判断力を重視します。",
+      "jobsButton": "GitHub プロフィールを提出",
+      "companyInfoTitle": "組織コンプライアンス",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "法人登記名",
+        "founded": "登記日",
+        "headquarters": "グローバル拠点",
+        "jurisdiction": "管轄法域"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "詳細な技術評価が必要ですか？",
+      "ctaDescription": "エンタープライズ統合アセスメントについてはエンジニアリングスペシャリストにお問い合わせいただくか、デプロイメントドキュメントをご確認ください。",
+      "ctaButton": "お問い合わせ"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — Nebutra Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "技術・商用お問い合わせ — Nebutra Intelligence",
+      "description": "商用ライセンス、エンタープライズセルフホスティング、高度な技術サポートのための専用連絡チャンネルです。",
+      "heading": "サポート接続を確立する",
+      "subheading": "お客様の要件を評価するために、専任の技術スペシャリストまたはアーキテクトを派遣します。",
       "contacts": {
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "創業者直通",
+          "description": "コア戦略的整合および経営レベルの問い合わせのための直接連絡チャンネルです。"
         },
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "エンタープライズ相談",
+          "description": "エコシステム戦略パートナーシップおよびアーキテクチャ進化に関する予備的な議論です。"
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "商用デプロイメント",
+          "description": "クローズドソースライセンスの交渉およびプライベートクラスター環境のデプロイメントに関する詳細です。"
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "エキスパートサポート",
+          "description": "アクティブなビジネス統合とコアシステムデバッグのためのアーキテクチャガイダンスとトラブルシューティングサービスです。"
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "法務・コンプライアンス",
+          "description": "オープンソース境界定義、エンタープライズコンプライアンス監査、契約条件に関する問い合わせです。"
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "データセンタープライバシー",
+          "description": "GDPR および国際データ保護法に関する技術的な検証とコンプライアンス指示です。"
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "セキュリティ開示",
+          "description": "潜在的なソフトウェア脆弱性に関する技術的な再現レポートをインフラチームに安全に提出します。"
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "送信ポータル",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "お名前",
+        "email": "公式メールアドレス",
+        "company": "所属組織",
+        "category": "お問い合わせ種別",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "法人相談",
+          "sales": "ライセンス・アーキテクチャ",
+          "support": "開発者サポート",
+          "legal": "法務・コンプライアンス",
+          "privacy": "データ処理ポリシー",
+          "partnership": "エコシステム統合",
+          "press": "広報・PR"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "お問い合わせの要点",
+        "message": "技術・商用の詳細仕様",
+        "submit": "送信する",
+        "privacyNotice": "送信することにより、当社の",
+        "privacyLink": "プライバシーポリシー",
+        "submitting": "処理中...",
+        "successMessage": "データが正常に送信されました。担当の運用チームが 1〜2 営業日以内に詳細な回答を差し上げます。"
       },
-      "companyInfoTitle": "Operational Telemetry",
+      "companyInfoTitle": "運用情報",
       "companyNameChinese": "无锡云毓智能科技有限公司",
       "companyNameEnglish": "Wuxi Nebutra Intelligence Technology Co., Ltd.",
-      "companyAddress": "Wuxi, Jiangsu Province, China",
-      "socialMedia": "Primary Network Links"
+      "companyAddress": "中国江蘇省無錫市",
+      "socialMedia": "主要ネットワークリンク"
     },
     "cookies": {
-      "title": "Data Retention Protocols — Nebutra",
-      "description": "Elucidating the platform's execution of necessary technical storage mechanics to maintain session states and platform analytics.",
-      "heading": "Technical Tracking Mechanics",
-      "effectiveDate": "Mandatory Enforcement Date",
-      "lastUpdated": "Latest Technical Revision",
+      "title": "Cookie ポリシー — Nebutra",
+      "description": "Nebutra がウェブサイトおよびサービスで Cookie と類似のトラッキング技術をどのように使用するかについてです。",
+      "heading": "Cookie ポリシー",
+      "effectiveDate": "施行日",
+      "lastUpdated": "最終更新日",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "2025年1月1日",
+        "updated": "2025年1月1日"
       },
-      "intro": "This Cookie Policy explains how Nebutra Co., Ltd. (\"Nebutra,\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "この Cookie ポリシーは、Nebutra Co., Ltd.（以下「Nebutra」「当社」）が当社のウェブサイトおよびサービスで Cookie と類似のトラッキング技術をどのように使用するかを説明します。",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "Cookie とは何ですか？",
+        "content": "Cookie は、ウェブサイトを訪問した際にデバイスに保存される小さなテキストファイルです。ウェブサイトをより効率的に機能させ、サイト所有者に情報を提供するために広く使用されています。"
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "Cookie の使用方法",
+        "intro": "当社は以下の目的で Cookie を使用します：",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "必須機能の有効化",
+            "desc": "ユーザー認証やセキュリティなどのコア機能を提供します"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "設定の記憶",
+            "desc": "言語・テーマ・その他の設定を保存します"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "パフォーマンスの改善",
+            "desc": "訪問者がサービスをどのように利用するかを把握します"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "エクスペリエンスのパーソナライズ",
+            "desc": "関連性の高いコンテンツと推奨事項を提供します"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "マーケティングの測定",
+            "desc": "マーケティングキャンペーンの効果を追跡します"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "使用する Cookie の種類",
       "tableHeaders": {
         "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "provider": "プロバイダー",
+        "purpose": "目的",
+        "duration": "有効期間"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "厳密に必要な Cookie",
+        "description": "これらの Cookie はウェブサイトの正常動作に不可欠です。無効にすることはできません。",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "Nebutra",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "ユーザー認証セッション",
+            "duration": "セッション"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "認証トークン",
+            "duration": "7日間"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "Nebutra",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "Cookie の同意設定を保存",
+            "duration": "1年"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "機能的 Cookie",
+        "description": "これらの Cookie はパーソナライズされた機能を有効にし、設定を記憶します。",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "Nebutra",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "言語設定を保存",
+            "duration": "1年"
           },
           "1": {
             "name": "theme",
             "provider": "Nebutra",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "テーマ設定を保存",
+            "duration": "1年"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "分析 Cookie",
+        "description": "これらの Cookie は、訪問者がウェブサイトをどのように利用するかを把握するのに役立ちます。",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "ユニークユーザーを識別",
+            "duration": "2年"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "プロダクト分析",
+            "duration": "1年"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "マーケティング Cookie",
+        "description": "これらの Cookie は広告と広告キャンペーンのパフォーマンス追跡に使用されます。",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "Facebook 広告の訪問追跡",
+            "duration": "3ヶ月"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "コンバージョン追跡",
+            "duration": "3ヶ月"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "Cookie 設定の管理",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "Cookie 同意バナー",
+        "intro": "初めてウェブサイトを訪問すると、以下を選択できる Cookie 同意バナーが表示されます：",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "すべて許可",
+            "desc": "すべての Cookie カテゴリーを有効化"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "すべて拒否",
+            "desc": "任意の Cookie をすべて無効化（必須 Cookie は残ります）"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "カスタマイズ",
+            "desc": "有効にする Cookie カテゴリーを個別に選択"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "フッターの「Cookie 設定」をクリックすることで、いつでも設定を変更できます。"
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "ブラウザ設定",
+        "intro": "ほとんどのウェブブラウザでは、設定から Cookie を制御できます：",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "設定 > プライバシーとセキュリティ > Cookie"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "設定 > プライバシーとセキュリティ > Cookie"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "環境設定 > プライバシー > Cookie"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "設定 > プライバシー、検索、サービス > Cookie"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "特定の Cookie をブロックするとウェブサイトの機能に影響する場合があります。"
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "類似技術",
+        "intro": "Cookie に加えて、以下を使用する場合があります：",
         "items": {
           "0": {
-            "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "label": "ローカルストレージ",
+            "desc": "設定とキャッシュデータをローカルに保存するため"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "セッションストレージ",
+            "desc": "ブラウジングセッション中の一時データのため"
           },
           "2": {
-            "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "label": "ピクセルタグ",
+            "desc": "メール開封とウェブサイト訪問を追跡する小さな画像"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "当社はトラッキングのためにブラウザフィンガープリンティングを使用しません。"
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "ポリシーの更新",
+        "content": "この Cookie ポリシーは随時更新する場合があります。重要な変更については、更新されたポリシーをウェブサイトに掲載してお知らせします。"
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "お問い合わせ",
+        "intro": "Cookie の使用に関するご質問はこちらまでご連絡ください：",
         "company": "Nebutra Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "個人データの収集・処理方法の詳細については、当社の",
+        "privacyLink": "プライバシーポリシー"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — Nebutra",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "エンジニアリングガイダンス & FAQ — Nebutra",
+      "description": "フレームワークアーキテクチャ、ベースライントポロジー、商用デプロイメント戦略の包括的な分析。",
+      "heading": "エグゼクティブ詳細解説",
+      "subheading": "システムエンジニアリング統合とエグゼクティブの商業的意思決定のために最適化されたサポート資料。",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "アーキテクチャ概要",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of Nebutra Sailor?",
-              "a": "Nebutra Sailor is a highly structured, production-ready Next.js AI SaaS framework. It bundles microservice functionalities, including corporate billing, multi-factor authentication, and multi-tenant isolation, eliminating boilerplate development overhead and allowing teams to hyper-focus on core structural AI implementation."
+              "q": "Nebutra Sailor の明確な運用目的は何ですか？",
+              "a": "Nebutra Sailor は高度に構造化された本番対応の Next.js AI SaaS フレームワークです。法人向け課金、多要素認証、マルチテナント分離をガバナンスプラットフォームベースラインにバンドルし、チームがプロダクト固有の AI 実装に集中できるようにします。"
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "リポジトリのライセンス構造はどうなっていますか？",
+              "a": "基盤インフラは OSS AGPLv3 協定を厳格に適用し、透明性とゼロコスト利用を保証します。独自の難読化と高度なリライト保証を必要とする組織向けには、明示的なクローズドソース商用契約が用意されています。"
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "初期評価の速度はどのくらいですか？",
+              "a": "非常に高速です。カスタマイズされた Node CLI ツールチェーンと正確な技術仕様を使用することで、ジュニアエンジニアでも数分以内に自律的なローカル MVP インスタンスを立ち上げることができます。"
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "商用オペレーション",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "商用スケーリングの許容範囲はどのくらいですか？",
+              "a": "マイクロコンポーネントパラダイムに基づいて設計されており、ゼロ需要の無料ティアから月間数百万リクエストを処理するエンタープライズ閾値まで、ダッシュボードの制約でシームレスに対応できます。"
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "サブスクリプションの変動は会計にどのような影響を与えますか？",
+              "a": "リソースと API スループットの秒単位の精密ログを使用して運用しています。制約の変更は即座に会計レイヤーと照合され、日割り差額の返金または自動クレジットが発行されます。ティアフリーズ期間は一切ありません。"
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "決済経路を分離する処理インフラは何ですか？",
+              "a": "グローバルの現金ルーティングは基本的に Stripe サーバーインターフェースに委託され、厳格な PCI-DSS テレメトリと処理整合性を保証します。エンタープライズデプロイメントはカスタム SLA コミットメントによる非公開財務監査パイプラインを統合できます。"
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "システムエンジニアリングレイヤー",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "ネイティブにサポートされている基本的な AI 抽象化は何ですか？",
+              "a": "主要なインタラクションロジックは OpenAI、Anthropic、Gemini の標準仕様でのネイティブ相互運用性を規定しています。これにより、変数マッピングを通じて推論エンドポイントを効率的にホットスワップする大きな柔軟性が得られ、上流の商用ロジックへの影響はゼロです。"
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "データベース難読化のリスクはどのように対処されていますか？",
+              "a": "デフォルト実装では、サーバーレステナント解決ルーティングプリミティブと密接に連携した Postgres Row-Level Security (RLS) ポリシーを展開します。これにより、アプリケーションレベルのデータ汚染と実行の重複を防ぐハードパーティションが確保されます。"
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "セルフマネージドデプロイメントにアーキテクチャ上の制限はありますか？",
+              "a": "一切ありません。トポロジーは完全に分離されています。環境が独立した Node.js ランタイムと健全な PostgreSQL クラスターを実行できれば、完全な機能が本質的に維持されます。"
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "システム整合性",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "境界の機械的防御を規定するプロトコルは何ですか？",
+              "a": "送信時の必須 TLS 暗号化、シークレットマッピングのための決定論的ハッシュアルゴリズム、内部時系列追跡台帳への変更イベントの記録などが実行されます。"
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "トポロジーは主要な国際プライバシー法令を遵守していますか？",
+              "a": "はい、深く遵守しています。ビジネスモジュールは GDPR および各地域の規制フレームワークに最適に準拠した、同意撤回状態・完全削除ロジック・深いエクスポートクエリのアルゴリズム実装を標準で提供します。"
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "異常な重大インシデントが発生した場合はどうなりますか？",
+              "a": "自動化されたセンチネルがコアエンジニアリングチームに即座に警告を発し、回路遮断とトリアージを実施します。高度な解決ハンドブックに従い、完全に透明なインシデントポストモーテムが絶対的な 72 時間以内に全体に公開されます。"
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "技術支援指示",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "運用のボトルネックトラブルシューティングはどのように解決されますか？",
+              "a": "最初のトリアージは厳密に管理されたドキュメントマトリックスと検証済みのコミュニティインタラクションを対象とします。標準またはエンタープライズレベルのライセンスを取得すると、内部エンジニアリングノードを通じて解決するプライベートエスカレーションキューへのアクセスが得られます。"
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "物理的または特殊環境の統合オペレーションを提供していますか？",
+              "a": "これは上位企業コングロマリット向けの特注プレミアム実行ティアに該当します。最上位のアーキテクトがレガシーアーキテクチャのコード監査、デリケートなクラウド移行の管理、高度に隔離されたネットワークパーティションの検証を行うために派遣されます。"
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "即座の技術同期が必要ですか？",
+      "ctaDescription": "特定の API 動作スキーマの検証や長期統合協定の実行など、エンジニアリング組織と直接インターフェースしてください。",
+      "ctaButton": "統合手順を受け取る",
+      "ctaEmail": "ダイレクトメッセージを送信"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — Nebutra",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Enforcement Epoch",
-      "lastUpdated": "Latest Structural Revision",
+      "title": "プライバシーポリシー & 情報保護 — Nebutra",
+      "description": "インフラメカニクスがユーザーの自律性とデータ分離をどのように管理するかを詳細に文書化しています。",
+      "heading": "情報保護指針",
+      "effectiveDate": "施行日",
+      "lastUpdated": "最終更新日",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "2025年1月1日",
+        "updated": "2025年1月1日"
       },
-      "intro": "At Nebutra (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "Nebutra（以下「当社」）はお客様のプライバシー保護に取り組んでいます。このプライバシーポリシーは、当社のウェブサイト、アプリケーション、サービス（総称して「サービス」）をご利用の際に、お客様の情報をどのように収集・使用・開示・保護するかを説明します。",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. 収集する情報",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 お客様が提供する情報",
+          "intro": "お客様が直接提供する情報を収集します：",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "アカウント情報",
+              "desc": "アカウント作成時の氏名、メールアドレス、パスワード、組織情報。"
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "プロフィール情報",
+              "desc": "プロフィール写真、役職、会社名、その他の任意情報。"
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "支払い情報",
+              "desc": "請求先住所と支払い方法の詳細（Stripe 経由で安全に処理）。"
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "コミュニケーション",
+              "desc": "当社に送信されたメッセージ、フィードバック、その他の通信。"
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "コンテンツ",
+              "desc": "サービスを使用して作成、アップロード、または保存したコンテンツ。"
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 自動的に収集される情報",
+          "intro": "サービスをご利用の際、特定の情報を自動的に収集します：",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "デバイス情報",
+              "desc": "デバイスの種類、OS、ブラウザの種類、デバイス固有識別子。"
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "利用情報",
+              "desc": "閲覧ページ、使用機能、実行操作、サービス利用時間。"
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "ログデータ",
+              "desc": "IP アドレス、アクセス時刻、参照元 URL、システムアクティビティログ。"
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "位置情報",
+              "desc": "IP アドレスに基づく大まかな位置情報（正確な位置情報は収集しません）。"
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. 情報の使用方法",
+        "intro": "収集した情報を以下の目的で使用します：",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "サービスの提供",
+            "desc": "サービスの運営、維持、改善。"
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "取引の処理",
+            "desc": "支払い、課金、関連する業務の処理。"
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "コミュニケーション",
+            "desc": "サービスに関するお知らせ、更新情報、マーケティング通信の送信（同意を得た場合）。"
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "パーソナライズ",
+            "desc": "エクスペリエンスのカスタマイズと関連する推奨事項の提供。"
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "分析",
+            "desc": "利用パターンの把握とサービスの改善。"
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "保護",
+            "desc": "不正行為、乱用、セキュリティインシデントの検出・防止・対応。"
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. 情報の共有方法",
+        "intro": "以下の状況においてお客様の情報を共有する場合があります：",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 サービスプロバイダー",
+          "intro": "当社に代わってサービスを提供するサードパーティベンダーと情報を共有します：",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "インフラ",
+              "desc": "クラウドホスティング（Vercel、Supabase）、データベースサービス"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "決済処理",
+              "desc": "安全な決済処理のための Stripe"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "認証",
+              "desc": "ID 管理のための Clerk"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "分析",
+              "desc": "利用状況の把握のための PostHog、Vercel Analytics"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 事業譲渡",
+          "content": "合併、買収、資産売却が行われた場合、お客様の情報は当該取引の一部として移転される場合があります。"
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 法的要件",
+          "content": "法律、法的手続き、政府の要請により必要な場合、または当社の権利・プライバシー・安全・財産を保護するために必要な場合、情報を開示する場合があります。"
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. お客様の権利と選択肢",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 アクセスと可搬性",
+          "content": "アカウント設定から個人情報にアクセスし、ポータブル形式でデータのコピーをリクエストできます。"
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 訂正",
+          "content": "ダッシュボードからいつでもアカウント情報を更新できます。"
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 削除",
+          "content": "設定から、またはお問い合わせによりアカウントと関連データの削除をリクエストできます。"
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 マーケティングコミュニケーション",
+          "content": "マーケティングメールの「配信停止」をクリックするか、設定を更新することでマーケティングメールの受信を停止できます。"
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. データセキュリティ",
+        "intro": "お客様の情報を保護するために適切な技術的・組織的措置を実施しています：",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "転送中（TLS）および保存時のデータ暗号化",
+          "1": "定期的なセキュリティ評価とペネトレーションテスト",
+          "2": "アクセス制御と認証要件",
+          "3": "システムアクティビティの監視とログ記録"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. カリフォルニア州プライバシー権 (CCPA)",
+        "intro": "カリフォルニア州の居住者であれば、個人情報に関する特定の権利があります：",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "知る権利",
+            "desc": "当社が収集・使用・共有する情報の開示をリクエストします。"
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "削除の権利",
+            "desc": "個人情報の削除をリクエストします。"
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "オプトアウトの権利",
+            "desc": "個人情報の販売をオプトアウトします（当社はお客様のデータを販売しません）。"
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "非差別の権利",
+            "desc": "権利行使に対して差別的な扱いをしません。"
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. 欧州プライバシー権 (GDPR)",
+        "intro": "EEA・英国・スイスにお住まいの方は、GDPR に基づく追加の権利があります：",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "法的根拠",
+            "desc": "契約の履行、正当な利益、または同意に基づいてデータを処理します。"
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "権利",
+            "desc": "アクセス、訂正、消去、可搬性、制限、異議申し立て。"
           },
           "2": {
             "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "desc": "データ保護責任者には dpo@nebutra.com でご連絡いただけます。"
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "title": "8. お問い合わせ",
+        "intro": "このプライバシーポリシーについてご質問がある場合はお問い合わせください：",
         "company": "Nebutra Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — Nebutra",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "返金ポリシー — Nebutra",
+      "description": "多様な利用モデルにおける返金パラメーターの厳密な定義。",
+      "heading": "返金処理フレームワーク",
+      "effectiveDate": "施行日",
+      "lastUpdated": "最終更新日",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "2025年1月1日",
+        "updated": "2025年1月1日"
       },
-      "intro": "At Nebutra, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "Nebutra では、サービスにご満足いただけるよう努めております。この返金ポリシーは、返金が受けられる状況と申請手順を説明します。",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "サブスクリプションプラン",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "月次サブスクリプション",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "解約",
+              "desc": "月次サブスクリプションはいつでも解約できます"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "日割り返金",
+              "desc": "月の途中の日割り返金は行っておりません"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "アクセス",
+              "desc": "請求期間終了まで有料機能にアクセスできます"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "自動更新",
+              "desc": "解約しない限りサブスクリプションは自動更新されます"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "年次サブスクリプション",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "14 日間返金保証",
+              "desc": "新規年次購読者は初回購入から 14 日以内に全額返金をリクエストできます"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "14 日経過後",
+              "desc": "14 日間経過後は原則として返金できません"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "解約",
+              "desc": "いつでも解約できますが、年次期間終了までサブスクリプションはアクティブのままです"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "日割り返金なし",
+              "desc": "未使用の月分の部分返金は行っておりません"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "返金対象シナリオ",
+        "intro": "以下の状況において返金リクエストを検討します：",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. サービスの問題",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "コア機能の使用に影響する重大なサービス障害",
+            "1": "合理的な期間内に解決できない技術的な問題",
+            "2": "宣伝内容と大きく異なる機能"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. 請求エラー",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "二重請求",
+            "1": "誤った請求金額",
+            "2": "不正請求（確認後）"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. 例外的な状況",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "記録のある医療上の緊急事態",
+            "1": "事業に影響する自然災害",
+            "2": "個別に評価されるその他の状況"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "返金対象外の項目",
+        "intro": "以下は一般的に返金の対象外です：",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "従量課金",
+            "desc": "API コール、AI トークン消費、または使用されたストレージ"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "アドオンとオプション",
+            "desc": "一回限りの購入またはアドオンサービス"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "エンタープライズ契約",
+            "desc": "カスタム契約には独自の条件があります"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "任意の解約",
+            "desc": "返金対象期間経過後"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "規約違反",
+            "desc": "ポリシー違反で停止されたアカウント"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "返金のリクエスト方法",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "ステップ 1: サポートに連絡",
+          "intro": "billing@nebutra.com に以下を記載してメールしてください：",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "アカウントのメールアドレス",
+            "1": "サブスクリプションプランと請求期間",
+            "2": "返金リクエストの理由",
+            "3": "関連する書類"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "ステップ 2: 審査プロセス",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "5 営業日以内にリクエストを審査します",
+            "1": "追加情報をお願いする場合があります",
+            "2": "メールで書面による決定通知をお送りします"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "ステップ 3: 返金処理",
+          "intro": "承認された場合：",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "返金は元の支払い方法に処理されます",
+            "1": "クレジットカードへの返金は通常 5〜10 営業日以内に反映されます",
+            "2": "銀行の処理時間は異なる場合があります"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "プラン変更",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "アップグレード",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "アップグレードは即座に有効になります",
+            "1": "残りの請求期間について日割り差額が請求されます",
+            "2": "以前のプランの返金はありません"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "ダウングレード",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "ダウングレードは次の請求期間から有効になります",
+            "1": "それまで現在の機能にアクセスできます",
+            "2": "現在の期間の部分返金はありません"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "無料トライアル",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "無料トライアルに支払い情報は必要ありません",
+          "1": "トライアル期間中は課金されません",
+          "2": "課金が始まる前にお知らせします"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "紛争解決",
+        "intro": "返金決定に異議がある場合：",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "追加情報を添えて決定通知メールに返信してください",
+          "1": "上長へのエスカレーションをリクエストしてください",
+          "2": "さらなる審査のために legal@nebutra.com までご連絡ください"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "お問い合わせ",
+        "intro": "返金リクエストまたはこのポリシーに関するお問い合わせ：",
         "company": "Nebutra Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using Nebutra, you agree to these refund terms."
+        "billingLabel": "請求",
+        "supportLabel": "サポート",
+        "legalLabel": "法務",
+        "responseNote": "すべての返金リクエストに 5 営業日以内に回答することを目指しています。",
+        "termsNote": "このポリシーは当社の",
+        "termsLink": "利用規約",
+        "termsAgreement": "Nebutra をご利用いただくことで、これらの返金条件に同意したものとみなします。"
       }
     },
     "terms": {
-      "title": "Platform Interaction Treaty — Nebutra",
-      "description": "The exact defining technical guidelines outlining the required engagement behaviors between the software framework provider and executing agents.",
-      "heading": "Software Supply License Mechanics (Terms)",
-      "effectiveDate": "Execution Enforcement Date",
-      "lastUpdated": "Final Network Update",
+      "title": "利用規約 — Nebutra",
+      "description": "Nebutra のウェブサイト、アプリケーション、API、サービスへのアクセスと使用を規定する利用規約。",
+      "heading": "利用規約",
+      "effectiveDate": "施行日",
+      "lastUpdated": "最終更新日",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "2025年1月1日",
+        "updated": "2025年1月1日"
       },
-      "intro1": "Welcome to Nebutra! These Terms of Service (\"Terms\") govern your access to and use of Nebutra's website, applications, APIs, and services (collectively, the \"Services\") provided by Nebutra Co., Ltd. (\"Nebutra,\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "Nebutra へようこそ！これらの利用規約（以下「本規約」）は、Nebutra Co., Ltd.（以下「Nebutra」「当社」）が提供する Nebutra のウェブサイト、アプリケーション、API、サービス（総称して「サービス」）へのアクセスと使用を規定します。",
+      "intro2": "当社のサービスにアクセスまたは使用することで、本規約および当社の",
+      "intro2PrivacyLink": "プライバシーポリシー",
+      "intro2End": "に同意したものとみなされます。本規約に同意しない場合はサービスをご利用にならないでください。",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. 規約への同意",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 資格要件",
+          "intro": "サービスを利用するには、以下の条件を満たす必要があります：",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "お住まいの地域で成人年齢（最低 18 歳）以上であること",
+            "1": "ご自身または所属組織を代表して本規約に同意する権限を有すること",
+            "2": "適用される法律の下でサービスの利用が禁止されていないこと"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 組織アカウント",
+          "content": "組織を代表してサービスを利用する場合、その組織を本規約に拘束する権限を有することを表明します。"
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "Nebutra provides a SaaS platform that includes:",
+        "title": "2. サービスの説明",
+        "intro": "Nebutra は以下を含む SaaS プラットフォームを提供します：",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "AI による機能とコンテンツ生成",
+          "1": "コンテンツ管理とコミュニティツール",
+          "2": "レコメンデーションシステム",
+          "3": "EC 統合",
+          "4": "Web3 機能",
+          "5": "分析とレポート"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. アカウント登録",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 アカウント作成",
+          "intro": "特定の機能を利用するにはアカウントを作成する必要があります。以下に同意します：",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "正確で完全な情報を提供すること",
+            "1": "アカウント資格情報のセキュリティを維持すること",
+            "2": "情報に変更があれば速やかに更新すること",
+            "3": "アカウント上のすべての活動に責任を持つこと"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. サブスクリプションと課金",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 料金",
+          "content": "サービスは料金ページに記載のさまざまなサブスクリプションプランで提供されます。料金は 30 日前の通知をもって変更される場合があります。"
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 支払い",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "サブスクリプションは月次または年次で前払いで課金されます",
+            "1": "当社の",
+            "2": "お客様は適用される料金の支払い方法への請求を承認します",
+            "3": "安全な決済処理のために Stripe を使用します",
+            "1RefundLink": "返金ポリシー"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. 利用規定",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 禁止行為",
+          "intro": "以下を行わないことに同意します：",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "適用される法律、規制、第三者の権利を侵害すること",
+            "1": "マルウェア、スパム、有害なコンテンツの送信にサービスを使用すること",
+            "2": "当社のシステムへの不正アクセスを試みること",
+            "3": "サービスの整合性またはパフォーマンスを妨害または中断させること",
+            "4": "許可なくデータをスクレイピング、コピー、抽出する自動化ツールを使用すること",
+            "5": "サービスをリバースエンジニアリング、逆コンパイル、または逆アセンブルすること",
+            "6": "違法、有害、または欺瞞的なコンテンツを生成するために AI 機能を使用すること"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. 知的財産",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "Nebutra and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 当社の知的財産",
+          "content": "Nebutra およびそのライセンサーは、当社が作成したすべてのソフトウェア、デザイン、商標、コンテンツを含むサービスのすべての権利、権原、利益を所有します。"
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 お客様のコンテンツ",
+          "content": "お客様が作成またはアップロードしたコンテンツ（以下「お客様のコンテンツ」）の所有権はお客様に帰属します。サービスを利用することで、お客様はサービスを提供する目的のみで、お客様のコンテンツを使用・保存・処理・表示する世界規模の非独占的・ロイヤリティフリーライセンスを当社に付与します。"
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. 保証の免責",
+        "content": "サービスは「現状のまま」および「利用可能な状態で」提供され、商品性、特定目的への適合性、権原、非侵害の黙示的保証を含む、明示または黙示を問わず、いかなる種類の保証も伴いません。"
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. 責任の制限",
+        "para1": "法律で許容される最大限の範囲において、Nebutra は間接的、偶発的、特別、結果的、懲罰的な損害、または利益・データ・使用・のれんの損失について責任を負いません。",
+        "para2": "いかなる場合も当社の総責任は、(a) 請求に先立つ 12 ヶ月間にお支払いいただいた金額、または (b) 100 米ドルのいずれか大きい方を超えないものとします。"
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. 契約解除",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 お客様による解除",
+          "content": "アカウント設定からいつでもアカウントを解除できます。解除後はサービスへのアクセスが失われます。"
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 当社による解除",
+          "intro": "以下の場合、当社はアカウントを停止または解除する場合があります：",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "本規約に違反した場合",
+            "1": "詐欺的または違法な活動に従事した場合",
+            "2": "適用される料金の支払いを怠った場合",
+            "3": "当社にリスクまたは法的責任をもたらした場合"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. 紛争解決",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 非公式解決",
+          "content": "正式な手続きを開始する前に、legal@nebutra.com までご連絡いただき、非公式に紛争を解決することに同意します。"
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 準拠法",
+          "content": "本規約は、法の抵触に関する原則を考慮せず、デラウェア州の法律に準拠します。"
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. お問い合わせ",
+        "intro": "本規約についてご質問がある場合はお問い合わせください：",
         "company": "Nebutra Co., Ltd.",
-        "emailLabel": "Email",
-        "supportLabel": "Support"
+        "emailLabel": "メール",
+        "supportLabel": "サポート"
       },
-      "acknowledgement": "By using Nebutra, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "Nebutra をご利用いただくことで、この利用規約を読み、理解し、拘束されることに同意したことを確認します。"
     }
   },
   "metadata": {
@@ -1196,108 +1136,126 @@
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "Nebutra Sailor is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "システムトポロジー",
+      "title": "透明なアーキテクチャ、ブラックボックスなし。",
+      "description": "Nebutra Sailor はハイパーモジュラーな Turborepo 構造で設計されており、ソフトウェアライフサイクル全体の完全な所有権を提供します。",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "Row-Level Security (RLS) ポリシーをネイティブに組み込んだ完全型 ORM。"
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "title": "Clerk マルチテナント / カスタム ID",
+        "desc": "B2B 組織切り替えと RBAC をサポートする SOC2 対応認証ゲートウェイ。"
       }
     },
     "pricing": {
-      "title": "Accelerate your development cycle.",
-      "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
+      "title": "一回限りの購入。永続アクセス。",
+      "description": "サブスクリプション不要。月額費用なし。チームに合ったプランを選んで、今日から構築を始めましょう。",
       "socialProofText": "オープンソース AGPL-3.0 · 商用ライセンスもご利用可能。",
       "solo": {
-        "badge": "INDIVIDUAL",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Best for individual builders validating products on the AGPL foundation.",
-        "cta": "Clone Repository",
-        "f1": "Complete Next.js 16 SaaS core",
-        "f2": "Unlimited Personal Projects (Commercial use allowed)",
-        "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Admin UI, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "AGPLv3 Open Source License"
+        "badge": "個人向け",
+        "price": "無料",
+        "period": "永久",
+        "desc": "AGPL 基盤でプロダクトを検証する個人ビルダーに最適。",
+        "cta": "リポジトリをクローン",
+        "f1": "Complete Next.js 16 SaaS コア",
+        "f2": "個人プロジェクト無制限（商用利用可）",
+        "f3": "フル SaaS スタック：認証、決済、組織管理、API、管理 UI、メール、i18n、バックグラウンドジョブ、ストレージ他",
+        "f4": "マーケティング機能：ブログ、ランディングページ、SEO、アナリティクス",
+        "f5": "AGPLv3 オープンソースライセンス"
       },
       "startup": {
-        "badge": "STARTUP",
+        "badge": "スタートアップ",
         "price": "$799",
-        "period": "lifetime",
-        "desc": "For small teams building on the Nebutra platform baseline.",
-        "cta": "Get Nebutra for Startups",
-        "f1": "Up to 5 Developer Seats",
-        "f2": "Unlimited Team Projects",
-        "f3": "30-min Architecture Consult (Onboarding Call)",
-        "f4": "Priority Support",
-        "f5": "Everything in Solo"
+        "period": "/ 年",
+        "desc": "Nebutra プラットフォームベースラインで構築する小規模チーム向け。",
+        "cta": "スタートアップ向け Nebutra を購入",
+        "f1": "クローズドソース利用（商用ライセンス）",
+        "f2": "チームプロジェクト無制限",
+        "f3": "12 ヶ月のアップデート込み",
+        "f4": "メールサポート",
+        "f5": "Solo プランのすべてを含む"
       },
       "agency": {
-        "badge": "AGENCY",
+        "badge": "エージェンシー",
         "price": "$1,499",
-        "period": "lifetime",
-        "desc": "For agencies and operators shipping repeatable client platforms.",
-        "cta": "Get Nebutra for Agencies",
-        "f1": "Up to 10 Developer Seats",
-        "f2": "Unlimited Client Projects",
-        "f3": "30-min Architecture Consult (Onboarding Call)",
-        "f4": "White-label potential",
-        "f5": "Everything in Startup",
-        "f6": "Private Discord support channel"
+        "period": "/ 年",
+        "desc": "繰り返し可能なクライアントプラットフォームを出荷するエージェンシーとオペレーター向け。",
+        "cta": "エージェンシー向け Nebutra を購入",
+        "f1": "ホワイトラベル権（商用ライセンス）",
+        "f2": "クライアントプロジェクト無制限",
+        "f3": "12 ヶ月のアップデート込み",
+        "f4": "ホワイトラベル対応",
+        "f5": "Startup プランのすべてを含む",
+        "f6": "Startup プランのすべてを含む"
       }
     },
     "faq": {
-      "title": "Evaluating the stack.",
-      "description": "Detailed engineering answers to accelerate your architectural decisions.",
+      "title": "スタックを評価する。",
+      "description": "アーキテクチャ上の意思決定を加速するための詳細なエンジニアリング回答。",
       "q1": {
-        "q": "Why Turborepo over a standard Next.js app?",
-        "a": "Turborepo isolates your UI components, database schemas, and shared utilities, allowing unparalleled scale when your SaaS outgrows a single frontend application."
+        "q": "標準的な Next.js アプリではなく Turborepo を使う理由は？",
+        "a": "Turborepo は UI コンポーネント、データベーススキーマ、共有ユーティリティを分離し、SaaS が単一のフロントエンドアプリを超えて成長した際に比類のないスケールを可能にします。"
       },
       "q2": {
-        "q": "How is multi-tenancy handled?",
-        "a": "We use Clerk's B2B organizational structure deeply integrated with Prisma middleware to ensure strict row-level isolation between organizations."
+        "q": "マルチテナントはどのように処理されますか？",
+        "a": "Clerk の B2B 組織構造を Prisma ミドルウェアと深く統合し、組織間の厳格な行レベル分離を確保します。"
       },
       "q3": {
-        "q": "Can I swap Clerk for Supabase Auth?",
-        "a": "Absolutely. Our authentication layer is abstracted via @nebutra/auth, meaning you can hot-swap identity providers with minimal refactoring."
+        "q": "Clerk を Supabase Auth に切り替えられますか？",
+        "a": "もちろんです。認証レイヤーは @nebutra/auth 経由で抽象化されており、最小限のリファクタリングで ID プロバイダーをホットスワップできます。"
       },
       "q4": {
-        "q": "Do I need to pay for updates?",
-        "a": "Commercial licenses include 12 months of updates from the date of purchase. The AGPL-3.0 individual tier is perpetual."
+        "q": "アップデートは有料ですか？",
+        "a": "商用ライセンスには購入日から 12 ヶ月のアップデートが含まれます。AGPL-3.0 の個人ティアは永続的です。"
       }
     },
     "cta": {
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the Nebutra CLI.",
-      "button": "Deploy Architecture",
+      "eyebrow": "始める",
+      "title": "設定はやめて、構築を始めよう。",
+      "description": "Nebutra CLI でスケーラブルな SaaS アーキテクチャをローカルに初期化します。",
+      "button": "アーキテクチャをデプロイ",
       "license": "AGPL-3.0 ライセンスのオープンソース。クレジットカード不要。"
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "エンタープライズ機能",
+      "title": "完全型・拡張可能なコア。",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "ネイティブ行レベルセキュリティ",
+        "desc": "すべてのデータベースクエリが現在のテナントコンテキストで厳密にスコープされます。",
+        "cta": "データベース哲学を読む"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "ユニバーサル AI ゲートウェイ",
+        "desc": "OpenAI、Anthropic、またはオープンソースモデルへのプロンプトをシームレスにルーティング。",
+        "cta": "AI SDK ハンドラーを見る"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with zero boilerplate.",
-        "cta": "View RBAC documentation"
+        "title": "きめ細かいアクセス制御",
+        "desc": "組み込みのポリシー構造で管理者、メンバー、ビューワーのロールを定義します。",
+        "cta": "RBAC ドキュメントを見る"
       },
       "billing": {
-        "title": "Stripe Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "title": "マルチプロバイダー課金インフラ",
+        "desc": "従量制利用、サブスクリプション Webhook、セルフサービス顧客ポータル。",
+        "cta": "課金アーキテクチャを見る"
+      }
+    },
+    "productDemo": {
+      "badge": "インタラクティブデモ",
+      "title": "リアルタイムの速度を体験。",
+      "description": "コマンドラインインターフェース、Stripe Webhook トンネリング、ローカルマルチテナントデータベースプロビジョニングを体感してください。",
+      "analytics": {
+        "label": "ライブテレメトリ",
+        "desc": "本番利用データをターミナルに直接ストリーム。"
+      },
+      "billing": {
+        "label": "課金イベント",
+        "desc": "ローカルトンネリング経由で Stripe Webhook の実行を確認。"
+      },
+      "workspaces": {
+        "label": "ワークスペース初期化",
+        "desc": "隔離された B2B PostgreSQL スキーマを即座にプロビジョニング。"
       }
     },
     "workflow": {
@@ -1339,133 +1297,90 @@
         "detail": "14のパッケージがネイティブに統合されています。",
         "readyStatus": "プリセットシステム準備完了"
       }
-    },
-    "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
-      "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
-      },
-      "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
-      },
-      "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
-      }
-    },
-    "harness": {
-      "badge": "HARNESS ENGINEERING",
-      "headline": "Engineering that enforces itself.",
-      "subheadline": "Architecture tests, governance ratchets, and 15 CI workflows ensure code quality can only improve — never regress.",
-      "stat1Value": "19",
-      "stat1Label": "CI Workflows",
-      "stat2Value": "13",
-      "stat2Label": "Architecture Tests",
-      "stat3Value": "0",
-      "stat3Label": "Token Violations",
-      "card1Title": "Architecture Tests",
-      "card1Desc": "13 個のアーキテクチャテストが依存フロー、トークン利用、WCAG コントラスト、API 契約、Storybook カバレッジを検証 — うち 4 個は fast-check によるプロパティベース証明。",
-      "card2Title": "Governance Ratchets",
-      "card2Desc": "Token budgets that only tighten: zero raw color classes on landing page, oklch floor 120+, hex ceiling 40, motion imports whitelisted to 2 files.",
-      "card3Title": "CI Pipeline Depth",
-      "card3Desc": "CodeQL SAST, Gitleaks, cosign signing, SBOM/SLSA provenance, Lighthouse ≥0.95, OpenAPI backward compatibility, k6 load tests, Chromatic visual regression."
     }
   },
   "featuresPage": {
     "hero": {
       "badge": "プラットフォーム機能",
-      "headlinePrefix": "ユニコーンを出荷するために",
+      "headlinePrefix": "自信を持って出荷するために",
       "headlineHighlight": "必要なすべて。",
-      "description": "Nebutra はフルスタック SaaS プラットフォームです。AI、課金、マルチテナンシー、オブザーバビリティ、セキュリティが初日から組み込まれています。車輪の再発明はもう不要です。"
+      "description": "Nebutra はフルスタック SaaS プラットフォームです — AI、課金、マルチテナンシー、オブザーバビリティ、セキュリティが初日から組み込まれています。プラットフォームレイヤーの再構築はもう不要です。"
     },
     "sections": {
       "exploreFeature": "機能を見る",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
+      "ai_category": "AI & インテリジェンス",
+      "ai_f1_title": "マルチモデルチャット補完",
       "ai_f1_desc": "Anthropic、OpenAI、Google、または独自のファインチューニングモデルへリクエストをルーティング。ストリーミング、ビジョン、関数呼び出しに標準対応。",
-      "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Track token consumption per tenant per billing period. Set per-plan quotas and auto-notify on 80% / 100% burn.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Switch auth providers via preset config. Clerk for managed, Better Auth for self-hosted. Phone + SMS login for China market via Aliyun/Tencent Cloud.",
-      "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
-      "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "Every Python microservice uses a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
-      "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
+      "ai_f2_title": "セマンティックエンベディング",
+      "ai_f2_desc": "pgvector でベクターエンベディングを生成・保存。セマンティック検索、RAG パイプライン、レコメンデーションエンジンを強化。",
+      "ai_f3_title": "AI 利用メタリング",
+      "ai_f3_desc": "プランごとのクォータと利用追跡 — AI トークン、API コール、ストレージを ClickHouse バックのリアルタイム集計に対してメタリング。",
+      "multi_category": "マルチテナントプラットフォーム",
+      "multi_f1_title": "組織レベルの分離",
+      "multi_f1_desc": "Postgres の行レベルセキュリティにより、テナント間のデータアクセスをデータベースレイヤーで強制 — アプリケーション層だけでなく。",
+      "multi_f2_title": "マルチプロバイダー認証（Clerk / Better Auth / NextAuth / Supabase）",
+      "multi_f2_desc": "マルチプロバイダー OAuth（Google、GitHub 等）、メール/パスワード、マジックリンク — 単一の環境変数で Clerk、Better Auth、NextAuth、Supabase Auth を切り替え可能。",
+      "multi_f3_title": "自動テナントプロビジョニング",
+      "multi_f3_desc": "Clerk 経由で新しい組織がサインアップすると、最初の API キーを自動生成してブランドのウェルカムメールを送信 — 手動ステップは不要。",
+      "dx_category": "デベロッパーエクスペリエンス",
+      "dx_f1_title": "ハッシュ化 API キー",
+      "dx_f1_desc": "プレフィックス表示付きの SHA-256 ハッシュキー（nbtr_live_…）。作成時に一度だけ平文表示 — 摩擦のないセキュリティ。",
+      "dx_f2_title": "べき等ミドルウェア",
+      "dx_f2_desc": "Idempotency-Key ヘッダーを渡すと任意の POST リクエストが安全に再試行可能になります。Redis バック、24 時間キャッシュ、IETF ドラフト準拠。",
+      "dx_f3_title": "マルチプロトコル API（REST + oRPC + tRPC）",
+      "dx_f3_desc": "パブリック API に REST/OpenAPI、タイプセーフなフロントエンド呼び出しに oRPC、T3 スタック互換に tRPC。全プロトコルで同一の Zod コントラクトとミドルウェアスタックを共有。プリセット設定でプロトコルごとに有効化。",
+      "billing_category": "課金・マネタイズ",
+      "billing_f1_title": "Stripe、LemonSqueezy、Polar & China Pay",
+      "billing_f1_desc": "決済プロバイダーを選択：グローバルエンタープライズに Stripe、インディー開発者に LemonSqueezy、OSS に Polar、中国市場に Alipay/WeChat Pay。ワンクリックチェックアウトとセルフサービス課金ポータル。",
+      "billing_f2_title": "使用量ベースのクォータ適用",
+      "billing_f2_desc": "リアルタイム Redis カウンターがテナントごとの API コールとトークン使用量を追跡。制限に達するとゲートウェイでリクエストをゲート。",
+      "billing_f3_title": "Webhook ライフサイクル同期",
+      "billing_f3_desc": "Stripe のサブスクリプションイベントが Inngest 経由でデータベースの組織プランを自動更新 — Cron ジョブも ポーリングも不要。",
+      "rel_category": "信頼性",
+      "rel_f1_title": "サーキットブレーカー + リトライ",
+      "rel_f1_desc": "ゲートウェイと AI サービスは指数バックオフとジッター付きの CLOSED/OPEN/HALF_OPEN サーキットブレーカーを使用 — カスケード障害なし。",
+      "rel_f2_title": "デッドレターキュー",
+      "rel_f2_desc": "3 回のリトライを使い果たしたイベントハンドラーが DLQ に入ります。再デプロイなしに管理 API から個別にリプレイ可能。",
+      "rel_f3_title": "SLO バーンレートアラート",
+      "rel_f3_desc": "エラーバジェット枯渇前に 14.4×、6×、3× のバーンレートでマルチウィンドウ Google SRE スタイルアラートが発火。",
+      "sec_category": "セキュリティ",
+      "sec_f1_title": "CSP ノンスベースヘッダー",
+      "sec_f1_desc": "Clerk ミドルウェアでリクエストごとにノンスを生成する Strict-dynamic Content Security Policy — unsafe-inline は一切なし。",
       "sec_f2_title": "ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      "sec_f3_title": "SBOM + SLSA provenance",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
-      "obs_f1_title": "OpenTelemetry tracing",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      "obs_f2_title": "Grafana dashboards",
-      "obs_f2_desc": "32-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      "obs_f3_title": "Sentry error tracking",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion service decouples your application from your data warehouse. Schema validation at the edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "sec_f2_desc": "すべてのイングレスで DetectionOnly モードの OWASP コアルールセット。nginx アノテーション経由でバースト許容付き 30 RPS のレート制限。",
+      "sec_f3_title": "SBOM + SLSA プロバナンス",
+      "sec_f3_desc": "すべてのリリースで CycloneDX ソフトウェア部品表と SLSA プロバナンス証明を生成し、GitHub Release にアップロード。",
+      "obs_category": "オブザーバビリティ",
+      "obs_f1_title": "OpenTelemetry トレーシング",
+      "obs_f1_desc": "分散トレースが OTLP 経由で Next.js → Hono → Python マイクロサービスを流れます。Jaeger（開発）と Grafana Tempo（本番）にエクスポート。",
+      "obs_f2_title": "Grafana ダッシュボード",
+      "obs_f2_desc": "マルチパネルプラットフォーム概要：SLO 可用性、残りエラーバジェット、HPA 飽和度、Pod 再起動、CPU スロットリング。",
+      "obs_f3_title": "Sentry エラートラッキング",
+      "obs_f3_desc": "テナントコンテキスト、リクエスト ID、トレース ID でサーバーサイドとクライアントサイドのエラーをキャプチャしてクロスシステム相関を実現。",
+      "data_category": "データ & アナリティクス",
+      "data_f1_title": "ClickHouse OLAP ウェアハウス",
+      "data_f1_desc": "イベントが ClickHouse に蓄積されて高速な分析クエリが可能。dbt が生イベントをダッシュボードで可視化されるゴールドレイヤーの成長指標に変換。",
+      "data_f2_title": "ファネルアナリティクス",
+      "data_f2_desc": "コホートレベルの帰属でサインアップ → アクティベーション → コンバージョンを追跡。ゴールドレイヤーからアクティブユーザーあたりの収益を計算。",
+      "data_f3_title": "Kafka / イベントインジェスション",
+      "data_f3_desc": "Inngest 経由の高スループットイベントインジェスションで ClickHouse ブロンズに蓄積。ゲートウェイエッジでのメモリ内重複排除とスキーマ検証。",
+      "infra_category": "インフラ",
+      "infra_f1_title": "ArgoCD による GitOps",
+      "infra_f1_desc": "メインブランチの変更がクラスターに自動調整されます。セルフヒールが手動の kubectl 編集を元に戻します。同期ウィンドウで安全なデプロイ時間を強制。",
+      "infra_f2_title": "PgBouncer 接続プーリング",
+      "infra_f2_desc": "Supabase 前段のトランザクションモード PgBouncer が 20 本の Postgres 接続で 1,000 本のアプリ接続を処理。2 レプリカで HA 構成。",
+      "infra_f3_title": "水平 + 垂直オートスケーリング",
+      "infra_f3_desc": "HPA が CPU/メモリでスケール。VPA は Off モードで適正サイズの推奨を提供。KEDA カスタムメトリクスは v2 で計画中。"
     }
   },
   "comingSoon": {
     "badge": "🚧 準備中",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
-      "roadmap": "基盤からエンタープライズ規模へ — プロダクトフェーズ、バージョンマイルストーン、資金調達ビジョン。"
+      "ideas": "このセクションでは、驚異的なギーク向けエクスペリエンスを現在制作中です。次の主要なアーキテクチャパイプラインアップデートと同時にリリースされます。",
+      "opc": "より詳細なプラットフォーム概要を準備中です。今後のリリースについては変更履歴とロードマップをご確認ください。",
+      "roadmap": "インフラ基盤からエンタープライズスケールへ — プロダクトフェーズ、バージョンマイルストーン、資金調達ビジョン。"
     },
     "returnBtn": "ホームに戻る"
-  },
-  "showcase": {
-    "badge": "実際の動作",
-    "headline": "デモではなく、本番環境のために構築。",
-    "tabs": {
-      "dashboard": "Dashboard",
-      "billing": "Billing",
-      "ai-chat": "AI Chat"
-    }
   },
   "blogShowcase": {
     "badge": "ブログより",
@@ -1474,99 +1389,77 @@
     "readMore": "続きを読む"
   },
   "useCases": {
-    "badge": "デプロイメントシナリオ",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "Nebutra Sailor powers the next generation of SaaS products across global markets.",
+    "badge": "スケーラブルなシナリオ",
+    "title": "ひとつの基盤。無限の可能性。",
+    "description": "Nebutra Sailor は世界中の市場で次世代 SaaS プロダクトを支えます。",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets",
-      "seoGeo": "SEO & GEO エンジン"
+      "opc": "エージェント型オペレーション",
+      "ip": "個人 IP マトリックス",
+      "multimodal": "マルチモーダル AI SaaS",
+      "enterprise": "モダンエンタープライズ（中国）",
+      "export": "グローバルソフトウェア輸出",
+      "design": "デザインシステムエンジン",
+      "edam": "エンタープライズデジタル資産"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "AI ネイティブオペレーションハブ",
+        "desc": "エージェントワークフロー、社内ツール、統合サーフェスをひとつのガバナンスプラットフォームベースライン上で運用。レジストリ駆動のエクステンション、オペレーターポータル、再利用可能なランタイムパターンがシステムスケールに合わせて整合し続けます。",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "ツールレジストリ & 統合サーフェス",
+          "f2": "オペレーターポータル & 内部コンソール"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence. High-conversion blog, portfolio, and profile templates optimized for personal brand monetization.",
+        "title": "個人 IP 成長 & ポートフォリオマトリックス",
+        "desc": "高コンバージョンの MDX ブログ、ポートフォリオ、プロフィールページで世界クラスの創業者プレゼンスを確立。内蔵ニュースレター、アナリティクス、SEO でパーソナルブランドが蓄積されます。",
         "features": {
-          "f1": "MDX Blog Engine",
-          "f2": "Newsletter Integration"
+          "f1": "MDX ブログ + ニュースレターエンジン",
+          "f2": "SEO & ソーシャルグラフ最適化"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Launch complete Chatbot, Text-to-Image, or Video generation SaaS with integrated Vercel AI SDK, streaming, and prompt gateways.",
+        "title": "革新的なマルチモーダル AI SaaS",
+        "desc": "マルチエージェントオーケストレーション、チャットボット、テキスト→画像、画像→テキスト、テキスト→動画の SaaS プロダクトを UX 先進のストリーミング UI、インテリジェントモデルルーティング、使用量メタリングで出荷。",
         "features": {
-          "f1": "Streaming UI",
-          "f2": "Model Routing"
+          "f1": "マルチエージェントストリーミング UI",
+          "f2": "モデルルーター + 使用量メタリング"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Context (CN)",
-        "desc": "Tailored for the domestic market with ultra-fast local CDN support, WeChat ecosystem integration readiness, and localized compliance.",
+        "title": "モダンエンタープライズウェブサイト（中国）",
+        "desc": "中国のビジネスシナリオに最適化 — 超高速の国内 CDN、WeChat エコシステム統合、モバイルファーストのレスポンシブデザイン、標準でのローカルコンプライアンス対応。",
         "features": {
-          "f1": "Local Compliance",
-          "f2": "High Performance"
+          "f1": "ローカル CDN + コンプライアンス",
+          "f2": "WeChat エコシステム対応"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Designed for cross-border SaaS. Built-in multi-currency Stripe checkout, next-intl i18n routing, and GDPR compliance.",
+        "title": "グローバルソフトウェア輸出ランディングページ",
+        "desc": "グローバル展開 SaaS 向けに特化。マルチ通貨 Stripe チェックアウト、next-intl の 7 言語自動ルーティング、GDPR/CCPA 対応、ジオターゲットコンテンツ。",
         "features": {
-          "f1": "Global Payments",
-          "f2": "7 Languages Auto-routing"
+          "f1": "マルチ通貨グローバル決済",
+          "f2": "7 言語 + GDPR 対応"
         }
       },
       "design": {
-        "title": "Leading Modern Component Library System",
-        "desc": "A beautiful, token-driven architecture using Radix + framer-motion. Perfect for teams building their own opinionated UI libraries.",
+        "title": "先進的なデザインシステム & コンポーネントライブラリ",
+        "desc": "4 層トークン駆動アーキテクチャ：ブランド → トークン → テーマ → UI。Radix + framer-motion ベース、oklch マルチテーマ、Storybook ドキュメント、ビジュアルリグレッションテスト。",
         "features": {
-          "f1": "4-Layer Tokens",
-          "f2": "CSS Variables"
+          "f1": "4 層トークンガバナンス",
+          "f2": "oklch マルチテーマ + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "エンタープライズデジタル資産管理",
+        "desc": "スケーラブルな PostgreSQL アーキテクチャときめ細かい RBAC を活用した構造化データレイクと複雑なダッシュボードトポロジー。",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
-        }
-      },
-      "seoGeo": {
-        "title": "SEO & GEO 成長エンジン",
-        "desc": "従来の検索を超えて。組み込みのSEO基盤とジェネレーティブエンジン最適化により、GoogleとChatGPT、Perplexity、GeminiなどのAI検索エンジンの両方で発見されます。",
-        "features": {
-          "f1": "Lighthouse 99+ スコア",
-          "f2": "AI検索インデックス済み"
+          "f1": "行レベルセキュリティ",
+          "f2": "複雑なクエリ",
+          "f3": "ロール管理"
         }
       }
     }
-  },
-  "agentic": {
-    "badge": "AGENTIC エンジニアリング",
-    "headline": "AIコーディングエージェントのために設計。",
-    "subheadline": "すべてのファイル、ルール、テストは、Claude Code、Cursor、Codex がコードベース全体を理解し、自律的に出荷できるように設計されています。",
-    "card1Title": "構造化コンテキスト",
-    "card1Desc": "CLAUDE.md がコンポーネントルール、トークンガバナンス、インポート境界を提供——エージェントは推測不要。",
-    "card2Title": "アーキテクチャガードレール",
-    "card2Desc": "7つのプロパティテストが依存関係、トークン使用、WCAG コントラストを強制——エージェントは不変条件を破れません。",
-    "card3Title": "自律的デプロイ",
-    "card3Desc": "エージェントがコンテキストを読み、コードを書き、テストを実行し、CI をパス——プロンプトから本番まで人手介入なし。",
-    "compTraditional": "AI が推測 → 壊れる → 手動修正",
-    "compSailor": "AI がルールを読む → 制約に従う → CI が検証 → 出荷"
   },
   "designSystem": {
     "badge": "デザインシステム",
@@ -1591,36 +1484,6 @@
     "card5Title": "インタラクティブドキュメント",
     "card5Desc": "Fumadocs ベースの設計ドキュメントサイト。2言語対応のコンポーネント API ドキュメント、トークンギャラリー、レイアウトパターンガイド。"
   },
-  "seoGeo": {
-    "badge": "SEO & GEO",
-    "headline": "人に見つかる。AIに引用される。",
-    "subheadline": "すべてのページにプロダクション品質のSEOとジェネレーティブエンジン最適化を搭載。Google、Perplexity、ChatGPT Search、Bing Copilotに即座に表示されます。",
-    "stat1Value": "100",
-    "stat1Label": "Lighthouse SEO",
-    "stat2Value": "99",
-    "stat2Label": "パフォーマンス",
-    "stat3Value": "7",
-    "stat3Label": "言語",
-    "stat4Value": "6+",
-    "stat4Label": "Schemaタイプ",
-    "seoLabel": "検索エンジン最適化",
-    "geoLabel": "ジェネレーティブエンジン最適化",
-    "card1Title": "自動化メタ & 構造化データ",
-    "card1Desc": "JSON-LD schema、Open Graph、Twitter Cards、canonical URL、XML sitemapをコンテンツモデルから自動生成。設定不要。",
-    "card2Title": "AI最適化コンテンツアーキテクチャ",
-    "card2Desc": "セマンティックHTML5、FAQ schema、HowToマークアップ、AI検索エンジンが回答生成に好む引用対応フォーマット。",
-    "card3Title": "多言語SEO (hreflang)",
-    "card3Desc": "next-intlが7言語のhreflang代替言語を自動生成。各言語で独自のサイトマップエントリ。",
-    "card4Title": "Core Web Vitals ファースト",
-    "card4Desc": "サーバーコンポーネント、動的インポート、画像最適化、エッジキャッシングで99+のLighthouseスコア。モバイルでLCP 1.2秒以下。",
-    "card5Title": "AI引用シグナル",
-    "card5Desc": "構造化データ、権威的コンテンツパターン、E-E-A-Tシグナル。Perplexity、ChatGPT Search、Google SGEが引用元決定に使用。",
-    "card6Title": "グローバルエッジ配信",
-    "card6Desc": "ISR + 300+ Vercel PoP上のエッジミドルウェア。地理別ターゲティングコンテンツ、複数通貨対応、エッジでのロケール認識ルーティング。",
-    "compTraditionalLabel": "従来のSEO",
-    "compTraditional": "手動のmetaタグ → 遅いクロール → AI検索に不可視",
-    "compSailor": "自動化schema → 即時インデックス → AIエンジンに引用 → グローバルリーチ"
-  },
   "notFound": {
     "title": "ページが見つかりません",
     "desc": "お探しのページは削除されたか、一時的に利用できません。",
@@ -1628,29 +1491,29 @@
     "docs": "ドキュメントを読む"
   },
   "impact": {
-    "hero_eyebrow": "Nebutra Core Vision Whitepaper",
-    "hero_title": "The Governed AI Platform",
-    "hero_subtitle": "We build the platform baseline, governance model, and Harness layer for teams shipping AI-native products.",
-    "phil_title": "Ⅰ. Philosophy",
-    "phil_headline": "Governance over Glue Code",
-    "phil_desc": "Teams should not have to rebuild the same platform layer every time they start an AI-native product. Nebutra focuses on turning that repeated platform work into a governed, reusable baseline that stays auditable, extensible, and fast to ship.",
-    "infra_title": "Ⅱ. Infrastructure",
-    "infra_headline": "The AI-Native Platform Layer",
-    "infra_desc": "Nebutra is not a stitched-together starter. It is a production platform layer spanning scaffolding, runtime integrations, governance, and delivery.",
-    "infra_1_title": "The Builder Core",
-    "infra_1_desc": "A governed monorepo baseline with tenant isolation, billing, auth, docs, and AI integrations already wired.",
-    "infra_2_title": "The Launchpad",
-    "infra_2_desc": "Verified scaffolding, reproducible delivery, and operator-facing tooling that reduce platform risk from day zero.",
-    "infra_3_title": "Sleptons Router",
-    "infra_3_desc": "Registry-driven extensions and integration surfaces keep teams moving without fragmenting the codebase.",
-    "infra_4_title": "Algorithmic Capital",
-    "infra_4_desc": "Harness primitives, MCP interoperability, and workflow orchestration position the stack for the next generation of AI-native software.",
-    "route_title": "Ⅲ. Routing",
-    "route_headline": "A Clear Upgrade Path",
-    "route_desc": "The platform should grow through compatibility checks, migrations, and observable runtime behavior, not through one-off rewrites and hidden drift.",
-    "org_title": "Ⅳ. Organization",
-    "org_headline": "Operational Discipline at Scale",
-    "org_desc": "We use automation, tests, and governance ratchets to keep the platform improving as teams and workloads grow. Human attention stays on product decisions, not repeated infrastructure cleanup."
+    "hero_eyebrow": "Nebutra コアビジョン ホワイトペーパー",
+    "hero_title": "ガバナンス AI プラットフォーム",
+    "hero_subtitle": "AI ネイティブプロダクトを出荷するチームのために、プラットフォームベースライン、ガバナンスモデル、Harness レイヤーを構築します。",
+    "phil_title": "Ⅰ. 哲学",
+    "phil_headline": "グルーコードよりもガバナンス",
+    "phil_desc": "AI ネイティブプロダクトを始めるたびに同じプラットフォームレイヤーを再構築する必要はあるべきではありません。Nebutra は、繰り返されるプラットフォーム作業を、監査可能・拡張可能・出荷が速いガバナンスの効いた再利用可能なベースラインに変えることに注力しています。",
+    "infra_title": "Ⅱ. インフラ",
+    "infra_headline": "AI ネイティブプラットフォームレイヤー",
+    "infra_desc": "Nebutra はつぎはぎのスターターキットではありません。スキャフォールディング、ランタイム統合、ガバナンス、デリバリーにまたがる本番プラットフォームレイヤーです。",
+    "infra_1_title": "ビルダーコア",
+    "infra_1_desc": "テナント分離、課金、認証、ドキュメント、AI 統合があらかじめ組み込まれたガバナンスモノレポベースライン。",
+    "infra_2_title": "検証済みデリバリー",
+    "infra_2_desc": "検証済みスキャフォールディング、再現可能なデリバリー、ゼロ日目からプラットフォームリスクを低減するオペレーター向けツール。",
+    "infra_3_title": "エクステンションレジストリ",
+    "infra_3_desc": "レジストリ駆動のエクステンションと統合サーフェスにより、コードベースを断片化せずにチームが前進し続けられます。",
+    "infra_4_title": "Harness ランタイム",
+    "infra_4_desc": "Harness プリミティブ、MCP 相互運用性、ワークフローオーケストレーションにより、次世代の AI ネイティブソフトウェアに向けてスタックを位置付けます。",
+    "route_title": "Ⅲ. ルーティング",
+    "route_headline": "明確なアップグレードパス",
+    "route_desc": "プラットフォームは一時的なリライトや隠れたドリフトではなく、互換性チェック、マイグレーション、観測可能なランタイム動作を通じて成長すべきです。",
+    "org_title": "Ⅳ. 組織",
+    "org_headline": "スケールにおける運用規律",
+    "org_desc": "自動化、テスト、ガバナンスラチェットを使用して、チームとワークロードが増加しても継続的にプラットフォームが改善されるよう維持します。人間の注意はプロダクトの意思決定に向けられ、繰り返しのインフラクリーンアップではありません。"
   },
   "ui": {
     "search": {
@@ -1763,8 +1626,8 @@
     "versionTitleSuffix": "Nebutra 変更履歴"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — Nebutra",
-    "description": "The roadmap for Nebutra's governed platform baseline, Harness runtime, and upgrade path."
+    "title": "プラットフォームロードマップ — Nebutra",
+    "description": "Nebutra のガバナンスプラットフォームベースライン、Harness ランタイム、アップグレードパスのロードマップ。"
   },
   "blogMeta": {
     "title": "ブログ — Nebutra",
@@ -1772,6 +1635,169 @@
   },
   "getLicenseMeta": {
     "title": "ライセンスを取得 — Nebutra",
-    "description": "Get your Nebutra license and platform access in 2 minutes."
+    "description": "2 分で Nebutra ライセンスとプラットフォームアクセスを取得してください。"
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "プライバシー設定",
+      "description": "当サイトでは、ご利用体験の向上、サイトトラフィックの分析、コンテンツのパーソナライズのために Cookie を使用しています。許可するカテゴリーを選択してください。"
+    },
+    "button": {
+      "acceptAll": "すべて許可",
+      "savePreferences": "設定を保存"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "必須",
+        "description": "サイトの正常動作に必要です。無効にすることはできません。"
+      },
+      "functional": {
+        "label": "機能",
+        "description": "言語・テーマ・レイアウトなどの設定を保存します。"
+      },
+      "analytics": {
+        "label": "分析",
+        "description": "匿名の利用データを収集し、プロダクト改善に活用します。"
+      },
+      "marketing": {
+        "label": "マーケティング",
+        "description": "サードパーティプラットフォームでのパーソナライズ広告とリターゲティングに使用します。"
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP登録",
+      "publicSecurity": "公安備案"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "ICP登録番号",
+    "publicSecurity": "公安備案番号"
+  },
+  "landing": {
+    "faq": {
+      "badge": "よくある質問",
+      "title": "疑問に、率直にお答えします",
+      "subtitle": "出荷前に知っておくべきことをすべて網羅しています。",
+      "items": {
+        "what-is-sailor": {
+          "question": "Nebutra Sailor とは何ですか？",
+          "answer": "Sailor は Next.js + Tailwind v4 をベースとした、意見付き SaaS フレームワークです。認証、課金、マルチテナント、AI、キュー、検索、メールがあらかじめ組み込まれています。クローンして、プロバイダーを設定し、出荷する——通常1週間以内に完了します。"
+        },
+        "who-is-it-for": {
+          "question": "Sailor はどんな方向けですか？",
+          "answer": "差別化要素に時間を使いたい創業者やプロダクトエンジニア向けです。同じ認証・課金・テナント管理の基盤を何度も構築し直す手間をなくします。"
+        },
+        "free-or-paid": {
+          "question": "無料ですか、有料ですか？",
+          "answer": "フルソースコードは AGPL-3.0 で提供——個人プロジェクト、社内ツール、AGPL 互換のオープンソース利用は無料です。商用ライセンスを取得することで、クローズドソースの独自 SaaS として Sailor を出荷する権利が得られます。すべてのプランに完全な機能セット（認証、課金、マルチテナント、AI、監査）が含まれます。プランの違いはライセンス条件とサポート SLA であり、機能の差異はありません。"
+        },
+        "china-friendly": {
+          "question": "中国国内でも動作しますか？",
+          "answer": "はい。Aliyun 対応 CDN、ICP フレンドリーなドメイン、Figma の代わりに Penpot を使用する並行インフラ設定を提供しており、同一のコードベースでグレートファイアウォール内にクリーンにデプロイできます。"
+        },
+        "deployment": {
+          "question": "どこにデプロイできますか？",
+          "answer": "Node 22+ が動作する環境であれば どこでもデプロイ可能です。マーケティングサイトは Vercel、ダッシュボード・ゲートウェイ・Python サービスは Docker / PM2 で動作します（現在 Aliyun ECS で稼働中、infra/iac/k8s/ に Kubernetes マニフェストも完備）。エンタープライズのお客様は独自の VPC 内にもデプロイ可能です。"
+        },
+        "security": {
+          "question": "セキュリティはどのように管理されていますか？",
+          "answer": "シークレットのアプリケーション層エンベロープ暗号化（@nebutra/vault）、テナント分離のための Postgres RLS、CASL または OpenFGA による RBAC/ABAC（@nebutra/permissions）、HMAC 署名によるサービス間トークン、署名付き送信 Webhook、SOC 2 準拠の監査パイプライン（@nebutra/audit）がすべてのプランに含まれます。Pro・Enterprise は SOC 2 認証サポート、専任インシデント対応、長期監査ログ保持が追加されます。"
+        },
+        "support": {
+          "question": "どのようなサポートが受けられますか？",
+          "answer": "無料プランはコミュニティ Discord と GitHub Issues が利用できます。Pro はレスポンス SLA 1 営業日の優先メールサポートが追加されます。Enterprise は専用 Slack チャンネルとオンボーディングエンジニアが付きます。"
+        },
+        "byo-provider": {
+          "question": "独自のプロバイダーを使えますか？",
+          "answer": "はい。すべての統合（認証、キュー、検索、メール、決済、ストレージ、課金）はプロバイダー非依存です。各パッケージのファクトリーが単一の環境変数から適切なアダプターを選択します。Clerk を Better Auth・NextAuth・Supabase Auth に、QStash を BullMQ に、Resend を SES に、Stripe を Polar / LemonSqueezy / ChinaPay に——アプリケーションコードを変更せずに切り替えられます。"
+        },
+        "tech-stack": {
+          "question": "技術スタックは何ですか？",
+          "answer": "React 19 上の Next.js 16（App Router）、TypeScript 5.9、Tailwind v4、Postgres 上の Prisma 7（pgvector + RLS 付き）、BFF ゲートウェイに Hono、ML・重処理サービスに FastAPI、Radix + Lobe UI プリミティブと framer-motion によるコンポーネントライブラリです。AI 機能はプロバイダー可搬性を持つ Vercel AI SDK 経由（OpenAI / OpenRouter / SiliconFlow / Azure / ローカル）で提供されます。"
+        },
+        "license": {
+          "question": "ライセンスは何ですか？",
+          "answer": "AGPL-3.0 に商用例外付きのライセンスです。個人利用、社内ツール、AGPL 互換 OSS は無料です。有料の商用ライセンスを取得すると、Sailor をそのまま独自 SaaS として出荷する権利が得られます。すべてのプランにフルソースコードが含まれます。"
+        },
+        "paid-updates": {
+          "question": "アップデートは有料ですか？",
+          "answer": "いいえ。ソースコードの更新はすべての商用ライセンスに含まれています。いつでも main からプルしてフォークをリベースできます。有料プランは Sailor を商用本番環境で使用する権利であり、コードを受け取る権利ではありません。マイナーリリースごとに CHANGELOG と破壊的変更のアップグレードガイドが提供されます。"
+        },
+        "why-turborepo": {
+          "question": "標準的な Next.js アプリではなく Turborepo を使う理由は？",
+          "answer": "Sailor は 10 アプリ + 55 共有パッケージ + ポリグロットバックエンド（Hono BFF + FastAPI）で構成されており、単一の Next.js メガアプリでは保守が困難な規模です。Turborepo により、影響範囲のみのビルド、透過的なリモートキャッシング、共有デザイントークン・認証・課金・オブザーバビリティの単一ソースが得られます。"
+        },
+        "multi-tenancy": {
+          "question": "マルチテナントはどのように処理されますか？",
+          "answer": "2 層構造です。@nebutra/tenant によるリクエストスコープのテナントコンテキスト（AsyncLocalStorage が DB クエリや送信 Webhook を含むすべてのサーバーコールにアクティブ組織を伝播）と、Postgres Row-Level Security ポリシー（infra/data/database/policies/rls.sql）による DB 強制分離（セッションローカルの app.current_org_id にバインド）です。"
+        },
+        "swap-clerk": {
+          "question": "Clerk を別の認証プロバイダーに交換できますか？",
+          "answer": "はい。@nebutra/auth は Clerk、Better Auth、NextAuth（Auth.js v5）、Supabase Auth のファーストクラスアダプターを搭載しています。AUTH_PROVIDER 環境変数で切り替えるか、create-sailor --auth=... でスキャフォールド時に選択できます——サーバー・React・ミドルウェアのインターフェースはプロバイダーに関わらず同一です。5 つ目のアダプターを追加する場合は単一インターフェース（約 80 行）を実装するだけです。"
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "ビルダーに愛されています",
+      "title": "Sailor で出荷した創業者の声",
+      "subtitle": "ベータコホートのカスタマーストーリーは間もなく掲載されます。最初にご覧いただける方になりましょう。"
+    },
+    "comparison": {
+      "badge": "プランを比較",
+      "title": "現在のステージに合ったプランを選ぶ",
+      "subtitle": "すべてのプランにフルソースコードが含まれます。商用ライセンスには 12 ヶ月のアップデートが含まれます。",
+      "plan": {
+        "individual": "個人",
+        "startup": "スタートアップ",
+        "agency": "エージェンシー"
+      },
+      "feature": {
+        "license": {
+          "label": "ライセンス",
+          "type": "ライセンス種別",
+          "closed-source": "クローズドソース利用",
+          "white-label": "ホワイトラベル権"
+        },
+        "team": {
+          "label": "チーム",
+          "seats": "開発者シート数",
+          "projects": "プロジェクト数"
+        },
+        "source": {
+          "label": "ソースコード",
+          "full-source": "フルソースコード",
+          "all-packages": "全パッケージ・モジュール",
+          "lifetime-updates": "永続アップデート"
+        },
+        "support": {
+          "label": "サポート",
+          "channel": "サポートチャンネル",
+          "onboarding": "オンボーディングコール",
+          "architecture-consult": "アーキテクチャ相談",
+          "sla": "稼働率 SLA"
+        }
+      },
+      "ariaTable": "プランと機能の比較表"
+    },
+    "socialProof": {
+      "title": "信頼できるスタックで構築",
+      "logosLabel": "インテグレーションパートナー",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "対応 AI プロバイダー"
+        },
+        "projects": {
+          "value": "55",
+          "label": "モノレポパッケージ"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "標準搭載の i18n ロケール"
+        }
+      }
+    }
   }
 }
