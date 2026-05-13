@@ -12,9 +12,21 @@ function createPrismaClient(): PrismaClient {
     throw new Error("[db] DATABASE_URL is not set. Cannot initialize database connection pool.");
   }
 
+  // PostgreSQL statement_timeout — prevents runaway queries from holding
+  // locks or exhausting the pool. Set via libpq's `-c` connection option so
+  // it lands in the server session at HANDSHAKE time, BEFORE the pool hands
+  // the client to a query. The previous implementation used a
+  // `pool.on("connect", c => c.query("SET ..."))` fire-and-forget pattern
+  // which raced with Prisma's first query on the same client and tripped
+  // pg's "client already executing a query" deprecation (hard error in pg v9).
+  // Override via DB_STATEMENT_TIMEOUT_MS env var (default 30 s).
+  const statementTimeout = parseInt(process.env.DB_STATEMENT_TIMEOUT_MS ?? "30000", 10);
+
   // Use connection pool for PostgreSQL with explicit production-ready settings.
   const pool = new pg.Pool({
     connectionString: process.env.DATABASE_URL,
+    // libpq command-line options applied at connection time — see note above.
+    options: `-c statement_timeout=${statementTimeout}`,
     // Max connections per pool instance.
     // Rule of thumb: (2 × CPU cores) + effective_spindle_count
     // Default 10 is fine for most apps; override via env for large deployments.
@@ -31,16 +43,6 @@ function createPrismaClient(): PrismaClient {
   // propagate the error to the caller through normal query failure paths.
   pool.on("error", (err) => {
     logger.error("[db] Unexpected pool error", err);
-  });
-
-  // Set PostgreSQL statement_timeout on every new connection.
-  // This prevents runaway queries from holding locks or exhausting the pool.
-  // Override via DB_STATEMENT_TIMEOUT_MS env var (default 30 s).
-  const statementTimeout = parseInt(process.env.DB_STATEMENT_TIMEOUT_MS ?? "30000", 10);
-  pool.on("connect", (client) => {
-    client.query(`SET statement_timeout = ${statementTimeout}`).catch((err: unknown) => {
-      logger.error("[db] Failed to set statement_timeout", err);
-    });
   });
 
   const adapter = new PrismaPg(pool);

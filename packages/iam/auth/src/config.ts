@@ -19,20 +19,27 @@ const SUPPORTED: readonly AuthProviderId[] = ["clerk", "better-auth", "nextauth"
 
 /**
  * Read the active auth provider from environment. Falls back to `better-auth`
- * when unset or invalid. Safe to call from both server and client contexts —
- * client code only sees `NEXT_PUBLIC_AUTH_PROVIDER` (Next.js inlines it at
- * build time); the `AUTH_PROVIDER` branch is server-only and silently no-ops
- * in the browser.
+ * when unset or invalid. Safe to call from both server and client contexts.
+ *
+ * Hydration safety: `process.env.NEXT_PUBLIC_*` MUST be read via direct
+ * property access (not through an intermediate variable) — Webpack/Turbopack
+ * only inlines the value into the client bundle when the access is
+ * statically detectable. Dynamic access (e.g. `env.NEXT_PUBLIC_X`) returns
+ * `undefined` on the client and produces a different return value than the
+ * server, which causes hydration mismatches in any component that branches
+ * on the provider (e.g. dev-mode banners).
  *
  * @param overrideEnv - optional env-like map for tests/SSR override
  */
 export function getConfiguredAuthProvider(
   overrideEnv?: Partial<Pick<NodeJS.ProcessEnv, "AUTH_PROVIDER" | "NEXT_PUBLIC_AUTH_PROVIDER">>,
 ): AuthProviderId {
-  const env =
-    overrideEnv ??
-    (typeof process !== "undefined" && process.env ? process.env : ({} as NodeJS.ProcessEnv));
-  const raw = env.AUTH_PROVIDER ?? env.NEXT_PUBLIC_AUTH_PROVIDER;
+  const raw =
+    overrideEnv?.AUTH_PROVIDER ??
+    overrideEnv?.NEXT_PUBLIC_AUTH_PROVIDER ??
+    (typeof process !== "undefined" && process.env ? process.env.AUTH_PROVIDER : undefined) ??
+    // Direct access — see hydration safety note above.
+    process.env.NEXT_PUBLIC_AUTH_PROVIDER;
   if (raw && (SUPPORTED as readonly string[]).includes(raw)) {
     return raw as AuthProviderId;
   }
