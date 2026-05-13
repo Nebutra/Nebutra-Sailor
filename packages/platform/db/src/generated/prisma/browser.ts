@@ -223,6 +223,11 @@ export type OAuthAccessToken = Prisma.OAuthAccessTokenModel
  */
 export type AuthUser = Prisma.AuthUserModel
 /**
+ * Model ChatSession
+ * 
+ */
+export type ChatSession = Prisma.ChatSessionModel
+/**
  * Model AuthAccount
  * @conditional(auth=betterauth)
  */

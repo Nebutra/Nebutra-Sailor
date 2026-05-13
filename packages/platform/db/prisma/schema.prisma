@@ -98,6 +98,7 @@ model Organization {
   integrations Integration[]
   apiKeys      APIKey[]
   oauthClients OAuthClient[]
+  chatSessions ChatSession[]
 
   @@map("organizations")
   @@schema("public")
@@ -1233,8 +1234,35 @@ model AuthUser {
   // and do not alter `public.auth_users` itself.
   baMembers        BAMember[]
   baPasskeys       BAPasskey[]
+  chatSessions     ChatSession[]
 
   @@map("auth_users")
+  @@schema("public")
+}
+
+// ── Chat Sessions ────────────────────────────────────────────────────────────
+// Persistent AI chat history per (org, user). Messages are stored as JSONB to
+// preserve the UIMessage[] shape from @ai-sdk/react verbatim — we don't need
+// to query message content, only fetch whole sessions. `mode` records which
+// command mode the session was opened in (chat | data | workflow | search).
+model ChatSession {
+  id             String   @id @default(cuid())
+  organizationId String   @map("organization_id")
+  userId         String   @map("user_id")
+  title          String   @default("New chat") @db.VarChar(200)
+  mode           String   @default("chat") @db.VarChar(20)
+  messages       Json     @default("[]")
+  messageCount   Int      @default(0) @map("message_count")
+  lastMessageAt  DateTime @default(now()) @map("last_message_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         AuthUser     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, lastMessageAt(sort: Desc)])
+  @@index([userId, lastMessageAt(sort: Desc)])
+  @@map("chat_sessions")
   @@schema("public")
 }
 

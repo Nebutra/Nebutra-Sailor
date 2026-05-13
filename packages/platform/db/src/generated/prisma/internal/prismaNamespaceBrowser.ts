@@ -92,6 +92,7 @@ export const ModelName = {
   OAuthAuthorization: 'OAuthAuthorization',
   OAuthAccessToken: 'OAuthAccessToken',
   AuthUser: 'AuthUser',
+  ChatSession: 'ChatSession',
   AuthAccount: 'AuthAccount',
   AuthSession: 'AuthSession',
   AuthVerification: 'AuthVerification',
@@ -827,6 +828,22 @@ export const AuthUserScalarFieldEnum = {
 } as const
 
 export type AuthUserScalarFieldEnum = (typeof AuthUserScalarFieldEnum)[keyof typeof AuthUserScalarFieldEnum]
+
+
+export const ChatSessionScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  title: 'title',
+  mode: 'mode',
+  messages: 'messages',
+  messageCount: 'messageCount',
+  lastMessageAt: 'lastMessageAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChatSessionScalarFieldEnum = (typeof ChatSessionScalarFieldEnum)[keyof typeof ChatSessionScalarFieldEnum]
 
 
 export const AuthAccountScalarFieldEnum = {

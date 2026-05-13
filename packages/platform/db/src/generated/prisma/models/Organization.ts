@@ -213,6 +213,7 @@ export type OrganizationWhereInput = {
   integrations?: Prisma.IntegrationListRelationFilter
   apiKeys?: Prisma.APIKeyListRelationFilter
   oauthClients?: Prisma.OAuthClientListRelationFilter
+  chatSessions?: Prisma.ChatSessionListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -231,6 +232,7 @@ export type OrganizationOrderByWithRelationInput = {
   integrations?: Prisma.IntegrationOrderByRelationAggregateInput
   apiKeys?: Prisma.APIKeyOrderByRelationAggregateInput
   oauthClients?: Prisma.OAuthClientOrderByRelationAggregateInput
+  chatSessions?: Prisma.ChatSessionOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -252,6 +254,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   integrations?: Prisma.IntegrationListRelationFilter
   apiKeys?: Prisma.APIKeyListRelationFilter
   oauthClients?: Prisma.OAuthClientListRelationFilter
+  chatSessions?: Prisma.ChatSessionListRelationFilter
 }, "id" | "clerkId" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -298,6 +301,7 @@ export type OrganizationCreateInput = {
   integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -316,6 +320,7 @@ export type OrganizationUncheckedCreateInput = {
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -334,6 +339,7 @@ export type OrganizationUpdateInput = {
   integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -352,6 +358,7 @@ export type OrganizationUncheckedUpdateInput = {
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -539,6 +546,20 @@ export type OrganizationUpdateOneRequiredWithoutOauthClientsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutOauthClientsInput, Prisma.OrganizationUpdateWithoutOauthClientsInput>, Prisma.OrganizationUncheckedUpdateWithoutOauthClientsInput>
 }
 
+export type OrganizationCreateNestedOneWithoutChatSessionsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutChatSessionsInput, Prisma.OrganizationUncheckedCreateWithoutChatSessionsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutChatSessionsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutChatSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutChatSessionsInput, Prisma.OrganizationUncheckedCreateWithoutChatSessionsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutChatSessionsInput
+  upsert?: Prisma.OrganizationUpsertWithoutChatSessionsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutChatSessionsInput, Prisma.OrganizationUpdateWithoutChatSessionsInput>, Prisma.OrganizationUncheckedUpdateWithoutChatSessionsInput>
+}
+
 export type OrganizationCreateWithoutApiKeysInput = {
   id?: string
   clerkId: string
@@ -554,6 +575,7 @@ export type OrganizationCreateWithoutApiKeysInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutApiKeysInput = {
@@ -571,6 +593,7 @@ export type OrganizationUncheckedCreateWithoutApiKeysInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutApiKeysInput = {
@@ -604,6 +627,7 @@ export type OrganizationUpdateWithoutApiKeysInput = {
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutApiKeysInput = {
@@ -621,6 +645,7 @@ export type OrganizationUncheckedUpdateWithoutApiKeysInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutMembersInput = {
@@ -638,6 +663,7 @@ export type OrganizationCreateWithoutMembersInput = {
   integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutMembersInput = {
@@ -655,6 +681,7 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutMembersInput = {
@@ -688,6 +715,7 @@ export type OrganizationUpdateWithoutMembersInput = {
   integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutMembersInput = {
@@ -705,6 +733,7 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutContentsInput = {
@@ -722,6 +751,7 @@ export type OrganizationCreateWithoutContentsInput = {
   integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutContentsInput = {
@@ -739,6 +769,7 @@ export type OrganizationUncheckedCreateWithoutContentsInput = {
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutContentsInput = {
@@ -772,6 +803,7 @@ export type OrganizationUpdateWithoutContentsInput = {
   integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutContentsInput = {
@@ -789,6 +821,7 @@ export type OrganizationUncheckedUpdateWithoutContentsInput = {
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutProductsInput = {
@@ -806,6 +839,7 @@ export type OrganizationCreateWithoutProductsInput = {
   integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutProductsInput = {
@@ -823,6 +857,7 @@ export type OrganizationUncheckedCreateWithoutProductsInput = {
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutProductsInput = {
@@ -856,6 +891,7 @@ export type OrganizationUpdateWithoutProductsInput = {
   integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutProductsInput = {
@@ -873,6 +909,7 @@ export type OrganizationUncheckedUpdateWithoutProductsInput = {
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutOrdersInput = {
@@ -890,6 +927,7 @@ export type OrganizationCreateWithoutOrdersInput = {
   integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutOrdersInput = {
@@ -907,6 +945,7 @@ export type OrganizationUncheckedCreateWithoutOrdersInput = {
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutOrdersInput = {
@@ -940,6 +979,7 @@ export type OrganizationUpdateWithoutOrdersInput = {
   integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutOrdersInput = {
@@ -957,6 +997,7 @@ export type OrganizationUncheckedUpdateWithoutOrdersInput = {
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutIntegrationsInput = {
@@ -974,6 +1015,7 @@ export type OrganizationCreateWithoutIntegrationsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutIntegrationsInput = {
@@ -991,6 +1033,7 @@ export type OrganizationUncheckedCreateWithoutIntegrationsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutIntegrationsInput = {
@@ -1024,6 +1067,7 @@ export type OrganizationUpdateWithoutIntegrationsInput = {
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutIntegrationsInput = {
@@ -1041,6 +1085,7 @@ export type OrganizationUncheckedUpdateWithoutIntegrationsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutOauthClientsInput = {
@@ -1058,6 +1103,7 @@ export type OrganizationCreateWithoutOauthClientsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutOauthClientsInput = {
@@ -1075,6 +1121,7 @@ export type OrganizationUncheckedCreateWithoutOauthClientsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
   apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutOauthClientsInput = {
@@ -1108,6 +1155,7 @@ export type OrganizationUpdateWithoutOauthClientsInput = {
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutOauthClientsInput = {
@@ -1125,6 +1173,95 @@ export type OrganizationUncheckedUpdateWithoutOauthClientsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
   apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutChatSessionsInput = {
+  id?: string
+  clerkId: string
+  name: string
+  slug: string
+  plan?: $Enums.Plan
+  logo?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
+  contents?: Prisma.ContentCreateNestedManyWithoutOrganizationInput
+  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
+  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
+  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutChatSessionsInput = {
+  id?: string
+  clerkId: string
+  name: string
+  slug: string
+  plan?: $Enums.Plan
+  logo?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutOrganizationInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
+  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
+  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutChatSessionsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutChatSessionsInput, Prisma.OrganizationUncheckedCreateWithoutChatSessionsInput>
+}
+
+export type OrganizationUpsertWithoutChatSessionsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutChatSessionsInput, Prisma.OrganizationUncheckedUpdateWithoutChatSessionsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutChatSessionsInput, Prisma.OrganizationUncheckedCreateWithoutChatSessionsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutChatSessionsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutChatSessionsInput, Prisma.OrganizationUncheckedUpdateWithoutChatSessionsInput>
+}
+
+export type OrganizationUpdateWithoutChatSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutOrganizationNestedInput
+  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
+  apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
+  oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutChatSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutOrganizationNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
+  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
+  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -1140,6 +1277,7 @@ export type OrganizationCountOutputType = {
   integrations: number
   apiKeys: number
   oauthClients: number
+  chatSessions: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1150,6 +1288,7 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   integrations?: boolean | OrganizationCountOutputTypeCountIntegrationsArgs
   apiKeys?: boolean | OrganizationCountOutputTypeCountApiKeysArgs
   oauthClients?: boolean | OrganizationCountOutputTypeCountOauthClientsArgs
+  chatSessions?: boolean | OrganizationCountOutputTypeCountChatSessionsArgs
 }
 
 /**
@@ -1211,6 +1350,13 @@ export type OrganizationCountOutputTypeCountOauthClientsArgs<ExtArgs extends run
   where?: Prisma.OAuthClientWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountChatSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChatSessionWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1228,6 +1374,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   integrations?: boolean | Prisma.Organization$integrationsArgs<ExtArgs>
   apiKeys?: boolean | Prisma.Organization$apiKeysArgs<ExtArgs>
   oauthClients?: boolean | Prisma.Organization$oauthClientsArgs<ExtArgs>
+  chatSessions?: boolean | Prisma.Organization$chatSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -1273,6 +1420,7 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   integrations?: boolean | Prisma.Organization$integrationsArgs<ExtArgs>
   apiKeys?: boolean | Prisma.Organization$apiKeysArgs<ExtArgs>
   oauthClients?: boolean | Prisma.Organization$oauthClientsArgs<ExtArgs>
+  chatSessions?: boolean | Prisma.Organization$chatSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1288,6 +1436,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     integrations: Prisma.$IntegrationPayload<ExtArgs>[]
     apiKeys: Prisma.$APIKeyPayload<ExtArgs>[]
     oauthClients: Prisma.$OAuthClientPayload<ExtArgs>[]
+    chatSessions: Prisma.$ChatSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1699,6 +1848,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   integrations<T extends Prisma.Organization$integrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$integrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   apiKeys<T extends Prisma.Organization$apiKeysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$apiKeysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$APIKeyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   oauthClients<T extends Prisma.Organization$oauthClientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$oauthClientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OAuthClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  chatSessions<T extends Prisma.Organization$chatSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$chatSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2289,6 +2439,30 @@ export type Organization$oauthClientsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.OAuthClientScalarFieldEnum | Prisma.OAuthClientScalarFieldEnum[]
+}
+
+/**
+ * Organization.chatSessions
+ */
+export type Organization$chatSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChatSession
+   */
+  select?: Prisma.ChatSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChatSession
+   */
+  omit?: Prisma.ChatSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChatSessionInclude<ExtArgs> | null
+  where?: Prisma.ChatSessionWhereInput
+  orderBy?: Prisma.ChatSessionOrderByWithRelationInput | Prisma.ChatSessionOrderByWithRelationInput[]
+  cursor?: Prisma.ChatSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChatSessionScalarFieldEnum | Prisma.ChatSessionScalarFieldEnum[]
 }
 
 /**

@@ -425,6 +425,7 @@ export const ModelName = {
   OAuthAuthorization: 'OAuthAuthorization',
   OAuthAccessToken: 'OAuthAccessToken',
   AuthUser: 'AuthUser',
+  ChatSession: 'ChatSession',
   AuthAccount: 'AuthAccount',
   AuthSession: 'AuthSession',
   AuthVerification: 'AuthVerification',
@@ -453,7 +454,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey"
+    modelProps: "organization" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3475,6 +3476,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ChatSession: {
+      payload: Prisma.$ChatSessionPayload<ExtArgs>
+      fields: Prisma.ChatSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChatSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChatSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.ChatSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChatSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+        }
+        findMany: {
+          args: Prisma.ChatSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload>[]
+        }
+        create: {
+          args: Prisma.ChatSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+        }
+        createMany: {
+          args: Prisma.ChatSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChatSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.ChatSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+        }
+        update: {
+          args: Prisma.ChatSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ChatSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChatSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChatSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ChatSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.ChatSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChatSession>
+        }
+        groupBy: {
+          args: Prisma.ChatSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChatSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChatSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChatSessionCountAggregateOutputType> | number
+        }
+      }
+    }
     AuthAccount: {
       payload: Prisma.$AuthAccountPayload<ExtArgs>
       fields: Prisma.AuthAccountFieldRefs
@@ -5182,6 +5257,22 @@ export const AuthUserScalarFieldEnum = {
 export type AuthUserScalarFieldEnum = (typeof AuthUserScalarFieldEnum)[keyof typeof AuthUserScalarFieldEnum]
 
 
+export const ChatSessionScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  title: 'title',
+  mode: 'mode',
+  messages: 'messages',
+  messageCount: 'messageCount',
+  lastMessageAt: 'lastMessageAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChatSessionScalarFieldEnum = (typeof ChatSessionScalarFieldEnum)[keyof typeof ChatSessionScalarFieldEnum]
+
+
 export const AuthAccountScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -5979,6 +6070,7 @@ export type GlobalOmitConfig = {
   oAuthAuthorization?: Prisma.OAuthAuthorizationOmit
   oAuthAccessToken?: Prisma.OAuthAccessTokenOmit
   authUser?: Prisma.AuthUserOmit
+  chatSession?: Prisma.ChatSessionOmit
   authAccount?: Prisma.AuthAccountOmit
   authSession?: Prisma.AuthSessionOmit
   authVerification?: Prisma.AuthVerificationOmit
