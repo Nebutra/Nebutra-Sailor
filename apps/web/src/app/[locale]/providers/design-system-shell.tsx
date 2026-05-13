@@ -2,12 +2,30 @@
 
 // Use /client subpath — root entrypoint pulls server-only middleware.
 import { isAuthFeatureEnabledSync, useAuth } from "@nebutra/auth/client";
+import { AppShell } from "@nebutra/ui/layout";
+import type { SidebarNavRenderLinkProps, SidebarNavSection, Workspace } from "@nebutra/ui/patterns";
+import { SidebarNav, WorkspaceSwitcher } from "@nebutra/ui/patterns";
+import { ChevronRight, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { OrgSwitcher } from "@/components/navigation/org-switcher";
+import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
+import { ThemeToggle } from "@/components/navigation/theme-toggle";
 import { UserMenu } from "@/components/navigation/user-menu";
+import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
+import { usePermission } from "@/hooks/usePermission";
+import type { WebProductCapabilities } from "@/lib/product-capabilities";
+import { resolvePreferredWorkspaceId } from "@/lib/workspace-selection";
+import {
+  buildBreadcrumbs,
+  DASHBOARD_NAV_GROUPS,
+  DASHBOARD_NAV_ITEMS,
+  isActiveRoute,
+  WORKSPACES,
+} from "./dashboard-nav";
 
 function HeaderAuthControls({
   supportsWorkspaceSwitching,
@@ -49,21 +67,6 @@ function HeaderAuthControls({
   );
 }
 
-import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
-import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
-import { ThemeToggle } from "@/components/navigation/theme-toggle";
-import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
-import { usePermission } from "@/hooks/usePermission";
-import type { WebProductCapabilities } from "@/lib/product-capabilities";
-import { resolvePreferredWorkspaceId } from "@/lib/workspace-selection";
-import {
-  buildBreadcrumbs,
-  DASHBOARD_NAV_GROUPS,
-  DASHBOARD_NAV_ITEMS,
-  isActiveRoute,
-  WORKSPACES,
-} from "./dashboard-nav";
-
 interface Props {
   children: React.ReactNode;
   notificationCenter?: React.ReactNode;
@@ -76,69 +79,37 @@ interface WorkspaceOption {
   label: string;
 }
 
-function SidebarNav({
-  pathname,
-  mobile = false,
-  collapsed = false,
-  onNavigate,
-}: {
-  pathname: string;
-  mobile?: boolean;
-  collapsed?: boolean;
-  onNavigate?: () => void;
-}) {
-  const { can } = usePermission();
-  const isAdmin = can("admin:access");
-
-  return (
-    <nav className="space-y-1">
-      {DASHBOARD_NAV_GROUPS.map((group) => {
-        if (group.title === "Admin" && !isAdmin) return null;
-        return (
-          <div key={group.title} className="mb-4 space-y-1.5">
-            {!collapsed && (
-              <p className="px-2 text-[11px] font-semibold tracking-[0.12em] text-neutral-10 uppercase dark:text-white/50">
-                {group.title}
-              </p>
-            )}
-            {group.items.map((item) => {
-              const Icon = item.icon;
-              const active = isActiveRoute(pathname, item.href);
-              return (
-                <ViewTransitionLink
-                  key={item.label}
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  aria-label={collapsed ? item.label : undefined}
-                  title={collapsed ? item.label : undefined}
-                  onClick={() => {
-                    if (mobile) onNavigate?.();
-                  }}
-                  className={`flex items-center gap-3 rounded-xl py-2 text-sm font-medium transition-colors ${
-                    collapsed ? "justify-center px-2" : "px-3"
-                  } ${
-                    active
-                      ? "bg-blue-2 text-blue-11 dark:bg-white/10 dark:text-white"
-                      : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
-                  }`}
-                >
-                  <Icon className="h-4 w-4 shrink-0" />
-                  {!collapsed && <span>{item.label}</span>}
-                </ViewTransitionLink>
-              );
-            })}
-          </div>
-        );
-      })}
-    </nav>
-  );
-}
-
 export function DesignSystemShell(props: Props) {
   return (
     <SidebarProvider>
       <DesignSystemShellInner {...props} />
     </SidebarProvider>
+  );
+}
+
+/**
+ * Renders SidebarNav link items via Next.js <Link>.
+ * Passed to <SidebarNav renderLink={...}> so the internal a11y / className
+ * wiring is preserved while routing goes through the App Router.
+ */
+function renderNextLink({
+  href,
+  children,
+  className,
+  "aria-current": ariaCurrent,
+  "aria-label": ariaLabel,
+  onClick,
+}: SidebarNavRenderLinkProps) {
+  return (
+    <Link
+      href={href}
+      className={className}
+      aria-current={ariaCurrent}
+      aria-label={ariaLabel}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
   );
 }
 
@@ -150,10 +121,11 @@ function DesignSystemShellInner({
 }: Props) {
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
-  const { collapsed, toggle: toggleSidebar } = useSidebar();
+  const { collapsed, toggle } = useSidebar();
+  const { can } = usePermission();
+  const isAdmin = can("admin:access");
   const workspaceMode = productCapabilities?.workspace.mode ?? "organization";
   const supportsWorkspaceSwitching = workspaceMode === "organization";
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [workspaceOptions, setWorkspaceOptions] = useState<WorkspaceOption[]>(
     WORKSPACES.map((workspace) => ({
       id: workspace.id,
@@ -161,7 +133,6 @@ function DesignSystemShellInner({
     })),
   );
   const [workspace, setWorkspace] = useState<string>(WORKSPACES[0].id);
-  const [workspaceLoading, setWorkspaceLoading] = useState(false);
   const breadcrumbs = buildBreadcrumbs(pathname);
   const currentBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
 
@@ -175,8 +146,6 @@ function DesignSystemShellInner({
 
   const fetchWorkspaces = useCallback(async () => {
     if (!isSignedIn || !supportsWorkspaceSwitching) return;
-
-    setWorkspaceLoading(true);
 
     try {
       const response = await fetch("/api/organizations", {
@@ -214,8 +183,8 @@ function DesignSystemShellInner({
       if (preferredWorkspaceId) {
         setWorkspace(preferredWorkspaceId);
       }
-    } finally {
-      setWorkspaceLoading(false);
+    } catch {
+      // Swallow — fallback workspace state remains usable.
     }
   }, [isSignedIn, session?.organizationId, supportsWorkspaceSwitching]);
 
@@ -245,206 +214,164 @@ function DesignSystemShellInner({
     }
   }, []);
 
-  return (
-    <div className="min-h-screen bg-neutral-2 text-neutral-12 dark:bg-black dark:text-white">
-      {isMobileNavOpen && (
-        <>
-          <button
-            type="button"
-            aria-label="Close mobile navigation backdrop"
-            className="fixed inset-0 z-50 bg-black/45 md:hidden"
-            onClick={() => setIsMobileNavOpen(false)}
+  // ─── Map dashboard nav → SidebarNavSection[] ─────────────────────────────
+  const sidebarSections = useMemo<SidebarNavSection[]>(() => {
+    return DASHBOARD_NAV_GROUPS.filter((group) => group.title !== "Admin" || isAdmin).map(
+      (group) => ({
+        id: group.title,
+        label: group.title,
+        items: group.items.map((item) => ({
+          id: item.href,
+          label: item.label,
+          href: item.href,
+          icon: item.icon,
+          badge: item.badge,
+          isActive: isActiveRoute(pathname, item.href),
+          children: item.children?.map((child) => ({
+            id: child.href,
+            label: child.label,
+            href: child.href,
+            icon: child.icon,
+            badge: child.badge,
+            isActive: isActiveRoute(pathname, child.href),
+          })),
+        })),
+      }),
+    );
+  }, [isAdmin, pathname]);
+
+  // ─── Workspaces mapped to WorkspaceSwitcher shape ────────────────────────
+  const workspacesForSwitcher = useMemo<Workspace[]>(
+    () =>
+      workspaceOptions.map((option) => ({
+        id: option.id,
+        name: option.label,
+      })),
+    [workspaceOptions],
+  );
+
+  // ─── Sidebar header slot — logo + workspace switcher ─────────────────────
+  const sidebarHeader = (
+    <div className="flex flex-col gap-3">
+      <div className={`flex items-center ${collapsed ? "justify-center" : "justify-start px-2"}`}>
+        {collapsed ? (
+          <span
+            aria-label="Nebutra Sailor"
+            className="flex h-8 w-8 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-sm font-semibold text-white"
+          >
+            N
+          </span>
+        ) : (
+          <span className="text-lg font-semibold tracking-tight">Nebutra Sailor</span>
+        )}
+      </div>
+      {supportsWorkspaceSwitching && workspacesForSwitcher.length > 0 && (
+        <div className={collapsed ? "flex justify-center" : "px-2"}>
+          <WorkspaceSwitcher
+            workspaces={workspacesForSwitcher}
+            activeWorkspaceId={workspace}
+            onSwitch={handleWorkspaceChange}
+            variant={collapsed ? "compact" : "expanded"}
+            showRoleBadge={false}
           />
-          <aside
-            aria-label="Mobile Sidebar"
-            className="fixed inset-y-0 left-0 z-60 w-[85vw] max-w-72 border-r border-neutral-7 bg-neutral-1 px-4 py-5 md:hidden dark:border-white/10 dark:bg-black"
-          >
-            <div className="mb-6 flex items-center justify-between px-2">
-              <span className="text-sm font-semibold tracking-tight">Nebutra Sailor</span>
-              <button
-                type="button"
-                aria-label="Close mobile navigation"
-                className="rounded-lg p-2 text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
-                onClick={() => setIsMobileNavOpen(false)}
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-
-            {supportsWorkspaceSwitching && (
-              <div className="mb-4 px-2">
-                <label htmlFor="workspace-switcher-mobile" className="sr-only">
-                  Workspace switcher
-                </label>
-                <select
-                  id="workspace-switcher-mobile"
-                  aria-label="Workspace switcher"
-                  value={workspace}
-                  onChange={(event) => {
-                    void handleWorkspaceChange(event.target.value);
-                  }}
-                  disabled={workspaceLoading}
-                  className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 dark:border-white/15 dark:bg-black dark:text-white"
-                >
-                  {workspaceOptions.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-
-            <SidebarNav pathname={pathname} mobile onNavigate={() => setIsMobileNavOpen(false)} />
-          </aside>
-        </>
-      )}
-
-      <div className="flex min-h-screen">
-        <aside
-          aria-label="Sidebar"
-          data-collapsed={collapsed ? "true" : "false"}
-          className={`hidden shrink-0 border-r border-neutral-7 bg-neutral-1 py-5 transition-[width] duration-200 ease-out md:flex md:flex-col dark:border-white/10 dark:bg-black/30 ${
-            collapsed ? "w-16 px-2" : "w-72 px-4"
-          }`}
-        >
-          <div
-            className={`mb-7 flex items-center ${collapsed ? "justify-center px-0" : "justify-between px-2"}`}
-          >
-            {!collapsed && (
-              <span className="text-lg font-semibold tracking-tight">Nebutra Sailor</span>
-            )}
-            <button
-              type="button"
-              aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-              aria-pressed={collapsed}
-              title={collapsed ? "Expand sidebar (⌘B)" : "Collapse sidebar (⌘B)"}
-              onClick={toggleSidebar}
-              className="rounded-lg p-1.5 text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
-            >
-              {collapsed ? (
-                <ChevronRight className="h-4 w-4" />
-              ) : (
-                <ChevronLeft className="h-4 w-4" />
-              )}
-            </button>
-          </div>
-
-          {supportsWorkspaceSwitching && !collapsed && (
-            <div className="mb-5 px-2">
-              <label htmlFor="workspace-switcher" className="sr-only">
-                Workspace switcher
-              </label>
-              <select
-                id="workspace-switcher"
-                aria-label="Workspace switcher"
-                value={workspace}
-                onChange={(event) => {
-                  void handleWorkspaceChange(event.target.value);
-                }}
-                disabled={workspaceLoading}
-                className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 dark:border-white/15 dark:bg-black/40 dark:text-white"
-              >
-                {workspaceOptions.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          <SidebarNav pathname={pathname} collapsed={collapsed} />
-
-          <div
-            className={`mt-auto flex items-center ${
-              collapsed ? "flex-col gap-2" : "justify-between gap-2"
-            }`}
-          >
-            {!collapsed && (
-              <div className="flex-1 truncate rounded-xl border border-neutral-7 bg-neutral-2 p-3 text-xs text-neutral-11 dark:border-white/10 dark:bg-white/5 dark:text-white/70">
-                Workspace mode: {currentWorkspaceLabel}
-              </div>
-            )}
-            <ThemeToggle compact />
-          </div>
-        </aside>
-
-        <div className="flex min-h-screen min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-40 border-b border-neutral-7 bg-(--neutral-1)/90 px-3 py-3 backdrop-blur sm:px-4 md:px-8 dark:border-white/10 dark:bg-black/65">
-            <div className="flex items-center justify-between">
-              <div className="flex min-w-0 items-center gap-3">
-                <button
-                  type="button"
-                  aria-label="Open navigation"
-                  className="rounded-lg p-2 text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 md:hidden dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
-                  onClick={() => setIsMobileNavOpen(true)}
-                >
-                  <Menu className="h-4 w-4" />
-                </button>
-                <div className="min-w-0">
-                  <p className="hidden text-xs text-neutral-10 min-[360px]:block dark:text-white/60">
-                    Workspace
-                  </p>
-                  <p className="mt-0.5 truncate text-sm font-medium text-neutral-12 dark:text-white sm:hidden">
-                    {currentBreadcrumb?.label ?? "Dashboard"}
-                  </p>
-                  <nav aria-label="Breadcrumb" className="mt-0.5 hidden sm:block">
-                    <ol className="flex items-center gap-1 text-sm text-neutral-11 dark:text-white/70">
-                      {breadcrumbs.map((crumb, index) => {
-                        const isLast = index === breadcrumbs.length - 1;
-                        return (
-                          <li key={crumb.href} className="flex items-center gap-1">
-                            {index > 0 && <ChevronRight className="h-3.5 w-3.5" />}
-                            {isLast ? (
-                              <span className="font-medium text-neutral-12 dark:text-white">
-                                {crumb.label}
-                              </span>
-                            ) : (
-                              <ViewTransitionLink
-                                href={crumb.href}
-                                className="transition-colors hover:text-neutral-12 dark:hover:text-white"
-                              >
-                                {crumb.label}
-                              </ViewTransitionLink>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ol>
-                  </nav>
-                </div>
-              </div>
-
-              <div className="hidden gap-2 md:flex">
-                {DASHBOARD_NAV_ITEMS.slice(0, 3).map((item) => (
-                  <ViewTransitionLink
-                    key={item.label}
-                    href={item.href}
-                    className="rounded-lg px-3 py-1.5 text-sm text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
-                  >
-                    {item.label}
-                  </ViewTransitionLink>
-                ))}
-              </div>
-
-              <div className="flex items-center gap-2">
-                {planBadge}
-                {notificationCenter}
-                <HeaderAuthControls supportsWorkspaceSwitching={supportsWorkspaceSwitching} />
-              </div>
-            </div>
-          </header>
-
-          <main
-            id="main-content"
-            aria-label="Main content"
-            className="content-area flex-1 px-3 py-5 sm:px-4 sm:py-6 md:px-8"
-          >
-            {children}
-          </main>
         </div>
+      )}
+    </div>
+  );
+
+  // ─── Sidebar footer slot — workspace mode info + theme toggle + collapse ─
+  const sidebarFooter = (
+    <div className={`flex items-center ${collapsed ? "flex-col gap-2" : "justify-between gap-2"}`}>
+      {!collapsed && (
+        <div className="flex-1 truncate rounded-md border border-border bg-muted/40 p-2 text-xs text-muted-foreground">
+          Workspace: {currentWorkspaceLabel}
+        </div>
+      )}
+      <div className={`flex items-center gap-1 ${collapsed ? "flex-col" : ""}`}>
+        <ThemeToggle compact />
+        <button
+          type="button"
+          onClick={toggle}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          className="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+        >
+          {collapsed ? (
+            <PanelLeftOpen className="h-4 w-4" />
+          ) : (
+            <PanelLeftClose className="h-4 w-4" />
+          )}
+        </button>
       </div>
     </div>
+  );
+
+  const sidebar = (
+    <SidebarNav
+      sections={sidebarSections}
+      collapsed={collapsed}
+      header={sidebarHeader}
+      footer={sidebarFooter}
+      renderLink={renderNextLink}
+    />
+  );
+
+  // ─── Header slot — breadcrumbs + quick links + auth controls ─────────────
+  const headerContent = (
+    <div className="flex w-full items-center justify-between gap-3">
+      <div className="min-w-0">
+        <p className="hidden text-xs text-muted-foreground min-[360px]:block">Workspace</p>
+        <p className="mt-0.5 truncate text-sm font-medium text-foreground sm:hidden">
+          {currentBreadcrumb?.label ?? "Dashboard"}
+        </p>
+        <nav aria-label="Breadcrumb" className="mt-0.5 hidden sm:block">
+          <ol className="flex items-center gap-1 text-sm text-muted-foreground">
+            {breadcrumbs.map((crumb, index) => {
+              const isLast = index === breadcrumbs.length - 1;
+              return (
+                <li key={crumb.href} className="flex items-center gap-1">
+                  {index > 0 && <ChevronRight className="h-3.5 w-3.5" />}
+                  {isLast ? (
+                    <span className="font-medium text-foreground">{crumb.label}</span>
+                  ) : (
+                    <ViewTransitionLink
+                      href={crumb.href}
+                      className="transition-colors hover:text-foreground"
+                    >
+                      {crumb.label}
+                    </ViewTransitionLink>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      </div>
+
+      <div className="hidden gap-2 md:flex">
+        {DASHBOARD_NAV_ITEMS.slice(0, 3).map((item) => (
+          <ViewTransitionLink
+            key={item.label}
+            href={item.href}
+            className="rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+          >
+            {item.label}
+          </ViewTransitionLink>
+        ))}
+      </div>
+
+      <div className="flex items-center gap-2">
+        {planBadge}
+        {notificationCenter}
+        <HeaderAuthControls supportsWorkspaceSwitching={supportsWorkspaceSwitching} />
+      </div>
+    </div>
+  );
+
+  return (
+    <AppShell sidebar={sidebar} header={headerContent} collapsed={collapsed}>
+      <div id="main-content" aria-label="Main content" className="content-area">
+        {children}
+      </div>
+    </AppShell>
   );
 }

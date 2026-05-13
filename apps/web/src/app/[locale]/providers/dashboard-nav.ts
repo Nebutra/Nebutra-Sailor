@@ -10,22 +10,41 @@ import {
   Users,
 } from "lucide-react";
 
+export interface DashboardNavBadge {
+  label: string;
+  tone: "beta" | "new" | "owner" | "featured" | "coming-soon";
+}
+
 export interface DashboardNavItem {
   href: string;
   label: string;
   icon: LucideIcon;
   group: "Product" | "Operations" | "Admin";
+  badge?: DashboardNavBadge;
+  children?: DashboardNavItem[];
 }
 
 export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
   { href: "/", label: "Overview", icon: LayoutDashboard, group: "Product" },
   { href: "/analytics", label: "Analytics", icon: ChartSpline, group: "Product" },
-  { href: "/chat", label: "AI Chat", icon: Bot, group: "Product" },
+  {
+    href: "/chat",
+    label: "AI Chat",
+    icon: Bot,
+    group: "Product",
+    badge: { label: "New", tone: "new" },
+  },
   { href: "/integrations", label: "Connectors", icon: Plug, group: "Product" },
   { href: "/billing", label: "Billing", icon: CreditCard, group: "Operations" },
   { href: "/tenants", label: "Tenants", icon: Users, group: "Operations" },
   { href: "/audit", label: "Audit", icon: FileText, group: "Operations" },
-  { href: "/admin", label: "Admin", icon: Shield, group: "Admin" },
+  {
+    href: "/admin",
+    label: "Admin",
+    icon: Shield,
+    group: "Admin",
+    badge: { label: "Owner", tone: "owner" },
+  },
 ];
 
 export const DASHBOARD_NAV_GROUPS = [
