@@ -137,7 +137,7 @@ export function UseCasesSection() {
           {/* Right Column: Sticky Mockup Viewport */}
           <div className="w-full lg:w-8/12 relative order-1 lg:order-2">
             <div
-              className="sticky top-32 w-full aspect-square lg:aspect-auto lg:h-[700px] rounded-[var(--radius-panel)] bg-background border border-[var(--neutral-6)] overflow-hidden flex items-center justify-center p-6 lg:p-8 group"
+              className="sticky top-32 w-full aspect-[4/5] sm:aspect-square lg:aspect-auto lg:h-[700px] rounded-[var(--radius-panel)] bg-background border border-[var(--neutral-6)] overflow-hidden flex items-center justify-center p-3 sm:p-6 lg:p-8 group"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
               {/* Internal Glass glare reflection */}
@@ -153,7 +153,14 @@ export function UseCasesSection() {
                   transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
                   className="relative z-10 w-full h-full flex items-center justify-center"
                 >
-                  <ActiveMockup />
+                  {/* Mockups are designed at ~600×420 desktop scale and lay out
+                      three internal columns. On narrow viewports we scale the
+                      whole fixture down rather than re-flowing each mockup —
+                      preserves visual integrity and avoids per-mockup mobile
+                      refactors. lg+ retains 1:1 scale. */}
+                  <div className="w-full h-full flex items-center justify-center scale-[0.55] sm:scale-[0.78] md:scale-[0.92] lg:scale-100 origin-center">
+                    <ActiveMockup />
+                  </div>
                 </motion.div>
               </AnimatePresence>
             </div>
