@@ -140,14 +140,17 @@ export function SignInForm({
         <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("subtitle")}</p>
       </div>
 
-      <OAuthButtons mode="signIn" providers={enabledOAuthProviders} returnUrl={returnUrl} />
-
-      <div className="relative my-6">
-        <Separator />
-        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--neutral-1)] px-3 text-xs font-medium text-[var(--neutral-9)]">
-          {t("dividerOr")}
-        </span>
-      </div>
+      {(enabledOAuthProviders?.length ?? 0) > 0 && (
+        <>
+          <OAuthButtons mode="signIn" providers={enabledOAuthProviders} returnUrl={returnUrl} />
+          <div className="relative my-6">
+            <Separator />
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--neutral-1)] px-3 text-xs font-medium text-[var(--neutral-9)]">
+              {t("dividerOr")}
+            </span>
+          </div>
+        </>
+      )}
 
       <form
         onSubmit={handleSubmit}
