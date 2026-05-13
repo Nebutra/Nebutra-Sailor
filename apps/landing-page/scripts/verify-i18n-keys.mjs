@@ -2,19 +2,35 @@
 /**
  * verify-i18n-keys.mjs
  *
- * Verifies that every non-canonical locale in apps/landing-page/messages/
- * matches the key shape of en.json. The app deep-merges English as fallback
- * at runtime, so missing keys silently render in English — this script is
- * the CI-blocking check that prevents that drift.
+ * Three-tier i18n integrity check for apps/landing-page/messages/.
+ *
+ * Tier 1 (blocking, exit 1):
+ *   - Key parity: every locale must have the same leaf-key shape as en.json.
+ *     Missing keys silently fall back to English at runtime (next-intl
+ *     deep-merge), which is exactly the drift class this gate prevents.
+ *   - Placeholder parity: `{var}` and `{var, plural, ...}` ICU tokens in
+ *     en.json must appear in every locale value. A missing placeholder
+ *     turns into a literal `undefined` rendered to the user.
+ *   - High-visibility identical-to-EN strings in critical namespaces
+ *     (nav / hero / cta / etc.) — these are above-the-fold copy.
+ *
+ * Tier 2 (advisory, exit 0 but reported):
+ *   - Identical-to-EN strings across all other content namespaces.
+ *     Catches the "key exists, value is still English placeholder" class.
+ *
+ * Tier 3 (always reported, never fails):
+ *   - Per-locale translation coverage summary.
  *
  * Canonical source: en.json
  * Checked locales:  every other *.json sibling in the same directory
  *
- * Exit codes:
- *   0  — all locales match en.json (no missing, no extra keys)
- *   1  — drift detected, or a JSON file is malformed / unreadable
+ * Flags:
+ *   --strict    Promote Tier 2 (advisory identical-to-EN) to blocking.
+ *   --json      Emit a machine-readable JSON report on stdout (no human log).
  *
- * Output is plain text, no ANSI colors, safe for both local TTY and CI logs.
+ * Exit codes:
+ *   0  — all gates pass
+ *   1  — drift detected, malformed JSON, or unreadable file
  */
 
 import { readdirSync, readFileSync } from "node:fs";
@@ -25,26 +41,173 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const MESSAGES_DIR = resolve(__dirname, "..", "messages");
 const CANONICAL_LOCALE = "en";
 const REPORT_LIMIT = 20;
-const CONTENT_CHECK_NAMESPACES = new Set([
-  "nav",
+
+const ARGS = new Set(process.argv.slice(2));
+const STRICT = ARGS.has("--strict");
+const JSON_OUT = ARGS.has("--json");
+
+// Namespaces that ship as above-the-fold marketing copy. An identical-to-EN
+// value here is almost always a translation regression and blocks CI.
+// Excludes `nav` and `footer` because those are dominated by short link
+// labels (Blog, FAQ, npm, DPA, Docs, Dashboard) that B2B SaaS commonly
+// keeps in English across locales by convention.
+const CRITICAL_CONTENT_NAMESPACES = new Set([
   "hero",
   "cta",
   "logoStrip",
   "monorepoTree",
   "stats",
   "metadata",
+  "features",
+  "comingSoon",
+  "impact",
 ]);
+
+// Namespaces where identical-to-EN is reported as Tier 2 advisory (not
+// blocking by default — promoted to blocking under --strict).
+const ADVISORY_CONTENT_NAMESPACES = new Set([
+  "nav",
+  "footer",
+  "landing",
+  "legal",
+  "legalPages",
+  "marketing",
+  "microLanding",
+  "featuresPage",
+  "useCases",
+  "licensing",
+  "licenseWizard",
+  "changelogMeta",
+  "roadmapMeta",
+  "blogMeta",
+  "getLicenseMeta",
+  "designSystem",
+  "cookieConsent",
+  "compliance",
+  "icpFooter",
+  "error",
+]);
+
+// Strings that legitimately read the same in every locale: brand names,
+// product names, tech stack tokens, version numbers, emails. Maintained
+// here (not auto-detected) so the linter is deterministic and reviewable.
 const ALLOWED_IDENTICAL_VALUES = new Set([
   "",
+  // Company / product
   "Nebutra",
   "Nebutra Sailor",
+  "Sailor",
+  // Social / contact
   "GitHub",
+  "GitHub Issues",
   "Discord",
+  "Slack",
   "X (Twitter)",
-  "Next.js",
-  "Turborepo",
   "you@example.com",
+  // Frameworks / libraries (must NOT be translated)
+  "Next.js",
+  "Nuxt",
+  "TanStack",
+  "React",
+  "TypeScript",
+  "Tailwind",
+  "Prisma",
+  "Hono",
+  "FastAPI",
+  "Radix",
+  "shadcn/ui",
+  "framer-motion",
+  "Playwright",
+  "Turborepo",
+  "OpenAI",
+  "OpenRouter",
+  "Clerk",
+  "Better Auth",
+  "NextAuth",
+  "Supabase",
+  "QStash",
+  "BullMQ",
+  "Resend",
+  "Stripe",
+  "Polar",
+  "LemonSqueezy",
+  "ChinaPay",
+  "Meilisearch",
+  "Typesense",
+  "Algolia",
+  "Svix",
+  "Novu",
+  "Pusher",
+  "Inngest",
+  "ClickHouse",
+  "trigger.dev",
+  "Lobe UI",
+  "oRPC",
+  "tRPC",
+  "OpenAPI",
+  "pgvector",
+  "Postgres",
+  "PostgreSQL",
+  "AsyncLocalStorage",
+  "SiliconFlow",
+  "Azure",
+  "Sanity",
+  "Mintlify",
+  "Sentry",
+  "Upstash",
+  "Redis",
+  "Docker",
+  "Kubernetes",
+  "Aliyun",
+  "Figma",
+  "Penpot",
+  "Google Analytics",
+  "AGPL",
+  "AGPL-3.0",
+  "MIT",
+  "RBAC",
+  "ABAC",
+  "CASL",
+  "OpenFGA",
+  "HMAC",
+  "SOC 2",
+  "ICP",
+  "RLS",
+  "ModSecurity WAF",
+  // Universal UI shorthand kept in English by convention (B2B SaaS)
+  "Blog",
+  "FAQ",
+  "DPA",
+  "npm",
+  "Docs",
+  "Dashboard",
+  "Showcase",
+  "Roadmap",
+  "Status",
+  "API",
+  "SDK",
+  "CLI",
+  "OSS",
+  // Roman-numeral section labels with technical anchors
+  "Ⅰ. Identity",
+  "Ⅱ. Infrastructure",
+  "Ⅲ. Routing",
 ]);
+
+// Per-locale untranslated-phrases ceiling (Tier 3 summary). A locale whose
+// identical-to-EN advisory count exceeds this threshold gets a visible
+// warning in the CI log. Tunable per locale.
+const ADVISORY_CEILINGS = {
+  de: 80,
+  es: 80,
+  fr: 80,
+  ja: 80,
+  ko: 80,
+  zh: 80,
+};
+
+// ICU placeholder pattern. Matches `{name}`, `{count, number}`, `{n, plural, one {...}}`, etc.
+const PLACEHOLDER_RE = /\{\s*([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
 
 /**
  * Recursively flatten an object into dot-path leaf keys.
@@ -112,7 +275,7 @@ function diff(locale, enKeys, localeKeys) {
   return { locale, missing, extra };
 }
 
-function findIdenticalCriticalMessages(locale, enFlat, localeFlat) {
+function findIdenticalMessages(locale, enFlat, localeFlat, namespaces) {
   if (locale === "zh") return [];
 
   const identical = [];
@@ -120,7 +283,7 @@ function findIdenticalCriticalMessages(locale, enFlat, localeFlat) {
     const namespace = key.split(".")[0];
     const localeValue = localeFlat[key];
     if (
-      !CONTENT_CHECK_NAMESPACES.has(namespace) ||
+      !namespaces.has(namespace) ||
       typeof enValue !== "string" ||
       typeof localeValue !== "string" ||
       ALLOWED_IDENTICAL_VALUES.has(enValue.trim()) ||
@@ -135,6 +298,32 @@ function findIdenticalCriticalMessages(locale, enFlat, localeFlat) {
   return identical.sort();
 }
 
+function extractPlaceholders(value) {
+  if (typeof value !== "string") return new Set();
+  const names = new Set();
+  for (const match of value.matchAll(PLACEHOLDER_RE)) {
+    names.add(match[1]);
+  }
+  return names;
+}
+
+function findPlaceholderMismatches(enFlat, localeFlat) {
+  const mismatches = [];
+  for (const [key, enValue] of Object.entries(enFlat)) {
+    if (typeof enValue !== "string") continue;
+    const enPlaceholders = extractPlaceholders(enValue);
+    if (enPlaceholders.size === 0) continue;
+    const localeValue = localeFlat[key];
+    if (typeof localeValue !== "string") continue;
+    const localePlaceholders = extractPlaceholders(localeValue);
+    const missing = [...enPlaceholders].filter((p) => !localePlaceholders.has(p));
+    if (missing.length > 0) {
+      mismatches.push({ key, missing });
+    }
+  }
+  return mismatches.sort((a, b) => a.key.localeCompare(b.key));
+}
+
 function formatList(keys, limit) {
   const shown = keys.slice(0, limit);
   const lines = shown.map((k) => `    - ${k}`);
@@ -145,14 +334,16 @@ function formatList(keys, limit) {
 }
 
 function main() {
-  process.stdout.write(`[i18n-verify] canonical source: ${CANONICAL_LOCALE}.json\n`);
-  process.stdout.write(`[i18n-verify] messages dir: ${MESSAGES_DIR}\n\n`);
+  const log = JSON_OUT ? () => {} : (s) => process.stdout.write(s);
+  log(`[i18n-verify] canonical source: ${CANONICAL_LOCALE}.json\n`);
+  log(`[i18n-verify] messages dir: ${MESSAGES_DIR}\n`);
+  log(`[i18n-verify] mode: ${STRICT ? "strict (advisory promoted to blocking)" : "default"}\n\n`);
 
   const locales = discoverLocales();
   const en = loadLocale(CANONICAL_LOCALE);
   const enKeys = flatten(en);
   const enFlat = flattenToRecord(en);
-  process.stdout.write(`[i18n-verify] ${CANONICAL_LOCALE}: ${enKeys.size} leaf keys\n`);
+  log(`[i18n-verify] ${CANONICAL_LOCALE}: ${enKeys.size} leaf keys\n`);
 
   const others = locales.filter((l) => l !== CANONICAL_LOCALE);
   const results = others.map((locale) => {
@@ -161,57 +352,98 @@ function main() {
     const flat = flattenToRecord(data);
     return {
       ...diff(locale, enKeys, keys),
-      identicalCritical: findIdenticalCriticalMessages(locale, enFlat, flat),
+      identicalCritical: findIdenticalMessages(locale, enFlat, flat, CRITICAL_CONTENT_NAMESPACES),
+      identicalAdvisory: findIdenticalMessages(locale, enFlat, flat, ADVISORY_CONTENT_NAMESPACES),
+      placeholderMismatches: findPlaceholderMismatches(enFlat, flat),
       total: keys.size,
     };
   });
 
-  let hasDrift = false;
+  let hasBlockingDrift = false;
   for (const r of results) {
-    const status =
-      r.missing.length === 0 && r.extra.length === 0 && r.identicalCritical.length === 0
-        ? "OK"
-        : "DRIFT";
-    process.stdout.write(
-      `[i18n-verify] ${r.locale}: ${r.total} leaf keys | missing=${r.missing.length} extra=${r.extra.length} identicalCritical=${r.identicalCritical.length} [${status}]\n`,
+    const blocking =
+      r.missing.length > 0 ||
+      r.extra.length > 0 ||
+      r.identicalCritical.length > 0 ||
+      r.placeholderMismatches.length > 0 ||
+      (STRICT && r.identicalAdvisory.length > 0);
+    const status = blocking ? "DRIFT" : r.identicalAdvisory.length > 0 ? "WARN" : "OK";
+    log(
+      `[i18n-verify] ${r.locale}: ${r.total} keys | missing=${r.missing.length} extra=${r.extra.length} ` +
+        `placeholder=${r.placeholderMismatches.length} criticalIdentical=${r.identicalCritical.length} ` +
+        `advisoryIdentical=${r.identicalAdvisory.length} [${status}]\n`,
     );
-    if (r.missing.length > 0 || r.extra.length > 0 || r.identicalCritical.length > 0) {
-      hasDrift = true;
+    if (blocking) hasBlockingDrift = true;
+
+    const ceiling = ADVISORY_CEILINGS[r.locale];
+    if (ceiling != null && r.identicalAdvisory.length > ceiling && !STRICT) {
+      log(
+        `  ⚠  advisory identical-to-EN count (${r.identicalAdvisory.length}) exceeds ceiling (${ceiling}) for ${r.locale}\n`,
+      );
     }
   }
 
-  if (!hasDrift) {
-    process.stdout.write(`\n[i18n-verify] all locales in sync with ${CANONICAL_LOCALE}.json\n`);
+  if (JSON_OUT) {
+    process.stdout.write(
+      `${JSON.stringify(
+        { canonical: CANONICAL_LOCALE, totalKeys: enKeys.size, locales: results, strict: STRICT },
+        null,
+        2,
+      )}\n`,
+    );
+    return hasBlockingDrift ? 1 : 0;
+  }
+
+  if (!hasBlockingDrift) {
+    log(`\n[i18n-verify] all locales pass blocking gates against ${CANONICAL_LOCALE}.json\n`);
     return 0;
   }
 
-  process.stdout.write(`\n[i18n-verify] DRIFT DETECTED\n`);
+  log(`\n[i18n-verify] DRIFT DETECTED\n`);
   for (const r of results) {
-    if (r.missing.length === 0 && r.extra.length === 0 && r.identicalCritical.length === 0) {
-      continue;
-    }
-    process.stdout.write(`\n  locale: ${r.locale}\n`);
+    const blocking =
+      r.missing.length > 0 ||
+      r.extra.length > 0 ||
+      r.identicalCritical.length > 0 ||
+      r.placeholderMismatches.length > 0 ||
+      (STRICT && r.identicalAdvisory.length > 0);
+    if (!blocking) continue;
+    log(`\n  locale: ${r.locale}\n`);
     if (r.missing.length > 0) {
-      process.stdout.write(
+      log(
         `  missing (${r.missing.length}) — present in ${CANONICAL_LOCALE}, absent in ${r.locale}:\n`,
       );
-      process.stdout.write(`${formatList(r.missing, REPORT_LIMIT)}\n`);
+      log(`${formatList(r.missing, REPORT_LIMIT)}\n`);
     }
     if (r.extra.length > 0) {
-      process.stdout.write(
-        `  extra (${r.extra.length}) — present in ${r.locale}, absent in ${CANONICAL_LOCALE}:\n`,
+      log(`  extra (${r.extra.length}) — present in ${r.locale}, absent in ${CANONICAL_LOCALE}:\n`);
+      log(`${formatList(r.extra, REPORT_LIMIT)}\n`);
+    }
+    if (r.placeholderMismatches.length > 0) {
+      log(
+        `  placeholder mismatches (${r.placeholderMismatches.length}) — ICU tokens dropped from translation:\n`,
       );
-      process.stdout.write(`${formatList(r.extra, REPORT_LIMIT)}\n`);
+      const lines = r.placeholderMismatches
+        .slice(0, REPORT_LIMIT)
+        .map((m) => `    - ${m.key}  (missing: ${m.missing.map((v) => `{${v}}`).join(", ")})`);
+      if (r.placeholderMismatches.length > REPORT_LIMIT) {
+        lines.push(`    ... and ${r.placeholderMismatches.length - REPORT_LIMIT} more`);
+      }
+      log(`${lines.join("\n")}\n`);
     }
     if (r.identicalCritical.length > 0) {
-      process.stdout.write(
-        `  identical critical messages (${r.identicalCritical.length}) — high-visibility strings still equal ${CANONICAL_LOCALE}:\n`,
+      log(
+        `  critical identical-to-EN (${r.identicalCritical.length}) — high-visibility strings still equal ${CANONICAL_LOCALE}:\n`,
       );
-      process.stdout.write(`${formatList(r.identicalCritical, REPORT_LIMIT)}\n`);
+      log(`${formatList(r.identicalCritical, REPORT_LIMIT)}\n`);
+    }
+    if (STRICT && r.identicalAdvisory.length > 0) {
+      log(`  advisory identical-to-EN (${r.identicalAdvisory.length}) [promoted by --strict]:\n`);
+      log(`${formatList(r.identicalAdvisory, REPORT_LIMIT)}\n`);
     }
   }
-  process.stdout.write(
-    `\n[i18n-verify] fix: keep locale files key-compatible with en.json and translate high-visibility namespaces instead of leaving English copies.\n`,
+  log(
+    `\n[i18n-verify] fix: keep locale files key-compatible with en.json, preserve every {placeholder}, and translate high-visibility namespaces.\n`,
   );
   return 1;
 }

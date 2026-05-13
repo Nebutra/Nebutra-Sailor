@@ -41,8 +41,8 @@
       "description": "Moteurs d'orchestration LLM et de robots d'agents autonomes. Contournez les abstractions complexes immédiatement."
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "Base de plateforme gouvernée",
+      "description": "Une base de plateforme gouvernée pour les équipes qui déploient des SaaS AI-natifs. Alignez le scaffolding, les primitives runtime et les surfaces de livraison sans assembler des outils ad hoc."
     },
     "item2": {
       "title": "Automatisation SaaS B2B",

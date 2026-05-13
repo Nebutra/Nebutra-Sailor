@@ -15,6 +15,10 @@ pre-push:
   commands:
     typecheck:
       run: pnpm turbo typecheck --affected
+    i18n-check:
+      # Only runs when landing-page locale files are part of the push.
+      glob: "apps/landing-page/messages/*.json"
+      run: pnpm i18n:check
 
 commit-msg:
   commands:

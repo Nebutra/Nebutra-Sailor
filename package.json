@@ -21,6 +21,8 @@
     "test:coverage": "turbo run test -- --coverage",
     "test:arch": "vitest run --config vitest.arch.config.ts",
     "mail:check": "pnpm --filter mail-preview check",
+    "i18n:check": "pnpm --filter @nebutra/landing-page check:i18n",
+    "i18n:check:strict": "pnpm --filter @nebutra/landing-page check:i18n -- --strict",
     "mail:export": "pnpm --filter mail-preview export",
     "setup": "tsx scripts/setup.ts",
     "check-env": "npx tsx infra/ops/scripts/check-env.ts",

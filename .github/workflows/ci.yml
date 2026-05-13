@@ -184,6 +184,12 @@ jobs:
       - name: Typecheck (affected)
         run: pnpm turbo typecheck --filter="...[${TURBO_BASE_REF}]..."
 
+      # ── i18n integrity (landing-page) ────────────────────────────────────
+      # Key parity + ICU placeholder consistency + critical-namespace
+      # untranslated detection across all 7 locales. Cheap; runs always.
+      - name: i18n integrity (landing-page locales)
+        run: pnpm --filter @nebutra/landing-page check:i18n
+
   # ── Python services — lint + test (matrix, parallel) ──────────────────────
   python-ci:
     name: Python CI (${{ matrix.service }})
