@@ -79,10 +79,18 @@ function buildCsp(nonce: string): string {
   ].join("; ");
 }
 
-function withNonce(_request: NextRequest, response: NextResponse): NextResponse {
+function withNonce(request: NextRequest, response: NextResponse): NextResponse {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
   const csp = buildCsp(nonce);
 
+  // Server components read the nonce via `getNonce()` → `headers().get("x-nonce")`,
+  // which reads the *request* headers. Without injecting here, getNonce() always
+  // returns "" and any inline `<script nonce={...}>` rendered server-side fails
+  // CSP, throws, and the ErrorBoundary surfaces a generic "Something went wrong".
+  request.headers.set("x-nonce", nonce);
+
+  // The browser validates `<script nonce="...">` against the CSP header on the
+  // *response*, so the same nonce must appear on both sides.
   response.headers.set("x-nonce", nonce);
   response.headers.set("Content-Security-Policy", csp);
 
