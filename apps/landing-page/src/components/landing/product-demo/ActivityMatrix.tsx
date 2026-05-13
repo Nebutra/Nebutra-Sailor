@@ -1,4 +1,4 @@
-import { useTheme } from "next-themes";
+import { useTheme } from "@nebutra/tokens";
 import { useEffect, useState } from "react";
 import { type Activity, ActivityCalendar } from "react-activity-calendar";
 

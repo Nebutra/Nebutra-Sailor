@@ -1,8 +1,8 @@
 "use client";
 
 import { Logo, Logomark } from "@nebutra/brand";
+import { useTheme } from "@nebutra/tokens";
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { LocaleSwitcher } from "@/components/ui/locale-switcher";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";

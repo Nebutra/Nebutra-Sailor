@@ -7,9 +7,9 @@ import {
   Message as MessageCircle,
   LogoTwitterX as Twitter,
 } from "@nebutra/icons";
+import { useTheme } from "@nebutra/tokens";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
 import { useMount } from "@/hooks/useMount";
 import { Link } from "@/i18n/navigation";
 import { createPublicDocsUrl } from "@/lib/docs-links";
