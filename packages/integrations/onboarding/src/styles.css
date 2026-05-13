@@ -1,0 +1,171 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+ * @nebutra/onboarding — driver.js theme overrides.
+ *
+ * Maps driver.js classes to our scale tokens + brand gradient. Import once
+ * in your app entry (e.g. globals.css):
+ *
+ *   @import "@nebutra/onboarding/styles.css";
+ *
+ * driver.js publishes class names with the `driver-popover` and `driver-overlay`
+ * prefixes — we override these without touching the underlying lib.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/* Backdrop overlay — match our modal pattern (40% black, slight blur). */
+.driver-overlay {
+  background: rgb(0 0 0 / 0.45) !important;
+}
+
+/* Popover container — surface tokens + dark mode parity. */
+.driver-popover {
+  border-radius: 16px !important;
+  border: 1px solid var(--neutral-7) !important;
+  background: var(--neutral-1) !important;
+  color: var(--neutral-12) !important;
+  box-shadow:
+    0 12px 32px -8px rgb(0 0 0 / 0.18),
+    0 4px 12px -4px rgb(0 0 0 / 0.08) !important;
+  padding: 16px !important;
+  font-family: var(--font-geist-sans, system-ui), sans-serif !important;
+  max-width: 360px !important;
+}
+
+[data-theme="dark"] .driver-popover,
+html.dark .driver-popover {
+  background: var(--neutral-2, #0a0a0a) !important;
+  border-color: rgb(255 255 255 / 0.1) !important;
+  color: #fff !important;
+  box-shadow:
+    0 12px 32px -8px rgb(0 0 0 / 0.6),
+    0 4px 12px -4px rgb(0 0 0 / 0.4) !important;
+}
+
+.driver-popover-title {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  margin: 0 0 6px !important;
+  color: var(--neutral-12) !important;
+}
+
+[data-theme="dark"] .driver-popover-title,
+html.dark .driver-popover-title {
+  color: #fff !important;
+}
+
+.driver-popover-description {
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+  color: var(--neutral-11) !important;
+  margin-bottom: 12px !important;
+}
+
+[data-theme="dark"] .driver-popover-description,
+html.dark .driver-popover-description {
+  color: rgb(255 255 255 / 0.7) !important;
+}
+
+/* Progress text "1 / 5". */
+.driver-popover-progress-text {
+  font-family: var(--font-geist-mono, ui-monospace), monospace !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+  color: var(--neutral-10) !important;
+}
+
+[data-theme="dark"] .driver-popover-progress-text,
+html.dark .driver-popover-progress-text {
+  color: rgb(255 255 255 / 0.4) !important;
+}
+
+/* Footer button row. */
+.driver-popover-footer {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: 14px !important;
+}
+
+/* Buttons share base styling, primary uses brand gradient. */
+.driver-popover-prev-btn,
+.driver-popover-next-btn,
+.driver-popover-close-btn {
+  font-family: inherit !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 6px 12px !important;
+  border-radius: 8px !important;
+  border: 1px solid transparent !important;
+  cursor: pointer !important;
+  transition: opacity 0.15s, background 0.15s, border-color 0.15s !important;
+  text-shadow: none !important;
+}
+
+.driver-popover-prev-btn {
+  color: var(--neutral-11) !important;
+  background: transparent !important;
+  border-color: var(--neutral-7) !important;
+}
+
+.driver-popover-prev-btn:hover {
+  background: var(--neutral-2) !important;
+  color: var(--neutral-12) !important;
+}
+
+[data-theme="dark"] .driver-popover-prev-btn,
+html.dark .driver-popover-prev-btn {
+  color: rgb(255 255 255 / 0.7) !important;
+  border-color: rgb(255 255 255 / 0.15) !important;
+}
+
+[data-theme="dark"] .driver-popover-prev-btn:hover,
+html.dark .driver-popover-prev-btn:hover {
+  background: rgb(255 255 255 / 0.08) !important;
+  color: #fff !important;
+}
+
+.driver-popover-next-btn {
+  color: #fff !important;
+  background: var(--brand-gradient, linear-gradient(135deg, var(--blue-9), var(--cyan-9))) !important;
+  border-color: transparent !important;
+  font-weight: 600 !important;
+}
+
+.driver-popover-next-btn:hover {
+  opacity: 0.92 !important;
+}
+
+/* The small "x" close button in the corner. */
+.driver-popover-close-btn {
+  color: var(--neutral-10) !important;
+}
+
+.driver-popover-close-btn:hover {
+  color: var(--neutral-12) !important;
+  background: var(--neutral-2) !important;
+}
+
+[data-theme="dark"] .driver-popover-close-btn,
+html.dark .driver-popover-close-btn {
+  color: rgb(255 255 255 / 0.5) !important;
+}
+
+[data-theme="dark"] .driver-popover-close-btn:hover,
+html.dark .driver-popover-close-btn:hover {
+  color: #fff !important;
+  background: rgb(255 255 255 / 0.1) !important;
+}
+
+/* Arrow follows surface — driver.js renders the arrow as `.driver-popover-arrow-*`. */
+.driver-popover-arrow-side-bottom.driver-popover-arrow {
+  border-top-color: var(--neutral-7) !important;
+}
+.driver-popover-arrow-side-top.driver-popover-arrow {
+  border-bottom-color: var(--neutral-7) !important;
+}
+.driver-popover-arrow-side-left.driver-popover-arrow {
+  border-right-color: var(--neutral-7) !important;
+}
+.driver-popover-arrow-side-right.driver-popover-arrow {
+  border-left-color: var(--neutral-7) !important;
+}

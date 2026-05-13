@@ -81,7 +81,7 @@ export async function PlanBadge() {
     : "bg-green-9";
 
   return (
-    <div className="hidden items-center gap-2 sm:flex">
+    <div data-tour-id="plan-badge" className="hidden items-center gap-2 sm:flex">
       <ViewTransitionLink
         href="/billing"
         aria-label={

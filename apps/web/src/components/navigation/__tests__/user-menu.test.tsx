@@ -18,6 +18,18 @@ vi.mock("@nebutra/tokens", () => ({
   useTheme: () => ({ theme: "system", setTheme: vi.fn() }),
 }));
 
+const openDialogMock = vi.fn();
+vi.mock("@/components/account/account-dialog", () => ({
+  useAccountDialog: () => ({
+    open: false,
+    activeTab: "profile" as const,
+    openDialog: openDialogMock,
+    closeDialog: vi.fn(),
+    setOpen: vi.fn(),
+    setActiveTab: vi.fn(),
+  }),
+}));
+
 import { UserMenu } from "../user-menu";
 
 function withUser(user: { name?: string; email?: string; imageUrl?: string } | null) {

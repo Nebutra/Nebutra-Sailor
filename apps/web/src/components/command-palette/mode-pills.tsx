@@ -66,6 +66,7 @@ export function ModePills() {
     <div
       role="radiogroup"
       aria-label="Command mode"
+      data-tour-id="mode-pills"
       className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       <div className="flex w-max items-center gap-2 sm:w-full sm:flex-wrap sm:justify-center">

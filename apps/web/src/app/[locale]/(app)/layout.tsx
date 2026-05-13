@@ -1,7 +1,9 @@
 import { CommandPaletteMount } from "@/app/[locale]/providers/command-palette-mount";
+import { AccountDialogMount } from "@/components/account/account-dialog";
 import { PlanBadge } from "@/components/billing/plan-badge";
 import { FeedbackMount } from "@/components/feedback/feedback-mount";
 import { ShellNotificationCenter } from "@/components/notifications/shell-notification-center";
+import { OnboardingMount } from "@/components/onboarding/onboarding-mount";
 import { requireAuth } from "@/lib/auth";
 import { resolveWebProductCapabilities } from "@/lib/product-capabilities";
 import { DesignSystemShell } from "../providers/design-system-shell";
@@ -17,16 +19,20 @@ export default async function AppLayout({
   await requireAuth();
 
   return (
-    <FeedbackMount>
-      <CommandPaletteMount>
-        <DesignSystemShell
-          notificationCenter={<ShellNotificationCenter locale={locale} />}
-          planBadge={<PlanBadge />}
-          productCapabilities={resolveWebProductCapabilities()}
-        >
-          {children}
-        </DesignSystemShell>
-      </CommandPaletteMount>
-    </FeedbackMount>
+    <OnboardingMount>
+      <FeedbackMount>
+        <AccountDialogMount>
+          <CommandPaletteMount>
+            <DesignSystemShell
+              notificationCenter={<ShellNotificationCenter locale={locale} />}
+              planBadge={<PlanBadge />}
+              productCapabilities={resolveWebProductCapabilities()}
+            >
+              {children}
+            </DesignSystemShell>
+          </CommandPaletteMount>
+        </AccountDialogMount>
+      </FeedbackMount>
+    </OnboardingMount>
   );
 }

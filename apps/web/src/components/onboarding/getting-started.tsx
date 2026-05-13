@@ -115,7 +115,7 @@ export async function GettingStarted() {
   const percent = Math.round((doneCount / total) * 100);
 
   return (
-    <div>
+    <div data-tour-id="getting-started">
       <AnimateIn preset="fadeUp">
         <div className="mb-3 flex items-center justify-between gap-4">
           <div className="min-w-0">

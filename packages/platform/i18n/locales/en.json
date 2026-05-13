@@ -119,7 +119,10 @@
       "success": "Profile updated.",
       "verificationSent": "Verification email sent.",
       "errorRequiredName": "Name is required.",
-      "errorInvalidEmail": "Email address is not valid."
+      "errorInvalidEmail": "Email address is not valid.",
+      "subtitle": "Your identity and contact information.",
+      "unknown": "Unnamed user",
+      "manageCta": "Open full account settings"
     },
     "avatar": {
       "title": "Avatar",
@@ -160,6 +163,43 @@
         "continueCta": "Back to account",
         "backCta": "Back to account"
       }
+    },
+    "title": "Account",
+    "ariaLabel": "Account settings",
+    "navLabel": "Account settings tabs",
+    "tip": "Press {key} anywhere to reopen this dialog.",
+    "tabs": {
+      "profile": "Profile",
+      "subscription": "Subscription",
+      "billing": "Billing",
+      "preferences": "Preferences"
+    },
+    "subscription": {
+      "title": "Subscription",
+      "subtitle": "Plan, quota, and renewal.",
+      "currentPlan": "Current plan",
+      "upgradeCta": "Compare plans",
+      "manageCta": "Manage subscription"
+    },
+    "billing": {
+      "title": "Billing",
+      "subtitle": "Invoice history and payment method.",
+      "empty": {
+        "title": "No history yet",
+        "description": "Charges and invoices will appear here after your first paid period.",
+        "cta": "Open full billing"
+      }
+    },
+    "preferences": {
+      "title": "Preferences",
+      "subtitle": "Theme and accessibility.",
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "help": "Help",
+      "reportIssue": "Report an issue",
+      "shortcuts": "Keyboard shortcuts"
     }
   },
   "impact": {

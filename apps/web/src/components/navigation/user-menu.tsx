@@ -5,6 +5,7 @@ import { useTheme } from "@nebutra/tokens";
 import { ChevronRight, LogOut, Monitor, Moon, Settings, Sun, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useAccountDialog } from "@/components/account/account-dialog";
 
 type ThemeChoice = "system" | "light" | "dark";
 
@@ -37,6 +38,7 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
   const tTheme = useTranslations("theme");
   const { isSignedIn, user, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
+  const account = useAccountDialog();
   const [open, setOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -112,16 +114,19 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
           </div>
           <div className="my-1 h-px bg-neutral-6 dark:bg-white/10" />
 
-          <a
+          <button
+            type="button"
             role="menuitem"
-            href="/settings"
             aria-label={t("profile")}
-            className="flex items-center gap-2 rounded-sm px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
-            onClick={() => setOpen(false)}
+            className="flex w-full items-center gap-2 rounded-sm px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+            onClick={() => {
+              setOpen(false);
+              account.openDialog("profile");
+            }}
           >
             <User className="h-4 w-4" aria-hidden />
             <span>{t("profile")}</span>
-          </a>
+          </button>
           <a
             role="menuitem"
             href="/settings"

@@ -41,12 +41,12 @@ async function AnalyticsContent() {
 
       {!summary.day ? (
         <AnimateIn preset="fadeUp">
-          <Card className="p-8">
-            <EmptyState
-              title="No analytics data yet"
-              description="Run ingestion and transformation jobs to populate funnel metrics."
-            />
-          </Card>
+          <EmptyState
+            tone="branded"
+            size="lg"
+            title="No analytics data yet"
+            description="Run ingestion and transformation jobs to populate funnel metrics."
+          />
         </AnimateIn>
       ) : (
         <>

@@ -113,12 +113,12 @@ async function UsageContent() {
 
       {!usage ? (
         <AnimateIn preset="fadeUp">
-          <Card className="p-8">
-            <EmptyState
-              title="No usage data yet"
-              description="Usage metrics will appear once your organization starts making API calls. Ensure the API gateway is connected."
-            />
-          </Card>
+          <EmptyState
+            tone="branded"
+            size="lg"
+            title="No usage data yet"
+            description="Usage metrics will appear once your organization starts making API calls. Ensure the API gateway is connected."
+          />
         </AnimateIn>
       ) : (
         <>

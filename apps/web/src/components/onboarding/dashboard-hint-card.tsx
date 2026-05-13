@@ -1,8 +1,10 @@
 "use client";
 
+import { useTour } from "@nebutra/onboarding";
 import { AnimateIn } from "@nebutra/ui/components";
-import { Sparkles, X } from "lucide-react";
+import { Compass, Sparkles, X } from "lucide-react";
 import { useState } from "react";
+import { DASHBOARD_TOUR_V1 } from "@/lib/onboarding/dashboard-tour";
 
 interface Props {
   cookieName: string;
@@ -10,6 +12,7 @@ interface Props {
 
 export function DashboardHintCard({ cookieName }: Props) {
   const [dismissed, setDismissed] = useState(false);
+  const tour = useTour();
 
   if (dismissed) return null;
 
@@ -19,6 +22,13 @@ export function DashboardHintCard({ cookieName }: Props) {
     const oneYear = 60 * 60 * 24 * 365;
     document.cookie = `${cookieName}=1; max-age=${oneYear}; path=/; SameSite=Lax`;
     setDismissed(true);
+  }
+
+  function startTour() {
+    dismiss();
+    // Delay slightly so the hint card's exit transition has begun — driver.js
+    // overlay should land on a stable layout.
+    setTimeout(() => tour.start(DASHBOARD_TOUR_V1), 80);
   }
 
   return (
@@ -50,9 +60,27 @@ export function DashboardHintCard({ cookieName }: Props) {
               </kbd>{" "}
               to open the command palette. Pick a{" "}
               <span className="font-medium text-neutral-12 dark:text-white">mode</span> below to
-              focus your work — chat, data, workflow, or search. Recent sessions appear here as you
-              work.
+              focus your work — chat, data, workflow, or search.
             </p>
+
+            <div className="mt-3 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={startTour}
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+                style={{ background: "var(--brand-gradient)" }}
+              >
+                <Compass className="h-3 w-3" />
+                Take the 4-step tour
+              </button>
+              <button
+                type="button"
+                onClick={dismiss}
+                className="rounded-full px-3 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+              >
+                Skip
+              </button>
+            </div>
           </div>
 
           <button
