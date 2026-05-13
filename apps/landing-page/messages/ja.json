@@ -1679,26 +1679,17 @@
         "license": {
           "label": "ライセンス",
           "type": "ライセンス種別",
-          "closed-source": "クローズドソース利用",
-          "white-label": "ホワイトラベル権"
-        },
-        "team": {
-          "label": "チーム",
-          "seats": "開発者シート数",
           "projects": "プロジェクト数"
         },
         "source": {
           "label": "ソースコード",
           "full-source": "フルソースコード",
           "all-packages": "全パッケージ・モジュール",
-          "lifetime-updates": "永続アップデート"
+          "update-window": "アップデート期間"
         },
         "support": {
           "label": "サポート",
-          "channel": "サポートチャンネル",
-          "onboarding": "オンボーディングコール",
-          "architecture-consult": "アーキテクチャ相談",
-          "sla": "稼働率 SLA"
+          "channel": "サポートチャンネル"
         }
       },
       "ariaTable": "プランと機能の比較表"

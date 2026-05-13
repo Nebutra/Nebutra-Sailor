@@ -1669,26 +1669,17 @@
         "license": {
           "label": "许可证",
           "type": "许可类型",
-          "closed-source": "闭源使用",
-          "white-label": "白标权利"
-        },
-        "team": {
-          "label": "团队",
-          "seats": "开发者席位",
-          "projects": "项目数"
+          "projects": "可授权项目数"
         },
         "source": {
           "label": "源代码",
           "full-source": "完整源代码",
           "all-packages": "全部包与模块",
-          "lifetime-updates": "终身更新"
+          "update-window": "更新窗口"
         },
         "support": {
           "label": "支持",
-          "channel": "支持渠道",
-          "onboarding": "新手引导",
-          "architecture-consult": "架构咨询",
-          "sla": "可用性 SLA"
+          "channel": "支持渠道"
         }
       },
       "ariaTable": "套餐与功能对比"

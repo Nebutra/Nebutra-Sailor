@@ -10,8 +10,47 @@ vi.mock("next-intl", () => ({
   useTranslations: (namespace: string) => (key: string) => `${namespace}.${key}`,
 }));
 
+import en from "../../../../messages/en.json" with { type: "json" };
 import { COMPARISON_GROUPS, PLAN_IDS } from "../../../lib/landing/pricing-features";
 import { PricingComparisonTable } from "../pricing-comparison-table";
+
+/**
+ * Governance: every (group.id, row.id) in COMPARISON_GROUPS must have a matching
+ * `landing.comparison.feature.${group.id}.{label,row.id}` key in en.json — and
+ * no orphan keys may live under that namespace. We learned this the hard way
+ * when license.projects + source.update-window rendered as raw key paths in
+ * production after the data file was refactored but i18n was not.
+ */
+describe("landing.comparison.feature ↔ COMPARISON_GROUPS parity", () => {
+  const featureNs = (
+    en as { landing: { comparison: { feature: Record<string, Record<string, unknown>> } } }
+  ).landing.comparison.feature;
+
+  it("every group + row id has a translation", () => {
+    for (const group of COMPARISON_GROUPS) {
+      const grp = featureNs[group.id];
+      expect(grp, `missing feature.${group.id}`).toBeDefined();
+      expect(grp?.label, `missing feature.${group.id}.label`).toBeDefined();
+      for (const row of group.rows) {
+        expect(grp?.[row.id], `missing feature.${group.id}.${row.id}`).toBeDefined();
+      }
+    }
+  });
+
+  it("no orphan keys under landing.comparison.feature", () => {
+    const expected = new Set<string>();
+    for (const group of COMPARISON_GROUPS) {
+      expected.add(`${group.id}.label`);
+      for (const row of group.rows) expected.add(`${group.id}.${row.id}`);
+    }
+    const actual = new Set<string>();
+    for (const [groupId, leaves] of Object.entries(featureNs)) {
+      for (const leafKey of Object.keys(leaves)) actual.add(`${groupId}.${leafKey}`);
+    }
+    const orphans = [...actual].filter((k) => !expected.has(k));
+    expect(orphans, `orphan i18n keys: ${orphans.join(", ")}`).toEqual([]);
+  });
+});
 
 describe("PricingComparisonTable", () => {
   afterEach(() => cleanup());

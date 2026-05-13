@@ -1670,26 +1670,17 @@
         "license": {
           "label": "Lizenz",
           "type": "Lizenztyp",
-          "closed-source": "Closed-Source-Nutzung",
-          "white-label": "White-Label-Rechte"
-        },
-        "team": {
-          "label": "Team",
-          "seats": "Entwickler-Plätze",
-          "projects": "Projekte"
+          "projects": "Anzahl der Projekte"
         },
         "source": {
           "label": "Quellcode",
           "full-source": "Vollständiger Quellcode",
           "all-packages": "Alle Pakete & Module",
-          "lifetime-updates": "Lebenslange Updates"
+          "update-window": "Update-Zeitraum"
         },
         "support": {
           "label": "Support",
-          "channel": "Support-Kanal",
-          "onboarding": "Onboarding-Gespräch",
-          "architecture-consult": "Architekturberatung",
-          "sla": "Verfügbarkeits-SLA"
+          "channel": "Support-Kanal"
         }
       }
     },

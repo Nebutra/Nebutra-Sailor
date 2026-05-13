@@ -1612,26 +1612,17 @@
         "license": {
           "label": "라이선스",
           "type": "라이선스 유형",
-          "closed-source": "비공개 소스 사용",
-          "white-label": "화이트 라벨 권한"
+          "projects": "프로젝트 수"
         },
         "source": {
           "label": "소스 코드",
           "full-source": "전체 소스 코드",
           "all-packages": "모든 패키지 및 모듈",
-          "lifetime-updates": "평생 업데이트"
+          "update-window": "업데이트 기간"
         },
         "support": {
           "label": "지원",
-          "channel": "지원 채널",
-          "onboarding": "온보딩 콜",
-          "sla": "가동률 SLA",
-          "architecture-consult": "아키텍처 컨설팅"
-        },
-        "team": {
-          "label": "팀",
-          "seats": "개발자 좌석",
-          "projects": "프로젝트"
+          "channel": "지원 채널"
         }
       }
     },

@@ -1669,26 +1669,17 @@
         "license": {
           "label": "License",
           "type": "License type",
-          "closed-source": "Closed-source use",
-          "white-label": "White-label rights"
-        },
-        "team": {
-          "label": "Team",
-          "seats": "Developer seats",
-          "projects": "Projects"
+          "projects": "Number of projects"
         },
         "source": {
           "label": "Source Code",
           "full-source": "Full source code",
           "all-packages": "All packages & modules",
-          "lifetime-updates": "Lifetime updates"
+          "update-window": "Update window"
         },
         "support": {
           "label": "Support",
-          "channel": "Support channel",
-          "onboarding": "Onboarding call",
-          "architecture-consult": "Architecture consult",
-          "sla": "Uptime SLA"
+          "channel": "Support channel"
         }
       },
       "ariaTable": "Plan and feature comparison"
