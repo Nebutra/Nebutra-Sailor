@@ -14,8 +14,8 @@
  *   - DELETE /api/organizations/[orgId]/members/[memberId] → remove
  */
 
+import { Trash as Trash2 } from "@nebutra/icons";
 import { AnimateIn, Button } from "@nebutra/ui/components";
-import { Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useId, useState } from "react";
 import { InviteDialog } from "./invite-dialog";

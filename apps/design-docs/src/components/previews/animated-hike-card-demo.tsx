@@ -1,5 +1,5 @@
+import { Clock, Pin as MapPin, Layers as Mountain } from "@nebutra/icons";
 import { AnimatedHikeCard } from "@nebutra/ui/primitives";
-import { Clock, MapPin, Mountain } from "lucide-react";
 
 export function AnimatedHikeCardDemo() {
   return (

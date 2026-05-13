@@ -1,6 +1,6 @@
 "use client";
 
-import { CreditCard, Sparkles } from "lucide-react";
+import { CreditCard, Sparkles } from "@nebutra/icons";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { SubscriptionStatus } from "@/lib/billing/active-plan";

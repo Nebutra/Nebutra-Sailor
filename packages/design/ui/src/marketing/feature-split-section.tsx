@@ -1,6 +1,6 @@
 "use client";
 
-import type { LucideIcon } from "lucide-react";
+import type { Icon as LucideIcon } from "@nebutra/icons";
 import type * as React from "react";
 import { Badge } from "../primitives/badge";
 import { FeatureCheckItem } from "../primitives/feature-check-item";

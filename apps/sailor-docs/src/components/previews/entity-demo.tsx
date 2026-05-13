@@ -1,5 +1,5 @@
+import { ChevronRight, Envelope as Mail, SettingsGear as Settings, User } from "@nebutra/icons";
 import { Entity } from "@nebutra/ui/primitives";
-import { ChevronRight, Mail, Settings, User } from "lucide-react";
 
 export function EntityDemo() {
   return (

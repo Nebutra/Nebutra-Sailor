@@ -1,7 +1,7 @@
 "use client";
 
+import { Globe, LockClosed as Lock, Sparkles, Lightning as Zap } from "@nebutra/icons";
 import { BentoCard, BentoGrid } from "@nebutra/ui/primitives";
-import { Globe, Lock, Sparkles, Zap } from "lucide-react";
 
 export function BentoGridDemo() {
   return (

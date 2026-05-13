@@ -1,5 +1,5 @@
+import { Bell } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
-import { Bell } from "lucide-react";
 
 export function BadgeNotificationDemo() {
   return (

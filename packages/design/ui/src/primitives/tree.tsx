@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, File, Folder, FolderOpen } from "lucide-react";
+import { ChevronRight, File, FolderClosed as Folder, FolderOpen } from "@nebutra/icons";
 import { AnimatePresence, motion } from "motion/react";
 import {
   type ComponentProps,

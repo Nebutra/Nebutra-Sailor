@@ -1,7 +1,7 @@
 "use client";
 
+import { Message as MessageSquare, MagnifyingGlass as Search, Users } from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { MessageSquare, Search, Users } from "lucide-react";
 
 const channels = ["# General", "# AI-Models", "# Showcase", "# Help"];
 const messages = [

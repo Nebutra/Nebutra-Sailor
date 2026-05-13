@@ -1,5 +1,5 @@
+import { BarChart as BarChart3, Coins, Database, Users } from "@nebutra/icons";
 import { Card } from "@nebutra/ui/layout";
-import { BarChart3, Coins, Database, Users } from "lucide-react";
 import Link from "next/link";
 import { connection } from "next/server";
 import { getGrowthSummary } from "@/lib/warehouse/gold";

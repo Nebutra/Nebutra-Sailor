@@ -1,5 +1,13 @@
+import {
+  ArrowRight,
+  Command,
+  External as ExternalLink,
+  Envelope as Mail,
+  Plus,
+  MagnifyingGlass as Search,
+  SettingsGear as Settings,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { ArrowRight, Command, ExternalLink, Mail, Plus, Search, Settings } from "lucide-react";
 import { Button, ButtonLink } from "./button";
 
 const meta = {

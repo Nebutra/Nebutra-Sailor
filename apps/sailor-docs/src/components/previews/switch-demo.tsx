@@ -1,7 +1,7 @@
 "use client";
 
+import { Moon, Sun } from "@nebutra/icons";
 import { Switch } from "@nebutra/ui/primitives";
-import { Moon, Sun } from "lucide-react";
 
 export function SwitchDemo() {
   return (

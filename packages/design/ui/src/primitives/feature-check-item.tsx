@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, type LucideIcon } from "lucide-react";
+import { Check, type Icon as LucideIcon } from "@nebutra/icons";
 import { cn } from "../utils/cn";
 
 export interface FeatureCheckItemProps {

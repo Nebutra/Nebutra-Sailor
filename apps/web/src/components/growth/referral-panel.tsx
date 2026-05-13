@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Check, Copy, Gift, Sparkles } from "lucide-react";
+import { ArrowUpRight, Check, Copy, Sparkles as Gift, Sparkles } from "@nebutra/icons";
 import { useState } from "react";
 
 /**

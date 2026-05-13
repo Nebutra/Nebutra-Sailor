@@ -1,8 +1,8 @@
 "use client";
 
+import { CloudUpload as Upload } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/components";
 import { Label } from "@nebutra/ui/primitives";
-import { Upload } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 

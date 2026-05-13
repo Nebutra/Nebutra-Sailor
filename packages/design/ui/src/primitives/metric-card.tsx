@@ -7,7 +7,11 @@
  * Inspired by Linear, Vercel, and Supabase dashboards
  */
 
-import { Minus, TrendingDown, TrendingUp } from "lucide-react";
+import {
+  Minus,
+  ChartTrendingDown as TrendingDown,
+  ChartTrendingUp as TrendingUp,
+} from "@nebutra/icons";
 import type * as React from "react";
 import { cn } from "../utils/cn";
 

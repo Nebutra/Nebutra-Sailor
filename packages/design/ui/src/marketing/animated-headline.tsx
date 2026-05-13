@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Plus } from "@nebutra/icons";
 import type * as React from "react";
 import { GradientAnimatedText, type GradientTheme } from "../primitives/gradient-animated-text";
 import { cn } from "../utils/cn";

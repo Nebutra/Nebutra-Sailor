@@ -139,6 +139,7 @@ async function main() {
     "// Source: vercel.com/geist/icons  |  Run: pnpm --filter @nebutra/icons generate",
     "",
     'export type { IconProps } from "./components/' + exportLines[0].componentName + '";',
+    'export type { Icon } from "./types";',
     "",
     ...exportLines.map(
       ({ componentName }) => `export { ${componentName} } from "./components/${componentName}";`,

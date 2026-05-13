@@ -1,4 +1,4 @@
-import { ExternalLink } from "lucide-react";
+import { External as ExternalLink } from "@nebutra/icons";
 
 export function FigmaLink({ href }: { href: string }) {
   return (

@@ -1,7 +1,7 @@
 "use client";
 
+import { CheckCircle as CheckCircle2 } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
-import { CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 
 export function SonnerDemo() {

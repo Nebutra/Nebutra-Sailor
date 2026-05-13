@@ -1,5 +1,6 @@
 "use client";
 
+import { Eye as EyeIcon, EyeOff as EyeOffIcon } from "@nebutra/icons";
 import {
   Button,
   Dialog,
@@ -13,7 +14,6 @@ import {
   Input,
   Label,
 } from "@nebutra/ui/primitives";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useState } from "react";
 
 export function DialogPasswordDemo() {

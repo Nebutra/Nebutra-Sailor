@@ -9,8 +9,8 @@
  * a heavier component for a single use site; can be migrated later.
  */
 
+import { Cross as X } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/components";
-import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useId, useState } from "react";
 

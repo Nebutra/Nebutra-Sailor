@@ -1,6 +1,12 @@
 "use client";
 
-import { CheckCircle2, Circle, CircleAlert, CircleDotDashed, CircleX } from "lucide-react";
+import {
+  CheckCircle as CheckCircle2,
+  Status as Circle,
+  Warning as CircleAlert,
+  ClockDashed as CircleDotDashed,
+  CrossCircle as CircleX,
+} from "@nebutra/icons";
 import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 import type React from "react";
 import { useMemo, useState } from "react";

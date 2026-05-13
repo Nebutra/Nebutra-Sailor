@@ -1,9 +1,8 @@
 "use client";
 
-import { Check, Copy } from "@nebutra/icons";
+import { Check, Copy, Message as MessageSquare, Moon, Sun, Terminal } from "@nebutra/icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { MessageSquare, Moon, Sun, Terminal } from "lucide-react";
 import type { ReactNode } from "react";
 import { Suspense, useCallback, useEffect, useState } from "react";
 

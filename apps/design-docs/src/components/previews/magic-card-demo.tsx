@@ -1,5 +1,5 @@
+import { Layers, Sparkles, Lightning as Zap } from "@nebutra/icons";
 import { MagicCard } from "@nebutra/ui/primitives";
-import { Layers, Sparkles, Zap } from "lucide-react";
 
 export function MagicCardDemo() {
   return (

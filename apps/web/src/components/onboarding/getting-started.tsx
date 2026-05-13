@@ -1,13 +1,13 @@
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import {
   ArrowRight,
   Check,
-  type LucideIcon,
-  MessageSquare,
-  Plug,
+  type Icon as LucideIcon,
+  Message as MessageSquare,
+  Connection as Plug,
   ShieldCheck,
   Users,
-} from "lucide-react";
+} from "@nebutra/icons";
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { getTranslations } from "next-intl/server";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { getAuth } from "@/lib/auth";

@@ -1,6 +1,11 @@
 "use client";
 
-import { Info, Palette, Settings, User } from "lucide-react";
+import {
+  Information as Info,
+  BlendMode as Palette,
+  SettingsGear as Settings,
+  User,
+} from "@nebutra/icons";
 import { SettingsSidebarNav } from "./components/sidebar-nav";
 import { Separator } from "./separator";
 

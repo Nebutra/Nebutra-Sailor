@@ -1,7 +1,7 @@
 "use client";
 
+import { Shield, Sparkles, Lightning as Zap } from "@nebutra/icons";
 import { FeatureArrowCard } from "@nebutra/ui/primitives";
-import { Shield, Sparkles, Zap } from "lucide-react";
 
 export function FeatureArrowCardDemo() {
   return (

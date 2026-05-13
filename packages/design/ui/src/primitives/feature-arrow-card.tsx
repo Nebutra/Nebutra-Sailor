@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, type LucideIcon } from "lucide-react";
+import { ArrowRight, type Icon as LucideIcon } from "@nebutra/icons";
 import type * as React from "react";
 import { cn } from "../utils/cn";
 import { Card } from "./card";

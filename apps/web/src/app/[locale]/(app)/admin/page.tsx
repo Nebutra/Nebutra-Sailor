@@ -1,8 +1,12 @@
 import "server-only";
-import { Sparkles } from "@nebutra/icons";
+import {
+  ChartActivity as Activity,
+  Dollar as DollarSign,
+  External as ExternalLink,
+  Sparkles,
+} from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card } from "@nebutra/ui/layout";
-import { Activity, DollarSign, ExternalLink } from "lucide-react";
 
 /**
  * Minimal admin dashboard.

@@ -1,9 +1,9 @@
 "use client";
 
+import { Warning as AlertCircle, Check, Shield, ShieldCheck, Cross as X } from "@nebutra/icons";
 import { type ZxcvbnResult, zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
 import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
 import * as zxcvbnEnPackage from "@zxcvbn-ts/language-en";
-import { AlertCircle, Check, Shield, ShieldCheck, X } from "lucide-react";
 import { useDeferredValue, useEffect, useMemo } from "react";
 import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/utils";

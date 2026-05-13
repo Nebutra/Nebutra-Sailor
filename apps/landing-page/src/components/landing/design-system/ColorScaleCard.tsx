@@ -1,6 +1,6 @@
+import { Layers } from "@nebutra/icons";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { Layers } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function ColorScaleCard() {

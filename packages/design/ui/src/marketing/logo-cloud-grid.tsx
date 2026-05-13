@@ -1,6 +1,6 @@
 "use client";
 
-import { PlusIcon } from "lucide-react";
+import { Plus as PlusIcon } from "@nebutra/icons";
 import Image from "next/image";
 import type * as React from "react";
 import { cn } from "../utils/cn";

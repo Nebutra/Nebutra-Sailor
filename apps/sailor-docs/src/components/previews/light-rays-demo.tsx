@@ -1,7 +1,7 @@
 "use client";
 
+import { Sparkles } from "@nebutra/icons";
 import { Card, LightRays } from "@nebutra/ui/primitives";
-import { Sparkles } from "lucide-react";
 
 export function LightRaysDemo() {
   return (

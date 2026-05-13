@@ -1,5 +1,5 @@
+import { Sparkles } from "@nebutra/icons";
 import { API_CALLS, getMetering } from "@nebutra/metering";
-import { Sparkles } from "lucide-react";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { getTenantContext } from "@/lib/auth";
 

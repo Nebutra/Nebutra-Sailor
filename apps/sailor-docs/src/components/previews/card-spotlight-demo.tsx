@@ -1,5 +1,5 @@
+import { ShieldOff as ShieldAlert } from "@nebutra/icons";
 import { CardSpotlight } from "@nebutra/ui/primitives";
-import { ShieldAlert } from "lucide-react";
 
 export function CardSpotlightDemo() {
   return (

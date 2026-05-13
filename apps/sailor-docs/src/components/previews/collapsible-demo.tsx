@@ -1,7 +1,7 @@
 "use client";
 
+import { ChevronUpDown as ChevronsUpDown } from "@nebutra/icons";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@nebutra/ui/primitives";
-import { ChevronsUpDown } from "lucide-react";
 
 export function CollapsibleDemo() {
   return (

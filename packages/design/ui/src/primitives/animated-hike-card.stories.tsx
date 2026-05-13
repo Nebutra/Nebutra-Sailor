@@ -1,5 +1,12 @@
+import {
+  BookOpen,
+  Clock,
+  FileText as FileCode,
+  Layers,
+  Globe as Map,
+  ChartTrendingUp as TrendingUp,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { BookOpen, Clock, FileCode, Layers, Map, TrendingUp } from "lucide-react";
 import { AnimatedHikeCard } from "./animated-hike-card";
 
 const meta = {

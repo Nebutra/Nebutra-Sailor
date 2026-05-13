@@ -1,7 +1,13 @@
 "use client";
 
+import {
+  File,
+  GridSquare as Grid,
+  Image as ImageIcon,
+  ListUnordered as List,
+  Plus,
+} from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { File, Grid, Image as ImageIcon, List, Plus } from "lucide-react";
 
 const filters = ["All", "Images", "Documents", "Video"];
 const assets = [

@@ -1,5 +1,12 @@
+import {
+  Code,
+  Globe,
+  LockClosed as Lock,
+  Shield,
+  Sparkles,
+  Lightning as Zap,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Code, Globe, Lock, Shield, Sparkles, Zap } from "lucide-react";
 import { GridFeatureCard } from "./grid-feature-card";
 
 const meta = {

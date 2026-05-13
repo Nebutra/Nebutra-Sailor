@@ -1,17 +1,17 @@
 "use client";
 
+import {
+  Code as Code2,
+  Database,
+  type Icon as LucideIcon,
+  Message as MessageSquare,
+  Plus,
+  MagnifyingGlass as Search,
+  Trash as Trash2,
+  Workflow,
+} from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { ConfirmDialog, toast } from "@nebutra/ui/primitives";
-import {
-  Code2,
-  Database,
-  type LucideIcon,
-  MessageSquare,
-  Plus,
-  Search,
-  Trash2,
-  Workflow,
-} from "lucide-react";
 import { useMemo, useState, useTransition } from "react";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 

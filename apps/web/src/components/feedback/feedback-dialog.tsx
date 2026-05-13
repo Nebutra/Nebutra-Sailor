@@ -1,5 +1,6 @@
 "use client";
 
+import { LoaderCircle as Loader2, PaperAirplane as Send } from "@nebutra/icons";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +9,6 @@ import {
   DialogTitle,
   toast,
 } from "@nebutra/ui/primitives";
-import { Loader2, Send } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { useFeedbackDialog } from "./feedback-dialog-provider";
 

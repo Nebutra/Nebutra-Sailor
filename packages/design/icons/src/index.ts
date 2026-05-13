@@ -543,3 +543,4 @@ export { WindowVariable } from "./components/WindowVariable";
 export { Workflow } from "./components/Workflow";
 export { Wrench } from "./components/Wrench";
 export { ZeroConfig } from "./components/ZeroConfig";
+export type { Icon } from "./types";

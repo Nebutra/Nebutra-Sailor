@@ -1,8 +1,16 @@
 "use client";
 
 import { useAuth } from "@nebutra/auth/client";
+import {
+  ChevronRight,
+  Logout as LogOut,
+  DeviceDesktop as Monitor,
+  Moon,
+  SettingsGear as Settings,
+  Sun,
+  User,
+} from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
-import { ChevronRight, LogOut, Monitor, Moon, Settings, Sun, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAccountDialog } from "@/components/account/account-dialog";

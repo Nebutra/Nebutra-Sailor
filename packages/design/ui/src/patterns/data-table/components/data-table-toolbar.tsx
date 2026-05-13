@@ -1,5 +1,5 @@
+import { Copy, ListFilter, MagnifyingGlass as Search } from "@nebutra/icons";
 import type { Table } from "@tanstack/react-table";
-import { Copy, ListFilter, Search } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { Button } from "../../../primitives/button";

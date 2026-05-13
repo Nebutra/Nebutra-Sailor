@@ -1,7 +1,7 @@
 "use client";
 
+import { SpeakerVolumeLoud as Volume2 } from "@nebutra/icons";
 import { Slider } from "@nebutra/ui/primitives";
-import { Volume2 } from "lucide-react";
 export function Slider3Demo() {
   return (
     <div className="gap-3 flex w-full items-center">

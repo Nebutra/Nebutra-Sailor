@@ -1,8 +1,8 @@
 "use client";
 
+import { ArrowRight as MoveRight } from "@nebutra/icons";
 import { AuroraBackground } from "@nebutra/ui/primitives";
 import { motion } from "framer-motion";
-import { MoveRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function FrictionlessRouting() {

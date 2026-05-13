@@ -1,6 +1,10 @@
 "use client";
 
-import { CheckCircle2, MessageSquarePlus, X } from "lucide-react";
+import {
+  CheckCircle as CheckCircle2,
+  Message as MessageSquarePlus,
+  Cross as X,
+} from "@nebutra/icons";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "../utils/cn";
 import { Avatar, AvatarFallback } from "./avatar";

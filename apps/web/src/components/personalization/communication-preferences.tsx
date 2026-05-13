@@ -1,8 +1,13 @@
 "use client";
 
+import type { Icon as LucideIcon } from "@nebutra/icons";
+import {
+  LoaderCircle as Loader2,
+  Envelope as Mail,
+  Notification as Megaphone,
+  Sparkles,
+} from "@nebutra/icons";
 import { toast } from "@nebutra/ui/primitives";
-import type { LucideIcon } from "lucide-react";
-import { Loader2, Mail, Megaphone, Sparkles } from "lucide-react";
 import { useCallback, useState } from "react";
 
 /**

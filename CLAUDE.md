@@ -92,9 +92,12 @@ import { Button, Input, Card } from "@nebutra/ui/components";
 // Layout wrapper components (merged from design-system)
 import { PageHeader, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";
 
-// Icons — Geist icons from @nebutra/icons, Lucide for generic
-import { Search, Settings } from "@nebutra/icons";
-import { ChevronRight } from "lucide-react";
+// Icons — three-tier hierarchy (2026 governance, see also MEMORY.md):
+//   1. @nebutra/icons (Geist 541) — DEFAULT for product/app/dashboard surfaces (Vercel/v0 same visual)
+//   2. @phosphor-icons/react/light — ONLY in marketing/** for AI-brand thin/duotone weight
+//   3. lucide-react — DEPRECATED, ZERO new imports allowed (lint-enforced)
+import { MagnifyingGlass, SettingsGear, ChevronRight, Sparkles } from "@nebutra/icons";
+// import { Brain } from "@phosphor-icons/react/dist/ssr"; // only inside packages/design/ui/src/marketing/**
 
 // Theme switching (light/dark) — from @nebutra/tokens
 import { ThemeProvider, useTheme } from "@nebutra/tokens";

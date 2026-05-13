@@ -1,7 +1,12 @@
 "use client";
 
+import {
+  Connection as Cable,
+  External as ExternalLink,
+  Plus,
+  Trash as Trash2,
+} from "@nebutra/icons";
 import { ConfirmDialog, toast } from "@nebutra/ui/primitives";
-import { Cable, ExternalLink, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 /**

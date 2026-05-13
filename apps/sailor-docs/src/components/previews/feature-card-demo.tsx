@@ -1,7 +1,7 @@
 "use client";
 
+import { Lightning as Zap } from "@nebutra/icons";
 import { FeatureCard, FeatureCardContent, FeatureCardHeader } from "@nebutra/ui/primitives";
-import { Zap } from "lucide-react";
 
 export function FeatureCardDemo() {
   return (

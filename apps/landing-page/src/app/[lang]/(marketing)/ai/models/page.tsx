@@ -3,8 +3,8 @@ import {
   type ProviderCategory,
   type ProviderMeta,
 } from "@nebutra/ai-providers";
+import { External as ExternalLink } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";

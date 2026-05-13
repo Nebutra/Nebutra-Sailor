@@ -1,7 +1,7 @@
 "use client";
 
+import { DeviceDesktop as Monitor, Moon, Sun } from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
-import { Monitor, Moon, Sun } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 

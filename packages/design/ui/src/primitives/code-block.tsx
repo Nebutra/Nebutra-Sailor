@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown, Copy, File, FileCode, FileText } from "lucide-react";
+import { Check, ChevronDown, Copy, File, FileText as FileCode, FileText } from "@nebutra/icons";
 import { motion } from "motion/react";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";

@@ -19,8 +19,8 @@
  */
 
 import { useOrganization } from "@nebutra/auth/client";
+import { Buildings as Building2, Check, ChevronDown, Plus } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { Building2, Check, ChevronDown, Plus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";

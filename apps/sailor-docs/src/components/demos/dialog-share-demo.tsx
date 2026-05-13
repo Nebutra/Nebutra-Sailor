@@ -1,6 +1,13 @@
 "use client";
 
 import {
+  Check as CheckIcon,
+  Copy as CopyIcon,
+  External as ExternalLink,
+  Link,
+  Share as Share2,
+} from "@nebutra/icons";
+import {
   Button,
   Dialog,
   DialogContent,
@@ -16,7 +23,6 @@ import {
   TooltipTrigger,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { CheckIcon, CopyIcon, ExternalLink, Link, Share2 } from "lucide-react";
 import { useRef, useState } from "react";
 
 export function DialogShareDemo() {

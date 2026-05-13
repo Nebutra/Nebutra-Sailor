@@ -1,7 +1,7 @@
 "use client";
 
+import type { Icon as LucideIcon } from "@nebutra/icons";
 import { cva, type VariantProps } from "class-variance-authority";
-import type { LucideIcon } from "lucide-react";
 import type * as React from "react";
 import { cn } from "../utils/cn";
 
@@ -52,12 +52,11 @@ export interface StatusBadgeProps
  * StatusBadge - Two-part status indicator badge
  *
  * @description
- * A badge component that displays two labels separated by a divider,
- * with optional icons and status-based coloring.
+ * A badge component that displays two labels separated by a divider, * with optional icons and status-based coloring.
  *
  * @example Basic usage
  * ```tsx
- * import { ShieldCheck, XCircle } from "lucide-react";
+ * import { ShieldCheck, CrossCircle as XCircle } from "@nebutra/icons";
  *
  * <StatusBadge
  *   leftIcon={ShieldCheck}

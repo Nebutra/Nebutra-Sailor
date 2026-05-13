@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Loader2 } from "lucide-react";
+import { Check, LoaderCircle as Loader2 } from "@nebutra/icons";
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import { cn } from "../utils/cn";

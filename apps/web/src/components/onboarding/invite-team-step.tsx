@@ -1,8 +1,8 @@
 "use client";
 
+import { Plus, Cross as X } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/components";
 import { Label } from "@nebutra/ui/primitives";
-import { Plus, X } from "lucide-react";
 import { useState } from "react";
 
 interface InviteTeamStepProps {

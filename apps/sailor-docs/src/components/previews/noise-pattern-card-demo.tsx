@@ -1,7 +1,7 @@
 "use client";
 
+import { Sparkles } from "@nebutra/icons";
 import { NoisePatternCard, NoisePatternCardBody } from "@nebutra/ui/primitives";
-import { Sparkles } from "lucide-react";
 
 export function NoisePatternCardDemo() {
   return (

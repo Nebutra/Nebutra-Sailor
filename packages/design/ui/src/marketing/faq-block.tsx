@@ -1,6 +1,12 @@
 "use client";
 
-import { Loader2, Search, Sparkles, ThumbsDown, ThumbsUp } from "lucide-react";
+import {
+  LoaderCircle as Loader2,
+  MagnifyingGlass as Search,
+  Sparkles,
+  ThumbDown as ThumbsDown,
+  ThumbUp as ThumbsUp,
+} from "@nebutra/icons";
 import { useMemo, useState } from "react";
 import {
   Accordion,

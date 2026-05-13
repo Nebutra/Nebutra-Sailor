@@ -7,8 +7,8 @@
 
 "use client";
 
+import { ArrowRight, Play } from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
 import { AnimateIn, AnimateInGroup } from "../components";
 import { cn } from "../utils";
 import type { HeroProps } from "./types";

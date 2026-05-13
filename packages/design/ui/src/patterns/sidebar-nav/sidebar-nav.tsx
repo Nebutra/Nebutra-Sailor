@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
+import { ChevronRight } from "@nebutra/icons";
 import * as React from "react";
 import { Badge } from "../../primitives/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../primitives/collapsible";

@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRightIcon, PlusIcon } from "lucide-react";
+import { ArrowRight as ArrowRightIcon, Plus as PlusIcon } from "@nebutra/icons";
 import { Button } from "../primitives/button";
 import { cn } from "../utils/cn";
 export interface CTASectionProps {

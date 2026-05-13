@@ -1,7 +1,15 @@
 "use client";
 
+import {
+  CreditCard,
+  Question as HelpCircle,
+  Command as Keyboard,
+  Logout as LogOut,
+  SettingsGear as Settings,
+  User,
+  Users,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { CreditCard, HelpCircle, Keyboard, LogOut, Settings, User, Users } from "lucide-react";
 import { UserMenu } from "./user-menu";
 
 const meta: Meta<typeof UserMenu> = {

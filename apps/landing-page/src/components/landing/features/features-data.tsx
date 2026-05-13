@@ -1,14 +1,14 @@
 import {
-  Activity,
+  ChartActivity as Activity,
   Cpu,
   CreditCard,
   Database,
   Layers,
   Shield,
-  TerminalSquare,
+  TerminalWindow as TerminalSquare,
   Workflow,
-  Zap,
-} from "lucide-react";
+  Lightning as Zap,
+} from "@nebutra/icons";
 
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import {

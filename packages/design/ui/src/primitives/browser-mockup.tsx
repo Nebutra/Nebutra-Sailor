@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Check, Copy, RotateCw } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Copy, RotateClockwise as RotateCw } from "@nebutra/icons";
 import Image from "next/image";
 import type * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";

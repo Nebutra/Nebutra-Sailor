@@ -1,7 +1,7 @@
 "use client";
 
+import { Minus } from "@nebutra/icons";
 import { OTPInput, OTPInputContext, type RenderProps } from "input-otp";
-import { Minus } from "lucide-react";
 import * as React from "react";
 import { cn } from "../utils/cn";
 

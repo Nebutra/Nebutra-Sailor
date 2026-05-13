@@ -18,7 +18,7 @@
  * ```
  */
 
-import { CheckCircle2, type LucideIcon, X } from "lucide-react";
+import { CheckCircle as CheckCircle2, type Icon as LucideIcon, Cross as X } from "@nebutra/icons";
 import * as React from "react";
 import { cn } from "../utils/cn";
 import { Button } from "./button";

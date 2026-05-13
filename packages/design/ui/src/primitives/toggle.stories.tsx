@@ -1,5 +1,5 @@
+import { LockClosed as Lock, LockOpen } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Lock, LockOpen } from "lucide-react";
 import { Toggle } from "./toggle";
 
 const meta: Meta<typeof Toggle> = {

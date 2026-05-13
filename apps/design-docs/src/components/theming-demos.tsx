@@ -1,7 +1,12 @@
 "use client";
 
+import {
+  Box,
+  Layout as LayoutDashboard,
+  BlendMode as Palette,
+  Lightning as Zap,
+} from "@nebutra/icons";
 import { Badge, Button } from "@nebutra/ui/primitives";
-import { Box, LayoutDashboard, Palette, Zap } from "lucide-react";
 
 export function ThemeColorsDemo() {
   return (

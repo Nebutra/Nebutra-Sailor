@@ -1,8 +1,7 @@
 "use client";
 
-import { Shield } from "@nebutra/icons";
+import { CheckCircle as CheckCircle2, Fingerprint, Shield } from "@nebutra/icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@nebutra/ui/primitives";
-import { CheckCircle2, Fingerprint } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { CapabilityCard } from "./CapabilityCard";

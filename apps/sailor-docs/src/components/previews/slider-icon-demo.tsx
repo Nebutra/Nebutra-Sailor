@@ -1,6 +1,6 @@
 "use client";
+import { SpeakerVolumeLoud as Volume2 } from "@nebutra/icons";
 import { Slider } from "@nebutra/ui/primitives";
-import { Volume2 } from "lucide-react";
 
 export function SliderIconDemo() {
   return (

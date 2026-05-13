@@ -1,7 +1,7 @@
 "use client";
 
 import { Select as BaseSelect } from "@base-ui/react/select";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "@nebutra/icons";
 import * as React from "react";
 
 import { cn } from "../utils/cn";

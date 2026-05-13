@@ -1,14 +1,14 @@
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import {
   ArrowLeft,
   BookOpen,
   Clock,
   Compass,
   Layers,
-  Network,
-  ScrollText,
+  NetworkDevice as Network,
+  Notes as ScrollText,
   Shield,
-} from "lucide-react";
+} from "@nebutra/icons";
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";

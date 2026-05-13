@@ -1,7 +1,7 @@
 "use client";
 
+import { Image as ImageIcon, PaperAirplane as Send, Sparkles } from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { Image as ImageIcon, Send, Sparkles } from "lucide-react";
 
 const convos = [
   { title: "Cybernetic landscape", time: "2m ago" },

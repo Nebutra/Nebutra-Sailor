@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@nebutra/email": "workspace:*",
+    "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "geist": "catalog:",
-    "lucide-react": "catalog:",
     "next": "catalog:",
     "next-themes": "catalog:",
     "react": "catalog:",

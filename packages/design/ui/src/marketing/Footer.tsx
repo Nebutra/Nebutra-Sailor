@@ -1,14 +1,14 @@
 "use client";
 
-import { cva } from "class-variance-authority";
 import {
   ArrowRight,
-  MessageSquare as Discord,
-  Github,
-  Linkedin,
-  Twitter,
-  Youtube,
-} from "lucide-react";
+  Message as Discord,
+  LogoGithub as Github,
+  LogoLinkedin as Linkedin,
+  LogoTwitterX as Twitter,
+  LogoYoutubeSmall as Youtube,
+} from "@nebutra/icons";
+import { cva } from "class-variance-authority";
 import * as React from "react";
 import { AnimateIn } from "../primitives/animate-in";
 import { cn } from "../utils/cn";

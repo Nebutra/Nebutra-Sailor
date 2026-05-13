@@ -1,5 +1,5 @@
+import { Bell, Logout as LogOut, SettingsGear as Settings, User } from "@nebutra/icons";
 import { Material } from "@nebutra/ui/primitives";
-import { Bell, LogOut, Settings, User } from "lucide-react";
 
 export function MaterialDemo() {
   return (

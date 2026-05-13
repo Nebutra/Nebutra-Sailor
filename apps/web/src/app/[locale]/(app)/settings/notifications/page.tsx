@@ -1,5 +1,5 @@
+import { Bell, Envelope as Mail, DevicePhone as Smartphone } from "@nebutra/icons";
 import { loadNotificationSettingsSnapshot } from "@nebutra/notifications";
-import { Bell, Mail, Smartphone } from "lucide-react";
 import { NotificationInboxPreview } from "@/components/notifications/notification-inbox-preview";
 import { NotificationPreferenceMatrix } from "@/components/notifications/notification-preference-matrix";
 import { NotificationRuntimeBanner } from "@/components/notifications/notification-runtime-banner";

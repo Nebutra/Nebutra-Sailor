@@ -1,6 +1,6 @@
 "use client";
+import { Plus } from "@nebutra/icons";
 import { Button, GeistTooltip as Tooltip } from "@nebutra/ui/primitives";
-import { Plus } from "lucide-react";
 
 export function TooltipIconButtonDemo() {
   return (

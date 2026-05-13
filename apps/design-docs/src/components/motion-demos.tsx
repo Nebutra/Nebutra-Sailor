@@ -1,9 +1,16 @@
 "use client";
 
 import { brandMotion } from "@nebutra/brand";
+import {
+  CheckCircle as CheckCircle2,
+  Database,
+  NetworkDevice as Network,
+  Servers as Server,
+  Shield,
+  User,
+} from "@nebutra/icons";
 import { AnimatedBeam, AnimatedList, FlickeringGrid, MagicCard } from "@nebutra/ui/primitives";
 import { motion } from "framer-motion";
-import { CheckCircle2, Database, Network, Server, Shield, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export function MotionDemos() {

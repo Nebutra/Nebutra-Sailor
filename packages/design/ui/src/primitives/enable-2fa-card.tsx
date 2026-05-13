@@ -1,6 +1,6 @@
 "use client";
 
-import { Shield } from "lucide-react";
+import { Shield } from "@nebutra/icons";
 import Image from "next/image";
 import type * as React from "react";
 import { cn } from "../utils/cn";

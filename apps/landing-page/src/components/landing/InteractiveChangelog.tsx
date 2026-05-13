@@ -1,5 +1,15 @@
 "use client";
 
+import {
+  ChevronDown,
+  Copy,
+  External as ExternalLink,
+  Filter,
+  GitPullRequest,
+  Fullscreen as Maximize2,
+  Rss,
+  MagnifyingGlass as Search,
+} from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import {
   Button,
@@ -14,16 +24,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@nebutra/ui/primitives";
-import {
-  ChevronDown,
-  Copy,
-  ExternalLink,
-  Filter,
-  GitPullRequest,
-  Maximize2,
-  Rss,
-  Search,
-} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";

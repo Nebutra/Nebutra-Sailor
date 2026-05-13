@@ -1,7 +1,7 @@
 "use client";
 
+import { ChevronRight } from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { ChevronRight } from "lucide-react";
 
 const navLinks = ["Products", "Solutions", "Pricing", "Docs"];
 const stats = [

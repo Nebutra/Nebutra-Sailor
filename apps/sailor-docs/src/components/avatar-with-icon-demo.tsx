@@ -1,7 +1,11 @@
 "use client";
 
+import {
+  ChevronCircleDown as ArrowDownCircle,
+  CheckCircle as CheckCircle2,
+  Clock,
+} from "@nebutra/icons";
 import { AvatarWithIcon } from "@nebutra/ui/primitives";
-import { ArrowDownCircle, CheckCircle2, Clock } from "lucide-react";
 
 export function AvatarWithIconDemo() {
   return (

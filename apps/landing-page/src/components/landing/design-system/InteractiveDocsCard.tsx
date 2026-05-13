@@ -1,4 +1,4 @@
-import { BookOpen, TerminalSquare } from "lucide-react";
+import { BookOpen, TerminalWindow as TerminalSquare } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
 
 export function InteractiveDocsCard() {

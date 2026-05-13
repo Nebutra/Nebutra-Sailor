@@ -1,13 +1,13 @@
 "use client";
 
 import { colors } from "@nebutra/brand";
+import { Check, Copy } from "@nebutra/icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
-import { Check, Copy } from "lucide-react";
 import * as React from "react";
 
 interface ColorSwatchProps {

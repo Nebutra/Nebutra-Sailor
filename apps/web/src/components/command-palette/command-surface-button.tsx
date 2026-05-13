@@ -1,6 +1,6 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
+import { Sparkles } from "@nebutra/icons";
 import { useRouter } from "next/navigation";
 import { ACCENT_ICON_CLASSES, useCommandMode } from "./command-mode-context";
 import { useCommandPalette } from "./command-palette-provider";

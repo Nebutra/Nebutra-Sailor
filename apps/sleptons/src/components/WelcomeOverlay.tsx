@@ -1,6 +1,6 @@
 "use client";
 
-import { X } from "lucide-react";
+import { Cross as X } from "@nebutra/icons";
 import { useState } from "react";
 
 interface WelcomeOverlayProps {

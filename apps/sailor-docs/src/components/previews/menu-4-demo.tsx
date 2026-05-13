@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronRight } from "@nebutra/icons";
 import {
   Button,
   DropdownMenu,
@@ -7,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
-import { ChevronRight } from "lucide-react";
 
 export function Menu4Demo() {
   return (

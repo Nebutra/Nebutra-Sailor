@@ -1,5 +1,12 @@
+import {
+  Copy,
+  Download,
+  Pencil as Edit2,
+  Link,
+  MoreHorizontal,
+  Trash as Trash2,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Copy, Download, Edit2, Link, MoreHorizontal, Trash2 } from "lucide-react";
 import type * as React from "react";
 import { ContextMenu } from "./context-menu";
 

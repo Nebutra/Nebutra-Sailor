@@ -1,6 +1,6 @@
+import { CheckCircle, Status as Circle, Clock } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
-import { CheckCircle, Circle, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";

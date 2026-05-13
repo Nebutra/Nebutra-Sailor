@@ -1,19 +1,19 @@
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import {
   ArrowRight,
   type Code,
   Cpu,
   GitBranch,
   Layers,
-  Network,
+  NetworkDevice as Network,
   Route,
   Shield,
   Sparkles,
   Terminal,
   Workflow,
-  Zap,
-} from "lucide-react";
+  Lightning as Zap,
+} from "@nebutra/icons";
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";

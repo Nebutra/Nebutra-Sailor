@@ -2,10 +2,15 @@
 
 // Use /client subpath — root entrypoint pulls server-only middleware.
 import { getConfiguredAuthProvider, isAuthFeatureEnabledSync, useAuth } from "@nebutra/auth/client";
+import {
+  Warning as AlertTriangle,
+  ChevronRight,
+  SidebarLeft as PanelLeftClose,
+  SidebarLeft as PanelLeftOpen,
+} from "@nebutra/icons";
 import { AppShell } from "@nebutra/ui/layout";
 import type { SidebarNavRenderLinkProps, SidebarNavSection, Workspace } from "@nebutra/ui/patterns";
 import { SidebarNav, WorkspaceSwitcher } from "@nebutra/ui/patterns";
-import { AlertTriangle, ChevronRight, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type React from "react";

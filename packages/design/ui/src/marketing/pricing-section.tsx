@@ -1,6 +1,6 @@
 "use client";
+import { CheckCircle as CheckCircleIcon, Star as StarIcon } from "@nebutra/icons";
 import { motion, type Transition } from "framer-motion";
-import { CheckCircleIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../primitives/button";

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "@nebutra/icons";
 import * as React from "react";
 
 import { cn } from "../utils/cn";

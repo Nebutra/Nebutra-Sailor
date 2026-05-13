@@ -1,7 +1,12 @@
 "use client";
+import {
+  CornerDownRight as CornerDownRightIcon,
+  Message as MessageSquare,
+  ThumbDown as ThumbsDown,
+  ThumbUp as ThumbsUp,
+} from "@nebutra/icons";
 import { cva } from "class-variance-authority";
 import type { FeedbackBlockProps } from "fumadocs-core/mdx-plugins/remark-feedback-block";
-import { CornerDownRightIcon, MessageSquare, ThumbsDown, ThumbsUp } from "lucide-react";
 import { usePathname } from "next/navigation";
 import {
   type ReactNode,

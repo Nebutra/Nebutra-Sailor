@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowRight, Envelope as Mail } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
-import { ArrowRight, Mail } from "lucide-react";
 
 export function ButtonDemo() {
   return (

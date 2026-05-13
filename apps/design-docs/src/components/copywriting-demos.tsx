@@ -1,6 +1,14 @@
 "use client";
 
 import {
+  Warning as AlertCircle,
+  CheckCircle,
+  FileText,
+  Plus,
+  Trash as Trash2,
+  CrossCircle as XCircle,
+} from "@nebutra/icons";
+import {
   Alert,
   AlertDescription,
   AlertTitle,
@@ -11,7 +19,6 @@ import {
   Label,
   Spinner,
 } from "@nebutra/ui/primitives";
-import { AlertCircle, CheckCircle, FileText, Plus, Trash2, XCircle } from "lucide-react";
 
 export function CopywritingErrorsDemo() {
   return (

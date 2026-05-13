@@ -1,14 +1,14 @@
 import {
-  Bot,
-  ChartSpline,
+  Robot as Bot,
+  ChartTrendingUp as ChartSpline,
   CreditCard,
   FileText,
-  LayoutDashboard,
-  type LucideIcon,
-  Plug,
+  Layout as LayoutDashboard,
+  type Icon as LucideIcon,
+  Connection as Plug,
   Shield,
   Users,
-} from "lucide-react";
+} from "@nebutra/icons";
 
 export interface DashboardNavBadge {
   label: string;

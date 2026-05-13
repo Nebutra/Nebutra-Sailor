@@ -1,4 +1,4 @@
-import { GitBranch, ShieldCheck } from "lucide-react";
+import { GitBranch, ShieldCheck } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
 
 export function TokenGovernanceCard() {

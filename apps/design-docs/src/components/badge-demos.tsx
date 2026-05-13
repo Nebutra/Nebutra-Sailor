@@ -1,7 +1,7 @@
 "use client";
 
+import { Bell, Shield, LogoSlack as Slack } from "@nebutra/icons";
 import { Badge, type BadgeProps } from "@nebutra/ui/primitives";
-import { Bell, Shield, Slack } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 // --- Variants Demo ---

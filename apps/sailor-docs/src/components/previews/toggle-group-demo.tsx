@@ -1,7 +1,11 @@
 "use client";
 
+import {
+  AlignmentCenter as AlignCenter,
+  AlignmentLeft as AlignLeft,
+  AlignmentRight as AlignRight,
+} from "@nebutra/icons";
 import { ToggleGroup, ToggleGroupItem } from "@nebutra/ui/primitives";
-import { AlignCenter, AlignLeft, AlignRight } from "lucide-react";
 
 export function ToggleGroupDemo() {
   return (

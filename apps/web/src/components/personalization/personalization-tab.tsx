@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
+import { LoaderCircle as Loader2 } from "@nebutra/icons";
 import { useCallback, useEffect, useState } from "react";
 import {
   PersonalizationPanel,

@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail } from "lucide-react";
+import { Envelope as Mail } from "@nebutra/icons";
 import { groupTemplatesByCategory, type TemplateMeta } from "@/lib/template-types";
 
 interface SidebarProps {

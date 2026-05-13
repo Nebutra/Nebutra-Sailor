@@ -1,5 +1,5 @@
+import { ChartActivity as Activity, CreditCard, Lightning as Rocket, Users } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Activity, CreditCard, Rocket, Users } from "lucide-react";
 import { connection } from "next/server";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";

@@ -1,6 +1,13 @@
 "use client";
 
-import { Bell, BellRing, Bug, Mail, Star, Trash2 } from "lucide-react";
+import {
+  Bell,
+  Bell as BellRing,
+  Bug,
+  Envelope as Mail,
+  Star,
+  Trash as Trash2,
+} from "@nebutra/icons";
 import Link from "next/link";
 
 // =============================================================================

@@ -1,7 +1,7 @@
+import { External as ExternalLink } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { getShowcaseProjects } from "@nebutra/sanity/queries";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import Image from "next/image";

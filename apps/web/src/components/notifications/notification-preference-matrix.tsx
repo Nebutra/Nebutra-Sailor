@@ -1,9 +1,9 @@
+import { Information as Info, ShieldOff as ShieldAlert } from "@nebutra/icons";
 import type {
   NotificationPreferenceSection,
   NotificationPreferenceSource,
   NotificationRuntimeStatus,
 } from "@nebutra/notifications";
-import { Info, ShieldAlert } from "lucide-react";
 import { updateNotificationPreference } from "@/app/[locale]/(app)/settings/notifications/actions";
 
 interface Props {

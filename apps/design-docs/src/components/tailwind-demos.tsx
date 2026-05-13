@@ -1,5 +1,6 @@
 "use client";
 
+import { Check, Copy, Play } from "@nebutra/icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +15,6 @@ import {
   nebutraSpacing,
   nebutraTypography,
 } from "@nebutra/ui/tailwind.preset";
-import { Check, Copy, Play } from "lucide-react";
 import * as React from "react";
 
 // --- Colors Demo ---

@@ -1,15 +1,15 @@
 "use client";
 
-import type { Meta, StoryObj } from "@storybook/react";
 import {
-  BarChart3,
-  Code2,
+  BarChart as BarChart3,
+  Code as Code2,
   FileText,
   Image as ImageIcon,
   Music,
   Sparkles,
   Video,
-} from "lucide-react";
+} from "@nebutra/icons";
+import type { Meta, StoryObj } from "@storybook/react";
 import { GalleryCard, type GalleryCardIconTone } from "./gallery-card";
 
 const meta: Meta<typeof GalleryCard> = {

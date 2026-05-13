@@ -11,7 +11,7 @@
  * - Customizable fallback UI
  */
 
-import { AlertCircle, RefreshCw } from "lucide-react";
+import { Warning as AlertCircle, RefreshClockwise as RefreshCw } from "@nebutra/icons";
 import type React from "react";
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { Button } from "./button";

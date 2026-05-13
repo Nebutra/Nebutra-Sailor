@@ -1,5 +1,6 @@
 "use client";
 
+import { SettingsGear as Settings } from "@nebutra/icons";
 import {
   Button,
   Label,
@@ -8,7 +9,6 @@ import {
   PopoverTrigger,
   Toggle,
 } from "@nebutra/ui/primitives";
-import { Settings } from "lucide-react";
 
 export function PopoverSettingsDemo() {
   return (

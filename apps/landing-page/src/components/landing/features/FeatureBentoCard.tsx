@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@nebutra/icons";
 import type { ComponentType, CSSProperties } from "react";
 import { AnimateIn } from "../AnimateIn";
 

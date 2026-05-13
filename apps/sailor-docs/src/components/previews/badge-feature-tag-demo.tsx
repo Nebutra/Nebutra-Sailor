@@ -1,5 +1,5 @@
+import { Sparkles } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
-import { Sparkles } from "lucide-react";
 
 export function BadgeFeatureTagDemo() {
   return (

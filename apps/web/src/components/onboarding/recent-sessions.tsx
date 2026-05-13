@@ -1,6 +1,13 @@
+import type { Icon as LucideIcon } from "@nebutra/icons";
+import {
+  Code as Code2,
+  Database,
+  Message as MessageSquare,
+  Plus,
+  MagnifyingGlass as Search,
+  Workflow,
+} from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import type { LucideIcon } from "lucide-react";
-import { Code2, Database, MessageSquare, Plus, Search, Workflow } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { getAuth } from "@/lib/auth";

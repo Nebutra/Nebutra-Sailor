@@ -1,6 +1,5 @@
-import { ArrowRight } from "@nebutra/icons";
+import { ArrowRight, Play } from "@nebutra/icons";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
-import { Play } from "lucide-react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";

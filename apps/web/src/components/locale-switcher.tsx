@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "@nebutra/i18n/routing";
-import { Check, Globe } from "lucide-react";
+import { Check, Globe } from "@nebutra/icons";
 import { useLocale } from "next-intl";
 import { useTransition } from "react";
 

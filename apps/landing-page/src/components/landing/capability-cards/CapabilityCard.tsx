@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@nebutra/icons";
 import Link from "next/link";
 import type { ReactNode } from "react";
 

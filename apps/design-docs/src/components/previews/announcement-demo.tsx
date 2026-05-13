@@ -1,5 +1,5 @@
+import { ArrowUpRight } from "@nebutra/icons";
 import { Announcement, AnnouncementTag, AnnouncementTitle } from "@nebutra/ui/primitives";
-import { ArrowUpRight } from "lucide-react";
 
 export function AnnouncementDemo() {
   return (

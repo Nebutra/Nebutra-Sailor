@@ -1,7 +1,7 @@
 "use client";
 
+import { Eye, EyeOff } from "@nebutra/icons";
 import { Input } from "@nebutra/ui/primitives";
-import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 export function InputPasswordRevealDemo() {

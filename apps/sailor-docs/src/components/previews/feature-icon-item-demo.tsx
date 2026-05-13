@@ -1,5 +1,12 @@
+import {
+  Cloud,
+  Cpu,
+  Globe,
+  Shield,
+  DevicePhone as Smartphone,
+  Lightning as Zap,
+} from "@nebutra/icons";
 import { FeatureIconItem } from "@nebutra/ui/primitives";
-import { Cloud, Cpu, Globe, Shield, Smartphone, Zap } from "lucide-react";
 
 export function FeatureIconItemDemo() {
   return (

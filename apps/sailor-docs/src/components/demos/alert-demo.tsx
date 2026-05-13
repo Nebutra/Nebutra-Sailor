@@ -1,13 +1,18 @@
 "use client";
 
 import {
+  Warning as CircleAlert,
+  CheckCircle as CircleCheck,
+  Information as Info,
+  Warning as TriangleAlert,
+} from "@nebutra/icons";
+import {
   Alert,
   AlertContent,
   AlertDescription,
   AlertIcon,
   AlertTitle,
 } from "@nebutra/ui/primitives";
-import { CircleAlert, CircleCheck, Info, TriangleAlert } from "lucide-react";
 import { useState } from "react";
 
 export function AlertDemo() {

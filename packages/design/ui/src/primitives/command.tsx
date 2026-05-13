@@ -1,7 +1,7 @@
 "use client";
 
+import { MagnifyingGlass as Search } from "@nebutra/icons";
 import { Command as CommandPrimitive } from "cmdk";
-import { Search } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "../utils/cn";

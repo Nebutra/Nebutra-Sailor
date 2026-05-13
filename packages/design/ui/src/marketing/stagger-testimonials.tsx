@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "@nebutra/icons";
 import Image from "next/image";
 import type React from "react";
 import { useEffect, useState } from "react";

@@ -1,7 +1,7 @@
 "use client";
 
+import { Key } from "@nebutra/icons";
 import { Button, Input, Label } from "@nebutra/ui/primitives";
-import { Key } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";

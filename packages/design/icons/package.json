@@ -16,8 +16,8 @@
   },
   "scripts": {
     "generate": "tsx scripts/generate.ts",
-    "build": "tsup src/index.ts --format cjs,esm --dts --out-dir dist",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --out-dir dist --watch",
+    "build": "tsup src/index.ts --format cjs,esm --out-dir dist && tsc -p tsconfig.build.json",
+    "dev": "tsup src/index.ts --format cjs,esm --out-dir dist --watch",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
@@ -26,12 +26,17 @@
     "@svgr/plugin-prettier": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
     "@types/node": "^22.19.15",
-    "@types/react": "^19.2.14",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "catalog:"
   },
   "peerDependencies": {
+    "@types/react": ">=18.0.0",
     "react": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   }
 }

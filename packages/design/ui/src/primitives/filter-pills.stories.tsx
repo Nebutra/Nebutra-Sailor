@@ -1,18 +1,17 @@
 "use client";
 
-import type { Meta, StoryObj } from "@storybook/react";
 import {
   Briefcase,
-  Code2,
-  GraduationCap,
+  Code as Code2,
   Heart,
   Pencil,
-  Rocket,
+  Lightning as Rocket,
   Sparkles,
   Star,
-  Wallet,
-  Zap,
-} from "lucide-react";
+  Lightning as Zap,
+} from "@nebutra/icons";
+import { GraduationCap, Wallet } from "@phosphor-icons/react/dist/ssr";
+import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { type FilterPillOption, FilterPills, type FilterPillsProps } from "./filter-pills";
 

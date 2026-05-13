@@ -1,5 +1,6 @@
 "use client";
 
+import { Command, Logout as LogOut, SettingsGear as Settings, User } from "@nebutra/icons";
 import {
   Button,
   DropdownMenu,
@@ -10,7 +11,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
-import { Command, LogOut, Settings, User } from "lucide-react";
 
 export function MenuDemo() {
   return (

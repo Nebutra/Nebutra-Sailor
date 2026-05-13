@@ -1,7 +1,7 @@
 "use client";
 
+import { Eye } from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { Eye } from "lucide-react";
 
 const components = ["Button", "Input", "Card", "Dialog", "Badge", "Tabs"];
 const variants = [

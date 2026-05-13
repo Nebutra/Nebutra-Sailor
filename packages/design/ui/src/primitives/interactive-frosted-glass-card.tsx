@@ -1,6 +1,6 @@
 "use client";
 
-import { MoveUpRight } from "lucide-react";
+import { ArrowUpRight as MoveUpRight } from "@nebutra/icons";
 import type React from "react";
 import { useRef, useState } from "react";
 

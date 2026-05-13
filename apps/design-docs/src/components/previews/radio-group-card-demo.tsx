@@ -1,5 +1,5 @@
+import { CreditCard, Buildings as Landmark, DevicePhone as Smartphone } from "@nebutra/icons";
 import { RadioGroupCard, RadioGroupCardItem } from "@nebutra/ui/primitives";
-import { CreditCard, Landmark, Smartphone } from "lucide-react";
 
 export function RadioGroupCardDemo() {
   return (

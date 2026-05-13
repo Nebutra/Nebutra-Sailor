@@ -1,8 +1,14 @@
 "use client";
 
 import { useSignIn, useSignUp } from "@clerk/nextjs";
+import {
+  Email as AtSignIcon,
+  ChevronLeft as ChevronLeftIcon,
+  LogoGithub as GithubIcon,
+  LoaderCircle as Loader2,
+  Anchor as Sailboat,
+} from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { AtSignIcon, ChevronLeftIcon, GithubIcon, Loader2, Sailboat } from "lucide-react";
 import React from "react";
 import { Button } from "../primitives/button";
 import { Input } from "../primitives/input";

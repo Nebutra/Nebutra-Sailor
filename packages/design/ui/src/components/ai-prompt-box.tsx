@@ -1,17 +1,17 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowUp,
-  BrainCog,
-  FolderCode,
+  Brain as BrainCog,
+  FolderClosed as FolderCode,
   Globe,
-  Mic,
+  Microphone as Mic,
   Paperclip,
-  Square,
   StopCircle,
-  X,
-} from "lucide-react";
+  Cross as X,
+} from "@nebutra/icons";
+import { Square } from "@phosphor-icons/react/dist/ssr";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React from "react";
 import { Dialog, DialogContent, DialogTitle } from "../primitives/dialog";

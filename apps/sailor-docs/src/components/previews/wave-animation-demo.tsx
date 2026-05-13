@@ -1,7 +1,7 @@
 "use client";
 
+import { ChartActivity as Activity, Pause, Play } from "@nebutra/icons";
 import { Button, WaveAnimation } from "@nebutra/ui/primitives";
-import { Activity, Pause, Play } from "lucide-react";
 import { useState } from "react";
 
 export function WaveAnimationDemo() {

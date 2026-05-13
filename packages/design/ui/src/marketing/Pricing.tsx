@@ -1,7 +1,7 @@
 "use client";
 
+import { Check, Cross as X } from "@nebutra/icons";
 import { cva } from "class-variance-authority";
-import { Check, X } from "lucide-react";
 import * as React from "react";
 import { AnimateIn, AnimateInGroup } from "../primitives/animate-in";
 import { cn } from "../utils/cn";

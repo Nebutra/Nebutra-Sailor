@@ -1,5 +1,5 @@
+import { ShieldCheck, Star } from "@nebutra/icons";
 import { FeatureCheckItem } from "@nebutra/ui/primitives";
-import { ShieldCheck, Star } from "lucide-react";
 
 export function FeatureCheckItemDemo() {
   return (

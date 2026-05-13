@@ -1,6 +1,6 @@
 "use client";
 
-import { Building2, Home, Settings, Users } from "lucide-react";
+import { Buildings as Building2, Home, SettingsGear as Settings, Users } from "@nebutra/icons";
 
 export function SidebarDemo() {
   return (

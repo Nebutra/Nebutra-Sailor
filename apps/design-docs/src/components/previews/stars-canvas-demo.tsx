@@ -1,7 +1,7 @@
 "use client";
 
+import { Pause, Play } from "@nebutra/icons";
 import { Button, StarsCanvas } from "@nebutra/ui/primitives";
-import { Pause, Play } from "lucide-react";
 import { useState } from "react";
 
 export function StarsCanvasDemo() {

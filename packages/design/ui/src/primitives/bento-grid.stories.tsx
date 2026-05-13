@@ -1,5 +1,12 @@
+import {
+  BarChart,
+  Code,
+  Globe,
+  LockClosed as Lock,
+  Sparkles,
+  Lightning as Zap,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { BarChart, Code, Globe, Lock, Sparkles, Zap } from "lucide-react";
 import { BentoCard, BentoGrid } from "./bento-grid";
 
 const meta = {

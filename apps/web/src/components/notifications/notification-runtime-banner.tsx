@@ -1,9 +1,13 @@
+import {
+  Bell as BellRing,
+  Database as DatabaseZap,
+  Connection as RadioTower,
+} from "@nebutra/icons";
 import type {
   NotificationInboxSource,
   NotificationPreferenceSource,
   NotificationRuntimeStatus,
 } from "@nebutra/notifications";
-import { BellRing, DatabaseZap, RadioTower } from "lucide-react";
 
 interface Props {
   runtime: NotificationRuntimeStatus;

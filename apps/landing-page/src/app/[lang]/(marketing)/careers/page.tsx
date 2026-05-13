@@ -1,6 +1,6 @@
+import { ArrowRight, Sparkles } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
-import { ArrowRight, Sparkles } from "lucide-react";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";

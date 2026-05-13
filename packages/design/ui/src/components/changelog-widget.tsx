@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, ChevronRight } from "lucide-react";
+import { Bell, ChevronRight } from "@nebutra/icons";
 import * as React from "react";
 import { cn } from "../utils";
 

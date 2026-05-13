@@ -1,6 +1,13 @@
+import {
+  Email as AtSign,
+  Dollar as DollarSign,
+  Eye,
+  EyeOff,
+  Envelope as Mail,
+  MagnifyingGlass as Search,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
-import { AtSign, DollarSign, Eye, EyeOff, Mail, Search } from "lucide-react";
 import { useState } from "react";
 import { Input } from "./input";
 

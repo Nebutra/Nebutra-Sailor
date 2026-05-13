@@ -43,7 +43,7 @@ export function FontFaceDemo({
   );
 }
 
-import { Code, Info } from "lucide-react";
+import { Code, Information as Info } from "@nebutra/icons";
 import type React from "react";
 
 const headingItems = [

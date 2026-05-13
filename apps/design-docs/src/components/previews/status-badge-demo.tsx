@@ -1,7 +1,7 @@
 "use client";
 
+import { ShieldCheck, CrossCircle as XCircle } from "@nebutra/icons";
 import { StatusBadge } from "@nebutra/ui/primitives";
-import { ShieldCheck, XCircle } from "lucide-react";
 
 export function StatusBadgeDemo() {
   return (

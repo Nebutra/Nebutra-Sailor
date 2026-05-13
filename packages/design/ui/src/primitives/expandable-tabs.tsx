@@ -1,7 +1,7 @@
 "use client";
 
+import type { Icon as LucideIcon } from "@nebutra/icons";
 import { AnimatePresence, motion } from "framer-motion";
-import type { LucideIcon } from "lucide-react";
 import * as React from "react";
 import { useOnClickOutside } from "usehooks-ts";
 import { cn } from "../utils/cn";

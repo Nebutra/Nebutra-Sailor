@@ -1,4 +1,8 @@
-import { Minus, TrendingDown, TrendingUp } from "lucide-react";
+import {
+  Minus,
+  ChartTrendingDown as TrendingDown,
+  ChartTrendingUp as TrendingUp,
+} from "@nebutra/icons";
 import { cn } from "../utils/cn";
 import { Card, CardContent } from "./card";
 

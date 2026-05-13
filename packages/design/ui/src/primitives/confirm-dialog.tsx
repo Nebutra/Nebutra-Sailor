@@ -36,7 +36,12 @@
  * ```
  */
 
-import { AlertCircle, AlertTriangle, Loader2, Trash2 } from "lucide-react";
+import {
+  Warning as AlertCircle,
+  Warning as AlertTriangle,
+  LoaderCircle as Loader2,
+  Trash as Trash2,
+} from "@nebutra/icons";
 import * as React from "react";
 import { cn } from "../utils/cn";
 import {

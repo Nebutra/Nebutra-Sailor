@@ -1,5 +1,6 @@
 "use client";
 
+import { Menu } from "@nebutra/icons";
 import {
   Button,
   Sheet,
@@ -9,7 +10,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@nebutra/ui/primitives";
-import { Menu } from "lucide-react";
 import Link from "next/link";
 
 export function SheetSideDemo() {

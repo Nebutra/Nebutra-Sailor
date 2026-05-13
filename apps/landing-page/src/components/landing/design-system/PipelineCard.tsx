@@ -1,6 +1,6 @@
+import { GitCommit } from "@nebutra/icons";
 import { cn } from "@nebutra/ui/utils";
 import { motion } from "framer-motion";
-import { GitCommit } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function PipelineCard() {

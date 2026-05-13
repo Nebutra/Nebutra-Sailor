@@ -1,5 +1,10 @@
 "use client";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronDoubleLeft as ChevronsLeft,
+  ChevronDoubleRight as ChevronsRight,
+} from "@nebutra/icons";
 import { Button } from "./button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 

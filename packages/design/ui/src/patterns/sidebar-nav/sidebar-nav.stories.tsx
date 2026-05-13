@@ -1,19 +1,19 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import {
-  Bot,
-  Folder,
+  Robot as Bot,
+  FolderClosed as Folder,
   Home,
   Inbox,
-  LayoutGrid,
-  LifeBuoy,
-  LogOut,
+  GridSquare as LayoutGrid,
+  Lifebuoy as LifeBuoy,
+  Logout as LogOut,
   Moon,
-  Search,
-  Settings,
+  MagnifyingGlass as Search,
+  SettingsGear as Settings,
   Sparkles,
   Users,
-  Zap,
-} from "lucide-react";
+  Lightning as Zap,
+} from "@nebutra/icons";
+import type { Meta, StoryObj } from "@storybook/react";
 import { SidebarNav, type SidebarNavSection } from "./sidebar-nav";
 
 const meta: Meta<typeof SidebarNav> = {

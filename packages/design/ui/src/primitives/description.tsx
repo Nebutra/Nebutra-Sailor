@@ -1,6 +1,6 @@
 "use client";
 
-import { Info } from "lucide-react";
+import { Information as Info } from "@nebutra/icons";
 import * as React from "react";
 import { cn } from "../utils/cn";
 import { ContextCard } from "./context-card";

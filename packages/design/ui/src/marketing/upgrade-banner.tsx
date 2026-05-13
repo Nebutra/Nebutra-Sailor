@@ -1,6 +1,6 @@
 "use client";
+import { Cross as X } from "@nebutra/icons";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
 import * as React from "react";
 import { cn } from "../utils/cn";
 export interface UpgradeBannerProps {

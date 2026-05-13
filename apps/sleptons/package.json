@@ -18,7 +18,6 @@
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "geist": "catalog:",
-    "lucide-react": "catalog:",
     "next": "catalog:",
     "next-themes": "catalog:",
     "react": "catalog:",

@@ -1,5 +1,5 @@
+import { Sparkles, Star } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Sparkles, Star } from "lucide-react";
 import { FeatureCheckItem } from "./feature-check-item";
 
 const meta = {

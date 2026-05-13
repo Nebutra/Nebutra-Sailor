@@ -1,24 +1,24 @@
 "use client";
 
 import { useAuth } from "@nebutra/auth/client";
-import { useTheme } from "@nebutra/tokens";
-import { EmptyState } from "@nebutra/ui/layout";
-import { BrandMark, Dialog, DialogContent } from "@nebutra/ui/primitives";
 import {
   ArrowRight,
   CreditCard,
-  Keyboard,
-  LifeBuoy,
-  Mail,
-  Monitor,
+  Command as Keyboard,
+  Lifebuoy as LifeBuoy,
+  Envelope as Mail,
+  DeviceDesktop as Monitor,
   Moon,
-  Receipt,
-  Settings as SettingsIcon,
+  Invoice as Receipt,
+  SettingsGear as SettingsIcon,
   Sparkles,
   Sun,
   User,
-  Wand2,
-} from "lucide-react";
+  Sparkles as Wand2,
+} from "@nebutra/icons";
+import { useTheme } from "@nebutra/tokens";
+import { EmptyState } from "@nebutra/ui/layout";
+import { BrandMark, Dialog, DialogContent } from "@nebutra/ui/primitives";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {

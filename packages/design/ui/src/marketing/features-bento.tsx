@@ -1,6 +1,6 @@
 "use client";
 
-import { type LucideIcon, Shield, Users } from "lucide-react";
+import { type Icon as LucideIcon, Shield, Users } from "@nebutra/icons";
 import Image from "next/image";
 import { Card, CardContent } from "../primitives/card";
 import { cn } from "../utils/cn";

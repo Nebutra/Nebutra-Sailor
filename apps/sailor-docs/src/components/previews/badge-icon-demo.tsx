@@ -1,5 +1,5 @@
+import { Check } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
-import { Check } from "lucide-react";
 
 export function BadgeIconDemo() {
   return (

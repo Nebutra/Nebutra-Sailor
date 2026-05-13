@@ -1,5 +1,5 @@
 "use client";
-import { ChevronRight, MoreHorizontal } from "lucide-react";
+import { ChevronRight, MoreHorizontal } from "@nebutra/icons";
 import * as React from "react";
 import { cn } from "../utils";
 import { Slot } from "../utils/slot";

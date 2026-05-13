@@ -1,5 +1,5 @@
+import { Cpu, Database, LockClosed as Lock, NetworkDevice as Network } from "@nebutra/icons";
 import { GridFeatureCard } from "@nebutra/ui/primitives";
-import { Cpu, Database, Lock, Network } from "lucide-react";
 
 export function GridFeatureCardDemo() {
   return (

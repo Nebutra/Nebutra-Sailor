@@ -1,7 +1,7 @@
 "use client";
 
+import { DeviceDesktop as Laptop, Moon, Sun } from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { Laptop, Moon, Sun } from "lucide-react";
 import type React from "react";
 import { useEffect, useState } from "react";
 

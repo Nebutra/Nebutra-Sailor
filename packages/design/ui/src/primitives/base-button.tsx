@@ -1,7 +1,7 @@
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
+import { ChevronDown, type IconProps, type Icon as LucideIcon } from "@nebutra/icons";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ChevronDown, type LucideIcon } from "lucide-react";
 import * as React from "react";
 import { cn } from "../utils/cn";
 
@@ -428,7 +428,7 @@ function BaseButton({
   return element;
 }
 
-interface BaseButtonArrowProps extends React.SVGProps<SVGSVGElement> {
+interface BaseButtonArrowProps extends IconProps {
   icon?: LucideIcon;
 }
 

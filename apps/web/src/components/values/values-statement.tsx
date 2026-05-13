@@ -1,4 +1,10 @@
-import { ArrowUpRight, Leaf, type LucideIcon, Recycle, Shield } from "lucide-react";
+import {
+  ArrowUpRight,
+  Sparkles as Leaf,
+  type Icon as LucideIcon,
+  RefreshClockwise as Recycle,
+  Shield,
+} from "@nebutra/icons";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 
 /**

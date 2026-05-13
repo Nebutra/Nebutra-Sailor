@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy } from "lucide-react";
+import { Check, Copy } from "@nebutra/icons";
 import { useState } from "react";
 
 interface CopyCommandProps {

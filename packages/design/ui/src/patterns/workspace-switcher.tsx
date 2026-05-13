@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronUpDown as ChevronsUpDown } from "@nebutra/icons";
 import * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../primitives/avatar";
 import { Badge } from "../primitives/badge";

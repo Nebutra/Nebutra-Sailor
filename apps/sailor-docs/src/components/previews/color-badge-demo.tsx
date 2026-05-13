@@ -1,5 +1,12 @@
+import {
+  Warning as AlertTriangle,
+  CheckCircle as CheckCircle2,
+  Information as Info,
+  Shield,
+  CrossCircle as XCircle,
+  Lightning as Zap,
+} from "@nebutra/icons";
 import { ColorBadge } from "@nebutra/ui/primitives";
-import { AlertTriangle, CheckCircle2, Info, Shield, XCircle, Zap } from "lucide-react";
 
 export function ColorBadgeDemo() {
   return (

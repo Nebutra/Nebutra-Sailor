@@ -1,12 +1,12 @@
 "use client";
 
+import { User } from "@nebutra/icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
-import { User } from "lucide-react";
 
 export function Menu5Demo() {
   return (

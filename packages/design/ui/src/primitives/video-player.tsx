@@ -1,6 +1,12 @@
 "use client";
 
-import { Pause, Play, Volume1, Volume2, VolumeX } from "lucide-react";
+import {
+  Pause,
+  Play,
+  SpeakerVolumeQuiet as Volume1,
+  SpeakerVolumeLoud as Volume2,
+  SpeakerOff as VolumeX,
+} from "@nebutra/icons";
 import { AnimatePresence, motion } from "motion/react";
 import type React from "react";
 import { useCallback, useRef, useState } from "react";

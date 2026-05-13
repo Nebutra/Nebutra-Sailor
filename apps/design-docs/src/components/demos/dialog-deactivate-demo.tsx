@@ -1,5 +1,6 @@
 "use client";
 
+import { Warning as AlertTriangleIcon } from "@nebutra/icons";
 import {
   Button,
   Dialog,
@@ -11,7 +12,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@nebutra/ui/primitives";
-import { AlertTriangleIcon } from "lucide-react";
 import { useState } from "react";
 
 export function DialogDeactivateDemo() {

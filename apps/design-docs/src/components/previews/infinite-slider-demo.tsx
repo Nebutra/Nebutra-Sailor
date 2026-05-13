@@ -1,7 +1,16 @@
 "use client";
 
+import {
+  Cloud,
+  Code,
+  Cpu,
+  Database,
+  LockClosed as Lock,
+  NetworkDevice as Network,
+  Shield,
+  Lightning as Zap,
+} from "@nebutra/icons";
 import { InfiniteSlider } from "@nebutra/ui/primitives";
-import { Cloud, Code, Cpu, Database, Lock, Network, Shield, Zap } from "lucide-react";
 
 export function InfiniteSliderDemo() {
   const icons = [

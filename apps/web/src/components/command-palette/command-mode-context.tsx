@@ -1,6 +1,12 @@
 "use client";
 
-import { Database, type LucideIcon, MessageSquare, Search, Workflow } from "lucide-react";
+import {
+  Database,
+  type Icon as LucideIcon,
+  Message as MessageSquare,
+  MagnifyingGlass as Search,
+  Workflow,
+} from "@nebutra/icons";
 import { createContext, type ReactNode, useContext, useMemo, useState } from "react";
 
 export type CommandMode = "chat" | "data" | "workflow" | "search";

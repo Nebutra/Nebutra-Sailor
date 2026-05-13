@@ -1,5 +1,5 @@
+import { Globe, Layers, Pin as MapPin, Shield, Lightning as Zap } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Globe, Layers, MapPin, Shield, Zap } from "lucide-react";
 import { CircularUI, FeatureCard, FeatureCardContent, FeatureCardHeader } from "./feature-card";
 
 const meta = {

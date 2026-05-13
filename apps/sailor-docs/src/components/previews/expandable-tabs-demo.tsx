@@ -1,7 +1,7 @@
 "use client";
 
+import { Bell, Home, MagnifyingGlass as Search, User } from "@nebutra/icons";
 import { ExpandableTabs } from "@nebutra/ui/primitives";
-import { Bell, Home, Search, User } from "lucide-react";
 import { useState } from "react";
 
 export function ExpandableTabsDemo() {

@@ -1,6 +1,13 @@
 "use client";
 
 import {
+  Warning as AlertCircle,
+  CheckCircle as CheckCircleIcon,
+  LoaderCircle as Loader2,
+  Cross as X,
+  CrossCircle as XCircle,
+} from "@nebutra/icons";
+import {
   ariaPatterns,
   Button,
   Checkbox,
@@ -13,7 +20,6 @@ import {
   skipLinkStyle,
   visuallyHidden,
 } from "@nebutra/ui/primitives";
-import { AlertCircle, CheckCircle as CheckCircleIcon, Loader2, X, XCircle } from "lucide-react";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { ComponentPreview } from "@/components/component-preview";

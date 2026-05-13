@@ -1,6 +1,13 @@
 "use client";
 
-import { ChevronDown, ExternalLink, Github, Linkedin, Twitter, Youtube } from "lucide-react";
+import {
+  ChevronDown,
+  External as ExternalLink,
+  LogoGithub as Github,
+  LogoLinkedin as Linkedin,
+  LogoTwitterX as Twitter,
+  LogoYoutubeSmall as Youtube,
+} from "@nebutra/icons";
 import Link from "next/link";
 import type * as React from "react";
 import {

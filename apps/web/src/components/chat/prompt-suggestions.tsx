@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, Bug, Mail, Sparkles } from "lucide-react";
+import { ChartActivity as Activity, Bug, Envelope as Mail, Sparkles } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
 import type { ComponentType, SVGProps } from "react";
 

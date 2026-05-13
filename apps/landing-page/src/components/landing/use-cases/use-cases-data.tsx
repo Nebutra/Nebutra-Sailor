@@ -1,4 +1,12 @@
-import { Folder, Globe, ImageIcon, Layout, LayoutGrid, Terminal, Users } from "lucide-react";
+import {
+  FolderClosed as Folder,
+  Globe,
+  Image as ImageIcon,
+  Layout,
+  GridSquare as LayoutGrid,
+  Terminal,
+  Users,
+} from "@nebutra/icons";
 import {
   DesignMockup,
   EDAMMockup,

@@ -1,7 +1,7 @@
 "use client";
 
+import { Check, Lightning as Zap } from "@nebutra/icons";
 import { PricingCard } from "@nebutra/ui/primitives";
-import { Check, Zap } from "lucide-react";
 
 export function PricingCardDemo() {
   const features = ["Unlimited projects", "API access", "Priority support"];

@@ -1,16 +1,16 @@
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import {
   ArrowRight,
   Database,
-  FileLock,
+  LockClosed as FileLock,
   FileText,
   Key,
-  Lock,
-  Mail,
+  LockClosed as Lock,
+  Envelope as Mail,
   ShieldCheck,
   Users,
-} from "lucide-react";
+} from "@nebutra/icons";
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";

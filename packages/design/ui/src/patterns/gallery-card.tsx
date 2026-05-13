@@ -1,6 +1,6 @@
 "use client";
 
-import { MoreHorizontal, Pin } from "lucide-react";
+import { MoreHorizontal, Pin } from "@nebutra/icons";
 import * as React from "react";
 import { Badge } from "../primitives/badge";
 import {

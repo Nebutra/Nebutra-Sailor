@@ -1,7 +1,7 @@
 "use client";
 
+import { Cpu, GitBranch, Lightning as Rocket, SettingsSliders as Sliders } from "@nebutra/icons";
 import { AnimatedBeam } from "@nebutra/ui/primitives";
-import { Cpu, GitBranch, Rocket, Sliders } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRef } from "react";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";

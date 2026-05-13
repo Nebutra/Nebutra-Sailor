@@ -1,19 +1,19 @@
 "use client";
 
+import {
+  ChartActivity as Activity,
+  Check,
+  External as ExternalLink,
+  LoaderCircle as Loader2,
+  Plus,
+  SettingsGear as Settings,
+  Cart as ShoppingBag,
+  Store,
+  Cross as X,
+  Lightning as Zap,
+} from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card, EmptyState, PageHeader } from "@nebutra/ui/layout";
-import {
-  Activity,
-  Check,
-  ExternalLink,
-  Loader2,
-  Plus,
-  Settings,
-  ShoppingBag,
-  Store,
-  X,
-  Zap,
-} from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 // ── Types ────────────────────────────────────────────────────────────────────

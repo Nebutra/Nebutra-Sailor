@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowLeft } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/components";
-import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";

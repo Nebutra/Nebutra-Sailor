@@ -1,7 +1,7 @@
 "use client";
 
+import { TextBold as Bold, TextItalic as Italic, TextFormat as Underline } from "@nebutra/icons";
 import { ToggleGroup, ToggleGroupItem } from "@nebutra/ui/primitives";
-import { Bold, Italic, Underline } from "lucide-react";
 export function ToggleGroup2Demo() {
   return (
     <ToggleGroup type="multiple" defaultValue={["bold", "italic"]}>

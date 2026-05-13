@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowRight, BookOpen } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
-import { ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { AnimateIn } from "../AnimateIn";
 

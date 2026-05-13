@@ -1,7 +1,7 @@
 "use client";
 
 import { Accordion as BaseAccordion } from "@base-ui/react/accordion";
-import { Plus } from "lucide-react";
+import { Plus } from "@nebutra/icons";
 import * as React from "react";
 import { cn } from "../utils/cn";
 import { withHtmlProps } from "../utils/primitive-props";

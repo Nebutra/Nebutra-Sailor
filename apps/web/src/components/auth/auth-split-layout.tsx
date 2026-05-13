@@ -1,5 +1,5 @@
+import { ArrowLeft } from "@nebutra/icons";
 import { cn } from "@nebutra/ui/utils";
-import { ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { AuthBanner } from "./auth-banner";

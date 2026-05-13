@@ -39,7 +39,6 @@ const tabsListVariants = cva("flex items-center shrink-0", {
     { variant: "default", size: "md", className: "p-1 gap-2" },
     { variant: "default", size: "sm", className: "p-1 gap-1.5" },
     { variant: "default", size: "xs", className: "p-1 gap-1" },
-
     {
       variant: "default",
       shape: "default",
@@ -64,12 +63,10 @@ const tabsListVariants = cva("flex items-center shrink-0", {
       size: "xs",
       className: "rounded-[var(--radius-md)]",
     },
-
     { variant: "line", size: "lg", className: "gap-9" },
     { variant: "line", size: "md", className: "gap-8" },
     { variant: "line", size: "sm", className: "gap-4" },
     { variant: "line", size: "xs", className: "gap-4" },
-
     {
       variant: "default",
       shape: "pill",
@@ -125,7 +122,6 @@ const tabsTriggerVariants = cva(
         size: "xs",
         className: "py-1 px-2 rounded-[var(--radius-sm)]",
       },
-
       {
         variant: "button",
         size: "lg",
@@ -146,7 +142,6 @@ const tabsTriggerVariants = cva(
         size: "xs",
         className: "py-1.5 px-2 rounded-[var(--radius-md)]",
       },
-
       { variant: "line", size: "lg", className: "py-3" },
       { variant: "line", size: "md", className: "py-2.5" },
       { variant: "line", size: "sm", className: "py-2" },
@@ -263,7 +258,7 @@ export interface TabsContentProps
  * @example
  * ```tsx
  * import { Tabs, TabsList, TabsTrigger, TabsContent } from "@nebutra/ui";
- * import { UserRound, ShieldCheck, Bell } from "lucide-react";
+ * import { User as UserRound, ShieldCheck, Bell } from "@nebutra/icons";
  *
  * // Default variant (segmented control style)
  * <Tabs defaultValue="profile">

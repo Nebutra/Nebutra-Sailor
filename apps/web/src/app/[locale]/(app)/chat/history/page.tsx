@@ -1,6 +1,6 @@
+import { Plus } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { PageHeader } from "@nebutra/ui/layout";
-import { Plus } from "lucide-react";
 import { ChatHistoryList, type ChatHistoryRow } from "@/components/chat/chat-history-list";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { getAuth } from "@/lib/auth";

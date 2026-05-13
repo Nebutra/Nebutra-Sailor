@@ -1,5 +1,5 @@
+import { ChartActivity as Activity } from "@nebutra/icons";
 import { EmptyState } from "@nebutra/ui/layout";
-import { Activity } from "lucide-react";
 
 export function EmptyStateDemo() {
   return (

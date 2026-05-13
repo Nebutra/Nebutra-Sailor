@@ -1,4 +1,5 @@
 "use client";
+import { MagnifyingGlass as Search, User } from "@nebutra/icons";
 import {
   Command,
   CommandEmpty,
@@ -8,7 +9,6 @@ import {
   CommandList,
   CommandSeparator,
 } from "@nebutra/ui/primitives";
-import { Search, User } from "lucide-react";
 
 export function CommandDemo() {
   return (

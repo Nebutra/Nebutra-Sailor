@@ -1,7 +1,12 @@
 "use client";
 
+import {
+  FolderClosed as Folder,
+  Heart as HeartHandshake,
+  type Icon as LucideIcon,
+  Sparkles,
+} from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { Folder, HeartHandshake, type LucideIcon, Sparkles } from "lucide-react";
 import { cn } from "../utils/cn";
 
 // Inline CSS for offset-path animations (avoids external CSS dependency)

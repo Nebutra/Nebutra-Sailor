@@ -21,7 +21,7 @@
  * ```
  */
 
-import { Check, Code, Copy, Hash, Link } from "lucide-react";
+import { Check, Code, Copy, Hash, Link } from "@nebutra/icons";
 import * as React from "react";
 // Toast feedback handled by consumer
 import { toast } from "sonner";

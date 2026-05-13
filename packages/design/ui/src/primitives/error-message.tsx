@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, ExternalLink } from "lucide-react";
+import { Warning as AlertCircle, External as ExternalLink } from "@nebutra/icons";
 import * as React from "react";
 import { cn } from "../utils/cn";
 

@@ -1,5 +1,5 @@
+import { BarChart, Globe, Shield, Lightning as Zap } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { BarChart, Globe, Shield, Zap } from "lucide-react";
 import { FeatureArrowCard } from "./feature-arrow-card";
 
 const meta = {

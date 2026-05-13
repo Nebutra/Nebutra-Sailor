@@ -1,4 +1,10 @@
-import { CheckCircle2, CreditCard, ExternalLink, ShieldAlert, Sparkles } from "lucide-react";
+import {
+  CheckCircle as CheckCircle2,
+  CreditCard,
+  External as ExternalLink,
+  ShieldOff as ShieldAlert,
+  Sparkles,
+} from "@nebutra/icons";
 
 export type BillingPlanId = "free" | "pro_monthly" | "pro_yearly" | "enterprise";
 export type BillingProviderStatus = "disabled" | "ready" | "degraded";

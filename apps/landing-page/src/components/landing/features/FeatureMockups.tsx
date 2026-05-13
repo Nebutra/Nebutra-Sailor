@@ -1,4 +1,4 @@
-import { CheckCircle2, Cpu, Fingerprint, Terminal } from "lucide-react";
+import { CheckCircle as CheckCircle2, Cpu, Fingerprint, Terminal } from "@nebutra/icons";
 
 const SECURITY_ROWS = [
   { name: "posts:write", a: true, u: false },

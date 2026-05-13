@@ -1,5 +1,12 @@
+import {
+  BarChart,
+  Globe,
+  LockClosed as Lock,
+  Shield,
+  Sparkles,
+  Lightning as Zap,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { BarChart, Globe, Lock, Shield, Sparkles, Zap } from "lucide-react";
 import { FeatureIconItem } from "./feature-icon-item";
 
 const meta = {

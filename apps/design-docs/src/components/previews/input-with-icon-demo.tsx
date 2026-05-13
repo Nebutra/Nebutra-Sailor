@@ -1,7 +1,7 @@
 "use client";
 
+import { Envelope as Mail, MagnifyingGlass as Search } from "@nebutra/icons";
 import { Input } from "@nebutra/ui/primitives";
-import { Mail, Search } from "lucide-react";
 
 export function InputWithIconDemo() {
   return (

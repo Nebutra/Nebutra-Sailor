@@ -1,5 +1,5 @@
+import { CheckCircle as CheckCircle2 } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { CheckCircle2 } from "lucide-react";
 import { CardSpotlight } from "./card-spotlight";
 
 const meta = {

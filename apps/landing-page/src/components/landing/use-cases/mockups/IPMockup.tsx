@@ -1,7 +1,7 @@
 "use client";
 
+import { Clock, Eye } from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { Clock, Eye } from "lucide-react";
 
 const navItems = ["Blog", "About", "Projects"];
 const posts = [

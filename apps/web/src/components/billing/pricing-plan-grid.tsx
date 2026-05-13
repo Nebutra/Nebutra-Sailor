@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Sparkles } from "@nebutra/icons";
 import { useMemo, useState, useTransition } from "react";
 
 export type BillingInterval = "month" | "year";

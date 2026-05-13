@@ -1,6 +1,10 @@
 "use client";
 
-import { AlertCircle, Loader2, Send } from "lucide-react";
+import {
+  Warning as AlertCircle,
+  LoaderCircle as Loader2,
+  PaperAirplane as Send,
+} from "@nebutra/icons";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { TemplateMeta } from "@/lib/template-types";
 

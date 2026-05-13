@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@nebutra/icons";
 import type { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
 import { cn } from "../utils";
 import { Button } from "./button";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Filter } from "lucide-react";
+import { Check, Filter } from "@nebutra/icons";
 import { useCallback, useMemo, useState } from "react";
 import { Badge } from "../../../primitives/badge";
 import { Button } from "../../../primitives/button";

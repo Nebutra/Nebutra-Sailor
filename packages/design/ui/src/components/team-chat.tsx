@@ -1,6 +1,13 @@
 "use client";
 
-import { Check, CheckCheck, MoreHorizontal, Send, SmilePlus, Users } from "lucide-react";
+import {
+  Check,
+  DoubleCheck as CheckCheck,
+  MoreHorizontal,
+  PaperAirplane as Send,
+  FacePlus as SmilePlus,
+  Users,
+} from "@nebutra/icons";
 import Image from "next/image";
 import type React from "react";
 import { useState } from "react";

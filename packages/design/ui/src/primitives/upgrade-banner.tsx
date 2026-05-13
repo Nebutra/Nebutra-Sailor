@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Sparkles, X } from "lucide-react";
+import { ArrowRight, Sparkles, Cross as X } from "@nebutra/icons";
 import { type ReactNode, useState } from "react";
 import { cn } from "../utils/cn";
 import { BrandMark } from "./brand-mark";

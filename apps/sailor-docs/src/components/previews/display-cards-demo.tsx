@@ -1,5 +1,5 @@
+import { Lightning as Rocket, Shield, Lightning as Zap } from "@nebutra/icons";
 import { DisplayCards } from "@nebutra/ui/primitives";
-import { Rocket, Shield, Zap } from "lucide-react";
 
 export function DisplayCardsDemo() {
   const cards = [

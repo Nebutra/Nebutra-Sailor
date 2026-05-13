@@ -1,20 +1,36 @@
 "use client";
 
-import { Loader, LoaderCircle, LoaderPinwheel, type LucideProps } from "lucide-react";
+import { LoaderCircle } from "@nebutra/icons";
+import type { ComponentProps } from "react";
 import { cn } from "../utils/cn";
+
+// `ComponentProps<"svg">` is the JSX intrinsic type — equivalent to but more
+// precise than `SVGProps<SVGSVGElement>` for spreading onto raw <svg> elements.
+// Avoids cross-package React type duplication observed with `SVGProps`.
+type SpinnerBaseProps = ComponentProps<"svg"> & { size?: number | string };
+// Aliases preserved for back-compat with prior variants — both render LoaderCircle.
+const Loader = LoaderCircle;
+const LoaderPinwheel = LoaderCircle;
 
 type SpinnerVariantProps = Omit<SpinnerProps, "variant">;
 
+// Geist icons are exposed as ForwardRefExoticComponent from a separately-built
+// .d.ts; spreading raw SVGProps into them confuses TS's pnpm-symlinked React
+// types. We pass only the small surface Spinner needs (className, size, style,
+// title, aria-*) and forward the rest via `as` cast.
+const forwardIconProps = (props: SpinnerVariantProps): Record<string, unknown> =>
+  props as unknown as Record<string, unknown>;
+
 const Default = ({ className, ...props }: SpinnerVariantProps) => (
-  <Loader className={cn("animate-spin", className)} {...props} />
+  <Loader className={cn("animate-spin", className)} {...forwardIconProps(props)} />
 );
 
 const Circle = ({ className, ...props }: SpinnerVariantProps) => (
-  <LoaderCircle className={cn("animate-spin", className)} {...props} />
+  <LoaderCircle className={cn("animate-spin", className)} {...forwardIconProps(props)} />
 );
 
 const Pinwheel = ({ className, ...props }: SpinnerVariantProps) => (
-  <LoaderPinwheel className={cn("animate-spin", className)} {...props} />
+  <LoaderPinwheel className={cn("animate-spin", className)} {...forwardIconProps(props)} />
 );
 
 const CircleFilled = ({ className, size = 24, ...props }: SpinnerVariantProps) => (
@@ -23,10 +39,14 @@ const CircleFilled = ({ className, size = 24, ...props }: SpinnerVariantProps) =
       <LoaderCircle
         className={cn("animate-spin text-foreground opacity-20", className)}
         size={size}
-        {...props}
+        {...forwardIconProps(props)}
       />
     </div>
-    <LoaderCircle className={cn("relative animate-spin", className)} size={size} {...props} />
+    <LoaderCircle
+      className={cn("relative animate-spin", className)}
+      size={size}
+      {...forwardIconProps(props)}
+    />
   </div>
 );
 
@@ -227,7 +247,7 @@ export type SpinnerVariant =
 /**
  * Props for the Spinner component
  */
-export interface SpinnerProps extends LucideProps {
+export interface SpinnerProps extends SpinnerBaseProps {
   /** Spinner animation variant */
   variant?: SpinnerVariant;
 }

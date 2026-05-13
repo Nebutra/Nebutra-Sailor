@@ -1,10 +1,18 @@
+import {
+  Bell,
+  BellSmall as BellDot,
+  CreditCard,
+  External as ExternalLink,
+  Shield,
+  Sparkles,
+  Users,
+} from "@nebutra/icons";
 import type {
   NotificationInboxItem,
   NotificationInboxSource,
   NotificationRuntimeStatus,
   NotificationSettingsSnapshot,
 } from "@nebutra/notifications";
-import { Bell, BellDot, CreditCard, ExternalLink, Shield, Sparkles, Users } from "lucide-react";
 import Link from "next/link";
 import {
   markAllNotificationsRead,

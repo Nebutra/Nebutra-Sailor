@@ -1,6 +1,6 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
+import { Sparkles } from "@nebutra/icons";
 import type * as React from "react";
 import { cn } from "../utils/cn";
 

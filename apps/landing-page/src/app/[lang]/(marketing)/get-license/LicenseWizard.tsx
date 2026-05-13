@@ -1,7 +1,12 @@
 "use client";
 
+import {
+  Warning as AlertCircle,
+  CheckCircle as CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+} from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { AlertCircle, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { emitBrowserEvent } from "@/lib/analytics/emit";

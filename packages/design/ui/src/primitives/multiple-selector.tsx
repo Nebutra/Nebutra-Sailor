@@ -1,7 +1,7 @@
 "use client";
 
+import { Cross as XIcon } from "@nebutra/icons";
 import { Command as CommandPrimitive, useCommandState } from "cmdk";
-import { XIcon } from "lucide-react";
 import * as React from "react";
 import { forwardRef, useEffect } from "react";
 

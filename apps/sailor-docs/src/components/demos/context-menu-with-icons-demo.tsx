@@ -1,7 +1,7 @@
 "use client";
 
+import { Copy, Pencil as Edit2, Trash as Trash2 } from "@nebutra/icons";
 import { ContextMenu } from "@nebutra/ui/primitives";
-import { Copy, Edit2, Trash2 } from "lucide-react";
 
 export function ContextMenuWithIconsDemo() {
   return (

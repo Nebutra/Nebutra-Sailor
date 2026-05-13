@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
+import { ChevronRight } from "@nebutra/icons";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatedGroup } from "../primitives/animated-group";

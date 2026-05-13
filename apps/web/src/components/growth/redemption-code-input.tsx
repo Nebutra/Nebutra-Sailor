@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Gift, Loader2 } from "lucide-react";
+import { Check, Sparkles as Gift, LoaderCircle as Loader2 } from "@nebutra/icons";
 import { useId, useState } from "react";
 
 /**

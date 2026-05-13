@@ -1,7 +1,7 @@
 "use client";
 
+import { Check, Copy } from "@nebutra/icons";
 import { MagicCard } from "@nebutra/ui/primitives";
-import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 
 function CopyButton({ text, label }: { text: string; label?: string }) {

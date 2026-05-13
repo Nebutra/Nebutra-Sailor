@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu } from "@nebutra/icons";
 import * as React from "react";
 
 import { Sheet, SheetContent } from "../primitives/sheet";

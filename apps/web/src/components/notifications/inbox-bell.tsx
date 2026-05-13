@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell } from "lucide-react";
+import { Bell } from "@nebutra/icons";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { InboxList, type InboxNotification } from "./inbox-list";

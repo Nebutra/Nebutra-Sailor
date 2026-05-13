@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@nebutra/icons";
 import * as React from "react";
 import { cn } from "../utils/cn";
 

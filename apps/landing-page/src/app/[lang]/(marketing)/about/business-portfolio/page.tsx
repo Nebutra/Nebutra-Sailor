@@ -1,6 +1,6 @@
+import { ArrowRight, Box as Boxes, Cpu, Database, Shield } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
-import { ArrowRight, Boxes, Cpu, Database, Shield } from "lucide-react";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";

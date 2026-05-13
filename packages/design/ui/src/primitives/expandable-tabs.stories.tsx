@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import {
   BarChart,
   Bell,
   Bookmark,
   Home,
-  MessageCircle,
-  Search,
-  Settings,
+  Message as MessageCircle,
+  MagnifyingGlass as Search,
+  SettingsGear as Settings,
   User,
-} from "lucide-react";
+} from "@nebutra/icons";
+import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { ExpandableTabs } from "./expandable-tabs";
 

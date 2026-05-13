@@ -1,5 +1,11 @@
+import {
+  Robot as Bot,
+  LoaderCircle as Loader2,
+  PaperAirplane as Send,
+  Trash as Trash2,
+  User,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Bot, Loader2, Send, Trash2, User } from "lucide-react";
 
 /* ---------------------------------------------------------------------------
  * Visual-only story components

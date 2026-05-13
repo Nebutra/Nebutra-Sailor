@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, Star } from "lucide-react";
+import { VerifiedCheck as Award, Star } from "@nebutra/icons";
 import type React from "react";
 
 import { cn } from "../utils/cn";

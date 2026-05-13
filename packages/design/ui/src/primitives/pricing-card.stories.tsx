@@ -1,5 +1,11 @@
+import {
+  Buildings as Building,
+  Check,
+  LockClosed as Lock,
+  Star,
+  Lightning as Zap,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Building, Check, Lock, Star, Zap } from "lucide-react";
 import { PricingCard } from "./pricing-card";
 
 const meta = {

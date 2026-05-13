@@ -1,16 +1,16 @@
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import {
   ArrowRight,
   BookOpen,
   FileText,
-  Github,
+  LogoGithub as Github,
   Layers,
-  Network,
-  Rocket,
+  NetworkDevice as Network,
+  Lightning as Rocket,
   Sparkles,
   Users,
-} from "lucide-react";
+} from "@nebutra/icons";
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";

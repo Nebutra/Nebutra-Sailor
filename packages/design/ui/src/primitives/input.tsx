@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, X } from "lucide-react";
+import { LoaderCircle as Loader2, Cross as X } from "@nebutra/icons";
 import * as React from "react";
 import { cn } from "../utils/cn";
 import { Kbd } from "./kbd";

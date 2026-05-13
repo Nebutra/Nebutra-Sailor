@@ -1,6 +1,13 @@
 "use client";
 
-import { BadgeCheck, MoreHorizontal, Plus, Search, Settings2, Sparkles } from "lucide-react";
+import {
+  VerifiedCheck as BadgeCheck,
+  MoreHorizontal,
+  Plus,
+  MagnifyingGlass as Search,
+  SettingsSlider as Settings2,
+  Sparkles,
+} from "@nebutra/icons";
 import { useMemo, useState } from "react";
 
 /**

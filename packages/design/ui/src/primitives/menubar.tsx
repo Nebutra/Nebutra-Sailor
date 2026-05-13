@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronRight, Circle } from "lucide-react";
+import { Check, ChevronRight, Status as Circle } from "@nebutra/icons";
 import * as React from "react";
 
 import { cn } from "../utils/cn";

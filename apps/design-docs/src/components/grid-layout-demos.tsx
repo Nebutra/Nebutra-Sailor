@@ -1,7 +1,11 @@
 "use client";
 
+import {
+  Layout as LayoutDashboard,
+  SidebarLeft as LayoutPanelLeft,
+  Lightning as Rocket,
+} from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
-import { LayoutDashboard, LayoutPanelLeft, Rocket } from "lucide-react";
 import { GridCell, GridDemo } from "@/components/grid-demos";
 
 export function StandardGridDemo() {

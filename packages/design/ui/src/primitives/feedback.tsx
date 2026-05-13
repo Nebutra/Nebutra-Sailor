@@ -1,6 +1,12 @@
 "use client";
 
-import { Frown, Meh, Plus, Smile, X } from "lucide-react";
+import {
+  FaceSad as Frown,
+  FaceSmile as Meh,
+  Plus,
+  FaceSmile as Smile,
+  Cross as X,
+} from "@nebutra/icons";
 import * as React from "react";
 import { cn } from "../utils/cn";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";

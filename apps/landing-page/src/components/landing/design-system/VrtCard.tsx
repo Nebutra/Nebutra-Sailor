@@ -1,4 +1,4 @@
-import { CheckCircle2, Eye } from "lucide-react";
+import { CheckCircle as CheckCircle2, Eye } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
 
 export function VrtCard() {

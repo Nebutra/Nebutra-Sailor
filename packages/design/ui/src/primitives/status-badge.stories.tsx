@@ -1,5 +1,13 @@
+import {
+  Warning as AlertCircle,
+  CheckCircle as CheckCircle2,
+  Globe,
+  Information as Info,
+  Servers as Server,
+  ShieldCheck,
+  CrossCircle as XCircle,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { AlertCircle, CheckCircle2, Globe, Info, Server, ShieldCheck, XCircle } from "lucide-react";
 import { StatusBadge } from "./status-badge";
 
 const meta = {

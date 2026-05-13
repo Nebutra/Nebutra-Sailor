@@ -1,7 +1,7 @@
 "use client";
 
+import { Information as Info } from "@nebutra/icons";
 import { Alert } from "@nebutra/ui/primitives";
-import { Info } from "lucide-react";
 
 export function IntroductionDemo() {
   return (

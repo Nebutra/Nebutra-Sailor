@@ -1,4 +1,4 @@
-import { Droplet } from "lucide-react";
+import { Droplet } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
 
 export function ThemeSelectorCard() {

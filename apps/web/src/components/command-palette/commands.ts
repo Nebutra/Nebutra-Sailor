@@ -3,19 +3,19 @@ import {
   CreditCard,
   FileText,
   Home,
-  Keyboard,
-  KeyRound,
-  LifeBuoy,
-  LogOut,
+  Command as Keyboard,
+  Key as KeyRound,
+  Lifebuoy as LifeBuoy,
+  Logout as LogOut,
   Moon,
   Plus,
-  Settings,
+  SettingsGear as Settings,
   Shield,
   Sun,
   UserPlus,
   Users,
   Webhook,
-} from "lucide-react";
+} from "@nebutra/icons";
 import type { ComponentType, SVGProps } from "react";
 import type { Scope } from "@/lib/permissions";
 

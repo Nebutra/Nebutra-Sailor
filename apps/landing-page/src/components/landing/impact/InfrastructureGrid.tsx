@@ -1,7 +1,12 @@
 "use client";
 
+import {
+  Box as Boxes,
+  Dollar as CircleDollarSign,
+  GitBranch as GitGraph,
+  Lightning as Rocket,
+} from "@nebutra/icons";
 import { motion } from "framer-motion";
-import { Boxes, CircleDollarSign, GitGraph, Rocket } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type React from "react";
 import { useRef, useState } from "react";

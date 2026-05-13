@@ -1,8 +1,8 @@
 "use client";
 
+import { Compass, Sparkles, Cross as X } from "@nebutra/icons";
 import { useTour } from "@nebutra/onboarding";
 import { AnimateIn } from "@nebutra/ui/components";
-import { Compass, Sparkles, X } from "lucide-react";
 import { useState } from "react";
 import { DASHBOARD_TOUR_V1 } from "@/lib/onboarding/dashboard-tour";
 

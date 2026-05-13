@@ -1,8 +1,8 @@
 "use client";
 
 import { Turnstile } from "@marsidev/react-turnstile";
+import { Warning as AlertTriangle, Eye, EyeOff, Key, Envelope as Mail } from "@nebutra/icons";
 import { Button, Input, Label, Separator } from "@nebutra/ui/primitives";
-import { AlertTriangle, Eye, EyeOff, Key, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";

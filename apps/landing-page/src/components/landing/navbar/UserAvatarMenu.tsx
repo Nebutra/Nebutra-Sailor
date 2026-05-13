@@ -24,7 +24,14 @@
  * apps/web/src/app/api/me/public/route.ts.
  */
 
-import { BookOpen, ChevronDown, CreditCard, LogOut, Settings, User } from "lucide-react";
+import {
+  BookOpen,
+  ChevronDown,
+  CreditCard,
+  Logout as LogOut,
+  SettingsGear as Settings,
+  User,
+} from "@nebutra/icons";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { env } from "@/lib/env";

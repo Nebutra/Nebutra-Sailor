@@ -1,7 +1,7 @@
 "use client";
 
+import { LoaderCircle as Loader2, FloppyDisk as Save, Sparkles } from "@nebutra/icons";
 import { toast } from "@nebutra/ui/primitives";
-import { Loader2, Save, Sparkles } from "lucide-react";
 import { useEffect, useId, useState, useTransition } from "react";
 
 /**

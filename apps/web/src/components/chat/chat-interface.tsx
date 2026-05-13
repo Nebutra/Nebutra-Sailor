@@ -1,26 +1,26 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { AnimateIn } from "@nebutra/ui/components";
-import { MessageContent, toast } from "@nebutra/ui/primitives";
-import { DefaultChatTransport, type UIMessage } from "ai";
 import {
-  AlertCircle,
-  Bot,
+  Warning as AlertCircle,
+  Robot as Bot,
   Check,
   Copy,
   Database,
-  Loader2,
-  type LucideIcon,
-  MessageSquare,
+  LoaderCircle as Loader2,
+  type Icon as LucideIcon,
+  Message as MessageSquare,
   Plus,
-  RotateCcw,
-  Search,
-  Send,
-  Trash2,
+  RotateCounterClockwise as RotateCcw,
+  MagnifyingGlass as Search,
+  PaperAirplane as Send,
+  Trash as Trash2,
   User,
   Workflow,
-} from "lucide-react";
+} from "@nebutra/icons";
+import { AnimateIn } from "@nebutra/ui/components";
+import { MessageContent, toast } from "@nebutra/ui/primitives";
+import { DefaultChatTransport, type UIMessage } from "ai";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PromptSuggestions } from "./prompt-suggestions";
