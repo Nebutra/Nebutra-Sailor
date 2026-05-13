@@ -7,7 +7,7 @@
     "dev": "next dev --port 3010",
     "build": "next build --webpack",
     "start": "next start --port 3010",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "check": "tsx scripts/check.ts",
     "export": "tsx scripts/export.ts",
     "render:react": "tsx scripts/render-react-templates.ts",
