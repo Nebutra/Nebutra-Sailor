@@ -88,6 +88,21 @@ function readStoredTheme(storageKey: string, fallback: Theme): Theme {
   return fallback;
 }
 
+/** 1 year — long-lived because theme is a deliberate user choice. */
+const THEME_COOKIE_MAX_AGE = 365 * 24 * 60 * 60;
+
+/**
+ * Mirror the resolved theme into a cookie so the next request can be
+ * server-rendered with the correct `<html>` class — eliminating the
+ * need for an inline FOUC-prevention `<script>` (which React 19 warns
+ * about). The cookie value is always concrete ("light" | "dark"), never
+ * "system" — Server Components shouldn't try to guess the OS preference.
+ */
+function writeThemeCookie(resolved: ResolvedTheme, cookieName: string) {
+  if (typeof document === "undefined") return;
+  document.cookie = `${cookieName}=${resolved}; Max-Age=${THEME_COOKIE_MAX_AGE}; Path=/; SameSite=Lax`;
+}
+
 function applyThemeToDom(
   resolved: ResolvedTheme,
   attribute: "class" | "data-theme",
@@ -168,10 +183,13 @@ export function ThemeProvider({
     [storageKey],
   );
 
-  // Apply the resolved theme to the DOM whenever it changes
+  // Apply the resolved theme to the DOM AND sync the cookie so the next
+  // SSR can render the correct <html> class directly (no inline script,
+  // no React 19 "script in component" warning).
   useEffect(() => {
     applyThemeToDom(resolvedTheme, attribute, disableTransitionOnChange);
-  }, [resolvedTheme, attribute, disableTransitionOnChange]);
+    writeThemeCookie(resolvedTheme, storageKey);
+  }, [resolvedTheme, attribute, disableTransitionOnChange, storageKey]);
 
   // Follow OS preference changes when in `system` mode
   useEffect(() => {

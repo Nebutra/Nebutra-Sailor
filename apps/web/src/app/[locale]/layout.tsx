@@ -1,6 +1,6 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
-import { buildThemeInitScript } from "@nebutra/tokens";
+import { THEME_STORAGE_KEY } from "@nebutra/tokens";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
 import { Toaster } from "@nebutra/ui/primitives";
 import { Analytics } from "@vercel/analytics/react";
@@ -8,7 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
+import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -60,6 +60,16 @@ export default async function RootLayout({
   const nonce = await getNonce();
   const messages = await getMessages();
 
+  // Read the persisted theme from cookie so we can render <html> with the
+  // correct class server-side. ThemeProvider writes this cookie whenever
+  // the user changes themes (mirrors the localStorage state). On first
+  // visit the cookie is absent — we render with no theme class and let
+  // the client take over (brief flash only on "system" preference first
+  // visit). This replaces the inline FOUC-prevention <script>, which
+  // React 19 / Turbopack warn about for every page load.
+  const themeCookie = (await cookies()).get(THEME_STORAGE_KEY)?.value;
+  const themeClass = themeCookie === "dark" ? "dark" : themeCookie === "light" ? "light" : "";
+
   // Detect auth provider from environment
   const authProvider = getConfiguredAuthProvider();
 
@@ -72,19 +82,10 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable}`.trim()}
       suppressHydrationWarning
     >
       <body className="antialiased">
-        {/* FOUC-prevention: Next.js next/script `beforeInteractive`
-            strategy injects the inline script into the HTML response
-            itself, bypassing React's render pipeline — which is what
-            makes the React 19 "scripts inside React components" warning
-            actually go away (it fires for any <script> JSX, Server or
-            Client). Runs synchronously before hydration. */}
-        <Script id="theme-init" strategy="beforeInteractive" nonce={nonce}>
-          {buildThemeInitScript()}
-        </Script>
         <a
           href="#main-content"
           className="fixed left-3 top-3 z-[100] -translate-y-20 rounded-[var(--radius-md)] bg-[var(--blue-9)] px-3 py-2 text-sm font-medium text-white opacity-0 transition focus:translate-y-0 focus:opacity-100"

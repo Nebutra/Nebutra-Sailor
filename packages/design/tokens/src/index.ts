@@ -11,13 +11,12 @@
  *   → Display-P3 wide gamut with sRGB fallback
  *   → Tailwind v4 @theme integration
  *
- * JS exports:  ThemeProvider, useTheme, buildThemeInitScript (custom — no next-themes)
+ * JS exports:  ThemeProvider, useTheme, THEME_STORAGE_KEY (custom — no next-themes)
  *   → App-level light/dark mode switching
- *   → buildThemeInitScript() returns the FOUC-prevention script as a
- *     STRING. Consumers wrap it in their framework's script-injection
- *     primitive (Next.js: <Script strategy="beforeInteractive">), which
- *     bypasses React's render pipeline and sidesteps the React 19
- *     "scripts inside React components" warning entirely.
+ *   → ThemeProvider writes BOTH localStorage AND a cookie of the same name.
+ *     Server Components read the cookie via `next/headers` cookies() and
+ *     inject the resolved class directly into <html> — zero inline script,
+ *     zero React 19 "script in component" warning, zero FOUC risk.
  *
  * Related packages:
  *   @nebutra/brand  → brand primitives (color definitions, motion language)
@@ -31,7 +30,6 @@ export {
   type ThemeProviderProps,
   useTheme,
 } from "./theme-provider";
-export { type BuildThemeInitScriptOptions, buildThemeInitScript } from "./theme-script";
 
 export const THEME_IDS = ["light", "dark"] as const;
 export type ThemeId = (typeof THEME_IDS)[number];

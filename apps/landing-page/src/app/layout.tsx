@@ -1,8 +1,8 @@
-import { buildThemeInitScript } from "@nebutra/tokens";
+import { THEME_STORAGE_KEY } from "@nebutra/tokens";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import Script from "next/script";
+import { cookies } from "next/headers";
 import { seoContent } from "@/lib/landing-content";
 import "./globals.css";
 
@@ -60,22 +60,21 @@ export const metadata: Metadata = {
  * Root layout is a passthrough — the HTML shell lives in [lang]/layout.tsx
  * so that the locale is available from static params (required for cacheComponents).
  */
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Read the persisted theme from cookie so <html> gets the correct class
+  // server-side — zero inline script, zero React 19 / Turbopack warning,
+  // zero FOUC risk for users who have already picked light/dark. ThemeProvider
+  // writes this cookie whenever theme changes.
+  const themeCookie = (await cookies()).get(THEME_STORAGE_KEY)?.value;
+  const themeClass = themeCookie === "dark" ? "dark" : themeCookie === "light" ? "light" : "";
+
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} min-h-screen antialiased`}
+      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} min-h-screen antialiased`.trim()}
       suppressHydrationWarning
     >
-      <body className="antialiased">
-        {/* FOUC-prevention: see apps/web layout for the full rationale.
-            next/script `beforeInteractive` is the only injection path that
-            React 19 + Turbopack don't warn about. */}
-        <Script id="theme-init" strategy="beforeInteractive">
-          {buildThemeInitScript()}
-        </Script>
-        {children}
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
