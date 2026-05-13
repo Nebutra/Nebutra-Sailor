@@ -152,7 +152,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
               href="/contact"
               className="font-medium text-[var(--blue-9)] underline-offset-4 hover:underline"
             >
-              {faq("description")}
+              {faq("contactNudge")}
             </Link>
           </p>
         </AnimateIn>

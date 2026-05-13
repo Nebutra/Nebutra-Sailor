@@ -118,19 +118,6 @@
     "ctaStart": "Commencer →",
     "ctaExplore": "Explorer →"
   },
-  "legal": {
-    "nav": {
-      "home": "Accueil",
-      "contact": "Contact"
-    },
-    "footer": {
-      "privacy": "Politique de confidentialité",
-      "terms": "Conditions d'utilisation",
-      "cookies": "Politique relative aux cookies",
-      "refund": "Politique de remboursement",
-      "copyright": "© Nebutra. Tous droits réservés."
-    }
-  },
   "legalPages": {
     "about": {
       "title": "À propos — La plateforme IA gouvernée",
@@ -1213,7 +1200,8 @@
       "q4": {
         "q": "Dois-je payer pour les mises à jour ?",
         "a": "Les licences commerciales incluent 12 mois de mises à jour à partir de la date d'achat. Le niveau individuel AGPL-3.0 est perpétuel."
-      }
+      },
+      "contactNudge": "D’autres questions ? Parlez à notre équipe d’ingénierie →"
     },
     "cta": {
       "eyebrow": "Commencer",

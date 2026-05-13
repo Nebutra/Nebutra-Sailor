@@ -118,19 +118,6 @@
     "ctaStart": "Starten →",
     "ctaExplore": "Ansehen →"
   },
-  "legal": {
-    "nav": {
-      "home": "Startseite",
-      "contact": "Kontakt"
-    },
-    "footer": {
-      "privacy": "Datenschutzrichtlinie",
-      "terms": "Nutzungsbedingungen",
-      "cookies": "Cookie-Richtlinie",
-      "refund": "Erstattungsrichtlinie",
-      "copyright": "© Nebutra. Alle Rechte vorbehalten."
-    }
-  },
   "legalPages": {
     "about": {
       "title": "Über uns — Die Governed-AI-Plattform",
@@ -1208,7 +1195,8 @@
       "q4": {
         "q": "Muss ich für Updates bezahlen?",
         "a": "Kommerzielle Lizenzen enthalten 12 Monate Updates ab Kaufdatum. Die individuelle AGPL-3.0-Stufe ist unbegrenzt gültig."
-      }
+      },
+      "contactNudge": "Noch Fragen? Sprechen Sie mit unserem Engineering-Team →"
     },
     "cta": {
       "eyebrow": "Loslegen",

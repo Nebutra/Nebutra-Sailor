@@ -118,19 +118,6 @@
     "ctaStart": "快速开始",
     "ctaExplore": "探索技术栈"
   },
-  "legal": {
-    "nav": {
-      "home": "首页",
-      "contact": "联系我们"
-    },
-    "footer": {
-      "privacy": "隐私政策要求",
-      "terms": "核心服务条款",
-      "cookies": "数据存储政策",
-      "refund": "商业退款细则",
-      "copyright": "© Nebutra. 保留所有权利。"
-    }
-  },
   "legalPages": {
     "about": {
       "title": "关于我们 — 受治理的 AI 平台",
@@ -1213,7 +1200,8 @@
       "q4": {
         "q": "我需要为后续的更新付费吗？",
         "a": "完全不需要，商业授权包含对代码库的终身访问权限，并同步所有未来的架构升级与演进。"
-      }
+      },
+      "contactNudge": "还有疑问？与工程团队直接沟通 →"
     },
     "cta": {
       "eyebrow": "立即开始",
