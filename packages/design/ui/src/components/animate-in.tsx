@@ -58,14 +58,12 @@ export interface AnimateInProps {
   className?: string;
 }
 
-export function AnimateIn({
-  children,
-  preset = "emerge",
-  delay = 0,
-  duration,
-  inView = false,
-  className,
-}: AnimateInProps) {
+// NOTE: do not destructure at the parameter signature. Next.js build-time
+// type inference can mis-resolve destructured params without defaults as
+// required `any`, masking the typed AnimateInProps interface. Keep the signature
+// as `(props: AnimateInProps)` and destructure inside.
+export function AnimateIn(props: AnimateInProps) {
+  const { children, preset = "emerge", delay = 0, duration, inView = false, className } = props;
   const shouldReduce = useReducedMotion();
   const { initial, animate, exit, transition } = PRESETS[preset];
   const t = {
@@ -105,12 +103,8 @@ export interface AnimateInGroupProps {
   className?: string;
 }
 
-export function AnimateInGroup({
-  children,
-  stagger = "normal",
-  inView = false,
-  className,
-}: AnimateInGroupProps) {
+export function AnimateInGroup(props: AnimateInGroupProps) {
+  const { children, stagger = "normal", inView = false, className } = props;
   const shouldReduce = useReducedMotion();
   const variants = {
     initial: {},

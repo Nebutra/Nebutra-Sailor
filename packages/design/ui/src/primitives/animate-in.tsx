@@ -86,14 +86,11 @@ export interface AnimateInProps {
  *   <Card>...</Card>
  * </AnimateIn>
  */
-export function AnimateIn({
-  children,
-  preset = "emerge",
-  delay = 0,
-  duration,
-  inView = false,
-  className,
-}: AnimateInProps) {
+// NOTE: parameter-level destructuring loses optionality during dist .js emit —
+// Next.js build then mis-infers optional props as required `any`. Use the
+// `props: AnimateInProps` form and destructure inside.
+export function AnimateIn(props: AnimateInProps) {
+  const { children, preset = "emerge", delay = 0, duration, inView = false, className } = props;
   const shouldReduce = useFramerReducedMotion();
   const base = PRESETS[preset] || PRESETS.emerge;
 
@@ -162,12 +159,8 @@ export interface AnimateInGroupProps {
  *   {items.map(item => <AnimateIn key={item.id} preset="fadeUp">{item}</AnimateIn>)}
  * </AnimateInGroup>
  */
-export function AnimateInGroup({
-  children,
-  stagger = "normal",
-  inView = false,
-  className,
-}: AnimateInGroupProps) {
+export function AnimateInGroup(props: AnimateInGroupProps) {
+  const { children, stagger = "normal", inView = false, className } = props;
   const shouldReduce = useFramerReducedMotion();
   const container = staggerContainers[stagger];
 
