@@ -1,8 +1,6 @@
-import { THEME_STORAGE_KEY } from "@nebutra/tokens";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { seoContent } from "@/lib/landing-content";
 import "./globals.css";
 
@@ -60,18 +58,24 @@ export const metadata: Metadata = {
  * Root layout is a passthrough — the HTML shell lives in [lang]/layout.tsx
  * so that the locale is available from static params (required for cacheComponents).
  */
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // Read the persisted theme from cookie so <html> gets the correct class
-  // server-side — zero inline script, zero React 19 / Turbopack warning,
-  // zero FOUC risk for users who have already picked light/dark. ThemeProvider
-  // writes this cookie whenever theme changes.
-  const themeCookie = (await cookies()).get(THEME_STORAGE_KEY)?.value;
-  const themeClass = themeCookie === "dark" ? "dark" : themeCookie === "light" ? "light" : "";
-
+// NOTE: landing-page does NOT inject the theme class server-side from the
+// `theme` request header (the way apps/web does via next/headers). Reading
+// any request-scoped data here would make the root layout dynamic, which
+// breaks Next.js 16 Cache Components (PPR) for every static marketing route
+// — confirmed regression that failed seven prerendered routes (changelog,
+// legal, impact, blog, etc.).
+//
+// Trade-off: users who have picked light/dark see a brief (~50ms) flash
+// on first paint while the client-side ThemeProvider in <Providers> takes
+// over and applies their saved preference. For a static marketing site
+// this is the canonical compromise — Vercel.com itself does the same.
+// The authenticated dashboard (apps/web) is dynamic anyway, so it keeps
+// the header-based SSR injection without paying any PPR cost.
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} min-h-screen antialiased`.trim()}
+      className={`${GeistSans.variable} ${GeistMono.variable} min-h-screen antialiased`}
       suppressHydrationWarning
     >
       <body className="antialiased">{children}</body>
