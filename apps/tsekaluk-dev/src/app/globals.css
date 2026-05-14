@@ -1,6 +1,9 @@
 @import "@nebutra/tokens/styles.css";
 @import "tailwindcss";
 
+/* Scan @nebutra/ui primitives so their Tailwind classes get generated. */
+@source "../../../../packages/design/ui/src";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ─── Local font declarations ──────────────────────────────────────────────── */

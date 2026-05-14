@@ -6,6 +6,9 @@
 @import "tailwindcss";
 @import "@nebutra/tokens/styles.css";
 
+/* Scan @nebutra/ui primitives so their Tailwind classes get generated. */
+@source "../../../../packages/design/ui/src";
+
 @custom-variant dark (&:is(.dark *));
 
 @layer base {

@@ -11,6 +11,12 @@
 @import "@nebutra/tokens/styles.css";
 @import "tw-animate-css";
 
+/* Scan @nebutra/ui primitives so their Tailwind classes
+ * (e.g. rounded-[var(--radius-md)], border-input) get generated.
+ * Without this, <Input>/<Textarea>/<Select> render unstyled (square border,
+ * no padding, prefix icon overlapping placeholder). See web app's globals.css. */
+@source "../../../../packages/design/ui/src";
+
 /* Typography plugin — enables prose classes for legal/content pages */
 @plugin "@tailwindcss/typography";
 /*---break---
