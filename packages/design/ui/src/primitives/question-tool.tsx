@@ -143,9 +143,9 @@ export function QuestionPrompt({
   const isLastQuestion = clampedIndex >= resolvedTotal;
   const primaryLabel = isLastQuestion ? submitLabel : nextLabel;
 
-  // Reset internal state when the question or initialAnswer changes.
-  // Use a stable signature for initialAnswer to avoid array-identity churn.
-  const _initialAnswerSignature = useMemo(() => {
+  // Stable signature for initialAnswer keeps the reset effect from churning on
+  // array-identity changes. Used in the deps array below.
+  const initialAnswerSignature = useMemo(() => {
     if (!initialAnswer || initialAnswer.kind === "skip") return "";
     if (initialAnswer.kind === "text") return `t:${initialAnswer.text}`;
     return `${initialAnswer.kind}:${initialAnswer.selectedIds.join(",")}:${initialAnswer.text ?? ""}`;
@@ -172,7 +172,7 @@ export function QuestionPrompt({
     setSelectedIds(Array.from(nextSelected));
     setCustomText(nextCustomText);
     setTextValue("");
-  }, [customEnabled, initialAnswer]);
+  }, [customEnabled, initialAnswer, initialAnswerSignature]);
 
   const canSubmit = useMemo(() => {
     if (!activeQuestion) return false;
@@ -504,9 +504,9 @@ export function QuestionTool({
   useEffect(() => {
     setLocalAnswers({});
     setLocalIndex(questionIndex ?? 1);
-    // toolCallId resets — questionIndex left intentionally out of deps.
+    // toolCallId is the reset signal — questionIndex left intentionally out of deps.
     // biome-ignore lint/correctness/useExhaustiveDependencies: reset signal
-  }, [questionIndex]);
+  }, [toolCallId]);
 
   const outputAnswer = output?.answer;
   const answeredCount = Object.keys(localAnswers).length;
