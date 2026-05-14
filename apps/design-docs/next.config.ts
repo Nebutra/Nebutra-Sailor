@@ -14,6 +14,20 @@ const nextConfig: NextConfig = {
     "@fumadocs/story",
   ],
   reactStrictMode: true,
+  // Remote image hosts referenced by demos.
+  // Unsplash removed — demos use local SVG data URLs (avoid Fake-IP DNS proxy
+  // issues + Next SSRF protection + CDN flakiness).
+  images: {
+    remotePatterns: [
+      // Avatar / user icon demos still legitimately use these GitHub-family hosts.
+      { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "github.com" },
+      { protocol: "https", hostname: "gitlab.com" },
+      { protocol: "https", hostname: "bitbucket.org" },
+      { protocol: "https", hostname: "nebutra.com" },
+      { protocol: "https", hostname: "www.w3schools.com" },
+    ],
+  },
   async rewrites() {
     return [
       {

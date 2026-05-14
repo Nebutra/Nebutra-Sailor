@@ -1,15 +1,19 @@
 import { Clock, Pin as MapPin, Layers as Mountain } from "@nebutra/icons";
 import { AnimatedHikeCard } from "@nebutra/ui/primitives";
 
+// Three brand-gradient variants for the stack (avoids network deps).
+const gradient = (from: string, to: string, label: string): string =>
+  `data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='${from}'/%3E%3Cstop offset='1' stop-color='${to}'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23g)'/%3E%3Ctext x='400' y='320' text-anchor='middle' fill='white' font-size='48' font-weight='700' font-family='system-ui' opacity='0.9'%3E${label}%3C/text%3E%3C/svg%3E`;
+
 export function AnimatedHikeCardDemo() {
   return (
-    <div className="p-8 flex w-full items-center justify-center">
+    <div className="flex w-full items-center justify-center p-8">
       <AnimatedHikeCard
         title="Yosemite Valley"
         images={[
-          "https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&q=80&w=400",
-          "https://images.unsplash.com/photo-1519681393774-d08959eb4a39?auto=format&fit=crop&q=80&w=400",
-          "https://images.unsplash.com/photo-1444090542259-0af8afa965cb?auto=format&fit=crop&q=80&w=400",
+          gradient("%230033fe", "%230bf1c3", "Cliff"),
+          gradient("%230bf1c3", "%238b5cf6", "Waterfall"),
+          gradient("%238b5cf6", "%230033fe", "Sequoia"),
         ]}
         stats={[
           { icon: <Clock className="h-4 w-4" />, label: "~6 Hours" },

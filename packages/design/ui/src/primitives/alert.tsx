@@ -131,31 +131,31 @@ const alertVariants = cva("flex items-stretch w-full gap-2 group-[.toaster]:w-(-
       variant: "primary",
       appearance: "light",
       className:
-        "text-foreground bg-[var(--color-primary-soft, var(--color-blue-50))] border border-[var(--color-primary-alpha, var(--color-blue-100))] [&_[data-slot=alert-icon]]:text-primary dark:bg-[var(--color-primary-soft, var(--color-blue-950))] dark:border-[var(--color-primary-alpha, var(--color-blue-900))]",
+        "bg-[hsl(var(--primary)/0.1)] border border-[hsl(var(--primary)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--primary))]",
     },
     {
       variant: "destructive",
       appearance: "light",
       className:
-        "bg-[var(--color-destructive-soft, var(--color-red-50))] border border-[var(--color-destructive-alpha, var(--color-red-100))] text-foreground [&_[data-slot=alert-icon]]:text-destructive dark:bg-[var(--color-destructive-soft, var(--color-red-950))] dark:border-[var(--color-destructive-alpha, var(--color-red-900))]",
+        "bg-[hsl(var(--destructive)/0.1)] border border-[hsl(var(--destructive)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--destructive))]",
     },
     {
       variant: "success",
       appearance: "light",
       className:
-        "bg-[var(--color-success-soft, var(--color-green-50))] border border-[var(--color-success-alpha, var(--color-green-200))] text-foreground [&_[data-slot=alert-icon]]:text-[var(--color-success, var(--color-green-600))] dark:bg-[var(--color-success-soft, var(--color-green-950))] dark:border-[var(--color-success-alpha, var(--color-green-900))]",
+        "bg-[hsl(var(--success)/0.1)] border border-[hsl(var(--success)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--success))]",
     },
     {
       variant: "info",
       appearance: "light",
       className:
-        "bg-[var(--color-info-soft, var(--color-violet-50))] border border-[var(--color-info-alpha, var(--color-violet-100))] text-foreground [&_[data-slot=alert-icon]]:text-[var(--color-info, var(--color-violet-600))] dark:bg-[var(--color-info-soft, var(--color-violet-950))] dark:border-[var(--color-info-alpha, var(--color-violet-900))]",
+        "bg-[hsl(var(--info)/0.1)] border border-[hsl(var(--info)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--info))]",
     },
     {
       variant: "warning",
       appearance: "light",
       className:
-        "bg-[var(--color-warning-soft, var(--color-yellow-50))] border border-[var(--color-warning-alpha, var(--color-yellow-200))] text-foreground [&_[data-slot=alert-icon]]:text-[var(--color-warning, var(--color-yellow-600))] dark:bg-[var(--color-warning-soft, var(--color-yellow-950))] dark:border-[var(--color-warning-alpha, var(--color-yellow-900))]",
+        "bg-[hsl(var(--warning)/0.1)] border border-[hsl(var(--warning)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--warning))]",
     } /* Mono icon colors */,
     {
       variant: "mono",
