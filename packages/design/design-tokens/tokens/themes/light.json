@@ -131,9 +131,9 @@
     "border": { "$value": "240 5.9% 90%", "$type": "string" },
     "input": { "$value": "240 5.9% 90%", "$type": "string" },
     "ring": {
-      "$value": "228 85% 56%",
+      "$value": "222 47% 11%",
       "$type": "string",
-      "$description": "Focus ring — desaturated brand blue. Pair with ring-[3px] ring-ring/30 (shadcn 2025 pattern), not legacy ring-2 ring-offset-2."
+      "$description": "Focus ring — neutral foreground (Vercel/Linear/Cursor 2026 pattern). Brand blue is reserved for selected/active states; focus indication is chrome and stays neutral. Consumed by global :focus-visible outline as hsl(var(--ring) / 0.5)."
     },
     "sidebar": { "$value": "210 40% 98%", "$type": "string" },
     "sidebar-foreground": { "$value": "215 25% 27%", "$type": "string" },

@@ -189,7 +189,7 @@
   --info-foreground: 0 0% 100%;
   --border: 240 5.9% 90%;
   --input: 240 5.9% 90%;
-  --ring: 228 85% 56%; /** Focus ring — desaturated brand blue. Pair with ring-[3px] ring-ring/30 (shadcn 2025 pattern), not legacy ring-2 ring-offset-2. */
+  --ring: 222 47% 11%; /** Focus ring — neutral foreground (Vercel/Linear/Cursor 2026 pattern). Brand blue is reserved for selected/active states; focus indication is chrome and stays neutral. Consumed by global :focus-visible outline as hsl(var(--ring) / 0.5). */
   --sidebar: 210 40% 98%;
   --sidebar-foreground: 215 25% 27%;
   --sidebar-primary: 228 85% 56%;
@@ -462,7 +462,7 @@
   --info-foreground: 222 47% 4%;
   --border: 0 0% 14.9%;
   --input: 0 0% 14.9%;
-  --ring: 228 95% 67%;
+  --ring: 0 0% 88%; /** Focus ring (dark mode) — neutral light gray. Mirrors light-mode neutral foreground choice. */
   --sidebar: 222 47% 6%;
   --sidebar-foreground: 210 40% 96%;
   --sidebar-primary: 228 95% 67%;

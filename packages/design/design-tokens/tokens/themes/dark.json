@@ -104,7 +104,11 @@
     "info-foreground": { "$value": "222 47% 4%", "$type": "string" },
     "border": { "$value": "0 0% 14.9%", "$type": "string" },
     "input": { "$value": "0 0% 14.9%", "$type": "string" },
-    "ring": { "$value": "228 95% 67%", "$type": "string" },
+    "ring": {
+      "$value": "0 0% 88%",
+      "$type": "string",
+      "$description": "Focus ring (dark mode) — neutral light gray. Mirrors light-mode neutral foreground choice."
+    },
     "sidebar": { "$value": "222 47% 6%", "$type": "string" },
     "sidebar-foreground": { "$value": "210 40% 96%", "$type": "string" },
     "sidebar-primary": { "$value": "228 95% 67%", "$type": "string" },

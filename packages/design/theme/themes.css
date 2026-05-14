@@ -1,6 +1,6 @@
 /**
  * @nebutra/theme — themes.generated.css
- * AUTO-GENERATED from packages/design-tokens/tokens/themes/*.json — DO NOT EDIT.
+ * AUTO-GENERATED from packages/design/design-tokens/tokens/themes/*.json — DO NOT EDIT.
  *
  * Multi-theme engine — CSS-only:
  *   :root                         neon (default theme)
@@ -66,6 +66,7 @@
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+
 /* ─── gradient theme ─── */
 /**
  * @nebutra/design-tokens — generated from W3C DTCG tokens.
@@ -102,6 +103,7 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
 }
 
+
 /* ─── dark-dense theme ─── */
 /**
  * @nebutra/design-tokens — generated from W3C DTCG tokens.
@@ -135,6 +137,7 @@
   --font-sans: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
   --font-heading: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 }
+
 
 /* ─── minimal theme ─── */
 /**
@@ -172,6 +175,7 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.07);
 }
+
 
 /* ─── vibrant theme ─── */
 /**
@@ -211,6 +215,7 @@
   --shadow-xl: 0 20px 25px -5px rgb(249 115 22 / 0.15);
 }
 
+
 /* ─── ocean theme ─── */
 /**
  * @nebutra/design-tokens — generated from W3C DTCG tokens.
@@ -246,6 +251,7 @@
   --shadow-lg: 0 10px 15px -3px rgb(8 145 178 / 0.12);
   --shadow-xl: 0 20px 25px -5px rgb(8 145 178 / 0.12);
 }
+
 
 /* ─── Shared Keyframe Animations ─── */
 /*
