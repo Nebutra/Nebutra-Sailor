@@ -3,8 +3,8 @@
   "name": "input-2-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui",
-    "lucide-react"
+    "@nebutra/icons",
+    "@nebutra/ui"
   ],
   "registryDependencies": [
     "@nebutra/ui"
@@ -12,7 +12,7 @@
   "files": [
     {
       "path": "registry/examples/input-2-demo.tsx",
-      "content": "\"use client\";\n\nimport { Input } from \"@nebutra/ui/primitives\";\nimport { Search } from \"lucide-react\";\nexport function Input2Demo() {\n  return <Input prefix={<Search className=\"h-4 w-4\" />} clearable placeholder=\"Search…\" />;\n}\n",
+      "content": "\"use client\";\n\nimport { Input } from \"@nebutra/ui/primitives\";\nimport { MagnifyingGlass as Search } from \"@nebutra/icons\";\nexport function Input2Demo() {\n  return <Input prefix={<Search className=\"h-4 w-4\" />} clearable placeholder=\"Search…\" />;\n}\n",
       "type": "registry:example"
     }
   ]

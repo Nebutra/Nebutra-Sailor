@@ -55,8 +55,21 @@
       "$description": "Geist-matching 6px"
     }
   },
+  "motion": {
+    "$description": "Semantic motion layer — references the four-rail duration scale in core.json. Component code should consume these (or Tailwind duration-micro / duration-flow / duration-reveal / duration-cinematic utilities), never raw ms.",
+    "duration": {
+      "micro": { "$value": "{duration.micro}", "$type": "duration" },
+      "flow": { "$value": "{duration.flow}", "$type": "duration" },
+      "reveal": { "$value": "{duration.reveal}", "$type": "duration" },
+      "cinematic": { "$value": "{duration.cinematic}", "$type": "duration" }
+    }
+  },
   "transition": {
-    "duration": { "$value": "{duration.normal}", "$type": "duration" },
+    "duration": {
+      "$value": "{duration.flow}",
+      "$type": "duration",
+      "$description": "Default transition duration — 200ms flow rail."
+    },
     "easing": {
       "$value": "ease-out",
       "$type": "string",

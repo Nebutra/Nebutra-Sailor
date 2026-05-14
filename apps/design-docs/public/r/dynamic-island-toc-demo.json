@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dynamic-island-toc-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/dynamic-island-toc-demo.tsx",
+      "content": "\"use client\";\n\nimport { DynamicIslandTOC } from \"@nebutra/ui/primitives\";\n\nexport function DynamicIslandTocDemo() {\n  return (\n    <div className=\"relative h-[600px] overflow-y-auto rounded-xl border border-border bg-background text-foreground\">\n      <DynamicIslandTOC />\n      <article className=\"prose mx-auto max-w-2xl px-6 py-12 dark:prose-invert\">\n        <h1>The Evolution of Web Architecture</h1>\n\n        <h2>The Early Days: Static HTML</h2>\n        <p>\n          In the beginning, the web was read-only. Servers hosted flat HTML files and served them\n          on request — no interactivity, no user accounts, no dynamic content.\n        </p>\n\n        <h3>The Role of Webmasters</h3>\n        <p>\n          The Webmaster was a legendary figure — part designer, part sysadmin, part content\n          creator. They uploaded files via FTP and prayed nothing broke.\n        </p>\n\n        <h2>The Rise of Dynamic Content</h2>\n        <p>\n          As the web grew, user-specific content birthed Server-Side Rendering. PHP, Perl, and Java\n          stitched HTML together on the fly from relational databases.\n        </p>\n\n        <h3>Server-Side Rendering</h3>\n        <p>Every click was a full page reload. WordPress was born here.</p>\n\n        <h4>The Database Bottleneck</h4>\n        <p>MySQL queries per page load became expensive. Memcached emerged.</p>\n\n        <h2 data-toc-title=\"The SPA Revolution\">\n          The Paradigm Shift to Client-Side Rendering\n        </h2>\n        <p>\n          That long heading shows up as \"The SPA Revolution\" in the TOC thanks to{\" \"}\n          <code>data-toc-title</code>.\n        </p>\n\n        <h3>AJAX Changes Everything</h3>\n        <p>Background data fetching made web apps feel native.</p>\n\n        <div\n          data-toc\n          data-toc-depth=\"2\"\n          data-toc-title=\"Modern Era: Edge Computing\"\n          className=\"my-8 rounded-2xl border border-border bg-foreground/5 p-6\"\n        >\n          <h3 className=\"mt-0\">A DIV behaving as a heading</h3>\n          <p className=\"mb-0 mt-3 text-sm text-muted-foreground\">\n            <code>data-toc data-toc-depth=\"2\"</code> registers this whole block as a level-2 TOC\n            entry.\n          </p>\n        </div>\n\n        <p>Today we move compute closer to the user — Edge Functions, serverless, distributed DBs.</p>\n\n        <h2 data-toc-ignore className=\"text-center\">\n          Hidden from TOC\n        </h2>\n        <p className=\"text-center text-muted-foreground\">\n          This heading carries <code>data-toc-ignore</code> — not in the menu.\n        </p>\n\n        <p className=\"mt-12 text-center text-sm text-muted-foreground\">\n          Scroll inside this preview frame to test scroll-spy ↑\n        </p>\n      </article>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

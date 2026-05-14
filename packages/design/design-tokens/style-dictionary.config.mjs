@@ -581,11 +581,11 @@ function buildTailwindThemeInline() {
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  /* Motion — Durations */
-  --duration-fast: 100ms;
-  --duration-normal: 150ms;
-  --duration-slow: 300ms;
-  --duration-slower: 500ms;
+  /* Motion — Durations (four-rail; see core.json:duration). Names denote intent, not relative speed. */
+  --duration-micro: 100ms;
+  --duration-flow: 200ms;
+  --duration-reveal: 300ms;
+  --duration-cinematic: 500ms;
 
   /* Font family — Geist primary stack with CJK fallbacks */
   --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;

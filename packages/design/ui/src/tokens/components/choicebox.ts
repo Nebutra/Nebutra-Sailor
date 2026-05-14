@@ -31,6 +31,6 @@ export const choiceboxTokens = {
   description: {
     fontSize: primitiveFontSize.xs, // 12px
   },
-  /** Transition */
-  transitionDuration: primitiveTransition.duration.fast, // 150ms
+  /** Transition — micro rail for state feedback */
+  transitionDuration: primitiveTransition.duration.micro, // 100ms
 } as const;

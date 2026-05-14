@@ -1,5 +1,6 @@
 "use client";
 
+import { ChartActivity as Activity, ShieldCheck } from "@nebutra/icons";
 import {
   AppleLiquidGlassSwitcher,
   FlickeringGrid,
@@ -9,7 +10,6 @@ import {
   StarsCanvas,
   WarpBackground,
 } from "@nebutra/ui/primitives";
-import { Activity, ShieldCheck } from "lucide-react";
 
 export function HexGridDemo() {
   return (

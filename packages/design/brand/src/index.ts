@@ -58,7 +58,6 @@ export {
 } from "./metadata";
 // Brand Motion Language (品牌运动语言)
 export {
-  brandDuration,
   brandEasing,
   brandMotion,
   brandSpring,
@@ -66,6 +65,7 @@ export {
   float,
   flow,
   interactive,
+  motionDurationSec,
   pulse,
   stagger,
   viewport,

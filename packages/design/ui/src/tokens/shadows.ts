@@ -2,10 +2,10 @@
  * Shadow Token System
  *
  * Geist-style elevation scale: xs → 2xl + brand glow variants.
- * CSS variables (--elevation-*) are defined in globals.css with
- * automatic light / dark mode switching.
+ * CSS variables (--elevation-*) are defined in @nebutra/tokens/styles.css
+ * with automatic light / dark mode switching.
  *
- * @see packages/design/ui/src/styles/globals.css  @theme inline
+ * @see packages/design/tokens/styles.css  @theme inline
  * @see apps/landing-page/DESIGN.md Section 10.10
  */
 

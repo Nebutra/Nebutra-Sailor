@@ -1,31 +1,34 @@
 /**
- * Motion Token System
+ * Motion Token System — four-rail duration scale (2026-05-14 governance).
  *
- * Geist-aligned durations + easing curves, plus Framer Motion variants
- * for the components that remain in the current design (Hero, FeatureCards, FinalCTA).
+ * SSOT: packages/design/design-tokens/tokens/core.json → duration.*
+ *       Emitted to --duration-{micro,flow,reveal,cinematic} CSS vars
+ *       (light/dark/themes) by Style Dictionary.
  *
- * CSS variables (--ease-* / --duration-*) are defined in globals.css
- * and available as Tailwind ease-* / duration-* utility classes.
+ * Names denote INTENT, not relative speed:
+ *   - micro      (100ms)  hover, focus, toggle, button press
+ *   - flow       (200ms)  modal, dropdown, tab — default state transition
+ *   - reveal     (300ms)  slide-in, expand, accordion, drawer
+ *   - cinematic  (500ms)  landing hero, large delight moments
  *
- * @see packages/design/ui/src/styles/globals.css  @theme inline
- * @see apps/landing-page/DESIGN.md Section 10.8
+ * CSS usage:  duration-micro / duration-flow / duration-reveal / duration-cinematic
+ * JS usage:   motionDurations.flow / 1000  →  Framer Motion seconds
+ *
+ * @see packages/design/tokens/styles.css  @theme inline (runtime CSS vars)
+ * @see @nebutra/brand → motionDurationSec (Framer-ready seconds bridge)
  */
 
 import type { Transition, Variants } from "framer-motion";
 
-/**
- * Duration scale in milliseconds — Geist-aligned.
- *
- * CSS usage:  duration-fast / duration-normal / duration-slow / duration-slower
- * JS usage:   durations.fast / 1000  →  Framer Motion seconds
- */
-export const durations = {
-  instant: 0,
-  fast: 100, // micro-interactions, hover feedback
-  normal: 150, // default transitions (buttons, inputs)
-  slow: 300, // page transitions, reveals
-  slower: 500, // entrances, hero animations
-  slowest: 1000, // dramatic reveals
+export const motionDurations = {
+  /** 100ms — micro-feedback (hover, focus, toggle, button press) */
+  micro: 100,
+  /** 200ms — state flow (modal, dropdown, tab — default) */
+  flow: 200,
+  /** 300ms — content unveil (slide, expand, accordion, drawer) */
+  reveal: 300,
+  /** 500ms — hero-grade cinematic (landing entrance, big delight) */
+  cinematic: 500,
 } as const;
 
 /**
@@ -48,26 +51,27 @@ export const easings = {
  *
  * @example
  *   style={{ transitionTimingFunction: motionVars.easeOut,
- *            transitionDuration: motionVars.durationNormal }}
+ *            transitionDuration: motionVars.flow }}
  */
 export const motionVars = {
   easeIn: "var(--ease-in)",
   easeOut: "var(--ease-out)",
   easeInOut: "var(--ease-in-out)",
   easeSpring: "var(--ease-spring)",
-  durationFast: "var(--duration-fast)",
-  durationNormal: "var(--duration-normal)",
-  durationSlow: "var(--duration-slow)",
-  durationSlower: "var(--duration-slower)",
+  micro: "var(--duration-micro)",
+  flow: "var(--duration-flow)",
+  reveal: "var(--duration-reveal)",
+  cinematic: "var(--duration-cinematic)",
 } as const;
 
 /**
- * Standard Framer Motion transition presets.
+ * Standard Framer Motion transition presets — keyed by rail name.
  */
 export const transitions: Record<string, Transition> = {
-  fast: { duration: durations.fast / 1000, ease: easings.easeOut },
-  normal: { duration: durations.normal / 1000, ease: easings.easeOut },
-  slow: { duration: durations.slow / 1000, ease: easings.easeOut },
+  micro: { duration: motionDurations.micro / 1000, ease: easings.easeOut },
+  flow: { duration: motionDurations.flow / 1000, ease: easings.easeOut },
+  reveal: { duration: motionDurations.reveal / 1000, ease: easings.easeOut },
+  cinematic: { duration: motionDurations.cinematic / 1000, ease: easings.easeOut },
   spring: { type: "spring", stiffness: 120, damping: 18 },
 };
 
@@ -188,6 +192,6 @@ export const staggerDelay = (index: number, base = 0.1) => ({
   transition: { delay: index * base },
 });
 
-export type Duration = keyof typeof durations;
+export type MotionDuration = keyof typeof motionDurations;
 export type Easing = keyof typeof easings;
 export type MotionVar = keyof typeof motionVars;

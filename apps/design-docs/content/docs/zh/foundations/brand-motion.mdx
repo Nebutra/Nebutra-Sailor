@@ -1,107 +1,106 @@
 ---
-title: "Motion Language"
-description: "Nebutra motion system — Emerge, Flow, and Pulse core motions, brand easing curves, spring configs, and Framer Motion code examples."
+title: "动效语言（Motion Language）"
+description: "Nebutra 动效系统 — Emerge / Flow / Pulse 三大核心动效、品牌缓动曲线、Spring 配置与 Framer Motion 代码示例。"
 ---
 
 <Callout>
-  Motion is not decoration. Every animation in Nebutra maps to a data metaphor — data materializing, streaming, or pulsing.
-  Arbitrary animation is prohibited.
+  动效不是装饰。Nebutra 每一个动画都映射到一个数据隐喻——具象化、流动、或脉动。禁止任意为之的动画。
 </Callout>
 
-## Motion Philosophy: Cloud Aggregation — 云端聚合
+## 动效哲学：云端聚合
 
-Nebutra's motion language is inspired by cloud computing data flows. Three core motions represent the lifecycle of data:
+Nebutra 的动效语言取自云计算的数据流。三个核心动效代表数据的完整生命周期：
 
-1. **Emerge (涌现)** — data materializing from the cloud into view
-2. **Flow (流动)** — data streaming through pipelines and interfaces
-3. **Pulse (脉动)** — systems alive, breathing, actively processing
+1. **Emerge（涌现）** — 数据从云端具象化进入视野
+2. **Flow（流动）** — 数据在管道与界面之间流转
+3. **Pulse（脉动）** — 系统活着、呼吸、主动处理
 
-Every UI animation must map to one of these three metaphors.
+任何 UI 动画必须映射到这三种隐喻之一。
 
 ---
 
-## Core Motions
+## 核心动效
 
 <MotionDemos />
 
-### Emerge (涌现)
+### Emerge（涌现）
 
-Data materializing from the cloud. Use for content entering the viewport, modals opening, and page transitions.
+数据从云端具象化。用于：内容进入视口、弹窗打开、页面切换。
 
-| Property | From | To |
-|----------|------|----|
+| 属性 | 起始 | 终态 |
+|------|------|------|
 | `translateY` | `16px` | `0` |
 | `filter: blur` | `6px` | `0` |
 | `opacity` | `0` | `1` |
 
-| Timing | Value |
-|--------|-------|
-| Duration | `0.6s` |
+| 时序参数 | 值 |
+|----------|----|
+| Duration | `cinematic` 轨（500ms） |
 | Easing | `cubic-bezier(0.16, 1, 0.3, 1)` |
 
 ```tsx
 import { motion } from "framer-motion"
 import { brandMotion } from "@nebutra/brand"
 
-// Using brand preset
+// 使用品牌 preset
 <motion.div {...brandMotion.emerge}>
   <h1>Welcome to Nebutra</h1>
 </motion.div>
 
-// Manual implementation
+// 手动实现
 <motion.div
   initial={{ y: 16, filter: "blur(6px)", opacity: 0 }}
   animate={{ y: 0, filter: "blur(0px)", opacity: 1 }}
-  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
 >
   <h1>Welcome to Nebutra</h1>
 </motion.div>
 ```
 
-### Flow (流动)
+### Flow（流动）
 
-Data streaming through pipes. Use for horizontal transitions, slide-in panels, navigation changes, and sequential content.
+数据在管道间流转。用于：水平方向切换、滑入面板、导航变更、序列化内容。
 
-| Property | From | To |
-|----------|------|----|
+| 属性 | 起始 | 终态 |
+|------|------|------|
 | `translateX` | `-20px` | `0` |
 | `opacity` | `0` | `1` |
 
-| Timing | Value |
-|--------|-------|
-| Duration | `0.4s` |
+| 时序参数 | 值 |
+|----------|----|
+| Duration | `reveal` 轨（300ms） |
 | Easing | `cubic-bezier(0, 0, 0.2, 1)` |
 
 ```tsx
 import { motion } from "framer-motion"
 import { brandMotion } from "@nebutra/brand"
 
-// Using brand preset
+// 使用品牌 preset
 <motion.div {...brandMotion.flow}>
   <SidePanel />
 </motion.div>
 
-// Manual implementation
+// 手动实现
 <motion.div
   initial={{ x: -20, opacity: 0 }}
   animate={{ x: 0, opacity: 1 }}
-  transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
+  transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
 >
   <SidePanel />
 </motion.div>
 ```
 
-### Pulse (脉动)
+### Pulse（脉动）
 
-System alive and breathing. Use for status indicators, loading states, and ambient background elements. This is the only infinite animation.
+系统活着、呼吸。用于：状态指示器、loading 态、环境背景元素。**这是唯一允许无限循环的动画。**
 
-| Property | Keyframes |
-|----------|-----------|
+| 属性 | 关键帧 |
+|------|--------|
 | `scale` | `1 → 1.015 → 1` |
 | `opacity` | `1 → 0.85 → 1` |
 
-| Timing | Value |
-|--------|-------|
+| 时序参数 | 值 |
+|----------|----|
 | Duration | `3s` |
 | Repeat | `Infinity` |
 
@@ -132,16 +131,16 @@ import { brandMotion } from "@nebutra/brand"
 
 ---
 
-## Brand Easing Curves
+## 品牌缓动曲线（Easing）
 
-| Name | Value | Description | Usage |
-|------|-------|-------------|-------|
-| **Brand** | `[0.16, 1, 0.3, 1]` | Custom deceleration — fast start, smooth stop | Primary easing for emerge and reveal |
-| **Enter** | `[0, 0, 0.2, 1]` | Material deceleration | Elements entering the viewport |
-| **Exit** | `[0.4, 0, 1, 1]` | Material acceleration | Elements leaving the viewport |
-| **Spring** | Spring physics (see below) | Natural bounce | Interactive micro-motions |
+| 名称 | 值 | 描述 | 适用 |
+|------|----|------|------|
+| **Brand** | `[0.16, 1, 0.3, 1]` | 品牌专属减速曲线 — 快速起始、平滑收尾 | emerge / reveal 类首选 |
+| **Enter** | `[0, 0, 0.2, 1]` | Material 减速 | 进入视口的元素 |
+| **Exit** | `[0.4, 0, 1, 1]` | Material 加速 | 离开视口的元素 |
+| **Spring** | 见下方 Spring 物理参数 | 自然回弹 | 交互式微动效 |
 
-### CSS Custom Properties
+### CSS 自定义属性
 
 ```css
 :root {
@@ -151,7 +150,7 @@ import { brandMotion } from "@nebutra/brand"
 }
 ```
 
-### Framer Motion Usage
+### Framer Motion 用法
 
 ```tsx
 import { brandEasing } from "@nebutra/brand"
@@ -161,59 +160,71 @@ import { brandEasing } from "@nebutra/brand"
 // brandEasing.exit   → [0.4, 0, 1, 1]
 
 <motion.div
-  transition={{ ease: brandEasing.brand, duration: 0.6 }}
+  transition={{ ease: brandEasing.brand, duration: 0.5 }}
 />
 ```
 
 <Warning>
-  Never use generic `ease-in-out` or `linear` easing in Nebutra products.
-  Always use brand easing curves for predictable, on-brand motion.
+  Nebutra 产品中**禁止**使用通用的 `ease-in-out` 或 `linear` 曲线。始终使用品牌缓动曲线以保证可预期、品牌一致的动效。
 </Warning>
 
 ---
 
-## Brand Duration Scale
+## Duration Scale — 四轨
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `instant` | `0.1s` | Hover color changes, toggle states |
-| `fast` | `0.2s` | Button presses, checkbox toggles, small UI feedback |
-| `normal` | `0.3s` | Dropdown open/close, tooltip appear, tab switch |
-| `moderate` | `0.4s` | Flow transitions, panel slides, navigation changes |
-| `slow` | `0.6s` | Emerge animations, modal open, page transitions |
-| `reveal` | `0.8s` | Maximum duration — hero section reveal, large viewport enters |
+动效时长系统采用**四轨**结构。名称表达**意图**，而非相对速度。按动效语义选轨道，而非"想要多快"。
 
-### Code
+| 轨道 | 时长 | CSS 变量 | Tailwind | 适用场景 |
+|------|-------|---------|----------|----------|
+| `micro` | `100ms` | `--duration-micro` | `duration-micro` | hover、focus、toggle、按钮按下 |
+| `flow` | `200ms` | `--duration-flow` | `duration-flow` | 弹窗、下拉、tab 切换 — **默认状态流转** |
+| `reveal` | `300ms` | `--duration-reveal` | `duration-reveal` | 滑入、展开、accordion、抽屉 |
+| `cinematic` | `500ms` | `--duration-cinematic` | `duration-cinematic` | 着陆页 hero 入场、大型 delight 时刻 |
+
+<Callout type="info">
+  `flow` 是状态流转的默认值。拿不准时先选 `flow`——覆盖约 70% 场景。
+</Callout>
+
+### CSS / Tailwind 用法
 
 ```tsx
-import { brandDuration } from "@nebutra/brand"
+<div className="transition-opacity duration-flow ease-out" />
+<div style={{ transitionDuration: "var(--duration-reveal)" }} />
+```
 
-// brandDuration.instant  → 0.1
-// brandDuration.fast     → 0.2
-// brandDuration.normal   → 0.3
-// brandDuration.moderate → 0.4
-// brandDuration.slow     → 0.6
-// brandDuration.reveal   → 0.8
+### TypeScript / Framer Motion 用法
+
+```tsx
+import { motionDurationSec, brandEasing } from "@nebutra/brand"
+
+// motionDurationSec.micro      → 0.1
+// motionDurationSec.flow       → 0.2
+// motionDurationSec.reveal     → 0.3
+// motionDurationSec.cinematic  → 0.5
 
 <motion.div
-  transition={{ duration: brandDuration.slow, ease: brandEasing.brand }}
+  transition={{ duration: motionDurationSec.cinematic, ease: brandEasing.brand }}
 />
 ```
 
+<Callout type="warning">
+  禁止硬编码时长（`duration: 0.4`）。必须选一个轨道。如果四轨都不合适，这个动效大概率有问题——先和设计沟通，不要随手加第五轨。
+</Callout>
+
 ---
 
-## Brand Spring Configs
+## 品牌 Spring 配置
 
-Spring physics create natural, responsive motion for interactive elements. Four presets cover all use cases.
+Spring 物理参数为交互元素提供自然、响应式的动效。四组预设覆盖所有场景。
 
-| Name | Stiffness | Damping | Mass | Character | Usage |
-|------|-----------|---------|------|-----------|-------|
-| **Default** | 200 | 24 | 1.0 | Balanced, professional | General UI transitions |
-| **Bouncy** | 300 | 15 | 0.8 | Energetic, playful | Button feedback, notifications, success states |
-| **Heavy** | 120 | 28 | 1.5 | Weighty, deliberate | Modal transitions, large panels, drawer open |
-| **Gentle** | 80 | 20 | 1.0 | Soft, ambient | Background elements, subtle repositioning |
+| 名称 | Stiffness | Damping | Mass | 性格 | 适用 |
+|------|-----------|---------|------|------|------|
+| **Default** | 200 | 24 | 1.0 | 平衡、专业 | 通用 UI 切换 |
+| **Bouncy** | 300 | 15 | 0.8 | 活力、俏皮 | 按钮反馈、通知、成功态 |
+| **Heavy** | 120 | 28 | 1.5 | 沉稳、慎重 | 弹窗切换、大面板、抽屉打开 |
+| **Gentle** | 80 | 20 | 1.0 | 柔和、环境感 | 背景元素、细微位置调整 |
 
-### Framer Motion Usage
+### Framer Motion 用法
 
 ```tsx
 import { brandSpring } from "@nebutra/brand"
@@ -248,7 +259,7 @@ import { brandSpring } from "@nebutra/brand"
 />
 ```
 
-### Raw Values
+### 原始值
 
 ```tsx
 import { brandSpring } from "@nebutra/brand"
@@ -261,13 +272,13 @@ import { brandSpring } from "@nebutra/brand"
 
 ---
 
-## Stagger Pattern
+## Stagger 模式
 
-Use stagger for list and grid entrance animations. Each child enters with a slight delay after the previous one.
+列表与网格入场使用 stagger——每个子元素在前一个之后稍微延迟进入。
 
 ```tsx
 import { motion } from "framer-motion"
-import { brandMotion, brandDuration, brandEasing } from "@nebutra/brand"
+import { brandMotion, motionDurationSec, brandEasing } from "@nebutra/brand"
 
 const container = {
   hidden: { opacity: 0 },
@@ -287,7 +298,7 @@ const item = {
     filter: "blur(0px)",
     opacity: 1,
     transition: {
-      duration: brandDuration.slow,
+      duration: motionDurationSec.cinematic,
       ease: brandEasing.brand,
     },
   },
@@ -302,14 +313,14 @@ const item = {
 </motion.ul>
 ```
 
-| Parameter | Value | Description |
-|-----------|-------|-------------|
-| `staggerChildren` | `0.08s` | Delay between each child's entrance |
-| `delayChildren` | `0.1s` | Initial delay before the first child enters |
+| 参数 | 值 | 描述 |
+|------|----|------|
+| `staggerChildren` | `0.08s` | 每个子元素入场之间的延迟 |
+| `delayChildren` | `0.1s` | 第一个子元素入场前的整体延迟 |
 
 ---
 
-## Interactive Micro-Motions
+## 交互微动效
 
 ### Hover
 
@@ -337,7 +348,7 @@ import { brandSpring } from "@nebutra/brand"
 
 ### Hover Lift
 
-Combines vertical lift with shadow elevation. Use for cards and interactive surfaces.
+垂直上浮 + 阴影抬升的组合。用于卡片与交互表面。
 
 ```tsx
 <motion.div
@@ -353,18 +364,18 @@ Combines vertical lift with shadow elevation. Use for cards and interactive surf
 
 ---
 
-## Viewport Triggers
+## 视口触发（Viewport Triggers）
 
-### Once (Default)
+### Once（默认）
 
-Animate only the first time the element enters the viewport. Use for content sections, feature grids, and testimonials.
+只在元素首次进入视口时执行动画。用于：内容章节、feature 网格、客户证言。
 
 ```tsx
 <motion.section
   initial={{ y: 16, filter: "blur(6px)", opacity: 0 }}
   whileInView={{ y: 0, filter: "blur(0px)", opacity: 1 }}
   viewport={{ once: true, margin: "-100px" }}
-  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
 >
   <FeatureSection />
 </motion.section>
@@ -372,70 +383,69 @@ Animate only the first time the element enters the viewport. Use for content sec
 
 ### Always
 
-Re-animate every time the element enters the viewport. Use sparingly — only for ambient background elements and decorative motions.
+每次元素进入视口都重新触发动画。**慎用**——仅用于环境背景元素与装饰性动效。
 
 ```tsx
 <motion.div
   initial={{ opacity: 0 }}
   whileInView={{ opacity: 1 }}
   viewport={{ once: false, amount: 0.3 }}
-  transition={{ duration: 0.4 }}
+  transition={{ duration: 0.3 }}
 >
   <DecorativeElement />
 </motion.div>
 ```
 
 <Tip>
-  Default to `once: true` for all content animations.
-  Use `once: false` only for ambient/decorative elements that benefit from re-entrance.
+  所有内容类动画默认 `once: true`。`once: false` 仅适用于受益于重复入场的环境/装饰元素。
 </Tip>
 
 ---
 
-## Full Import Reference
+## 完整 Import 参考
 
 ```tsx
 import {
   // Core motions (spread directly onto motion.div)
-  brandMotion,     // .emerge, .flow, .pulse
+  brandMotion,         // .emerge, .flow, .pulse, .float
 
   // Easing curves
-  brandEasing,     // .brand, .enter, .exit
+  brandEasing,         // .brand, .enter, .exit, .spring
 
-  // Duration scale
-  brandDuration,   // .instant, .fast, .normal, .moderate, .slow, .reveal
+  // Duration scale — 四轨（SSOT: @nebutra/design-tokens core.json）
+  motionDurationSec,   // .micro (0.1) / .flow (0.2) / .reveal (0.3) / .cinematic (0.5)
 
   // Spring configs
-  brandSpring,     // .default, .bouncy, .heavy, .gentle
+  brandSpring,         // .default, .bouncy, .heavy, .gentle
 } from "@nebutra/brand"
 ```
 
 ---
 
-## Do / Don't
+## Do / Don't（推荐与禁止）
 
-**Do** use `emerge` for all content entering the viewport (vertical reveal with blur).
+**Do** 所有内容进入视口都用 `emerge`（垂直方向 + 模糊揭示）。
 
-**Do** use `flow` for horizontal transitions (panels, navigation, sequential content).
+**Do** 水平方向的切换（面板、导航、序列内容）用 `flow`。
 
-**Do** use `pulse` for status indicators and ambient breathing effects.
+**Do** 状态指示器与环境呼吸效果用 `pulse`。
 
-**Do** use brand easing curves (`[0.16, 1, 0.3, 1]`) for all tween animations.
+**Do** 所有 tween 动画使用品牌缓动曲线（`[0.16, 1, 0.3, 1]`）。
 
-**Do** use brand springs for all interactive micro-motions (hover, tap, drag).
+**Do** 所有交互微动效（hover、tap、drag）使用品牌 spring。
 
-**Do** stagger list/grid entrances with `0.08s` delay between children.
+**Do** 列表/网格入场用 `0.08s` 的 stagger 子元素延迟。
 
-**Do** respect `prefers-reduced-motion` — disable all non-essential animation.
+**Do** 尊重 `prefers-reduced-motion`——关闭所有非必要动画。
 
-**Don't** bounce everything — use `brandSpring.bouncy` only for button feedback and success states.
+**Don't** 不要到处加弹性——`brandSpring.bouncy` 仅用于按钮反馈与成功态。
 
-**Don't** use generic `ease-in-out` or `linear` easing — always use brand curves.
+**Don't** 不要用通用的 `ease-in-out` 或 `linear` 曲线，始终用品牌曲线。
 
-**Don't** exceed `0.8s` duration for any UI transition — `reveal` (0.8s) is the absolute maximum.
+**Don't** UI 切换时长**不要超过 `cinematic` 轨（500ms）**——这是绝对上限。
 
-**Don't** use `pulse` for content elements — it is reserved for status indicators and ambient effects.
+**Don't** 内容元素**不要用 `pulse`**——它保留给状态指示器与环境效果。
 
-**Don't** animate more than 3 properties simultaneously — keep motion focused and readable.
+**Don't** 同时动画的属性**不要超过 3 个**——保持动效聚焦、可读。
 
-**Don't** create infinite animations outside of `pulse` — only status indicators loop.
+**Don't** **不要**在 `pulse` 之外创建无限循环动画——只有状态指示器可以循环。

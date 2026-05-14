@@ -214,11 +214,17 @@ export type PrimitiveShadow = keyof typeof primitiveShadow;
 
 // ─── Transition ───────────────────────────────────────────────────────────────
 
+/**
+ * Primitive transition tokens — aligned with the four-rail motion scale
+ * (SSOT: @nebutra/design-tokens core.json → duration.*).
+ * Keys mirror semantic.json motion.duration.*; values are in ms.
+ */
 export const primitiveTransition = {
   duration: {
-    fast: 150, // ms — hover, focus, small state changes
-    normal: 200, // ms — standard transitions
-    slow: 300, // ms — larger motion (accordion, modal)
+    micro: 100, // hover, focus, small state changes
+    flow: 200, // standard state transitions (default)
+    reveal: 300, // larger motion (accordion, modal, drawer)
+    cinematic: 500, // hero entrance, big delight moments
   },
   easing: {
     default: "ease-out",

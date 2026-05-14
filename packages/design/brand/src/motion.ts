@@ -23,16 +23,23 @@ export const brandEasing = {
 } as const;
 
 // =============================================================================
-// Duration Scale (milliseconds)
+// Duration Bridge — Framer Motion needs seconds; CSS tokens hold ms.
+//
+// SSOT lives in @nebutra/design-tokens (core.json → duration.*). These
+// constants mirror the four rails for JS callers (Framer transition props).
+// If the SSOT changes, update here AND in @nebutra/tokens/styles.css.
 // =============================================================================
 
-export const brandDuration = {
-  instant: 0,
-  fast: 120,
-  normal: 200,
-  slow: 400,
-  slower: 600,
-  reveal: 800,
+/** Four-rail motion durations in seconds (Framer Motion `transition.duration`). */
+export const motionDurationSec = {
+  /** 100ms — micro-feedback */
+  micro: 0.1,
+  /** 200ms — state flow (default) */
+  flow: 0.2,
+  /** 300ms — content unveil */
+  reveal: 0.3,
+  /** 500ms — hero-grade cinematic */
+  cinematic: 0.5,
 } as const;
 
 // =============================================================================
@@ -54,20 +61,20 @@ export const brandSpring = {
 // Core Motion Signatures
 // =============================================================================
 
-/** 涌现 — data materializing from the cloud */
+/** 涌现 — data materializing from the cloud. Cinematic entrance rail. */
 export const emerge = {
   initial: { opacity: 0, y: 16, filter: "blur(6px)" },
   animate: { opacity: 1, y: 0, filter: "blur(0px)" },
   exit: { opacity: 0, y: -8, filter: "blur(4px)" },
-  transition: { duration: 0.6, ease: brandEasing.brand },
+  transition: { duration: motionDurationSec.cinematic, ease: brandEasing.brand },
 } as const;
 
-/** 流动 — data streaming through pipelines */
+/** 流动 — data streaming through pipelines. Reveal rail. */
 export const flow = {
   initial: { opacity: 0, x: -20 },
   animate: { opacity: 1, x: 0 },
   exit: { opacity: 0, x: 20 },
-  transition: { duration: 0.4, ease: brandEasing.enter },
+  transition: { duration: motionDurationSec.reveal, ease: brandEasing.enter },
 } as const;
 
 /** 脉动 — system breathing / alive */
@@ -92,16 +99,16 @@ export const stagger = (delayPerChild = 0.08) =>
     animate: { transition: { staggerChildren: delayPerChild } },
   }) as const;
 
-/** Interactive micro-motions */
+/** Interactive micro-motions — flow rail for hover, micro rail for tap. */
 export const interactive = {
   hover: {
     scale: 1.02,
-    transition: { duration: 0.2, ease: brandEasing.brand },
+    transition: { duration: motionDurationSec.flow, ease: brandEasing.brand },
   },
-  tap: { scale: 0.98, transition: { duration: 0.1 } },
+  tap: { scale: 0.98, transition: { duration: motionDurationSec.micro } },
   hoverLift: {
     y: -4,
-    transition: { duration: 0.2, ease: brandEasing.brand },
+    transition: { duration: motionDurationSec.flow, ease: brandEasing.brand },
   },
 } as const;
 
@@ -124,6 +131,6 @@ export const brandMotion = {
   interactive,
   viewport,
   brandEasing,
-  brandDuration,
   brandSpring,
+  motionDurationSec,
 } as const;

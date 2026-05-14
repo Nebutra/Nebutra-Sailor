@@ -120,10 +120,27 @@
     }
   },
   "duration": {
-    "fast": { "$value": "100ms", "$type": "duration" },
-    "normal": { "$value": "150ms", "$type": "duration" },
-    "slow": { "$value": "300ms", "$type": "duration" },
-    "slower": { "$value": "500ms", "$type": "duration" }
+    "$description": "Four-rail motion duration scale (2026-05-14 governance). Names denote intent, not relative speed: micro = momentary feedback, flow = state transition, reveal = content unveil, cinematic = hero entrance.",
+    "micro": {
+      "$value": "100ms",
+      "$type": "duration",
+      "$description": "Micro-feedback: hover, focus, toggle, button press"
+    },
+    "flow": {
+      "$value": "200ms",
+      "$type": "duration",
+      "$description": "State flow: modal open, dropdown reveal, tab switch, default page transition"
+    },
+    "reveal": {
+      "$value": "300ms",
+      "$type": "duration",
+      "$description": "Content unveil: slide-in, expand, accordion, drawer"
+    },
+    "cinematic": {
+      "$value": "500ms",
+      "$type": "duration",
+      "$description": "Hero-grade entrance: landing reveal, large delight moments"
+    }
   },
   "easing": {
     "in": { "$value": "cubic-bezier(0.4, 0, 1, 1)", "$type": "cubicBezier" },
@@ -180,11 +197,11 @@
     "default": {
       "$type": "transition",
       "$value": {
-        "duration": "150ms",
+        "duration": "200ms",
         "timingFunction": "ease-out",
         "delay": "0ms"
       },
-      "$description": "Standard 150ms ease-out — used by --transition shorthand."
+      "$description": "Default state-flow transition — 200ms ease-out (matches {duration.flow}). Used by --transition shorthand."
     }
   }
 }

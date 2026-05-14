@@ -87,10 +87,10 @@
   --radius-button: 0.5rem; /** 2026 button radius — Vercel/Linear/Cursor consensus */
   --radius-card: 0.75rem; /** 2026 card radius */
   --radius-panel: 1rem; /** 2026 bento/hero panel radius */
-  --duration-fast: 100ms;
-  --duration-normal: 150ms;
-  --duration-slow: 300ms;
-  --duration-slower: 500ms;
+  --duration-micro: 100ms; /** Micro-feedback: hover, focus, toggle, button press */
+  --duration-flow: 200ms; /** State flow: modal open, dropdown reveal, tab switch, default page transition */
+  --duration-reveal: 300ms; /** Content unveil: slide-in, expand, accordion, drawer */
+  --duration-cinematic: 500ms; /** Hero-grade entrance: landing reveal, large delight moments */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -107,7 +107,7 @@
   --font-display: "Geist", "Noto Sans SC", sans-serif;
   --font-heading: "Geist", "Noto Sans SC", sans-serif;
   --font-mono: "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
-  --transition-duration: 150ms;
+  --transition-duration: 200ms; /** Default transition duration — 200ms flow rail. */
   --transition-easing: ease-out; /** ease-out keyword form (CSS-friendly). Equivalent to cubic-bezier(0,0,0.2,1). */
   --brand-primary: #0033fe; /** Brand primary — 云毓蓝 */
   --brand-accent: #0bf1c3; /** Brand accent — 云毓青 */
@@ -124,6 +124,10 @@
   --container-content: 1152px;
   --container-wide: 1400px;
   --radius: 0.375rem; /** Geist-matching 6px */
+  --motion-duration-micro: 100ms;
+  --motion-duration-flow: 200ms;
+  --motion-duration-reveal: 300ms;
+  --motion-duration-cinematic: 500ms;
   --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4); /** Single-layer translucent focus ring (2026 pattern). Legacy box-shadow consumers stay compatible; modern surfaces should prefer the global :focus-visible outline rule in static/base.css. */
   --neutral-1: #ffffff; /** app background */
   --neutral-2: #f8fafc; /** subtle background */
@@ -356,10 +360,10 @@
   --radius-button: 0.5rem; /** 2026 button radius — Vercel/Linear/Cursor consensus */
   --radius-card: 0.75rem; /** 2026 card radius */
   --radius-panel: 1rem; /** 2026 bento/hero panel radius */
-  --duration-fast: 100ms;
-  --duration-normal: 150ms;
-  --duration-slow: 300ms;
-  --duration-slower: 500ms;
+  --duration-micro: 100ms; /** Micro-feedback: hover, focus, toggle, button press */
+  --duration-flow: 200ms; /** State flow: modal open, dropdown reveal, tab switch, default page transition */
+  --duration-reveal: 300ms; /** Content unveil: slide-in, expand, accordion, drawer */
+  --duration-cinematic: 500ms; /** Hero-grade entrance: landing reveal, large delight moments */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -376,7 +380,7 @@
   --font-display: "Geist", "Noto Sans SC", sans-serif;
   --font-heading: "Geist", "Noto Sans SC", sans-serif;
   --font-mono: "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
-  --transition-duration: 150ms;
+  --transition-duration: 200ms; /** Default transition duration — 200ms flow rail. */
   --transition-easing: ease-out; /** ease-out keyword form (CSS-friendly). Equivalent to cubic-bezier(0,0,0.2,1). */
   --brand-primary: #5c7cfa; /** Dark-mode brand primary — visible against dark surfaces (uses --blue-9 = nebutra-blue-400). */
   --brand-accent: #1af7c8; /** Dark-mode brand accent — visible against dark surfaces (uses --cyan-9 = nebutra-cyan-400). */
@@ -393,6 +397,10 @@
   --container-content: 1152px;
   --container-wide: 1400px;
   --radius: 0.375rem; /** Geist-matching 6px */
+  --motion-duration-micro: 100ms;
+  --motion-duration-flow: 200ms;
+  --motion-duration-reveal: 300ms;
+  --motion-duration-cinematic: 500ms;
   --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4); /** Single-layer translucent focus ring (2026 pattern). Legacy box-shadow consumers stay compatible; modern surfaces should prefer the global :focus-visible outline rule in static/base.css. */
   --neutral-1: #020617;
   --neutral-2: #0f172a;
@@ -728,11 +736,11 @@
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  /* Motion — Durations */
-  --duration-fast: 100ms;
-  --duration-normal: 150ms;
-  --duration-slow: 300ms;
-  --duration-slower: 500ms;
+  /* Motion — Durations (four-rail; see core.json:duration). Names denote intent, not relative speed. */
+  --duration-micro: 100ms;
+  --duration-flow: 200ms;
+  --duration-reveal: 300ms;
+  --duration-cinematic: 500ms;
 
   /* Font family — Geist primary stack with CJK fallbacks */
   --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;

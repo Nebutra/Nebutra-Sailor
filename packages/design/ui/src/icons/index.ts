@@ -48,15 +48,15 @@ export {
 } from "@lobehub/icons";
 // ── Lucide UI icons ──────────────────────────────────────────────────────────
 export {
-  Bot,
   Check,
-  Loader2,
+  Cross as X,
+  LoaderCircle as Loader2,
+  MagnifyingGlass as Search,
   Menu,
   Moon,
   Plus,
-  Search,
-  Settings,
+  Robot as Bot,
+  SettingsGear as Settings,
   Sparkles,
   Sun,
-  X,
-} from "lucide-react";
+} from "@nebutra/icons";

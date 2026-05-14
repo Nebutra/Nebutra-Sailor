@@ -175,10 +175,10 @@ Dark mode glow uses `#5C7CFA` (nebutra-blue-400) for visibility on `#020617`.
 
 | Token | Value | Use |
 |------|-------|-----|
-| `--duration-fast` | `100ms` | Hover, micro-interactions |
-| `--duration-normal` | `150ms` | Default — buttons, switches |
-| `--duration-slow` | `300ms` | Modals, drawers |
-| `--duration-slower` | `500ms` | Page-level transitions |
+| `--duration-micro` | `100ms` | Hover, focus, toggle, button press |
+| `--duration-flow` | `200ms` | Modal, dropdown, tab — **default state transition** |
+| `--duration-reveal` | `300ms` | Slide, expand, accordion, drawer |
+| `--duration-cinematic` | `500ms` | Hero entrance, large delight moments |
 | `--ease-in` | `cubic-bezier(0.4, 0, 1, 1)` | Exit animations |
 | `--ease-out` | `cubic-bezier(0, 0, 0.2, 1)` | Enter animations |
 | `--ease-in-out` | `cubic-bezier(0.4, 0, 0.2, 1)` | Bidirectional |

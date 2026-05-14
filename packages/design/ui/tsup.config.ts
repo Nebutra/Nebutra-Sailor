@@ -183,7 +183,6 @@ export default defineConfig({
 
     // 2. Copy CSS / static assets that are referenced via package exports.
     copyAsset(join(srcDir, "typography/fonts.css"), join(distDir, "typography/fonts.css"));
-    copyAsset(join(srcDir, "styles/globals.css"), join(distDir, "styles/globals.css"));
     copyAsset(
       join(srcDir, "styles/brand-override.css"),
       join(distDir, "styles/brand-override.css"),

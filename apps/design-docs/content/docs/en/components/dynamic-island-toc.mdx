@@ -1,0 +1,103 @@
+---
+title: Dynamic Island TOC
+description: Apple Dynamic Island-style floating Table of Contents with scroll-spy, self-scanning headings, and full keyboard accessibility.
+status: alpha
+---
+
+<ComponentPreview name="dynamic-island-toc-demo" />
+
+## Installation
+
+```tsx
+import { DynamicIslandTOC } from "@nebutra/ui/primitives";
+```
+
+Or install standalone via the shadcn registry:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/dynamic-island-toc.json
+```
+
+## Usage
+
+Mount the component anywhere in your page layout — it positions itself as a fixed overlay at the bottom-center of the viewport and auto-scans the document for headings.
+
+```tsx
+import { DynamicIslandTOC } from "@nebutra/ui/primitives";
+
+export default function BlogPostPage() {
+  return (
+    <main>
+      <DynamicIslandTOC />
+      <article className="prose">
+        <h1>Article Title</h1>
+        <h2>Section One</h2>
+        {/* … */}
+      </article>
+    </main>
+  );
+}
+```
+
+## Heading attributes
+
+Three escape hatches are available on any element matched by the selector:
+
+| Attribute            | Effect                                                                    |
+| -------------------- | ------------------------------------------------------------------------- |
+| `data-toc-title`     | Override the text shown in the TOC (useful for long headings)             |
+| `data-toc-depth="2"` | Force a nesting level — lets non-heading elements register as TOC entries |
+| `data-toc-ignore`    | Hide an otherwise-matched element from the TOC                            |
+| `data-toc`           | Marks a non-heading element as a TOC entry (pair with `data-toc-depth`)   |
+
+```tsx
+<h2 data-toc-title="The SPA Revolution">
+  The Paradigm Shift to Client-Side Rendering and Single Page Applications
+</h2>
+
+<div data-toc data-toc-depth="2" data-toc-title="Edge Computing Era">
+  {/* non-heading block registers as a level-2 TOC entry */}
+</div>
+
+<h2 data-toc-ignore>Hidden from TOC</h2>
+```
+
+## Props
+
+| Prop          | Type     | Default                 | Description                                                                           |
+| ------------- | -------- | ----------------------- | ------------------------------------------------------------------------------------- |
+| `selector`    | `string` | (article + .prose + [data-toc]) | CSS selector for headings to scan                                              |
+| `ariaLabel`   | `string` | `"Table of contents"`   | Accessible label for the `<nav>` landmark                                             |
+| `menuHeading` | `string` | `"TABLE OF CONTENTS"`   | Visible header text in the expanded menu                                              |
+| `emptyLabel`  | `string` | `"Contents"`            | Pill label when no heading is yet active                                              |
+| `className`   | `string` | —                       | Additional class on the outer fixed wrapper                                           |
+
+## Accessibility
+
+- The outer wrapper is `<nav role aria-label>` — a proper landmark.
+- The pill itself is a `<button aria-expanded>` (keyboard-reachable).
+- The active menu item carries `aria-current="location"`.
+- **Escape** closes the menu and returns focus to the pill.
+- When expanded, focus jumps to the first menu item.
+- `prefers-reduced-motion: reduce` collapses the shape morph + spring + blur to opacity-only transitions; scroll behavior switches from `smooth` to `auto`.
+
+## Motion language
+
+This component intentionally carries Apple's Dynamic Island signature easing curve `cubic-bezier(0.22, 1, 0.36, 1)` rather than the brand easing — it is part of the component's visual identity. **Durations** are still tokenized through the four-rail motion scale:
+
+| Where             | Rail        | Value  |
+| ----------------- | ----------- | ------ |
+| Pill shape morph  | `cinematic` | 500ms  |
+| Backdrop fade     | `flow`      | 200ms  |
+| Heading text swap | `reveal`    | 300ms  |
+| Progress arc      | `micro`     | 100ms  |
+
+## When to use
+
+Reach for this component for **long-form content** — blog posts, documentation chapters, marketing pages with deep section nesting — where a sidebar TOC would be visually heavy on mobile and unconventional on desktop. The floating pill stays out of the way until the reader wants it.
+
+Avoid for:
+
+- Short pages with fewer than 4 sections (overkill)
+- Dashboards / app UIs (the floating pill competes with persistent navigation)
+- Mobile-first pages where bottom 30px is already used by tab bars

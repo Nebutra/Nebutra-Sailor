@@ -484,6 +484,11 @@ export const DropdownMenuSubDemo = dynamic(() =>
     default: m.DropdownMenuSubDemo,
   })),
 );
+export const DynamicIslandTocDemo = dynamic(() =>
+  import("@/components/previews/dynamic-island-toc-demo").then((m) => ({
+    default: m.DynamicIslandTocDemo,
+  })),
+);
 export const EmptyStateDemo = dynamic(() =>
   import("@/components/previews/empty-state-demo").then((m) => ({ default: m.EmptyStateDemo })),
 );
@@ -1294,6 +1299,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     component: DropdownMenuRadioGroupDemo,
   },
   "dropdown-menu-sub-demo": { name: "dropdown-menu-sub-demo", component: DropdownMenuSubDemo },
+  "dynamic-island-toc-demo": { name: "dynamic-island-toc-demo", component: DynamicIslandTocDemo },
   "empty-state-demo": { name: "empty-state-demo", component: EmptyStateDemo },
   "entity-demo": { name: "entity-demo", component: EntityDemo },
   "error-message-demo": { name: "error-message-demo", component: ErrorMessageDemo },

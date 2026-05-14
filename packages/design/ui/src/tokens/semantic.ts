@@ -168,8 +168,8 @@ export const semanticGlobals = {
   // Border radius — 6px (Geist-matching, more rounded than typical 4px)
   defaultRadius: primitiveRadius.md,
 
-  // Universal transition — applies to all interactive elements
-  transitionDuration: primitiveTransition.duration.fast, // 150ms
+  // Universal transition — applies to all interactive elements (micro rail)
+  transitionDuration: primitiveTransition.duration.micro, // 100ms
   transitionEasing: primitiveTransition.easing.default, // ease-out
 
   // Focus ring — brand blue at 2px width, 2px gap

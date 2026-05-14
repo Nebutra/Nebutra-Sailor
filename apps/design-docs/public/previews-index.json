@@ -472,6 +472,10 @@
       "type": "registry:example"
     },
     {
+      "name": "dynamic-island-toc-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "empty-state-demo",
       "type": "registry:example"
     },

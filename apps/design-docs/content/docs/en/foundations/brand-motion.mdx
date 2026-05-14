@@ -172,33 +172,49 @@ import { brandEasing } from "@nebutra/brand"
 
 ---
 
-## Brand Duration Scale
+## Duration Scale — Four Rails
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `instant` | `0.1s` | Hover color changes, toggle states |
-| `fast` | `0.2s` | Button presses, checkbox toggles, small UI feedback |
-| `normal` | `0.3s` | Dropdown open/close, tooltip appear, tab switch |
-| `moderate` | `0.4s` | Flow transitions, panel slides, navigation changes |
-| `slow` | `0.6s` | Emerge animations, modal open, page transitions |
-| `reveal` | `0.8s` | Maximum duration — hero section reveal, large viewport enters |
+The motion duration system has **four rails**. Names denote *intent*, not relative speed. Pick a rail by what the animation represents, not how fast you want it.
 
-### Code
+| Rail | Value | CSS var | Tailwind | When to use |
+|------|-------|---------|----------|-------------|
+| `micro` | `100ms` | `--duration-micro` | `duration-micro` | Hover, focus, toggle, button press |
+| `flow` | `200ms` | `--duration-flow` | `duration-flow` | Modal, dropdown, tab — **default state transition** |
+| `reveal` | `300ms` | `--duration-reveal` | `duration-reveal` | Slide, expand, accordion, drawer |
+| `cinematic` | `500ms` | `--duration-cinematic` | `duration-cinematic` | Landing hero entrance, large delight moments |
+
+<Callout type="info">
+  The `flow` rail is the default for state transitions. If you don't know which rail to pick, start with `flow` — it covers ~70% of cases.
+</Callout>
+
+### CSS / Tailwind usage
 
 ```tsx
-import { brandDuration } from "@nebutra/brand"
+// Tailwind utility class
+<div className="transition-opacity duration-flow ease-out" />
 
-// brandDuration.instant  → 0.1
-// brandDuration.fast     → 0.2
-// brandDuration.normal   → 0.3
-// brandDuration.moderate → 0.4
-// brandDuration.slow     → 0.6
-// brandDuration.reveal   → 0.8
+// Inline style with CSS variable
+<div style={{ transitionDuration: "var(--duration-reveal)" }} />
+```
+
+### TypeScript / Framer Motion usage
+
+```tsx
+import { motionDurationSec, brandEasing } from "@nebutra/brand"
+
+// motionDurationSec.micro      → 0.1
+// motionDurationSec.flow       → 0.2
+// motionDurationSec.reveal     → 0.3
+// motionDurationSec.cinematic  → 0.5
 
 <motion.div
-  transition={{ duration: brandDuration.slow, ease: brandEasing.brand }}
+  transition={{ duration: motionDurationSec.cinematic, ease: brandEasing.brand }}
 />
 ```
+
+<Callout type="warning">
+  **Do not** hardcode duration values (`duration: 0.4`). Pick a rail. If no rail fits, the animation is probably wrong — talk to design before adding a fifth.
+</Callout>
 
 ---
 
@@ -267,7 +283,7 @@ Use stagger for list and grid entrance animations. Each child enters with a slig
 
 ```tsx
 import { motion } from "framer-motion"
-import { brandMotion, brandDuration, brandEasing } from "@nebutra/brand"
+import { brandMotion, motionDurationSec, brandEasing } from "@nebutra/brand"
 
 const container = {
   hidden: { opacity: 0 },
@@ -287,7 +303,7 @@ const item = {
     filter: "blur(0px)",
     opacity: 1,
     transition: {
-      duration: brandDuration.slow,
+      duration: motionDurationSec.cinematic,
       ease: brandEasing.brand,
     },
   },
@@ -397,16 +413,16 @@ Re-animate every time the element enters the viewport. Use sparingly — only fo
 ```tsx
 import {
   // Core motions (spread directly onto motion.div)
-  brandMotion,     // .emerge, .flow, .pulse
+  brandMotion,         // .emerge, .flow, .pulse, .float
 
   // Easing curves
-  brandEasing,     // .brand, .enter, .exit
+  brandEasing,         // .brand, .enter, .exit, .spring
 
-  // Duration scale
-  brandDuration,   // .instant, .fast, .normal, .moderate, .slow, .reveal
+  // Duration scale — four rails (SSOT: @nebutra/design-tokens core.json)
+  motionDurationSec,   // .micro (0.1) / .flow (0.2) / .reveal (0.3) / .cinematic (0.5)
 
   // Spring configs
-  brandSpring,     // .default, .bouncy, .heavy, .gentle
+  brandSpring,         // .default, .bouncy, .heavy, .gentle
 } from "@nebutra/brand"
 ```
 

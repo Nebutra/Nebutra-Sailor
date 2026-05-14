@@ -1,6 +1,12 @@
 "use client";
+import {
+  Check,
+  ChevronDown,
+  Copy,
+  External as ExternalLinkIcon,
+  TextFormat as TextIcon,
+} from "@nebutra/icons";
 import { useCopyButton } from "fumadocs-ui/utils/use-copy-button";
-import { Check, ChevronDown, Copy, ExternalLinkIcon, TextIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "../lib/cn";
 import { buttonVariants } from "./ui/button";

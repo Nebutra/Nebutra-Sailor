@@ -86,3 +86,6 @@ apps/api-gateway/openapi.json
 # subsequent fumadocs-mdx regeneration (it skips files that already exist),
 # which silently broke design-docs typecheck for weeks.
 apps/*/.source/
+
+# Playwright MCP browser session logs
+.playwright-mcp/

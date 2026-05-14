@@ -4,8 +4,8 @@
  * Consumes primitive design tokens from tokens/primitive.ts, which itself
  * sources values from @nebutra/brand → @nebutra/design-tokens (SSOT).
  *
- * Usage (Tailwind CSS 4, CSS import):
- *   @source "@nebutra/ui/styles/globals.css"
+ * Usage (Tailwind CSS 4, CSS import — the runtime token source):
+ *   @import "@nebutra/tokens/styles.css"
  *
  * Usage (legacy tailwind.config.js):
  *   import { nebutraPreset } from "@nebutra/ui/tailwind.preset"

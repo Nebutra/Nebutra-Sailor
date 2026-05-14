@@ -1,4 +1,11 @@
-import { ArrowUpRight, Email, Linkedin, LockClosed, LogoGithub, Rss } from "@nebutra/icons";
+import {
+  ArrowUpRight,
+  Email,
+  LogoLinkedinSmall as Linkedin,
+  LockClosed,
+  LogoGithub,
+  Rss,
+} from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import {
   Dialog,

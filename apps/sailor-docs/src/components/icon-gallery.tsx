@@ -1,6 +1,7 @@
 "use client";
 
 import * as AllIcons from "@nebutra/icons";
+import { Check, MagnifyingGlass as Search } from "@nebutra/icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +9,6 @@ import {
   DropdownMenuTrigger,
   Input,
 } from "@nebutra/ui/primitives";
-import { Check, Search } from "lucide-react";
 import * as React from "react";
 
 // Filter out types or non-components

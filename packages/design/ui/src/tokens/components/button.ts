@@ -10,6 +10,7 @@ import {
   primitiveRadius,
   primitiveSizing,
   primitiveSpacing,
+  primitiveTransition,
 } from "../primitive";
 
 export const buttonTokens = {
@@ -55,8 +56,8 @@ export const buttonTokens = {
     md: 16,
     lg: 18,
   },
-  /** Transition — fast for snappy interactive feel */
-  transitionDuration: 150,
+  /** Transition — micro rail for snappy interactive feel */
+  transitionDuration: primitiveTransition.duration.micro, // 100ms
 } as const;
 
 export type ButtonSize = keyof typeof buttonTokens.size;

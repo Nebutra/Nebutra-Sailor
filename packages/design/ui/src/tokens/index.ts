@@ -22,14 +22,14 @@ export {
   cardTokens,
   inputTokens,
 } from "./components";
-// Motion
+// Motion — four-rail duration scale (micro/flow/reveal/cinematic)
 export {
-  type Duration,
-  durations,
   type Easing,
   easings,
   interactiveVariants,
+  type MotionDuration,
   type MotionVar,
+  motionDurations,
   motionVariants,
   motionVars,
   sectionMotions,

@@ -166,7 +166,8 @@ Keyframe definitions live in `packages/design/ui/styles/globals.css`.
 ```css
 /* app/globals.css */
 @import "tailwindcss";
-@source "@nebutra/ui/styles/globals.css";
+@import "@nebutra/tokens/styles.css";
+@source "../../../packages/design/ui/src";
 ```
 
 ### Tailwind CSS 3 (Config-based)

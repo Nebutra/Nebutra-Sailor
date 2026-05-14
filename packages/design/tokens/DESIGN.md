@@ -195,10 +195,10 @@ Easing:
 Duration:
 
 ```
---duration-fast:    100ms
---duration-normal:  150ms
---duration-slow:    300ms
---duration-slower:  500ms
+--duration-micro:      100ms   /* hover, focus, toggle, button press */
+--duration-flow:       200ms   /* modal, dropdown, tab — default */
+--duration-reveal:     300ms   /* slide, expand, accordion, drawer */
+--duration-cinematic:  500ms   /* hero entrance, big delight */
 ```
 
 Reduced motion: a global `@media (prefers-reduced-motion: reduce)` block in `styles.css` collapses all animation/transition durations to `0.01ms`.

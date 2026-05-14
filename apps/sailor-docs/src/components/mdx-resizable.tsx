@@ -1,7 +1,7 @@
 "use client";
 
+import { MoreVertical as GripVertical } from "@nebutra/icons";
 import { cn } from "@nebutra/ui/utils";
-import { GripVertical } from "lucide-react";
 import type { ComponentProps } from "react";
 import { Group, Panel as ResizablePanel, Separator } from "react-resizable-panels";
 
