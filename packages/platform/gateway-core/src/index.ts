@@ -223,7 +223,7 @@ export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyCont
 
                 // Write each SSE frame directly to the Client stream
                 await sse.writeSSE({ data: dataStr });
-              } catch (e) {
+              } catch (_e) {
                 logger.warn("Failed to parse SSE data chunk", { raw: line });
               }
             }

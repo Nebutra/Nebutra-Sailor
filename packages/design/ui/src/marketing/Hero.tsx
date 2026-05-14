@@ -45,7 +45,6 @@ export function Hero({
             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-80" />
           </div>
         );
-      case "mesh":
       default:
         return (
           <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 flex items-center justify-center isolate">

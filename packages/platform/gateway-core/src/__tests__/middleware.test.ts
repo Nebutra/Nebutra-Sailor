@@ -216,7 +216,7 @@ describe("createGatewayAuthMiddleware", () => {
 
     expect(capturedRequestId).toBeDefined();
     expect(typeof capturedRequestId).toBe("string");
-    expect(capturedRequestId!.length).toBeGreaterThan(0);
+    expect(capturedRequestId?.length).toBeGreaterThan(0);
     expect(capturedStartTime).toBeDefined();
     expect(typeof capturedStartTime).toBe("number");
   });

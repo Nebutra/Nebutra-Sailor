@@ -64,7 +64,7 @@ describe("aiGatewayMiddleware", () => {
 
     // Check Authorization header logic
     const reqHeaders = fetchArgs[1]?.headers as Record<string, string>;
-    expect(reqHeaders["Authorization"]).toBeDefined();
+    expect(reqHeaders.Authorization).toBeDefined();
 
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ id: "chatcmpl-123", choices: [] });

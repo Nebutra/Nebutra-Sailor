@@ -292,7 +292,7 @@ describe("ChangePasswordForm", () => {
       expect(screen.getByRole("button", { name: "Update password" })).toBeDisabled();
     });
 
-    resolveSubmit!();
+    (resolveSubmit as (() => void) | null)?.();
 
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "Update password" })).not.toBeDisabled();

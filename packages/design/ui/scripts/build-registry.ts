@@ -42,8 +42,8 @@ const __dirname = dirname(__filename);
 const UI_ROOT = resolve(__dirname, "..");
 // W3b layout: packages/design/ui/scripts/build-registry.ts → walk 3 levels up to repo root
 const REPO_ROOT = resolve(UI_ROOT, "..", "..", "..");
-const PRIMITIVES_DIR = join(UI_ROOT, "src", "primitives");
-const COMPONENTS_DIR = join(UI_ROOT, "src", "components");
+const _PRIMITIVES_DIR = join(UI_ROOT, "src", "primitives");
+const _COMPONENTS_DIR = join(UI_ROOT, "src", "components");
 const TOKENS_LIGHT = join(
   REPO_ROOT,
   "packages",

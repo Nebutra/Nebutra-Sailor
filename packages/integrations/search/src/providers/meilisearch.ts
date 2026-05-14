@@ -63,7 +63,7 @@ export class MeilisearchProvider implements SearchProvider {
         if (!byTenant.has(tenant)) {
           byTenant.set(tenant, []);
         }
-        byTenant.get(tenant)!.push(doc);
+        byTenant.get(tenant)?.push(doc);
       }
 
       // Index each tenant's documents to their own index

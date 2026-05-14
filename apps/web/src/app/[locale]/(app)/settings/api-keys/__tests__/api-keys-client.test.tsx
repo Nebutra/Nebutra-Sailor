@@ -95,7 +95,7 @@ describe("ApiKeysPageClient (integration)", () => {
       ([, init]) => (init as RequestInit | undefined)?.method === "POST",
     );
     expect(postCall).toBeDefined();
-    const postedBody = JSON.parse((postCall![1] as RequestInit).body as string);
+    const postedBody = JSON.parse((postCall?.[1] as RequestInit).body as string);
     expect(postedBody).toMatchObject({ name: "Prod" });
   });
 });

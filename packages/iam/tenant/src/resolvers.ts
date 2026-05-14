@@ -68,11 +68,11 @@ export function fromSubdomain(pattern: string): TenantResolver {
       const hostname = url.hostname;
       const match = hostname.match(regex);
 
-      if (match && match[1]) {
+      if (match?.[1]) {
         logger.debug("Tenant resolved from subdomain", { hostname, tenantId: match[1] });
         return match[1];
       }
-    } catch (err) {
+    } catch (_err) {
       logger.warn("Failed to parse URL for subdomain extraction", { url: req.url });
     }
 
@@ -108,11 +108,11 @@ export function fromPath(prefix: string): TenantResolver {
       const pathname = url.pathname;
       const match = pathname.match(regex);
 
-      if (match && match[1]) {
+      if (match?.[1]) {
         logger.debug("Tenant resolved from path", { pathname, tenantId: match[1] });
         return match[1];
       }
-    } catch (err) {
+    } catch (_err) {
       logger.warn("Failed to parse URL for path extraction", { url: req.url });
     }
 
@@ -151,7 +151,7 @@ export function fromJwtClaim(claimName: string): TenantResolver {
         logger.debug("Tenant resolved from JWT claim", { claimName, tenantId: value });
         return value;
       }
-    } catch (err) {
+    } catch (_err) {
       logger.warn("Failed to extract JWT claim", { claimName });
     }
 

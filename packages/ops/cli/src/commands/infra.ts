@@ -1,8 +1,6 @@
 import * as p from "@clack/prompts";
 import type { Command, OptionValues } from "commander";
-import pc from "picocolors";
 import { dockerCompose } from "../utils/delegate";
-import { logger } from "../utils/logger";
 import { debug, output, status } from "../utils/output";
 
 interface InfraCommandOptions {
@@ -85,7 +83,7 @@ async function handleStatus(options: InfraCommandOptions): Promise<void> {
 
         output(rows, { format: "table" });
       }
-    } catch (e) {
+    } catch (_e) {
       // Fallback: output raw docker compose ps
       output(result.stdout, { format: "plain" });
     }

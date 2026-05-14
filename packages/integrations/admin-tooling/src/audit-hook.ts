@@ -37,7 +37,7 @@ export interface WithAuditHookOptions<TInput> {
 
 type AuditModule = {
   getAuditProvider?: () => Promise<{
-    log: (entry: Record<string, unknown>) => Promise<{ id?: string } | void>;
+    log: (entry: Record<string, unknown>) => Promise<{ id?: string } | undefined>;
   }>;
 };
 

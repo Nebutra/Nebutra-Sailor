@@ -12,7 +12,7 @@
   "files": [
     {
       "path": "registry/examples/tooltip-icon-button-demo.tsx",
-      "content": "\"use client\";\nimport { Button, GeistTooltip as Tooltip } from \"@nebutra/ui/primitives\";\nimport { Plus } from \"@nebutra/icons\";\n\nexport function TooltipIconButtonDemo() {\n  return (\n    <div className=\"p-8 flex items-center justify-center\">\n      <Tooltip text=\"Add item\">\n        <Button variant=\"outline\" size=\"icon\">\n          <Plus className=\"w-4 h-4\" />\n        </Button>\n      </Tooltip>\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\nimport { Plus } from \"@nebutra/icons\";\nimport { Button, GeistTooltip as Tooltip } from \"@nebutra/ui/primitives\";\n\nexport function TooltipIconButtonDemo() {\n  return (\n    <div className=\"p-8 flex items-center justify-center\">\n      <Tooltip text=\"Add item\">\n        <Button variant=\"outline\" size=\"icon\">\n          <Plus className=\"w-4 h-4\" />\n        </Button>\n      </Tooltip>\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

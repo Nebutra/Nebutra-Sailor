@@ -112,7 +112,7 @@
 
 .solidButton {
   background: var(--neutral-12, #18181b);
-  color: var(--neutral-1, #fff) !important;
+  color: var(--neutral-1, #fff);
 }
 
 .nav a:hover,

@@ -19,7 +19,7 @@
  * Reference: https://styledictionary.com/reference/config/
  */
 
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import StyleDictionary from "style-dictionary";
 
 const MULTI_THEMES = ["neon", "gradient", "dark-dense", "minimal", "vibrant", "ocean"];

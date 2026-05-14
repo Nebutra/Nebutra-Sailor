@@ -27,9 +27,9 @@ describe("mapSession (NextAuth → canonical Session)", () => {
     });
 
     expect(session).not.toBeNull();
-    expect(session!.userId).toBe("user_123");
-    expect(session!.email).toBe("a@b.test");
-    expect(session!.expiresAt.toISOString()).toBe("2030-01-01T00:00:00.000Z");
+    expect(session?.userId).toBe("user_123");
+    expect(session?.email).toBe("a@b.test");
+    expect(session?.expiresAt.toISOString()).toBe("2030-01-01T00:00:00.000Z");
   });
 
   it("omits optional fields entirely when absent (exactOptionalPropertyTypes contract)", () => {
@@ -52,8 +52,8 @@ describe("mapSession (NextAuth → canonical Session)", () => {
       role: "admin",
     });
 
-    expect(session!.organizationId).toBe("org_456");
-    expect(session!.role).toBe("admin");
+    expect(session?.organizationId).toBe("org_456");
+    expect(session?.role).toBe("admin");
   });
 
   it("falls back to a +1h expiresAt when the payload omits expires", () => {
@@ -61,7 +61,7 @@ describe("mapSession (NextAuth → canonical Session)", () => {
     const session = mapSession({ user: { id: "user_123" } });
     const after = Date.now();
 
-    const ms = session!.expiresAt.getTime();
+    const ms = session?.expiresAt.getTime();
     expect(ms).toBeGreaterThanOrEqual(before + 3_600_000 - 50);
     expect(ms).toBeLessThanOrEqual(after + 3_600_000 + 50);
   });

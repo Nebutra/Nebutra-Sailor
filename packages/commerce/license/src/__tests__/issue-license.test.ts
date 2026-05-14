@@ -66,7 +66,7 @@ describe("issueLicense", () => {
     const result = await issueLicense({ ...baseParams, tier: "INDIVIDUAL" });
 
     expect(mockLicenseCreate).toHaveBeenCalledOnce();
-    const createArgs = mockLicenseCreate.mock.calls[0]![0];
+    const createArgs = mockLicenseCreate.mock.calls[0]?.[0];
     expect(createArgs.data.type).toBe("FREE");
     expect(createArgs.data.tier).toBe("INDIVIDUAL");
     expect(createArgs.data.expiresAt).toBeNull();
@@ -78,7 +78,7 @@ describe("issueLicense", () => {
 
     const result = await issueLicense({ ...baseParams, tier: "OPC" });
 
-    const createArgs = mockLicenseCreate.mock.calls[0]![0];
+    const createArgs = mockLicenseCreate.mock.calls[0]?.[0];
     expect(createArgs.data.type).toBe("FREE");
     expect(createArgs.data.expiresAt).toBeNull();
     expect(result.type).toBe("FREE");
@@ -96,7 +96,7 @@ describe("issueLicense", () => {
     const { issueLicense } = await import("../issue-license");
     const result = await issueLicense({ ...baseParams, tier: "STARTUP" });
 
-    const createArgs = mockLicenseCreate.mock.calls[0]![0];
+    const createArgs = mockLicenseCreate.mock.calls[0]?.[0];
     expect(createArgs.data.type).toBe("COMMERCIAL");
     expect(createArgs.data.tier).toBe("STARTUP");
     expect(createArgs.data.expiresAt).toBeInstanceOf(Date);
@@ -115,7 +115,7 @@ describe("issueLicense", () => {
     const { issueLicense } = await import("../issue-license");
     const result = await issueLicense({ ...baseParams, tier: "ENTERPRISE" });
 
-    const createArgs = mockLicenseCreate.mock.calls[0]![0];
+    const createArgs = mockLicenseCreate.mock.calls[0]?.[0];
     expect(createArgs.data.type).toBe("COMMERCIAL");
     expect(createArgs.data.expiresAt).toBeInstanceOf(Date);
     expect(result.type).toBe("COMMERCIAL");
@@ -131,7 +131,7 @@ describe("issueLicense", () => {
       projectUrl: "https://myapp.com",
     });
 
-    const createArgs = mockLicenseCreate.mock.calls[0]![0];
+    const createArgs = mockLicenseCreate.mock.calls[0]?.[0];
     expect(createArgs.data.acceptedIp).toBe("1.2.3.4");
     expect(createArgs.data.projectName).toBe("MyApp");
     expect(createArgs.data.projectUrl).toBe("https://myapp.com");
@@ -147,7 +147,7 @@ describe("issueLicense", () => {
     });
 
     expect(mockEnqueue).toHaveBeenCalledOnce();
-    const enqueuedJob = mockEnqueue.mock.calls[0]![0];
+    const enqueuedJob = mockEnqueue.mock.calls[0]?.[0];
     expect(enqueuedJob.queue).toBe("license");
     expect(enqueuedJob.type).toBe("issued");
     expect(enqueuedJob.data.licenseId).toBe("lic_1");

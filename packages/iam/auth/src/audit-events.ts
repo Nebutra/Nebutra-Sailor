@@ -75,19 +75,19 @@ export function buildAuditDatabaseHooks(): unknown {
             // Avoid throwing if the shape ever changes — the worst case is
             // that we emit the path-derived event without a confirmed flip.
             const adapter = (auth as { adapter?: { findOne?: unknown } } | undefined)?.adapter;
-            if (
-              adapter &&
-              typeof (adapter as { findOne?: unknown }).findOne === "function"
-            ) {
-              const findOne = (adapter as {
-                findOne: (args: unknown) => Promise<Record<string, unknown> | null>;
-              }).findOne;
+            if (adapter && typeof (adapter as { findOne?: unknown }).findOne === "function") {
+              const findOne = (
+                adapter as {
+                  findOne: (args: unknown) => Promise<Record<string, unknown> | null>;
+                }
+              ).findOne;
               const prior = await findOne({
                 model: "user",
                 where: [{ field: "id", value: userId }],
               });
-              (ctx as unknown as { __nebutraPriorUser?: Record<string, unknown> | null })
-                .__nebutraPriorUser = prior;
+              (
+                ctx as unknown as { __nebutraPriorUser?: Record<string, unknown> | null }
+              ).__nebutraPriorUser = prior;
             }
           } catch (error) {
             logger.warn("[audit-hooks] before(user.update) prior-state read failed", {
@@ -101,9 +101,11 @@ export function buildAuditDatabaseHooks(): unknown {
             if (!userId || !ctx) return;
 
             const path = typeof ctx.path === "string" ? ctx.path : "";
-            const stash = (ctx as unknown as {
-              __nebutraPriorUser?: Record<string, unknown> | null;
-            }).__nebutraPriorUser;
+            const stash = (
+              ctx as unknown as {
+                __nebutraPriorUser?: Record<string, unknown> | null;
+              }
+            ).__nebutraPriorUser;
             const priorEnabled =
               stash && typeof stash.twoFactorEnabled === "boolean"
                 ? stash.twoFactorEnabled
@@ -248,7 +250,12 @@ function extractContext(ctx: HookContext): {
     undefined;
   const sess = ctx?.context?.session?.session;
   const sessionId =
-    sess && (typeof sess.id === "string" ? sess.id : typeof sess.token === "string" ? sess.token : undefined);
+    sess &&
+    (typeof sess.id === "string"
+      ? sess.id
+      : typeof sess.token === "string"
+        ? sess.token
+        : undefined);
   return {
     ...(ip ? { ip } : {}),
     ...(userAgent ? { userAgent } : {}),

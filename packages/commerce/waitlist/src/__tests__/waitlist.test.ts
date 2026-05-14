@@ -70,7 +70,7 @@ describe("Waitlist", () => {
       await waitlist.join({ email: "user@test.com" });
       const entry = await waitlist.getByEmail("user@test.com");
       expect(entry).not.toBeNull();
-      expect(entry!.email).toBe("user@test.com");
+      expect(entry?.email).toBe("user@test.com");
     });
 
     it("returns null for unknown email", async () => {

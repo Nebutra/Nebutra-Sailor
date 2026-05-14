@@ -144,7 +144,6 @@ export function categorizeExitCode(code: ExitCodeValue): ErrorCategory {
       return ErrorCategory.INCOMPATIBILITY;
     case ExitCode.RESOURCE_EXHAUSTED:
       return ErrorCategory.TRANSIENT;
-    case ExitCode.ERROR:
     default:
       return ErrorCategory.UNKNOWN;
   }

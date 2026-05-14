@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { DelegateResult, delegate, findMonorepoRoot } from "../utils/delegate";
+import { delegate, findMonorepoRoot } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 
@@ -71,7 +71,7 @@ async function handleStatsOverview(options: StatsCommandOptions) {
 
   let packages: string[] = [];
   let apps: string[] = [];
-  const totalFiles = 0;
+  const _totalFiles = 0;
   let preset = "unknown";
 
   try {

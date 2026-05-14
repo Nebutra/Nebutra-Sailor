@@ -1,5 +1,6 @@
 import type { Preview, StoryContext, StoryFn } from "@storybook/react";
-import "@nebutra/tokens/styles.css";
+// Single stylesheet — Tailwind v4 + tokens + fonts + @source scan directives.
+import "./preview.css";
 import { a11yConfig } from "./a11y-config";
 
 const preview: Preview = {

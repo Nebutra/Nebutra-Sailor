@@ -121,7 +121,7 @@ describe("POST /api/onboarding/invite-members", () => {
 
     expect(response.status).toBe(200);
     expect(systemDbMock.organizationInvitation.create).toHaveBeenCalledTimes(1);
-    const createArgs = systemDbMock.organizationInvitation.create.mock.calls[0]![0] as {
+    const createArgs = systemDbMock.organizationInvitation.create.mock.calls[0]?.[0] as {
       data: {
         email: string;
         organizationId: string;

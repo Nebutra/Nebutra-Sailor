@@ -1,5 +1,4 @@
 import type { Command } from "commander";
-import pc from "picocolors";
 import { type DelegateResult, delegate, pnpmRun } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";

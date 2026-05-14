@@ -1,9 +1,9 @@
-import fs, { lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import fs, { lstatSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { DelegateResult, delegate, pnpmRun } from "../utils/delegate";
+import { delegate, pnpmRun } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 
@@ -102,7 +102,7 @@ function loadLocaleFile(filePath: string): Record<string, any> | null {
 /**
  * Format output based on requested format
  */
-function formatOutput(data: any, format?: string) {
+function _formatOutput(data: any, format?: string) {
   if (format === "json") {
     console.log(JSON.stringify(data, null, 2));
   } else {

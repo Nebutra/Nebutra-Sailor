@@ -142,7 +142,7 @@ export function OnboardingProvider({
         onDestroyed: () => {
           // If we reached the last step and clicked Done, mark complete.
           // `driver.js` doesn't expose a "completed" signal — use index check.
-          if (driverRef.current && driverRef.current.isLastStep?.()) {
+          if (driverRef.current?.isLastStep?.()) {
             finalize(tour);
           }
         },

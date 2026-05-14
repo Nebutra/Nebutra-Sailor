@@ -151,7 +151,7 @@ describe("NotificationPreferencesMatrix", () => {
         (call: unknown[]) => (call[1] as RequestInit | undefined)?.method === "PATCH",
       );
       expect(patchCall).toBeDefined();
-      const init = patchCall![1] as RequestInit;
+      const init = patchCall?.[1] as RequestInit;
       const parsed = JSON.parse(init.body as string);
       expect(parsed).toEqual({
         eventType: "account.security",

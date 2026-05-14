@@ -59,7 +59,7 @@ function initialsFor(name: string, email: string): string {
   if (!source) return "?";
   const tokens = source.split(/\s+|@/).filter(Boolean);
   if (tokens.length >= 2) {
-    return (tokens[0]!.charAt(0) + tokens[1]!.charAt(0)).toUpperCase();
+    return (tokens[0]?.charAt(0) + tokens[1]?.charAt(0)).toUpperCase();
   }
   return source.slice(0, 2).toUpperCase();
 }

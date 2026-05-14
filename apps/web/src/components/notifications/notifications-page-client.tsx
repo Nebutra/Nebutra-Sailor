@@ -105,7 +105,7 @@ export function NotificationsPageClient({
         return null;
       }
     },
-    [buildUrl, fetchImpl],
+    [buildUrl, fetchImpl, t],
   );
 
   // Initial + filter-change fetch
@@ -182,7 +182,7 @@ export function NotificationsPageClient({
         setErrorMessage(t("errors.markRead"));
       }
     },
-    [patchRead, state],
+    [patchRead, state, t],
   );
 
   const handleArchive = useCallback(
@@ -200,7 +200,7 @@ export function NotificationsPageClient({
         setErrorMessage(t("errors.archive"));
       }
     },
-    [archiveOne, state],
+    [archiveOne, state, t],
   );
 
   const bulkMarkRead = useCallback(async () => {
@@ -223,7 +223,7 @@ export function NotificationsPageClient({
       setState(previous);
       setErrorMessage(t("errors.bulkMarkRead"));
     }
-  }, [patchRead, selectedIds, state]);
+  }, [patchRead, selectedIds, state, t]);
 
   const bulkArchive = useCallback(async () => {
     if (selectedIds.size === 0) return;
@@ -242,7 +242,7 @@ export function NotificationsPageClient({
       setState(previous);
       setErrorMessage(t("errors.archive"));
     }
-  }, [archiveOne, selectedIds, state]);
+  }, [archiveOne, selectedIds, state, t]);
 
   const markAllAsRead = useCallback(async () => {
     const unreadIds = state.items.filter((n) => !n.read).map((n) => n.id);
@@ -264,7 +264,7 @@ export function NotificationsPageClient({
       setState(previous);
       setErrorMessage(t("errors.bulkMarkRead"));
     }
-  }, [patchRead, state]);
+  }, [patchRead, state, t]);
 
   // ---------------------------------------------------------------------------
   // Pagination

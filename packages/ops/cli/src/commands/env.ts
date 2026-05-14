@@ -4,7 +4,6 @@ import * as p from "@clack/prompts";
 import type { Command, OptionValues } from "commander";
 import pc from "picocolors";
 import { findMonorepoRoot } from "../utils/delegate";
-import { logger } from "../utils/logger";
 import { debug, output, sectionHeader, status } from "../utils/output";
 
 interface EnvCommandOptions {

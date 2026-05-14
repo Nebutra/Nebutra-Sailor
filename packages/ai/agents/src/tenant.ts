@@ -45,7 +45,7 @@ export async function checkAgentQuota(
     }
 
     return { allowed: false, remaining: 0 };
-  } catch (err) {
+  } catch (_err) {
     // Failsafe open if billing is unconfigured
     return { allowed: true, remaining: -1 };
   }

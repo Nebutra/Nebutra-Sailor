@@ -1,7 +1,6 @@
 "use client";
 
 import { cva } from "class-variance-authority";
-import * as React from "react";
 import { AnimateIn, AnimateInGroup } from "../primitives/animate-in";
 import { cn } from "../utils/cn";
 import type { Logo, SocialProofProps, Stat } from "./types";

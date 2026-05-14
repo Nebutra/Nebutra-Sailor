@@ -12,7 +12,7 @@ type Phase = "details" | "verify";
 export function SignUpForm() {
   const router = useRouter();
 
-  const [phase, setPhase] = useState<Phase>("details");
+  const [phase, _setPhase] = useState<Phase>("details");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");

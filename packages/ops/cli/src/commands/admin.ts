@@ -1,6 +1,5 @@
 import type { Command } from "commander";
 import pc from "picocolors";
-import { delegate, findMonorepoRoot } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 

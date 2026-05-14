@@ -271,6 +271,14 @@ export * from "./popover";
 export * from "./pricing-card";
 export * from "./progress";
 export * from "./progressive-blur";
+/**
+ * @registry https://ui.nebutra.com/r/question-tool.json
+ * @distribution dual-track (npm + shadcn registry) from 2026-05-14.
+ *   Inline AI chat-tool rendering for multi-step questionnaires. Self-contained,
+ *   distinctive visual IP, no transitive @nebutra deps beyond icons + utils.
+ *   See docs/architecture/2026-05-14-registry-dual-track-distribution.md.
+ */
+export * from "./question-tool";
 export { RadioGroup, RadioGroupItem } from "./radio-group";
 export * from "./radio-group-card";
 export * from "./radio-group-stacked";

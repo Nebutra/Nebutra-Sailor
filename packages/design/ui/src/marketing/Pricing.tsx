@@ -112,7 +112,7 @@ export function Pricing({
 
       <AnimateInGroup stagger="normal">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-4 xl:gap-8 items-center max-w-6xl mx-auto">
-          {plans.map((plan, index) => (
+          {plans.map((plan, _index) => (
             <AnimateIn key={plan.id} preset="fadeUp">
               <div
                 className={cn(cardVariants({ popular: plan.popular }))}

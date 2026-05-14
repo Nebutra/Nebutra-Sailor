@@ -15,7 +15,7 @@ describe("validateUpload", () => {
   it("rejects files exceeding max size", () => {
     const result = validateUpload("huge.bin", 200 * 1024 * 1024, "application/octet-stream");
     expect(result).not.toBeNull();
-    expect(result!.code).toBe("size_exceeded");
+    expect(result?.code).toBe("size_exceeded");
   });
 
   it("rejects files with custom smaller max size", () => {
@@ -23,7 +23,7 @@ describe("validateUpload", () => {
       maxSize: 5 * 1024 * 1024,
     });
     expect(result).not.toBeNull();
-    expect(result!.code).toBe("size_exceeded");
+    expect(result?.code).toBe("size_exceeded");
   });
 
   it("accepts files within custom max size", () => {
@@ -38,7 +38,7 @@ describe("validateUpload", () => {
     for (const ext of blocked) {
       const result = validateUpload(`malware${ext}`, 100, "application/octet-stream");
       expect(result).not.toBeNull();
-      expect(result!.code).toBe("extension_blocked");
+      expect(result?.code).toBe("extension_blocked");
     }
   });
 
@@ -55,7 +55,7 @@ describe("validateUpload", () => {
       allowedTypes: ["image/jpeg", "image/png"],
     });
     expect(result).not.toBeNull();
-    expect(result!.code).toBe("type_not_allowed");
+    expect(result?.code).toBe("type_not_allowed");
   });
 
   it("accepts wildcard MIME type categories", () => {
@@ -70,7 +70,7 @@ describe("validateUpload", () => {
       allowedTypes: ["image/*"],
     });
     expect(result).not.toBeNull();
-    expect(result!.code).toBe("type_not_allowed");
+    expect(result?.code).toBe("type_not_allowed");
   });
 
   it("allows all types with */* wildcard", () => {
@@ -90,13 +90,13 @@ describe("validateImageDimensions", () => {
   it("rejects zero width", () => {
     const result = validateImageDimensions({ width: 0, height: 600 });
     expect(result).not.toBeNull();
-    expect(result!.code).toBe("invalid_image");
+    expect(result?.code).toBe("invalid_image");
   });
 
   it("rejects negative dimensions", () => {
     const result = validateImageDimensions({ width: -1, height: 600 });
     expect(result).not.toBeNull();
-    expect(result!.code).toBe("invalid_image");
+    expect(result?.code).toBe("invalid_image");
   });
 
   it("rejects dimensions exceeding max", () => {
@@ -105,8 +105,8 @@ describe("validateImageDimensions", () => {
       { maxWidth: 4096, maxHeight: 4096 },
     );
     expect(result).not.toBeNull();
-    expect(result!.code).toBe("invalid_image");
-    expect(result!.message).toContain("width");
+    expect(result?.code).toBe("invalid_image");
+    expect(result?.message).toContain("width");
   });
 
   it("rejects height exceeding max", () => {
@@ -115,8 +115,8 @@ describe("validateImageDimensions", () => {
       { maxWidth: 4096, maxHeight: 4096 },
     );
     expect(result).not.toBeNull();
-    expect(result!.code).toBe("invalid_image");
-    expect(result!.message).toContain("height");
+    expect(result?.code).toBe("invalid_image");
+    expect(result?.message).toContain("height");
   });
 
   it("accepts dimensions at exactly the max", () => {

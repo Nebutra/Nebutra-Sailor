@@ -1,5 +1,5 @@
 import { promises as fs } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { findMonorepoRoot } from "../utils/delegate";
@@ -178,7 +178,7 @@ export function hello(name: string): string {
  * Template for a Hono API route
  */
 function getHonoRouteTemplate(routePath: string): Record<string, string> {
-  const routeVar = routePath.replace(/\//g, "_").replace(/-/g, "_");
+  const _routeVar = routePath.replace(/\//g, "_").replace(/-/g, "_");
 
   return {
     [`src/routes/${routePath}.ts`]: `import { Hono } from "hono";
@@ -336,7 +336,7 @@ export const AllSizes: Story = {
 async function getFilesToCreate(
   type: string,
   name: string,
-  options: GenerateOptions,
+  _options: GenerateOptions,
 ): Promise<Array<{ path: string; size: number }>> {
   const root = findMonorepoRoot();
   const files: Array<{ path: string; size: number }> = [];

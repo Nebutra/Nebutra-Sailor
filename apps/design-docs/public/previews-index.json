@@ -812,6 +812,10 @@
       "type": "registry:example"
     },
     {
+      "name": "question-tool-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "radio-group-2-demo",
       "type": "registry:example"
     },

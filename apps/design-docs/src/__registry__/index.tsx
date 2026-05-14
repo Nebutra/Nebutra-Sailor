@@ -809,6 +809,9 @@ export const ProgressiveBlurDemo = dynamic(() =>
     default: m.ProgressiveBlurDemo,
   })),
 );
+export const QuestionToolDemo = dynamic(() =>
+  import("@/components/previews/question-tool-demo").then((m) => ({ default: m.QuestionToolDemo })),
+);
 export const RadioGroup2Demo = dynamic(() =>
   import("@/components/previews/radio-group-2-demo").then((m) => ({ default: m.RadioGroup2Demo })),
 );
@@ -1408,6 +1411,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     component: ProgressWithLabelDemo,
   },
   "progressive-blur-demo": { name: "progressive-blur-demo", component: ProgressiveBlurDemo },
+  "question-tool-demo": { name: "question-tool-demo", component: QuestionToolDemo },
   "radio-group-2-demo": { name: "radio-group-2-demo", component: RadioGroup2Demo },
   "radio-group-3-demo": { name: "radio-group-3-demo", component: RadioGroup3Demo },
   "radio-group-billing-demo": {

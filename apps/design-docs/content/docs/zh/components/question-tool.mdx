@@ -1,0 +1,126 @@
+---
+title: Question Tool
+description: AI 工具调用内联问卷组件——支持单选、多选、自由文本三种题型，带进度、汇总态与键盘快捷键。
+status: alpha
+---
+
+<ComponentPreview name="question-tool-demo" />
+
+## 安装
+
+```tsx
+import { QuestionTool } from "@nebutra/ui/primitives";
+```
+
+或通过 shadcn 注册表独立安装：
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/question-tool.json
+```
+
+## 基本用法
+
+`QuestionTool` 是带 chrome 的组合组件；`QuestionPrompt`（同时导出）是裸的单题渲染器，需要自定义外壳时使用。
+
+```tsx
+import { QuestionTool, type QuestionConfig } from "@nebutra/ui/primitives";
+
+const questions: QuestionConfig[] = [
+  {
+    kind: "single",
+    title: "你的主要岗位是什么？",
+    options: [
+      { id: "fe", label: "前端" },
+      { id: "be", label: "后端" },
+      { id: "design", label: "设计" },
+    ],
+    allowCustom: true,
+  },
+];
+
+<QuestionTool
+  questions={questions}
+  onSubmitAnswer={(answer, index) => {
+    // 转发到你的 AI 聊天管线
+  }}
+/>
+```
+
+## 三种题型
+
+| Kind     | 行为                                                                  |
+| -------- | --------------------------------------------------------------------- |
+| `single` | 渲染为 `<radiogroup>` —— 恰好选一项（或自定义写入）                   |
+| `multi`  | 渲染为 `<group aria-multiselectable>` —— `min`/`max` 之间的 N 项     |
+| `text`   | 自由文本 `<textarea>` —— `Cmd/Ctrl+Enter` 提交                       |
+
+## QuestionConfig
+
+| 字段                | 类型                                  | 说明                                                       |
+| ------------------- | ------------------------------------- | ---------------------------------------------------------- |
+| `kind`              | `"single" \| "multi" \| "text"`       | **必填**                                                   |
+| `title`             | `string`                              | **必填**。渲染为 `<h2>` 供屏幕阅读器                       |
+| `description`       | `string`                              | 通过 `aria-describedby` 链接到选项组                       |
+| `options`           | `QuestionOption[]`                    | `single` / `multi` 必填                                    |
+| `allowCustom`       | `boolean`                             | 追加一个自定义写入槽（仅选项题型）                         |
+| `customLabel`       | `string`                              | 自定义输入框的无障碍标签                                   |
+| `customPlaceholder` | `string`                              | 自定义输入框 placeholder                                   |
+| `minSelections`     | `number`                              | 仅 `multi`。默认 `1`                                       |
+| `maxSelections`     | `number`                              | 仅 `multi`。默认无上限                                     |
+| `placeholder`       | `string`                              | 仅 `text`。textarea placeholder                            |
+
+## QuestionAnswer（判别联合类型）
+
+```ts
+type QuestionAnswer =
+  | { kind: "single"; selectedIds: string[]; text?: string }
+  | { kind: "multi";  selectedIds: string[]; text?: string }
+  | { kind: "text";   text: string }
+  | { kind: "skip" };
+```
+
+当 `allowCustom: true` 且用户填了写入槽时，answer 同时携带 `text` 和 `selectedIds`。
+
+## 受控 vs 非受控 index
+
+默认情况下 `QuestionTool` 内部管理当前题目索引。传入 `questionIndex` + `onPreviousQuestion` / `onNextQuestion` 把控制权交给父级——当 LLM 在服务端根据上一题答案决定下一题时尤其有用。
+
+```tsx
+<QuestionTool
+  questions={questions}
+  questionIndex={currentIdx}
+  onPreviousQuestion={() => setIdx((i) => i - 1)}
+  onNextQuestion={() => setIdx((i) => i + 1)}
+  onSubmitAnswer={(answer, idx) => persistAndAdvance(answer, idx)}
+/>
+```
+
+## 键盘
+
+| 按键                                     | 行为                                                          |
+| ---------------------------------------- | ------------------------------------------------------------- |
+| `A`–`Z`                                  | 选中对应字母的选项（仅选项题型）                              |
+| `Cmd`/`Ctrl` + `Enter`                   | 提交 `text` 题型                                              |
+| `Tab` / `Shift+Tab`                      | 标准焦点流转                                                  |
+
+输入框 / textarea 获得焦点时字母快捷键自动失效，不阻塞用户输入。
+
+## 无障碍
+
+- 外层 `<section aria-label>` 地标
+- 问题标题渲染为 `<h2>` + `aria-labelledby` 链接到选项组
+- 选项带 `role="radio"` / `role="checkbox"` + `aria-checked`
+- 描述（如有）通过 `aria-describedby` 链接
+- 顶部 chevron 按钮带 `aria-label`
+- 进度（`{n} of {total}`）通过 `aria-live="polite"` 实时播报
+- 字母 badge（`A`/`B`/…）`aria-hidden` —— 语义由 role+state 承载
+
+## 适用场景
+
+放在 AI 聊天界面，当助手需要从用户拿到结构化输入时：onboarding 流程、澄清问题、用户画像、追问对话。视觉读感是"工具调用结果"，用户隐式理解这是 LLM 发起的表单。
+
+不要用于：
+
+- 聊天之外的独立表单（用 `Form` + `Field` primitive）
+- 单题超过 26 个选项的问卷（字母上限）
+- 异步 / 流式生成的问题——组件预期 `questions` 数组稳定

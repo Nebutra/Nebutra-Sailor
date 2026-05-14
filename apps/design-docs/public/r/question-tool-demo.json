@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "question-tool-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/question-tool-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  type QuestionAnswer,\n  type QuestionConfig,\n  QuestionTool,\n} from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nconst questions: QuestionConfig[] = [\n  {\n    kind: \"single\",\n    title: \"What's your primary role?\",\n    options: [\n      { id: \"frontend\", label: \"Frontend engineer\", description: \"(React, UI)\" },\n      { id: \"backend\", label: \"Backend engineer\", description: \"(API, infra)\" },\n      { id: \"design\", label: \"Designer\" },\n      { id: \"pm\", label: \"Product manager\" },\n    ],\n    allowCustom: true,\n    customPlaceholder: \"Other role…\",\n  },\n  {\n    kind: \"multi\",\n    title: \"Which tools do you use daily?\",\n    description: \"Pick all that apply.\",\n    options: [\n      { id: \"vscode\", label: \"VS Code\" },\n      { id: \"linear\", label: \"Linear\" },\n      { id: \"figma\", label: \"Figma\" },\n      { id: \"vercel\", label: \"Vercel\" },\n      { id: \"raycast\", label: \"Raycast\" },\n    ],\n    minSelections: 1,\n    maxSelections: 3,\n  },\n  {\n    kind: \"text\",\n    title: \"Anything else we should know?\",\n    placeholder: \"Type your thoughts… (⌘+Enter to submit)\",\n  },\n];\n\nexport function QuestionToolDemo() {\n  const [answers, setAnswers] = useState<Record<number, QuestionAnswer>>({});\n  return (\n    <div className=\"w-full max-w-[480px]\">\n      <QuestionTool\n        questions={questions}\n        toolCallId=\"docs-demo\"\n        onSubmitAnswer={(answer, idx) =>\n          setAnswers((prev) => ({ ...prev, [idx]: answer }))\n        }\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

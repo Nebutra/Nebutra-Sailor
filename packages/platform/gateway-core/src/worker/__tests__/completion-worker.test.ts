@@ -167,7 +167,7 @@ describe("processCompletionEvent — success path", () => {
     await processCompletionEvent(baseEvent, deps);
 
     expect(deps.ingestUsage).toHaveBeenCalledTimes(1);
-    const meteringEvent = deps.ingestUsage!.mock.calls[0][0] as {
+    const meteringEvent = deps.ingestUsage?.mock.calls[0][0] as {
       meterId: string;
       tenantId: string;
       value: number;
@@ -347,7 +347,7 @@ describe("registerCompletionWorker", () => {
     registerCompletionWorker(queue, deps);
     expect(captured).toBeDefined();
 
-    await captured!({ data: baseEvent });
+    await captured?.({ data: baseEvent });
 
     // processCompletionEvent side effects — pricing fetched for this event's model
     expect(deps.getModelPricing).toHaveBeenCalledWith(baseEvent.model);

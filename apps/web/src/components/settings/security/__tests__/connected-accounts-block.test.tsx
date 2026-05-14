@@ -103,7 +103,7 @@ describe("ConnectedAccountsBlock", () => {
     render(<ConnectedAccountsBlock capability={buildCapability()} onLink={onLink} />);
 
     const googleRow = screen.getByText("Google").closest("div")!;
-    const connectBtn = googleRow.parentElement!.querySelector("button");
+    const connectBtn = googleRow.parentElement?.querySelector("button");
     await user.click(connectBtn!);
 
     await waitFor(() => {
@@ -158,7 +158,7 @@ describe("ConnectedAccountsBlock", () => {
     render(<ConnectedAccountsBlock capability={buildCapability()} onLink={onLink} />);
 
     const googleRow = screen.getByText("Google").closest("div")!;
-    const connectBtn = googleRow.parentElement!.querySelector("button");
+    const connectBtn = googleRow.parentElement?.querySelector("button");
     await user.click(connectBtn!);
 
     await waitFor(() => {

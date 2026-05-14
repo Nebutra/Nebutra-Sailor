@@ -66,7 +66,6 @@ export async function getCheckout(config?: CheckoutConfig): Promise<CheckoutProv
       const { ChinaPayCheckoutProvider } = await import("./chinapay");
       return new ChinaPayCheckoutProvider();
     }
-    case "manual":
     default: {
       const { ManualCheckoutProvider } = await import("./manual");
       return new ManualCheckoutProvider();

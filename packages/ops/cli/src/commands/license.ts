@@ -16,7 +16,7 @@ async function getConfigDir() {
   const configDir = path.join(home, ".config", "nebutra");
   try {
     await fs.mkdir(configDir, { recursive: true });
-  } catch (e) {
+  } catch (_e) {
     // ignore
   }
   return configDir;
@@ -31,7 +31,7 @@ async function validateKeyRemotely(key: string): Promise<{ tier: string; type: s
   let res: Response;
   try {
     res = await fetch(url, { signal: AbortSignal.timeout(10_000) });
-  } catch (err) {
+  } catch (_err) {
     throw new Error(
       `Could not reach the Nebutra license server (${LICENSE_API_BASE}). ` +
         `Check your internet connection or set NEBUTRA_LICENSE_API_URL.`,
@@ -144,7 +144,7 @@ export async function statusLicenseCommand(options: Record<string, unknown>) {
     } else {
       throw new Error("License key not found in config.");
     }
-  } catch (error) {
+  } catch (_error) {
     if (!isQuiet) {
       p.log.warn(pc.yellow("No active license found locally."));
       p.log.message(pc.dim("Run `nebutra license activate <key>` to unlock premium features."));

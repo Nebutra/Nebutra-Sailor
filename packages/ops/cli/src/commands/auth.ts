@@ -1,8 +1,6 @@
-import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Command } from "commander";
-import pc from "picocolors";
-import { type DelegateResult, delegate } from "../utils/delegate";
+import type { DelegateResult } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 

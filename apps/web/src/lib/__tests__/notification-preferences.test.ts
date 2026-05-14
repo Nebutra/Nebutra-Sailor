@@ -87,7 +87,7 @@ describe("notification-preferences helper", () => {
         capabilities: { hasPushSubscription: true, phoneVerified: true },
       });
 
-      const cellChannels = matrix.rows[0]!.cells.map((cell) => cell.channel);
+      const cellChannels = matrix.rows[0]?.cells.map((cell) => cell.channel);
       expect(cellChannels).toEqual(["in_app", "email", "push", "sms"]);
     });
 

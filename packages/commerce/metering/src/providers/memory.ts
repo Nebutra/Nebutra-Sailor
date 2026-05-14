@@ -165,7 +165,7 @@ export class MemoryProvider implements MeteringProvider {
           if (!byDimension.has(dimValue)) {
             byDimension.set(dimValue, []);
           }
-          byDimension.get(dimValue)!.push(event);
+          byDimension.get(dimValue)?.push(event);
         }
         for (const [dim, events] of byDimension) {
           breakdown[dim] = this.aggregateEvents(events, meter.aggregation);
@@ -309,7 +309,7 @@ export class MemoryProvider implements MeteringProvider {
 
     const breakdown: Record<string, number> = {};
     for (const event of relevant) {
-      const dimValue = String(event.properties![dimension]);
+      const dimValue = String(event.properties?.[dimension]);
       if (!breakdown[dimValue]) {
         breakdown[dimValue] = 0;
       }

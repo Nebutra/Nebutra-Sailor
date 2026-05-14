@@ -15,7 +15,7 @@ import type { AgentMessage } from "./types";
 const DEFAULT_TTL_SECONDS = 7 * 24 * 60 * 60; // 7 days
 
 function getTtl(): number {
-  const envTtl = process.env["AGENT_MEMORY_TTL_SECONDS"];
+  const envTtl = process.env.AGENT_MEMORY_TTL_SECONDS;
   if (envTtl) {
     const parsed = Number.parseInt(envTtl, 10);
     if (!Number.isNaN(parsed) && parsed > 0) {
@@ -58,19 +58,19 @@ export async function getMemory(tenantId: string, conversationId: string): Promi
     if (!Array.isArray(parsed)) return [];
 
     return parsed.map((m: Record<string, unknown>): AgentMessage => {
-      const toolCalls = m["toolCalls"];
+      const toolCalls = m.toolCalls;
       if (Array.isArray(toolCalls) && toolCalls.length > 0) {
         return {
-          role: m["role"] as AgentMessage["role"],
-          content: String(m["content"] ?? ""),
+          role: m.role as AgentMessage["role"],
+          content: String(m.content ?? ""),
           toolCalls: toolCalls as unknown as NonNullable<AgentMessage["toolCalls"]>,
-          timestamp: new Date(String(m["timestamp"])),
+          timestamp: new Date(String(m.timestamp)),
         };
       }
       return {
-        role: m["role"] as AgentMessage["role"],
-        content: String(m["content"] ?? ""),
-        timestamp: new Date(String(m["timestamp"])),
+        role: m.role as AgentMessage["role"],
+        content: String(m.content ?? ""),
+        timestamp: new Date(String(m.timestamp)),
       };
     });
   } catch (error) {

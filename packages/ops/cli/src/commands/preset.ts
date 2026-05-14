@@ -300,7 +300,7 @@ export async function presetApplyCommand(presetName: string, options: PresetOpti
 export async function presetEnvCommand(options: PresetOptions) {
   p.intro(pc.bgCyan(pc.black(" nebutra preset env ")));
 
-  const root = findMonorepoRoot();
+  const _root = findMonorepoRoot();
 
   try {
     const result = await pnpmRun("preset:env", {

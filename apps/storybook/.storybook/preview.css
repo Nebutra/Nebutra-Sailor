@@ -1,0 +1,23 @@
+/**
+ * Storybook global stylesheet.
+ *
+ * Mirrors apps/web/src/app/globals.css:
+ *   1. Tailwind CSS v4 (must be first)
+ *   2. @nebutra/tokens runtime CSS variables (SSOT)
+ *   3. @nebutra/ui font typography variables
+ *
+ * @source directives tell Tailwind v4 which files to scan for class names —
+ * the design system source, local story files, and cross-imported apps/web.
+ */
+
+@import "tailwindcss";
+
+@import "@nebutra/tokens/styles.css";
+@import "@nebutra/ui/typography/fonts.css";
+
+/* Tailwind v4 auto-scans files reached via the module graph, but tsup-built
+ * @nebutra/ui dist files are pre-bundled and won't be reached during dev.
+ * Point @source at the *source* tree where authoring happens. Each glob is
+ * narrow on purpose — broad globs (e.g. apps/web/**) hang the dev server. */
+@source "../../../packages/design/ui/src/**/*.{ts,tsx}";
+@source "../src/**/*.{ts,tsx}";

@@ -111,7 +111,7 @@ describe("buildAuditDatabaseHooks", () => {
     expect(event.outcome).toBe("success");
     expect((event.actor as { id: string }).id).toBe("user_1");
     expect(event.tenantId).toBe("org_42");
-    expect((event.resource as { type: string; id: string })).toEqual({
+    expect(event.resource as { type: string; id: string }).toEqual({
       type: "user",
       id: "user_1",
     });
@@ -195,10 +195,7 @@ describe("buildAuditDatabaseHooks", () => {
     };
 
     await hooks.user.update.before({ id: "user_1", twoFactorEnabled: false }, ctx);
-    await hooks.user.update.after(
-      { id: "user_1", twoFactorEnabled: false },
-      ctx,
-    );
+    await hooks.user.update.after({ id: "user_1", twoFactorEnabled: false }, ctx);
 
     expect(logMock).toHaveBeenCalledTimes(1);
     const event = logMock.mock.calls[0]?.[0] as Record<string, unknown>;
@@ -281,10 +278,13 @@ describe("buildAuditDatabaseHooks", () => {
       account: { update: { after: (a: unknown, c: unknown) => Promise<void> } };
     };
 
-    await hooks.user.update.after({ twoFactorEnabled: true }, {
-      path: "/two-factor/enable",
-      context: { session: null },
-    });
+    await hooks.user.update.after(
+      { twoFactorEnabled: true },
+      {
+        path: "/two-factor/enable",
+        context: { session: null },
+      },
+    );
     await hooks.account.update.after(
       { id: "acc_1", providerId: "credential", password: "hash" },
       { path: "/change-password", context: { session: null } },
