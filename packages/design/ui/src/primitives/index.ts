@@ -195,6 +195,13 @@ export * from "./feature-gate";
 export * from "./feature-icon-item";
 export * from "./feedback";
 export * from "./field";
+/**
+ * Chip / thumbnail display for an attached file. Use in chat composers,
+ * message bubbles, or attachment lists. Distinct from the chat tool-family
+ * — this renders *user input* (uploaded files), not AI output. Removable
+ * variant is keyboard-accessible (focus-visible reveal, not hover-only).
+ */
+export * from "./file-attachment";
 // Pill-style category filter (MiniMax / GPT Store discovery row)
 export * from "./filter-pills";
 export * from "./flex";

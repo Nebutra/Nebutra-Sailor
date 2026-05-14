@@ -536,6 +536,13 @@ export const FeedbackDemo = dynamic(() =>
 export const FieldDemo = dynamic(() =>
   import("@/components/previews/field-demo").then((m) => ({ default: m.FieldDemo })),
 );
+export const FileAttachmentDemo = dynamic(
+  () =>
+    import("@/components/previews/file-attachment-demo").then((m) => ({
+      default: m.FileAttachmentDemo,
+    })),
+  { ssr: false },
+);
 export const FlexDemo = dynamic(() =>
   import("@/components/previews/flex-demo").then((m) => ({ default: m.FlexDemo })),
 );
@@ -1331,6 +1338,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "feature-icon-item-demo": { name: "feature-icon-item-demo", component: FeatureIconItemDemo },
   "feedback-demo": { name: "feedback-demo", component: FeedbackDemo },
   "field-demo": { name: "field-demo", component: FieldDemo },
+  "file-attachment-demo": { name: "file-attachment-demo", component: FileAttachmentDemo },
   "flex-demo": { name: "flex-demo", component: FlexDemo },
   "flickering-grid-demo": { name: "flickering-grid-demo", component: FlickeringGridDemo },
   "form-demo": { name: "form-demo", component: FormDemo },

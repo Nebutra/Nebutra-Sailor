@@ -273,6 +273,18 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/subagent-tool.tsx",
     layer: "business",
   },
+  // -------------------------------------------------------------------------
+  // Chat composer primitives — separate from the chat tool-family above.
+  // These render *user input* (uploaded files etc.), not AI output.
+  // -------------------------------------------------------------------------
+  {
+    name: "file-attachment",
+    title: "File Attachment",
+    description:
+      "Chip / thumbnail display for an attached file in a chat composer or message bubble. Keyboard-accessible removal.",
+    source: "primitives/file-attachment.tsx",
+    layer: "business",
+  },
 ];
 
 // ---------------------------------------------------------------------------

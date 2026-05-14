@@ -524,6 +524,10 @@
       "type": "registry:example"
     },
     {
+      "name": "file-attachment-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "flex-demo",
       "type": "registry:example"
     },

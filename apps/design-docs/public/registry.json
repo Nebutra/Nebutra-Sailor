@@ -112,6 +112,12 @@
       "description": "Single-line status pill for delegated subagent invocations — lightest member of the chat tool-family."
     },
     {
+      "name": "file-attachment",
+      "type": "registry:ui",
+      "title": "File Attachment",
+      "description": "Chip / thumbnail display for an attached file in a chat composer or message bubble. Keyboard-accessible removal."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",
