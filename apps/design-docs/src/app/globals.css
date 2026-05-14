@@ -100,9 +100,12 @@
   --shadow-book-border: var(--ds-shadow-book-border);
 }
 
-/* Scan @nebutra/ui source directly via workspace path (avoids node_modules symlink fragility) */
+/* Scan @nebutra/ui source directly via workspace path (avoids node_modules symlink fragility).
+ * Path is `packages/design/ui/src` — historical `packages/ui/src` was incorrect
+ * and silently broke utility-class generation for any class authored inside
+ * the UI package (e.g. Alert variants, motion primitives). */
 /* stylelint-disable-next-line at-rule-no-unknown */
-@source "../../../../packages/ui/src";
+@source "../../../../packages/design/ui/src";
 
 /* stylelint-disable-next-line at-rule-no-unknown */
 @custom-variant dark (&:is(.dark *));
