@@ -8,10 +8,10 @@ import {
   FacePlus as SmilePlus,
   Users,
 } from "@nebutra/icons";
-import { Input } from "@nebutra/ui/primitives";
 import Image from "next/image";
 import type React from "react";
 import { useState } from "react";
+import { Input } from "../primitives/input";
 import { cn } from "../utils/cn";
 
 // =============================================================================
@@ -288,7 +288,7 @@ export function TeamChat({
         <Input
           type="text"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={inputPlaceholder}
         />
