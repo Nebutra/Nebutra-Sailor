@@ -1,7 +1,14 @@
 import type { InferPageType } from "fumadocs-core/source";
+import type { DocData, DocMethods } from "fumadocs-mdx/runtime/types";
 import { NextResponse } from "next/server";
 import { type FileObject, scanURLs, validateFiles } from "next-validate-link";
 import { source } from "@/lib/source";
+
+// fumadocs-core's `InferPageType` returns the bare PageData (frontmatter +
+// title/description). The MDX runtime adds `toc` (DocData) and `getText`
+// (DocMethods) at access time, but the loader generics in fumadocs-core 16
+// don't propagate them. Cast at call sites.
+type MdxPageData = InferPageType<typeof source>["data"] & DocData & DocMethods;
 
 export async function GET() {
   const scanned = await scanURLs({
@@ -50,14 +57,14 @@ export async function GET() {
 }
 
 function getHeadings({ data }: InferPageType<typeof source>): string[] {
-  return data.toc.map((item) => item.url.slice(1));
+  return (data as MdxPageData).toc.map((item) => item.url.slice(1));
 }
 
 function getFiles() {
   const promises = source.getPages().map(
     async (page): Promise<FileObject> => ({
       path: page.absolutePath ?? page.url,
-      content: await page.data.getText("raw"),
+      content: await (page.data as MdxPageData).getText("raw"),
       url: page.url,
       data: page.data,
     }),
