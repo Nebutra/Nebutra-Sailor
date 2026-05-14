@@ -64,6 +64,54 @@
       "description": "Linear / Vercel / Supabase inspired SaaS dashboard metric tile."
     },
     {
+      "name": "text-shimmer",
+      "type": "registry:ui",
+      "title": "Text Shimmer",
+      "description": "Animated text shimmer used as the streaming-header substrate for the chat tool-family."
+    },
+    {
+      "name": "loading-dots",
+      "type": "registry:ui",
+      "title": "Loading Dots",
+      "description": "Three-dot bouncing loader; reused inside EditTool's approval footer."
+    },
+    {
+      "name": "edit-tool",
+      "type": "registry:ui",
+      "title": "Edit Tool",
+      "description": "Inline AI tool-call rendering for file edits — Cursor / Claude Code-style diff block with optional approval footer."
+    },
+    {
+      "name": "question-tool",
+      "type": "registry:ui",
+      "title": "Question Tool",
+      "description": "Inline AI tool-call rendering of a multi-step questionnaire — single / multi / text question kinds."
+    },
+    {
+      "name": "mcp-tool",
+      "type": "registry:ui",
+      "title": "MCP Tool",
+      "description": "Inline AI tool-call rendering for MCP invocations — verb conjugation, priority-sorted args, expandable output panel."
+    },
+    {
+      "name": "todo-tool",
+      "type": "registry:ui",
+      "title": "Todo Tool",
+      "description": "Flat streaming todo list for the Claude TodoWrite tool — sibling of EditTool / McpTool / SearchTool."
+    },
+    {
+      "name": "search-tool",
+      "type": "registry:ui",
+      "title": "Search Tool",
+      "description": "Inline AI tool-call rendering for search/retrieval results — honest-link rows, scrollable result panel."
+    },
+    {
+      "name": "subagent-tool",
+      "type": "registry:ui",
+      "title": "Subagent Tool",
+      "description": "Single-line status pill for delegated subagent invocations — lightest member of the chat tool-family."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",

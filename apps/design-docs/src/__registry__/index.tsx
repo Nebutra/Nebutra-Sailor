@@ -489,6 +489,10 @@ export const DynamicIslandTocDemo = dynamic(() =>
     default: m.DynamicIslandTocDemo,
   })),
 );
+export const EditToolDemo = dynamic(
+  () => import("@/components/previews/edit-tool-demo").then((m) => ({ default: m.EditToolDemo })),
+  { ssr: false },
+);
 export const EmptyStateDemo = dynamic(() =>
   import("@/components/previews/empty-state-demo").then((m) => ({ default: m.EmptyStateDemo })),
 );
@@ -701,6 +705,9 @@ export const MagicCardDemo = dynamic(() =>
 export const MaterialDemo = dynamic(() =>
   import("@/components/previews/material-demo").then((m) => ({ default: m.MaterialDemo })),
 );
+export const McpToolDemo = dynamic(() =>
+  import("@/components/previews/mcp-tool-demo").then((m) => ({ default: m.McpToolDemo })),
+);
 export const Menu2Demo = dynamic(() =>
   import("@/components/previews/menu-2-demo").then((m) => ({ default: m.Menu2Demo })),
 );
@@ -872,6 +879,9 @@ export const ScrollVelocityDemo = dynamic(() =>
     default: m.ScrollVelocityDemo,
   })),
 );
+export const SearchToolDemo = dynamic(() =>
+  import("@/components/previews/search-tool-demo").then((m) => ({ default: m.SearchToolDemo })),
+);
 export const SelectDemo = dynamic(() =>
   import("@/components/previews/select-demo").then((m) => ({ default: m.SelectDemo })),
 );
@@ -978,6 +988,9 @@ export const StarsCanvasDemo = dynamic(() =>
 export const StatusBadgeDemo = dynamic(() =>
   import("@/components/previews/status-badge-demo").then((m) => ({ default: m.StatusBadgeDemo })),
 );
+export const SubagentToolDemo = dynamic(() =>
+  import("@/components/previews/subagent-tool-demo").then((m) => ({ default: m.SubagentToolDemo })),
+);
 export const SwitchDemo = dynamic(() =>
   import("@/components/previews/switch-demo").then((m) => ({ default: m.SwitchDemo })),
 );
@@ -1036,6 +1049,9 @@ export const ThemeSwitcherDemo = dynamic(
       default: m.ThemeSwitcherDemo,
     })),
   { ssr: false },
+);
+export const TodoToolDemo = dynamic(() =>
+  import("@/components/previews/todo-tool-demo").then((m) => ({ default: m.TodoToolDemo })),
 );
 export const Toggle2Demo = dynamic(() =>
   import("@/components/previews/toggle-2-demo").then((m) => ({ default: m.Toggle2Demo })),
@@ -1303,6 +1319,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   },
   "dropdown-menu-sub-demo": { name: "dropdown-menu-sub-demo", component: DropdownMenuSubDemo },
   "dynamic-island-toc-demo": { name: "dynamic-island-toc-demo", component: DynamicIslandTocDemo },
+  "edit-tool-demo": { name: "edit-tool-demo", component: EditToolDemo },
   "empty-state-demo": { name: "empty-state-demo", component: EmptyStateDemo },
   "entity-demo": { name: "entity-demo", component: EntityDemo },
   "error-message-demo": { name: "error-message-demo", component: ErrorMessageDemo },
@@ -1368,6 +1385,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "macbook-pro-demo": { name: "macbook-pro-demo", component: MacbookProDemo },
   "magic-card-demo": { name: "magic-card-demo", component: MagicCardDemo },
   "material-demo": { name: "material-demo", component: MaterialDemo },
+  "mcp-tool-demo": { name: "mcp-tool-demo", component: McpToolDemo },
   "menu-2-demo": { name: "menu-2-demo", component: Menu2Demo },
   "menu-3-demo": { name: "menu-3-demo", component: Menu3Demo },
   "menu-4-demo": { name: "menu-4-demo", component: Menu4Demo },
@@ -1437,6 +1455,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "scroll-area-demo": { name: "scroll-area-demo", component: ScrollAreaDemo },
   "scroll-area-list-demo": { name: "scroll-area-list-demo", component: ScrollAreaListDemo },
   "scroll-velocity-demo": { name: "scroll-velocity-demo", component: ScrollVelocityDemo },
+  "search-tool-demo": { name: "search-tool-demo", component: SearchToolDemo },
   "select-demo": { name: "select-demo", component: SelectDemo },
   "select-disabled-demo": { name: "select-disabled-demo", component: SelectDisabledDemo },
   "select-groups-demo": { name: "select-groups-demo", component: SelectGroupsDemo },
@@ -1478,6 +1497,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "stack-demo": { name: "stack-demo", component: StackDemo },
   "stars-canvas-demo": { name: "stars-canvas-demo", component: StarsCanvasDemo },
   "status-badge-demo": { name: "status-badge-demo", component: StatusBadgeDemo },
+  "subagent-tool-demo": { name: "subagent-tool-demo", component: SubagentToolDemo },
   "switch-demo": { name: "switch-demo", component: SwitchDemo },
   "table-demo": { name: "table-demo", component: TableDemo },
   "tabs-button-demo": { name: "tabs-button-demo", component: TabsButtonDemo },
@@ -1498,6 +1518,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     component: TextareaWithLimitDemo,
   },
   "theme-switcher-demo": { name: "theme-switcher-demo", component: ThemeSwitcherDemo },
+  "todo-tool-demo": { name: "todo-tool-demo", component: TodoToolDemo },
   "toggle-2-demo": { name: "toggle-2-demo", component: Toggle2Demo },
   "toggle-3-demo": { name: "toggle-3-demo", component: Toggle3Demo },
   "toggle-4-demo": { name: "toggle-4-demo", component: Toggle4Demo },

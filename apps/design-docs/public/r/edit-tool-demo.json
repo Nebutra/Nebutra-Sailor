@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "edit-tool-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/edit-tool-demo.tsx",
+      "content": "\"use client\";\n\nimport { type ApprovalDecision, EditTool } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nconst oldContent = `export const metadata = { title: 'Old' };\n\nexport default function Page() {\n  return <div>Old content</div>;\n}\n`;\n\nconst newContent = `export const metadata = { title: 'Updated' };\n\nexport default function Page() {\n  return (\n    <div>\n      <h1>Release notes</h1>\n      <p>New layout applied.</p>\n    </div>\n  );\n}\n`;\n\nexport function EditToolDemo() {\n  const [decision, setDecision] = useState<ApprovalDecision>(null);\n  return (\n    <div className=\"w-full max-w-xl\">\n      <EditTool\n        state={decision === \"approved\" ? \"pending\" : \"completed\"}\n        filePath=\"/app/page.tsx\"\n        oldContent={oldContent}\n        newContent={newContent}\n        approval={{\n          decision,\n          onDecisionChange: setDecision,\n          approveLabel: \"Apply\",\n          rejectLabel: \"Skip\",\n        }}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+---
+title: MCP Tool
+description: Inline AI tool-call rendering for MCP invocations — verb-conjugated header, priority-sorted args, expandable output panel.
+status: experimental
+---
+
+<ComponentPreview name="mcp-tool-demo" />
+
+## Installation
+
+```tsx
+import { McpTool } from "@nebutra/ui/primitives";
+```
+
+Or install standalone via the shadcn registry:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/mcp-tool.json
+```
+
+## Usage
+
+`McpTool` renders an inline tool-call block when the assistant invokes an MCP tool. The header conjugates the tool name to past tense ("Listed Resources"), shows priority-sorted arguments, and reveals the response in an expandable panel.
+
+```tsx
+import { McpTool } from "@nebutra/ui/primitives";
+
+<McpTool
+  name="list_resources"
+  args={{ query: "active customers", limit: 25 }}
+  output={JSON.stringify(rows, null, 2)}
+/>
+```
+
+## State machine
+
+| State          | Render                                                                |
+| -------------- | --------------------------------------------------------------------- |
+| `pending`      | Shimmer "Preparing X" header — no args, no output                     |
+| `completed`    | Past-tense header + priority-sorted args + expandable output (if any) |
+| `interrupted`  | Muted "X interrupted" — no body, no toggle                            |
+
+## Name normalization
+
+The `name` prop accepts three shapes — all normalize to Title Case for display and verb conjugation:
+
+```tsx
+<McpTool name="list_resources"  /* snake_case  */ />
+<McpTool name="listResources"   /* camelCase   */ />
+<McpTool name="List Resources"  /* Title Case  */ />
+// All three render as "Listed Resources"
+```
+
+Pass exactly what the MCP server reports — no translation layer needed.
+
+## Argument formatting
+
+Args render below the title as `key: value  key2: value2` (up to `maxArgsShown`, default 2). The sort is **stable and priority-aware** — common keys (`query`, `email`, `id`, …) appear first, so the most informative arg is never truncated away.
+
+Long values are capped at `maxArgValueChars` (default 30) with an ellipsis.
+
+## Output formatting
+
+The `output` string is auto-detected:
+
+- Starts with `{` or `[` → parsed and pretty-printed
+- Otherwise → rendered verbatim
+
+Output longer than `maxOutputChars` (default 3000) is sliced with an honest suffix reporting the original byte count — no silent mid-token chop.
+
+## Controlled expand
+
+```tsx
+const [open, setOpen] = useState(false);
+
+<McpTool
+  name="get_customer"
+  args={{ id: "cus_8sR2x9pK" }}
+  output={JSON.stringify(customer, null, 2)}
+  expanded={open}
+  onExpandedChange={setOpen}
+/>
+```
+
+Useful when a chat thread implements an "expand all" toggle across multiple tool calls.
+
+## Props
+
+| Prop                | Type                                          | Default       | Description                                                  |
+| ------------------- | --------------------------------------------- | ------------- | ------------------------------------------------------------ |
+| `state`             | `"completed" \| "pending" \| "interrupted"`   | `"completed"` | Visual progression                                           |
+| `name`              | `string`                                      | —             | Raw MCP tool name (any case style; normalized internally)    |
+| `args`              | `McpToolArgs`                                 | —             | Tool arguments — priority-sorted, capped at `maxArgsShown`   |
+| `output`            | `string`                                      | —             | Tool output. JSON auto-pretty-printed; text rendered as-is   |
+| `defaultOpen`       | `boolean`                                     | `false`       | Initial expand state (uncontrolled)                          |
+| `expanded`          | `boolean`                                     | —             | Controlled expand state                                      |
+| `onExpandedChange`  | `(next: boolean) => void`                     | —             | Controlled callback                                          |
+| `maxArgsShown`      | `number`                                      | `2`           | Cap on arg pairs rendered in the subtitle                    |
+| `maxArgValueChars`  | `number`                                      | `30`          | Per-value char cap before ellipsis                           |
+| `maxOutputChars`    | `number`                                      | `3000`        | Output body cap with truncation suffix                       |
+| `className`         | `string`                                      | —             | Outer wrapper class                                          |
+
+## Accessibility
+
+- Wrapper is `<section aria-label>` reflecting the title + subtitle.
+- Toggle button carries `aria-expanded` + `aria-controls` linked to the output region id.
+- Output panel is `<pre role="region" aria-label="Tool output">`.
+- Interrupted state uses `role="status"` so screen readers hear the termination.
+- Chevron icon is `aria-hidden` (decorative).
+
+## Reuses
+
+- [`TextShimmer`](/en/docs/components/text-shimmer) for the pending-state header.
+
+## Tool-family siblings
+
+| Primitive       | When                                                              |
+| --------------- | ----------------------------------------------------------------- |
+| `EditTool`      | File edits with LCS diff                                          |
+| `QuestionTool`  | Multi-step questionnaire                                          |
+| `McpTool`       | MCP invocation with expandable output (this component)            |
+| `TodoTool`      | Flat streaming todo list                                          |
+| `SearchTool`    | Search/retrieval results                                          |
+| `SubagentTool`  | Single-line subagent status pill                                  |

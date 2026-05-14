@@ -167,6 +167,14 @@ export * from "./dropdown-menu";
  *   See docs/architecture/2026-05-14-registry-dual-track-distribution.md.
  */
 export * from "./dynamic-island-toc";
+/**
+ * @registry https://ui.nebutra.com/r/edit-tool.json
+ * @distribution dual-track (npm + shadcn registry) from 2026-05-14.
+ *   Inline AI tool-call rendering for file edits (Cursor / Claude Code style).
+ *   Composed from TextShimmer + LoadingDots primitives.
+ *   See docs/architecture/2026-05-14-registry-dual-track-distribution.md.
+ */
+export * from "./edit-tool";
 export * from "./enable-2fa-card";
 export * from "./entity";
 export * from "./error-boundary";
@@ -242,6 +250,14 @@ export * from "./macbook-pro";
  */
 export * from "./magic-card";
 export * from "./material";
+/**
+ * Inline AI tool-call rendering for MCP tool invocations. Sibling of
+ * EditTool / QuestionTool. Composes TextShimmer; uses @nebutra/icons
+ * ChevronRight. Three states (pending / completed / interrupted),
+ * verb conjugation, priority-sorted args, JSON pretty-print + truncation,
+ * expandable output region.
+ */
+export * from "./mcp-tool";
 export * from "./menubar";
 export * from "./mesh-gradient-bg";
 // Streaming-aware markdown renderer for AI responses. Wraps Streamdown with
@@ -287,6 +303,13 @@ export * from "./resizable";
 export * from "./responsive";
 export * from "./safari";
 export * from "./scroll-velocity";
+/**
+ * Inline AI tool-call rendering for search/retrieval results. Sibling of
+ * EditTool / QuestionTool / McpTool / TodoTool. Rows with `url` render as
+ * honest external anchors (rel="noopener noreferrer"); rows without are
+ * inert <li> with no fake hover affordance.
+ */
+export * from "./search-tool";
 export {
   Select,
   SelectContent,
@@ -311,6 +334,14 @@ export * from "./stack";
 export * from "./stars-canvas";
 export * from "./status-badge";
 export * from "./stepper";
+/**
+ * Inline status pill for delegated subagent invocations. Lightest member
+ * of the chat tool-family — single line, no body, no expand. Sibling of
+ * EditTool / QuestionTool / McpTool / TodoTool / SearchTool. The `elapsedTime`
+ * field accepts an already-formatted display string ("6s", "1m 24s");
+ * upstream owns the timer to avoid drift between adjacent rows.
+ */
+export * from "./subagent-tool";
 export { Switch, type SwitchProps } from "./switch";
 export * from "./table";
 export {
@@ -335,6 +366,14 @@ export * from "./textarea";
 export * from "./theme-switcher";
 // Sonner-backed toaster + `toast` API. Mount `<Toaster />` once at app root.
 export * from "./toaster";
+/**
+ * Inline AI tool-call rendering for the Claude TodoWrite tool family.
+ * Sibling of EditTool / QuestionTool / McpTool. Flat, read-only, streaming.
+ * Distinct from AgentPlan — TodoTool is chat-inline; AgentPlan is dashboard.
+ * Status enum (`pending` / `in_progress` / `completed`) deliberately mirrors
+ * the TodoWrite tool wire format (underscored, not hyphenated).
+ */
+export * from "./todo-tool";
 export * from "./toggle";
 export * from "./toggle-group";
 export {

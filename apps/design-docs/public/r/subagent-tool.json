@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "subagent-tool",
+  "type": "registry:ui",
+  "title": "Subagent Tool",
+  "description": "Single-line status pill for delegated subagent invocations — lightest member of the chat tool-family.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "registryDependencies": [
+    "text-shimmer"
+  ],
+  "files": [
+    {
+      "path": "components/ui/subagent-tool.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/subagent-tool.tsx",
+      "content": "\"use client\";\n\nimport { memo, type ReactElement } from \"react\";\nimport { cn } from \"../utils/cn\";\nimport { TextShimmer } from \"./text-shimmer\";\n\n/* -------------------------------------------------------------------------- *\\\n *  SubagentTool — inline status pill for delegated subagent invocations.\n *\n *  Sibling of EditTool / QuestionTool / McpTool / TodoTool / SearchTool.\n *  See `project_tool_family_primitives` memory for the boundary contract.\n *\n *  Shape: the lightest member of the tool-family — a single status line,\n *  no body, no expand. Renders as a status pill inside a chat reply when\n *  the assistant delegates work to a subagent (Claude Code subagents,\n *  agent-as-tool patterns, etc.).\n *\n *  States:\n *    - pending     → shimmer \"Running Subagent\" + optional description + elapsed\n *    - completed   → static \"Completed Subagent\" + optional description + elapsed\n *    - interrupted → muted \"Subagent interrupted\" — description + elapsed suppressed\n *\n *  `elapsedTime` is an already-formatted display string (\"6s\", \"1m 24s\", etc).\n *  Owned by upstream — primitives do not run timers. Letting each primitive\n *  self-tick produces drift between adjacent rows in a chat thread.\n *\n *  a11y:\n *    - <output aria-live=\"polite\"> wraps the line so the transition\n *      pending → completed / interrupted is announced to SRs.\n *      (\"status\" role is implicit on <output> — do not add it.)\n *    - elapsed time carries an sr-only \"Elapsed time:\" prefix so SR users\n *      hear \"Elapsed time: 6s\" instead of the ambiguous bare \"6s\".\n\\* -------------------------------------------------------------------------- */\n\nexport type SubagentToolState = \"completed\" | \"pending\" | \"interrupted\";\n\nexport type SubagentToolProps = {\n  /** @default \"completed\" */\n  state?: SubagentToolState;\n  /**\n   * Detail text — typically the currently-running nested tool name while\n   * pending, or the subagent's task description once completed.\n   */\n  description?: string;\n  /**\n   * Trailing elapsed-time label, already formatted (e.g. \"6s\", \"1m 24s\").\n   * Suppressed in interrupted state.\n   */\n  elapsedTime?: string;\n  className?: string;\n};\n\nconst LABEL: Readonly<Record<SubagentToolState, string>> = {\n  pending: \"Running Subagent\",\n  completed: \"Completed Subagent\",\n  interrupted: \"Subagent interrupted\",\n};\n\nexport const SubagentTool = memo(function SubagentTool({\n  state = \"completed\",\n  description,\n  elapsedTime,\n  className,\n}: SubagentToolProps): ReactElement {\n  const isPending = state === \"pending\";\n  const isInterrupted = state === \"interrupted\";\n  const label = LABEL[state];\n  const showDetails = !isInterrupted;\n\n  return (\n    <output\n      aria-live=\"polite\"\n      className={cn(\n        \"flex max-w-full select-none items-center gap-2 text-sm text-muted-foreground\",\n        className,\n      )}\n    >\n      <span className=\"shrink-0 whitespace-nowrap font-medium\">\n        {isPending ? (\n          <TextShimmer as=\"span\" className=\"text-sm\">\n            {label}\n          </TextShimmer>\n        ) : (\n          label\n        )}\n      </span>\n      {showDetails && description && (\n        <span className=\"min-w-0 flex-1 truncate font-normal text-muted-foreground/70\">\n          {description}\n        </span>\n      )}\n      {showDetails && elapsedTime && (\n        <span className=\"shrink-0 font-normal tabular-nums text-muted-foreground/70\">\n          <span className=\"sr-only\">Elapsed time: </span>\n          {elapsedTime}\n        </span>\n      )}\n    </output>\n  );\n});\n"
+    }
+  ],
+  "meta": {
+    "nebutraTokens": [],
+    "nebutraLayer": "business"
+  }
+}

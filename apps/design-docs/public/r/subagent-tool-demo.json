@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "subagent-tool-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/subagent-tool-demo.tsx",
+      "content": "\"use client\";\n\nimport { SubagentTool } from \"@nebutra/ui/primitives\";\n\nexport function SubagentToolDemo() {\n  return (\n    <div className=\"flex w-full max-w-[420px] flex-col gap-3\">\n      <SubagentTool state=\"pending\" description=\"Reading\" elapsedTime=\"2s\" />\n      <SubagentTool\n        state=\"completed\"\n        description=\"Audit complete\"\n        elapsedTime=\"14s\"\n      />\n      <SubagentTool state=\"interrupted\" />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

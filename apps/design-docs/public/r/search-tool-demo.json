@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "search-tool-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/search-tool-demo.tsx",
+      "content": "\"use client\";\n\nimport { type SearchResult, SearchTool } from \"@nebutra/ui/primitives\";\n\nconst results: SearchResult[] = [\n  {\n    title: \"United UA837 SFO→NRT · $1,105 economy\",\n    source: \"google.com/flights\",\n    url: \"https://www.google.com/flights\",\n  },\n  {\n    title: \"SFO–Tokyo · 14 results from $1,089\",\n    source: \"expedia.com\",\n    date: \"Updated 12m ago\",\n    url: \"https://www.expedia.com\",\n  },\n  {\n    title: \"ANA NH7 Direct SFO→NRT · $1,240 rt\",\n    source: \"google.com/flights\",\n    url: \"https://www.google.com/flights\",\n  },\n];\n\nexport function SearchToolDemo() {\n  return (\n    <div className=\"w-full max-w-xl\">\n      <SearchTool\n        query=\"best flights to Tokyo\"\n        results={results}\n        defaultOpen\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

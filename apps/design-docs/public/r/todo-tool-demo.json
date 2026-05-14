@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "todo-tool-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/todo-tool-demo.tsx",
+      "content": "\"use client\";\n\nimport { type TodoItem, TodoTool } from \"@nebutra/ui/primitives\";\n\nconst todos: TodoItem[] = [\n  { content: \"Audit components\", status: \"completed\" },\n  { content: \"Tighten spacing\", status: \"in_progress\" },\n  { content: \"Ship updates\", status: \"pending\" },\n];\n\nexport function TodoToolDemo() {\n  return (\n    <div className=\"flex w-full max-w-md flex-col gap-4\">\n      <TodoTool todos={todos} />\n      <div className=\"border-t border-border pt-4\">\n        <TodoTool state=\"loading\" mode=\"creating\" />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

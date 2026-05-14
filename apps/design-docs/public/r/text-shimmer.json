@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-shimmer",
+  "type": "registry:ui",
+  "title": "Text Shimmer",
+  "description": "Animated text shimmer used as the streaming-header substrate for the chat tool-family.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "dependencies": [
+    "framer-motion"
+  ],
+  "files": [
+    {
+      "path": "components/ui/text-shimmer.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/text-shimmer.tsx",
+      "content": "\"use client\";\nimport { motion } from \"framer-motion\";\nimport { type JSX, useMemo } from \"react\";\nimport { cn } from \"../utils\";\n\nexport interface TextShimmerProps {\n  children: string;\n  as?: React.ElementType;\n  className?: string;\n  duration?: number;\n  spread?: number;\n}\n\nexport function TextShimmer({\n  children,\n  as: Component = \"p\",\n  className,\n  duration = 2,\n  spread = 2,\n}: TextShimmerProps) {\n  // Memoize by Component so React doesn't see a new type on every render\n  // (which would unmount/remount and reset the animation).\n  const MotionComponent = useMemo(\n    () =>\n      motion.create\n        ? motion.create(Component as keyof JSX.IntrinsicElements)\n        : motion(Component as keyof JSX.IntrinsicElements),\n    [Component],\n  );\n\n  const dynamicSpread = useMemo(() => children.length * spread, [children, spread]);\n\n  return (\n    <MotionComponent\n      className={cn(\n        \"relative inline-block bg-[length:250%_100%,auto] bg-clip-text\",\n        \"text-transparent [--base-color:#a1a1aa] [--base-gradient-color:#000]\",\n        \"[background-repeat:no-repeat,padding-box] [--bg:linear-gradient(90deg,#0000_calc(50%-var(--spread)),var(--base-gradient-color),#0000_calc(50%+var(--spread)))]\",\n        \"dark:[--base-color:#71717a] dark:[--base-gradient-color:#ffffff] dark:[--bg:linear-gradient(90deg,#0000_calc(50%-var(--spread)),var(--base-gradient-color),#0000_calc(50%+var(--spread)))]\",\n        className,\n      )}\n      initial={{ backgroundPosition: \"100% center\" }}\n      animate={{ backgroundPosition: \"0% center\" }}\n      transition={{\n        repeat: Infinity,\n        duration,\n        ease: \"linear\",\n      }}\n      style={\n        {\n          \"--spread\": `${dynamicSpread}px`,\n          backgroundImage: `var(--bg), linear-gradient(var(--base-color), var(--base-color))`,\n        } as any // eslint-disable-line @typescript-eslint/no-explicit-any\n      }\n    >\n      {children}\n    </MotionComponent>\n  );\n}\n\nexport default TextShimmer;\n"
+    }
+  ],
+  "meta": {
+    "nebutraTokens": [
+      "--base-color",
+      "--base-gradient-color",
+      "--bg",
+      "--spread"
+    ],
+    "nebutraLayer": "animation"
+  }
+}

@@ -1,0 +1,96 @@
+---
+title: Subagent Tool
+description: Inline status pill for delegated subagent invocations — lightest member of the chat tool-family.
+status: experimental
+---
+
+<ComponentPreview name="subagent-tool-demo" />
+
+## Installation
+
+```tsx
+import { SubagentTool } from "@nebutra/ui/primitives";
+```
+
+Or install standalone via the shadcn registry:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/subagent-tool.json
+```
+
+## Usage
+
+`SubagentTool` renders a single-line status pill inside a chat reply when the assistant delegates work to a subagent. It is the lightest member of the chat tool-family — no body, no expand, no scroll region.
+
+```tsx
+import { SubagentTool } from "@nebutra/ui/primitives";
+
+<SubagentTool
+  state="pending"
+  description="Reading apps/design-docs/content"
+  elapsedTime="6s"
+/>
+```
+
+## State machine
+
+| State          | Render                                                              |
+| -------------- | ------------------------------------------------------------------- |
+| `pending`      | Shimmer "Running Subagent" + optional description + elapsed time    |
+| `completed`    | Static "Completed Subagent" + optional description + elapsed time   |
+| `interrupted`  | Muted "Subagent interrupted" — description + elapsed are suppressed |
+
+```tsx
+<SubagentTool state="pending"     description="Searching" elapsedTime="2s" />
+<SubagentTool state="completed"   description="Done"      elapsedTime="14s" />
+<SubagentTool state="interrupted" />
+```
+
+## Elapsed time ownership
+
+`elapsedTime` is an **already-formatted display string** (`"6s"`, `"1m 24s"`). The primitive does not run a timer.
+
+This is a deliberate ownership decision: when a chat thread contains multiple `SubagentTool` rows, each running its own `useEffect(setInterval)` would produce visible jitter — adjacent rows tick on different mount-time boundaries. Letting the upstream chat orchestrator hold one shared timer and broadcast the same formatted string to every row keeps the seconds in lockstep.
+
+```tsx
+// Upstream chat orchestrator owns the timer
+const elapsed = useElapsedTime(subagent.startedAt); // → "6s"
+
+<SubagentTool state="pending" elapsedTime={elapsed} />
+```
+
+## Props
+
+| Prop          | Type                                              | Default       | Description                                                  |
+| ------------- | ------------------------------------------------- | ------------- | ------------------------------------------------------------ |
+| `state`       | `"completed" \| "pending" \| "interrupted"`       | `"completed"` | Visual progression of the subagent run                       |
+| `description` | `string`                                          | —             | Detail text (e.g. currently-running nested tool name)        |
+| `elapsedTime` | `string`                                          | —             | Already-formatted elapsed-time label                         |
+| `className`   | `string`                                          | —             | Outer wrapper class                                          |
+
+In `interrupted` state, both `description` and `elapsedTime` are suppressed regardless of value — partial readings of a cancelled run are ambiguous.
+
+## Accessibility
+
+- Wrapper is `<output role="status" aria-live="polite">` — screen readers announce transitions between `pending → completed / interrupted`.
+- Elapsed-time span carries `aria-label="Elapsed time: …"` for unambiguous SR readout.
+- No decorative icons — the label text and `role="status"` carry all semantics.
+
+## Reuses
+
+- [`TextShimmer`](/en/docs/components/text-shimmer) for the pending state header.
+
+## Tool-family siblings
+
+`SubagentTool` is one of six chat-inline tool primitives. Pick the right surface for the right call:
+
+| Primitive       | When                                                              |
+| --------------- | ----------------------------------------------------------------- |
+| `EditTool`      | File edits with LCS diff                                          |
+| `QuestionTool`  | Multi-step questionnaire                                          |
+| `McpTool`       | MCP tool invocation with expandable output                        |
+| `TodoTool`      | Flat streaming todo list (TodoWrite tool family)                  |
+| `SearchTool`    | Search/retrieval results with linkable rows                       |
+| `SubagentTool`  | Delegated subagent status pill (this component)                   |
+
+For dashboard-level hierarchical task planning (with subtasks, dependencies, motion animations) use `AgentPlan` instead — it is **not** a member of the chat tool-family.

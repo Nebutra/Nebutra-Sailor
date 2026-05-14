@@ -123,7 +123,8 @@ interface ShadcnRegistryItem {
 }
 
 // ---------------------------------------------------------------------------
-// TIER B Phase 1 batch — 10 components + 1 theme entry
+// TIER B Phase 1 (10 components) + Phase 2 chat tool-family (2 substrate +
+// 6 tool primitives = 8) + 1 theme entry. Total: 18 + 1 theme.
 // ---------------------------------------------------------------------------
 
 const COMPONENT_REGISTRY: ComponentSpec[] = [
@@ -198,6 +199,79 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     description: "Linear / Vercel / Supabase inspired SaaS dashboard metric tile.",
     source: "primitives/metric-card.tsx",
     layer: "dashboard",
+  },
+  // -------------------------------------------------------------------------
+  // Chat tool-family substrate (TextShimmer / LoadingDots) — these are leaf
+  // primitives consumed by the six tool primitives below. They MUST be in the
+  // registry so `npx shadcn add edit-tool` can resolve their sibling imports.
+  // -------------------------------------------------------------------------
+  {
+    name: "text-shimmer",
+    title: "Text Shimmer",
+    description:
+      "Animated text shimmer used as the streaming-header substrate for the chat tool-family.",
+    source: "primitives/text-shimmer.tsx",
+    layer: "animation",
+  },
+  {
+    name: "loading-dots",
+    title: "Loading Dots",
+    description: "Three-dot bouncing loader; reused inside EditTool's approval footer.",
+    source: "primitives/loading-dots.tsx",
+    layer: "animation",
+  },
+  // -------------------------------------------------------------------------
+  // Chat tool-family — inline AI tool-call rendering primitives. Siblings of
+  // each other; see `project_tool_family_primitives` memory for the boundary
+  // with AgentPlan (dashboard hierarchical planner).
+  // -------------------------------------------------------------------------
+  {
+    name: "edit-tool",
+    title: "Edit Tool",
+    description:
+      "Inline AI tool-call rendering for file edits — Cursor / Claude Code-style diff block with optional approval footer.",
+    source: "primitives/edit-tool.tsx",
+    layer: "business",
+  },
+  {
+    name: "question-tool",
+    title: "Question Tool",
+    description:
+      "Inline AI tool-call rendering of a multi-step questionnaire — single / multi / text question kinds.",
+    source: "primitives/question-tool.tsx",
+    layer: "business",
+  },
+  {
+    name: "mcp-tool",
+    title: "MCP Tool",
+    description:
+      "Inline AI tool-call rendering for MCP invocations — verb conjugation, priority-sorted args, expandable output panel.",
+    source: "primitives/mcp-tool.tsx",
+    layer: "business",
+  },
+  {
+    name: "todo-tool",
+    title: "Todo Tool",
+    description:
+      "Flat streaming todo list for the Claude TodoWrite tool — sibling of EditTool / McpTool / SearchTool.",
+    source: "primitives/todo-tool.tsx",
+    layer: "business",
+  },
+  {
+    name: "search-tool",
+    title: "Search Tool",
+    description:
+      "Inline AI tool-call rendering for search/retrieval results — honest-link rows, scrollable result panel.",
+    source: "primitives/search-tool.tsx",
+    layer: "business",
+  },
+  {
+    name: "subagent-tool",
+    title: "Subagent Tool",
+    description:
+      "Single-line status pill for delegated subagent invocations — lightest member of the chat tool-family.",
+    source: "primitives/subagent-tool.tsx",
+    layer: "business",
   },
 ];
 
@@ -337,6 +411,7 @@ const TIER_A_PRIMITIVES = new Set([
   "separator",
   "badge",
   "skeleton",
+  "textarea",
 ]);
 
 function topLevelPackage(specifier: string): string | null {

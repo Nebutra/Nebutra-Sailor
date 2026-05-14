@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loading-dots",
+  "type": "registry:ui",
+  "title": "Loading Dots",
+  "description": "Three-dot bouncing loader; reused inside EditTool's approval footer.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "files": [
+    {
+      "path": "components/ui/loading-dots.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/loading-dots.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"../utils/cn\";\n\n// =============================================================================\n// Types\n// =============================================================================\n\nexport interface LoadingDotsProps {\n  /** Diameter of each dot in pixels. Default: 6 */\n  size?: number;\n  /** Optional content rendered before the dots (e.g. a label). */\n  children?: React.ReactNode;\n  className?: string;\n}\n\n// =============================================================================\n// Animation keyframe — injected once via <style>\n// =============================================================================\n\nconst KEYFRAMES = `\n@keyframes loading-dot {\n  0%, 100% { opacity: 0.25; transform: scale(0.75); }\n  50%       { opacity: 1;    transform: scale(1); }\n}\n`;\n\n// =============================================================================\n// LoadingDots\n// =============================================================================\n\nconst LoadingDots = React.forwardRef<HTMLSpanElement, LoadingDotsProps>(\n  ({ size = 6, children, className }, ref) => {\n    return (\n      <>\n        <style>{KEYFRAMES}</style>\n        <span ref={ref} className={cn(\"inline-flex items-center gap-1\", className)}>\n          {children}\n          <span className=\"inline-flex items-center gap-[3px]\">\n            {[0, 1, 2].map((i) => (\n              <span\n                key={i}\n                className=\"rounded-full bg-current\"\n                style={{\n                  width: size,\n                  height: size,\n                  animation: `loading-dot 1.2s ease-in-out infinite`,\n                  animationDelay: `${i * 0.2}s`,\n                }}\n              />\n            ))}\n          </span>\n        </span>\n      </>\n    );\n  },\n);\nLoadingDots.displayName = \"LoadingDots\";\n\nexport { LoadingDots };\n"
+    }
+  ],
+  "meta": {
+    "nebutraTokens": [],
+    "nebutraLayer": "animation"
+  }
+}

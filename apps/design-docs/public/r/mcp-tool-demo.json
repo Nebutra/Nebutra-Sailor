@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mcp-tool-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/mcp-tool-demo.tsx",
+      "content": "\"use client\";\n\nimport { McpTool } from \"@nebutra/ui/primitives\";\n\nconst resourcesJson = JSON.stringify(\n  [\n    { id: \"res_1\", name: \"Billing\" },\n    { id: \"res_2\", name: \"Support\" },\n    { id: \"res_3\", name: \"Onboarding\" },\n  ],\n  null,\n  2,\n);\n\nexport function McpToolDemo() {\n  return (\n    <div className=\"flex w-full max-w-xl flex-col gap-3\">\n      <McpTool\n        name=\"List Resources\"\n        args={{ query: \"active customers\", limit: 25 }}\n        output={resourcesJson}\n        defaultOpen\n      />\n      <McpTool state=\"pending\" name=\"Search Documentation\" />\n      <McpTool state=\"interrupted\" name=\"Generate Report\" />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}
