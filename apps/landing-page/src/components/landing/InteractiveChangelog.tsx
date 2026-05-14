@@ -19,6 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  Input,
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -147,7 +148,11 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
           <div className="absolute -left-32 top-24 h-64 w-[48rem] -rotate-12 rounded-full bg-[linear-gradient(90deg,rgba(11,241,195,0.24),rgba(0,51,254,0.14),transparent)] blur-3xl" />
           <div className="absolute right-[-18rem] top-[-12rem] h-[34rem] w-[34rem] rounded-full bg-[var(--blue-9)]/25 blur-[130px]" />
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[var(--neutral-1)] dark:to-black" />
+          {/* Bottom fade-to-bg mask removed (2026-05-14): in light mode it created
+              a milky "smear" over the tagline; in dark mode it faded into the same
+              near-black so was visually inert. The hero's `border-b border-white/10`
+              already provides a clean hero→content seam — preferred Linear/Vercel
+              pattern of hard edge over soft gradient. */}
         </div>
 
         <div className="relative container mx-auto px-4 text-left">
@@ -175,14 +180,13 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             {/* Search input */}
-            <div className="relative flex-1 lg:max-w-xs">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-[var(--neutral-11)]" />
-              <input
-                type="text"
+            <div className="flex-1 lg:max-w-xs">
+              <Input
+                type="search"
+                prefix={<Search className="size-4" />}
                 placeholder="Search releases..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] placeholder-[var(--neutral-11)] transition-colors dark:bg-[var(--neutral-2)] dark:border-[var(--neutral-3)]"
               />
             </div>
 

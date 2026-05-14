@@ -7,6 +7,15 @@ import {
   ChevronRight,
 } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
+import {
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Textarea,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { emitBrowserEvent } from "@/lib/analytics/emit";
@@ -536,7 +545,7 @@ export function LicenseWizard() {
                 >
                   Describe what you're building (optional)
                 </label>
-                <textarea
+                <Textarea
                   id="license-building-what"
                   name="buildingWhat"
                   autoComplete="off"
@@ -548,7 +557,6 @@ export function LicenseWizard() {
                     }))
                   }
                   placeholder="e.g. A financial management platform for freelancers…"
-                  className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[hsl(var(--ring))]"
                   rows={4}
                 />
                 <p className="mt-1 text-xs text-[var(--neutral-11)]">
@@ -564,7 +572,7 @@ export function LicenseWizard() {
                 >
                   Industry (optional)
                 </label>
-                <input
+                <Input
                   id="license-industry"
                   type="text"
                   name="industry"
@@ -572,7 +580,6 @@ export function LicenseWizard() {
                   value={step2.industry}
                   onChange={(e) => setStep2((prev) => ({ ...prev, industry: e.target.value }))}
                   placeholder="e.g. Fintech, Healthcare, Dev Tools…"
-                  className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[hsl(var(--ring))]"
                 />
               </div>
 
@@ -753,7 +760,7 @@ export function LicenseWizard() {
                     >
                       GitHub username (optional)
                     </label>
-                    <input
+                    <Input
                       id="license-github-handle"
                       type="text"
                       name="githubHandle"
@@ -764,7 +771,6 @@ export function LicenseWizard() {
                         setStep3((prev) => ({ ...prev, githubHandle: e.target.value }))
                       }
                       placeholder="your-github-username…"
-                      className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[hsl(var(--ring))]"
                     />
                   </div>
 
@@ -775,7 +781,7 @@ export function LicenseWizard() {
                     >
                       Twitter/X handle (optional)
                     </label>
-                    <input
+                    <Input
                       id="license-twitter-handle"
                       type="text"
                       name="twitterHandle"
@@ -786,7 +792,6 @@ export function LicenseWizard() {
                         setStep3((prev) => ({ ...prev, twitterHandle: e.target.value }))
                       }
                       placeholder="your-twitter-handle…"
-                      className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] placeholder-[var(--neutral-11)] focus:border-[hsl(var(--ring))]"
                     />
                   </div>
 
@@ -797,27 +802,27 @@ export function LicenseWizard() {
                     >
                       How did you hear about us? *
                     </label>
-                    <select
-                      id="license-referral-source"
+                    <Select
                       name="referralSource"
-                      autoComplete="off"
-                      value={step3.referralSource || ""}
-                      onChange={(e) => {
-                        const value = e.target.value as ReferralSource | "";
+                      value={step3.referralSource ?? ""}
+                      onValueChange={(value) =>
                         setStep3((prev) => ({
                           ...prev,
-                          referralSource: value === "" ? null : value,
-                        }));
-                      }}
-                      className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-3 text-[var(--neutral-12)] focus:border-[hsl(var(--ring))]"
+                          referralSource: value ? (value as ReferralSource) : null,
+                        }))
+                      }
                     >
-                      <option value="">{t("referralSource.selectPlaceholder")}</option>
-                      {REFERRAL_SOURCE_OPTIONS.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.labelKey ? t(option.labelKey) : option.label}
-                        </option>
-                      ))}
-                    </select>
+                      <SelectTrigger id="license-referral-source">
+                        <SelectValue placeholder={t("referralSource.selectPlaceholder")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {REFERRAL_SOURCE_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.labelKey ? t(option.labelKey) : option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
               )}

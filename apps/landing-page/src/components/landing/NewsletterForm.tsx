@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -37,14 +38,15 @@ export function NewsletterForm() {
       onSubmit={handleSubmit}
       className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center"
     >
-      <input
+      <Input
         type="email"
+        size="sm"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder={t("newsletterPlaceholder")}
         aria-label={t("newsletterPlaceholder")}
         required
-        className="w-full rounded-lg border border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] px-3 py-2 text-sm text-[color:var(--neutral-12)] placeholder:text-[color:var(--neutral-10)] sm:w-48 sm:py-1.5 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-white/50"
+        className="sm:w-48"
       />
       <button
         type="submit"
