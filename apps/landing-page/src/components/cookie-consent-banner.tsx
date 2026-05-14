@@ -130,6 +130,7 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
                   className="flex cursor-pointer items-start gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3 transition-colors hover:border-[color:var(--blue-8)]"
                 >
                   <input
+                    data-allow-native
                     id={inputId}
                     type="checkbox"
                     aria-label={t(`toggle.${key}.label`)}

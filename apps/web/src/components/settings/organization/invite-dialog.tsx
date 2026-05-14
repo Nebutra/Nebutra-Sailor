@@ -11,6 +11,13 @@
 
 import { Cross as X } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/components";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useId, useState } from "react";
 
@@ -119,18 +126,16 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
             >
               {t("roleLabel")}
             </label>
-            <select
-              id={`${titleId}-role`}
-              name="role"
-              value={role}
-              onChange={(event) => setRole(event.target.value as Role)}
-              className="h-9 w-full rounded-md border border-neutral-7 bg-neutral-1 px-2 text-sm text-neutral-12 dark:border-white/10 dark:bg-white/5 dark:text-white"
-              aria-label={t("roleLabel")}
-            >
-              <option value="admin">Admin</option>
-              <option value="member">Member</option>
-              <option value="viewer">Viewer</option>
-            </select>
+            <Select name="role" value={role} onValueChange={(value) => setRole(value as Role)}>
+              <SelectTrigger id={`${titleId}-role`} aria-label={t("roleLabel")}>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="member">Member</SelectItem>
+                <SelectItem value="viewer">Viewer</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {errorMessage && (

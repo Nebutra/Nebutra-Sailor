@@ -5,6 +5,7 @@ import {
   LoaderCircle as Loader2,
   PaperAirplane as Send,
 } from "@nebutra/icons";
+import { Input, Textarea } from "@nebutra/ui/primitives";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { TemplateMeta } from "@/lib/template-types";
 
@@ -44,7 +45,7 @@ export function PreviewPane({ template }: PreviewPaneProps) {
     setRenderError(null);
     setRendered(null);
     setTab("preview");
-  }, [template.id, template.defaultProps]);
+  }, [template.defaultProps]);
 
   // Debounced re-render whenever the props JSON changes.
   useEffect(() => {
@@ -244,16 +245,11 @@ function PropsEditor({
         >
           Props (JSON)
         </label>
-        <textarea
+        <Textarea
           id="props-editor"
           value={value}
           onChange={(event) => onChange(event.target.value)}
           spellCheck={false}
-          className={[
-            "h-[55vh] w-full rounded-md border bg-[var(--neutral-2)] p-3 font-mono text-xs",
-            "focus:outline-none focus:ring-2",
-            parseError ? "border-[color:var(--status-danger)]" : "border-[var(--neutral-6)]",
-          ].join(" ")}
         />
         {parseError ? (
           <p className="mt-2 text-xs text-[color:var(--status-danger)]">
@@ -321,13 +317,12 @@ function SendTestPanel({
         Send test email (dev only)
       </p>
       <div className="flex flex-wrap items-center gap-2">
-        <input
+        <Input
           type="email"
           value={to}
           onChange={(event) => setTo(event.target.value)}
           placeholder="you@example.com"
           aria-label="Recipient email address"
-          className="min-w-[240px] flex-1 rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2 text-sm"
         />
         <button
           type="button"

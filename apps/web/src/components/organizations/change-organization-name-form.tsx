@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
@@ -93,7 +94,7 @@ export function ChangeOrganizationNameForm({
           >
             {t("organizations.settings.name.label")}
           </label>
-          <input
+          <Input
             id="organization-name"
             name="name"
             type="text"
@@ -106,7 +107,6 @@ export function ChangeOrganizationNameForm({
               setShowSuccess(false);
             }}
             disabled={pending}
-            className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] disabled:opacity-50"
           />
         </div>
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@nebutra/ui/primitives";
 import { type FormEvent, useState } from "react";
 
 interface SignUpFormProps {
@@ -82,7 +83,7 @@ export function SignUpForm({ onSubmit, oauthProviders, signInUrl = "/sign-in" }:
           <label htmlFor="signup-name" className="text-sm font-medium text-[var(--neutral-12)]">
             Name
           </label>
-          <input
+          <Input
             id="signup-name"
             type="text"
             placeholder="Your name"
@@ -90,7 +91,6 @@ export function SignUpForm({ onSubmit, oauthProviders, signInUrl = "/sign-in" }:
             onChange={(e) => setName(e.target.value)}
             required
             autoComplete="name"
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[hsl(var(--ring))]"
           />
         </div>
 
@@ -98,7 +98,7 @@ export function SignUpForm({ onSubmit, oauthProviders, signInUrl = "/sign-in" }:
           <label htmlFor="signup-email" className="text-sm font-medium text-[var(--neutral-12)]">
             Email
           </label>
-          <input
+          <Input
             id="signup-email"
             type="email"
             placeholder="you@example.com"
@@ -106,7 +106,6 @@ export function SignUpForm({ onSubmit, oauthProviders, signInUrl = "/sign-in" }:
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[hsl(var(--ring))]"
           />
         </div>
 
@@ -114,14 +113,13 @@ export function SignUpForm({ onSubmit, oauthProviders, signInUrl = "/sign-in" }:
           <label htmlFor="signup-password" className="text-sm font-medium text-[var(--neutral-12)]">
             Password
           </label>
-          <input
+          <Input
             id="signup-password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="new-password"
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[hsl(var(--ring))]"
           />
         </div>
 
@@ -129,14 +127,13 @@ export function SignUpForm({ onSubmit, oauthProviders, signInUrl = "/sign-in" }:
           <label htmlFor="signup-confirm" className="text-sm font-medium text-[var(--neutral-12)]">
             Confirm password
           </label>
-          <input
+          <Input
             id="signup-confirm"
             type="password"
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
             required
             autoComplete="new-password"
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[hsl(var(--ring))]"
           />
         </div>
 

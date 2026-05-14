@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
@@ -86,14 +87,13 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
         >
           {t("action")}
         </label>
-        <input
+        <Input
           id="audit-filter-action"
           data-testid="audit-filter-action"
           type="text"
           value={filters.action ?? ""}
           onChange={(e) => setField("action", e.target.value)}
           placeholder={t("actionPlaceholder")}
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
         />
       </div>
 
@@ -107,6 +107,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
         <select
           id="audit-filter-entity"
           data-testid="audit-filter-entity"
+          data-allow-native
           value={filters.entityType ?? ""}
           onChange={(e) => setField("entityType", e.target.value || undefined)}
           className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
@@ -130,6 +131,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
         <select
           id="audit-filter-outcome"
           data-testid="audit-filter-outcome"
+          data-allow-native
           value={filters.outcome ?? ""}
           onChange={(e) =>
             setField("outcome", (e.target.value || undefined) as AuditLogFilterValues["outcome"])
@@ -150,13 +152,12 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
         >
           {t("startDate")}
         </label>
-        <input
+        <Input
           id="audit-filter-start"
           data-testid="audit-filter-start"
           type="date"
           value={filters.startDate ?? ""}
           onChange={(e) => setField("startDate", e.target.value || undefined)}
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
         />
       </div>
 
@@ -167,13 +168,12 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
         >
           {t("endDate")}
         </label>
-        <input
+        <Input
           id="audit-filter-end"
           data-testid="audit-filter-end"
           type="date"
           value={filters.endDate ?? ""}
           onChange={(e) => setField("endDate", e.target.value || undefined)}
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
         />
       </div>
 

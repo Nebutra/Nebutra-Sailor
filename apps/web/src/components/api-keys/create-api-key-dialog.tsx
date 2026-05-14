@@ -1,7 +1,7 @@
 "use client";
 
+import { Input } from "@nebutra/ui/primitives";
 import { useEffect, useState } from "react";
-
 export interface CreatedApiKey {
   key: string;
   id: string;
@@ -187,7 +187,7 @@ export function CreateApiKeyDialog({
               >
                 {text.nameLabel}
               </label>
-              <input
+              <Input
                 id="api-key-name"
                 name="name"
                 type="text"
@@ -197,7 +197,6 @@ export function CreateApiKeyDialog({
                 onChange={(e) => setName(e.target.value)}
                 placeholder={text.namePlaceholder}
                 disabled={submitting}
-                className="w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] disabled:opacity-50"
               />
             </div>
 
@@ -212,6 +211,7 @@ export function CreateApiKeyDialog({
                     className="flex items-center gap-2 rounded-md border border-[var(--neutral-7)] px-3 py-2 text-sm text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                   >
                     <input
+                      data-allow-native
                       type="checkbox"
                       name="scopes"
                       value={scope}

@@ -16,6 +16,13 @@
 
 import { Trash as Trash2 } from "@nebutra/icons";
 import { AnimateIn, Button } from "@nebutra/ui/components";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useId, useState } from "react";
 import { InviteDialog } from "./invite-dialog";
@@ -229,19 +236,22 @@ export function MembersClient({ orgId }: MembersClientProps) {
                       </td>
                       <td className="px-3 py-2 align-middle">
                         {canEditRole ? (
-                          <select
-                            aria-label={`${t("changeRole")} for ${displayName}`}
+                          <Select
                             disabled={pendingMemberId === member.id}
                             value={member.role}
-                            onChange={(event) =>
-                              void handleRoleChange(member.id, event.target.value as Role)
+                            onValueChange={(value) =>
+                              void handleRoleChange(member.id, value as Role)
                             }
-                            className="h-8 rounded-md border border-neutral-7 bg-neutral-1 px-2 text-xs dark:border-white/10 dark:bg-white/5 dark:text-white"
                           >
-                            <option value="admin">{t("role.admin")}</option>
-                            <option value="member">{t("role.member")}</option>
-                            <option value="viewer">{t("role.viewer")}</option>
-                          </select>
+                            <SelectTrigger aria-label={`${t("changeRole")} for ${displayName}`}>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="admin">{t("role.admin")}</SelectItem>
+                              <SelectItem value="member">{t("role.member")}</SelectItem>
+                              <SelectItem value="viewer">{t("role.viewer")}</SelectItem>
+                            </SelectContent>
+                          </Select>
                         ) : (
                           <span className="text-xs text-neutral-11 dark:text-white/60">
                             {t(`role.${member.role}` as `role.${Role}`)}

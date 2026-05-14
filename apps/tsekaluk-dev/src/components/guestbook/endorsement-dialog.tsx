@@ -198,6 +198,7 @@ export function EndorsementDialog({ onSubmitted }: EndorsementDialogProps) {
               <Image size={14} />
             </button>
             <input
+              data-allow-native
               type="file"
               ref={fileInputRef}
               onChange={handleFileChange}
@@ -247,6 +248,7 @@ export function EndorsementDialog({ onSubmitted }: EndorsementDialogProps) {
                 <div className="flex-1 space-y-1.5">
                   <Label htmlFor={`${id}-relationship`}>Relationship</Label>
                   <select
+                    data-allow-native
                     id={`${id}-relationship`}
                     value={relationship}
                     onChange={(e) => setRelationship(e.target.value)}

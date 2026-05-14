@@ -8,6 +8,7 @@ import {
   LogoGithub,
   MagnifyingGlass,
 } from "@nebutra/icons";
+import { Input } from "@nebutra/ui/primitives";
 import {
   createColumnHelper,
   flexRender,
@@ -144,12 +145,11 @@ export default function AdminProjectsPage() {
       {/* Search */}
       <div className="mb-4 relative max-w-xs">
         <MagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-        <input
+        <Input
           type="text"
           placeholder="Filter by name…"
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
-          className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 py-2 pl-9 pr-3 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-white focus:ring-offset-1"
         />
       </div>
 

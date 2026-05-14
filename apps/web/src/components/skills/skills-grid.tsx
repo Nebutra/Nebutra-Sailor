@@ -8,6 +8,7 @@ import {
   SettingsSlider as Settings2,
   Sparkles,
 } from "@nebutra/icons";
+import { Input } from "@nebutra/ui/primitives";
 import { useMemo, useState } from "react";
 
 /**
@@ -98,12 +99,11 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-neutral-10 dark:text-white/40" />
-          <input
+          <Input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search skills…"
-            className="w-full rounded-lg border border-neutral-7 bg-neutral-1 py-1.5 pl-8 pr-3 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
           />
         </div>
         <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11 dark:border-white/15 dark:bg-black/40 dark:text-white/70">
@@ -112,6 +112,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
           />
           Official only
           <input
+            data-allow-native
             type="checkbox"
             checked={officialOnly}
             onChange={(e) => setOfficialOnly(e.target.checked)}

@@ -19,7 +19,7 @@ import {
   Workflow,
 } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { MessageContent, toast } from "@nebutra/ui/primitives";
+import { MessageContent, Textarea, toast } from "@nebutra/ui/primitives";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -171,7 +171,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
   const [mode, setMode] = useState<ChatMode>(resolveMode(initialMode));
   const [isLoadingSession, setIsLoadingSession] = useState(!!initialSessionId);
   const [sessionLoadError, setSessionLoadError] = useState<string | null>(null);
-  const [loadAttempt, setLoadAttempt] = useState(0);
+  const [_loadAttempt, setLoadAttempt] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -221,7 +221,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
     return () => {
       cancelled = true;
     };
-  }, [initialSessionId, loadAttempt, setMessages]);
+  }, [initialSessionId, setMessages]);
 
   const handleRetryLoad = useCallback(() => {
     setLoadAttempt((n) => n + 1);
@@ -242,7 +242,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
     const maxHeight = lineHeight * MAX_TEXTAREA_ROWS;
     ta.style.height = `${Math.min(ta.scrollHeight, maxHeight)}px`;
     ta.style.overflowY = ta.scrollHeight > maxHeight ? "auto" : "hidden";
-  }, [inputValue]);
+  }, []);
 
   const reflectSessionInUrl = useCallback(
     (nextId: string, nextMode: ChatMode) => {
@@ -449,7 +449,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
         className="border-t border-neutral-7 px-4 py-3 dark:border-white/10"
       >
         <div className="flex items-end gap-2">
-          <textarea
+          <Textarea
             ref={textareaRef}
             rows={1}
             value={inputValue}
@@ -457,7 +457,6 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
             onKeyDown={handleKeyDown}
             placeholder={`Type a message… (${currentMeta.label} mode)`}
             disabled={isStreaming || isLoadingSession}
-            className="flex-1 resize-none rounded-lg border border-neutral-7 bg-neutral-2 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 transition-colors focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/50"
           />
           <button
             type="submit"

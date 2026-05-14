@@ -92,6 +92,7 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
             )}
           </button>
           <input
+            data-allow-native
             ref={fileInputRef}
             type="file"
             accept="image/*"

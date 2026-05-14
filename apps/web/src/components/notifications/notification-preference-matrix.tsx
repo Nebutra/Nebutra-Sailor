@@ -107,10 +107,20 @@ export function NotificationPreferenceMatrix({
                         <td key={cell.channel} className="px-4 py-4 align-top">
                           {cell.supported ? (
                             <form action={updateNotificationPreference}>
-                              <input type="hidden" name="locale" value={locale} />
-                              <input type="hidden" name="type" value={row.id} />
-                              <input type="hidden" name="channel" value={cell.channel} />
-                              <input type="hidden" name="enabled" value={String(!cell.enabled)} />
+                              <input data-allow-native type="hidden" name="locale" value={locale} />
+                              <input data-allow-native type="hidden" name="type" value={row.id} />
+                              <input
+                                data-allow-native
+                                type="hidden"
+                                name="channel"
+                                value={cell.channel}
+                              />
+                              <input
+                                data-allow-native
+                                type="hidden"
+                                name="enabled"
+                                value={String(!cell.enabled)}
+                              />
                               <button
                                 type="submit"
                                 disabled={!cell.editable}

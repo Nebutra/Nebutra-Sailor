@@ -7,6 +7,12 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Textarea,
   toast,
 } from "@nebutra/ui/primitives";
 import { useEffect, useId, useState } from "react";
@@ -124,19 +130,18 @@ export function FeedbackDialog() {
               >
                 Where did this happen?
               </label>
-              <select
-                id={areaId}
-                value={area}
-                onChange={(e) => setArea(e.target.value)}
-                disabled={submitting}
-                className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white"
-              >
-                {AREAS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+              <Select value={area} onValueChange={(v) => setArea(v ?? "")} disabled={submitting}>
+                <SelectTrigger id={areaId}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {AREAS.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div>
@@ -146,19 +151,18 @@ export function FeedbackDialog() {
               >
                 Chat mode (optional)
               </label>
-              <select
-                id={modeId}
-                value={mode}
-                onChange={(e) => setMode(e.target.value)}
-                disabled={submitting}
-                className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white"
-              >
-                {MODES.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+              <Select value={mode} onValueChange={(v) => setMode(v ?? "")} disabled={submitting}>
+                <SelectTrigger id={modeId}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {MODES.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
@@ -179,14 +183,13 @@ export function FeedbackDialog() {
                 {descLength}/{MAX_DESCRIPTION}
               </span>
             </label>
-            <textarea
+            <Textarea
               id={descId}
               rows={5}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               disabled={submitting}
               placeholder="What did you expect? What actually happened? If you can, list the steps to reproduce."
-              className="w-full resize-none rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/50"
             />
             <p className="mt-1 text-[11px] text-neutral-10 dark:text-white/40">
               Minimum {MIN_DESCRIPTION} characters · maximum {MAX_DESCRIPTION}
@@ -199,6 +202,7 @@ export function FeedbackDialog() {
             className="flex cursor-pointer items-center gap-2 text-xs text-neutral-11 dark:text-white/70"
           >
             <input
+              data-allow-native
               id={emailId}
               type="checkbox"
               checked={followUp}

@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 
@@ -82,14 +83,13 @@ export function EmailChangeForm({
           <label htmlFor={inputId} className="block text-sm font-medium text-[var(--neutral-12)]">
             {t("newEmailLabel")}
           </label>
-          <input
+          <Input
             id={inputId}
             type="email"
             autoComplete="email"
             value={value}
             onChange={(event) => setValue(event.target.value)}
             placeholder={t("newEmailPlaceholder")}
-            className="mt-1 w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
           />
         </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
+import { Input } from "@nebutra/ui/primitives";
 import { useState } from "react";
-
 /**
  * Standard webhook events surfaced in the UI. The full enum lives in
  * `@nebutra/webhooks` (`WebhookEventType`); this list is curated for the most
@@ -145,14 +145,13 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
         >
           Endpoint URL
         </label>
-        <input
+        <Input
           id="webhook-url"
           type="url"
           required
           value={url}
           onChange={(event) => setUrl(event.target.value)}
           placeholder="https://api.example.com/webhooks/nebutra"
-          className="w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)]"
         />
       </div>
 
@@ -167,6 +166,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
                 className="flex items-center gap-2 text-sm text-[var(--neutral-12)]"
               >
                 <input
+                  data-allow-native
                   type="checkbox"
                   name="events"
                   value={eventDef.id}

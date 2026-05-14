@@ -8,6 +8,7 @@ import {
   FacePlus as SmilePlus,
   Users,
 } from "@nebutra/icons";
+import { Input } from "@nebutra/ui/primitives";
 import Image from "next/image";
 import type React from "react";
 import { useState } from "react";
@@ -284,17 +285,12 @@ export function TeamChat({
         >
           <SmilePlus className="w-6 h-6 text-[var(--neutral-10)]" />
         </button>
-        <input
+        <Input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={inputPlaceholder}
-          className={cn(
-            "flex-1 px-5 py-3 rounded-full border border-[var(--neutral-7)]",
-            "bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400",
-            "focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white transition",
-          )}
         />
         <button
           type="button"

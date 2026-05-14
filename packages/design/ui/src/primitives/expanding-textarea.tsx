@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "../utils/cn";
+import { Textarea } from "./textarea";
 
 export type ExpandingTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
@@ -25,12 +25,9 @@ export const ExpandingTextarea = React.forwardRef<HTMLTextAreaElement, Expanding
     );
 
     return (
-      <textarea
+      <Textarea
         ref={textareaRef}
-        className={cn(
-          "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30 aria-invalid:border-destructive/60 aria-invalid:ring-destructive/10 disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden resize-none",
-          className,
-        )}
+        className={className}
         onInput={handleInput}
         onChange={onChange}
         {...props}

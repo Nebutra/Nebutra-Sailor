@@ -1,6 +1,7 @@
 "use client";
 
 import { Download, Plus, RefreshClockwise, Trash } from "@nebutra/icons";
+import { Input, Textarea } from "@nebutra/ui/primitives";
 import { useCallback, useEffect, useState } from "react";
 
 interface NowEntry {
@@ -179,12 +180,7 @@ export default function AdminNowPage() {
           <label className="block text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1.5">
             Date
           </label>
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-white"
-          />
+          <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
         </div>
 
         {/* Sections */}
@@ -194,12 +190,11 @@ export default function AdminNowPage() {
               {label}
               <span className="ml-2 font-normal normal-case text-gray-400">one item per line</span>
             </label>
-            <textarea
+            <Textarea
               value={fields[key]}
               onChange={(e) => setFields((prev) => ({ ...prev, [key]: e.target.value }))}
               rows={4}
               placeholder={`Add ${label.toLowerCase()} items, one per line...`}
-              className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-white resize-y"
             />
           </div>
         ))}

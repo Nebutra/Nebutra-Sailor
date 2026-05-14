@@ -1,7 +1,7 @@
 "use client";
 
 import { LoaderCircle as Loader2, FloppyDisk as Save, Sparkles } from "@nebutra/icons";
-import { toast } from "@nebutra/ui/primitives";
+import { Input, Textarea, toast } from "@nebutra/ui/primitives";
 import { useEffect, useId, useState, useTransition } from "react";
 
 /**
@@ -126,14 +126,13 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Field id={nicknameId} label="Nickname" hint={`${value.nickname.length}/${NICKNAME_MAX}`}>
-          <input
+          <Input
             id={nicknameId}
             type="text"
             value={value.nickname}
             onChange={(e) => update("nickname", e.target.value.slice(0, NICKNAME_MAX))}
             placeholder="What should Sailor call you?"
             disabled={submitting}
-            className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
           />
         </Field>
         <Field
@@ -141,14 +140,13 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
           label="Occupation"
           hint={`${value.occupation.length}/${OCCUPATION_MAX}`}
         >
-          <input
+          <Input
             id={occupationId}
             type="text"
             value={value.occupation}
             onChange={(e) => update("occupation", e.target.value.slice(0, OCCUPATION_MAX))}
             placeholder="e.g. Product Designer, Software Engineer"
             disabled={submitting}
-            className="w-full rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
           />
         </Field>
       </div>
@@ -160,14 +158,13 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
         hint={`${value.bio.length}/${BIO_MAX}`}
         overLimit={value.bio.length > BIO_MAX}
       >
-        <textarea
+        <Textarea
           id={bioId}
           rows={5}
           value={value.bio}
           onChange={(e) => update("bio", e.target.value)}
           placeholder="I work in fintech, building infra for embedded payments. I prefer direct, technical answers without too many caveats…"
           disabled={submitting}
-          className="w-full resize-none rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
         />
       </Field>
 
@@ -178,14 +175,13 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
         hint={`${value.customInstructions.length}/${CUSTOM_INSTRUCTIONS_MAX}`}
         overLimit={value.customInstructions.length > CUSTOM_INSTRUCTIONS_MAX}
       >
-        <textarea
+        <Textarea
           id={instructionsId}
           rows={6}
           value={value.customInstructions}
           onChange={(e) => update("customInstructions", e.target.value)}
           placeholder={`e.g. "Focus on TypeScript best practices", "Maintain a professional tone", "Always cite sources for important conclusions"`}
           disabled={submitting}
-          className="w-full resize-none rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm leading-relaxed text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
         />
       </Field>
 

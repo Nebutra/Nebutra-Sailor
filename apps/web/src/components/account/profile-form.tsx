@@ -1,6 +1,14 @@
 "use client";
 
 import { useUser } from "@nebutra/auth/client";
+import {
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@nebutra/ui/primitives";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
@@ -147,7 +155,7 @@ export function ProfileForm({
           >
             {t("nameLabel")}
           </label>
-          <input
+          <Input
             id="profile-name"
             name="name"
             type="text"
@@ -155,7 +163,6 @@ export function ProfileForm({
             placeholder={t("namePlaceholder")}
             onChange={(event) => setName(event.target.value)}
             disabled={!isLoaded || pending}
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
           />
         </div>
 
@@ -167,14 +174,13 @@ export function ProfileForm({
             {t("emailLabel")}
           </label>
           <div className="flex items-center gap-2">
-            <input
+            <Input
               id="profile-email"
               name="email"
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               disabled={!isLoaded || verifying}
-              className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             />
             <button
               type="button"
@@ -197,20 +203,23 @@ export function ProfileForm({
           >
             {t("languageLabel")}
           </label>
-          <select
-            id="profile-language"
+          <Select
             name="language"
             value={language}
-            onChange={(event) => setLanguage(event.target.value as LocaleCode)}
+            onValueChange={(value) => setLanguage(value as LocaleCode)}
             disabled={!isLoaded || pending}
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
           >
-            {SUPPORTED_LOCALES.map((code) => (
-              <option key={code} value={code}>
-                {code === "en" ? "English" : "中文"}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger id="profile-language">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {SUPPORTED_LOCALES.map((code) => (
+                <SelectItem key={code} value={code}>
+                  {code === "en" ? "English" : "中文"}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="flex items-center gap-3">

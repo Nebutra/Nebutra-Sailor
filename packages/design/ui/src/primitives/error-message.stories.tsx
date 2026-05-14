@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ErrorMessage } from "./error-message";
+import { Input } from "./input";
 
 const meta = {
   title: "Primitives/ErrorMessage",
@@ -87,12 +88,7 @@ export const InForm: Story = {
       <label className="text-sm font-medium text-foreground" htmlFor="email">
         Email
       </label>
-      <input
-        id="email"
-        type="email"
-        defaultValue="taken@example.com"
-        className="rounded-md border border-destructive bg-background px-3 py-2 text-sm text-foreground outline-none ring-destructive focus:ring-1"
-      />
+      <Input id="email" type="email" defaultValue="taken@example.com" />
       <ErrorMessage>This email address is already in use.</ErrorMessage>
     </div>
   ),

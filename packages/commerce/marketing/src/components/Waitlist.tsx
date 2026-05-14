@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@nebutra/ui/primitives";
 import Image from "next/image";
 import type React from "react";
 import { useState } from "react";
@@ -53,13 +54,12 @@ export function Waitlist({
         <label htmlFor="email-address" className="sr-only">
           Email address
         </label>
-        <input
+        <Input
           type="email"
           name="email-address"
           id="email-address"
           autoComplete="email"
           required
-          className="w-full min-w-0 appearance-none rounded-lg border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder-slate-500"
           placeholder={placeholder}
           value={email}
           onChange={(e) => setEmail(e.target.value)}

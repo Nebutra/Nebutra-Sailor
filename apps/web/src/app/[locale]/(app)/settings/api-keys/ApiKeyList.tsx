@@ -25,8 +25,8 @@ function RevokeButton({ keyId, orgId }: { keyId: string; orgId: string }) {
 
   return (
     <form action={action}>
-      <input type="hidden" name="keyId" value={keyId} />
-      <input type="hidden" name="orgId" value={orgId} />
+      <input data-allow-native type="hidden" name="keyId" value={keyId} />
+      <input data-allow-native type="hidden" name="orgId" value={orgId} />
       <button
         type="submit"
         disabled={isPending}

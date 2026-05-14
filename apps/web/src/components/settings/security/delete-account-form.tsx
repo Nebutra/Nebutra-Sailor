@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/components";
+import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
@@ -121,7 +122,7 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
             >
               {t("auth.security.deleteAccount.passwordPrompt")}
             </label>
-            <input
+            <Input
               id="delete-account-password"
               name="password"
               type="password"
@@ -129,7 +130,6 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               disabled={pending}
-              className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             />
           </div>
 
@@ -140,7 +140,7 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
             >
               {t("auth.security.deleteAccount.confirmTextLabel")}
             </label>
-            <input
+            <Input
               id="delete-account-confirm"
               name="confirm"
               type="text"
@@ -148,7 +148,6 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
               value={confirmText}
               onChange={(event) => setConfirmText(event.target.value)}
               disabled={pending}
-              className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--status-danger)] focus:ring-offset-1"
             />
           </div>
 

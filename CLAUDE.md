@@ -242,6 +242,41 @@ Every interactive component must have:
 - `role` attribute where semantic HTML isn't possible
 - Keyboard navigation support — **do NOT add component-level focus rings**. The global `:focus-visible` rule in [packages/design/design-tokens/static/base.css](packages/design/design-tokens/static/base.css) supplies a translucent 2px outline (`hsl(var(--ring) / 0.5)`) with 2px offset for every focusable element. Keyboard users get the ring; mouse users don't.
 
+### Form controls — primitive-only rule (lint-enforced)
+
+**Banned in `apps/**`** — raw `<input>` / `<textarea>` / `<select>`. Use `@nebutra/ui/primitives`:
+
+```tsx
+import { Input, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Field } from "@nebutra/ui/primitives";
+
+<Field label="Email *" htmlFor="email">
+  <Input id="email" type="email" name="email" required />
+</Field>
+
+<Field label="Plan *" htmlFor="plan">
+  <Select name="plan" defaultValue="pro">
+    <SelectTrigger id="plan"><SelectValue /></SelectTrigger>
+    <SelectContent>
+      <SelectItem value="pro">Pro</SelectItem>
+      <SelectItem value="enterprise">Enterprise</SelectItem>
+    </SelectContent>
+  </Select>
+</Field>
+```
+
+**Native opt-out** — add `data-allow-native` for legitimate cases:
+
+```tsx
+<input data-allow-native type="hidden" name="orgId" value={orgId} />  {/* form data */}
+<input data-allow-native type="file" ref={inputRef} className="sr-only" />  {/* trigger via button */}
+<select data-allow-native value={filters.outcome ?? ""} onChange={...}>  {/* needs empty-string "all" semantics */}
+  <option value="">All</option>
+  ...
+</select>
+```
+
+CI guard: `scripts/lint-no-raw-inputs.mjs` (wired into `pnpm lint`). Whitelist: storybook stories, design-docs/sailor-docs previews, tsekaluk-dev's own `ui/`, test files, all `packages/**/primitives/**`.
+
 ```tsx
 // ✅ Accessible icon button — no focus classes needed
 <button

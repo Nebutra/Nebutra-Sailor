@@ -8,13 +8,13 @@ import {
   LogoTwitterX as Twitter,
   LogoYoutubeSmall as Youtube,
 } from "@nebutra/icons";
+import { Input } from "@nebutra/ui/primitives";
 import { cva } from "class-variance-authority";
-import * as React from "react";
 import { AnimateIn } from "../primitives/animate-in";
 import { cn } from "../utils/cn";
 import type { FooterProps } from "./types";
 
-const IS_DARK =
+const _IS_DARK =
   "text-[var(--neutral-11)] hover:text-[var(--neutral-12)] border-[var(--neutral-6)] bg-[var(--neutral-2)]";
 
 const footerVariants = cva("w-full bg-[var(--neutral-1)] border-t border-[var(--neutral-6)]", {
@@ -150,11 +150,10 @@ export function Footer({
                   </p>
                   <form className="mt-2 flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
                     <div className="relative flex items-center">
-                      <input
+                      <Input
                         type="email"
                         placeholder="Enter your email"
                         aria-label="Email address"
-                        className="w-full pl-4 pr-12 py-2.5 bg-[var(--neutral-2)] border border-[var(--neutral-6)] rounded-lg text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-10)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-gradient-start,var(--blue-8))] focus:border-transparent transition-all"
                         required
                       />
                       <button

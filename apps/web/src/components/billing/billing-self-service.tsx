@@ -454,7 +454,7 @@ function PlanAction({ action }: { action: BillingPlanAction }) {
   if (action.enabled && action.priceId) {
     return (
       <form action="/api/billing/checkout" method="post" className="mt-6">
-        <input type="hidden" name="priceId" value={action.priceId} />
+        <input data-allow-native type="hidden" name="priceId" value={action.priceId} />
         <button
           type="submit"
           className="inline-flex w-full items-center justify-center rounded-xl bg-blue-9 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-10"

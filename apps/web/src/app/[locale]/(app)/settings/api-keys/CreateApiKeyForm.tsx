@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@nebutra/ui/primitives";
 import { useActionState, useState } from "react";
 import { type CreateKeyState, createApiKey } from "./actions";
 
@@ -43,14 +44,13 @@ export function CreateApiKeyForm({ orgId }: Props) {
 
   return (
     <form action={action} className="flex gap-3">
-      <input type="hidden" name="orgId" value={orgId} />
-      <input
+      <input data-allow-native type="hidden" name="orgId" value={orgId} />
+      <Input
         type="text"
         name="name"
         required
         placeholder="e.g. Production backend"
         disabled={isPending}
-        className="flex-1 rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] disabled:opacity-50"
       />
       <button
         type="submit"

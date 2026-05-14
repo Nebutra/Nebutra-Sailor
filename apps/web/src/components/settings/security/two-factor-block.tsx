@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/components";
+import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
@@ -315,11 +316,10 @@ export function TwoFactorBlock({
             >
               {t("passwordPrompt")}
             </label>
-            <input
+            <Input
               aria-describedby={errorMessage ? "two-factor-error" : undefined}
               aria-invalid={Boolean(errorMessage)}
               autoComplete="current-password"
-              className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
               id="two-factor-enable-password"
               name="password"
               onChange={(event) => setPassword(event.target.value)}
@@ -370,11 +370,10 @@ export function TwoFactorBlock({
             >
               {t("verificationCodeLabel")}
             </label>
-            <input
+            <Input
               aria-describedby={errorMessage ? "two-factor-error" : undefined}
               aria-invalid={Boolean(errorMessage)}
               autoComplete="one-time-code"
-              className="block w-40 rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-center font-mono text-base tracking-[0.4em] text-[var(--neutral-12)]"
               id="two-factor-code"
               inputMode="numeric"
               maxLength={VERIFICATION_CODE_LENGTH}
@@ -448,11 +447,10 @@ export function TwoFactorBlock({
             >
               {t("passwordPrompt")}
             </label>
-            <input
+            <Input
               aria-describedby={errorMessage ? "two-factor-error" : undefined}
               aria-invalid={Boolean(errorMessage)}
               autoComplete="current-password"
-              className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
               id="two-factor-disable-password"
               name="password"
               onChange={(event) => setPassword(event.target.value)}

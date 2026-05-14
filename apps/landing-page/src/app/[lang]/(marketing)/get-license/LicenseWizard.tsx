@@ -443,6 +443,7 @@ export function LicenseWizard() {
                   {TEAM_SIZE_OPTIONS.map((size) => (
                     <label key={size} className="flex items-center gap-3 cursor-pointer">
                       <input
+                        data-allow-native
                         type="radio"
                         name="teamSize"
                         value={size}

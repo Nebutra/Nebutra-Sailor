@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, Sparkles as Gift, LoaderCircle as Loader2 } from "@nebutra/icons";
+import { Input } from "@nebutra/ui/primitives";
 import { useId, useState } from "react";
 
 /**
@@ -84,7 +85,7 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
       </div>
 
       <div className="mt-2.5 flex flex-col gap-2 sm:flex-row">
-        <input
+        <Input
           id={inputId}
           type="text"
           autoComplete="off"
@@ -94,7 +95,6 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
           onChange={(e) => setCode(e.target.value.toUpperCase().slice(0, 40))}
           disabled={state === "submitting"}
           placeholder="ENTER-CODE"
-          className="flex-1 rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-1.5 font-mono text-sm uppercase tracking-wider text-neutral-12 placeholder:text-neutral-9 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50 dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/30"
           aria-describedby={message ? `${inputId}-message` : undefined}
         />
         <button

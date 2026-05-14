@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/components";
+import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
@@ -101,11 +102,10 @@ export function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps) {
           >
             {t("emailLabel")}
           </label>
-          <input
+          <Input
             aria-describedby={errorMessage ? errorId : undefined}
             aria-invalid={Boolean(errorMessage)}
             autoComplete="email"
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             id="forgot-password-email"
             name="email"
             onChange={(event) => setEmail(event.target.value)}

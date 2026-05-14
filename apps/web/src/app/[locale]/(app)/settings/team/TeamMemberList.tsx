@@ -1,6 +1,13 @@
 "use client";
 
 import { ErrorState, LoadingState } from "@nebutra/ui/layout";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@nebutra/ui/primitives";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -246,20 +253,23 @@ export function TeamMemberList({ orgId }: Props) {
                     {formatJoinedAt(member.joinedAt)}
                   </td>
                   <td className="px-4 py-4">
-                    <select
+                    <Select
                       value={member.role}
                       disabled={!canChangeRole}
-                      onChange={(event) => handleRoleChange(member, event.target.value as TeamRole)}
-                      aria-label={`Role for ${memberDisplayName(member)}`}
-                      className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] disabled:cursor-not-allowed disabled:bg-[var(--neutral-2)] disabled:text-[var(--neutral-10)]"
+                      onValueChange={(value) => handleRoleChange(member, value as TeamRole)}
                     >
-                      {isOwner && <option value="owner">Owner</option>}
-                      {editableRoles.map((role) => (
-                        <option key={role} value={role}>
-                          {roleLabels[role]}
-                        </option>
-                      ))}
-                    </select>
+                      <SelectTrigger aria-label={`Role for ${memberDisplayName(member)}`}>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {isOwner && <SelectItem value="owner">Owner</SelectItem>}
+                        {editableRoles.map((role) => (
+                          <SelectItem key={role} value={role}>
+                            {roleLabels[role]}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </td>
                   <td className="px-4 py-4 text-right">
                     <button

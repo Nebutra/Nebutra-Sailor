@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/components";
+import { Input } from "@nebutra/ui/primitives";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useState } from "react";
@@ -101,7 +102,7 @@ export function DeleteOrganizationForm({
             >
               {t("confirmLabel")}
             </label>
-            <input
+            <Input
               id="delete-org-confirm"
               type="text"
               value={confirmText}
@@ -109,7 +110,6 @@ export function DeleteOrganizationForm({
               autoComplete="off"
               aria-invalid={Boolean(error) || undefined}
               aria-describedby={error ? "delete-org-error" : undefined}
-              className="mt-1 block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] focus:border-red-8 focus:outline-none focus:ring-1 focus:ring-red-8"
               disabled={pending}
             />
             <p className="mt-1 text-xs text-[var(--neutral-11)]">

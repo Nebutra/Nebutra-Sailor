@@ -179,6 +179,7 @@ export function AvatarUploadForm({
           }`}
         >
           <input
+            data-allow-native
             ref={inputRef}
             id="account-avatar-input"
             data-testid="avatar-input"

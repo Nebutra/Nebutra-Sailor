@@ -10,6 +10,7 @@ import {
 import * as React from "react";
 import { cn } from "../utils/cn";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Textarea } from "./textarea";
 
 // =============================================================================
 // Types
@@ -177,16 +178,11 @@ function FeedbackForm({
       )}
 
       {/* Textarea */}
-      <textarea
+      <Textarea
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Your feedback..."
         rows={4}
-        className={cn(
-          "w-full resize-none rounded-[var(--radius-md)] border bg-background px-3 py-2 text-sm",
-          "text-foreground placeholder:text-muted-foreground",
-          "outline-none focus:ring-2 focus:ring-ring",
-        )}
       />
 
       {/* Bottom row: emotion buttons | md hint | send */}

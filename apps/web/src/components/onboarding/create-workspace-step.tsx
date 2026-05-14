@@ -2,7 +2,6 @@
 
 import { Button } from "@nebutra/ui/components";
 import { Input, Label } from "@nebutra/ui/primitives";
-import { cn } from "@nebutra/ui/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -101,12 +100,8 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
             <span className="select-none border-r border-input px-3 py-2 text-sm text-muted-foreground">
               nebutra.app /
             </span>
-            <input
+            <Input
               id="workspace-slug"
-              className={cn(
-                "flex-1 bg-transparent px-3 py-2 text-sm outline-none",
-                "placeholder:text-muted-foreground",
-              )}
               placeholder="my-workspace"
               value={slug}
               onChange={(e) => {

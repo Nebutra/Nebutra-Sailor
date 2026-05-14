@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@nebutra/ui/primitives";
 import { type FormEvent, useState } from "react";
 
 interface SignInFormProps {
@@ -83,7 +84,7 @@ export function SignInForm({
           <label htmlFor="signin-email" className="text-sm font-medium text-[var(--neutral-12)]">
             Email
           </label>
-          <input
+          <Input
             id="signin-email"
             type="email"
             placeholder="you@example.com"
@@ -91,7 +92,6 @@ export function SignInForm({
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[hsl(var(--ring))]"
           />
         </div>
 
@@ -99,14 +99,13 @@ export function SignInForm({
           <label htmlFor="signin-password" className="text-sm font-medium text-[var(--neutral-12)]">
             Password
           </label>
-          <input
+          <Input
             id="signin-password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="current-password"
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[hsl(var(--ring))]"
           />
         </div>
 

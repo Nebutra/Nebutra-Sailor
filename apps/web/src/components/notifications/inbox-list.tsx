@@ -138,6 +138,7 @@ export function InboxList({
           >
             {selectable ? (
               <input
+                data-allow-native
                 type="checkbox"
                 aria-label={`Select notification ${item.title}`}
                 checked={checked}

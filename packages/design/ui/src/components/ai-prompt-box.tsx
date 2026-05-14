@@ -50,17 +50,7 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
   className?: string;
 }
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, ...props }, ref) => (
-    <textarea
-      className={cn(
-        "flex w-full rounded-md border-none bg-transparent px-3 py-2.5 text-base text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px] resize-none scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent hover:scrollbar-thumb-muted-foreground",
-        className,
-      )}
-      ref={ref}
-      rows={1}
-      {...props}
-    />
-  ),
+  ({ className, ...props }, ref) => <Textarea ref={ref} rows={1} {...props} />,
 );
 Textarea.displayName = "Textarea";
 // Button Component

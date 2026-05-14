@@ -11,7 +11,7 @@ import {
   Workflow,
 } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { ConfirmDialog, toast } from "@nebutra/ui/primitives";
+import { ConfirmDialog, Input, toast } from "@nebutra/ui/primitives";
 import { useMemo, useState, useTransition } from "react";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 
@@ -178,13 +178,12 @@ export function ChatHistoryList({ initialSessions }: Props) {
       {/* Search */}
       <div className="relative">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-neutral-10 dark:text-white/40" />
-        <input
+        <Input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search sessions by title or mode…"
           aria-label="Search chat history"
-          className="w-full rounded-xl border border-neutral-7 bg-neutral-1 py-2 pl-9 pr-3 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none dark:border-white/15 dark:bg-black/40 dark:text-white dark:placeholder:text-white/40"
         />
         {query && (
           <p className="mt-1.5 text-[11px] text-neutral-10 dark:text-white/40">

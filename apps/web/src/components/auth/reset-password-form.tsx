@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/components";
+import { Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -117,11 +118,10 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
           >
             {t("newPasswordLabel")}
           </label>
-          <input
+          <Input
             aria-describedby={errorMessage ? errorId : undefined}
             aria-invalid={Boolean(errorMessage)}
             autoComplete="new-password"
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             id="reset-password-new"
             minLength={MIN_PASSWORD_LENGTH}
             name="newPassword"
@@ -139,11 +139,10 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
           >
             {t("confirmPasswordLabel")}
           </label>
-          <input
+          <Input
             aria-describedby={errorMessage ? errorId : undefined}
             aria-invalid={Boolean(errorMessage)}
             autoComplete="new-password"
-            className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
             id="reset-password-confirm"
             minLength={MIN_PASSWORD_LENGTH}
             name="confirmPassword"

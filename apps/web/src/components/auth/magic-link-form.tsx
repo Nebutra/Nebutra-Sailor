@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/components";
+import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
@@ -162,11 +163,10 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
             >
               {t("emailLabel")}
             </label>
-            <input
+            <Input
               aria-describedby={errorMessage ? errorId : undefined}
               aria-invalid={Boolean(errorMessage)}
               autoComplete="email"
-              className="block w-full rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
               id="magic-link-email"
               name="email"
               onChange={(event) => setEmail(event.target.value)}
@@ -193,11 +193,10 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
             >
               {t("codeLabel")}
             </label>
-            <input
+            <Input
               aria-describedby={errorMessage ? errorId : undefined}
               aria-invalid={Boolean(errorMessage)}
               autoComplete="one-time-code"
-              className="block w-40 rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-center font-mono text-base tracking-[0.4em] text-[var(--neutral-12)]"
               id="magic-link-code"
               inputMode="numeric"
               maxLength={VERIFICATION_CODE_LENGTH}

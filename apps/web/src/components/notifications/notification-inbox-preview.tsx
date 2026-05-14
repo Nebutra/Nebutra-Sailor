@@ -120,8 +120,13 @@ export function NotificationInboxPreview({
 
                   {!item.read ? (
                     <form action={markNotificationRead}>
-                      <input type="hidden" name="locale" value={locale} />
-                      <input type="hidden" name="notificationId" value={item.id} />
+                      <input data-allow-native type="hidden" name="locale" value={locale} />
+                      <input
+                        data-allow-native
+                        type="hidden"
+                        name="notificationId"
+                        value={item.id}
+                      />
                       <button
                         type="submit"
                         disabled={!runtime.canMarkInboxRead}
