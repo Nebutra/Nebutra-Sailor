@@ -43,7 +43,7 @@ export function ContactForm() {
             name="name"
             required
             disabled={isPending}
-            className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[color:var(--blue-8)] focus:outline-none focus:ring-1 focus:ring-[color:var(--blue-8)] disabled:opacity-60 dark:text-white"
+            className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-60 dark:text-white"
           />
         </div>
         <div>
@@ -56,7 +56,7 @@ export function ContactForm() {
             name="email"
             required
             disabled={isPending}
-            className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[color:var(--blue-8)] focus:outline-none focus:ring-1 focus:ring-[color:var(--blue-8)] disabled:opacity-60 dark:text-white"
+            className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-60 dark:text-white"
           />
         </div>
       </div>
@@ -71,7 +71,7 @@ export function ContactForm() {
             id="company"
             name="company"
             disabled={isPending}
-            className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[color:var(--blue-8)] focus:outline-none focus:ring-1 focus:ring-[color:var(--blue-8)] disabled:opacity-60 dark:text-white"
+            className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-60 dark:text-white"
           />
         </div>
         <div>
@@ -83,7 +83,7 @@ export function ContactForm() {
             name="category"
             required
             disabled={isPending}
-            className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[color:var(--blue-8)] focus:outline-none focus:ring-1 focus:ring-[color:var(--blue-8)] disabled:opacity-60 dark:text-white"
+            className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-60 dark:text-white"
           >
             <option value="general">{t("contact.form.categories.general")}</option>
             <option value="sales">{t("contact.form.categories.sales")}</option>
@@ -106,7 +106,7 @@ export function ContactForm() {
           name="subject"
           required
           disabled={isPending}
-          className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[color:var(--blue-8)] focus:outline-none focus:ring-1 focus:ring-[color:var(--blue-8)] disabled:opacity-60 dark:text-white"
+          className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-60 dark:text-white"
         />
       </div>
 
@@ -120,7 +120,7 @@ export function ContactForm() {
           rows={5}
           required
           disabled={isPending}
-          className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[color:var(--blue-8)] focus:outline-none focus:ring-1 focus:ring-[color:var(--blue-8)] disabled:opacity-60 dark:text-white"
+          className="mt-1 block w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-[var(--neutral-12)] focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-60 dark:text-white"
         />
       </div>
 
@@ -128,7 +128,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full rounded-[var(--radius-lg)] bg-[color:var(--blue-9)] px-6 py-3 font-semibold text-white transition hover:bg-[color:var(--blue-10)] focus:outline-none focus:ring-2 focus:ring-[color:var(--blue-8)] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full rounded-[var(--radius-lg)] bg-[color:var(--blue-9)] px-6 py-3 font-semibold text-white transition hover:bg-[color:var(--blue-10)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isPending ? t("contact.form.submitting") : t("contact.form.submit")}
         </button>

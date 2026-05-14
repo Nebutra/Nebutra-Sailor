@@ -103,7 +103,7 @@ export function PhoneLoginForm({ onSendCode, onVerify, backUrl }: PhoneLoginForm
               onChange={(e) => setPhone(e.target.value)}
               required
               autoComplete="tel"
-              className="flex-1 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[var(--blue-9)]"
+              className="flex-1 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[hsl(var(--ring))]"
             />
             <button
               type="button"
@@ -132,7 +132,7 @@ export function PhoneLoginForm({ onSendCode, onVerify, backUrl }: PhoneLoginForm
               onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
               required
               autoComplete="one-time-code"
-              className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-center text-lg tracking-[0.5em] text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[var(--blue-9)]"
+              className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-center text-lg tracking-[0.5em] text-[var(--neutral-12)] placeholder:text-[var(--neutral-9)] focus:border-[hsl(var(--ring))]"
             />
           </div>
         )}
