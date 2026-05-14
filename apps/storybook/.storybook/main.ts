@@ -60,9 +60,14 @@ const config: StorybookConfig = {
     const stubsDir = resolve(HERE, "./stubs");
     return mergeConfig(cfg, {
       plugins: [tailwindcss()],
+
+      // Stable cache location (survives pnpm install / branch switches).
+      cacheDir: resolve(HERE, "../node_modules/.vite-storybook"),
+
       define: {
         "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV ?? "development"),
       },
+
       resolve: {
         alias: {
           "@": resolve(HERE, "../../web/src"),
@@ -73,6 +78,7 @@ const config: StorybookConfig = {
           "next/headers": resolve(stubsDir, "./next-headers.ts"),
         },
       },
+
       optimizeDeps: {
         // Keep narrow. Broad include of @lobehub/ui (heavy + many "use client"
         // directives) caused rollup pre-bundle to abort. Apps that need it can
@@ -85,13 +91,58 @@ const config: StorybookConfig = {
           "lucide-react",
         ],
       },
+
+      // D1 — dev cold-start tuning.
       server: {
+        // Skip fs.stat() short-circuit on every request (Vite 6+ feature).
+        fs: { cachedChecks: true },
+        // HMR overlay rerenders the entire app on the slightest dev error.
+        // We rely on console + Storybook's own error display instead.
+        hmr: { overlay: false },
         warmup: {
           clientFiles: [
             "../../packages/design/ui/src/primitives/index.ts",
             "../../packages/design/tokens/styles.css",
             "./.storybook/preview.ts",
           ],
+        },
+      },
+
+      // D2 — build perf tuning. See ADR.
+      build: {
+        // Skip sourcemap generation (the static build is for verification, not
+        // production debugging — saves ~25% wall time + ~50% disk).
+        sourcemap: false,
+        // Skip gzip size estimation in the report (saves ~10% wall time).
+        reportCompressedSize: false,
+        rollupOptions: {
+          // Suppress noisy warnings that flood I/O without representing real
+          // issues: "use client" directives in transitive deps + sourcemap
+          // location lookup failures.
+          onwarn(
+            warning: { code?: string; message?: string },
+            defaultHandler: (w: { code?: string; message?: string }) => void,
+          ) {
+            if (warning.code === "MODULE_LEVEL_DIRECTIVE") return;
+            if (warning.code === "SOURCEMAP_BROKEN") return;
+            if (warning.message?.includes("Error when using sourcemap")) return;
+            defaultHandler(warning);
+          },
+          output: {
+            // Split heavy vendor chunks so Rollup caches them independently
+            // and the runtime can lazy-load.
+            manualChunks: (id: string) => {
+              if (id.includes("node_modules")) {
+                if (id.includes("framer-motion") || id.includes("/motion/")) return "vendor-motion";
+                if (id.includes("three")) return "vendor-three";
+                if (id.includes("@lobehub/ui") || id.includes("@lobehub/icons"))
+                  return "vendor-lobehub";
+                if (id.includes("@base-ui/")) return "vendor-base-ui";
+                if (id.includes("recharts")) return "vendor-recharts";
+                if (id.includes("@phosphor-icons")) return "vendor-phosphor";
+              }
+            },
+          },
         },
       },
     });
