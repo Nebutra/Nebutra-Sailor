@@ -31,11 +31,15 @@ export class AgentRouter {
       throw new Error("No agents configured in the orchestrator");
     }
 
+    const fallback = defaultAgentId ?? agents[0]?.id;
+    if (!fallback) {
+      throw new Error("No agents configured in the orchestrator");
+    }
     switch (this.config.strategy) {
       case "keyword":
-        return this.routeByKeyword(message, agents, defaultAgentId);
+        return this.routeByKeyword(message, agents, defaultAgentId) ?? fallback;
       case "llm":
-        return this.routeByLLM(message, agents, defaultAgentId);
+        return (await this.routeByLLM(message, agents, defaultAgentId)) ?? fallback;
       case "custom":
         return this.routeByCustom(message, context, defaultAgentId);
       default: {
@@ -53,9 +57,9 @@ export class AgentRouter {
     message: string,
     agents: readonly AgentConfig[],
     defaultAgentId?: string,
-  ): string {
+  ): string | undefined {
     const messageLower = message.toLowerCase();
-    let bestId = defaultAgentId ?? agents[0]!.id;
+    let bestId = defaultAgentId ?? agents[0]?.id;
     let bestScore = 0;
 
     for (const agent of agents) {
@@ -89,14 +93,14 @@ export class AgentRouter {
     message: string,
     agents: readonly AgentConfig[],
     defaultAgentId?: string,
-  ): Promise<string> {
+  ): Promise<string | undefined> {
     try {
       const { generateText } = await import("ai");
 
       const agentList = agents.map((a) => `- ${a.id}: ${a.description}`).join("\n");
 
       const result = await generateText({
-        model: agents[0]!.model as unknown as Parameters<typeof generateText>[0]["model"],
+        model: agents[0]?.model as unknown as Parameters<typeof generateText>[0]["model"],
         system: [
           "You are a routing classifier. Given a user message and a list of agents,",
           "respond with ONLY the agent ID that best matches the user's intent.",
@@ -120,7 +124,7 @@ export class AgentRouter {
       }
 
       // LLM returned an invalid ID — fall back
-      return defaultAgentId ?? agents[0]!.id;
+      return defaultAgentId ?? agents[0]?.id;
     } catch (error) {
       logger.warn("Router: LLM routing failed, falling back to keyword", {
         error,
