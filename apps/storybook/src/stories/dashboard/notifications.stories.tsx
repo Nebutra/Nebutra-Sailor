@@ -84,7 +84,7 @@ export const FullWithArchive: Story = {
     onMarkRead: () => undefined,
     onArchive: () => undefined,
     selectable: true,
-    selectedIds: new Set([FIXTURE_ITEMS[0]!.id]),
+    selectedIds: new Set<string>([FIXTURE_ITEMS[0]?.id].filter((id): id is string => Boolean(id))),
     onToggleSelect: () => undefined,
   },
 };
