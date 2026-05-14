@@ -277,9 +277,10 @@ export async function processCompletionEvent(
 
   // 7. Metering ingestion (optional, non-critical)
   if (deps.ingestUsage) {
+    const ingestUsage = deps.ingestUsage;
     await safeCall(
       () =>
-        deps.ingestUsage!({
+        ingestUsage({
           meterId: AI_TOKENS_METER_ID,
           tenantId: event.organizationId,
           value: event.totalTokens,
