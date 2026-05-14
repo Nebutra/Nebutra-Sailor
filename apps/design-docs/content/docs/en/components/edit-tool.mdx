@@ -102,11 +102,10 @@ LCS line-diff is O(m·n) memory. A 10K-line diff = 100M cells = browser OOM. `Ed
 
 ## Accessibility
 
-- Wrapper is `<section aria-label>` landmark.
-- Diff body is `<div role="group" aria-labelledby>` linking to header label.
+- Wrapper is `<section aria-label>` landmark — covers both header and diff body.
 - Approval status uses `<output aria-live="polite">` — screen readers announce "Starting", "Approved", "Canceled" automatically.
 - Loading dots are aria-hidden (decorative).
-- Diff line gutters (`+` / `-` / ` `) are aria-hidden; row background color carries the semantics.
+- Diff line gutters (`+` / `-` / ` `) are aria-hidden; row background color carries the semantics (this is also why the gutter MUST stay as text characters — see the component's design invariants).
 - Esc rejects a pending approval (matches industry chat-tool convention).
 
 ## Reuses
