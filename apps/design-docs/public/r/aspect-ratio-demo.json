@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/aspect-ratio-demo.tsx",
-      "content": "\"use client\";\n\nimport { AspectRatio } from \"@nebutra/ui/primitives\";\n\nexport function AspectRatioDemo() {\n  return (\n    <div className=\"w-full max-w-sm\">\n      <AspectRatio\n        ratio={16 / 9}\n        className=\"overflow-hidden rounded-md ring-1 ring-border\"\n      >\n        <div\n          className=\"flex h-full w-full items-center justify-center text-xs font-medium tracking-wider text-white/90\"\n          style={{ background: \"var(--brand-gradient)\" }}\n        >\n          16 / 9\n        </div>\n      </AspectRatio>\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { AspectRatio } from \"@nebutra/ui/primitives\";\n\nexport function AspectRatioDemo() {\n  return (\n    <div className=\"w-full max-w-sm\">\n      <AspectRatio ratio={16 / 9} className=\"overflow-hidden rounded-md ring-1 ring-border\">\n        <div\n          className=\"flex h-full w-full items-center justify-center text-xs font-medium tracking-wider text-white/90\"\n          style={{ background: \"var(--brand-gradient)\" }}\n        >\n          16 / 9\n        </div>\n      </AspectRatio>\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

@@ -206,6 +206,13 @@ export * from "./file-attachment";
 export * from "./filter-pills";
 export * from "./flex";
 export * from "./flickering-grid";
+/**
+ * Decorative animated folder with hover-reveal papers. Renders as aria-hidden
+ * <div> by default; becomes a real <button> with keyboard support when
+ * `onClick` is provided. Colors are categorical labels (red folder / yellow
+ * folder), not brand-derived — hence raw Tailwind palette over semantic tokens.
+ */
+export * from "./folder";
 export * from "./form";
 export * from "./gauge";
 export * from "./geist-tooltip";
