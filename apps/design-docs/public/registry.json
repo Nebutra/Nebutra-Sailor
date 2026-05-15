@@ -142,6 +142,12 @@
       "description": "Short relative-time label with hover popover showing absolute UTC + local time. Adaptive tick cadence."
     },
     {
+      "name": "project-banner",
+      "type": "registry:ui",
+      "title": "Project Banner",
+      "description": "Full-width, non-dismissible banner for project-wide states needing resolution. Four severity variants + ARIA live region."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",

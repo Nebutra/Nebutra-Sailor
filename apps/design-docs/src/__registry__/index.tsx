@@ -818,6 +818,11 @@ export const ProgressIndeterminateDemo = dynamic(() =>
     default: m.ProgressIndeterminateDemo,
   })),
 );
+export const ProjectBannerDemo = dynamic(() =>
+  import("@/components/previews/project-banner-demo").then((m) => ({
+    default: m.ProjectBannerDemo,
+  })),
+);
 export const ProgressWithLabelDemo = dynamic(() =>
   import("@/components/previews/progress-with-label-demo").then((m) => ({
     default: m.ProgressWithLabelDemo,
@@ -1443,6 +1448,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     name: "progress-indeterminate-demo",
     component: ProgressIndeterminateDemo,
   },
+  "project-banner-demo": { name: "project-banner-demo", component: ProjectBannerDemo },
   "progress-with-label-demo": {
     name: "progress-with-label-demo",
     component: ProgressWithLabelDemo,

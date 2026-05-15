@@ -326,6 +326,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/relative-time-card.tsx",
     layer: "dashboard",
   },
+  {
+    name: "project-banner",
+    title: "Project Banner",
+    description:
+      "Full-width, non-dismissible banner for project-wide states needing resolution. Four severity variants + ARIA live region.",
+    source: "primitives/project-banner.tsx",
+    layer: "dashboard",
+  },
 ];
 
 // ---------------------------------------------------------------------------

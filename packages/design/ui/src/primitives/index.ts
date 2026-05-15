@@ -310,6 +310,12 @@ export * from "./pricing-card";
 export * from "./progress";
 export * from "./progressive-blur";
 /**
+ * Full-width non-dismissible banner for project-wide states needing
+ * resolution (overdue billing, rollback, attack mitigation). Non-dismissible
+ * by design — if it can be dismissed without resolving the state, use Note.
+ */
+export * from "./project-banner";
+/**
  * @registry https://ui.nebutra.com/r/question-tool.json
  * @distribution dual-track (npm + shadcn registry) from 2026-05-14.
  *   Inline AI chat-tool rendering for multi-step questionnaires. Self-contained,
