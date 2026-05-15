@@ -87,6 +87,16 @@ build/
 node_modules/
 
 # ---------------------------------------------------------------------------
+# Architecture tests that assert source-repo invariants
+# These reference paths stripped from the template (apps/sailor-docs,
+# scripts/lighthouse, apps/landing-page/src/app/api/changelog) so they
+# cannot run in the scaffolded skeleton. Generic invariants (no-inline-css,
+# dependency-flow, package-readiness, etc.) remain.
+# ---------------------------------------------------------------------------
+tests/architecture/docs-coverage.test.ts
+tests/architecture/lighthouse-ci.test.ts
+
+# ---------------------------------------------------------------------------
 # Internal planning/governance docs
 # ---------------------------------------------------------------------------
 docs/plans/
