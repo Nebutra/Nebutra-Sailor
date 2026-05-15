@@ -18,8 +18,8 @@
 # Marketing, legal, blog, changelog — all Nebutra-owned pages & sections.
 # The shell (layout, globals, next.config, package.json) is preserved.
 # ---------------------------------------------------------------------------
-apps/landing-page/src/app/[lang]/(marketing)/
-apps/landing-page/src/app/[lang]/(legal)/
+apps/landing-page/src/app/\[lang\]/(marketing)/
+apps/landing-page/src/app/\[lang\]/(legal)/
 apps/landing-page/src/components/landing/
 apps/landing-page/public/og/
 apps/landing-page/public/brand/
@@ -35,16 +35,16 @@ apps/landing-page/src/lib/constants/landing-data.ts
 # Nebutra dashboard (apps/web) business surfaces
 # Keep the locale shell + layout; strip Nebutra-specific feature pages.
 # ---------------------------------------------------------------------------
-apps/web/src/app/[locale]/(app)/admin/
-apps/web/src/app/[locale]/(app)/billing/
-apps/web/src/app/[locale]/(app)/analytics/
-apps/web/src/app/[locale]/(app)/audit/
-apps/web/src/app/[locale]/(app)/chat/
-apps/web/src/app/[locale]/(app)/integrations/
-apps/web/src/app/[locale]/(app)/tenants/
-apps/web/src/app/[locale]/(app)/usage/
-apps/web/src/app/[locale]/(app)/feature-flags/
-apps/web/src/app/[locale]/demo/
+apps/web/src/app/\[locale\]/(app)/admin/
+apps/web/src/app/\[locale\]/(app)/billing/
+apps/web/src/app/\[locale\]/(app)/analytics/
+apps/web/src/app/\[locale\]/(app)/audit/
+apps/web/src/app/\[locale\]/(app)/chat/
+apps/web/src/app/\[locale\]/(app)/integrations/
+apps/web/src/app/\[locale\]/(app)/tenants/
+apps/web/src/app/\[locale\]/(app)/usage/
+apps/web/src/app/\[locale\]/(app)/feature-flags/
+apps/web/src/app/\[locale\]/demo/
 
 # ---------------------------------------------------------------------------
 # Nebutra-owned apps (not reusable skeleton)
