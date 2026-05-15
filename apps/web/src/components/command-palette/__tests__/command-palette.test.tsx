@@ -81,6 +81,7 @@ vi.mock("next-intl", () => ({
   },
 }));
 
+import { FeedbackDialogProvider } from "@/components/feedback/feedback-dialog-provider";
 import { CommandPalette } from "../command-palette";
 import { CommandPaletteProvider, useCommandPalette } from "../command-palette-provider";
 
@@ -97,10 +98,12 @@ function OpenButton() {
 
 function Harness({ onNavigate }: { onNavigate?: (href: string) => void }) {
   return (
-    <CommandPaletteProvider>
-      <OpenButton />
-      <CommandPalette onNavigate={onNavigate} />
-    </CommandPaletteProvider>
+    <FeedbackDialogProvider>
+      <CommandPaletteProvider>
+        <OpenButton />
+        <CommandPalette onNavigate={onNavigate} />
+      </CommandPaletteProvider>
+    </FeedbackDialogProvider>
   );
 }
 

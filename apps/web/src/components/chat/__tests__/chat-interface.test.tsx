@@ -29,6 +29,19 @@ vi.mock("next-intl", () => ({
   },
 }));
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    refresh: vi.fn(),
+    prefetch: vi.fn(),
+  }),
+  usePathname: () => "/",
+  useSearchParams: () => new URLSearchParams(),
+}));
+
 // ---- streamdown mock --------------------------------------------------------
 // Avoid pulling streamdown's full markdown/highlighting deps into jsdom tests.
 vi.mock("streamdown", () => ({
@@ -98,9 +111,10 @@ describe("ChatInterface — prompt suggestions", () => {
     await user.click(screen.getByRole("button", { name: /show recent activity/i }));
 
     expect(sendMessageMock).toHaveBeenCalledTimes(1);
-    expect(sendMessageMock).toHaveBeenCalledWith({
-      text: messages["chat.suggestions.activity.prompt"],
-    });
+    expect(sendMessageMock).toHaveBeenCalledWith(
+      { text: messages["chat.suggestions.activity.prompt"] },
+      expect.anything(),
+    );
   });
 
   it("hides suggestions once messages.length > 0", () => {
@@ -122,7 +136,7 @@ describe("ChatInterface — multiline textarea", () => {
 
     fireEvent.keyDown(textarea, { key: "Enter", code: "Enter", shiftKey: false });
 
-    expect(sendMessageMock).toHaveBeenCalledWith({ text: "hello" });
+    expect(sendMessageMock).toHaveBeenCalledWith({ text: "hello" }, expect.anything());
   });
 
   it("inserts a newline and does NOT submit when Shift+Enter is pressed", async () => {

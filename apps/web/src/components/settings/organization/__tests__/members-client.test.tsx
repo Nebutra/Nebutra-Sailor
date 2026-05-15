@@ -41,6 +41,73 @@ vi.mock("next-intl", () => ({
   },
 }));
 
+vi.mock("@nebutra/ui/primitives", () => ({
+  Select: ({
+    children,
+    value,
+    onValueChange,
+  }: {
+    children?: ReactNode;
+    value?: string;
+    onValueChange?: (v: string) => void;
+  }) => {
+    let triggerProps: Record<string, unknown> = {};
+    const options: { value: string; label: ReactNode }[] = [];
+    const walk = (node: ReactNode) => {
+      if (!node) return;
+      if (Array.isArray(node)) {
+        node.forEach(walk);
+        return;
+      }
+      if (typeof node !== "object" || !("type" in (node as object))) return;
+      const el = node as {
+        type: { displayName?: string; name?: string };
+        props: Record<string, unknown>;
+      };
+      const tname =
+        (el.type as { displayName?: string; name?: string }).displayName ??
+        (el.type as { name?: string }).name;
+      if (tname === "SelectTrigger") {
+        triggerProps = el.props ?? {};
+      } else if (tname === "SelectContent") {
+        walk(el.props.children as ReactNode);
+      } else if (tname === "SelectItem") {
+        options.push({ value: el.props.value as string, label: el.props.children as ReactNode });
+      } else if (el.props?.children) {
+        walk(el.props.children as ReactNode);
+      }
+    };
+    walk(children);
+    return (
+      <select
+        aria-label={triggerProps["aria-label"] as string}
+        value={value ?? ""}
+        onChange={(e) => onValueChange?.(e.target.value)}
+      >
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {typeof o.label === "string" ? o.label : o.value}
+          </option>
+        ))}
+      </select>
+    );
+  },
+  SelectTrigger: Object.assign(({ children }: { children?: ReactNode }) => <>{children}</>, {
+    displayName: "SelectTrigger",
+  }),
+  SelectContent: Object.assign(({ children }: { children?: ReactNode }) => <>{children}</>, {
+    displayName: "SelectContent",
+  }),
+  SelectItem: Object.assign(
+    ({ children }: { children?: ReactNode; value: string }) => <>{children}</>,
+    { displayName: "SelectItem" },
+  ),
+  SelectValue: Object.assign(
+    ({ placeholder }: { placeholder?: string }) => <span>{placeholder}</span>,
+    { displayName: "SelectValue" },
+  ),
+}));
+
 vi.mock("@nebutra/ui/components", () => ({
   AnimateIn: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   Button: ({
