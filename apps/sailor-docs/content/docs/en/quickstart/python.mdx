@@ -3,6 +3,18 @@ title: Python Quickstart
 description: Use the Nebutra Python SDK in FastAPI, Django, or any Python backend.
 ---
 
+<Warning>
+  **Python is reserved for batch / ML / specialized libraries** (per ADR 2026-05-10, [TS-by-Default Backend Language Policy](/docs/architecture/backend-language-policy)).
+
+  For CRUD, webhooks, billing, content management, third-party API proxies — use **`backends/gateway/`** (TypeScript + Hono). A new Python service is only acceptable when at least one applies:
+
+  1. Batch / queued work that is too long for edge runtimes (>5s typical)
+  2. ML / scientific compute that depends on the Python ecosystem (transformers, vLLM, etc.)
+  3. Specialized libraries with no comparable TS port
+
+  This page is for **consumers of `nebutra-sdk` from an existing Python service** (FastAPI / Django). It is not an invitation to start a Python service for general-purpose work.
+</Warning>
+
 ## Prerequisites
 
 - Python 3.11+

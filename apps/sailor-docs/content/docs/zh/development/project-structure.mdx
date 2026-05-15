@@ -1,123 +1,154 @@
 ---
 title: 项目结构
-description: Nebutra-Sailor 单体仓库的目录树注释说明 — 每个应用、包和文件命名约定的详细解释。
+description: Nebutra-Sailor monorepo 目录树——按领域分类的 packages、按语言切分的 backends，以及 infra / workflows / e2e / tests 顶层目录。
 ---
 
-## 目录树
+Nebutra-Sailor monorepo 顶层按**用途**组织（`apps/`、`backends/`、`packages/`、`infra/`、`workflows/`、`e2e/`、`tests/`），其中 packages 进一步按**领域**分类（`packages/<category>/<name>/`）。
+
+## 顶层布局
 
 ```
 nebutra-sailor/
-├── apps/
-│   ├── landing-page/     Next.js 16 — 公开营销网站（7 种语言，端口 3002）
-│   ├── web/              Next.js 16 — 已认证的 SaaS 控制台（端口 3000）
-│   ├── api-gateway/      Hono + OpenAPI — REST API 后端（端口 3001）
-│   ├── storybook/        Storybook 8.x — 组件库文档（端口 6006）
-│   ├── design-docs/      Fumadocs — 内部设计系统文档（端口 3003）
-│   ├── studio/           Sanity Studio v5 — 内容管理系统（端口 3333）
-│   └── sailor-docs/      Fumadocs — 公开产品文档（端口 3004，本站）
-│
-├── packages/
-│   ├── ui/               主要组件库（Radix + HeroUI + Lobe UI）
-│   ├── tokens/           运行时 CSS 设计 Token + ThemeProvider
-│   ├── icons/            541 个 Geist 图标，以可按需加载的 TSX 组件提供
-│   ├── brand/            品牌色彩、渐变和动效语言
-│   ├── theme/            纯 CSS 多主题引擎（6 个 oklch 主题）
-│   ├── preset/           基于功能的 SaaS 入门配置系统
-│   ├── db/               Prisma v7 Schema、迁移和客户端
-│   ├── identity/         认证适配器（Clerk / Better Auth）
-│   ├── billing/          Stripe 计费、Webhook 和配额门控
-│   ├── email/            事务邮件（Resend + React Email）
-│   ├── ai-sdk/           AI 服务代理辅助工具和模型路由
-│   ├── permissions/      RBAC/ABAC — CASL（进程内）+ OpenFGA
-│   ├── webhooks/         出站 Webhook 分发 — Svix + 自定义
-│   ├── metering/         使用量计量管道 — ClickHouse
-│   ├── queue/            消息队列 — QStash（无服务器）+ BullMQ
-│   ├── search/           全文检索 — Meilisearch + Typesense + Algolia
-│   ├── notifications/    多渠道通知 — Novu + 直接分发器
-│   ├── uploads/          文件上传 — S3/R2 分片 + Tus 断点续传
-│   ├── vault/            应用层密钥信封加密
-│   ├── tenant/           多租户上下文 — AsyncLocalStorage + RLS
-│   ├── analytics/        产品分析管道
-│   ├── audit/            不可变审计日志
-│   ├── logger/           结构化日志（替代 console.log）
-│   └── errors/           类型化错误层次结构和 HTTP 错误辅助工具
-│
-├── scripts/              仓库级别工具脚本（调色板生成器等）
-├── docker-compose.infra.yml  本地基础设施（PostgreSQL、Redis、ClickHouse）
-├── turbo.json            Turborepo 任务管道配置
-├── pnpm-workspace.yaml   pnpm workspace 包路径配置
-└── package.json          根脚本和开发依赖
+├── apps/                面向用户的应用（Next.js / Hono / Storybook / 文档站）
+├── backends/            无 UI 后端 —— 按语言切分（gateway/、python/）
+├── packages/            共享 TypeScript 库 —— 按领域分类
+├── infra/               iac/ + runtime/ + data/ + ops/  （Wave 2.2）
+├── workflows/           inngest/ + n8n/ + pusher/        （Wave 2.3）
+├── e2e/                 smoke/ + golden/ + sleptons/     （Wave 2.1）
+├── tests/               architecture/ + load/            （vitest + k6）
+├── docs/                内部架构 ADR（仅源仓库可见）
+├── scripts/             仓库级工具脚本
+├── docker-compose.infra.yml
+├── turbo.json
+├── pnpm-workspace.yaml
+└── package.json
 ```
 
-## 应用详情
+## `apps/` —— 面向用户的应用
 
-| 应用 | 端口 | 框架 | 关键依赖 |
-|-----|------|------|---------|
-| `apps/landing-page` | 3002 | Next.js 16 + Tailwind v4 | next-intl、Sanity 客户端、@nebutra/ui |
-| `apps/web` | 3000 | Next.js 16 + Tailwind v4 | Clerk、@nebutra/billing、@nebutra/permissions |
-| `backends/gateway` | 3001 | Hono + TypeScript | @hono/zod-openapi、@nebutra/tenant、@nebutra/metering |
-| `apps/storybook` | 6006 | Storybook 8.x | @nebutra/ui、@nebutra/tokens、@nebutra/icons |
-| `apps/design-docs` | 3003 | Next.js 16 + Fumadocs | @nebutra/ui、@nebutra/tokens |
-| `apps/studio` | 3333 | Sanity Studio v5 | sanity、@sanity/vision |
-| `apps/sailor-docs` | 3004 | Next.js 16 + Fumadocs | @nebutra/ui、@nebutra/tokens |
+| 应用 | 框架 | 用途 |
+|------|------|------|
+| `apps/landing-page` | Next.js 16 + Tailwind v4 | 公开营销站（7 语言） |
+| `apps/web` | Next.js 16 + Tailwind v4 | 已认证的 SaaS 控制台 |
+| `apps/storybook` | Storybook 8.x | 组件库文档 |
+| `apps/design-docs` | Next.js + Fumadocs | 内部设计系统文档 |
+| `apps/sailor-docs` | Next.js + Fumadocs | 公开产品文档（本站） |
+| `apps/studio` | Sanity Studio v4 | CMS —— 内容管理 |
+| `apps/docs` | Mintlify | 公开产品文档（Mintlify 变体） |
+| `apps/idp` | Next.js | 自托管身份服务（IdP） |
+| `apps/mail-preview` | Next.js | React Email 模板预览 |
+| `apps/sleptons`、`apps/tsekaluk-dev` | —— | 辅助产品界面 |
 
-## 包详情
+## `backends/` —— 无 UI 服务
 
-| 包名 | 导入路径 | 用途 |
-|-----|---------|------|
-| `@nebutra/ui` | `@nebutra/ui/components`、`@nebutra/ui/layout` | 组件库 — Radix + HeroUI + Lobe UI + 布局封装 |
-| `@nebutra/tokens` | `@nebutra/tokens` | 运行时 CSS 变量、ThemeProvider、useTheme |
-| `@nebutra/icons` | `@nebutra/icons` | 541 个 Geist 图标，以可按需加载的 TSX 组件提供 |
-| `@nebutra/db` | `@nebutra/db` | Prisma 客户端、Schema、迁移 |
-| `@nebutra/identity` | `@nebutra/identity` | 认证适配器（Clerk / Better Auth） |
-| `@nebutra/billing` | `@nebutra/billing` | Stripe 计费、计划门控、使用配额执行 |
-| `@nebutra/email` | `@nebutra/email` | 事务邮件模板和分发 |
-| `@nebutra/agents` | `@nebutra/agents` | AI 服务代理、模型路由、提供商适配器 |
-| `@nebutra/permissions` | `@nebutra/permissions` | RBAC/ABAC — CASL + OpenFGA |
-| `@nebutra/webhooks` | `@nebutra/webhooks` | 出站 Webhook 分发 |
-| `@nebutra/metering` | `@nebutra/metering` | 基于 ClickHouse 的使用量计量 |
-| `@nebutra/queue` | `@nebutra/queue` | 消息队列 — QStash + BullMQ |
-| `@nebutra/search` | `@nebutra/search` | 全文检索 |
-| `@nebutra/notifications` | `@nebutra/notifications` | 多渠道通知 |
-| `@nebutra/uploads` | `@nebutra/uploads` | 文件上传 — S3/R2 + Tus |
-| `@nebutra/vault` | `@nebutra/vault` | 应用层密钥加密 |
-| `@nebutra/tenant` | `@nebutra/tenant` | 多租户上下文传播 |
-| `@nebutra/analytics` | `@nebutra/analytics` | 产品分析管道 |
-| `@nebutra/audit` | `@nebutra/audit` | 不可变审计日志 |
-| `@nebutra/logger` | `@nebutra/logger` | 结构化日志 |
-| `@nebutra/errors` | `@nebutra/errors` | 类型化错误层次结构 |
+```
+backends/
+├── gateway/             TypeScript / Hono —— BFF、认证、租户、限流、路由
+│                        按 ADR 2026-05-10，新后端工作的默认归属
+└── python/              Python / FastAPI —— 仅限批处理 / ML / 专用库场景
+    ├── _shared/         跨服务工具（active）
+    └── ai/              LLM、Embedding、Agent 编排（active）
+```
+
+TS / Python 切分参考 `vercel/vercel` 的 `pkg/` 模式。**新增后端默认进入 `backends/gateway`**，除非满足 [TS-by-Default ADR](/docs/architecture/backend-language-policy) 的例外条件。
+
+每个 Python 模块属于三种生命周期之一 —— `active`（有真实调用者，参与 CI）、`stub`（接口保留、`src/` 为空）、`incubator`（移出 workspaces 与 CI）。
+
+## `packages/` —— 按领域分类的库
+
+所有包都位于 `packages/<category>/<name>/`：
+
+| 类别 | 用途 | 示例 |
+|------|------|------|
+| `design/` | UI、Token、品牌、图标、主题 | `ui`、`tokens`、`design-tokens`、`brand`、`theme`、`icons`、`design-sync` |
+| `iam/` | 身份、认证、租户、密钥、审计、权限 | `auth`、`audit`、`vault`、`tenant`、`permissions`、`identity` |
+| `commerce/` | 计费、营销、License、计量、契约、Waitlist | `billing`、`contracts`、`license`、`marketing`、`metering`、`waitlist` |
+| `integrations/` | 队列、搜索、通知、Webhook、上传、存储、邮件、Saga | `queue`、`search`、`notifications`、`webhooks`、`uploads`、`storage`、`email`、`saga` |
+| `platform/` | 底层平台原语 | `db`、`logger`、`config` |
+| `ai/` | AI 原语与 Provider 元数据 | `mcp`、`ai-providers`、`agents` |
+| `ops/` | CLI、脚手架、预设、Sanity 辅助 | `cli`、`create-sailor`、`sanity`、`preset` |
+
+### Design System 变更
+
+`@nebutra/design-system` 已**合并入 `@nebutra/ui`**。原本由它导出的布局封装组件现位于 `@nebutra/ui/layout`：
+
+```tsx
+import { Button, Input, Card } from "@nebutra/ui/components";
+import { PageHeader, EmptyState, LoadingState } from "@nebutra/ui/layout";
+```
+
+### 图标治理（三层）
+
+允许的图标库共有三个，每个有清晰的位置：
+
+| 层级 | 包 | 适用场景 |
+|------|----|----------|
+| 1 —— 默认 | `@nebutra/icons`（Geist 541） | 全部产品 / 应用 / 控制台界面 |
+| 2 —— 营销 | `@phosphor-icons/react/light` | **仅限** `packages/design/ui/src/marketing/**`，提供 AI 品牌所需的细描 / 双色调权重 |
+| 3 —— 弃用 | `lucide-react` | **禁止新增任何引用**——现有引用将逐步迁移 |
+
+详见 [Linting 规则](/docs/customization/linting-rules)。
+
+## `infra/`、`workflows/`、`e2e/`、`tests/`
+
+```
+infra/
+├── iac/                 Terraform / Pulumi
+├── runtime/             Cloud Run / ECS / Vercel 运行时配置
+├── data/                迁移 / 数据填充流水线
+└── ops/                 运维 Runbook
+
+workflows/
+├── inngest/             持久化工作流函数
+├── n8n/                 自托管 n8n 工作流 JSON 导出
+└── pusher/              实时频道
+
+e2e/
+├── smoke/               关键路径冒烟测试
+├── golden/              黄金路径视觉回归
+├── sleptons/            Sleptons 产品流
+├── playwright.config.ts
+├── playwright.golden.config.ts
+└── playwright.sleptons.config.ts
+
+tests/
+├── architecture/        架构合规测试（vitest）
+└── load/                压力测试（k6）
+```
+
+`nebutra workflow init <provider>` 将起始模板写入 `workflows/<provider>/`；`nebutra e2e <suite>` 通过对应的 Playwright 配置运行套件。
 
 ## 文件命名约定
 
 | 模式 | 示例 | 用途 |
 |------|------|------|
-| `kebab-case.tsx` | `user-avatar.tsx` | React 组件文件 |
-| `kebab-case.ts` | `format-date.ts` | 工具和辅助函数文件 |
-| `*.test.ts` | `billing.test.ts` | Vitest 单元测试文件 |
-| `*.test.tsx` | `button.test.tsx` | Vitest 组件测试文件 |
-| `*.stories.tsx` | `button.stories.tsx` | Storybook 故事文件 |
-| `*.config.ts` | `tailwind.config.ts` | 配置文件 |
+| `kebab-case.tsx` | `user-avatar.tsx` | React 组件 |
+| `kebab-case.ts` | `format-date.ts` | 工具 / 辅助函数 |
+| `*.test.ts` / `*.test.tsx` | `billing.test.ts` | Vitest 测试 |
+| `*.stories.tsx` | `button.stories.tsx` | Storybook Story |
 | `route.ts` | `app/api/webhooks/route.ts` | Next.js App Router API 路由 |
-| `page.tsx` | `app/dashboard/page.tsx` | Next.js App Router 页面 |
-| `layout.tsx` | `app/dashboard/layout.tsx` | Next.js App Router 布局 |
+| `page.tsx` / `layout.tsx` | `app/dashboard/page.tsx` | App Router 页面 / 布局 |
 
-## 新功能应放在哪里
+## 新增内容应放在哪里
 
-| 您想要... | 放置位置 |
-|-----------|---------|
-| 添加新的控制台页面 | `apps/web/src/app/(dashboard)/` |
-| 添加新的营销页面 | `apps/landing-page/src/app/[lang]/` |
-| 添加新的 API 路由 | `backends/gateway/src/routes/` |
-| 添加新的 UI 组件 | `packages/design/ui/src/components/` + `apps/storybook/` 中的故事文件 |
-| 添加新的布局封装组件 | `packages/design/ui/src/layout/` |
-| 添加新的设计 Token | `packages/design/tokens/styles.css` |
-| 添加新的邮件模板 | `packages/integrations/email/src/templates/` |
-| 添加新的 Prisma 模型 | `packages/platform/db/prisma/schema.prisma` |
-| 添加新的后台任务类型 | `packages/integrations/queue/src/handlers/` |
+| 你想要…… | 放置位置 |
+|----------|----------|
+| 新增控制台页面 | `apps/web/src/app/(dashboard)/` |
+| 新增营销页面 | `apps/landing-page/src/app/[lang]/` |
+| 新增 API 路由 | `backends/gateway/src/routes/` |
+| 新增 Python 服务 | `backends/python/<name>/`（README 必须引用 ADR 例外理由） |
+| 新增 UI 组件 | `packages/design/ui/src/components/` + Storybook Story |
+| 新增布局封装组件 | `packages/design/ui/src/layout/` |
+| 新增设计 Token | `packages/design/tokens/styles.css` |
+| 新增邮件模板 | `packages/integrations/email/src/templates/` |
+| 新增 Prisma 模型 | `packages/platform/db/prisma/schema.prisma` |
+| 新增队列处理器 | `packages/integrations/queue/src/handlers/` |
+| 新增工作流 | `workflows/<provider>/`（用 `nebutra workflow init` 脚手架） |
+| 新增 E2E 测试 | `e2e/<suite>/` |
 
 ## Turborepo 任务管道
 
-仓库根目录的 `turbo.json` 定义了任务之间的依赖关系：
+仓库根目录的 `turbo.json` 定义了任务依赖关系：
 
 ```json
 {
@@ -131,7 +162,7 @@ nebutra-sailor/
 }
 ```
 
-使用 `--filter` 为单个包运行任务：
+使用 `--filter` 将任务限定到单个 workspace：
 
 ```bash
 pnpm turbo run build --filter=@nebutra/ui
@@ -141,10 +172,16 @@ pnpm turbo run typecheck --filter=apps/web
 ## 相关内容
 
 <CardGroup cols={2}>
-  <Card title="本地开发" icon="laptop" href="/zh/development/local-dev">
-    分步骤的开发环境配置指南。
+  <Card title="后端语言策略" icon="server" href="/zh/docs/architecture/backend-language-policy">
+    TS-by-Default ADR —— 何时（且仅何时）可以引入 Python。
   </Card>
-  <Card title="开发环境概览" icon="map" href="/zh/development/overview">
-    前置条件和快速开始。
+  <Card title="Lint 规则" icon="shield" href="/zh/docs/customization/linting-rules">
+    Lint 强制治理：表单控件、焦点环、图标层级。
+  </Card>
+  <Card title="本地开发" icon="laptop" href="/zh/docs/development/local-dev">
+    开发环境分步配置指南。
+  </Card>
+  <Card title="开发概览" icon="map" href="/zh/docs/development/overview">
+    前置条件与快速开始。
   </Card>
 </CardGroup>

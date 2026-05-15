@@ -42,6 +42,35 @@ nebutra add button --yes                  # 跳过提示（Agent 模式）
 nebutra add button --if-not-exists        # 如已安装则跳过
 ```
 
+#### 功能注册中心（Feature Registry）
+
+`nebutra add <feature>` 同时接受组件名和**功能 ID**，注册中心由两个层级组成：
+
+**硬编码功能**（位于 [`packages/ops/cli/src/utils/registry.ts`](https://github.com/Nebutra/Nebutra-Sailor/blob/main/packages/ops/cli/src/utils/registry.ts)）：
+
+| 功能 ID | 分组 | 用途 |
+|---------|------|------|
+| `queue` | integrations | 后台任务队列（Upstash QStash 或 BullMQ） |
+| `search` | integrations | 全文搜索（Meilisearch 或 Typesense） |
+| `cache` | integrations | 缓存适配器（Upstash Redis、Vercel KV、Redis、Dragonfly） |
+| `notifications` | integrations | 通知工作流（Novu、Knock、自定义） |
+| `webhooks` | integrations | 出站 Webhook（Svix、自定义） |
+| `cms` | integrations | 无头 CMS（Sanity、Contentful、Strapi） |
+| `feature-flags` | platform | 功能开关（Vercel Flags、GrowthBook、ConfigCat） |
+| `captcha` | iam | 验证码（Turnstile、hCaptcha、阿里云滑块） |
+
+**动态发现功能** —— 任意在 `package.json` 中声明 `"nebutra": { "featureId": "..." }` 块的工作区包都会被自动发现。当前包括：
+
+`vault`、`audit`、`tenant`、`permissions`、`metering`、`license`、`waitlist`、`uploads`、`saga`、`email`、`design-sync`、`agents`、`mcp`。
+
+列出两层全部功能：
+
+```bash
+nebutra add --list                 # 列出全部可用功能（硬编码 + 动态发现）
+```
+
+动态发现的功能会从已发布版本注册表中读取 npm caret 区间（`^0.x.y`）固定版本——绝不会写入 `workspace:*`——以保证生成的 `package.json` 在 monorepo 外也能干净安装。
+
 ---
 
 ### `nebutra generate`（别名：`gen`）
@@ -461,6 +490,70 @@ nebutra doctor
 ```bash
 nebutra mcp                           # 启动 MCP 上下文服务器
 ```
+
+---
+
+### `nebutra workflow`
+
+为工作流服务商在 `workflows/<provider>/` 下生成入门文件。若目标文件已存在则拒绝覆盖。
+
+```bash
+nebutra workflow init inngest          # workflows/inngest/example.ts
+nebutra workflow init n8n              # workflows/n8n/README.md + example.json
+nebutra workflow init pusher           # workflows/pusher/example.ts
+nebutra workflow init inngest --dry-run
+```
+
+| 服务商 | 生成的文件 |
+|--------|-----------|
+| `inngest` | `workflows/inngest/example.ts`（Inngest 函数骨架） |
+| `n8n` | `workflows/n8n/README.md` + `workflows/n8n/example.json`（自托管约定） |
+| `pusher` | `workflows/pusher/example.ts`（频道发布器） |
+
+退出码：成功为 `0`；若所有目标文件均已存在则为 `9`（`CONFLICT`）；`--dry-run` 为 `10`。
+
+---
+
+### `nebutra backend`
+
+生成后端服务脚手架。按照 [ADR 2026-05-10](/docs/architecture/backend-language-policy)，TypeScript（`backends/gateway/`）是默认选项。
+
+```bash
+# TypeScript 网关（Hono）—— 仅下游消费者 monorepo 需要
+nebutra backend init ts
+
+# Python（FastAPI）—— 仅当 ADR 例外条件成立时
+nebutra backend init py --name translator
+nebutra backend init py --name translator --dry-run
+```
+
+| 运行时 | 输出 | 说明 |
+|--------|------|------|
+| `ts` | `backends/gateway/{package.json,src/index.ts,README.md}` | 若 `backends/gateway/` 已存在则跳过 |
+| `py` | `backends/python/<name>/{pyproject.toml,README.md,src/main.py,src/__init__.py}` | 生成的 README 引用 ADR 2026-05-10，并要求替换为具体的例外理由 |
+
+`--name` 在非交互模式下对 `py` 为必填；交互模式下会提示输入。名称格式：`^[a-z][a-z0-9_-]{0,40}$`。
+
+---
+
+### `nebutra e2e`
+
+通过 `e2e/` 下专用配置运行对应的 Playwright 套件。
+
+```bash
+nebutra e2e smoke                      # e2e/playwright.config.ts
+nebutra e2e golden                     # e2e/playwright.golden.config.ts
+nebutra e2e sleptons                   # e2e/playwright.sleptons.config.ts
+nebutra e2e smoke --dry-run            # 打印将要执行的 `playwright test` 任务
+```
+
+| 套件 | 配置 | 套件目录 |
+|------|------|---------|
+| `smoke` | `e2e/playwright.config.ts` | `e2e/smoke/` |
+| `golden` | `e2e/playwright.golden.config.ts` | `e2e/golden/` |
+| `sleptons` | `e2e/playwright.sleptons.config.ts` | `e2e/sleptons/` |
+
+命令以 Playwright 子进程的退出码返回；若套件目录或配置缺失，则返回 `7`（`NOT_FOUND`）。
 
 ---
 

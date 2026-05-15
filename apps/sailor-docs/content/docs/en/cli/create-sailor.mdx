@@ -19,11 +19,11 @@ If you omit `[dir]`, the wizard prompts you for a directory name.
   <Step title="Ask where to create the project">
     Prompts for a target directory (default: `./my-saas-app`).
   </Step>
-  <Step title="Choose your app configuration">
-    Interactive menus for app type, ORM, database, payment provider, AI provider, and i18n.
+  <Step title="Choose your core configuration">
+    Four interactive questions: region, auth provider, and AI topology (plus directory). Everything else is resolved from flags or region-aware defaults.
   </Step>
-  <Step title="Set environment variables">
-    Prompts for `DATABASE_URL`, Clerk keys, and other critical secrets — writes them directly to `.env.local`.
+  <Step title="Generate environment defaults">
+    Generates random `AUTH_SECRET` / `JWT_SECRET` and writes `.env.local` with provider-specific stub keys you fill in later.
   </Step>
   <Step title="Clone, configure, and prune">
     Clones the Nebutra-Sailor monorepo, sets the project name in `package.json`, writes `nebutra.config.json`, prunes unused template features, and injects your env vars.
@@ -33,53 +33,65 @@ If you omit `[dir]`, the wizard prompts you for a directory name.
   </Step>
 </Steps>
 
-## Configuration prompts
+## Interactive prompts
 
-### Application type
+The wizard asks **only four** questions; every other setting is resolved from flags or region defaults:
 
-| Option | Description |
-|--------|-------------|
-| `saas` (default) | Standard B2B/B2C SaaS — optimized UI + DB stack |
-| `full` | Full monorepo — includes Python AI workflows & Web3 |
-| `ecommerce` | E-Commerce suite |
-| `web3` | Web3 DApp |
+1. **Project directory** — defaults to `./my-saas-app`
+2. **Region** — `global` | `cn` | `hybrid`
+3. **Auth provider** — `clerk` | `betterauth` | `nextauth` | `none`
+4. **AI topology** — `gateway` (recommended) | `direct` | `custom` | `none`. Choosing `direct` triggers a follow-up multi-select for provider adapters; choosing `custom` triggers prompts for endpoint name, base URL, and API-key env var.
 
-### ORM
+Everything else (ORM, database, payment, email, storage, etc.) is flag-only.
 
-| Option | Description |
-|--------|-------------|
-| `prisma` (default) | Prisma v7 — recommended |
-| `drizzle` | Drizzle ORM |
-| `none` | Skip — configure manually |
+## Core flags
 
-### Database
+| Flag | Values | Default |
+|------|--------|---------|
+| `--region` | `global`, `cn`, `hybrid` | `global` |
+| `--orm` | `prisma`, `drizzle` | `prisma` (dual-ORM when `drizzle` — adds `db-drizzle` alongside Prisma) |
+| `--db` | `postgres`, `mysql`, `sqlite`, `none` | `postgresql` |
+| `--db-host` | `local`, `supabase`, `neon`, `vercel-postgres`, `planetscale`, `railway`, `aliyun-rds`, `tencent-cdb`, `none` | region-aware (`supabase` global, `local` cn) |
+| `--auth` | `clerk`, `betterauth`, `nextauth`, `none` | `clerk` |
+| `--payment` | `stripe`, `lemon`, `wechat`, `alipay`, `none` | `stripe` global / `wechat` cn |
+| `--ai` | topology shorthand (`gateway`, `direct`, `custom`, `none`) or comma-separated provider IDs | `gateway` |
+| `--deploy` | `vercel`, `railway`, `cloudflare`, `selfhost`, `none` | `vercel` |
+| `--docs` | `fumadocs`, `none` (others fall back to fumadocs in v1.x) | `fumadocs` |
+| `-y`, `--yes` | (flag) — accept all defaults; non-interactive | off |
+| `--dry-run` | (flag) — print plan, write nothing | off |
+| `--json` | (flag) — machine-readable event stream | off |
 
-| Option | Description |
-|--------|-------------|
-| `postgresql` (default) | PostgreSQL — Supabase, Vercel, Neon, etc. |
-| `mysql` | MySQL / PlanetScale |
-| `sqlite` | SQLite / Turso |
-| `none` | Skip |
+For the full per-feature flag set (`--email`, `--storage`, `--monitoring`, `--analytics`, `--sms`, `--queue`, `--search`, `--cache`, `--notifications`, `--webhooks`, `--cms`, `--feature-flags`, `--captcha`, `--mcp`, `--metering`, `--billing-mode`, `--idp`, etc.) run `npx create-sailor --help`.
 
-### Payment provider
+## Advanced flags
 
-| Option | Description |
-|--------|-------------|
-| `stripe` (default) | Stripe subscriptions |
-| `lemonsqueezy` | Lemon Squeezy |
-| `none` | Skip |
+### Scaffold extras
 
-### AI provider
+| Flag | Effect |
+|------|--------|
+| `--with-workflows` | Adds `workflows/{inngest,n8n,pusher}/` starter directories so you can pick a provider later via `nebutra workflow init`. |
+| `--with-python-backend` | Adds a `backends/python/` FastAPI stub. **Only enable this when the [TS-by-Default ADR](/docs/architecture/backend-language-policy) exception applies** — batch/queued work, ML/scientific compute, or specialized libraries with no TS port. The README produced asks you to cite which justification fits. |
+| `--no-install` | Skip `pnpm install` after scaffolding. |
+| `--no-git` | Skip `git init` and the initial commit. |
+| `--no-color` | Disable ANSI color in stdout (CI-friendly). |
 
-| Option | Description |
-|--------|-------------|
-| `openai` (default) | OpenAI |
-| `anthropic` | Anthropic Claude |
-| `none` | Skip |
+### Compliance / wave-3 toggles
 
-### i18n
+All accept `true` / `false`. Defaults are `true` except `--china-compliance` which auto-flips to `true` when `--region=cn`.
 
-Enable internationalization with `next-intl` (7 locale support). Defaults to **yes**.
+`--cron-jobs`, `--audit-log`, `--api-keys`, `--command-palette`, `--cookie-consent`, `--legal-pages`, `--china-compliance`.
+
+### Wave-2 governance
+
+| Flag | Values | Default |
+|------|--------|---------|
+| `--billing-mode` | `usage`, `seat`, `credits` | `usage` |
+| `--idp` | `clerk`, `oauth-server` | `clerk` |
+| `--social-login` | comma-separated CN providers (`wechat,qq,dingtalk,workweixin,feishu,weibo`) | none |
+
+## Package versioning
+
+Scaffolded projects depend on `@nebutra/*` packages using **npm caret ranges** (e.g. `"@nebutra/ui": "^0.1.0"`), not `workspace:*`. This is what allows a `create-sailor`-generated repo to install and run standalone, outside of the Nebutra-Sailor monorepo. The version pins are read from the published-versions registry at scaffold time.
 
 ## Example session
 
@@ -87,15 +99,20 @@ Enable internationalization with `next-intl` (7 locale support). Defaults to **y
   create-sailor
 
 ✔ Where should we create your project? … ./my-saas
-✔ What kind of application are you building? › Standard B2B/B2C SaaS
-✔ Which ORM would you like to use? › Prisma
-✔ Which database provider? › PostgreSQL
-✔ Which payment provider? › Stripe
-✔ Default AI Provider? › OpenAI
-✔ Enable Internationalization (i18n)? › yes
-✔ Database URL … postgresql://postgres:postgres@localhost:5432/nebutra
-✔ Clerk Publishable Key … pk_test_...
-✔ Clerk Secret Key … sk_test_...
+✔ Target region? › global — 海外优先
+✔ Auth provider? › Clerk
+✔ AI topology? › Multi-provider AI Gateway / router
+
+  ▸ Region            global
+  ▸ Auth              clerk
+  ▸ ORM               prisma
+  ▸ Database          postgresql
+  ▸ Payment           stripe
+  ▸ AI topology       gateway
+  ▸ Email             resend
+  ▸ Storage           r2
+  ▸ Deploy Target     vercel
+  ▸ Docs Framework    fumadocs
 
 ⠋ Cloning Nebutra-Sailor template into ./my-saas...
 ✔ Project my-saas successfully initialized!

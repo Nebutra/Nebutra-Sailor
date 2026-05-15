@@ -1,91 +1,122 @@
 ---
 title: Project Structure
-description: An annotated directory tree of the Nebutra-Sailor monorepo — every app, package, and file naming convention explained.
+description: An annotated directory tree of the Nebutra-Sailor monorepo — categorized packages, backends split, infra/workflows/e2e/tests directories.
 ---
 
-## Directory tree
+The Nebutra-Sailor monorepo is organized by **purpose** at the top level (`apps/`, `backends/`, `packages/`, `infra/`, `workflows/`, `e2e/`, `tests/`), and packages are **categorized by domain** (`packages/<category>/<name>/`).
+
+## Top-level layout
 
 ```
 nebutra-sailor/
-├── apps/
-│   ├── landing-page/     Next.js 16 — public marketing site (7 locales, port 3002)
-│   ├── web/              Next.js 16 — authenticated SaaS dashboard (port 3000)
-│   ├── api-gateway/      Hono + OpenAPI — REST API backend (port 3001)
-│   ├── storybook/        Storybook 8.x — component library docs (port 6006)
-│   ├── design-docs/      Fumadocs — internal design system docs (port 3003)
-│   ├── studio/           Sanity Studio v5 — CMS (port 3333)
-│   └── sailor-docs/      Fumadocs — public product docs (port 3004, this site)
-│
-├── packages/
-│   ├── ui/               PRIMARY component library (Radix + HeroUI + Lobe UI)
-│   ├── tokens/           Runtime CSS design tokens + ThemeProvider
-│   ├── icons/            541 Geist icons as tree-shakable TSX components
-│   ├── brand/            Brand colors, gradients, and motion language
-│   ├── theme/            CSS-only multi-theme engine (6 oklch themes)
-│   ├── preset/           Feature-based SaaS starter config system
-│   ├── db/               Prisma v7 schema, migrations, and client
-│   ├── identity/         Auth adapters (Clerk / Better Auth)
-│   ├── billing/          Stripe billing, webhooks, and quota gates
-│   ├── email/            Transactional email (Resend + React Email)
-│   ├── ai-sdk/           AI service proxy helpers and model routing
-│   ├── permissions/      RBAC/ABAC — CASL (in-process) + OpenFGA
-│   ├── webhooks/         Outbound webhook delivery — Svix + custom
-│   ├── metering/         Usage metering pipeline — ClickHouse
-│   ├── queue/            Message queue — QStash (serverless) + BullMQ
-│   ├── search/           Full-text search — Meilisearch + Typesense + Algolia
-│   ├── notifications/    Multi-channel notifications — Novu + dispatchers
-│   ├── uploads/          File uploads — S3/R2 multipart + Tus resumable
-│   ├── vault/            Envelope encryption for application secrets
-│   ├── tenant/           Multi-tenancy context — AsyncLocalStorage + RLS
-│   ├── analytics/        Product analytics pipeline
-│   ├── audit/            Immutable audit log
-│   ├── logger/           Structured logging (replaces console.log)
-│   └── errors/           Typed error hierarchy and HTTP error helpers
-│
-├── scripts/              Repo-level utility scripts (palette generator, etc.)
-├── docker-compose.infra.yml  Local infrastructure (PostgreSQL, Redis, ClickHouse)
-├── turbo.json            Turborepo task pipeline configuration
-├── pnpm-workspace.yaml   pnpm workspace package globs
-└── package.json          Root scripts and devDependencies
+├── apps/                User-facing apps (Next.js / Hono / Storybook / docs)
+├── backends/            Non-UI backends — split by language (gateway/, python/)
+├── packages/            Shared TypeScript libraries — categorized by domain
+├── infra/               iac/ + runtime/ + data/ + ops/  (Wave 2.2)
+├── workflows/           inngest/ + n8n/ + pusher/        (Wave 2.3)
+├── e2e/                 smoke/ + golden/ + sleptons/     (Wave 2.1)
+├── tests/               architecture/ + load/            (vitest + k6)
+├── docs/                Internal architecture ADRs (source repo only)
+├── scripts/             Repo-level utility scripts
+├── docker-compose.infra.yml
+├── turbo.json
+├── pnpm-workspace.yaml
+└── package.json
 ```
 
-## Apps
+## `apps/` — user-facing apps
 
-| App | Port | Framework | Key dependencies |
-|-----|------|-----------|-----------------|
-| `apps/landing-page` | 3002 | Next.js 16 + Tailwind v4 | next-intl, Sanity client, @nebutra/ui |
-| `apps/web` | 3000 | Next.js 16 + Tailwind v4 | Clerk, @nebutra/billing, @nebutra/permissions |
-| `backends/gateway` | 3001 | Hono + TypeScript | @hono/zod-openapi, @nebutra/tenant, @nebutra/metering |
-| `apps/storybook` | 6006 | Storybook 8.x | @nebutra/ui, @nebutra/tokens, @nebutra/icons |
-| `apps/design-docs` | 3003 | Next.js 16 + Fumadocs | @nebutra/ui, @nebutra/tokens |
-| `apps/studio` | 3333 | Sanity Studio v5 | sanity, @sanity/vision |
-| `apps/sailor-docs` | 3004 | Next.js 16 + Fumadocs | @nebutra/ui, @nebutra/tokens |
+| App | Framework | Purpose |
+|-----|-----------|---------|
+| `apps/landing-page` | Next.js 16 + Tailwind v4 | Public marketing site (7 locales) |
+| `apps/web` | Next.js 16 + Tailwind v4 | Authenticated SaaS dashboard |
+| `apps/storybook` | Storybook 8.x | Component library documentation |
+| `apps/design-docs` | Next.js + Fumadocs | Internal design system docs |
+| `apps/sailor-docs` | Next.js + Fumadocs | Public product docs (this site) |
+| `apps/studio` | Sanity Studio v4 | CMS — content management |
+| `apps/docs` | Mintlify | Public product docs (Mintlify variant) |
+| `apps/idp` | Next.js | Self-hosted identity provider |
+| `apps/mail-preview` | Next.js | React Email template preview |
+| `apps/sleptons`, `apps/tsekaluk-dev` | — | Auxiliary product surfaces |
 
-## Packages
+## `backends/` — non-UI services
 
-| Package | Import path | Purpose |
-|---------|-------------|---------|
-| `@nebutra/ui` | `@nebutra/ui/components`, `@nebutra/ui/layout` | Component library — Radix + HeroUI + Lobe UI + layout wrappers |
-| `@nebutra/tokens` | `@nebutra/tokens` | Runtime CSS variables, ThemeProvider, useTheme |
-| `@nebutra/icons` | `@nebutra/icons` | 541 Geist icons as tree-shakable TSX components |
-| `@nebutra/db` | `@nebutra/db` | Prisma client, schema, migrations |
-| `@nebutra/identity` | `@nebutra/identity` | Auth adapters (Clerk / Better Auth) |
-| `@nebutra/billing` | `@nebutra/billing` | Stripe billing, plan gates, usage quota enforcement |
-| `@nebutra/email` | `@nebutra/email` | Transactional email templates and dispatch |
-| `@nebutra/agents` | `@nebutra/agents` | AI service proxy, model routing, provider adapters |
-| `@nebutra/permissions` | `@nebutra/permissions` | RBAC/ABAC — CASL + OpenFGA |
-| `@nebutra/webhooks` | `@nebutra/webhooks` | Outbound webhook delivery |
-| `@nebutra/metering` | `@nebutra/metering` | Usage metering via ClickHouse |
-| `@nebutra/queue` | `@nebutra/queue` | Message queue — QStash + BullMQ |
-| `@nebutra/search` | `@nebutra/search` | Full-text search |
-| `@nebutra/notifications` | `@nebutra/notifications` | Multi-channel notifications |
-| `@nebutra/uploads` | `@nebutra/uploads` | File uploads — S3/R2 + Tus |
-| `@nebutra/vault` | `@nebutra/vault` | Application-layer secret encryption |
-| `@nebutra/tenant` | `@nebutra/tenant` | Multi-tenancy context propagation |
-| `@nebutra/analytics` | `@nebutra/analytics` | Product analytics pipeline |
-| `@nebutra/audit` | `@nebutra/audit` | Immutable audit log |
-| `@nebutra/logger` | `@nebutra/logger` | Structured logging |
-| `@nebutra/errors` | `@nebutra/errors` | Typed error hierarchy |
+```
+backends/
+├── gateway/             TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing
+│                        DEFAULT for new backend work per ADR 2026-05-10
+└── python/              Python / FastAPI — batch / ML / specialized libs only
+    ├── _shared/         Cross-service utilities (active)
+    └── ai/              LLM, embeddings, agent orchestration (active)
+```
+
+The TS/Python split mirrors `vercel/vercel`'s `pkg/` layout. **New backend work goes in `backends/gateway`** unless the [TS-by-Default ADR](/docs/architecture/backend-language-policy) exception applies.
+
+Each Python module has exactly one of three lifecycle tiers — `active` (has real callers, builds in CI), `stub` (interface preserved, `src/` empty), or `incubator` (excluded from workspaces and CI).
+
+## `packages/` — categorized libraries
+
+Every package lives under `packages/<category>/<name>/`:
+
+| Category | Purpose | Example packages |
+|----------|---------|------------------|
+| `design/` | UI, tokens, brand, icons, theme | `ui`, `tokens`, `design-tokens`, `brand`, `theme`, `icons`, `design-sync` |
+| `iam/` | Identity, auth, tenancy, secrets, audit, permissions | `auth`, `audit`, `vault`, `tenant`, `permissions`, `identity` |
+| `commerce/` | Billing, marketing, license, metering, contracts, waitlist | `billing`, `contracts`, `license`, `marketing`, `metering`, `waitlist` |
+| `integrations/` | Queue, search, notifications, webhooks, uploads, storage, email, saga | `queue`, `search`, `notifications`, `webhooks`, `uploads`, `storage`, `email`, `saga` |
+| `platform/` | Lower-level platform primitives | `db`, `logger`, `config` |
+| `ai/` | AI primitives and provider metadata | `mcp`, `ai-providers`, `agents` |
+| `ops/` | CLI, scaffolding, presets, Sanity helpers | `cli`, `create-sailor`, `sanity`, `preset` |
+
+### Design system note
+
+`@nebutra/design-system` has been **merged into `@nebutra/ui`**. The layout wrappers it used to export now live at `@nebutra/ui/layout`:
+
+```tsx
+import { Button, Input, Card } from "@nebutra/ui/components";
+import { PageHeader, EmptyState, LoadingState } from "@nebutra/ui/layout";
+```
+
+### Icon governance (three-tier)
+
+Three icon libraries are allowed; each has a single, well-defined slot:
+
+| Tier | Package | Where to use |
+|------|---------|--------------|
+| 1 — default | `@nebutra/icons` (Geist 541) | All product / app / dashboard surfaces |
+| 2 — marketing | `@phosphor-icons/react/light` | **Only** inside `packages/design/ui/src/marketing/**` for thin/duotone AI-brand emphasis |
+| 3 — deprecated | `lucide-react` | **Zero new imports allowed** — existing references will be migrated |
+
+See [Linting rules](/docs/customization/linting-rules) for details.
+
+## `infra/`, `workflows/`, `e2e/`, `tests/`
+
+```
+infra/
+├── iac/                 Terraform / Pulumi
+├── runtime/             Cloud Run / ECS / Vercel runtime configs
+├── data/                Migration / seeding pipelines
+└── ops/                 Operational runbooks
+
+workflows/
+├── inngest/             Durable workflow functions
+├── n8n/                 Self-hosted n8n workflow JSON exports
+└── pusher/              Realtime channels
+
+e2e/
+├── smoke/               Critical-path smoke tests
+├── golden/              Golden-path visual regressions
+├── sleptons/            Sleptons product flows
+├── playwright.config.ts
+├── playwright.golden.config.ts
+└── playwright.sleptons.config.ts
+
+tests/
+├── architecture/        Architecture conformance tests (vitest)
+└── load/                Load tests (k6)
+```
+
+`nebutra workflow init <provider>` scaffolds a starter into `workflows/<provider>/`. `nebutra e2e <suite>` runs the matching Playwright config.
 
 ## File naming conventions
 
@@ -93,27 +124,27 @@ nebutra-sailor/
 |---------|---------|---------|
 | `kebab-case.tsx` | `user-avatar.tsx` | React component files |
 | `kebab-case.ts` | `format-date.ts` | Utility and helper files |
-| `*.test.ts` | `billing.test.ts` | Vitest unit test files |
-| `*.test.tsx` | `button.test.tsx` | Vitest component test files |
-| `*.stories.tsx` | `button.stories.tsx` | Storybook story files |
-| `*.config.ts` | `tailwind.config.ts` | Configuration files |
-| `route.ts` | `app/api/webhooks/route.ts` | Next.js App Router API routes |
-| `page.tsx` | `app/dashboard/page.tsx` | Next.js App Router pages |
-| `layout.tsx` | `app/dashboard/layout.tsx` | Next.js App Router layouts |
+| `*.test.ts` / `*.test.tsx` | `billing.test.ts` | Vitest tests |
+| `*.stories.tsx` | `button.stories.tsx` | Storybook stories |
+| `route.ts` | `app/api/webhooks/route.ts` | Next.js App Router API route |
+| `page.tsx` / `layout.tsx` | `app/dashboard/page.tsx` | App Router page / layout |
 
-## Where to add new features
+## Where to add new things
 
 | You want to... | Where to put it |
 |---------------|----------------|
 | Add a new dashboard page | `apps/web/src/app/(dashboard)/` |
 | Add a new marketing page | `apps/landing-page/src/app/[lang]/` |
 | Add a new API route | `backends/gateway/src/routes/` |
-| Add a new UI component | `packages/design/ui/src/components/` + story in `apps/storybook/` |
+| Add a new Python service | `backends/python/<name>/` (must cite ADR justification) |
+| Add a new UI component | `packages/design/ui/src/components/` + Storybook story |
 | Add a new layout wrapper | `packages/design/ui/src/layout/` |
 | Add a new design token | `packages/design/tokens/styles.css` |
 | Add a new email template | `packages/integrations/email/src/templates/` |
 | Add a new Prisma model | `packages/platform/db/prisma/schema.prisma` |
-| Add a new background job type | `packages/integrations/queue/src/handlers/` |
+| Add a queue handler | `packages/integrations/queue/src/handlers/` |
+| Add a workflow | `workflows/<provider>/` (scaffold via `nebutra workflow init`) |
+| Add an e2e test | `e2e/<suite>/` |
 
 ## Turborepo task pipeline
 
@@ -131,7 +162,7 @@ The `turbo.json` at the repo root defines how tasks depend on each other:
 }
 ```
 
-Use `--filter` to run tasks for a single package:
+Use `--filter` to scope tasks to a single workspace:
 
 ```bash
 pnpm turbo run build --filter=@nebutra/ui
@@ -141,10 +172,16 @@ pnpm turbo run typecheck --filter=apps/web
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Local Development" icon="laptop" href="/development/local-dev">
+  <Card title="Backend Language Policy" icon="server" href="/docs/architecture/backend-language-policy">
+    TS-by-Default ADR — when (and only when) Python is acceptable.
+  </Card>
+  <Card title="Linting Rules" icon="shield" href="/docs/customization/linting-rules">
+    Lint-enforced governance: form controls, focus rings, icon tiers.
+  </Card>
+  <Card title="Local Development" icon="laptop" href="/docs/development/local-dev">
     Step-by-step environment setup guide.
   </Card>
-  <Card title="Development Overview" icon="map" href="/development/overview">
+  <Card title="Development Overview" icon="map" href="/docs/development/overview">
     Prerequisites and quick start.
   </Card>
 </CardGroup>

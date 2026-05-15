@@ -19,11 +19,11 @@ npx create-sailor [目录]
   <Step title="询问项目创建位置">
     提示输入目标目录（默认：`./my-saas-app`）。
   </Step>
-  <Step title="选择应用配置">
-    通过交互菜单选择：应用类型、ORM、数据库、支付服务商、AI 服务商、i18n。
+  <Step title="选择核心配置">
+    仅 4 个交互问题：项目目录、Region、Auth、AI 拓扑。其余设置全部通过标志或基于 Region 的默认值解析。
   </Step>
-  <Step title="设置环境变量">
-    提示输入 `DATABASE_URL`、Clerk 密钥等关键密钥——直接写入 `.env.local`。
+  <Step title="生成环境变量默认值">
+    自动生成随机 `AUTH_SECRET` / `JWT_SECRET`，并写入带服务商占位 Key 的 `.env.local`，稍后填入真实密钥即可。
   </Step>
   <Step title="克隆、配置并剪枝">
     克隆 Nebutra-Sailor 仓库，在 `package.json` 中设置项目名称，写入 `nebutra.config.json`，裁剪未使用的模板功能，并注入环境变量。
@@ -33,53 +33,65 @@ npx create-sailor [目录]
   </Step>
 </Steps>
 
-## 配置选项
+## 交互式问答
 
-### 应用类型
+向导**只问 4 个问题**，其余设置全部由标志或 Region 默认值解析：
 
-| 选项 | 说明 |
+1. **项目目录** —— 默认 `./my-saas-app`
+2. **Region** —— `global` | `cn` | `hybrid`
+3. **认证服务商** —— `clerk` | `betterauth` | `nextauth` | `none`
+4. **AI 拓扑** —— `gateway`（推荐）| `direct` | `custom` | `none`。选择 `direct` 会追问 Provider 适配器多选；选择 `custom` 会追问端点名、Base URL 和 API Key 环境变量名。
+
+其余（ORM、数据库、支付、邮件、存储……）均为标志驱动。
+
+## 核心标志
+
+| 标志 | 取值 | 默认 |
+|------|------|------|
+| `--region` | `global`、`cn`、`hybrid` | `global` |
+| `--orm` | `prisma`、`drizzle` | `prisma`（选 `drizzle` 进入双 ORM 模式：在 Prisma 旁追加 `db-drizzle`） |
+| `--db` | `postgres`、`mysql`、`sqlite`、`none` | `postgresql` |
+| `--db-host` | `local`、`supabase`、`neon`、`vercel-postgres`、`planetscale`、`railway`、`aliyun-rds`、`tencent-cdb`、`none` | 基于 Region（global 选 `supabase`，cn 选 `local`） |
+| `--auth` | `clerk`、`betterauth`、`nextauth`、`none` | `clerk` |
+| `--payment` | `stripe`、`lemon`、`wechat`、`alipay`、`none` | `stripe`（global）/ `wechat`（cn） |
+| `--ai` | 拓扑速写（`gateway`、`direct`、`custom`、`none`）或逗号分隔的 Provider ID | `gateway` |
+| `--deploy` | `vercel`、`railway`、`cloudflare`、`selfhost`、`none` | `vercel` |
+| `--docs` | `fumadocs`、`none`（v1.x 中其他值会回退到 fumadocs） | `fumadocs` |
+| `-y`, `--yes` | （开关）接受所有默认值，非交互模式 | 关 |
+| `--dry-run` | （开关）打印计划但不写入文件 | 关 |
+| `--json` | （开关）机器可读的事件流输出 | 关 |
+
+完整的按功能标志（`--email`、`--storage`、`--monitoring`、`--analytics`、`--sms`、`--queue`、`--search`、`--cache`、`--notifications`、`--webhooks`、`--cms`、`--feature-flags`、`--captcha`、`--mcp`、`--metering`、`--billing-mode`、`--idp` 等）请执行 `npx create-sailor --help`。
+
+## 进阶标志
+
+### 脚手架扩展
+
+| 标志 | 效果 |
 |------|------|
-| `saas`（默认） | 标准 B2B/B2C SaaS——优化的 UI + 数据库架构 |
-| `full` | 完整 monorepo——含 Python AI 工作流和 Web3 |
-| `ecommerce` | 电商套件 |
-| `web3` | Web3 DApp |
+| `--with-workflows` | 添加 `workflows/{inngest,n8n,pusher}/` 起始目录，便于稍后通过 `nebutra workflow init` 选择服务商。 |
+| `--with-python-backend` | 添加 `backends/python/` FastAPI 存根。**仅当 [TS-by-Default ADR](/docs/architecture/backend-language-policy) 例外成立时启用**——批处理 / 队列任务、机器学习 / 科学计算、或无对应 TS 端口的专用库。生成的 README 会要求你声明引用的具体理由。 |
+| `--no-install` | 跳过脚手架完成后的 `pnpm install`。 |
+| `--no-git` | 跳过 `git init` 和初始提交。 |
+| `--no-color` | 关闭 stdout 的 ANSI 颜色（适配 CI）。 |
 
-### ORM
+### 合规 / Wave-3 开关
 
-| 选项 | 说明 |
-|------|------|
-| `prisma`（默认） | Prisma v7——推荐 |
-| `drizzle` | Drizzle ORM |
-| `none` | 跳过——自行配置 |
+均接受 `true` / `false`，默认 `true`；`--china-compliance` 在 `--region=cn` 时自动翻转为 `true`。
 
-### 数据库
+`--cron-jobs`、`--audit-log`、`--api-keys`、`--command-palette`、`--cookie-consent`、`--legal-pages`、`--china-compliance`。
 
-| 选项 | 说明 |
-|------|------|
-| `postgresql`（默认） | PostgreSQL——Supabase、Vercel、Neon 等 |
-| `mysql` | MySQL / PlanetScale |
-| `sqlite` | SQLite / Turso |
-| `none` | 跳过 |
+### Wave-2 治理
 
-### 支付服务商
+| 标志 | 取值 | 默认 |
+|------|------|------|
+| `--billing-mode` | `usage`、`seat`、`credits` | `usage` |
+| `--idp` | `clerk`、`oauth-server` | `clerk` |
+| `--social-login` | 中国社交登录（`wechat,qq,dingtalk,workweixin,feishu,weibo`，逗号分隔） | 无 |
 
-| 选项 | 说明 |
-|------|------|
-| `stripe`（默认） | Stripe 订阅 |
-| `lemonsqueezy` | Lemon Squeezy |
-| `none` | 跳过 |
+## 包版本策略
 
-### AI 服务商
-
-| 选项 | 说明 |
-|------|------|
-| `openai`（默认） | OpenAI |
-| `anthropic` | Anthropic Claude |
-| `none` | 跳过 |
-
-### i18n
-
-使用 `next-intl` 启用国际化（支持 7 种语言）。默认**启用**。
+生成的项目中 `@nebutra/*` 包以 **npm caret 区间**（如 `"@nebutra/ui": "^0.1.0"`）声明，而**不是** `workspace:*`。正因如此，`create-sailor` 生成的仓库可以脱离 Nebutra-Sailor monorepo 独立 install / run。版本来源是脚手架运行时读取的已发布版本注册表。
 
 ## 示例会话
 
@@ -87,15 +99,20 @@ npx create-sailor [目录]
   create-sailor
 
 ✔ 项目创建在哪里？ … ./my-saas
-✔ 你在构建什么类型的应用？ › 标准 B2B/B2C SaaS
-✔ 选择 ORM？ › Prisma
-✔ 选择数据库？ › PostgreSQL
-✔ 选择支付服务商？ › Stripe
-✔ 默认 AI 服务商？ › OpenAI
-✔ 启用国际化 (i18n)？ › 是
-✔ 数据库 URL … postgresql://postgres:postgres@localhost:5432/nebutra
-✔ Clerk 发布密钥 … pk_test_...
-✔ Clerk 密钥 … sk_test_...
+✔ Target region? › global — 海外优先
+✔ Auth provider? › Clerk
+✔ AI topology? › Multi-provider AI Gateway / router
+
+  ▸ Region            global
+  ▸ Auth              clerk
+  ▸ ORM               prisma
+  ▸ Database          postgresql
+  ▸ Payment           stripe
+  ▸ AI topology       gateway
+  ▸ Email             resend
+  ▸ Storage           r2
+  ▸ Deploy Target     vercel
+  ▸ Docs Framework    fumadocs
 
 ⠋ 正在克隆 Nebutra-Sailor 模板到 ./my-saas...
 ✔ 项目 my-saas 初始化成功！

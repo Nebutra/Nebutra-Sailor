@@ -42,6 +42,35 @@ nebutra add button --yes                  # Skip prompts (Agent mode)
 nebutra add button --if-not-exists        # Skip if already installed
 ```
 
+#### Feature registry
+
+`nebutra add <feature>` accepts both component names and **feature IDs** drawn from a two-tier registry:
+
+**Hardcoded features** (in [`packages/ops/cli/src/utils/registry.ts`](https://github.com/Nebutra/Nebutra-Sailor/blob/main/packages/ops/cli/src/utils/registry.ts)):
+
+| Feature ID | Group | Purpose |
+|------------|-------|---------|
+| `queue` | integrations | Background job queue (Upstash QStash or BullMQ) |
+| `search` | integrations | Full-text search (Meilisearch or Typesense) |
+| `cache` | integrations | Cache adapter (Upstash Redis, Vercel KV, Redis, Dragonfly) |
+| `notifications` | integrations | Notification workflows (Novu, Knock, custom) |
+| `webhooks` | integrations | Outbound webhooks (Svix, custom) |
+| `cms` | integrations | Headless CMS (Sanity, Contentful, Strapi) |
+| `feature-flags` | platform | Feature flags (Vercel Flags, GrowthBook, ConfigCat) |
+| `captcha` | iam | Captcha verification (Turnstile, hCaptcha, Aliyun) |
+
+**Dynamically discovered features** — any workspace package that declares a `"nebutra": { "featureId": "..." }` block in its `package.json`. Today this surfaces:
+
+`vault`, `audit`, `tenant`, `permissions`, `metering`, `license`, `waitlist`, `uploads`, `saga`, `email`, `design-sync`, `agents`, `mcp`.
+
+Listing both tiers:
+
+```bash
+nebutra add --list                 # All available features (hardcoded + discovered)
+```
+
+Discovered features pin themselves to npm caret ranges (`^0.x.y`) from the published-versions registry — never `workspace:*` — so generated `package.json` files install cleanly outside the monorepo.
+
 ---
 
 ### `nebutra generate` (alias: `gen`)
@@ -461,6 +490,70 @@ Start the MCP (Model Context Protocol) context server for AI coding tools (Curso
 ```bash
 nebutra mcp                           # Start the MCP context server
 ```
+
+---
+
+### `nebutra workflow`
+
+Scaffold a starter file for a workflow provider into `workflows/<provider>/`. Refuses to overwrite an existing file.
+
+```bash
+nebutra workflow init inngest          # workflows/inngest/example.ts
+nebutra workflow init n8n              # workflows/n8n/README.md + example.json
+nebutra workflow init pusher           # workflows/pusher/example.ts
+nebutra workflow init inngest --dry-run
+```
+
+| Provider | Files created |
+|----------|--------------|
+| `inngest` | `workflows/inngest/example.ts` (Inngest function skeleton) |
+| `n8n` | `workflows/n8n/README.md` + `workflows/n8n/example.json` (self-hosted convention) |
+| `pusher` | `workflows/pusher/example.ts` (channels publisher) |
+
+Exit codes: `0` on success, `9` (`CONFLICT`) if every target file already exists, `10` on `--dry-run`.
+
+---
+
+### `nebutra backend`
+
+Scaffold a backend service. Two runtimes — TypeScript (`backends/gateway/`) is the default per [ADR 2026-05-10](/docs/architecture/backend-language-policy).
+
+```bash
+# TypeScript gateway (Hono) — only needed in downstream consumer monorepos
+nebutra backend init ts
+
+# Python (FastAPI) — only when the ADR justification applies
+nebutra backend init py --name translator
+nebutra backend init py --name translator --dry-run
+```
+
+| Runtime | Output | Notes |
+|---------|--------|-------|
+| `ts` | `backends/gateway/{package.json,src/index.ts,README.md}` | Skipped when `backends/gateway/` already exists |
+| `py` | `backends/python/<name>/{pyproject.toml,README.md,src/main.py,src/__init__.py}` | Generated README cites ADR 2026-05-10 with placeholder for the concrete justification |
+
+The `--name` flag is required for `py` in non-interactive mode; otherwise it is prompted. Name format: `^[a-z][a-z0-9_-]{0,40}$`.
+
+---
+
+### `nebutra e2e`
+
+Run a Playwright suite via its dedicated config in `e2e/`.
+
+```bash
+nebutra e2e smoke                      # e2e/playwright.config.ts
+nebutra e2e golden                     # e2e/playwright.golden.config.ts
+nebutra e2e sleptons                   # e2e/playwright.sleptons.config.ts
+nebutra e2e smoke --dry-run            # prints the `playwright test` task that would run
+```
+
+| Suite | Config | Suite dir |
+|-------|--------|-----------|
+| `smoke` | `e2e/playwright.config.ts` | `e2e/smoke/` |
+| `golden` | `e2e/playwright.golden.config.ts` | `e2e/golden/` |
+| `sleptons` | `e2e/playwright.sleptons.config.ts` | `e2e/sleptons/` |
+
+The command exits with the Playwright runner's exit code, or `7` (`NOT_FOUND`) if the suite directory or config is missing.
 
 ---
 
