@@ -18,77 +18,84 @@ const nextConfig: NextConfig = {
     "@fumadocs/story",
   ],
   reactStrictMode: true,
+  // Clean-subdomain URL scheme (docs.nebutra.com/<lang>/<slug>). Old
+  // `/docs/...` and `/<lang>/docs/...` URLs are 301'd to the new paths so
+  // external links keep working. Host root `/` is redirected to default lang.
   async redirects() {
+    const backCompat = (slug: string) => [
+      // pre-i18n shape — assume English when no locale was specified
+      { source: `/docs/${slug}`, destination: `/en/${slug}`, permanent: true as const },
+      // legacy /<lang>/docs/<slug> → /<lang>/<slug>
+      { source: `/en/docs/${slug}`, destination: `/en/${slug}`, permanent: true as const },
+      { source: `/zh/docs/${slug}`, destination: `/zh/${slug}`, permanent: true as const },
+    ];
+
     return [
+      // Host root → default language
+      { source: "/", destination: "/en", permanent: false },
+
+      // Catch-all back-compat from the old /docs prefix (both pre-i18n and
+      // post-i18n shapes). Permanent so caches + search engines update.
+      {
+        source: "/docs/:path*",
+        destination: "/en/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:lang(en|zh)/docs/:path*",
+        destination: "/:lang/:path*",
+        permanent: true,
+      },
+
+      // Renamed pages — translated from the old `/docs/*` shape into the new
+      // clean shape. Listed explicitly because each one redirects across a
+      // taxonomy change (not just a prefix strip).
       {
         source: "/sailor/getting-started",
-        destination: "/docs/getting-started/installation",
+        destination: "/en/getting-started/installation",
         permanent: true,
       },
-      {
-        source: "/docs/whitelabel",
-        destination: "/docs/customization/overview",
-        permanent: true,
-      },
-      {
-        source: "/en/docs/whitelabel",
-        destination: "/docs/customization/overview",
-        permanent: true,
-      },
-      {
-        source: "/zh/docs/whitelabel",
-        destination: "/zh/docs/customization/overview",
-        permanent: true,
-      },
-      {
-        source: "/docs/billing",
-        destination: "/docs/payments/overview",
-        permanent: true,
-      },
-      {
-        source: "/docs/authentication",
-        destination: "/docs/guides/authentication",
-        permanent: true,
-      },
-      {
-        source: "/docs/multi-tenancy",
-        destination: "/docs/guides/multi-tenancy",
-        permanent: true,
-      },
-      {
-        source: "/docs/ai-integrations",
-        destination: "/docs/ai/overview",
-        permanent: true,
-      },
-      {
-        source: "/docs/integrations",
-        destination: "/docs/integrations/overview",
-        permanent: true,
-      },
-      {
-        source: "/docs/infrastructure",
-        destination: "/docs/deployment/overview",
-        permanent: true,
-      },
-      {
-        source: "/docs/monorepo",
-        destination: "/docs/development/project-structure",
-        permanent: true,
-      },
+      ...backCompat("whitelabel").map((r) => ({
+        ...r,
+        destination: r.destination.replace(/\/whitelabel$/, "/customization/overview"),
+      })),
+      ...backCompat("billing").map((r) => ({
+        ...r,
+        destination: r.destination.replace(/\/billing$/, "/payments/overview"),
+      })),
+      ...backCompat("authentication").map((r) => ({
+        ...r,
+        destination: r.destination.replace(/\/authentication$/, "/guides/authentication"),
+      })),
+      ...backCompat("multi-tenancy").map((r) => ({
+        ...r,
+        destination: r.destination.replace(/\/multi-tenancy$/, "/guides/multi-tenancy"),
+      })),
+      ...backCompat("ai-integrations").map((r) => ({
+        ...r,
+        destination: r.destination.replace(/\/ai-integrations$/, "/ai/overview"),
+      })),
+      ...backCompat("integrations").map((r) => ({
+        ...r,
+        destination: r.destination.replace(/\/integrations$/, "/integrations/overview"),
+      })),
+      ...backCompat("infrastructure").map((r) => ({
+        ...r,
+        destination: r.destination.replace(/\/infrastructure$/, "/deployment/overview"),
+      })),
+      ...backCompat("monorepo").map((r) => ({
+        ...r,
+        destination: r.destination.replace(/\/monorepo$/, "/development/project-structure"),
+      })),
     ];
   },
+  // `<lang>/<slug>.mdx` returns the raw Markdown via the llms.mdx internal API.
+  // The internal API path keeps its `docs/` segment — it is not a user-visible
+  // URL, just the underlying handler at app/llms.mdx/docs/[[...slug]]/route.tsx.
   async rewrites() {
     return [
       {
-        source: "/docs/:path*.mdx",
-        destination: "/llms.mdx/docs/:path*",
-      },
-      {
-        source: "/zh/docs/:path*.mdx",
-        destination: "/llms.mdx/docs/:path*",
-      },
-      {
-        source: "/en/docs/:path*.mdx",
+        source: "/:lang(en|zh)/:path*.mdx",
         destination: "/llms.mdx/docs/:path*",
       },
     ];

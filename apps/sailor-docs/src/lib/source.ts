@@ -4,7 +4,11 @@ import { docs } from "@/.source/server";
 import { i18n } from "./i18n";
 
 export const source = loader({
-  baseUrl: "/docs",
+  // docs.nebutra.com is dedicated to docs (clean-subdomain pattern, like
+  // docs.anthropic.com / docs.cursor.com), so docs pages mount at the host
+  // root rather than under /docs. Old `/docs/*` URLs are 301'd at the
+  // origin nginx layer for back-compat.
+  baseUrl: "/",
   source: docs.toFumadocsSource(),
   i18n,
 });

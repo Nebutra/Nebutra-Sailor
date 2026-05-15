@@ -7,7 +7,7 @@ import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
 import { DeprecatedBanner, StatusBadge } from "@/components/status-badge";
 import { onPageFeedbackAction } from "@/lib/github";
 import { getPageImage, source } from "@/lib/source";
-import { useMDXComponents } from "../../../../../mdx-components";
+import { useMDXComponents } from "../../../../mdx-components";
 
 interface PageProps {
   params: Promise<{ slug?: string[]; lang: string }>;
@@ -29,7 +29,7 @@ export default async function Page({ params }: PageProps) {
         repo: "Nebutra-Sailor",
         owner: "TsekaLuk",
         sha: "main",
-        path: `apps/design-docs/content/docs/${page.path}`,
+        path: `apps/sailor-docs/content/docs/${page.path}`,
       }}
       breadcrumb={{
         enabled: true,
@@ -58,7 +58,7 @@ export default async function Page({ params }: PageProps) {
         <LLMCopyButton markdownUrl={`/llms.mdx/docs/${page.path}`} />
         <ViewOptions
           markdownUrl={`/llms.mdx/docs/${page.path}`}
-          githubUrl={`https://github.com/TsekaLuk/Nebutra-Sailor/blob/main/apps/design-docs/content/docs/${page.path}`}
+          githubUrl={`https://github.com/TsekaLuk/Nebutra-Sailor/blob/main/apps/sailor-docs/content/docs/${page.path}`}
         />
         {(page.data as { figma?: string }).figma && (
           <FigmaLink href={(page.data as { figma: string }).figma} />
