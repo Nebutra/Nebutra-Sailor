@@ -1,10 +1,11 @@
 {
   "name": "@nebutra/brand",
   "version": "0.1.0",
-  "private": true,
   "description": "Nebutra brand assets, logos, and identity components",
-  "sideEffects": false,
+  "private": false,
+  "license": "AGPL-3.0",
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -34,13 +35,25 @@
   "dependencies": {
     "react": "^19.2.4"
   },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
   "devDependencies": {
     "@types/react": "^19.2.14",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "catalog:"
   },
-  "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0"
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/design/brand#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/brand"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,8 +1,9 @@
 {
   "name": "@nebutra/contracts",
   "version": "0.1.0",
-  "private": true,
   "description": "Canonical API/event/domain contracts for Nebutra superstarter",
+  "private": false,
+  "license": "AGPL-3.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -40,5 +41,17 @@
     "@types/node": "^22.19.15",
     "tsup": "^8.5.1",
     "typescript": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/commerce/contracts#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/commerce/contracts"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

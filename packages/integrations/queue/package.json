@@ -1,7 +1,8 @@
 {
   "name": "@nebutra/queue",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "AGPL-3.0",
   "type": "module",
   "nebutra": {
     "status": "foundation",
@@ -16,14 +17,30 @@
       "Worker auto-scaling TODO"
     ]
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./qstash": "./src/providers/qstash.ts",
-    "./bullmq": "./src/providers/bullmq.ts",
-    "./sqs": "./src/providers/sqs.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./qstash": {
+      "types": "./dist/providers/qstash.d.ts",
+      "import": "./dist/providers/qstash.js"
+    },
+    "./bullmq": {
+      "types": "./dist/providers/bullmq.d.ts",
+      "import": "./dist/providers/bullmq.js"
+    },
+    "./sqs": {
+      "types": "./dist/providers/sqs.d.ts",
+      "import": "./dist/providers/sqs.js"
+    }
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
@@ -31,14 +48,34 @@
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.700.0",
-    "@nebutra/db": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@upstash/qstash": "^2.7.17",
     "bullmq": "^5.34.8",
     "ioredis": "^5.4.2",
     "zod": "catalog:"
   },
+  "peerDependencies": {
+    "@nebutra/db": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nebutra/db": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@nebutra/db": "workspace:*",
     "typescript": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/integrations/queue#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/integrations/queue"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

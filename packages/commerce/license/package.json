@@ -1,15 +1,31 @@
 {
   "name": "@nebutra/license",
   "version": "0.1.0",
-  "private": true,
   "description": "License domain logic — issuance, validation, and lifecycle events",
+  "private": false,
+  "license": "AGPL-3.0",
   "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": "./src/index.ts",
-    "./handlers": "./src/handlers/index.ts"
+  "nebutra": {
+    "featureId": "license",
+    "category": "commerce",
+    "summary": "License key generation + validation"
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./handlers": {
+      "types": "./dist/handlers/index.d.ts",
+      "import": "./dist/handlers/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
@@ -18,20 +34,35 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@nebutra/db": "workspace:*",
-    "@nebutra/queue": "workspace:*",
     "@nebutra/email": "workspace:*",
     "@nebutra/logger": "workspace:*",
+    "@nebutra/queue": "workspace:*",
     "zod": "catalog:"
   },
+  "peerDependencies": {
+    "@nebutra/db": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nebutra/db": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@nebutra/db": "workspace:*",
     "@vitest/coverage-v8": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "nebutra": {
-    "featureId": "license",
-    "category": "commerce",
-    "summary": "License key generation + validation"
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/commerce/license#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/commerce/license"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

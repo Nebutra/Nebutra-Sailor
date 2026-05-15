@@ -1,9 +1,10 @@
 {
   "name": "@nebutra/design-sync",
   "version": "0.1.0",
-  "private": true,
-  "type": "module",
   "description": "Provider-agnostic design-tool sync. Figma + Tokens Studio | Penpot | git-only | memory.",
+  "private": false,
+  "license": "AGPL-3.0",
+  "type": "module",
   "nebutra": {
     "status": "foundation",
     "productionReady": false,
@@ -21,19 +22,41 @@
     "category": "design",
     "summary": "Provider-agnostic design-tool sync (Figma | Penpot | git-only)"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./figma": {
+      "types": "./dist/providers/figma.d.ts",
+      "import": "./dist/providers/figma.js"
+    },
+    "./penpot": {
+      "types": "./dist/providers/penpot.d.ts",
+      "import": "./dist/providers/penpot.js"
+    },
+    "./git-only": {
+      "types": "./dist/providers/git-only.d.ts",
+      "import": "./dist/providers/git-only.js"
+    },
+    "./memory": {
+      "types": "./dist/providers/memory.d.ts",
+      "import": "./dist/providers/memory.js"
+    },
+    "./cli": {
+      "types": "./dist/cli/index.d.ts",
+      "import": "./dist/cli/index.js"
+    }
+  },
   "bin": {
     "design-sync": "./src/cli/index.ts"
   },
-  "exports": {
-    ".": "./src/index.ts",
-    "./figma": "./src/providers/figma.ts",
-    "./penpot": "./src/providers/penpot.ts",
-    "./git-only": "./src/providers/git-only.ts",
-    "./memory": "./src/providers/memory.ts",
-    "./cli": "./src/cli/index.ts"
-  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
@@ -49,5 +72,17 @@
     "tsx": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/design/design-sync#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/design-sync"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

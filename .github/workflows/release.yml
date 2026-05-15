@@ -1,9 +1,9 @@
 name: Release
 
+# Manual-only: publish is gated on workflow_dispatch. We intentionally do NOT
+# auto-publish on `push: main` so that landing a PR does not surface a release.
+# Run via the Actions tab when ready to cut a release.
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}

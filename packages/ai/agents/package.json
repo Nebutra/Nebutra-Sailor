@@ -1,9 +1,15 @@
 {
   "name": "@nebutra/agents",
   "version": "1.0.0",
-  "private": true,
   "description": "Nebutra AI runtime: multi-agent orchestration + Vercel AI SDK helpers (absorbed @nebutra/ai-sdk in 1.0.0)",
+  "private": false,
+  "license": "AGPL-3.0",
   "type": "module",
+  "nebutra": {
+    "featureId": "agents",
+    "category": "ai",
+    "summary": "Nebutra AI runtime: multi-agent orchestration + Vercel AI SDK helpers"
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
@@ -50,9 +56,16 @@
     "typescript": "catalog:",
     "vitest": "^4.0.18"
   },
-  "nebutra": {
-    "featureId": "agents",
-    "category": "ai",
-    "summary": "Nebutra AI runtime: multi-agent orchestration + Vercel AI SDK helpers"
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/agents#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/agents"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

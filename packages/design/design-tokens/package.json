@@ -1,9 +1,10 @@
 {
   "name": "@nebutra/design-tokens",
   "version": "0.1.0",
-  "private": true,
-  "type": "module",
   "description": "W3C DTCG ($value/$type) tokens — SSOT, Style Dictionary 4 pipeline. Coexists with @nebutra/tokens; not a replacement.",
+  "private": false,
+  "license": "AGPL-3.0",
+  "type": "module",
   "main": "./build/ts/tokens.js",
   "types": "./build/ts/tokens.d.ts",
   "exports": {
@@ -35,5 +36,17 @@
     "style-dictionary": "^4.4.0",
     "tsx": "catalog:",
     "typescript": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/design/design-tokens#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/design-tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

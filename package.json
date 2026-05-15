@@ -53,7 +53,7 @@
     "template:check": "tsx scripts/template-check.ts",
     "template:build": "tsx scripts/template-build.ts",
     "prepare": "node scripts/install-git-hooks.mjs",
-    "release": "changeset publish",
+    "release": "pnpm build && changeset publish",
     "version:packages": "changeset version",
     "changeset": "changeset",
     "e2e": "playwright test --config=e2e/playwright.config.ts",

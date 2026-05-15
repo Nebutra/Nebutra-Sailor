@@ -9,8 +9,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@nebutra/tokens": "workspace:*",
-    "@nebutra/ui": "workspace:*",
+    "@nebutra/tokens": "^0.1.0",
+    "@nebutra/ui": "^0.1.0",
     "fumadocs-core": "^16.6.12",
     "fumadocs-mdx": "^14.2.9",
     "fumadocs-ui": "^16.6.12",

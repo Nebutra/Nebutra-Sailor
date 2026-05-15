@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, parse as parsePath } from "node:path";
 import { fileURLToPath } from "node:url";
+import { getNebutraPackageVersion } from "./nebutra-versions";
 
 export interface FeatureDependency {
   name: string;
@@ -474,11 +475,17 @@ function descriptorFromDiscovered(
     description: `${key} (declared by ${packageName})`,
   }));
 
+  // Resolve a real npm caret range from the published-versions registry.
+  // Fall back to "latest" only if the package is not yet declassified — that
+  // signals to the user something is off, but avoids emitting the toxic
+  // "workspace:*" token into a user project's package.json.
+  const npmVersion = getNebutraPackageVersion(packageName) ?? "latest";
+
   return {
     name: featureId,
     description: block.summary ?? pkg.description ?? `${featureId} feature`,
     group: block.category ?? category,
-    dependencies: [{ name: packageName, version: "workspace:*" }],
+    dependencies: [{ name: packageName, version: npmVersion }],
     env,
     envFile: block.envFile ?? ".env.local",
     files: [],

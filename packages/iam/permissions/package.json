@@ -1,7 +1,8 @@
 {
   "name": "@nebutra/permissions",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "AGPL-3.0",
   "type": "module",
   "nebutra": {
     "status": "foundation",
@@ -17,16 +18,38 @@
     "category": "iam",
     "summary": "RBAC/ABAC engine — CASL (in-process) + OpenFGA (Zanzibar)"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./casl": "./src/providers/casl.ts",
-    "./openfga": "./src/providers/openfga.ts",
-    "./react": "./src/react.ts",
-    "./middleware": "./src/middleware.ts",
-    "./types": "./src/types.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./casl": {
+      "types": "./dist/providers/casl.d.ts",
+      "import": "./dist/providers/casl.js"
+    },
+    "./openfga": {
+      "types": "./dist/providers/openfga.d.ts",
+      "import": "./dist/providers/openfga.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./middleware": {
+      "types": "./dist/middleware.d.ts",
+      "import": "./dist/middleware.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    }
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
@@ -39,14 +62,26 @@
     "@nebutra/logger": "workspace:*",
     "zod": "catalog:"
   },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "hono": "^4.0.0"
+  },
   "devDependencies": {
     "react": "^19.0.0",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "hono": "^4.0.0"
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/iam/permissions#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/iam/permissions"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "peerDependenciesOptional": {
     "hono": true,

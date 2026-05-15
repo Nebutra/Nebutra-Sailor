@@ -1,9 +1,15 @@
 {
   "name": "@nebutra/email",
   "version": "0.1.0",
-  "private": true,
   "description": "Multi-provider transactional email (Resend, Nodemailer, Console)",
+  "private": false,
+  "license": "AGPL-3.0",
   "type": "module",
+  "nebutra": {
+    "featureId": "email",
+    "category": "integrations",
+    "summary": "Multi-provider transactional email (Resend, Nodemailer, Console)"
+  },
   "main": "./dist/index.js",
   "exports": {
     ".": {
@@ -34,9 +40,16 @@
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "nebutra": {
-    "featureId": "email",
-    "category": "integrations",
-    "summary": "Multi-provider transactional email (Resend, Nodemailer, Console)"
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/integrations/email#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/integrations/email"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

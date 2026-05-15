@@ -1507,9 +1507,6 @@ importers:
 
   packages/commerce/license:
     dependencies:
-      '@nebutra/db':
-        specifier: workspace:*
-        version: link:../../platform/db
       '@nebutra/email':
         specifier: workspace:*
         version: link:../../integrations/email
@@ -1523,6 +1520,9 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
+      '@nebutra/db':
+        specifier: workspace:*
+        version: link:../../platform/db
       '@vitest/coverage-v8':
         specifier: 'catalog:'
         version: 4.1.4(vitest@4.1.4)
@@ -1893,9 +1893,6 @@ importers:
 
   packages/iam/audit:
     dependencies:
-      '@nebutra/db':
-        specifier: workspace:*
-        version: link:../../platform/db
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../platform/logger
@@ -1903,6 +1900,9 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
+      '@nebutra/db':
+        specifier: workspace:*
+        version: link:../../platform/db
       '@types/node':
         specifier: ^22.19.15
         version: 22.19.15
@@ -2197,9 +2197,6 @@ importers:
       '@aws-sdk/client-sqs':
         specifier: ^3.700.0
         version: 3.1045.0
-      '@nebutra/db':
-        specifier: workspace:*
-        version: link:../../platform/db
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../platform/logger
@@ -2216,6 +2213,9 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
+      '@nebutra/db':
+        specifier: workspace:*
+        version: link:../../platform/db
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -2757,6 +2757,9 @@ importers:
       pino-pretty:
         specifier: ^13.1.3
         version: 13.1.3
+      tsup:
+        specifier: 'catalog:'
+        version: 8.5.1(@swc/core@1.15.18(@swc/helpers@0.5.19))(jiti@2.6.1)(postcss@8.5.8)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3

@@ -1,7 +1,8 @@
 {
   "name": "@nebutra/search",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "AGPL-3.0",
   "type": "module",
   "nebutra": {
     "status": "foundation",
@@ -17,15 +18,34 @@
       "Tenant-scoped index isolation not enforced"
     ]
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./meilisearch": "./src/providers/meilisearch.ts",
-    "./typesense": "./src/providers/typesense.ts",
-    "./algolia": "./src/providers/algolia.ts",
-    "./pgvector": "./src/providers/pgvector.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./meilisearch": {
+      "types": "./dist/providers/meilisearch.d.ts",
+      "import": "./dist/providers/meilisearch.js"
+    },
+    "./typesense": {
+      "types": "./dist/providers/typesense.d.ts",
+      "import": "./dist/providers/typesense.js"
+    },
+    "./algolia": {
+      "types": "./dist/providers/algolia.d.ts",
+      "import": "./dist/providers/algolia.js"
+    },
+    "./pgvector": {
+      "types": "./dist/providers/pgvector.d.ts",
+      "import": "./dist/providers/pgvector.js"
+    }
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit"
@@ -41,5 +61,17 @@
   "devDependencies": {
     "@types/pg": "^8.11.10",
     "typescript": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/integrations/search#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/integrations/search"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

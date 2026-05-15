@@ -1,8 +1,9 @@
 {
   "name": "@nebutra/identity",
   "version": "0.1.0",
-  "private": true,
   "description": "Provider-agnostic identity adapter layer (Clerk-first, Auth.js-ready)",
+  "private": false,
+  "license": "AGPL-3.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -33,5 +34,17 @@
     "@types/node": "^22.19.15",
     "tsup": "^8.5.1",
     "typescript": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/iam/identity#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/iam/identity"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

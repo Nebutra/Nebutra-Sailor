@@ -1,9 +1,10 @@
 {
   "name": "@nebutra/tokens",
   "version": "0.1.0",
-  "private": true,
-  "type": "module",
   "description": "Unified theme tokens and theme-provider entry for Nebutra apps",
+  "private": false,
+  "license": "AGPL-3.0",
+  "type": "module",
   "sideEffects": [
     "./styles.css"
   ],
@@ -22,11 +23,23 @@
     "@nebutra/design-tokens": "workspace:*",
     "next-themes": "^0.4.6"
   },
+  "peerDependencies": {
+    "react": "^19"
+  },
   "devDependencies": {
     "@types/react": "^19.2.14",
     "typescript": "catalog:"
   },
-  "peerDependencies": {
-    "react": "^19"
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/design/tokens#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,7 +1,8 @@
 {
   "name": "@nebutra/notifications",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "AGPL-3.0",
   "type": "module",
   "nebutra": {
     "status": "foundation",
@@ -16,14 +17,30 @@
       "Provider health and retry telemetry are still minimal"
     ]
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./novu": "./src/providers/novu.ts",
-    "./knock": "./src/providers/knock.ts",
-    "./direct": "./src/providers/direct.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./novu": {
+      "types": "./dist/providers/novu.d.ts",
+      "import": "./dist/providers/novu.js"
+    },
+    "./knock": {
+      "types": "./dist/providers/knock.d.ts",
+      "import": "./dist/providers/knock.js"
+    },
+    "./direct": {
+      "types": "./dist/providers/direct.d.ts",
+      "import": "./dist/providers/direct.js"
+    }
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
@@ -38,5 +55,17 @@
   "devDependencies": {
     "typescript": "catalog:",
     "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/integrations/notifications#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/integrations/notifications"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
