@@ -11,6 +11,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  type CommandListProps,
   CommandSeparator,
 } from "./command";
 import { Label } from "./label";
@@ -20,7 +21,43 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 // Types
 // =============================================================================
 
-export type ComboboxSize = "sm" | "default" | "lg";
+export type ComboboxSize = "small" | "medium" | "large";
+type LegacyComboboxSize = "sm" | "default" | "lg";
+type ComboboxValue = string | null;
+type ComboboxWidth = number | string;
+type ComboboxStyle = React.CSSProperties & {
+  "--combobox-width"?: string;
+  "--combobox-trigger-height"?: string;
+  "--combobox-trigger-padding-x"?: string;
+  "--combobox-font-size"?: string;
+};
+
+const comboboxSizeMap = {
+  sm: "small",
+  default: "medium",
+  lg: "large",
+  small: "small",
+  medium: "medium",
+  large: "large",
+} as const satisfies Record<ComboboxSize | LegacyComboboxSize, ComboboxSize>;
+
+const comboboxSizeTokens = {
+  small: {
+    "--combobox-trigger-height": "2rem",
+    "--combobox-trigger-padding-x": "0.625rem",
+    "--combobox-font-size": "0.75rem",
+  },
+  medium: {
+    "--combobox-trigger-height": "2.5rem",
+    "--combobox-trigger-padding-x": "0.75rem",
+    "--combobox-font-size": "0.875rem",
+  },
+  large: {
+    "--combobox-trigger-height": "3rem",
+    "--combobox-trigger-padding-x": "0.875rem",
+    "--combobox-font-size": "1rem",
+  },
+} as const satisfies Record<ComboboxSize, ComboboxStyle>;
 
 export interface ComboboxOption {
   /** Machine value — used for selection matching */
@@ -33,23 +70,22 @@ export interface ComboboxOption {
   group?: string;
 }
 
-export interface ComboboxProps {
+interface ComboboxBaseProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue" | "onChange"> {
   /** Flat list of options — the component handles grouping internally via option.group */
   options?: ComboboxOption[];
-  /** Currently selected value (controlled) */
-  value?: string;
-  /** Callback when selection changes */
-  onChange?: (value: string) => void;
-  /** Initial value for uncontrolled usage */
-  defaultValue?: string;
   /** Disable the entire combobox */
   disabled?: boolean;
-  /** Show error styling (red border) */
+  /** Show error styling. Prefer `errored`; `error` is kept for existing consumers. */
+  errored?: boolean;
+  /** @deprecated Use `errored`. */
   error?: boolean;
-  /** Size variant matching Geist scale */
-  size?: ComboboxSize;
-  /** Custom width — applied to both trigger and popover (e.g. "w-64" or "w-[240px]") */
-  width?: string;
+  /** Size variant matching Nebutra form controls. Legacy `sm`/`default`/`lg` values still map through. */
+  size?: ComboboxSize | LegacyComboboxSize;
+  /** Custom root width. Numbers are treated as pixels; strings can be CSS lengths. */
+  width?: ComboboxWidth;
+  /** Custom list max width. Numbers are treated as pixels; strings can be CSS lengths. */
+  listMaxWidth?: ComboboxWidth;
   /** Accessible label shown above the trigger */
   label?: string;
   /** Whether the label is visually hidden (still accessible) */
@@ -62,9 +98,27 @@ export interface ComboboxProps {
   searchPlaceholder?: string;
   /** Composition mode — children provide their own CommandInput/List/etc. */
   children?: React.ReactNode;
-  /** Additional CSS classes for the outer container */
-  className?: string;
+  /** Loading state for async option providers. */
+  loading?: boolean;
+  /** Text shown while async options are loading. */
+  loadingMessage?: string;
+  /** Accessible name when no visible label is rendered. */
+  "aria-label"?: string;
 }
+
+interface ControlledComboboxProps extends ComboboxBaseProps {
+  value: ComboboxValue;
+  onChange: (value: ComboboxValue) => void;
+  defaultValue?: never;
+}
+
+interface UncontrolledComboboxProps extends ComboboxBaseProps {
+  value?: never;
+  onChange?: (value: ComboboxValue) => void;
+  defaultValue?: ComboboxValue;
+}
+
+export type ComboboxProps = ControlledComboboxProps | UncontrolledComboboxProps;
 
 export interface ComboboxOptionProps {
   value: string;
@@ -80,6 +134,12 @@ export type ComboboxEmptyProps = React.ComponentPropsWithoutRef<typeof CommandEm
 
 export type ComboboxGroupProps = React.ComponentPropsWithoutRef<typeof CommandGroup>;
 
+export interface ComboboxListProps extends CommandListProps {
+  emptyMessage?: React.ReactNode;
+  // explicit `| undefined` to accept passthrough under `exactOptionalPropertyTypes`
+  maxWidth?: ComboboxWidth | undefined;
+}
+
 // =============================================================================
 // CVA Variants
 // =============================================================================
@@ -87,9 +147,9 @@ export type ComboboxGroupProps = React.ComponentPropsWithoutRef<typeof CommandGr
 export const comboboxTriggerVariants = cva(
   [
     "flex w-full items-center justify-between gap-2 whitespace-nowrap",
-    "rounded-[var(--radius-md)] border border-input bg-background px-3",
-    "text-sm ring-offset-background",
-    "transition-colors duration-150 ease-out",
+    "h-[var(--combobox-trigger-height)] rounded-[var(--radius-md)] border border-input bg-background px-[var(--combobox-trigger-padding-x)]",
+    "text-[length:var(--combobox-font-size)] ring-offset-background",
+    "transition-colors duration-micro ease-out",
     "placeholder:text-muted-foreground",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
     "disabled:cursor-not-allowed disabled:opacity-50",
@@ -98,9 +158,9 @@ export const comboboxTriggerVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-8 text-xs",
-        default: "h-10",
-        lg: "h-12 text-base",
+        small: "",
+        medium: "",
+        large: "",
       },
       error: {
         true: "border-destructive focus-visible:ring-destructive",
@@ -108,7 +168,7 @@ export const comboboxTriggerVariants = cva(
       },
     },
     defaultVariants: {
-      size: "default",
+      size: "medium",
       error: false,
     },
   },
@@ -119,7 +179,7 @@ export const comboboxTriggerVariants = cva(
 // =============================================================================
 
 interface ComboboxContextValue {
-  selectedValue: string;
+  selectedValue: ComboboxValue;
   onSelect: (value: string) => void;
 }
 
@@ -204,30 +264,60 @@ ComboboxGroupSub.displayName = "Combobox.Group";
 
 const ComboboxSeparator = CommandSeparator;
 
+const ComboboxList = React.forwardRef<React.ElementRef<typeof CommandList>, ComboboxListProps>(
+  ({ children, className, emptyMessage = "No results found.", maxWidth, style, ...props }, ref) => {
+    const listStyle = {
+      ...style,
+      ...(maxWidth ? { maxWidth: toCssLength(maxWidth) } : undefined),
+    } satisfies React.CSSProperties;
+
+    return (
+      <CommandList ref={ref} className={className} style={listStyle} {...props}>
+        <CommandEmpty>{emptyMessage}</CommandEmpty>
+        {children}
+      </CommandList>
+    );
+  },
+);
+ComboboxList.displayName = "Combobox.List";
+
 // =============================================================================
 // ComboboxRoot
 // =============================================================================
+
+function toCssLength(value: ComboboxWidth): string {
+  return typeof value === "number" ? `${value}px` : value;
+}
 
 function ComboboxRoot({
   options,
   value: controlledValue,
   onChange,
-  defaultValue = "",
+  defaultValue = null,
   disabled = false,
+  errored,
   error = false,
-  size = "default",
+  size = "medium",
   width,
+  listMaxWidth,
   label,
   hideLabel = false,
   placeholder = "Select...",
   emptyMessage = "No results found.",
   searchPlaceholder = "Search...",
+  loading = false,
+  loadingMessage = "Loading options...",
   children,
   className,
+  style,
+  "aria-label": ariaLabel,
+  ...props
 }: ComboboxProps) {
   // Controlled / uncontrolled value management
   const [internalValue, setInternalValue] = React.useState(defaultValue);
   const selectedValue = controlledValue !== undefined ? controlledValue : internalValue;
+  const normalizedSize = comboboxSizeMap[size];
+  const isErrored = errored ?? error;
 
   // Ref to avoid stale closure in handleSelect toggle logic
   const selectedValueRef = React.useRef(selectedValue);
@@ -238,7 +328,7 @@ function ComboboxRoot({
   const handleSelect = React.useCallback(
     (incoming: string) => {
       const current = selectedValueRef.current;
-      const next = incoming === current ? "" : incoming;
+      const next = incoming === current ? null : incoming;
       if (controlledValue === undefined) setInternalValue(next);
       onChange?.(next);
       setOpen(false);
@@ -248,6 +338,7 @@ function ComboboxRoot({
 
   // Find label for currently selected value when using options prop
   const selectedLabel = React.useMemo(() => {
+    if (!selectedValue) return "";
     if (!options) return selectedValue;
     return options.find((o) => o.value === selectedValue)?.label ?? selectedValue;
   }, [options, selectedValue]);
@@ -279,34 +370,49 @@ function ComboboxRoot({
 
   const renderContent = () => {
     if (groupedOptions) {
+      const listProps = {
+        emptyMessage: loading ? loadingMessage : emptyMessage,
+        ...(listMaxWidth ? { maxWidth: listMaxWidth } : undefined),
+      } satisfies ComboboxListProps;
+
       return (
         <>
           <CommandInput placeholder={searchPlaceholder} />
-          <CommandList>
-            <CommandEmpty>{emptyMessage}</CommandEmpty>
-            {Array.from(groupedOptions.entries()).map(([group, opts]) => (
-              <CommandGroup key={group ?? "__ungrouped__"} heading={group}>
-                {opts.map((opt) => (
-                  <ComboboxOptionItem
-                    key={opt.value}
-                    value={opt.value}
-                    disabled={opt.disabled ?? false}
-                  >
-                    {opt.label}
-                  </ComboboxOptionItem>
-                ))}
-              </CommandGroup>
-            ))}
-          </CommandList>
+          <ComboboxList {...listProps}>
+            {!loading &&
+              Array.from(groupedOptions.entries()).map(([group, opts]) => (
+                <CommandGroup key={group ?? "__ungrouped__"} heading={group}>
+                  {opts.map((opt) => (
+                    <ComboboxOptionItem
+                      key={opt.value}
+                      value={opt.value}
+                      disabled={opt.disabled ?? false}
+                    >
+                      {opt.label}
+                    </ComboboxOptionItem>
+                  ))}
+                </CommandGroup>
+              ))}
+          </ComboboxList>
         </>
       );
     }
     return children;
   };
 
+  const rootStyle = {
+    ...style,
+    ...comboboxSizeTokens[normalizedSize],
+    ...(width ? { "--combobox-width": toCssLength(width) } : undefined),
+  } satisfies ComboboxStyle;
+
   return (
     <ComboboxContext.Provider value={contextValue}>
-      <div className={cn("flex flex-col gap-1.5", width, className)}>
+      <div
+        className={cn("flex w-[var(--combobox-width,100%)] flex-col gap-1.5", className)}
+        style={rootStyle}
+        {...props}
+      >
         {label && (
           <Label id={labelId} htmlFor={triggerId} className={cn(hideLabel && "sr-only")}>
             {label}
@@ -327,9 +433,11 @@ function ComboboxRoot({
               aria-expanded={open}
               aria-controls={listboxId}
               aria-labelledby={label ? labelId : undefined}
-              aria-label={!label ? placeholder : undefined}
+              aria-label={!label ? (ariaLabel ?? placeholder) : undefined}
+              aria-invalid={isErrored || undefined}
+              data-invalid={isErrored || undefined}
               disabled={disabled}
-              className={cn(comboboxTriggerVariants({ size, error }))}
+              className={cn(comboboxTriggerVariants({ size: normalizedSize, error: isErrored }))}
             >
               <span className={cn(!selectedValue && "text-muted-foreground")}>
                 {selectedValue ? selectedLabel : placeholder}
@@ -337,7 +445,13 @@ function ComboboxRoot({
               <ChevronsUpDown aria-hidden="true" className="h-4 w-4 shrink-0 opacity-50" />
             </button>
           </PopoverTrigger>
-          <PopoverContent className="p-0" style={{ width: "var(--radix-popover-trigger-width)" }}>
+          <PopoverContent
+            className="p-0"
+            style={{
+              width: "var(--combobox-width, var(--radix-popover-trigger-width))",
+              maxWidth: listMaxWidth ? toCssLength(listMaxWidth) : undefined,
+            }}
+          >
             <Command id={listboxId}>{renderContent()}</Command>
           </PopoverContent>
         </Popover>
@@ -372,18 +486,18 @@ ComboboxRoot.displayName = "Combobox";
  * ```tsx
  * <Combobox value={value} onChange={setValue} placeholder="Search...">
  *   <Combobox.Input placeholder="Search frameworks..." />
- *   <CommandList>
- *     <Combobox.Empty>Nothing here.</Combobox.Empty>
+ *   <Combobox.List emptyMessage="Nothing here.">
  *     <Combobox.Group heading="Frontend">
  *       <Combobox.Option value="next">Next.js</Combobox.Option>
  *       <Combobox.Option value="remix">Remix</Combobox.Option>
  *     </Combobox.Group>
- *   </CommandList>
+ *   </Combobox.List>
  * </Combobox>
  * ```
  */
 const Combobox = Object.assign(ComboboxRoot, {
   Input: ComboboxInput,
+  List: ComboboxList,
   Option: ComboboxOptionItem,
   Empty: ComboboxEmpty,
   Group: ComboboxGroupSub,
@@ -395,6 +509,7 @@ export {
   ComboboxEmpty,
   ComboboxGroupSub,
   ComboboxInput,
+  ComboboxList,
   ComboboxOptionItem,
   ComboboxRoot,
   ComboboxSeparator,

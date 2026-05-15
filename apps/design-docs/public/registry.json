@@ -166,6 +166,12 @@
       "description": "Syntax-highlighted code viewer with copy + diff lines. Accepts Geist single-file children API or Nebutra multi-file tabs."
     },
     {
+      "name": "collapse",
+      "type": "registry:ui",
+      "title": "Collapse",
+      "description": "Geist-style flat Collapse/CollapseGroup API on top of our Accordion. Single, multiple-open, and standalone modes."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",

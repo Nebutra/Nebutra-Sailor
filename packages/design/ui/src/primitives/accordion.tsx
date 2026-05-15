@@ -83,10 +83,17 @@ const AccordionContent = React.forwardRef<
   React.ComponentPropsWithoutRef<"div"> & {
     /** Size variant matching Geist Collapse */
     size?: AccordionSize;
+    /**
+     * Keep the panel content in the DOM when closed. Lets browser find-in-page
+     * and search crawlers hit hidden content. Forwarded to Base UI's Panel.
+     * @default false (Base UI's default)
+     */
+    keepMounted?: boolean;
   }
->(({ className, children, size = "default", ...props }, ref) => (
+>(({ className, children, size = "default", keepMounted, ...props }, ref) => (
   <RadixContent
     ref={ref}
+    {...(keepMounted ? { keepMounted: true } : {})}
     className="text-sm leading-relaxed data-[ending-style]:animate-accordion-up data-[open]:animate-accordion-down overflow-hidden text-muted-foreground transition-all"
     {...props}
   >

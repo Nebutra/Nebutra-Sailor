@@ -112,6 +112,12 @@ export {
 } from "./checkbox-group";
 export * from "./choicebox";
 export * from "./code-block";
+/**
+ * Geist-style flat Collapse / CollapseGroup API on top of Accordion.
+ * Use when consumers expect the Geist surface (title prop + defaultExpanded
+ * + multiple group); use Accordion directly when you need the Radix tree.
+ */
+export * from "./collapse";
 export * from "./collapsible";
 export * from "./color-badge";
 export {
@@ -119,6 +125,7 @@ export {
   ComboboxEmpty,
   ComboboxGroupSub,
   ComboboxInput,
+  ComboboxList,
   type ComboboxOption,
   ComboboxOptionItem,
   type ComboboxProps,

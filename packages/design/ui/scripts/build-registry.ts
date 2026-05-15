@@ -361,6 +361,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/code-block.tsx",
     layer: "business",
   },
+  {
+    name: "collapse",
+    title: "Collapse",
+    description:
+      "Geist-style flat Collapse/CollapseGroup API on top of our Accordion. Single, multiple-open, and standalone modes.",
+    source: "primitives/collapse.tsx",
+    layer: "business",
+  },
 ];
 
 // ---------------------------------------------------------------------------
