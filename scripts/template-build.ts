@@ -336,14 +336,14 @@ const NEBUTRA_ONLY_MODELS = [
   "SleptonsUpvote",
   "SleptonsConnection",
   "CommunityProfile", // licensing/community table tied to Nebutra's OPC network
-  "License", // Nebutra's license issuance table
+  // License model is generic SaaS infrastructure (issued, validated, renewed) —
+  // keep it in the template so packages/commerce/license works downstream.
 ];
 
 const NEBUTRA_ONLY_ENUMS = [
   "SleptonsTier",
   "ProductStage", // used only by Sleptons
-  "LicenseTier",
-  "LicenseType",
+  // LicenseTier/LicenseType travel with the License model.
 ];
 
 function stripNebutraOnlyModels(targetDir: string): number {

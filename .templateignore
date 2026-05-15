@@ -87,6 +87,14 @@ build/
 node_modules/
 
 # ---------------------------------------------------------------------------
+# Nebutra-business glue inside otherwise-generic packages
+# on-license-issued.ts creates Sleptons community profiles — that's Nebutra-
+# specific orchestration, not generic license-issuance logic. The rest of
+# @nebutra/license (issue/validate/types) stays in the template.
+# ---------------------------------------------------------------------------
+packages/commerce/license/src/handlers/
+
+# ---------------------------------------------------------------------------
 # Architecture tests that assert source-repo invariants
 # These reference paths stripped from the template (apps/sailor-docs,
 # scripts/lighthouse, apps/landing-page/src/app/api/changelog) so they
