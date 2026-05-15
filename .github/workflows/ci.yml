@@ -296,11 +296,11 @@ jobs:
       - name: Build (affected)
         run: |
           pnpm turbo build --filter="...[${TURBO_BASE_REF}]..." \
-            --filter="!@nebutra/design-docs" \
-            --filter="!@nebutra/sailor-docs" \
-            --filter="!@nebutra/storybook" \
-            --filter="!@nebutra/studio" \
-            --filter="!@nebutra/tsekaluk-dev"
+            --filter='!./apps/design-docs' \
+            --filter='!./apps/sailor-docs' \
+            --filter='!./apps/storybook' \
+            --filter='!./apps/studio' \
+            --filter='!./apps/tsekaluk-dev'
         env:
           SKIP_ENV_VALIDATION: true
 

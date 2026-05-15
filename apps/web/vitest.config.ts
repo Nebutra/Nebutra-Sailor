@@ -8,6 +8,16 @@ export default defineConfig({
     environment: "node",
     globals: true,
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    // Use forks pool with bounded concurrency — the inline @nebutra/* + React
+    // tree per worker holds a lot of memory; default thread-pool fanout OOMs
+    // GitHub Actions runners (~7 GB) on this app's test count.
+    pool: "forks",
+    poolOptions: {
+      forks: {
+        maxForks: process.env.CI ? 2 : undefined,
+        minForks: 1,
+      },
+    },
     // Inline UI library + transitive deps that ship raw CSS / CSS-modules so
     // Vite's CSS pipeline handles them instead of Node's native loader, which
     // chokes on "Unknown file extension .css" when these are externalized
