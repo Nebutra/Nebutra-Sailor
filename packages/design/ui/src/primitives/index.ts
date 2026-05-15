@@ -202,6 +202,13 @@ export * from "./field";
  * variant is keyboard-accessible (focus-visible reveal, not hover-only).
  */
 export * from "./file-attachment";
+/**
+ * Decorative file-format card with colored banner + content placeholder.
+ * Sibling of Folder (decorative tile family). 26 format banners are
+ * categorical labels — raw Tailwind palette is correct here per the same
+ * reasoning as Folder. Always aria-hidden (no interactivity).
+ */
+export * from "./file-card";
 // Pill-style category filter (MiniMax / GPT Store discovery row)
 export * from "./filter-pills";
 export * from "./flex";
