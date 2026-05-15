@@ -5,7 +5,7 @@
   "type": "module",
   "nebutra": {
     "status": "foundation",
-    "productionReady": true,
+    "productionReady": false,
     "requires": [],
     "gaps": [
       "Server-side completion sync (currently localStorage only)",

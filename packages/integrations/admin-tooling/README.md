@@ -1,5 +1,7 @@
 # @nebutra/admin-tooling
 
+> Status: Foundation — contract surface stable, adapter examples WIP.
+
 > Thin contract layer that lets non-engineers (ops, CS, finance) build their
 > own admin UI in Retool / Forest Admin / Appsmith — without engineering
 > hand-rolling a new dashboard every quarter, and without anyone bypassing

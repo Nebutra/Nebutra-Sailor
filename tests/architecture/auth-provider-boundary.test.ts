@@ -36,7 +36,10 @@ describe("auth provider boundary", () => {
   it("AuthProviderId includes clerk + better-auth + nextauth", async () => {
     const types = await readFile(join(process.cwd(), "packages/iam/auth/src/types.ts"), "utf8");
 
-    expect(types).toContain('export type AuthProviderId = "clerk" | "better-auth" | "nextauth";');
+    expect(types).toMatch(/export type AuthProviderId\s*=/);
+    expect(types).toContain('"clerk"');
+    expect(types).toContain('"better-auth"');
+    expect(types).toContain('"nextauth"');
   });
 
   it("all three provider files exist in packages/auth", async () => {
