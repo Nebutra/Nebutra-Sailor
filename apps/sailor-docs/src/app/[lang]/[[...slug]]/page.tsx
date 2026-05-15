@@ -1,6 +1,6 @@
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import type { MDXComponents } from "mdx/types";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Feedback } from "@/components/feedback/client";
 import { FigmaLink } from "@/components/figma-link";
 import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
@@ -16,7 +16,16 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { slug, lang } = await params;
   const page = source.getPage(slug, lang);
-  if (!page) notFound();
+  if (!page) {
+    // Host root resolves to `/<lang>` with no slug; there is no `index.mdx`
+    // for the docs index yet, so send the visitor to the first authored
+    // page instead of dead-ending on 404. Replaces the deleted
+    // `app/[lang]/page.tsx`, which conflicted with this optional catch-all.
+    if (!slug || slug.length === 0) {
+      redirect(`/${lang}/getting-started/installation`);
+    }
+    notFound();
+  }
 
   const MDX = (page.data as { body: React.ComponentType<{ components: MDXComponents }> }).body;
   const components = useMDXComponents({});
