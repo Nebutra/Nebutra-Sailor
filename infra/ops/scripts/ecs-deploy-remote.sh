@@ -20,7 +20,7 @@
 set -euo pipefail
 
 DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
-APPS="${APPS:-landing web api design-docs}"
+APPS="${APPS:-landing web api design-docs sailor-docs}"
 # Default 1 (was 2 since the May 12 disk-full incident reduced it from 5).
 # Cut to 1 on 2026-05-15 when design-docs joined as the 4th ECS app — at 4
 # apps × ~1 GB/release × 2 releases the 2C4G Aliyun Lite disk fills again.
@@ -34,8 +34,8 @@ log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
 
 case "$APPS" in
-  *landing*|*web*|*api*|*design-docs*) : ;;
-  *) fail "APPS must contain at least one of: landing web api design-docs (got: $APPS)" ;;
+  *landing*|*web*|*api*|*design-docs*|*sailor-docs*) : ;;
+  *) fail "APPS must contain at least one of: landing web api design-docs sailor-docs (got: $APPS)" ;;
 esac
 
 mkdir -p "$DEPLOY_ROOT"
@@ -197,6 +197,7 @@ for app in $APPS; do
     web)         deploy_one web         web          ;;
     api)         deploy_one api         api-gateway  ;;
     design-docs) deploy_one design-docs design-docs  ;;
+    sailor-docs) deploy_one sailor-docs sailor-docs  ;;
     *)           fail "unknown app: $app"            ;;
   esac
 done

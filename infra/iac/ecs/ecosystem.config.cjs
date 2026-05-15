@@ -5,6 +5,7 @@
 //   $DEPLOY_ROOT/web/current/apps/web/server.js                  (Next standalone)
 //   $DEPLOY_ROOT/api/current/dist/index.js                       (pnpm-deploy + tsc)
 //   $DEPLOY_ROOT/design-docs/current/apps/design-docs/server.js  (Next standalone)
+//   $DEPLOY_ROOT/sailor-docs/current/apps/sailor-docs/server.js  (Next standalone)
 //
 // The workflow renders this file on the ECS box with DEPLOY_ROOT substituted in
 // via envsubst at apply time (see ecs-deploy-remote.sh).
@@ -51,6 +52,23 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         PORT: 3004,
+        HOSTNAME: "127.0.0.1",
+      },
+      max_memory_restart: "400M",
+      instances: 1,
+      exec_mode: "fork",
+      autorestart: true,
+      max_restarts: 10,
+      kill_timeout: 8000,
+      listen_timeout: 10000,
+    },
+    {
+      name: "sailor-docs",
+      cwd: "/var/www/nebutra/sailor-docs/current",
+      script: "apps/sailor-docs/server.js",
+      env: {
+        NODE_ENV: "production",
+        PORT: 3005,
         HOSTNAME: "127.0.0.1",
       },
       max_memory_restart: "400M",

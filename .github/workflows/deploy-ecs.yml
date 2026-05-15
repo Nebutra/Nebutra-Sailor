@@ -43,6 +43,7 @@ on:
       - "apps/landing-page/**"
       - "apps/web/**"
       - "apps/design-docs/**"
+      - "apps/sailor-docs/**"
       - "backends/gateway/**"
       - "packages/**"
       - "pnpm-lock.yaml"
@@ -53,7 +54,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated subset of: landing web api design-docs). Empty = auto-detect."
+        description: "Apps to deploy (space-separated subset of: landing web api design-docs sailor-docs). Empty = auto-detect."
         required: false
         default: ""
       reason:
@@ -85,6 +86,7 @@ jobs:
       web:         ${{ steps.resolve.outputs.web }}
       api:         ${{ steps.resolve.outputs.api }}
       design-docs: ${{ steps.resolve.outputs['design-docs'] }}
+      sailor-docs: ${{ steps.resolve.outputs['sailor-docs'] }}
       any:         ${{ steps.resolve.outputs.any }}
     steps:
       - uses: actions/checkout@v4
@@ -129,6 +131,13 @@ jobs:
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - '.github/workflows/deploy-ecs.yml'
+            sailor-docs:
+              - 'apps/sailor-docs/**'
+              - 'packages/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - '.github/workflows/deploy-ecs.yml'
 
       - name: Resolve target apps
         id: resolve
@@ -138,23 +147,26 @@ jobs:
           F_WEB:          ${{ steps.filter.outputs.web }}
           F_API:          ${{ steps.filter.outputs.api }}
           F_DESIGN_DOCS:  ${{ steps.filter.outputs['design-docs'] }}
+          F_SAILOR_DOCS:  ${{ steps.filter.outputs['sailor-docs'] }}
         run: |
-          # `design-docs` token contains a hyphen — match it explicitly to avoid
-          # bash glob pitfalls where *design* could also match other strings
-          # we add in the future (e.g. *design-tokens*).
+          # `design-docs` / `sailor-docs` tokens contain a hyphen — match them
+          # explicitly to avoid bash glob pitfalls where *docs* could also match
+          # other strings we add in the future.
           {
             if [ -n "${INPUT_APPS:-}" ]; then
               echo "landing=$([[ "$INPUT_APPS" == *landing* ]] && echo true || echo false)"
               echo "web=$([[ "$INPUT_APPS" == *web* ]] && echo true || echo false)"
               echo "api=$([[ "$INPUT_APPS" == *api* ]] && echo true || echo false)"
               echo "design-docs=$([[ "$INPUT_APPS" == *design-docs* ]] && echo true || echo false)"
+              echo "sailor-docs=$([[ "$INPUT_APPS" == *sailor-docs* ]] && echo true || echo false)"
             else
               echo "landing=$F_LANDING"
               echo "web=$F_WEB"
               echo "api=$F_API"
               echo "design-docs=$F_DESIGN_DOCS"
+              echo "sailor-docs=$F_SAILOR_DOCS"
             fi
-            echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_DESIGN_DOCS" == "true" || -n "${INPUT_APPS:-}" ]] && echo true || echo false)"
+            echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" || -n "${INPUT_APPS:-}" ]] && echo true || echo false)"
           } >> "$GITHUB_OUTPUT"
 
   # ──────────────────────────────────────────────────────────────────────
@@ -185,6 +197,11 @@ jobs:
             workspace: apps/design-docs
             condition: ${{ needs.detect-changes.outputs['design-docs'] }}
             site_url: "https://design.nebutra.com"
+          - app: sailor-docs
+            package: "@nebutra/sailor-docs"
+            workspace: apps/sailor-docs
+            condition: ${{ needs.detect-changes.outputs['sailor-docs'] }}
+            site_url: "https://docs.nebutra.com"
     steps:
       - name: Skip if not needed
         if: matrix.condition != 'true'
@@ -370,6 +387,13 @@ jobs:
           name: bundle-design-docs
           path: ${{ runner.temp }}/bundles
 
+      - name: Download sailor-docs bundle
+        if: needs.detect-changes.outputs['sailor-docs'] == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: bundle-sailor-docs
+          path: ${{ runner.temp }}/bundles
+
       - name: Download api bundle
         if: needs.detect-changes.outputs.api == 'true'
         uses: actions/download-artifact@v4
@@ -415,7 +439,7 @@ jobs:
           find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -ls 2>/dev/null || true
           find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -delete 2>/dev/null || true
           echo "--- pruning old releases (keep latest 2 per app) ---"
-          for app in landing web api design-docs; do
+          for app in landing web api design-docs sailor-docs; do
             dir="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/$app/releases"
             [ -d "$dir" ] || continue
             extra=$(find "$dir" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' 2>/dev/null \
@@ -479,6 +503,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && APPS="$APPS web"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
+          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
           APPS="$(echo "$APPS" | xargs)"
           echo "Deploying: $APPS"
           # SSH joins all remaining args into a single shell-evaluated string
@@ -506,6 +531,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && targets[web]="https://app.nebutra.com"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/health"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && targets[design-docs]="https://design.nebutra.com"
+          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://docs.nebutra.com"
           ok_codes='^(200|301|302|307)$'
           for name in "${!targets[@]}"; do
             url="${targets[$name]}"
@@ -534,7 +560,7 @@ jobs:
           {
             echo "## ECS deploy summary"
             echo "- Commit: \`${{ github.sha }}\`"
-            echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }} / design-docs=${{ needs.detect-changes.outputs['design-docs'] }}"
+            echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }} / design-docs=${{ needs.detect-changes.outputs['design-docs'] }} / sailor-docs=${{ needs.detect-changes.outputs['sailor-docs'] }}"
             echo "- Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
             if [ -n "${{ github.event.inputs.reason }}" ]; then
               echo "- Reason: ${{ github.event.inputs.reason }}"
