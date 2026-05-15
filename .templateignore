@@ -30,6 +30,13 @@ apps/landing-page/public/animations/
 apps/landing-page/src/app/api/changelog/
 apps/landing-page/src/app/api/license/
 apps/landing-page/src/lib/constants/landing-data.ts
+# Tests + not-found + mockups that import stripped marketing content.
+# A generic landing-page 404 is a known follow-up.
+apps/landing-page/src/__tests__/api/license.test.ts
+apps/landing-page/src/__tests__/ui-governance.test.ts
+apps/landing-page/src/app/not-found.tsx
+apps/landing-page/src/app/\[lang\]/not-found.tsx
+apps/landing-page/src/components/ui/mockups/
 
 # ---------------------------------------------------------------------------
 # Nebutra dashboard (apps/web) business surfaces
