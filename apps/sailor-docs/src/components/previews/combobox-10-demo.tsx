@@ -10,7 +10,7 @@ export function Combobox10Demo() {
         { value: "astro", label: "Astro" },
         { value: "nuxt", label: "Nuxt" },
       ]}
-      width="w-96"
+      width={384}
       placeholder="Select framework..."
     />
   );

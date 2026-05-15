@@ -11,7 +11,7 @@ const frameworks = [
 ];
 
 export function ComboboxDemo() {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string | null>(null);
 
   return (
     <Combobox

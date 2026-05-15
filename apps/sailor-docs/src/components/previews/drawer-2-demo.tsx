@@ -3,8 +3,10 @@
 import {
   Button,
   Drawer,
+  DrawerBody,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -12,17 +14,20 @@ import {
 } from "@nebutra/ui/primitives";
 export function Drawer2Demo() {
   return (
-    <Drawer>
+    <Drawer height={200}>
       <DrawerTrigger asChild>
-        <Button>Open Settings</Button>
+        <Button variant="outline">Open Compact</Button>
       </DrawerTrigger>
-      <DrawerContent className="p-4">
+      <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Settings</DrawerTitle>
+          <DrawerTitle>Quick Filter</DrawerTitle>
+          <DrawerDescription>Keep the action and Cancel visible above the fold.</DrawerDescription>
         </DrawerHeader>
+        <DrawerBody />
         <DrawerFooter>
+          <Button>Apply Filter</Button>
           <DrawerClose asChild>
-            <Button variant="outline">Close</Button>
+            <Button variant="outline">Cancel</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

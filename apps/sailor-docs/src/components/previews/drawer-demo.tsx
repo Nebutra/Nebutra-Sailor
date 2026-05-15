@@ -3,6 +3,7 @@
 import {
   Button,
   Drawer,
+  DrawerBody,
   DrawerClose,
   DrawerContent,
   DrawerDescription,
@@ -20,14 +21,24 @@ export function DrawerDemo() {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Edit Profile</DrawerTitle>
-          <DrawerDescription>Make changes to your profile here.</DrawerDescription>
+          <DrawerTitle>Filter Logs</DrawerTitle>
+          <DrawerDescription>Choose the log types shown in this view.</DrawerDescription>
         </DrawerHeader>
-        <div className="px-4 py-2">
-          <p className="text-sm text-muted-foreground">Drawer body content.</p>
-        </div>
+        <DrawerBody>
+          <div className="grid gap-2">
+            {["Errors", "Warnings", "Deployments"].map((option) => (
+              <label
+                key={option}
+                className="flex items-center justify-between rounded-[var(--radius-md)] border bg-card px-3 py-2 text-sm"
+              >
+                <span>{option}</span>
+                <input type="checkbox" className="size-4 accent-primary" />
+              </label>
+            ))}
+          </div>
+        </DrawerBody>
         <DrawerFooter>
-          <Button>Save changes</Button>
+          <Button>Apply Filters</Button>
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
