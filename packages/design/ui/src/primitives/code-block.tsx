@@ -17,41 +17,105 @@ import {
 // Types
 // =============================================================================
 
+/**
+ * Per-file shape (multi-file tab mode).
+ *
+ * Geist's `<CodeBlock>` is single-file by design — pass `children`/`filename`/
+ * `language` directly on the component instead. The `files[]` array remains
+ * the canonical multi-file form, which Geist does not provide.
+ *
+ * Geist prop-name aliases:
+ *   - `filename` (single-file) ↔ `title` (per file in `files[]`)
+ *   - `addedLinesNumbers` ↔ `addedLines`
+ *   - `removedLinesNumbers` ↔ `removedLines`
+ */
 export interface CodeBlockFile {
-  /** File name/title displayed in tab */
+  /** File name/title displayed in tab. Geist single-file equivalent: `filename`. */
   title: string;
-  /** Code content */
+  /** Code content. */
   code: string;
-  /** Language for syntax highlighting (auto-detected from title if omitted) */
+  /** Language for syntax highlighting (auto-detected from title if omitted). */
   language?: string;
-  /** Line numbers to highlight with emphasis background (1-indexed) */
+  /** Line numbers to highlight with emphasis background (1-indexed). */
   highlightedLines?: number[];
-  /** Line numbers to mark as added / diff-green (1-indexed) */
+  /** Line numbers to mark as added / diff-green (1-indexed). Geist alias: `addedLinesNumbers`. */
   addedLines?: number[];
-  /** Line numbers to mark as removed / diff-red (1-indexed) */
+  /** Line numbers to mark as removed / diff-red (1-indexed). Geist alias: `removedLinesNumbers`. */
   removedLines?: number[];
 }
 
-export interface CodeBlockProps {
-  /** Array of code files to display */
-  files: CodeBlockFile[];
-  /** Initially active file title */
-  defaultTitle?: string;
-  /** Additional CSS classes */
-  className?: string;
-  /** Maximum height of code area */
-  maxHeight?: string | number;
-  /** Show line numbers */
-  showLineNumbers?: boolean;
-  /** Enable clickable line numbers that copy #L{n} anchors */
-  enableLineReferences?: boolean;
-  /** Show a language switcher dropdown in the header */
-  showLanguageSwitcher?: boolean;
-  /** Languages available in the switcher (defaults to built-in list) */
-  languages?: string[];
-  /** Callback when a line reference is clicked */
-  onLineReference?: (lineNumber: number) => void;
+/**
+ * Controlled language-switcher (Geist API).
+ * The single-file form accepts this directly; the multi-file form keeps the
+ * legacy uncontrolled `showLanguageSwitcher` + `languages` for back-compat.
+ */
+export interface CodeBlockSwitcher {
+  options: ReadonlyArray<{ label: string; value: string }>;
+  value: string;
+  onChange: (next: string) => void;
 }
+
+interface CommonCodeBlockProps {
+  /** Additional CSS classes on the outer container. */
+  className?: string;
+  /** Maximum height of code area. */
+  maxHeight?: string | number;
+  /** Show line numbers. Geist default: visible. Alias of `hideLineNumbers` (inverted). */
+  showLineNumbers?: boolean;
+  /** Geist single-file convention — inverse of `showLineNumbers`. */
+  hideLineNumbers?: boolean;
+  /** Enable clickable line numbers that copy `#L{n}` anchors. */
+  enableLineReferences?: boolean;
+  /** Callback when a line reference is clicked. */
+  onLineReference?: (lineNumber: number) => void;
+  /** Accessible label for the code block. Pass via the standard `aria-label` attribute. */
+  "aria-label"?: string;
+}
+
+/** Multi-file (legacy) shape — tabs across `files[]`. */
+export interface CodeBlockFilesProps extends CommonCodeBlockProps {
+  /** Array of code files to display as tabs. */
+  files: CodeBlockFile[];
+  /** Initially active file title. */
+  defaultTitle?: string;
+  /** Show an uncontrolled language switcher dropdown over the built-in list. */
+  showLanguageSwitcher?: boolean;
+  /** Languages available in the uncontrolled switcher (defaults to built-in list). */
+  languages?: string[];
+  // Mutually exclusive with single-file props:
+  children?: never;
+  filename?: never;
+  language?: never;
+  addedLinesNumbers?: never;
+  removedLinesNumbers?: never;
+  highlightedLines?: never;
+  switcher?: never;
+}
+
+/** Single-file (Geist) shape — `<CodeBlock filename="..." language="...">{code}</CodeBlock>`. */
+export interface CodeBlockSingleProps extends CommonCodeBlockProps {
+  /** Source code as a string. */
+  children: string;
+  /** Language for syntax highlighting. Required by Geist guidance. */
+  language: string;
+  /** File name shown in the header; omit for ephemeral examples. */
+  filename?: string;
+  /** Line numbers to highlight with emphasis background (1-indexed). */
+  highlightedLines?: number[];
+  /** Geist canonical name for added lines. */
+  addedLinesNumbers?: number[];
+  /** Geist canonical name for removed lines. */
+  removedLinesNumbers?: number[];
+  /** Controlled language switcher. */
+  switcher?: CodeBlockSwitcher;
+  // Mutually exclusive with multi-file props:
+  files?: never;
+  defaultTitle?: never;
+  showLanguageSwitcher?: never;
+  languages?: never;
+}
+
+export type CodeBlockProps = CodeBlockFilesProps | CodeBlockSingleProps;
 
 // =============================================================================
 // Themes
@@ -185,54 +249,100 @@ function FileIcon({ fileName }: { fileName: string }) {
 // =============================================================================
 
 /**
- * CodeBlock - Multi-file code display with syntax highlighting
+ * CodeBlock — syntax-highlighted code viewer with copy + (optional) tabs.
  *
- * @description
- * A tabbed code viewer with syntax highlighting, copy functionality,
- * and automatic language detection. Supports light/dark themes.
+ * Two calling conventions are supported:
  *
- * @example Single file
+ * @example Geist single-file (canonical for prose-embedded snippets)
  * ```tsx
- * <CodeBlock
- *   files={[{
- *     title: "example.ts",
- *     code: `const greeting = "Hello World";`
- *   }]}
- * />
+ * <CodeBlock filename="Table.jsx" language="jsx" aria-label="Hello world">
+ *   {code}
+ * </CodeBlock>
  * ```
  *
- * @example Multiple files
+ * @example Geist with a controlled language switcher
+ * ```tsx
+ * <CodeBlock
+ *   filename="example.tsx"
+ *   language={lang}
+ *   switcher={{
+ *     options: [{ label: "JS", value: "js" }, { label: "TS", value: "ts" }],
+ *     value: lang,
+ *     onChange: setLang,
+ *   }}
+ * >
+ *   {code}
+ * </CodeBlock>
+ * ```
+ *
+ * @example Multi-file tabs (Nebutra extension — Geist has no tabs)
  * ```tsx
  * <CodeBlock
  *   files={[
- *     { title: "theme.ts", code: themeCode, language: "typescript" },
- *     { title: "styles.css", code: cssCode, language: "css" },
+ *     { title: "theme.ts", code: themeCode },
+ *     { title: "styles.css", code: cssCode },
  *   ]}
  *   defaultTitle="theme.ts"
  * />
  * ```
  *
- * @example With custom height
- * ```tsx
- * <CodeBlock
- *   files={files}
- *   maxHeight={300}
- *   showLineNumbers
- * />
- * ```
+ * Line number defaults:
+ *   - Single-file (Geist) → line numbers shown by default; opt out via `hideLineNumbers`.
+ *   - Multi-file (legacy) → hidden by default; opt in via `showLineNumbers`.
  */
-export function CodeBlock({
-  files,
-  defaultTitle,
-  className,
-  maxHeight = 400,
-  showLineNumbers = false,
-  enableLineReferences = false,
-  showLanguageSwitcher = false,
-  languages,
-  onLineReference,
-}: CodeBlockProps) {
-  const [activeTitle, setActiveTitle] = useState(defaultTitle || files[0]?.title);
+export function CodeBlock(props: CodeBlockProps) {
+  // Normalize single-file (Geist) and multi-file (legacy) shapes into one
+  // internal representation. Single-file form is the canonical Geist surface;
+  // multi-file form keeps tabs across `files[]`.
+  const isSingleFile = "children" in props && typeof props.children === "string";
+
+  const normalizedFiles: CodeBlockFile[] = isSingleFile
+    ? (() => {
+        const single = props as CodeBlockSingleProps;
+        const f: CodeBlockFile = {
+          title: single.filename ?? "",
+          code: single.children,
+          language: single.language,
+        };
+        if (single.highlightedLines !== undefined) f.highlightedLines = single.highlightedLines;
+        if (single.addedLinesNumbers !== undefined) f.addedLines = single.addedLinesNumbers;
+        if (single.removedLinesNumbers !== undefined) f.removedLines = single.removedLinesNumbers;
+        return [f];
+      })()
+    : (props as CodeBlockFilesProps).files;
+
+  const showFilenameHeader = isSingleFile
+    ? Boolean((props as CodeBlockSingleProps).filename)
+    : true;
+
+  const {
+    className,
+    maxHeight = 400,
+    enableLineReferences = false,
+    onLineReference,
+    "aria-label": ariaLabel,
+  } = props;
+
+  // Line numbers default differs by form: Geist shows them by default
+  // (`hideLineNumbers` opts out); legacy `files[]` defaults to hidden.
+  const resolvedHide = props.hideLineNumbers;
+  const resolvedShow = props.showLineNumbers;
+  const showLineNumbers =
+    resolvedShow !== undefined
+      ? resolvedShow
+      : resolvedHide !== undefined
+        ? !resolvedHide
+        : isSingleFile; // Geist default true; legacy default false
+
+  // Switcher: single-file uses controlled `switcher` prop; multi-file uses
+  // legacy uncontrolled `showLanguageSwitcher` + `languages`.
+  const controlledSwitcher = isSingleFile ? (props as CodeBlockSingleProps).switcher : undefined;
+  const showLanguageSwitcher =
+    !isSingleFile && Boolean((props as CodeBlockFilesProps).showLanguageSwitcher);
+  const languages = isSingleFile ? undefined : (props as CodeBlockFilesProps).languages;
+  const defaultTitle = isSingleFile ? undefined : (props as CodeBlockFilesProps).defaultTitle;
+
+  const [activeTitle, setActiveTitle] = useState(defaultTitle || normalizedFiles[0]?.title || "");
   const [copied, setCopied] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [languageOverride, setLanguageOverride] = useState<string | null>(null);
@@ -277,10 +387,11 @@ export function CodeBlock({
     return () => observer.disconnect();
   }, []);
 
-  const activeFile = files.find((file) => file.title === activeTitle);
+  const activeFile = normalizedFiles.find((file) => file.title === activeTitle);
   const code = activeFile?.code || "";
   const detectedLanguage = activeFile?.language || getLanguageFromFileName(activeTitle || "");
-  const effectiveLanguage = languageOverride ?? detectedLanguage;
+  // Priority: controlled switcher > local override > detected/passed language.
+  const effectiveLanguage = controlledSwitcher?.value ?? languageOverride ?? detectedLanguage;
 
   // Memoized Set lookups for O(1) per-line checks + stable useCallback deps
   const highlightedSet = useMemo(
@@ -379,10 +490,15 @@ export function CodeBlock({
     [showCopyFeedback],
   );
 
-  const switcherLanguages = languages ?? SUPPORTED_LANGUAGES;
+  // Header is rendered only when there's something to show: tabs in multi-file
+  // mode, a filename in single-file mode, a switcher, or the copy affordance.
+  const hasMultipleFiles = normalizedFiles.length > 1;
+  const hasSwitcher = showLanguageSwitcher || Boolean(controlledSwitcher);
+  const showHeader = hasMultipleFiles || showFilenameHeader || hasSwitcher || true; // copy lives here
 
   return (
     <div
+      aria-label={ariaLabel}
       className={cn(
         "cb-root relative rounded-[var(--radius-lg)] border bg-card text-card-foreground",
         "backdrop-blur-md",
@@ -411,73 +527,120 @@ export function CodeBlock({
         `}</style>
       )}
 
-      {/* Tab header */}
-      <div className="flex items-center justify-between border-b px-4 py-2">
-        <div className="flex gap-1 overflow-x-auto">
-          {files.map(({ title }) => (
-            <button
-              key={title}
-              type="button"
-              onClick={() => setActiveTitle(title)}
-              className={cn(
-                "inline-flex items-center gap-2 rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium transition-colors",
-                title === activeTitle
-                  ? "bg-secondary text-secondary-foreground"
-                  : "hover:bg-accent hover:text-accent-foreground",
-              )}
-            >
-              <FileIcon fileName={title} />
-              <span className="hidden sm:inline">{title}</span>
-            </button>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-1">
-          {/* Language switcher */}
-          {showLanguageSwitcher && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+      {/* Header — tabs (multi-file) or filename (single-file) + switcher + copy */}
+      {showHeader && (
+        <div className="flex items-center justify-between border-b px-4 py-2">
+          <div className="flex gap-1 overflow-x-auto">
+            {hasMultipleFiles ? (
+              normalizedFiles.map(({ title }) => (
                 <button
+                  key={title}
                   type="button"
-                  aria-label={`Switch language, current: ${effectiveLanguage}`}
-                  aria-haspopup="menu"
-                  className="inline-flex items-center gap-1 rounded-[var(--radius-md)] px-2 py-1 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  onClick={() => setActiveTitle(title)}
+                  className={cn(
+                    "inline-flex items-center gap-2 rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium transition-colors",
+                    title === activeTitle
+                      ? "bg-secondary text-secondary-foreground"
+                      : "hover:bg-accent hover:text-accent-foreground",
+                  )}
                 >
-                  {effectiveLanguage}
-                  <ChevronDown className="h-3 w-3" />
+                  <FileIcon fileName={title} />
+                  <span className="hidden sm:inline">{title}</span>
                 </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="max-h-60 overflow-y-auto">
-                {switcherLanguages.map((lang) => (
-                  <DropdownMenuItem
-                    key={lang}
-                    onClick={() => setLanguageOverride(lang)}
-                    className={cn("text-xs", lang === effectiveLanguage && "bg-accent font-medium")}
-                  >
-                    {lang}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+              ))
+            ) : showFilenameHeader && activeTitle ? (
+              <span className="inline-flex items-center gap-2 px-2 py-1.5 text-muted-foreground text-sm">
+                <FileIcon fileName={activeTitle} />
+                <span>{activeTitle}</span>
+              </span>
+            ) : null}
+          </div>
 
-          {/* Copy button */}
-          <button
-            type="button"
-            onClick={() => copyToClipboard(code)}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] hover:bg-accent hover:text-accent-foreground"
-            aria-label="Copy code"
-          >
-            {copied ? (
-              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}>
-                <Check className="h-4 w-4" />
-              </motion.div>
-            ) : (
-              <Copy className="h-4 w-4" />
+          <div className="flex items-center gap-1">
+            {/* Controlled switcher (Geist single-file API) */}
+            {controlledSwitcher && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    aria-label={`Switch language, current: ${
+                      controlledSwitcher.options.find((o) => o.value === controlledSwitcher.value)
+                        ?.label ?? controlledSwitcher.value
+                    }`}
+                    aria-haspopup="menu"
+                    className="inline-flex items-center gap-1 rounded-[var(--radius-md)] px-2 py-1 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  >
+                    {controlledSwitcher.options.find((o) => o.value === controlledSwitcher.value)
+                      ?.label ?? controlledSwitcher.value}
+                    <ChevronDown className="h-3 w-3" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="max-h-60 overflow-y-auto">
+                  {controlledSwitcher.options.map((opt) => (
+                    <DropdownMenuItem
+                      key={opt.value}
+                      onClick={() => controlledSwitcher.onChange(opt.value)}
+                      className={cn(
+                        "text-xs",
+                        opt.value === controlledSwitcher.value && "bg-accent font-medium",
+                      )}
+                    >
+                      {opt.label}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
-          </button>
+
+            {/* Uncontrolled switcher (legacy multi-file API) */}
+            {showLanguageSwitcher && !controlledSwitcher && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    aria-label={`Switch language, current: ${effectiveLanguage}`}
+                    aria-haspopup="menu"
+                    className="inline-flex items-center gap-1 rounded-[var(--radius-md)] px-2 py-1 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  >
+                    {effectiveLanguage}
+                    <ChevronDown className="h-3 w-3" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="max-h-60 overflow-y-auto">
+                  {(languages ?? SUPPORTED_LANGUAGES).map((lang) => (
+                    <DropdownMenuItem
+                      key={lang}
+                      onClick={() => setLanguageOverride(lang)}
+                      className={cn(
+                        "text-xs",
+                        lang === effectiveLanguage && "bg-accent font-medium",
+                      )}
+                    >
+                      {lang}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+
+            {/* Copy button */}
+            <button
+              type="button"
+              onClick={() => copyToClipboard(code)}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] hover:bg-accent hover:text-accent-foreground"
+              aria-label="Copy code"
+            >
+              {copied ? (
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}>
+                  <Check className="h-4 w-4" />
+                </motion.div>
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Code content */}
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}

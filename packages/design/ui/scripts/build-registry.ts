@@ -353,6 +353,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/choicebox.tsx",
     layer: "business",
   },
+  {
+    name: "code-block",
+    title: "Code Block",
+    description:
+      "Syntax-highlighted code viewer with copy + diff lines. Accepts Geist single-file children API or Nebutra multi-file tabs.",
+    source: "primitives/code-block.tsx",
+    layer: "business",
+  },
 ];
 
 // ---------------------------------------------------------------------------

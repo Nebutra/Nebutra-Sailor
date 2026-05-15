@@ -160,6 +160,12 @@
       "description": "Card-style selection control with radio (single) and checkbox (multi) modes. Roving tabindex + arrow-key navigation."
     },
     {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code Block",
+      "description": "Syntax-highlighted code viewer with copy + diff lines. Accepts Geist single-file children API or Nebutra multi-file tabs."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",
