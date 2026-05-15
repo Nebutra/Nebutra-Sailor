@@ -5,6 +5,7 @@ import { addCommand } from "./commands/add";
 import { registerAdminCommand } from "./commands/admin";
 import { registerAiCommand } from "./commands/ai";
 import { registerAuthCommand } from "./commands/auth";
+import { registerBackendCommand } from "./commands/backend";
 import { registerBillingCommand } from "./commands/billing";
 import { registerBrandCommand } from "./commands/brand";
 import { registerCommunityCommand } from "./commands/community";
@@ -12,6 +13,7 @@ import { registerCompletionsCommand } from "./commands/completions";
 import { registerCreateCommand } from "./commands/create";
 import { registerDbCommand } from "./commands/db";
 import { registerDevCommand } from "./commands/dev";
+import { registerE2eCommand } from "./commands/e2e";
 import { registerEcosystemCommand } from "./commands/ecosystem";
 import { registerEnvCommand } from "./commands/env";
 import { registerGenerateCommand } from "./commands/generate";
@@ -28,6 +30,7 @@ import { registerSecretsCommand } from "./commands/secrets";
 import { registerServicesCommand } from "./commands/services";
 import { registerStatsCommand } from "./commands/stats";
 import { registerTestCommand } from "./commands/test";
+import { registerWorkflowCommand } from "./commands/workflow";
 import { logger } from "./utils/logger";
 import { maybeNotifyUpdate } from "./utils/update-notifier";
 
@@ -115,6 +118,9 @@ async function main() {
   registerPresetCommand(program);
   registerDevCommand(program);
   registerTestCommand(program);
+  registerWorkflowCommand(program);
+  registerBackendCommand(program);
+  registerE2eCommand(program);
 
   // ─── Platform & ecosystem commands ──────────────────────
   registerAdminCommand(program);

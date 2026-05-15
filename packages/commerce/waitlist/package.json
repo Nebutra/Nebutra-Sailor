@@ -15,7 +15,10 @@
       "Prisma adapter not implemented — only in-memory store ships",
       "Email confirmation + position update notifications not wired",
       "Referral attribution analytics endpoint TODO"
-    ]
+    ],
+    "featureId": "waitlist",
+    "category": "commerce",
+    "summary": "Pre-launch waitlist with position tracking and referral codes"
   },
   "main": "./src/index.ts",
   "exports": {

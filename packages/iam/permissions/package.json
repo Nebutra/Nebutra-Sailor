@@ -12,7 +12,10 @@
     ],
     "gaps": [
       "OpenFGA adapter is a stub"
-    ]
+    ],
+    "featureId": "permissions",
+    "category": "iam",
+    "summary": "RBAC/ABAC engine — CASL (in-process) + OpenFGA (Zanzibar)"
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

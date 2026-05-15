@@ -15,7 +15,10 @@
       "No production app integrations",
       "Event schema not finalized",
       "Retention/export workflow not implemented"
-    ]
+    ],
+    "featureId": "audit",
+    "category": "iam",
+    "summary": "SOC 2-grade audit logging for sensitive operations"
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

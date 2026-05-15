@@ -1,3 +1,7 @@
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { dirname, join, parse as parsePath } from "node:path";
+import { fileURLToPath } from "node:url";
+
 export interface FeatureDependency {
   name: string;
   version: string;
@@ -408,14 +412,150 @@ Next steps:
   },
 };
 
+interface DiscoveredNebutraBlock {
+  featureId?: string;
+  category?: string;
+  summary?: string;
+  env?: string[];
+  peers?: string[];
+  envFile?: string;
+}
+
+interface DiscoveredPackageJson {
+  name?: string;
+  description?: string;
+  nebutra?: DiscoveredNebutraBlock;
+}
+
+const PACKAGE_CATEGORIES = [
+  "iam",
+  "commerce",
+  "integrations",
+  "ai",
+  "design",
+  "platform",
+  "ops",
+] as const;
+
+function findPackagesRoot(): string | null {
+  let current: string;
+  try {
+    current = dirname(fileURLToPath(import.meta.url));
+  } catch {
+    current = process.cwd();
+  }
+
+  while (current && current !== parsePath(current).root) {
+    try {
+      const entries = readdirSync(current);
+      if (entries.includes("pnpm-workspace.yaml") || entries.includes("packages")) {
+        const candidate = join(current, "packages");
+        if (existsSync(candidate) && statSync(candidate).isDirectory()) {
+          return candidate;
+        }
+      }
+    } catch {
+      // unreadable directory
+    }
+    current = dirname(current);
+  }
+  return null;
+}
+
+function descriptorFromDiscovered(
+  featureId: string,
+  block: DiscoveredNebutraBlock,
+  pkg: DiscoveredPackageJson,
+  category: string,
+  packageName: string,
+): FeatureDescriptor {
+  const env: FeatureEnv[] = (block.env ?? []).map((key) => ({
+    key,
+    description: `${key} (declared by ${packageName})`,
+  }));
+
+  return {
+    name: featureId,
+    description: block.summary ?? pkg.description ?? `${featureId} feature`,
+    group: block.category ?? category,
+    dependencies: [{ name: packageName, version: "workspace:*" }],
+    env,
+    envFile: block.envFile ?? ".env.local",
+    files: [],
+  };
+}
+
+let discoveryCache: Record<string, FeatureDescriptor> | null = null;
+
+export function discoverFeatures(): Record<string, FeatureDescriptor> {
+  if (discoveryCache) return discoveryCache;
+
+  const discovered: Record<string, FeatureDescriptor> = {};
+  const packagesRoot = findPackagesRoot();
+  if (!packagesRoot) {
+    discoveryCache = discovered;
+    return discovered;
+  }
+
+  for (const category of PACKAGE_CATEGORIES) {
+    const categoryDir = join(packagesRoot, category);
+    let names: string[];
+    try {
+      names = readdirSync(categoryDir);
+    } catch {
+      continue;
+    }
+
+    for (const pkgDirName of names) {
+      const pkgJsonPath = join(categoryDir, pkgDirName, "package.json");
+      let raw: string;
+      try {
+        raw = readFileSync(pkgJsonPath, "utf-8");
+      } catch {
+        continue;
+      }
+
+      let parsed: DiscoveredPackageJson;
+      try {
+        parsed = JSON.parse(raw) as DiscoveredPackageJson;
+      } catch {
+        continue;
+      }
+
+      const block = parsed.nebutra;
+      const featureId = block?.featureId;
+      if (!block || !featureId || !parsed.name) continue;
+
+      discovered[featureId] = descriptorFromDiscovered(
+        featureId,
+        block,
+        parsed,
+        category,
+        parsed.name,
+      );
+    }
+  }
+
+  discoveryCache = discovered;
+  return discovered;
+}
+
+function mergedRegistry(): Record<string, FeatureDescriptor> {
+  return { ...discoverFeatures(), ...FEATURE_REGISTRY };
+}
+
 export function listFeatureDescriptors(): FeatureDescriptor[] {
-  return Object.values(FEATURE_REGISTRY);
+  return Object.values(mergedRegistry());
 }
 
 export function listFeatureNames(): string[] {
-  return Object.keys(FEATURE_REGISTRY);
+  return Object.keys(mergedRegistry());
 }
 
 export async function getFeatureDescriptor(featureName: string): Promise<FeatureDescriptor | null> {
-  return FEATURE_REGISTRY[featureName] ?? null;
+  return mergedRegistry()[featureName] ?? null;
+}
+
+export function _resetDiscoveryCacheForTests(): void {
+  discoveryCache = null;
 }

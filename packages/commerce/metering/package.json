@@ -12,7 +12,10 @@
     "gaps": [
       "Retention/TTL policy is operator-driven (apply per environment)",
       "Sharded/replicated topology uses ReplicatedMergeTree — see README"
-    ]
+    ],
+    "featureId": "metering",
+    "category": "commerce",
+    "summary": "Usage metering pipeline — ClickHouse real-time aggregation"
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

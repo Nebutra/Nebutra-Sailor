@@ -28,5 +28,10 @@
     "@vitest/coverage-v8": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
+  },
+  "nebutra": {
+    "featureId": "license",
+    "category": "commerce",
+    "summary": "License key generation + validation"
   }
 }

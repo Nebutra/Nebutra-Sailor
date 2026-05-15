@@ -63,6 +63,7 @@ import { applyProviderSelection } from "./utils/providers";
 import { pruneTemplate, pruneWaveFeatures } from "./utils/prune";
 import { pruneSchemaByFlags } from "./utils/prune-schema";
 import { applyQueueSelection } from "./utils/queue";
+import { applyScaffoldExtras } from "./utils/scaffold-extras";
 import { applySearchSelection } from "./utils/search";
 import { generateSeedData } from "./utils/seed";
 import { applySmsSelection } from "./utils/sms";
@@ -114,6 +115,8 @@ interface CliOptions {
   legalPages?: string;
   chinaCompliance?: string;
   i18n?: boolean;
+  withWorkflows?: boolean;
+  withPythonBackend?: boolean;
   install?: boolean;
   git?: boolean;
   yes?: boolean;
@@ -473,6 +476,11 @@ async function run(): Promise<void> {
     )
     .option("--i18n", "enable i18n")
     .option("--no-i18n", "disable i18n")
+    .option("--with-workflows", "scaffold workflows/ (inngest + n8n + pusher stubs)")
+    .option(
+      "--with-python-backend",
+      "scaffold backends/python/ (FastAPI stub — only when TS-by-Default ADR exception applies)",
+    )
     .option("--no-install", "skip package install")
     .option("--no-git", "skip git init")
     .option("-y, --yes", "accept all defaults (non-interactive)")
@@ -1300,6 +1308,20 @@ async function run(): Promise<void> {
     emitJson(useJson, { event: "step", step: "env", status: "start" });
     await injectEnv(resolvedTarget, envDefaults);
     emitJson(useJson, { event: "step", step: "env", status: "ok" });
+
+    emitJson(useJson, { event: "step", step: "scaffold-extras", status: "start" });
+    const extras = await applyScaffoldExtras(resolvedTarget, {
+      projectName,
+      withWorkflows: Boolean(opts.withWorkflows),
+      withPythonBackend: Boolean(opts.withPythonBackend),
+    });
+    emitJson(useJson, {
+      event: "step",
+      step: "scaffold-extras",
+      status: "ok",
+      applied: extras.applied,
+      skipped: extras.skipped,
+    });
 
     // Install dependencies (non-fatal on failure).
     const shouldInstall = opts.install !== false;

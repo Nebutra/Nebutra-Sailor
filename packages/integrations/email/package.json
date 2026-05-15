@@ -33,5 +33,10 @@
     "tsup": "^8.5.0",
     "typescript": "catalog:",
     "vitest": "catalog:"
+  },
+  "nebutra": {
+    "featureId": "email",
+    "category": "integrations",
+    "summary": "Multi-provider transactional email (Resend, Nodemailer, Console)"
   }
 }

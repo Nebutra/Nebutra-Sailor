@@ -12,7 +12,10 @@
     "gaps": [
       "Subdomain/JWT resolver strategies scaffolded only",
       "Schema-per-tenant migration flow pending"
-    ]
+    ],
+    "featureId": "tenant",
+    "category": "iam",
+    "summary": "Multi-tenancy context — AsyncLocalStorage + RLS + schema isolation"
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

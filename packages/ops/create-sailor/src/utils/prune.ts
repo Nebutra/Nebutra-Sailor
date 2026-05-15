@@ -403,7 +403,7 @@ export function pruneWaveFeatures(targetDir: string, toggles: WaveFeatureToggles
     safeRm(path.join(targetDir, "apps/web/src/app/[locale]/(app)/settings/webhooks"));
     safeRm(path.join(targetDir, "apps/web/src/app/api/webhooks"));
     safeRm(path.join(targetDir, "apps/web/src/components/webhooks"));
-    safeRm(path.join(targetDir, "packages/webhooks"));
+    safeRm(path.join(targetDir, "packages/integrations/webhooks"));
   }
 
   // 5. commandPalette
@@ -438,7 +438,7 @@ export function pruneWaveFeatures(targetDir: string, toggles: WaveFeatureToggles
 
   // 8. chinaCompliance — also removes the dep from apps/web/package.json
   if (!toggles.chinaCompliance) {
-    safeRm(path.join(targetDir, "packages/china-compliance"));
+    safeRm(path.join(targetDir, "packages/ops/china-compliance"));
     safeRm(path.join(targetDir, "apps/landing-page/src/components/icp-footer.tsx"));
     safeRm(path.join(targetDir, "apps/landing-page/src/components/__tests__/icp-footer.test.tsx"));
     safeRm(path.join(targetDir, "apps/web/src/components/auth/wechat-login-button.tsx"));

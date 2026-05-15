@@ -39,6 +39,7 @@ export function emitLicenseCliEvent(props: LicenseCliEventProps, opts: EmitOptio
 
   void (async () => {
     try {
+      // @ts-expect-error — optional peer; resolved at runtime, may be absent
       const mod = (await import("@nebutra/analytics")) as unknown as {
         createAnalyticsClient?: (config: unknown) => {
           track: (event: string, props: Record<string, unknown>) => Promise<unknown> | unknown;
@@ -59,7 +60,7 @@ export function emitLicenseCliEvent(props: LicenseCliEventProps, opts: EmitOptio
 
       if (typeof client?.track !== "function") return;
 
-      const result = client.track("license.cli", props);
+      const result = client.track("license.cli", props as unknown as Record<string, unknown>);
       if (result && typeof (result as Promise<unknown>).then === "function") {
         await (result as Promise<unknown>).catch(() => {
           // Silent

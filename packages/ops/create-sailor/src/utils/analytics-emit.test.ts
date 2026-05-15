@@ -63,7 +63,7 @@ describe("emitScaffoldCompleted", () => {
     emitScaffoldCompleted(baseProps);
     await flushAsync();
 
-    const callArg = createAnalyticsClientMock.mock.calls[0]?.[0] as {
+    const callArg = (createAnalyticsClientMock.mock.calls as unknown as unknown[][])[0]?.[0] as {
       posthog: { host: string };
     };
     expect(callArg.posthog.host).toBe("https://analytics.nebutra.com");
@@ -74,7 +74,7 @@ describe("emitScaffoldCompleted", () => {
     emitScaffoldCompleted(baseProps);
     await flushAsync();
 
-    const callArg = createAnalyticsClientMock.mock.calls[0]?.[0] as {
+    const callArg = (createAnalyticsClientMock.mock.calls as unknown as unknown[][])[0]?.[0] as {
       posthog: { host: string };
     };
     expect(callArg.posthog.host).toBe("https://ph.example.test");

@@ -13,7 +13,10 @@
     "gaps": [
       "Tus resumable adapter optional-peer, not wired end-to-end",
       "Virus-scan hook pending"
-    ]
+    ],
+    "featureId": "uploads",
+    "category": "integrations",
+    "summary": "Large file uploads — S3/R2 multipart + Tus resumable + presigned URLs"
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

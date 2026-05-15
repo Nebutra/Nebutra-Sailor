@@ -49,5 +49,10 @@
     "tsup": "catalog:",
     "typescript": "catalog:",
     "vitest": "^4.0.18"
+  },
+  "nebutra": {
+    "featureId": "agents",
+    "category": "ai",
+    "summary": "Nebutra AI runtime: multi-agent orchestration + Vercel AI SDK helpers"
   }
 }

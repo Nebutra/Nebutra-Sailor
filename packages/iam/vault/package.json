@@ -14,7 +14,10 @@
       "KEK rotation workflow not exposed via CLI",
       "Per-tenant key isolation scaffolded only",
       "Audit trail on decrypt operations TODO"
-    ]
+    ],
+    "featureId": "vault",
+    "category": "iam",
+    "summary": "Application-layer secrets — envelope encryption (AWS KMS + local HKDF)"
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

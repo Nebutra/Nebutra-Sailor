@@ -31,10 +31,13 @@ const VALID_APPS = [
   "landing-page",
   "web",
   "storybook",
-  "api-gateway",
   "design-docs",
+  "sailor-docs",
   "studio",
   "docs",
+  "idp",
+  "mail-preview",
+  "gateway",
 ];
 
 /**
