@@ -11,6 +11,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import ignore from "ignore";
 
 const REPO_ROOT = path.resolve(__dirname, "..");
 const IGNORE_FILE = path.join(REPO_ROOT, ".templateignore");
@@ -79,89 +80,26 @@ const MUST_STRIP = [
   "apps/landing-page/public/og",
 ];
 
-interface Rule {
-  pattern: string;
-  negate: boolean;
-  dirOnly: boolean;
-}
+type Matcher = ReturnType<typeof ignore>;
 
-function parseIgnore(content: string): Rule[] {
-  return content
-    .split("\n")
-    .map((l) => l.trim())
-    .filter((l) => l && !l.startsWith("#"))
-    .map((raw) => {
-      let line = raw;
-      let negate = false;
-      if (line.startsWith("!")) {
-        negate = true;
-        line = line.slice(1);
-      }
-      const dirOnly = line.endsWith("/");
-      if (dirOnly) line = line.slice(0, -1);
-      if (line.startsWith("/")) line = line.slice(1);
-      return { pattern: line, negate, dirOnly };
-    });
-}
-
-// Minimal gitignore-ish matcher: supports exact prefix/dir match + simple globs.
-function matchesRule(relPath: string, isDir: boolean, rule: Rule): boolean {
-  if (rule.dirOnly && !isDir && !relPath.startsWith(rule.pattern + "/")) return false;
-
-  const pat = rule.pattern;
-
-  // Exact match or directory prefix match
-  if (relPath === pat) return true;
-  if (relPath.startsWith(pat + "/")) return true;
-
-  // Glob-ish: convert * and ** to regex
-  if (pat.includes("*")) {
-    const re = new RegExp(
-      "^" +
-        pat
-          .replace(/[.+^${}()|[\]\\]/g, "\\$&")
-          .replace(/\*\*/g, "::DOUBLE::")
-          .replace(/\*/g, "[^/]*")
-          .replace(/::DOUBLE::/g, ".*") +
-        "(/.*)?$",
-    );
-    if (re.test(relPath)) return true;
-  }
-
-  // Basename match for rules without slashes
-  if (!pat.includes("/")) {
-    const base = path.basename(relPath);
-    if (base === pat) return true;
-  }
-
-  return false;
-}
-
-function isIgnored(relPath: string, isDir: boolean, rules: Rule[]): boolean {
-  let ignored = false;
-  for (const rule of rules) {
-    if (matchesRule(relPath, isDir, rule)) {
-      ignored = !rule.negate;
-    }
-  }
-  return ignored;
-}
-
-function walk(dir: string, rules: Rule[], preserved: string[], stripped: string[]): void {
+function walk(dir: string, matcher: Matcher, preserved: string[], stripped: string[]): void {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
     if (HARD_SKIP.has(entry.name)) continue;
     const full = path.join(dir, entry.name);
     const rel = path.relative(REPO_ROOT, full).split(path.sep).join("/");
     const isDir = entry.isDirectory();
+    // ignore() rejects a leading "/" and dir paths without trailing "/"; the
+    // ignore lib expects relative paths with no leading slash.
+    const probe = isDir ? `${rel}/` : rel;
 
-    if (isIgnored(rel, isDir, rules)) {
+    if (matcher.ignores(probe)) {
       stripped.push(rel + (isDir ? "/" : ""));
-      continue; // Don't descend into stripped directories
+      continue;
     }
 
     if (isDir) {
-      walk(full, rules, preserved, stripped);
+      walk(full, matcher, preserved, stripped);
     } else {
       preserved.push(rel);
     }
@@ -174,14 +112,18 @@ function main() {
     process.exit(1);
   }
 
-  const rules = parseIgnore(fs.readFileSync(IGNORE_FILE, "utf8"));
+  const patterns = fs.readFileSync(IGNORE_FILE, "utf8");
+  const matcher = ignore().add(patterns);
+  const ruleCount = patterns
+    .split("\n")
+    .filter((l) => l.trim() && !l.trim().startsWith("#")).length;
   const preserved: string[] = [];
   const stripped: string[] = [];
 
-  walk(REPO_ROOT, rules, preserved, stripped);
+  walk(REPO_ROOT, matcher, preserved, stripped);
 
   process.stdout.write("\n=== Template Check ===\n\n");
-  process.stdout.write(`Rules loaded:     ${rules.length}\n`);
+  process.stdout.write(`Rules loaded:     ${ruleCount}\n`);
   process.stdout.write(`Files preserved:  ${preserved.length}\n`);
   process.stdout.write(`Paths stripped:   ${stripped.length}\n\n`);
 
@@ -199,7 +141,8 @@ function main() {
     const full = path.join(REPO_ROOT, p);
     if (!fs.existsSync(full)) continue;
     const isDir = fs.statSync(full).isDirectory();
-    if (!isIgnored(p, isDir, rules)) leakedBusiness.push(p);
+    const probe = isDir ? `${p}/` : p;
+    if (!matcher.ignores(probe)) leakedBusiness.push(p);
   }
 
   let failed = false;
