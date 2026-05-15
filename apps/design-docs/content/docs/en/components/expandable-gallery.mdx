@@ -1,0 +1,111 @@
+---
+title: Expandable Gallery
+description: Fanned photo stack that animates into a responsive grid — Tab/Enter to expand, outside-click or Back to collapse.
+status: experimental
+---
+
+<ComponentPreview name="expandable-gallery-demo" />
+
+## Installation
+
+```tsx
+import { ExpandableGallery, type GalleryPhoto } from "@nebutra/ui/primitives";
+```
+
+Or install standalone via the shadcn registry:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/expandable-gallery.json
+```
+
+## Usage
+
+`ExpandableGallery` renders a fanned stack of photos that animates into a responsive grid on activation. The collapsed slot (headline + CTA) is caller-owned, so the component composes inside any marketing or showcase section.
+
+```tsx
+import { ArrowRight } from "@nebutra/icons";
+import { Button, ExpandableGallery, type GalleryPhoto } from "@nebutra/ui/primitives";
+
+const photos: GalleryPhoto[] = [
+  { id: "p1", src: "/img/1.jpg", alt: "Setup", rotation: -15, x: -90, y: 10, zIndex: 10 },
+  { id: "p2", src: "/img/2.jpg", alt: "Research", rotation: -3, x: -10, y: -15, zIndex: 20 },
+  { id: "p3", src: "/img/3.jpg", alt: "Build",    rotation: 12, x: 75,  y: 5,   zIndex: 30 },
+  { id: "p4", src: "/img/4.jpg", alt: "Dashboard" },
+  // … more
+];
+
+<ExpandableGallery photos={photos}>
+  <h2 className="text-2xl md:text-4xl">People fall in love with how something feels.</h2>
+  <Button className="rounded-full">
+    Explore more <ArrowRight className="ml-2 h-5 w-5" />
+  </Button>
+</ExpandableGallery>
+```
+
+## State machine
+
+| State        | Cards                                              | Children slot |
+| ------------ | -------------------------------------------------- | ------------- |
+| `collapsed`  | First `previewCount` photos fanned as `<button>`s  | Visible       |
+| `expanded`   | All photos in a responsive grid, `aria-hidden`     | Hidden        |
+
+Toggle:
+
+- Click / Enter / Space any preview card → expands.
+- Click the Back button → collapses.
+- Click outside the gallery → collapses (toggle with `closeOnOutsideClick={false}`).
+
+## Controlled vs. uncontrolled
+
+Omit `expanded`/`onExpandedChange` and the component manages its own state (seeded by `defaultExpanded`). Provide both to drive externally — for example, to sync with a route or persist across remounts.
+
+```tsx
+const [expanded, setExpanded] = useState(false);
+
+<ExpandableGallery
+  photos={photos}
+  expanded={expanded}
+  onExpandedChange={setExpanded}
+/>
+```
+
+## Photo positioning
+
+Per-photo `rotation` / `x` / `y` / `zIndex` apply only in the collapsed fanned state. In the expanded grid they are reset to a uniform layout. Omitting them lets the fallback (`rotation: 0`, `x: 0`, `y: 0`, `zIndex: index`) stack cards centered.
+
+```ts
+type GalleryPhoto = {
+  id: string;
+  src: string;
+  alt: string;
+  rotation?: number; // degrees, collapsed-only
+  x?: number;        // px, collapsed-only
+  y?: number;        // px, collapsed-only
+  zIndex?: number;   // collapsed-only
+};
+```
+
+## Props
+
+| Prop                  | Type                                       | Default      | Description                                                  |
+| --------------------- | ------------------------------------------ | ------------ | ------------------------------------------------------------ |
+| `photos`              | `ReadonlyArray<GalleryPhoto>`              | —            | All photos. Only the first `previewCount` show when collapsed. |
+| `previewCount`        | `number`                                   | `3`          | Number of fanned cards visible in collapsed state            |
+| `expanded`            | `boolean`                                  | —            | Controlled expansion. Pair with `onExpandedChange`.          |
+| `defaultExpanded`     | `boolean`                                  | `false`      | Initial state when uncontrolled                              |
+| `onExpandedChange`    | `(next: boolean) => void`                  | —            | Notified on every toggle                                     |
+| `closeOnOutsideClick` | `boolean`                                  | `true`       | Collapse when the user clicks outside in expanded state      |
+| `backLabel`           | `string`                                   | `"Go back"`  | Back-button label (i18n hook)                                |
+| `children`            | `ReactNode`                                | —            | Rendered below the stack while collapsed                     |
+| `className`           | `string`                                   | —            | Outer wrapper class                                          |
+
+## Accessibility
+
+- Collapsed cards are real `<button>` elements with `aria-label={photo.alt}` and full keyboard support.
+- `whileFocus` mirrors `whileHover` — keyboard users see the same lift animation that mouse users get.
+- Expanded cards are decorative `<motion.div aria-hidden="true">` — clicks would no-op, so the cards are not announced as interactive.
+- Back button uses semantic `<button type="button">`; the arrow icon is `aria-hidden` (label text carries the meaning).
+
+## Framework neutrality
+
+This primitive uses native `<img>` (not `next/image`) so it can ship through the shadcn registry to any React app, not just Next.js. Consumers on Next.js can pre-resolve URLs (e.g. via `getImageProps`) before passing them in.

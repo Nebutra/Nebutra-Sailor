@@ -118,6 +118,12 @@
       "description": "Chip / thumbnail display for an attached file in a chat composer or message bubble. Keyboard-accessible removal."
     },
     {
+      "name": "expandable-gallery",
+      "type": "registry:ui",
+      "title": "Expandable Gallery",
+      "description": "Fanned photo stack that animates into a responsive grid. Tab/Enter expands; outside-click or Back collapses."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",

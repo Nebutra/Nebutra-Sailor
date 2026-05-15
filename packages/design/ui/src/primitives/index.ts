@@ -179,6 +179,7 @@ export * from "./enable-2fa-card";
 export * from "./entity";
 export * from "./error-boundary";
 export * from "./error-message";
+export * from "./expandable-gallery";
 export * from "./expandable-tabs";
 export * from "./expanding-textarea";
 export * from "./fallback-card";

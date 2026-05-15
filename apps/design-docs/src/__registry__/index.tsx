@@ -502,6 +502,11 @@ export const EntityDemo = dynamic(() =>
 export const ErrorMessageDemo = dynamic(() =>
   import("@/components/previews/error-message-demo").then((m) => ({ default: m.ErrorMessageDemo })),
 );
+export const ExpandableGalleryDemo = dynamic(() =>
+  import("@/components/previews/expandable-gallery-demo").then((m) => ({
+    default: m.ExpandableGalleryDemo,
+  })),
+);
 export const ExpandableTabsDemo = dynamic(() =>
   import("@/components/previews/expandable-tabs-demo").then((m) => ({
     default: m.ExpandableTabsDemo,
@@ -1330,6 +1335,10 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "empty-state-demo": { name: "empty-state-demo", component: EmptyStateDemo },
   "entity-demo": { name: "entity-demo", component: EntityDemo },
   "error-message-demo": { name: "error-message-demo", component: ErrorMessageDemo },
+  "expandable-gallery-demo": {
+    name: "expandable-gallery-demo",
+    component: ExpandableGalleryDemo,
+  },
   "expandable-tabs-demo": { name: "expandable-tabs-demo", component: ExpandableTabsDemo },
   "expanding-textarea-demo": { name: "expanding-textarea-demo", component: ExpandingTextareaDemo },
   "feature-arrow-card-demo": { name: "feature-arrow-card-demo", component: FeatureArrowCardDemo },

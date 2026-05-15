@@ -285,6 +285,17 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/file-attachment.tsx",
     layer: "business",
   },
+  // -------------------------------------------------------------------------
+  // Marketing — composed showcase pieces.
+  // -------------------------------------------------------------------------
+  {
+    name: "expandable-gallery",
+    title: "Expandable Gallery",
+    description:
+      "Fanned photo stack that animates into a responsive grid. Tab/Enter expands; outside-click or Back collapses.",
+    source: "primitives/expandable-gallery.tsx",
+    layer: "marketing",
+  },
 ];
 
 // ---------------------------------------------------------------------------
