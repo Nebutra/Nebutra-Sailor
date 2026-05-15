@@ -23,6 +23,7 @@
     "@nebutra/audit": "workspace:*",
     "@nebutra/email": "workspace:*",
     "@nebutra/logger": "workspace:*",
+    "@nebutra/ui": "workspace:*",
     "better-auth": "^1.5.6"
   },
   "devDependencies": {

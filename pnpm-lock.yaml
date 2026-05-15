@@ -1933,6 +1933,9 @@ importers:
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../platform/logger
+      '@nebutra/ui':
+        specifier: workspace:*
+        version: link:../../design/ui
       '@supabase/supabase-js':
         specifier: '>=2.0.0'
         version: 2.98.0
