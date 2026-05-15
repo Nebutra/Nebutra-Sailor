@@ -23,12 +23,12 @@ export function BasePopoverDemo() {
         </p>
 
         {/* Additional Note */}
-        <p className="flex items-center space-x-1">
+        <div className="flex items-center space-x-1">
           <BaseBadge variant="destructive" size="sm">
             Note!
           </BaseBadge>
           <span className="text-xs text-muted-foreground">Plan upgrade is required.</span>
-        </p>
+        </div>
       </PopoverContent>
     </Popover>
   );

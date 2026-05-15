@@ -12,10 +12,10 @@ export default function BasePopoverDemo() {
           Advanced analytics provides deeper insights into your data, including trends, predictions,
           and detailed user behavior.
         </p>
-        <p className="flex items-center space-x-1">
+        <div className="flex items-center space-x-1">
           <Badge variant="destructive">Note!</Badge>
           <span className="text-xs text-muted-foreground">Plan upgrade is required.</span>
-        </p>
+        </div>
       </div>
     </div>
   );
