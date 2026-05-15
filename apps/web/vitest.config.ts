@@ -12,12 +12,11 @@ export default defineConfig({
     // tree per worker holds a lot of memory; default thread-pool fanout OOMs
     // GitHub Actions runners (~7 GB) on this app's test count.
     pool: "forks",
-    poolOptions: {
-      forks: {
-        maxForks: process.env.CI ? 2 : undefined,
-        minForks: 1,
-      },
-    },
+    // Vitest 4 unified pool options under top-level `maxWorkers` (replacing
+    // v3's `poolOptions.forks.maxForks`). The matching `minWorkers` is gone in
+    // v4's InlineConfig; vitest now picks the floor automatically based on
+    // available CPUs. See https://vitest.dev/guide/migration#pool-rework
+    maxWorkers: process.env.CI ? 2 : undefined,
     // Inline UI library + transitive deps that ship raw CSS / CSS-modules so
     // Vite's CSS pipeline handles them instead of Node's native loader, which
     // chokes on "Unknown file extension .css" when these are externalized
