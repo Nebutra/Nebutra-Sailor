@@ -52,6 +52,8 @@ apps/web/src/app/\[locale\]/(app)/tenants/
 apps/web/src/app/\[locale\]/(app)/usage/
 apps/web/src/app/\[locale\]/(app)/feature-flags/
 apps/web/src/app/\[locale\]/demo/
+# Test that imports stripped billing journey-state.
+apps/web/src/lib/__tests__/saas-journey-state.test.ts
 
 # ---------------------------------------------------------------------------
 # Nebutra-owned apps (not reusable skeleton)
