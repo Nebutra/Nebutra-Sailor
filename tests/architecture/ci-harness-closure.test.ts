@@ -18,11 +18,12 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain(
       `run: |\n          pnpm turbo build --filter="...[${turboBaseRef}]..."`,
     );
-    expect(workflow).toContain('--filter="!@nebutra/design-docs"');
-    expect(workflow).toContain('--filter="!@nebutra/sailor-docs"');
-    expect(workflow).toContain('--filter="!@nebutra/storybook"');
-    expect(workflow).toContain('--filter="!@nebutra/studio"');
-    expect(workflow).toContain('--filter="!@nebutra/tsekaluk-dev"');
+    // Path-glob filters (tolerate stripped apps in the template build).
+    expect(workflow).toContain("--filter='!./apps/design-docs'");
+    expect(workflow).toContain("--filter='!./apps/sailor-docs'");
+    expect(workflow).toContain("--filter='!./apps/storybook'");
+    expect(workflow).toContain("--filter='!./apps/studio'");
+    expect(workflow).toContain("--filter='!./apps/tsekaluk-dev'");
   });
 
   it("runs bundle analysis through the webpack analyzer path", async () => {
