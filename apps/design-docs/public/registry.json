@@ -124,6 +124,24 @@
       "description": "Fanned photo stack that animates into a responsive grid. Tab/Enter expands; outside-click or Back collapses."
     },
     {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Radix Tooltip wrapper used as the substrate for ContextCard and RelativeTimeCard."
+    },
+    {
+      "name": "context-card",
+      "type": "registry:ui",
+      "title": "Context Card",
+      "description": "Geist-style hover card built on Radix Tooltip — used wherever a row needs an at-a-glance detail popover."
+    },
+    {
+      "name": "relative-time-card",
+      "type": "registry:ui",
+      "title": "Relative Time Card",
+      "description": "Short relative-time label with hover popover showing absolute UTC + local time. Adaptive tick cadence."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",

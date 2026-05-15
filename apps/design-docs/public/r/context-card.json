@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-card",
+  "type": "registry:ui",
+  "title": "Context Card",
+  "description": "Geist-style hover card built on Radix Tooltip — used wherever a row needs an at-a-glance detail popover.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "registryDependencies": [
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "components/ui/context-card.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/context-card.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"../utils/cn\";\nimport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from \"./tooltip\";\n\n// =============================================================================\n// Types\n// =============================================================================\n\nexport type ContextCardSide = \"top\" | \"bottom\" | \"left\" | \"right\";\n\nexport interface ContextCardTriggerProps {\n  /** Content shown in the context card */\n  content: React.ReactNode;\n  /** Which side the card appears on */\n  side?: ContextCardSide;\n  /** Offset from the trigger in pixels */\n  sideOffset?: number;\n  /** The element that triggers the card on hover/focus */\n  children: React.ReactNode;\n  /** Additional CSS classes for the card */\n  className?: string;\n}\n\n// =============================================================================\n// ContextCardTrigger\n// =============================================================================\n\nconst ContextCardTrigger = React.forwardRef<\n  React.ElementRef<typeof TooltipTrigger>,\n  ContextCardTriggerProps\n>(({ content, side = \"top\", sideOffset = 8, children, className }, ref) => (\n  <TooltipProvider delayDuration={200}>\n    <Tooltip>\n      <TooltipTrigger ref={ref} asChild>\n        {/* Wrap non-element children in a span so asChild works correctly */}\n        {React.isValidElement(children) ? children : <span>{children}</span>}\n      </TooltipTrigger>\n      <TooltipContent\n        side={side}\n        sideOffset={sideOffset}\n        className={cn(\n          \"z-50 max-w-xs overflow-hidden rounded-[var(--radius-lg)] border bg-popover\",\n          \"px-3 py-2 text-sm text-popover-foreground shadow-md\",\n          \"animate-in fade-in-0 zoom-in-95\",\n          \"data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95\",\n          \"data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2\",\n          \"data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2\",\n          className,\n        )}\n      >\n        {content}\n      </TooltipContent>\n    </Tooltip>\n  </TooltipProvider>\n));\nContextCardTrigger.displayName = \"ContextCard.Trigger\";\n\n// =============================================================================\n// Compound Export\n// =============================================================================\n\n/**\n * ContextCard — Geist-style hover card that shows rich content on hover/focus.\n *\n * @example\n * ```tsx\n * <ContextCard.Trigger\n *   content=\"The Evil Rabbit Jumped over the Fence\"\n *   side=\"top\"\n * >\n *   <span>Hover me</span>\n * </ContextCard.Trigger>\n * ```\n */\nexport const ContextCard = {\n  Trigger: ContextCardTrigger,\n} as const;\n"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "--radius-lg": "0.5rem"
+    },
+    "dark": {
+      "--radius-lg": "0.5rem"
+    }
+  },
+  "meta": {
+    "nebutraTokens": [
+      "--radius-lg"
+    ],
+    "nebutraLayer": "business"
+  }
+}

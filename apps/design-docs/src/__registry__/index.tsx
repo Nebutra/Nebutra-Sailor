@@ -863,6 +863,11 @@ export const RadioGroupStackedDemo = dynamic(() =>
 export const ReactionChipDemo = dynamic(() =>
   import("@/components/previews/reaction-chip-demo").then((m) => ({ default: m.ReactionChipDemo })),
 );
+export const RelativeTimeCardDemo = dynamic(() =>
+  import("@/components/previews/relative-time-card-demo").then((m) => ({
+    default: m.RelativeTimeCardDemo,
+  })),
+);
 export const Resizable2Demo = dynamic(() =>
   import("@/components/previews/resizable-2-demo").then((m) => ({ default: m.Resizable2Demo })),
 );
@@ -1335,10 +1340,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "empty-state-demo": { name: "empty-state-demo", component: EmptyStateDemo },
   "entity-demo": { name: "entity-demo", component: EntityDemo },
   "error-message-demo": { name: "error-message-demo", component: ErrorMessageDemo },
-  "expandable-gallery-demo": {
-    name: "expandable-gallery-demo",
-    component: ExpandableGalleryDemo,
-  },
+  "expandable-gallery-demo": { name: "expandable-gallery-demo", component: ExpandableGalleryDemo },
   "expandable-tabs-demo": { name: "expandable-tabs-demo", component: ExpandableTabsDemo },
   "expanding-textarea-demo": { name: "expanding-textarea-demo", component: ExpandingTextareaDemo },
   "feature-arrow-card-demo": { name: "feature-arrow-card-demo", component: FeatureArrowCardDemo },
@@ -1464,6 +1466,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     component: RadioGroupStackedDemo,
   },
   "reaction-chip-demo": { name: "reaction-chip-demo", component: ReactionChipDemo },
+  "relative-time-card-demo": { name: "relative-time-card-demo", component: RelativeTimeCardDemo },
   "resizable-2-demo": { name: "resizable-2-demo", component: Resizable2Demo },
   "resizable-demo": { name: "resizable-demo", component: ResizableDemo },
   "safari-demo": { name: "safari-demo", component: SafariDemo },

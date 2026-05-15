@@ -1,0 +1,115 @@
+---
+title: Relative Time Card
+description: Short relative-time label with hover popover showing absolute UTC + local time.
+status: experimental
+---
+
+<ComponentPreview name="relative-time-card-demo" />
+
+## Installation
+
+```tsx
+import { RelativeTimeCard } from "@nebutra/ui/primitives";
+```
+
+Or install standalone via the shadcn registry:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/relative-time-card.json
+```
+
+## Usage
+
+Use `<RelativeTimeCard>` anywhere a recent timestamp appears in scannable surfaces: table cells, entity rows, deploy lists, activity feeds. For a static date older than ~7 days in body prose, render the absolute date directly.
+
+```tsx
+<RelativeTimeCard date={Date.now() - 14 * 60_000} />
+```
+
+The component renders its own short trigger label and shows the absolute UTC + local-time detail on hover or keyboard focus.
+
+## Label formatter
+
+The canonical short form, by age of the target:
+
+| Age              | Label              |
+| ---------------- | ------------------ |
+| `< 1 minute`     | `just now`         |
+| `< 1 hour`       | `2m`               |
+| `< 24 hours`     | `5h`               |
+| Calendar day −1  | `Yesterday`        |
+| `< 7 days`       | `3d`               |
+| `< 365 days`     | `Mar 14`           |
+| `≥ 365 days`     | `Mar 14, 2024`     |
+
+Do not append `ago` after the component — the formatter is the canonical form. `<RelativeTimeCard /> ago` reads as `2m ago ago`.
+
+## Don't pre-format
+
+Pass `date` as a `number` (Unix ms), `Date`, or `string` (ISO/RFC). Don't pre-format the value, and don't replace `children` with a formatted string.
+
+```tsx
+// ✅
+<RelativeTimeCard date={1714521600000} />
+<RelativeTimeCard date={deployment.createdAt} />          // Date or ISO string
+<RelativeTimeCard date={new Date("2026-03-14T12:34:56Z")} />
+
+// ❌
+<RelativeTimeCard date={Date.now()}>{"2m ago"}</RelativeTimeCard>
+```
+
+## `children` is an override
+
+Use `children` only for non-time labels (`Just now`, `Pending`, `Queued`) where the short formatter can't describe the state. The popover still shows the absolute date.
+
+```tsx
+<RelativeTimeCard date={deployment.queuedAt}>
+  <span className="text-muted-foreground">Pending</span>
+</RelativeTimeCard>
+```
+
+## Pair with a leading label
+
+When the row would be ambiguous on its own, prefix with a label:
+
+```tsx
+Last deploy <RelativeTimeCard date={deployment.createdAt} />
+```
+
+The popover already shows absolute UTC and local time — don't duplicate that copy elsewhere on the row.
+
+## Adaptive ticking
+
+The component re-renders only as often as the magnitude requires:
+
+| Diff             | Interval |
+| ---------------- | -------- |
+| `< 1 minute`     | 1 s      |
+| `< 1 hour`       | 30 s     |
+| `< 24 hours`     | 60 s     |
+| `≥ 1 day`        | none     |
+
+Day-or-older rows render once and stay still. A dashboard with 200 timestamps does not burn 200 timers/second.
+
+## Hydration safety
+
+The first paint is deterministic: the short absolute UTC date is rendered server-side and on the client's first commit. A single `useEffect` then upgrades the label to the relative form and starts the adaptive ticker. Local-timezone rows in the popover render only after mount.
+
+## Props
+
+| Prop        | Type                                                  | Default | Description                                                                  |
+| ----------- | ----------------------------------------------------- | ------- | ---------------------------------------------------------------------------- |
+| `date`      | `number \| Date \| string`                            | —       | Target timestamp. `number` is Unix ms; strings are parsed by `new Date()`.   |
+| `side`      | `"top" \| "right" \| "bottom" \| "left"`              | `"top"` | Popover side                                                                 |
+| `children`  | `ReactNode`                                           | —       | Optional override of the trigger label                                       |
+| `className` | `string`                                              | —       | Class applied to the default `<time>` trigger (ignored when `children` set). |
+
+## Accessibility
+
+- Default trigger is a semantic `<time dateTime={ISO}>` element.
+- The popover is built on `ContextCard.Trigger` (Radix Tooltip) — keyboard focus opens it on `focus-visible`.
+- The popover content omits the relative label on the first paint (matching SSR) and adds it after hydration — there is no flash of "0 seconds ago" garbage.
+
+## Known debt
+
+- Future timestamps clamp to `just now`. Bidirectional rendering would need `Intl.RelativeTimeFormat`; current callers pass only past timestamps (deploy / activity feed).

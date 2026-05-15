@@ -296,6 +296,36 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/expandable-gallery.tsx",
     layer: "marketing",
   },
+  // -------------------------------------------------------------------------
+  // Dashboard — scannable-surface primitives.
+  // RelativeTimeCard composes ContextCard which composes Tooltip; the leaf
+  // primitives must precede their consumers so `npx shadcn add` can resolve
+  // the chain without dangling sibling imports.
+  // -------------------------------------------------------------------------
+  {
+    name: "tooltip",
+    title: "Tooltip",
+    description:
+      "Radix Tooltip wrapper used as the substrate for ContextCard and RelativeTimeCard.",
+    source: "primitives/tooltip.tsx",
+    layer: "business",
+  },
+  {
+    name: "context-card",
+    title: "Context Card",
+    description:
+      "Geist-style hover card built on Radix Tooltip — used wherever a row needs an at-a-glance detail popover.",
+    source: "primitives/context-card.tsx",
+    layer: "business",
+  },
+  {
+    name: "relative-time-card",
+    title: "Relative Time Card",
+    description:
+      "Short relative-time label with hover popover showing absolute UTC + local time. Adaptive tick cadence.",
+    source: "primitives/relative-time-card.tsx",
+    layer: "dashboard",
+  },
 ];
 
 // ---------------------------------------------------------------------------

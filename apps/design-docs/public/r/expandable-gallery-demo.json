@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "expandable-gallery-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/icons",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/expandable-gallery-demo.tsx",
+      "content": "\"use client\";\n\nimport { ArrowRight } from \"@nebutra/icons\";\nimport { Button, ExpandableGallery, type GalleryPhoto } from \"@nebutra/ui/primitives\";\n\nconst PHOTOS: GalleryPhoto[] = [\n  {\n    id: \"p1\",\n    src: \"https://images.unsplash.com/photo-1755398104393-746e52af4a9f?w=900&auto=format&fit=crop&q=60\",\n    alt: \"Technology setup\",\n    rotation: -15,\n    x: -90,\n    y: 10,\n    zIndex: 10,\n  },\n  {\n    id: \"p2\",\n    src: \"https://images.unsplash.com/photo-1756764099214-b09a5666914b?w=900&auto=format&fit=crop&q=60\",\n    alt: \"Design research\",\n    rotation: -3,\n    x: -10,\n    y: -15,\n    zIndex: 20,\n  },\n  {\n    id: \"p3\",\n    src: \"https://images.unsplash.com/photo-1757372429884-92e02350c5d9?w=900&auto=format&fit=crop&q=60\",\n    alt: \"Code and development\",\n    rotation: 12,\n    x: 75,\n    y: 5,\n    zIndex: 30,\n  },\n  {\n    id: \"p4\",\n    src: \"https://images.unsplash.com/photo-1756993399574-2fa126269ce7?w=900&auto=format&fit=crop&q=60\",\n    alt: \"Dashboard interface\",\n  },\n  {\n    id: \"p5\",\n    src: \"https://images.unsplash.com/photo-1756990637536-714b76296a30?w=900&auto=format&fit=crop&q=60\",\n    alt: \"Product design\",\n  },\n  {\n    id: \"p6\",\n    src: \"https://images.unsplash.com/photo-1756838197413-07f174def66c?w=900&auto=format&fit=crop&q=60\",\n    alt: \"Laptop on desk\",\n  },\n  {\n    id: \"p7\",\n    src: \"https://images.unsplash.com/photo-1756310406492-3ce3bef447aa?w=900&auto=format&fit=crop&q=60\",\n    alt: \"Team collaboration\",\n  },\n  {\n    id: \"p8\",\n    src: \"https://images.unsplash.com/photo-1755311905796-d539c7d24acd?w=900&auto=format&fit=crop&q=60\",\n    alt: \"UX wireframes\",\n  },\n  {\n    id: \"p9\",\n    src: \"https://images.unsplash.com/photo-1755542366797-b3f036b11310?w=900&auto=format&fit=crop&q=60\",\n    alt: \"Developer workspace\",\n  },\n];\n\nexport function ExpandableGalleryDemo() {\n  return (\n    <div className=\"flex min-h-[820px] w-full items-start justify-center bg-background px-4 py-8 md:px-8\">\n      <ExpandableGallery photos={PHOTOS}>\n        <h2 className=\"text-2xl font-normal leading-tight tracking-tight text-foreground/90 md:text-4xl\">\n          People don&rsquo;t fall in love with components.\n          <br className=\"hidden md:block\" /> They fall in love with how something feels.\n        </h2>\n        <div className=\"flex justify-center\">\n          <Button variant=\"default\" className=\"group rounded-full px-8 py-6 font-normal\">\n            Explore more components\n            <ArrowRight className=\"ml-2 h-5 w-5 transition-transform group-hover:translate-x-1\" />\n          </Button>\n        </div>\n      </ExpandableGallery>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

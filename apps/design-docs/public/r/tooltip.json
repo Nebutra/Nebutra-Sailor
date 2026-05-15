@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "Tooltip",
+  "description": "Radix Tooltip wrapper used as the substrate for ContextCard and RelativeTimeCard.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "files": [
+    {
+      "path": "components/ui/tooltip.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/tooltip.tsx",
+      "content": "\"use client\";\n\nimport { Tooltip as BaseTooltip } from \"@base-ui/react/tooltip\";\nimport * as React from \"react\";\n\nimport { cn } from \"../utils/cn\";\n\n// We expose Base UI's native Provider to pass global `delayDuration` downwards to tooltips.\nconst TooltipProvider = ({\n  children,\n  delayDuration,\n}: {\n  children: React.ReactNode;\n  delayDuration?: number;\n}) => {\n  const providerProps = delayDuration !== undefined ? { delay: delayDuration } : {};\n  return <BaseTooltip.Provider {...providerProps}>{children}</BaseTooltip.Provider>;\n};\n\nconst Tooltip = ({\n  delayDuration,\n  children,\n  ...props\n}: React.ComponentPropsWithoutRef<typeof BaseTooltip.Root> & {\n  delayDuration?: number;\n  children?: React.ReactNode;\n}) => {\n  if (delayDuration !== undefined) {\n    return (\n      <BaseTooltip.Provider delay={delayDuration}>\n        <BaseTooltip.Root {...props}>{children}</BaseTooltip.Root>\n      </BaseTooltip.Provider>\n    );\n  }\n  return <BaseTooltip.Root {...props}>{children}</BaseTooltip.Root>;\n};\n\nconst TooltipTrigger = React.forwardRef<\n  HTMLButtonElement,\n  React.ComponentPropsWithoutRef<typeof BaseTooltip.Trigger> & { asChild?: boolean }\n>(({ asChild, children, ...props }, ref) => {\n  if (asChild && React.isValidElement(children)) {\n    return (\n      <BaseTooltip.Trigger\n        ref={ref}\n        {...props}\n        render={children as React.ReactElement<Record<string, unknown>>}\n      />\n    );\n  }\n  return (\n    <BaseTooltip.Trigger ref={ref} {...props}>\n      {children}\n    </BaseTooltip.Trigger>\n  );\n});\nTooltipTrigger.displayName = \"TooltipTrigger\";\n\nconst TooltipContent = React.forwardRef<\n  React.ElementRef<typeof BaseTooltip.Popup>,\n  React.ComponentPropsWithoutRef<typeof BaseTooltip.Popup> & {\n    side?: \"top\" | \"right\" | \"bottom\" | \"left\";\n    align?: \"start\" | \"center\" | \"end\";\n    sideOffset?: number;\n    alignOffset?: number;\n  }\n>(\n  (\n    { className, side = \"top\", align = \"center\", sideOffset = 4, alignOffset = 0, ...props },\n    ref,\n  ) => (\n    <BaseTooltip.Portal>\n      <BaseTooltip.Positioner\n        side={side}\n        align={align}\n        sideOffset={sideOffset}\n        alignOffset={alignOffset}\n        className=\"z-50\"\n      >\n        <BaseTooltip.Popup\n          ref={ref}\n          className={cn(\n            \"z-50 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md px-3 py-1.5 text-sm text-popover-foreground shadow-xl transition-[opacity,transform,display] duration-200 data-starting-style:animate-in data-starting-style:fade-in-0 data-starting-style:zoom-in-95 data-ending-style:animate-out data-ending-style:fade-out-0 data-ending-style:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2\",\n            className,\n          )}\n          {...props}\n        />\n      </BaseTooltip.Positioner>\n    </BaseTooltip.Portal>\n  ),\n);\nTooltipContent.displayName = \"TooltipContent\";\n\nexport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger };\n"
+    }
+  ],
+  "meta": {
+    "nebutraTokens": [],
+    "nebutraLayer": "business"
+  }
+}

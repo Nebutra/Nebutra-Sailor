@@ -321,6 +321,11 @@ export { RadioGroup, RadioGroupItem } from "./radio-group";
 export * from "./radio-group-card";
 export * from "./radio-group-stacked";
 export * from "./reaction-chip";
+/**
+ * Short relative-time label (`2m` / `5h` / `Yesterday`) with hover popover
+ * showing absolute UTC + local time. Built on ContextCard.
+ */
+export * from "./relative-time-card";
 export * from "./resizable";
 export * from "./responsive";
 export * from "./safari";
