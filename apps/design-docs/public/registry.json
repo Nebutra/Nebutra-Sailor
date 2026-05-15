@@ -154,6 +154,12 @@
       "description": "Geist-style browser chrome around a screenshot or demo. Middle-truncating address bar, aspect-locked image viewport."
     },
     {
+      "name": "choicebox",
+      "type": "registry:ui",
+      "title": "Choicebox",
+      "description": "Card-style selection control with radio (single) and checkbox (multi) modes. Roving tabindex + arrow-key navigation."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",

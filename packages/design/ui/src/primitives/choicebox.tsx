@@ -411,11 +411,19 @@ function ChoiceboxGroupRoot({
     [onItemSelect],
   );
   const getFirstItemValue = React.useCallback(() => itemOrder.current[0], []);
-  // Dev warning for type/value mismatch
+  // Dev warning: type/value shape mismatch is a footgun (e.g. passing a
+  // single string to checkbox mode silently clobbers the array invariant).
+  // Production builds drop both branches via dead-code elimination.
   if (process.env.NODE_ENV !== "production") {
     if (type === "checkbox" && typeof controlledValue === "string") {
+      console.warn(
+        '[ChoiceboxGroup] type="checkbox" expects value: string[]; got string. Pass an array.',
+      );
     }
     if (type === "radio" && Array.isArray(controlledValue)) {
+      console.warn(
+        '[ChoiceboxGroup] type="radio" expects value: string; got string[]. Pass a single value.',
+      );
     }
   }
   const contextValue = React.useMemo(
@@ -478,6 +486,14 @@ ChoiceboxGroupRoot.displayName = "ChoiceboxGroup";
  *
  * A larger form of Radio or Checkbox where the user has a larger
  * tap target and more details per option.
+ *
+ * Why `role="radiogroup"` instead of `<fieldset><legend>`:
+ *   The WAI-ARIA radiogroup pattern is the AT-equivalent of `<fieldset>` and
+ *   composes more cleanly with `aria-labelledby` (the `<label>` slot is a
+ *   rendered `<span>`, not a `<legend>`, so consumers can style it freely).
+ *   `<fieldset>`'s automatic disabled-inheritance is replicated by passing
+ *   `disabled` on the group, which propagates via context. Do NOT swap to
+ *   `<fieldset>` without first confirming the styling regression budget.
  *
  * @example Single-select (radio)
  * ```tsx

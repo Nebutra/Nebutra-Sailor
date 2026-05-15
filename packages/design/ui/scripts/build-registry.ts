@@ -345,6 +345,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/browser-mockup.tsx",
     layer: "marketing",
   },
+  {
+    name: "choicebox",
+    title: "Choicebox",
+    description:
+      "Card-style selection control with radio (single) and checkbox (multi) modes. Roving tabindex + arrow-key navigation.",
+    source: "primitives/choicebox.tsx",
+    layer: "business",
+  },
 ];
 
 // ---------------------------------------------------------------------------

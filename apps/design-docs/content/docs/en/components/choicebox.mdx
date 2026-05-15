@@ -125,13 +125,46 @@ Custom content renders below title/description when the item is selected.
 | `className` | `string` | — | Additional CSS classes |
 | `children` | `ReactNode` | — | Custom content shown when selected |
 
+## When to use
+
+- A choice that benefits from a larger tap target plus a description or icon — framework picker, plan comparison, deployment region with latency.
+- **Single-select** for mutually exclusive choices, **multi-select** for additive ones. Don't mix the two within one group.
+- Cap at **4–6 tiles**. Past that, switch to `Select` or `Combobox` so the page doesn't scroll for a single field. For plain text labels with no description, use `Radio`.
+
+## Content rules
+
+- Titles are **parallel**: one Title Case title plus one sentence-case description per tile, ending in a period.
+- Don't restate the title in the description. The description adds the differentiator (`$20/mo · 100 GB bandwidth`), not a synonym.
+- Don't place nested buttons or links inside a tile that would steal the click — the whole tile is the click target.
+
+## Disabling — always explain why
+
+A faded tile with no reason reads as broken. Wrap a disabled `ChoiceboxGroup.Item` in a `Tooltip` that names the constraint:
+
+```tsx
+import { Tooltip, TooltipContent, TooltipTrigger } from "@nebutra/ui/primitives";
+
+<Tooltip>
+  <TooltipTrigger asChild>
+    <ChoiceboxGroup.Item
+      disabled
+      title="Enterprise"
+      description="Custom SLA + dedicated support."
+      value="enterprise"
+    />
+  </TooltipTrigger>
+  <TooltipContent>Available on the Pro plan and above</TooltipContent>
+</Tooltip>
+```
+
 ## Accessibility
 
-- Radio mode: `role="radiogroup"` on group, `role="radio"` on items
+- Radio mode: `role="radiogroup"` on group, `role="radio"` on items (WAI-ARIA equivalent of `<fieldset><legend>` — composes cleaner with custom label styling and `aria-labelledby`)
 - Checkbox mode: `role="group"` on group, `role="checkbox"` on items
-- `aria-checked` reflects selection state
-- `aria-disabled` on disabled items
-- Keyboard: Arrow keys navigate radio items (roving tabindex); Tab + Space/Enter for checkbox items
+- `aria-checked` reflects selection state; `aria-disabled` on disabled items
+- Keyboard: Arrow keys navigate radio items (roving tabindex); Space/Enter toggle both modes
+- Color is not the selection signal — the corner check / filled dot pairs with the border highlight so colorblind users see the active state
+- Group-level `disabled` propagates to all items via context (replaces `<fieldset disabled>` inheritance)
 - Focus ring: 2px primary color with 2px offset
 
 ## See Also
