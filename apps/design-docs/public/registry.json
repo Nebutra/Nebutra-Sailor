@@ -178,6 +178,12 @@
       "description": "Definition-list metadata block (<dl>/<dt>/<dd>). Title Case key + emphasized value, optional tooltip on the label."
     },
     {
+      "name": "entity",
+      "type": "registry:ui",
+      "title": "Entity",
+      "description": "Row of descriptive content paired with one or two controls. Compound Entity / Entity.Content / Entity.List."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",

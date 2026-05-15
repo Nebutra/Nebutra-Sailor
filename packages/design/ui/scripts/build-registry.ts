@@ -375,6 +375,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/description.tsx",
     layer: "dashboard",
   },
+  {
+    name: "entity",
+    title: "Entity",
+    description:
+      "Row of descriptive content paired with one or two controls. Compound Entity / Entity.Content / Entity.List.",
+    source: "primitives/entity.tsx",
+    layer: "dashboard",
+  },
 ];
 
 // ---------------------------------------------------------------------------
