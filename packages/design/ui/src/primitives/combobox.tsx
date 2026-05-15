@@ -314,7 +314,7 @@ function ComboboxRoot({
   ...props
 }: ComboboxProps) {
   // Controlled / uncontrolled value management
-  const [internalValue, setInternalValue] = React.useState(defaultValue);
+  const [internalValue, setInternalValue] = React.useState<ComboboxValue>(defaultValue);
   const selectedValue = controlledValue !== undefined ? controlledValue : internalValue;
   const normalizedSize = comboboxSizeMap[size];
   const isErrored = errored ?? error;
@@ -347,8 +347,8 @@ function ComboboxRoot({
   const triggerId = React.useId();
   const listboxId = React.useId();
 
-  const contextValue = React.useMemo(
-    () => ({ selectedValue, onSelect: handleSelect }),
+  const contextValue = React.useMemo<ComboboxContextValue>(
+    () => ({ selectedValue: selectedValue ?? null, onSelect: handleSelect }),
     [selectedValue, handleSelect],
   );
 
