@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "description",
+  "type": "registry:ui",
+  "title": "Description",
+  "description": "Definition-list metadata block (<dl>/<dt>/<dd>). Title Case key + emphasized value, optional tooltip on the label.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "dependencies": [
+    "@nebutra/icons"
+  ],
+  "registryDependencies": [
+    "context-card"
+  ],
+  "files": [
+    {
+      "path": "components/ui/description.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/description.tsx",
+      "content": "\"use client\";\n\nimport { Information as Info } from \"@nebutra/icons\";\nimport { forwardRef, type ReactNode } from \"react\";\nimport { cn } from \"../utils/cn\";\nimport { ContextCard } from \"./context-card\";\n\n/* -------------------------------------------------------------------------- *\\\n *  Description — definition-list metadata block.\n *\n *  Use cases (per Geist guidance):\n *    Short Title Case key paired with a single value:\n *      `Last Deployed`, `Region`, `Plan`, `Build Duration`.\n *    For inline help under a form field, use the input's helper-text slot\n *    instead (Field / FormDescription) — not Description.\n *\n *  Semantics — non-negotiable:\n *    Renders as <dl><dt><dd> so screen readers announce each key/value as a\n *    definition. Wrapping in extra paragraphs or stripping the <dl> breaks\n *    definition-list semantics — do not \"simplify\" this without an ADR.\n *\n *  Emphasis convention:\n *    The value (<dd>) is the data the user cares about; the label (<dt>) is\n *    supplementary. The visual weight reflects that: dt is muted/secondary,\n *    dd is foreground/medium-weight.\n *\n *  Title slot is text-only:\n *    `title` is typed as string. Don't put interactive controls in the title\n *    slot. Buttons, menus, and links belong in `content` (which accepts\n *    ReactNode) or in the surrounding layout — never in the <dt>.\n\\* -------------------------------------------------------------------------- */\n\n// ---------------------------------------------------------------------------\n// Public types\n// ---------------------------------------------------------------------------\n\nexport interface DescriptionProps {\n  /** Title Case noun naming the field (`Last Deployed`, `Region`). */\n  title: string;\n  /**\n   * Value associated with the title. Sentence case unless the value is a\n   * literal identifier, ID, or timestamp that should be preserved verbatim.\n   * Accepts ReactNode so links and inline timestamps render correctly.\n   */\n  content: ReactNode;\n  /** Optional one-sentence definition shown via a hover/focus tooltip on the info glyph. Sentence case, ends with a period. */\n  tooltip?: ReactNode;\n  className?: string;\n}\n\n// ---------------------------------------------------------------------------\n// Component\n// ---------------------------------------------------------------------------\n\n/**\n * @example\n * ```tsx\n * <Description\n *   title=\"Section Title\"\n *   content=\"Data about this section.\"\n *   tooltip=\"Additional context about what this section refers to.\"\n * />\n * ```\n */\nexport const Description = forwardRef<HTMLDListElement, DescriptionProps>(function Description(\n  { title, content, tooltip, className },\n  ref,\n) {\n  return (\n    <dl ref={ref} className={cn(\"font-sans\", className)}>\n      <dt className=\"flex items-center gap-1 text-muted-foreground text-sm capitalize\">\n        {title}\n        {tooltip && (\n          <ContextCard.Trigger content={tooltip} side=\"top\" sideOffset={6}>\n            <Info aria-hidden=\"true\" className=\"size-3.5 shrink-0 text-muted-foreground\" />\n          </ContextCard.Trigger>\n        )}\n      </dt>\n      <dd className=\"mt-1 font-medium text-foreground text-sm\">{content}</dd>\n    </dl>\n  );\n});\n"
+    }
+  ],
+  "meta": {
+    "nebutraTokens": [],
+    "nebutraLayer": "dashboard"
+  }
+}

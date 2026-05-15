@@ -298,15 +298,13 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
   },
   // -------------------------------------------------------------------------
   // Dashboard — scannable-surface primitives.
-  // RelativeTimeCard composes ContextCard which composes Tooltip; the leaf
-  // primitives must precede their consumers so `npx shadcn add` can resolve
-  // the chain without dangling sibling imports.
+  // RelativeTimeCard composes ContextCard; Tooltip remains earlier because
+  // sibling dashboard primitives still consume it directly.
   // -------------------------------------------------------------------------
   {
     name: "tooltip",
     title: "Tooltip",
-    description:
-      "Radix Tooltip wrapper used as the substrate for ContextCard and RelativeTimeCard.",
+    description: "Base UI Tooltip wrapper for concise, non-interactive explanatory text.",
     source: "primitives/tooltip.tsx",
     layer: "business",
   },
@@ -314,7 +312,7 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     name: "context-card",
     title: "Context Card",
     description:
-      "Geist-style hover card built on Radix Tooltip — used wherever a row needs an at-a-glance detail popover.",
+      "Geist-style hover/focus card built on Base UI Popover for compact entity metadata.",
     source: "primitives/context-card.tsx",
     layer: "business",
   },
@@ -368,6 +366,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
       "Geist-style flat Collapse/CollapseGroup API on top of our Accordion. Single, multiple-open, and standalone modes.",
     source: "primitives/collapse.tsx",
     layer: "business",
+  },
+  {
+    name: "description",
+    title: "Description",
+    description:
+      "Definition-list metadata block (<dl>/<dt>/<dd>). Title Case key + emphasized value, optional tooltip on the label.",
+    source: "primitives/description.tsx",
+    layer: "dashboard",
   },
 ];
 

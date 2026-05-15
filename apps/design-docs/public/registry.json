@@ -127,13 +127,13 @@
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
-      "description": "Radix Tooltip wrapper used as the substrate for ContextCard and RelativeTimeCard."
+      "description": "Base UI Tooltip wrapper for concise, non-interactive explanatory text."
     },
     {
       "name": "context-card",
       "type": "registry:ui",
       "title": "Context Card",
-      "description": "Geist-style hover card built on Radix Tooltip — used wherever a row needs an at-a-glance detail popover."
+      "description": "Geist-style hover/focus card built on Base UI Popover for compact entity metadata."
     },
     {
       "name": "relative-time-card",
@@ -170,6 +170,12 @@
       "type": "registry:ui",
       "title": "Collapse",
       "description": "Geist-style flat Collapse/CollapseGroup API on top of our Accordion. Single, multiple-open, and standalone modes."
+    },
+    {
+      "name": "description",
+      "type": "registry:ui",
+      "title": "Description",
+      "description": "Definition-list metadata block (<dl>/<dt>/<dd>). Title Case key + emphasized value, optional tooltip on the label."
     },
     {
       "name": "nebutra-tokens",
