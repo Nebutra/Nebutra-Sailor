@@ -1,64 +1,130 @@
 "use client";
 
 import { ArrowLeft, ArrowRight, Check, Copy, RotateClockwise as RotateCw } from "@nebutra/icons";
-import Image from "next/image";
-import type * as React from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "../utils/cn";
 
 const COPIED_FEEDBACK_MS = 1500;
 
-// =============================================================================
-// Types
-// =============================================================================
+/* -------------------------------------------------------------------------- *\
+ *  Browser — Geist-style browser chrome around a screenshot, demo, or video.
+ *
+ *  Use cases (per Geist guidance):
+ *    - Marketing chrome on landing pages, docs, changelog posts.
+ *    - Do NOT render real product UI here — the chrome implies a screenshot,
+ *      not a live surface.
+ *
+ *  Behavior rules:
+ *    - Chrome (dots + nav arrows) is decorative. Wrapped in `aria-hidden="true"`.
+ *    - Address bar uses middle truncation so the host and path tail both
+ *      remain visible on long URLs. The copy button is the one real,
+ *      reachable interaction.
+ *    - Image-mode viewport locks an aspect ratio (default 16:9) so the chrome
+ *      doesn't reflow when the image is missing or slow to load. Children mode
+ *      defers sizing to the consumer's own JSX.
+ *
+ *  Content slots — discriminated:
+ *    Pass exactly one of:
+ *      - `children`         → arbitrary JSX (consumer owns aspect lock)
+ *      - `imageSrc + imageAlt` → framework-neutral <img> tag, alt required
+ *    Both unrepresentable: the TS union forbids it. Use the children form
+ *    when you need next/image or a video.
+\* -------------------------------------------------------------------------- */
 
-export interface BrowserProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** URL displayed in the address bar */
+// ---------------------------------------------------------------------------
+// Public types
+// ---------------------------------------------------------------------------
+
+type BaseProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
+  /** URL displayed in the address bar (host + path). */
   address?: string;
-  /** Convenience prop: render an <img> when no children are provided */
-  imageSrc?: string;
-  /** Alt text for the image (only used with imageSrc) */
-  imageAlt?: string;
-  /** Arbitrary content rendered in the browser viewport */
-  children?: React.ReactNode;
-}
+  /**
+   * Inner viewport aspect ratio. Number is width/height (e.g. `16/9 = 1.777`).
+   * String passes directly to CSS `aspect-ratio` (e.g. `"16 / 9"`, `"4 / 3"`).
+   *
+   * Defaults: `"16 / 9"` in image mode (prevents layout shift on slow load),
+   * undefined in children mode (consumer JSX owns sizing).
+   */
+  aspectRatio?: number | string;
+};
 
-/** @deprecated Use BrowserProps instead */
+type ChildrenProps = BaseProps & {
+  children: ReactNode;
+  imageSrc?: never;
+  imageAlt?: never;
+};
+
+type ImageProps = BaseProps & {
+  children?: never;
+  imageSrc: string;
+  imageAlt: string;
+};
+
+export type BrowserProps = ChildrenProps | ImageProps;
+
+/** @deprecated Use `BrowserProps` instead. */
 export type BrowserMockupProps = BrowserProps;
 
-// =============================================================================
-// Component
-// =============================================================================
+// ---------------------------------------------------------------------------
+// Middle-truncate helper
+// ---------------------------------------------------------------------------
 
 /**
- * Browser - Geist-style browser window frame
- *
- * A decorative browser chrome for showcasing websites, screenshots, demos, or
- * arbitrary content. Features traffic-light buttons, navigation icons,
- * an address bar with copy-to-clipboard, and a flexible content area.
- *
- * @example Children mode (arbitrary JSX)
+ * Split a URL so a CSS flexbox can truncate the middle while keeping the
+ * leading host visible (grows-and-truncates) and the trailing path tail
+ * always rendered (fixed-width). Pure string function — no DOM dependency.
+ */
+function splitForMiddleTruncate(value: string, tailLength = 16) {
+  if (value.length <= tailLength + 4) return { head: value, tail: "" };
+  const head = value.slice(0, value.length - tailLength);
+  const tail = value.slice(value.length - tailLength);
+  return { head, tail };
+}
+
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
+/**
+ * @example Children mode
  * ```tsx
- * <Browser address="vercel.com">
- *   <div className="p-6">Hello World</div>
- * </Browser>
+ * <Browser address="vercel.com"><MyDemo /></Browser>
  * ```
  *
- * @example Image convenience mode
+ * @example Image mode (alt required)
  * ```tsx
- * <Browser address="example.com" imageSrc="/screenshot.png" />
+ * <Browser
+ *   address="vercel.com/dashboard"
+ *   imageSrc="/dashboard.png"
+ *   imageAlt="Dashboard showing the current month's deployments and bandwidth usage"
+ * />
  * ```
  */
-export function Browser({
-  address,
-  imageSrc,
-  imageAlt = "Preview",
-  children,
-  className,
-  ...props
-}: BrowserProps) {
+export function Browser(props: BrowserProps) {
+  const {
+    address,
+    aspectRatio,
+    className,
+    // children path
+    children,
+    // image path
+    imageSrc,
+    imageAlt,
+    ...rest
+  } = props as BaseProps & {
+    children?: ReactNode;
+    imageSrc?: string;
+    imageAlt?: string;
+  };
+
+  // Children mode → defer aspect to the consumer (their JSX may already be
+  // height-constrained). Image mode → default to 16:9 so the chrome doesn't
+  // reflow when the image is missing or slow to load.
+  const resolvedRatio = aspectRatio ?? (imageSrc ? "16 / 9" : undefined);
+
   const [copied, setCopied] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     return () => {
@@ -74,28 +140,35 @@ export function Browser({
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setCopied(false), COPIED_FEEDBACK_MS);
     } catch {
-      // Clipboard API may be blocked in some contexts
+      // Clipboard API may be blocked (insecure context, iframe sandbox).
     }
   }, [address]);
+
+  const { head, tail } = useMemo(() => splitForMiddleTruncate(address ?? ""), [address]);
+
+  const viewportStyle: CSSProperties =
+    resolvedRatio !== undefined
+      ? {
+          aspectRatio: typeof resolvedRatio === "number" ? `${resolvedRatio} / 1` : resolvedRatio,
+        }
+      : {};
 
   return (
     <div
       className={cn(
-        "rounded-[var(--radius-xl)] border border-border bg-card shadow-sm overflow-hidden",
+        "overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card shadow-sm",
         className,
       )}
-      {...props}
+      {...rest}
     >
-      {/* ── Toolbar ────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-3 border-b border-border bg-muted px-4 py-2.5">
-        {/* Traffic lights */}
+      {/* ── Chrome toolbar — decorative ──────────────────────────────── */}
+      <div className="flex items-center gap-3 border-border border-b bg-muted px-4 py-2.5">
         <div className="flex items-center gap-1.5" aria-hidden="true">
           <span className="size-3 rounded-full bg-[#FF5F57]" />
           <span className="size-3 rounded-full bg-[#FEBC2E]" />
           <span className="size-3 rounded-full bg-[#28C840]" />
         </div>
 
-        {/* Navigation buttons */}
         <div className="flex items-center gap-1" aria-hidden="true">
           <span className="flex size-6 items-center justify-center rounded text-muted-foreground">
             <ArrowLeft className="size-3.5" />
@@ -108,18 +181,23 @@ export function Browser({
           </span>
         </div>
 
-        {/* Address bar */}
+        {/* Address bar — middle-truncate keeps host visible AND path tail */}
         <div className="flex flex-1 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-background/80 px-3 py-1">
           {address ? (
             <>
-              <span className="flex-1 truncate text-center text-xs text-muted-foreground">
-                {address}
+              <span className="flex min-w-0 flex-1 justify-center text-center text-muted-foreground text-xs">
+                <span className="min-w-0 truncate" aria-hidden="true">
+                  {head}
+                </span>
+                {tail && <span className="shrink-0">{tail}</span>}
+                {/* Full address available to assistive tech and Find-in-page */}
+                <span className="sr-only">{address}</span>
               </span>
               <button
                 type="button"
                 onClick={handleCopy}
+                aria-label={copied ? "Address copied" : "Copy address"}
                 className="flex-shrink-0 rounded p-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-label={copied ? "Copied" : "Copy address"}
               >
                 {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
               </button>
@@ -130,13 +208,20 @@ export function Browser({
         </div>
       </div>
 
-      {/* ── Content area ───────────────────────────────────────────── */}
-      <div className="bg-background">
+      {/* ── Inner viewport — aspect-locked ──────────────────────────── */}
+      <div className="relative bg-background" style={viewportStyle}>
         {children ??
           (imageSrc ? (
-            <Image src={imageSrc} alt={imageAlt} decoding="async" className="block w-full" fill />
+            // biome-ignore lint/performance/noImgElement: framework-neutral primitive — consumers may not be on Next.js
+            <img
+              src={imageSrc}
+              alt={imageAlt ?? ""}
+              decoding="async"
+              loading="lazy"
+              className="absolute inset-0 block h-full w-full object-cover"
+            />
           ) : (
-            <div className="flex aspect-video items-center justify-center bg-muted text-sm text-muted-foreground">
+            <div className="absolute inset-0 flex items-center justify-center bg-muted text-muted-foreground text-sm">
               No content
             </div>
           ))}
@@ -147,5 +232,5 @@ export function Browser({
 
 Browser.displayName = "Browser";
 
-/** @deprecated Use Browser instead */
+/** @deprecated Use `Browser` instead. */
 export const BrowserMockup = Browser;

@@ -334,6 +334,17 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/project-banner.tsx",
     layer: "dashboard",
   },
+  // -------------------------------------------------------------------------
+  // Marketing chrome.
+  // -------------------------------------------------------------------------
+  {
+    name: "browser-mockup",
+    title: "Browser",
+    description:
+      "Geist-style browser chrome around a screenshot or demo. Middle-truncating address bar, aspect-locked image viewport.",
+    source: "primitives/browser-mockup.tsx",
+    layer: "marketing",
+  },
 ];
 
 // ---------------------------------------------------------------------------

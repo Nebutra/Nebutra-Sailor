@@ -148,6 +148,12 @@
       "description": "Full-width, non-dismissible banner for project-wide states needing resolution. Four severity variants + ARIA live region."
     },
     {
+      "name": "browser-mockup",
+      "type": "registry:ui",
+      "title": "Browser",
+      "description": "Geist-style browser chrome around a screenshot or demo. Middle-truncating address bar, aspect-locked image viewport."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",

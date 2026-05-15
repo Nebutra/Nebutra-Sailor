@@ -53,6 +53,34 @@ export const WithImage: Story = {
       <Browser
         address="example.com"
         imageSrc="https://placehold.co/800x450/f4f4f5/a1a1aa?text=Website+Preview"
+        imageAlt="Placeholder showing a 800x450 light-gray rectangle labelled 'Website Preview'"
+      />
+    </div>
+  ),
+};
+
+export const LongUrl: Story = {
+  name: "Long URL (middle-truncate)",
+  render: () => (
+    <div className="w-[700px]">
+      <Browser address="vercel.com/team/acme/dashboard/projects/marketing-website/settings/security/attack-challenge-mode">
+        <div className="flex items-center justify-center p-12 text-muted-foreground text-sm">
+          Address bar middle-truncates so host and path tail both stay visible
+        </div>
+      </Browser>
+    </div>
+  ),
+};
+
+export const CustomAspect: Story = {
+  name: "Custom aspect (4:3)",
+  render: () => (
+    <div className="w-[700px]">
+      <Browser
+        address="example.com/screenshot"
+        imageSrc="https://placehold.co/800x600/f4f4f5/a1a1aa?text=4:3"
+        imageAlt="4-by-3 placeholder image"
+        aspectRatio="4 / 3"
       />
     </div>
   ),
