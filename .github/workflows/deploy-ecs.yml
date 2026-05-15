@@ -20,10 +20,14 @@ name: Deploy to ECS (PM2)
 #
 # OPTIONAL REPOSITORY VARIABLES:
 #   ECS_SSH_PORT         — defaults to 22.
-#   ECS_KEEP_RELEASES    — past releases to retain (default 2; reduced from 5
-#                          after the May 12 disk-full incident — 3 apps × 5
-#                          releases × ~1 GB node_modules overflowed the 2C4G
-#                          Aliyun Lite box and blocked every deploy).
+#   ECS_KEEP_RELEASES    — past releases to retain (default 1 since 2026-05-15
+#                          when design-docs was added as the 4th app; previously
+#                          2 after the May 12 disk-full incident reduced it from
+#                          5. 4 apps × ~1 GB node_modules per release overflowed
+#                          the 2C4G Aliyun Lite disk again at retention=2.
+#                          Override per-deploy via the ECS_KEEP_RELEASES repo
+#                          variable if you need rollback depth on a specific
+#                          deploy; raise to 2 if/when ECS box is sized up).
 #
 # CONNECTIVITY NOTE:
 # GH-hosted runners sit in US/EU. SSH to Aliyun ECS in mainland China usually
@@ -38,6 +42,7 @@ on:
     paths:
       - "apps/landing-page/**"
       - "apps/web/**"
+      - "apps/design-docs/**"
       - "backends/gateway/**"
       - "packages/**"
       - "pnpm-lock.yaml"
@@ -48,7 +53,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated subset of: landing web api). Empty = auto-detect."
+        description: "Apps to deploy (space-separated subset of: landing web api design-docs). Empty = auto-detect."
         required: false
         default: ""
       reason:
@@ -76,10 +81,11 @@ jobs:
     name: Detect changed apps
     runs-on: ubuntu-latest
     outputs:
-      landing: ${{ steps.resolve.outputs.landing }}
-      web:     ${{ steps.resolve.outputs.web }}
-      api:     ${{ steps.resolve.outputs.api }}
-      any:     ${{ steps.resolve.outputs.any }}
+      landing:     ${{ steps.resolve.outputs.landing }}
+      web:         ${{ steps.resolve.outputs.web }}
+      api:         ${{ steps.resolve.outputs.api }}
+      design-docs: ${{ steps.resolve.outputs['design-docs'] }}
+      any:         ${{ steps.resolve.outputs.any }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -116,26 +122,39 @@ jobs:
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - '.github/workflows/deploy-ecs.yml'
+            design-docs:
+              - 'apps/design-docs/**'
+              - 'packages/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - '.github/workflows/deploy-ecs.yml'
 
       - name: Resolve target apps
         id: resolve
         env:
-          INPUT_APPS: ${{ github.event.inputs.apps }}
-          F_LANDING:  ${{ steps.filter.outputs.landing }}
-          F_WEB:      ${{ steps.filter.outputs.web }}
-          F_API:      ${{ steps.filter.outputs.api }}
+          INPUT_APPS:     ${{ github.event.inputs.apps }}
+          F_LANDING:      ${{ steps.filter.outputs.landing }}
+          F_WEB:          ${{ steps.filter.outputs.web }}
+          F_API:          ${{ steps.filter.outputs.api }}
+          F_DESIGN_DOCS:  ${{ steps.filter.outputs['design-docs'] }}
         run: |
+          # `design-docs` token contains a hyphen — match it explicitly to avoid
+          # bash glob pitfalls where *design* could also match other strings
+          # we add in the future (e.g. *design-tokens*).
           {
             if [ -n "${INPUT_APPS:-}" ]; then
               echo "landing=$([[ "$INPUT_APPS" == *landing* ]] && echo true || echo false)"
               echo "web=$([[ "$INPUT_APPS" == *web* ]] && echo true || echo false)"
               echo "api=$([[ "$INPUT_APPS" == *api* ]] && echo true || echo false)"
+              echo "design-docs=$([[ "$INPUT_APPS" == *design-docs* ]] && echo true || echo false)"
             else
               echo "landing=$F_LANDING"
               echo "web=$F_WEB"
               echo "api=$F_API"
+              echo "design-docs=$F_DESIGN_DOCS"
             fi
-            echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || -n "${INPUT_APPS:-}" ]] && echo true || echo false)"
+            echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_DESIGN_DOCS" == "true" || -n "${INPUT_APPS:-}" ]] && echo true || echo false)"
           } >> "$GITHUB_OUTPUT"
 
   # ──────────────────────────────────────────────────────────────────────
@@ -161,6 +180,11 @@ jobs:
             workspace: apps/web
             condition: ${{ needs.detect-changes.outputs.web }}
             site_url: "https://app.nebutra.com"
+          - app: design-docs
+            package: "@nebutra/design-docs"
+            workspace: apps/design-docs
+            condition: ${{ needs.detect-changes.outputs['design-docs'] }}
+            site_url: "https://design.nebutra.com"
     steps:
       - name: Skip if not needed
         if: matrix.condition != 'true'
@@ -312,7 +336,7 @@ jobs:
       ECS_USER:          ${{ vars.ECS_USER }}
       ECS_SSH_PORT:      ${{ vars.ECS_SSH_PORT || '22' }}
       ECS_DEPLOY_ROOT:   ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
-      ECS_KEEP_RELEASES: ${{ vars.ECS_KEEP_RELEASES || '2' }}
+      ECS_KEEP_RELEASES: ${{ vars.ECS_KEEP_RELEASES || '1' }}
     steps:
       - name: Verify deploy targets configured
         run: |
@@ -337,6 +361,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: bundle-web
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download design-docs bundle
+        if: needs.detect-changes.outputs['design-docs'] == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: bundle-design-docs
           path: ${{ runner.temp }}/bundles
 
       - name: Download api bundle
@@ -384,7 +415,7 @@ jobs:
           find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -ls 2>/dev/null || true
           find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -delete 2>/dev/null || true
           echo "--- pruning old releases (keep latest 2 per app) ---"
-          for app in landing web api; do
+          for app in landing web api design-docs; do
             dir="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/$app/releases"
             [ -d "$dir" ] || continue
             extra=$(find "$dir" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' 2>/dev/null \
@@ -444,9 +475,10 @@ jobs:
         run: |
           set -euo pipefail
           APPS=""
-          [ "${{ needs.detect-changes.outputs.landing }}" = "true" ] && APPS="$APPS landing"
-          [ "${{ needs.detect-changes.outputs.web }}"     = "true" ] && APPS="$APPS web"
-          [ "${{ needs.detect-changes.outputs.api }}"     = "true" ] && APPS="$APPS api"
+          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && APPS="$APPS landing"
+          [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && APPS="$APPS web"
+          [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
+          [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           APPS="$(echo "$APPS" | xargs)"
           echo "Deploying: $APPS"
           # SSH joins all remaining args into a single shell-evaluated string
@@ -470,9 +502,10 @@ jobs:
         run: |
           set -euo pipefail
           declare -A targets=()
-          [ "${{ needs.detect-changes.outputs.landing }}" = "true" ] && targets[landing]="https://nebutra.com"
-          [ "${{ needs.detect-changes.outputs.web }}"     = "true" ] && targets[web]="https://app.nebutra.com"
-          [ "${{ needs.detect-changes.outputs.api }}"     = "true" ] && targets[api]="https://api.nebutra.com/health"
+          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing]="https://nebutra.com"
+          [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && targets[web]="https://app.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/health"
+          [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && targets[design-docs]="https://design.nebutra.com"
           ok_codes='^(200|301|302|307)$'
           for name in "${!targets[@]}"; do
             url="${targets[$name]}"
@@ -501,7 +534,7 @@ jobs:
           {
             echo "## ECS deploy summary"
             echo "- Commit: \`${{ github.sha }}\`"
-            echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }}"
+            echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }} / design-docs=${{ needs.detect-changes.outputs['design-docs'] }}"
             echo "- Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
             if [ -n "${{ github.event.inputs.reason }}" ]; then
               echo "- Reason: ${{ github.event.inputs.reason }}"

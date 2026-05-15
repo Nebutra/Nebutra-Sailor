@@ -4,6 +4,12 @@ import type { NextConfig } from "next";
 const withMDX = createMDX();
 
 const nextConfig: NextConfig = {
+  // `output: "standalone"` is gated by env so Vercel builds (which ignore it)
+  // skip the standalone trace cost, while Docker / ECS deploys can opt in by
+  // setting NEXT_OUTPUT=standalone. The ECS workflow at .github/workflows/
+  // deploy-ecs.yml relies on .next/standalone/ existing.
+  output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
+
   serverExternalPackages: ["@takumi-rs/image-response"],
   transpilePackages: [
     "@nebutra/ui",

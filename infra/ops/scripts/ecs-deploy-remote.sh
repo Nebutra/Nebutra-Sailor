@@ -20,12 +20,13 @@
 set -euo pipefail
 
 DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
-APPS="${APPS:-landing web api}"
-# Default 2 (was 5). Each release holds ~1 GB of node_modules; on the 2C4G
-# Aliyun Lite instance, 5 × 3 apps ≈ 15 GB already overflowed the disk and
-# caused the May 12 deploy chain to fail at scp. Override per-deploy with
-# the ECS_KEEP_RELEASES repository variable if you need more rollback depth.
-KEEP_RELEASES="${KEEP_RELEASES:-2}"
+APPS="${APPS:-landing web api design-docs}"
+# Default 1 (was 2 since the May 12 disk-full incident reduced it from 5).
+# Cut to 1 on 2026-05-15 when design-docs joined as the 4th ECS app — at 4
+# apps × ~1 GB/release × 2 releases the 2C4G Aliyun Lite disk fills again.
+# Override per-deploy with the ECS_KEEP_RELEASES repository variable if you
+# need rollback depth on a specific deploy.
+KEEP_RELEASES="${KEEP_RELEASES:-1}"
 PM2_CONFIG="${PM2_CONFIG:-$DEPLOY_ROOT/ecosystem.config.cjs}"
 SHA="${SHA:?SHA env var required}"
 
@@ -33,8 +34,8 @@ log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
 
 case "$APPS" in
-  *landing*|*web*|*api*) : ;;
-  *) fail "APPS must contain at least one of: landing web api (got: $APPS)" ;;
+  *landing*|*web*|*api*|*design-docs*) : ;;
+  *) fail "APPS must contain at least one of: landing web api design-docs (got: $APPS)" ;;
 esac
 
 mkdir -p "$DEPLOY_ROOT"
@@ -192,10 +193,11 @@ for p in procs:
 
 for app in $APPS; do
   case "$app" in
-    landing) deploy_one landing landing-page ;;
-    web)     deploy_one web     web         ;;
-    api)     deploy_one api     api-gateway ;;
-    *)       fail "unknown app: $app"       ;;
+    landing)     deploy_one landing     landing-page ;;
+    web)         deploy_one web         web          ;;
+    api)         deploy_one api         api-gateway  ;;
+    design-docs) deploy_one design-docs design-docs  ;;
+    *)           fail "unknown app: $app"            ;;
   esac
 done
 

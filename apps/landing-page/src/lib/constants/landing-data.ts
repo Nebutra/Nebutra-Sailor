@@ -382,6 +382,7 @@ export const NAV_LINKS = [
       { labelKey: "changelog", href: "/changelog", icon: GitPullRequest },
       { labelKey: "roadmap", href: "/roadmap", icon: Route },
       { labelKey: "docs", href: createPublicDocsUrl(), icon: BookOpenNebutra },
+      { labelKey: "designDocs", href: "https://design.nebutra.com", icon: Paintbrush },
     ],
   },
   {
