@@ -1,30 +1,17 @@
 "use client";
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@nebutra/ui/primitives";
+import { Select } from "@nebutra/ui/primitives";
+
+const options = [
+  { value: "nextjs", label: "Next.js" },
+  { value: "react", label: "React" },
+  { value: "sveltekit", label: "SvelteKit" },
+] as const;
 
 export function SelectDemo() {
   return (
-    <Select>
-      <SelectTrigger className="w-[200px]">
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Fruits</SelectLabel>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="orange">Orange</SelectItem>
-          <SelectItem value="grape">Grape</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <div className="w-full max-w-[var(--select-demo-width)] [--select-demo-width:240px]">
+      <Select label="Framework" placeholder="Select a framework" options={options} />
+    </div>
   );
 }

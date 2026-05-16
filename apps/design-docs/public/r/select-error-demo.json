@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select-error-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/select-error-demo.tsx",
+      "content": "\"use client\";\n\nimport { Select } from \"@nebutra/ui/primitives\";\n\nconst options = [\n  { value: \"iad1\", label: \"Washington, D.C.\" },\n  { value: \"sfo1\", label: \"San Francisco\" },\n  { value: \"hnd1\", label: \"Tokyo\" },\n] as const;\n\nexport function SelectErrorDemo() {\n  return (\n    <div className=\"w-full max-w-[var(--select-demo-width)] [--select-demo-width:260px]\">\n      <Select\n        error=\"Select a region.\"\n        label=\"Region\"\n        placeholder=\"Select a region\"\n        options={options}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

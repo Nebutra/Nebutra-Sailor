@@ -1,26 +1,17 @@
 "use client";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@nebutra/ui/primitives";
+import { Select } from "@nebutra/ui/primitives";
+
+const options = [
+  { value: "free", label: "Free" },
+  { value: "pro", label: "Pro" },
+  { value: "enterprise", label: "Enterprise", disabled: true },
+] as const;
 
 export function SelectDisabledDemo() {
   return (
-    <Select>
-      <SelectTrigger className="w-48">
-        <SelectValue placeholder="选择计划 (Select plan)" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="free">免费版 (Free)</SelectItem>
-        <SelectItem value="pro">专业版 (Pro)</SelectItem>
-        <SelectItem value="enterprise" disabled>
-          企业版 (Enterprise) - 联系销售
-        </SelectItem>
-      </SelectContent>
-    </Select>
+    <div className="w-full max-w-[var(--select-demo-width)] [--select-demo-width:260px]">
+      <Select disabled placeholder="Disabled with placeholder" options={options} />
+    </div>
   );
 }

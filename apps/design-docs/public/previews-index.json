@@ -928,6 +928,10 @@
       "type": "registry:example"
     },
     {
+      "name": "select-error-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "select-groups-demo",
       "type": "registry:example"
     },

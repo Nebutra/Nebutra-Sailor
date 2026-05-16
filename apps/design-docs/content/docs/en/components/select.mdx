@@ -1,18 +1,68 @@
 ---
 title: "Select"
-description: "Dropdown selection control built on Radix UI with full keyboard support."
+description: "Short fixed-list selection control with a native shorthand and compound listbox escape hatch."
 ---
 
+<ComponentPreview name="select-demo" className="min-h-[260px] flex items-start justify-center pt-8" />
 
-import { SelectDemo } from "@/components/previews/select-demo";
-import { SelectGroupsDemo } from "@/components/previews/select-groups-demo";
-import { SelectDisabledDemo } from "@/components/previews/select-disabled-demo";
-import { ComponentPreview } from "@/components/component-preview";
+## Installation
 
-<ComponentPreview name="select-demo" className="min-h-[300px] flex items-start justify-center pt-8"  />
+```tsx
+import { Select } from "@nebutra/ui/primitives";
+```
 
+## Overview
+
+`Select` is the default control for short, fixed lists where typing adds nothing: frameworks,
+regions, plans, and small status filters. The primary API renders a native `<select>` so browser
+focus, form submission, mobile pickers, and `optgroup` support stay intact.
+
+The compound listbox API (`SelectTrigger`, `SelectContent`, `SelectItem`) is still available for
+advanced grouped menus. Use `Combobox` once filtering is useful and `MultiSelect` when users can
+choose more than one value.
 
 ## Usage
+
+```tsx
+const options = [
+  { value: "nextjs", label: "Next.js" },
+  { value: "react", label: "React" },
+];
+
+<Select label="Framework" placeholder="Select a framework" options={options} />;
+```
+
+Native `<option>` and `<optgroup>` children are also supported:
+
+```tsx
+<Select label="Region" placeholder="Select a region">
+  <optgroup label="North America">
+    <option value="iad1">Washington, D.C.</option>
+    <option value="sfo1">San Francisco</option>
+  </optgroup>
+</Select>
+```
+
+## Props
+
+### Native Select
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `options` | `{ value: string; label: string; disabled?: boolean }[]` | — | Short fixed option list. |
+| `label` | `string` | — | Short Title Case field label. |
+| `placeholder` | `string` | — | Disabled first option shown before selection. |
+| `size` | `"xsmall" \| "small" \| "medium" \| "large"` | `"medium"` | Control density. |
+| `variant` | `"default" \| "ghost"` | `"default"` | Visual treatment. |
+| `prefix` | `ReactNode` | — | Decorative leading icon. |
+| `suffix` | `ReactNode` | `ChevronDown` | Decorative trailing icon. |
+| `error` | `string` | — | Validation message; sets `aria-invalid` and `aria-describedby`. |
+| `disabled` | `boolean` | `false` | Disables the native select. |
+| `value` | `string` | — | Controlled value. |
+| `defaultValue` | `string` | — | Uncontrolled default value. |
+| `onChange` | `ChangeEventHandler<HTMLSelectElement>` | — | Native change callback. |
+
+### Compound Listbox
 
 ```tsx
 import {
@@ -24,84 +74,58 @@ import {
   SelectGroup,
   SelectLabel,
   SelectSeparator,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
-} from "@nebutra/ui/primitives"
+} from "@nebutra/ui/primitives";
 ```
 
-## Props
+The compound API keeps the Base UI listbox behavior for grouped menu-like selection.
 
-### Select (Root)
-
-Built on standard Select patterns.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `string` | — | Controlled selected value |
-| `defaultValue` | `string` | — | Uncontrolled default value |
-| `onValueChange` | `(value: string) => void` | — | Callback when selection changes |
-| `open` | `boolean` | — | Controlled open state |
-| `onOpenChange` | `(open: boolean) => void` | — | Callback when open state changes |
-| `disabled` | `boolean` | `false` | Disables the select |
-
-### SelectTrigger
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | — | Additional CSS classes |
-| `children` | `ReactNode` | — | Trigger content (typically `SelectValue`) |
-
-### SelectValue
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `placeholder` | `string` | — | Text shown when no value selected |
-
-### SelectContent
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | — | Additional CSS classes |
-| `position` | `"item-aligned" \| "popper"` | `"popper"` | Positioning strategy |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | Preferred side to open |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | Alignment along the trigger |
-
-### SelectItem
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `string` | — | **Required.** The value for this option |
-| `disabled` | `boolean` | `false` | Prevents this item from being selected |
-| `className` | `string` | — | Additional CSS classes |
-| `children` | `ReactNode` | — | Item label text |
-
-### SelectGroup / SelectLabel / SelectSeparator
-
-| Component | Description |
-|-----------|-------------|
-| `SelectGroup` | Groups related items together |
-| `SelectLabel` | Non-selectable label for a group |
-| `SelectSeparator` | Visual divider between groups |
+| Component | Purpose |
+|---|---|
+| `Select` | Root state provider when no native props are passed. |
+| `SelectTrigger` | Button trigger. Accepts the same `size` scale as native Select. |
+| `SelectValue` | Selected value / placeholder renderer. |
+| `SelectContent` | Positioned listbox surface. |
+| `SelectItem` | Selectable listbox option. |
+| `SelectGroup` / `SelectLabel` / `SelectSeparator` | Grouping primitives for longer lists. |
 
 ## Examples
 
-### Controlled Select
+### Sizes
 
-<ComponentPreview name="select-demo" className="min-h-[300px] flex items-start justify-center pt-8"  />
+```tsx
+<Select placeholder="XSmall" size="xsmall" options={options} />
+<Select placeholder="Small" size="small" options={options} />
+<Select placeholder="Default" options={options} />
+<Select placeholder="Large" size="large" options={options} />
+```
 
+### Disabled
 
-<ComponentPreview name="select-groups-demo" className="min-h-[350px] flex items-start justify-center pt-8"  />
+<ComponentPreview name="select-disabled-demo" className="min-h-[220px] flex items-start justify-center pt-8" />
 
+### Error
 
-### Disabled Items
+<ComponentPreview name="select-error-demo" className="min-h-[240px] flex items-start justify-center pt-8" />
 
-<ComponentPreview name="select-disabled-demo" className="min-h-[250px] flex items-start justify-center pt-8"  />
+### Grouped Compound Listbox
 
+<ComponentPreview name="select-groups-demo" className="min-h-[350px] flex items-start justify-center pt-8" />
+
+## Best Practices
+
+- Pick `Select` for short, fixed lists under about ten items where typing adds nothing.
+- Switch to `Combobox` when filtering helps; use `MultiSelect` when more than one value can be
+  chosen.
+- Group native lists past about ten items with `<optgroup>`. The compound API also supports
+  `SelectGroup` for menu-like grouped lists.
+- Use short Title Case labels such as `Framework` or `Region`.
+- Make placeholders action-oriented: `Select a framework`, not `Choose one...` or a repeated label.
+- Validate on blur and pass a sentence-case `error` string ending in a period.
+- Do not wrap a labelled `Select` in a tooltip. Put hints on a sibling icon button so the label
+  stays announced.
 
 ## Accessibility
 
-- Built on Radix UI Select — follows the WAI-ARIA [Listbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/).
-- `SelectTrigger` has `role="combobox"` with `aria-expanded` and `aria-haspopup="listbox"`.
-- `SelectContent` has `role="listbox"`.
-- Each `SelectItem` has `role="option"` and `aria-selected`.
-- Full keyboard navigation: `ArrowUp`/`ArrowDown` to navigate, `Enter`/`Space` to select, `Escape` to close.
+- Native Select keeps browser form semantics, mobile pickers, and keyboard behavior.
+- `error` sets `aria-invalid` and connects the field to the inline error message.
+- The compound API follows the ARIA listbox pattern through Base UI primitives.

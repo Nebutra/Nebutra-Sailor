@@ -1,18 +1,64 @@
 ---
 title: "选择器 (Select)"
-description: "基于 Radix UI 构建的下拉选择控件，具有完善的键盘支持。"
+description: "短固定列表选择控件，提供原生 shorthand 和 compound listbox 扩展路径。"
 ---
 
+<ComponentPreview name="select-demo" className="min-h-[260px] flex items-start justify-center pt-8" />
 
-import { SelectDemo } from "@/components/previews/select-demo";
-import { SelectGroupsDemo } from "@/components/previews/select-groups-demo";
-import { SelectDisabledDemo } from "@/components/previews/select-disabled-demo";
-import { ComponentPreview } from "@/components/component-preview";
+## 安装
 
-<ComponentPreview name="select-demo" className="min-h-[300px] flex items-start justify-center pt-8"  />
+```tsx
+import { Select } from "@nebutra/ui/primitives";
+```
 
+## 概览
 
-## 使用方法 (Usage)
+`Select` 适用于短固定列表，输入搜索没有收益的场景：框架、区域、套餐、小型状态过滤。主 API 渲染原生 `<select>`，保留浏览器焦点、表单提交、移动端 picker 和 `optgroup` 支持。
+
+复杂分组菜单仍可使用 compound listbox API（`SelectTrigger`、`SelectContent`、`SelectItem`）。需要过滤时使用 `Combobox`，允许多选时使用 `MultiSelect`。
+
+## 用法
+
+```tsx
+const options = [
+  { value: "nextjs", label: "Next.js" },
+  { value: "react", label: "React" },
+];
+
+<Select label="Framework" placeholder="Select a framework" options={options} />;
+```
+
+也支持原生 `<option>` 和 `<optgroup>` children：
+
+```tsx
+<Select label="Region" placeholder="Select a region">
+  <optgroup label="North America">
+    <option value="iad1">Washington, D.C.</option>
+    <option value="sfo1">San Francisco</option>
+  </optgroup>
+</Select>
+```
+
+## Props
+
+### 原生 Select
+
+| Prop | Type | Default | 说明 |
+|---|---|---|---|
+| `options` | `{ value: string; label: string; disabled?: boolean }[]` | — | 短固定选项列表。 |
+| `label` | `string` | — | 简短 Title Case 字段标签。 |
+| `placeholder` | `string` | — | 选择前展示的 disabled 第一项。 |
+| `size` | `"xsmall" \| "small" \| "medium" \| "large"` | `"medium"` | 控件密度。 |
+| `variant` | `"default" \| "ghost"` | `"default"` | 视觉样式。 |
+| `prefix` | `ReactNode` | — | 装饰性前置图标。 |
+| `suffix` | `ReactNode` | `ChevronDown` | 装饰性后置图标。 |
+| `error` | `string` | — | 校验消息；设置 `aria-invalid` 和 `aria-describedby`。 |
+| `disabled` | `boolean` | `false` | 禁用原生 select。 |
+| `value` | `string` | — | 受控值。 |
+| `defaultValue` | `string` | — | 非受控默认值。 |
+| `onChange` | `ChangeEventHandler<HTMLSelectElement>` | — | 原生 change 回调。 |
+
+### Compound Listbox
 
 ```tsx
 import {
@@ -24,83 +70,55 @@ import {
   SelectGroup,
   SelectLabel,
   SelectSeparator,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
-} from "@nebutra/ui/primitives"
+} from "@nebutra/ui/primitives";
 ```
 
-## 属性 (Props)
+compound API 保留 Base UI listbox 行为，适合更像菜单的分组选择。
 
-### Select (根组件)
+| Component | 作用 |
+|---|---|
+| `Select` | 未传 native props 时作为 root state provider。 |
+| `SelectTrigger` | 按钮触发器。支持和原生 Select 相同的 `size`。 |
+| `SelectValue` | 选中值 / placeholder 渲染器。 |
+| `SelectContent` | 定位的 listbox surface。 |
+| `SelectItem` | 可选择 listbox option。 |
+| `SelectGroup` / `SelectLabel` / `SelectSeparator` | 较长列表的分组 primitive。 |
 
-基于标准的选择器模式构建。
+## 示例
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `value` | `string` | — | 受控的选中值 |
-| `defaultValue` | `string` | — | 非受控的默认值 |
-| `onValueChange` | `(value: string) => void` | — | 选中改变时的回调函数 |
-| `open` | `boolean` | — | 受控的打开状态 |
-| `onOpenChange` | `(open: boolean) => void` | — | 打开状态改变时的回调函数 |
-| `disabled` | `boolean` | `false` | 禁用选择器 |
+### 尺寸
 
-### SelectTrigger (触发器)
+```tsx
+<Select placeholder="XSmall" size="xsmall" options={options} />
+<Select placeholder="Small" size="small" options={options} />
+<Select placeholder="Default" options={options} />
+<Select placeholder="Large" size="large" options={options} />
+```
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `className` | `string` | — | 额外的 CSS 类名 |
-| `children` | `ReactNode` | — | 触发器内容 (通常为 `SelectValue`) |
+### 禁用
 
-### SelectValue (显示值)
+<ComponentPreview name="select-disabled-demo" className="min-h-[220px] flex items-start justify-center pt-8" />
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `placeholder` | `string" | — | 未选中任何值时显示的占位文本 |
+### 错误
 
-### SelectContent (内容区)
+<ComponentPreview name="select-error-demo" className="min-h-[240px] flex items-start justify-center pt-8" />
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `className` | `string" | — | 额外的 CSS 类名 |
-| `position` | `"item-aligned" \| "popper"` | `"popper"` | 定位策略 |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | 首选打开侧 |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | 沿触发器的对齐方式 |
+### 分组 Compound Listbox
 
-### SelectItem (选择条目)
+<ComponentPreview name="select-groups-demo" className="min-h-[350px] flex items-start justify-center pt-8" />
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `value` | `string" | — | **必填。** 该选项的值 |
-| `disabled` | `boolean" | `false` | 防止该条目被选中 |
-| `className` | `string" | — | 额外的 CSS 类名 |
-| `children` | `ReactNode` | — | 条目标签文本 |
+## 最佳实践
 
-### SelectGroup / SelectLabel / SelectSeparator (分组/标签/分隔线)
+- 短固定列表优先使用 `Select`，大约十项以内且搜索没有收益。
+- 需要过滤时改用 `Combobox`；允许多选时使用 `MultiSelect`。
+- 超过约十项的原生列表用 `<optgroup>` 分组；compound API 也可以用 `SelectGroup` 处理菜单式分组。
+- 标签使用简短 Title Case 名词，例如 `Framework`、`Region`。
+- placeholder 使用动作句式：`Select a framework`，不要写 `Choose one...` 或重复 label。
+- blur 后校验，并传入以句号结尾的 sentence-case `error` 文案。
+- 不要把带 label 的 `Select` 包进 Tooltip；提示应放在相邻 icon button 上，避免 label 宣告被破坏。
 
-| 组件 | 描述 |
-|-----------|-------------|
-| `SelectGroup` | 将相关的条目分在一起 |
-| `SelectLabel` | 组的非可选标签 |
-| `SelectSeparator` | 组之间的视觉分隔线 |
+## 可访问性
 
-## 示例 (Examples)
-
-### 受控选择器 (Controlled Select)
-
-<ComponentPreview name="select-demo" className="min-h-[300px] flex items-start justify-center pt-8"  />
-
-
-<ComponentPreview name="select-groups-demo" className="min-h-[350px] flex items-start justify-center pt-8"  />
-
-
-### 禁用条目 (Disabled Items)
-
-<ComponentPreview name="select-disabled-demo" className="min-h-[250px] flex items-start justify-center pt-8"  />
-
-
-## 可访问性 (Accessibility)
-
-- 基于 Radix UI Select 构建 —— 遵循 WAI-ARIA [列表框模式 (Listbox pattern)](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/)。
-- `SelectTrigger` 具有 `role="combobox"` 属性，并带有 `aria-expanded` 和 `aria-haspopup="listbox"`。
-- `SelectContent` 具有 `role="listbox"` 属性。
-- 每个 `SelectItem` 具有 `role="option"` 属性和 `aria-selected`。
+- 原生 Select 保留浏览器表单语义、移动端 picker 和键盘行为。
+- `error` 会设置 `aria-invalid`，并把字段关联到内联错误消息。
+- compound API 通过 Base UI primitive 遵循 ARIA listbox pattern。

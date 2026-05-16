@@ -921,6 +921,11 @@ export const SelectDisabledDemo = dynamic(() =>
     default: m.SelectDisabledDemo,
   })),
 );
+export const SelectErrorDemo = dynamic(() =>
+  import("@/components/previews/select-error-demo").then((m) => ({
+    default: m.SelectErrorDemo,
+  })),
+);
 export const SelectGroupsDemo = dynamic(() =>
   import("@/components/previews/select-groups-demo").then((m) => ({ default: m.SelectGroupsDemo })),
 );
@@ -1501,6 +1506,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "search-tool-demo": { name: "search-tool-demo", component: SearchToolDemo },
   "select-demo": { name: "select-demo", component: SelectDemo },
   "select-disabled-demo": { name: "select-disabled-demo", component: SelectDisabledDemo },
+  "select-error-demo": { name: "select-error-demo", component: SelectErrorDemo },
   "select-groups-demo": { name: "select-groups-demo", component: SelectGroupsDemo },
   "separator-2-demo": { name: "separator-2-demo", component: Separator2Demo },
   "separator-3-demo": { name: "separator-3-demo", component: Separator3Demo },

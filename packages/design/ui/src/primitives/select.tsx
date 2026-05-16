@@ -4,10 +4,10 @@ import { Select as BaseSelect } from "@base-ui/react/select";
 import { Check, ChevronDown } from "@nebutra/icons";
 import * as React from "react";
 
-import { type InputSize, inputTokens } from "../tokens/components/input";
+import { type SelectSize, selectTokens } from "../tokens/components/select";
 import { cn } from "../utils/cn";
-
-const Select = BaseSelect.Root;
+import { ErrorMessage } from "./error-message";
+import { Label } from "./label";
 
 type SelectTriggerCssVars = React.CSSProperties & {
   "--select-height"?: string;
@@ -18,20 +18,229 @@ type SelectTriggerCssVars = React.CSSProperties & {
 };
 
 function getSelectTriggerStyle(
-  size: InputSize,
+  size: SelectSize,
   style: React.CSSProperties | undefined,
 ): SelectTriggerCssVars {
-  const token = inputTokens.sizes[size];
+  const token = selectTokens.sizes[size];
 
   return {
     "--select-height": `${token.height}px`,
     "--select-padding-x": `${token.paddingX}px`,
     "--select-font-size": `${token.fontSize}px`,
     "--select-radius": `${token.radius}px`,
-    "--select-focus-ring-width": `${inputTokens.focusRingWidth}px`,
+    "--select-focus-ring-width": `${selectTokens.focusRingWidth}px`,
     ...style,
   };
 }
+
+type NativeSelectCssVar =
+  | "--select-height"
+  | "--select-padding-x"
+  | "--select-font-size"
+  | "--select-radius"
+  | "--select-icon-inset"
+  | "--select-icon-box-size"
+  | "--select-icon-size"
+  | "--select-label-size"
+  | "--select-focus-ring-width"
+  | "--select-field-gap"
+  | "--select-message-gap"
+  | "--select-duration"
+  | "--select-easing";
+
+type NativeSelectCssVars = React.CSSProperties & Record<NativeSelectCssVar, string>;
+
+export type SelectVariant = "default" | "ghost";
+
+export interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+export interface NativeSelectProps
+  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "children" | "size" | "prefix"> {
+  native?: true;
+  variant?: SelectVariant;
+  options?: readonly SelectOption[];
+  label?: string;
+  placeholder?: string;
+  size?: SelectSize;
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
+  error?: string;
+  children?: React.ReactNode;
+  wrapperClassName?: string;
+}
+
+export type CompoundSelectProps = React.ComponentPropsWithoutRef<typeof BaseSelect.Root> & {
+  native?: false;
+};
+
+export type SelectProps = NativeSelectProps | CompoundSelectProps;
+
+function getNativeSelectStyle(
+  size: SelectSize,
+  style: React.CSSProperties | undefined,
+): NativeSelectCssVars {
+  const token = selectTokens.sizes[size];
+
+  return {
+    "--select-height": `${token.height}px`,
+    "--select-padding-x": `${token.paddingX}px`,
+    "--select-font-size": `${token.fontSize}px`,
+    "--select-radius": `${token.radius}px`,
+    "--select-icon-inset": `${token.iconInset}px`,
+    "--select-icon-box-size": `${token.iconBoxSize}px`,
+    "--select-icon-size": `${token.iconSize}px`,
+    "--select-label-size": `${selectTokens.labelSize}px`,
+    "--select-focus-ring-width": `${selectTokens.focusRingWidth}px`,
+    "--select-field-gap": `${selectTokens.fieldGap}px`,
+    "--select-message-gap": `${selectTokens.messageGap}px`,
+    "--select-duration": `${selectTokens.motion.duration}ms`,
+    "--select-easing": selectTokens.motion.easing,
+    ...style,
+  };
+}
+
+function hasNativeOptionChildren(children: React.ReactNode) {
+  let hasNativeChildren = false;
+  React.Children.forEach(children, (child) => {
+    if (!React.isValidElement(child)) return;
+    if (child.type === "option" || child.type === "optgroup") {
+      hasNativeChildren = true;
+    }
+  });
+  return hasNativeChildren;
+}
+
+function shouldRenderNativeSelect(props: SelectProps) {
+  if (props.native === true) return true;
+  if ("options" in props || "label" in props || "placeholder" in props || "error" in props) {
+    return true;
+  }
+  if ("prefix" in props || "suffix" in props || "size" in props || "onChange" in props) {
+    return true;
+  }
+  if ("children" in props && hasNativeOptionChildren(props.children)) {
+    return true;
+  }
+
+  return false;
+}
+
+function NativeSelect({
+  id,
+  variant = "default",
+  options,
+  label,
+  placeholder,
+  size = "medium",
+  prefix,
+  suffix,
+  disabled = false,
+  error,
+  className,
+  wrapperClassName,
+  children,
+  style,
+  value,
+  defaultValue,
+  "aria-describedby": ariaDescribedBy,
+  ...props
+}: NativeSelectProps) {
+  const generatedId = React.useId();
+  const selectId = id ?? generatedId;
+  const errorId = error ? `${selectId}-error` : undefined;
+  const describedBy = [ariaDescribedBy, errorId].filter(Boolean).join(" ") || undefined;
+  const fallbackDefaultValue =
+    placeholder && value === undefined && defaultValue === undefined ? "" : defaultValue;
+  const hasAffix = Boolean(prefix || suffix);
+
+  return (
+    <div
+      className={cn("grid gap-[var(--select-field-gap)]", wrapperClassName)}
+      style={getNativeSelectStyle(size, style)}
+    >
+      {label && (
+        <Label
+          htmlFor={selectId}
+          className="text-[length:var(--select-label-size)] font-medium text-foreground capitalize"
+        >
+          {label}
+        </Label>
+      )}
+      <div
+        className={cn(
+          "relative flex items-center text-muted-foreground",
+          !disabled && "hover:text-foreground",
+        )}
+      >
+        <select
+          id={selectId}
+          disabled={disabled}
+          value={value}
+          defaultValue={fallbackDefaultValue}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
+          className={cn(
+            "h-[var(--select-height)] w-full appearance-none rounded-[var(--select-radius)] border font-sans",
+            "bg-background text-[length:var(--select-font-size)] text-foreground shadow-[var(--shadow-xs)] outline-none",
+            "transition-[background-color,border-color,box-shadow,color] duration-[var(--select-duration)] ease-[var(--select-easing)]",
+            "focus-visible:border-ring focus-visible:ring-[length:var(--select-focus-ring-width)] focus-visible:ring-ring/30",
+            "disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground",
+            "aria-invalid:border-destructive/60 aria-invalid:focus-visible:border-destructive aria-invalid:focus-visible:ring-destructive/20",
+            variant === "ghost" ? "border-transparent bg-transparent shadow-none" : "border-input",
+            prefix
+              ? "pl-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]"
+              : "pl-[var(--select-padding-x)]",
+            hasAffix
+              ? "pr-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]"
+              : "pr-[var(--select-padding-x)]",
+            className,
+          )}
+          {...props}
+        >
+          {placeholder && (
+            <option value="" disabled>
+              {placeholder}
+            </option>
+          )}
+          {options?.map((option) => (
+            <option key={option.value} value={option.value} disabled={option.disabled}>
+              {option.label}
+            </option>
+          ))}
+          {children}
+        </select>
+        {prefix && (
+          <span className="pointer-events-none absolute left-[var(--select-icon-inset)] inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
+            {prefix}
+          </span>
+        )}
+        <span className="pointer-events-none absolute right-[var(--select-icon-inset)] inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
+          {suffix ?? <ChevronDown aria-hidden="true" className="size-[var(--select-icon-size)]" />}
+        </span>
+      </div>
+      {error && (
+        <span id={errorId} className="mt-[var(--select-message-gap)]">
+          <ErrorMessage size={size === "large" ? "medium" : "small"}>{error}</ErrorMessage>
+        </span>
+      )}
+    </div>
+  );
+}
+
+function Select(props: SelectProps) {
+  if (shouldRenderNativeSelect(props)) {
+    return <NativeSelect {...(props as NativeSelectProps)} />;
+  }
+
+  const { native: _native, ...rootProps } = props as CompoundSelectProps;
+  return <BaseSelect.Root {...rootProps} />;
+}
+
+Select.displayName = "Select";
 
 const SelectGroup = React.forwardRef<
   HTMLDivElement,
@@ -59,8 +268,8 @@ SelectValue.displayName = "SelectValue";
 
 const SelectTrigger = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger> & { size?: InputSize }
->(({ className, children, size = "md", style, ...props }, ref) => (
+  Omit<React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger>, "size"> & { size?: SelectSize }
+>(({ className, children, size = "medium", style, ...props }, ref) => (
   <BaseSelect.Trigger
     ref={ref}
     className={cn(
@@ -148,16 +357,17 @@ const SelectItem = React.forwardRef<
 ));
 SelectItem.displayName = "SelectItem";
 
-const SelectSeparator = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BaseSelect.Separator>
->(({ className, ...props }, ref) => (
-  <BaseSelect.Separator
-    ref={ref}
-    className={cn("-mx-1 my-1 h-px bg-muted", className)}
-    {...props}
-  />
-));
+const SelectSeparator: React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<"div"> & React.RefAttributes<HTMLDivElement>
+> = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
+  ({ className, ...props }, ref) => (
+    <BaseSelect.Separator
+      ref={ref}
+      className={cn("-mx-1 my-1 h-px bg-muted", className)}
+      {...props}
+    />
+  ),
+);
 SelectSeparator.displayName = "SelectSeparator";
 
 export {

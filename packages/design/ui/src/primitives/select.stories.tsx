@@ -1,5 +1,7 @@
+import { ArrowCircleUp } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
+import type { ReactNode } from "react";
 import {
   Select,
   SelectContent,
@@ -18,7 +20,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Single-select control built on Radix Select with keyboard navigation and grouped options.",
+          "Short fixed-list native select with a compatible compound listbox API for advanced grouped menus.",
       },
     },
   },
@@ -28,7 +30,82 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+const planOptions = [
+  { value: "starter", label: "Starter" },
+  { value: "pro", label: "Pro" },
+  { value: "enterprise", label: "Enterprise" },
+] as const;
+
+function StoryRow({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex w-[var(--select-story-width)] flex-col gap-4 sm:flex-row sm:items-start [--select-story-width:720px]">
+      {children}
+    </div>
+  );
+}
+
+export const Sizes: Story = {
+  render: () => (
+    <StoryRow>
+      <Select placeholder="XSmall" size="xsmall" options={planOptions} />
+      <Select placeholder="Small" size="small" options={planOptions} />
+      <Select placeholder="Default" options={planOptions} />
+      <Select placeholder="Large" size="large" options={planOptions} />
+    </StoryRow>
+  ),
+};
+
+export const PrefixAndSuffix: Story = {
+  render: () => (
+    <StoryRow>
+      <Select
+        placeholder="Small"
+        prefix={<ArrowCircleUp aria-hidden="true" />}
+        size="small"
+        suffix={<ArrowCircleUp aria-hidden="true" />}
+        options={planOptions}
+      />
+      <Select
+        placeholder="Default"
+        prefix={<ArrowCircleUp aria-hidden="true" />}
+        suffix={<ArrowCircleUp aria-hidden="true" />}
+        options={planOptions}
+      />
+      <Select
+        placeholder="Large"
+        prefix={<ArrowCircleUp aria-hidden="true" />}
+        size="large"
+        suffix={<ArrowCircleUp aria-hidden="true" />}
+        options={planOptions}
+      />
+    </StoryRow>
+  ),
+};
+
+export const Disabled: Story = {
+  render: () => <Select disabled placeholder="Disabled with placeholder" options={planOptions} />,
+};
+
+export const ErrorState: Story = {
+  render: () => (
+    <StoryRow>
+      <Select error="Select a plan." placeholder="XSmall" size="xsmall" options={planOptions} />
+      <Select error="Select a plan." placeholder="Small" size="small" options={planOptions} />
+      <Select error="Select a plan." placeholder="Default" options={planOptions} />
+      <Select error="Select a plan." placeholder="Large" size="large" options={planOptions} />
+    </StoryRow>
+  ),
+};
+
+export const Label: Story = {
+  render: () => <Select label="Plan" placeholder="Select a plan" options={planOptions} />,
+};
+
+export const Empty: Story = {
+  render: () => <Select label="Region" placeholder="No regions available" options={[]} />,
+};
+
+export const CompoundListbox: Story = {
   render: () => (
     <div className="w-72">
       <Select defaultValue="pro">
@@ -48,23 +125,24 @@ export const Default: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
-    // Click the select trigger to open the listbox
     const trigger = canvas.getByRole("combobox");
     await userEvent.click(trigger);
 
-    // Radix Select portal renders in document.body
     const body = within(document.body);
-
-    // Verify the listbox options are visible
     const listbox = await body.findByRole("listbox");
     expect(listbox).toBeVisible();
 
-    // Click the "Starter" option
     const starterOption = body.getByRole("option", { name: "Starter" });
     await userEvent.click(starterOption);
 
-    // Trigger should now show the selected value
     expect(trigger).toHaveTextContent("Starter");
   },
+};
+
+export const DarkMode: Story = {
+  render: () => (
+    <div className="dark rounded-[var(--radius-lg)] bg-background p-6">
+      <Select label="Framework" placeholder="Select a framework" options={planOptions} />
+    </div>
+  ),
 };

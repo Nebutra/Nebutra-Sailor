@@ -235,6 +235,7 @@
   "search-tool-demo": "search-tool-demo",
   "select-demo": "select-demo",
   "select-disabled-demo": "select-disabled-demo",
+  "select-error-demo": "select-error-demo",
   "select-groups-demo": "select-groups-demo",
   "separator-2-demo": "separator-2-demo",
   "separator-3-demo": "separator-3-demo",
