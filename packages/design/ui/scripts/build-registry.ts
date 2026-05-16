@@ -629,6 +629,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/material.tsx",
     layer: "business",
   },
+  {
+    name: "menu",
+    title: "Menu",
+    description:
+      "Geist-style flat MenuContainer / MenuButton / Menu / MenuItem / MenuLink / MenuItemLocked / MenuSection API on top of DropdownMenu.",
+    source: "primitives/menu.tsx",
+    layer: "business",
+  },
 ];
 
 // ---------------------------------------------------------------------------

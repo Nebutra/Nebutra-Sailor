@@ -208,6 +208,12 @@
       "description": "Surface elevation primitive — 8 Geist-style types (base, small/medium/large, tooltip, menu, modal, fullscreen). Picks chrome from the theme."
     },
     {
+      "name": "menu",
+      "type": "registry:ui",
+      "title": "Menu",
+      "description": "Geist-style flat MenuContainer / MenuButton / Menu / MenuItem / MenuLink / MenuItemLocked / MenuSection API on top of DropdownMenu."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",

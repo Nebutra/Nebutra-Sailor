@@ -182,6 +182,7 @@ export * from "./dynamic-island-toc";
  *   See docs/architecture/2026-05-14-registry-dual-track-distribution.md.
  */
 export * from "./edit-tool";
+export * from "./empty-state";
 export * from "./enable-2fa-card";
 export * from "./entity";
 export * from "./error-boundary";
@@ -287,6 +288,12 @@ export * from "./material";
  * expandable output region.
  */
 export * from "./mcp-tool";
+/**
+ * Geist-style flat Menu / MenuContainer / MenuButton / MenuItem / MenuLink /
+ * MenuItemLocked / MenuSection API on top of DropdownMenu. Use when consumers
+ * expect Geist's surface; use DropdownMenu directly when you need the Radix tree.
+ */
+export * from "./menu";
 export * from "./menubar";
 export * from "./mesh-gradient-bg";
 // Streaming-aware markdown renderer for AI responses. Wraps Streamdown with
@@ -404,6 +411,7 @@ export * from "./text-scramble";
 export * from "./text-shimmer";
 export * from "./textarea";
 export * from "./theme-switcher";
+export * from "./theme-toggle";
 // Sonner-backed toaster + `toast` API. Mount `<Toaster />` once at app root.
 export * from "./toaster";
 /**
