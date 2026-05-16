@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import "@nebutra/tokens/styles.css";
+@import "@nebutra/theme/themes.css";
+
+@source "../../../../packages/design/ui/src";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: hsl(var(--background));
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 0%, color-mix(in oklch, var(--color-primary), transparent 78%), transparent 36rem),
+    radial-gradient(circle at 72% 12%, color-mix(in oklch, var(--color-accent), transparent 84%), transparent 32rem),
+    hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}

@@ -39,6 +39,10 @@
     "./queuebase": {
       "types": "./dist/queuebase.d.ts",
       "import": "./dist/queuebase.js"
+    },
+    "./scheduled": {
+      "types": "./dist/scheduled/index.d.ts",
+      "import": "./dist/scheduled/index.js"
     }
   },
   "files": [

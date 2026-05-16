@@ -18,7 +18,7 @@ import {
   getScheduledJob,
   registerDefaultScheduledJobs,
   type ScheduledJobResult,
-} from "@nebutra/queue";
+} from "@nebutra/queue/scheduled";
 
 // Register the built-in jobs once on module load. `registerScheduledJob` is
 // idempotent (overwrites on re-register) so repeated cold-start invocations

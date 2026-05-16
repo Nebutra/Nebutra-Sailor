@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 // Mock the queue package — we only care that the route looks up the right
 // scheduled job by name and forwards its result.
 const mockHandler = vi.fn();
-vi.mock("@nebutra/queue", () => ({
+vi.mock("@nebutra/queue/scheduled", () => ({
   getScheduledJob: vi.fn((name: string) => {
     if (name === "invitation-cleanup") {
       return {

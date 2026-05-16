@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockQueuebaseWebhookHandler = vi.fn();
 
-vi.mock("@nebutra/queue", () => ({
+vi.mock("@nebutra/queue/queuebase", () => ({
   queuebaseWebhookHandler: (request: Request) => mockQueuebaseWebhookHandler(request),
 }));
 

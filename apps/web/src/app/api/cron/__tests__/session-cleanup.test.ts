@@ -5,7 +5,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockHandler = vi.fn();
-vi.mock("@nebutra/queue", () => ({
+vi.mock("@nebutra/queue/scheduled", () => ({
   getScheduledJob: vi.fn((name: string) => {
     if (name === "session-cleanup") {
       return {

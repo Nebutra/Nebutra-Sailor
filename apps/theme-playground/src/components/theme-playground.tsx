@@ -19,7 +19,6 @@ import {
   ShieldCheck,
   Sparkles,
   Sun,
-  UserCheck,
 } from "@nebutra/icons";
 import { THEME_REGISTRY, type ThemeRegistryEntry } from "@nebutra/theme/registry";
 import { Badge, Button, Input, Tabs, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
@@ -463,13 +462,16 @@ function FormsPanel({ active }: { active: boolean }) {
         <FormInput label="Full name" value="Ava Johnson" />
         <FormInput label="Email" value="ava.johnson@example.com" />
         <FormInput label="Password" value="************" type="password" />
-        <label className="flex items-center gap-2 text-muted-foreground text-xs">
+        <div className="flex items-center gap-2 text-muted-foreground text-xs">
           <span className="grid size-4 place-items-center rounded-[var(--radius-sm)] bg-primary text-primary-foreground">
             <Check className="size-3" />
           </span>
           I agree to the Terms of Service and Privacy Policy
-        </label>
-        <button className="h-10 rounded-[var(--radius-md)] bg-primary px-4 font-medium text-primary-foreground text-sm shadow-[var(--shadow-md)]">
+        </div>
+        <button
+          className="h-10 rounded-[var(--radius-md)] bg-primary px-4 font-medium text-primary-foreground text-sm shadow-[var(--shadow-md)]"
+          type="button"
+        >
           Create account
         </button>
       </div>
@@ -529,6 +531,7 @@ function PricingPanel({ active }: { active: boolean }) {
                   ? "border-primary bg-primary text-primary-foreground"
                   : "border-border bg-card text-card-foreground",
               )}
+              type="button"
             >
               {plan.popular ? "Choose Pro" : "Get started"}
             </button>
@@ -608,6 +611,7 @@ function AiChatPanel({ active }: { active: boolean }) {
           <button
             key={item}
             className="rounded-full border border-border bg-background px-3 py-1 text-muted-foreground text-[11px]"
+            type="button"
           >
             {item}
           </button>

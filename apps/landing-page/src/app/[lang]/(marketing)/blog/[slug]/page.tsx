@@ -11,7 +11,6 @@ import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
-import { Link as LocaleLink } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import {
   type BlogLanguage,
@@ -88,6 +87,10 @@ function estimateReadTime(post: BlogPostWithSource, isZh: boolean): string {
 function localizedPostHref(locale: string, slug?: string): string {
   const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
   return slug ? `${prefix}/blog/${slug}` : `${prefix}/blog`;
+}
+
+function languageSwitchPostHref(locale: Locale, slug: string): string {
+  return `/${locale}/blog/${slug}`;
 }
 
 function oppositeBlogLanguage(language: BlogLanguage): BlogLanguage {
@@ -245,15 +248,14 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                   </span>
                 </div>
                 {translation && (
-                  <LocaleLink
-                    href={`/blog/${translation.slug}`}
-                    locale={translationLocale}
+                  <a
+                    href={languageSwitchPostHref(translationLocale, translation.slug)}
                     hrefLang={targetLanguage === "zh" ? "zh-CN" : "en"}
                     className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                   >
                     <Globe className="size-4" aria-hidden />
                     {targetLanguage === "zh" ? "阅读中文版" : "Read in English"}
-                  </LocaleLink>
+                  </a>
                 )}
               </div>
             </div>
