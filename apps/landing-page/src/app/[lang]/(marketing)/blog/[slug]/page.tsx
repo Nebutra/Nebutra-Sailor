@@ -1,23 +1,27 @@
-import { ArrowLeft, Calendar } from "@nebutra/icons";
+import { ArrowLeft, BookOpen, Calendar, Clock, Globe } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
+import { Link as LocaleLink } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import {
   type BlogLanguage,
   type BlogPostWithSource,
+  getLocalizedPostForSiblingSlug,
   getPostBySlug,
   getPostTranslation,
   toBlogLanguage,
 } from "@/lib/blog";
+import { getFallbackBlogCover } from "@/lib/blog-covers";
 
 type Params = { lang: string; slug: string };
 
@@ -25,33 +29,40 @@ type Params = { lang: string; slug: string };
 // pages exist; surfacing it to Sanity wastes a fetch + pollutes error logs.
 const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";
 
-export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+async function buildBlogMetadata(lang: string, slug: string): Promise<Metadata> {
   "use cache";
   cacheLife("hours");
   cacheTag("blog");
 
-  const { lang, slug } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) return {};
   cacheTag(`blog:${slug}`);
 
-  const post = await getPostBySlug(slug, toBlogLanguage(lang));
+  const post =
+    (await getCachedBlogPost(slug, toBlogLanguage(lang))) ??
+    (await getCachedLocalizedPostForSiblingSlug(slug, toBlogLanguage(lang)));
   if (!post) return {};
 
+  const fallbackCover = getFallbackBlogCover(post);
   const ogImage = post.mainImage
     ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
         width: 1200,
         height: 630,
         format: "webp",
       })
-    : undefined;
+    : `https://nebutra.com${fallbackCover.src}`;
 
   return {
     title: `${post.title} — Nebutra Blog`,
     description: post.excerpt ?? undefined,
-    alternates: { canonical: `/${lang}/blog/${slug}` },
+    alternates: { canonical: localizedPostHref(lang, post.slug) },
     openGraph: ogImage ? { images: [{ url: ogImage, width: 1200, height: 630 }] } : undefined,
   };
+}
+
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { lang, slug } = await params;
+  return buildBlogMetadata(lang, slug);
 }
 
 function getAuthorName(author: BlogPostWithSource["author"]): string | null {
@@ -59,8 +70,24 @@ function getAuthorName(author: BlogPostWithSource["author"]): string | null {
   return typeof author === "string" ? author : (author.name ?? null);
 }
 
-function localizedPostHref(locale: string, slug: string): string {
-  return locale === routing.defaultLocale ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
+function extractBodyText(post: BlogPostWithSource): string {
+  const bodyText =
+    post.body
+      ?.flatMap((block) => block.children?.map((child) => child.text ?? "") ?? [])
+      .join(" ") ?? "";
+  return `${post.title} ${post.excerpt} ${bodyText}`.trim();
+}
+
+function estimateReadTime(post: BlogPostWithSource, isZh: boolean): string {
+  const text = extractBodyText(post);
+  const units = isZh ? text.replace(/\s/g, "").length / 420 : text.split(/\s+/).length / 220;
+  const minutes = Math.max(2, Math.ceil(units));
+  return isZh ? `${minutes} 分钟阅读` : `${minutes} min read`;
+}
+
+function localizedPostHref(locale: string, slug?: string): string {
+  const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+  return slug ? `${prefix}/blog/${slug}` : `${prefix}/blog`;
 }
 
 function oppositeBlogLanguage(language: BlogLanguage): BlogLanguage {
@@ -71,33 +98,78 @@ function localeForBlogLanguage(language: BlogLanguage): Locale {
   return language === "zh" ? "zh" : "en";
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<Params> }) {
+async function getCachedBlogPost(
+  slug: string,
+  language: BlogLanguage,
+): Promise<BlogPostWithSource | null> {
   "use cache";
   cacheLife("hours");
+  cacheTag("blog");
+  cacheTag(`blog:${slug}`);
+  return getPostBySlug(slug, language);
+}
 
+async function getCachedPostTranslation(
+  translationKey: string,
+  language: BlogLanguage,
+): Promise<BlogPostWithSource | null> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("blog");
+  cacheTag(`blog:translation:${translationKey}`);
+  return getPostTranslation(translationKey, language);
+}
+
+async function getCachedLocalizedPostForSiblingSlug(
+  slug: string,
+  language: BlogLanguage,
+): Promise<BlogPostWithSource | null> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("blog");
+  cacheTag(`blog:${slug}`);
+  return getLocalizedPostForSiblingSlug(slug, language);
+}
+
+export default function BlogPostPage({ params }: { params: Promise<Params> }) {
+  return (
+    <Suspense fallback={<BlogPostSkeleton />}>
+      <BlogPostLoader params={params} />
+    </Suspense>
+  );
+}
+
+async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   const { lang, slug } = await params;
 
   if (!hasLocale(routing.locales, lang)) notFound();
   const isZh = lang === "zh";
-  cacheTag("blog");
-  cacheTag(`blog:${slug}`);
   setRequestLocale(lang as Locale);
 
   const blogLanguage = toBlogLanguage(lang);
-  const post = await getPostBySlug(slug, blogLanguage);
+  let post = await getCachedBlogPost(slug, blogLanguage);
+  if (!post) {
+    post = await getCachedLocalizedPostForSiblingSlug(slug, blogLanguage);
+    if (post?.slug && post.slug !== slug) {
+      redirect(localizedPostHref(lang, post.slug));
+    }
+  }
   if (!post) notFound();
   const targetLanguage = oppositeBlogLanguage(blogLanguage);
   const translation = post.translationKey
-    ? await getPostTranslation(post.translationKey, targetLanguage)
+    ? await getCachedPostTranslation(post.translationKey, targetLanguage)
     : null;
+  const translationLocale = localeForBlogLanguage(targetLanguage);
 
+  const fallbackCover = getFallbackBlogCover(post);
   const imageUrl = post.mainImage
     ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
         width: 1200,
         height: 630,
         format: "webp",
       })
-    : null;
+    : fallbackCover.src;
+  const imageAlt = post.mainImage ? post.title : fallbackCover.alt;
 
   const date = post.date
     ? new Date(post.date).toLocaleDateString(isZh ? "zh-CN" : "en-US", {
@@ -112,100 +184,139 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
       <Navbar />
 
-      <article className="mx-auto max-w-3xl px-4 py-24 sm:px-6 lg:px-8">
-        {/* Back link */}
+      <article className="mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:px-8">
         <AnimateIn preset="fade" inView>
           <Link
-            href={`/${lang}/blog`}
+            href={localizedPostHref(lang)}
             className="mb-8 inline-flex items-center gap-1.5 text-sm text-[var(--neutral-11)] hover:text-[var(--blue-9)] transition-colors rounded"
           >
-            <ArrowLeft className="h-4 w-4" aria-hidden />
+            <ArrowLeft className="size-4" aria-hidden />
             {isZh ? "全部文章" : "All posts"}
           </Link>
         </AnimateIn>
 
-        {/* Categories */}
-        {post.tags.length > 0 && (
-          <AnimateIn preset="fadeUp" inView>
-            <div className="mb-4 flex flex-wrap gap-1.5">
-              {post.tags.map((cat) => (
-                <span
-                  key={cat}
-                  className="rounded-full px-2.5 py-1 text-xs font-medium text-[var(--blue-9)]"
-                  style={{ background: "var(--blue-3)" }}
-                >
-                  {cat}
-                </span>
-              ))}
+        <header className="border-y border-[var(--neutral-6)] py-10 sm:py-12">
+          {post.tags.length > 0 && (
+            <AnimateIn preset="fadeUp" inView>
+              <div className="mb-5 flex flex-wrap gap-1.5">
+                {post.tags.map((cat) => (
+                  <span
+                    key={cat}
+                    className="rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]"
+                  >
+                    {cat}
+                  </span>
+                ))}
+              </div>
+            </AnimateIn>
+          )}
+
+          <AnimateIn preset="emerge" inView>
+            <div className="grid gap-8 lg:grid-cols-[1fr_260px] lg:items-end">
+              <div>
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
+                  <BookOpen className="size-3.5" aria-hidden />
+                  {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
+                </div>
+                <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-[var(--neutral-12)] sm:text-5xl">
+                  {post.title}
+                </h1>
+                {post.excerpt && (
+                  <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--neutral-11)]">
+                    {post.excerpt}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-4 text-sm text-[var(--neutral-11)]">
+                <div className="grid gap-2">
+                  {authorName && (
+                    <span className="font-medium text-[var(--neutral-12)]">{authorName}</span>
+                  )}
+                  {date && (
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="size-3.5" aria-hidden />
+                      <time dateTime={post.date}>{date}</time>
+                    </span>
+                  )}
+                  <span className="flex items-center gap-1.5">
+                    <Clock className="size-3.5" aria-hidden />
+                    {estimateReadTime(post, isZh)}
+                  </span>
+                </div>
+                {translation && (
+                  <LocaleLink
+                    href={`/blog/${translation.slug}`}
+                    locale={translationLocale}
+                    hrefLang={targetLanguage === "zh" ? "zh-CN" : "en"}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                  >
+                    <Globe className="size-4" aria-hidden />
+                    {targetLanguage === "zh" ? "阅读中文版" : "Read in English"}
+                  </LocaleLink>
+                )}
+              </div>
             </div>
           </AnimateIn>
-        )}
+        </header>
 
-        {/* Title */}
-        <AnimateIn preset="emerge" inView>
-          <h1 className="text-3xl font-bold tracking-tight text-[var(--neutral-12)] sm:text-4xl">
-            {post.title}
-          </h1>
-        </AnimateIn>
-
-        {/* Meta */}
+        {/* Hero image */}
         <AnimateIn preset="fadeUp" inView>
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--neutral-11)]">
-              {authorName && (
-                <span className="font-medium text-[var(--neutral-12)]">{authorName}</span>
-              )}
-              {date && (
-                <span className="flex items-center gap-1">
-                  <Calendar className="h-3.5 w-3.5" aria-hidden />
-                  <time dateTime={post.date}>{date}</time>
-                </span>
-              )}
-            </div>
-            {translation && (
-              <Link
-                href={localizedPostHref(localeForBlogLanguage(targetLanguage), translation.slug)}
-                hrefLang={targetLanguage === "zh" ? "zh-CN" : "en"}
-                className="inline-flex items-center rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
-              >
-                {targetLanguage === "zh" ? "阅读中文版" : "Read in English"}
-              </Link>
-            )}
+          <div className="relative mt-8 h-64 w-full overflow-hidden rounded-[var(--radius-lg)] sm:h-96">
+            <Image
+              src={imageUrl}
+              alt={imageAlt}
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 720px"
+            />
           </div>
         </AnimateIn>
 
-        {/* Hero image */}
-        {imageUrl && (
-          <AnimateIn preset="fadeUp" inView>
-            <div className="relative mt-8 h-64 w-full overflow-hidden rounded-xl sm:h-80">
-              <Image
-                src={imageUrl}
-                alt={post.title}
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 720px"
-              />
-            </div>
-          </AnimateIn>
-        )}
-
-        {/* Excerpt */}
-        {post.excerpt && (
-          <AnimateIn preset="fadeUp" inView>
-            <p className="mt-8 text-lg leading-7 text-[var(--neutral-11)]">{post.excerpt}</p>
-          </AnimateIn>
-        )}
-
-        {/* Body */}
         <AnimateIn preset="fadeUp" inView>
-          <div className="mt-8">
+          <div className="mx-auto mt-10 max-w-3xl">
             <BlogPortableText body={post.body} />
           </div>
         </AnimateIn>
       </article>
 
       <FooterMinimal />
+    </main>
+  );
+}
+
+function BlogPostSkeleton() {
+  return (
+    <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950" aria-busy="true">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+        <div className="h-8 w-36 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="hidden gap-3 sm:flex">
+          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
+        </div>
+      </div>
+      <article className="mx-auto max-w-3xl px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mb-8 h-5 w-28 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="h-10 w-3/4 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="mt-4 h-5 w-1/2 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="mt-8 h-32 w-full animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="mt-8 space-y-3">
+          <div className="h-4 w-full animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 w-11/12 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 w-10/12 animate-pulse rounded bg-[var(--neutral-3)]" />
+        </div>
+      </article>
+      <div className="mx-auto max-w-6xl border-t border-[var(--neutral-6)] px-4 py-12 sm:px-6 lg:px-8">
+        <div className="h-8 w-36 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="mt-5 grid gap-3 sm:grid-cols-4">
+          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
+        </div>
+      </div>
     </main>
   );
 }

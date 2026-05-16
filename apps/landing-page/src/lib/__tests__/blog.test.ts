@@ -200,6 +200,39 @@ describe("blog lib", () => {
     });
   });
 
+  describe("getLocalizedPostForSiblingSlug", () => {
+    it("resolves a localized post from the opposite-language slug", async () => {
+      mocks.getPostBySlug.mockResolvedValue({
+        _id: "post-en",
+        title: "Why Nebutra Sailor Exists",
+        slug: { current: "why-nebutra-sailor-exists" },
+        language: "en",
+        translationKey: "why-nebutra-sailor-exists",
+        publishedAt: "2026-05-16T00:00:00.000Z",
+        excerpt: "English version.",
+      });
+      mocks.getPostTranslationByKey.mockResolvedValue({
+        _id: "post-zh",
+        title: "为什么要做 Nebutra Sailor",
+        slug: { current: "why-nebutra-sailor-exists-zh" },
+        language: "zh",
+        translationKey: "why-nebutra-sailor-exists",
+        publishedAt: "2026-05-16T00:00:00.000Z",
+        excerpt: "中文版本。",
+      });
+
+      const { getLocalizedPostForSiblingSlug } = await import("@/lib/blog");
+      const post = await getLocalizedPostForSiblingSlug("why-nebutra-sailor-exists", "zh");
+
+      expect(mocks.getPostBySlug).toHaveBeenCalledWith("why-nebutra-sailor-exists", "en");
+      expect(mocks.getPostTranslationByKey).toHaveBeenCalledWith("why-nebutra-sailor-exists", "zh");
+      expect(post).toMatchObject({
+        language: "zh",
+        slug: "why-nebutra-sailor-exists-zh",
+      });
+    });
+  });
+
   describe("getPostBySlug back-compat alias", () => {
     it("is identical to getPost", async () => {
       const blog = await import("@/lib/blog");

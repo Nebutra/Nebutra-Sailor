@@ -167,4 +167,15 @@ export async function getPostTranslation(
   return post;
 }
 
+export async function getLocalizedPostForSiblingSlug(
+  slug: string,
+  language: BlogLanguage,
+): Promise<BlogPostWithSource | null> {
+  const siblingLanguage: BlogLanguage = language === "zh" ? "en" : "zh";
+  const siblingPost = await getPost(slug, siblingLanguage);
+  if (!siblingPost?.translationKey) return null;
+
+  return getPostTranslation(siblingPost.translationKey, language);
+}
+
 export const getPostBySlug = getPost;
