@@ -1,17 +1,19 @@
 "use client";
 
-import { Label, RadioGroup, RadioGroupItem } from "@nebutra/ui/primitives";
+import { RadioGroup } from "@nebutra/ui/primitives";
+import { useState } from "react";
+
 export function RadioGroup3Demo() {
+  const [value, setValue] = useState("monthly");
+
   return (
-    <RadioGroup defaultValue="monthly">
-      <div className="space-x-2 flex items-center">
-        <RadioGroupItem value="monthly" id="monthly" />
-        <Label htmlFor="monthly">Monthly billing</Label>
-      </div>
-      <div className="space-x-2 flex items-center">
-        <RadioGroupItem value="annually" id="annually" />
-        <Label htmlFor="annually">Annual billing (save 20%)</Label>
-      </div>
+    <RadioGroup label="Billing Cycle" onChange={setValue} value={value}>
+      <RadioGroup.Item value="monthly" description="Pay at the start of each month.">
+        Monthly
+      </RadioGroup.Item>
+      <RadioGroup.Item value="yearly" description="Save 20 percent with one annual invoice.">
+        Yearly
+      </RadioGroup.Item>
     </RadioGroup>
   );
 }

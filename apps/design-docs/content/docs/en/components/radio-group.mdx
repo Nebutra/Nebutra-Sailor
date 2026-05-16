@@ -1,40 +1,79 @@
 ---
-title: "Radio Group"
-description: "Single-choice selection control with circular radio button indicators."
+title: "Radio"
+description: "Single-choice input for a small set of mutually exclusive options."
 ---
 
 ## Demo
 
 <ComponentPreview name="radio-group-demo" className="max-w-[400px]" />
 
+## Overview
+
+`RadioGroup` renders a native `<fieldset>` and optional `<legend>`, then coordinates native radio inputs with a shared form name. Use it when users must pick one option from a short, visible list.
+
+Choose `Choicebox` for richer cards with descriptions, icons, or badges. Choose `Select` or `Combobox` after six options.
 
 ## Usage
 
 ```tsx
-import { RadioGroup, RadioGroupItem } from "@nebutra/ui/primitives"
+import { RadioGroup } from "@nebutra/ui/primitives";
+
+export function Example() {
+  return (
+    <RadioGroup defaultValue="iad1" label="Deployment Region">
+      <RadioGroup.Item value="iad1">Washington, D.C.</RadioGroup.Item>
+      <RadioGroup.Item value="sfo1">San Francisco</RadioGroup.Item>
+      <RadioGroup.Item value="fra1">Frankfurt</RadioGroup.Item>
+    </RadioGroup>
+  );
+}
 ```
 
 ## Props
 
-### RadioGroup (Root)
+### RadioGroup
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | `string` | — | Controlled selected value |
-| `defaultValue` | `string` | — | Uncontrolled default selected value |
-| `onValueChange` | `(value: string) => void` | — | Callback when selection changes |
-| `disabled` | `boolean` | `false` | Disables all radio items |
-| `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | Layout direction |
-| `className` | `string` | — | Additional CSS classes |
+| `label` | `ReactNode` | — | Visible group label rendered as `<legend>`. |
+| `name` | `string` | generated | Shared form field name. |
+| `value` | `string` | — | Controlled selected value. |
+| `defaultValue` | `string` | `""` | Uncontrolled initial value. |
+| `onChange` | `(value: string) => void` | — | Geist-compatible change callback. |
+| `onValueChange` | `(value: string) => void` | — | Base UI/Radix-compatible change callback. |
+| `required` | `boolean` | `false` | Makes the group require one selected option. |
+| `disabled` | `boolean` | `false` | Disables the whole fieldset. |
+| `orientation` | `"vertical" \| "horizontal"` | `"vertical"` | Option layout direction. |
+| `className` | `string` | — | Applies to the options container. |
+| `rootClassName` | `string` | — | Applies to the fieldset root. |
 
-### RadioGroupItem
+### RadioGroup.Item
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | `string` | — | **Required.** Value for this option |
-| `disabled` | `boolean` | `false` | Disables this specific item |
-| `id` | `string` | — | For linking with a `<Label>` |
-| `className` | `string` | — | Additional CSS classes |
+| `value` | `string` | — | Required option value. |
+| `children` | `ReactNode` | — | Visible option label. |
+| `description` | `ReactNode` | — | Optional secondary copy. |
+| `disabled` | `boolean` | `false` | Disables this option. |
+| `disabledReason` | `string` | — | Accessible reason and native tooltip for disabled options. |
+| `id` | `string` | generated | Input id for external labels. |
+
+`RadioGroupItem` remains as a named compatibility export.
+
+### Radio
+
+Standalone radio control for custom UI. Provide `id`, `aria-label`, or `aria-labelledby` so the control has an accessible name.
+
+```tsx
+<span id="region-iad1">Washington, D.C.</span>
+<Radio
+  aria-labelledby="region-iad1"
+  checked={value === "iad1"}
+  name="region"
+  onChange={() => setValue("iad1")}
+  value="iad1"
+/>
+```
 
 ## Examples
 
@@ -42,15 +81,43 @@ import { RadioGroup, RadioGroupItem } from "@nebutra/ui/primitives"
 
 <ComponentPreview name="radio-group-2-demo" className="max-w-[400px]" />
 
-
 ### Controlled
 
 <ComponentPreview name="radio-group-3-demo" className="max-w-[400px]" />
 
+### Billing
 
-## Accessibility
+<ComponentPreview name="radio-group-billing-demo" className="max-w-[400px]" />
 
-- Built on Radix UI RadioGroup — has `role="radiogroup"`.
-- Each item has `role="radio"` with `aria-checked`.
-- Always pair items with `<Label>` via matching `id`/`htmlFor`.
-- Keyboard: `ArrowUp`/`ArrowDown` (or `ArrowLeft`/`ArrowRight`) to navigate, `Space` to select.
+## Headless
+
+`useRadio` is for custom rows inside a `RadioGroup` provider. Call it from a descendant component, not before rendering the group.
+
+```tsx
+function DensityRow({ label, value }: { label: string; value: string }) {
+  const radio = useRadio({ value, "aria-label": label });
+
+  return (
+    <label>
+      <span>{label}</span>
+      {radio.component}
+    </label>
+  );
+}
+```
+
+## Best Practices
+
+Use Radio for a single choice from 2 to 6 mutually exclusive options where seeing every option matters: deployment regions, plan tiers, or billing cycle.
+
+Pre-select the safest default so the field reads as configured. Leave it empty only when the choice has real consequences and needs deliberate selection.
+
+Put `required` on `RadioGroup`, not on individual options.
+
+Group labels are short Title Case nouns: Deployment Region, Billing Cycle. Option labels are parallel: Monthly / Yearly, not Monthly / Pay yearly.
+
+Disabled options need `disabledReason`. A greyed-out radio without a reason reads as broken.
+
+`RadioGroup` uses `<fieldset>` and `<legend>` for the group name. Standalone `Radio` must have `id`, `aria-label`, or `aria-labelledby`.
+
+Do not replace the focus ring. Keyboard users need a visible target while arrowing through the group.

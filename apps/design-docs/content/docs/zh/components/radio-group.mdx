@@ -1,57 +1,123 @@
 ---
-title: "单选按钮组 (Radio Group)"
-description: "带有圆形单选按钮指示器的单项选择控件。"
+title: "Radio"
+description: "用于少量互斥选项的单选输入。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="radio-group-demo" className="max-w-[400px]" />
 
+## 概览
 
-## 使用方法 (Usage)
+`RadioGroup` 渲染原生 `<fieldset>` 和可选 `<legend>`，并用共享 `name` 协调一组原生 radio input。适合用户必须从少量可见选项中选择一个值的场景。
+
+如果选项需要图标、描述、徽标或更大的点击卡片，使用 `Choicebox`。超过六个选项后，使用 `Select` 或 `Combobox`。
+
+## 使用方法
 
 ```tsx
-import { RadioGroup, RadioGroupItem } from "@nebutra/ui/primitives"
+import { RadioGroup } from "@nebutra/ui/primitives";
+
+export function Example() {
+  return (
+    <RadioGroup defaultValue="iad1" label="Deployment Region">
+      <RadioGroup.Item value="iad1">Washington, D.C.</RadioGroup.Item>
+      <RadioGroup.Item value="sfo1">San Francisco</RadioGroup.Item>
+      <RadioGroup.Item value="fra1">Frankfurt</RadioGroup.Item>
+    </RadioGroup>
+  );
+}
 ```
 
-## 属性 (Props)
+## 属性
 
-### RadioGroup (根组件)
-
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `value` | `string` | — | 受控的选中值 |
-| `defaultValue` | `string` | — | 非受控的默认选中值 |
-| `onValueChange` | `(value: string) => void` | — | 选中项改变时的回调函数 |
-| `disabled` | `boolean` | `false` | 禁用所有单选条目 |
-| `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | 布局方向 |
-| `className` | `string` | — | 额外的 CSS 类名 |
-
-### RadioGroupItem (单选条目)
+### RadioGroup
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `value` | `string` | — | **必填。** 该选项的值 |
-| `disabled` | `boolean` | `false` | 禁用该特定条目 |
-| `id` | `string` | — | 用于与 `<Label>` 关联 |
-| `className` | `string` | — | 额外的 CSS 类名 |
+| `label` | `ReactNode` | — | 可见组标签，渲染为 `<legend>`。 |
+| `name` | `string` | 自动生成 | 共享表单字段名。 |
+| `value` | `string` | — | 受控选中值。 |
+| `defaultValue` | `string` | `""` | 非受控初始值。 |
+| `onChange` | `(value: string) => void` | — | Geist 兼容的变更回调。 |
+| `onValueChange` | `(value: string) => void` | — | Base UI/Radix 兼容的变更回调。 |
+| `required` | `boolean` | `false` | 要求该组必须选择一个选项。 |
+| `disabled` | `boolean` | `false` | 禁用整个 fieldset。 |
+| `orientation` | `"vertical" \| "horizontal"` | `"vertical"` | 选项布局方向。 |
+| `className` | `string` | — | 应用于选项容器。 |
+| `rootClassName` | `string` | — | 应用于 fieldset 根节点。 |
 
-## 示例 (Examples)
+### RadioGroup.Item
 
-### 水平布局 (Horizontal Layout)
+| 属性 | 类型 | 默认值 | 描述 |
+|------|------|---------|-------------|
+| `value` | `string` | — | 必填选项值。 |
+| `children` | `ReactNode` | — | 可见选项标签。 |
+| `description` | `ReactNode` | — | 可选辅助说明。 |
+| `disabled` | `boolean` | `false` | 禁用此选项。 |
+| `disabledReason` | `string` | — | 禁用原因，会作为可访问说明和原生 tooltip。 |
+| `id` | `string` | 自动生成 | input id，用于外部 label。 |
+
+`RadioGroupItem` 仍保留为兼容命名导出。
+
+### Radio
+
+`Radio` 是用于自定义 UI 的 standalone 控件。必须提供 `id`、`aria-label` 或 `aria-labelledby`，确保控件有可访问名称。
+
+```tsx
+<span id="region-iad1">Washington, D.C.</span>
+<Radio
+  aria-labelledby="region-iad1"
+  checked={value === "iad1"}
+  name="region"
+  onChange={() => setValue("iad1")}
+  value="iad1"
+/>
+```
+
+## 示例
+
+### 横向布局
 
 <ComponentPreview name="radio-group-2-demo" className="max-w-[400px]" />
 
-
-### 受控 (Controlled)
+### 受控
 
 <ComponentPreview name="radio-group-3-demo" className="max-w-[400px]" />
 
+### Billing
 
-## 可访问性 (Accessibility)
+<ComponentPreview name="radio-group-billing-demo" className="max-w-[400px]" />
 
-- 基于 Radix UI RadioGroup 构建 —— 具有 `role="radiogroup"` 属性。
-- 每个条目都具有 `role="radio"` 属性，并带有 `aria-checked`。
-- 始终通过匹配的 `id`/`htmlFor` 将条目与 `<Label>` 配对。
-- 键盘操作：使用 `ArrowUp`/`ArrowDown` (或 `ArrowLeft`/`ArrowRight`) 导航，使用 `Space` 选择。
-走
+## Headless
+
+`useRadio` 用于 `RadioGroup` provider 内部的自定义行。它必须从子组件中调用，不要在渲染 `RadioGroup` 之前调用。
+
+```tsx
+function DensityRow({ label, value }: { label: string; value: string }) {
+  const radio = useRadio({ value, "aria-label": label });
+
+  return (
+    <label>
+      <span>{label}</span>
+      {radio.component}
+    </label>
+  );
+}
+```
+
+## 最佳实践
+
+当用户需要从 2 到 6 个互斥选项中选择一个，并且看到所有选项很重要时使用 Radio，例如部署区域、计划等级、计费周期。
+
+默认预选最安全的值，让字段看起来已经配置好。只有当选择有真实后果、需要用户明确确认时才留空。
+
+`required` 放在 `RadioGroup` 上，不放在单个选项上。
+
+组标签是简短的 Title Case 名词：Deployment Region、Billing Cycle。选项标签保持平行：Monthly / Yearly，而不是 Monthly / Pay yearly。
+
+禁用选项必须提供 `disabledReason`。没有原因的灰色 radio 会让用户以为界面坏了。
+
+`RadioGroup` 使用 `<fieldset>` 和 `<legend>` 表达组名。Standalone `Radio` 必须有 `id`、`aria-label` 或 `aria-labelledby`。
+
+不要替换掉 focus ring。键盘用户需要在方向键切换时看到当前目标。

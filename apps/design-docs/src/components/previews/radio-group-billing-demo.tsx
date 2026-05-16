@@ -1,18 +1,14 @@
 "use client";
 
-import { Label, RadioGroup, RadioGroupItem } from "@nebutra/ui/primitives";
+import { RadioGroup } from "@nebutra/ui/primitives";
 
 export function RadioGroupBillingDemo() {
   return (
-    <RadioGroup defaultValue="monthly">
-      <div className="space-x-2 flex items-center">
-        <RadioGroupItem value="monthly" id="monthly" />
-        <Label htmlFor="monthly">Monthly billing</Label>
-      </div>
-      <div className="space-x-2 flex items-center">
-        <RadioGroupItem value="annually" id="annually" />
-        <Label htmlFor="annually">Annual billing (save 20%)</Label>
-      </div>
+    <RadioGroup defaultValue="monthly" label="Billing Cycle">
+      <RadioGroup.Item value="monthly">Monthly</RadioGroup.Item>
+      <RadioGroup.Item value="yearly" description="Save 20 percent with annual billing.">
+        Yearly
+      </RadioGroup.Item>
     </RadioGroup>
   );
 }

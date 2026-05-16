@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/radio-group-3-demo.tsx",
-      "content": "\"use client\";\n\nimport { Label, RadioGroup, RadioGroupItem } from \"@nebutra/ui/primitives\";\nexport function RadioGroup3Demo() {\n  return (\n    <RadioGroup defaultValue=\"monthly\">\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"monthly\" id=\"monthly\" />\n        <Label htmlFor=\"monthly\">Monthly billing</Label>\n      </div>\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"annually\" id=\"annually\" />\n        <Label htmlFor=\"annually\">Annual billing (save 20%)</Label>\n      </div>\n    </RadioGroup>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { RadioGroup } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function RadioGroup3Demo() {\n  const [value, setValue] = useState(\"monthly\");\n\n  return (\n    <RadioGroup label=\"Billing Cycle\" onChange={setValue} value={value}>\n      <RadioGroup.Item value=\"monthly\" description=\"Pay at the start of each month.\">\n        Monthly\n      </RadioGroup.Item>\n      <RadioGroup.Item value=\"yearly\" description=\"Save 20 percent with one annual invoice.\">\n        Yearly\n      </RadioGroup.Item>\n    </RadioGroup>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

@@ -1,22 +1,19 @@
 "use client";
 
-import { Label, RadioGroup, RadioGroupItem } from "@nebutra/ui/primitives";
+import { RadioGroup } from "@nebutra/ui/primitives";
 
 export function RadioGroupDemo() {
   return (
-    <RadioGroup defaultValue="comfortable">
-      <div className="space-x-2 flex items-center">
-        <RadioGroupItem value="default" id="r1" />
-        <Label htmlFor="r1">Default</Label>
-      </div>
-      <div className="space-x-2 flex items-center">
-        <RadioGroupItem value="comfortable" id="r2" />
-        <Label htmlFor="r2">Comfortable</Label>
-      </div>
-      <div className="space-x-2 flex items-center">
-        <RadioGroupItem value="compact" id="r3" />
-        <Label htmlFor="r3">Compact</Label>
-      </div>
+    <RadioGroup defaultValue="iad1" label="Deployment Region">
+      <RadioGroup.Item value="iad1">Washington, D.C.</RadioGroup.Item>
+      <RadioGroup.Item value="sfo1">San Francisco</RadioGroup.Item>
+      <RadioGroup.Item
+        value="fra1"
+        disabled
+        disabledReason="Available on Pro and Enterprise plans."
+      >
+        Frankfurt
+      </RadioGroup.Item>
     </RadioGroup>
   );
 }

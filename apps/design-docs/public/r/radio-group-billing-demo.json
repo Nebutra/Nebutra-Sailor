@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/radio-group-billing-demo.tsx",
-      "content": "\"use client\";\n\nimport { Label, RadioGroup, RadioGroupItem } from \"@nebutra/ui/primitives\";\n\nexport function RadioGroupBillingDemo() {\n  return (\n    <RadioGroup defaultValue=\"monthly\">\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"monthly\" id=\"monthly\" />\n        <Label htmlFor=\"monthly\">Monthly billing</Label>\n      </div>\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"annually\" id=\"annually\" />\n        <Label htmlFor=\"annually\">Annual billing (save 20%)</Label>\n      </div>\n    </RadioGroup>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { RadioGroup } from \"@nebutra/ui/primitives\";\n\nexport function RadioGroupBillingDemo() {\n  return (\n    <RadioGroup defaultValue=\"monthly\" label=\"Billing Cycle\">\n      <RadioGroup.Item value=\"monthly\">Monthly</RadioGroup.Item>\n      <RadioGroup.Item value=\"yearly\" description=\"Save 20 percent with annual billing.\">\n        Yearly\n      </RadioGroup.Item>\n    </RadioGroup>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

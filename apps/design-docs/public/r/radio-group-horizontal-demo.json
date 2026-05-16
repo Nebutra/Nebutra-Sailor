@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/radio-group-horizontal-demo.tsx",
-      "content": "\"use client\";\n\nimport { Label, RadioGroup, RadioGroupItem } from \"@nebutra/ui/primitives\";\n\nexport function RadioGroupHorizontalDemo() {\n  return (\n    <RadioGroup defaultValue=\"card\" className=\"gap-4 flex\">\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"card\" id=\"card\" />\n        <Label htmlFor=\"card\">Card</Label>\n      </div>\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"paypal\" id=\"paypal\" />\n        <Label htmlFor=\"paypal\">PayPal</Label>\n      </div>\n    </RadioGroup>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { RadioGroup } from \"@nebutra/ui/primitives\";\n\nexport function RadioGroupHorizontalDemo() {\n  return (\n    <RadioGroup defaultValue=\"preview\" label=\"Environment\" orientation=\"horizontal\">\n      <RadioGroup.Item value=\"preview\">Preview</RadioGroup.Item>\n      <RadioGroup.Item value=\"production\">Production</RadioGroup.Item>\n    </RadioGroup>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

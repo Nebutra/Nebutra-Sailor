@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/radio-group-demo.tsx",
-      "content": "\"use client\";\n\nimport { Label, RadioGroup, RadioGroupItem } from \"@nebutra/ui/primitives\";\n\nexport function RadioGroupDemo() {\n  return (\n    <RadioGroup defaultValue=\"comfortable\">\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"default\" id=\"r1\" />\n        <Label htmlFor=\"r1\">Default</Label>\n      </div>\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"comfortable\" id=\"r2\" />\n        <Label htmlFor=\"r2\">Comfortable</Label>\n      </div>\n      <div className=\"space-x-2 flex items-center\">\n        <RadioGroupItem value=\"compact\" id=\"r3\" />\n        <Label htmlFor=\"r3\">Compact</Label>\n      </div>\n    </RadioGroup>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { RadioGroup } from \"@nebutra/ui/primitives\";\n\nexport function RadioGroupDemo() {\n  return (\n    <RadioGroup defaultValue=\"iad1\" label=\"Deployment Region\">\n      <RadioGroup.Item value=\"iad1\">Washington, D.C.</RadioGroup.Item>\n      <RadioGroup.Item value=\"sfo1\">San Francisco</RadioGroup.Item>\n      <RadioGroup.Item\n        value=\"fra1\"\n        disabled\n        disabledReason=\"Available on Pro and Enterprise plans.\"\n      >\n        Frankfurt\n      </RadioGroup.Item>\n    </RadioGroup>\n  );\n}\n",
       "type": "registry:example"
     }
   ]
