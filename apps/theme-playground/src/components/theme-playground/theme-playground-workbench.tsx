@@ -29,7 +29,7 @@ import {
   getThemeSwatches,
   getTokenRows,
   type ThemeMode,
-} from "@/lib/theme-token-data";
+} from "./theme-token-data";
 
 type Density = "compact" | "comfortable";
 type Surface = "neutral" | "brand" | "product";
@@ -860,7 +860,7 @@ function InspectorBlock({
   );
 }
 
-export function ThemePlayground() {
+export function ThemePlaygroundWorkbench() {
   const [selectedTheme, setSelectedTheme] = useState<ThemeRegistryEntry>(() => {
     const defaultTheme =
       THEME_REGISTRY.themes.find((theme) => theme.id === THEME_REGISTRY.defaultTheme) ??

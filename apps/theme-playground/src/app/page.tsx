@@ -1,5 +1,5 @@
-import { ThemePlayground } from "@/components/theme-playground";
+import { ThemePlaygroundWorkbench } from "@/components/theme-playground/theme-playground-workbench";
 
 export default function Page() {
-  return <ThemePlayground />;
+  return <ThemePlaygroundWorkbench />;
 }
