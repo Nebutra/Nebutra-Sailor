@@ -24,8 +24,11 @@
  * but not for high-throughput counting.
  */
 
-import { BloomFilter } from "bloom-filters";
+import bloomFilters from "bloom-filters";
 import { getCacheClient } from "../client";
+
+const { BloomFilter } = bloomFilters;
+type BloomFilterInstance = InstanceType<typeof BloomFilter>;
 
 export interface BloomFilterOptions {
   /** Redis key holding the serialized filter. */
@@ -65,7 +68,7 @@ interface SerializedFilter {
 async function load(
   key: string,
   opts: BloomFilterOptions,
-): Promise<{ filter: BloomFilter; count: number }> {
+): Promise<{ filter: BloomFilterInstance; count: number }> {
   const cache = await getCacheClient();
   const raw = await cache.get(key);
   if (!raw) {
@@ -78,7 +81,6 @@ async function load(
       typeof raw === "string" ? JSON.parse(raw) : (raw as SerializedFilter);
     // `bloom-filters` types `fromJSON` as `(json: JSON)` (a typo for `any`
     // in their .d.ts) — cast through `any` to bypass the bogus constraint.
-    // biome-ignore lint/suspicious/noExplicitAny: third-party typing bug
     return {
       // biome-ignore lint/suspicious/noExplicitAny: third-party typing bug
       filter: BloomFilter.fromJSON(parsed.filter as any),
@@ -92,7 +94,7 @@ async function load(
 
 async function save(
   key: string,
-  filter: BloomFilter,
+  filter: BloomFilterInstance,
   count: number,
   ttlSeconds?: number,
 ): Promise<void> {
