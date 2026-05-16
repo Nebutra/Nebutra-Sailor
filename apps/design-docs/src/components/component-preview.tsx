@@ -275,11 +275,7 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
       className="my-8 relative w-full overflow-hidden rounded-xl border border-border/80 bg-background shadow-sm ring-1 ring-ring/10"
     >
       <div className="px-4 h-13 flex items-center justify-between border-b border-border/80 bg-muted/30">
-        <TabsList
-          variant="default"
-          size="sm"
-          className="bg-accent/50 transition-colors hover:bg-accent/80"
-        >
+        <TabsList variant="default" className="bg-accent/50 transition-colors hover:bg-accent/80">
           <TabsTrigger value="preview" className="px-3">
             Preview
           </TabsTrigger>
