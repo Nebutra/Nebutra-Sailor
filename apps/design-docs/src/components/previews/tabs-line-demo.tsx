@@ -4,21 +4,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@nebutra/ui/primitives
 
 export function TabsLineDemo() {
   return (
-    <Tabs defaultValue="tab1" className="w-[400px]">
-      <TabsList variant="button" className="grid grid-cols-3">
-        <TabsTrigger value="tab1">Overview</TabsTrigger>
-        <TabsTrigger value="tab2">Analytics</TabsTrigger>
-        <TabsTrigger value="tab3">Reports</TabsTrigger>
+    <Tabs defaultValue="overview" className="w-full max-w-md">
+      <TabsList aria-label="Project sections" variant="line">
+        <TabsTrigger value="overview">Overview</TabsTrigger>
+        <TabsTrigger value="logs" badge="12">
+          Logs
+        </TabsTrigger>
+        <TabsTrigger value="settings">Settings</TabsTrigger>
       </TabsList>
-      <TabsContent value="tab1" className="p-4 mt-2">
-        Overview content
-      </TabsContent>
-      <TabsContent value="tab2" className="p-4 mt-2">
-        Analytics content
-      </TabsContent>
-      <TabsContent value="tab3" className="p-4 mt-2">
-        Reports content
-      </TabsContent>
+      <TabsContent value="overview">Deployment health and current project ownership.</TabsContent>
+      <TabsContent value="logs">Recent events, build traces, and audit entries.</TabsContent>
+      <TabsContent value="settings">Project-level controls for owners and maintainers.</TabsContent>
     </Tabs>
   );
 }

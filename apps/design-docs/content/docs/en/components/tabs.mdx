@@ -1,114 +1,109 @@
 ---
 title: "Tabs"
-description: "Tabbed content panels with three visual variants, four sizes, and pill shape support."
+description: "Same-scope tab panels with controlled array and compound APIs."
 ---
 
-
-import { TabsDemo } from "@/components/previews/tabs-demo";
-import { TabsButtonDemo } from "@/components/previews/tabs-button-demo";
-import { TabsPillDemo } from "@/components/previews/tabs-pill-demo";
-import { TabsLineDemo } from "@/components/previews/tabs-line-demo";
 import { ComponentPreview } from "@/components/component-preview";
 
-<ComponentPreview name="tabs-demo" className="mt-4"  />
-
+<ComponentPreview name="tabs-demo" className="mt-4" />
 
 ## Usage
 
 ```tsx
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@nebutra/ui/primitives"
+import { Tabs } from "@nebutra/ui/primitives";
+```
+
+```tsx
+const [selected, setSelected] = useState("apple");
+
+<Tabs
+  aria-label="Fruit views"
+  selected={selected}
+  setSelected={setSelected}
+  tabs={[
+    { title: "Apple", value: "apple" },
+    { title: "Orange", value: "orange" },
+    { title: "Mango", value: "mango" },
+  ]}
+/>;
 ```
 
 ## Props
 
-### Tabs (Root)
+### Tabs
 
-Built on Base UI tabs primitive.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `defaultValue` | `string` | — | Uncontrolled default active tab |
-| `value` | `string` | — | Controlled active tab value |
-| `onValueChange` | `(value: string) => void` | — | Callback when active tab changes |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Tab list orientation |
-| `className` | `string` | — | Additional CSS classes |
-
-### TabsList
+Built on Base UI Tabs. Use the `tabs` array API for simple same-scope view switching, and the compound API when each tab owns a panel.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `"default" \| "button" \| "line"` | `"default"` | Visual style of the tab list |
-| `size` | `"xs" \| "sm" \| "md" \| "lg"` | `"md"` | Size of the tabs |
-| `shape` | `"default" \| "pill"` | `"default"` | Shape of tab triggers |
-| `className` | `string` | — | Additional CSS classes |
-| `children` | `ReactNode` | — | `TabsTrigger` elements |
+| `tabs` | `readonly TabsItem[]` | — | Optional array API for rendering a tab row without hand-writing triggers. |
+| `selected` | `string` | — | Controlled active tab value. Alias for `value` in the array API. |
+| `setSelected` | `(value: string) => void` | — | Controlled setter for the array API. Also calls `onValueChange` when provided. |
+| `value` | `string` | — | Controlled active tab value for compound usage. |
+| `defaultValue` | `string` | first enabled tab | Uncontrolled initial active tab. |
+| `onValueChange` | `(value: string) => void` | — | Callback when active tab changes. |
+| `variant` | `"default" \| "button" \| "line" \| "secondary"` | `"default"` | Visual style for array API and nested lists. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg"` | `"md"` | Component-token-backed control size. |
+| `shape` | `"default" \| "pill"` | `"default"` | Trigger radius treatment. |
+| `activationMode` | `"manual" \| "automatic"` | `"manual"` | Manual keeps arrows on focus movement and Enter/Space on activation. |
+| `disabled` | `boolean` | `false` | Disables the whole tab set. |
 
-### TabsTrigger
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `string` | — | **Required.** Unique identifier matching a `TabsContent` |
-| `disabled` | `boolean` | `false` | Prevents this tab from being selected |
-| `className` | `string` | — | Additional CSS classes |
-| `children` | `ReactNode` | — | Tab label (text + optional icon) |
-
-### TabsContent
+### TabsItem
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | `string` | — | **Required.** Matches a `TabsTrigger` value |
-| `className` | `string` | — | Additional CSS classes |
-| `children` | `ReactNode` | — | Content shown when this tab is active |
+| `title` | `ReactNode` | — | Visible tab title. Keep it Title Case and one or two words. |
+| `value` | `string` | — | Unique tab value. |
+| `icon` | `ReactNode` | — | Optional leading icon. Mark decorative icons `aria-hidden`. |
+| `badge` | `ReactNode` | — | Optional count/status badge. Drop it at zero instead of appending counts to titles. |
+| `disabled` | `boolean` | `false` | Disables only this tab. Use for permission or unavailable states. |
+| `tooltip` | `ReactNode` | — | Constraint explanation for a disabled tab. |
+| `content` | `ReactNode` | — | Optional panel content rendered through `TabsContent`. |
+
+### Compound API
+
+```tsx
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
+```
+
+| Component | Required props | Notes |
+|-----------|----------------|-------|
+| `TabsList` | `aria-label` when no visible heading exists | Supports `variant`, `shape`, `loop`, and `activateOnFocus`. |
+| `TabsTrigger` | `value` | Supports `icon`, `badge`, and native button props. |
+| `TabsContent` | `value` | Supports `keepMounted`; `forceMount` remains as a compatibility alias. |
 
 ## Examples
 
+### Line Variant
+
+<ComponentPreview name="tabs-line-demo" className="mt-4" />
+
 ### Button Variant
 
-<ComponentPreview name="tabs-line-demo" className="mt-4"  />
-
-
-### Line Variant (Underline)
-
-<ComponentPreview name="tabs-button-demo" className="mt-4"  />
-
+<ComponentPreview name="tabs-button-demo" className="mt-4" />
 
 ### Pill Shape
 
-<ComponentPreview name="tabs-pill-demo" className="mt-4"  />
+<ComponentPreview name="tabs-pill-demo" className="mt-4" />
 
+## Best Practices
 
-### Size Variants
+Use Tabs to switch between sibling views inside a single page: Overview, Logs, Settings. For navigation between unrelated pages, use a sub-menu or side navigation.
 
-```tsx
-<TabsList size="xs">...</TabsList>
-<TabsList size="sm">...</TabsList>
-<TabsList size="md">...</TabsList>
-<TabsList size="lg">...</TabsList>
-```
+Keep a row to 5–7 entries on desktop and 3–4 on mobile. Past that, consolidate views or move secondary surfaces behind a Menu.
 
-### Controlled Tabs
+Selecting a tab should be instant. Reflect the active tab in the URL when refresh or deep-link restoration matters, but do not toast or confirm tab changes.
 
-```tsx
-const [activeTab, setActiveTab] = useState("overview")
+Disable individual tabs only for permission or empty-state constraints. Pair disabled tabs with a tooltip that explains the constraint, such as "Only visible to project owners."
 
-<Tabs value={activeTab} onValueChange={setActiveTab}>
-  <TabsList>
-    <TabsTrigger value="overview">Overview</TabsTrigger>
-    <TabsTrigger value="details">Details</TabsTrigger>
-  </TabsList>
-</Tabs>
-```
+Tab titles are Title Case nouns, one or two words. Do not append counts to the title; use the `badge` slot and drop the badge at zero.
 
 ## Accessibility
 
-- Built on Radix UI Tabs — follows the WAI-ARIA [Tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
-- `TabsList` has `role="tablist"`.
-- Each `TabsTrigger` has `role="tab"`, `aria-selected`, and `aria-controls`.
-- Each `TabsContent` has `role="tabpanel"` and `aria-labelledby`.
-- Keyboard navigation: `ArrowLeft`/`ArrowRight` moves between tabs, `Home`/`End` jumps to first/last.
-- Focus management is handled automatically.
+Tabs render WAI-ARIA tablist/tab/tabpanel semantics through Base UI.
+
+Manual activation is the default: Left/Right moves focus, Enter/Space activates. Set `activationMode="automatic"` only when each panel is already mounted and switching is effectively free.
+
+Give `TabsList` or array-mode `Tabs` a stable `aria-label` when there is no visible heading above it.
+
+Keep visible focus rings. Do not suppress focus styling on the active tab.

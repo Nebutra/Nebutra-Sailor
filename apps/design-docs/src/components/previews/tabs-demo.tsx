@@ -1,22 +1,24 @@
 "use client";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
+
+import { Tabs } from "@nebutra/ui/primitives";
+import { useState } from "react";
+
+const tabs = [
+  { title: "Apple", value: "apple" },
+  { title: "Orange", value: "orange" },
+  { title: "Mango", value: "mango" },
+] as const;
+
 export function TabsDemo() {
+  const [selected, setSelected] = useState("apple");
+
   return (
-    <Tabs defaultValue="overview" className="max-w-md w-full">
-      <TabsList>
-        <TabsTrigger value="overview">Overview</TabsTrigger>
-        <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        <TabsTrigger value="settings">Settings</TabsTrigger>
-      </TabsList>
-      <TabsContent value="overview">
-        <p className="text-sm pt-2 text-muted-foreground">Overview content goes here.</p>
-      </TabsContent>
-      <TabsContent value="analytics">
-        <p className="text-sm pt-2 text-muted-foreground">Analytics content goes here.</p>
-      </TabsContent>
-      <TabsContent value="settings">
-        <p className="text-sm pt-2 text-muted-foreground">Settings content goes here.</p>
-      </TabsContent>
-    </Tabs>
+    <Tabs
+      aria-label="Fruit views"
+      selected={selected}
+      setSelected={setSelected}
+      tabs={tabs}
+      className="w-full max-w-md"
+    />
   );
 }

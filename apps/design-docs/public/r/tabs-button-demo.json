@@ -3,6 +3,7 @@
   "name": "tabs-button-demo",
   "type": "registry:example",
   "dependencies": [
+    "@nebutra/icons",
     "@nebutra/ui"
   ],
   "registryDependencies": [
@@ -11,7 +12,7 @@
   "files": [
     {
       "path": "registry/examples/tabs-button-demo.tsx",
-      "content": "\"use client\";\n\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@nebutra/ui/primitives\";\n\nexport function TabsButtonDemo() {\n  return (\n    <Tabs defaultValue=\"tab1\" className=\"w-[400px]\">\n      <TabsList variant=\"line\" className=\"w-full\">\n        <TabsTrigger value=\"tab1\">全部 (All)</TabsTrigger>\n        <TabsTrigger value=\"tab2\">进行中 (Active)</TabsTrigger>\n        <TabsTrigger value=\"tab3\">已归档 (Archived)</TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"tab1\" className=\"p-4 mt-2\">\n        全部内容 (All content)\n      </TabsContent>\n      <TabsContent value=\"tab2\" className=\"p-4 mt-2\">\n        进行中内容 (Active content)\n      </TabsContent>\n      <TabsContent value=\"tab3\" className=\"p-4 mt-2\">\n        已归档内容 (Archived content)\n      </TabsContent>\n    </Tabs>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { GridSquare, ListUnordered } from \"@nebutra/icons\";\nimport { Tabs, TabsList, TabsTrigger } from \"@nebutra/ui/primitives\";\n\nexport function TabsButtonDemo() {\n  return (\n    <Tabs defaultValue=\"grid\" className=\"w-full max-w-sm\">\n      <TabsList aria-label=\"View mode\" variant=\"button\" className=\"grid grid-cols-2\">\n        <TabsTrigger value=\"grid\" icon={<GridSquare aria-hidden />}>\n          Grid\n        </TabsTrigger>\n        <TabsTrigger value=\"list\" icon={<ListUnordered aria-hidden />}>\n          List\n        </TabsTrigger>\n      </TabsList>\n    </Tabs>\n  );\n}\n",
       "type": "registry:example"
     }
   ]
