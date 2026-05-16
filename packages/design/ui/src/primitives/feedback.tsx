@@ -252,7 +252,7 @@ function FeedbackForm({
       {topics.length ? (
         <Select
           value={topic}
-          onValueChange={(nextTopic) => setTopic(nextTopic ?? "")}
+          onValueChange={(nextTopic) => setTopic(typeof nextTopic === "string" ? nextTopic : "")}
           disabled={disabled || submitting}
         >
           <SelectTrigger aria-label="Feedback topic">
