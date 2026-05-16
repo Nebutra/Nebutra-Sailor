@@ -16,13 +16,19 @@ export interface LoadingDotsProps {
 }
 
 // =============================================================================
-// Animation keyframe — injected once via <style>
+// Animation keyframe — inline <style> so the registry-distributed copy ships
+// self-contained (no tailwind.config or globals.css edit required on the
+// consumer side). Wrapped in `prefers-reduced-motion: no-preference` to honor
+// Geist's a11y rule — users with reduced motion see static dots.
 // =============================================================================
 
 const KEYFRAMES = `
 @keyframes loading-dot {
   0%, 100% { opacity: 0.25; transform: scale(0.75); }
   50%       { opacity: 1;    transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nbt-loading-dot { animation: none !important; opacity: 0.6; }
 }
 `;
 
@@ -35,13 +41,20 @@ const LoadingDots = React.forwardRef<HTMLSpanElement, LoadingDotsProps>(
     return (
       <>
         <style>{KEYFRAMES}</style>
-        <span ref={ref} className={cn("inline-flex items-center gap-1", className)}>
+        <span
+          ref={ref}
+          // Geist a11y rule: announce the in-progress label politely so the
+          // surrounding text ("Saving"/"Building") reaches AT users without
+          // interrupting their current speech.
+          aria-live="polite"
+          className={cn("inline-flex items-center gap-1", className)}
+        >
           {children}
-          <span className="inline-flex items-center gap-[3px]">
+          <span aria-hidden="true" className="inline-flex items-center gap-[3px]">
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
-                className="rounded-full bg-current"
+                className="nbt-loading-dot rounded-full bg-current"
                 style={{
                   width: size,
                   height: size,
