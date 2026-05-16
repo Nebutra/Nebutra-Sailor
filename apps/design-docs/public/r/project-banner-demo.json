@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "project-banner-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/icons",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/project-banner-demo.tsx",
+      "content": "\"use client\";\n\nimport { RotateCounterClockwise, ShieldCheck, Warning as WarningIcon } from \"@nebutra/icons\";\nimport { ProjectBanner } from \"@nebutra/ui/primitives\";\n\nexport function ProjectBannerDemo() {\n  return (\n    <div className=\"flex w-full flex-col gap-4\">\n      <ProjectBanner\n        variant=\"success\"\n        icon={<ShieldCheck className=\"h-4 w-4 shrink-0\" />}\n        label=\"Attack Challenge Mode is enabled for this project\"\n        callToAction={{ label: \"Disable\", href: \"#\" }}\n      />\n      <ProjectBanner\n        variant=\"warning\"\n        icon={<RotateCounterClockwise className=\"h-4 w-4 shrink-0\" />}\n        label=\"This project was rolled back by @johnphamous\"\n        callToAction={{ label: \"Undo Rollback\", onClick: () => undefined }}\n      />\n      <ProjectBanner\n        variant=\"error\"\n        icon={<WarningIcon className=\"h-4 w-4 shrink-0\" />}\n        label=\"Payment failed, pay any open invoices before your account is shut down\"\n        callToAction={{ label: \"Pay Invoices\", href: \"#\" }}\n      />\n      <ProjectBanner\n        variant=\"info\"\n        label=\"Your Pro trial expires in 3 days\"\n        callToAction={{ label: \"Update Payment Method\", href: \"#\" }}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

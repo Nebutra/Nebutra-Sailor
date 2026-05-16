@@ -1,3 +1,4 @@
+export type { LegalDocumentMetadata } from "../types";
 export {
   companyInfo,
   contactConfig,
@@ -7,7 +8,10 @@ export {
   getCookieCategory,
   getDocumentConfig,
   getDocumentsByType,
+  getDocumentVersionHistory,
   getOptionalCookieCategories,
   getRequiredDocuments,
+  type LegalDocumentRegistry,
   legalConfig,
+  resolveDocumentVersion,
 } from "./config";

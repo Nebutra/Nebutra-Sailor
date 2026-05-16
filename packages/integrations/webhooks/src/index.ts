@@ -19,11 +19,14 @@ export { closeWebhooks, createWebhooks, getWebhooks, setWebhooks } from "./facto
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
 export { CustomProvider } from "./providers/custom";
 export { SvixProvider } from "./providers/svix";
+export type { VerifyOnceOptions, WebhookReplayGuard, WebhookReplayStore } from "./signing";
 
 // ── Signing ─────────────────────────────────────────────────────────────────
 export {
+  createReplayGuard,
   formatWebhookSignatureHeader,
   generateSecret,
+  InMemoryWebhookReplayStore,
   parseWebhookSignatureHeader,
   signPayload,
   verifyPayload,
@@ -37,6 +40,7 @@ export {
   type WebhookConfig,
   type WebhookDeadLetterDelivery,
   WebhookDeadLetterDeliverySchema,
+  type WebhookDeadLetterStore,
   type WebhookDeliveryAttempt,
   WebhookDeliveryAttemptSchema,
   type WebhookEndpoint,

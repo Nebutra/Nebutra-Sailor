@@ -2,8 +2,11 @@ import { Gauge } from "@nebutra/ui/primitives";
 
 export function GaugeDemo() {
   return (
-    <div className="max-w-sm px-4 py-8 space-x-4 flex w-full items-center justify-center">
-      <Gauge value={72} size={64} label />
+    <div className="flex w-full max-w-sm flex-col items-center justify-center gap-2 px-4 py-8">
+      <p id="gauge-demo-label" className="text-sm text-muted-foreground">
+        Build Cache Hit Rate · 72%
+      </p>
+      <Gauge aria-labelledby="gauge-demo-label" value={72} size="medium" showValue />
     </div>
   );
 }

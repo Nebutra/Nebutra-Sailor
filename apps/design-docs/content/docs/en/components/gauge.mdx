@@ -1,112 +1,72 @@
 ---
 title: "Gauge"
-description: "A circular visual for conveying a percentage."
+description: "A circular visual for conveying a 0–100 ratio against a fixed maximum."
 ---
 
 ## Demo
 
-<ComponentPreview name="gauge-demo"  />
+<ComponentPreview name="gauge-demo" />
 
-
-## Overview
-
-`Gauge` renders an SVG donut ring that fills from 0–100%. It supports:
-- **Automatic color scale** — gray → amber → emerald based on value
-- **Custom color stops** — arbitrary thresholds with any CSS color
-- **Center label** — numeric or custom `ReactNode`
-- **Indeterminate** — spinning animation for unknown/loading state
-
-## Installation
+## Usage
 
 ```tsx
 import { Gauge } from "@nebutra/ui/primitives";
 ```
 
-## Usage
-
-### Default
-
 ```tsx
-<Gauge value={72} size={48} />
+<div>
+  <p id="cache-hit-rate">Build Cache Hit Rate · 92%</p>
+  <Gauge aria-labelledby="cache-hit-rate" showValue size="medium" value={92} />
+</div>
 ```
 
-### With label
+## Design Principles
 
-```tsx
-<Gauge value={72} size={64} label />
-```
-
-### Custom color range
-
-```tsx
-<Gauge
-  value={60}
-  size={64}
-  label
-  colors={[
-    { value: 0,  color: "#ef4444" },
-    { value: 50, color: "#f59e0b" },
-    { value: 80, color: "#22c55e" },
-  ]}
-/>
-```
-
-### Custom secondary (track) color
-
-```tsx
-<Gauge value={60} size={64} secondaryColor="#dbeafe" label />
-```
-
-### Arc priority
-
-Controls which arc renders on top when both arcs overlap:
-
-```tsx
-<Gauge value={60} arcPriority="value" />     {/* default */}
-<Gauge value={60} arcPriority="secondary" />
-```
-
-### Indeterminate
-
-```tsx
-<Gauge size={48} indeterminate />
-```
+- Use Gauge for a 0–100 ratio against a fixed maximum: quota usage, cache hit rate, uptime, or billing-period consumption.
+- Use Progress for determinate task progress such as upload completion or setup steps.
+- Use Status Dot or Badge for binary, enum, or deployment state.
+- Pair every Gauge with adjacent label text or a Tooltip that names what the value represents.
+- Do not rely on color alone. Pair warning or error thresholds with copy nearby.
+- Default thresholds follow product usage semantics: `>=80%` warning, `>=95%` error. For health scores where high is good, pass an explicit `colors` scale.
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | `number` | `0` | Current value, 0–100 |
-| `size` | `number` | `48` | Diameter in pixels |
-| `strokeWidth` | `number` | `~10% of size` | Ring stroke width in pixels |
-| `label` | `boolean \| ReactNode` | — | `true` shows numeric value; pass a `ReactNode` for custom content |
-| `colors` | `GaugeColorStop[]` | default scale | Custom color stops (sorted ascending by `value`) |
-| `secondaryColor` | `string` | muted | CSS color for the background track arc |
-| `arcPriority` | `"value" \| "secondary"` | `"value"` | Which arc renders on top |
-| `indeterminate` | `boolean` | `false` | Show spinning animation (value is ignored) |
-| `className` | `string` | — | Additional CSS classes on the wrapper |
+| `value` | `number` | `0` | Current value, clamped to 0–100 |
+| `size` | `"tiny" \| "small" \| "medium" \| "large" \| number` | `"medium"` | Preset size or legacy pixel diameter |
+| `colors` | `GaugeColorMap \| GaugeColorStop[]` | usage scale | Threshold colors or explicit `primary` / `secondary` colors |
+| `secondaryColor` | `string` | — | Legacy track color override; prefer `colors.secondary` |
+| `showValue` | `boolean` | `false` | Renders the numeric value only, without `%` |
+| `label` | `boolean \| ReactNode` | — | Legacy alias for `showValue`; ReactNode becomes center overlay |
+| `children` | `ReactNode` | — | Center icon overlay |
+| `arcPriority` | `"default" \| "equal"` | `"default"` | `equal` renders both arcs with the same length for true ratios |
+| `indeterminate` | `boolean` | `false` | Shows loading state when the value is unknown |
 
-### `GaugeColorStop`
+### `GaugeColorMap`
 
 ```ts
-interface GaugeColorStop {
-  value: number;  // threshold 0–100
-  color: string;  // any CSS color
-}
+type GaugeColorMap = Record<string, string> & {
+  primary?: string;
+  secondary?: string;
+};
 ```
 
-The highest stop whose `value` ≤ current gauge value is used.
+Threshold keys are numeric strings. The highest threshold less than or equal to `value` wins.
 
-### Default color scale
-
-| Range | Color |
-|-------|-------|
-| 0–39 | Gray (`hsl(220 9% 46%)`) |
-| 40–74 | Amber (`hsl(38 92% 50%)`) |
-| 75–100 | Emerald (`hsl(142 71% 45%)`) |
+```tsx
+<Gauge
+  value={50}
+  colors={{
+    primary: "hsl(var(--info))",
+    secondary: "hsl(var(--info) / 0.18)",
+  }}
+/>
+```
 
 ## Accessibility
 
-- Root element has `role="meter"` with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`.
-- Label text is read by screen readers via the SVG `<text>` element.
-- Indeterminate gauges have `aria-label="Loading"`.
+- Gauge sets `role="progressbar"` with `aria-valuemin`, `aria-valuemax`, and `aria-valuenow`.
+- Use `aria-labelledby` to connect adjacent label text: “Build Cache Hit Rate, 92 percent.”
+- Indeterminate gauges omit `aria-valuenow` and set `aria-busy`.
+- `showValue` is visual only; the accessible value comes from ARIA.

@@ -1,93 +1,131 @@
 ---
 title: "Empty State"
-description: "Fill spaces when no content has been added yet, or is temporarily empty due to the nature of the feature."
+description: "Fill spaces when no content has been added yet, or is temporarily empty due to the feature state."
 ---
 
 ## Demo
 
-<ComponentPreview name="empty-state-demo"  />
-
+<ComponentPreview name="empty-state-demo" />
 
 ## Overview
 
-`EmptyState` is a compound component for zero-content views. It supports four design-framework variants — blank slate, informational (with CTAs), educational, and guide — all using the same API: icon, title, description, and optional action/link slots.
+`EmptyState` prevents confusion when a view has no content. It can describe a first-run blank slate, a filtered no-results state, completed work, permission or tier denial, or a failed load.
+
+The component is intentionally quiet: one title, one description, one primary CTA, and at most one secondary CTA.
 
 ## Installation
 
 ```tsx
-import { EmptyState } from "@nebutra/ui/primitives";
+import { EmptyState } from "@nebutra/ui/primitives"
 ```
 
 ## Usage
 
 ### Blank Slate
 
-The most basic form — conveys the state without directing users to a specific action.
-
 ```tsx
-import { EmptyState } from "@nebutra/ui/primitives";
-import { ChartBarPeak } from "@nebutra/icons";
+import { ChartBarPeak } from "@nebutra/icons"
+import { EmptyState } from "@nebutra/ui/primitives"
 
 <EmptyState.Root
-  icon={<EmptyState.Icon icon={<ChartBarPeak size={20} />} />}
-  title="Title"
   description="A message conveying the state of the product."
+  icon={<EmptyState.Icon icon={<ChartBarPeak size={32} />} />}
+  title="Title"
 />
 ```
 
 ### Informational
 
-Includes a primary CTA and a secondary link to guide users forward.
-
 ```tsx
 <EmptyState.Root
-  icon={<EmptyState.Icon icon={<ChartBarPeak size={20} />} />}
-  title="No deployments yet"
-  description="Push to a connected branch or deploy manually to see activity here."
-  action={
-    <Button>Deploy now</Button>
-  }
-  link={
-    <a href="/docs/deployments" className="text-sm text-muted-foreground hover:text-foreground">
-      Learn more ↗
-    </a>
-  }
-/>
+  description="This should detail the actions you can take on this screen, as well as why it's valuable."
+  icon={<EmptyState.Icon icon={<ChartBarPeak size={32} />} />}
+  title="Title"
+  variant="informational"
+>
+  <Button type="button" variant="secondary">Primary Action</Button>
+  <Button asChild type="button" variant="ghost">
+    <a href="/docs">Learn More</a>
+  </Button>
+</EmptyState.Root>
 ```
 
-### No icon
+### No Results
 
-Minimal text-only variant for constrained spaces.
+Use `live` after async filtering changes so assistive technology announces the new state.
 
 ```tsx
 <EmptyState.Root
-  title="No projects yet"
-  description="Create your first project to get started."
-  action={<Button>New Project</Button>}
-/>
+  description="No logs match “status:error”. Clear the filter to see all logs."
+  icon={<EmptyState.Icon icon={<MagnifyingGlass size={32} />} />}
+  live
+  title="No Logs Match Your Filter"
+  variant="no-results"
+>
+  <Button type="button" variant="secondary">Clear Filter</Button>
+</EmptyState.Root>
+```
+
+### Error
+
+```tsx
+<EmptyState.Root
+  description="Couldn't load deployments. Request ID: req_7K3QZ."
+  icon={<EmptyState.Icon icon={<Warning size={32} />} />}
+  title="Deployments Failed To Load"
+  variant="error"
+>
+  <Button type="button" variant="destructive">Try Again</Button>
+</EmptyState.Root>
 ```
 
 ## Props
 
-### `EmptyState.Root`
+### EmptyState.Root
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `title` | `string` | — | **Required.** Short heading naming the empty state |
-| `description` | `string` | — | **Required.** Supporting text explaining the state or next step |
+| `title` | `ReactNode` | — | Title Case message conveying the state |
+| `description` | `ReactNode` | — | Sentence case supporting copy |
 | `icon` | `ReactNode` | — | Use `<EmptyState.Icon icon={...} />` for consistent sizing |
-| `action` | `ReactNode` | — | Primary call-to-action (button or anchor) |
-| `link` | `ReactNode` | — | Secondary call-to-action (e.g. "Learn more" link) |
-| `className` | `string` | — | Additional CSS classes for the wrapper |
+| `children` | `ReactNode` | — | CTA slot. Use real `Button` or `Link` elements |
+| `action` | `ReactNode` | — | Compatibility alias for primary CTA |
+| `link` | `ReactNode` | — | Compatibility alias for secondary CTA |
+| `variant` | `EmptyStateVariant` | `"blank-slate"` | Semantic empty-state variant |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Layout density |
+| `align` | `"center" \| "start"` | `"center"` | Content alignment |
+| `live` | `boolean` | `false` | Adds `aria-live="polite"` for async state changes |
 
-### `EmptyState.Icon`
+### EmptyState.Icon
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `icon` | `ReactNode` | — | **Required.** Icon element (recommended size: 20px) |
-| `className` | `string` | — | Additional CSS classes for the icon wrapper |
+| `icon` | `ReactNode` | — | Icon element, usually 32px |
+| `className` | `string` | — | Additional classes for the icon wrapper |
+
+## Variants
+
+| Variant | Use when |
+|---------|----------|
+| `blank-slate` | The user has not created the first resource |
+| `informational` | The user needs a benefit explanation plus CTA |
+| `educational` | The user can start contextual onboarding |
+| `guide` | Starter content helps the user tinker or set up |
+| `no-results` | A filter or search returned zero rows |
+| `cleared` | Completed work leaves the surface empty |
+| `permission` | Role or tier denies access |
+| `error` | Loading failed and retry is possible |
+
+## Content
+
+- `title` is Title Case: `No Logs Match Your Filter`.
+- `description` is sentence case and adds information not already in the title.
+- Quote a single typed query with curly quotes: `No logs match “status:error”.`
+- CTA labels are Title Case Verb + Noun. Avoid `Get Started`, `Continue`, and `OK`.
+- Cap at one primary CTA, plus one secondary CTA when two paths are genuinely valid.
 
 ## Accessibility
 
-- The icon wrapper uses `aria-hidden="true"` on icon elements — all context is conveyed via `title` and `description` text.
-- Action elements should be standard `<button>` or `<a>` elements with appropriate labels.
+- CTAs must be real `Button` or `Link` elements so they join the tab order.
+- Use `live` for no-results states after async filter changes.
+- Icons are decorative; the title and description carry the meaning.

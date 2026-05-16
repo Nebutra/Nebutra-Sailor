@@ -13,17 +13,31 @@ import {
   type CreatedApiKey,
 } from "../../../../web/src/components/api-keys/create-api-key-dialog";
 
+const CREATED_KEY: CreatedApiKey = {
+  id: "key_new",
+  name: "Demo key",
+  key: "nbtr_live_demo_secret_value_do_not_use_in_production",
+  keyPrefix: "nbtr_live_demo",
+  scopes: ["read"],
+  rateLimitRps: 100,
+  expiresAt: null,
+  lastUsedAt: null,
+  createdAt: "2026-01-15T12:00:00Z",
+};
+
+const PRODUCTION_KEY: ApiKey = {
+  id: "key_01",
+  name: "Production backend",
+  keyPrefix: "nbtr_live_8af2",
+  lastUsedAt: "2026-01-15T09:00:00Z",
+  scopes: ["read", "write"],
+  rateLimitRps: 100,
+  expiresAt: null,
+  createdAt: "2025-09-01T10:00:00Z",
+};
+
 const FIXTURE_KEYS: ApiKey[] = [
-  {
-    id: "key_01",
-    name: "Production backend",
-    keyPrefix: "nbtr_live_8af2",
-    lastUsedAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
-    scopes: ["read", "write"],
-    rateLimitRps: 100,
-    expiresAt: null,
-    createdAt: new Date("2025-09-01T10:00:00Z").toISOString(),
-  },
+  PRODUCTION_KEY,
   {
     id: "key_02",
     name: "Staging deploy bot",
@@ -38,7 +52,7 @@ const FIXTURE_KEYS: ApiKey[] = [
     id: "key_03",
     name: "Analytics pipeline",
     keyPrefix: "nbtr_live_f31a",
-    lastUsedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
+    lastUsedAt: "2026-01-08T12:00:00Z",
     scopes: ["read", "admin"],
     rateLimitRps: 50,
     expiresAt: "2026-12-01T00:00:00Z",
@@ -83,70 +97,59 @@ export const Empty: Story = {
 
 export const Single: Story = {
   args: {
-    keys: [FIXTURE_KEYS[0]!],
+    keys: [PRODUCTION_KEY],
     onCreate: () => undefined,
     onRevoke: async () => undefined,
   },
 };
 
-export const CreateDialogClosed: StoryObj<typeof CreateApiKeyDialog> = {
-  name: "Dialog/Closed",
-  render: () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <div className="p-8">
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="rounded-md px-4 py-2 text-sm font-medium text-white"
-          style={{ background: "var(--brand-gradient)" }}
-        >
-          Open create-key dialog
-        </button>
-        <CreateApiKeyDialog
-          open={open}
-          onOpenChange={setOpen}
-          onCreate={async (input) => ({
-            id: "key_new",
-            name: input.name,
-            key: "nbtr_live_demo_secret_value_do_not_use_in_production",
-            keyPrefix: "nbtr_live_demo",
-            scopes: input.scopes,
-            rateLimitRps: 100,
-            expiresAt: null,
-            lastUsedAt: null,
-            createdAt: new Date().toISOString(),
-          })}
-        />
-      </div>
-    );
-  },
-};
+function CreateDialogClosedDemo() {
+  const [open, setOpen] = useState(false);
 
-export const CreateDialogOpen: StoryObj<typeof CreateApiKeyDialog> = {
-  name: "Dialog/Open",
-  render: () => {
-    const [open, setOpen] = useState(true);
-    const created: CreatedApiKey = {
-      id: "key_new",
-      name: "Demo key",
-      key: "nbtr_live_demo_secret_value_do_not_use_in_production",
-      keyPrefix: "nbtr_live_demo",
-      scopes: ["read"],
-      rateLimitRps: 100,
-      expiresAt: null,
-      lastUsedAt: null,
-      createdAt: new Date().toISOString(),
-    };
-    return (
+  return (
+    <div className="p-8">
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="rounded-md px-4 py-2 text-sm font-medium text-white"
+        style={{ background: "var(--brand-gradient)" }}
+      >
+        Open create-key dialog
+      </button>
       <CreateApiKeyDialog
         open={open}
         onOpenChange={setOpen}
-        onCreate={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 600));
-          return created;
-        }}
+        onCreate={async (input) => ({
+          ...CREATED_KEY,
+          name: input.name,
+          scopes: input.scopes,
+        })}
       />
-    );
-  },
+    </div>
+  );
+}
+
+export const CreateDialogClosed: StoryObj<typeof CreateApiKeyDialog> = {
+  name: "Dialog/Closed",
+  render: () => <CreateDialogClosedDemo />,
+};
+
+function CreateDialogOpenDemo() {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <CreateApiKeyDialog
+      open={open}
+      onOpenChange={setOpen}
+      onCreate={async () => {
+        await new Promise((resolve) => setTimeout(resolve, 600));
+        return CREATED_KEY;
+      }}
+    />
+  );
+}
+
+export const CreateDialogOpen: StoryObj<typeof CreateApiKeyDialog> = {
+  name: "Dialog/Open",
+  render: () => <CreateDialogOpenDemo />,
 };

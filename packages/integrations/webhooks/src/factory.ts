@@ -55,24 +55,31 @@ export async function createWebhooks(config?: WebhookConfig): Promise<WebhookPro
   switch (providerType) {
     case "svix": {
       const { SvixProvider } = await import("./providers/svix");
-      const svixConfig = config as Exclude<WebhookConfig, { provider: "custom" }> | undefined;
+      const svixConfig = config?.provider === "svix" ? config : undefined;
       return new SvixProvider({
         ...(svixConfig?.apiKey !== undefined ? { apiKey: svixConfig.apiKey } : {}),
-        ...((svixConfig as any)?.serverUrl !== undefined
-          ? { serverUrl: (svixConfig as any).serverUrl }
-          : {}),
+        ...(svixConfig?.serverUrl !== undefined ? { serverUrl: svixConfig.serverUrl } : {}),
       });
     }
 
     case "custom": {
       const { CustomProvider } = await import("./providers/custom");
-      const customConfig = config as Exclude<WebhookConfig, { provider: "svix" }> | undefined;
+      const customConfig = config?.provider === "custom" ? config : undefined;
       return new CustomProvider({
-        redisUrl: (customConfig as any)?.redisUrl,
-        queueProvider: (customConfig as any)?.queueProvider,
-        webhookBaseUrl: (customConfig as any)?.webhookBaseUrl,
-        maxRetries: (customConfig as any)?.maxRetries,
-        initialBackoffSec: (customConfig as any)?.initialBackoffSec,
+        ...(customConfig?.redisUrl !== undefined ? { redisUrl: customConfig.redisUrl } : {}),
+        ...(customConfig?.queueProvider !== undefined
+          ? { queueProvider: customConfig.queueProvider }
+          : {}),
+        ...(customConfig?.webhookBaseUrl !== undefined
+          ? { webhookBaseUrl: customConfig.webhookBaseUrl }
+          : {}),
+        ...(customConfig?.maxRetries !== undefined ? { maxRetries: customConfig.maxRetries } : {}),
+        ...(customConfig?.initialBackoffSec !== undefined
+          ? { initialBackoffSec: customConfig.initialBackoffSec }
+          : {}),
+        ...(customConfig?.deadLetterStore !== undefined
+          ? { deadLetterStore: customConfig.deadLetterStore }
+          : {}),
       });
     }
 

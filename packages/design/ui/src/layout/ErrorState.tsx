@@ -1,5 +1,7 @@
 "use client";
 
+import { Error as ErrorSurface } from "../primitives/error-message";
+
 export interface ErrorStateProps {
   /** Error title */
   title?: string;
@@ -7,6 +9,8 @@ export interface ErrorStateProps {
   message?: string;
   /** Optional retry callback */
   onRetry?: () => void;
+  /** Stable request, trace, deployment, or run identifier */
+  errorId?: string;
 }
 
 /**
@@ -24,27 +28,25 @@ export interface ErrorStateProps {
  * />
  * ```
  */
-export function ErrorState({ title = "Something went wrong", message, onRetry }: ErrorStateProps) {
+export function ErrorState({
+  title = "Couldn’t Load Resource",
+  message,
+  onRetry,
+  errorId,
+}: ErrorStateProps) {
+  const stableIdProps = errorId === undefined ? {} : { errorId };
+
   return (
     <div className="px-4 py-6">
-      <div
-        role="alert"
-        className="rounded-md border border-[hsl(var(--destructive)/0.35)] bg-[hsl(var(--destructive)/0.12)] p-4 text-[hsl(var(--destructive-foreground))]"
-      >
-        <p className="font-semibold">{title}</p>
-        {message && (
-          <p className="mt-1 text-sm text-[hsl(var(--destructive-foreground)/0.9)]">{message}</p>
-        )}
-        {onRetry && (
-          <button
-            type="button"
-            onClick={onRetry}
-            className="mt-3 rounded-md bg-[hsl(var(--destructive)/0.2)] px-3 py-1.5 text-sm font-medium text-[hsl(var(--destructive-foreground))] transition-colors hover:bg-[hsl(var(--destructive)/0.28)] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--destructive)/0.5)] focus:ring-offset-1 focus:ring-offset-[hsl(var(--background))]"
-          >
-            Try again
-          </button>
-        )}
-      </div>
+      {onRetry ? (
+        <ErrorSurface title={title} action="Try Again" onAction={onRetry} {...stableIdProps}>
+          {message}
+        </ErrorSurface>
+      ) : (
+        <ErrorSurface title={title} {...stableIdProps}>
+          {message}
+        </ErrorSurface>
+      )}
     </div>
   );
 }

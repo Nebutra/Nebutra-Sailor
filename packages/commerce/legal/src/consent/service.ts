@@ -5,12 +5,16 @@
  * Provides client-side utilities for consent management.
  */
 
+import { documentConfigs, type LegalDocumentRegistry, resolveDocumentVersion } from "../documents";
 import { cookieConfig } from "../documents/config";
 import type {
+  ConsentPersistenceStore,
   ConsentRequest,
   ConsentStatus,
   CookieConsentRequest,
   CookiePreferences,
+  PersistDocumentConsentRequest,
+  UserConsentRecord,
 } from "../types";
 
 // ============================================
@@ -169,6 +173,150 @@ export function getCookieConsentExpiry(): Date {
   const expiry = new Date();
   expiry.setDate(expiry.getDate() + cookieConfig.consentDuration);
   return expiry;
+}
+
+// ============================================
+// Consent Persistence
+// ============================================
+
+function generateConsentId(): string {
+  const timestamp = Date.now().toString(36);
+  const random = Math.random().toString(36).slice(2, 10);
+  return `consent_${timestamp}_${random}`;
+}
+
+class MemoryConsentStore implements ConsentPersistenceStore {
+  private readonly records: UserConsentRecord[] = [];
+
+  async recordDocumentConsent(
+    record: Omit<UserConsentRecord, "id"> & { id?: string },
+  ): Promise<UserConsentRecord> {
+    const stored: UserConsentRecord = {
+      ...record,
+      id: record.id ?? generateConsentId(),
+    };
+    this.records.push(stored);
+    return stored;
+  }
+
+  async getLatestDocumentConsent(input: {
+    documentSlug: string;
+    userId?: string;
+    visitorId?: string;
+  }): Promise<UserConsentRecord | null> {
+    const matches = this.records.filter((record) => {
+      if (record.documentSlug !== input.documentSlug) {
+        return false;
+      }
+      if (input.userId && record.userId === input.userId) {
+        return true;
+      }
+      if (input.visitorId && record.visitorId === input.visitorId) {
+        return true;
+      }
+      return false;
+    });
+
+    return matches.sort((a, b) => b.consentedAt.getTime() - a.consentedAt.getTime())[0] ?? null;
+  }
+}
+
+export function createMemoryConsentStore(): ConsentPersistenceStore {
+  return new MemoryConsentStore();
+}
+
+export interface ConsentPersistenceServiceConfig {
+  store: ConsentPersistenceStore;
+  documents?: LegalDocumentRegistry;
+  now?: () => Date;
+}
+
+export interface ConsentPersistenceService {
+  documents: LegalDocumentRegistry;
+  recordDocumentConsent(request: PersistDocumentConsentRequest): Promise<UserConsentRecord>;
+  getConsentStatus(input: {
+    documentSlug: string;
+    userId?: string;
+    visitorId?: string;
+  }): Promise<ConsentStatus>;
+}
+
+export function createConsentPersistenceService(
+  config: ConsentPersistenceServiceConfig,
+): ConsentPersistenceService {
+  const documents = config.documents ?? documentConfigs;
+  const now = config.now ?? (() => new Date());
+
+  return {
+    documents,
+    async recordDocumentConsent(request) {
+      const resolved = resolveDocumentVersion(request.documentSlug, {
+        documents,
+        at: now(),
+        version: request.documentVersion,
+      });
+
+      if (!resolved) {
+        throw new Error(`Unknown legal document version for "${request.documentSlug}"`);
+      }
+
+      return config.store.recordDocumentConsent({
+        userId: request.userId,
+        organizationId: request.organizationId,
+        visitorId: request.visitorId,
+        documentId: `${resolved.slug}@${resolved.version}`,
+        documentSlug: resolved.slug,
+        documentVersion: resolved.version,
+        consentType: request.consentType ?? "EXPLICIT",
+        consentGiven: true,
+        ipAddress: request.ipAddress,
+        userAgent: request.userAgent,
+        consentContext: request.context,
+        metadata: request.metadata ?? {},
+        consentedAt: now(),
+      });
+    },
+    async getConsentStatus(input) {
+      return resolveConsentStatus({
+        ...input,
+        store: config.store,
+        documents,
+        now: now(),
+      });
+    },
+  };
+}
+
+export async function resolveConsentStatus(input: {
+  documentSlug: string;
+  userId?: string;
+  visitorId?: string;
+  store: ConsentPersistenceStore;
+  documents?: LegalDocumentRegistry;
+  now?: Date;
+}): Promise<ConsentStatus> {
+  const current = resolveDocumentVersion(input.documentSlug, {
+    documents: input.documents,
+    at: input.now,
+  });
+
+  if (!current) {
+    throw new Error(`Unknown legal document "${input.documentSlug}"`);
+  }
+
+  const consent = await input.store.getLatestDocumentConsent({
+    documentSlug: input.documentSlug,
+    userId: input.userId,
+    visitorId: input.visitorId,
+  });
+
+  return {
+    hasConsented: consent?.consentGiven ?? false,
+    consentedVersion: consent?.documentVersion,
+    currentVersion: current.version,
+    needsReconsent: !consent?.consentGiven || consent.documentVersion !== current.version,
+    lastConsentedAt: consent?.consentedAt,
+  };
 }
 
 // ============================================

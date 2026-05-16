@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { WebhookDeliveriesPanel, type WebhookDeliveryView } from "../webhook-deliveries-panel";
 
 const deliveries: WebhookDeliveryView[] = [
@@ -32,6 +32,10 @@ const deliveries: WebhookDeliveryView[] = [
 ];
 
 describe("WebhookDeliveriesPanel", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it("shows a loading state then renders deliveries", async () => {
     const loader = vi.fn().mockResolvedValue(deliveries);
     render(<WebhookDeliveriesPanel endpointId="ep_1" loadDeliveries={loader} />);
@@ -48,7 +52,9 @@ describe("WebhookDeliveriesPanel", () => {
       expect(screen.getAllByRole("button", { name: "View payload" }).length).toBe(2),
     );
 
-    fireEvent.click(screen.getAllByRole("button", { name: "View payload" })[0]!);
+    const [viewPayloadButton] = screen.getAllByRole("button", { name: "View payload" });
+    expect(viewPayloadButton).toBeDefined();
+    fireEvent.click(viewPayloadButton as HTMLElement);
     expect(screen.getByText(/"hello": "world"/)).toBeTruthy();
 
     fireEvent.click(screen.getByRole("button", { name: "Hide payload" }));
@@ -62,8 +68,46 @@ describe("WebhookDeliveriesPanel", () => {
       <WebhookDeliveriesPanel endpointId="ep_1" loadDeliveries={loader} onReplay={onReplay} />,
     );
     await waitFor(() => expect(screen.getAllByRole("button", { name: "Replay" }).length).toBe(2));
-    fireEvent.click(screen.getAllByRole("button", { name: "Replay" })[1]!);
+    const replayButtons = screen.getAllByRole("button", { name: "Replay" });
+    expect(replayButtons[1]).toBeDefined();
+    fireEvent.click(replayButtons[1] as HTMLElement);
     await waitFor(() => expect(onReplay).toHaveBeenCalledWith("ep_1", "evt_fail"));
+  });
+
+  it("uses the default replay API and reloads deliveries when no handler is injected", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ deliveries }),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true }),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ deliveries }),
+      } as Response);
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<WebhookDeliveriesPanel endpointId="ep_1" />);
+
+    await waitFor(() => expect(screen.getAllByRole("button", { name: "Replay" }).length).toBe(2));
+    const replayButtons = screen.getAllByRole("button", { name: "Replay" });
+    expect(replayButtons[1]).toBeDefined();
+    fireEvent.click(replayButtons[1] as HTMLElement);
+
+    await waitFor(() =>
+      expect(fetchMock).toHaveBeenCalledWith(
+        "/api/webhooks/ep_1/deliveries",
+        expect.objectContaining({
+          body: JSON.stringify({ deliveryId: "evt_fail" }),
+          method: "POST",
+        }),
+      ),
+    );
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(3));
   });
 
   it("renders an alert when loading fails", async () => {

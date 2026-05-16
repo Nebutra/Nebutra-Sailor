@@ -1,4 +1,4 @@
-> **Status: Foundation** — Notification contracts, provider selection, runtime status, and direct-provider stores exist. `productionReady` remains `false` because production use still requires Novu credentials or injected durable direct-provider adapters plus stronger retry/telemetry coverage.
+> **Status: Foundation** — Notification contracts, provider selection, runtime status, direct-provider stores, and direct delivery retry telemetry exist. `productionReady` remains `false` because production use still requires Novu credentials or injected durable direct-provider adapters plus external provider-health monitoring.
 
 # @nebutra/notifications
 
@@ -77,6 +77,16 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const notifier = await createNotificationProvider({
   provider: "direct",
+  maxRetries: 1,
+  deliveryObserver: {
+    recordAttempt: async (attempt) => {
+      await metrics.increment("notifications.delivery_attempt", {
+        channel: attempt.channel,
+        sent: String(attempt.result.sent),
+        type: attempt.type,
+      });
+    },
+  },
   emailDispatcher: {
     send: async (to, subject, body) => {
       const result = await resend.emails.send({

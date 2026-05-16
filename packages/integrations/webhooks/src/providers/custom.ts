@@ -8,6 +8,7 @@ import {
 } from "../signing";
 import type {
   WebhookDeadLetterDelivery,
+  WebhookDeadLetterStore,
   WebhookDeliveryAttempt,
   WebhookEndpoint,
   WebhookMessage,
@@ -33,6 +34,7 @@ interface CustomProviderOptions {
   webhookBaseUrl?: string;
   maxRetries?: number;
   initialBackoffSec?: number;
+  deadLetterStore?: WebhookDeadLetterStore;
 }
 
 // In-memory state (dev/test only; use Redis in production)
@@ -50,11 +52,38 @@ interface MessageRecord {
 // 5s, 30s, 2m, 15m, 1h, 6h (6 attempts total)
 const BACKOFF_SCHEDULE = [5, 30, 120, 900, 3600, 21600];
 
+class InMemoryDeadLetterStore implements WebhookDeadLetterStore {
+  private records: Map<string, WebhookDeadLetterDelivery> = new Map();
+
+  async upsert(record: WebhookDeadLetterDelivery): Promise<void> {
+    this.records.set(this.key(record.messageId, record.endpointId), record);
+  }
+
+  async delete(messageId: string, endpointId: string): Promise<void> {
+    this.records.delete(this.key(messageId, endpointId));
+  }
+
+  async list(messageId?: string): Promise<WebhookDeadLetterDelivery[]> {
+    return Array.from(this.records.values()).filter(
+      (record) => messageId === undefined || record.messageId === messageId,
+    );
+  }
+
+  async clear(): Promise<void> {
+    this.records.clear();
+  }
+
+  private key(messageId: string, endpointId: string): string {
+    return `${messageId}:${endpointId}`;
+  }
+}
+
 export class CustomProvider implements WebhookProvider {
   readonly name = "custom" as const;
   private endpoints: Map<string, EndpointRecord> = new Map();
   private messages: Map<string, MessageRecord> = new Map();
-  private deadLetters: Map<string, WebhookDeadLetterDelivery> = new Map();
+  private deadLetterStore: WebhookDeadLetterStore;
+  private ownsDeadLetterStore: boolean;
   private maxRetries: number;
   private initialBackoffSec: number;
   private pendingRetries: Map<string, NodeJS.Timeout> = new Map(); // for graceful shutdown
@@ -62,6 +91,8 @@ export class CustomProvider implements WebhookProvider {
   constructor(options: CustomProviderOptions = {}) {
     this.maxRetries = options.maxRetries ?? 6;
     this.initialBackoffSec = options.initialBackoffSec ?? 5;
+    this.deadLetterStore = options.deadLetterStore ?? new InMemoryDeadLetterStore();
+    this.ownsDeadLetterStore = options.deadLetterStore === undefined;
 
     logger.info("[webhooks:custom] Provider initialized", {
       maxRetries: this.maxRetries,
@@ -232,7 +263,7 @@ export class CustomProvider implements WebhookProvider {
         attempt.status = "success";
         attempt.statusCode = response.status;
         attempt.response = responseText;
-        this.deadLetters.delete(this.deadLetterKey(message.id, endpoint.id));
+        await this.deadLetterStore.delete(message.id, endpoint.id);
         logger.info("[webhooks:custom] Delivery succeeded", {
           endpointId: endpoint.id,
           messageId: message.id,
@@ -272,24 +303,21 @@ export class CustomProvider implements WebhookProvider {
 
         this.pendingRetries.set(retryKey, timeoutId);
       } else {
-        this.recordDeadLetter(message, endpoint, attempt);
+        await this.recordDeadLetter(message, endpoint, attempt);
       }
     }
   }
 
-  private deadLetterKey(messageId: string, endpointId: string): string {
-    return `${messageId}:${endpointId}`;
-  }
-
-  private recordDeadLetter(
+  private async recordDeadLetter(
     message: WebhookMessage,
     endpoint: WebhookEndpoint,
     attempt: WebhookDeliveryAttempt,
-  ): void {
-    const key = this.deadLetterKey(message.id, endpoint.id);
-    const existing = this.deadLetters.get(key);
+  ): Promise<void> {
+    const existing = (await this.deadLetterStore.list(message.id)).find(
+      (record) => record.endpointId === endpoint.id,
+    );
 
-    this.deadLetters.set(key, {
+    await this.deadLetterStore.upsert({
       id: existing?.id ?? `dlq_${crypto.randomUUID()}`,
       messageId: message.id,
       endpointId: endpoint.id,
@@ -329,9 +357,7 @@ export class CustomProvider implements WebhookProvider {
   }
 
   async getDeadLetterDeliveries(messageId?: string): Promise<WebhookDeadLetterDelivery[]> {
-    const deadLetters = Array.from(this.deadLetters.values()).filter(
-      (record) => messageId === undefined || record.messageId === messageId,
-    );
+    const deadLetters = await this.deadLetterStore.list(messageId);
 
     return deadLetters.sort(
       (a, b) => new Date(a.deadLetteredAt).getTime() - new Date(b.deadLetteredAt).getTime(),
@@ -368,7 +394,11 @@ export class CustomProvider implements WebhookProvider {
   async verifySignature(payload: string, signature: string, secret: string): Promise<boolean> {
     try {
       const parsed = parseWebhookSignatureHeader(signature);
-      return parsed ? verifyPayload(payload, parsed.signature, secret, parsed.timestamp) : false;
+      if (!parsed) {
+        return false;
+      }
+
+      return verifyPayload(payload, parsed.signature, secret, parsed.timestamp);
     } catch {
       return false;
     }
@@ -385,6 +415,8 @@ export class CustomProvider implements WebhookProvider {
     this.pendingRetries.clear();
     this.endpoints.clear();
     this.messages.clear();
-    this.deadLetters.clear();
+    if (this.ownsDeadLetterStore) {
+      await this.deadLetterStore.clear?.();
+    }
   }
 }

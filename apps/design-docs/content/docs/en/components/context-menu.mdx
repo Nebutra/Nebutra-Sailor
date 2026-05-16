@@ -1,117 +1,103 @@
 ---
 title: "Context Menu"
-description: "Right-click context menu with support for icons, shortcuts, disabled items, and link mode."
+description: "Pointer-positioned secondary actions for rows, files, canvas objects, and deployment resources."
 ---
 
 ## Overview
 
-`ContextMenu` is a right-click context menu built on Radix ContextMenu. It supports prefix icons, suffix hints (shortcuts/badges), disabled items, link mode, and labeled groups.
+`ContextMenu` is the power-user shortcut surface for right-click and keyboard-menu interactions. It is built on Base UI and uses Nebutra item, overlay, and motion tokens. It must never be the only entry point for an action; mirror every item in a visible row action, toolbar menu, or details panel.
 
-## Installation
+Use `CommandMenu` for global actions and search. Use a visible menu trigger when discoverability matters more than pointer-positioned speed.
 
-<ComponentPreview name="context-menu-demo" className="min-h-[250px] flex justify-center items-center"  />
+<ComponentPreview name="context-menu-demo" className="min-h-[250px] flex justify-center items-center" />
 
-
-### With prefix icons
-
-<ComponentPreview name="context-menu-with-icons-demo" className="min-h-[250px] flex justify-center items-center"  />
-
-
-### With suffix hints (shortcuts)
-
-```tsx
-<ContextMenu.Item
-  prefix={<Edit2 className="h-4 w-4" />}
-  suffix={<span className="text-xs text-muted-foreground">⌘E</span>}
-  onSelect={() => {}}
->
-  Edit
-</ContextMenu.Item>
-```
-
-### With labels and sections
-
-```tsx
-<ContextMenu.Content>
-  <ContextMenu.Label>Actions</ContextMenu.Label>
-  <ContextMenu.Item onSelect={() => {}}>Edit</ContextMenu.Item>
-  <ContextMenu.Item onSelect={() => {}}>Copy</ContextMenu.Item>
-  <ContextMenu.Separator />
-  <ContextMenu.Label>Danger</ContextMenu.Label>
-  <ContextMenu.Item
-    onSelect={() => {}}
-    className="text-destructive focus:text-destructive"
-  >
-    Delete
-  </ContextMenu.Item>
-</ContextMenu.Content>
-```
-
-### Link mode
-
-Items with `href` render as `<a>` tags:
-
-```tsx
-<ContextMenu.Item value="docs" href="/docs" prefix={<Link className="h-4 w-4" />}>
-  Documentation
-</ContextMenu.Item>
-```
+## Usage
 
 ### Disabled items
 
+Disabled items stay visible when the action exists but is temporarily unavailable.
+
 ```tsx
-<ContextMenu.Item disabled onSelect={() => {}}>
-  Paste
+<ContextMenu.Item disabled value="promote">
+  Promote to Production
 </ContextMenu.Item>
+```
+
+### Link items
+
+Use `href` for navigation. Link items render with Base UI's link item primitive instead of a simulated click handler.
+
+```tsx
+<ContextMenu.Item href="/docs" prefix={<Link className="size-4" />} value="docs">
+  View Documentation
+</ContextMenu.Item>
+```
+
+### Prefix and suffix
+
+<ComponentPreview name="context-menu-with-icons-demo" className="min-h-[250px] flex justify-center items-center" />
+
+```tsx
+<ContextMenu.Item prefix={<Copy className="size-4" />} value="copy">
+  Copy URL
+  <ContextMenu.Shortcut>⌘C</ContextMenu.Shortcut>
+</ContextMenu.Item>
+```
+
+### Checkbox, radio, and submenu items
+
+```tsx
+<ContextMenu.CheckboxItem defaultChecked value="status">
+  Status
+</ContextMenu.CheckboxItem>
+
+<ContextMenu.RadioGroup defaultValue="comfortable">
+  <ContextMenu.RadioItem value="compact">Compact</ContextMenu.RadioItem>
+  <ContextMenu.RadioItem value="comfortable">Comfortable</ContextMenu.RadioItem>
+</ContextMenu.RadioGroup>
+
+<ContextMenu.Sub>
+  <ContextMenu.SubTrigger>Move to Project</ContextMenu.SubTrigger>
+  <ContextMenu.SubContent>
+    <ContextMenu.Item value="core">Core Platform</ContextMenu.Item>
+  </ContextMenu.SubContent>
+</ContextMenu.Sub>
 ```
 
 ## Props
 
-### ContextMenu.Root
+### ContextMenu
 
-Accepts all Radix `ContextMenu.Root` props.
-
-### ContextMenu.Trigger
-
-Accepts all Radix `ContextMenu.Trigger` props. Use `asChild` to make any element the trigger.
+`ContextMenu` is callable as the root component and also exposes `ContextMenu.Root` for existing consumers.
 
 ### ContextMenu.Content
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | — | Additional CSS classes |
-
-Accepts all Radix `ContextMenu.Content` props.
+Accepts Base UI popup props plus `align`, `side`, `alignOffset`, and `sideOffset`.
 
 ### ContextMenu.Item
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `children` | `ReactNode` | — | Item label |
-| `onSelect` | `() => void` | — | Called on click or keyboard selection (maps to Radix `onSelect`). Not fired when `href` is set. |
-| `disabled` | `boolean` | `false` | Disables interaction |
-| `href` | `string` | — | Renders item as `<a>` link; navigation is the selection action |
-| `prefix` | `ReactNode` | — | Element before the label (icon) |
-| `suffix` | `ReactNode` | — | Element after the label (shortcut/badge) |
-| `className` | `string` | — | Additional CSS classes |
+| `children` | `ReactNode` | — | Item label. Use Title Case Verb + Noun. |
+| `onSelect` | `BaseContextMenu.Item["onClick"]` | — | Activation handler for non-link items. |
+| `disabled` | `boolean` | `false` | Disables interaction. |
+| `href` | `string` | — | Renders a link item. |
+| `prefix` | `ReactNode` | — | Leading icon or avatar. |
+| `suffix` | `ReactNode` | — | Trailing hint. Prefer `ContextMenu.Shortcut` for keys. |
+| `variant` | `"default" \| "destructive"` | `"default"` | Destructive styling for irreversible actions. |
+| `value` | `string` | — | Stable analytics/test value. |
 
-### ContextMenu.Label
+## Design Principles
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — | Label text |
-| `className` | `string` | — | Additional CSS classes |
-
-### ContextMenu.Separator
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | — | Additional CSS classes |
+- Context menus accelerate secondary actions; they do not replace visible controls.
+- Labels are Title Case Verb + Noun: `Copy URL`, `Delete Deployment`, `Open in New Tab`.
+- Use an ellipsis only when the item opens a follow-up dialog, such as `Rename Deployment...`.
+- Keep destructive items at the bottom after a separator. Do not hide destructive actions in submenus.
+- Avoid more than one submenu level; keyboard navigation becomes fragile quickly.
 
 ## Accessibility
 
-- Built on Radix ContextMenu — fully keyboard navigable.
-- Arrow keys move between items; `Enter` or `Space` selects.
-- `Escape` closes the menu.
-- Disabled items are skipped by keyboard navigation.
-- Screen readers announce the menu via `role="menu"` and items via `role="menuitem"`.
+- Right-click, long-press, and keyboard menu flows should expose the same actions.
+- Arrow keys move focus; `Enter`/`Space` activates; `Escape` closes and returns focus.
+- Disabled items remain announced but are skipped for activation.
+- The trigger region should be scoped to the row/object, not the whole page.

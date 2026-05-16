@@ -107,6 +107,35 @@ export class MCPServerRegistry {
   }
 
   /**
+   * Check whether a context can execute a specific tool. Tool-level policy
+   * narrows the server policy and supports tenant, plan, and permission gates.
+   */
+  canAccessTool(toolName: string, context: MCPContext): boolean {
+    const server = this.findServerByTool(toolName);
+    if (!server || !this.canAccess(server.id, context)) return false;
+
+    const tool = this.findTool(server, toolName);
+    if (!tool) return false;
+
+    if (tool.allowedPlans && tool.allowedPlans.length > 0) {
+      if (!context.plan || !tool.allowedPlans.includes(context.plan)) return false;
+    }
+
+    if (tool.allowedTenants && tool.allowedTenants.length > 0) {
+      if (!context.tenantId || !tool.allowedTenants.includes(context.tenantId)) return false;
+    }
+
+    if (tool.requiredPermissions && tool.requiredPermissions.length > 0) {
+      const permissions = new Set(context.permissions ?? []);
+      if (!tool.requiredPermissions.every((permission) => permissions.has(permission))) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
    * Get tools accessible by a context
    */
   getAccessibleTools(context: MCPContext): Array<ToolDefinition & { serverId: string }> {
@@ -115,12 +144,20 @@ export class MCPServerRegistry {
     for (const server of this.servers.values()) {
       if (this.canAccess(server.id, context)) {
         for (const tool of server.tools) {
-          tools.push({ ...tool, serverId: server.id });
+          if (this.canAccessTool(`${server.id}:${tool.name}`, context)) {
+            tools.push({ ...tool, serverId: server.id });
+          }
         }
       }
     }
 
     return tools;
+  }
+
+  private findTool(server: MCPServerConfig, toolName: string): ToolDefinition | undefined {
+    return server.tools.find(
+      (tool) => tool.name === toolName || `${server.id}:${tool.name}` === toolName,
+    );
   }
 }
 

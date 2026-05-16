@@ -4,6 +4,7 @@ import { DirectProvider } from "../providers/direct";
 import { resolveNotificationRuntimeStatus } from "../runtime";
 import { loadNotificationSettingsSnapshot } from "../settings";
 import type {
+  ChannelResult,
   InAppFeedOptions,
   InAppFeedResult,
   InAppNotification,
@@ -255,6 +256,63 @@ describe("DirectProvider", () => {
         sent: false,
         error: "Channel disabled by user",
       }),
+    ]);
+  });
+
+  it("retries dispatcher failures and emits delivery attempts", async () => {
+    const attempts: Array<{
+      channel: ChannelResult["channel"];
+      attempt: number;
+      sent: boolean;
+      error?: string;
+    }> = [];
+    let sendCount = 0;
+    const provider = new DirectProvider({
+      provider: "direct",
+      maxRetries: 1,
+      deliveryObserver: {
+        recordAttempt: async (attempt) => {
+          attempts.push({
+            channel: attempt.channel,
+            attempt: attempt.attempt,
+            sent: attempt.result.sent,
+            ...(attempt.result.error ? { error: attempt.result.error } : {}),
+          });
+        },
+      },
+      emailDispatcher: {
+        send: async () => {
+          sendCount += 1;
+          if (sendCount === 1) {
+            return { messageId: "", sent: false, error: "temporary outage" };
+          }
+          return { messageId: "email_1", sent: true };
+        },
+      },
+    });
+
+    const result = await provider.send(
+      createNotification(
+        "workspace.invitation",
+        "user_retry",
+        ["email"],
+        {
+          email: "retry@example.com",
+          subject: "Invite",
+          body: "Join the workspace",
+        },
+        "tenant_a",
+      ),
+    );
+
+    expect(result.accepted).toBe(true);
+    expect(result.channelResults).toEqual([
+      expect.objectContaining({ channel: "email", sent: true, messageId: "email_1" }),
+    ]);
+    expect(sendCount).toBe(2);
+    expect(attempts).toEqual([
+      { channel: "email", attempt: 1, sent: false, error: "temporary outage" },
+      { channel: "email", attempt: 2, sent: true },
     ]);
   });
 

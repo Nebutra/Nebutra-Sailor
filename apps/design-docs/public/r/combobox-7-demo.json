@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/combobox-7-demo.tsx",
-      "content": "\"use client\";\n\nimport { Combobox } from \"@nebutra/ui/primitives\";\nexport function Combobox7Demo() {\n  return (\n    <Combobox\n      options={[\n        { value: \"next\", label: \"Next.js\" },\n        { value: \"remix\", label: \"Remix\" },\n        { value: \"astro\", label: \"Astro\" },\n        { value: \"nuxt\", label: \"Nuxt\" },\n      ]}\n      error\n      placeholder=\"Select framework...\"\n    />\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { Combobox } from \"@nebutra/ui/primitives\";\nexport function Combobox7Demo() {\n  return (\n    <Combobox\n      options={[\n        { value: \"next\", label: \"Next.js\" },\n        { value: \"remix\", label: \"Remix\" },\n        { value: \"astro\", label: \"Astro\" },\n        { value: \"nuxt\", label: \"Nuxt\" },\n      ]}\n      errored\n      placeholder=\"Select framework...\"\n    />\n  );\n}\n",
       "type": "registry:example"
     }
   ]

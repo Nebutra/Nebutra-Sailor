@@ -6,6 +6,7 @@ import * as React from "react";
 
 import { cn } from "../utils/cn";
 import { Dialog, DialogContent } from "./dialog";
+import { Kbd } from "./kbd";
 
 export type CommandProps = React.ComponentPropsWithoutRef<typeof CommandPrimitive>;
 
@@ -27,7 +28,32 @@ export type CommandSeparatorProps = React.ComponentPropsWithoutRef<
 
 export type CommandItemProps = React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>;
 
-export type CommandShortcutProps = React.HTMLAttributes<HTMLSpanElement>;
+export interface CommandShortcutProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** Render each shortcut token as a separate Kbd key. */
+  keys?: ReadonlyArray<React.ReactNode>;
+  /** Accessible label for compact shortcut glyphs. */
+  label?: string;
+}
+
+export interface CommandResultsProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Current visible result count. Pass from product state when known. */
+  count?: number;
+  /** Current search query, used only for the default screen-reader message. */
+  search?: string;
+  /** Custom screen-reader announcement. */
+  label?: (count: number | undefined, search: string) => React.ReactNode;
+}
+
+const commandFrameClassName = cn(
+  "[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium",
+  "[&_[cmdk-group-heading]]:text-muted-foreground",
+  "[&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0",
+  "[&_[cmdk-group]]:px-2",
+  "[&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5",
+  "[&_[cmdk-input]]:h-12",
+  "[&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-2.5",
+  "[&_[cmdk-item]_svg]:h-4 [&_[cmdk-item]_svg]:w-4",
+);
 
 /**
  * Command - A command palette / autocomplete component
@@ -81,9 +107,7 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent className="overflow-hidden p-0 shadow-lg">
-        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-          {children}
-        </Command>
+        <Command className={commandFrameClassName}>{children}</Command>
       </DialogContent>
     </Dialog>
   );
@@ -169,12 +193,42 @@ const CommandItem = React.forwardRef<
 ));
 CommandItem.displayName = CommandPrimitive.Item.displayName;
 
-const CommandShortcut = ({ className, ...props }: CommandShortcutProps) => {
+const defaultResultsLabel = (count: number | undefined, search: string) => {
+  if (typeof count !== "number") return "Command results updated.";
+  if (search.trim().length === 0) return `${count} command results available.`;
+  return `${count} command results available for ${search}.`;
+};
+
+const CommandResults = React.forwardRef<HTMLDivElement, CommandResultsProps>(
+  ({ className, count, search = "", label = defaultResultsLabel, children, ...props }, ref) => (
+    <div
+      ref={ref}
+      aria-atomic="true"
+      aria-live="polite"
+      className={cn("sr-only", className)}
+      {...props}
+    >
+      {children ?? label(count, search)}
+    </div>
+  ),
+);
+CommandResults.displayName = "CommandResults";
+
+const CommandShortcut = ({ className, keys, label, children, ...props }: CommandShortcutProps) => {
+  const shortcutKeys = keys ?? (children != null ? [children] : []);
+
   return (
     <span
-      className={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)}
+      className={cn("ml-auto flex shrink-0 items-center gap-1 text-muted-foreground", className)}
       {...props}
-    />
+    >
+      {label ? <span className="sr-only">{label}</span> : null}
+      {shortcutKeys.map((key, index) => (
+        <Kbd key={`${String(key)}-${index}`} aria-hidden={label ? true : undefined} small>
+          {key}
+        </Kbd>
+      ))}
+    </span>
   );
 };
 CommandShortcut.displayName = "CommandShortcut";
@@ -187,6 +241,8 @@ export {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandResults,
   CommandSeparator,
   CommandShortcut,
+  commandFrameClassName,
 };

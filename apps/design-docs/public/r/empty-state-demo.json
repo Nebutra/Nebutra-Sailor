@@ -12,7 +12,7 @@
   "files": [
     {
       "path": "registry/examples/empty-state-demo.tsx",
-      "content": "import { ChartActivity as Activity } from \"@nebutra/icons\";\nimport { EmptyState } from \"@nebutra/ui/layout\";\n\nexport function EmptyStateDemo() {\n  return (\n    <div className=\"max-w-md p-8 my-8 mx-auto w-full rounded-xl border bg-background\">\n      <EmptyState\n        icon={<Activity size={20} />}\n        title=\"Title\"\n        description=\"A message conveying the state of the product.\"\n      />\n    </div>\n  );\n}\n",
+      "content": "import { ChartBarPeak } from \"@nebutra/icons\";\nimport { EmptyState } from \"@nebutra/ui/primitives\";\n\nexport function EmptyStateDemo() {\n  return (\n    <div className=\"max-w-md p-8 my-8 mx-auto w-full rounded-xl border bg-background\">\n      <EmptyState.Root\n        icon={<EmptyState.Icon icon={<ChartBarPeak size={32} />} />}\n        title=\"Title\"\n        description=\"A message conveying the state of the product.\"\n      />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

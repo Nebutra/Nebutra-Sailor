@@ -5,5 +5,8 @@ export default defineCliConfig({
     projectId: "wyfqr24v",
     dataset: "production",
   },
-  studioHost: "nebutra-sailor",
+  deployment: {
+    appId: "scgmoa01zwwc7gzssev5avv7",
+  },
+  studioHost: "nebutra",
 });

@@ -7,6 +7,9 @@ import { db } from "@/lib/db";
 
 export interface CheckoutRequestBody {
   priceId?: unknown;
+  planId?: unknown;
+  interval?: unknown;
+  redirectUrl?: unknown;
   /**
    * Optional seat count override. When `seatBased` is true and this is omitted,
    * the route counts the calling org's members and uses that as the quantity.
@@ -23,6 +26,9 @@ interface NormalizedBody {
   priceId: string;
   seats: number | null;
   seatBased: boolean;
+  explicitReturnUrl: string | null;
+  invalidReturnUrl: boolean;
+  wantsJsonResponse: boolean;
 }
 
 async function readBody(request: Request): Promise<NormalizedBody> {
@@ -30,29 +36,95 @@ async function readBody(request: Request): Promise<NormalizedBody> {
 
   if (contentType.includes("application/json")) {
     const raw = (await request.json().catch(() => ({}))) as CheckoutRequestBody;
+    const explicitReturnUrl =
+      typeof raw.redirectUrl === "string"
+        ? resolveExplicitReturnUrl(request, raw.redirectUrl)
+        : null;
     return {
-      priceId: typeof raw.priceId === "string" ? raw.priceId : "",
+      priceId:
+        typeof raw.priceId === "string"
+          ? raw.priceId
+          : resolvePriceIdFromPlan(raw.planId, raw.interval),
       seats:
         typeof raw.seats === "number" && Number.isFinite(raw.seats) && raw.seats > 0
           ? Math.floor(raw.seats)
           : null,
       seatBased: raw.seatBased === true,
+      explicitReturnUrl,
+      invalidReturnUrl: typeof raw.redirectUrl === "string" && explicitReturnUrl === null,
+      wantsJsonResponse: typeof raw.redirectUrl === "string",
     };
   }
 
   const form = await request.formData().catch(() => null);
-  if (!form) return { priceId: "", seats: null, seatBased: false };
+  if (!form) {
+    return {
+      priceId: "",
+      seats: null,
+      seatBased: false,
+      explicitReturnUrl: null,
+      invalidReturnUrl: false,
+      wantsJsonResponse: false,
+    };
+  }
 
   const priceId = form.get("priceId");
+  const planId = form.get("planId");
+  const interval = form.get("interval");
+  const redirectUrl = form.get("redirectUrl");
   const seatsRaw = form.get("seats");
   const seatBasedRaw = form.get("seatBased");
   const seats = typeof seatsRaw === "string" ? Number.parseInt(seatsRaw, 10) : Number.NaN;
+  const explicitReturnUrl =
+    typeof redirectUrl === "string" ? resolveExplicitReturnUrl(request, redirectUrl) : null;
 
   return {
-    priceId: typeof priceId === "string" ? priceId : "",
+    priceId:
+      typeof priceId === "string"
+        ? priceId
+        : resolvePriceIdFromPlan(
+            typeof planId === "string" ? planId : undefined,
+            typeof interval === "string" ? interval : undefined,
+          ),
     seats: Number.isFinite(seats) && seats > 0 ? seats : null,
     seatBased: seatBasedRaw === "true" || seatBasedRaw === "1",
+    explicitReturnUrl,
+    invalidReturnUrl: typeof redirectUrl === "string" && explicitReturnUrl === null,
+    wantsJsonResponse: false,
   };
+}
+
+function resolvePriceIdFromPlan(planId: unknown, interval: unknown): string {
+  if (typeof planId !== "string") return "";
+
+  const normalizedPlan = planId.toLowerCase();
+  const normalizedInterval = interval === "year" ? "year" : "month";
+
+  if (
+    normalizedPlan === "plan_pro" ||
+    normalizedPlan === "pro" ||
+    normalizedPlan === "pro_monthly" ||
+    normalizedPlan === "pro_yearly"
+  ) {
+    if (normalizedPlan === "pro_yearly" || normalizedInterval === "year") {
+      return process.env.STRIPE_PRICE_ID_PRO_YEARLY ?? process.env.PRICE_ID_PRO_YEARLY ?? "";
+    }
+
+    return process.env.STRIPE_PRICE_ID_PRO_MONTHLY ?? process.env.PRICE_ID_PRO_MONTHLY ?? "";
+  }
+
+  return "";
+}
+
+function resolveExplicitReturnUrl(request: Request, value: string): string | null {
+  try {
+    const requestUrl = new URL(request.url);
+    const explicitUrl = new URL(value, requestUrl.origin);
+    if (explicitUrl.origin !== requestUrl.origin) return null;
+    return explicitUrl.toString();
+  } catch {
+    return null;
+  }
 }
 
 async function resolveSeatQuantity(
@@ -82,6 +154,10 @@ export async function POST(request: Request) {
     );
   }
 
+  if (body.invalidReturnUrl) {
+    return NextResponse.json({ error: "Invalid billing return URL." }, { status: 400 });
+  }
+
   if (!body.priceId.startsWith("price_")) {
     return NextResponse.json({ error: "Invalid or missing Stripe price id." }, { status: 400 });
   }
@@ -97,8 +173,8 @@ export async function POST(request: Request) {
 
   const upstreamPayload: Record<string, unknown> = {
     priceId: body.priceId,
-    successUrl: appendBillingStatus(returnUrl, "checkout-success"),
-    cancelUrl: appendBillingStatus(returnUrl, "checkout-canceled"),
+    successUrl: appendBillingStatus(body.explicitReturnUrl ?? returnUrl, "checkout-success"),
+    cancelUrl: appendBillingStatus(body.explicitReturnUrl ?? returnUrl, "checkout-canceled"),
   };
   if (quantity !== null) upstreamPayload.quantity = quantity;
 
@@ -139,6 +215,10 @@ export async function POST(request: Request) {
       severity: "info",
       ...(quantity !== null ? { metadata: { quantity, seatBased: body.seatBased } } : {}),
     });
+  }
+
+  if (body.wantsJsonResponse) {
+    return NextResponse.json({ url: payload.url });
   }
 
   return NextResponse.redirect(payload.url, 303);

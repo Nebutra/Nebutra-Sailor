@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/input-basic-demo.tsx",
-      "content": "\"use client\";\n\nimport { Input } from \"@nebutra/ui/primitives\";\n\nexport function InputBasicDemo() {\n  return <Input placeholder=\"Enter value…\" />;\n}\n",
+      "content": "\"use client\";\n\nimport { Input } from \"@nebutra/ui/primitives\";\n\nexport function InputBasicDemo() {\n  return <Input aria-label=\"Project name\" placeholder=\"my-awesome-project\" />;\n}\n",
       "type": "registry:example"
     }
   ]

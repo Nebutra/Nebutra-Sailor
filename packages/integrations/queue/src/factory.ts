@@ -85,6 +85,10 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
         ...(qstashConfig?.nextSigningKey !== undefined
           ? { nextSigningKey: qstashConfig.nextSigningKey }
           : {}),
+        ...(qstashConfig?.dlqEndpoint !== undefined
+          ? { dlqEndpoint: qstashConfig.dlqEndpoint }
+          : {}),
+        ...(qstashConfig?.dlqFetcher !== undefined ? { dlqFetcher: qstashConfig.dlqFetcher } : {}),
       });
     }
 

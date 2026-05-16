@@ -73,6 +73,8 @@ export interface PermissionConfig {
   provider?: PermissionProviderType;
   roles?: RoleDefinition[];
   openFgaApiUrl?: string;
+  openFgaStoreId?: string | undefined;
+  openFgaAuthToken?: string | undefined;
 }
 
 export interface AbilityOptions {

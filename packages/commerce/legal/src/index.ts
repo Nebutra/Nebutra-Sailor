@@ -41,6 +41,8 @@ export {
   cacheDocumentConsent,
   // API client
   configureConsentApi,
+  createConsentPersistenceService,
+  createMemoryConsentStore,
   // Cookie consent
   defaultCookiePreferences,
   // Visitor ID
@@ -58,6 +60,7 @@ export {
   recordCookieConsent,
   recordDocumentConsent,
   rejectAllCookies,
+  resolveConsentStatus,
   saveCookieConsent,
   // GTM integration
   updateGTMConsent,
@@ -72,9 +75,11 @@ export {
   getCookieCategory,
   getDocumentConfig,
   getDocumentsByType,
+  getDocumentVersionHistory,
   getOptionalCookieCategories,
   getRequiredDocuments,
   legalConfig,
+  resolveDocumentVersion,
 } from "./documents";
 // Types
 export * from "./types";

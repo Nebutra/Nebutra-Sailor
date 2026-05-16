@@ -11,7 +11,7 @@ export function ComboboxWidthDemo() {
         { value: "astro", label: "Astro" },
         { value: "nuxt", label: "Nuxt" },
       ]}
-      width="w-96"
+      width={384}
       placeholder="选择框架..."
     />
   );

@@ -21,7 +21,6 @@ const config: StorybookConfig = {
   addons: [
     getAbsolutePath("@storybook/addon-essentials"),
     getAbsolutePath("@storybook/addon-interactions"),
-    getAbsolutePath("@storybook/addon-docs"),
     getAbsolutePath("@storybook/addon-a11y"),
   ],
 
@@ -32,6 +31,13 @@ const config: StorybookConfig = {
 
   docs: {
     autodocs: "tag",
+  },
+
+  typescript: {
+    // Static builds are the CI verification surface, not the source of props
+    // metadata. Keep prop/API safety in `tsc --noEmit`; react-docgen was
+    // forcing Vite to scan the full monorepo graph before serving any story.
+    reactDocgen: false,
   },
 
   // Vite governance — see docs/architecture/2026-05-14-storybook-perf-governance.md
@@ -55,8 +61,10 @@ const config: StorybookConfig = {
   //     - Pre-bundle heavy deps & warm primitive surface for HMR stability
   //       on 290+ stories.
   viteFinal: async (cfg) => {
-    const { mergeConfig } = await import("vite");
-    const { default: tailwindcss } = await import("@tailwindcss/vite");
+    const [{ mergeConfig }, { default: tailwindcss }] = await Promise.all([
+      import("vite"),
+      import("@tailwindcss/vite"),
+    ]);
     const stubsDir = resolve(HERE, "./stubs");
     return mergeConfig(cfg, {
       plugins: [tailwindcss()],

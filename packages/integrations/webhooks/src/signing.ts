@@ -80,6 +80,81 @@ export function verifyPayload(
   return true;
 }
 
+export interface WebhookReplayStore {
+  has(messageId: string): Promise<boolean>;
+  set(messageId: string, expiresAt: Date): Promise<void>;
+}
+
+export class InMemoryWebhookReplayStore implements WebhookReplayStore {
+  private seen = new Map<string, Date>();
+
+  async has(messageId: string): Promise<boolean> {
+    const expiresAt = this.seen.get(messageId);
+    if (!expiresAt) return false;
+
+    if (expiresAt.getTime() <= Date.now()) {
+      this.seen.delete(messageId);
+      return false;
+    }
+
+    return true;
+  }
+
+  async set(messageId: string, expiresAt: Date): Promise<void> {
+    this.seen.set(messageId, expiresAt);
+  }
+
+  async clear(): Promise<void> {
+    this.seen.clear();
+  }
+}
+
+export interface WebhookReplayGuardOptions {
+  store?: WebhookReplayStore;
+  toleranceSec?: number;
+  now?: () => Date;
+}
+
+export interface VerifyOnceOptions {
+  payload: string;
+  signature: string;
+  secret: string;
+  messageId: string;
+}
+
+export interface WebhookReplayGuard {
+  verifyOnce(options: VerifyOnceOptions): Promise<boolean>;
+}
+
+export function createReplayGuard(options: WebhookReplayGuardOptions = {}): WebhookReplayGuard {
+  const store = options.store ?? new InMemoryWebhookReplayStore();
+  const toleranceSec = options.toleranceSec ?? 300;
+  const now = options.now ?? (() => new Date());
+
+  return {
+    async verifyOnce({
+      payload,
+      signature,
+      secret,
+      messageId,
+    }: VerifyOnceOptions): Promise<boolean> {
+      const parsed = parseWebhookSignatureHeader(signature);
+      if (!parsed) {
+        throw new Error("Invalid webhook signature header");
+      }
+
+      verifyPayload(payload, parsed.signature, secret, parsed.timestamp, toleranceSec);
+
+      if (await store.has(messageId)) {
+        throw new Error("Webhook replay detected");
+      }
+
+      await store.set(messageId, new Date(now().getTime() + toleranceSec * 1000));
+      return true;
+    },
+  };
+}
+
 /**
  * Extract and decode a webhook signature from a standard "Webhook-Signature" header.
  * Expected format: "t={timestamp},v1={signature}"

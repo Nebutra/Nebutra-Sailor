@@ -1,0 +1,133 @@
+---
+title: "破坏性操作弹窗 (Destructive Action Modal)"
+description: "用于高风险破坏性操作的输入确认弹窗。"
+---
+
+## 概览 (Overview)
+
+`DestructiveActionModal` 用必填的 type-to-confirm gate 确认高风险破坏性操作。适合删除、轮换、吊销、断开连接、降级或关闭安全设置。不要用于普通确认。
+
+组件只负责确认意图。`open` 由调用方控制；破坏性请求成功或失败后，调用方决定是否关闭。
+
+## 安装 (Installation)
+
+```tsx
+import { DestructiveActionModal } from "@nebutra/ui/primitives"
+```
+
+## 使用方法 (Usage)
+
+### 默认 (Default)
+
+```tsx
+import { Button, DestructiveActionModal } from "@nebutra/ui/primitives"
+import { useState } from "react"
+
+export function DeleteProjectDemo() {
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  function handleConfirm(): void {
+    setLoading(true)
+    deleteProject().then(() => {
+      setLoading(false)
+      setOpen(false)
+    })
+  }
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)} size="sm" variant="destructive">
+        Delete Project
+      </Button>
+      <DestructiveActionModal
+        confirmLabel="Delete Project"
+        description={
+          <>
+            <span className="font-medium">next-year-boilerplate</span> and all
+            its deployments, domains, and environment variables will be
+            permanently deleted.
+          </>
+        }
+        irreversibleDescription="Deleting next-year-boilerplate cannot be undone."
+        loading={loading}
+        onCancel={() => setOpen(false)}
+        onConfirm={handleConfirm}
+        open={open}
+        title="Delete Project"
+        verificationLabel="project name"
+        verificationPhrase="next-year-boilerplate"
+      />
+    </>
+  )
+}
+```
+
+### 可恢复操作 (Reversible)
+
+如果操作可以重新启用、撤销或回滚，不传 `irreversibleDescription`。后果仍然严重时，保留输入确认。
+
+```tsx
+<DestructiveActionModal
+  confirmLabel="Disable Vercel Authentication"
+  description="Anyone will be able to view your deployments without being a member of your team."
+  onCancel={() => setOpen(false)}
+  onConfirm={() => setOpen(false)}
+  open={open}
+  title="Disable Vercel Authentication"
+  verificationPhrase="disable vercel authentication"
+/>
+```
+
+### 错误状态 (With error)
+
+`error` 可以传字符串或 `Error`。弹窗保持打开，让用户可以重试。
+
+```tsx
+<DestructiveActionModal
+  confirmLabel="Delete Project"
+  description="my-project and all its deployments will be permanently deleted."
+  error="Couldn't delete project. Try again."
+  irreversibleDescription="Deleting my-project cannot be undone."
+  onCancel={() => setOpen(false)}
+  onConfirm={handleConfirm}
+  open={open}
+  title="Delete Project"
+  verificationLabel="project name"
+  verificationPhrase="my-project"
+/>
+```
+
+## 属性 (Props)
+
+| 属性 | 类型 | 描述 |
+|------|------|-------------|
+| `open` | `boolean` | 受控打开状态 |
+| `title` | `string` | Title Case 的 Verb + Noun 陈述 |
+| `description` | `ReactNode` | 后果说明，必要时点名具体资源 |
+| `confirmLabel` | `string` | 主按钮文案，和 `title` 1:1 匹配 |
+| `verificationPhrase` | `string` | 必须精确输入后才能提交的短语 |
+| `verificationLabel` | `string` | 可选资源标签，例如 `project name` |
+| `irreversibleDescription` | `ReactNode` | 不可逆操作的可选红色提示带 |
+| `error` | `string \| Error \| null` | 可重试的行内错误 |
+| `loading` | `boolean` | 禁用两个按钮，并显示主按钮加载态 |
+| `onCancel` | `() => void` | 取消、点击外部区域、Escape 时调用 |
+| `onConfirm` | `() => void` | 输入确认通过并提交时调用 |
+| `cancelLabel` | `string` | 取消按钮文案 |
+| `className` | `string` | 面板额外类名 |
+
+## 设计原则 (Design principles)
+
+- 删除实体时，优先让用户输入资源名本身，并配合 `verificationLabel`。
+- 没有实体名时，才使用小写动宾短语。
+- `confirmLabel` 必须匹配 `title`；不要用 `Confirm`、`OK` 或单独动词。
+- `irreversibleDescription` 要点名操作和资源，并以 `cannot be undone.` 结尾。
+- 组件不会在 `onConfirm` 内自行关闭；API 结束后由调用方关闭。
+
+## 可访问性 (Accessibility)
+
+- 打开时聚焦确认输入框。
+- 输入框通过 `htmlFor` 和 `aria-labelledby` 关联完整提示。
+- 只有输入值精确匹配 `verificationPhrase` 时，提交按钮才启用。
+- Enter 只会在 gate 打开后提交。
+- 不可逆提示带里的 Warning 图标是 `aria-hidden`；句子本身承载语义。

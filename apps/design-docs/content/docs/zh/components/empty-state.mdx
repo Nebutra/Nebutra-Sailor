@@ -1,94 +1,131 @@
 ---
 title: "空状态 (Empty State)"
-description: "当尚未添加任何内容，或由于功能特性而暂时为空时，填充相应的空间。"
+description: "当尚未添加内容，或由于功能状态而暂时为空时，用于填充对应空间。"
 ---
 
 ## 演示 (Demo)
 
-<ComponentPreview name="empty-state-demo"  />
-
+<ComponentPreview name="empty-state-demo" />
 
 ## 概览 (Overview)
 
-`EmptyState` 是一个用于处理零内容视图的复合组件。它支持四种设计框架变体 —— 初始空白 (Blank slate)、信息类 (Informational, 带 CTA)、教育类 (Educational) 和引导类 (Guide) —— 所有变体都使用同一套 API：图标、标题、描述以及可选的操作/链接插槽。
+`EmptyState` 用于避免用户在空视图里困惑。它可以表达首次使用的 blank slate、筛选无结果、任务已清空、权限或套餐限制，以及加载失败。
+
+组件刻意保持克制：一个标题、一段说明、一个主 CTA，最多再加一个次 CTA。
 
 ## 安装 (Installation)
 
 ```tsx
-import { EmptyState } from "@nebutra/ui/primitives";
+import { EmptyState } from "@nebutra/ui/primitives"
 ```
 
 ## 使用方法 (Usage)
 
 ### 初始空白 (Blank Slate)
 
-最基础的形式 —— 传达当前的状态，而不引导用户执行特定的操作。
-
 ```tsx
-import { EmptyState } from "@nebutra/ui/primitives";
-import { ChartBarPeak } from "@nebutra/icons";
+import { ChartBarPeak } from "@nebutra/icons"
+import { EmptyState } from "@nebutra/ui/primitives"
 
 <EmptyState.Root
-  icon={<EmptyState.Icon icon={<ChartBarPeak size={20} />} />}
-  title="标题"
   description="传达产品当前状态的消息。"
+  icon={<EmptyState.Icon icon={<ChartBarPeak size={32} />} />}
+  title="Title"
 />
 ```
 
 ### 信息类 (Informational)
 
-包含一个主要的行动唤起 (CTA) 和一个次要链接，以引导用户进行下一步。
-
 ```tsx
 <EmptyState.Root
-  icon={<EmptyState.Icon icon={<ChartBarPeak size={20} />} />}
-  title="尚无部署 (No deployments yet)"
-  description="推送到已连接的分支，或手动部署，即可在此处查看动态。"
-  action={
-    <Button>立即部署 (Deploy now)</Button>
-  }
-  link={
-    <a href="/docs/deployments" className="text-sm text-muted-foreground hover:text-foreground">
-      了解更多 (Learn more) ↗
-    </a>
-  }
-/>
+  description="This should detail the actions you can take on this screen, as well as why it's valuable."
+  icon={<EmptyState.Icon icon={<ChartBarPeak size={32} />} />}
+  title="Title"
+  variant="informational"
+>
+  <Button type="button" variant="secondary">Primary Action</Button>
+  <Button asChild type="button" variant="ghost">
+    <a href="/docs">Learn More</a>
+  </Button>
+</EmptyState.Root>
 ```
 
-### 无图标 (No icon)
+### 无结果 (No Results)
 
-适用于空间受限场景的极简纯文本变体。
+异步筛选后出现空结果时使用 `live`，让辅助技术播报状态变化。
 
 ```tsx
 <EmptyState.Root
-  title="尚无项目 (No projects yet)"
-  description="创建您的第一个项目以开始使用。"
-  action={<Button>新建项目 (New Project)</Button>}
-/>
+  description="No logs match “status:error”. Clear the filter to see all logs."
+  icon={<EmptyState.Icon icon={<MagnifyingGlass size={32} />} />}
+  live
+  title="No Logs Match Your Filter"
+  variant="no-results"
+>
+  <Button type="button" variant="secondary">Clear Filter</Button>
+</EmptyState.Root>
+```
+
+### 错误状态 (Error)
+
+```tsx
+<EmptyState.Root
+  description="Couldn't load deployments. Request ID: req_7K3QZ."
+  icon={<EmptyState.Icon icon={<Warning size={32} />} />}
+  title="Deployments Failed To Load"
+  variant="error"
+>
+  <Button type="button" variant="destructive">Try Again</Button>
+</EmptyState.Root>
 ```
 
 ## 属性 (Props)
 
-### `EmptyState.Root`
+### EmptyState.Root
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `title` | `string` | — | **必填。** 命名该空状态的小标题 |
-| `description` | `string` | — | **必填。** 解释状态或下一步操作的辅助文本 |
-| `icon` | `ReactNode` | — | 使用 `<EmptyState.Icon icon={...} />` 以保持尺寸一致 |
-| `action` | `ReactNode` | — | 主要行动唤起（按钮或锚点） |
-| `link` | `ReactNode` | — | 次要行动唤起（如 “了解更多” 链接） |
-| `className` | `string` | — | 包裹器的额外 CSS 类名 |
+| `title` | `ReactNode` | — | 表达状态的 Title Case 标题 |
+| `description` | `ReactNode` | — | sentence case 的辅助说明 |
+| `icon` | `ReactNode` | — | 使用 `<EmptyState.Icon icon={...} />` 保持尺寸一致 |
+| `children` | `ReactNode` | — | CTA 插槽。使用真实 `Button` 或 `Link` |
+| `action` | `ReactNode` | — | 主 CTA 的兼容别名 |
+| `link` | `ReactNode` | — | 次 CTA 的兼容别名 |
+| `variant` | `EmptyStateVariant` | `"blank-slate"` | 语义化空状态变体 |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | 布局密度 |
+| `align` | `"center" \| "start"` | `"center"` | 内容对齐方式 |
+| `live` | `boolean` | `false` | 为异步状态变化添加 `aria-live="polite"` |
 
-### `EmptyState.Icon`
+### EmptyState.Icon
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `icon` | `ReactNode` | — | **必填。** 图标元素（推荐尺寸：20px） |
-| `className` | `string` | — | 图标包裹器的额外 CSS 类名 |
+| `icon` | `ReactNode` | — | 图标元素，通常 32px |
+| `className` | `string` | — | 图标容器额外类名 |
+
+## 变体 (Variants)
+
+| 变体 | 使用场景 |
+|---------|----------|
+| `blank-slate` | 用户还没有创建第一个资源 |
+| `informational` | 用户需要理解功能价值并看到 CTA |
+| `educational` | 可以启动上下文 onboarding |
+| `guide` | starter content 能帮助用户试用或设置 |
+| `no-results` | 筛选或搜索返回零结果 |
+| `cleared` | 工作完成后列表为空 |
+| `permission` | 角色或套餐限制访问 |
+| `error` | 加载失败，并且可以重试 |
+
+## 文案 (Content)
+
+- `title` 使用 Title Case，例如 `No Logs Match Your Filter`。
+- `description` 使用 sentence case，并补充标题没有说出的信息。
+- 单个查询词用弯引号包裹：`No logs match “status:error”.`
+- CTA 文案使用 Title Case Verb + Noun。避免 `Get Started`、`Continue`、`OK`。
+- 最多一个主 CTA；只有确实存在两条合理路径时，才加一个次 CTA。
 
 ## 可访问性 (Accessibility)
 
-- 图标包裹器在图标元素上使用了 `aria-hidden="true"` —— 所有上下文信息都通过 `title` 和 `description` 文本传达。
-- 操作元素应使用带适当标签的标准 `<button>` 或 `<a>` 元素。
-走
+- CTA 必须是真实 `Button` 或 `Link`，这样才能进入 tab order。
+- 异步筛选后的 no-results 状态使用 `live`。
+- 图标只是装饰；语义由标题和描述承载。

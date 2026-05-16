@@ -85,7 +85,38 @@ export type JobStatus =
   | "failed"
   | "dead-lettered"
   | "delayed"
-  | "waiting";
+  | "waiting"
+  | "canceled";
+
+export type JobLifecycleAction =
+  | "enqueued"
+  | "started"
+  | "attempt-failed"
+  | "completed"
+  | "failed"
+  | "dead-lettered"
+  | "canceled"
+  | "retried";
+
+export interface JobLifecycleEvent {
+  id: string;
+  jobId: string;
+  queue: string;
+  action: JobLifecycleAction;
+  at: string;
+  attempt?: number;
+  reason?: string;
+  actor?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface JobLifecycleActionResult {
+  jobId: string;
+  queue: string;
+  accepted: boolean;
+  action: "cancel" | "retry";
+  reason?: string;
+}
 
 export interface JobStatusInfo {
   id: string;
@@ -94,10 +125,12 @@ export interface JobStatusInfo {
   attempts: number;
   maxRetries: number;
   failedReason?: string;
+  canceledReason?: string;
   createdAt: string;
   processedAt?: string;
   completedAt?: string;
   deadLetteredAt?: string;
+  canceledAt?: string;
 }
 
 export interface DeadLetterJob {
@@ -111,6 +144,18 @@ export interface DeadLetterJob {
   provider: QueueProviderType;
   failedAt: string;
 }
+
+export type QueueDeadLetterRecord = Record<string, unknown>;
+
+export interface QueueDeadLetterFetchContext {
+  token: string;
+  endpoint?: string;
+  queue?: string;
+}
+
+export type QueueDeadLetterFetcher = (
+  context: QueueDeadLetterFetchContext,
+) => Promise<QueueDeadLetterRecord[]>;
 
 // ── Handler ─────────────────────────────────────────────────────────────────
 
@@ -167,6 +212,22 @@ export interface QueueProvider {
   getDeadLetteredJobs?(queue?: string): Promise<DeadLetterJob[]>;
 
   /**
+   * Return provider-neutral lifecycle logs for operator tooling.
+   * Providers without durable inspection may omit this method.
+   */
+  getJobLogs?(jobId: string, queue: string): Promise<JobLifecycleEvent[]>;
+
+  /**
+   * Cancel a pending/delayed job when supported.
+   */
+  cancelJob?(jobId: string, queue: string, reason?: string): Promise<JobLifecycleActionResult>;
+
+  /**
+   * Replay a failed or dead-lettered job when supported.
+   */
+  retryJob?(jobId: string, queue: string, reason?: string): Promise<JobLifecycleActionResult>;
+
+  /**
    * Graceful shutdown — drain in-flight jobs, close connections.
    */
   close(): Promise<void>;
@@ -189,6 +250,12 @@ export interface QStashProviderConfig {
   /** Optional signing keys for webhook verification */
   currentSigningKey?: string;
   nextSigningKey?: string;
+
+  /** Optional provider-side DLQ endpoint for injected fetchers. */
+  dlqEndpoint?: string;
+
+  /** Injectable provider-side DLQ fetcher. No Upstash SDK DLQ APIs are assumed. */
+  dlqFetcher?: QueueDeadLetterFetcher;
 }
 
 export interface BullMQProviderConfig {

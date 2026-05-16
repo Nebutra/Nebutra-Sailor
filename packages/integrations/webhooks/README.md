@@ -1,4 +1,4 @@
-> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+> **Status: Foundation** — Type definitions, factory pattern, provider adapters, and injectable dead-letter storage are complete. Production custom deployments still need durable store adapters and queue infrastructure.
 
 # @nebutra/webhooks
 
@@ -131,14 +131,37 @@ const webhooks = await createWebhooks({
 
 **Features:**
 - ✅ Full control over delivery logic
-- ✅ In-memory or Redis-backed state
+- ✅ Injectable dead-letter store seam; default store is in-memory
 - ✅ Exponential backoff: 5s, 30s, 2m, 15m, 1h, 6h
 - ✅ Manual retry & delivery observability
-- ✅ In-memory dead-letter metadata after retry exhaustion
+- ✅ Dead-letter metadata after retry exhaustion
 - ✅ HMAC-SHA256 signing (industry standard)
 - ❌ You handle infra, scaling, monitoring
 
-**Note:** Dead-letter metadata is currently in-memory. For production use, implement Redis persistence and integrate with `@nebutra/queue` for distributed delivery.
+**Note:** The bundled dead-letter store is intentionally an adapter seam, not a database coupling. For production use, inject a Redis/PostgreSQL-backed implementation and integrate with `@nebutra/queue` for distributed delivery.
+
+```typescript
+import { createWebhooks, type WebhookDeadLetterStore } from "@nebutra/webhooks";
+
+const deadLetterStore: WebhookDeadLetterStore = {
+  async upsert(record) {
+    // Persist by `${record.messageId}:${record.endpointId}` in Redis/PostgreSQL.
+  },
+  async delete(messageId, endpointId) {
+    // Remove the dead-letter record after a successful manual replay.
+  },
+  async list(messageId) {
+    // Return all records or records for one message.
+    return [];
+  },
+};
+
+const webhooks = await createWebhooks({
+  provider: "custom",
+  maxRetries: 6,
+  deadLetterStore,
+});
+```
 
 ## API
 
@@ -422,9 +445,9 @@ For **Svix**:
 For **Custom**:
 - Deploy Redis or use managed Redis (AWS ElastiCache, etc.)
 - Integrate with `@nebutra/queue` for distributed delivery
-- Implement persistent state store (PostgreSQL table)
+- Inject a persistent dead-letter store
 - Add monitoring/alerting on delivery failures
-- Set up dead-letter queue for messages exceeding max retries
+- Add replay guard helpers for duplicate valid signatures
 - Consider rate limiting per endpoint
 
 ## Contributing

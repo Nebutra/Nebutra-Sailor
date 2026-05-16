@@ -25,6 +25,10 @@ const querySchema = z.object({
   pageSize: z.coerce.number().int().min(1).max(100).default(20),
 });
 
+const replaySchema = z.object({
+  deliveryId: z.string().min(1),
+});
+
 const MAX_RETRIES = 5;
 
 function toStatus(
@@ -102,6 +106,50 @@ export async function GET(
   } catch (error) {
     logger.error("[webhooks:deliveries] failed", { error: String(error) });
     return NextResponse.json({ error: "Failed to load deliveries." }, { status: 500 });
+  }
+}
+
+export async function POST(
+  request: Request,
+  ctx: { params: Promise<{ id: string }> },
+): Promise<Response> {
+  try {
+    const auth = await getAuth(request);
+    if (!auth.userId) {
+      return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+    }
+    if (!auth.orgId) {
+      return NextResponse.json({ error: "Organization required." }, { status: 400 });
+    }
+
+    const { id } = await ctx.params;
+    const provider = await getWebhooks();
+    const endpoints = await provider.listEndpoints(auth.orgId);
+    if (!endpoints.find((endpoint) => endpoint.id === id)) {
+      return NextResponse.json({ error: "Webhook endpoint not found." }, { status: 404 });
+    }
+
+    const payload = await request.json().catch(() => null);
+    const parsed = replaySchema.safeParse(payload);
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid replay payload." }, { status: 400 });
+    }
+
+    const event = await db.webhookEvent.findFirst({
+      where: {
+        provider: id,
+        OR: [{ id: parsed.data.deliveryId }, { eventId: parsed.data.deliveryId }],
+      },
+    });
+    if (!event) {
+      return NextResponse.json({ error: "Webhook delivery not found." }, { status: 404 });
+    }
+
+    await provider.retryMessage(event.eventId, id);
+    return NextResponse.json({ success: true, deliveryId: event.id });
+  } catch (error) {
+    logger.error("[webhooks:deliveries:replay] failed", { error: String(error) });
+    return NextResponse.json({ error: "Failed to replay delivery." }, { status: 500 });
   }
 }
 

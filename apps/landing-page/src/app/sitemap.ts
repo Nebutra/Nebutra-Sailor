@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
-import { getAllPosts } from "@/lib/blog";
+import { type BlogLanguage, getAllPosts } from "@/lib/blog";
 
 const staticPaths = [
   // Core pages
@@ -40,6 +40,10 @@ const staticPaths = [
 
 function localizedUrl(base: string, locale: string, path: string): string {
   return locale === routing.defaultLocale ? `${base}${path}` : `${base}/${locale}${path}`;
+}
+
+function contentLanguageForLocale(locale: string): BlogLanguage {
+  return locale === "zh" ? "zh" : "en";
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -102,18 +106,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   // Dynamic blog post entries
-  const posts = await getAllPosts();
-  const blogEntries = posts.flatMap((post) => {
-    const languages = Object.fromEntries(
-      routing.locales.map((l) => [l, localizedUrl(baseUrl, l, `/blog/${post.slug}`)]),
-    );
+  const [englishPosts, chinesePosts] = await Promise.all([getAllPosts("en"), getAllPosts("zh")]);
+  const postsByLanguage: Record<"en" | "zh", typeof englishPosts> = {
+    en: englishPosts,
+    zh: chinesePosts,
+  };
 
-    return routing.locales.map((locale) => ({
+  const blogEntries = routing.locales.flatMap((locale) => {
+    const contentLanguage = contentLanguageForLocale(locale);
+    return postsByLanguage[contentLanguage].map((post) => ({
       url: localizedUrl(baseUrl, locale, `/blog/${post.slug}`),
       lastModified: post.date ? new Date(post.date) : new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.7,
-      alternates: { languages },
     }));
   });
 

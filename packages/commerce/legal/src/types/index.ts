@@ -117,6 +117,19 @@ export interface ConsentRequest {
   metadata?: Record<string, unknown>;
 }
 
+export interface PersistDocumentConsentRequest extends ConsentRequest {
+  /** Clerk user ID (optional for anonymous) */
+  userId?: string;
+  /** Clerk organization ID */
+  organizationId?: string;
+  /** Anonymous visitor fingerprint */
+  visitorId?: string;
+  /** IP address at time of consent */
+  ipAddress?: string;
+  /** User agent string */
+  userAgent?: string;
+}
+
 export interface ConsentStatus {
   /** Has user consented to this document? */
   hasConsented: boolean;
@@ -128,6 +141,17 @@ export interface ConsentStatus {
   needsReconsent: boolean;
   /** When user last consented */
   lastConsentedAt?: Date;
+}
+
+export interface ConsentPersistenceStore {
+  recordDocumentConsent(
+    record: Omit<UserConsentRecord, "id"> & { id?: string },
+  ): Promise<UserConsentRecord>;
+  getLatestDocumentConsent(input: {
+    documentSlug: string;
+    userId?: string;
+    visitorId?: string;
+  }): Promise<UserConsentRecord | null>;
 }
 
 // ============================================

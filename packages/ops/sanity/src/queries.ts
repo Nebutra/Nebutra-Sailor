@@ -4,10 +4,20 @@ import { client } from "./client";
 // Posts
 // ============================================
 
-export const postsQuery = `*[_type == "post"] | order(publishedAt desc) {
+export const postsQuery = `*[
+  _type == "post" &&
+  !(_id in path("drafts.**")) &&
+  defined(slug.current) &&
+  language == $language &&
+  defined(publishedAt) &&
+  publishedAt <= now()
+] | order(publishedAt desc) {
   _id,
+  _updatedAt,
   title,
   slug,
+  language,
+  translationKey,
   publishedAt,
   excerpt,
   mainImage,
@@ -15,10 +25,20 @@ export const postsQuery = `*[_type == "post"] | order(publishedAt desc) {
   "categories": categories[]->title
 }`;
 
-export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0] {
+export const postBySlugQuery = `*[
+  _type == "post" &&
+  !(_id in path("drafts.**")) &&
+  slug.current == $slug &&
+  language == $language &&
+  defined(publishedAt) &&
+  publishedAt <= now()
+][0] {
   _id,
+  _updatedAt,
   title,
   slug,
+  language,
+  translationKey,
   publishedAt,
   excerpt,
   body,
@@ -27,12 +47,38 @@ export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0] {
   "categories": categories[]->title
 }`;
 
-export async function getPosts() {
-  return client.fetch(postsQuery);
+export const postTranslationByKeyQuery = `*[
+  _type == "post" &&
+  !(_id in path("drafts.**")) &&
+  translationKey == $translationKey &&
+  language == $language &&
+  defined(slug.current) &&
+  defined(publishedAt) &&
+  publishedAt <= now()
+][0] {
+  _id,
+  _updatedAt,
+  title,
+  slug,
+  language,
+  translationKey,
+  publishedAt,
+  excerpt,
+  mainImage,
+  "author": author->name,
+  "categories": categories[]->title
+}`;
+
+export async function getPosts(language = "en") {
+  return client.fetch(postsQuery, { language });
 }
 
-export async function getPostBySlug(slug: string) {
-  return client.fetch(postBySlugQuery, { slug });
+export async function getPostBySlug(slug: string, language = "en") {
+  return client.fetch(postBySlugQuery, { slug, language });
+}
+
+export async function getPostTranslationByKey(translationKey: string, language = "en") {
+  return client.fetch(postTranslationByKeyQuery, { translationKey, language });
 }
 
 // ============================================

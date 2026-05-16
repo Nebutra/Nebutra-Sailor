@@ -1,16 +1,17 @@
 ---
 title: "上下文卡片 (Context Card)"
-description: "悬停或聚焦时显示富内容的悬停卡片。支持顶部、底部、左侧和右侧放置。"
+description: "在密集产品界面中展示实体元数据的 hover / focus 卡片。"
 ---
 
 ## 演示 (Demo)
 
 <ComponentPreview name="context-card-demo"  />
 
-
 ## 概览 (Overview)
 
-`ContextCard` 是一款基于 Radix Tooltip 构建的悬停激活卡片。与普通提示框不同，它支持任意 `ReactNode` 内容 —— 文本、富标记、图像或链接。它会根据请求侧自动定位并带有动画。
+`ContextCard` 用于在悬停或键盘聚焦时展示紧凑实体信息：项目、部署、用户、团队、API Key、Webhook 投递或套餐状态。它不是 `Tooltip` 的替代品。一句话解释用 `Tooltip`，2-4 行元数据用 `ContextCard`，长内容或多操作流转到 `Drawer` 或详情页。
+
+底层基于 Base UI Popover，而不是 Tooltip，因此可以承载一个可键盘访问的主操作。触发器必须保留自己的可访问名称，卡片只是补充上下文。
 
 ## 安装 (Installation)
 
@@ -20,63 +21,62 @@ import { ContextCard } from "@nebutra/ui/primitives";
 
 ## 使用方法 (Usage)
 
-### 默认情况（所有侧面）
+### 实体元数据
 
 ```tsx
-import { ContextCard } from "@nebutra/ui/primitives"
+import { Button, ContextCard } from "@nebutra/ui/primitives";
 
-<div className="flex flex-row items-center justify-around gap-8">
-  <ContextCard.Trigger
-    content="The Evil Rabbit Jumped over the Fence"
-    side="top"
-  >
-    <span>顶部 (Top)</span>
-  </ContextCard.Trigger>
-
-  <ContextCard.Trigger
-    content="The Evil Rabbit Jumped over the Fence"
-    side="bottom"
-  >
-    <span>底部 (Bottom)</span>
-  </ContextCard.Trigger>
-
-  <ContextCard.Trigger
-    content="The Evil Rabbit Jumped over the Fence"
-    side="left"
-  >
-    <span>左侧 (Left)</span>
-  </ContextCard.Trigger>
-
-  <ContextCard.Trigger
-    content="The Evil Rabbit Jumped over the Fence"
-    side="right"
-  >
-    <span>右侧 (Right)</span>
-  </ContextCard.Trigger>
-</div>
+<ContextCard.Trigger
+  side="top"
+  content={
+    <ContextCard.Entity
+      title="Nebula Console"
+      description="nebutra/production"
+      metadata={[
+        { label: "Plan", value: "Pro" },
+        { label: "Owner", value: "Platform" },
+        { label: "Last Active", value: "2m ago" },
+      ]}
+      action={
+        <Button size="tiny" variant="outline" className="w-full">
+          Open Project
+        </Button>
+      }
+    />
+  }
+>
+  <button type="button">Nebula Console</button>
+</ContextCard.Trigger>
 ```
 
-### 富内容 (Rich content)
+### 放置位置
+
+```tsx
+<ContextCard.Trigger
+  side="right"
+  align="start"
+  width="sm"
+  content={<ContextCard.Entity title="API Gateway" description="api.nebutra.com" />}
+>
+  <button type="button">API Gateway</button>
+</ContextCard.Trigger>
+```
+
+### 自定义内容
+
+只有当 `ContextCard.Entity` 无法表达内容结构时才使用自定义内容。内容要保持紧凑，并且最多放一个主操作。
 
 ```tsx
 <ContextCard.Trigger
   side="top"
   content={
-    <div className="flex flex-col gap-1">
-      <p className="font-medium">Evil Rabbit</p>
-      <p className="text-muted-foreground text-xs">Jumped over the Fence</p>
+    <div className="grid gap-[var(--context-card-section-gap)]">
+      <p className="font-medium">API Gateway</p>
+      <p className="text-muted-foreground">Routes authenticated tenant traffic.</p>
     </div>
   }
 >
-  <span>悬停查看详情 (Hover for details)</span>
-</ContextCard.Trigger>
-```
-
-### 应用在按钮上 (On a button)
-
-```tsx
-<ContextCard.Trigger content="点击提交表单 (Click to submit your form)" side="bottom">
-  <Button>提交 (Submit)</Button>
+  <button type="button">Gateway</button>
 </ContextCard.Trigger>
 ```
 
@@ -86,16 +86,37 @@ import { ContextCard } from "@nebutra/ui/primitives"
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `content` | `ReactNode` | — | **必填。** 在卡片内显示的内容 |
+| `content` | `ReactNode` | - | **必填。** 在卡片内显示的内容 |
 | `side` | `"top" \| "bottom" \| "left" \| "right"` | `"top"` | 卡片出现的侧面 |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | 相对触发器的对齐方式 |
 | `sideOffset` | `number` | `8` | 距离触发器的像素距离 |
-| `children` | `ReactNode` | — | **必填。** 触发卡片的元素 |
-| `className` | `string` | — | 卡片的额外 CSS 类名 |
+| `alignOffset` | `number` | `0` | 垂直于主轴的偏移 |
+| `width` | `"sm" \| "md"` | `"md"` | 组件 token 控制的卡片宽度 |
+| `openDelay` | `number` | `150` | 打开延迟，单位毫秒 |
+| `closeDelay` | `number` | `120` | 关闭延迟，单位毫秒 |
+| `children` | `ReactNode` | - | **必填。** 触发卡片的元素 |
+| `className` | `string` | - | 卡片的额外 CSS 类名 |
+
+### ContextCard.Entity
+
+| 属性 | 类型 | 默认值 | 描述 |
+|------|------|---------|-------------|
+| `title` | `ReactNode` | - | **必填。** Title Case 的实体名称 |
+| `description` | `ReactNode` | - | 一行识别信息，例如 owner、slug 或 URL |
+| `metadata` | `{ id?: string; label: ReactNode; value?: ReactNode }[]` | - | 2-4 行紧凑 `Label: value` 元数据。缺失值显示 `—` |
+| `action` | `ReactNode` | - | 可选的单个主操作 |
+
+## 最佳实践 (Best Practices)
+
+- 用 Context Card 展示实体元数据：用户、部署、项目、Webhook、API Key 或套餐。
+- 不要承载破坏性操作。鼠标移动时卡片可能关闭。
+- 交互内容最多一个主操作。多个操作应使用 `Menu`、`Drawer` 或详情页。
+- 不要把 Context Card 嵌套在 Tooltip 或另一个 Context Card 中。
+- 不要重复触发器已经展示的信息。
 
 ## 可访问性 (Accessibility)
 
-- 基于 Radix Tooltip 构建，具有 200ms 的悬停延迟。
-- 键盘可达：聚焦触发器即可显示卡片。
-- 屏幕阅读器通过 `role="tooltip"` 播报内容。
-- 键盘 `Escape` 键可关闭卡片。
-走
+- 悬停和键盘聚焦都会打开，默认入口延迟来自组件 motion token：150ms。
+- 触发器聚焦时按 `Enter` 或 `ArrowDown`，可把焦点移动到卡片内的可聚焦操作。
+- 按 `Escape` 关闭卡片，并把焦点返回触发器。
+- 触发器必须有清晰的可访问名称；卡片内容只是补充说明。

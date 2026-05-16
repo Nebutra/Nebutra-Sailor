@@ -1,178 +1,206 @@
+import {
+  ChartBarPeak,
+  FileText,
+  FolderOpen,
+  LockClosed,
+  MagnifyingGlass,
+  Warning,
+} from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { EmptyState } from "../layout/EmptyState";
+import { expect, within } from "@storybook/test";
+import { Button } from "./button";
+import { EmptyState } from "./empty-state";
 
 const meta = {
   title: "Primitives/EmptyState",
+  component: EmptyState.Root,
   parameters: {
     layout: "centered",
     docs: {
       description: {
         component:
-          "Fill spaces when no content has been added yet, or is temporarily empty. " +
-          "Designed to prevent confusion and guide users toward the next action.",
+          "Zero-content state for first-run, informational, educational, guide, no-results, cleared, permission, and error surfaces.",
       },
     },
   },
   tags: ["autodocs"],
-} satisfies Meta;
+} satisfies Meta<typeof EmptyState.Root>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// =============================================================================
-// Placeholder icon (bar-chart style — matches Geist screenshot)
-// =============================================================================
-
-function ChartIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <line x1="18" y1="20" x2="18" y2="10" />
-      <line x1="12" y1="20" x2="12" y2="4" />
-      <line x1="6" y1="20" x2="6" y2="14" />
-    </svg>
-  );
-}
-
-function FolderIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-    </svg>
-  );
-}
-
-// =============================================================================
-// BlankSlate — most basic, first-run experience
-// =============================================================================
-
 export const BlankSlate: Story = {
   render: () => (
-    <div className="w-96 rounded-lg border bg-background">
+    <div className="w-96">
       <EmptyState.Root
-        icon={<EmptyState.Icon icon={<ChartIcon />} />}
-        title="Title"
         description="A message conveying the state of the product."
+        icon={<EmptyState.Icon icon={<ChartBarPeak size={32} />} />}
+        title="Title"
       />
     </div>
   ),
 };
-
-// =============================================================================
-// Informational — with CTA and learn more link
-// =============================================================================
 
 export const Informational: Story = {
   render: () => (
-    <div className="w-96 rounded-lg border bg-background">
+    <div className="w-96">
       <EmptyState.Root
-        icon={<EmptyState.Icon icon={<ChartIcon />} />}
-        title="Title"
         description="This should detail the actions you can take on this screen, as well as why it's valuable."
-        action={
-          <button
-            type="button"
-            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-          >
-            Primary Action
-          </button>
-        }
-        link={
-          <a
-            href="/"
-            className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
-          >
-            Learn more
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-              <polyline points="15 3 21 3 21 9" />
-              <line x1="10" y1="14" x2="21" y2="3" />
-            </svg>
-          </a>
-        }
-      />
+        icon={<EmptyState.Icon icon={<ChartBarPeak size={32} />} />}
+        title="Title"
+        variant="informational"
+      >
+        <Button type="button" variant="secondary">
+          Primary Action
+        </Button>
+        <Button asChild type="button" variant="ghost">
+          <a href="/">Learn More</a>
+        </Button>
+      </EmptyState.Root>
     </div>
   ),
 };
 
-// =============================================================================
-// NoIcon — minimal text-only variant
-// =============================================================================
-
-export const NoIcon: Story = {
+export const AllVariants: Story = {
   render: () => (
-    <div className="w-96 rounded-lg border bg-background">
+    <div className="grid w-[52rem] grid-cols-2 gap-4">
       <EmptyState.Root
-        title="No projects yet"
-        description="Create your first project to get started."
-        action={
-          <button
-            type="button"
-            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-          >
-            New Project
-          </button>
-        }
+        description="Create your first project to start deploying."
+        icon={<EmptyState.Icon icon={<FolderOpen size={32} />} />}
+        title="No Projects Yet"
+      >
+        <Button type="button">Create Project</Button>
+      </EmptyState.Root>
+      <EmptyState.Root
+        description="No logs match “status:error”. Clear the filter to see all logs."
+        icon={<EmptyState.Icon icon={<MagnifyingGlass size={32} />} />}
+        live
+        title="No Logs Match Your Filter"
+        variant="no-results"
+      >
+        <Button type="button" variant="secondary">
+          Clear Filter
+        </Button>
+      </EmptyState.Root>
+      <EmptyState.Root
+        description="All deployment checks have completed."
+        icon={<EmptyState.Icon icon={<ChartBarPeak size={32} />} />}
+        title="Queue Cleared"
+        variant="cleared"
       />
+      <EmptyState.Root
+        description="Audit exports are available with the Enterprise plan."
+        icon={<EmptyState.Icon icon={<LockClosed size={32} />} />}
+        title="Audit Exports Require Enterprise"
+        variant="permission"
+      >
+        <Button type="button">Upgrade Plan</Button>
+      </EmptyState.Root>
+      <EmptyState.Root
+        description="Couldn't load deployments. Request ID: req_7K3QZ."
+        icon={<EmptyState.Icon icon={<Warning size={32} />} />}
+        title="Deployments Failed To Load"
+        variant="error"
+      >
+        <Button type="button" variant="destructive">
+          Try Again
+        </Button>
+      </EmptyState.Root>
+      <EmptyState.Root
+        description="Push to your Git repository to create your first deployment."
+        icon={<EmptyState.Icon icon={<FileText size={32} />} />}
+        title="Deploy With Starter Content"
+        variant="guide"
+      >
+        <Button type="button">Import Repository</Button>
+        <Button type="button" variant="secondary">
+          Deploy Template
+        </Button>
+      </EmptyState.Root>
     </div>
   ),
 };
 
-// =============================================================================
-// InTable — inside a full-width table / data container
-// =============================================================================
-
-export const InTable: Story = {
+export const EdgeCases: Story = {
   render: () => (
-    <div className="w-full rounded-lg border bg-background">
-      <div className="flex items-center justify-between border-b px-4 py-3">
-        <span className="text-sm font-medium">Deployments</span>
+    <div className="w-80">
+      <EmptyState.Root
+        align="start"
+        description="No projects match “next-year-boilerplate production east-1”. Clear the filter or widen your selected environments."
+        icon={<EmptyState.Icon icon={<MagnifyingGlass size={32} />} />}
+        live
+        title="No Projects Match Your Filters"
+        variant="no-results"
+      >
+        <Button type="button" variant="secondary">
+          Clear Filters
+        </Button>
+      </EmptyState.Root>
+    </div>
+  ),
+};
+
+export const DarkMode: Story = {
+  decorators: [
+    (Story) => (
+      <div className="dark bg-background p-6 text-foreground">
+        <Story />
       </div>
+    ),
+  ],
+  render: () => (
+    <div className="w-96">
       <EmptyState.Root
-        icon={<EmptyState.Icon icon={<FolderIcon />} />}
-        title="No deployments"
-        description="Push to a connected Git branch or deploy manually to see deployments here."
-        link={
-          <a
-            href="/"
-            className="text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-          >
-            View documentation
-          </a>
-        }
-      />
+        description="Invite your teammates to collaborate on projects."
+        icon={<EmptyState.Icon icon={<LockClosed size={32} />} />}
+        title="No Team Members"
+        variant="informational"
+      >
+        <Button type="button">Invite Member</Button>
+      </EmptyState.Root>
     </div>
   ),
+};
+
+export const Mobile: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: "mobile1",
+    },
+  },
+  render: () => (
+    <div className="w-full max-w-sm">
+      <EmptyState.Root
+        description="Create your first API key to start making requests."
+        icon={<EmptyState.Icon icon={<FileText size={32} />} />}
+        title="No API Keys"
+        variant="informational"
+      >
+        <Button type="button">Create API Key</Button>
+      </EmptyState.Root>
+    </div>
+  ),
+};
+
+export const Accessibility: Story = {
+  render: () => (
+    <div className="w-96">
+      <EmptyState.Root
+        description="No logs match “status:error”. Clear the filter to see all logs."
+        icon={<EmptyState.Icon icon={<MagnifyingGlass size={32} />} />}
+        live
+        title="No Logs Match Your Filter"
+        variant="no-results"
+      >
+        <Button type="button" variant="secondary">
+          Clear Filter
+        </Button>
+      </EmptyState.Root>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole("heading", { name: "No Logs Match Your Filter" })).toBeVisible();
+    await expect(canvas.getByRole("button", { name: "Clear Filter" })).toBeVisible();
+  },
 };

@@ -246,6 +246,18 @@ export interface DirectProviderConfig {
 
   /** Preference store — required for preference management */
   preferenceStore?: PreferenceStore;
+
+  /**
+   * Retry failed channel dispatch attempts. Defaults to 0.
+   *
+   * Retries are intentionally provider-local so production apps can keep using
+   * their durable queue for cross-process retries while still getting a safer
+   * direct provider for short transient failures.
+   */
+  maxRetries?: number;
+
+  /** Optional telemetry sink for delivery attempts. */
+  deliveryObserver?: NotificationDeliveryObserver;
 }
 
 export type NotificationConfig = NovuProviderConfig | KnockProviderConfig | DirectProviderConfig;
@@ -336,4 +348,23 @@ export interface PreferenceStore {
     preferences: Partial<NotificationPreference>[],
     tenantId?: string,
   ): Promise<void>;
+}
+
+// ── Delivery Telemetry ─────────────────────────────────────────────────────
+
+export interface NotificationDeliveryAttempt {
+  provider: "direct";
+  channel: NotificationChannel;
+  notificationId: string;
+  type: string;
+  recipientId: string;
+  tenantId?: string;
+  attempt: number;
+  maxAttempts: number;
+  durationMs: number;
+  result: ChannelResult;
+}
+
+export interface NotificationDeliveryObserver {
+  recordAttempt(attempt: NotificationDeliveryAttempt): Promise<void> | void;
 }

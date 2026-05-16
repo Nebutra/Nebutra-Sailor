@@ -12,9 +12,9 @@
       "or WEBHOOK_SIGNING_SECRET for custom self-hosted delivery"
     ],
     "gaps": [
-      "Custom delivery adapter has in-memory retry + dead-letter metadata but lacks durable persistence",
+      "Custom delivery adapter exposes an injectable dead-letter store seam; bundled default remains in-memory",
       "Endpoint management UI not scaffolded",
-      "Replay protection helpers incomplete"
+      "Replay protection helpers are available; production use should inject a durable replay store"
     ]
   },
   "main": "./dist/index.js",

@@ -1,6 +1,6 @@
 "use client";
 
-import type * as React from "react";
+import * as React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
 import { cn } from "../utils";
 
@@ -10,8 +10,18 @@ import { cn } from "../utils";
 
 export type DrawerDirection = "top" | "bottom" | "left" | "right";
 
+export type DrawerHeight = number | string;
+
 export type DrawerProps = React.ComponentProps<typeof DrawerPrimitive.Root> & {
-  /** Direction the drawer slides from */
+  /** Controlled open state alias used by Geist-compatible examples. Prefer `open` for new Radix-style code. */
+  show?: boolean;
+  /** Called when the drawer is dismissed by escape, outside press, swipe, or close control. */
+  onDismiss?: () => void;
+  /** Bottom sheet height. Numbers resolve to px. */
+  height?: DrawerHeight;
+  /** Alias for `height` when the content needs a capped frame. */
+  customHeight?: DrawerHeight;
+  /** Direction the drawer slides from. Use bottom for Drawer; use Sheet for lateral desktop panels. */
   direction?: DrawerDirection;
 };
 
@@ -23,7 +33,14 @@ export type DrawerCloseProps = React.ComponentProps<typeof DrawerPrimitive.Close
 
 export type DrawerOverlayProps = React.ComponentProps<typeof DrawerPrimitive.Overlay>;
 
-export type DrawerContentProps = React.ComponentProps<typeof DrawerPrimitive.Content>;
+export type DrawerContentProps = React.ComponentProps<typeof DrawerPrimitive.Content> & {
+  /** Overrides root height for this content. Numbers resolve to px. */
+  height?: DrawerHeight;
+  /** Keep body scroll inside the drawer frame rather than the page behind it. */
+  verticalScroll?: boolean;
+  /** Show the drag handle on bottom drawers. */
+  showHandle?: boolean;
+};
 
 export type DrawerHeaderProps = React.ComponentProps<"div">;
 
@@ -39,12 +56,30 @@ export type DrawerDescriptionProps = React.ComponentProps<typeof DrawerPrimitive
 // Components
 // =============================================================================
 
+type DrawerRootContextValue = {
+  height?: DrawerHeight;
+};
+
+type DrawerContentStyle = React.CSSProperties & {
+  "--drawer-height"?: string;
+};
+
+const DrawerRootContext = React.createContext<DrawerRootContextValue>({});
+
+function formatDrawerHeight(height: DrawerHeight | undefined): string | undefined {
+  if (height == null) {
+    return undefined;
+  }
+
+  return typeof height === "number" ? `${height}px` : height;
+}
+
 /**
- * Drawer - Slide-out panel from screen edge
+ * Drawer - Mobile bottom sheet
  *
  * @description
- * A drawer component built on vaul that slides from any edge of the screen.
- * Supports swipe gestures on mobile and keyboard navigation.
+ * A focused mobile bottom sheet built on Vaul. Use Modal for blocking desktop
+ * flows and Sheet for lateral panels.
  *
  * @example Basic usage
  * ```tsx
@@ -68,22 +103,57 @@ export type DrawerDescriptionProps = React.ComponentProps<typeof DrawerPrimitive
  * </Drawer>
  * ```
  *
- * @example From different directions
- * ```tsx
- * <Drawer direction="left">...</Drawer>
- * <Drawer direction="right">...</Drawer>
- * <Drawer direction="top">...</Drawer>
- * <Drawer direction="bottom">...</Drawer>
- * ```
- *
  * @example Controlled
  * ```tsx
  * const [open, setOpen] = useState(false);
  * <Drawer open={open} onOpenChange={setOpen}>...</Drawer>
  * ```
  */
-function Drawer({ ...props }: DrawerProps) {
-  return <DrawerPrimitive.Root data-slot="drawer" {...props} />;
+function Drawer({
+  show,
+  onDismiss,
+  height,
+  customHeight,
+  direction = "bottom",
+  open,
+  onOpenChange,
+  modal = true,
+  shouldScaleBackground = false,
+  ...props
+}: DrawerProps) {
+  const controlledOpen = open ?? show;
+  const rootProps: React.ComponentProps<typeof DrawerPrimitive.Root> = {
+    ...props,
+    direction,
+    modal,
+    shouldScaleBackground,
+  };
+
+  if (controlledOpen !== undefined) {
+    rootProps.open = controlledOpen;
+  }
+
+  if (onOpenChange !== undefined || onDismiss !== undefined) {
+    rootProps.onOpenChange = (nextOpen) => {
+      onOpenChange?.(nextOpen);
+
+      if (!nextOpen) {
+        onDismiss?.();
+      }
+    };
+  }
+
+  const contextValue = React.useMemo<DrawerRootContextValue>(() => {
+    const resolvedHeight = customHeight ?? height;
+
+    return resolvedHeight === undefined ? {} : { height: resolvedHeight };
+  }, [customHeight, height]);
+
+  return (
+    <DrawerRootContext.Provider value={contextValue}>
+      <DrawerPrimitive.Root data-slot="drawer" {...rootProps} />
+    </DrawerRootContext.Provider>
+  );
 }
 
 function DrawerTrigger({ ...props }: DrawerTriggerProps) {
@@ -103,7 +173,8 @@ function DrawerOverlay({ className, ...props }: DrawerOverlayProps) {
     <DrawerPrimitive.Overlay
       data-slot="drawer-overlay"
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 bg-background/50 fixed inset-0 z-50 backdrop-blur",
+        "fixed inset-0 z-50 bg-background/70 backdrop-blur-[2px]",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
         className,
       )}
       {...props}
@@ -111,24 +182,45 @@ function DrawerOverlay({ className, ...props }: DrawerOverlayProps) {
   );
 }
 
-function DrawerContent({ className, children, ...props }: DrawerContentProps) {
+function DrawerContent({
+  className,
+  children,
+  height,
+  verticalScroll = true,
+  showHandle = true,
+  style,
+  ...props
+}: DrawerContentProps) {
+  const rootContext = React.useContext(DrawerRootContext);
+  const resolvedHeight = formatDrawerHeight(height ?? rootContext.height);
+  const contentStyle =
+    resolvedHeight === undefined
+      ? style
+      : ({
+          "--drawer-height": resolvedHeight,
+          ...style,
+        } satisfies DrawerContentStyle);
+
   return (
     <DrawerPortal data-slot="drawer-portal">
       <DrawerOverlay />
       <DrawerPrimitive.Content
         data-slot="drawer-content"
         className={cn(
-          "group/drawer-content bg-background fixed z-50 flex h-auto flex-col",
-          "data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[80vh] data-[vaul-drawer-direction=top]:rounded-b-3xl data-[vaul-drawer-direction=top]:border-b",
-          "data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:mt-24 data-[vaul-drawer-direction=bottom]:max-h-[80vh] data-[vaul-drawer-direction=bottom]:rounded-t-3xl data-[vaul-drawer-direction=bottom]:border-t",
-          "data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:border-l data-[vaul-drawer-direction=right]:sm:max-w-sm",
-          "data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-3/4 data-[vaul-drawer-direction=left]:border-r data-[vaul-drawer-direction=left]:sm:max-w-sm",
+          "group/drawer-content fixed z-50 flex bg-background text-foreground shadow-lg outline-none",
+          verticalScroll && "overflow-hidden",
+          "data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:h-[var(--drawer-height,auto)] data-[vaul-drawer-direction=bottom]:max-h-[min(var(--drawer-height,80vh),calc(100dvh-1rem))] data-[vaul-drawer-direction=bottom]:flex-col data-[vaul-drawer-direction=bottom]:rounded-t-[var(--radius-xl)] data-[vaul-drawer-direction=bottom]:border-t",
+          "data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:h-[var(--drawer-height,auto)] data-[vaul-drawer-direction=top]:max-h-[min(var(--drawer-height,80vh),calc(100dvh-1rem))] data-[vaul-drawer-direction=top]:flex-col data-[vaul-drawer-direction=top]:rounded-b-[var(--radius-xl)] data-[vaul-drawer-direction=top]:border-b",
+          "data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-[min(24rem,calc(100vw-2rem))] data-[vaul-drawer-direction=right]:flex-col data-[vaul-drawer-direction=right]:border-l",
+          "data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-[min(24rem,calc(100vw-2rem))] data-[vaul-drawer-direction=left]:flex-col data-[vaul-drawer-direction=left]:border-r",
           className,
         )}
+        style={contentStyle}
         {...props}
       >
-        {/* Drag handle for bottom drawer */}
-        <div className="bg-muted mx-auto my-2 hidden h-2 w-24 shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
+        {showHandle ? (
+          <DrawerPrimitive.Handle className="mx-auto mt-2 hidden h-1 w-10 shrink-0 rounded-full bg-muted-foreground/30 group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
+        ) : null}
         {children}
       </DrawerPrimitive.Content>
     </DrawerPortal>
@@ -140,7 +232,7 @@ function DrawerHeader({ className, ...props }: DrawerHeaderProps) {
     <div
       data-slot="drawer-header"
       className={cn(
-        "flex w-full flex-col gap-1 rounded-t-3xl border-b px-4 py-2 md:mx-auto md:max-w-md",
+        "grid w-full gap-1 border-b px-5 pb-4 pt-3 text-center md:mx-auto md:max-w-md",
         className,
       )}
       {...props}
@@ -152,7 +244,11 @@ function DrawerBody({ className, ...props }: DrawerBodyProps) {
   return (
     <div
       data-slot="drawer-body"
-      className={cn("w-full px-4 py-6 md:mx-auto md:max-w-md", className)}
+      className={cn(
+        "min-h-0 w-full flex-1 overscroll-contain px-5 py-4 md:mx-auto md:max-w-md",
+        "group-data-[vaul-drawer-direction=bottom]/drawer-content:overflow-y-auto group-data-[vaul-drawer-direction=top]/drawer-content:overflow-y-auto",
+        className,
+      )}
       {...props}
     />
   );
@@ -163,7 +259,7 @@ function DrawerFooter({ className, ...props }: DrawerFooterProps) {
     <div
       data-slot="drawer-footer"
       className={cn(
-        "mt-auto grid w-full gap-2 border-t px-4 py-3 md:mx-auto md:max-w-md",
+        "mt-auto grid w-full gap-2 border-t bg-background/95 px-5 py-4 md:mx-auto md:max-w-md",
         className,
       )}
       {...props}
@@ -175,7 +271,7 @@ function DrawerTitle({ className, ...props }: DrawerTitleProps) {
   return (
     <DrawerPrimitive.Title
       data-slot="drawer-title"
-      className={cn("text-foreground font-medium", className)}
+      className={cn("text-base font-semibold leading-6 text-foreground", className)}
       {...props}
     />
   );
@@ -185,7 +281,7 @@ function DrawerDescription({ className, ...props }: DrawerDescriptionProps) {
   return (
     <DrawerPrimitive.Description
       data-slot="drawer-description"
-      className={cn("text-muted-foreground text-sm", className)}
+      className={cn("text-sm leading-5 text-muted-foreground", className)}
       {...props}
     />
   );

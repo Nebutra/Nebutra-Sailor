@@ -22,6 +22,28 @@ export const post = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "language",
+      title: "Language",
+      type: "string",
+      initialValue: "en",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "English", value: "en" },
+          { title: "Chinese", value: "zh" },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "translationKey",
+      title: "Translation key",
+      type: "string",
+      description:
+        "Shared stable key for localized versions of the same article, for example nebutra-sailor-why-exists.",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "author",
       title: "Author",
       type: "reference",
@@ -69,11 +91,15 @@ export const post = defineType({
     select: {
       title: "title",
       author: "author.name",
+      language: "language",
       media: "mainImage",
     },
     prepare(selection) {
-      const { author } = selection;
-      return { ...selection, subtitle: author && `by ${author}` };
+      const { author, language } = selection;
+      return {
+        ...selection,
+        subtitle: [language?.toUpperCase(), author && `by ${author}`].filter(Boolean).join(" · "),
+      };
     },
   },
 });

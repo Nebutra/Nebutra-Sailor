@@ -1,9 +1,16 @@
 import { Clock, Pin as MapPin, Layers as Mountain } from "@nebutra/icons";
 import { AnimatedHikeCard } from "@nebutra/ui/primitives";
 
-// Three brand-gradient variants for the stack (avoids network deps).
-const gradient = (from: string, to: string, label: string): string =>
-  `data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='${from}'/%3E%3Cstop offset='1' stop-color='${to}'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23g)'/%3E%3Ctext x='400' y='320' text-anchor='middle' fill='white' font-size='48' font-weight='700' font-family='system-ui' opacity='0.9'%3E${label}%3C/text%3E%3C/svg%3E`;
+const landscape = (sky: string, ridge: string, foreground: string): string =>
+  `data:image/svg+xml;utf8,${encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="${sky}"/>
+  <circle cx="640" cy="128" r="56" fill="#ffffff" opacity="0.72"/>
+  <path d="M0 356 L128 224 L248 330 L372 184 L520 342 L640 244 L800 372 V600 H0 Z" fill="${ridge}"/>
+  <path d="M0 430 C92 396 178 414 252 388 C362 350 476 402 566 374 C656 346 728 372 800 342 V600 H0 Z" fill="${foreground}"/>
+  <path d="M104 500 C204 448 298 536 410 470 C512 410 610 498 720 438" fill="none" stroke="#ffffff" stroke-opacity="0.46" stroke-width="18" stroke-linecap="round"/>
+</svg>
+`)}`;
 
 export function AnimatedHikeCardDemo() {
   return (
@@ -11,14 +18,14 @@ export function AnimatedHikeCardDemo() {
       <AnimatedHikeCard
         title="Yosemite Valley"
         images={[
-          gradient("%230033fe", "%230bf1c3", "Cliff"),
-          gradient("%230bf1c3", "%238b5cf6", "Waterfall"),
-          gradient("%238b5cf6", "%230033fe", "Sequoia"),
+          landscape("#e8f1f5", "#9fb3bf", "#627784"),
+          landscape("#edf4ee", "#a5bda9", "#657b67"),
+          landscape("#f4efe7", "#baa993", "#756b5f"),
         ]}
         stats={[
-          { icon: <Clock className="h-4 w-4" />, label: "~6 Hours" },
-          { icon: <Mountain className="h-4 w-4" />, label: "8 km" },
-          { icon: <MapPin className="h-4 w-4" />, label: "California" },
+          { icon: <Clock className="size-4" />, label: "~6 Hours" },
+          { icon: <Mountain className="size-4" />, label: "8 km" },
+          { icon: <MapPin className="size-4" />, label: "California" },
         ]}
         description="Experience the breathtaking cliffs, spectacular waterfalls, and ancient sequoia trees in this unforgettable day hike."
         href="#"

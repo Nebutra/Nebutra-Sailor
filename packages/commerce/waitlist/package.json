@@ -8,12 +8,12 @@
     "status": "foundation",
     "productionReady": false,
     "requires": [
-      "Database adapter (Prisma or in-memory)",
-      "@nebutra/email for confirmation + position update emails"
+      "Database schema/migration in @nebutra/db or consuming app",
+      "@nebutra/email notification sink wiring"
     ],
     "gaps": [
-      "Prisma adapter not implemented — only in-memory store ships",
-      "Email confirmation + position update notifications not wired",
+      "Durable database model/migration not owned by this package",
+      "Email provider integration not wired by default",
       "Referral attribution analytics endpoint TODO"
     ],
     "featureId": "waitlist",

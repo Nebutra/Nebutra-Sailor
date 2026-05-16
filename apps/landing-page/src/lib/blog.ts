@@ -1,56 +1,170 @@
-/**
- * Stub for the blog data layer.
- *
- * The full implementation (MDX + Sanity merge) was in flight in another
- * branch but never landed; this file exists so `@/lib/blog` resolves and
- * the type-checker passes. At runtime it returns the static fallback list
- * shipped with the landing page.
- *
- * TODO: replace with the real MDX/Sanity-aware loader once the in-progress
- * blog refactor lands on main.
- */
+import {
+  getPostBySlug as fetchSanityPostBySlug,
+  getPostTranslationByKey as fetchSanityPostTranslationByKey,
+  getPosts,
+} from "@nebutra/sanity/queries";
 import { type BlogPost, FALLBACK_POSTS } from "./blog-fallback";
 
 export type { BlogPost };
 
+export type BlogSource = "sanity" | "fallback";
+export type BlogLanguage = "en" | "zh";
+
+export type BlogAuthor = {
+  name?: string | null;
+  image?: unknown;
+  bio?: unknown;
+};
+
+export type PortableTextSpan = {
+  _type?: "span";
+  _key?: string;
+  text?: string;
+  marks?: string[];
+};
+
+export type PortableTextBlock = {
+  _type: string;
+  _key?: string;
+  style?: string;
+  listItem?: string;
+  level?: number;
+  children?: PortableTextSpan[];
+  markDefs?: Array<Record<string, unknown>>;
+  asset?: { _ref?: string; _type?: string } | null;
+  alt?: string | null;
+  caption?: string | null;
+};
+
 export type BlogPostWithSource = BlogPost & {
   id: string;
   slug: string;
+  title: string;
+  language: BlogLanguage;
+  translationKey?: string;
+  excerpt: string;
   description: string;
   date: string;
+  updatedAt?: string;
   tags: string[];
-  author?: string;
-  content?: string;
-  source: "mdx" | "sanity" | "fallback";
+  author?: string | BlogAuthor;
+  mainImage?: unknown;
+  body?: PortableTextBlock[] | null;
+  source: BlogSource;
 };
 
-function toFullPost(post: BlogPost, idx: number): BlogPostWithSource {
-  const augmented = post as Partial<BlogPostWithSource>;
+type SanityPost = {
+  _id?: string;
+  _updatedAt?: string;
+  title?: string | null;
+  slug?: { current?: string | null } | string | null;
+  language?: BlogLanguage | string | null;
+  translationKey?: string | null;
+  publishedAt?: string | null;
+  excerpt?: string | null;
+  mainImage?: unknown;
+  author?: string | BlogAuthor | null;
+  categories?: string[] | null;
+  body?: PortableTextBlock[] | null;
+};
+
+function normalizeSlug(slug: SanityPost["slug"]): string | null {
+  if (typeof slug === "string") return slug || null;
+  return slug?.current || null;
+}
+
+export function toBlogLanguage(locale: string): BlogLanguage {
+  return locale === "zh" ? "zh" : "en";
+}
+
+function normalizeFallbackPost(post: BlogPost, idx: number): BlogPostWithSource {
   return {
     ...post,
-    id: augmented.id ?? `fallback-${idx}`,
-    slug: augmented.slug ?? `fallback-${idx}`,
+    id: `fallback-${idx}`,
+    slug: post.slug,
     title: post.title,
-    description: augmented.description ?? "",
-    date: augmented.date ?? new Date().toISOString(),
-    tags: augmented.tags ?? [],
+    language: "en",
+    excerpt: post.excerpt,
+    description: post.excerpt,
+    date: post.date,
+    tags: [],
     source: "fallback",
   };
 }
 
-export async function getAllPosts(): Promise<BlogPostWithSource[]> {
-  return FALLBACK_POSTS.map((p, i) => toFullPost(p, i));
+function normalizeSanityPost(post: SanityPost | null): BlogPostWithSource | null {
+  if (!post) return null;
+  const slug = normalizeSlug(post.slug);
+  if (!slug || !post.title) return null;
+  const language = post.language === "zh" ? "zh" : "en";
+
+  const excerpt = post.excerpt ?? "";
+  return {
+    id: post._id ?? slug,
+    slug,
+    title: post.title,
+    language,
+    translationKey: post.translationKey ?? undefined,
+    excerpt,
+    description: excerpt,
+    date: post.publishedAt ?? post._updatedAt ?? new Date(0).toISOString(),
+    updatedAt: post._updatedAt,
+    tags: post.categories?.filter(Boolean) ?? [],
+    author: post.author ?? undefined,
+    mainImage: post.mainImage ?? null,
+    body: post.body ?? null,
+    source: "sanity",
+  };
 }
 
-export async function getPost(slug: string): Promise<BlogPostWithSource | null> {
-  const posts = await getAllPosts();
-  return posts.find((p) => p.slug === slug) ?? null;
+function shouldUseFallbackSource(): boolean {
+  return process.env.NEXT_PUBLIC_BLOG_SOURCE === "fallback";
 }
 
-export async function getAllSlugs(): Promise<string[]> {
-  const posts = await getAllPosts();
-  return posts.map((p) => p.slug);
+function getFallbackPosts(): BlogPostWithSource[] {
+  return FALLBACK_POSTS.map((post, idx) => normalizeFallbackPost(post, idx));
 }
 
-// Back-compat alias — the in-flight refactor was renaming getPostBySlug → getPost.
+export async function getAllPosts(language: BlogLanguage = "en"): Promise<BlogPostWithSource[]> {
+  if (shouldUseFallbackSource()) {
+    return getFallbackPosts().filter((post) => post.language === language);
+  }
+
+  const posts = (await getPosts(language)) as SanityPost[];
+  return posts.map(normalizeSanityPost).filter((post): post is BlogPostWithSource => Boolean(post));
+}
+
+export async function getPost(
+  slug: string,
+  language: BlogLanguage = "en",
+): Promise<BlogPostWithSource | null> {
+  if (shouldUseFallbackSource()) {
+    return (
+      getFallbackPosts().find((post) => post.slug === slug && post.language === language) ?? null
+    );
+  }
+
+  const post = normalizeSanityPost(
+    (await fetchSanityPostBySlug(slug, language)) as SanityPost | null,
+  );
+  return post;
+}
+
+export async function getAllSlugs(language: BlogLanguage = "en"): Promise<string[]> {
+  const posts = await getAllPosts(language);
+  return [...new Set(posts.map((post) => post.slug))];
+}
+
+export async function getPostTranslation(
+  translationKey: string,
+  language: BlogLanguage,
+): Promise<BlogPostWithSource | null> {
+  if (shouldUseFallbackSource()) return null;
+
+  const post = normalizeSanityPost(
+    (await fetchSanityPostTranslationByKey(translationKey, language)) as SanityPost | null,
+  );
+  return post;
+}
+
 export const getPostBySlug = getPost;

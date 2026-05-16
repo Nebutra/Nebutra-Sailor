@@ -18,6 +18,31 @@ export interface FeatureFlagProvider {
   getVariant: <T>(flag: string, defaultValue: T, context?: FeatureFlagContext) => Promise<T>;
 }
 
+export interface FeatureFlagProviderAdapter {
+  isEnabled: (flag: string, context?: FeatureFlagContext) => boolean | Promise<boolean>;
+  getVariant?: <T>(flag: string, defaultValue: T, context?: FeatureFlagContext) => T | Promise<T>;
+}
+
+export interface MemoryFlagRule {
+  enabled: boolean;
+  rolloutPercentage?: number;
+  variants?: Record<string, unknown>;
+}
+
+type MemoryFlagValue = boolean | MemoryFlagRule;
+
+export function createFeatureFlagProviderAdapter(
+  adapter: FeatureFlagProviderAdapter,
+): FeatureFlagProvider {
+  return {
+    isEnabled: async (flag, context) => Boolean(await adapter.isEnabled(flag, context)),
+    getVariant: async (flag, defaultValue, context) => {
+      if (!adapter.getVariant) return defaultValue;
+      return adapter.getVariant(flag, defaultValue, context);
+    },
+  };
+}
+
 import { getRedis } from "@nebutra/cache";
 
 // ============================================
@@ -130,18 +155,89 @@ const envProvider: FeatureFlagProvider = {
 
 const memoryFlags = new Map<string, boolean | unknown>();
 
-export const memoryProvider: FeatureFlagProvider = {
-  isEnabled: async (flag: string) => {
-    return memoryFlags.get(flag) === true;
+export function createMemoryProvider(
+  initialFlags: Record<string, MemoryFlagValue> = {},
+): FeatureFlagProvider {
+  const flags = new Map<string, MemoryFlagValue>(Object.entries(initialFlags));
+  const variants = new Map<string, unknown>();
+
+  return {
+    isEnabled: async (flag: string, context?: FeatureFlagContext) => {
+      const value = flags.get(flag);
+      if (typeof value === "boolean") return value;
+      if (!value?.enabled) return false;
+      if (value.rolloutPercentage === undefined) return true;
+
+      const rolloutKey = getRolloutKey(flag, context);
+      if (!rolloutKey) return false;
+      return isEnabledForPercentage(flag, rolloutKey, value.rolloutPercentage);
+    },
+    getVariant: async <T>(
+      flag: string,
+      defaultValue: T,
+      context?: FeatureFlagContext,
+    ): Promise<T> => {
+      const explicitVariant = variants.get(flag);
+      if (explicitVariant !== undefined) return explicitVariant as T;
+
+      const rule = flags.get(flag);
+      if (typeof rule === "object" && rule?.variants) {
+        const rolloutKey = getRolloutKey(flag, context);
+        if (rolloutKey) {
+          const variantNames = Object.keys(rule.variants).sort();
+          if (variantNames.length > 0) {
+            const selected = variantNames[getRolloutBucket(flag, rolloutKey) % variantNames.length];
+            if (selected !== undefined) return rule.variants[selected] as T;
+          }
+        }
+      }
+
+      return defaultValue;
+    },
+  };
+}
+
+export const memoryProvider: FeatureFlagProvider = createFeatureFlagProviderAdapter({
+  isEnabled: async (flag: string, context?: FeatureFlagContext) => {
+    const value = memoryFlags.get(flag) as MemoryFlagValue | undefined;
+    if (typeof value === "boolean") return value;
+    if (!value?.enabled) return false;
+    if (value.rolloutPercentage === undefined) return true;
+
+    const rolloutKey = getRolloutKey(flag, context);
+    if (!rolloutKey) return false;
+    return isEnabledForPercentage(flag, rolloutKey, value.rolloutPercentage);
   },
-  getVariant: async <T>(flag: string, defaultValue: T): Promise<T> => {
+  getVariant: async <T>(
+    flag: string,
+    defaultValue: T,
+    context?: FeatureFlagContext,
+  ): Promise<T> => {
     const value = memoryFlags.get(`${flag}:variant`);
-    return value !== undefined ? (value as T) : defaultValue;
+    if (value !== undefined) return value as T;
+
+    const rule = memoryFlags.get(flag) as MemoryFlagValue | undefined;
+    if (typeof rule === "object" && rule?.variants) {
+      const rolloutKey = getRolloutKey(flag, context);
+      if (rolloutKey) {
+        const variantNames = Object.keys(rule.variants).sort();
+        if (variantNames.length > 0) {
+          const selected = variantNames[getRolloutBucket(flag, rolloutKey) % variantNames.length];
+          if (selected !== undefined) return rule.variants[selected] as T;
+        }
+      }
+    }
+
+    return defaultValue;
   },
-};
+});
 
 export function setMemoryFlag(flag: string, enabled: boolean): void {
   memoryFlags.set(flag, enabled);
+}
+
+export function setMemoryFlagRule(flag: string, rule: MemoryFlagRule): void {
+  memoryFlags.set(flag, rule);
 }
 
 export function setMemoryVariant<T>(flag: string, value: T): void {
@@ -204,20 +300,28 @@ export async function isEnabledForPercentage(
   userId: string,
   percentage: number,
 ): Promise<boolean> {
-  // Simple hash-based percentage check
-  const hash = simpleHash(userId + flag);
-  const bucket = hash % 100;
-  return bucket < percentage;
+  if (percentage <= 0) return false;
+  if (percentage >= 100) return true;
+  return getRolloutBucket(flag, userId) < percentage;
 }
 
-function simpleHash(str: string): number {
-  let hash = 0;
+function getRolloutKey(flag: string, context?: FeatureFlagContext): string | undefined {
+  if (!context) return undefined;
+  if (context.userId && context.tenantId) return `${context.tenantId}:${context.userId}`;
+  return context.userId ?? context.tenantId ?? `${flag}:${context.environment ?? ""}`;
+}
+
+function getRolloutBucket(flag: string, key: string): number {
+  return stableHash(`${flag}:${key}`) % 100;
+}
+
+function stableHash(str: string): number {
+  let hash = 2166136261;
   for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
+    hash ^= str.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
   }
-  return Math.abs(hash);
+  return hash >>> 0;
 }
 
 // ============================================

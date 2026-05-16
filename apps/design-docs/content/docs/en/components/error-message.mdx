@@ -1,89 +1,79 @@
 ---
-title: "Error Message"
-description: "Good error design is clear, useful, and friendly. Designing concise and accurate error messages unblocks users and builds trust."
+title: "Error"
+description: "Block-level error surface for failed resources, sections, and route boundaries."
 ---
 
 ## Demo
 
-<ComponentPreview name="error-message-demo"  />
-
-
-## Overview
-
-`ErrorMessage` renders an inline error indicator — a red alert icon, an optional label prefix, the message, and an optional action link. It maps to Geist's `<Error>` component (`ErrorMessage` is used as the export name to avoid shadowing the JavaScript built-in `Error`).
-
-## Installation
-
-```tsx
-import { ErrorMessage } from "@nebutra/ui/primitives";
-```
+<ComponentPreview name="error-message-demo" />
 
 ## Usage
 
-### Default
-
 ```tsx
-<ErrorMessage>This email address is already in use.</ErrorMessage>
+import { Error } from "@nebutra/ui/primitives";
 ```
 
-### Custom label
-
 ```tsx
-<ErrorMessage label="Email Error">
-  This email address is already in use.
-</ErrorMessage>
+<Error
+  title="Couldn’t Load Deployments"
+  action="Try Again"
+  onAction={refetch}
+  errorId="iad1::r7h2p-1712f9cda5d8"
+>
+  The deployments list failed to load. Try again or check the request details.
+</Error>
 ```
 
-### Sizes
+## Design Principles
 
-```tsx
-<ErrorMessage size="small">This email is in use.</ErrorMessage>
-<ErrorMessage size="medium">This email is in use.</ErrorMessage>
-<ErrorMessage size="large">This email is in use.</ErrorMessage>
-```
-
-### With action link (error object)
-
-```tsx
-<ErrorMessage
-  error={{
-    message: "The request failed.",
-    action: "Contact Us",
-    link: "https://vercel.com/contact",
-  }}
-/>
-```
-
-### In a form field
-
-```tsx
-<div className="flex flex-col gap-1.5">
-  <label htmlFor="email">Email</label>
-  <input id="email" type="email" className="border-destructive ..." />
-  <ErrorMessage>This email address is already in use.</ErrorMessage>
-</div>
-```
+- Use `Error` when a page, route boundary, section, panel, or dashboard card failed to load.
+- Use toast errors for transient action failures and the owning input/field primitive for validation.
+- Name the failed resource. Do not ship `Something went wrong`.
+- State what happened and what to do next. Avoid apologetic or humorous copy.
+- Include a stable identifier for system errors: request ID, trace ID, deployment ID, or run ID.
+- Recovery actions must be concrete: `Try Again`, `Reconnect GitHub`, `Update Payment Method`.
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `children` | `ReactNode` | — | Inline error text (use when not passing `error`) |
-| `label` | `string` | — | Optional label prefix shown before the message |
-| `size` | `"small" \| "medium" \| "large"` | `"medium"` | Font and icon size |
-| `error` | `ErrorObject` | — | Structured error — `message`, `action`, `link` |
-| `className` | `string` | — | Additional CSS classes |
+| `title` | `string` | — | Resource-specific title |
+| `children` | `ReactNode` | — | Message body |
+| `label` | `string` | — | Optional compact label above the title |
+| `showLabel` | `boolean` | `true` | Hides the label when false |
+| `size` | `"small" \| "medium" \| "large"` | `"medium"` | Surface density |
+| `error` | `ErrorObject` | — | Structured error data |
+| `errorId` | `string` | — | Stable diagnostic identifier |
+| `errorIdLabel` | `string` | `"Request ID"` | Label rendered before the stable ID |
+| `live` | `"polite" \| "assertive" \| "off"` | `"polite"` | Announcement mode for async errors |
+| `action` | `string` | — | Recovery action label |
+| `link` | `string` | — | Recovery action link |
+| `onAction` | `() => void` | — | Recovery button handler |
 
 ### `ErrorObject`
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `message` | `string` | Error description |
-| `action` | `string` | Label for the action link |
-| `link` | `string` | href for the action link |
+| `title` | `string` | Optional resource title |
+| `message` | `string` | Error message |
+| `action` | `string` | Recovery action label |
+| `link` | `string` | Recovery action href |
+| `id` | `string` | Stable diagnostic identifier |
+| `code` | `string` | Machine-readable error code |
 
 ## Accessibility
 
-- Renders with `role="alert"` so screen readers announce the error immediately.
-- The icon is `aria-hidden="true"` — the text provides the full context.
-- External action links include `rel="noopener noreferrer"`.
+- Async errors announce with `aria-live="polite"` by default.
+- Use `live="assertive"` only for blocking errors that interrupt input.
+- Diagnostic IDs render inside collapsed `details` so users can copy them without making the error visually noisy.
+- Button actions remain keyboard reachable; links use `rel="noopener noreferrer"` when external.
+
+## Legacy Inline Usage
+
+`ErrorMessage` remains exported for existing inline validation text, but new field-level errors should live on the field/input primitive.
+
+```tsx
+import { ErrorMessage } from "@nebutra/ui/primitives";
+
+<ErrorMessage>This email address is already in use.</ErrorMessage>
+```

@@ -3,7 +3,7 @@
   "name": "tooltip",
   "type": "registry:ui",
   "title": "Tooltip",
-  "description": "Radix Tooltip wrapper used as the substrate for ContextCard and RelativeTimeCard.",
+  "description": "Base UI Tooltip wrapper for concise, non-interactive explanatory text.",
   "author": "Nebutra <ui.nebutra.com>",
   "dependencies": [
     "@base-ui/react"

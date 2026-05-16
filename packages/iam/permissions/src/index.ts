@@ -24,6 +24,7 @@ export {
   type OpenFGACheckResponse,
   type OpenFGAListObjectsRequest,
   OpenFGAProvider,
+  type OpenFGAProviderConfig,
   type OpenFGATuple,
   type OpenFGAWriteRequest,
 } from "./providers/openfga";

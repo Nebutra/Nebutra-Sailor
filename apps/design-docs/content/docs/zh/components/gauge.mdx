@@ -1,113 +1,72 @@
 ---
 title: "仪表盘 (Gauge)"
-description: "用于传达百分比的圆形视觉组件。"
+description: "用于表达固定最大值下 0–100 比率的圆形视觉组件。"
 ---
 
 ## 演示 (Demo)
 
-<ComponentPreview name="gauge-demo"  />
+<ComponentPreview name="gauge-demo" />
 
-
-## 概览 (Overview)
-
-`Gauge` 渲染一个 SVG 圆环图，其填充范围为 0–100%。它支持：
-- **自动颜色刻度** —— 根据数值自动从 灰色 → 琥珀色 → 翡翠色 切换
-- **自定义颜色停靠点** —— 可设置任意阈值和 CSS 颜色
-- **中心标签** —— 可显示数字或自定义 `ReactNode`
-- **未定状态 (Indeterminate)** —— 用于未知或加载状态的旋转动画
-
-## 安装 (Installation)
+## 使用方法 (Usage)
 
 ```tsx
 import { Gauge } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
-
-### 默认用法 (Default)
-
 ```tsx
-<Gauge value={72} size={48} />
+<div>
+  <p id="cache-hit-rate">Build Cache Hit Rate · 92%</p>
+  <Gauge aria-labelledby="cache-hit-rate" showValue size="medium" value={92} />
+</div>
 ```
 
-### 带有标签 (With label)
+## 设计原则 (Design Principles)
 
-```tsx
-<Gauge value={72} size={64} label />
-```
-
-### 自定义颜色范围 (Custom color range)
-
-```tsx
-<Gauge
-  value={60}
-  size={64}
-  label
-  colors={[
-    { value: 0,  color: "#ef4444" },
-    { value: 50, color: "#f59e0b" },
-    { value: 80, color: "#22c55e" },
-  ]}
-/>
-```
-
-### 自定义背景环颜色 (Custom secondary color)
-
-```tsx
-<Gauge value={60} size={64} secondaryColor="#dbeafe" label />
-```
-
-### 圆弧优先级 (Arc priority)
-
-控制当两个圆弧重叠时，哪个渲染在上方：
-
-```tsx
-<Gauge value={60} arcPriority="value" />     {/* 默认 */}
-<Gauge value={60} arcPriority="secondary" />
-```
-
-### 未定状态 (Indeterminate)
-
-```tsx
-<Gauge size={48} indeterminate />
-```
+- Gauge 用于固定最大值下的 0–100 比率：配额使用量、缓存命中率、可用率、账期消耗。
+- 上传进度、多步流程进度这类确定性任务使用 Progress。
+- 二元、枚举、部署状态使用 Status Dot 或 Badge。
+- 每个 Gauge 都必须搭配相邻标签或 Tooltip，说明这个数字代表什么。
+- 不要只靠颜色表达阈值；warning/error 色调旁边要有冗余文案。
+- 默认阈值遵循用量语义：`>=80%` warning，`>=95%` error。健康分这类高分更好的场景应显式传入 `colors`。
 
 ## 属性 (Props)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `value` | `number` | `0` | 当前值，范围 0–100 |
-| `size` | `number` | `48` | 直径（像素） |
-| `strokeWidth` | `number` | 约尺寸的 10% | 环形的描边宽度（像素） |
-| `label` | `boolean \| ReactNode` | — | 为 `true` 时显示数值；也可以传入 `ReactNode` 作为自定义内容 |
-| `colors` | `GaugeColorStop[]` | 默认刻度 | 自定义颜色停靠点（按 `value` 升序排列） |
-| `secondaryColor` | `string` | muted | 背景轨道圆弧的 CSS 颜色 |
-| `arcPriority` | `"value" \| "secondary"` | `"value"` | 哪个圆弧渲染在顶层 |
-| `indeterminate` | `boolean` | `false` | 显示旋转动画（此时会忽略 `value`） |
-| `className` | `string` | — | 外层容器的额外 CSS 类名 |
+| `value` | `number` | `0` | 当前值，会限制在 0–100 |
+| `size` | `"tiny" \| "small" \| "medium" \| "large" \| number` | `"medium"` | 预设尺寸或兼容旧版像素直径 |
+| `colors` | `GaugeColorMap \| GaugeColorStop[]` | 用量刻度 | 阈值颜色或显式 `primary` / `secondary` 颜色 |
+| `secondaryColor` | `string` | — | 兼容旧版轨道颜色覆盖；优先使用 `colors.secondary` |
+| `showValue` | `boolean` | `false` | 仅渲染数字，不渲染 `%` |
+| `label` | `boolean \| ReactNode` | — | 兼容旧版 `showValue` 别名；ReactNode 作为中心覆盖层 |
+| `children` | `ReactNode` | — | 中心图标覆盖层 |
+| `arcPriority` | `"default" \| "equal"` | `"default"` | `equal` 用于真实比例，让两段圆弧等长 |
+| `indeterminate` | `boolean` | `false` | 数值未知时显示加载态 |
 
-### `GaugeColorStop`
+### `GaugeColorMap`
 
 ```ts
-interface GaugeColorStop {
-  value: number;  // 阈值 0–100
-  color: string;  // 任意 CSS 颜色
-}
+type GaugeColorMap = Record<string, string> & {
+  primary?: string;
+  secondary?: string;
+};
 ```
 
-将使用 `value` ≤ 当前数值的最高值对应的颜色。
+阈值 key 是数字字符串。小于或等于当前 `value` 的最高阈值会生效。
 
-### 默认颜色刻度 (Default color scale)
-
-| 范围 | 颜色 |
-|-------|-------|
-| 0–39 | 灰色 (`hsl(220 9% 46%)`) |
-| 40–74 | 琥珀色 (`hsl(38 92% 50%)`) |
-| 75–100 | 翡翠色 (`hsl(142 71% 45%)`) |
+```tsx
+<Gauge
+  value={50}
+  colors={{
+    primary: "hsl(var(--info))",
+    secondary: "hsl(var(--info) / 0.18)",
+  }}
+/>
+```
 
 ## 可访问性 (Accessibility)
 
-- 根元素具有 `role="meter"`，并带有 `aria-valuenow`, `aria-valuemin`, `aria-valuemax`。
-- 标签文本通过 SVG 的 `<text>` 元素可被屏幕阅读器读取。
-- 未定状态的 Gauge 带有 `aria-label="正在加载 (Loading)"`。
-走
+- Gauge 设置 `role="progressbar"`，并带有 `aria-valuemin`、`aria-valuemax`、`aria-valuenow`。
+- 使用 `aria-labelledby` 关联相邻标签，例如 “Build Cache Hit Rate, 92 percent”。
+- indeterminate 状态会省略 `aria-valuenow` 并设置 `aria-busy`。
+- `showValue` 仅用于视觉显示；可访问数值来自 ARIA。

@@ -71,17 +71,21 @@ export const TenantInfoSchema = z.object({
 
 export type TenantInfo = z.infer<typeof TenantInfoSchema>;
 
+export interface TenantResolverObjectInput {
+  headers?: Headers | Record<string, string | string[] | undefined>;
+  url?: string | URL;
+  token?: string;
+  apiKey?: string;
+}
+
+export type TenantResolverInput = Request | TenantResolverObjectInput;
+
 /**
  * Callback to resolve a tenant from various sources (header, subdomain, path, JWT, API key).
  *
  * Returns the resolved tenant ID or null if not found.
  */
-export type TenantResolver = (req: {
-  headers?: Record<string, string | string[] | undefined>;
-  url?: string;
-  token?: string;
-  apiKey?: string;
-}) => Promise<string | null> | string | null;
+export type TenantResolver = (req: TenantResolverInput) => Promise<string | null> | string | null;
 
 /**
  * Configuration for tenant extraction and isolation.

@@ -36,6 +36,7 @@
  * ```
  */
 
+import { Dialog as BaseDialog } from "@base-ui/react/dialog";
 import {
   Warning as AlertCircle,
   Warning as AlertTriangle,
@@ -190,6 +191,194 @@ export function ConfirmDialog({
 }
 
 // ============================================================================
+// Destructive Action Modal (type-to-confirm gate)
+// ============================================================================
+
+export interface DestructiveActionModalProps {
+  /** Dialog open state. The caller owns it and decides when to close after confirm. */
+  open: boolean;
+  /** Title Case Verb + Noun label, e.g. "Delete Project". */
+  title: string;
+  /** Consequence copy. Name the specific resource when possible. */
+  description: React.ReactNode;
+  /** Primary action label. Should match title 1:1. */
+  confirmLabel: string;
+  /** Exact phrase the user must type to unlock confirm. */
+  verificationPhrase: string;
+  /** Resource label used in the prompt, e.g. "project name". */
+  verificationLabel?: string;
+  /** Optional irreversible-action band. Omit for reversible actions. */
+  irreversibleDescription?: React.ReactNode;
+  /** Inline API failure. Keep the modal open so the user can retry. */
+  error?: string | Error | null;
+  /** In-flight state owned by the caller. */
+  loading?: boolean;
+  /** Cancel callback for cancel button, outside click, and Escape. */
+  onCancel: () => void;
+  /** Confirm callback. The component never closes itself from here. */
+  onConfirm: () => void;
+  /** Cancel button label. */
+  cancelLabel?: string;
+  /** Optional className for the modal panel. */
+  className?: string;
+}
+
+function getErrorMessage(error: DestructiveActionModalProps["error"]): string | undefined {
+  if (!error) return undefined;
+  if (typeof error === "string") return error;
+  return error.message;
+}
+
+export function DestructiveActionModal({
+  open,
+  title,
+  description,
+  confirmLabel,
+  verificationPhrase,
+  verificationLabel,
+  irreversibleDescription,
+  error,
+  loading = false,
+  onCancel,
+  onConfirm,
+  cancelLabel = "Cancel",
+  className,
+}: DestructiveActionModalProps) {
+  const [value, setValue] = React.useState("");
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputId = React.useId();
+  const promptId = React.useId();
+  const descriptionId = React.useId();
+  const errorId = React.useId();
+  const irreversibleId = React.useId();
+
+  const isVerified = value === verificationPhrase;
+  const errorMessage = getErrorMessage(error);
+  const describedBy = [
+    descriptionId,
+    errorMessage ? errorId : undefined,
+    irreversibleDescription ? irreversibleId : undefined,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  React.useEffect(() => {
+    if (!open) return;
+    setValue("");
+    const timer = window.setTimeout(() => inputRef.current?.focus(), 0);
+    return () => window.clearTimeout(timer);
+  }, [open]);
+
+  const handleOpenChange = React.useCallback(
+    (nextOpen: boolean) => {
+      if (!nextOpen && !loading) onCancel();
+    },
+    [loading, onCancel],
+  );
+
+  const handleSubmit = React.useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      if (!isVerified || loading) return;
+      onConfirm();
+    },
+    [isVerified, loading, onConfirm],
+  );
+
+  return (
+    <BaseDialog.Root open={open} onOpenChange={handleOpenChange}>
+      <BaseDialog.Portal>
+        <BaseDialog.Backdrop className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm transition-[opacity,display] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] data-ending-style:opacity-0 data-starting-style:opacity-0" />
+        <BaseDialog.Popup
+          aria-busy={loading || undefined}
+          aria-describedby={describedBy}
+          className={cn(
+            "fixed left-[50%] top-[50%] z-50 w-[calc(100vw-2rem)] max-w-md translate-x-[-50%] translate-y-[-50%]",
+            "overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background text-foreground shadow-2xl",
+            "transition-[opacity,transform,display] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)]",
+            "data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0",
+            "motion-reduce:transition-none motion-reduce:data-starting-style:transform-none motion-reduce:data-ending-style:transform-none",
+            className,
+          )}
+        >
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-5 p-6">
+              <div className="space-y-2">
+                <BaseDialog.Title className="text-base font-semibold leading-none">
+                  {title}
+                </BaseDialog.Title>
+                <BaseDialog.Description
+                  id={descriptionId}
+                  className="text-sm leading-6 text-muted-foreground"
+                >
+                  {description}
+                </BaseDialog.Description>
+              </div>
+
+              <div className="space-y-2">
+                <Label
+                  id={promptId}
+                  htmlFor={inputId}
+                  className="block text-sm leading-6 text-foreground"
+                >
+                  To confirm, type{" "}
+                  {verificationLabel ? <span>the {verificationLabel} </span> : null}
+                  <span className="font-mono text-destructive">"{verificationPhrase}"</span>.
+                </Label>
+                <Input
+                  ref={inputRef}
+                  id={inputId}
+                  aria-describedby={describedBy}
+                  aria-invalid={errorMessage ? true : undefined}
+                  aria-labelledby={promptId}
+                  autoComplete="off"
+                  className="font-mono"
+                  disabled={loading}
+                  onChange={(event) => setValue(event.target.value)}
+                  value={value}
+                />
+                {errorMessage ? (
+                  <p id={errorId} className="text-sm text-destructive" role="alert">
+                    {errorMessage}
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                <Button disabled={loading} onClick={onCancel} type="button" variant="outline">
+                  {cancelLabel}
+                </Button>
+                <Button
+                  disabled={!isVerified || loading}
+                  loading={loading}
+                  type="submit"
+                  variant="destructive"
+                >
+                  {confirmLabel}
+                </Button>
+              </div>
+            </div>
+
+            {irreversibleDescription ? (
+              <div
+                id={irreversibleId}
+                className={cn(
+                  "flex items-start gap-2 border-t border-destructive/20 px-6 py-3 text-sm text-destructive",
+                  "bg-[repeating-linear-gradient(-45deg,hsl(var(--destructive)/0.08),hsl(var(--destructive)/0.08)_1px,transparent_1px,transparent_7px)]",
+                )}
+              >
+                <AlertTriangle aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+                <span>{irreversibleDescription}</span>
+              </div>
+            ) : null}
+          </form>
+        </BaseDialog.Popup>
+      </BaseDialog.Portal>
+    </BaseDialog.Root>
+  );
+}
+
+// ============================================================================
 // Confirm Delete Dialog (with input confirmation)
 // ============================================================================
 
@@ -222,107 +411,28 @@ export function ConfirmDeleteDialog({
   loading = false,
   warnings = [],
 }: ConfirmDeleteDialogProps) {
-  const [inputValue, setInputValue] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
-
-  const isConfirmEnabled = inputValue === confirmationText;
-  const isProcessing = loading || isLoading;
-
-  // Reset input when dialog opens/closes
-  React.useEffect(() => {
-    if (open) {
-      setInputValue("");
-    }
-  }, [open]);
-
-  const handleConfirm = async () => {
-    if (!isConfirmEnabled) return;
-
-    try {
-      setIsLoading(true);
-      await onConfirm();
-      onOpenChange(false);
-    } catch (error) {
-      console.error("[ConfirmDeleteDialog] Error:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const warningCopy = warnings.length > 0 ? ` ${warnings.join(" ")}` : "";
+  const verificationLabelProps =
+    confirmationText === itemName ? { verificationLabel: `${itemType} name` } : {};
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <div className="flex items-start gap-4">
-            <div className="rounded-full bg-destructive/10 p-2">
-              <Trash2 className="size-6 text-destructive" />
-            </div>
-            <div className="flex-1">
-              <AlertDialogTitle>Delete {itemType}</AlertDialogTitle>
-              <AlertDialogDescription className="mt-2">
-                You are about to delete <strong className="text-foreground">{itemName}</strong>.
-                This action <span className="font-semibold text-destructive">cannot be undone</span>
-                .
-              </AlertDialogDescription>
-            </div>
-          </div>
-        </AlertDialogHeader>
-
-        {/* Warning list */}
-        {warnings.length > 0 && (
-          <div className="rounded-md border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
-            <div className="flex items-start gap-2">
-              <AlertTriangle className="size-4 text-amber-600 mt-0.5 shrink-0" />
-              <ul className="text-sm text-amber-800 dark:text-amber-200 space-y-1">
-                {warnings.map((warning, index) => (
-                  <li key={index}>{warning}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {/* Input confirmation */}
-        <div className="space-y-3 pt-2">
-          <Label htmlFor="confirm-input" className="text-sm text-muted-foreground">
-            Type{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm text-destructive">
-              {confirmationText}
-            </code>{" "}
-            to confirm
-          </Label>
-          <Input
-            id="confirm-input"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder={confirmationText}
-            className={cn(
-              "font-mono",
-              isConfirmEnabled && "border-green-500 focus-visible:ring-green-500",
-            )}
-            disabled={isProcessing}
-            autoComplete="off"
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && isConfirmEnabled) {
-                handleConfirm();
-              }
-            }}
-          />
-        </div>
-
-        <AlertDialogFooter>
-          <AlertDialogCancel disabled={isProcessing}>Cancel</AlertDialogCancel>
-          <Button
-            variant="destructive"
-            onClick={handleConfirm}
-            disabled={!isConfirmEnabled || isProcessing}
-          >
-            {isProcessing && <Loader2 className="size-4 mr-2 animate-spin" />}
-            Confirm Delete
-          </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <DestructiveActionModal
+      confirmLabel={`Delete ${itemType}`}
+      description={
+        <>
+          <span className="font-medium">{itemName}</span> will be permanently deleted.
+          {warningCopy}
+        </>
+      }
+      irreversibleDescription={`Deleting ${itemName} cannot be undone.`}
+      loading={loading}
+      onCancel={() => onOpenChange(false)}
+      onConfirm={onConfirm}
+      open={open}
+      title={`Delete ${itemType}`}
+      verificationPhrase={confirmationText}
+      {...verificationLabelProps}
+    />
   );
 }
 

@@ -408,6 +408,19 @@
       "continueCta": "Continue",
       "signInCta": "Go to sign in"
     },
+    "loginSuccess": {
+      "eyebrow": "Login complete",
+      "title": "You're signed in",
+      "description": "Your session is ready. We are opening the Nebutra workspace and preserving the secure handoff from the authentication flow.",
+      "session": "Session",
+      "verified": "Verified",
+      "workspace": "Workspace",
+      "preparing": "Preparing",
+      "redirecting": "Entering workspace in {seconds}s",
+      "secureHandoff": "Secure handoff",
+      "continueCta": "Continue to workspace",
+      "signInCta": "Use another account"
+    },
     "errors": {
       "invalidCredentials": "Email or password is incorrect.",
       "userNotFound": "No account found with that email.",

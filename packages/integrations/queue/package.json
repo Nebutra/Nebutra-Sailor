@@ -9,11 +9,11 @@
     "productionReady": false,
     "requires": [
       "QSTASH_TOKEN (+ signing keys) for serverless",
+      "Configured QStash dlqFetcher/dlqEndpoint for provider-side DLQ observability",
       "REDIS_URL for BullMQ self-hosted",
       "AWS_SQS_QUEUE_URL (+ AWS credentials) for SQS"
     ],
     "gaps": [
-      "QStash provider dead letter retrieval not implemented",
       "Worker auto-scaling TODO"
     ]
   },

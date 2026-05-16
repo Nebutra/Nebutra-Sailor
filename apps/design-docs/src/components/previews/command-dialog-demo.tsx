@@ -7,6 +7,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  Kbd,
 } from "@nebutra/ui/primitives";
 import * as React from "react";
 
@@ -28,10 +29,7 @@ export function CommandDialogDemo() {
   return (
     <>
       <p className="text-sm text-muted-foreground">
-        Press{" "}
-        <kbd className="h-5 gap-1 rounded px-1.5 font-medium pointer-events-none inline-flex items-center border bg-muted font-mono text-[10px] text-muted-foreground opacity-100 select-none">
-          <span className="text-xs">⌘</span>J
-        </kbd>
+        Press <Kbd meta>J</Kbd>
       </p>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="Type a command or search..." />

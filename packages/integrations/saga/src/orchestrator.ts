@@ -1,4 +1,5 @@
 import type { EventBus } from "@nebutra/event-bus";
+import type { SagaJournal, SagaJournalEventType } from "./journal";
 
 export interface SagaStep<TContext = unknown> {
   name: string;
@@ -8,10 +9,19 @@ export interface SagaStep<TContext = unknown> {
 
 export interface SagaResult<TContext = unknown> {
   success: boolean;
+  executionId?: string;
   context: TContext;
   completedSteps: string[];
   failedStep?: string;
   error?: string;
+}
+
+export interface SagaExecuteOptions {
+  executionId?: string;
+}
+
+export interface SagaOrchestratorOptions<TContext = unknown> {
+  journal?: SagaJournal<TContext>;
 }
 
 /**
@@ -27,6 +37,7 @@ export class SagaOrchestrator<TContext = unknown> {
   constructor(
     private name: string,
     private readonly eventBus: EventBus,
+    private readonly options: SagaOrchestratorOptions<TContext> = {},
   ) {}
 
   /**
@@ -40,9 +51,15 @@ export class SagaOrchestrator<TContext = unknown> {
   /**
    * Execute the saga
    */
-  async execute(initialContext: TContext): Promise<SagaResult<TContext>> {
+  async execute(
+    initialContext: TContext,
+    executeOptions: SagaExecuteOptions = {},
+  ): Promise<SagaResult<TContext>> {
+    const executionId = executeOptions.executionId ?? `saga_${crypto.randomUUID()}`;
     const completedSteps: string[] = [];
     let context = initialContext;
+
+    await this.appendJournal("saga.started", executionId, { context });
 
     // Emit saga started event
     await this.eventBus.publish(
@@ -58,6 +75,10 @@ export class SagaOrchestrator<TContext = unknown> {
         try {
           context = await step.execute(context);
           completedSteps.push(step.name);
+          await this.appendJournal("step.completed", executionId, {
+            step: step.name,
+            context,
+          });
 
           await this.eventBus.publish(
             this.eventBus.createEvent("saga.step.completed", {
@@ -74,19 +95,32 @@ export class SagaOrchestrator<TContext = unknown> {
               error: error instanceof Error ? error.message : String(error),
             }),
           );
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          await this.appendJournal("step.failed", executionId, {
+            step: step.name,
+            context,
+            error: errorMessage,
+          });
 
           // Compensate in reverse order
-          await this.compensate(context, completedSteps);
+          await this.compensate(context, completedSteps, executionId);
+          await this.appendJournal("saga.failed", executionId, {
+            context,
+            error: errorMessage,
+          });
 
           return {
             success: false,
+            executionId,
             context,
             completedSteps,
             failedStep: step.name,
-            error: error instanceof Error ? error.message : String(error),
+            error: errorMessage,
           };
         }
       }
+
+      await this.appendJournal("saga.completed", executionId, { context });
 
       // All steps completed
       await this.eventBus.publish(
@@ -98,15 +132,19 @@ export class SagaOrchestrator<TContext = unknown> {
 
       return {
         success: true,
+        executionId,
         context,
         completedSteps,
       };
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      await this.appendJournal("saga.failed", executionId, { context, error: errorMessage });
       return {
         success: false,
+        executionId,
         context,
         completedSteps,
-        error: error instanceof Error ? error.message : String(error),
+        error: errorMessage,
       };
     }
   }
@@ -114,7 +152,11 @@ export class SagaOrchestrator<TContext = unknown> {
   /**
    * Execute compensation steps in reverse order
    */
-  private async compensate(context: TContext, completedSteps: string[]): Promise<void> {
+  private async compensate(
+    context: TContext,
+    completedSteps: string[],
+    executionId: string,
+  ): Promise<void> {
     await this.eventBus.publish(
       this.eventBus.createEvent("saga.compensating", {
         saga: this.name,
@@ -129,7 +171,15 @@ export class SagaOrchestrator<TContext = unknown> {
       const step = this.steps.find((s) => s.name === stepName);
       if (step?.compensate) {
         try {
+          await this.appendJournal("compensation.started", executionId, {
+            step: stepName,
+            context,
+          });
           await step.compensate(context);
+          await this.appendJournal("compensation.completed", executionId, {
+            step: stepName,
+            context,
+          });
           await this.eventBus.publish(
             this.eventBus.createEvent("saga.compensation.completed", {
               saga: this.name,
@@ -137,6 +187,11 @@ export class SagaOrchestrator<TContext = unknown> {
             }),
           );
         } catch (error) {
+          await this.appendJournal("compensation.failed", executionId, {
+            step: stepName,
+            context,
+            error: error instanceof Error ? error.message : String(error),
+          });
           await this.eventBus.publish(
             this.eventBus.createEvent("saga.compensation.failed", {
               saga: this.name,
@@ -148,6 +203,28 @@ export class SagaOrchestrator<TContext = unknown> {
       }
     }
   }
+
+  private async appendJournal(
+    type: SagaJournalEventType,
+    executionId: string,
+    details: {
+      step?: string;
+      context?: TContext;
+      error?: string;
+      metadata?: Record<string, unknown>;
+    } = {},
+  ): Promise<void> {
+    if (!this.options.journal) return;
+
+    await this.options.journal.append({
+      id: `sje_${crypto.randomUUID()}`,
+      executionId,
+      saga: this.name,
+      type,
+      at: new Date().toISOString(),
+      ...details,
+    });
+  }
 }
 
 /**
@@ -156,6 +233,7 @@ export class SagaOrchestrator<TContext = unknown> {
 export function createSaga<TContext = unknown>(
   name: string,
   eventBus: EventBus,
+  options?: SagaOrchestratorOptions<TContext>,
 ): SagaOrchestrator<TContext> {
-  return new SagaOrchestrator<TContext>(name, eventBus);
+  return new SagaOrchestrator<TContext>(name, eventBus, options);
 }

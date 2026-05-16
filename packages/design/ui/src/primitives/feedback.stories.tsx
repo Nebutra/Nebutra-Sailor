@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, userEvent, within } from "@storybook/test";
 import { Feedback } from "./feedback";
 
 const meta = {
@@ -8,7 +9,8 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
-        component: "Gather text feedback with an associated emotion.",
+        component:
+          "Gather text feedback with an associated emotion, optional triage topic, and metadata.",
       },
     },
   },
@@ -24,64 +26,109 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// =============================================================================
-// Default — trigger button + popover panel
-// =============================================================================
-
 export const Default: Story = {
   args: {
-    label: "vercel",
+    label: "Feedback",
     dryRun: true,
   },
 };
 
-// =============================================================================
-// Inline — "Was this helpful?" bar
-// =============================================================================
-
 export const Inline: Story = {
   args: {
-    label: "vercel",
+    label: "Feedback",
     type: "inline",
     dryRun: true,
   },
 };
 
-// =============================================================================
-// WithSelect — topic dropdown pre-configured
-// =============================================================================
-
-export const WithSelect: Story = {
+export const WithTopics: Story = {
   args: {
-    label: "vercel",
+    label: "Report a Bug",
+    showTopics: true,
     dryRun: true,
-    topics: ["Bug report", "Feature request", "Performance", "Documentation", "Other"],
   },
 };
 
-// =============================================================================
-// WithMetadata — arbitrary metadata attached to submission
-// =============================================================================
-
 export const WithMetadata: Story = {
   args: {
-    label: "vercel",
+    label: "Feedback on Checkout",
     dryRun: true,
     metadata: {
-      userId: "user_12345",
+      buildId: "build_12345",
       location: "post-checkout",
-      orderId: "order_123456",
+      plan: "pro",
+      viewport: "desktop",
     },
   },
 };
 
-// =============================================================================
-// WithSubmitHandler — logs payload to console
-// =============================================================================
-
-export const WithSubmitHandler: Story = {
+export const LongCopy: Story = {
   args: {
-    label: "my-app",
-    onSubmit: (_payload) => {},
+    label: "Feedback on Imports",
+    copy: "How did the import from the production workspace go?",
+    defaultOpen: true,
+    dryRun: true,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    label: "Feedback",
+    disabled: true,
+    dryRun: true,
+  },
+};
+
+export const DarkMode: Story = {
+  decorators: [
+    (Story) => (
+      <div className="dark bg-background p-6 text-foreground">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    label: "Feedback",
+    defaultOpen: true,
+    dryRun: true,
+  },
+};
+
+export const SubmitError: Story = {
+  args: {
+    label: "Feedback",
+    defaultOpen: true,
+    onSubmit: async () => {
+      throw new Error("Couldn't send feedback. Try again.");
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.type(
+      canvas.getByPlaceholderText("Your feedback..."),
+      "The docs link is stale.",
+    );
+    await userEvent.click(canvas.getByRole("button", { name: "Send" }));
+    await expect(await canvas.findByRole("alert")).toHaveTextContent(
+      "Couldn't send feedback. Try again.",
+    );
+  },
+};
+
+export const Accessibility: Story = {
+  args: {
+    label: "Feedback",
+    defaultOpen: true,
+    showTopics: true,
+    dryRun: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole("heading", { name: "Feedback" })).toBeVisible();
+    await expect(
+      canvas.getByRole("radiogroup", { name: "How was this experience?" }),
+    ).toBeVisible();
+    await expect(canvas.getByRole("textbox", { name: "How was this experience?" })).toHaveFocus();
+    await expect(canvas.getByRole("button", { name: "Send" })).toBeDisabled();
   },
 };

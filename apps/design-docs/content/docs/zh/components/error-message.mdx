@@ -1,90 +1,79 @@
 ---
-title: "错误消息 (Error Message)"
-description: "优秀的错误设计应清晰、有用且友好。设计简洁准确的错误消息能够解除用户的困惑并建立信任。"
+title: "错误 (Error)"
+description: "用于资源、区块和路由边界加载失败的块级错误状态。"
 ---
 
 ## 演示 (Demo)
 
-<ComponentPreview name="error-message-demo"  />
-
-
-## 概览 (Overview)
-
-`ErrorMessage` 渲染一个行内错误指示器 —— 包含一个红色警示图标、一个可选的标签前缀、消息文本以及一个可选的操作链接。它对应于 Geist 的 `<Error>` 组件（为了避免与 JavaScript 内置的 `Error` 对象冲突，我们将其导出命名为 `ErrorMessage`）。
-
-## 安装 (Installation)
-
-```tsx
-import { ErrorMessage } from "@nebutra/ui/primitives";
-```
+<ComponentPreview name="error-message-demo" />
 
 ## 使用方法 (Usage)
 
-### 默认用法 (Default)
-
 ```tsx
-<ErrorMessage>此邮箱地址已被使用 (This email address is already in use.)</ErrorMessage>
+import { Error } from "@nebutra/ui/primitives";
 ```
 
-### 自定义标签 (Custom label)
-
 ```tsx
-<ErrorMessage label="邮箱错误 (Email Error)">
-  此邮箱地址已被使用 (This email address is already in use.)
-</ErrorMessage>
+<Error
+  title="Couldn’t Load Deployments"
+  action="Try Again"
+  onAction={refetch}
+  errorId="iad1::r7h2p-1712f9cda5d8"
+>
+  The deployments list failed to load. Try again or check the request details.
+</Error>
 ```
 
-### 尺寸 (Sizes)
+## 设计原则 (Design Principles)
 
-```tsx
-<ErrorMessage size="small">此邮箱已被使用。</ErrorMessage>
-<ErrorMessage size="medium">此邮箱已被使用。</ErrorMessage>
-<ErrorMessage size="large">此邮箱已被使用。</ErrorMessage>
-```
-
-### 带有操作链接（传入错误对象） (With action link)
-
-```tsx
-<ErrorMessage
-  error={{
-    message: "请求失败 (The request failed.)",
-    action: "联系我们 (Contact Us)",
-    link: "https://vercel.com/contact",
-  }}
-/>
-```
-
-### 在表单字段中使用 (In a form field)
-
-```tsx
-<div className="flex flex-col gap-1.5">
-  <label htmlFor="email">邮箱 (Email)</label>
-  <input id="email" type="email" className="border-destructive ..." />
-  <ErrorMessage>此邮箱地址已被使用。</ErrorMessage>
-</div>
-```
+- 当页面、路由边界、区块、面板或 dashboard card 加载失败时使用 `Error`。
+- 短暂操作失败用 toast；字段校验错误交给对应 input/field primitive。
+- 标题必须命名失败资源，不要使用 `Something went wrong`。
+- 先说明发生了什么，再说明下一步怎么做；不要写道歉式或玩笑式文案。
+- 系统错误要带稳定标识：request ID、trace ID、deployment ID 或 run ID。
+- 恢复动作必须具体：`Try Again`、`Reconnect GitHub`、`Update Payment Method`。
 
 ## 属性 (Props)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `children` | `ReactNode` | — | 行内错误文本（不传递 `error` 属性时使用） |
-| `label` | `string` | — | 显示在消息前的可选标签前缀 |
-| `size` | `"small" \| "medium" \| "large"` | `"medium"` | 字体和图标尺寸 |
-| `error` | `ErrorObject` | — | 结构化错误对象 —— 包含 `message`, `action`, `link` |
-| `className` | `string` | — | 额外的 CSS 类名 |
+| `title` | `string` | — | 命名失败资源的标题 |
+| `children` | `ReactNode` | — | 消息正文 |
+| `label` | `string` | — | 标题上方的紧凑标签 |
+| `showLabel` | `boolean` | `true` | 为 false 时隐藏标签 |
+| `size` | `"small" \| "medium" \| "large"` | `"medium"` | 错误面板密度 |
+| `error` | `ErrorObject` | — | 结构化错误数据 |
+| `errorId` | `string` | — | 稳定诊断标识 |
+| `errorIdLabel` | `string` | `"Request ID"` | 稳定标识前的标签 |
+| `live` | `"polite" \| "assertive" \| "off"` | `"polite"` | 异步错误播报模式 |
+| `action` | `string` | — | 恢复动作文案 |
+| `link` | `string` | — | 恢复动作链接 |
+| `onAction` | `() => void` | — | 恢复按钮回调 |
 
 ### `ErrorObject`
 
-| 字段 (Field) | 类型 | 描述 |
+| 字段 | 类型 | 描述 |
 |-------|------|-------------|
-| `message` | `string` | 错误描述 |
-| `action` | `string` | 操作链接的标签 |
-| `link` | `string` | 操作链接的 href 地址 |
+| `title` | `string` | 可选资源标题 |
+| `message` | `string` | 错误消息 |
+| `action` | `string` | 恢复动作文案 |
+| `link` | `string` | 恢复动作链接 |
+| `id` | `string` | 稳定诊断标识 |
+| `code` | `string` | 机器可读错误码 |
 
 ## 可访问性 (Accessibility)
 
-- 渲染时带有 `role="alert"`，以便屏幕阅读器立即播报错误。
-- 图标带有 `aria-hidden="true"` —— 文本内容提供了完整的上下文。
-- 外部操作链接包含 `rel="noopener noreferrer"`。
-走
+- 异步错误默认使用 `aria-live="polite"` 播报。
+- 只有阻断输入的错误才使用 `live="assertive"`。
+- 诊断 ID 放在折叠的 `details` 内，便于复制，同时不干扰主要信息。
+- 恢复按钮可键盘访问；外部链接会使用 `rel="noopener noreferrer"`。
+
+## 旧版行内用法 (Legacy Inline Usage)
+
+`ErrorMessage` 仍然导出，用于兼容既有行内校验文本；新的字段级错误应放在对应 field/input primitive 上。
+
+```tsx
+import { ErrorMessage } from "@nebutra/ui/primitives";
+
+<ErrorMessage>This email address is already in use.</ErrorMessage>
+```

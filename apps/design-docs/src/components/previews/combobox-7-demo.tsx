@@ -10,7 +10,7 @@ export function Combobox7Demo() {
         { value: "astro", label: "Astro" },
         { value: "nuxt", label: "Nuxt" },
       ]}
-      error
+      errored
       placeholder="Select framework..."
     />
   );

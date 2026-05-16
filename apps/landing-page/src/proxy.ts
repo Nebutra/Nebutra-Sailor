@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
+import { createLegacyAppRedirectUrl } from "./lib/app-redirects";
 import { createDocsRedirectUrl } from "./lib/docs-routing";
 
 const intlMiddleware = createMiddleware(routing);
@@ -78,9 +79,16 @@ export default function proxy(request: NextRequest): NextResponse {
   const host = request.headers.get("host")?.split(":")[0]?.toLowerCase();
   const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
   const docsRedirectUrl = createDocsRedirectUrl(request.nextUrl, host);
+  const legacyAppRedirectUrl = createLegacyAppRedirectUrl(pathname, APP_REDIRECT_URL);
 
   if (docsRedirectUrl) {
     return withSecurityHeaders(NextResponse.redirect(docsRedirectUrl, 308));
+  }
+
+  if (host !== STATUS_HOST && legacyAppRedirectUrl) {
+    const redirect = NextResponse.redirect(legacyAppRedirectUrl, 302);
+    redirect.headers.set("Cache-Control", "private, no-store");
+    return withSecurityHeaders(redirect);
   }
 
   if (pathname === "/status.json") {

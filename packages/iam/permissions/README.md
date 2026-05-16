@@ -1,4 +1,4 @@
-> **Status: Foundation** — CASL in-process evaluation supports deterministic role inheritance, ABAC conditions, and field-level rules. OpenFGA remains a stub, so this package is not yet production-ready for Zanzibar-style relationship authorization.
+> **Status: Foundation** — CASL in-process evaluation supports deterministic role inheritance, ABAC conditions, and field-level rules. OpenFGA support now uses the store-scoped REST API, but model and tuple lifecycle management remain external to this package.
 
 # @nebutra/permissions
 
@@ -7,7 +7,7 @@ RBAC (Role-Based Access Control) and ABAC (Attribute-Based Access Control) permi
 ## Features
 
 - **CASL-based in-process evaluation** — Fast, no network calls, great for UI + API middleware
-- **OpenFGA integration** — Placeholder for managed/self-hosted Zanzibar relationship graphs
+- **OpenFGA integration** — Store-scoped REST checks, writes, deletes, and list-objects calls for managed/self-hosted Zanzibar relationship graphs
 - **Role hierarchy** — Roles inherit permissions from parent roles; child rules override inherited grants deterministically
 - **ABAC conditions** — Dynamic field resolution at evaluation time
 - **Field-level permissions** — Restrict access to specific fields through CASL-backed checks
@@ -186,13 +186,17 @@ const provider = createCASLProvider();
 
 ### OpenFGA (Relationship-Based)
 
-OpenFGA is still a foundation stub and should not be used for production relationship authorization yet.
+OpenFGA uses the store-scoped REST API and fails closed when configuration or network calls are invalid. This package does not manage OpenFGA authorization models or tuple migrations.
 
 ```typescript
 import { createOpenFGAProvider } from "@nebutra/permissions/openfga";
 
 const provider = createOpenFGAProvider(
-  "http://openfga.internal:8080",
+  {
+    apiUrl: "http://openfga.internal:8080",
+    storeId: "store_abc123",
+    authToken: process.env.OPENFGA_AUTH_TOKEN,
+  },
   roles
 );
 
@@ -220,7 +224,7 @@ PERMISSIONS_PROVIDER=casl              # "casl" | "openfga"
 
 # OpenFGA configuration
 OPENFGA_API_URL=http://openfga:8080    # Triggers OpenFGA provider
-OPENFGA_STORE_ID=abc123                # Optional
+OPENFGA_STORE_ID=abc123                # Required for OpenFGA REST calls
 OPENFGA_AUTH_TOKEN=secret              # Optional for managed OpenFGA
 ```
 
@@ -232,9 +236,11 @@ Initialize the global permissions manager (singleton).
 
 ```typescript
 const permissions = createPermissions({
-  provider: "casl",
+  provider: "openfga",
   roles: customRoles,
   openFgaApiUrl: "http://openfga:8080",
+  openFgaStoreId: "abc123",
+  openFgaAuthToken: process.env.OPENFGA_AUTH_TOKEN,
 });
 ```
 

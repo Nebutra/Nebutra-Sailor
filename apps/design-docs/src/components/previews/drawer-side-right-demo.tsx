@@ -3,7 +3,10 @@
 import {
   Button,
   Drawer,
+  DrawerBody,
+  DrawerClose,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -11,14 +14,24 @@ import {
 
 export function DrawerSideRightDemo() {
   return (
-    <Drawer direction="right">
+    <Drawer height={260}>
       <DrawerTrigger asChild>
-        <Button>打开侧边栏 (Open Sidebar)</Button>
+        <Button variant="outline">Open Drawer</Button>
       </DrawerTrigger>
-      <DrawerContent className="w-80 p-4 mt-0 mr-0 mb-0 ml-auto h-full">
+      <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>导航 (Navigation)</DrawerTitle>
+          <DrawerTitle>Mobile Action</DrawerTitle>
         </DrawerHeader>
+        <DrawerBody>
+          <p className="text-sm text-muted-foreground">
+            Use Sheet for side panels; Drawer stays a mobile bottom sheet.
+          </p>
+        </DrawerBody>
+        <DrawerFooter>
+          <DrawerClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DrawerClose>
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

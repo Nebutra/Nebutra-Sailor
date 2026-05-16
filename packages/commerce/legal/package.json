@@ -5,7 +5,7 @@
   "description": "Legal & Compliance infrastructure for Nebutra SaaS",
   "type": "module",
   "nebutra": {
-    "status": "wip",
+    "status": "foundation",
     "productionReady": false,
     "requires": [
       "@nebutra/db",
@@ -13,8 +13,9 @@
     ],
     "gaps": [
       "No production app integrations",
-      "Consent persistence API not implemented",
-      "Document versioning workflow pending"
+      "Consent persistence API route not wired in apps/backends",
+      "Database-backed consent store adapter pending",
+      "Document publishing workflow pending"
     ]
   },
   "main": "./dist/index.js",
@@ -46,6 +47,8 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit"
   },
@@ -57,7 +60,8 @@
     "@types/react": "^19.2.14",
     "react": "^19.2.4",
     "tsup": "^8.5.1",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "react": "^19.0.0"

@@ -14,7 +14,7 @@
     "gaps": [
       "Novu provider adapter stubs — no batching, retries limited",
       "Direct production mode requires injected durable preference and in-app stores",
-      "Provider health and retry telemetry are still minimal"
+      "Provider health telemetry still requires an external monitor; direct delivery attempts now expose retry telemetry"
     ]
   },
   "main": "./dist/index.js",

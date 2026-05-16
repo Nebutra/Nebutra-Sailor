@@ -10,6 +10,7 @@ const REGISTRY_BASE = "https://design.nebutra.com/r";
 
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { Index } from "@/__registry__";
+import registryFileMap from "@/__registry__/file-map.json";
 
 interface ComponentPreviewProps {
   children?: ReactNode;
@@ -21,7 +22,7 @@ interface ComponentPreviewProps {
 function PreviewSkeleton() {
   return (
     <div className="flex min-h-[200px] items-center justify-center">
-      <div className="h-6 w-6 animate-spin rounded-full border-2 border-muted-foreground/20 border-t-muted-foreground" />
+      <div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/20 border-t-muted-foreground" />
     </div>
   );
 }
@@ -76,8 +77,7 @@ function useClipboard() {
       try {
         const textarea = document.createElement("textarea");
         textarea.value = value;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
+        textarea.style.cssText = "position: fixed; opacity: 0;";
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand("copy");
@@ -101,7 +101,7 @@ function CopyButton({ value }: { value: string }) {
       className="p-2 backdrop-blur inline-flex items-center justify-center rounded-md border bg-muted/50 text-muted-foreground transition-opacity hover:bg-muted"
       aria-label="Copy code to clipboard"
     >
-      {hasCopied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
+      {hasCopied ? <Check className="size-4 text-primary" /> : <Copy className="size-4" />}
     </button>
   );
 }
@@ -117,9 +117,15 @@ function InstallButton({ name }: { name: string }) {
       aria-label="Copy install command"
       title="Copy install command"
     >
-      {hasCopied ? <Check className="h-4 w-4 text-primary" /> : <Terminal className="h-4 w-4" />}
+      {hasCopied ? <Check className="size-4 text-primary" /> : <Terminal className="size-4" />}
     </button>
   );
+}
+
+const previewRegistryFiles = registryFileMap as Record<string, string>;
+
+function getRegistryItemName(previewName: string): string {
+  return previewRegistryFiles[previewName] ?? previewName;
 }
 
 function InstallTab({ name }: { name: string }) {
@@ -142,9 +148,9 @@ function InstallTab({ name }: { name: string }) {
             aria-label="Copy install command"
           >
             {cmdCopied ? (
-              <Check className="h-3.5 w-3.5 text-green-400" />
+              <Check className="size-3.5 text-green-400" />
             ) : (
-              <Copy className="h-3.5 w-3.5" />
+              <Copy className="size-3.5" />
             )}
           </button>
         </div>
@@ -162,9 +168,9 @@ function InstallTab({ name }: { name: string }) {
             aria-label="Copy dependency install command"
           >
             {depCopied ? (
-              <Check className="h-3.5 w-3.5 text-green-400" />
+              <Check className="size-3.5 text-green-400" />
             ) : (
-              <Copy className="h-3.5 w-3.5" />
+              <Copy className="size-3.5" />
             )}
           </button>
         </div>
@@ -183,17 +189,14 @@ function PromptButton({ name, code }: { name: string; code: string }) {
       aria-label="Copy integration prompt for AI"
       title="Copy prompt"
     >
-      {hasCopied ? (
-        <Check className="h-4 w-4 text-primary" />
-      ) : (
-        <MessageSquare className="h-4 w-4" />
-      )}
+      {hasCopied ? <Check className="size-4 text-primary" /> : <MessageSquare className="size-4" />}
     </button>
   );
 }
 
 export function ComponentPreview({ children, name, code, className }: ComponentPreviewProps) {
   const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("light");
+  const registryItemName = name ? getRegistryItemName(name) : undefined;
 
   // 1. Resolve component from registry
   const Demo = name
@@ -226,7 +229,7 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
         )}
         aria-label="Light theme"
       >
-        <Sun className="h-3.5 w-3.5" />
+        <Sun className="size-3.5" />
       </button>
       <button
         type="button"
@@ -239,7 +242,7 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
         )}
         aria-label="Dark theme"
       >
-        <Moon className="h-3.5 w-3.5" />
+        <Moon className="size-3.5" />
       </button>
     </>
   );
@@ -291,7 +294,7 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
         </TabsList>
         <div className="gap-2 flex items-center">
           {themeToggle}
-          {name && <InstallButton name={name} />}
+          {registryItemName && <InstallButton name={registryItemName} />}
           {name && code && <PromptButton name={name} code={code} />}
           <CopyButton value={code} />
         </div>
@@ -318,7 +321,7 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
 
       {name && (
         <TabsContent value="install" className="m-0 border-none">
-          <InstallTab name={name} />
+          <InstallTab name={registryItemName ?? name} />
         </TabsContent>
       )}
     </Tabs>

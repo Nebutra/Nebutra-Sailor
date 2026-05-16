@@ -8,7 +8,7 @@ Applies to everything under `packages/commerce/legal/`.
 
 This package owns legal document metadata, checked-in legal content, client-side
 consent helpers, and reusable React compliance components. It is currently a
-WIP policy layer, not a fully integrated production subsystem.
+foundation policy layer, not a fully integrated production subsystem.
 
 ## Source Of Truth
 
@@ -32,9 +32,10 @@ update the source of truth here instead of patching consumers.
 - Keep legal content and legal metadata separate. The MDX files under
   `content/` are the canonical document bodies; `src/documents/config.ts`
   defines slugs, versions, required-ness, and related-doc relationships.
-- Treat the package's WIP status as real. `package.json` already declares gaps
-  around app integration, consent persistence, and document versioning; do not
-  write scoped guidance that assumes those parts are finished.
+- Treat the package's foundation status as real. `package.json` still declares
+  gaps around app integration, database-backed persistence, and document
+  publishing workflow; do not write scoped guidance that assumes those parts are
+  finished.
 - Keep `src/types/index.ts` as the canonical contract for consent, cookie, and
   legal-document shapes. If those semantics change, align exports and consumer
   expectations intentionally.
@@ -57,6 +58,5 @@ update the source of truth here instead of patching consumers.
 
 - Export or legal type-surface changes:
   `pnpm --filter @nebutra/legal typecheck`
-- Because this package has no package-local tests yet, be conservative when
-  changing consent behavior or document metadata and prefer narrow consumer
-  verification before widening the change.
+- Package-local tests:
+  `pnpm --filter @nebutra/legal test`

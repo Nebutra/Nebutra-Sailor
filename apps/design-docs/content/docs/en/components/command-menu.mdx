@@ -1,11 +1,13 @@
 ---
 title: "Command Menu"
-description: "Full-screen command palette overlay. Launch a set of actions as a searchable overlay panel."
+description: "Dialog-backed command palette for global, keyboard-first product actions."
 ---
 
 ## Overview
 
-`CommandMenu` is a full-screen Dialog-based command palette built on `cmdk`. It opens as a centered overlay with a search input and grouped action items. Pressing `Escape` closes it.
+`CommandMenu` is a Dialog-backed command palette built on `cmdk`. Use it for global, keyboard-first product actions such as deploying a project, inviting a team member, switching theme, or opening a scoped product tool.
+
+Use `Command` directly for embedded search surfaces. Use `Menu` or `ContextMenu` for commands tied to a visible trigger or a single row.
 
 ## Installation
 
@@ -31,24 +33,29 @@ export function CommandMenuDemo() {
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Command Menu</Button>
-      <CommandMenu.Root open={open} setOpen={setOpen}>
+      <CommandMenu.Root
+        open={open}
+        setOpen={setOpen}
+        description="Search commands and run global product actions."
+      >
         <CommandMenu.Input placeholder="What do you need?" />
+        <CommandMenu.Results count={5} />
         <CommandMenu.List>
           <CommandMenu.Group heading="Suggestions">
-            <CommandMenu.Item callback={handleAction}>
+            <CommandMenu.Item onSelect={handleAction} value="figma-import">
               Figma Import
             </CommandMenu.Item>
           </CommandMenu.Group>
           <CommandMenu.Group heading="Commands">
-            <CommandMenu.Item callback={handleAction}>
+            <CommandMenu.Item onSelect={handleAction} value="import-extension">
               Import Extension
             </CommandMenu.Item>
-            <CommandMenu.Item callback={handleAction}>
+            <CommandMenu.Item onSelect={handleAction} value="manage-extensions">
               Manage Extensions
             </CommandMenu.Item>
           </CommandMenu.Group>
           <CommandMenu.Group heading="Collaboration">
-            <CommandMenu.Item callback={handleAction}>
+            <CommandMenu.Item onSelect={handleAction} value="flags-explorer">
               Flags Explorer
             </CommandMenu.Item>
           </CommandMenu.Group>
@@ -59,9 +66,9 @@ export function CommandMenuDemo() {
 }
 ```
 
-### With keyboard shortcut (⌘K)
+### With keyboard shortcut
 
-Wire up a `useEffect` at your app root or layout to toggle on `Cmd+K`:
+Wire up a single app-level shortcut. Use `Cmd+K` on macOS and `Ctrl+K` elsewhere. Do not bind the same shortcut to an in-page filter input.
 
 ```tsx
 useEffect(() => {
@@ -76,36 +83,27 @@ useEffect(() => {
 }, [])
 ```
 
-### With separators
-
-```tsx
-<CommandMenu.Root open={open} setOpen={setOpen}>
-  <CommandMenu.Input placeholder="Search commands..." />
-  <CommandMenu.List>
-    <CommandMenu.Group heading="Files">
-      <CommandMenu.Item callback={handleAction}>New File</CommandMenu.Item>
-    </CommandMenu.Group>
-    <CommandMenu.Separator />
-    <CommandMenu.Group heading="Edit">
-      <CommandMenu.Item callback={handleAction}>Copy</CommandMenu.Item>
-    </CommandMenu.Group>
-  </CommandMenu.List>
-</CommandMenu.Root>
-```
-
 ### With shortcuts
 
 ```tsx
-<CommandMenu.Item callback={handleAction}>
-  New File
-  <CommandMenu.Shortcut>⌘N</CommandMenu.Shortcut>
+<CommandMenu.Item onSelect={handleAction} value="deploy-project">
+  <span className="flex-1">Deploy Project</span>
+  <CommandMenu.Shortcut keys={["⌘", "D"]} label="Deploy Project shortcut" />
 </CommandMenu.Item>
+```
+
+### Empty, loading, and error states
+
+```tsx
+<CommandMenu.List>
+  <CommandMenu.Empty>No commands found.</CommandMenu.Empty>
+</CommandMenu.List>
 ```
 
 ### With disabled items
 
 ```tsx
-<CommandMenu.Item disabled callback={handleAction}>
+<CommandMenu.Item disabled onSelect={handleAction} value="rotate-secrets">
   Unavailable Action
 </CommandMenu.Item>
 ```
@@ -118,16 +116,30 @@ useEffect(() => {
 |------|------|-------------|
 | `open` | `boolean` | Whether the command menu is visible |
 | `setOpen` | `(open: boolean) => void` | Setter to control open state |
+| `label` | `string` | Accessible title, defaults to `Command Menu` |
+| `description` | `string` | Hidden assistive description |
+| `className` | `string` | Additional classes for the dialog panel |
+| `commandClassName` | `string` | Additional classes for the cmdk frame |
 | `children` | `ReactNode` | `CommandMenu.Input` + `CommandMenu.List` |
 
 ### CommandMenu.Item
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `callback` | `() => void` | Invoked on click or Enter key |
+| `onSelect` | `(value: string) => void` | Invoked when the item is selected |
+| `callback` | `() => void` | Compatibility alias. Prefer `onSelect` for new code |
+| `value` | `string` | Stable value used by cmdk filtering and selection |
 | `disabled` | `boolean` | Disable this item |
 | `className` | `string` | Additional CSS classes |
 | `children` | `ReactNode` | Item label (+ optional `CommandMenu.Shortcut`) |
+
+### CommandMenu.Shortcut
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `keys` | `ReactNode[]` | Shortcut tokens rendered as `Kbd` keys |
+| `label` | `string` | Accessible shortcut label |
+| `children` | `ReactNode` | Compatibility form for a single key cluster |
 
 ### Sub-Components
 
@@ -135,17 +147,27 @@ useEffect(() => {
 |-----------|-------------|
 | `CommandMenu.Input` | Search input with search icon |
 | `CommandMenu.List` | Scrollable results container |
+| `CommandMenu.Results` | `aria-live="polite"` result-count announcement |
 | `CommandMenu.Group` | Group with optional `heading` label |
-| `CommandMenu.Item` | Selectable action item with `callback` |
+| `CommandMenu.Item` | Selectable action item |
 | `CommandMenu.Empty` | Shown when no results match the search |
-| `CommandMenu.Shortcut` | Keyboard shortcut hint aligned to the right |
+| `CommandMenu.Shortcut` | Keyboard shortcut hint rendered through `Kbd` |
 | `CommandMenu.Separator` | Visual divider between groups |
+
+## Design principles
+
+- Open into the root page and keep useful defaults visible when the input is empty.
+- Group commands by product scope. If a flat list exceeds roughly 30 items or crosses resource types, split into pages.
+- Item labels are Title Case verb phrases such as `Deploy Project` and `Invite Team Member`.
+- Place shortcuts in `CommandMenu.Shortcut` so sighted users can discover them and assistive tech receives a label.
+- Do not hand-roll arrow-key state. `CommandMenu` delegates filtering, selection, and roles to `cmdk`.
 
 ## Accessibility
 
 - Dialog overlay traps focus and restores on close.
 - `Escape` closes the overlay.
 - `ArrowUp` / `ArrowDown` navigate between items.
-- `Enter` triggers the focused item's `callback`.
+- `Enter` triggers the focused item's `onSelect`.
 - Search filters items in real-time via cmdk.
-- No close button — command palettes rely on `Escape` and item selection as exit paths.
+- `CommandMenu.Results` announces result-count changes with `aria-live="polite"`.
+- No close button — command palettes rely on `Escape`, outside click, and item selection as exit paths.

@@ -83,3 +83,12 @@
 }
 
 /* Loader animations */
+@keyframes login-success-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}

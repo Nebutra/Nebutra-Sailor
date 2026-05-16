@@ -1,21 +1,19 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-/**
- * Tests for the blog data layer stub.
- *
- * Note: The full MDX + Sanity dual-track loader was in flight on another branch
- * but never landed. The current `@/lib/blog` returns a static FALLBACK_POSTS list
- * (source: "fallback"). When the real loader lands, these tests should be
- * expanded to cover MDX file reads and Sanity CMS source selection.
- */
+const mocks = vi.hoisted(() => ({
+  getPosts: vi.fn(),
+  getPostBySlug: vi.fn(),
+  getPostTranslationByKey: vi.fn(),
+}));
 
 vi.mock("@nebutra/sanity/image", () => ({
   getImageUrl: () => "https://cdn.sanity.io/mock.webp",
 }));
 
 vi.mock("@nebutra/sanity/queries", () => ({
-  getPosts: () => Promise.resolve([]),
-  getPostBySlug: () => Promise.resolve(null),
+  getPosts: mocks.getPosts,
+  getPostBySlug: mocks.getPostBySlug,
+  getPostTranslationByKey: mocks.getPostTranslationByKey,
 }));
 
 describe("blog lib", () => {
@@ -24,6 +22,9 @@ describe("blog lib", () => {
   beforeEach(() => {
     process.env = { ...originalEnv };
     delete process.env.NEXT_PUBLIC_BLOG_SOURCE;
+    mocks.getPosts.mockResolvedValue([]);
+    mocks.getPostBySlug.mockResolvedValue(null);
+    mocks.getPostTranslationByKey.mockResolvedValue(null);
   });
 
   afterEach(() => {
@@ -33,45 +34,119 @@ describe("blog lib", () => {
   });
 
   describe("getAllPosts", () => {
-    it("returns an array of posts with the expected shape", async () => {
+    it("returns published Sanity posts as the default source", async () => {
+      mocks.getPosts.mockResolvedValue([
+        {
+          _id: "post-1",
+          title: "Sanity Launch Notes",
+          slug: { current: "sanity-launch-notes" },
+          language: "en",
+          translationKey: "sanity-launch-notes",
+          publishedAt: "2026-04-10T00:00:00.000Z",
+          excerpt: "A CMS-backed article.",
+          mainImage: { asset: { _ref: "image-ref" } },
+          author: "Nebutra Team",
+          categories: ["Engineering", "Product"],
+        },
+      ]);
+
       const { getAllPosts } = await import("@/lib/blog");
       const posts = await getAllPosts();
 
-      expect(Array.isArray(posts)).toBe(true);
-      expect(posts.length).toBeGreaterThan(0);
-
-      const post = posts[0];
-      expect(post).toHaveProperty("id");
-      expect(post).toHaveProperty("slug");
-      expect(post).toHaveProperty("title");
-      expect(post).toHaveProperty("description");
-      expect(post).toHaveProperty("date");
-      expect(post).toHaveProperty("tags");
-      expect(post).toHaveProperty("source");
-      expect(["mdx", "sanity", "fallback"]).toContain(post.source);
+      expect(posts).toHaveLength(1);
+      expect(posts[0]).toMatchObject({
+        id: "post-1",
+        slug: "sanity-launch-notes",
+        title: "Sanity Launch Notes",
+        language: "en",
+        translationKey: "sanity-launch-notes",
+        excerpt: "A CMS-backed article.",
+        description: "A CMS-backed article.",
+        date: "2026-04-10T00:00:00.000Z",
+        tags: ["Engineering", "Product"],
+        author: "Nebutra Team",
+        source: "sanity",
+      });
+      expect(mocks.getPosts).toHaveBeenCalledWith("en");
     });
 
-    it("returns posts with valid ISO date strings", async () => {
+    it("passes the requested blog language to Sanity", async () => {
+      mocks.getPosts.mockResolvedValue([
+        {
+          _id: "post-zh",
+          title: "为什么要做 Nebutra Sailor",
+          slug: { current: "why-nebutra-sailor-exists-zh" },
+          language: "zh",
+          translationKey: "why-nebutra-sailor-exists",
+          publishedAt: "2026-05-16T00:00:00.000Z",
+          excerpt: "一篇中文文章。",
+          categories: ["工程"],
+        },
+      ]);
+
+      const { getAllPosts } = await import("@/lib/blog");
+      const posts = await getAllPosts("zh");
+
+      expect(mocks.getPosts).toHaveBeenCalledWith("zh");
+      expect(posts[0]).toMatchObject({
+        language: "zh",
+        translationKey: "why-nebutra-sailor-exists",
+        slug: "why-nebutra-sailor-exists-zh",
+      });
+    });
+
+    it("does not publish fallback posts unless explicitly requested", async () => {
       const { getAllPosts } = await import("@/lib/blog");
       const posts = await getAllPosts();
 
-      for (const post of posts) {
-        expect(Number.isNaN(new Date(post.date).getTime())).toBe(false);
-      }
+      expect(posts).toEqual([]);
+    });
+
+    it("keeps fallback posts behind the explicit fallback source switch", async () => {
+      process.env.NEXT_PUBLIC_BLOG_SOURCE = "fallback";
+
+      const { getAllPosts } = await import("@/lib/blog");
+      const posts = await getAllPosts();
+
+      expect(posts.length).toBeGreaterThan(0);
+      expect(posts.every((post) => post.source === "fallback")).toBe(true);
     });
   });
 
   describe("getPost", () => {
-    it("returns a post for a valid slug from the fallback list", async () => {
-      const { getAllPosts, getPost } = await import("@/lib/blog");
-      const posts = await getAllPosts();
-      const firstSlug = posts[0]?.slug;
-      expect(firstSlug).toBeDefined();
+    it("returns a Sanity post for a valid slug", async () => {
+      mocks.getPostBySlug.mockResolvedValue({
+        _id: "post-2",
+        title: "Deep Governance",
+        slug: { current: "deep-governance" },
+        language: "en",
+        publishedAt: "2026-04-11T00:00:00.000Z",
+        excerpt: "Making the blog maintainable.",
+        body: [{ _type: "block", _key: "a", children: [{ _type: "span", text: "Body" }] }],
+        mainImage: null,
+        author: { name: "Tseka" },
+        categories: ["Engineering"],
+      });
 
-      const post = await getPost(firstSlug!);
+      const { getPost } = await import("@/lib/blog");
+
+      const post = await getPost("deep-governance");
       expect(post).not.toBeNull();
-      expect(post?.slug).toBe(firstSlug);
-      expect(post?.title).toBeDefined();
+      expect(post).toMatchObject({
+        id: "post-2",
+        slug: "deep-governance",
+        title: "Deep Governance",
+        source: "sanity",
+      });
+      expect(mocks.getPostBySlug).toHaveBeenCalledWith("deep-governance", "en");
+    });
+
+    it("passes language when fetching a specific post", async () => {
+      const { getPost } = await import("@/lib/blog");
+
+      await getPost("why-nebutra-sailor-exists-zh", "zh");
+
+      expect(mocks.getPostBySlug).toHaveBeenCalledWith("why-nebutra-sailor-exists-zh", "zh");
     });
 
     it("returns null for a non-existent slug", async () => {
@@ -82,23 +157,46 @@ describe("blog lib", () => {
   });
 
   describe("getAllSlugs", () => {
-    it("returns an array of slug strings", async () => {
+    it("returns deduplicated Sanity slug strings", async () => {
+      mocks.getPosts.mockResolvedValue([
+        { _id: "1", title: "One", slug: { current: "one" }, language: "en", publishedAt: null },
+        {
+          _id: "2",
+          title: "One duplicate",
+          slug: { current: "one" },
+          language: "en",
+          publishedAt: null,
+        },
+        { _id: "3", title: "Two", slug: { current: "two" }, language: "en", publishedAt: null },
+      ]);
+
       const { getAllSlugs } = await import("@/lib/blog");
       const slugs = await getAllSlugs();
 
-      expect(Array.isArray(slugs)).toBe(true);
-      expect(slugs.length).toBeGreaterThan(0);
-      for (const slug of slugs) {
-        expect(typeof slug).toBe("string");
-        expect(slug.length).toBeGreaterThan(0);
-      }
+      expect(slugs).toEqual(["one", "two"]);
     });
+  });
 
-    it("returns deduplicated slugs", async () => {
-      const { getAllSlugs } = await import("@/lib/blog");
-      const slugs = await getAllSlugs();
-      const unique = [...new Set(slugs)];
-      expect(slugs.length).toBe(unique.length);
+  describe("getPostTranslation", () => {
+    it("fetches the sibling localized article by translation key and language", async () => {
+      mocks.getPostTranslationByKey.mockResolvedValue({
+        _id: "post-zh",
+        title: "为什么要做 Nebutra Sailor",
+        slug: { current: "why-nebutra-sailor-exists-zh" },
+        language: "zh",
+        translationKey: "why-nebutra-sailor-exists",
+        publishedAt: "2026-05-16T00:00:00.000Z",
+        excerpt: "中文版本。",
+      });
+
+      const { getPostTranslation } = await import("@/lib/blog");
+      const translation = await getPostTranslation("why-nebutra-sailor-exists", "zh");
+
+      expect(mocks.getPostTranslationByKey).toHaveBeenCalledWith("why-nebutra-sailor-exists", "zh");
+      expect(translation).toMatchObject({
+        language: "zh",
+        slug: "why-nebutra-sailor-exists-zh",
+      });
     });
   });
 

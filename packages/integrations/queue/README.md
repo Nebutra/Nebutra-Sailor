@@ -1,4 +1,4 @@
-> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. The in-memory provider exposes a test-only dead-letter queue, and BullMQ exposes retry-exhausted failed jobs through the shared dead-letter contract. QStash provider-side dead-letter retrieval is still not production-ready.
+> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. The in-memory provider exposes a test-only dead-letter queue, BullMQ exposes retry-exhausted failed jobs, and QStash can map records returned by an injected DLQ fetcher into the shared dead-letter contract.
 
 # @nebutra/queue
 
@@ -69,4 +69,6 @@ app.post("/api/queue/:queue/:type", async (c) => {
 
 ## Failure Observability
 
-Providers may expose `getDeadLetteredJobs(queue?)` for jobs that exhausted retries and need operator attention. The memory provider implements this for deterministic tests and local harnesses. The BullMQ provider maps durable failed jobs whose attempts are exhausted into the same contract, including the original payload, attempt count, configured retry limit, failure reason, and `failedAt` timestamp. QStash provider-side dead-letter retrieval is still a known gap, so package metadata keeps `productionReady: false`.
+Providers may expose `getDeadLetteredJobs(queue?)` for jobs that exhausted retries and need operator attention. The memory provider implements this for deterministic tests and local harnesses. The BullMQ provider maps durable failed jobs whose attempts are exhausted into the same contract, including the original payload, attempt count, configured retry limit, failure reason, and `failedAt` timestamp.
+
+For QStash, pass an injected `dlqFetcher` and optional `dlqEndpoint`; this package does not assume unstable provider SDK DLQ APIs. The fetcher returns provider-side records, and the provider maps records whose body is the original `JobPayload` into `DeadLetterJob`. Fetcher errors fail closed to `[]` and are logged.

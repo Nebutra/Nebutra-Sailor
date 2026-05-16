@@ -1,3 +1,4 @@
+import type { MCPServerRegistry } from "../registry/serverRegistry";
 import { serverRegistry } from "../registry/serverRegistry";
 import type { MCPContext, MCPServerConfig, ToolExecutionResult } from "../types";
 
@@ -6,6 +7,8 @@ import type { MCPContext, MCPServerConfig, ToolExecutionResult } from "../types"
  */
 export class MCPClient {
   private requestCounter = 0;
+
+  constructor(private readonly registry: MCPServerRegistry = serverRegistry) {}
 
   /**
    * Execute a tool by name
@@ -18,7 +21,7 @@ export class MCPClient {
     const startTime = Date.now();
 
     // Find server for this tool
-    const server = serverRegistry.findServerByTool(toolName);
+    const server = this.registry.findServerByTool(toolName);
     if (!server) {
       return {
         success: false,
@@ -28,7 +31,7 @@ export class MCPClient {
     }
 
     // Check access
-    if (!serverRegistry.canAccess(server.id, context)) {
+    if (!this.registry.canAccessTool(toolName, context)) {
       return {
         success: false,
         error: `Access denied to tool: ${toolName}`,
@@ -69,6 +72,8 @@ export class MCPClient {
         return this.executeHttp(server, toolName, args, requestId);
       case "websocket":
         return this.executeWebSocket(server, toolName, args, requestId);
+      case "local":
+        return this.executeLocal(server, toolName, args, context);
       case "stdio":
         throw new Error("stdio transport not supported in browser/serverless");
       default:
@@ -146,21 +151,37 @@ export class MCPClient {
     throw new Error("WebSocket transport not yet implemented");
   }
 
+  private async executeLocal(
+    server: MCPServerConfig,
+    toolName: string,
+    args: Record<string, unknown>,
+    context: MCPContext,
+  ): Promise<unknown> {
+    const shortName = toolName.startsWith(`${server.id}:`)
+      ? toolName.slice(server.id.length + 1)
+      : toolName;
+    const handler = server.handlers?.[shortName] ?? server.handlers?.[toolName];
+    if (!handler) {
+      throw new Error(`No local handler registered for tool: ${toolName}`);
+    }
+    return handler(args, context);
+  }
+
   /**
    * List available tools for a context
    */
   listTools(context: MCPContext) {
-    return serverRegistry.getAccessibleTools(context);
+    return this.registry.getAccessibleTools(context);
   }
 
   /**
    * Get tool definition
    */
   getTool(toolName: string, context: MCPContext) {
-    const server = serverRegistry.findServerByTool(toolName);
+    const server = this.registry.findServerByTool(toolName);
     if (!server) return undefined;
 
-    if (!serverRegistry.canAccess(server.id, context)) {
+    if (!this.registry.canAccessTool(toolName, context)) {
       return undefined;
     }
 

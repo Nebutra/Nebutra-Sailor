@@ -40,45 +40,51 @@ function ReplayButton({ onClick }: { onClick: () => void }) {
   );
 }
 
+function AllPresetsDemo() {
+  const [key, setKey] = useState(0);
+
+  return (
+    <div className="bg-[var(--neutral-2)] p-8">
+      <div className="flex flex-wrap gap-6">
+        {(["emerge", "flow", "fade", "fadeUp", "scale"] as const).map((preset, i) => (
+          <div key={`${preset}-${key}`} className="flex flex-col items-center gap-2">
+            <AnimateIn preset={preset} delay={i * 0.1}>
+              <Card>{preset}</Card>
+            </AnimateIn>
+            <span className="font-mono text-xs text-[var(--neutral-9)]">{preset}</span>
+          </div>
+        ))}
+      </div>
+      <ReplayButton onClick={() => setKey((k) => k + 1)} />
+    </div>
+  );
+}
+
 export const AllPresets: StoryObj = {
   name: "AnimateIn — Presets",
-  render: () => {
-    const [key, setKey] = useState(0);
-    return (
-      <div className="bg-[var(--neutral-2)] p-8">
-        <div className="flex flex-wrap gap-6">
-          {(["emerge", "flow", "fade", "fadeUp", "scale"] as const).map((preset, i) => (
-            <div key={`${preset}-${key}`} className="flex flex-col items-center gap-2">
-              <AnimateIn preset={preset} delay={i * 0.1}>
-                <Card>{preset}</Card>
-              </AnimateIn>
-              <span className="font-mono text-xs text-[var(--neutral-9)]">{preset}</span>
-            </div>
-          ))}
-        </div>
-        <ReplayButton onClick={() => setKey((k) => k + 1)} />
-      </div>
-    );
-  },
+  render: () => <AllPresetsDemo />,
 };
+
+function StaggerDemo() {
+  const [key, setKey] = useState(0);
+
+  return (
+    <div className="bg-[var(--neutral-2)] p-8">
+      <AnimateInGroup key={key} stagger="normal" className="flex gap-4">
+        {["One", "Two", "Three", "Four", "Five"].map((label) => (
+          <AnimateIn key={label} preset="fadeUp">
+            <Card>{label}</Card>
+          </AnimateIn>
+        ))}
+      </AnimateInGroup>
+      <ReplayButton onClick={() => setKey((k) => k + 1)} />
+    </div>
+  );
+}
 
 export const Stagger: StoryObj = {
   name: "AnimateInGroup — Stagger",
-  render: () => {
-    const [key, setKey] = useState(0);
-    return (
-      <div className="bg-[var(--neutral-2)] p-8">
-        <AnimateInGroup key={key} stagger="normal" className="flex gap-4">
-          {["One", "Two", "Three", "Four", "Five"].map((label) => (
-            <AnimateIn key={label} preset="fadeUp">
-              <Card>{label}</Card>
-            </AnimateIn>
-          ))}
-        </AnimateInGroup>
-        <ReplayButton onClick={() => setKey((k) => k + 1)} />
-      </div>
-    );
-  },
+  render: () => <StaggerDemo />,
 };
 
 const RAILS = [
@@ -245,13 +251,13 @@ export const IntentMapping: StoryObj = {
           <tbody>
             {rows.map((r) => (
               <tr key={r.scenario} className="border-b border-[var(--neutral-6)] last:border-b-0">
-                <td className="px-3 py-3 text-[var(--neutral-12)]">{r.scenario}</td>
-                <td className="px-3 py-3">
+                <td className="p-3 text-[var(--neutral-12)]">{r.scenario}</td>
+                <td className="p-3">
                   <code className="rounded bg-[var(--neutral-3)] px-2 py-0.5 font-mono text-xs text-[var(--neutral-12)]">
                     {r.rail}
                   </code>
                 </td>
-                <td className="px-3 py-3 text-[var(--neutral-10)]">{r.rationale}</td>
+                <td className="p-3 text-[var(--neutral-10)]">{r.rationale}</td>
               </tr>
             ))}
           </tbody>
@@ -272,19 +278,22 @@ export const ReducedMotion: StoryObj = {
       },
     },
   },
-  render: () => {
-    const [key, setKey] = useState(0);
-    return (
-      <div className="bg-[var(--neutral-2)] p-8">
-        <div className="flex flex-wrap gap-6">
-          {(["emerge", "flow", "fadeUp"] as const).map((preset, i) => (
-            <AnimateIn key={`${preset}-${key}`} preset={preset} delay={i * 0.1}>
-              <Card>{preset}</Card>
-            </AnimateIn>
-          ))}
-        </div>
-        <ReplayButton onClick={() => setKey((k) => k + 1)} />
-      </div>
-    );
-  },
+  render: () => <ReducedMotionDemo />,
 };
+
+function ReducedMotionDemo() {
+  const [key, setKey] = useState(0);
+
+  return (
+    <div className="bg-[var(--neutral-2)] p-8">
+      <div className="flex flex-wrap gap-6">
+        {(["emerge", "flow", "fadeUp"] as const).map((preset, i) => (
+          <AnimateIn key={`${preset}-${key}`} preset={preset} delay={i * 0.1}>
+            <Card>{preset}</Card>
+          </AnimateIn>
+        ))}
+      </div>
+      <ReplayButton onClick={() => setKey((k) => k + 1)} />
+    </div>
+  );
+}

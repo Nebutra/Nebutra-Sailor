@@ -10,6 +10,7 @@ import type {
   InAppNotification,
   InAppNotificationStore,
   NotificationChannel,
+  NotificationDeliveryObserver,
   NotificationPayload,
   NotificationPreference,
   NotificationProvider,
@@ -36,6 +37,8 @@ export class DirectProvider implements NotificationProvider {
   private chatDispatcher: ChatDispatcher | undefined;
   private preferenceStore: PreferenceStore;
   private runtimeMetadata: NotificationProviderRuntimeMetadata;
+  private maxRetries: number;
+  private deliveryObserver: NotificationDeliveryObserver | undefined;
 
   constructor(config: DirectProviderConfig) {
     const hasInjectedInAppStore = config.inAppStore !== undefined;
@@ -47,6 +50,8 @@ export class DirectProvider implements NotificationProvider {
     this.smsDispatcher = config.smsDispatcher;
     this.chatDispatcher = config.chatDispatcher;
     this.preferenceStore = config.preferenceStore ?? new InMemoryPreferenceStore();
+    this.maxRetries = Math.max(0, Math.floor(config.maxRetries ?? 0));
+    this.deliveryObserver = config.deliveryObserver;
     this.runtimeMetadata = {
       provider: this.name,
       preferenceStoreMode: hasInjectedPreferenceStore ? "adapter" : "memory",
@@ -60,6 +65,7 @@ export class DirectProvider implements NotificationProvider {
       hasChatDispatcher: !!this.chatDispatcher,
       preferenceStoreMode: this.runtimeMetadata.preferenceStoreMode,
       inAppStoreMode: this.runtimeMetadata.inAppStoreMode,
+      maxRetries: this.maxRetries,
     });
   }
 
@@ -294,28 +300,113 @@ export class DirectProvider implements NotificationProvider {
       return { ...base, sent: false, error: "Channel disabled by user" } as ChannelResult;
     }
 
-    try {
-      switch (channel) {
-        case "in_app":
-          return await this.dispatchInApp(base, payload, notificationId);
-        case "email":
-          return await this.dispatchEmail(base, payload, notificationId);
-        case "push":
-          return await this.dispatchPush(base, payload, notificationId);
-        case "sms":
-          return await this.dispatchSMS(base, payload, notificationId);
-        case "chat":
-          return await this.dispatchChat(base, payload, notificationId);
-        default:
-          return { ...base, sent: false, error: `Unknown channel: ${channel}` };
+    const maxAttempts = this.maxRetries + 1;
+    let latestResult: ChannelResult = {
+      ...base,
+      sent: false,
+      error: "Dispatch did not run",
+    } as ChannelResult;
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      const startedAt = Date.now();
+
+      try {
+        latestResult = await this.dispatchToChannelOnce(channel, base, payload, notificationId);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
+        logger.error("[notifications:direct] Dispatch error", {
+          channel,
+          attempt,
+          error: errorMessage,
+        });
+        latestResult = { ...base, sent: false, error: errorMessage } as ChannelResult;
       }
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      logger.error("[notifications:direct] Dispatch error", {
+
+      await this.recordDeliveryAttempt({
         channel,
-        error: errorMessage,
+        payload,
+        notificationId,
+        attempt,
+        maxAttempts,
+        durationMs: Math.max(0, Date.now() - startedAt),
+        result: latestResult,
       });
-      return { ...base, sent: false, error: errorMessage } as ChannelResult;
+
+      if (latestResult.sent || attempt === maxAttempts || !this.shouldRetry(latestResult)) {
+        return latestResult;
+      }
+    }
+
+    return latestResult;
+  }
+
+  private async dispatchToChannelOnce(
+    channel: NotificationChannel,
+    base: ChannelResult,
+    payload: NotificationPayload,
+    notificationId: string,
+  ): Promise<ChannelResult> {
+    switch (channel) {
+      case "in_app":
+        return await this.dispatchInApp(base, payload, notificationId);
+      case "email":
+        return await this.dispatchEmail(base, payload, notificationId);
+      case "push":
+        return await this.dispatchPush(base, payload, notificationId);
+      case "sms":
+        return await this.dispatchSMS(base, payload, notificationId);
+      case "chat":
+        return await this.dispatchChat(base, payload, notificationId);
+      default:
+        return { ...base, sent: false, error: `Unknown channel: ${channel}` };
+    }
+  }
+
+  private shouldRetry(result: ChannelResult): boolean {
+    if (result.sent) return false;
+    if (!result.error) return true;
+    return ![
+      "Channel disabled by user",
+      "Email dispatcher not configured",
+      "Push dispatcher not configured",
+      "SMS dispatcher not configured",
+      "Chat dispatcher not configured",
+      "No email address provided",
+      "No phone number provided",
+      "No webhook URL provided",
+    ].includes(result.error);
+  }
+
+  private async recordDeliveryAttempt(input: {
+    channel: NotificationChannel;
+    payload: NotificationPayload;
+    notificationId: string;
+    attempt: number;
+    maxAttempts: number;
+    durationMs: number;
+    result: ChannelResult;
+  }): Promise<void> {
+    if (!this.deliveryObserver) return;
+
+    try {
+      await this.deliveryObserver.recordAttempt({
+        provider: "direct",
+        channel: input.channel,
+        notificationId: input.notificationId,
+        type: input.payload.type,
+        recipientId: input.payload.recipientId,
+        ...(input.payload.tenantId !== undefined ? { tenantId: input.payload.tenantId } : {}),
+        attempt: input.attempt,
+        maxAttempts: input.maxAttempts,
+        durationMs: input.durationMs,
+        result: input.result,
+      });
+    } catch (error) {
+      logger.warn("[notifications:direct] Delivery observer failed", {
+        channel: input.channel,
+        attempt: input.attempt,
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
     }
   }
 

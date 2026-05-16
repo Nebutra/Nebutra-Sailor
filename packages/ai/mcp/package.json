@@ -12,8 +12,8 @@
     ],
     "gaps": [
       "No production app integrations",
-      "Context server binary is a placeholder stub",
-      "Tool registry + plan-based access control pending"
+      "No production MCP transports beyond HTTP/local seams",
+      "No durable remote tool discovery or app-level integrations"
     ],
     "featureId": "mcp",
     "category": "ai",
@@ -34,6 +34,7 @@
     "prepare": "mkdir -p dist/server && test -f dist/server/contextServer.js || echo '#!/usr/bin/env node' > dist/server/contextServer.js",
     "build": "tsup",
     "dev": "tsup --watch",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

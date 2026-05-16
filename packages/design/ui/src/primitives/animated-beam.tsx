@@ -2,6 +2,12 @@
 
 import { motion } from "framer-motion";
 import * as React from "react";
+import { useReducedMotion } from "../hooks/use-reduced-motion";
+import {
+  type AnimatedBeamIntensity,
+  type AnimatedBeamTone,
+  animatedBeamTokens,
+} from "../tokens/components/animated-beam";
 import { cn } from "../utils/cn";
 
 /**
@@ -20,19 +26,23 @@ export interface AnimatedBeamProps {
   curvature?: number;
   /** Reverse the animation direction */
   reverse?: boolean;
-  /** Animation duration in seconds (default: random 4-7) */
+  /** Semantic beam color. Prefer this over raw color overrides. */
+  tone?: AnimatedBeamTone;
+  /** Visual emphasis for the static rail and travelling beam. */
+  intensity?: AnimatedBeamIntensity;
+  /** Animation duration in seconds. Defaults to the component motion token (4s). */
   duration?: number;
   /** Delay before animation starts */
   delay?: number;
-  /** Color of the path line */
+  /** Advanced override: color of the static path line */
   pathColor?: string;
-  /** Width of the path line */
+  /** Advanced override: width of the static path line */
   pathWidth?: number;
-  /** Opacity of the path line */
+  /** Advanced override: opacity of the static path line */
   pathOpacity?: number;
-  /** Start color of the gradient */
+  /** Advanced override: start color of the gradient */
   gradientStartColor?: string;
-  /** Stop color of the gradient */
+  /** Advanced override: stop color of the gradient */
   gradientStopColor?: string;
   /** X offset for the start point */
   startXOffset?: number;
@@ -83,8 +93,8 @@ export interface AnimatedBeamProps {
  *   containerRef={containerRef}
  *   fromRef={fromRef}
  *   toRef={toRef}
- *   gradientStartColor="#00ff00"
- *   gradientStopColor="#0000ff"
+ *   tone="brand"
+ *   intensity="normal"
  * />
  * ```
  */
@@ -95,18 +105,21 @@ export function AnimatedBeam({
   toRef,
   curvature = 0,
   reverse = false,
+  tone = "brand",
+  intensity = "normal",
   duration,
   delay = 0,
-  pathColor = "gray",
-  pathWidth = 2,
-  pathOpacity = 0.2,
-  gradientStartColor = "#ffaa40",
-  gradientStopColor = "#9c40ff",
+  pathColor,
+  pathWidth,
+  pathOpacity,
+  gradientStartColor,
+  gradientStopColor,
   startXOffset = 0,
   startYOffset = 0,
   endXOffset = 0,
   endYOffset = 0,
 }: AnimatedBeamProps) {
+  const shouldReduceMotion = useReducedMotion();
   const id = React.useId().replace(/:/g, "");
   const [pathD, setPathD] = React.useState("");
   const [svgDimensions, setSvgDimensions] = React.useState({
@@ -114,14 +127,15 @@ export function AnimatedBeam({
     height: 0,
   });
 
-  // Generate random duration if not specified on the client to prevent SSR hydration mismatches
-  const [animationDuration, setAnimationDuration] = React.useState(duration ?? 4);
+  const toneToken = animatedBeamTokens.tone[tone];
+  const railOpacity = pathOpacity ?? animatedBeamTokens.path.opacity[intensity];
+  const railWidth = pathWidth ?? animatedBeamTokens.path.width;
+  const beamWidth = pathWidth ?? animatedBeamTokens.beam.width[intensity];
+  const beamDuration = duration ?? animatedBeamTokens.beam.duration / 1000;
 
-  React.useEffect(() => {
-    if (duration === undefined) {
-      setAnimationDuration(Math.random() * 3 + 4);
-    }
-  }, [duration]);
+  const resolvedPathColor = pathColor ?? toneToken.pathColor;
+  const resolvedStartColor = gradientStartColor ?? toneToken.startColor;
+  const resolvedStopColor = gradientStopColor ?? toneToken.stopColor;
 
   React.useEffect(() => {
     const updatePath = () => {
@@ -152,14 +166,13 @@ export function AnimatedBeam({
     // Initial calculation
     updatePath();
 
-    // Setup ResizeObserver
     const resizeObserver = new ResizeObserver(() => {
       updatePath();
     });
 
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
-    }
+    if (containerRef.current) resizeObserver.observe(containerRef.current);
+    if (fromRef.current) resizeObserver.observe(fromRef.current);
+    if (toRef.current) resizeObserver.observe(toRef.current);
 
     return () => {
       resizeObserver.disconnect();
@@ -178,18 +191,20 @@ export function AnimatedBeam({
     >
       <path
         d={pathD}
-        stroke={pathColor}
-        strokeWidth={pathWidth}
-        strokeOpacity={pathOpacity}
+        stroke={resolvedPathColor}
+        strokeWidth={railWidth}
+        strokeOpacity={railOpacity}
         strokeLinecap="round"
       />
-      <path
-        d={pathD}
-        stroke={`url(#${id})`}
-        strokeWidth={pathWidth}
-        strokeOpacity="1"
-        strokeLinecap="round"
-      />
+      {!shouldReduceMotion && (
+        <path
+          d={pathD}
+          stroke={`url(#${id})`}
+          strokeWidth={beamWidth}
+          strokeOpacity="1"
+          strokeLinecap="round"
+        />
+      )}
       <defs>
         <motion.linearGradient
           className="transform-gpu"
@@ -209,16 +224,20 @@ export function AnimatedBeam({
           }}
           transition={{
             delay,
-            duration: animationDuration,
-            ease: [0.16, 1, 0.3, 1],
+            duration: beamDuration,
+            // framer-motion v12 typed `ease` as Easing | EasingFunction tuples
+            // — accept the cubic-bezier() string token at runtime, mute the
+            // type check (CSS-side consumers still use the same value).
+            // biome-ignore lint/suspicious/noExplicitAny: framer-motion Easing union narrows incorrectly for cubic-bezier() string literals.
+            ease: animatedBeamTokens.beam.easing as any,
             repeat: Infinity,
             repeatDelay: 0,
           }}
         >
-          <stop stopColor={gradientStartColor} stopOpacity="0" />
-          <stop stopColor={gradientStartColor} />
-          <stop offset="32.5%" stopColor={gradientStopColor} />
-          <stop offset="100%" stopColor={gradientStopColor} stopOpacity="0" />
+          <stop stopColor={resolvedStartColor} stopOpacity="0" />
+          <stop stopColor={resolvedStartColor} />
+          <stop offset="32.5%" stopColor={resolvedStopColor} />
+          <stop offset="100%" stopColor={resolvedStopColor} stopOpacity="0" />
         </motion.linearGradient>
       </defs>
     </svg>

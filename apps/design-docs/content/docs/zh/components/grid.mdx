@@ -1,111 +1,111 @@
 ---
 title: "网格系统 (Grid)"
-description: "在网格布局中展示元素，并可选显示列和行的引导线。"
+description: "用带装饰引导线的二维网格布局展示元素。"
 ---
 
 <Note>
   交互式示例可在 [Storybook](https://storybook.nebutra.com/?path=/docs/primitives-grid--docs) 中查看。
 </Note>
 
-## 概览 (Overview)
+## 概览
 
-`Grid.System` 是一个 CSS 网格容器，它通过使用容器的 `border` 颜色作为背景并配合 `gap-px` 来渲染 1px 厚度的引导线。`Grid.Cell` 是网格中的每一项 —— 它的 `bg-background` 填充色会遮盖其下方的引导线背景，从而产生出独特的列/行指示效果。
+`Grid` 用于营销页、文档首页、功能拆解等“引导线本身就是视觉语言”的二维 cell-and-guide 布局。普通卡片列表、n 列内容流请直接用 Tailwind grid utilities，不要引入这个 primitive。
 
-设置 `showGuides={false}` 可以使用不带引导线的普通 CSS 网格。
+组件分三层：
 
-## 安装 (Installation)
+- `Grid.System` 管理 guide 宽度、debug 模式，以及可选的 container query 边界。
+- `Grid` 管理 columns/rows 数学和装饰性 guide 背景。
+- `Grid.Cell` 管理内容放置，并可通过 `solid` 遮住 cell 背后的 guide。
+
+Guide 使用 CSS background 绘制，不生成 DOM 节点，因此不会进入无障碍树。
+
+## 安装
 
 ```tsx
 import { Grid } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
+## 用法
 
-### 基础网格 (Basic grid)
+### 空 guide 网格
 
 ```tsx
-<Grid.System columns={3}>
-  <Grid.Cell><p>1</p></Grid.Cell>
-  <Grid.Cell><p>2</p></Grid.Cell>
-  <Grid.Cell><p>3</p></Grid.Cell>
+<Grid.System debug guideWidth={1} unstable_useContainer>
+  <Grid columns={5} height="preserve-aspect-ratio" rows={2} />
 </Grid.System>
 ```
 
-### 跨度设置 (Spanning cells)
+### 基础网格
 
 ```tsx
-<Grid.System columns={12}>
-  <Grid.Cell span={8}><p>主要内容 (main)</p></Grid.Cell>
-  <Grid.Cell span={4}><p>侧边栏 (sidebar)</p></Grid.Cell>
+<Grid.System guideWidth={1} unstable_useContainer>
+  <Grid columns={3} rows={2}>
+    <Grid.Cell>1</Grid.Cell>
+    <Grid.Cell>2</Grid.Cell>
+    <Grid.Cell>3</Grid.Cell>
+    <Grid.Cell>4</Grid.Cell>
+    <Grid.Cell>5</Grid.Cell>
+    <Grid.Cell>6</Grid.Cell>
+  </Grid>
 </Grid.System>
 ```
 
-### 实色单元格 (Solid cells)
-
-实色单元格使用 `bg-muted` 填充并从视觉上“填满”整个空间，覆盖所有交叉的引导线：
+### 响应式网格与 guide clipping
 
 ```tsx
-<Grid.System columns={3}>
-  <Grid.Cell solid><p>1</p></Grid.Cell>
-  <Grid.Cell solid><p>2</p></Grid.Cell>
-  <Grid.Cell solid><p>3</p></Grid.Cell>
+<Grid.System unstable_useContainer>
+  <Grid columns={{ sm: 1, md: 2, lg: 3 }} rows={{ sm: 6, md: 3, lg: 2 }}>
+    <Grid.Cell column={{ sm: "1", md: "1/3" }} row={{ sm: "1/3", md: 1 }} solid>
+      1 + 2
+    </Grid.Cell>
+    <Grid.Cell>3</Grid.Cell>
+    <Grid.Cell>4</Grid.Cell>
+    <Grid.Cell column={{ sm: 1, md: "1/3", lg: "2/4" }} row={{ sm: "5/7", md: 3, lg: 2 }} solid>
+      5 + 6
+    </Grid.Cell>
+  </Grid>
 </Grid.System>
 ```
 
-### 隐藏行引导线 (Hide row guides)
+### 隐藏某个 guide 轴
 
 ```tsx
-<Grid.System columns={3}>
-  <Grid.Cell hideRowGuides="top"><p>无顶部引导线</p></Grid.Cell>
-  <Grid.Cell hideRowGuides="bottom"><p>无底部引导线</p></Grid.Cell>
-  <Grid.Cell hideRowGuides><p>无行引导线</p></Grid.Cell>
+<Grid.System unstable_useContainer>
+  <Grid columns={12} height="preserve-aspect-ratio" hideGuides="row" rows={3} />
 </Grid.System>
 ```
 
-### 隐藏列引导线 (Hide column guides)
-
-```tsx
-<Grid.System columns={3}>
-  <Grid.Cell hideColumnGuides="left"><p>无左侧引导线</p></Grid.Cell>
-  <Grid.Cell hideColumnGuides="right"><p>无右侧引导线</p></Grid.Cell>
-  <Grid.Cell hideColumnGuides><p>无列引导线</p></Grid.Cell>
-</Grid.System>
-```
-
-### 无引导线（普通 CSS 网格） (No guides)
-
-```tsx
-<Grid.System columns={3} showGuides={false} className="gap-4">
-  <Grid.Cell><p>1</p></Grid.Cell>
-  <Grid.Cell><p>2</p></Grid.Cell>
-  <Grid.Cell><p>3</p></Grid.Cell>
-</Grid.System>
-```
-
-## 属性 (Props)
+## 属性
 
 ### `Grid.System`
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `columns` | `number` | `12` | 等宽列的数量 |
-| `rowHeight` | `string \| number` | — | `grid-auto-rows` 的 CSS 值 |
-| `showGuides` | `boolean` | `true` | 是否渲染 1px 的引导线 |
-| `children` | `ReactNode` | — | `Grid.Cell` 元素 |
-| `className` | `string` | — | 额外的 CSS 类名 |
+| `debug` | `boolean` | `false` | 给透明 cell 加上 debug wash，便于检查 guide |
+| `guideWidth` | `number \| string` | `1` | 装饰 guide 的线宽 |
+| `unstable_useContainer` | `boolean` | `false` | 使用 container queries 解析响应式 `Grid` props |
+| `children` | `ReactNode` | — | 通常是一层 `Grid` |
+
+### `Grid`
+
+| 属性 | 类型 | 默认值 | 描述 |
+|------|------|---------|-------------|
+| `columns` | `number \| { sm?: number; md?: number; lg?: number }` | — | 等宽列数 |
+| `rows` | `number \| { sm?: number; md?: number; lg?: number }` | `1` | 行数，用于 guide 数学和 cell 放置 |
+| `height` | `"preserve-aspect-ratio" \| string \| number` | — | 保持列/行比例，或设置固定 CSS 高度 |
+| `hideGuides` | `"row" \| "column" \| "both"` | — | 隐藏一个或两个装饰 guide 轴 |
 
 ### `Grid.Cell`
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `span` | `number` | — | 该单元格跨越的列数 |
-| `solid` | `boolean` | `false` | 使用 `bg-muted` 填充（视觉上覆盖引导线） |
-| `hideRowGuides` | `boolean \| "top" \| "bottom"` | — | 移除该单元格的顶部/底部引导线 |
-| `hideColumnGuides` | `boolean \| "left" \| "right"` | — | 移除该单元格的左侧/右侧引导线 |
-| `children` | `ReactNode` | — | 单元格内容 |
-| `className` | `string` | — | 额外的 CSS 类名 |
+| `column` | `number \| string \| responsive value` | — | CSS `grid-column` 放置 |
+| `row` | `number \| string \| responsive value` | — | CSS `grid-row` 放置 |
+| `solid` | `boolean` | `false` | 使用 token 化不透明背景遮住 guide |
+| `children` | `ReactNode` | — | cell 内容 |
 
-## 实现说明 (Implementation notes)
+## 设计原则
 
-引导线通过在容器上设置 `gap-px` 并使用 `bg-border` 作为背景来实现。每个 `Grid.Cell` 则使用 `bg-background`（或实色时的 `bg-muted`）进行填充，从而使 1px 的间隙显现为列/行引导线。这种方案避免了复杂的绝对定位叠加或 SVG 技巧。
-走
+只有在 guide line 真的传达结构时才使用 Grid。所有目标断点都要明确设置 rows/columns，保证移动、平板、桌面之间阅读顺序可预测。不要嵌套超过一层 Grid；重叠 guide 会制造视觉噪音。
+
+当 cell 可交互时，把真正的语义元素放在 cell 内部。cell 负责 `focus-within` 的容器反馈，按钮或链接本身继续持有自己的可访问名称和键盘契约。

@@ -1,169 +1,138 @@
 ---
 title: "Input"
-description: "Single-line text input with optional prefix/suffix adornments and a built-in clearable mode."
+description: "Single-line text input with strict labels, semantic error states, affixes, clearable search, and shortcut hints."
 ---
 
-
-import { InputDemo } from "@/components/previews/input-demo";
-import { InputBasicDemo } from "@/components/previews/input-basic-demo";
-import { InputWithLabelDemo } from "@/components/previews/input-with-label-demo";
-import { InputErrorDemo } from "@/components/previews/input-error-demo";
-import { InputWithIconDemo } from "@/components/previews/input-with-icon-demo";
-import { InputWithAddonsDemo } from "@/components/previews/input-with-addons-demo";
-import { InputClearableDemo } from "@/components/previews/input-clearable-demo";
-
-import { InputPasswordRevealDemo } from "@/components/previews/input-password-reveal-demo";
 import { ComponentPreview } from "@/components/component-preview";
+import { InputBasicDemo } from "@/components/previews/input-basic-demo";
+import { InputClearableDemo } from "@/components/previews/input-clearable-demo";
+import { InputDemo } from "@/components/previews/input-demo";
+import { InputErrorDemo } from "@/components/previews/input-error-demo";
+import { InputPasswordRevealDemo } from "@/components/previews/input-password-reveal-demo";
+import { InputWithAddonsDemo } from "@/components/previews/input-with-addons-demo";
+import { InputWithIconDemo } from "@/components/previews/input-with-icon-demo";
+import { InputWithLabelDemo } from "@/components/previews/input-with-label-demo";
 
-<ComponentPreview name="input-basic-demo">
+<ComponentPreview name="input-basic-demo" className="max-w-[350px]">
   <InputBasicDemo />
 
   ```tsx
-<InputBasicDemo />
+<Input aria-label="Project name" placeholder="my-awesome-project" />
   ```
 </ComponentPreview>
 
 ## Usage
 
-<ComponentPreview name="input-with-icon-demo" className="max-w-[350px] flex-col gap-4">
-  {/* Search icon */}
-  <Input prefix={<span className="text-xs">🔍</span>} placeholder="Search…" />
-
-  {/* Mail icon */}
-  <Input prefix={<span className="text-xs">✉️</span>} type="email" placeholder="contact@nebutra.com" />
-
-  ```tsx
-{/* Search icon */}
-  <Input prefix={<span className="text-xs">🔍</span>} placeholder="Search…" />
-
-  {/* Mail icon */}
-  <Input prefix={<span className="text-xs">✉️</span>} type="email" placeholder="contact@nebutra.com" />
-  ```
-</ComponentPreview>
-
-## Examples
-
-### Basic
-
-<ComponentPreview name="input-demo" className="max-w-[350px]">
-  <Input placeholder="Enter value…" />
-
-  ```tsx
-<Input placeholder="Enter value…" />
-  ```
-</ComponentPreview>
-
-### With Label
-
-<ComponentPreview name="input-with-label-demo" className="max-w-[350px]"  />
-
-
-### With Error State
-
-<ComponentPreview name="input-error-demo" className="max-w-[350px]"  />
-
-
-## Prefix
-
-Use the `prefix` prop to render a non-interactive icon or node inside the left edge. Clicks on the prefix area pass through to the input (it gets focused).
-
-<ComponentPreview name="input-with-icon-demo" className="max-w-[350px] flex-col gap-4"  />
-
-
-## Suffix
-
-Use the `suffix` prop to render a non-interactive label or icon inside the right edge.
-
-<Warning>
-  `suffix` has `pointer-events: none` — it is purely decorative. For interactive right-side elements
-  (e.g. a password reveal button) build them manually with `className="pr-9"` and an `absolute` button.
-  See the [Password Reveal](#password-reveal) example below.
-</Warning>
-
-<ComponentPreview name="input-with-addons-demo" className="max-w-[350px]"  />
-
-
-## Clearable
-
-Set `clearable` to render a ✕ button whenever the field has a value. The button disappears when the field is empty.
-
-### Uncontrolled
-
-<ComponentPreview name="input-clearable-demo" className="max-w-[350px]"  />
-
-
-### Controlled
+Use `Input` for one line of free-form text: names, domains, tokens, URLs, and scoped search. Switch to `Textarea` when content can wrap. Use `Combobox` when the value comes from a known list.
 
 ```tsx
-const [value, setValue] = useState("")
-
 <Input
-  value={value}
-  onChange={(e) => setValue(e.target.value)}
-  clearable
-  onClear={() => setValue("")}
-  placeholder="Controlled clearable…"
+  id="project-name"
+  label="Project Name"
+  placeholder="my-awesome-project"
+  description="Use lowercase letters, numbers, and hyphens."
 />
 ```
 
-### With Prefix
+## Examples
 
-<ComponentPreview name="input-2-demo" className="max-w-[350px]">
-  <Input
-    prefix={<Search className="h-4 w-4" />}
-    clearable
-    placeholder="Search…"
-  />
+### Sizes
+
+<ComponentPreview name="input-demo" className="max-w-[350px]">
+  <InputDemo />
 </ComponentPreview>
 
-<Callout>
-  When `clearable` and `suffix` are both set, the ✕ button replaces the suffix while the field has a value.
-  The suffix reappears when the field is cleared — useful for keyboard shortcut hints or unit labels.
-</Callout>
+### Label And Helper Text
 
----
+<ComponentPreview name="input-with-label-demo" className="max-w-[350px]">
+  <InputWithLabelDemo />
+</ComponentPreview>
 
-## Password Reveal
+### Error
 
-For interactive right-side controls, use `className="pr-9"` and position a button with `absolute`:
+<ComponentPreview name="input-error-demo" className="max-w-[350px]">
+  <InputErrorDemo />
+</ComponentPreview>
 
-<ComponentPreview name="input-password-reveal-demo" className="max-w-[350px]"  />
+### Prefix And Suffix
 
+<ComponentPreview name="input-with-addons-demo" className="max-w-[350px]">
+  <InputWithAddonsDemo />
+</ComponentPreview>
+
+Text affixes such as `https://` and `USD` are wired through `aria-describedby`. Icon affixes are decorative, so pass `aria-hidden` on the icon.
+
+### Search
+
+<ComponentPreview name="input-with-icon-demo" className="max-w-[350px]">
+  <InputWithIconDemo />
+</ComponentPreview>
+
+`type="search"` clears the current value with Escape when the field is dirty. Use a scoped placeholder such as `Search projects`, not a generic `Search`.
+
+### File
+
+Use `type="file"` for native uploads when the browser file picker is the right interaction. The file selector button inherits the same height, border, and typography scale as the rest of `Input`; avoid styling it as a custom upload zone unless the workflow needs drag-and-drop, progress, or validation previews.
+
+### Clearable
+
+<ComponentPreview name="input-clearable-demo" className="max-w-[350px]">
+  <InputClearableDemo />
+</ComponentPreview>
+
+Use `onValueChange` for controlled clearable inputs when you only need the next string value. Use native `onChange` when the event matters.
+
+### Password Reveal
+
+<ComponentPreview name="input-password-reveal-demo" className="max-w-[350px]">
+  <InputPasswordRevealDemo />
+</ComponentPreview>
+
+Use `revealable` on `type="password"` when the field needs a visibility toggle. The control is a tokenized button owned by `Input`, so focus rings, icon sizing, padding, and labels stay consistent with clear/search controls.
 
 ## Props
 
-`Input` extends all native `React.InputHTMLAttributes<HTMLInputElement>`.
+`Input` extends native `React.InputHTMLAttributes<HTMLInputElement>`, except `prefix` and `size` are owned by the component API.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `type` | `string` | `"text"` | HTML input type |
-| `placeholder` | `string` | — | Placeholder text |
-| `disabled` | `boolean` | `false` | Disables the input and hides the clear button |
-| `className` | `string` | — | Applied to the `<input>` element |
-| `prefix` | `ReactNode` | — | Non-interactive adornment inside the left edge |
-| `suffix` | `ReactNode` | — | Non-interactive adornment inside the right edge |
-| `clearable` | `boolean` | `false` | Show ✕ button when the field has a value |
-| `onClear` | `() => void` | — | Called when the ✕ button is clicked |
-| `wrapperClassName` | `string` | — | Applied to the outer `<div>` wrapper |
-| `value` | `string \| number` | — | Controlled value |
-| `defaultValue` | `string \| number` | — | Uncontrolled default value |
-| `onChange` | `ChangeEventHandler` | — | Change handler |
-| `ref` | `Ref<HTMLInputElement>` | — | Forwarded ref — always points to `<input>` |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Visual density tied to component tokens. |
+| `label` | `string` | - | Visible label. Requires `id` at type level. |
+| `id` | `string` | - | Required when `label` is provided. |
+| `description` | `string` | - | Helper text wired through `aria-describedby`. |
+| `error` | `string \| boolean` | - | Marks invalid state. A string also renders an inline error. |
+| `prefix` | `ReactNode` | - | Non-interactive left affix. |
+| `suffix` | `ReactNode` | - | Non-interactive right affix. Hidden by clear/shortcut/loading controls. |
+| `clearable` | `boolean` | `false` | Shows a clear button when the field has a value. |
+| `onClear` | `() => void` | - | Fires after the field is cleared. |
+| `onValueChange` | `(value: string) => void` | - | Value-first callback for controlled inputs. |
+| `shortcut` | `string` | - | Visual shortcut hint. Dirty fields show `Esc`. |
+| `loading` | `boolean` | `false` | Shows a spinner without removing focusability. |
+| `revealable` | `boolean` | `false` | Adds a password visibility button when `type="password"`. |
+| `revealLabel` | `string` | `"Show password"` | Accessible label for the hidden-password state. |
+| `hideLabel` | `string` | `"Hide password"` | Accessible label for the visible-password state. |
+| `clearOnEscape` | `boolean` | `type === "search"` | Clears the field on Escape when dirty. |
+| `wrapperClassName` | `string` | - | Applies to the control wrapper when affixes are present. |
+| `fieldClassName` | `string` | - | Applies to the label/helper/error wrapper. |
 
----
+## Design Principles
 
-## Design Tokens
-
-Height locked to `h-10` (40px) from `inputTokens.height`.
-Focus ring: `--focus-ring` — brand-blue 2px ring, 2px offset.
-Prefix/suffix positioned at `left-3` / `right-3` (12px inset).
-
----
+- Labels are Title Case nouns: Project Name, Domain, Environment Variable Name.
+- Placeholders show example values, never instructions.
+- Validate on blur and pass a string to `error` when the message is ready.
+- Trim leading and trailing whitespace before submit in the calling form.
+- Keep the input focusable while saving; use `loading` instead of disabling unless input is impossible.
+- Do not use `suffix` for buttons. Use built-in controls such as `clearable` and `revealable`, or compose a dedicated field primitive when the right side needs custom interaction.
 
 ## Accessibility
 
-- Renders native `<input>` — always pair with a visible `<label>` or `aria-label`.
-- Use `aria-invalid="true"` + `aria-describedby` to associate error messages.
-- The ✕ clear button has `aria-label="Clear"` — screen readers announce it correctly.
-- Prefix and suffix spans carry `aria-hidden` — they are decorative and ignored by assistive tech.
-- Focus ring is always visible for keyboard navigation.
+- `label` cannot compile without `id`, preserving the label association.
+- `description`, string text affixes, and string errors are merged into `aria-describedby`.
+- Error text renders with `role="alert"`.
+- Prefix and suffix icons are decorative; hide them from assistive technology.
+- Search inputs clear with Escape only while dirty, so Escape can still close an outer dialog when the field is empty.
+- Password reveal exposes `aria-pressed` and restores focus to the input after toggling.
+
+## Tokens
+
+`Input` consumes `inputTokens` for size, radius, padding, affix offsets, control sizes, icon sizes, and focus ring width. Runtime colors use semantic tokens: `background`, `foreground`, `input`, `ring`, `muted-foreground`, and `destructive`.

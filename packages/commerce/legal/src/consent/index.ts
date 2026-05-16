@@ -4,6 +4,8 @@ export {
   cacheDocumentConsent,
   // API client
   configureConsentApi,
+  createConsentPersistenceService,
+  createMemoryConsentStore,
   // Cookie consent
   defaultCookiePreferences,
   // Visitor ID
@@ -21,6 +23,7 @@ export {
   recordCookieConsent,
   recordDocumentConsent,
   rejectAllCookies,
+  resolveConsentStatus,
   saveCookieConsent,
   // GTM integration
   updateGTMConsent,

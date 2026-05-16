@@ -12,6 +12,7 @@ import type {
   CookieConfig,
   DocumentConfig,
   LegalConfig,
+  LegalDocumentMetadata,
 } from "../types";
 
 // ============================================
@@ -414,6 +415,86 @@ export const legalConfig: LegalConfig = {
  */
 export function getDocumentConfig(slug: string): DocumentConfig | undefined {
   return documentConfigs[slug];
+}
+
+export type LegalDocumentRegistry = Record<
+  string,
+  DocumentConfig | LegalDocumentMetadata | LegalDocumentMetadata[]
+>;
+
+function asVersionList(
+  slug: string,
+  documents: LegalDocumentRegistry = documentConfigs,
+): LegalDocumentMetadata[] {
+  const document = documents[slug];
+  if (!document) {
+    return [];
+  }
+
+  if (Array.isArray(document)) {
+    return document;
+  }
+
+  return "metadata" in document ? [document.metadata] : [document];
+}
+
+function compareVersion(a: string, b: string): number {
+  const left = a.split(".").map((part) => Number.parseInt(part, 10) || 0);
+  const right = b.split(".").map((part) => Number.parseInt(part, 10) || 0);
+  const length = Math.max(left.length, right.length);
+
+  for (let index = 0; index < length; index += 1) {
+    const diff = (left[index] ?? 0) - (right[index] ?? 0);
+    if (diff !== 0) {
+      return diff;
+    }
+  }
+
+  return 0;
+}
+
+/**
+ * Resolve the active document version at a point in time.
+ */
+export function resolveDocumentVersion(
+  slug: string,
+  options: {
+    documents?: LegalDocumentRegistry;
+    at?: Date;
+    version?: string;
+  } = {},
+): LegalDocumentMetadata | null {
+  const at = options.at ?? new Date();
+  const versions = asVersionList(slug, options.documents);
+
+  if (options.version) {
+    return versions.find((document) => document.version === options.version) ?? null;
+  }
+
+  return (
+    versions
+      .filter(
+        (document) =>
+          document.effectiveAt <= at && (!document.expiresAt || document.expiresAt > at),
+      )
+      .sort((a, b) => {
+        const effectiveDiff = b.effectiveAt.getTime() - a.effectiveAt.getTime();
+        return effectiveDiff === 0 ? compareVersion(b.version, a.version) : effectiveDiff;
+      })[0] ?? null
+  );
+}
+
+/**
+ * Return all known versions for a document, newest first.
+ */
+export function getDocumentVersionHistory(
+  slug: string,
+  options: { documents?: LegalDocumentRegistry } = {},
+): LegalDocumentMetadata[] {
+  return [...asVersionList(slug, options.documents)].sort((a, b) => {
+    const effectiveDiff = b.effectiveAt.getTime() - a.effectiveAt.getTime();
+    return effectiveDiff === 0 ? compareVersion(b.version, a.version) : effectiveDiff;
+  });
 }
 
 /**

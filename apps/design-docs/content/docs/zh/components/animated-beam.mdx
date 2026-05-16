@@ -1,107 +1,73 @@
 ---
-title: "动画光束 (Animated Beam)"
-description: "在两个 DOM 元素之间绘制动画发光光束。非常适合用于集成图表、数据流可视化和连接展示。"
+title: "Animated Beam"
+description: "基于 token 的数据流连接器，用于集成图、工作流图和操作状态交接界面。"
 ---
 
-## 演示 (Demo)
+## 演示
 
-<ComponentPreview name="animated-beam-demo"  />
+<ComponentPreview name="animated-beam-demo" />
 
-
-## 使用方法 (Usage)
+## 用法
 
 ```tsx
 import { AnimatedBeam } from "@nebutra/ui/primitives";
 ```
 
-## 示例 (Examples)
+Animated Beam 用一条克制的动态轨道连接真实 DOM 节点。它适合表达信息结构里的连接关系：
+Webhook 路由、部署流水线、Agent 交接、集成状态。纯装饰性的发光线条应该放到营销装饰组件里。
 
-### 基础连接 (Basic Connection)
+## 示例
 
 ```tsx
-function BeamDemo() {
+function FlowDemo() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const fromRef = useRef<HTMLDivElement>(null);
-  const toRef = useRef<HTMLDivElement>(null);
+  const sourceRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={containerRef} className="relative flex justify-between p-16">
-      <div ref={fromRef} className="rounded-full bg-blue-500 p-4">
-        A
-      </div>
-      <div ref={toRef} className="rounded-full bg-purple-500 p-4">
-        B
-      </div>
+    <div ref={containerRef} className="relative grid grid-cols-2">
+      <ServiceNode ref={sourceRef} name="GitHub" />
+      <ServiceNode ref={targetRef} name="Nebutra" />
       <AnimatedBeam
         containerRef={containerRef}
-        fromRef={fromRef}
-        toRef={toRef}
+        fromRef={sourceRef}
+        toRef={targetRef}
+        tone="brand"
+        intensity="normal"
       />
     </div>
   );
 }
 ```
 
-### 弯曲光束 (Curved Beam)
+## Props
 
-```tsx
-<AnimatedBeam
-  containerRef={containerRef}
-  fromRef={fromRef}
-  toRef={toRef}
-  curvature={50}
-/>
-```
+| Prop                 | Type                                             | Default   | Description |
+| -------------------- | ------------------------------------------------ | --------- | ----------- |
+| `containerRef`       | `RefObject<HTMLElement>`                         | —         | 外层定位容器 ref |
+| `fromRef`            | `RefObject<HTMLElement>`                         | —         | 起点元素 ref |
+| `toRef`              | `RefObject<HTMLElement>`                         | —         | 终点元素 ref |
+| `tone`               | `"neutral" \| "brand" \| "success" \| "warning"` | `"brand"` | 语义颜色 |
+| `intensity`          | `"subtle" \| "normal" \| "strong"`               | `"normal"` | 光束和底线强度 |
+| `curvature`          | `number`                                         | `0`       | 贝塞尔曲线弯曲高度，单位 px |
+| `reverse`            | `boolean`                                        | `false`   | 反转光束运动方向 |
+| `duration`           | `number`                                         | `4`       | 动画周期，单位秒 |
+| `delay`              | `number`                                         | `0`       | 启动延迟，单位秒 |
+| `startXOffset`       | `number`                                         | `0`       | 起点元素中心的 X 偏移 |
+| `startYOffset`       | `number`                                         | `0`       | 起点元素中心的 Y 偏移 |
+| `endXOffset`         | `number`                                         | `0`       | 终点元素中心的 X 偏移 |
+| `endYOffset`         | `number`                                         | `0`       | 终点元素中心的 Y 偏移 |
+| `className`          | `string`                                         | —         | SVG 上的附加 class |
 
-### 自定义颜色 (Custom Colors)
+## 高级绘制参数
 
-```tsx
-<AnimatedBeam
-  containerRef={containerRef}
-  fromRef={fromRef}
-  toRef={toRef}
-  gradientStartColor="#00ff88"
-  gradientStopColor="#0066ff"
-  pathColor="rgba(0,100,255,0.2)"
-/>
-```
+底层 SVG 绘制参数仍保留用于迁移和一次性可视化：
+`pathColor`、`pathWidth`、`pathOpacity`、`gradientStartColor`、`gradientStopColor`。
+产品界面优先使用 `tone` 和 `intensity`，避免颜色脱离 token 系统。
 
-### 反向运行 (Reversed Direction)
+## 设计原则
 
-```tsx
-<AnimatedBeam
-  containerRef={containerRef}
-  fromRef={fromRef}
-  toRef={toRef}
-  reverse
-/>
-```
-
-## 属性 (Props)
-
-| 属性 | 类型 | 默认值 | 描述 |
-| -------------------- | ------------------------ | ----------- | -------------------------------------------------- |
-| `containerRef`       | `RefObject<HTMLElement>` | —           | 包围容器的 Ref |
-| `fromRef`            | `RefObject<HTMLElement>` | —           | 起始元素的 Ref |
-| `toRef`              | `RefObject<HTMLElement>` | —           | 结束元素的 Ref |
-| `curvature`          | `number`                 | `0`         | 贝塞尔曲线高度（像素），正数表示向下弯曲 |
-| `reverse`            | `boolean`                | `false`     | 反转光束的移动方向 |
-| `duration`           | `number`                 | 随机 4–7    | 动画持续时间（秒） |
-| `delay`              | `number`                 | `0`         | 启动延迟（秒） |
-| `pathColor`          | `string`                 | `"gray"`    | 静态路径线的颜色 |
-| `pathWidth`          | `number`                 | `2`         | 路径线的宽度 |
-| `pathOpacity`        | `number`                 | `0.2`       | 静态路径的透明度 |
-| `gradientStartColor` | `string`                 | `"#ffaa40"` | 光束渐变的起始颜色 |
-| `gradientStopColor`  | `string`                 | `"#9c40ff"` | 光束渐变的结束颜色 |
-| `startXOffset`       | `number`                 | `0`         | 相对于起始元素中心的 X 偏移 |
-| `startYOffset`       | `number`                 | `0`         | 相对于起始元素中心的 Y 偏移 |
-| `endXOffset`         | `number`                 | `0`         | 相对于结束元素中心的 X 偏移 |
-| `endYOffset`         | `number`                 | `0`         | 相对于结束元素中心的 Y 偏移 |
-| `className`          | `string`                 | —           | SVG 上的额外 CSS 类名 |
-
-## 注意事项 (Notes)
-
-- 该组件渲染一个绝对定位的 SVG，填充整个容器。
-- 使用 `ResizeObserver` 在容器尺寸变化时更新路径。
-- 同一个容器上可以堆叠多个光束。
-走
+- 节点必须是真实服务或工作流标签，不要使用抽象的 `A → B` 玩具示例。
+- 控制光束数量；超过三条同时出现时通常应该改用图结构视图。
+- 光束是装饰性内容，组件 `aria-hidden`；语义由节点标签承载。
+- reduced motion 用户只看到静态轨道，不播放移动光束。

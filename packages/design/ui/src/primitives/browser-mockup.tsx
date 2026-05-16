@@ -2,8 +2,9 @@
 
 import { ArrowLeft, ArrowRight, Check, Copy, RotateClockwise as RotateCw } from "@nebutra/icons";
 import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "../utils/cn";
+import { MiddleTruncate } from "./middle-truncate";
 
 const COPIED_FEEDBACK_MS = 1500;
 
@@ -67,22 +68,6 @@ export type BrowserProps = ChildrenProps | ImageProps;
 export type BrowserMockupProps = BrowserProps;
 
 // ---------------------------------------------------------------------------
-// Middle-truncate helper
-// ---------------------------------------------------------------------------
-
-/**
- * Split a URL so a CSS flexbox can truncate the middle while keeping the
- * leading host visible (grows-and-truncates) and the trailing path tail
- * always rendered (fixed-width). Pure string function — no DOM dependency.
- */
-function splitForMiddleTruncate(value: string, tailLength = 16) {
-  if (value.length <= tailLength + 4) return { head: value, tail: "" };
-  const head = value.slice(0, value.length - tailLength);
-  const tail = value.slice(value.length - tailLength);
-  return { head, tail };
-}
-
-// ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 
@@ -144,8 +129,6 @@ export function Browser(props: BrowserProps) {
     }
   }, [address]);
 
-  const { head, tail } = useMemo(() => splitForMiddleTruncate(address ?? ""), [address]);
-
   const viewportStyle: CSSProperties =
     resolvedRatio !== undefined
       ? {
@@ -164,9 +147,9 @@ export function Browser(props: BrowserProps) {
       {/* ── Chrome toolbar — decorative ──────────────────────────────── */}
       <div className="flex items-center gap-3 border-border border-b bg-muted px-4 py-2.5">
         <div className="flex items-center gap-1.5" aria-hidden="true">
-          <span className="size-3 rounded-full bg-[#FF5F57]" />
-          <span className="size-3 rounded-full bg-[#FEBC2E]" />
-          <span className="size-3 rounded-full bg-[#28C840]" />
+          <span className="size-3 rounded-full bg-destructive" />
+          <span className="size-3 rounded-full bg-warning" />
+          <span className="size-3 rounded-full bg-success" />
         </div>
 
         <div className="flex items-center gap-1" aria-hidden="true">
@@ -185,14 +168,10 @@ export function Browser(props: BrowserProps) {
         <div className="flex flex-1 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-background/80 px-3 py-1">
           {address ? (
             <>
-              <span className="flex min-w-0 flex-1 justify-center text-center text-muted-foreground text-xs">
-                <span className="min-w-0 truncate" aria-hidden="true">
-                  {head}
-                </span>
-                {tail && <span className="shrink-0">{tail}</span>}
-                {/* Full address available to assistive tech and Find-in-page */}
-                <span className="sr-only">{address}</span>
-              </span>
+              <MiddleTruncate
+                value={address}
+                className="min-w-0 flex-1 text-center text-muted-foreground text-xs"
+              />
               <button
                 type="button"
                 onClick={handleCopy}

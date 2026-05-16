@@ -1,3 +1,8 @@
+export {
+  type AnimatedBeamIntensity,
+  type AnimatedBeamTone,
+  animatedBeamTokens,
+} from "./animated-beam";
 export { type AvatarSize, avatarTokens } from "./avatar";
 export { badgeTokens } from "./badge";
 export { type ButtonSize, buttonTokens } from "./button";

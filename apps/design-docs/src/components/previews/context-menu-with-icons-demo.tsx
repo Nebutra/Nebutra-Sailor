@@ -5,27 +5,30 @@ import { ContextMenu } from "@nebutra/ui/primitives";
 
 export function ContextMenuWithIconsDemo() {
   return (
-    <ContextMenu.Root>
+    <ContextMenu>
       <ContextMenu.Trigger asChild>
-        <div className="text-sm flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed">
+        <div className="flex h-[150px] w-[300px] items-center justify-center rounded-[var(--radius-md)] border border-dashed border-border text-sm text-muted-foreground">
           Right-click here
         </div>
       </ContextMenu.Trigger>
       <ContextMenu.Content>
-        <ContextMenu.Item onSelect={() => {}}>
-          <Edit2 className="mr-2 h-4 w-4" />
-          Edit
+        <ContextMenu.Item prefix={<Edit2 className="size-4" />} value="rename" onSelect={() => {}}>
+          Rename Deployment...
         </ContextMenu.Item>
-        <ContextMenu.Item onSelect={() => {}}>
-          <Copy className="mr-2 h-4 w-4" />
-          Copy
+        <ContextMenu.Item prefix={<Copy className="size-4" />} value="copy" onSelect={() => {}}>
+          Copy URL
+          <ContextMenu.Shortcut>⌘C</ContextMenu.Shortcut>
         </ContextMenu.Item>
         <ContextMenu.Separator />
-        <ContextMenu.Item onSelect={() => {}}>
-          <Trash2 className="mr-2 h-4 w-4" />
-          Delete
+        <ContextMenu.Item
+          prefix={<Trash2 className="size-4" />}
+          value="delete"
+          variant="destructive"
+          onSelect={() => {}}
+        >
+          Delete Deployment
         </ContextMenu.Item>
       </ContextMenu.Content>
-    </ContextMenu.Root>
+    </ContextMenu>
   );
 }

@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Display keyboard input that triggers an action. Supports modifier symbols (⌘ ⇧ ⌥ ⌃), combinations, and a small size variant.",
+          "Keyboard shortcut hint for prose, menu items, and button suffixes. Modifier props render platform-aware glyphs.",
       },
     },
   },
@@ -19,10 +19,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ─── Modifiers ────────────────────────────────────────────────────────────────
-
 export const Modifiers: Story = {
-  name: "Modifiers",
   render: () => (
     <div className="flex items-center gap-2">
       <Kbd meta />
@@ -33,76 +30,52 @@ export const Modifiers: Story = {
   ),
 };
 
-// ─── Combination ──────────────────────────────────────────────────────────────
-
 export const Combination: Story = {
-  name: "Combination",
-  render: () => (
-    <div className="flex items-center gap-4">
-      <Kbd meta shift />
-      <Kbd ctrl alt />
-      <Kbd meta shift alt />
-    </div>
-  ),
+  render: () => <Kbd meta shift />,
 };
-
-// ─── Small ────────────────────────────────────────────────────────────────────
 
 export const Small: Story = {
-  name: "Small",
-  render: () => (
-    <div className="flex items-center gap-2">
-      <Kbd small>/</Kbd>
-      <Kbd small meta />
-      <Kbd small shift />
-      <Kbd small meta shift />
-    </div>
-  ),
+  render: () => <Kbd small>/</Kbd>,
 };
 
-// ─── With Text ────────────────────────────────────────────────────────────────
-
-export const WithText: Story = {
-  name: "With text content",
+export const NamedKeys: Story = {
   render: () => (
     <div className="flex items-center gap-2">
       <Kbd>Enter</Kbd>
       <Kbd>Esc</Kbd>
       <Kbd>Tab</Kbd>
       <Kbd>Space</Kbd>
-      <Kbd>⌘K</Kbd>
     </div>
   ),
 };
 
-// ─── Modifier + Text ──────────────────────────────────────────────────────────
-
-export const ModifierWithText: Story = {
-  name: "Modifier + text",
+export const WithKey: Story = {
   render: () => (
     <div className="flex items-center gap-2">
       <Kbd meta>K</Kbd>
       <Kbd shift>Tab</Kbd>
+      <Kbd alt>Enter</Kbd>
       <Kbd ctrl>C</Kbd>
     </div>
   ),
 };
 
-// ─── In Context ───────────────────────────────────────────────────────────────
-
-export const InContext: Story = {
-  name: "In context",
+export const DenseSurface: Story = {
   render: () => (
-    <div className="flex flex-col gap-3 text-sm text-muted-foreground">
-      <p>
-        Press <Kbd small meta /> <Kbd small>K</Kbd> to open the command menu.
-      </p>
-      <p>
-        Use <Kbd small>⇧</Kbd> <Kbd small>Tab</Kbd> to navigate backwards.
-      </p>
-      <p>
-        Hit <Kbd small>Esc</Kbd> to dismiss.
-      </p>
+    <div className="flex w-80 items-center justify-between rounded-[var(--radius-md)] border bg-card px-3 py-2 text-sm">
+      <span>Open Command Menu</span>
+      <span className="flex items-center gap-1">
+        <Kbd small meta />
+        <Kbd small>K</Kbd>
+      </span>
     </div>
+  ),
+};
+
+export const InProse: Story = {
+  render: () => (
+    <p className="text-sm text-muted-foreground">
+      Press <Kbd meta>K</Kbd> to open the command menu.
+    </p>
   ),
 };

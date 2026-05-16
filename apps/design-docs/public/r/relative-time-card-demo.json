@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "relative-time-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/relative-time-card-demo.tsx",
+      "content": "\"use client\";\n\nimport { RelativeTimeCard } from \"@nebutra/ui/primitives\";\n\nconst NOW = Date.now();\nconst MIN = 60 * 1000;\nconst HOUR = 60 * MIN;\nconst DAY = 24 * HOUR;\n\nconst ROWS = [\n  { label: \"10s\", delta: 10 * 1000 },\n  { label: \"2m\", delta: 2 * MIN },\n  { label: \"5h\", delta: 5 * HOUR },\n  { label: \"Yesterday\", delta: 26 * HOUR },\n  { label: \"3d\", delta: 3 * DAY },\n  { label: \"21d\", delta: 21 * DAY },\n  { label: \"~2y\", delta: 2 * 365 * DAY },\n];\n\nexport function RelativeTimeCardDemo() {\n  return (\n    <div className=\"grid w-full max-w-md grid-cols-2 gap-x-12 gap-y-3 font-mono text-sm\">\n      {ROWS.map(({ label, delta }) => (\n        <div key={label} className=\"contents\">\n          <span className=\"text-muted-foreground\">{label} ago</span>\n          <RelativeTimeCard date={NOW - delta} />\n        </div>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

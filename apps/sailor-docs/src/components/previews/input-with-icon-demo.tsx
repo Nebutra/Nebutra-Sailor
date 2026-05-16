@@ -5,13 +5,16 @@ import { Input } from "@nebutra/ui/primitives";
 
 export function InputWithIconDemo() {
   return (
-    <div className="gap-4 flex flex-col">
-      {/* Search icon */}
-      <Input prefix={<Search className="w-4 h-4 text-muted-foreground" />} placeholder="Search…" />
-
-      {/* Mail icon */}
+    <div className="flex flex-col gap-4">
       <Input
-        prefix={<Mail className="w-4 h-4 text-muted-foreground" />}
+        aria-label="Search projects"
+        type="search"
+        prefix={<Search aria-hidden="true" />}
+        placeholder="Search projects"
+      />
+      <Input
+        aria-label="Team email"
+        prefix={<Mail aria-hidden="true" />}
         type="email"
         placeholder="contact@nebutra.com"
       />

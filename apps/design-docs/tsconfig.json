@@ -21,7 +21,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/.source": ["./.source"],
-      "@/.source/*": ["./.source/*"]
+      "@/.source/*": ["./.source/*"],
+      "@nebutra/ui": ["../../packages/design/ui/src/index.ts"],
+      "@nebutra/ui/*": ["../../packages/design/ui/src/*"]
     }
   },
   "include": [

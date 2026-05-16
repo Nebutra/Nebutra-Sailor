@@ -14,6 +14,7 @@ const intlMiddleware = createIntlMiddleware(routing);
 const publicRoutePaths = [
   "/sign-in",
   "/sign-up",
+  "/login/success",
   "/onboarding",
   "/select-org",
   "/sso-callback",

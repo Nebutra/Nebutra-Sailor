@@ -1,130 +1,111 @@
 ---
 title: "组合框 (Combobox)"
-description: "可搜索的选择输入组件，结合了触发按钮和经过过滤的下拉列表。支持受控、非受控、禁用、错误、尺寸、标签、分组和复合模式。"
+description: "根据输入查询过滤已知列表，并选择一个确定值。"
 ---
-
-
-<ComponentPreview name="combobox-demo" className="min-h-[300px] flex justify-center items-start pt-10"  />
-
-
-## 概览 (Overview)
-
-`Combobox` 是一个基于 `Popover` + `cmdk` 构建的自包含可搜索选择器。它支持两种使用模式：
-
-1. **简单模式** — 传入 `options` 数组，组件将处理一切（搜索、过滤、渲染、选择）。
-2. **复合模式** — 使用 `Combobox.Input`、`Combobox.Option`、`Combobox.Group` 等子组件作为 children 进行自定义渲染。
-
-## 安装 (Installation)
 
 <ComponentPreview name="combobox-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
+## 概览
 
-### 带有标签 (With label)
+`Combobox` 用于“已知值”的可搜索单选，例如区域、框架、API scope、环境变量名。短固定列表用 `Select`，多选用 `MultipleSelector`，如果用户输入本身就是提交值则用 `Input`。
+
+组件支持两种模式：
+
+1. **Options 模式** — 传入 `options`，组件负责输入框、列表、分组、空状态和选中图标。
+2. **复合模式** — 使用 `Combobox.Input`、`Combobox.List`、`Combobox.Group`、`Combobox.Option` 自定义列表结构。
+
+## 用法
+
+### 非受控
+
+<ComponentPreview name="combobox-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
+
+### 受控
+
+<ComponentPreview name="combobox-default-value-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
+
+### 带标签
 
 <ComponentPreview name="combobox-2-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
+### 禁用
 
-## 使用方法 (Usage)
+<ComponentPreview name="combobox-disabled-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
-### 简单模式 (使用 options 属性)
+### 错误状态
 
-<ComponentPreview name="combobox-3-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
+<ComponentPreview name="combobox-error-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
+### 尺寸
 
-### 带有标签 (With label)
+<ComponentPreview name="combobox-sizes-demo" className="min-h-[300px] flex flex-col gap-4 justify-center items-center" />
 
-<ComponentPreview name="combobox-4-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
+### 分组选项
 
+<ComponentPreview name="combobox-groups-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
 
-### 非受控 (Uncontrolled)
+### 自定义宽度
 
-<ComponentPreview name="combobox-5-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
+<ComponentPreview name="combobox-width-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
-
-### 禁用状态 (Disabled)
-
-<ComponentPreview name="combobox-6-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
-
-
-### 错误状态 (Error state)
-
-<ComponentPreview name="combobox-7-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
-
-
-### 尺寸 (Sizes)
-
-<ComponentPreview name="combobox-8-demo" className="min-h-[300px] flex flex-col gap-4 justify-center items-center" />
-
-
-### 分组选项 (Grouped options)
-
-<ComponentPreview name="combobox-9-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
-
-
-### 自定义宽度 (Custom width)
-
-<ComponentPreview name="combobox-10-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
-
-
-### 复合模式 (Composition mode)
-
-对于高级场景（异步搜索、自定义渲染、分隔符），请使用子组件作为 children。
+### 复合模式
 
 <ComponentPreview name="combobox-11-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
 
-
-## 属性 (Props)
+## Props
 
 ### Combobox
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `options` | `ComboboxOption[]` | — | 简单模式：要渲染的选项数组 |
-| `value` | `string` | — | 受控的选择值 |
-| `onChange` | `(value: string) => void` | — | 选择改变时的回调 |
-| `defaultValue` | `string` | `""` | 非受控使用的初始值 |
-| `disabled` | `boolean` | `false` | 禁用整个组合框 |
-| `error` | `boolean` | `false` | 显示错误样式（红色边框） |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | 尺寸变体 — `sm` (32px), `default` (40px), `lg` (48px) |
-| `width` | `string` | — | 应用于触发器和下拉列表的 Tailwind 宽度类 |
-| `label` | `string` | — | 显示在触发器上方的可访问标签 |
-| `hideLabel` | `boolean` | `false` | 视觉上隐藏标签（仍然可通过 aria 访问） |
-| `placeholder` | `string` | `"Select..."` | 未选择任何内容时的文本 |
-| `emptyMessage` | `string` | `"No results found."` | 搜索无匹配项时的文本 |
-| `searchPlaceholder` | `string` | `"Search..."` | 搜索输入框中的占位符 |
-| `children` | `ReactNode` | — | 复合模式：手动提供子组件 |
-| `className` | `string` | — | 额外的 CSS 类名 |
+| `options` | `ComboboxOption[]` | — | Options 模式渲染的已知值。 |
+| `value` | `string \| null` | — | 受控选中值。 |
+| `onChange` | `(value: string \| null) => void` | — | 选中变化回调。再次选择当前项会清空为 `null`。 |
+| `defaultValue` | `string \| null` | `null` | 非受控初始值。 |
+| `disabled` | `boolean` | `false` | 禁用触发器并阻止打开。 |
+| `errored` | `boolean` | `false` | 应用错误样式并设置 `aria-invalid`。 |
+| `size` | `"small" \| "medium" \| "large"` | `"medium"` | 表单控件尺寸。旧的 `sm`、`default`、`lg` 仍会兼容映射。 |
+| `width` | `number \| string` | `100%` | 根节点和触发器宽度。数字按像素处理，字符串按 CSS 长度处理。 |
+| `listMaxWidth` | `number \| string` | — | 长文本选项的弹层/列表最大宽度。 |
+| `label` | `string` | — | 渲染在触发器上方的可见标签。 |
+| `hideLabel` | `boolean` | `false` | 视觉隐藏内置标签，但保留无障碍名称。 |
+| `placeholder` | `string` | `"Select..."` | 未选择前的触发器文案。推荐领域化文案，例如 `Search regions...`。 |
+| `emptyMessage` | `string` | `"No results found."` | Options 模式无结果文案。 |
+| `searchPlaceholder` | `string` | `"Search..."` | Options 模式搜索输入占位符。 |
+| `loading` | `boolean` | `false` | 异步结果加载时展示 loading 文案。 |
+| `loadingMessage` | `string` | `"Loading options..."` | Options 模式 loading 文案。 |
 
-### ComboboxOption (组合框选择项)
+### ComboboxOption
 
 | 属性 | 类型 | 描述 |
 |------|------|-------------|
-| `value` | `string` | 用于选择匹配的机器值 |
-| `label` | `string` | 显示在触发器和列表中的人类可读标签 |
-| `disabled` | `boolean` | 禁用此特定选项 |
-| `group` | `string` | 分配到分组标题下 |
+| `value` | `string` | 用于匹配选中状态的稳定机器值。 |
+| `label` | `string` | Options 模式展示的人类可读标签。 |
+| `disabled` | `boolean` | 禁用单个选项。 |
+| `group` | `string` | 将选项归入对应 `CommandGroup` 标题。 |
 
-### 子组件 (Sub-Components)
+### 子组件
 
 | 组件 | 基于 | 描述 |
 |-----------|----------|-------------|
-| `Combobox.Input` | `CommandInput` | 用于过滤选项的搜索输入框 |
-| `Combobox.Option` | `CommandItem` | 带有自动勾选图标的可选项目 |
-| `Combobox.Empty` | `CommandEmpty` | 搜索无结果时显示的信息 |
-| `Combobox.Group` | `CommandGroup` | 相关选项的分组标题 |
-| `Combobox.Separator` | `CommandSeparator` | 组与组之间的视觉分隔线 |
+| `Combobox.Input` | `CommandInput` | 用于过滤选项的搜索输入框。 |
+| `Combobox.List` | `CommandList` | 带 `emptyMessage` 与 `maxWidth` 的列表容器。 |
+| `Combobox.Option` | `CommandItem` | 带选中图标的可选项。 |
+| `Combobox.Empty` | `CommandEmpty` | 旧复合模式的手动空状态。优先使用 `Combobox.List emptyMessage`。 |
+| `Combobox.Group` | `CommandGroup` | 相关选项分组。 |
+| `Combobox.Separator` | `CommandSeparator` | 分组之间的视觉分隔线。 |
 
-## 可访问性 (Accessibility)
+## 设计原则
 
-- 触发按钮具有 `role="combobox"` 和 `aria-expanded`。
-- 标签使用 `aria-labelledby` 与触发器关联。
-- `CommandInput` 提供屏幕阅读器可访问的实时搜索。
-- `CommandItem` 元素具有 `role="option"` 和 `aria-selected`。
-- 键盘导航：输入以过滤，`ArrowUp`/`ArrowDown` 导航，`Enter` 选择，`Escape` 关闭。
+- 可见标签使用短名词，例如 `Region`、`Environment Variable`。
+- placeholder 描述搜索对象，而不是控件本身：用 `Search regions...`，不要只写 `Search...`。
+- 异步加载时保持列表打开，不要在 refetch 时折叠弹层。
+- 空状态尽量带对象和查询词，例如 `No regions match "fra"`。
+- 选项文案遵循官方品牌大小写，例如 `Next.js`，不要写成 `NextJS`。
 
-## 注意事项 (Notes)
+## 可访问性
 
-- 下拉列表宽度通过 `--radix-popover-trigger-width` 自动匹配触发器宽度。
-- 当在带有分组项目的 `options` 中使用时，选项会自动分拣到 `CommandGroup` 标题下。
-- `Combobox.Option` 接受透传给 `CommandItem` 的 `keywords` 属性，以增强搜索匹配能力。
-- 反选切换：点击已选中的选项会清除该选择。
+- 触发器使用 `role="combobox"`、`aria-expanded`、`aria-controls`，错误时设置 `aria-invalid`。
+- 简单字段可用内置 `label`；复杂布局可用兄弟 `Label htmlFor` 关联根节点 `id`。
+- 没有可见标签时必须传 `aria-label`。
+- 方向键在 `Combobox.Option` 间移动，`Enter` 选择，`Escape` 关闭。

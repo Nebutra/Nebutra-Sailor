@@ -1,77 +1,56 @@
 ---
 title: Combobox
-description: Searchable select input combining a trigger button with a filtered dropdown list. Supports controlled, uncontrolled, disabled, error, size, label, grouping, and composition modes.
+description: Filters known lists to one selectable value based on the matching query.
 ---
-
-
-<ComponentPreview name="combobox-demo" className="min-h-[300px] flex justify-center items-start pt-10"  />
-
-
-## Overview
-
-`Combobox` is a self-contained searchable select built on `Popover` + `cmdk`. It supports two usage modes:
-
-1. **Simple mode** — pass an `options` array and the component handles everything (search, filtering, rendering, selection).
-2. **Composition mode** — use `Combobox.Input`, `Combobox.Option`, `Combobox.Group` etc. as children for custom rendering.
-
-## Installation
 
 <ComponentPreview name="combobox-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
+## Overview
+
+`Combobox` is the searchable single-select primitive for known values such as regions, frameworks, API scopes, and environment variable names. Use `Select` for short fixed lists, `MultipleSelector` for multiple values, and `Input` when the query itself is the submitted value.
+
+The component supports two modes:
+
+1. **Options mode** — pass `options`; the primitive renders the input, list, groups, empty state, and selected indicator.
+2. **Composition mode** — render `Combobox.Input`, `Combobox.List`, `Combobox.Group`, and `Combobox.Option` when the list needs custom structure.
+
+## Usage
+
+### Uncontrolled
+
+<ComponentPreview name="combobox-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
+
+### Controlled
+
+<ComponentPreview name="combobox-default-value-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
 ### With label
 
 <ComponentPreview name="combobox-2-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
-
-## Usage
-
-### Simple mode (options prop)
-
-<ComponentPreview name="combobox-3-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
-
-
-### With label
-
-<ComponentPreview name="combobox-4-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
-
-
-### Uncontrolled
-
-<ComponentPreview name="combobox-5-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
-
-
 ### Disabled
 
-<ComponentPreview name="combobox-6-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
+<ComponentPreview name="combobox-disabled-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
+### Errored
 
-### Error state
-
-<ComponentPreview name="combobox-7-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
-
+<ComponentPreview name="combobox-error-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
 ### Sizes
 
-<ComponentPreview name="combobox-8-demo" className="min-h-[300px] flex flex-col gap-4 justify-center items-center" />
-
+<ComponentPreview name="combobox-sizes-demo" className="min-h-[300px] flex flex-col gap-4 justify-center items-center" />
 
 ### Grouped options
 
-<ComponentPreview name="combobox-9-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
-
+<ComponentPreview name="combobox-groups-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
 
 ### Custom width
 
-<ComponentPreview name="combobox-10-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
-
+<ComponentPreview name="combobox-width-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
 ### Composition mode
 
-For advanced scenarios (async search, custom rendering, separators), use sub-components as children.
-
 <ComponentPreview name="combobox-11-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
-
 
 ## Props
 
@@ -79,52 +58,54 @@ For advanced scenarios (async search, custom rendering, separators), use sub-com
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `options` | `ComboboxOption[]` | — | Simple mode: array of options to render |
-| `value` | `string` | — | Controlled selected value |
-| `onChange` | `(value: string) => void` | — | Callback when selection changes |
-| `defaultValue` | `string` | `""` | Initial value for uncontrolled usage |
-| `disabled` | `boolean` | `false` | Disable the entire combobox |
-| `error` | `boolean` | `false` | Show error styling (red border) |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Size variant — `sm` (32px), `default` (40px), `lg` (48px) |
-| `width` | `string` | — | Tailwind width class applied to both trigger and dropdown |
-| `label` | `string` | — | Accessible label shown above the trigger |
-| `hideLabel` | `boolean` | `false` | Visually hide the label (still accessible via aria) |
-| `placeholder` | `string` | `"Select..."` | Text when nothing is selected |
-| `emptyMessage` | `string` | `"No results found."` | Text when search has no matches |
-| `searchPlaceholder` | `string` | `"Search..."` | Placeholder in the search input |
-| `children` | `ReactNode` | — | Composition mode: provide sub-components manually |
-| `className` | `string` | — | Additional CSS classes |
+| `options` | `ComboboxOption[]` | — | Known values rendered by options mode. |
+| `value` | `string \| null` | — | Controlled selected value. |
+| `onChange` | `(value: string \| null) => void` | — | Called when selection changes. Selecting the current option clears to `null`. |
+| `defaultValue` | `string \| null` | `null` | Initial uncontrolled value. |
+| `disabled` | `boolean` | `false` | Disables the trigger and prevents opening. |
+| `errored` | `boolean` | `false` | Applies invalid styling and `aria-invalid`. |
+| `size` | `"small" \| "medium" \| "large"` | `"medium"` | Form-control size. Legacy `sm`, `default`, and `lg` still map through for existing consumers. |
+| `width` | `number \| string` | `100%` | Root and trigger width. Numbers are pixels; strings are CSS lengths. |
+| `listMaxWidth` | `number \| string` | — | Maximum popover/list width for long option text. |
+| `label` | `string` | — | Optional visible label rendered above the trigger. |
+| `hideLabel` | `boolean` | `false` | Visually hides the built-in label while keeping it accessible. |
+| `placeholder` | `string` | `"Select..."` | Trigger copy before a value is selected. Prefer domain-specific copy such as `Search regions...`. |
+| `emptyMessage` | `string` | `"No results found."` | Options-mode empty result text. |
+| `searchPlaceholder` | `string` | `"Search..."` | Search input placeholder in options mode. |
+| `loading` | `boolean` | `false` | Shows the loading message while async results are in flight. |
+| `loadingMessage` | `string` | `"Loading options..."` | Loading message for options mode. |
 
 ### ComboboxOption
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `value` | `string` | Machine value used for selection matching |
-| `label` | `string` | Human-readable label displayed in trigger and list |
-| `disabled` | `boolean` | Disable this specific option |
-| `group` | `string` | Assign to a group heading |
+| `value` | `string` | Stable machine value used for selection matching. |
+| `label` | `string` | Human-readable label displayed in options mode. |
+| `disabled` | `boolean` | Disables a specific option. |
+| `group` | `string` | Groups the option under a `CommandGroup` heading. |
 
-### Sub-Components
+### Subcomponents
 
-| Component | Based On | Description |
+| Component | Based on | Description |
 |-----------|----------|-------------|
-| `Combobox.Input` | `CommandInput` | Search input for filtering options |
-| `Combobox.Option` | `CommandItem` | Selectable option with auto check icon |
-| `Combobox.Empty` | `CommandEmpty` | Message when no options match search |
-| `Combobox.Group` | `CommandGroup` | Group heading for related options |
-| `Combobox.Separator` | `CommandSeparator` | Visual divider between groups |
+| `Combobox.Input` | `CommandInput` | Search field used to filter options. |
+| `Combobox.List` | `CommandList` | List wrapper with `emptyMessage` and `maxWidth`. |
+| `Combobox.Option` | `CommandItem` | Selectable option with selected check icon. |
+| `Combobox.Empty` | `CommandEmpty` | Manual empty state for legacy composition. Prefer `Combobox.List emptyMessage`. |
+| `Combobox.Group` | `CommandGroup` | Related option group. |
+| `Combobox.Separator` | `CommandSeparator` | Visual divider between groups. |
+
+## Design Principles
+
+- Visible labels are short nouns such as `Region` or `Environment Variable`.
+- Placeholders describe the search target, not the control: use `Search regions...`, not bare `Search...`.
+- Keep async lists open while loading; do not collapse the popover during refetch.
+- Empty states should name the searched item and query when possible, for example `No regions match "fra"`.
+- Option text should match canonical branding and casing, such as `Next.js`, not `NextJS`.
 
 ## Accessibility
 
-- Trigger button has `role="combobox"` with `aria-expanded`.
-- Label uses `aria-labelledby` to associate with the trigger.
-- `CommandInput` provides a live search accessible to screen readers.
-- `CommandItem` elements have `role="option"` with `aria-selected`.
-- Keyboard navigation: type to filter, `ArrowUp`/`ArrowDown` to navigate, `Enter` to select, `Escape` to close.
-
-## Notes
-
-- The dropdown width automatically matches the trigger width via `--radix-popover-trigger-width`.
-- When using `options` with grouped items, options are automatically sorted into `CommandGroup` headings.
-- `Combobox.Option` accepts `keywords` passthrough to `CommandItem` for enhanced search matching.
-- Toggle-deselect: clicking an already-selected option clears the selection.
+- The trigger uses `role="combobox"`, `aria-expanded`, `aria-controls`, and `aria-invalid` when errored.
+- Use the built-in `label` prop for simple fields, or pair a sibling `Label htmlFor` with the root `id`.
+- If there is no visible label, pass `aria-label`.
+- Arrow keys move through `Combobox.Option` items; `Enter` selects; `Escape` closes.

@@ -35,6 +35,28 @@ export {
   type GalleryCardRenderLinkProps,
 } from "./gallery-card";
 
+// QAPage — Stack Overflow-style question + answers surface. react-markdown +
+// remark-gfm for post rendering; @nebutra/icons (Geist) for all toolbar /
+// vote / action chrome. Composed from Card / Button / Badge / Separator
+// primitives + sibling MarkdownEditor / MarkdownRenderer / VoteButtons /
+// UserInfo pieces.
+export {
+  type AnswerType,
+  type Author,
+  MarkdownEditor,
+  type MarkdownEditorProps,
+  MarkdownRenderer,
+  type MarkdownRendererProps,
+  QAPage,
+  type QAPageProps,
+  type QuestionType,
+  UserInfo,
+  type UserInfoProps,
+  VoteButtons,
+  type VoteButtonsProps,
+  type VoteType,
+} from "./qa-page";
+
 // SidebarNav — grouped app sidebar with badges, nested children, collapsed mode
 export {
   SidebarNav,

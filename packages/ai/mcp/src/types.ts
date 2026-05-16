@@ -16,6 +16,9 @@ export const ToolDefinitionSchema = z.object({
   description: z.string(),
   parameters: z.record(z.string(), ToolParameterSchema).optional(),
   returns: z.string().optional(),
+  allowedPlans: z.array(z.string()).optional(),
+  allowedTenants: z.array(z.string()).optional(),
+  requiredPermissions: z.array(z.string()).optional(),
 });
 
 export type ToolParameter = z.infer<typeof ToolParameterSchema>;
@@ -83,8 +86,9 @@ export interface MCPServerConfig {
   name: string;
   description: string;
   endpoint: string;
-  transport: "http" | "websocket" | "stdio";
+  transport: "http" | "websocket" | "stdio" | "local";
   tools: ToolDefinition[];
+  handlers?: Record<string, MCPToolHandler>;
   authentication?: {
     type: "bearer" | "api-key" | "none";
     headerName?: string;
@@ -97,6 +101,11 @@ export interface MCPServerConfig {
   allowedPlans?: string[]; // e.g., ["PRO", "ENTERPRISE"]
   allowedTenants?: string[]; // specific tenant IDs
 }
+
+export type MCPToolHandler = (
+  args: Record<string, unknown>,
+  context: MCPContext,
+) => unknown | Promise<unknown>;
 
 // ============================================
 // Smithery Integration

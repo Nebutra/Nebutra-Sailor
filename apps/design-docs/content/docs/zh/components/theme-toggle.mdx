@@ -1,0 +1,50 @@
+---
+title: ThemeToggle
+description: 用于浅色和深色主题切换的二态动画图标按钮。
+---
+
+## Demo
+
+<ComponentPreview name="theme-toggle-demo" />
+
+## 用法
+
+```tsx
+import { ThemeToggle, type ThemeToggleValue } from "@nebutra/ui/primitives";
+import { useTheme } from "@nebutra/tokens";
+
+function AppThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme();
+  const value: ThemeToggleValue = resolvedTheme === "dark" ? "dark" : "light";
+
+  return <ThemeToggle value={value} onChange={setTheme} />;
+}
+```
+
+## 设计契约
+
+`ThemeToggle` 是二态控件，适合导航栏、命令面板、设置页头等高密度区域。需要显式展示 `system`、`light`、`dark` 三种偏好时，使用 `ThemeSwitcher`。
+
+太阳/月亮 morph 由组件内部维护，并走统一 motion token。用户开启 `prefers-reduced-motion` 时，形态变化和按压动效会收敛为静态切换。
+
+声音通过 `sound` 显式开启，默认关闭。常规企业产品界面不要默认播放声音；只有当产品本身已有音频反馈语义时才启用。
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `"light" \| "dark"` | — | 受控二态主题值。 |
+| `defaultValue` | `"light" \| "dark"` | document class 或 `"light"` | 非受控初始值。 |
+| `onChange` | `(value: ThemeToggleValue) => void` | — | 用户切换时返回下一个主题。 |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | 组件 token 化的图标按钮尺寸。 |
+| `sound` | `boolean` | `false` | 用户操作后播放轻微点击声。 |
+| `applyToDocument` | `boolean` | `false` | 独立使用时切换 `document.documentElement` 上的 `.dark`。 |
+| `labels` | `{ light?: string; dark?: string }` | action labels | 无障碍动作标签。 |
+| `className` | `string` | — | 追加到按钮上的类名。 |
+
+## Best Practices
+
+- 优先配合 `@nebutra/tokens` 或 `next-themes` 做受控集成。
+- 当用户需要看到 `system` 偏好时，不要用它，改用 `ThemeSwitcher`。
+- 控件保持 icon-only；如果上下文不清晰，把可见文字放在相邻 label 中。
+- 不要覆盖内部 SVG。这个 morph 是组件身份的一部分，并绑定了无障碍与 motion token 契约。

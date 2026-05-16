@@ -11,7 +11,7 @@ export function ComboboxErrorDemo() {
         { value: "astro", label: "Astro" },
         { value: "nuxt", label: "Nuxt" },
       ]}
-      error
+      errored
       placeholder="选择框架..."
     />
   );

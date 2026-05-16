@@ -167,6 +167,13 @@ export const WebhookDeadLetterDeliverySchema = z.object({
 
 export type WebhookDeadLetterDelivery = z.infer<typeof WebhookDeadLetterDeliverySchema>;
 
+export interface WebhookDeadLetterStore {
+  upsert(record: WebhookDeadLetterDelivery): Promise<void>;
+  delete(messageId: string, endpointId: string): Promise<void>;
+  list(messageId?: string): Promise<WebhookDeadLetterDelivery[]>;
+  clear?(): Promise<void>;
+}
+
 // ── Provider Interface ──────────────────────────────────────────────────────
 
 /**
@@ -274,6 +281,9 @@ export interface CustomProviderConfig {
 
   /** Initial backoff in seconds (default: 5) */
   initialBackoffSec?: number;
+
+  /** Optional durable dead-letter store adapter for exhausted deliveries. */
+  deadLetterStore?: WebhookDeadLetterStore;
 }
 
 export type WebhookConfig = SvixProviderConfig | CustomProviderConfig;

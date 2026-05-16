@@ -51,6 +51,8 @@ describe("POST /api/billing/checkout", () => {
     mockedGetAuth.mockReset();
     mockedCount.mockReset();
     process.env.STRIPE_SECRET_KEY = "sk_test_123";
+    process.env.STRIPE_PRICE_ID_PRO_MONTHLY = "price_pro_monthly_env";
+    process.env.STRIPE_PRICE_ID_PRO_YEARLY = "price_pro_yearly_env";
 
     fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
       new Response(JSON.stringify({ url: "https://stripe.example/checkout/session_1" }), {
@@ -63,6 +65,8 @@ describe("POST /api/billing/checkout", () => {
   afterEach(() => {
     vi.restoreAllMocks();
     delete process.env.STRIPE_SECRET_KEY;
+    delete process.env.STRIPE_PRICE_ID_PRO_MONTHLY;
+    delete process.env.STRIPE_PRICE_ID_PRO_YEARLY;
   });
 
   it("returns 503 when Stripe is not configured", async () => {
@@ -96,6 +100,50 @@ describe("POST /api/billing/checkout", () => {
     expect(upstreamBody.priceId).toBe("price_pro_month");
     expect(upstreamBody.quantity).toBeUndefined();
     expect(mockedCount).not.toHaveBeenCalled();
+  });
+
+  it("accepts pricing grid planId plus interval and uses a safe explicit return URL", async () => {
+    mockedGetAuth.mockResolvedValue(buildAuth(null));
+
+    const { POST } = await loadRoute();
+    const response = await POST(
+      jsonRequest({
+        planId: "plan_pro",
+        interval: "year",
+        redirectUrl: "https://app.example/checkout-return?organizationId=org_1",
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({
+      url: "https://stripe.example/checkout/session_1",
+    });
+
+    const [, init] = fetchSpy.mock.calls[0];
+    const upstreamBody = JSON.parse((init as RequestInit).body as string);
+    expect(upstreamBody).toMatchObject({
+      priceId: "price_pro_yearly_env",
+      successUrl:
+        "https://app.example/checkout-return?organizationId=org_1&billing=checkout-success",
+      cancelUrl:
+        "https://app.example/checkout-return?organizationId=org_1&billing=checkout-canceled",
+    });
+  });
+
+  it("rejects cross-origin explicit redirect URLs before creating checkout", async () => {
+    mockedGetAuth.mockResolvedValue(buildAuth(null));
+
+    const { POST } = await loadRoute();
+    const response = await POST(
+      jsonRequest({
+        planId: "plan_pro",
+        interval: "month",
+        redirectUrl: "https://evil.example/checkout-return",
+      }),
+    );
+
+    expect(response.status).toBe(400);
+    expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it("counts org members and forwards them as quantity when seatBased is true", async () => {

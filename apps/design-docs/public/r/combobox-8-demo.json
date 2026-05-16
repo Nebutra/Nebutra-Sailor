@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/combobox-8-demo.tsx",
-      "content": "\"use client\";\n\nimport { Combobox } from \"@nebutra/ui/primitives\";\nexport function Combobox8Demo() {\n  return (\n    <div className=\"gap-4 flex flex-col items-center justify-center\">\n      <Combobox options={[{ value: \"1\", label: \"Option 1\" }]} size=\"sm\" placeholder=\"Small\" />\n      <Combobox\n        options={[{ value: \"1\", label: \"Option 1\" }]}\n        size=\"default\"\n        placeholder=\"Default\"\n      />\n      <Combobox options={[{ value: \"1\", label: \"Option 1\" }]} size=\"lg\" placeholder=\"Large\" />\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { Combobox } from \"@nebutra/ui/primitives\";\nexport function Combobox8Demo() {\n  return (\n    <div className=\"gap-4 flex flex-col items-center justify-center\">\n      <Combobox options={[{ value: \"1\", label: \"Option 1\" }]} size=\"small\" placeholder=\"Small\" />\n      <Combobox options={[{ value: \"1\", label: \"Option 1\" }]} size=\"medium\" placeholder=\"Default\" />\n      <Combobox options={[{ value: \"1\", label: \"Option 1\" }]} size=\"large\" placeholder=\"Large\" />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

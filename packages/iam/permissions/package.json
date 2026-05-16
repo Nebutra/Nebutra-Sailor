@@ -12,7 +12,7 @@
       "or OPENFGA_API_URL + OPENFGA_STORE_ID for Zanzibar-style"
     ],
     "gaps": [
-      "OpenFGA adapter is a stub"
+      "OpenFGA model and tuple lifecycle management remain external"
     ],
     "featureId": "permissions",
     "category": "iam",

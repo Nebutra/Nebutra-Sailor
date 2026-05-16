@@ -1,11 +1,4 @@
-import {
-  Email as AtSign,
-  Dollar as DollarSign,
-  Eye,
-  EyeOff,
-  Envelope as Mail,
-  MagnifyingGlass as Search,
-} from "@nebutra/icons";
+import { Dollar as DollarSign, Envelope as Mail, MagnifyingGlass as Search } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
@@ -19,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Text input control. h-10 (40px) locked per component tokens. Supports prefix/suffix adornments and a built-in clearable mode.",
+          "Token-driven single-line text input. Supports strict labelled usage, helper/error text, non-interactive affixes, clearable search, and shortcut hints.",
       },
     },
   },
@@ -27,15 +20,21 @@ const meta = {
   argTypes: {
     type: {
       control: "select",
-      options: ["text", "email", "password", "number", "search", "tel", "url"],
+      options: ["text", "email", "password", "number", "search", "tel", "url", "file"],
+    },
+    size: {
+      control: "select",
+      options: ["sm", "md", "lg"],
     },
     placeholder: { control: "text" },
     disabled: { control: "boolean" },
     clearable: { control: "boolean" },
+    loading: { control: "boolean" },
+    revealable: { control: "boolean" },
   },
   decorators: [
     (Story) => (
-      <div className="w-72">
+      <div className="w-80">
         <Story />
       </div>
     ),
@@ -45,220 +44,230 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ─── Sizes ────────────────────────────────────────────────────────────────────
+function ClearableSearchDemo() {
+  const [value, setValue] = useState("build logs");
 
-export const Sizes: Story = {
-  render: () => (
-    <div className="flex flex-col gap-3 w-72">
-      <Input size="sm" placeholder="Small" />
-      <Input size="md" placeholder="Default" />
-      <Input size="lg" placeholder="Large" />
-    </div>
-  ),
-};
+  return (
+    <Input
+      aria-label="Search logs"
+      type="search"
+      value={value}
+      onValueChange={setValue}
+      prefix={<Search aria-hidden="true" />}
+      clearable
+      placeholder="Search logs"
+    />
+  );
+}
 
-// ─── Base States ──────────────────────────────────────────────────────────────
+function SearchShortcutDemo() {
+  const [value, setValue] = useState("");
+
+  return (
+    <Input
+      aria-label="Search commands"
+      type="search"
+      value={value}
+      onValueChange={setValue}
+      prefix={<Search aria-hidden="true" />}
+      shortcut="⌘K"
+      placeholder="Search commands"
+    />
+  );
+}
 
 export const Default: Story = {
-  args: { placeholder: "Enter value…", type: "text" },
+  args: {
+    "aria-label": "Project name",
+    placeholder: "my-awesome-project",
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const input = canvas.getByRole("textbox", { name: "Project name" });
 
-    // Get the input element and focus it
-    const input = canvas.getByRole("textbox");
     await userEvent.click(input);
+    await userEvent.type(input, "hello-world");
 
-    // Type "hello world" into the input
-    await userEvent.type(input, "hello world");
-
-    // Verify the input value is "hello world"
-    expect(input).toHaveValue("hello world");
-
-    // Clear the input with triple-click to select all, then Delete
-    await userEvent.tripleClick(input);
-    await userEvent.keyboard("{Delete}");
-
-    // Verify the input is now empty
-    expect(input).toHaveValue("");
+    expect(input).toHaveValue("hello-world");
   },
 };
 
-export const WithValue: Story = {
-  args: { defaultValue: "contact@nebutra.com", type: "email" },
-};
-
-export const Password: Story = {
-  args: { placeholder: "Password", type: "password" },
-};
-
-export const Disabled: Story = {
-  args: { placeholder: "Disabled input", disabled: true },
-};
-
-// ─── Labelled Field ───────────────────────────────────────────────────────────
-
-export const WithLabel: Story = {
+export const AllSizes: Story = {
   render: () => (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-foreground" htmlFor="email-field">
-        Email address
-      </label>
-      <Input id="email-field" type="email" placeholder="contact@nebutra.com" />
+    <div className="flex flex-col gap-3">
+      <Input aria-label="Small project slug" size="sm" placeholder="Small" />
+      <Input aria-label="Default project slug" placeholder="Default" />
+      <Input aria-label="Large project slug" size="lg" placeholder="Large" />
     </div>
   ),
 };
 
-export const WithError: Story = {
-  render: () => (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-foreground" htmlFor="error-field">
-        Email address
-      </label>
-      <Input
-        id="error-field"
-        type="email"
-        defaultValue="not-an-email"
-        className="border-destructive focus-visible:ring-destructive"
-        aria-invalid="true"
-      />
-      <p className="text-xs text-destructive">Please enter a valid email address.</p>
-    </div>
-  ),
-};
-
-// ─── Prefix ───────────────────────────────────────────────────────────────────
-
-export const WithPrefix: Story = {
-  name: "Prefix — Search icon",
-  render: () => (
-    <Input prefix={<Search className="h-4 w-4" />} placeholder="Search…" type="search" />
-  ),
-};
-
-export const WithEmailPrefix: Story = {
-  name: "Prefix — Mail icon",
-  render: () => (
-    <Input prefix={<Mail className="h-4 w-4" />} type="email" placeholder="contact@nebutra.com" />
-  ),
-};
-
-// ─── Suffix ───────────────────────────────────────────────────────────────────
-
-export const WithSuffix: Story = {
-  name: "Suffix — Domain text",
-  render: () => (
-    <Input suffix={<span className="text-xs">@nebutra.com</span>} placeholder="username" />
-  ),
-};
-
-export const WithAtSuffix: Story = {
-  name: "Suffix — @ icon",
-  render: () => <Input suffix={<AtSign className="h-4 w-4" />} placeholder="username" />,
-};
-
-// ─── Clearable ────────────────────────────────────────────────────────────────
-
-export const Clearable: Story = {
-  name: "Clearable (uncontrolled)",
-  render: () => (
-    <Input clearable defaultValue="contact@nebutra.com" placeholder="Type to see the × button…" />
-  ),
-};
-
-export const ClearableControlled: Story = {
-  name: "Clearable (controlled)",
-  render: () => {
-    const [value, setValue] = useState("contact@nebutra.com");
-    return (
-      <div className="flex flex-col gap-1.5">
-        <Input
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          clearable
-          onClear={() => setValue("")}
-          placeholder="Controlled clearable…"
-        />
-        <p className="text-xs text-muted-foreground">
-          Value: <code className="font-mono">{value === "" ? "(empty)" : value}</code>
-        </p>
-      </div>
-    );
-  },
-};
-
-// ─── Combinations ─────────────────────────────────────────────────────────────
-
-export const SearchWithClearable: Story = {
-  name: "Prefix + Clearable",
-  render: () => <Input prefix={<Search className="h-4 w-4" />} clearable placeholder="Search…" />,
-};
-
-export const CurrencyInput: Story = {
-  name: "Prefix + Suffix (currency)",
+export const WithLabelAndDescription: Story = {
   render: () => (
     <Input
-      prefix={<DollarSign className="h-4 w-4" />}
-      suffix={<span className="text-xs font-medium">USD</span>}
-      type="number"
-      placeholder="0.00"
+      id="project-name"
+      label="Project Name"
+      placeholder="my-awesome-project"
+      description="Use lowercase letters, numbers, and hyphens."
     />
   ),
 };
 
-export const PasswordReveal: Story = {
-  name: "Suffix — password reveal",
-  render: () => {
-    const [shown, setShown] = useState(false);
-    const Icon = shown ? EyeOff : Eye;
-    return (
-      <div className="relative">
-        <Input
-          type={shown ? "text" : "password"}
-          placeholder="Enter password…"
-          suffix={undefined}
-          // Interactive suffix: built manually for full pointer-events control
-          className="pr-9"
-        />
-        <button
-          type="button"
-          aria-label={shown ? "Hide password" : "Show password"}
-          onClick={() => setShown((v) => !v)}
-          className="absolute right-2 top-1/2 -translate-y-1/2 flex h-5 w-5 items-center justify-center rounded text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-        >
-          <Icon className="h-3.5 w-3.5" />
-        </button>
-      </div>
-    );
-  },
+export const ErrorState: Story = {
+  render: () => (
+    <Input
+      id="domain"
+      label="Domain"
+      defaultValue="not a domain"
+      error="Domain must be a valid hostname."
+    />
+  ),
 };
 
-// ─── Shortcut (KK) ────────────────────────────────────────────────────────────
-
-export const Shortcut: Story = {
-  name: "Shortcut / KK",
+export const PrefixAndSuffix: Story = {
   render: () => (
-    <div className="flex flex-col gap-3 w-72">
-      <Input placeholder="Search commands…" shortcut="⌘K" />
-      <p className="text-xs text-muted-foreground">
-        Type to see the shortcut badge transition to a loading spinner.
-      </p>
+    <div className="flex flex-col gap-3">
+      <Input
+        aria-label="Search projects"
+        type="search"
+        prefix={<Search aria-hidden="true" />}
+        placeholder="Search projects"
+      />
+      <Input
+        aria-label="Repository URL"
+        prefix="https://"
+        suffix=".vercel.app"
+        placeholder="my-project"
+      />
+      <Input
+        aria-label="Monthly spend"
+        type="number"
+        prefix={<DollarSign aria-hidden="true" />}
+        suffix="USD"
+        placeholder="0.00"
+      />
+      <Input
+        aria-label="Team email"
+        type="email"
+        prefix={<Mail aria-hidden="true" />}
+        placeholder="team@example.com"
+      />
     </div>
   ),
 };
 
-// ─── All Types ────────────────────────────────────────────────────────────────
-
-export const AllTypes: Story = {
-  name: "All Types",
+export const Disabled: Story = {
   render: () => (
-    <div className="flex flex-col gap-3 w-72">
-      <Input type="text" placeholder="Text" />
-      <Input type="email" placeholder="Email" />
-      <Input type="password" placeholder="Password" />
-      <Input type="number" placeholder="Number" />
-      <Input type="search" placeholder="Search…" />
-      <Input type="tel" placeholder="Phone" />
-      <Input type="url" placeholder="https://…" />
+    <div className="flex flex-col gap-3">
+      <Input aria-label="Disabled placeholder" disabled placeholder="Disabled with placeholder" />
+      <Input aria-label="Disabled value" disabled value="Disabled with value" readOnly />
+      <Input
+        aria-label="Disabled with prefix"
+        disabled
+        prefix="https://"
+        placeholder="disabled-project"
+      />
+      <Input aria-label="Disabled with suffix" disabled suffix=".com" placeholder="example" />
+    </div>
+  ),
+};
+
+export const ClearableSearch: Story = {
+  render: () => <ClearableSearchDemo />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole("searchbox", { name: "Search logs" });
+    const clear = canvas.getByRole("button", { name: "Clear input" });
+
+    expect(input).toHaveValue("build logs");
+    await userEvent.click(clear);
+    expect(input).toHaveValue("");
+  },
+};
+
+export const SearchShortcut: Story = {
+  render: () => <SearchShortcutDemo />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole("searchbox", { name: "Search commands" });
+
+    await userEvent.click(input);
+    await userEvent.type(input, "deploy");
+    expect(input).toHaveValue("deploy");
+
+    await userEvent.keyboard("{Escape}");
+    expect(input).toHaveValue("");
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    "aria-label": "Saving environment variable",
+    value: "DATABASE_URL",
+    loading: true,
+    readOnly: true,
+  },
+};
+
+export const LongValue: Story = {
+  args: {
+    "aria-label": "Long token",
+    defaultValue: "example_token_nebutra_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    clearable: true,
+  },
+};
+
+export const FileInput: Story = {
+  render: () => (
+    <Input
+      id="config-file"
+      label="Configuration File"
+      type="file"
+      description="Upload a JSON or YAML environment preset."
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText("Configuration File");
+    const file = new File(["{}"], "production.json", { type: "application/json" });
+
+    await userEvent.upload(input, file);
+
+    expect(input).toHaveProperty("files");
+    expect((input as HTMLInputElement).files?.[0]?.name).toBe("production.json");
+  },
+};
+
+export const PasswordReveal: Story = {
+  render: () => (
+    <Input aria-label="Password" type="password" revealable placeholder="Enter password" />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText("Password");
+    const show = canvas.getByRole("button", { name: "Show password" });
+
+    expect(input).toHaveAttribute("type", "password");
+    await userEvent.click(show);
+    expect(input).toHaveAttribute("type", "text");
+    expect(canvas.getByRole("button", { name: "Hide password" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  },
+};
+
+export const DarkMode: Story = {
+  render: () => (
+    <div className="dark rounded-[var(--radius-lg)] border border-border bg-background p-4 text-foreground">
+      <Input
+        id="dark-domain"
+        label="Domain"
+        prefix="https://"
+        suffix=".nebutra.app"
+        defaultValue="docs"
+        description="Dark mode uses the same semantic contract."
+      />
     </div>
   ),
 };

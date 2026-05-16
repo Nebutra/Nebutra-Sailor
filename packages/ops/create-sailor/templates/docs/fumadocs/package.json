@@ -3,10 +3,12 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
+    "predev": "fumadocs-mdx",
     "dev": "next dev -p 3001",
-    "build": "next build",
+    "prebuild": "fumadocs-mdx",
+    "build": "_FUMADOCS_MDX=1 next build",
     "start": "next start -p 3001",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "fumadocs-mdx && _FUMADOCS_MDX=1 next typegen && tsc --noEmit"
   },
   "dependencies": {
     "@nebutra/tokens": "^0.1.0",

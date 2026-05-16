@@ -435,6 +435,19 @@
       "continueCta": "继续",
       "signInCta": "前往登录"
     },
+    "loginSuccess": {
+      "eyebrow": "登录完成",
+      "title": "你已成功登录",
+      "description": "会话已准备就绪。我们正在打开你的工作台，并保留认证流程中的安全交接状态。",
+      "session": "会话",
+      "verified": "已验证",
+      "workspace": "工作台",
+      "preparing": "准备中",
+      "redirecting": "{seconds} 秒后进入工作台",
+      "secureHandoff": "安全交接",
+      "continueCta": "进入工作台",
+      "signInCta": "使用其他账号"
+    },
     "errors": {
       "invalidCredentials": "邮箱或密码错误。",
       "userNotFound": "未找到该邮箱对应的账户。",

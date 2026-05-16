@@ -1,0 +1,50 @@
+---
+title: ThemeToggle
+description: Animated binary icon button for switching between light and dark themes.
+---
+
+## Demo
+
+<ComponentPreview name="theme-toggle-demo" />
+
+## Usage
+
+```tsx
+import { ThemeToggle, type ThemeToggleValue } from "@nebutra/ui/primitives";
+import { useTheme } from "@nebutra/tokens";
+
+function AppThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme();
+  const value: ThemeToggleValue = resolvedTheme === "dark" ? "dark" : "light";
+
+  return <ThemeToggle value={value} onChange={setTheme} />;
+}
+```
+
+## Design Contract
+
+`ThemeToggle` is a binary control for dense surfaces such as navbars, command surfaces, and settings headers. Use `ThemeSwitcher` when the user must choose `system`, `light`, or `dark` explicitly.
+
+The sun/moon morph is owned by the component and uses the motion token rail. It respects `prefers-reduced-motion` by collapsing morph and press transitions.
+
+Sound is opt-in through `sound`. Keep it off for routine product surfaces; only enable it in contexts where audible feedback is already part of the product experience.
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `"light" \| "dark"` | — | Controlled binary theme value. |
+| `defaultValue` | `"light" \| "dark"` | document class or `"light"` | Initial uncontrolled value. |
+| `onChange` | `(value: ThemeToggleValue) => void` | — | Called with the next theme. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Component-tokenized icon button size. |
+| `sound` | `boolean` | `false` | Plays a quiet click after user interaction. |
+| `applyToDocument` | `boolean` | `false` | Toggles `.dark` on `document.documentElement` for standalone usage. |
+| `labels` | `{ light?: string; dark?: string }` | action labels | Accessible action labels. |
+| `className` | `string` | — | Additional classes for the button. |
+
+## Best Practices
+
+- Prefer controlled usage with `@nebutra/tokens` or `next-themes`.
+- Do not use this when `system` preference must be visible; use `ThemeSwitcher`.
+- Keep the control icon-only. Add visible text as a sibling label if the setting is not obvious in context.
+- Do not override the SVG. The morph is the component identity and is tied to accessibility and motion tokens.

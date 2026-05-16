@@ -110,6 +110,21 @@ describe("billing <-> metering integration", () => {
       expect(result.limit).toBe(10_000);
     });
 
+    it("blocks a pending operation that would exceed the plan limit", async () => {
+      await provider.ingest({ tenantId: "org_1", meterId: "ai_tokens", value: 9_950 });
+
+      const result = await checkEntitlementUsage("org_1", "ai_tokens", "FREE", {
+        requested: 100,
+      });
+
+      expect(result.allowed).toBe(false);
+      expect(result.used).toBe(9_950);
+      expect(result.requested).toBe(100);
+      expect(result.projected).toBe(10_050);
+      expect(result.remaining).toBe(50);
+      expect(result.reason).toBe("ai_tokens limit exceeded (10050/10000)");
+    });
+
     it("allows higher usage on PRO than FREE", async () => {
       // FREE limit is 10_000; PRO is 500_000
       await provider.ingest({ tenantId: "org_1", meterId: "ai_tokens", value: 50_000 });

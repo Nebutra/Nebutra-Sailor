@@ -1,117 +1,103 @@
 ---
 title: "右键菜单 (Context Menu)"
-description: "支持图标、快捷键提示、禁用状态和链接模式的右键上下文菜单。"
+description: "用于表格行、文件、画布对象和部署资源的指针定位二级操作菜单。"
 ---
 
-## 概览 (Overview)
+## 概览
 
-`ContextMenu` 是基于 Radix ContextMenu 构建的右键上下文菜单。它支持前缀图标、后缀提示（快捷键/徽章）、禁用项、链接模式以及带有标题的分组。
+`ContextMenu` 是给熟练用户使用的快捷操作入口，服务于右键、长按和键盘菜单键。它基于 Base UI，并使用 Nebutra 的菜单项、弹层和 motion token。它绝不能成为某个操作的唯一入口；每个菜单项都必须在可见的行操作、工具栏菜单或详情面板中有等价入口。
 
-## 安装 (Installation)
+全局动作和搜索用 `CommandMenu`。如果可发现性比右键效率更重要，请使用可见触发器菜单。
 
-<ComponentPreview name="context-menu-demo" className="min-h-[250px] flex justify-center items-center"  />
+<ComponentPreview name="context-menu-demo" className="min-h-[250px] flex justify-center items-center" />
 
+## 用法
 
-### 带有前缀图标 (With prefix icons)
+### 禁用项
 
-<ComponentPreview name="context-menu-with-icons-demo" className="min-h-[250px] flex justify-center items-center"  />
-
-
-### 带有后缀提示（快捷键） (With suffix hints)
+当操作存在但暂时不可用时，保留禁用项。
 
 ```tsx
-<ContextMenu.Item
-  prefix={<Edit2 className="h-4 w-4" />}
-  suffix={<span className="text-xs text-muted-foreground">⌘E</span>}
-  onSelect={() => {}}
->
-  编辑 (Edit)
+<ContextMenu.Item disabled value="promote">
+  Promote to Production
 </ContextMenu.Item>
 ```
 
-### 带有标签和分组 (With labels and sections)
+### 链接项
+
+有导航语义时使用 `href`。链接项会渲染为 Base UI 的 link item，而不是模拟点击。
 
 ```tsx
-<ContextMenu.Content>
-  <ContextMenu.Label>操作 (Actions)</ContextMenu.Label>
-  <ContextMenu.Item onSelect={() => {}}>编辑 (Edit)</ContextMenu.Item>
-  <ContextMenu.Item onSelect={() => {}}>拷贝 (Copy)</ContextMenu.Item>
-  <ContextMenu.Separator />
-  <ContextMenu.Label>危险区域 (Danger)</ContextMenu.Label>
-  <ContextMenu.Item
-    onSelect={() => {}}
-    className="text-destructive focus:text-destructive"
-  >
-    删除 (Delete)
-  </ContextMenu.Item>
-</ContextMenu.Content>
-```
-
-### 链接模式 (Link mode)
-
-带有 `href` 属性的项目将渲染为 `<a>` 标签：
-
-```tsx
-<ContextMenu.Item value="docs" href="/docs" prefix={<Link className="h-4 w-4" />}>
-  文档说明 (Documentation)
+<ContextMenu.Item href="/docs" prefix={<Link className="size-4" />} value="docs">
+  View Documentation
 </ContextMenu.Item>
 ```
 
-### 禁用状态 (Disabled items)
+### 前缀和后缀
+
+<ComponentPreview name="context-menu-with-icons-demo" className="min-h-[250px] flex justify-center items-center" />
 
 ```tsx
-<ContextMenu.Item disabled onSelect={() => {}}>
-  粘贴 (Paste)
+<ContextMenu.Item prefix={<Copy className="size-4" />} value="copy">
+  Copy URL
+  <ContextMenu.Shortcut>⌘C</ContextMenu.Shortcut>
 </ContextMenu.Item>
 ```
 
-## 属性 (Props)
+### Checkbox、Radio 和子菜单
 
-### ContextMenu.Root
+```tsx
+<ContextMenu.CheckboxItem defaultChecked value="status">
+  Status
+</ContextMenu.CheckboxItem>
 
-接受所有 Radix `ContextMenu.Root` 的属性。
+<ContextMenu.RadioGroup defaultValue="comfortable">
+  <ContextMenu.RadioItem value="compact">Compact</ContextMenu.RadioItem>
+  <ContextMenu.RadioItem value="comfortable">Comfortable</ContextMenu.RadioItem>
+</ContextMenu.RadioGroup>
 
-### ContextMenu.Trigger
+<ContextMenu.Sub>
+  <ContextMenu.SubTrigger>Move to Project</ContextMenu.SubTrigger>
+  <ContextMenu.SubContent>
+    <ContextMenu.Item value="core">Core Platform</ContextMenu.Item>
+  </ContextMenu.SubContent>
+</ContextMenu.Sub>
+```
 
-接受所有 Radix `ContextMenu.Trigger` 的属性。使用 `asChild` 可以使任何元素成为触发器。
+## Props
+
+### ContextMenu
+
+`ContextMenu` 本身就是 root 组件，同时保留 `ContextMenu.Root` 兼容既有调用。
 
 ### ContextMenu.Content
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `className` | `string` | — | 额外的 CSS 类名 |
-
-接受所有 Radix `ContextMenu.Content` 的属性。
+接受 Base UI popup props，并额外支持 `align`、`side`、`alignOffset`、`sideOffset`。
 
 ### ContextMenu.Item
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `children` | `ReactNode` | — | 菜单项标签文本 |
-| `onSelect` | `() => void` | — | 电机或键盘选中时触发（对应 Radix 的 `onSelect`）。当设置了 `href` 时不会触发。 |
-| `disabled` | `boolean` | `false` | 禁用交互 |
-| `href` | `string` | — | 将项目渲染为 `<a>` 链接；跳转行为即为选中动作 |
-| `prefix` | `ReactNode` | — | 位于标签前的元素（如图标） |
-| `suffix` | `ReactNode` | — | 位于标签后的元素（如快捷键/徽章） |
-| `className` | `string` | — | 额外的 CSS 类名 |
+| `children` | `ReactNode` | — | 菜单项标签。使用 Title Case Verb + Noun。 |
+| `onSelect` | `BaseContextMenu.Item["onClick"]` | — | 非链接项的激活回调。 |
+| `disabled` | `boolean` | `false` | 禁用交互。 |
+| `href` | `string` | — | 渲染为链接项。 |
+| `prefix` | `ReactNode` | — | 前置图标或头像。 |
+| `suffix` | `ReactNode` | — | 后置提示。快捷键优先用 `ContextMenu.Shortcut`。 |
+| `variant` | `"default" \| "destructive"` | `"default"` | 不可逆操作的危险样式。 |
+| `value` | `string` | — | 稳定的埋点/测试值。 |
 
-### ContextMenu.Label
+## 设计原则
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — | 标签文本内容 |
-| `className` | `string` | — | 额外的 CSS 类名 |
+- Context menu 用于加速二级操作，不替代可见控件。
+- 标签使用 Title Case Verb + Noun：`Copy URL`、`Delete Deployment`、`Open in New Tab`。
+- 只有打开后续对话框时才使用省略号，例如 `Rename Deployment...`。
+- 危险操作放在底部并用分隔线隔开。不要把危险操作藏进子菜单。
+- 子菜单最多一层；层级过深会让键盘导航变脆弱。
 
-### ContextMenu.Separator (分割线)
+## 可访问性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `className` | `string` | — | 额外的 CSS 类名 |
-
-## 无障碍支持 (Accessibility)
-
-- 基于 Radix ContextMenu 构建 —— 完全支持键盘导航。
-- 使用方向键在菜单项间移动；`Enter` 或 `Space` 键进行选中。
-- `Escape` 键关闭菜单。
-- 键盘导航会自动跳过禁用项。
-- 屏幕阅读器通过 `role="menu"` 识别菜单，通过 `role="menuitem"` 识别菜单项。
+- 右键、长按和键盘菜单键应暴露同一组操作。
+- 方向键移动焦点；`Enter`/`Space` 激活；`Escape` 关闭并返回焦点。
+- 禁用项保持可读，但不可激活。
+- 触发区域应限定在具体行/对象，而不是整个页面。

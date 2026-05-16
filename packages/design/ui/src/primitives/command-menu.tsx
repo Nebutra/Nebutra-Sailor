@@ -9,6 +9,7 @@ import type {
   CommandInputProps,
   CommandItemProps,
   CommandListProps,
+  CommandResultsProps,
   CommandSeparatorProps,
   CommandShortcutProps,
 } from "./command";
@@ -19,8 +20,10 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandResults,
   CommandSeparator,
   CommandShortcut,
+  commandFrameClassName,
 } from "./command";
 import { DialogOverlay, DialogPortal } from "./dialog";
 
@@ -35,13 +38,28 @@ export interface CommandMenuRootProps {
   setOpen: (open: boolean) => void;
   /** Accessible label announced by screen readers (defaults to "Command Menu") */
   label?: string;
+  /** Optional hidden description for assistive technology */
+  description?: string;
+  /** Additional classes for the overlay panel */
+  className?: string;
+  /** Additional classes for the cmdk frame */
+  commandClassName?: string;
   children?: React.ReactNode;
 }
 
-export interface CommandMenuItemProps extends Omit<CommandItemProps, "onSelect"> {
-  /** Callback invoked when the item is selected (click or Enter) */
+export interface CommandMenuItemProps extends CommandItemProps {
+  /** Callback invoked when the item is selected. Prefer `onSelect` for new code. */
   callback?: () => void;
 }
+
+const commandMenuSurfaceClassName = cn(
+  "fixed left-[50%] top-[18vh] z-50 w-[calc(100vw-2rem)] max-w-xl translate-x-[-50%]",
+  "overflow-hidden rounded-[var(--radius-lg)] border border-border/70 bg-popover text-popover-foreground shadow-2xl",
+  "transition-[opacity,transform,display] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)]",
+  "data-starting-style:translate-y-[-0.5rem] data-starting-style:scale-95 data-starting-style:opacity-0",
+  "data-ending-style:translate-y-[-0.5rem] data-ending-style:scale-95 data-ending-style:opacity-0",
+  "motion-reduce:transition-none motion-reduce:data-starting-style:transform-none motion-reduce:data-ending-style:transform-none",
+);
 
 // =============================================================================
 // CommandMenuRoot
@@ -51,38 +69,22 @@ export function CommandMenuRoot({
   open,
   setOpen,
   label = "Command Menu",
+  description,
+  className,
+  commandClassName,
   children,
 }: CommandMenuRootProps) {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <DialogPortal>
         <DialogOverlay />
-        <Dialog.Popup
-          className={cn(
-            "fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%]",
-            "overflow-hidden rounded-[var(--radius-lg)] border bg-background shadow-lg",
-            "duration-200",
-            "data-[state=open]:animate-in data-[state=closed]:animate-out",
-            "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-            "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
-          )}
-        >
+        <Dialog.Popup className={cn(commandMenuSurfaceClassName, className)}>
           {/* Visually-hidden title for screen reader accessibility (WCAG 4.1.2) */}
           <Dialog.Title className="sr-only">{label}</Dialog.Title>
-          <Command
-            className={cn(
-              "[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium",
-              "[&_[cmdk-group-heading]]:text-muted-foreground",
-              "[&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0",
-              "[&_[cmdk-group]]:px-2",
-              "[&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5",
-              "[&_[cmdk-input]]:h-12",
-              "[&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3",
-              "[&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5",
-            )}
-          >
-            {children}
-          </Command>
+          {description ? (
+            <Dialog.Description className="sr-only">{description}</Dialog.Description>
+          ) : null}
+          <Command className={cn(commandFrameClassName, commandClassName)}>{children}</Command>
         </Dialog.Popup>
       </DialogPortal>
     </Dialog.Root>
@@ -97,9 +99,17 @@ CommandMenuRoot.displayName = "CommandMenu.Root";
 export const CommandMenuItem = React.forwardRef<
   React.ElementRef<typeof CommandItem>,
   CommandMenuItemProps
->(({ callback, className, ...props }, ref) => (
-  <CommandItem ref={ref} onSelect={() => callback?.()} className={className} {...props} />
-));
+>(({ callback, className, onSelect, ...props }, ref) => {
+  const handleSelect = React.useCallback(
+    (value: string) => {
+      onSelect?.(value);
+      callback?.();
+    },
+    [callback, onSelect],
+  );
+
+  return <CommandItem ref={ref} onSelect={handleSelect} className={className} {...props} />;
+});
 CommandMenuItem.displayName = "CommandMenu.Item";
 
 // =============================================================================
@@ -123,6 +133,12 @@ export const CommandMenuEmpty = React.forwardRef<
   CommandEmptyProps
 >((props, ref) => <CommandEmpty ref={ref} {...props} />);
 CommandMenuEmpty.displayName = "CommandMenu.Empty";
+
+export const CommandMenuResults = React.forwardRef<
+  React.ElementRef<typeof CommandResults>,
+  CommandResultsProps
+>((props, ref) => <CommandResults ref={ref} {...props} />);
+CommandMenuResults.displayName = "CommandMenu.Results";
 
 export const CommandMenuGroup = React.forwardRef<
   React.ElementRef<typeof CommandGroup>,
@@ -170,6 +186,7 @@ export const CommandMenu = {
   Input: CommandMenuInput,
   List: CommandMenuList,
   Empty: CommandMenuEmpty,
+  Results: CommandMenuResults,
   Group: CommandMenuGroup,
   Item: CommandMenuItem,
   Shortcut: CommandMenuShortcut,

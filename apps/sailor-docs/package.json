@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "fumadocs-mdx",
     "dev": "next dev --port 3004",
-    "build": "next build",
+    "prebuild": "fumadocs-mdx",
+    "build": "_FUMADOCS_MDX=1 next build",
     "start": "next start",
-    "typecheck": "next typegen && fumadocs-mdx && tsc --noEmit",
+    "typecheck": "fumadocs-mdx && _FUMADOCS_MDX=1 next typegen && tsc --noEmit",
     "clean": "rm -rf .next"
   },
   "dependencies": {

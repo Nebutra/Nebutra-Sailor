@@ -5,6 +5,54 @@ import type { TenantResolver } from "./types";
 // Tenant Resolution Strategies
 // =============================================================================
 
+type HeaderMap = Record<string, string | string[] | undefined>;
+type ResolverInput = Parameters<TenantResolver>[0];
+
+function isRequest(req: ResolverInput): req is Request {
+  return typeof Request !== "undefined" && req instanceof Request;
+}
+
+function getHeader(headers: Headers | HeaderMap | undefined, headerName: string): string | null {
+  if (!headers) return null;
+
+  if (headers instanceof Headers) {
+    return headers.get(headerName);
+  }
+
+  const normalizedHeaderName = headerName.toLowerCase();
+  const entry = Object.entries(headers).find(
+    ([name]) => name.toLowerCase() === normalizedHeaderName,
+  );
+
+  const value = entry?.[1];
+  if (typeof value === "string") return value;
+  if (Array.isArray(value)) return value[0] ?? null;
+
+  return null;
+}
+
+function getUrlString(req: ResolverInput): string | null {
+  const url = req.url;
+  if (!url) return null;
+  return url instanceof URL ? url.toString() : url;
+}
+
+function getJwtToken(req: ResolverInput): string | null {
+  const explicitToken = isRequest(req) ? null : req.token;
+  if (explicitToken) return explicitToken;
+
+  const authorization = getHeader(req.headers, "authorization");
+  const match = authorization?.match(/^Bearer\s+(.+)$/i);
+  return match?.[1]?.trim() || null;
+}
+
+function decodeJwtPayload(token: string): Record<string, unknown> | null {
+  const parts = token.split(".");
+  if (parts.length !== 3 || !parts[1]) return null;
+
+  return JSON.parse(Buffer.from(parts[1], "base64url").toString("utf8")) as Record<string, unknown>;
+}
+
 /**
  * Extract tenant ID from an HTTP header.
  *
@@ -21,21 +69,11 @@ import type { TenantResolver } from "./types";
  */
 export function fromHeader(headerName: string = "x-tenant-id"): TenantResolver {
   return (req) => {
-    if (!req.headers) return null;
-
-    const value = req.headers[headerName.toLowerCase()];
+    const value = getHeader(req.headers, headerName);
 
     if (typeof value === "string") {
       logger.debug("Tenant resolved from header", { headerName, tenantId: value });
       return value;
-    }
-
-    if (Array.isArray(value)) {
-      const first = value[0];
-      if (first) {
-        logger.debug("Tenant resolved from header array", { headerName, tenantId: first });
-        return first;
-      }
     }
 
     return null;
@@ -61,10 +99,11 @@ export function fromSubdomain(pattern: string): TenantResolver {
   const regex = new RegExp(pattern, "i");
 
   return (req) => {
-    if (!req.url) return null;
+    const urlString = getUrlString(req);
+    if (!urlString) return null;
 
     try {
-      const url = new URL(req.url);
+      const url = new URL(urlString);
       const hostname = url.hostname;
       const match = hostname.match(regex);
 
@@ -73,7 +112,7 @@ export function fromSubdomain(pattern: string): TenantResolver {
         return match[1];
       }
     } catch (_err) {
-      logger.warn("Failed to parse URL for subdomain extraction", { url: req.url });
+      logger.warn("Failed to parse URL for subdomain extraction", { url: urlString });
     }
 
     return null;
@@ -101,10 +140,11 @@ export function fromPath(prefix: string): TenantResolver {
   const regex = new RegExp(`^${pattern}`);
 
   return (req) => {
-    if (!req.url) return null;
+    const urlString = getUrlString(req);
+    if (!urlString) return null;
 
     try {
-      const url = new URL(req.url);
+      const url = new URL(urlString);
       const pathname = url.pathname;
       const match = pathname.match(regex);
 
@@ -113,7 +153,7 @@ export function fromPath(prefix: string): TenantResolver {
         return match[1];
       }
     } catch (_err) {
-      logger.warn("Failed to parse URL for path extraction", { url: req.url });
+      logger.warn("Failed to parse URL for path extraction", { url: urlString });
     }
 
     return null;
@@ -137,14 +177,14 @@ export function fromPath(prefix: string): TenantResolver {
  */
 export function fromJwtClaim(claimName: string): TenantResolver {
   return (req) => {
-    if (!req.token) return null;
+    const token = getJwtToken(req);
+    if (!token) return null;
 
     try {
       // Decode JWT without verification (signature should be verified upstream)
-      const parts = req.token.split(".");
-      if (parts.length !== 3) return null;
+      const payload = decodeJwtPayload(token);
+      if (!payload) return null;
 
-      const payload = JSON.parse(Buffer.from(parts[1]!, "base64").toString("utf8"));
       const value = payload[claimName];
 
       if (typeof value === "string") {
@@ -179,10 +219,11 @@ export function fromJwtClaim(claimName: string): TenantResolver {
  */
 export function fromApiKey(lookupFn: (apiKey: string) => Promise<string | null>): TenantResolver {
   return async (req) => {
-    if (!req.apiKey) return null;
+    const apiKey = isRequest(req) ? null : req.apiKey;
+    if (!apiKey) return null;
 
     try {
-      const tenantId = await lookupFn(req.apiKey);
+      const tenantId = await lookupFn(apiKey);
       if (tenantId) {
         logger.debug("Tenant resolved from API key");
         return tenantId;

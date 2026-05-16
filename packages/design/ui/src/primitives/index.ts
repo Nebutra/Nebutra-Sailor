@@ -82,7 +82,6 @@ export * from "./box";
 export * from "./brand-mark";
 export * from "./breadcrumb";
 export * from "./browser-mockup";
-export * from "./bubble-text";
 // Dashboard patterns (migrated from production)
 export * from "./bulk-action-bar";
 export {
@@ -306,6 +305,7 @@ export * from "./message-content";
  *   via `npx shadcn@latest add ...`. See docs/architecture/2026-05-14-registry-dual-track-distribution.md.
  */
 export * from "./metric-card";
+export * from "./middle-truncate";
 export * from "./multiple-selector";
 export * from "./navigation-menu";
 export * from "./neuro-noise-bg";

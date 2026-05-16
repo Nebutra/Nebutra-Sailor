@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { cn } from "../utils/cn";
 
 export type ThemeSwitcherValue = "light" | "dark" | "system";
+type ThemeSwitcherIcon = React.ElementType<{ className?: string }>;
 
 export interface ThemeSwitcherProps {
   /** Current theme value */
@@ -19,9 +20,9 @@ export interface ThemeSwitcherProps {
   className?: string;
   /** Custom icons for each theme */
   icons?: {
-    system?: React.ElementType;
-    light?: React.ElementType;
-    dark?: React.ElementType;
+    system?: ThemeSwitcherIcon;
+    light?: ThemeSwitcherIcon;
+    dark?: ThemeSwitcherIcon;
   };
   /** Labels for accessibility */
   labels?: {
@@ -35,7 +36,7 @@ const DEFAULT_ICONS = {
   system: Monitor,
   light: Sun,
   dark: Moon,
-};
+} satisfies Record<ThemeSwitcherValue, ThemeSwitcherIcon>;
 
 const DEFAULT_LABELS = {
   system: "System theme",
@@ -87,7 +88,7 @@ export function ThemeSwitcher({
 
   const themes: Array<{
     key: ThemeSwitcherValue;
-    icon: React.ElementType;
+    icon: ThemeSwitcherIcon;
     label: string;
   }> = [
     {
@@ -144,9 +145,7 @@ export function ThemeSwitcher({
         className,
       )}
     >
-      {themes.map(({ key, icon: IconRaw, label }) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const Icon = IconRaw as any;
+      {themes.map(({ key, icon: Icon, label }) => {
         const isActive = currentValue === key;
 
         return (

@@ -196,10 +196,6 @@
       "type": "registry:example"
     },
     {
-      "name": "bubble-text-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "button-demo",
       "type": "registry:example"
     },
@@ -648,6 +644,10 @@
       "type": "registry:example"
     },
     {
+      "name": "kbd-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "label-2-demo",
       "type": "registry:example"
     },
@@ -725,6 +725,10 @@
     },
     {
       "name": "message-with-reactions-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "middle-truncate-demo",
       "type": "registry:example"
     },
     {
@@ -1065,6 +1069,10 @@
     },
     {
       "name": "theme-switcher-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "theme-toggle-demo",
       "type": "registry:example"
     },
     {

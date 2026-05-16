@@ -1,5 +1,6 @@
 "use client";
 
+import { LogomarkSVG } from "@nebutra/brand";
 import { Buildings as Building2, Home, SettingsGear as Settings, Users } from "@nebutra/icons";
 
 export function SidebarDemo() {
@@ -8,9 +9,7 @@ export function SidebarDemo() {
       {/* Mock Sidebar */}
       <div className="w-64 flex h-full flex-col border-r bg-muted/30">
         <div className="p-4 gap-2 flex items-center border-b">
-          <div className="w-6 h-6 rounded font-bold text-xs flex items-center justify-center bg-primary text-primary-foreground">
-            N
-          </div>
+          <LogomarkSVG width={24} height={24} className="text-[var(--brand-primary)]" />
           <span className="font-semibold text-sm">Nebutra App</span>
         </div>
 

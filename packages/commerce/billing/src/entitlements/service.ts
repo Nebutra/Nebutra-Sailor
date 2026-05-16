@@ -1,3 +1,4 @@
+import { evaluateUsageLimit } from "@nebutra/metering";
 import type { Plan } from "../types";
 import { DEFAULT_PLAN_LIMITS, DEFAULT_USAGE_PRICING, EntitlementError } from "../types";
 import { getUsage } from "../usage/service";
@@ -245,11 +246,20 @@ export interface UsageEntitlementResult {
   meterId: string;
   plan: Plan;
   used: number;
+  /** Usage requested by the pending operation being checked. */
+  requested: number;
+  /** Usage after applying the pending operation. */
+  projected: number;
   /** Plan limit. `-1` means unlimited (ENTERPRISE). */
   limit: number;
   /** Remaining quota (`Infinity` when `limit === -1`). */
   remaining: number;
   reason?: string;
+}
+
+export interface CheckEntitlementUsageOptions {
+  /** Usage that would be consumed by the operation about to run. */
+  requested?: number;
 }
 
 /**
@@ -272,6 +282,7 @@ export async function checkEntitlementUsage(
   organizationId: string,
   meterId: string,
   plan: Plan,
+  options: CheckEntitlementUsageOptions = {},
 ): Promise<UsageEntitlementResult> {
   const limitField = METER_TO_PLAN_LIMIT[meterId];
   if (!limitField) {
@@ -283,30 +294,23 @@ export async function checkEntitlementUsage(
 
   const limit = DEFAULT_PLAN_LIMITS[plan][limitField] as number;
   const used = await getUsage(organizationId, meterId, { period: "monthly" });
-
-  // Unlimited plan (-1) → always allowed
-  if (limit === -1) {
-    return {
-      allowed: true,
-      meterId,
-      plan,
-      used,
-      limit: -1,
-      remaining: Number.POSITIVE_INFINITY,
-    };
-  }
-
-  const remaining = Math.max(0, limit - used);
-  const allowed = used < limit;
+  const quota = evaluateUsageLimit({
+    meterId,
+    used,
+    requested: options.requested ?? 0,
+    limit,
+  });
 
   return {
-    allowed,
+    allowed: quota.allowed,
     meterId,
     plan,
     used,
+    requested: quota.requested,
+    projected: quota.projected,
     limit,
-    remaining,
-    ...(allowed ? {} : { reason: `${meterId} limit exceeded (${used}/${limit})` }),
+    remaining: quota.remaining,
+    ...(quota.reason ? { reason: quota.reason } : {}),
   };
 }
 
@@ -317,8 +321,9 @@ export async function requireEntitlementUsage(
   organizationId: string,
   meterId: string,
   plan: Plan,
+  options: CheckEntitlementUsageOptions = {},
 ): Promise<void> {
-  const result = await checkEntitlementUsage(organizationId, meterId, plan);
+  const result = await checkEntitlementUsage(organizationId, meterId, plan, options);
   if (!result.allowed) {
     throw new EntitlementError(result.reason ?? "Usage limit exceeded", "USAGE_LIMIT_EXCEEDED");
   }

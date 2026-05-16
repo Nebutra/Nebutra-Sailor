@@ -12,8 +12,8 @@
     ],
     "gaps": [
       "No production app integrations",
-      "Provider adapters not wired (vercel-flags, growthbook, configcat)",
-      "Gradual rollout logic pending"
+      "Managed providers not wired to real Vercel Flags/GrowthBook/ConfigCat clients",
+      "No rollout dashboard or persisted rule store"
     ]
   },
   "main": "./src/index.ts",

@@ -1,12 +1,11 @@
 ---
 title: "抽屉 (Drawer)"
-description: "锚定在视口边缘的滑入式面板覆盖层，基于 Vaul 构建。"
+description: "用于移动端短流程的底部抽屉，基于 Vaul 构建。"
 ---
 
 ## 演示 (Demo)
 
-<ComponentPreview name="drawer-demo" className="min-h-[300px] flex justify-center items-center" />
-
+<ComponentPreview name="drawer-demo" className="min-h-[320px] flex justify-center items-center" />
 
 ## 使用方法 (Usage)
 
@@ -18,12 +17,18 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerDescription,
+  DrawerBody,
   DrawerFooter,
   DrawerClose,
-  DrawerPortal,
-  DrawerOverlay,
 } from "@nebutra/ui/primitives"
 ```
+
+## 设计原则 (Design Principles)
+
+- Drawer 是移动端 bottom sheet，用于短而聚焦的任务：筛选、单步表单、一个主操作加 Cancel。
+- 不用 Drawer 承载删除、吊销这类破坏性确认；这类流程使用 Modal。
+- 桌面侧向上下文使用 Sheet。侧向 Drawer 只为历史调用保持类型兼容，新流程不要继续使用。
+- 可滚动内容放进 `DrawerBody`，抽屉打开时页面背后的滚动不能泄漏。
 
 ## 属性 (Props)
 
@@ -31,34 +36,37 @@ import {
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `open` | `boolean` | — | 受控的打开状态 |
-| `onOpenChange` | `(open: boolean) => void` | — | 打开状态改变时的回调函数 |
-| `direction` | `"top" \| "bottom" \| "left" \| "right"` | `"bottom"` | 滑入方向 |
-| `shouldScaleBackground` | `boolean` | `false` | 抽屉打开时是否缩放背景 |
+| `open` | `boolean` | — | 受控打开状态 |
+| `show` | `boolean` | — | Geist 兼容的受控打开别名 |
+| `onOpenChange` | `(open: boolean) => void` | — | 打开状态变化回调 |
+| `onDismiss` | `() => void` | — | 通过 Escape、外部点击、下滑或关闭控件关闭时触发 |
+| `height` | `number \| string` | `80vh` | 限制底部抽屉高度；数字会转为 px |
+| `customHeight` | `number \| string` | — | 需要自定义高度框架时的 `height` 别名 |
+| `dismissible` | `boolean` | `true` | 是否允许外部点击和下滑关闭 |
+| `direction` | `"bottom" \| "top" \| "left" \| "right"` | `"bottom"` | 优先使用 `bottom`；侧向面板使用 Sheet |
 
 ### DrawerContent (抽屉内容)
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `className` | `string` | — | 额外的 CSS 类名 |
-| `children` | `ReactNode` | — | 抽屉内容 |
+| `height` | `number \| string` | 继承根组件 | 覆盖当前内容高度 |
+| `verticalScroll` | `boolean` | `true` | 将滚动限制在抽屉内部 |
+| `showHandle` | `boolean` | `true` | 显示底部抽屉拖拽把手 |
 
 ## 示例 (Examples)
 
 ### 受控抽屉 (Controlled Drawer)
 
-<ComponentPreview name="drawer-2-demo" className="min-h-[200px] flex justify-center items-center" />
+<ComponentPreview name="drawer-2-demo" className="min-h-[260px] flex justify-center items-center" />
 
+### 可滚动抽屉 (Scrollable Drawer)
 
-### 右侧抽屉 (Right-Side Drawer)
-
-<ComponentPreview name="drawer-3-demo" className="min-h-[250px] flex justify-center items-center" />
-
+<ComponentPreview name="drawer-3-demo" className="min-h-[320px] flex justify-center items-center" />
 
 ## 可访问性 (Accessibility)
 
-- 基于 Vaul 构建 — 提供带有 `aria-modal="true"` 的 `role="dialog"`。
-- `DrawerTitle` 通过 `aria-labelledby` 进行关联。
-- 抽屉打开时，焦点被锁定在抽屉内。
-- 按下 `Escape` 键可关闭抽屉并将焦点返回到触发器。
-- 在移动设备上，支持拖拽关闭手势。
+- 基于 Vaul 构建，提供 dialog 语义与焦点陷阱。
+- `DrawerTitle` 和 `DrawerDescription` 提供可访问名称与说明。
+- Escape 会关闭抽屉，并把焦点返回触发器。
+- 打开时锁定页面滚动，可滚动内容保留在 `DrawerBody` 内。
+- 除非表单有未保存输入，否则保留外部点击和下滑关闭。

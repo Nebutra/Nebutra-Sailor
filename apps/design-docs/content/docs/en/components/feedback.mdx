@@ -1,107 +1,118 @@
 ---
 title: "Feedback"
-description: "Gather text feedback with an associated emotion. Supports a trigger-button popover and an inline reaction bar."
+description: "Gather text feedback with an associated emotion, optional triage topic, and metadata."
 ---
 
 ## Demo
 
-<ComponentPreview name="feedback-demo"  />
-
+<ComponentPreview name="feedback-demo" />
 
 ## Overview
 
-`Feedback` is a self-contained feedback widget. It supports two display modes:
+`Feedback` is a compact feedback primitive for the end of a page, doc, or completed flow. It is not a support form, bug intake, or NPS replacement.
 
-- **default** — A "Feedback" trigger button that opens a floating popover panel with a textarea, optional topic select, and emotion buttons.
-- **inline** — An inline "Was this helpful?" bar with emotion icons. Clicking an emotion expands the form in-place.
-
-Submission is handled via the `onSubmit` callback — you are responsible for sending the payload to your backend. Use `dryRun` during UI development to skip the callback.
+Submit closes the panel and returns focus to the trigger. That close is the acknowledgment; do not replace the panel with a generic thank-you toast.
 
 ## Installation
 
 ```tsx
-import { Feedback } from "@nebutra/ui/primitives";
+import { Feedback } from "@nebutra/ui/primitives"
 ```
 
 ## Usage
 
 ### Default
 
+Use the default popover only on desktop-width surfaces.
+
 ```tsx
-<Feedback
-  label="my-app"
-  onSubmit={async (payload) => {
-    await fetch("/api/feedback", {
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
-  }}
-/>
+<Feedback label="Feedback" dryRun />
 ```
 
 ### Inline
 
 ```tsx
-<Feedback label="my-app" type="inline" onSubmit={handleFeedback} />
+<Feedback dryRun label="Feedback" type="inline" />
 ```
 
-### With topic select
+### With Topics
+
+Use `showTopics` for the default triage list, or pass `topics` for a product-specific list.
 
 ```tsx
 <Feedback
-  label="my-app"
-  topics={["Bug report", "Feature request", "Documentation", "Other"]}
-  onSubmit={handleFeedback}
+  dryRun
+  label="Report a Bug"
+  showTopics
 />
 ```
 
-### With metadata
+### With Metadata
+
+Attach non-PII context that helps reproduce the report.
 
 ```tsx
 <Feedback
-  label="vercel"
+  dryRun
+  label="Feedback on Checkout"
   metadata={{
-    userId: "user_12345",
+    buildId: "build_12345",
     location: "post-checkout",
-    orderId: "order_123456",
+    plan: "pro",
+    viewport: "desktop",
   }}
-  onSubmit={handleFeedback}
 />
 ```
 
-### Dry run (UI testing)
+### Custom Copy
 
 ```tsx
-<Feedback label="my-app" dryRun />
+<Feedback
+  copy="How did the import go?"
+  label="Feedback on Imports"
+  type="inline"
+/>
 ```
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `label` | `string` | — | **Required.** Product/feature label attached to every submission |
-| `type` | `"default" \| "inline"` | `"default"` | Display variant |
-| `topics` | `string[]` | — | Pre-defined topics shown in a select dropdown |
-| `metadata` | `Record<string, string>` | — | Arbitrary key-value pairs attached to the submission |
-| `onSubmit` | `(payload: FeedbackPayload) => void \| Promise<void>` | — | Called when the user submits feedback |
-| `dryRun` | `boolean` | `false` | When `true`, the `onSubmit` callback is not called |
-| `className` | `string` | — | Additional CSS classes on the root element |
+| `label` | `string` | — | Visible trigger/title and payload label. Use Title Case |
+| `type` | `"default" \| "inline"` | `"default"` | Display mode |
+| `copy` | `string` | mode-specific | Prompt next to the emotion row |
+| `topics` | `Array<string \| { value: string; label: string }>` | — | Product-specific triage topics |
+| `showTopics` | `boolean` | `false` | Enables the default Bug/Pricing/Documentation/Performance/Other list |
+| `metadata` | `FeedbackMetadata` | — | Non-PII context attached to the payload |
+| `onSubmit` | `(payload: FeedbackPayload) => void \| Promise<void>` | — | Sends feedback to your backend |
+| `dryRun` | `boolean` | `false` | Skips `onSubmit` for demos |
+| `disabled` | `boolean` | `false` | Disables trigger and form controls |
+| `className` | `string` | — | Root class override |
 
 ## FeedbackPayload
 
 ```ts
 interface FeedbackPayload {
-  label: string;
-  emotion?: "happy" | "neutral" | "sad" | "other";
-  message: string;
-  topic?: string;
-  metadata?: Record<string, string>;
+  label: string
+  emotion?: "love" | "okay" | "not-great" | "hate"
+  message: string
+  topic?: string
+  metadata?: Record<string, string | number | boolean | null | undefined>
 }
 ```
 
+## Best Practices
+
+- Place Feedback after the user has formed an opinion: page end, docs footer, or completed flow.
+- Use topics only when the team triages by category. Skip them when open text is enough.
+- Keep `metadata` non-PII: route, build ID, plan, viewport.
+- `label` is Title Case and short: `Feedback`, `Feedback on Imports`, `Report a Bug`.
+- `copy` is sentence case. Avoid `please` and apology copy.
+- The textarea placeholder is fixed as `Your feedback...`.
+
 ## Accessibility
 
-- Emotion buttons use `aria-label` and `aria-pressed`.
-- The popover close button is labelled `aria-label="Close feedback"`.
-- The textarea is focusable and keyboard-navigable.
-- After submission a "Thank you" message replaces the form.
+- Emotion controls are exposed as a radio group with labelled options.
+- The textarea is labelled by the prompt copy and receives focus when the form opens.
+- Submit closes the panel and returns focus to the trigger.
+- Failed submissions keep the form open and announce the inline error with `role="alert"`.

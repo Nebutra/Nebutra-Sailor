@@ -2,9 +2,10 @@
 import { Input } from "@nebutra/ui/primitives";
 export function InputDemo() {
   return (
-    <div className="gap-3 max-w-sm flex flex-col">
-      <Input placeholder="Default input" />
-      <Input placeholder="Disabled input" disabled />
+    <div className="flex max-w-sm flex-col gap-3">
+      <Input aria-label="Small project name" size="sm" placeholder="Small" />
+      <Input aria-label="Default project name" placeholder="Default" />
+      <Input aria-label="Large project name" size="lg" placeholder="Large" />
     </div>
   );
 }

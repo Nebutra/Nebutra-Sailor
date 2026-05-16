@@ -19,7 +19,7 @@ export interface WebhookDeliveriesPanelProps {
   endpointId: string;
   /** Override loader; defaults to GET /api/webhooks/[id]/deliveries */
   loadDeliveries?: (endpointId: string) => Promise<WebhookDeliveryView[]>;
-  /** Override replay; defaults to POST /api/webhooks/[id]/deliveries/[deliveryId]/replay */
+  /** Override replay; defaults to POST /api/webhooks/[id]/deliveries */
   onReplay?: (endpointId: string, deliveryId: string) => Promise<void>;
   onClose?: () => void;
 }
@@ -29,6 +29,15 @@ async function defaultLoad(endpointId: string): Promise<WebhookDeliveryView[]> {
   if (!response.ok) throw new Error("Failed to load deliveries");
   const json = (await response.json()) as { deliveries: WebhookDeliveryView[] };
   return json.deliveries;
+}
+
+async function defaultReplay(endpointId: string, deliveryId: string): Promise<void> {
+  const response = await fetch(`/api/webhooks/${endpointId}/deliveries`, {
+    body: JSON.stringify({ deliveryId }),
+    headers: { "content-type": "application/json" },
+    method: "POST",
+  });
+  if (!response.ok) throw new Error("Failed to replay delivery");
 }
 
 function StatusPill({ status }: { status: WebhookDeliveryView["status"] }) {
@@ -82,12 +91,15 @@ export function WebhookDeliveriesPanel({
   }, [endpointId, loadDeliveries]);
 
   async function handleReplay(deliveryId: string) {
-    if (!onReplay) return;
     setReplayingId(deliveryId);
+    setError(null);
     try {
-      await onReplay(endpointId, deliveryId);
+      const replay = onReplay ?? defaultReplay;
+      const load = loadDeliveries ?? defaultLoad;
+      await replay(endpointId, deliveryId);
+      setDeliveries(await load(endpointId));
     } catch {
-      // surfaced inline below
+      setError("Failed to replay delivery");
     } finally {
       setReplayingId(null);
     }
@@ -163,16 +175,14 @@ export function WebhookDeliveriesPanel({
                 >
                   {isOpen ? "Hide payload" : "View payload"}
                 </button>
-                {onReplay && (
-                  <button
-                    type="button"
-                    disabled={replayingId === delivery.id}
-                    onClick={() => handleReplay(delivery.id)}
-                    className="text-[var(--neutral-11)] hover:text-[var(--neutral-12)] disabled:opacity-50"
-                  >
-                    {replayingId === delivery.id ? "Replaying…" : "Replay"}
-                  </button>
-                )}
+                <button
+                  type="button"
+                  disabled={replayingId === delivery.id}
+                  onClick={() => handleReplay(delivery.id)}
+                  className="text-[var(--neutral-11)] hover:text-[var(--neutral-12)] disabled:opacity-50"
+                >
+                  {replayingId === delivery.id ? "Replaying…" : "Replay"}
+                </button>
               </div>
 
               {isOpen && (

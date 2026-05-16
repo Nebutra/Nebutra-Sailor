@@ -21,6 +21,7 @@ export const NEBUTRA_PACKAGE_STATUS: Record<string, PackageStatus> = {
   notifications: "foundation",
   permissions: "foundation",
   queue: "foundation",
+  legal: "foundation",
   search: "foundation",
   tenant: "foundation",
   uploads: "foundation",
@@ -32,7 +33,6 @@ export const NEBUTRA_PACKAGE_STATUS: Record<string, PackageStatus> = {
   "feature-flags": "wip",
   captcha: "wip",
   "event-bus": "wip",
-  legal: "wip",
   mcp: "wip",
   saga: "wip",
 };
