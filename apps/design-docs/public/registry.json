@@ -148,6 +148,18 @@
       "description": "Base UI Tooltip wrapper for concise, non-interactive explanatory text."
     },
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Base UI accordion primitive with tokenized focus and disclosure motion. Used by Collapse."
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "Base UI menu primitive with keyboard navigation, checkbox/radio items, and submenu support."
+    },
+    {
       "name": "context-card",
       "type": "registry:ui",
       "title": "Context Card",
@@ -170,6 +182,12 @@
       "type": "registry:ui",
       "title": "Browser",
       "description": "Geist-style browser chrome around a screenshot or demo. Middle-truncating address bar, aspect-locked image viewport."
+    },
+    {
+      "name": "middle-truncate",
+      "type": "registry:ui",
+      "title": "Middle Truncate",
+      "description": "Accessible middle truncation for long IDs, URLs, and file paths while preserving copy text."
     },
     {
       "name": "choicebox",
@@ -218,6 +236,12 @@
       "type": "registry:ui",
       "title": "Modal",
       "description": "Geist-style compound Modal API on top of Dialog. active/onClickOutside/sticky/initialFocusRef + Body/Header/Title/Subtitle/Inset/Actions/Action."
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "Determinate progress bar with max ceiling, threshold-color map, multi-stage stops with tooltips, and ~1Hz aria-valuenow throttling."
     },
     {
       "name": "nebutra-tokens",

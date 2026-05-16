@@ -540,6 +540,22 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     layer: "business",
   },
   {
+    name: "accordion",
+    title: "Accordion",
+    description:
+      "Base UI accordion primitive with tokenized focus and disclosure motion. Used by Collapse.",
+    source: "primitives/accordion.tsx",
+    layer: "business",
+  },
+  {
+    name: "dropdown-menu",
+    title: "Dropdown Menu",
+    description:
+      "Base UI menu primitive with keyboard navigation, checkbox/radio items, and submenu support.",
+    source: "primitives/dropdown-menu.tsx",
+    layer: "business",
+  },
+  {
     name: "context-card",
     title: "Context Card",
     description:
@@ -580,6 +596,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
       "Geist-style browser chrome around a screenshot or demo. Middle-truncating address bar, aspect-locked image viewport.",
     source: "primitives/browser-mockup.tsx",
     layer: "marketing",
+  },
+  {
+    name: "middle-truncate",
+    title: "Middle Truncate",
+    description:
+      "Accessible middle truncation for long IDs, URLs, and file paths while preserving copy text.",
+    source: "primitives/middle-truncate.tsx",
+    layer: "business",
   },
   {
     name: "choicebox",
@@ -644,6 +668,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
       "Geist-style compound Modal API on top of Dialog. active/onClickOutside/sticky/initialFocusRef + Body/Header/Title/Subtitle/Inset/Actions/Action.",
     source: "primitives/modal.tsx",
     layer: "business",
+  },
+  {
+    name: "progress",
+    title: "Progress",
+    description:
+      "Determinate progress bar with max ceiling, threshold-color map, multi-stage stops with tooltips, and ~1Hz aria-valuenow throttling.",
+    source: "primitives/progress.tsx",
+    layer: "dashboard",
   },
 ];
 
