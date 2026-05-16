@@ -8,7 +8,10 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: process.env.NODE_ENV === "production",
+  // Blog/changelog pages already use Next cache tags and webhook revalidation.
+  // Reading through Sanity's CDN can keep newly published localized slugs
+  // invisible after a mutation, which turns valid posts into false 404s.
+  useCdn: false,
 });
 
 /**
