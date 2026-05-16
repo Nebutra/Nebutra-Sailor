@@ -40,6 +40,7 @@
       "apps/landing-page/src/components/landing/AnimateIn.tsx",
       "apps/landing-page/src/components/landing/GlobalEdgeMap.tsx",
       "apps/landing-page/src/components/landing/ProductDemoSection.tsx",
+      "apps/landing-page/src/app/[lang]/(marketing)/layout.tsx",
       "apps/landing-page/src/components/landing/agentic-engineering/TerminalSnippet.tsx",
       "apps/landing-page/src/components/landing/design-system/PipelineCard.tsx",
       "apps/landing-page/src/components/landing/impact/FrictionlessRouting.tsx",

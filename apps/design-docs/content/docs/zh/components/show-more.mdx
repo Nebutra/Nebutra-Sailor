@@ -1,0 +1,82 @@
+---
+title: "Show More"
+description: "用于长列表和内容块的计数感知渐进展开触发器。"
+---
+
+## 概览
+
+`ShowMore` 用来展开单个列表或内容块的隐藏尾部。它不是分页，也不是可选区域容器：同一数据集的兄弟页面用 `Pagination`，可选章节用 `Collapse`。
+
+这个 primitive 是受控组件，默认展示隐藏数量，支持键盘聚焦，并把 `aria-expanded` 与 `aria-controls` 绑定到被展开的内容上。
+
+## 安装
+
+```tsx
+import { ShowMore } from "@nebutra/ui/primitives"
+```
+
+## 用法
+
+```tsx
+const [expanded, setExpanded] = React.useState(false)
+const firstRevealedRef = React.useRef<HTMLLIElement>(null)
+
+const visibleItems = expanded ? items : items.slice(0, 5)
+
+return (
+  <>
+    <ul id="activity-list">
+      {visibleItems.map((item, index) => (
+        <li
+          key={item.id}
+          ref={index === 5 ? firstRevealedRef : undefined}
+          tabIndex={index === 5 ? -1 : undefined}
+        >
+          {item.label}
+        </li>
+      ))}
+    </ul>
+
+    <ShowMore
+      controls="activity-list"
+      expanded={expanded}
+      focusTargetRef={firstRevealedRef}
+      hiddenCount={items.length - visibleItems.length}
+      onExpandedChange={setExpanded}
+    />
+  </>
+)
+```
+
+## Props
+
+| Prop | Type | 默认值 | 说明 |
+|------|------|--------|------|
+| `expanded` | `boolean` | — | 当前展开状态 |
+| `onExpandedChange` | `(expanded: boolean) => void` | — | 推荐的受控变更回调 |
+| `onClick` | `(expanded: boolean) => void` | — | Geist 兼容回调。不要与 `onExpandedChange` 同时传入 |
+| `controls` | `string` | — | 被这个触发器控制的列表或内容块 ID |
+| `hiddenCount` | `number` | — | 折叠态展示数量，例如 `Show 12 More` |
+| `noBorder` | `boolean` | `false` | 隐藏两侧分隔线 |
+| `collapsedLabel` | `string` | `Show More` | 未提供数量时的折叠态文案 |
+| `expandedLabel` | `string` | `Show Less` | 展开态文案 |
+| `focusTargetRef` | `RefObject<HTMLElement>` | — | 展开后要聚焦的第一个新增行 |
+| `focusOnExpand` | `boolean` | `true` | 展开后是否执行焦点交接 |
+| `disabled` | `boolean` | `false` | 禁用触发器 |
+| `buttonClassName` | `string` | — | 触发按钮样式覆盖 |
+| `dividerClassName` | `string` | — | 分隔线样式覆盖 |
+
+## 最佳实践
+
+- 用于单个长列表或内容块的渐进展开：最近活动、仓库分支、附件资源。
+- 截断前先展示足够行数，让用户判断列表结构；通常是 5-10 行。
+- 已知隐藏数量时展示成本：`Show 12 More`。
+- 不要在同一个阅读流里频繁切回折叠态；折叠会让用户正在看的行离开当前位置。
+- 隐藏项较少且需要浏览器页内搜索时，保留在 DOM 中；只有数据集足够大时才懒加载。
+
+## 无障碍
+
+- 触发器是原生 `button`，并且使用 `type="button"`、`aria-expanded`、`aria-controls`。
+- 传入 `focusTargetRef` 后，展开会把焦点交给第一个新增行，键盘和读屏用户不会丢上下文。
+- 箭头图标是装饰性的，对辅助技术隐藏。
+- 开启减少动态效果的用户仍然得到相同状态变化，但不会播放图标旋转过渡。

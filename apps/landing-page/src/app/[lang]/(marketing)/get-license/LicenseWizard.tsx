@@ -111,7 +111,7 @@ const RoleCard = ({
     type="button"
     aria-pressed={selected}
     onClick={onClick}
-    className={`flex flex-col items-center gap-3 rounded-lg border-2 p-4 transition-all duration-200 ${
+    className={`flex flex-col items-center gap-3 rounded-[var(--radius-lg)] border-2 p-4 transition-all duration-200 ${
       selected
         ? "border-[var(--blue-9)] bg-[var(--blue-3)]"
         : "border-[var(--neutral-7)] hover:border-[var(--neutral-11)]"
@@ -138,7 +138,7 @@ const UseCaseCard = ({
     type="button"
     aria-pressed={selected}
     onClick={onClick}
-    className={`flex flex-col gap-2 rounded-xl border-2 p-5 text-left transition-all duration-200 ${
+    className={`flex flex-col gap-2 rounded-[var(--radius-xl)] border-2 p-5 text-left transition-all duration-200 ${
       selected
         ? "border-[var(--blue-9)] bg-[var(--blue-3)]"
         : "border-[var(--neutral-7)] hover:border-[var(--neutral-11)]"
@@ -173,7 +173,7 @@ const LicenseTierCard = ({
     type="button"
     aria-pressed={selected}
     onClick={onClick}
-    className={`flex flex-col gap-4 rounded-xl border-2 p-6 text-left transition-all duration-200 ${
+    className={`flex flex-col gap-4 rounded-[var(--radius-xl)] border-2 p-6 text-left transition-all duration-200 ${
       highlighted ? "ring-2 ring-[var(--brand-primary)] ring-offset-2" : ""
     } ${
       selected
@@ -206,7 +206,7 @@ const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSt
     {WIZARD_STEP_MARKERS.slice(0, totalSteps).map((step) => (
       <div
         key={step.id}
-        className={`h-2 flex-1 rounded-full transition-all duration-300 ${
+        className={`h-2 flex-1 rounded-[var(--radius-full)] transition-all duration-300 ${
           step.value <= currentStep ? "bg-[var(--blue-9)]" : "bg-[var(--neutral-7)]"
         }`}
       />
@@ -469,7 +469,7 @@ export function LicenseWizard() {
                   type="button"
                   onClick={handleNext}
                   disabled={!isStep1Valid}
-                  className={`flex items-center gap-2 rounded-lg px-6 py-3 font-semibold text-white transition-opacity ${
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${
                     isStep1Valid ? "cursor-pointer" : "cursor-not-allowed opacity-50"
                   }`}
                   style={{ background: isStep1Valid ? "var(--brand-gradient)" : undefined }}
@@ -589,7 +589,7 @@ export function LicenseWizard() {
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className="flex items-center gap-2 rounded-lg border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                  className="flex items-center gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                 >
                   <ChevronLeft className="h-4 w-4" />
                   Back
@@ -598,7 +598,7 @@ export function LicenseWizard() {
                   type="button"
                   onClick={handleNext}
                   disabled={!isStep2Valid}
-                  className={`flex items-center gap-2 rounded-lg px-6 py-3 font-semibold text-white transition-opacity ${
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${
                     isStep2Valid ? "cursor-pointer" : "cursor-not-allowed opacity-50"
                   }`}
                   style={{ background: isStep2Valid ? "var(--brand-gradient)" : undefined }}
@@ -628,7 +628,7 @@ export function LicenseWizard() {
               <div>
                 {step1.teamSize === "1" && (
                   <div className="space-y-4">
-                    <div className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
+                    <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
                       <p className="text-sm text-[var(--neutral-11)]">
                         If you operate as a single-seat business, you can choose either the
                         Individual or Single-Owner Company license below.
@@ -669,7 +669,7 @@ export function LicenseWizard() {
                   step1.teamSize === "6-20" ||
                   step1.teamSize === "21-50") && (
                   <div className="space-y-4">
-                    <div className="rounded-lg border border-[var(--status-warning)] bg-yellow-50 p-4">
+                    <div className="rounded-[var(--radius-lg)] border border-[var(--status-warning)] bg-yellow-50 p-4">
                       <p className="text-sm text-[var(--neutral-12)] font-medium">
                         Your team is too large for a free license. Let's find the right commercial
                         plan.
@@ -694,7 +694,7 @@ export function LicenseWizard() {
 
                 {step1.teamSize === "50+" && (
                   <div className="space-y-4">
-                    <div className="rounded-lg border border-[var(--status-info)] bg-blue-50 p-4">
+                    <div className="rounded-[var(--radius-lg)] border border-[var(--status-info)] bg-blue-50 p-4">
                       <p className="text-sm text-[var(--neutral-12)] font-medium">
                         For enterprises with 50+ people, let's connect with our sales team to find
                         the perfect fit.
@@ -746,7 +746,7 @@ export function LicenseWizard() {
                                   : prev.lookingFor.filter((v) => v !== opt.value),
                               }));
                             }}
-                            className="h-4 w-4 rounded"
+                            className="h-4 w-4 rounded-[var(--radius-sm)]"
                           />
                           <span className="text-sm text-[var(--neutral-12)]">{opt.label}</span>
                         </label>
@@ -831,7 +831,7 @@ export function LicenseWizard() {
               {submitError && (
                 <div
                   aria-live="polite"
-                  className="flex gap-3 rounded-lg border border-[var(--status-danger)] bg-red-50 p-4"
+                  className="flex gap-3 rounded-[var(--radius-lg)] border border-[var(--status-danger)] bg-red-50 p-4"
                 >
                   <AlertCircle className="h-5 w-5 shrink-0 text-[var(--status-danger)]" />
                   <p className="text-sm text-[var(--status-danger)]">{submitError}</p>
@@ -843,7 +843,7 @@ export function LicenseWizard() {
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className="flex items-center gap-2 rounded-lg border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                  className="flex items-center gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                 >
                   <ChevronLeft className="h-4 w-4" />
                   Back
@@ -852,7 +852,7 @@ export function LicenseWizard() {
                   type="button"
                   onClick={handleNext}
                   disabled={!isStep3Valid || isSubmitting}
-                  className={`flex items-center gap-2 rounded-lg px-6 py-3 font-semibold text-white transition-opacity ${
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${
                     isStep3Valid && !isSubmitting
                       ? "cursor-pointer"
                       : "cursor-not-allowed opacity-50"
@@ -873,7 +873,7 @@ export function LicenseWizard() {
         {currentStep === 4 && (
           <AnimateIn preset="fadeUp">
             <div className="flex flex-col items-center gap-8 py-12 text-center">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[var(--blue-3)]">
+              <div className="flex h-20 w-20 items-center justify-center rounded-[var(--radius-full)] bg-[var(--blue-3)]">
                 <CheckCircle2 className="h-12 w-12 text-[var(--blue-9)]" />
               </div>
 
@@ -896,7 +896,7 @@ export function LicenseWizard() {
                 <p className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
                   Your License Key
                 </p>
-                <div className="relative flex items-center rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-3">
+                <div className="relative flex items-center rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-3">
                   <code className="flex-1 font-mono text-sm text-[var(--neutral-12)]">
                     {step4.licenseKey}
                   </code>
@@ -916,14 +916,14 @@ export function LicenseWizard() {
               <div className="flex w-full max-w-md flex-col gap-3">
                 <a
                   href={`${process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002"}?welcome=true`}
-                  className="rounded-lg px-6 py-3 text-center font-semibold text-white transition-opacity hover:opacity-90"
+                  className="rounded-[var(--radius-lg)] px-6 py-3 text-center font-semibold text-white transition-opacity hover:opacity-90"
                   style={{ background: "var(--brand-gradient)" }}
                 >
                   Explore Nebutra Community →
                 </a>
                 <a
                   href="https://app.nebutra.com/dashboard"
-                  className="rounded-lg border border-[var(--neutral-7)] px-6 py-3 text-center font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                  className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 text-center font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                 >
                   Go to Console
                 </a>

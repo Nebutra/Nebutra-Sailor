@@ -20,6 +20,11 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@nebutra/design-tokens/*": ["../../packages/design/design-tokens/*"],
+      "@nebutra/queue": ["../../packages/integrations/queue/src/index.ts"],
+      "@nebutra/queue/*": ["../../packages/integrations/queue/src/*"],
+      "@nebutra/theme": ["../../packages/design/theme/src/index.ts"],
+      "@nebutra/theme/*": ["../../packages/design/theme/src/*"],
       "@nebutra/ui": ["../../packages/design/ui/src/index.ts"],
       "@nebutra/ui/*": ["../../packages/design/ui/src/*"]
     }

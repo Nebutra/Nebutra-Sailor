@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "show-more",
+  "type": "registry:ui",
+  "title": "Show More",
+  "description": "Count-aware progressive disclosure trigger for long lists and content blocks.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "dependencies": [
+    "@nebutra/icons"
+  ],
+  "files": [
+    {
+      "path": "components/ui/show-more.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/show-more.tsx",
+      "content": "\"use client\";\n\nimport { ChevronDown } from \"@nebutra/icons\";\nimport * as React from \"react\";\nimport { showMoreTokens } from \"../tokens/components/show-more\";\nimport { cn } from \"../utils/cn\";\n\ntype ShowMoreCssVar =\n  | \"--show-more-trigger-height\"\n  | \"--show-more-trigger-padding-x\"\n  | \"--show-more-divider-inset\"\n  | \"--show-more-gap\"\n  | \"--show-more-radius\"\n  | \"--show-more-icon-size\"\n  | \"--show-more-duration\"\n  | \"--show-more-easing\";\n\ntype ShowMoreBaseProps = Omit<React.HTMLAttributes<HTMLDivElement>, \"onClick\"> & {\n  /** Current disclosure state. */\n  expanded: boolean;\n  /** ID of the list/block whose hidden rows are controlled by the trigger. */\n  controls: string;\n  /** Number of rows/items hidden while collapsed. Used in the collapsed label. */\n  hiddenCount?: number;\n  /** Removes the divider rails while preserving the trigger affordance. */\n  noBorder?: boolean;\n  /** Label shown after expansion. */\n  expandedLabel?: string;\n  /** Label shown before expansion when `hiddenCount` is omitted. */\n  collapsedLabel?: string;\n  /** Focus target for the first newly revealed row. */\n  focusTargetRef?: React.RefObject<HTMLElement | null>;\n  /** Move focus to `focusTargetRef` after expansion. */\n  focusOnExpand?: boolean;\n  disabled?: boolean;\n  buttonClassName?: string;\n  dividerClassName?: string;\n};\n\ntype ShowMoreControlledProps =\n  | {\n      onExpandedChange: (expanded: boolean) => void;\n      /** Use `onExpandedChange`; this legacy callback shape is intentionally exclusive. */\n      onClick?: never;\n    }\n  | {\n      /** Legacy Geist-compatible callback. Prefer `onExpandedChange`. */\n      onClick: (expanded: boolean) => void;\n      onExpandedChange?: never;\n    };\n\nexport type ShowMoreProps = ShowMoreBaseProps & ShowMoreControlledProps;\n\nfunction getCollapsedLabel(hiddenCount?: number, collapsedLabel?: string) {\n  if (collapsedLabel) {\n    return collapsedLabel;\n  }\n\n  if (typeof hiddenCount === \"number\" && hiddenCount > 0) {\n    return `Show ${hiddenCount} More`;\n  }\n\n  return \"Show More\";\n}\n\nfunction callExpandedChange(props: ShowMoreControlledProps, expanded: boolean) {\n  const onExpandedChange = \"onExpandedChange\" in props ? props.onExpandedChange : undefined;\n\n  if (typeof onExpandedChange === \"function\") {\n    onExpandedChange(expanded);\n    return;\n  }\n\n  const onClick = \"onClick\" in props ? props.onClick : undefined;\n  onClick?.(expanded);\n}\n\nexport const ShowMore = React.forwardRef<HTMLDivElement, ShowMoreProps>(\n  (\n    {\n      expanded,\n      controls,\n      hiddenCount,\n      noBorder = false,\n      expandedLabel = \"Show Less\",\n      collapsedLabel,\n      focusTargetRef,\n      focusOnExpand = true,\n      disabled = false,\n      className,\n      buttonClassName,\n      dividerClassName,\n      onExpandedChange,\n      onClick,\n      style,\n      ...props\n    },\n    ref,\n  ) => {\n    const wasExpanded = React.useRef(expanded);\n    const label = expanded ? expandedLabel : getCollapsedLabel(hiddenCount, collapsedLabel);\n\n    React.useEffect(() => {\n      if (focusOnExpand && expanded && !wasExpanded.current) {\n        focusTargetRef?.current?.focus();\n      }\n\n      wasExpanded.current = expanded;\n    }, [expanded, focusOnExpand, focusTargetRef]);\n\n    const cssVars = {\n      \"--show-more-trigger-height\": `${showMoreTokens.triggerHeight}px`,\n      \"--show-more-trigger-padding-x\": `${showMoreTokens.triggerPaddingX}px`,\n      \"--show-more-divider-inset\": `${showMoreTokens.dividerInset}px`,\n      \"--show-more-gap\": `${showMoreTokens.gap}px`,\n      \"--show-more-radius\": `${showMoreTokens.radius}px`,\n      \"--show-more-icon-size\": `${showMoreTokens.iconSize}px`,\n      \"--show-more-duration\": `${showMoreTokens.motion.duration}ms`,\n      \"--show-more-easing\": showMoreTokens.motion.easing,\n      ...style,\n    } satisfies React.CSSProperties & Record<ShowMoreCssVar, string | number>;\n\n    const actionProps: ShowMoreControlledProps =\n      typeof onExpandedChange === \"function\"\n        ? { onExpandedChange }\n        : { onClick: onClick as (expanded: boolean) => void };\n\n    return (\n      <div\n        ref={ref}\n        className={cn(\n          \"flex w-full items-center justify-center px-[var(--show-more-divider-inset)]\",\n          className,\n        )}\n        style={cssVars}\n        {...props}\n      >\n        {!noBorder && (\n          <div\n            aria-hidden=\"true\"\n            className={cn(\"h-px flex-1 bg-[var(--neutral-7)]\", dividerClassName)}\n          />\n        )}\n\n        <div className=\"shrink-0 bg-[var(--neutral-1)] px-[var(--show-more-gap)]\">\n          <button\n            type=\"button\"\n            aria-controls={controls}\n            aria-expanded={expanded}\n            disabled={disabled}\n            className={cn(\n              \"inline-flex items-center justify-center gap-1 whitespace-nowrap border border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] font-medium text-sm\",\n              \"h-[var(--show-more-trigger-height)] rounded-[var(--show-more-radius)] px-[var(--show-more-trigger-padding-x)]\",\n              \"transition-[background-color,border-color,color] duration-[var(--show-more-duration)] ease-[var(--show-more-easing)]\",\n              \"hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]\",\n              \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]\",\n              \"disabled:pointer-events-none disabled:opacity-50\",\n              \"motion-reduce:transition-none\",\n              buttonClassName,\n            )}\n            onClick={() => callExpandedChange(actionProps, !expanded)}\n          >\n            {label}\n            <ChevronDown\n              aria-hidden=\"true\"\n              className={cn(\n                \"size-[var(--show-more-icon-size)] transition-transform duration-[var(--show-more-duration)] ease-[var(--show-more-easing)] motion-reduce:transition-none\",\n                expanded && \"rotate-180\",\n              )}\n            />\n          </button>\n        </div>\n\n        {!noBorder && (\n          <div\n            aria-hidden=\"true\"\n            className={cn(\"h-px flex-1 bg-[var(--neutral-7)]\", dividerClassName)}\n          />\n        )}\n      </div>\n    );\n  },\n);\nShowMore.displayName = \"ShowMore\";\n"
+    },
+    {
+      "path": "components/tokens/components/show-more.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/components/show-more.ts",
+      "content": "/**\n * ShowMore Component Tokens — standalone registry copy.\n *\n * Values are generated from @nebutra/ui source component tokens so this\n * registry item can be installed without copying the internal token pipeline.\n */\n\nexport const showMoreTokens = {\n  triggerHeight: 32,\n  triggerPaddingX: 12,\n  dividerInset: 20,\n  gap: 8,\n  radius: 9999,\n  iconSize: 16,\n  motion: {\n    duration: 100,\n    easing: \"ease-out\",\n  },\n} as const;\n"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "--neutral-1": "#f8fafc",
+      "--neutral-12": "#020617",
+      "--neutral-2": "#f1f5f9"
+    },
+    "dark": {
+      "--neutral-1": "#f8fafc",
+      "--neutral-12": "#020617",
+      "--neutral-2": "#f1f5f9"
+    }
+  },
+  "meta": {
+    "nebutraTokens": [
+      "--neutral-1",
+      "--neutral-12",
+      "--neutral-2",
+      "--neutral-7",
+      "--neutral-8",
+      "--show-more-divider-inset",
+      "--show-more-duration",
+      "--show-more-easing",
+      "--show-more-gap",
+      "--show-more-icon-size",
+      "--show-more-radius",
+      "--show-more-trigger-height",
+      "--show-more-trigger-padding-x"
+    ],
+    "nebutraLayer": "business"
+  }
+}

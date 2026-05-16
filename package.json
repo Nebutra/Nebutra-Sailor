@@ -10,7 +10,7 @@
     "dev:api": "pnpm --filter @nebutra/gateway dev",
     "dev:storybook": "pnpm --filter @nebutra/storybook dev",
     "dev:docs": "pnpm --filter @nebutra/sailor-docs dev",
-    "dev:theme-playground": "pnpm --filter @nebutra/theme-playground dev",
+    "dev:theme-playground": "pnpm --filter @nebutra/web dev",
     "build": "pnpm brand:sync && turbo run build",
     "build:strict": "pnpm ui:verify-governance && pnpm brand:verify-tokens && pnpm run build",
     "lint": "biome check . && node scripts/lint-no-raw-inputs.mjs",

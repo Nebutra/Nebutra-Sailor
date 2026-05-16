@@ -1,6 +1,6 @@
 "use client";
 
-import { Select as BaseSelect } from "@base-ui/react/select";
+import { Select as BaseSelect, type SelectRoot } from "@base-ui/react/select";
 import { Check, ChevronDown } from "@nebutra/icons";
 import * as React from "react";
 
@@ -73,7 +73,7 @@ export interface NativeSelectProps
   wrapperClassName?: string;
 }
 
-export type CompoundSelectProps = React.ComponentPropsWithoutRef<typeof BaseSelect.Root> & {
+export type CompoundSelectProps = SelectRoot.Props<string, false> & {
   native?: false;
 };
 

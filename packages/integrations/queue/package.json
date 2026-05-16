@@ -40,6 +40,10 @@
       "types": "./dist/queuebase.d.ts",
       "import": "./dist/queuebase.js"
     },
+    "./queuebase-webhook": {
+      "types": "./dist/queuebase-webhook.d.ts",
+      "import": "./dist/queuebase-webhook.js"
+    },
     "./scheduled": {
       "types": "./dist/scheduled/index.d.ts",
       "import": "./dist/scheduled/index.js"

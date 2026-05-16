@@ -336,6 +336,9 @@ function countAggregateBudgetViolations(budget: AggregateBudgetEntry, pattern: R
   for (const file of allFiles) {
     const posixFile = toPosixPath(file);
     const shouldExclude = [...excludeSet].some((ex) => {
+      if (ex === "**/*.stories.*") {
+        return /\.stories\.[^/]+$/.test(posixFile);
+      }
       if (ex.startsWith("**/")) {
         const suffix = ex.slice(3);
         return posixFile.includes(suffix);

@@ -142,7 +142,7 @@ export function CreateApiKeyDialog({
       aria-modal="true"
       aria-labelledby="create-api-key-title"
     >
-      <div className="w-full max-w-lg rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-xl">
+      <div className="w-full max-w-lg rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-xl">
         <h2
           id="create-api-key-title"
           className="mb-1 text-base font-semibold text-[var(--neutral-12)]"
@@ -153,16 +153,18 @@ export function CreateApiKeyDialog({
 
         {created ? (
           <div className="space-y-4">
-            <div className="rounded-md border border-amber-300 bg-amber-50 p-4">
-              <p className="mb-2 text-sm font-medium text-amber-900">{text.successWarning}</p>
+            <div className="rounded-[var(--radius-md)] border border-[var(--amber-6)] bg-[var(--amber-2)] p-4">
+              <p className="mb-2 text-sm font-medium text-[var(--amber-12)]">
+                {text.successWarning}
+              </p>
               <div className="flex items-center gap-2">
-                <code className="flex-1 break-all rounded bg-white px-3 py-2 font-mono text-xs text-amber-900 shadow-inner">
+                <code className="flex-1 break-all rounded bg-[var(--neutral-1)] px-3 py-2 font-mono text-[var(--amber-12)] text-xs shadow-inner">
                   {created.key}
                 </code>
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="rounded-md border border-amber-400 px-3 py-2 text-xs font-medium text-amber-900 transition-colors hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+                  className="rounded-[var(--radius-md)] border border-[var(--amber-7)] px-3 py-2 text-[var(--amber-12)] text-xs font-medium transition-colors hover:bg-[var(--amber-3)] focus:outline-none focus:ring-2 focus:ring-[var(--amber-8)] focus:ring-offset-1"
                 >
                   {copied ? text.copied : text.copy}
                 </button>
@@ -172,7 +174,7 @@ export function CreateApiKeyDialog({
               <button
                 type="button"
                 onClick={attemptClose}
-                className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
               >
                 {text.close}
               </button>
@@ -208,7 +210,7 @@ export function CreateApiKeyDialog({
                 {availableScopes.map((scope) => (
                   <label
                     key={scope}
-                    className="flex items-center gap-2 rounded-md border border-[var(--neutral-7)] px-3 py-2 text-sm text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                    className="flex items-center gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-2 text-sm text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                   >
                     <input
                       data-allow-native
@@ -233,14 +235,14 @@ export function CreateApiKeyDialog({
                 type="button"
                 onClick={attemptClose}
                 disabled={submitting}
-                className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:opacity-50"
+                className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:opacity-50"
               >
                 {text.close}
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+                className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
                 style={{ background: "var(--brand-gradient)" }}
               >
                 {submitting ? text.submitting : text.submit}

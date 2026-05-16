@@ -18,11 +18,16 @@
     "./tokens/themes/minimal.json": "./tokens/themes/minimal.json",
     "./tokens/themes/vibrant.json": "./tokens/themes/vibrant.json",
     "./tokens/themes/ocean.json": "./tokens/themes/ocean.json",
+    "./themes": {
+      "types": "./themes.ts",
+      "import": "./themes.ts"
+    },
     "./build/css/styles.generated.css": "./build/css/styles.generated.css"
   },
   "files": [
     "tokens",
     "build",
+    "themes.ts",
     "style-dictionary.config.mjs"
   ],
   "scripts": {

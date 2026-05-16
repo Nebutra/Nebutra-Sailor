@@ -383,6 +383,7 @@ export {
 export { Separator } from "./separator";
 export * from "./sheet";
 export * from "./shine-border";
+export * from "./show-more";
 export * from "./skeleton";
 export * from "./slider";
 export * from "./slider-number-flow";

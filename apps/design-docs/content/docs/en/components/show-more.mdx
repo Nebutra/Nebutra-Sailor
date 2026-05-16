@@ -1,0 +1,82 @@
+---
+title: "Show More"
+description: "Count-aware progressive disclosure trigger for long lists and content blocks."
+---
+
+## Overview
+
+`ShowMore` reveals the hidden tail of a single list or content block. It is not a page switcher and not an optional-section container: use `Pagination` for sibling pages and `Collapse` for optional sections.
+
+The trigger is controlled, count-aware, keyboard-focusable, and wires `aria-expanded` plus `aria-controls` to the content it reveals.
+
+## Installation
+
+```tsx
+import { ShowMore } from "@nebutra/ui/primitives"
+```
+
+## Usage
+
+```tsx
+const [expanded, setExpanded] = React.useState(false)
+const firstRevealedRef = React.useRef<HTMLLIElement>(null)
+
+const visibleItems = expanded ? items : items.slice(0, 5)
+
+return (
+  <>
+    <ul id="activity-list">
+      {visibleItems.map((item, index) => (
+        <li
+          key={item.id}
+          ref={index === 5 ? firstRevealedRef : undefined}
+          tabIndex={index === 5 ? -1 : undefined}
+        >
+          {item.label}
+        </li>
+      ))}
+    </ul>
+
+    <ShowMore
+      controls="activity-list"
+      expanded={expanded}
+      focusTargetRef={firstRevealedRef}
+      hiddenCount={items.length - visibleItems.length}
+      onExpandedChange={setExpanded}
+    />
+  </>
+)
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `expanded` | `boolean` | — | Current disclosure state |
+| `onExpandedChange` | `(expanded: boolean) => void` | — | Preferred controlled change handler |
+| `onClick` | `(expanded: boolean) => void` | — | Legacy Geist-compatible handler. Do not pass with `onExpandedChange` |
+| `controls` | `string` | — | ID of the list or block controlled by the trigger |
+| `hiddenCount` | `number` | — | Adds the count to the collapsed label, e.g. `Show 12 More` |
+| `noBorder` | `boolean` | `false` | Hides the divider rails |
+| `collapsedLabel` | `string` | `Show More` | Collapsed fallback label when no count is provided |
+| `expandedLabel` | `string` | `Show Less` | Expanded label |
+| `focusTargetRef` | `RefObject<HTMLElement>` | — | First newly revealed row to focus after expansion |
+| `focusOnExpand` | `boolean` | `true` | Enables focus handoff after expansion |
+| `disabled` | `boolean` | `false` | Disables the trigger |
+| `buttonClassName` | `string` | — | Trigger class override |
+| `dividerClassName` | `string` | — | Divider rail class override |
+
+## Best Practices
+
+- Use for progressive disclosure of one long list or block: recent activity, repo branches, attached resources.
+- Show enough rows to communicate list shape before truncating; 5-10 rows is the normal range.
+- Pair the trigger with the hidden count when the count is known: `Show 12 More`.
+- Avoid collapsing the same data set mid-flow unless the user explicitly asks; rows can move away from the reading position.
+- Keep small hidden sets in the DOM when find-in-page matters. Lazy-load only when the dataset is large enough to harm initial render.
+
+## Accessibility
+
+- The trigger renders a native `button` with `type="button"`, `aria-expanded`, and `aria-controls`.
+- Pass `focusTargetRef` for the first newly revealed row so keyboard and screen-reader users land in the new content after expansion.
+- The chevron is decorative and hidden from assistive technology.
+- Reduced-motion users keep the same state changes without icon rotation transitions.

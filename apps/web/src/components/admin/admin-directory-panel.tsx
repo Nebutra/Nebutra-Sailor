@@ -78,7 +78,7 @@ export function AdminDirectoryPanel({
   const hasNext = currentPage < totalPages;
 
   return (
-    <section className="mt-6 rounded-3xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-4 shadow-sm sm:p-6">
+    <section className="mt-6 rounded-[var(--radius-3xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-4 shadow-sm sm:p-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="font-medium text-sm text-[var(--neutral-10)] uppercase tracking-[0.18em]">
@@ -98,7 +98,7 @@ export function AdminDirectoryPanel({
           <input
             data-allow-native
             aria-label="Search users and organizations"
-            className="min-w-0 flex-1 rounded-xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] outline-none transition focus:border-[color:var(--brand-primary)] focus:ring-2 focus:ring-[color:var(--brand-primary)]/20"
+            className="min-w-0 flex-1 rounded-[var(--radius-xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] outline-none transition focus:border-[color:var(--brand-primary)] focus:ring-2 focus:ring-[color:var(--brand-primary)]/20"
             name="q"
             type="search"
             defaultValue={query}
@@ -106,7 +106,7 @@ export function AdminDirectoryPanel({
           />
           <button
             type="submit"
-            className="rounded-xl bg-[color:var(--brand-primary)] px-4 py-2 font-medium text-[var(--neutral-1)] text-sm transition hover:opacity-90"
+            className="rounded-[var(--radius-xl)] bg-[color:var(--brand-primary)] px-4 py-2 font-medium text-[var(--neutral-1)] text-sm transition hover:opacity-90"
           >
             Search
           </button>
@@ -151,7 +151,7 @@ export function AdminDirectoryPanel({
           {hasPrevious ? (
             <Link
               href={buildAdminHref(query, currentPage - 1)}
-              className="rounded-lg border border-[var(--neutral-7)] px-3 py-1.5 font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
+              className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-3 py-1.5 font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
             >
               Previous page
             </Link>
@@ -159,7 +159,7 @@ export function AdminDirectoryPanel({
           {hasNext ? (
             <Link
               href={buildAdminHref(query, currentPage + 1)}
-              className="rounded-lg border border-[var(--neutral-7)] px-3 py-1.5 font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
+              className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-3 py-1.5 font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
             >
               Next page
             </Link>
@@ -180,7 +180,7 @@ function DirectoryTable({
   empty: string;
 }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-[var(--neutral-7)]">
+    <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--neutral-7)]">
       <div className="border-[var(--neutral-7)] border-b bg-[var(--neutral-2)] px-4 py-3">
         <h3 className="font-semibold text-[var(--neutral-12)] text-sm">{title}</h3>
       </div>
@@ -258,7 +258,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
-            className="rounded-lg border border-[var(--neutral-7)] px-2.5 py-1.5 font-medium text-[var(--neutral-12)] text-xs transition hover:bg-[var(--neutral-2)]"
+            className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-2.5 py-1.5 font-medium text-[var(--neutral-12)] text-xs transition hover:bg-[var(--neutral-2)]"
           >
             Edit {row.label}
           </button>
@@ -277,7 +277,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                   data-allow-native
                   name="name"
                   defaultValue={row.label}
-                  className="mt-1 w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                  className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
                 />
               </label>
               {row.kind === "user" ? (
@@ -289,7 +289,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                       name="email"
                       type="email"
                       defaultValue={row.meta}
-                      className="mt-1 w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
                     />
                   </label>
                   <label className="flex items-end gap-2 pb-2 text-xs font-medium text-[var(--neutral-11)]">
@@ -310,7 +310,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                       data-allow-native
                       name="slug"
                       defaultValue={row.slug}
-                      className="mt-1 w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
                     />
                   </label>
                   <label className="text-xs font-medium text-[var(--neutral-11)]">
@@ -319,7 +319,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                       data-allow-native
                       name="plan"
                       defaultValue={row.planName}
-                      className="mt-1 w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
                     />
                   </label>
                 </>
@@ -328,7 +328,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                 <button
                   type="submit"
                   disabled={pending}
-                  className="rounded-lg bg-[color:var(--brand-primary)] px-3 py-2 font-medium text-[var(--neutral-1)] text-sm disabled:opacity-50"
+                  className="rounded-[var(--radius-lg)] bg-[color:var(--brand-primary)] px-3 py-2 font-medium text-[var(--neutral-1)] text-sm disabled:opacity-50"
                 >
                   {pending ? "Saving…" : row.kind === "user" ? "Save user" : "Save organization"}
                 </button>

@@ -130,7 +130,11 @@ export function FeedbackDialog() {
               >
                 Where did this happen?
               </label>
-              <Select value={area} onValueChange={(v) => setArea(v ?? "")} disabled={submitting}>
+              <Select
+                value={area}
+                onValueChange={(value) => setArea(value ?? "")}
+                disabled={submitting}
+              >
                 <SelectTrigger id={areaId}>
                   <SelectValue />
                 </SelectTrigger>
@@ -151,7 +155,11 @@ export function FeedbackDialog() {
               >
                 Chat mode (optional)
               </label>
-              <Select value={mode} onValueChange={(v) => setMode(v ?? "")} disabled={submitting}>
+              <Select
+                value={mode}
+                onValueChange={(value) => setMode(value ?? "")}
+                disabled={submitting}
+              >
                 <SelectTrigger id={modeId}>
                   <SelectValue />
                 </SelectTrigger>

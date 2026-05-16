@@ -12,6 +12,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["scripts/**/*.ts", "style-dictionary.config.mjs", "tokens/**/*.json"],
+  "include": ["scripts/**/*.ts", "style-dictionary.config.mjs", "themes.ts", "tokens/**/*.json"],
   "exclude": ["build", "node_modules"]
 }
