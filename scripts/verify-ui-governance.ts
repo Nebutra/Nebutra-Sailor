@@ -34,6 +34,39 @@ const HSL_RE = /\bhsl\(/g;
 const OKLCH_RE = /\boklch\(/g;
 const OUTLINE_HIDDEN_RE = /\b(?:focus-visible:|focus:)?outline-hidden\b/g;
 const GLOBAL_FOCUS_RESET_RE = /\*:focus-visible\s*\{/g;
+const FOCUS_GOVERNANCE_ROOTS = ["packages/design/ui/src", "apps/landing-page/src"] as const;
+const FORM_CONTROL_FOCUS_REQUIREMENTS = [
+  {
+    file: "packages/design/ui/src/primitives/input.tsx",
+    markers: [
+      "outline-none",
+      "focus:border-ring",
+      "focus:ring-[length:var(--input-focus-ring-width)]",
+      "aria-invalid:focus:border-destructive",
+      "aria-invalid:focus:ring-destructive/20",
+    ],
+  },
+  {
+    file: "packages/design/ui/src/primitives/textarea.tsx",
+    markers: [
+      "outline-none",
+      "focus:border-ring",
+      "focus:ring-[length:var(--textarea-focus-ring-width)]",
+      "aria-invalid:focus:border-destructive",
+      "aria-invalid:focus:ring-destructive/20",
+    ],
+  },
+  {
+    file: "packages/design/ui/src/primitives/select.tsx",
+    markers: [
+      "outline-none",
+      "focus:border-ring",
+      "focus:ring-[length:var(--select-focus-ring-width)]",
+      "aria-invalid:focus:border-destructive",
+      "aria-invalid:focus:ring-destructive/20",
+    ],
+  },
+] as const;
 
 function assert(condition: boolean, message: string) {
   if (!condition) {
@@ -344,9 +377,12 @@ function verifyAggregateBudgets(policy: GovernancePolicy) {
 }
 
 function verifyFocusRingGovernance() {
-  const files = collectFiles("packages/design/ui/src", new Set([".ts", ".tsx", ".css"]));
+  const files = FOCUS_GOVERNANCE_ROOTS.flatMap((root) =>
+    collectFiles(root, new Set([".ts", ".tsx", ".css"])),
+  );
   const outlineHiddenViolations: string[] = [];
   const globalFocusResetViolations: string[] = [];
+  const formControlViolations: string[] = [];
 
   for (const file of files) {
     const content = stripComments(read(file), file);
@@ -370,6 +406,19 @@ function verifyFocusRingGovernance() {
   assert(
     globalFocusResetViolations.length === 0,
     `Focus ring governance violation: do not reset *:focus-visible globally inside components.\n${globalFocusResetViolations.map((item) => `- ${item}`).join("\n")}`,
+  );
+
+  for (const requirement of FORM_CONTROL_FOCUS_REQUIREMENTS) {
+    const content = stripComments(read(requirement.file), requirement.file);
+    const missingMarkers = requirement.markers.filter((marker) => !content.includes(marker));
+    if (missingMarkers.length > 0) {
+      formControlViolations.push(`${requirement.file} missing ${missingMarkers.join(", ")}`);
+    }
+  }
+
+  assert(
+    formControlViolations.length === 0,
+    `Focus ring governance violation: text-like form controls must suppress native outline at rest and draw a tokenized ring on :focus, not only :focus-visible.\n${formControlViolations.map((item) => `- ${item}`).join("\n")}`,
   );
 }
 

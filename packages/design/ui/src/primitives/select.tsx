@@ -276,8 +276,8 @@ const SelectTrigger = React.forwardRef<
       "flex h-[var(--select-height)] w-full items-center justify-between whitespace-nowrap rounded-[var(--select-radius)] border border-input bg-background",
       "px-[var(--select-padding-x)] text-[length:var(--select-font-size)] text-foreground shadow-[var(--shadow-xs)]",
       "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
-      "focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[length:var(--select-focus-ring-width)] focus-visible:ring-ring/30",
-      "disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive/60 aria-invalid:focus-visible:border-destructive aria-invalid:focus-visible:ring-destructive/20 [&>span]:line-clamp-1",
+      "outline-none focus:border-ring focus:ring-[length:var(--select-focus-ring-width)] focus:ring-ring/30",
+      "disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive/60 aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive/20 [&>span]:line-clamp-1",
       className,
     )}
     style={getSelectTriggerStyle(size, style)}
