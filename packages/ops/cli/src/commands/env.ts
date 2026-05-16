@@ -4,6 +4,7 @@ import * as p from "@clack/prompts";
 import type { Command, OptionValues } from "commander";
 import pc from "picocolors";
 import { findMonorepoRoot } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
 import { debug, output, sectionHeader, status } from "../utils/output";
 
 interface EnvCommandOptions {
@@ -145,7 +146,7 @@ async function handleValidate(options: EnvCommandOptions): Promise<void> {
   }
 
   if (!allValid) {
-    process.exit(1);
+    process.exit(ExitCode.CONFIG_ERROR);
   }
 }
 
@@ -165,7 +166,7 @@ async function handleTemplate(options: EnvCommandOptions): Promise<void> {
 
     if (p.isCancel(overwrite) || !overwrite) {
       status("Template generation cancelled", "warn");
-      process.exit(0);
+      process.exit(ExitCode.CANCELLED);
     }
   }
 
@@ -191,7 +192,7 @@ async function handleTemplate(options: EnvCommandOptions): Promise<void> {
 
       if (p.isCancel(value)) {
         status("Template generation cancelled", "warn");
-        process.exit(0);
+        process.exit(ExitCode.CANCELLED);
       }
 
       newVars[key] = value;
@@ -369,13 +370,13 @@ export function registerEnvCommand(program: Command): void {
               `Unknown env subcommand: ${verb}. Valid commands: validate, template, diff, show`,
               "error",
             );
-            process.exit(1);
+            process.exit(ExitCode.INVALID_ARGS);
         }
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         status(`Environment command failed: ${message}`, "error");
         debug("Full error", { error });
-        process.exit(1);
+        process.exit(ExitCode.ERROR);
       }
     });
 

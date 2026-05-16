@@ -4,6 +4,7 @@ import pc from "picocolors";
 import { delegate, findMonorepoRoot } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
+import { dryRunOutput } from "../utils/output";
 
 type E2ESuite = "smoke" | "golden" | "sleptons";
 
@@ -42,17 +43,11 @@ export async function e2eCommand(suite: string, options: E2EOptions = {}): Promi
   }
 
   if (options.dryRun) {
-    process.stdout.write(
-      JSON.stringify(
-        {
-          mode: "dry-run",
-          command: `e2e ${suite}`,
-          task: `pnpm exec playwright test --config ${config}`,
-        },
-        null,
-        2,
-      ) + "\n",
-    );
+    dryRunOutput({
+      mode: "dry-run",
+      command: `e2e ${suite}`,
+      task: `pnpm exec playwright test --config ${config}`,
+    });
     process.exit(ExitCode.DRY_RUN_OK);
   }
 

@@ -5,6 +5,7 @@ import pc from "picocolors";
 import { findMonorepoRoot, pnpmRun } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
+import { dryRunOutput } from "../utils/output";
 
 interface PresetOptions {
   dryRun?: boolean;
@@ -235,20 +236,22 @@ export async function presetApplyCommand(presetName: string, options: PresetOpti
   const configPath = resolve(root, "nebutra.config.ts");
 
   if (options.dryRun) {
-    const output = {
-      mode: "dry-run",
-      timestamp: new Date().toISOString(),
-      action: "preset.apply",
-      preset: presetName,
-      configFile: configPath,
-      changes: {
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        action: "preset.apply",
         preset: presetName,
-        apps: preset.apps,
-        features: preset.features,
-        theme: preset.theme || "default",
+        configFile: configPath,
+        changes: {
+          preset: presetName,
+          apps: preset.apps,
+          features: preset.features,
+          theme: preset.theme || "default",
+        },
       },
-    };
-    process.stdout.write(JSON.stringify(output, null, 2) + "\n");
+      { format: options.format as any },
+    );
     process.exit(ExitCode.DRY_RUN_OK);
   }
 

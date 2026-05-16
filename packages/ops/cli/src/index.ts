@@ -35,6 +35,7 @@ import { registerTestCommand } from "./commands/test";
 import { registerUnlinkCommand } from "./commands/unlink";
 import { registerUpgradeCommand } from "./commands/upgrade";
 import { registerWorkflowCommand } from "./commands/workflow";
+import { ExitCode } from "./utils/exit-codes";
 import { maybeShowFirstRunBanner } from "./utils/first-run";
 import { logger } from "./utils/logger";
 import { maybeNotifyUpdate } from "./utils/update-notifier";
@@ -44,6 +45,16 @@ import { maybeNotifyUpdate } from "./utils/update-notifier";
 // (with a specific `ExitCode`) instead of calling `process.exit` directly.
 // Existing commands migrate opportunistically — see command-error.ts for the
 // migration guide.
+//
+// Command-naming convention: <resource> <action> (noun-verb), matching gh,
+// vercel, and supabase. Examples: `workflow init <provider>`, `db migrate`,
+// `infra up`, `env validate`, `secrets list`, `search reindex`, `services
+// restart`. Top-level verbs (`init`, `add`, `create`, `dev`, `build`, `lint`,
+// `typecheck`, `doctor`) are exceptions — they are the project's primary
+// daily-use verbs and stay flat. Exceptions: `e2e <suite>` takes a positional
+// argument instead of an action (the suite name *is* the resource). When
+// renaming a command, ALWAYS keep the old form as a `.alias()` so existing
+// docs/scripts continue to work.
 
 const VERSION = "0.1.0";
 
@@ -198,7 +209,7 @@ async function main() {
 
       if (hasErrors) {
         logger.error("Doctor found critical issues that require your attention.");
-        process.exit(1);
+        process.exit(ExitCode.CONFIG_ERROR);
       } else {
         logger.success("Doctor is happy. Your project looks healthy!");
       }
@@ -249,10 +260,13 @@ Examples:
   $ nebutra secrets list --tenant org_123 List encrypted secrets
 
 Exit Codes:
-  0   Success          2   Invalid arguments
-  1   General error    3   Resource not found
-  4   Permission denied   5   Conflict/exists
-  6   Network error (retryable)   10  Dry-run OK
+  0   Success                       2   Invalid arguments
+  1   General error                 3   Resource not found
+  4   Permission denied             5   Conflict/exists
+  6   Network error (retryable)     7   Timeout (retryable)
+  8   Cancelled by user             9   Config error
+  10  Dry-run OK                    11  Incompatible
+  12  Resource exhausted
 
 Environment:
   NEBUTRA_LOG_LEVEL       Log level (debug|info|warn|error)
@@ -264,7 +278,7 @@ Environment:
 
   if (process.argv.length <= 2) {
     program.outputHelp();
-    process.exit(0);
+    process.exit(ExitCode.SUCCESS);
   }
 
   await program.parseAsync(process.argv);

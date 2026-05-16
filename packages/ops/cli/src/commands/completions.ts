@@ -4,6 +4,7 @@ import { join } from "node:path";
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
+import { ExitCode } from "../utils/exit-codes";
 import { createSailorValueDomains } from "./metadata";
 
 // All known subcommands and their flags
@@ -376,7 +377,7 @@ function printCompletion(shell: string): void {
   const generator = completionMap[shell.toLowerCase()];
   if (!generator) {
     console.error(pc.red(`Error: Unknown shell '${shell}'. Supported: bash, zsh, fish`));
-    process.exit(1);
+    process.exit(ExitCode.INVALID_ARGS);
   }
 
   console.log(generator());
@@ -423,7 +424,7 @@ async function installCompletions(): Promise<void> {
           "Run 'nebutra completions bash' (or zsh/fish) to generate completions for your shell.",
         ),
       );
-      process.exit(0);
+      process.exit(ExitCode.SUCCESS);
     }
 
     // Ensure completion directory exists
@@ -470,7 +471,7 @@ async function installCompletions(): Promise<void> {
       console.error(pc.dim(error.message));
     }
 
-    process.exit(1);
+    process.exit(ExitCode.ERROR);
   }
 }
 

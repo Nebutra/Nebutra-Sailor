@@ -1,6 +1,7 @@
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import { prismaRun } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
 import { debug, status } from "../utils/output";
 
 interface DbCommandOptions {
@@ -151,7 +152,7 @@ async function handleReset(options: DbCommandOptions): Promise<void> {
 
       if (p.isCancel(confirmed) || !confirmed) {
         status("Reset cancelled", "warn");
-        process.exit(0);
+        process.exit(ExitCode.CANCELLED);
       }
     } else {
       // Non-interactive without --yes is not allowed
@@ -159,7 +160,7 @@ async function handleReset(options: DbCommandOptions): Promise<void> {
         "Database reset requires explicit --yes confirmation (use: nebutra db reset --yes)",
         "error",
       );
-      process.exit(1);
+      process.exit(ExitCode.INVALID_ARGS);
     }
   }
 
@@ -279,13 +280,13 @@ export function registerDbCommand(program: Command): void {
                 `Unknown db subcommand: ${verb}. Valid commands: generate, migrate, migrate create, push, seed, studio, reset, status`,
                 "error",
               );
-              process.exit(1);
+              process.exit(ExitCode.INVALID_ARGS);
           }
         } catch (error) {
           const message = error instanceof Error ? error.message : String(error);
           status(`Database command failed: ${message}`, "error");
           debug("Full error", { error });
-          process.exit(1);
+          process.exit(ExitCode.ERROR);
         }
       },
     );

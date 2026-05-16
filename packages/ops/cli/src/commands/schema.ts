@@ -1,7 +1,7 @@
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { EXIT_CODE_DESCRIPTIONS } from "../utils/exit-codes";
+import { EXIT_CODE_DESCRIPTIONS, ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 import { listFeatureDescriptors } from "../utils/registry";
 import { type CommandMeta, createSailorValueDomains, nebultraCommand } from "./metadata";
@@ -251,7 +251,7 @@ export async function schemaCommand(
           logger.error(`Unknown command '${commandArg}'`);
           logger.info(`Available commands: ${listCommandNames().join(", ")}`);
         }
-        process.exit(2);
+        process.exit(ExitCode.NOT_FOUND);
       }
 
       outputJSON(schema);
@@ -286,7 +286,7 @@ export async function schemaCommand(
     if (!isQuiet) {
       logger.error(error instanceof Error ? error.message : String(error));
     }
-    process.exit(1);
+    process.exit(ExitCode.ERROR);
   }
 }
 

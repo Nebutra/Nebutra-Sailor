@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
+import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -92,9 +93,10 @@ export function registerCreateCommand(program: Command) {
           if (err.code === "ENOENT") {
             logger.warn("\nTip: Ensure create-sailor is installed or available in your PATH.");
             logger.info("  Install globally: npm install -g create-sailor");
+            process.exit(ExitCode.NOT_FOUND);
           }
 
-          process.exit(1);
+          process.exit(ExitCode.ERROR);
         });
       } catch (error: unknown) {
         p.log.error(
@@ -105,7 +107,7 @@ export function registerCreateCommand(program: Command) {
           logger.error(error.message);
         }
 
-        process.exit(1);
+        process.exit(ExitCode.ERROR);
       }
     });
 }

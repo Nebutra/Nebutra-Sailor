@@ -165,7 +165,7 @@ async function handleRestart(service: string, options: ServiceCommandOptions): P
 
     if (p.isCancel(confirmed) || !confirmed) {
       status("Restart cancelled", "warn");
-      process.exit(0);
+      process.exit(ExitCode.CANCELLED);
     }
   }
 

@@ -5,6 +5,7 @@ import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
 import { emitLicenseCliEvent } from "../utils/analytics-emit";
+import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 
 // Configurable base URL: falls back to production landing-page origin.
@@ -117,7 +118,7 @@ export async function activateLicenseCommand(key: string, options: Record<string
       logger.error(error instanceof Error ? error.message : String(error));
       p.outro("Please check your key and try again.");
     }
-    process.exit(1);
+    process.exit(ExitCode.ERROR);
   }
 }
 
@@ -150,7 +151,7 @@ export async function statusLicenseCommand(options: Record<string, unknown>) {
       p.log.message(pc.dim("Run `nebutra license activate <key>` to unlock premium features."));
       p.outro("");
     }
-    process.exit(1);
+    process.exit(ExitCode.NOT_FOUND);
   }
 }
 

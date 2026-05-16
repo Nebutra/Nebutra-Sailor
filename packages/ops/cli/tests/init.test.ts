@@ -118,6 +118,22 @@ describe("init command", () => {
     }
   });
 
+  it("--dry-run emits structured payload to stdout only (status on stderr)", async () => {
+    const result = await runCliInDir(["init", "--dry-run"], testDir);
+
+    expect(result.exitCode).toBe(ExitCode.DRY_RUN_OK);
+
+    // stdout must contain pure JSON payload — parseable as a single object
+    const trimmed = result.stdout.trim();
+    expect(() => JSON.parse(trimmed)).not.toThrow();
+    const payload = JSON.parse(trimmed);
+    expect(payload.operation).toBeDefined();
+    expect(payload.after).toBeDefined();
+
+    // status/progress messages must not pollute stdout
+    expect(result.stdout).not.toContain("Dry-run completed");
+  });
+
   it("should support combining --dry-run and --if-not-exists", async () => {
     // First create config
     await runCliInDir(["init", "--yes"], testDir);

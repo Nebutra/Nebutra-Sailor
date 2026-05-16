@@ -3,6 +3,7 @@ import pc from "picocolors";
 import { findMonorepoRoot } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
+import { dryRunOutput, status } from "../utils/output";
 
 // Constants
 const ECOSYSTEM_API_BASE = process.env.NEBUTRA_ECOSYSTEM_URL || "https://api.nebutra.com/ecosystem";
@@ -22,10 +23,11 @@ async function ecosystemFetch(
   const url = `${ECOSYSTEM_API_BASE}${endpoint}`;
 
   if (dryRun) {
-    logger.info(`[DRY RUN] ${method} ${url}`);
+    status(`[DRY RUN] ${method} ${url}`);
     if (body) {
-      logger.info(`Body: ${JSON.stringify(body, null, 2)}`);
+      status(`Body: ${JSON.stringify(body)}`);
     }
+    dryRunOutput({ mode: "dry-run", method, url, ...(body && { body }) });
     return { ok: true, status: 200, json: async () => ({ dryRun: true }) };
   }
 
@@ -147,7 +149,7 @@ async function handleConnect(options: {
     const data = (await response.json()) as Record<string, unknown>;
 
     if (options.dryRun) {
-      logger.info(pc.green("✓ [DRY RUN] Would connect project to ecosystem\n"));
+      status("[DRY RUN] Would connect project to ecosystem", "success");
       return ExitCode.SUCCESS;
     }
 
@@ -219,7 +221,7 @@ async function handlePublish(options: {
     const data = (await response.json()) as Record<string, unknown>;
 
     if (options.dryRun) {
-      logger.info(pc.green("✓ [DRY RUN] Would publish to ecosystem\n"));
+      status("[DRY RUN] Would publish to ecosystem", "success");
       return ExitCode.SUCCESS;
     }
 
@@ -307,7 +309,7 @@ async function handleTemplatesInstall(id: string, options: { dryRun?: boolean })
     });
 
     if (options.dryRun) {
-      logger.info(pc.green("✓ [DRY RUN] Would install template\n"));
+      status("[DRY RUN] Would install template", "success");
       return ExitCode.SUCCESS;
     }
 
@@ -376,7 +378,7 @@ async function handleIdeasSubmit(options: {
     const data = (await response.json()) as Record<string, unknown>;
 
     if (options.dryRun) {
-      logger.info(pc.green("✓ [DRY RUN] Would submit idea\n"));
+      status("[DRY RUN] Would submit idea", "success");
       return ExitCode.SUCCESS;
     }
 
@@ -402,7 +404,7 @@ async function handleIdeasVote(id: string, options: { dryRun?: boolean }) {
     });
 
     if (options.dryRun) {
-      logger.info(pc.green("✓ [DRY RUN] Would upvote idea\n"));
+      status("[DRY RUN] Would upvote idea", "success");
       return ExitCode.SUCCESS;
     }
 
@@ -425,7 +427,7 @@ async function handleIdeasClaim(id: string, options: { dryRun?: boolean }) {
     });
 
     if (options.dryRun) {
-      logger.info(pc.green("✓ [DRY RUN] Would claim idea\n"));
+      status("[DRY RUN] Would claim idea", "success");
       return ExitCode.SUCCESS;
     }
 
@@ -455,7 +457,7 @@ async function handleIdeasComment(id: string, options: { message?: string; dryRu
     });
 
     if (options.dryRun) {
-      logger.info(pc.green("✓ [DRY RUN] Would post comment\n"));
+      status("[DRY RUN] Would post comment", "success");
       return ExitCode.SUCCESS;
     }
 
@@ -608,7 +610,7 @@ async function handleShowcaseSubmit(options: { dryRun?: boolean; yes?: boolean }
     });
 
     if (options.dryRun) {
-      logger.info(pc.green("✓ [DRY RUN] Would submit to showcase\n"));
+      status("[DRY RUN] Would submit to showcase", "success");
       return ExitCode.SUCCESS;
     }
 
@@ -634,7 +636,7 @@ async function handleShowcaseVote(id: string, options: { dryRun?: boolean }) {
     });
 
     if (options.dryRun) {
-      logger.info(pc.green("✓ [DRY RUN] Would upvote project\n"));
+      status("[DRY RUN] Would upvote project", "success");
       return ExitCode.SUCCESS;
     }
 

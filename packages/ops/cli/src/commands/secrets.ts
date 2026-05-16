@@ -199,7 +199,7 @@ async function handleRotate(key: string, options: SecretsCommandOptions): Promis
 
     if (p.isCancel(confirmed) || !confirmed) {
       status("Rotation cancelled", "warn");
-      process.exit(0);
+      process.exit(ExitCode.CANCELLED);
     }
   }
 

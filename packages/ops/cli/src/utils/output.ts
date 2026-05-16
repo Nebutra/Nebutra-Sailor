@@ -265,6 +265,40 @@ export function output(data: unknown, options?: OutputOptions): void {
 }
 
 /**
+ * Write a dry-run payload to stdout in the chosen format.
+ *
+ * Contract:
+ * - The structured payload ALWAYS goes to stdout (so agents can pipe it).
+ * - Status/progress messages ("Would create X", "Would install Y") must go to
+ *   stderr via {@link status} or the logger — they do not belong here.
+ * - The output is line-terminated for line-based stream consumers.
+ *
+ * @example
+ * dryRunOutput({ mode: "dry-run", command: "add", task: "install cache" });
+ * // stdout: {"mode":"dry-run","command":"add","task":"install cache"}
+ */
+export function dryRunOutput(data: unknown, opts: { format?: OutputFormat } = {}): void {
+  const format = getOutputFormat(opts.format);
+
+  let formatted: string;
+  switch (format) {
+    case "json":
+      formatted = JSON.stringify(data);
+      break;
+    case "table":
+      formatted = formatAsTable(data);
+      break;
+    default:
+      // For dry-run, "plain" mode still emits pretty JSON to keep payload
+      // structured and machine-parseable while remaining human-readable.
+      formatted = JSON.stringify(data, null, 2);
+      break;
+  }
+
+  stdout.write(formatted + "\n");
+}
+
+/**
  * Write a status/progress message to stderr
  * Never pollutes stdout (which is reserved for data)
  *

@@ -4,6 +4,7 @@ import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
+import { dryRunOutput, status } from "../utils/output";
 
 interface InitOptions {
   dryRun?: boolean;
@@ -101,9 +102,9 @@ export async function initCommand(options: InitOptions = {}) {
       : undefined;
 
     const diff = generateDiff(configPath, config, existingConfig);
-    console.log(JSON.stringify(diff, null, 2));
+    dryRunOutput(diff);
 
-    logger.info("Dry-run completed. No changes made.");
+    status("Dry-run completed. No changes made.");
     process.exit(ExitCode.DRY_RUN_OK);
   }
 

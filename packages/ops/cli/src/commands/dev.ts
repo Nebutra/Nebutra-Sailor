@@ -2,6 +2,7 @@ import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { delegate, pnpmRun, turboRun } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
+import { dryRunOutput } from "../utils/output";
 
 interface DevOptions {
   app?: string;
@@ -73,17 +74,19 @@ function validatePreset(preset: string): string {
  */
 export async function devCommand(options: DevOptions) {
   if (options.dryRun) {
-    const dryRunOutput = {
-      mode: "dry-run",
-      timestamp: new Date().toISOString(),
-      command: "dev",
-      options: {
-        app: options.app,
-        preset: options.preset,
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "dev",
+        options: {
+          app: options.app,
+          preset: options.preset,
+        },
+        task: options.app ? "turbo dev" : options.preset ? "pnpm dev" : "turbo dev (all apps)",
       },
-      task: options.app ? "turbo dev" : options.preset ? "pnpm dev" : "turbo dev (all apps)",
-    };
-    process.stdout.write(JSON.stringify(dryRunOutput, null, 2) + "\n");
+      { format: options.format as any },
+    );
     process.exit(ExitCode.DRY_RUN_OK);
   }
 
@@ -135,17 +138,19 @@ export async function devCommand(options: DevOptions) {
  */
 export async function buildCommand(options: BuildOptions) {
   if (options.dryRun) {
-    const dryRunOutput = {
-      mode: "dry-run",
-      timestamp: new Date().toISOString(),
-      command: "build",
-      options: {
-        app: options.app,
-        strict: options.strict,
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "build",
+        options: {
+          app: options.app,
+          strict: options.strict,
+        },
+        task: options.strict ? "pnpm build:strict" : "pnpm build",
       },
-      task: options.strict ? "pnpm build:strict" : "pnpm build",
-    };
-    process.stdout.write(JSON.stringify(dryRunOutput, null, 2) + "\n");
+      { format: options.format as any },
+    );
     process.exit(ExitCode.DRY_RUN_OK);
   }
 
@@ -189,17 +194,19 @@ export async function buildCommand(options: BuildOptions) {
  */
 export async function lintCommand(options: LintOptions) {
   if (options.dryRun) {
-    const dryRunOutput = {
-      mode: "dry-run",
-      timestamp: new Date().toISOString(),
-      command: "lint",
-      options: {
-        app: options.app,
-        fix: options.fix,
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "lint",
+        options: {
+          app: options.app,
+          fix: options.fix,
+        },
+        task: options.fix ? "pnpm lint:fix" : "pnpm lint",
       },
-      task: options.fix ? "pnpm lint:fix" : "pnpm lint",
-    };
-    process.stdout.write(JSON.stringify(dryRunOutput, null, 2) + "\n");
+      { format: options.format as any },
+    );
     process.exit(ExitCode.DRY_RUN_OK);
   }
 
@@ -247,16 +254,18 @@ export async function lintCommand(options: LintOptions) {
  */
 export async function typecheckCommand(options: TypecheckOptions) {
   if (options.dryRun) {
-    const dryRunOutput = {
-      mode: "dry-run",
-      timestamp: new Date().toISOString(),
-      command: "typecheck",
-      options: {
-        app: options.app,
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "typecheck",
+        options: {
+          app: options.app,
+        },
+        task: "turbo typecheck",
       },
-      task: "turbo typecheck",
-    };
-    process.stdout.write(JSON.stringify(dryRunOutput, null, 2) + "\n");
+      { format: options.format as any },
+    );
     process.exit(ExitCode.DRY_RUN_OK);
   }
 

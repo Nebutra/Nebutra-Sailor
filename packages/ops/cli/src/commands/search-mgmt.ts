@@ -146,7 +146,7 @@ async function handleReindex(index?: string, options?: SearchCommandOptions): Pr
 
     if (p.isCancel(confirmed) || !confirmed) {
       status("Reindex cancelled", "warn");
-      process.exit(0);
+      process.exit(ExitCode.CANCELLED);
     }
   }
 

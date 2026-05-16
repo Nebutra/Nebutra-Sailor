@@ -2,6 +2,7 @@ import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { pnpmRun, turboRun } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
+import { dryRunOutput } from "../utils/output";
 
 interface TestOptions {
   watch?: boolean;
@@ -75,22 +76,24 @@ function validateApp(app: string): string {
  */
 export async function testCommand(options: TestOptions) {
   if (options.dryRun) {
-    const dryRunOutput = {
-      mode: "dry-run",
-      timestamp: new Date().toISOString(),
-      command: "test",
-      options: {
-        app: options.app,
-        watch: options.watch,
-        coverage: options.coverage,
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "test",
+        options: {
+          app: options.app,
+          watch: options.watch,
+          coverage: options.coverage,
+        },
+        task: options.coverage
+          ? "pnpm test:coverage"
+          : options.watch
+            ? "pnpm test:watch"
+            : "pnpm test",
       },
-      task: options.coverage
-        ? "pnpm test:coverage"
-        : options.watch
-          ? "pnpm test:watch"
-          : "pnpm test",
-    };
-    process.stdout.write(JSON.stringify(dryRunOutput, null, 2) + "\n");
+      { format: options.format as any },
+    );
     process.exit(ExitCode.DRY_RUN_OK);
   }
 
@@ -143,17 +146,19 @@ export async function testCommand(options: TestOptions) {
  */
 export async function testE2eCommand(options: E2EOptions) {
   if (options.dryRun) {
-    const dryRunOutput = {
-      mode: "dry-run",
-      timestamp: new Date().toISOString(),
-      command: "test e2e",
-      options: {
-        ui: options.ui,
-        ci: options.ci,
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "test e2e",
+        options: {
+          ui: options.ui,
+          ci: options.ci,
+        },
+        task: options.ci ? "pnpm e2e:ci" : options.ui ? "pnpm e2e:ui" : "pnpm e2e",
       },
-      task: options.ci ? "pnpm e2e:ci" : options.ui ? "pnpm e2e:ui" : "pnpm e2e",
-    };
-    process.stdout.write(JSON.stringify(dryRunOutput, null, 2) + "\n");
+      { format: options.format as any },
+    );
     process.exit(ExitCode.DRY_RUN_OK);
   }
 
@@ -194,16 +199,18 @@ export async function testE2eCommand(options: E2EOptions) {
  */
 export async function testSizeCommand(options: SizeOptions) {
   if (options.dryRun) {
-    const dryRunOutput = {
-      mode: "dry-run",
-      timestamp: new Date().toISOString(),
-      command: "test size",
-      options: {
-        why: options.why,
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "test size",
+        options: {
+          why: options.why,
+        },
+        task: options.why ? "pnpm size:why" : "pnpm size",
       },
-      task: options.why ? "pnpm size:why" : "pnpm size",
-    };
-    process.stdout.write(JSON.stringify(dryRunOutput, null, 2) + "\n");
+      { format: options.format as any },
+    );
     process.exit(ExitCode.DRY_RUN_OK);
   }
 
@@ -234,13 +241,15 @@ export async function testSizeCommand(options: SizeOptions) {
  */
 export async function testArchCommand(options: Omit<TestOptions, "watch" | "coverage" | "app">) {
   if (options.dryRun) {
-    const dryRunOutput = {
-      mode: "dry-run",
-      timestamp: new Date().toISOString(),
-      command: "test arch",
-      task: "pnpm test:arch",
-    };
-    process.stdout.write(JSON.stringify(dryRunOutput, null, 2) + "\n");
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "test arch",
+        task: "pnpm test:arch",
+      },
+      { format: options.format as any },
+    );
     process.exit(ExitCode.DRY_RUN_OK);
   }
 

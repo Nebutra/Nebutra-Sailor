@@ -2,6 +2,7 @@ import type { Command } from "commander";
 import pc from "picocolors";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
+import { dryRunOutput } from "../utils/output";
 
 interface AdminCommandOptions {
   dryRun?: boolean;
@@ -47,7 +48,7 @@ async function adminFetch(
 
   // Dry-run mode: output request as JSON
   if (options.dryRun) {
-    const dryRunOutput = {
+    const payload = {
       mode: "dry-run",
       timestamp: new Date().toISOString(),
       method,
@@ -58,8 +59,8 @@ async function adminFetch(
         "Content-Type": "application/json",
       },
     };
-    console.log(JSON.stringify(dryRunOutput, null, 2));
-    return { ok: true, status: 0, data: dryRunOutput };
+    dryRunOutput(payload);
+    return { ok: true, status: 0, data: payload };
   }
 
   try {

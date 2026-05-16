@@ -4,6 +4,7 @@ import pc from "picocolors";
 import { findMonorepoRoot } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
+import { dryRunOutput } from "../utils/output";
 
 type WorkflowProvider = "inngest" | "n8n" | "pusher";
 
@@ -124,17 +125,11 @@ export async function workflowInitCommand(
   const files = filesFor(provider as WorkflowProvider);
 
   if (options.dryRun) {
-    process.stdout.write(
-      JSON.stringify(
-        {
-          mode: "dry-run",
-          command: `workflow init ${provider}`,
-          files: files.map((f) => ({ path: path.join(root, f.relPath) })),
-        },
-        null,
-        2,
-      ) + "\n",
-    );
+    dryRunOutput({
+      mode: "dry-run",
+      command: `workflow init ${provider}`,
+      files: files.map((f) => ({ path: path.join(root, f.relPath) })),
+    });
     process.exit(ExitCode.DRY_RUN_OK);
   }
 
