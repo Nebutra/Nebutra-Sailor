@@ -5,10 +5,12 @@
   "scripts": {
     "dev": "sanity dev",
     "build": "sanity build",
+    "blog:publish": "node scripts/publish-blog-post.mjs",
     "deploy": "sanity deploy",
     "start": "sanity start"
   },
   "dependencies": {
+    "@sanity/client": "^7.16.0",
     "@sanity/vision": "^5.13.0",
     "react": "catalog:",
     "react-dom": "catalog:",
