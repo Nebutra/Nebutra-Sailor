@@ -21,6 +21,10 @@ import {
 
 type Params = { lang: string; slug: string };
 
+// Sentinel slug Next emits during static prerender warm-up before any blog
+// pages exist; surfacing it to Sanity wastes a fetch + pollutes error logs.
+const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";
+
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   "use cache";
   cacheLife("hours");
@@ -28,6 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   const { lang, slug } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
+  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) return {};
   cacheTag(`blog:${slug}`);
 
   const post = await getPostBySlug(slug, toBlogLanguage(lang));

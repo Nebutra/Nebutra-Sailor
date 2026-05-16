@@ -56,7 +56,7 @@ describe("lighthouse dashboard ci harness", () => {
       "if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG)",
       metadataStart,
     );
-    const sanityFetch = blogPostPage.indexOf("await getPostBySlug(slug)", metadataStart);
+    const sanityFetch = blogPostPage.indexOf("await getPostBySlug(slug", metadataStart);
 
     expect(blogPostPage).toContain(
       'const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";',
