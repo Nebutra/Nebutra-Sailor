@@ -11,12 +11,12 @@ type PopoverTriggerProps = React.ComponentProps<typeof PopoverPrimitive.Trigger>
 };
 
 function PopoverTrigger({ asChild, children, render, ...props }: PopoverTriggerProps) {
-  const renderElement = asChild && React.isValidElement(children) ? children : render;
+  const renderElement: PopoverPrimitive.Trigger.Props["render"] =
+    asChild && React.isValidElement(children) ? children : render;
   return (
     <PopoverPrimitive.Trigger
       data-slot="popover-trigger"
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      render={renderElement as any}
+      render={renderElement}
       {...(renderElement ? props : { ...props, children })}
     />
   );
@@ -68,7 +68,7 @@ function PopoverContent({
           data-slot="popover-content"
           className={cn(
             `
-              w-72 z-50 bg-background/90 backdrop-blur-md text-popover-foreground rounded-xl border p-4 shadow-xl outline-hidden
+              w-72 z-50 bg-background/90 backdrop-blur-md text-popover-foreground rounded-xl border p-4 shadow-xl outline-none
               data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 
               data-[open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 
               data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 

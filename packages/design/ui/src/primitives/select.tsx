@@ -4,9 +4,34 @@ import { Select as BaseSelect } from "@base-ui/react/select";
 import { Check, ChevronDown } from "@nebutra/icons";
 import * as React from "react";
 
+import { type InputSize, inputTokens } from "../tokens/components/input";
 import { cn } from "../utils/cn";
 
 const Select = BaseSelect.Root;
+
+type SelectTriggerCssVars = React.CSSProperties & {
+  "--select-height"?: string;
+  "--select-padding-x"?: string;
+  "--select-font-size"?: string;
+  "--select-radius"?: string;
+  "--select-focus-ring-width"?: string;
+};
+
+function getSelectTriggerStyle(
+  size: InputSize,
+  style: React.CSSProperties | undefined,
+): SelectTriggerCssVars {
+  const token = inputTokens.sizes[size];
+
+  return {
+    "--select-height": `${token.height}px`,
+    "--select-padding-x": `${token.paddingX}px`,
+    "--select-font-size": `${token.fontSize}px`,
+    "--select-radius": `${token.radius}px`,
+    "--select-focus-ring-width": `${inputTokens.focusRingWidth}px`,
+    ...style,
+  };
+}
 
 const SelectGroup = React.forwardRef<
   HTMLDivElement,
@@ -34,14 +59,19 @@ SelectValue.displayName = "SelectValue";
 
 const SelectTrigger = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger> & { size?: InputSize }
+>(({ className, children, size = "md", style, ...props }, ref) => (
   <BaseSelect.Trigger
     ref={ref}
     className={cn(
-      "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+      "flex h-[var(--select-height)] w-full items-center justify-between whitespace-nowrap rounded-[var(--select-radius)] border border-input bg-background",
+      "px-[var(--select-padding-x)] text-[length:var(--select-font-size)] text-foreground shadow-[var(--shadow-xs)]",
+      "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
+      "focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[length:var(--select-focus-ring-width)] focus-visible:ring-ring/30",
+      "disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive/60 aria-invalid:focus-visible:border-destructive aria-invalid:focus-visible:ring-destructive/20 [&>span]:line-clamp-1",
       className,
     )}
+    style={getSelectTriggerStyle(size, style)}
     {...props}
   >
     {children}

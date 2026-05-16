@@ -32,6 +32,8 @@ const IMPORT_SOURCE_RE = /from\s+["']([^"']+)["']/g;
 const HEX_RE = /#[0-9A-Fa-f]{6}\b/g;
 const HSL_RE = /\bhsl\(/g;
 const OKLCH_RE = /\boklch\(/g;
+const OUTLINE_HIDDEN_RE = /\b(?:focus-visible:|focus:)?outline-hidden\b/g;
+const GLOBAL_FOCUS_RESET_RE = /\*:focus-visible\s*\{/g;
 
 function assert(condition: boolean, message: string) {
   if (!condition) {
@@ -341,8 +343,39 @@ function verifyAggregateBudgets(policy: GovernancePolicy) {
   return { colorCount, radiusCount };
 }
 
+function verifyFocusRingGovernance() {
+  const files = collectFiles("packages/design/ui/src", new Set([".ts", ".tsx", ".css"]));
+  const outlineHiddenViolations: string[] = [];
+  const globalFocusResetViolations: string[] = [];
+
+  for (const file of files) {
+    const content = stripComments(read(file), file);
+    const outlineHiddenCount = countMatches(content, OUTLINE_HIDDEN_RE);
+    const globalFocusResetCount = countMatches(content, GLOBAL_FOCUS_RESET_RE);
+
+    if (outlineHiddenCount > 0) {
+      outlineHiddenViolations.push(`${file} (${outlineHiddenCount})`);
+    }
+
+    if (globalFocusResetCount > 0) {
+      globalFocusResetViolations.push(`${file} (${globalFocusResetCount})`);
+    }
+  }
+
+  assert(
+    outlineHiddenViolations.length === 0,
+    `Focus ring governance violation: use outline-none, not outline-hidden. Hidden outlines can leak native square focus frames around rounded controls.\n${outlineHiddenViolations.map((item) => `- ${item}`).join("\n")}`,
+  );
+
+  assert(
+    globalFocusResetViolations.length === 0,
+    `Focus ring governance violation: do not reset *:focus-visible globally inside components.\n${globalFocusResetViolations.map((item) => `- ${item}`).join("\n")}`,
+  );
+}
+
 function main() {
   const policy = loadUiGovernancePolicy();
+  verifyFocusRingGovernance();
   const rawColorStats = verifyRawTailwindColorUsage(policy);
   verifyMotionImports(policy);
   const _tokenStats = verifyTokenFormatPolicy(policy);
