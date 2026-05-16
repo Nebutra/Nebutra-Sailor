@@ -91,6 +91,8 @@ const DEPENDENCY_RULES: DependencyRule[] = [
       "@nebutra/audit",
       "@nebutra/metering",
       "@nebutra/onboarding",
+      "@nebutra/design-tokens",
+      "@nebutra/theme",
     ],
   },
   {
