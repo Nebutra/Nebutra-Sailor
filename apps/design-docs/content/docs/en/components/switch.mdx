@@ -1,42 +1,96 @@
 ---
-title: "Switch"
-description: "A Segmented Control toggle used for binary or multiple exclusive choices."
+title: Switch
+description: Segmented radio selector for mutually exclusive view options.
 ---
 
-import { SwitchDemo } from "@/components/previews/switch-demo";
-import { ComponentPreview } from "@/components/component-preview";
+## Demo
 
-<ComponentPreview name="switch-demo" className="min-h-[400px] flex items-center justify-center p-8">
-  <SwitchDemo />
-
-  ```tsx
-<SwitchDemo />
-  ```
-</ComponentPreview>
+<ComponentPreview name="switch-demo" />
 
 ## Usage
 
 ```tsx
-import { Switch } from "@nebutra/ui/primitives"
+import { Switch } from "@nebutra/ui/primitives";
+
+<Switch name="source-output" defaultValue="source">
+  <Switch.Control label="Source" value="source" />
+  <Switch.Control label="Output" value="output" />
+</Switch>
+```
+
+## Design Contract
+
+`Switch` chooses between two or three mutually exclusive options that change the
+view of the same surface. It renders native radio inputs, so arrow-key
+navigation, form submission, and screen reader semantics stay aligned.
+
+Use `Toggle` for a boolean on/off setting. Use `Tabs` or `Select` when there are
+more than three options or labels need more than a couple of words.
+
+## Controlled State
+
+```tsx
+const [view, setView] = useState("source");
+
+<Switch name="view" value={view} onValueChange={setView}>
+  <Switch.Control label="Source" value="source" />
+  <Switch.Control label="Output" value="output" />
+</Switch>
+```
+
+## Icon Controls
+
+Always pass `label`, even when an icon is visible. The label becomes the radio's
+accessible name.
+
+```tsx
+<Switch name="layout">
+  <Switch.Control label="Grid View" value="grid" icon={<GridSquare />} />
+  <Switch.Control label="List View" value="list" icon={<ListUnordered />} />
+</Switch>
 ```
 
 ## Props
 
-### Switch (Root)
+### Switch
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `name` | `string` | `"default"` | Form field name group for the internal radio inputs |
-| `size` | `"small" \| "medium" \| "large"` | `"medium"` | Defines the size of the controls |
-| `className` | `string` | — | Additional CSS classes |
-| `style` | `React.CSSProperties` | — | Additional inline styles |
+| `name` | `string` | generated id | Native radio group name. Pass a stable value for forms. |
+| `size` | `"small" \| "medium" \| "large"` | `"medium"` | Default size for child controls |
+| `value` | `string` | — | Controlled selected value |
+| `defaultValue` | `string` | — | Uncontrolled selected value |
+| `onValueChange` | `(value: string) => void` | — | Called when a control is selected |
+| `disabled` | `boolean` | `false` | Disables all controls |
 
 ### Switch.Control
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `label` | `string` | — | Text label for the control option |
-| `value` | `string` | — | **Required.** The value of this specific option |
-| `defaultChecked` | `boolean` | `false` | Whether this option should be selected by default |
-| `disabled` | `boolean` | `false` | Disables this specific control |
-| `icon` | `ReactNode` | — | Optional icon to display instead of a text label |
+| `value` | `string` | — | Native radio value |
+| `label` | `string` | `value` fallback | Visible text or accessible name for icon-only controls |
+| `icon` | `ReactNode` | — | Optional icon rendered instead of visible text |
+| `size` | `"small" \| "medium" \| "large"` | root size | Per-control size override |
+| `checked` | `boolean` | — | Controlled radio checked state |
+| `defaultChecked` | `boolean` | `false` | Uncontrolled initial checked state |
+| `disabled` | `boolean` | `false` | Disables this control |
+
+## Best Practices
+
+Use Switch as a segmented selector for two or three mutually exclusive options
+that show different views of the same surface, like `Source` and `Output`.
+
+Pass a stable `name` so the underlying radios are grouped. Without a stable name,
+form serialization and cross-render identity are harder to reason about.
+
+Set `defaultValue`, controlled `value`, or exactly one `defaultChecked` control so
+the group has a defined initial state.
+
+Keep labels Title Case, short, and parallel: `Source / Output`, not `Source /
+Show output`.
+
+Pad each control so the widest label fits without the active pill resizing. Test
+with the longest copy in the set.
+
+Pair icon-only controls with Tooltip so sighted users get the same label
+assistive technology receives.

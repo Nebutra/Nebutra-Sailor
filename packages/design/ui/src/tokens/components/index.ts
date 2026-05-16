@@ -32,6 +32,7 @@ export {
   spinnerTokens,
   spinnerTones,
 } from "./spinner";
+export { type SwitchSize, switchSizes, switchTokens } from "./switch";
 
 export { textareaTokens } from "./textarea";
 export { type ThemeToggleSize, themeToggleTokens } from "./theme-toggle";

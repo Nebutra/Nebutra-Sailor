@@ -1,42 +1,88 @@
 ---
-title: "开关 (Switch / Segmented Control)"
-description: "一个分段控制组件，用于二元或多个互斥选项的切换。"
+title: 开关 (Switch)
+description: 用于互斥视图选项的分段 radio 选择器。
 ---
 
-import { SwitchDemo } from "@/components/previews/switch-demo";
-import { ComponentPreview } from "@/components/component-preview";
+## 演示
 
-<ComponentPreview name="switch-demo" className="min-h-[400px] flex items-center justify-center p-8">
-  <SwitchDemo />
+<ComponentPreview name="switch-demo" />
 
-  ```tsx
-<SwitchDemo />
-  ```
-</ComponentPreview>
-
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
-import { Switch } from "@nebutra/ui/primitives"
+import { Switch } from "@nebutra/ui/primitives";
+
+<Switch name="source-output" defaultValue="source">
+  <Switch.Control label="Source" value="source" />
+  <Switch.Control label="Output" value="output" />
+</Switch>
 ```
 
-## 属性 (Props)
+## 设计契约
 
-### Switch (根组件)
+`Switch` 用于二到三个互斥选项，它们切换的是同一个界面的不同视图。组件渲染原生
+radio input，因此方向键、表单提交和屏幕阅读器语义都保持一致。
+
+布尔开关使用 `Toggle`。超过三个选项，或标签超过一两个词时，改用 `Tabs` 或 `Select`。
+
+## 受控状态
+
+```tsx
+const [view, setView] = useState("source");
+
+<Switch name="view" value={view} onValueChange={setView}>
+  <Switch.Control label="Source" value="source" />
+  <Switch.Control label="Output" value="output" />
+</Switch>
+```
+
+## 图标控件
+
+即使界面只显示图标，也要传 `label`。这个 label 会成为 radio 的可访问名称。
+
+```tsx
+<Switch name="layout">
+  <Switch.Control label="Grid View" value="grid" icon={<GridSquare />} />
+  <Switch.Control label="List View" value="list" icon={<ListUnordered />} />
+</Switch>
+```
+
+## 属性
+
+### Switch
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `name` | `string` | `"default"` | 内部单选输入组合的表单名称 |
-| `size` | `"small" \| "medium" \| "large"` | `"medium"` | 定义控件的大小 |
-| `className` | `string` | — | 额外的 CSS 类名 |
-| `style` | `React.CSSProperties` | — | 额外的内联样式 |
+| `name` | `string` | 生成 id | 原生 radio 组名。表单场景应传稳定值。 |
+| `size` | `"small" \| "medium" \| "large"` | `"medium"` | 子控件默认尺寸 |
+| `value` | `string` | — | 受控选中值 |
+| `defaultValue` | `string` | — | 非受控初始选中值 |
+| `onValueChange` | `(value: string) => void` | — | 选项被选中时触发 |
+| `disabled` | `boolean` | `false` | 禁用全部控件 |
 
-### Switch.Control (子控件)
+### Switch.Control
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `label` | `string` | — | 控件选项的文本标签 |
-| `value` | `string` | — | **必填。** 该特定选项的值 |
-| `defaultChecked` | `boolean` | `false` | 此选项是否应默认选中 |
-| `disabled` | `boolean` | `false` | 禁用此特定控件 |
-| `icon` | `ReactNode` | — | 可选图标，显示以代替文本标签 |
+| `value` | `string` | — | 原生 radio 值 |
+| `label` | `string` | 回退到 `value` | 可见文本，或图标控件的可访问名称 |
+| `icon` | `ReactNode` | — | 可选图标；存在时替代可见文本 |
+| `size` | `"small" \| "medium" \| "large"` | 根尺寸 | 单个控件的尺寸覆盖 |
+| `checked` | `boolean` | — | 受控 radio checked 状态 |
+| `defaultChecked` | `boolean` | `false` | 非受控初始选中状态 |
+| `disabled` | `boolean` | `false` | 禁用当前控件 |
+
+## 最佳实践
+
+Switch 用作二到三个互斥选项的分段选择器，适合切换同一界面的不同视图，例如 `Source`
+和 `Output`。
+
+传入稳定的 `name`，让底层 radio 被正确分组。没有稳定 name 时，表单序列化和跨渲染身份会更难推理。
+
+通过 `defaultValue`、受控 `value`，或恰好一个 `defaultChecked` 控件定义初始状态。
+
+标签使用 Title Case，保持简短且并列：`Source / Output`，不要写成 `Source / Show output`。
+
+每个控件都要有足够 padding，让最长标签也不会在选中时撑动 active pill。
+
+图标控件应配合 Tooltip，让视觉用户获得与辅助技术相同的标签提示。

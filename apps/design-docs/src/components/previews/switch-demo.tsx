@@ -1,54 +1,52 @@
 "use client";
 
-import { Moon, Sun } from "@nebutra/icons";
+import { GridSquare, ListUnordered } from "@nebutra/icons";
 import { Switch } from "@nebutra/ui/primitives";
 
 export function SwitchDemo() {
   return (
-    <div className="gap-8 max-w-sm flex w-full flex-col">
-      <div className="gap-2 flex flex-col">
-        <h4 className="text-sm font-medium text-muted-foreground">Default</h4>
-        <Switch name="default">
-          <Switch.Control defaultChecked label="List view" value="list" />
-          <Switch.Control label="Grid view" value="grid" />
+    <div className="flex w-full max-w-md flex-col gap-8">
+      <section className="flex flex-col gap-2">
+        <h4 className="font-medium text-muted-foreground text-sm">Default</h4>
+        <Switch name="preview-default">
+          <Switch.Control defaultChecked label="Source" value="source" />
+          <Switch.Control label="Output" value="output" />
         </Switch>
-      </div>
+      </section>
 
-      <div className="gap-2 flex flex-col">
-        <h4 className="text-sm font-medium text-muted-foreground">Disabled</h4>
-        <Switch name="disabled">
-          <Switch.Control defaultChecked disabled label="List view" value="list" />
-          <Switch.Control disabled label="Grid view" value="grid" />
+      <section className="flex flex-col gap-2">
+        <h4 className="font-medium text-muted-foreground text-sm">Disabled</h4>
+        <Switch name="preview-disabled" disabled>
+          <Switch.Control defaultChecked label="Source" value="source" />
+          <Switch.Control label="Output" value="output" />
         </Switch>
-      </div>
+      </section>
 
-      <div className="gap-2 flex flex-col">
-        <h4 className="text-sm font-medium text-muted-foreground">Sizes</h4>
-        <div className="gap-4 flex items-center">
-          <Switch name="size-sm" size="small">
-            <Switch.Control label="Small" value="sm" defaultChecked />
-            <Switch.Control label="Auto" value="auto" />
+      <section className="flex flex-col gap-2">
+        <h4 className="font-medium text-muted-foreground text-sm">Sizes</h4>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Switch name="preview-small" size="small">
+            <Switch.Control defaultChecked label="Source" value="source" />
+            <Switch.Control label="Output" value="output" />
           </Switch>
-          <Switch name="size-md" size="medium">
-            <Switch.Control label="Medium" value="md" defaultChecked />
-            <Switch.Control label="Auto" value="auto" />
+          <Switch name="preview-medium">
+            <Switch.Control defaultChecked label="Source" value="source" />
+            <Switch.Control label="Output" value="output" />
           </Switch>
-          <Switch name="size-lg" size="large">
-            <Switch.Control label="Large" value="lg" defaultChecked />
-            <Switch.Control label="Auto" value="auto" />
+          <Switch name="preview-large" size="large">
+            <Switch.Control defaultChecked label="Source" value="source" />
+            <Switch.Control label="Output" value="output" />
           </Switch>
         </div>
-      </div>
+      </section>
 
-      <div className="gap-2 flex flex-col">
-        <h4 className="text-sm font-medium text-muted-foreground">Icons</h4>
-        <div className="gap-4 flex">
-          <Switch name="theme" size="small">
-            <Switch.Control icon={<Sun className="h-4 w-4" />} value="light" defaultChecked />
-            <Switch.Control icon={<Moon className="h-4 w-4" />} value="dark" />
-          </Switch>
-        </div>
-      </div>
+      <section className="flex flex-col gap-2">
+        <h4 className="font-medium text-muted-foreground text-sm">Icon</h4>
+        <Switch name="preview-icons" size="large">
+          <Switch.Control defaultChecked icon={<GridSquare />} label="Grid View" value="grid" />
+          <Switch.Control icon={<ListUnordered />} label="List View" value="list" />
+        </Switch>
+      </section>
     </div>
   );
 }

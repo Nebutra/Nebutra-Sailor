@@ -1,116 +1,246 @@
 "use client";
 
-import clsx from "clsx";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { twMerge } from "tailwind-merge";
+import * as React from "react";
 
-const SwitchContext = createContext<{
-  value: string | null;
-  setValue: React.Dispatch<React.SetStateAction<string | null>>;
-} | null>(null);
+import { type SwitchSize, switchSizes, switchTokens } from "../tokens/components/switch";
+import { cn } from "../utils/cn";
 
-export interface SwitchProps extends Omit<React.ComponentPropsWithoutRef<"div">, "children"> {
-  children?: React.ReactNode;
-  name?: string;
-  size?: "small" | "medium" | "large";
-  style?: React.CSSProperties;
+type SwitchCssVar =
+  | "--switch-height"
+  | "--switch-control-height"
+  | "--switch-control-min-width"
+  | "--switch-control-padding-x"
+  | "--switch-icon-size"
+  | "--switch-font-size"
+  | "--switch-padding"
+  | "--switch-gap"
+  | "--switch-radius"
+  | "--switch-control-radius"
+  | "--switch-duration"
+  | "--switch-easing";
+
+type SwitchCssVars = React.CSSProperties & Record<SwitchCssVar, string>;
+
+type SwitchContextValue = {
+  defaultValue: string | undefined;
+  disabled: boolean | undefined;
+  name: string;
+  onValueChange: ((value: string) => void) | undefined;
+  size: SwitchSize;
+  value: string | undefined;
+};
+
+const SwitchContext = React.createContext<SwitchContextValue | null>(null);
+
+function useSwitchContext() {
+  const context = React.useContext(SwitchContext);
+
+  if (!context) {
+    throw new Error("Switch.Control must be rendered inside Switch.");
+  }
+
+  return context;
 }
 
-export const Switch = ({
-  children,
-  name = "default",
-  size = "medium",
-  style,
-  className,
-  ...props
-}: SwitchProps) => {
-  const [value, setValue] = useState<string | null>(null);
+export interface SwitchProps
+  extends Omit<React.ComponentPropsWithoutRef<"div">, "children" | "defaultValue" | "onChange"> {
+  children?: React.ReactNode;
+  defaultValue?: string;
+  disabled?: boolean;
+  name?: string;
+  onValueChange?: (value: string) => void;
+  size?: SwitchSize;
+  value?: string;
+}
+
+function getSwitchStyle(size: SwitchSize, style: React.CSSProperties | undefined) {
+  const sizeTokens = switchSizes[size];
+
+  return {
+    "--switch-height": `${sizeTokens.height}px`,
+    "--switch-control-height": `${sizeTokens.controlHeight}px`,
+    "--switch-control-min-width": `${sizeTokens.minWidth}px`,
+    "--switch-control-padding-x": `${sizeTokens.paddingX}px`,
+    "--switch-icon-size": `${sizeTokens.iconSize}px`,
+    "--switch-font-size": `${sizeTokens.fontSize}px`,
+    "--switch-padding": `${sizeTokens.padding}px`,
+    "--switch-gap": `${switchTokens.gap}px`,
+    "--switch-radius": `${switchTokens.radius}px`,
+    "--switch-control-radius": `${switchTokens.controlRadius}px`,
+    "--switch-duration": `${switchTokens.motion.duration}ms`,
+    "--switch-easing": switchTokens.motion.easing,
+    ...style,
+  } satisfies SwitchCssVars;
+}
+
+function getSwitchControlStyle(size: SwitchSize, style: React.CSSProperties | undefined) {
+  const sizeTokens = switchSizes[size];
+
+  return {
+    "--switch-control-height": `${sizeTokens.controlHeight}px`,
+    "--switch-control-min-width": `${sizeTokens.minWidth}px`,
+    "--switch-control-padding-x": `${sizeTokens.paddingX}px`,
+    "--switch-icon-size": `${sizeTokens.iconSize}px`,
+    "--switch-font-size": `${sizeTokens.fontSize}px`,
+    ...style,
+  } satisfies Pick<
+    SwitchCssVars,
+    | "--switch-control-height"
+    | "--switch-control-min-width"
+    | "--switch-control-padding-x"
+    | "--switch-icon-size"
+    | "--switch-font-size"
+  >;
+}
+
+const SwitchRoot = React.forwardRef<HTMLDivElement, SwitchProps>(function SwitchRoot(
+  {
+    children,
+    name,
+    size = "medium",
+    defaultValue,
+    value,
+    disabled,
+    onValueChange,
+    style,
+    className,
+    ...props
+  },
+  ref,
+) {
+  const generatedName = React.useId();
+  const resolvedName = name ?? generatedName;
+  const context = React.useMemo<SwitchContextValue>(
+    () => ({
+      defaultValue,
+      disabled,
+      name: resolvedName,
+      onValueChange,
+      size,
+      value,
+    }),
+    [defaultValue, disabled, onValueChange, resolvedName, size, value],
+  );
 
   return (
-    <SwitchContext.Provider value={{ value, setValue }}>
+    <SwitchContext.Provider value={context}>
       <div
-        className={clsx(
-          "flex bg-background-100 p-1 border border-gray-alpha-400",
-          size === "small" && "h-8 rounded-md",
-          size === "medium" && "h-10 rounded-md",
-          size === "large" && "h-12 rounded-lg",
+        ref={ref}
+        data-slot="switch"
+        role="radiogroup"
+        className={cn(
+          "inline-flex h-[var(--switch-height)] items-center gap-[var(--switch-gap)] rounded-[var(--switch-radius)] border border-border bg-muted p-[var(--switch-padding)] text-muted-foreground",
+          disabled && "cursor-not-allowed opacity-60",
           className,
         )}
-        style={style}
+        style={getSwitchStyle(size, style)}
         {...props}
       >
-        {React.Children.map(children, (child) =>
-          React.cloneElement(child as React.ReactElement<SwitchControlProps>, { size, name }),
-        )}
+        {children}
       </div>
     </SwitchContext.Provider>
   );
-};
+});
 
-interface SwitchControlProps {
-  label?: string;
-  value: string;
+export interface SwitchControlProps
+  extends Omit<React.LabelHTMLAttributes<HTMLLabelElement>, "children" | "onChange"> {
+  checked?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
-  name?: string;
-  size?: "small" | "medium" | "large";
   icon?: React.ReactNode;
+  label?: string;
+  name?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  size?: SwitchSize;
+  value: string;
 }
 
-const SwitchControl = ({
-  label,
-  value,
-  defaultChecked,
-  disabled = false,
-  name,
-  size = "medium",
-  icon,
-}: SwitchControlProps) => {
-  const context = useContext(SwitchContext);
-  const checked = value === context?.value;
+const SwitchControl = React.forwardRef<HTMLLabelElement, SwitchControlProps>(function SwitchControl(
+  {
+    checked,
+    className,
+    defaultChecked,
+    disabled,
+    icon,
+    label,
+    name,
+    onChange,
+    size,
+    style,
+    value,
+    ...props
+  },
+  ref,
+) {
+  const context = useSwitchContext();
+  const resolvedSize = size ?? context.size;
+  const isControlled = checked !== undefined || context.value !== undefined;
+  const isChecked = checked ?? (context.value !== undefined ? context.value === value : undefined);
+  const isDefaultChecked =
+    !isControlled &&
+    (defaultChecked ?? (context.defaultValue !== undefined && context.defaultValue === value));
+  const isDisabled = disabled ?? context.disabled;
+  const accessibleLabel = label ?? value;
 
-  useEffect(() => {
-    if (defaultChecked) {
-      context?.setValue(value);
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    onChange?.(event);
+
+    if (!event.defaultPrevented) {
+      context.onValueChange?.(event.currentTarget.value);
     }
-  }, [context?.setValue, defaultChecked, value]);
+  }
 
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <label
-      className={clsx("flex flex-1 h-full", disabled && "cursor-not-allowed pointer-events-none")}
-      onClick={() => context?.setValue(value)}
+      ref={ref}
+      data-slot="switch-control"
+      data-size={resolvedSize}
+      className={cn(
+        "relative isolate flex h-[var(--switch-control-height)] min-w-[var(--switch-control-min-width)] flex-1 cursor-pointer items-center",
+        isDisabled && "cursor-not-allowed",
+        className,
+      )}
+      style={getSwitchControlStyle(resolvedSize, style)}
+      {...props}
     >
       <input
         type="radio"
-        name={name}
+        name={name ?? context.name}
         value={value}
-        disabled={disabled}
-        checked={checked}
-        className="hidden"
-        readOnly
+        checked={isControlled ? isChecked : undefined}
+        defaultChecked={isDefaultChecked}
+        disabled={isDisabled}
+        aria-label={accessibleLabel}
+        className="peer sr-only"
+        onChange={handleChange}
       />
       <span
-        className={twMerge(
-          clsx(
-            "flex items-center justify-center flex-1 cursor-pointer font-medium font-sans duration-150",
-            checked
-              ? "bg-muted text-muted-foreground fill-muted-foreground rounded-sm"
-              : "text-foreground hover:text-muted-foreground fill-foreground hover:fill-muted-foreground",
-            disabled && "text-neutral-8 fill-neutral-8",
-            !icon && size === "small" && "text-sm px-3",
-            !icon && size === "medium" && "text-sm px-3",
-            !icon && size === "large" && "text-base px-4",
-            icon && size === "small" && "py-1 px-2",
-            icon && size === "medium" && "py-2 px-3",
-            icon && size === "large" && "p-3",
-          ),
+        aria-hidden={icon ? true : undefined}
+        className={cn(
+          "inline-flex h-full w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-[var(--switch-control-radius)] px-[var(--switch-control-padding-x)] font-medium text-[length:var(--switch-font-size)]",
+          "text-muted-foreground transition-[background-color,box-shadow,color] duration-[var(--switch-duration)] ease-[var(--switch-easing)]",
+          "peer-checked:bg-background peer-checked:text-foreground peer-checked:shadow-sm",
+          "peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background",
+          "peer-disabled:pointer-events-none peer-disabled:text-muted-foreground/60",
+          "[&_svg]:size-[var(--switch-icon-size)]",
         )}
       >
-        {icon ? <span className={clsx(size === "large" && "scale-125")}>{icon}</span> : label}
+        {icon ? (
+          <>
+            {icon}
+            <span className="sr-only">{accessibleLabel}</span>
+          </>
+        ) : (
+          accessibleLabel
+        )}
       </span>
     </label>
   );
-};
+});
 
-Switch.Control = SwitchControl;
+SwitchRoot.displayName = "Switch";
+SwitchControl.displayName = "Switch.Control";
+
+export const Switch = Object.assign(SwitchRoot, {
+  Control: SwitchControl,
+});
