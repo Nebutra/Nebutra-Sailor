@@ -72,7 +72,7 @@ export function FullPageStatus({
   const isSection = variant === "section";
   const Wrapper = isSection ? "section" : "main";
   const wrapperClass = isSection
-    ? "flex min-h-[60vh] items-center justify-start px-6 py-12 text-neutral-12"
+    ? "flex min-h-[60vh] items-center justify-center px-6 py-12 text-neutral-12"
     : "flex min-h-[100dvh] items-center justify-center bg-neutral-1 px-6 text-neutral-12";
 
   return (
