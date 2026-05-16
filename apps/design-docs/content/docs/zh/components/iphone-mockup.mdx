@@ -1,72 +1,99 @@
 ---
-title: iPhone 模型 (IphoneMockup)
-description: 写实的 iPhone 15 风格 SVG 设备框架，用于展示移动端应用。
+title: Phone
+description: 用设备外壳展示移动端截图、静态海报和短录屏。
 ---
 
-## 演示 (Demo)
+## 演示
 
-<ComponentPreview name="iphone-mockup-demo"  />
+<ComponentPreview name="iphone-mockup-demo" />
 
+## 概览
 
-## 概览 (Overview)
+`Phone` 用克制的 iPhone 风格外壳承载移动端截图或录屏。设备外壳是装饰性的；可访问名称应该来自截图本身，例如 `imageAlt`、`videoLabel`，或带 `aria-label` 的静态 children。
 
-`IphoneMockup` 渲染一个像素级精确的 iPhone 15 Pro SVG 框架。屏幕内容（图片或视频）会被裁剪成与真机一致的圆角。组件具有完全响应式特性 —— 可以通过容器宽度来控制尺寸。
+适合用于营销页、文档示例、changelog 视觉和发布截图。不要把真实可交互的产品 UI 放进框里，因为设备外壳传达的是“已捕获的屏幕”，不是一个可以操作的界面。
 
-特性：
-- 灵动岛 (Dynamic Island) 切口
-- 侧边按钮和顶部扬声器
-- 通过 Tailwind 类名支持深/浅色框架颜色
-- 在屏幕区域内显示图片或视频
-
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
-import { IphoneMockup } from "@nebutra/ui/primitives";
+import { Phone } from "@nebutra/ui/primitives";
 
-// 仅框架
-<div className="w-48">
-  <IphoneMockup />
-</div>
-
-// 带有图片
-<div className="w-64">
-  <IphoneMockup src="/app-screenshot.png" />
-</div>
-
-// 带有循环视频
-<div className="w-64">
-  <IphoneMockup videoSrc="/app-demo.mp4" />
-</div>
+export function Example() {
+  return (
+    <div className="w-full max-w-xs">
+      <Phone
+        imageSrc="/screenshots/mobile-dashboard.png"
+        imageAlt="展示用量卡片和最近活动的 Nebutra 移动端仪表盘截图"
+      />
+    </div>
+  );
+}
 ```
 
-### Hero 区域布局 (Hero section layout)
+### 静态 JSX 截图
+
+只在需要静态截图式构图时使用 children。组件会阻止内部交互，因为设备外壳表达的是截图，而不是真实产品表面。
 
 ```tsx
-<div className="flex items-center gap-8">
-  <div className="flex-1">
-    <h1 className="text-4xl font-bold">您的应用 (Your App)</h1>
-    <p className="text-muted-foreground">立即下载</p>
+<Phone>
+  <div role="img" aria-label="移动端引导完成页面截图">
+    {/* static captured layout */}
   </div>
-  <div className="w-72">
-    <IphoneMockup src="/hero-screenshot.png" />
-  </div>
-</div>
+</Phone>
 ```
 
-## 属性 (Props)
+### 视频
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+```tsx
+<Phone
+  videoSrc="/recordings/mobile-demo.mp4"
+  videoPoster="/recordings/mobile-demo-poster.png"
+  videoLabel="移动端引导流程录屏"
+/>
+```
+
+`videoPoster` 是 reduced motion 下的回退画面。产品内使用视频时必须提供。
+
+## 属性
+
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `src` | `string` | — | 屏幕区域显示的图片 URL |
-| `videoSrc` | `string` | — | 视频 URL（自动播放、循环、静音） |
-| `className` | `string` | — | 容器 CSS 类名 |
-| `style` | `CSSProperties` | — | 容器的内联样式 |
+| `imageSrc` | `string` | — | 截图资源地址。必须同时提供 `imageAlt`。 |
+| `imageAlt` | `string` | — | 截图内容的可访问描述。 |
+| `videoSrc` | `string` | — | 静音循环播放的演示录屏。必须同时提供 `videoLabel`。 |
+| `videoLabel` | `string` | — | 录屏的可访问名称。 |
+| `videoPoster` | `string` | — | 视频封面，也是 `prefers-reduced-motion` 回退图。 |
+| `children` | `ReactNode` | — | 静态截图式 JSX。与图片、视频 props 互斥。 |
+| `address` | `string` | — | 空状态占位中展示的来源地址。 |
+| `chrome` | `"graphite" \| "silver" \| "titanium"` | `"graphite"` | 语义化设备外壳颜色。 |
+| `fit` | `"cover" \| "contain"` | `"cover"` | 图片或视频的 `object-fit`。 |
+| `position` | `CSSProperties["objectPosition"]` | `"top"` | 图片或视频的 `object-position`。 |
+| `className` | `string` | — | 根节点 class。通过宽度约束控制尺寸。 |
 
-## 注意事项 (Notes)
+## 迁移
 
-- 如果同时提供了 `videoSrc` 和 `src`，`videoSrc` 将具有更高优先级。
-- 视频播放时带有 `autoPlay loop muted playsInline` 属性 —— 这是符合浏览器安全策略的默认设置。
-- 框架颜色通过 `dark:fill-[#404040]` / `dark:fill-[#262626]` 自动适应深色模式。
-- 宽高比固定为 `433/882`（iPhone 15 Pro 的实际比例）。
-- 屏幕区域坐标：`left 4.9%, top 2.2%, width 89.9%, height 95.6%`，圆角半径 `55.75px`。
-走
+`IphoneMockup` 仍保留为 deprecated 兼容别名。新代码应该导入 `Phone`。
+
+```tsx
+import { Phone } from "@nebutra/ui/primitives";
+```
+
+旧的 `src` prop 仍可使用，但必须配合 `imageAlt`；新代码使用 `imageSrc`。
+
+## 最佳实践
+
+用 `Phone` 在营销页和文档中展示移动端截图、录屏和演示海报。
+
+不要在框内渲染真实可交互的移动端产品 UI。设备外壳意味着这是捕获画面，不是交互界面。
+
+同时展示桌面和移动端时，搭配 `Browser` 使用，并让两者保持同一主题。
+
+让 `chrome` 与周围主题匹配，避免设备外壳抢走截图主体。
+
+用稳定宽度约束组件，例如 `max-w-xs`、网格列或媒体栏，避免 19.5:9 的屏幕比例在布局中不可预期地裁切内容。
+
+不要在父容器上再叠阴影。`Phone` 已经拥有自己的 elevation token。
+
+设备外壳按装饰处理。可访问名称属于内部截图或录屏，不属于外壳。
+
+自动播放视频时必须提供 `videoPoster`，以尊重 `prefers-reduced-motion`。

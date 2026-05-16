@@ -1,48 +1,52 @@
-import { IphoneMockup } from "@nebutra/ui/primitives";
+import { Phone } from "@nebutra/ui/primitives";
 
-const DEMO_SCREEN = `data:image/svg+xml;utf8,${encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600">
-  <rect width="900" height="1600" fill="#f8fafc"/>
-  <rect x="64" y="72" width="772" height="1456" rx="64" fill="#ffffff" stroke="#d7dde8" stroke-width="3"/>
-  <rect x="112" y="140" width="260" height="22" rx="11" fill="#182033"/>
-  <rect x="112" y="204" width="360" height="16" rx="8" fill="#8a94a6"/>
-  <rect x="112" y="268" width="676" height="168" rx="36" fill="#e9f1fb"/>
-  <rect x="152" y="316" width="252" height="18" rx="9" fill="#182033"/>
-  <rect x="152" y="366" width="464" height="14" rx="7" fill="#a6b0bf"/>
-  <rect x="152" y="402" width="220" height="14" rx="7" fill="#c5cedb"/>
-  <rect x="112" y="484" width="316" height="228" rx="36" fill="#ffffff" stroke="#d7dde8" stroke-width="2"/>
-  <rect x="152" y="532" width="112" height="14" rx="7" fill="#182033"/>
-  <circle cx="220" cy="620" r="48" fill="#dff3ed"/>
-  <circle cx="220" cy="620" r="29" fill="#ffffff"/>
-  <rect x="300" y="588" width="72" height="12" rx="6" fill="#8a94a6"/>
-  <rect x="300" y="622" width="92" height="12" rx="6" fill="#c5cedb"/>
-  <rect x="472" y="484" width="316" height="228" rx="36" fill="#ffffff" stroke="#d7dde8" stroke-width="2"/>
-  <rect x="512" y="532" width="128" height="14" rx="7" fill="#182033"/>
-  <rect x="512" y="648" width="212" height="16" rx="8" fill="#b6d5ff"/>
-  <rect x="512" y="608" width="176" height="16" rx="8" fill="#d7dde8"/>
-  <rect x="512" y="568" width="236" height="16" rx="8" fill="#91c9b9"/>
-  <rect x="112" y="764" width="676" height="560" rx="36" fill="#ffffff" stroke="#d7dde8" stroke-width="2"/>
-  <rect x="152" y="820" width="184" height="16" rx="8" fill="#182033"/>
-  <rect x="152" y="888" width="596" height="104" rx="28" fill="#f1f5f9"/>
-  <rect x="152" y="1032" width="596" height="104" rx="28" fill="#f1f5f9"/>
-  <rect x="152" y="1176" width="596" height="104" rx="28" fill="#f1f5f9"/>
-  <circle cx="204" cy="940" r="20" fill="#91c9b9"/>
-  <circle cx="204" cy="1084" r="20" fill="#b6d5ff"/>
-  <circle cx="204" cy="1228" r="20" fill="#c5cedb"/>
-  <rect x="252" y="920" width="264" height="14" rx="7" fill="#7f8a9b"/>
-  <rect x="252" y="958" width="184" height="12" rx="6" fill="#c5cedb"/>
-  <rect x="252" y="1064" width="332" height="14" rx="7" fill="#7f8a9b"/>
-  <rect x="252" y="1102" width="204" height="12" rx="6" fill="#c5cedb"/>
-  <rect x="252" y="1208" width="292" height="14" rx="7" fill="#7f8a9b"/>
-  <rect x="252" y="1246" width="172" height="12" rx="6" fill="#c5cedb"/>
-  <rect x="252" y="1400" width="396" height="20" rx="10" fill="#d7dde8"/>
-</svg>
-`)}`;
+function CapturedScreen() {
+  return (
+    <div
+      role="img"
+      aria-label="Nebutra mobile dashboard screenshot with usage cards and recent activity"
+      className="flex size-full flex-col gap-5 bg-[var(--neutral-1)] px-6 py-12 text-[var(--neutral-12)]"
+    >
+      <div className="space-y-2">
+        <div className="h-3 w-28 rounded-[var(--radius-full)] bg-[var(--neutral-12)]" />
+        <div className="h-2 w-44 rounded-[var(--radius-full)] bg-[var(--neutral-7)]" />
+      </div>
+      <div className="rounded-[var(--radius-xl)] border border-border bg-[var(--neutral-2)] p-5">
+        <div className="h-3 w-24 rounded-[var(--radius-full)] bg-[var(--neutral-12)]" />
+        <div className="mt-5 h-2 w-52 rounded-[var(--radius-full)] bg-[var(--blue-9)]" />
+        <div className="mt-3 h-2 w-36 rounded-[var(--radius-full)] bg-[var(--neutral-7)]" />
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="rounded-[var(--radius-lg)] border border-border bg-background p-4">
+          <div className="h-2 w-16 rounded-[var(--radius-full)] bg-[var(--neutral-8)]" />
+          <div className="mt-5 h-4 w-20 rounded-[var(--radius-full)] bg-[var(--neutral-12)]" />
+        </div>
+        <div className="rounded-[var(--radius-lg)] border border-border bg-background p-4">
+          <div className="h-2 w-14 rounded-[var(--radius-full)] bg-[var(--neutral-8)]" />
+          <div className="mt-5 h-4 w-16 rounded-[var(--radius-full)] bg-[var(--neutral-12)]" />
+        </div>
+      </div>
+      <div className="mt-auto space-y-3 rounded-[var(--radius-xl)] border border-border bg-background p-4">
+        {[0, 1, 2].map((item) => (
+          <div className="flex items-center gap-3" key={item}>
+            <div className="size-8 rounded-[var(--radius-full)] bg-[var(--neutral-4)]" />
+            <div className="min-w-0 flex-1 space-y-2">
+              <div className="h-2 rounded-[var(--radius-full)] bg-[var(--neutral-9)]" />
+              <div className="h-2 w-2/3 rounded-[var(--radius-full)] bg-[var(--neutral-6)]" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function IphoneMockupDemo() {
   return (
     <div className="mx-auto w-full max-w-xs px-4 py-8">
-      <IphoneMockup className="w-full" src={DEMO_SCREEN} />
+      <Phone className="w-full" chrome="graphite">
+        <CapturedScreen />
+      </Phone>
     </div>
   );
 }

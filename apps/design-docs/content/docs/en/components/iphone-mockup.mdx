@@ -1,71 +1,99 @@
 ---
-title: IphoneMockup
-description: Realistic iPhone 15-style SVG device frame for showcasing mobile apps.
+title: Phone
+description: Device chrome for presenting captured mobile screenshots, posters, and short demo recordings.
 ---
 
 ## Demo
 
-<ComponentPreview name="iphone-mockup-demo"  />
-
+<ComponentPreview name="iphone-mockup-demo" />
 
 ## Overview
 
-`IphoneMockup` renders a pixel-accurate iPhone 15 Pro SVG frame. The screen content (image or video) is clipped with rounded corners matching the real device. Fully responsive — control size via the container width.
+`Phone` wraps captured mobile media in a restrained iPhone-style frame. The chrome is decorative; the captured screen supplies the accessible name through `imageAlt`, `videoLabel`, or a labelled child.
 
-Features:
-- Dynamic Island cutout
-- Side buttons and top speaker
-- Light/dark frame colors via Tailwind classes
-- Image or video inside the screen area
+Use `Phone` for marketing pages, docs examples, changelog visuals, and launch screenshots. Do not render live product UI inside it unless the content is intentionally static and labelled as a captured screen.
 
 ## Usage
 
 ```tsx
-import { IphoneMockup } from "@nebutra/ui/primitives";
+import { Phone } from "@nebutra/ui/primitives";
 
-// Frame only
-<div className="w-48">
-  <IphoneMockup />
-</div>
-
-// With image
-<div className="w-64">
-  <IphoneMockup src="/app-screenshot.png" />
-</div>
-
-// With looping video
-<div className="w-64">
-  <IphoneMockup videoSrc="/app-demo.mp4" />
-</div>
+export function Example() {
+  return (
+    <div className="w-full max-w-xs">
+      <Phone
+        imageSrc="/screenshots/mobile-dashboard.png"
+        imageAlt="Nebutra mobile dashboard showing usage cards and recent activity"
+      />
+    </div>
+  );
+}
 ```
 
-### Hero section layout
+### Captured JSX
+
+Use children only for static captured compositions. Interactive controls are blocked by the component because the device chrome implies a screenshot, not a live surface.
 
 ```tsx
-<div className="flex items-center gap-8">
-  <div className="flex-1">
-    <h1 className="text-4xl font-bold">Your App</h1>
-    <p className="text-muted-foreground">Download now</p>
+<Phone>
+  <div role="img" aria-label="Mobile onboarding confirmation screen">
+    {/* static captured layout */}
   </div>
-  <div className="w-72">
-    <IphoneMockup src="/hero-screenshot.png" />
-  </div>
-</div>
+</Phone>
 ```
+
+### Video
+
+```tsx
+<Phone
+  videoSrc="/recordings/mobile-demo.mp4"
+  videoPoster="/recordings/mobile-demo-poster.png"
+  videoLabel="Mobile onboarding flow recording"
+/>
+```
+
+`videoPoster` is the fallback for reduced motion. Always provide it in product usage.
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `src` | `string` | — | Image URL to display in the screen area |
-| `videoSrc` | `string` | — | Video URL (autoplay, loop, muted) |
-| `className` | `string` | — | Container CSS class |
-| `style` | `CSSProperties` | — | Inline styles for the container |
+| `imageSrc` | `string` | — | Captured screenshot source. Requires `imageAlt`. |
+| `imageAlt` | `string` | — | Accessible description of the captured screen. |
+| `videoSrc` | `string` | — | Muted looping demo recording source. Requires `videoLabel`. |
+| `videoLabel` | `string` | — | Accessible name for the recording. |
+| `videoPoster` | `string` | — | Poster and `prefers-reduced-motion` fallback. |
+| `children` | `ReactNode` | — | Static captured JSX. Mutually exclusive with image and video props. |
+| `address` | `string` | — | Optional origin shown in the empty placeholder. |
+| `chrome` | `"graphite" \| "silver" \| "titanium"` | `"graphite"` | Semantic chrome finish. |
+| `fit` | `"cover" \| "contain"` | `"cover"` | Object fit for image and video media. |
+| `position` | `CSSProperties["objectPosition"]` | `"top"` | Object position for image and video media. |
+| `className` | `string` | — | Root class. Size the component with width constraints. |
 
-## Notes
+## Migration
 
-- `videoSrc` takes priority over `src` if both are provided
-- Video plays with `autoPlay loop muted playsInline` — browser-safe defaults
-- Frame colors adapt to dark mode via `dark:fill-[#404040]` / `dark:fill-[#262626]`
-- Aspect ratio is fixed at `433/882` (iPhone 15 Pro dimensions)
-- Screen region coordinates: `left 4.9%, top 2.2%, width 89.9%, height 95.6%`, radius `55.75px`
+`IphoneMockup` remains as a deprecated compatibility alias. New code should import `Phone`.
+
+```tsx
+import { Phone } from "@nebutra/ui/primitives";
+```
+
+Legacy `src` still works when paired with `imageAlt`, but `imageSrc` is the canonical prop.
+
+## Best Practices
+
+Use `Phone` as marketing chrome around mobile screenshots, recordings, and demo images on landing pages and docs.
+
+Do not render live mobile product UI inside the frame. The chrome implies a captured screen, not an interactive surface.
+
+Pair with `Browser` when showing parallel desktop and mobile views, and keep both variants on the same theme.
+
+Match `chrome` to the surrounding theme so the frame does not outshine the screenshot it is framing.
+
+Lock the component with a stable width (`max-w-xs`, a grid column, or a media rail) so the inner 19.5:9 screen ratio does not crop unpredictably.
+
+Avoid stacking additional shadows on the parent container. The component already owns its elevation token.
+
+Treat the chrome as decorative. Accessible naming belongs on the captured screenshot or recording, not on the device frame.
+
+For autoplay video, respect `prefers-reduced-motion` by providing `videoPoster`.
