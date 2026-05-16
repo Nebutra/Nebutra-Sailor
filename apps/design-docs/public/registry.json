@@ -70,6 +70,12 @@
       "description": "Count-aware progressive disclosure trigger for long lists and content blocks."
     },
     {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Semantic table primitive with compound API, row states, numeric alignment, and Geist-compatible exports."
+    },
+    {
       "name": "theme-toggle",
       "type": "registry:ui",
       "title": "Theme Toggle",
@@ -254,6 +260,12 @@
       "type": "registry:ui",
       "title": "Skeleton",
       "description": "Loading placeholder with width/height/boxHeight + pill/rounded/squared + animated/show props. Respects prefers-reduced-motion; aria-busy + inert keep focus off the placeholder."
+    },
+    {
+      "name": "status-dot",
+      "type": "registry:ui",
+      "title": "Status Dot",
+      "description": "Deployment-lifecycle dot (QUEUED/BUILDING/READY/ERROR/CANCELED/DELETED). QUEUED+BUILDING pulse; terminal states static. Semantic-token colored, decorative-mode aria-hidden when paired with text."
     },
     {
       "name": "nebutra-tokens",

@@ -207,6 +207,44 @@ export const showMoreTokens = {
 } as const;
 `;
 
+const TABLE_REGISTRY_TOKENS = `/**
+ * Table Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const tableTokens = {
+  wrapper: {
+    minWidth: 248,
+    padding: 24,
+    radius: 8,
+  },
+  row: {
+    radius: 4,
+  },
+  cell: {
+    paddingX: 8,
+    paddingY: 10,
+  },
+  header: {
+    height: 40,
+  },
+  typography: {
+    size: 14,
+    headingWeight: 500,
+    bodyWeight: 400,
+  },
+  spacer: {
+    bodyTop: 12,
+  },
+  motion: {
+    duration: 100,
+    easing: "ease-out",
+  },
+} as const;
+`;
+
 const THEME_TOGGLE_REGISTRY_TOKENS = `/**
  * ThemeToggle Component Tokens — standalone registry copy.
  *
@@ -428,6 +466,21 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
       {
         content: SHOW_MORE_REGISTRY_TOKENS,
         targetPath: "components/tokens/components/show-more.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "table",
+    title: "Table",
+    description:
+      "Semantic table primitive with compound API, row states, numeric alignment, and Geist-compatible exports.",
+    source: "primitives/table.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: TABLE_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/table.ts",
         type: "registry:lib",
       },
     ],
@@ -718,6 +771,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     description:
       "Loading placeholder with width/height/boxHeight + pill/rounded/squared + animated/show props. Respects prefers-reduced-motion; aria-busy + inert keep focus off the placeholder.",
     source: "primitives/skeleton.tsx",
+    layer: "dashboard",
+  },
+  {
+    name: "status-dot",
+    title: "Status Dot",
+    description:
+      "Deployment-lifecycle dot (QUEUED/BUILDING/READY/ERROR/CANCELED/DELETED). QUEUED+BUILDING pulse; terminal states static. Semantic-token colored, decorative-mode aria-hidden when paired with text.",
+    source: "primitives/status-dot.tsx",
     layer: "dashboard",
   },
 ];
