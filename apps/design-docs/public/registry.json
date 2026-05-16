@@ -52,6 +52,24 @@
       "description": "AI command palette built on cmdk + base-ui dialog."
     },
     {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "Zero-content surface for blank slate, no-results, permission, and error states."
+    },
+    {
+      "name": "feedback",
+      "type": "registry:ui",
+      "title": "Feedback",
+      "description": "Compact feedback widget with emotion, message, topic, and metadata payloads."
+    },
+    {
+      "name": "theme-toggle",
+      "type": "registry:ui",
+      "title": "Theme Toggle",
+      "description": "Binary sun/moon icon-button for light and dark mode switching. Tokenized motion and reduced-motion aware."
+    },
+    {
       "name": "kpi-card",
       "type": "registry:ui",
       "title": "KPI Card",

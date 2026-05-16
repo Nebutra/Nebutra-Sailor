@@ -65,6 +65,178 @@ const TOKENS_DARK = join(
 const OUT_DIR = join(REPO_ROOT, "apps", "design-docs", "public", "r");
 const OUT_INDEX = join(REPO_ROOT, "apps", "design-docs", "public", "registry.json");
 
+const CONTEXT_CARD_REGISTRY_TOKENS = `/**
+ * Context Card Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const contextCardTokens = {
+  width: {
+    sm: 240,
+    md: 320,
+  },
+  padding: {
+    x: 12,
+    y: 12,
+  },
+  gap: {
+    stack: 12,
+    section: 8,
+    row: 4,
+  },
+  borderRadius: 8,
+  fontSize: {
+    body: 14,
+    metadata: 12,
+  },
+  motion: {
+    openDelay: 150,
+    closeDelay: 120,
+    duration: 200,
+    easing: "ease-out",
+  },
+} as const;
+
+export type ContextCardWidth = keyof typeof contextCardTokens.width;
+`;
+
+const EMPTY_STATE_REGISTRY_TOKENS = `/**
+ * Empty State Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const emptyStateTokens = {
+  root: {
+    minHeight: {
+      sm: 128,
+      md: 192,
+      lg: 256,
+    },
+    paddingX: {
+      sm: 16,
+      md: 24,
+      lg: 32,
+    },
+    paddingY: {
+      sm: 32,
+      md: 40,
+      lg: 56,
+    },
+    radius: 8,
+  },
+  content: {
+    maxWidth: 448,
+    descriptionMaxWidth: 384,
+    stackGap: 16,
+    copyGap: 8,
+    actionsGap: 8,
+  },
+  icon: {
+    size: 48,
+    radius: 8,
+  },
+  typography: {
+    title: {
+      sm: 14,
+      md: 16,
+      lg: 18,
+    },
+    description: {
+      sm: 12,
+      md: 14,
+      lg: 14,
+    },
+    titleWeight: 600,
+    titleLineHeight: 24,
+    descriptionLineHeight: 24,
+  },
+} as const;
+`;
+
+const FEEDBACK_REGISTRY_TOKENS = `/**
+ * Feedback Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const feedbackTokens = {
+  width: 320,
+  padding: 12,
+  sideOffset: 8,
+  triggerHeight: 48,
+  controlSize: 32,
+  textareaHeight: 100,
+  gap: {
+    stack: 12,
+    row: 8,
+  },
+  radius: {
+    control: 6,
+    panel: 8,
+  },
+  motion: {
+    duration: 200,
+    easing: "ease-out",
+  },
+} as const;
+`;
+
+const THEME_TOGGLE_REGISTRY_TOKENS = `/**
+ * ThemeToggle Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+import type { Transition } from "framer-motion";
+
+export const themeToggleTokens = {
+  sizes: {
+    sm: {
+      control: 32,
+      icon: 16,
+      padding: 4,
+      radius: 6,
+    },
+    md: {
+      control: 40,
+      icon: 20,
+      padding: 8,
+      radius: 6,
+    },
+    lg: {
+      control: 48,
+      icon: 24,
+      padding: 12,
+      radius: 8,
+    },
+  },
+  icon: {
+    center: 12,
+    sunRadius: 5,
+    moonRadius: 9,
+    maskRadius: 9,
+    strokeWidth: 2,
+  },
+  motion: {
+    duration: 100,
+    easing: "ease-out",
+    hoverScale: 1.06,
+    tapScale: 0.92,
+    morph: { type: "spring", stiffness: 380, damping: 30 } satisfies Transition,
+    press: { type: "spring", stiffness: 420, damping: 28 } satisfies Transition,
+    instant: { duration: 0 } satisfies Transition,
+  },
+} as const;
+
+export type ThemeToggleSize = keyof typeof themeToggleTokens.sizes;
+`;
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
@@ -92,6 +264,17 @@ interface ComponentSpec {
   type?: "registry:ui" | "registry:theme";
   /** path written into the consumer project */
   targetPath?: string;
+  /** additional files required by relative imports in the emitted component */
+  extraFiles?: Array<{
+    /** source file (relative to packages/design/ui/src) */
+    source?: string;
+    /** inline content for registry-only support files */
+    content?: string;
+    /** path written into the consumer project */
+    targetPath: string;
+    /** shadcn registry file type */
+    type?: "registry:ui" | "registry:lib";
+  }>;
 }
 
 interface ShadcnFile {
@@ -185,6 +368,54 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     description: "AI command palette built on cmdk + base-ui dialog.",
     source: "primitives/command-menu.tsx",
     layer: "business",
+  },
+  {
+    name: "empty-state",
+    title: "Empty State",
+    description: "Zero-content surface for blank slate, no-results, permission, and error states.",
+    source: "primitives/empty-state.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: EMPTY_STATE_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/empty-state.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "feedback",
+    title: "Feedback",
+    description: "Compact feedback widget with emotion, message, topic, and metadata payloads.",
+    source: "primitives/feedback.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: FEEDBACK_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/feedback.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "theme-toggle",
+    title: "Theme Toggle",
+    description:
+      "Binary sun/moon icon-button for light and dark mode switching. Tokenized motion and reduced-motion aware.",
+    source: "primitives/theme-toggle.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: THEME_TOGGLE_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/theme-toggle.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "hooks/use-reduced-motion.ts",
+        targetPath: "components/hooks/use-reduced-motion.ts",
+        type: "registry:lib",
+      },
+    ],
   },
   {
     name: "kpi-card",
@@ -315,6 +546,13 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
       "Geist-style hover/focus card built on Base UI Popover for compact entity metadata.",
     source: "primitives/context-card.tsx",
     layer: "business",
+    extraFiles: [
+      {
+        content: CONTEXT_CARD_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/context-card.ts",
+        type: "registry:lib",
+      },
+    ],
   },
   {
     name: "relative-time-card",
@@ -568,7 +806,15 @@ interface ParsedDeps {
   warnings: string[];
 }
 
-function parseImports(source: string, knownRegistry: Set<string>): ParsedDeps {
+function moduleBasename(path: string): string {
+  return (path.split("/").pop() ?? path).replace(/\.tsx?$/, "");
+}
+
+function parseImports(
+  source: string,
+  knownRegistry: Set<string>,
+  knownExtraFiles = new Set<string>(),
+): ParsedDeps {
   const npmSet = new Set<string>();
   const registrySet = new Set<string>();
   const warnings: string[] = [];
@@ -582,6 +828,9 @@ function parseImports(source: string, knownRegistry: Set<string>): ParsedDeps {
       // Sibling component → registry dep
       const dep = relativeImportToRegistryDep(spec);
       if (!dep || ["cn", "utils"].includes(dep)) {
+        continue;
+      }
+      if (knownExtraFiles.has(dep)) {
         continue;
       }
       if (knownRegistry.has(dep)) {
@@ -671,6 +920,10 @@ function readSource(spec: ComponentSpec): string {
   return readFileSync(path, "utf-8");
 }
 
+function readExtraFile(source: string): string {
+  return readFileSync(join(UI_ROOT, "src", source), "utf-8");
+}
+
 function buildOne(
   spec: ComponentSpec,
   knownRegistry: Set<string>,
@@ -678,7 +931,14 @@ function buildOne(
   darkMap: Record<string, string>,
 ): { item: ShadcnRegistryItem; warnings: string[]; sizeBytes: number } {
   const source = readSource(spec);
-  const deps = parseImports(source, knownRegistry);
+  const knownExtraFiles = new Set(
+    spec.extraFiles?.flatMap((file) =>
+      [file.source, file.targetPath]
+        .filter((path): path is string => Boolean(path))
+        .map(moduleBasename),
+    ) ?? [],
+  );
+  const deps = parseImports(source, knownRegistry, knownExtraFiles);
   const cssVarsUsed = collectCssVars(source);
   const fallbacks = buildCssVarFallbacks(cssVarsUsed, lightMap, darkMap);
 
@@ -700,6 +960,12 @@ function buildOne(
         target: targetPath,
         content: source,
       },
+      ...(spec.extraFiles?.map((file) => ({
+        path: file.targetPath,
+        type: file.type ?? "registry:lib",
+        target: file.targetPath,
+        content: file.content ?? readExtraFile(file.source ?? ""),
+      })) ?? []),
     ],
     ...(fallbacks && { cssVars: fallbacks }),
     meta: {

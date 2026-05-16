@@ -22,6 +22,8 @@ import { registerI18nCommand } from "./commands/i18n";
 import { registerInfraCommand } from "./commands/infra";
 import { initCommand } from "./commands/init";
 import { registerLicenseCommand } from "./commands/license";
+import { registerLinkCommand } from "./commands/link";
+import { registerLogoutCommand } from "./commands/logout";
 import { registerMcpCommand } from "./commands/mcp-server";
 import { registerPresetCommand } from "./commands/preset";
 import { registerSchemaCommand } from "./commands/schema";
@@ -30,7 +32,10 @@ import { registerSecretsCommand } from "./commands/secrets";
 import { registerServicesCommand } from "./commands/services";
 import { registerStatsCommand } from "./commands/stats";
 import { registerTestCommand } from "./commands/test";
+import { registerUnlinkCommand } from "./commands/unlink";
+import { registerUpgradeCommand } from "./commands/upgrade";
 import { registerWorkflowCommand } from "./commands/workflow";
+import { maybeShowFirstRunBanner } from "./utils/first-run";
 import { logger } from "./utils/logger";
 import { maybeNotifyUpdate } from "./utils/update-notifier";
 
@@ -43,6 +48,9 @@ import { maybeNotifyUpdate } from "./utils/update-notifier";
 const VERSION = "0.1.0";
 
 async function main() {
+  // Show first-run telemetry opt-out banner (gated by TTY + env + marker)
+  maybeShowFirstRunBanner();
+
   // Start update check in background (non-blocking)
   const notifyUpdate = await maybeNotifyUpdate(VERSION);
 
@@ -134,6 +142,12 @@ async function main() {
   // ─── Utility commands ────────────────────────────────────
 
   registerCompletionsCommand(program);
+
+  // ─── Lifecycle commands (logout / upgrade / link / unlink) ─
+  registerLogoutCommand(program);
+  registerUpgradeCommand(program);
+  registerLinkCommand(program);
+  registerUnlinkCommand(program);
 
   program
     .command("doctor")
