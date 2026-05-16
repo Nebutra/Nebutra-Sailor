@@ -32,6 +32,7 @@ export {
   spinnerTokens,
   spinnerTones,
 } from "./spinner";
+export { type SplitButtonTokenSize, splitButtonTokens } from "./split-button";
 export { type SwitchSize, switchSizes, switchTokens } from "./switch";
 
 export { textareaTokens } from "./textarea";

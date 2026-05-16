@@ -389,6 +389,7 @@ export * from "./slider";
 export * from "./slider-number-flow";
 export * from "./spacing";
 export * from "./spinner";
+export * from "./split-button";
 export * from "./stack";
 export * from "./stars-canvas";
 export * from "./status-badge";

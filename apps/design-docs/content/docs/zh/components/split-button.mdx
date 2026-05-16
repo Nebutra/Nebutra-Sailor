@@ -1,0 +1,92 @@
+---
+title: "Split Button"
+description: "把一个主操作和一组相邻操作变体组合在一起的分裂按钮。"
+---
+
+## 概览
+
+`SplitButton` 由 `Button` 与 `DropdownMenu` 组合而成，用于一个操作有明确默认路径，并且旁边需要放少量相近变体的场景。
+
+主操作仍然是原生按钮。右侧箭头是独立的菜单触发按钮，并且必须提供可访问名称，避免读屏只读到一个无语义图标。
+
+## 安装
+
+```tsx
+import { SplitButton, SplitButtonMenuItem } from "@nebutra/ui/primitives"
+```
+
+## 用法
+
+```tsx
+<SplitButton
+  buttonProps={{
+    onClick: save,
+    type: "default",
+  }}
+  menuButtonLabel="More save options"
+  menuItems={
+    <>
+      <SplitButtonMenuItem
+        description="Save changes."
+        menuItemProps={{ onClick: save }}
+        title="Save"
+      />
+      <SplitButtonMenuItem
+        description="Save changes and create a production deployment."
+        menuItemProps={{ onClick: saveAndDeploy }}
+        title="Save and Deploy"
+      />
+    </>
+  }
+>
+  Save
+</SplitButton>
+```
+
+## Props
+
+### `SplitButton`
+
+| Prop | Type | 默认值 | 说明 |
+|------|------|--------|------|
+| `children` | `ReactNode` | — | 主按钮的可见文案 |
+| `buttonProps` | `SplitButtonPrimaryProps` | — | 透传给主按钮的属性 |
+| `menuButtonLabel` | `string` | — | 右侧箭头触发按钮的可访问名称 |
+| `menuItems` | `ReactNode` | — | 菜单内容，通常使用 `SplitButtonMenuItem` |
+| `menuAlignment` | `"bottom-start" \| "bottom-end"` | `"bottom-start"` | 菜单相对按钮组的位置 |
+| `menuProps` | `SplitButtonMenuContentProps` | — | 透传给 `DropdownMenuContent` 的属性，并额外支持 `width` |
+| `disabled` | `boolean` | `false` | 同时禁用主按钮与菜单触发按钮 |
+
+### `buttonProps`
+
+| Prop | Type | 默认值 | 说明 |
+|------|------|--------|------|
+| `type` | `"default" \| "secondary"` | `"default"` | 视觉类型。故意不支持 destructive |
+| `size` | `"tiny" \| "small" \| "medium" \| "large" \| "sm" \| "default" \| "lg"` | `"medium"` | Geist 尺寸别名与 Nebutra 原生按钮尺寸 |
+| `htmlType` | `"button" \| "submit" \| "reset"` | `"button"` | 表单里的原生按钮类型 |
+| `loading` | `boolean` | `false` | 展示主按钮 loading，并禁用整个 split control |
+| `prefix` | `ReactNode` | — | 主按钮文案前的可选图标 |
+
+### `SplitButtonMenuItem`
+
+| Prop | Type | 默认值 | 说明 |
+|------|------|--------|------|
+| `title` | `ReactNode` | — | 菜单项标题 |
+| `description` | `ReactNode` | — | 标题下方的短说明 |
+| `icon` | `ReactNode` | — | 装饰性的前置图标 |
+| `menuItemProps` | `DropdownMenuItem` props | — | 透传给底层菜单项的属性 |
+
+## 设计原则
+
+- 主操作必须作为菜单第一项重复出现；可见按钮文案与第一项标题应完全一致。
+- 只允许 `default` 与 `secondary` 视觉类型。破坏性操作应进入可见确认界面，而不是藏在箭头后。
+- 菜单控制在 1-4 个相近变体；不相关操作使用 `Menu`。
+- 菜单项采用动词 + 名词：`Deploy Preview`、`Deploy Production`、`Rollback Deployment`。
+- 只有按钮贴近容器右边缘时，才使用 `menuAlignment="bottom-end"`。
+
+## 无障碍
+
+- 主操作与菜单触发器都是原生按钮。
+- `menuButtonLabel` 是必填语义，因为箭头触发器没有可见文本。
+- loading 与 disabled 会同时禁用两侧按钮，键盘焦点不会落到无效菜单上。
+- 菜单键盘行为继承自 `DropdownMenu`：方向键移动焦点，Enter/Space 激活，Escape 关闭。
