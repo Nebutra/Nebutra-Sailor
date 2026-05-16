@@ -306,6 +306,15 @@ export * from "./message-content";
  */
 export * from "./metric-card";
 export * from "./middle-truncate";
+/**
+ * Geist-style compound Modal API on top of our Dialog (Base UI).
+ *   <Modal.Modal active onClickOutside sticky initialFocusRef>
+ *     <Modal.Body><Modal.Header><Modal.Title /><Modal.Subtitle /></Modal.Header></Modal.Body>
+ *     <Modal.Actions><Modal.Action type=primary|secondary /></Modal.Actions>
+ *   </Modal.Modal>
+ * Use Dialog directly when you need the lower-level Radix-style tree.
+ */
+export * from "./modal";
 export * from "./multiple-selector";
 export * from "./navigation-menu";
 export * from "./neuro-noise-bg";

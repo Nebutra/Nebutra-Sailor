@@ -214,6 +214,12 @@
       "description": "Geist-style flat MenuContainer / MenuButton / Menu / MenuItem / MenuLink / MenuItemLocked / MenuSection API on top of DropdownMenu."
     },
     {
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "Geist-style compound Modal API on top of Dialog. active/onClickOutside/sticky/initialFocusRef + Body/Header/Title/Subtitle/Inset/Actions/Action."
+    },
+    {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",

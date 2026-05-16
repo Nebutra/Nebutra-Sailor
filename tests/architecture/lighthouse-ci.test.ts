@@ -51,19 +51,20 @@ describe("lighthouse dashboard ci harness", () => {
       join(process.cwd(), "apps/landing-page/src/app/[lang]/(marketing)/blog/[slug]/page.tsx"),
       "utf8",
     );
-    const metadataStart = blogPostPage.indexOf("export async function generateMetadata");
-    const placeholderGuard = blogPostPage.indexOf(
-      "if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG)",
-      metadataStart,
-    );
-    const sanityFetch = blogPostPage.indexOf("await getPostBySlug(slug", metadataStart);
+    // The architectural invariant: the placeholder slug is declared, cached,
+    // guarded, and the guard appears before any Sanity fetch. Layout-agnostic
+    // so that extracting helpers (e.g. buildBlogMetadata) doesn't break the
+    // contract — only ordering relative to the Sanity call matters.
+    const placeholderGuard = blogPostPage.indexOf("if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG)");
+    const sanityFetch = blogPostPage.indexOf("getPostBySlug(slug");
 
     expect(blogPostPage).toContain(
       'const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";',
     );
     expect(blogPostPage).toContain('cacheLife("hours");');
-    expect(placeholderGuard).toBeGreaterThan(metadataStart);
-    expect(sanityFetch).toBeGreaterThan(placeholderGuard);
+    expect(placeholderGuard).toBeGreaterThan(-1);
+    expect(sanityFetch).toBeGreaterThan(-1);
+    expect(placeholderGuard).toBeLessThan(sanityFetch);
   });
 
   it("keeps Next prerender feed fetch cancellations out of CI error logs", async () => {

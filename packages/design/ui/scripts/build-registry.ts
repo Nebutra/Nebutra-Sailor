@@ -637,6 +637,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/menu.tsx",
     layer: "business",
   },
+  {
+    name: "modal",
+    title: "Modal",
+    description:
+      "Geist-style compound Modal API on top of Dialog. active/onClickOutside/sticky/initialFocusRef + Body/Header/Title/Subtitle/Inset/Actions/Action.",
+    source: "primitives/modal.tsx",
+    layer: "business",
+  },
 ];
 
 // ---------------------------------------------------------------------------
