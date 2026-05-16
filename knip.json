@@ -4,6 +4,16 @@
     ".": {
       "ignoreDependencies": ["turbo"]
     },
+    "apps/storybook": {
+      "entry": [
+        ".storybook/main.ts",
+        ".storybook/preview.ts",
+        ".storybook/preview.css",
+        ".storybook/a11y-config.ts",
+        ".storybook/stubs/*.{ts,tsx}",
+        "src/stories/**/*.stories.{ts,tsx}"
+      ]
+    },
     "apps/*": {
       "entry": [
         "src/app/**/page.{ts,tsx}",

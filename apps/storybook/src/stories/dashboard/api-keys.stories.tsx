@@ -111,7 +111,7 @@ function CreateDialogClosedDemo() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="rounded-md px-4 py-2 text-sm font-medium text-white"
+        className="rounded-md px-4 py-2 text-[color:var(--neutral-1)] text-sm font-medium"
         style={{ background: "var(--brand-gradient)" }}
       >
         Open create-key dialog

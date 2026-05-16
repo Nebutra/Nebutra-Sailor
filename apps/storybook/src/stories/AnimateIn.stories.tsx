@@ -56,9 +56,9 @@ export const AllPresets: Story = {
 export const StaggeredGroup: Story = {
   render: () => (
     <AnimateInGroup stagger="normal" className="grid grid-cols-3 gap-4 p-4">
-      {Array.from({ length: 6 }, (_, i) => (
-        <AnimateIn key={i} preset="fadeUp">
-          <div className="rounded-lg border p-4 text-center text-sm font-medium">Card {i + 1}</div>
+      {["analytics", "billing", "audit", "teams", "tokens", "deployments"].map((card) => (
+        <AnimateIn key={card} preset="fadeUp">
+          <div className="rounded-lg border p-4 text-center text-sm font-medium">{card}</div>
         </AnimateIn>
       ))}
     </AnimateInGroup>
@@ -68,8 +68,8 @@ export const StaggeredGroup: Story = {
 export const WithDelay: Story = {
   render: () => (
     <div className="flex flex-col gap-3 p-4">
-      {[0, 0.15, 0.3, 0.45].map((delay, i) => (
-        <AnimateIn key={i} preset="fadeUp" delay={delay}>
+      {[0, 0.15, 0.3, 0.45].map((delay) => (
+        <AnimateIn key={`delay-${delay}`} preset="fadeUp" delay={delay}>
           <div className="rounded-lg border p-3">
             <p className="text-sm">delay={delay}s</p>
           </div>

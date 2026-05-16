@@ -123,6 +123,11 @@ const config: StorybookConfig = {
         sourcemap: false,
         // Skip gzip size estimation in the report (saves ~10% wall time).
         reportCompressedSize: false,
+        // Storybook includes DocsRenderer, Axe, Three.js demos, and a merged
+        // LobeHub/Base UI/motion interaction vendor chunk. Treat 1.4 MB as the
+        // static-docs regression budget instead of
+        // Vite's application-oriented 500 KB default.
+        chunkSizeWarningLimit: 1400,
         rollupOptions: {
           // Suppress noisy warnings that flood I/O without representing real
           // issues: "use client" directives in transitive deps + sourcemap
@@ -137,15 +142,21 @@ const config: StorybookConfig = {
             defaultHandler(warning);
           },
           output: {
-            // Split heavy vendor chunks so Rollup caches them independently
-            // and the runtime can lazy-load.
+            // Split heavy vendor chunks so Rollup caches them independently.
+            // Keep motion / Base UI / LobeHub together: those packages import
+            // each other, and splitting them creates circular Rollup chunks.
             manualChunks: (id: string) => {
               if (id.includes("node_modules")) {
-                if (id.includes("framer-motion") || id.includes("/motion/")) return "vendor-motion";
+                if (
+                  id.includes("framer-motion") ||
+                  id.includes("/motion/") ||
+                  id.includes("@lobehub/ui") ||
+                  id.includes("@lobehub/icons") ||
+                  id.includes("@base-ui/")
+                ) {
+                  return "vendor-interaction";
+                }
                 if (id.includes("three")) return "vendor-three";
-                if (id.includes("@lobehub/ui") || id.includes("@lobehub/icons"))
-                  return "vendor-lobehub";
-                if (id.includes("@base-ui/")) return "vendor-base-ui";
                 if (id.includes("recharts")) return "vendor-recharts";
                 if (id.includes("@phosphor-icons")) return "vendor-phosphor";
               }

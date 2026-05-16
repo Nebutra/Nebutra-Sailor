@@ -28,7 +28,7 @@ export const Default: Story = {
 
 export const WithIcon: Story = {
   args: {
-    icon: <Inbox className="h-10 w-10" />,
+    icon: <Inbox className="size-10" />,
     title: "Your inbox is empty",
     description: "New notifications will appear here.",
   },
@@ -36,13 +36,13 @@ export const WithIcon: Story = {
 
 export const WithAction: Story = {
   args: {
-    icon: <Key className="h-10 w-10" />,
+    icon: <Key className="size-10" />,
     title: "No API keys",
     description: "Create an API key to start making requests.",
     action: (
       <button
         type="button"
-        className="rounded-lg px-3 py-1.5 text-sm font-medium text-white"
+        className="rounded-lg px-3 py-1.5 text-[color:var(--neutral-1)] text-sm font-medium"
         style={{ background: "var(--brand-gradient)" }}
       >
         Create API key
@@ -60,13 +60,13 @@ export const AllVariants: Story = {
         description="Some supporting context to help the user understand the empty state."
       />
       <EmptyState
-        icon={<Users className="h-10 w-10" />}
+        icon={<Users className="size-10" />}
         title="No team members"
         description="Invite your teammates to collaborate on projects."
         action={
           <button
             type="button"
-            className="rounded-lg px-3 py-1.5 text-sm font-medium text-white"
+            className="rounded-lg px-3 py-1.5 text-[color:var(--neutral-1)] text-sm font-medium"
             style={{ background: "var(--brand-gradient)" }}
           >
             Invite member

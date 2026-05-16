@@ -7,9 +7,10 @@
  * the app.
  */
 
-import { forwardRef, type ImgHTMLAttributes } from "react";
+import { createElement, type ImgHTMLAttributes, type Ref } from "react";
 
 type StaticImageData = { src: string; height?: number; width?: number };
+type ImageLoaderProps = { src: string; width: number; quality?: number };
 
 type ImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, "src"> & {
   src: string | StaticImageData;
@@ -20,30 +21,28 @@ type ImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, "src"> & {
   priority?: boolean;
   placeholder?: "blur" | "empty";
   blurDataURL?: string;
-  // biome-ignore lint/suspicious/noExplicitAny: matches next/image loader signature
-  loader?: (...args: any[]) => string;
+  loader?: (props: ImageLoaderProps) => string;
   quality?: number;
   sizes?: string;
   unoptimized?: boolean;
+  ref?: Ref<HTMLImageElement>;
 };
 
-const Image = forwardRef<HTMLImageElement, ImageProps>(function NextImageStub(
-  {
-    src,
-    alt,
-    fill,
-    priority: _priority,
-    placeholder: _placeholder,
-    blurDataURL: _blurDataURL,
-    loader: _loader,
-    quality: _quality,
-    sizes: _sizes,
-    unoptimized: _unoptimized,
-    style,
-    ...rest
-  },
+function Image({
+  src,
+  alt,
+  fill,
+  priority: _priority,
+  placeholder: _placeholder,
+  blurDataURL: _blurDataURL,
+  loader: _loader,
+  quality: _quality,
+  sizes: _sizes,
+  unoptimized: _unoptimized,
+  style,
   ref,
-) {
+  ...rest
+}: ImageProps) {
   const finalSrc = typeof src === "string" ? src : src.src;
   const fillStyle = fill
     ? {
@@ -54,15 +53,13 @@ const Image = forwardRef<HTMLImageElement, ImageProps>(function NextImageStub(
         objectFit: "cover" as const,
       }
     : undefined;
-  return (
-    <img
-      ref={ref}
-      src={finalSrc}
-      alt={alt}
-      style={fillStyle ? { ...fillStyle, ...style } : style}
-      {...rest}
-    />
-  );
-});
+  return createElement("img", {
+    ...rest,
+    ref,
+    src: finalSrc,
+    alt,
+    style: fillStyle ? { ...fillStyle, ...style } : style,
+  });
+}
 
 export default Image;

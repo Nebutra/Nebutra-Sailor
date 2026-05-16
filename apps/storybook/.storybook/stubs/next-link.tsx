@@ -12,7 +12,7 @@
  * See: docs/architecture/2026-05-14-storybook-perf-governance.md
  */
 
-import { type AnchorHTMLAttributes, forwardRef, type ReactNode } from "react";
+import type { AnchorHTMLAttributes, ReactNode, Ref } from "react";
 
 type LinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
   href: string | URL;
@@ -25,31 +25,30 @@ type LinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
   locale?: string | false;
   as?: string;
   children?: ReactNode;
+  ref?: Ref<HTMLAnchorElement>;
 };
 
-const Link = forwardRef<HTMLAnchorElement, LinkProps>(function NextLinkStub(
-  {
-    href,
-    // Strip Next-only props to avoid React warnings about unknown <a> attributes
-    prefetch: _prefetch,
-    replace: _replace,
-    scroll: _scroll,
-    shallow: _shallow,
-    passHref: _passHref,
-    legacyBehavior: _legacyBehavior,
-    locale: _locale,
-    as: _as,
-    children,
-    ...rest
-  },
+function Link({
+  href,
+  // Strip Next-only props to avoid React warnings about unknown <a> attributes
+  prefetch: _prefetch,
+  replace: _replace,
+  scroll: _scroll,
+  shallow: _shallow,
+  passHref: _passHref,
+  legacyBehavior: _legacyBehavior,
+  locale: _locale,
+  as: _as,
+  children,
   ref,
-) {
+  ...rest
+}: LinkProps) {
   const hrefStr = typeof href === "string" ? href : href.toString();
   return (
     <a ref={ref} href={hrefStr} {...rest}>
       {children}
     </a>
   );
-});
+}
 
 export default Link;

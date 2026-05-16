@@ -2,6 +2,10 @@
 
 AI coding agent onboarding guide for Cursor, Claude Code, Codex, Windsurf, and GitHub Copilot.
 
+> Keep this file repo-relative. Do not add local absolute paths such as
+> `/Users/...` or references to sibling checkout paths. If a workflow needs
+> machine-local context, put it in the agent prompt, not in tracked docs.
+
 ---
 
 ## Project Overview
@@ -27,8 +31,8 @@ apps/                  # User-facing apps (Next.js / Storybook / Mintlify)
   web/                 # Authenticated SaaS dashboard (Next.js 16, Clerk auth)
   storybook/           # Component library documentation (Storybook 8.x)
   design-docs/         # Internal design docs (Next.js + Fumadocs)
+  sailor-docs/         # Product/design documentation app
   studio/              # Sanity Studio v5 — CMS for blog/changelog/pages
-  docs/                # Public product docs (Mintlify)
   idp/                 # Identity Provider application
 
 backends/              # No-UI backends (split by language à la vercel/vercel)
@@ -37,38 +41,35 @@ backends/              # No-UI backends (split by language à la vercel/vercel)
     _shared/  ai/
 
 packages/
-  ui/             Component library (Radix + HeroUI + Lobe UI + framer-motion)
-  tokens/         Runtime CSS variables — SINGLE SOURCE OF TRUTH for theming
-  brand/          Brand primitives (colors, gradients, motion language)
-  theme/          Multi-theme CSS engine (6 oklch presets)
-  icons/          541 Geist icons as tree-shakable TSX components
-  preset/         Feature-based SaaS starter config system
-  db/             Prisma v7 + PostgreSQL (pgvector, RLS, multi-schema)
-  billing/        Stripe integration (subscriptions, credits, usage metering)
-  identity/       Auth abstraction layer (Clerk adapter active)
-  email/          Resend transactional emails (welcome, invite, quota alerts)
-  ai-sdk/         Vercel AI SDK wrapper (OpenAI, OpenRouter, streaming)
-  i18n/           next-intl integration
-  analytics/      PostHog + Dub.co analytics
-  audit/          Audit logging (37 action types, actor/tenant scoping)
-  event-bus/      Inngest background jobs
-  cache/          Redis caching adapter
-  rate-limit/     Token bucket rate limiting
-  alerting/       Email + Slack alert system
-  errors/         Typed error definitions
-  health/         Health check probes
-  logger/         Structured logging (Sentry integration)
-  contracts/      API contract definitions
-  config/         Environment variable validation
-  legal/          Legal content + GDPR consent tracking
-  marketing/      Marketing components (FAQ, pricing, testimonials, waitlist)
-  sanity/         Sanity CMS client + queries
-  storage/        S3-compatible file storage
-  oauth-server/   OAuth 2.0 provider
-  mcp/            Model Context Protocol server
+  ai/                    agents, MCP, provider adapters
+  commerce/              billing, contracts, legal, marketing, metering, waitlist
+  design/                brand, icons, theme, tokens, UI, design sync
+  iam/                   auth, identity, tenant, permissions, audit, vault, OAuth
+  integrations/          cache, email, event bus, notifications, queue, search, storage, webhooks
+  ops/                   CLI, create-sailor, presets, Sanity, Supabase, China compliance
+  platform/              analytics, config, db, errors, gateway-core, health, logger, rate-limit
 ```
 
 ---
+
+## Agent Operating Contract
+
+1. Start from `main` unless the user explicitly asks for a branch. Check
+   `git status --branch --short` before edits and preserve unrelated dirty
+   changes.
+2. Read the nearest `AGENTS.md` before changing a package or app. The root file
+   gives global defaults; package-local files own the local contract.
+3. Use TDD for behavior changes: write the failing test, run it red, implement,
+   run it green, then refactor.
+4. Prefer production-proven libraries and provider SDKs over hand-rolled
+   infrastructure. If a provider adapter is only scaffolded, keep metadata
+   honest instead of marking it production-ready.
+5. Keep checked-in docs and examples portable. Use repo-relative paths and
+   commands; do not mention sibling local checkouts.
+6. If copying patterns from Supastarter or other starters, copy the proven
+   product behavior, then localize to Nebutra package boundaries and tests.
+7. Do not broaden a fix into unrelated formatting churn. Stage only intended
+   files when committing.
 
 ## Quick Start
 

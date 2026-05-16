@@ -29,7 +29,7 @@ const FIXTURE_LOGS: AuditLogEntry[] = [
     ipAddress: "203.0.113.7",
     userAgent: "Mozilla/5.0",
     metadata: null,
-    createdAt: new Date(Date.now() - 1000 * 60 * 4).toISOString(),
+    createdAt: "2026-05-16T06:56:00.000Z",
   },
   {
     id: "log_02",
@@ -46,7 +46,7 @@ const FIXTURE_LOGS: AuditLogEntry[] = [
     ipAddress: "203.0.113.10",
     userAgent: "curl/8.4",
     metadata: null,
-    createdAt: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
+    createdAt: "2026-05-16T06:25:00.000Z",
   },
   {
     id: "log_03",
@@ -63,7 +63,7 @@ const FIXTURE_LOGS: AuditLogEntry[] = [
     ipAddress: null,
     userAgent: null,
     metadata: { stripeCode: "card_declined" },
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString(),
+    createdAt: "2026-05-15T05:00:00.000Z",
   },
 ];
 

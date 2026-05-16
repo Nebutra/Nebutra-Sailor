@@ -16,16 +16,29 @@ export default meta;
 
 // ── helpers ──────────────────────────────────────────────────
 
-function Swatch({ name, cssVar, hex }: { name: string; cssVar: string; hex?: string }) {
+const legacySteps = [
+  "50",
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+  "950",
+] as const;
+
+function Swatch({ name, cssVar }: { name: string; cssVar: string }) {
   return (
     <div className="flex flex-col gap-1">
       <div
-        className="h-12 w-full rounded-md border border-black/10"
-        style={{ background: hex ?? `var(${cssVar})` }}
+        className="h-12 w-full rounded-md border border-[var(--neutral-7)]"
+        style={{ background: `var(${cssVar})` }}
       />
-      <p className="text-xs font-medium text-gray-900">{name}</p>
-      <p className="font-mono text-[11px] text-gray-500">{cssVar}</p>
-      {hex && <p className="font-mono text-[11px] text-gray-400">{hex}</p>}
+      <p className="text-xs font-medium text-[var(--neutral-12)]">{name}</p>
+      <p className="font-mono text-[11px] text-[var(--neutral-10)]">{cssVar}</p>
     </div>
   );
 }
@@ -35,11 +48,11 @@ function ColorRow({
   swatches,
 }: {
   label: string;
-  swatches: Array<{ name: string; cssVar: string; hex?: string }>;
+  swatches: Array<{ name: string; cssVar: string }>;
 }) {
   return (
     <div className="mb-8">
-      <h3 className="mb-3 text-sm font-semibold text-gray-700">{label}</h3>
+      <h3 className="mb-3 text-sm font-semibold text-[var(--neutral-11)]">{label}</h3>
       <div className="grid grid-cols-6 gap-3 md:grid-cols-11">
         {swatches.map((s) => (
           <Swatch key={s.cssVar} {...s} />
@@ -54,38 +67,14 @@ function ColorRow({
 export const BrandColors: StoryObj = {
   name: "Brand Scales",
   render: () => (
-    <div className="p-6 bg-white">
+    <div className="bg-[var(--neutral-1)] p-6">
       <ColorRow
         label="云毓蓝 — Primary Brand (--nebutra-blue-*)"
-        swatches={[
-          { name: "50", cssVar: "--nebutra-blue-50", hex: "#f0f4ff" },
-          { name: "100", cssVar: "--nebutra-blue-100", hex: "#dbe4ff" },
-          { name: "200", cssVar: "--nebutra-blue-200", hex: "#bac8ff" },
-          { name: "300", cssVar: "--nebutra-blue-300", hex: "#91a7ff" },
-          { name: "400", cssVar: "--nebutra-blue-400", hex: "#5c7cfa" },
-          { name: "500", cssVar: "--nebutra-blue-500", hex: "#0033FE" },
-          { name: "600", cssVar: "--nebutra-blue-600", hex: "#002ad4" },
-          { name: "700", cssVar: "--nebutra-blue-700", hex: "#0021ab" },
-          { name: "800", cssVar: "--nebutra-blue-800", hex: "#001882" },
-          { name: "900", cssVar: "--nebutra-blue-900", hex: "#000f59" },
-          { name: "950", cssVar: "--nebutra-blue-950", hex: "#000830" },
-        ]}
+        swatches={legacySteps.map((name) => ({ name, cssVar: `--nebutra-blue-${name}` }))}
       />
       <ColorRow
         label="云毓青 — Secondary Accent (--nebutra-cyan-*)"
-        swatches={[
-          { name: "50", cssVar: "--nebutra-cyan-50", hex: "#e6fff8" },
-          { name: "100", cssVar: "--nebutra-cyan-100", hex: "#b3ffec" },
-          { name: "200", cssVar: "--nebutra-cyan-200", hex: "#80ffe0" },
-          { name: "300", cssVar: "--nebutra-cyan-300", hex: "#4dfcd4" },
-          { name: "400", cssVar: "--nebutra-cyan-400", hex: "#1af7c8" },
-          { name: "500", cssVar: "--nebutra-cyan-500", hex: "#0BF1C3" },
-          { name: "600", cssVar: "--nebutra-cyan-600", hex: "#09c9a3" },
-          { name: "700", cssVar: "--nebutra-cyan-700", hex: "#07a183" },
-          { name: "800", cssVar: "--nebutra-cyan-800", hex: "#057963" },
-          { name: "900", cssVar: "--nebutra-cyan-900", hex: "#035143" },
-          { name: "950", cssVar: "--nebutra-cyan-950", hex: "#012923" },
-        ]}
+        swatches={legacySteps.map((name) => ({ name, cssVar: `--nebutra-cyan-${name}` }))}
       />
     </div>
   ),
@@ -94,8 +83,8 @@ export const BrandColors: StoryObj = {
 export const SemanticColors: StoryObj = {
   name: "Semantic Scale (12-step)",
   render: () => (
-    <div className="p-6 bg-white">
-      <p className="mb-4 text-sm text-gray-500">
+    <div className="bg-[var(--neutral-1)] p-6">
+      <p className="mb-4 text-sm text-[var(--neutral-10)]">
         Geist-style 12-step scales. Steps 1–2 = backgrounds, 3–5 = component states, 6–8 = borders,
         9–10 = solid fills, 11–12 = text.
       </p>
@@ -116,7 +105,7 @@ export const SemanticColors: StoryObj = {
 export const Gradients: StoryObj = {
   name: "Brand Gradients",
   render: () => (
-    <div className="p-6 bg-white grid grid-cols-2 gap-4 md:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 bg-[var(--neutral-1)] p-6 md:grid-cols-4">
       {[
         { name: "Default", cssVar: "--brand-gradient" },
         { name: "Reverse", cssVar: "--brand-gradient-reverse" },
@@ -125,8 +114,8 @@ export const Gradients: StoryObj = {
       ].map(({ name, cssVar }) => (
         <div key={cssVar} className="flex flex-col gap-2">
           <div className="h-24 rounded-lg" style={{ background: `var(${cssVar})` }} />
-          <p className="text-sm font-medium text-gray-900">{name}</p>
-          <p className="font-mono text-[11px] text-gray-500">{cssVar}</p>
+          <p className="text-sm font-medium text-[var(--neutral-12)]">{name}</p>
+          <p className="font-mono text-[11px] text-[var(--neutral-10)]">{cssVar}</p>
         </div>
       ))}
     </div>
@@ -158,10 +147,10 @@ export const DarkMode: StoryObj = {
         ].map((cssVar) => (
           <div key={cssVar} className="flex flex-col gap-1">
             <div
-              className="h-10 w-full rounded border border-white/10"
+              className="h-10 w-full rounded border border-[color:var(--neutral-7)]"
               style={{ background: `var(${cssVar})` }}
             />
-            <p className="font-mono text-[10px] text-white/60">{cssVar}</p>
+            <p className="font-mono text-[10px] text-[color:var(--neutral-5)]">{cssVar}</p>
           </div>
         ))}
       </div>

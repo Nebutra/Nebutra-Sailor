@@ -23,7 +23,7 @@ const FIXTURE_ENDPOINTS: WebhookEndpointView[] = [
     isActive: true,
     signingSecretMasked: "whsec_***************************4f2a",
     createdAt: "2025-09-12T09:32:00Z",
-    lastDeliveredAt: new Date(Date.now() - 1000 * 60 * 12).toISOString(),
+    lastDeliveredAt: "2025-09-12T10:04:00Z",
   },
   {
     id: "wh_02",
@@ -90,7 +90,7 @@ export const CreateDialog: StoryObj<typeof CreateWebhookDialog> = {
               events,
               isActive: true,
               signingSecretMasked: "whsec_***************************demo",
-              createdAt: new Date().toISOString(),
+              createdAt: "2025-10-20T08:00:00Z",
               lastDeliveredAt: null,
             },
             signingSecret: "whsec_demo_signing_secret_value_replace_in_real_use",

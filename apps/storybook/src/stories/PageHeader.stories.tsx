@@ -32,7 +32,7 @@ export const WithActions: Story = {
     actions: (
       <button
         type="button"
-        className="rounded-lg px-3 py-1.5 text-sm font-medium text-white"
+        className="rounded-lg px-3 py-1.5 text-[color:var(--neutral-1)] text-sm font-medium"
         style={{ background: "var(--brand-gradient)" }}
       >
         Create key
@@ -56,7 +56,7 @@ export const AllVariants: Story = {
         actions={
           <button
             type="button"
-            className="rounded-lg px-3 py-1.5 text-sm font-medium text-white"
+            className="rounded-lg px-3 py-1.5 text-[color:var(--neutral-1)] text-sm font-medium"
             style={{ background: "var(--brand-gradient)" }}
           >
             Primary action
