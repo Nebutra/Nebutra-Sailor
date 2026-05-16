@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "multi-select-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/multi-select-demo.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport {\n  MultiSelectContent,\n  MultiSelectRoot,\n  MultiSelectRow,\n  MultiSelectTrigger,\n} from \"@nebutra/ui/primitives\";\n\nconst items = [\n  { id: \"design\", name: \"Design System\", description: \"Tokens, primitives, docs\", count: 42 },\n  { id: \"components\", name: \"Components\", description: \"Reusable interface pieces\", count: 28 },\n  { id: \"tokens\", name: \"Design Tokens\", description: \"Semantic variables\", count: 15 },\n  { id: \"accessibility\", name: \"Accessibility\", description: \"Focus and screen reader checks\", count: 11 },\n] as const;\n\nfunction triggerLabel(selectedCount: number) {\n  if (selectedCount === 0) return \"No workstreams selected\";\n  if (selectedCount === items.length) return \"All workstreams selected\";\n  if (selectedCount === 1) return \"1 workstream selected\";\n  return `${selectedCount} workstreams selected`;\n}\n\nexport function MultiSelectDemo() {\n  const [selectedItems, setSelectedItems] = React.useState<Set<string>>(\n    () => new Set([\"design\", \"components\"]),\n  );\n\n  const toggleItem = (id: string) => {\n    setSelectedItems((current) => {\n      const next = new Set(current);\n      if (next.has(id)) next.delete(id);\n      else next.add(id);\n      return next;\n    });\n  };\n\n  const selectOnly = (id: string) => setSelectedItems(new Set([id]));\n  const selectAll = () => setSelectedItems(new Set(items.map((item) => item.id)));\n\n  return (\n    <div className=\"flex w-full justify-center p-6\">\n      <div className=\"flex w-[var(--multi-select-demo-width)] flex-col gap-3 [--multi-select-demo-width:360px]\">\n        <MultiSelectRoot>\n          <MultiSelectTrigger aria-label=\"Selected workstreams\">\n            {triggerLabel(selectedItems.size)}\n          </MultiSelectTrigger>\n          <MultiSelectContent>\n            {items.map((item) => (\n              <MultiSelectRow\n                key={item.id}\n                name={item.name}\n                description={item.description}\n                count={item.count}\n                checked={selectedItems.has(item.id)}\n                onChange={() => toggleItem(item.id)}\n                onSelectOnly={() => selectOnly(item.id)}\n                onSelectAll={selectAll}\n                selectedCount={selectedItems.size}\n                totalCount={items.length}\n              />\n            ))}\n          </MultiSelectContent>\n        </MultiSelectRoot>\n        <p className=\"text-sm text-muted-foreground\">\n          Arrow keys preserve row focus: Up and Down move rows, Left and Right switch controls.\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

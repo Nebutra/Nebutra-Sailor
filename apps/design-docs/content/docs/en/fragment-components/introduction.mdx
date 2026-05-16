@@ -36,7 +36,6 @@ A Fragment is distinguished from a primitive atom by its **composition**. Each F
 | [LogsBarChart](/fragment-components/logs-bar-chart) | `@nebutra/ui` | Log volume visualisation |
 | [MetricCard](/fragment-components/metric-card) | `@nebutra/ui` | KPI / metric display card |
 | [Modal](/fragment-components/modal) | `@nebutra/ui` | General-purpose overlay dialog |
-| [MultiSelect](/fragment-components/multi-select) | `@nebutra/ui` | Multi-value selector input |
 | [PageContainer](/fragment-components/page-container) | `@nebutra/ui` | Section wrapper with max-width + spacing |
 | [PageHeader](/fragment-components/page-header) | `@nebutra/ui` | Page title with breadcrumbs and actions |
 | [PageSection](/fragment-components/page-section) | `@nebutra/ui` | Content section with heading |
@@ -51,5 +50,5 @@ If you need a button inside a fragment, it renders the `Button` atom — not a s
 **Escape hatches via `className`.** Every Fragment accepts a `className` prop for one-off overrides
 without forking the component.
 
-**Controlled and uncontrolled modes.** Where state is involved (modals, multi-selects), Fragments
+**Controlled and uncontrolled modes.** Where state is involved (modals, filter bars), Fragments
 support both controlled (`value` / `onChange`) and uncontrolled (internal state) modes.

@@ -197,6 +197,7 @@ export const MenubarDemo = dynamic(() => import("@/components/previews/menubar-d
 export const MermaidDemo = dynamic(() => import("@/components/previews/mermaid-demo").then(m => ({ default: m.MermaidDemo })));
 export const MessageWithReactionsDemo = dynamic(() => import("@/components/previews/message-with-reactions-demo").then(m => ({ default: m.default })));
 export const MiddleTruncateDemo = dynamic(() => import("@/components/previews/middle-truncate-demo").then(m => ({ default: m.MiddleTruncateDemo })));
+export const MultiSelectDemo = dynamic(() => import("@/components/previews/multi-select-demo").then(m => ({ default: m.MultiSelectDemo })));
 export const MultipleSelectorDemo = dynamic(() => import("@/components/previews/multiple-selector-demo").then(m => ({ default: m.MultipleSelectorDemo })));
 export const NavigationMenuDemo = dynamic(() => import("@/components/previews/navigation-menu-demo").then(m => ({ default: m.NavigationMenuDemo })));
 export const NoisePatternCardDemo = dynamic(() => import("@/components/previews/noise-pattern-card-demo").then(m => ({ default: m.NoisePatternCardDemo })));
@@ -505,6 +506,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "mermaid-demo": { name: "mermaid-demo", component: MermaidDemo },
   "message-with-reactions-demo": { name: "message-with-reactions-demo", component: MessageWithReactionsDemo },
   "middle-truncate-demo": { name: "middle-truncate-demo", component: MiddleTruncateDemo },
+  "multi-select-demo": { name: "multi-select-demo", component: MultiSelectDemo },
   "multiple-selector-demo": { name: "multiple-selector-demo", component: MultipleSelectorDemo },
   "navigation-menu-demo": { name: "navigation-menu-demo", component: NavigationMenuDemo },
   "noise-pattern-card-demo": { name: "noise-pattern-card-demo", component: NoisePatternCardDemo },

@@ -315,6 +315,7 @@ export * from "./middle-truncate";
  * Use Dialog directly when you need the lower-level Radix-style tree.
  */
 export * from "./modal";
+export * from "./multi-select";
 export * from "./multiple-selector";
 export * from "./navigation-menu";
 export * from "./neuro-noise-bg";

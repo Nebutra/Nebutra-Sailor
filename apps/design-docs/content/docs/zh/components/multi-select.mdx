@@ -1,0 +1,120 @@
+---
+title: MultiSelect
+description: 支持键盘导航的多选菜单，提供 checkbox 行与智能行操作。
+---
+
+<ComponentPreview name="multi-select-demo" />
+
+## 安装
+
+```tsx
+import {
+  MultiSelectRoot,
+  MultiSelectTrigger,
+  MultiSelectContent,
+  MultiSelectRow,
+} from "@nebutra/ui/primitives";
+```
+
+## 概览
+
+`MultiSelect` 是用于已知列表多选的紧凑菜单 primitive。它不是标签输入框。需要搜索、创建、
+可移除 badge chips 时用 `MultipleSelector`；如果过滤比完整浏览选项更重要，用 `Combobox`。
+
+组件内部负责菜单开合、焦点移动、Escape 关闭和行级智能操作；选择状态由消费者受控管理。
+
+## 用法
+
+```tsx
+const [selected, setSelected] = useState<Set<string>>(() => new Set(["design"]));
+
+function toggle(id: string) {
+  setSelected((current) => {
+    const next = new Set(current);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    return next;
+  });
+}
+
+<MultiSelectRoot>
+  <MultiSelectTrigger aria-label="Selected workstreams">
+    {selected.size === 0 ? "No workstreams selected" : `${selected.size} workstreams selected`}
+  </MultiSelectTrigger>
+  <MultiSelectContent>
+    {items.map((item) => (
+      <MultiSelectRow
+        key={item.id}
+        name={item.name}
+        checked={selected.has(item.id)}
+        onChange={() => toggle(item.id)}
+        onSelectOnly={() => setSelected(new Set([item.id]))}
+        onSelectAll={() => setSelected(new Set(items.map((next) => next.id)))}
+        selectedCount={selected.size}
+        totalCount={items.length}
+      />
+    ))}
+  </MultiSelectContent>
+</MultiSelectRoot>
+```
+
+## 交互契约
+
+| 焦点位置 | Enter / Space | 方向键 |
+|---|---|---|
+| 行 checkbox | 切换当前行 | Up / Down 移动行 |
+| 行操作按钮 | Select Only、Select All、Select 或 Deselect | Left / Right 切换行内控件 |
+| 菜单内容 | Escape 关闭并回到 trigger | Tab 被限制在菜单内部 |
+
+行操作标签在 hover 和键盘 focus 时出现。标签文本必须直接描述真实动作，保证视觉与屏幕阅读器播报一致。
+
+## Props
+
+### `MultiSelectRoot`
+
+| 属性 | 类型 | 默认值 | 描述 |
+|---|---|---|---|
+| `children` | `ReactNode` | — | Trigger 与 Content 的组合 |
+| `open` | `boolean` | — | 受控开合状态 |
+| `defaultOpen` | `boolean` | `false` | 非受控初始开合状态 |
+| `onOpenChange` | `(open: boolean) => void` | — | 菜单开合时触发 |
+
+### `MultiSelectTrigger`
+
+| 属性 | 类型 | 默认值 | 描述 |
+|---|---|---|---|
+| `children` | `ReactNode` | — | 可见 trigger 标签 |
+| `width` | `"sm" \| "md" \| "lg"` | `"md"` | token 化的 trigger 与菜单宽度 |
+| `aria-label` | `string` | `"Multi select"` | 非纯文本标签时的稳定可访问名称 |
+
+### `MultiSelectContent`
+
+| 属性 | 类型 | 默认值 | 描述 |
+|---|---|---|---|
+| `children` | `ReactNode` | — | 行内容，或 empty/loading/error 状态 |
+| `align` | `"start" \| "center" \| "end"` | `"start"` | 浮层对齐方式 |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | 首选出现方向 |
+| `sideOffset` | `number` | `6` | 与 trigger 的距离 |
+| `width` | `"sm" \| "md" \| "lg"` | `"md"` | token 化菜单宽度 |
+
+### `MultiSelectRow`
+
+| 属性 | 类型 | 默认值 | 描述 |
+|---|---|---|---|
+| `name` | `string` | — | 条目标签与行可访问名称 |
+| `checked` | `boolean` | — | 受控选中状态 |
+| `onChange` | `() => void` | — | 切换回调 |
+| `selectedCount` | `number` | — | 当前选中数量 |
+| `totalCount` | `number` | — | 总数量 |
+| `description` | `ReactNode` | — | 次级说明 |
+| `count` | `number` | — | 可选计数 |
+| `disabled` | `boolean` | `false` | 同时禁用行内两个控件 |
+| `onSelectOnly` | `() => void` | — | 已选行处于多选集合中时的智能操作 |
+| `onSelectAll` | `() => void` | — | 选中当前行即可补全集合时的智能操作 |
+
+## 设计原则
+
+- Trigger 展示选中数量；只有单选项名称能提高扫描效率时才直接展示名称。
+- Checkbox 焦点和 action 焦点必须分离。用户不应该猜 Enter 是切换行还是执行批量动作。
+- 隐藏 action 必须在 hover 与键盘 focus 时出现，并用可见文本承载屏幕阅读器播报。
+- 固定、稠密过滤菜单用 `MultiSelect`；可搜索标签输入用 `MultipleSelector`。

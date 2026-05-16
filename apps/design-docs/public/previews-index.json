@@ -752,6 +752,10 @@
       "type": "registry:example"
     },
     {
+      "name": "multi-select-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "multiple-selector-demo",
       "type": "registry:example"
     },
