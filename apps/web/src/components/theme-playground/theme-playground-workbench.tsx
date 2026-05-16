@@ -344,8 +344,12 @@ function CanvasHeader({
         </p>
       </div>
       <div className="min-w-0 overflow-x-auto">
-        <Tabs value={activeSuite} onValueChange={(value) => onSuiteChange(value as PreviewSuite)}>
-          <TabsList size="sm" className="min-w-max border border-border bg-card/80">
+        <Tabs
+          value={activeSuite}
+          size="sm"
+          onValueChange={(value) => onSuiteChange(value as PreviewSuite)}
+        >
+          <TabsList className="min-w-max border border-border bg-card/80">
             {suites.map((suite) => (
               <TabsTrigger key={suite.id} value={suite.id}>
                 {suite.icon}

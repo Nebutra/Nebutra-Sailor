@@ -11,8 +11,8 @@
 @import "tailwindcss";
 /* Single token source */
 @import "@nebutra/tokens/styles.css";
-/* Typography SSOT — defines --font-* variables */
-@import "@nebutra/ui/typography/fonts.css";
+/* Typography SSOT — source import keeps local workspace dev independent of @nebutra/ui dist. */
+@import "../../../../packages/design/ui/src/typography/fonts.css";
 /* Product-tour theme overrides (driver.js → our tokens) */
 @import "@nebutra/onboarding/styles.css";
 
