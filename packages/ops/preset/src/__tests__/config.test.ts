@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { AppId, defineConfig, FeatureId, NebutraConfigSchema, PresetId, ThemeId } from "../config";
+import {
+  AppId,
+  BUILT_IN_THEME_IDS,
+  defineConfig,
+  FeatureId,
+  NebutraConfigSchema,
+  PresetId,
+  ThemeId,
+} from "../config";
 
 describe("NebutraConfigSchema", () => {
   it("parses minimal config with defaults", () => {
@@ -99,9 +107,16 @@ describe("FeatureId", () => {
 });
 
 describe("ThemeId", () => {
-  it("accepts all 7 theme IDs", () => {
-    const ids = ["neon", "gradient", "dark-dense", "minimal", "vibrant", "ocean", "custom"];
-    for (const id of ids) {
+  it("accepts built-in theme IDs from the shared registry and custom themes", () => {
+    expect(BUILT_IN_THEME_IDS).toEqual([
+      "neon",
+      "gradient",
+      "dark-dense",
+      "minimal",
+      "vibrant",
+      "ocean",
+    ]);
+    for (const id of [...BUILT_IN_THEME_IDS, "custom"]) {
       expect(ThemeId.parse(id)).toBe(id);
     }
   });
@@ -121,7 +136,6 @@ describe("defineConfig", () => {
   });
 
   it("throws on invalid input", () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect(() => defineConfig({ preset: "bad" as any })).toThrow();
+    expect(() => defineConfig({ preset: "bad" as never })).toThrow();
   });
 });

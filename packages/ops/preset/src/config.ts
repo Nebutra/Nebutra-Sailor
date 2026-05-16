@@ -1,3 +1,4 @@
+import { THEME_IDS as BUILT_IN_THEME_IDS, isThemeId } from "@nebutra/theme/registry";
 import { z } from "zod";
 import { getPreset } from "./presets";
 
@@ -44,15 +45,15 @@ export const FeatureId = z.enum([
   "upload",
 ]);
 
-export const ThemeId = z.enum([
-  "neon",
-  "gradient",
-  "dark-dense",
-  "minimal",
-  "vibrant",
-  "ocean",
-  "custom",
-]);
+export { BUILT_IN_THEME_IDS };
+
+export const ThemeId = z.string().superRefine((value, ctx) => {
+  if (isThemeId(value)) return;
+  ctx.addIssue({
+    code: "custom",
+    message: `Unknown Nebutra theme '${value}'. Use one of: ${[...BUILT_IN_THEME_IDS, "custom"].join(", ")}`,
+  });
+});
 
 export const ApiProtocolId = z.enum(["rest", "orpc", "trpc"]);
 

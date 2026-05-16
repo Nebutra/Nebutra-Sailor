@@ -16,6 +16,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@nebutra/theme": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {
