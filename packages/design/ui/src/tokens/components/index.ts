@@ -23,10 +23,15 @@ export { scrollerTokens } from "./scroller";
 export { type SelectSize, selectTokens } from "./select";
 export { type SheetSide, sheetSides, sheetTokens } from "./sheet";
 
-
 export { showMoreTokens } from "./show-more";
 export { sliderTokens } from "./slider";
-
+export {
+  type SpinnerSize,
+  type SpinnerTone,
+  spinnerSizes,
+  spinnerTokens,
+  spinnerTones,
+} from "./spinner";
 
 export { textareaTokens } from "./textarea";
 export { type ThemeToggleSize, themeToggleTokens } from "./theme-toggle";

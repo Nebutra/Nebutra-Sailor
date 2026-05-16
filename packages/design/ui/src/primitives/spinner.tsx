@@ -1,238 +1,15 @@
 "use client";
 
-import { LoaderCircle } from "@nebutra/icons";
-import type { ComponentProps } from "react";
+import type { ComponentProps, CSSProperties } from "react";
+
+import {
+  type SpinnerSize,
+  type SpinnerTone,
+  spinnerSizes,
+  spinnerTokens,
+  spinnerTones,
+} from "../tokens/components/spinner";
 import { cn } from "../utils/cn";
-
-// `ComponentProps<"svg">` is the JSX intrinsic type — equivalent to but more
-// precise than `SVGProps<SVGSVGElement>` for spreading onto raw <svg> elements.
-// Avoids cross-package React type duplication observed with `SVGProps`.
-type SpinnerBaseProps = ComponentProps<"svg"> & { size?: number | string };
-// Aliases preserved for back-compat with prior variants — both render LoaderCircle.
-const Loader = LoaderCircle;
-const LoaderPinwheel = LoaderCircle;
-
-type SpinnerVariantProps = Omit<SpinnerProps, "variant">;
-
-// Geist icons are exposed as ForwardRefExoticComponent from a separately-built
-// .d.ts; spreading raw SVGProps into them confuses TS's pnpm-symlinked React
-// types. We pass only the small surface Spinner needs (className, size, style,
-// title, aria-*) and forward the rest via `as` cast.
-const forwardIconProps = (props: SpinnerVariantProps): Record<string, unknown> =>
-  props as unknown as Record<string, unknown>;
-
-const Default = ({ className, ...props }: SpinnerVariantProps) => (
-  <Loader className={cn("animate-spin", className)} {...forwardIconProps(props)} />
-);
-
-const Circle = ({ className, ...props }: SpinnerVariantProps) => (
-  <LoaderCircle className={cn("animate-spin", className)} {...forwardIconProps(props)} />
-);
-
-const Pinwheel = ({ className, ...props }: SpinnerVariantProps) => (
-  <LoaderPinwheel className={cn("animate-spin", className)} {...forwardIconProps(props)} />
-);
-
-const CircleFilled = ({ className, size = 24, ...props }: SpinnerVariantProps) => (
-  <div className="relative" style={{ width: size, height: size }}>
-    <div className="absolute inset-0 rotate-180">
-      <LoaderCircle
-        className={cn("animate-spin text-foreground opacity-20", className)}
-        size={size}
-        {...forwardIconProps(props)}
-      />
-    </div>
-    <LoaderCircle
-      className={cn("relative animate-spin", className)}
-      size={size}
-      {...forwardIconProps(props)}
-    />
-  </div>
-);
-
-const Ellipsis = ({ size = 24, ...props }: SpinnerVariantProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      {...props}
-    >
-      <title>Loading...</title>
-      <circle cx="4" cy="12" r="2" fill="currentColor">
-        <animate
-          id="ellipsis1"
-          begin="0;ellipsis3.end+0.25s"
-          attributeName="cy"
-          calcMode="spline"
-          dur="0.6s"
-          values="12;6;12"
-          keySplines=".33,.66,.66,1;.33,0,.66,.33"
-        />
-      </circle>
-      <circle cx="12" cy="12" r="2" fill="currentColor">
-        <animate
-          begin="ellipsis1.begin+0.1s"
-          attributeName="cy"
-          calcMode="spline"
-          dur="0.6s"
-          values="12;6;12"
-          keySplines=".33,.66,.66,1;.33,0,.66,.33"
-        />
-      </circle>
-      <circle cx="20" cy="12" r="2" fill="currentColor">
-        <animate
-          id="ellipsis3"
-          begin="ellipsis1.begin+0.2s"
-          attributeName="cy"
-          calcMode="spline"
-          dur="0.6s"
-          values="12;6;12"
-          keySplines=".33,.66,.66,1;.33,0,.66,.33"
-        />
-      </circle>
-    </svg>
-  );
-};
-
-const Ring = ({ size = 24, ...props }: SpinnerVariantProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 44 44"
-    stroke="currentColor"
-    {...props}
-  >
-    <title>Loading...</title>
-    <g fill="none" fillRule="evenodd" strokeWidth="2">
-      <circle cx="22" cy="22" r="1">
-        <animate
-          attributeName="r"
-          begin="0s"
-          dur="1.8s"
-          values="1; 20"
-          calcMode="spline"
-          keyTimes="0; 1"
-          keySplines="0.165, 0.84, 0.44, 1"
-          repeatCount="indefinite"
-        />
-        <animate
-          attributeName="stroke-opacity"
-          begin="0s"
-          dur="1.8s"
-          values="1; 0"
-          calcMode="spline"
-          keyTimes="0; 1"
-          keySplines="0.3, 0.61, 0.355, 1"
-          repeatCount="indefinite"
-        />
-      </circle>
-      <circle cx="22" cy="22" r="1">
-        <animate
-          attributeName="r"
-          begin="-0.9s"
-          dur="1.8s"
-          values="1; 20"
-          calcMode="spline"
-          keyTimes="0; 1"
-          keySplines="0.165, 0.84, 0.44, 1"
-          repeatCount="indefinite"
-        />
-        <animate
-          attributeName="stroke-opacity"
-          begin="-0.9s"
-          dur="1.8s"
-          values="1; 0"
-          calcMode="spline"
-          keyTimes="0; 1"
-          keySplines="0.3, 0.61, 0.355, 1"
-          repeatCount="indefinite"
-        />
-      </circle>
-    </g>
-  </svg>
-);
-
-const Bars = ({ size = 24, ...props }: SpinnerVariantProps) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" {...props}>
-    <title>Loading...</title>
-    <style>{`
-      .spinner-bar {
-        animation: spinner-bars-animation .8s linear infinite;
-        animation-delay: -.8s;
-      }
-      .spinner-bars-2 {
-        animation-delay: -.65s;
-      }
-      .spinner-bars-3 {
-        animation-delay: -0.5s;
-      }
-      @keyframes spinner-bars-animation {
-        0% {
-          y: 1px;
-          height: 22px;
-        }
-        93.75% {
-          y: 5px;
-          height: 14px;
-          opacity: 0.2;
-        }
-      }
-    `}</style>
-    <rect className="spinner-bar" x="1" y="1" width="6" height="22" fill="currentColor" />
-    <rect
-      className="spinner-bar spinner-bars-2"
-      x="9"
-      y="1"
-      width="6"
-      height="22"
-      fill="currentColor"
-    />
-    <rect
-      className="spinner-bar spinner-bars-3"
-      x="17"
-      y="1"
-      width="6"
-      height="22"
-      fill="currentColor"
-    />
-  </svg>
-);
-
-const Infinite = ({ size = 24, ...props }: SpinnerVariantProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 100 100"
-    preserveAspectRatio="xMidYMid"
-    {...props}
-  >
-    <title>Loading...</title>
-    <path
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="10"
-      strokeDasharray="205.271142578125 51.317785644531256"
-      d="M24.3 30C11.4 30 5 43.3 5 50s6.4 20 19.3 20c19.3 0 32.1-40 51.4-40 C88.6 30 95 43.3 95 50s-6.4 20-19.3 20C56.4 70 43.6 30 24.3 30z"
-      strokeLinecap="round"
-      style={{
-        transform: "scale(0.8)",
-        transformOrigin: "50px 50px",
-      }}
-    >
-      <animate
-        attributeName="stroke-dashoffset"
-        repeatCount="indefinite"
-        dur="2s"
-        keyTimes="0;1"
-        values="0;256.58892822265625"
-      />
-    </path>
-  </svg>
-);
 
 export type SpinnerVariant =
   | "default"
@@ -244,69 +21,131 @@ export type SpinnerVariant =
   | "bars"
   | "infinite";
 
-/**
- * Props for the Spinner component
- */
-export interface SpinnerProps extends SpinnerBaseProps {
-  /** Spinner animation variant */
+type SpinnerCssVar =
+  | "--spinner-size"
+  | "--spinner-bar-width"
+  | "--spinner-bar-height"
+  | "--spinner-bar-left"
+  | "--spinner-bar-top"
+  | "--spinner-bar-translate"
+  | "--spinner-bar-radius"
+  | "--spinner-duration"
+  | "--spinner-easing";
+
+type SpinnerCssVars = CSSProperties & Record<SpinnerCssVar, string>;
+
+export interface SpinnerProps extends Omit<ComponentProps<"span">, "children" | "color" | "role"> {
+  /** Size token or explicit pixel size. Prefer tokens inside primitives. */
+  size?: SpinnerSize | number;
+  /** Semantic color tone. Use className only for local composition overrides. */
+  tone?: SpinnerTone;
+  /** Accessible status label. Omit when the parent already exposes aria-busy. */
+  label?: string;
+  /** Force decorative mode even when a label would otherwise announce status. */
+  decorative?: boolean;
+  /**
+   * @deprecated Spinner is intentionally a single canonical loading indicator.
+   * Legacy variants are accepted for source compatibility and render the same
+   * tokenized spinner.
+   */
   variant?: SpinnerVariant;
 }
 
-/**
- * Spinner - Multi-variant loading spinner
- *
- * A collection of animated spinner variants using Lucide icons
- * and custom SVG animations.
- *
- * @example Basic usage
- * ```tsx
- * <Spinner />
- * <Spinner variant="circle" />
- * ```
- *
- * @example Different variants
- * ```tsx
- * <Spinner variant="default" />      // Lucide Loader icon
- * <Spinner variant="circle" />       // Lucide LoaderCircle
- * <Spinner variant="pinwheel" />     // Lucide LoaderPinwheel
- * <Spinner variant="circle-filled" /> // Double circle
- * <Spinner variant="ellipsis" />     // Bouncing dots
- * <Spinner variant="ring" />         // Expanding rings
- * <Spinner variant="bars" />         // Animated bars
- * <Spinner variant="infinite" />     // Infinity symbol
- * ```
- *
- * @example Custom size and color
- * ```tsx
- * <Spinner size={32} className="text-primary" />
- * <Spinner variant="ring" size={48} className="text-blue-500" />
- * ```
- *
- * @example In a button
- * ```tsx
- * <Button disabled>
- *   <Spinner size={16} className="mr-2" />
- *   Loading...
- * </Button>
- * ```
- */
-export function Spinner({ variant = "default", ...props }: SpinnerProps) {
-  switch (variant) {
-    case "circle":
-      return <Circle {...props} />;
-    case "pinwheel":
-      return <Pinwheel {...props} />;
-    case "circle-filled":
-      return <CircleFilled {...props} />;
-    case "ellipsis":
-      return <Ellipsis {...props} />;
-    case "ring":
-      return <Ring {...props} />;
-    case "bars":
-      return <Bars {...props} />;
-    case "infinite":
-      return <Infinite {...props} />;
-    default:
-      return <Default {...props} />;
+function resolveSize(size: SpinnerProps["size"]) {
+  if (typeof size === "number") {
+    return `${size}px`;
   }
+
+  return `${spinnerSizes[size ?? spinnerTokens.defaultSize]}px`;
+}
+
+function getSpinnerStyle(size: SpinnerProps["size"], style: CSSProperties | undefined) {
+  return {
+    "--spinner-size": resolveSize(size),
+    "--spinner-bar-width": spinnerTokens.barWidth,
+    "--spinner-bar-height": spinnerTokens.barHeight,
+    "--spinner-bar-left": spinnerTokens.barLeft,
+    "--spinner-bar-top": spinnerTokens.barTop,
+    "--spinner-bar-translate": spinnerTokens.barTranslate,
+    "--spinner-bar-radius": `${spinnerTokens.barRadius}px`,
+    "--spinner-duration": `${spinnerTokens.motion.duration}ms`,
+    "--spinner-easing": spinnerTokens.motion.easing,
+    ...style,
+  } satisfies SpinnerCssVars;
+}
+
+function getBarOpacity(index: number) {
+  const fadeRange = spinnerTokens.opacity.max - spinnerTokens.opacity.min;
+  const progress = index / (spinnerTokens.barCount - 1);
+
+  return Number((spinnerTokens.opacity.min + fadeRange * progress).toFixed(2));
+}
+
+function getBarTransform(index: number) {
+  return `rotate(${index * (360 / spinnerTokens.barCount)}deg) translate(var(--spinner-bar-translate))`;
+}
+
+export function Spinner({
+  className,
+  style,
+  size,
+  tone = "default",
+  label,
+  decorative,
+  variant = "default",
+  "aria-label": ariaLabel,
+  ...props
+}: SpinnerProps) {
+  const accessibleLabel = ariaLabel ?? label;
+  const isDecorative = decorative ?? !accessibleLabel;
+  const accessibilityProps = isDecorative
+    ? ({ "aria-hidden": true } as const)
+    : ({
+        "aria-label": accessibleLabel,
+        "aria-live": "polite",
+        role: "status",
+      } as const);
+
+  return (
+    <span
+      data-slot="spinner"
+      data-variant={variant}
+      className={cn(
+        "relative inline-block shrink-0 align-[-0.125em]",
+        "[block-size:var(--spinner-size)] [inline-size:var(--spinner-size)]",
+        spinnerTones[tone],
+        className,
+      )}
+      style={getSpinnerStyle(size, style)}
+      {...accessibilityProps}
+      {...props}
+    >
+      <span
+        aria-hidden="true"
+        className={cn(
+          "absolute inset-0 origin-center",
+          "[animation:spin_var(--spinner-duration)_var(--spinner-easing)_infinite]",
+          "motion-reduce:animate-none",
+        )}
+      >
+        {Array.from({ length: spinnerTokens.barCount }, (_, index) => (
+          <span
+            key={index}
+            aria-hidden="true"
+            className={cn(
+              "absolute bg-current",
+              "h-[var(--spinner-bar-height)] w-[var(--spinner-bar-width)]",
+              "rounded-[var(--spinner-bar-radius)]",
+            )}
+            style={{
+              left: "calc(50% - var(--spinner-bar-left))",
+              opacity: getBarOpacity(index),
+              top: "calc(50% - var(--spinner-bar-top))",
+              transform: getBarTransform(index),
+            }}
+          />
+        ))}
+      </span>
+    </span>
+  );
 }

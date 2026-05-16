@@ -1,12 +1,11 @@
 ---
 title: Spinner
-description: Multi-variant loading spinner using Lucide icons and custom SVG animations. Accepts all LucideProps for size and color control.
+description: Indeterminate loading feedback for short, single-action waits.
 ---
 
 ## Demo
 
-<ComponentPreview name="spinner-demo"  />
-
+<ComponentPreview name="spinner-demo" />
 
 ## Usage
 
@@ -14,104 +13,77 @@ description: Multi-variant loading spinner using Lucide icons and custom SVG ani
 import { Spinner } from "@nebutra/ui";
 
 <Spinner />
-<Spinner variant="ring" size={32} />
-<Spinner variant="infinite" className="text-primary" />
+<Spinner size="sm" />
+<Spinner label="Verifying deployment" />
 ```
 
-## Variants
+## Design Contract
 
-### Default
+`Spinner` is intentionally a single canonical loader. It indicates an action is
+running without implying progress. The component renders a 12-segment
+`currentColor` indicator, uses component motion tokens, and stops motion through
+`prefers-reduced-motion`.
 
-Lucide `Loader` icon with spin animation — the classic dashed circle.
+Legacy `variant` values are still accepted so older call sites do not break, but
+they render the same spinner. Use copy and context to differentiate work, not a
+different animation.
+
+## Size
+
+Use size tokens for system surfaces and numeric sizes only when matching a
+specific adjacent icon.
 
 ```tsx
-<Spinner variant="default" />
+<Spinner size="xs" />
+<Spinner size="sm" />
+<Spinner size="md" />
+<Spinner size="lg" />
+<Spinner size={32} />
 ```
 
-### Circle
+## Tone
 
-Lucide `LoaderCircle` icon — solid arc spinner.
+Tone maps to semantic text color.
 
 ```tsx
-<Spinner variant="circle" />
+<Spinner tone="default" />
+<Spinner tone="foreground" />
+<Spinner tone="inverse" />
 ```
 
-### Pinwheel
+## In a Button
 
-Lucide `LoaderPinwheel` icon — pinwheel rotation.
-
-```tsx
-<Spinner variant="pinwheel" />
-```
-
-### Circle Filled
-
-Two overlapping `LoaderCircle` icons with offset opacity — creates a depth effect.
+For submit buttons, use `Button`'s loading state so sizing, disabled state, and
+busy affordance stay aligned.
 
 ```tsx
-<Spinner variant="circle-filled" />
-```
-
-### Ellipsis
-
-Three dots that bounce up sequentially using native SVG `<animate>`.
-
-```tsx
-<Spinner variant="ellipsis" />
-```
-
-### Ring
-
-Expanding ring pulses radiating outward — like a sonar ping.
-
-```tsx
-<Spinner variant="ring" />
-```
-
-### Bars
-
-Three vertical bars that scale in sequence — audio visualizer style.
-
-```tsx
-<Spinner variant="bars" />
-```
-
-### Infinite
-
-Animated infinity symbol traced with a dashed stroke.
-
-```tsx
-<Spinner variant="infinite" />
-```
-
-## Size and Color
-
-`Spinner` extends `LucideProps`, so `size` and `className` control dimensions and color:
-
-```tsx
-<Spinner size={16} className="mr-2 text-white" />
-<Spinner variant="ring" size={48} className="text-blue-500" />
-```
-
-### In a Button
-
-```tsx
-<button disabled className="flex items-center gap-2 px-4 py-2">
-  <Spinner size={16} />
-  Saving...
-</button>
+<Button loading>Saving changes</Button>
 ```
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `"default" \| "circle" \| "pinwheel" \| "circle-filled" \| "ellipsis" \| "ring" \| "bars" \| "infinite"` | `"default"` | Spinner animation style |
-| `size` | `number \| string` | `24` | Width and height in pixels (from `LucideProps`) |
-| `className` | `string` | — | Tailwind classes — use `text-*` to control color |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| number` | `"md"` | Spinner size token or explicit pixel size |
+| `tone` | `"default" \| "foreground" \| "inverse"` | `"default"` | Semantic color tone |
+| `label` | `string` | — | Accessible status label for standalone use |
+| `decorative` | `boolean` | inferred | Forces decorative mode when the parent already exposes busy state |
+| `variant` | legacy union | `"default"` | Deprecated compatibility prop; all variants render the same spinner |
 
-## Notes
+## Best Practices
 
-- `Spinner` uses `currentColor` for all custom SVG variants — color is controlled via `text-*` Tailwind classes.
-- The `ellipsis`, `ring`, `bars`, and `infinite` variants use native SVG `<animate>` elements, which respect `prefers-reduced-motion` in browsers that support it.
-- For text-based loading indicators (e.g., "Thinking..."), use the `Loader` component's `text-shimmer` or `loading-dots` variants instead.
+Use a Spinner for indeterminate, single-action waits of roughly one to three
+seconds: submit buttons, inline refresh, row-level retry, pagination changes.
+
+Pick Skeleton when async data fills a known layout, LoadingDots for inline copy,
+and Progress when total work is known.
+
+Mount the Spinner only after the action starts. Pre-rendering and toggling
+visibility can leave a partial rotation visible at idle.
+
+Pair any wait longer than about one second with copy that names the work:
+`Verifying...`, `Deploying...`, `Retrying...`.
+
+Set `aria-busy="true"` on the element wrapping the in-flight action. When the
+spinner is standalone, pass `label`; otherwise leave it decorative so screen
+readers do not announce duplicate loading text.

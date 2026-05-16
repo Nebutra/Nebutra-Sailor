@@ -1,118 +1,82 @@
 ---
 title: 加载动画 (Spinner)
-description: 多变体加载动画，使用 Lucide 图标和自定义 SVG 动画实现。支持全部 LucideProps 属性以控制尺寸和颜色。
+description: 用于短时、单个动作等待的非确定性加载反馈。
 ---
 
-## 演示 (Demo)
+## 演示
 
-<ComponentPreview name="spinner-demo"  />
+<ComponentPreview name="spinner-demo" />
 
-
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Spinner } from "@nebutra/ui";
 
 <Spinner />
-<Spinner variant="ring" size={32} />
-<Spinner variant="infinite" className="text-primary" />
+<Spinner size="sm" />
+<Spinner label="正在验证部署" />
 ```
 
-## 变体 (Variants)
+## 设计契约
 
-### 默认 (Default)
+`Spinner` 是单一规范加载指示器。它只表达“动作正在进行”，不表达进度。
+组件渲染 12 段 `currentColor` 指示器，动画走 component motion token，并遵守
+`prefers-reduced-motion`。
 
-Lucide `Loader` 图标配合旋转动画 —— 经典的虚线圆圈。
+旧的 `variant` 值仍被接受，避免历史调用立刻失效，但所有 variant 都渲染为同一个
+Spinner。区分不同任务应依赖上下文文案，而不是换一种动画。
+
+## 尺寸
+
+系统界面优先使用尺寸 token；只有需要贴合相邻图标时才传数字尺寸。
 
 ```tsx
-<Spinner variant="default" />
+<Spinner size="xs" />
+<Spinner size="sm" />
+<Spinner size="md" />
+<Spinner size="lg" />
+<Spinner size={32} />
 ```
 
-### 圆环 (Circle)
+## 色调
 
-Lucide `LoaderCircle` 图标 —— 实线弧形旋转动画。
+`tone` 映射到语义文本色。
 
 ```tsx
-<Spinner variant="circle" />
+<Spinner tone="default" />
+<Spinner tone="foreground" />
+<Spinner tone="inverse" />
 ```
 
-### 风车 (Pinwheel)
+## 在 Button 中使用
 
-Lucide `LoaderPinwheel` 图标 —— 风车式旋转。
+提交按钮应使用 `Button` 的 `loading` 状态，让尺寸、禁用态和 busy 反馈保持一致。
 
 ```tsx
-<Spinner variant="pinwheel" />
+<Button loading>保存更改</Button>
 ```
 
-### 实心圆环 (Circle Filled)
+## 属性
 
-由两个重叠的 `LoaderCircle` 图标组成，带有不透明度偏移 —— 营造出深度感。
-
-```tsx
-<Spinner variant="circle-filled" />
-```
-
-### 省略点 (Ellipsis)
-
-三个依次弹跳的圆点，使用原生 SVG `<animate>` 实现。
-
-```tsx
-<Spinner variant="ellipsis" />
-```
-
-### 光圈 (Ring)
-
-向外扩散的脉冲光轮 —— 类似声纳探测波。
-
-```tsx
-<Spinner variant="ring" />
-```
-
-### 柱状图 (Bars)
-
-三个依次缩放的垂直条柱 —— 音频可视化器风格。
-
-```tsx
-<Spinner variant="bars" />
-```
-
-### 无限 (Infinite)
-
-带有虚线描边的动态无限符号。
-
-```tsx
-<Spinner variant="infinite" />
-```
-
-## 尺寸与颜色 (Size and Color)
-
-`Spinner` 继承自 `LucideProps`，因此可以通过 `size` 和 `className` 控制维度和颜色：
-
-```tsx
-<Spinner size={16} className="mr-2 text-white" />
-<Spinner variant="ring" size={48} className="text-blue-500" />
-```
-
-### 在按钮中使用 (In a Button)
-
-```tsx
-<button disabled className="flex items-center gap-2 px-4 py-2">
-  <Spinner size={16} />
-  正在保存... (Saving...)
-</button>
-```
-
-## 属性 (Props)
-
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `variant` | `"default" \| "circle" \| "pinwheel" \| "circle-filled" \| "ellipsis" \| "ring" \| "bars" \| "infinite"` | `"default"` | 加载动画风格 |
-| `size` | `number \| string` | `24` | 宽度和高度（像素值，源自 `LucideProps`） |
-| `className` | `string` | — | Tailwind 类名 —— 使用 `text-*` 来控制颜色 |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| number` | `"md"` | Spinner 尺寸 token 或明确像素值 |
+| `tone` | `"default" \| "foreground" \| "inverse"` | `"default"` | 语义色调 |
+| `label` | `string` | — | 独立使用时的可访问状态名称 |
+| `decorative` | `boolean` | 自动推断 | 当父级已经暴露 busy 状态时，强制作为装饰元素 |
+| `variant` | legacy union | `"default"` | 已废弃兼容属性；所有 variant 渲染一致 |
 
-## 注意事项 (Notes)
+## 最佳实践
 
-- `Spinner` 的所有自定义 SVG 变体均使用 `currentColor` —— 颜色由 Tailwind 的 `text-*` 类名控制。
-- `ellipsis`、`ring`、`bars` 以及 `infinite` 变体使用了原生的 SVG `<animate>` 元素，在支持该属性的浏览器中会遵循系统的“减弱动画”偏好设置。
-- 对于纯文本形式的加载指示器（例如“思考中...”），请改用 `Loader` 组件的 `text-shimmer` 或 `loading-dots` 变体。
-走
+Spinner 用于约一到三秒的单动作等待：提交按钮、行内刷新、行级重试、分页切换。
+
+已知布局的数据加载使用 Skeleton；行内文字等待使用 LoadingDots；已知总量的工作使用
+Progress。
+
+动作真正开始后再挂载 Spinner。预先渲染后只切换可见性，会让静止时残留半截旋转状态。
+
+超过约一秒的等待需要配合说明当前任务的文案：`正在验证...`、`正在部署...`、
+`正在重试...`。
+
+在执行中的区域外层设置 `aria-busy="true"`。Spinner 独立出现时传 `label`；如果父级已经有
+busy 状态，则保持装饰模式，避免屏幕阅读器重复播报。
