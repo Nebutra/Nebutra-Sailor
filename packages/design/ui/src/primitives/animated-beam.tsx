@@ -225,11 +225,7 @@ export function AnimatedBeam({
           transition={{
             delay,
             duration: beamDuration,
-            // framer-motion v12 typed `ease` as Easing | EasingFunction tuples
-            // — accept the cubic-bezier() string token at runtime, mute the
-            // type check (CSS-side consumers still use the same value).
-            // biome-ignore lint/suspicious/noExplicitAny: framer-motion Easing union narrows incorrectly for cubic-bezier() string literals.
-            ease: animatedBeamTokens.beam.easing as any,
+            ease: animatedBeamTokens.beam.easing,
             repeat: Infinity,
             repeatDelay: 0,
           }}

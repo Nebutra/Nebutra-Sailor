@@ -5,6 +5,7 @@
  * should choose tone/intensity before reaching for raw SVG paint overrides.
  */
 
+import { easings } from "../motion";
 import { primitiveTransition } from "../primitive";
 
 export type AnimatedBeamTone = "neutral" | "brand" | "success" | "warning";
@@ -26,7 +27,7 @@ export const animatedBeamTokens = {
       strong: 2.5,
     },
     duration: primitiveTransition.duration.cinematic * 8, // 4000ms
-    easing: primitiveTransition.easing.inOut,
+    easing: easings.easeInOut,
   },
   tone: {
     neutral: {
