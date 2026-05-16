@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "node -e \"const fs=require('node:fs'),src='../design-tokens/build/css/styles.generated.css';if(fs.existsSync(src)){fs.copyFileSync(src,'./styles.css');console.log('styles.css refreshed from @nebutra/design-tokens')}else{console.log('styles.css kept (committed copy used; design-tokens build/ absent — likely Turbo cache restore without files)')}\"",
-    "sync": "pnpm --filter @nebutra/design-tokens build && node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/styles.generated.css', './styles.css')\"",
+    "sync": "corepack pnpm --filter @nebutra/design-tokens build && node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/styles.generated.css', './styles.css')\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

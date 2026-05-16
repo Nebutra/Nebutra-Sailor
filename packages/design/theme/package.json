@@ -8,12 +8,15 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./registry": "./src/registry.ts",
+    "./registry.json": "./src/registry.json",
     "./themes.css": "./themes.css"
   },
   "scripts": {
-    "prebuild": "pnpm --filter @nebutra/design-tokens build",
+    "prebuild": "corepack pnpm --filter @nebutra/design-tokens build",
     "build": "node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/themes.generated.css', './themes.css'); console.log('themes.css regenerated from @nebutra/design-tokens')\"",
-    "sync": "pnpm --filter @nebutra/design-tokens build && node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/themes.generated.css', './themes.css')\"",
+    "sync": "corepack pnpm --filter @nebutra/design-tokens build && node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/themes.generated.css', './themes.css')\"",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -21,7 +24,8 @@
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "react": "^19"

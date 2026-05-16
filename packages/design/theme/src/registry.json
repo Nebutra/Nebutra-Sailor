@@ -1,0 +1,199 @@
+{
+  "$schema": "https://nebutra.com/schemas/theme-registry.json",
+  "version": "2026.05",
+  "defaultTheme": "neon",
+  "themes": [
+    {
+      "id": "neon",
+      "name": "Neon",
+      "category": "ai-native",
+      "mood": "AI SaaS default - dark, electric, high contrast",
+      "tokenPath": "tokens/themes/neon.json",
+      "install": {
+        "command": "nebutra theme add neon",
+        "registryUrl": "https://ui.nebutra.com/themes/neon.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "gradient",
+      "name": "Gradient",
+      "category": "marketing",
+      "mood": "Growth and marketing - bright, polished, conversion-oriented",
+      "tokenPath": "tokens/themes/gradient.json",
+      "install": {
+        "command": "nebutra theme add gradient",
+        "registryUrl": "https://ui.nebutra.com/themes/gradient.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "dark-dense",
+      "name": "Dark Dense",
+      "category": "pro-tools",
+      "mood": "Dense operator surfaces - dark, compact, low distraction",
+      "tokenPath": "tokens/themes/dark-dense.json",
+      "install": {
+        "command": "nebutra theme add dark-dense",
+        "registryUrl": "https://ui.nebutra.com/themes/dark-dense.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "minimal",
+      "name": "Minimal",
+      "category": "productivity",
+      "mood": "Document and workspace apps - neutral, calm, readable",
+      "tokenPath": "tokens/themes/minimal.json",
+      "install": {
+        "command": "nebutra theme add minimal",
+        "registryUrl": "https://ui.nebutra.com/themes/minimal.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "vibrant",
+      "name": "Vibrant",
+      "category": "creative",
+      "mood": "Creator and consumer surfaces - saturated, expressive, energetic",
+      "tokenPath": "tokens/themes/vibrant.json",
+      "install": {
+        "command": "nebutra theme add vibrant",
+        "registryUrl": "https://ui.nebutra.com/themes/vibrant.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "ocean",
+      "name": "Ocean",
+      "category": "enterprise",
+      "mood": "B2B infrastructure and finance - cool, stable, trustworthy",
+      "tokenPath": "tokens/themes/ocean.json",
+      "install": {
+        "command": "nebutra theme add ocean",
+        "registryUrl": "https://ui.nebutra.com/themes/ocean.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    }
+  ]
+}

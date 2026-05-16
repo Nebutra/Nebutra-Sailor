@@ -35,6 +35,9 @@
     "lg": { "$value": "0.75rem", "$type": "dimension" },
     "xl": { "$value": "1rem", "$type": "dimension" }
   },
+  "fontFamily": {
+    "sans": { "$value": "\"Inter\", ui-sans-serif, system-ui, sans-serif", "$type": "fontFamily" }
+  },
   "shadow": {
     "sm": { "$value": "0 1px 2px 0 rgb(0 0 0 / 0.05)", "$type": "shadow" },
     "md": { "$value": "0 4px 6px -1px rgb(0 0 0 / 0.1)", "$type": "shadow" },

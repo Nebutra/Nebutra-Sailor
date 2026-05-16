@@ -65,8 +65,6 @@
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-
 /* ─── gradient theme ─── */
 /**
  * @nebutra/design-tokens — generated from W3C DTCG tokens.
@@ -97,13 +95,12 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
 }
-
-
 /* ─── dark-dense theme ─── */
 /**
  * @nebutra/design-tokens — generated from W3C DTCG tokens.
@@ -137,8 +134,6 @@
   --font-sans: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
   --font-heading: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 }
-
-
 /* ─── minimal theme ─── */
 /**
  * @nebutra/design-tokens — generated from W3C DTCG tokens.
@@ -169,14 +164,13 @@
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-heading: "Playfair Display", ui-serif, Georgia, serif;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.03);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.07);
 }
-
-
 /* ─── vibrant theme ─── */
 /**
  * @nebutra/design-tokens — generated from W3C DTCG tokens.
@@ -214,8 +208,6 @@
   --shadow-lg: 0 10px 15px -3px rgb(249 115 22 / 0.15);
   --shadow-xl: 0 20px 25px -5px rgb(249 115 22 / 0.15);
 }
-
-
 /* ─── ocean theme ─── */
 /**
  * @nebutra/design-tokens — generated from W3C DTCG tokens.
@@ -246,13 +238,12 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --shadow-sm: 0 1px 2px 0 rgb(8 145 178 / 0.08);
   --shadow-md: 0 4px 6px -1px rgb(8 145 178 / 0.12);
   --shadow-lg: 0 10px 15px -3px rgb(8 145 178 / 0.12);
   --shadow-xl: 0 20px 25px -5px rgb(8 145 178 / 0.12);
 }
-
-
 /* ─── Shared Keyframe Animations ─── */
 /*
  * These keyframes are shared across all apps that import this file.

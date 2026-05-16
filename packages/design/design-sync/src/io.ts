@@ -125,7 +125,7 @@ export async function writeTokenSet(tokensDir: string, set: DesignTokenSet): Pro
  * Default tokens directory for the Nebutra-Sailor monorepo.
  */
 export function defaultTokensDir(cwd: string = process.cwd()): string {
-  return join(cwd, "packages", "design-tokens", "tokens");
+  return join(cwd, "packages", "design", "design-tokens", "tokens");
 }
 
 /**

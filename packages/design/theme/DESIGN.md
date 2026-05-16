@@ -7,7 +7,7 @@
 |------|------|
 | Package | `@nebutra/theme` |
 | Status | Stable — 6 themes shipped, more allowed via governance |
-| Source file | `packages/design/theme/themes.css` |
+| Source files | `packages/design/theme/src/registry.json` and generated `packages/design/theme/themes.css` |
 | Activation | `[data-theme="…"]` attribute on `<html>` |
 | Default theme | `neon` (no `data-theme` attribute) |
 
@@ -18,6 +18,10 @@
 A **product feature**: the SaaS preset system (`@nebutra/preset`) lets end customers and self-hosters choose a theme that matches their product mood. Switching is CSS-only (no JS rebuild) — token values are overridden per `[data-theme]` selector.
 
 **Boundary**: this package is for the multi-theme product feature. For light/dark of the *base* `neon` look, use `class="dark"` from `next-themes`. The two systems compose.
+
+The theme catalogue is governed through `src/registry.json`. Consumers must import from
+`@nebutra/theme/registry` instead of copying theme names. The Style Dictionary pipeline,
+`@nebutra/preset`, CLI commands, docs, and future Figma/playground publishing all use this registry.
 
 ---
 
@@ -119,11 +123,13 @@ function ThemeSwitch() {
 
 ### 3.3 Adding a new theme
 
-1. Append a new `[data-theme="my-theme"] { --color-…: oklch(…); }` block to `themes.css`.
-2. Provide values for every token defined in §2.
-3. Validate: `pnpm tsx scripts/validate-ui-governance-policy.ts`.
-4. Add a Storybook entry under **Foundation/Themes/My Theme**.
-5. Open a PR; design-system maintainer reviews perceptual coherence (color contrast on real components).
+1. Add the DTCG file under `packages/design/design-tokens/tokens/themes/my-theme.json`.
+2. Add the registry entry to `packages/design/theme/src/registry.json`.
+3. Provide every token defined in §2.
+4. Run `pnpm --filter @nebutra/design-tokens build` to regenerate theme CSS.
+5. Validate with theme tests, preset tests, and the CLI smoke checks.
+6. Add the playground/Storybook visual entry before publishing the theme.
+7. Open a PR; design-system maintainer reviews perceptual coherence, contrast, and component coverage.
 
 ---
 
@@ -133,7 +139,8 @@ function ThemeSwitch() {
 @import "@nebutra/theme/themes.css";
 ```
 
-Themes do not export TS — they are pure CSS. Theme names are hard-coded strings; consider adding a TS enum if multi-theme switching becomes user-facing in shared components.
+Themes are CSS at runtime, but their catalogue metadata is exported from `@nebutra/theme/registry`.
+Theme names are registry-derived; do not introduce new handwritten enums.
 
 ### Forbidden
 
@@ -175,7 +182,12 @@ Themes that define their own background/foreground supersede the `.dark` overrid
 ### Governance scripts
 
 ```bash
+pnpm --filter @nebutra/theme test
 pnpm --filter @nebutra/theme typecheck
+pnpm --filter @nebutra/design-tokens build
+pnpm --filter @nebutra/preset test
+pnpm --filter nebutra build
+node packages/ops/cli/dist/index.js theme list --format json
 pnpm tsx scripts/validate-ui-governance-policy.ts
 ```
 
@@ -183,7 +195,6 @@ pnpm tsx scripts/validate-ui-governance-policy.ts
 
 ## 7. Open questions / review notes
 
-- A **TS enum / union type** of theme names should be exported from `@nebutra/theme` so app code (`<ThemeProvider themes={…}>`) and theme switchers stay in sync. Currently the names are duplicated as string literals.
 - Per-theme oklch tables are not enumerated here to avoid duplicating `themes.css`. Storybook's Foundation/Themes panel is the canonical visual reference — add it if missing.
 
 ---

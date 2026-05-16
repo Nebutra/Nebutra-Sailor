@@ -1,10 +1,20 @@
 // packages/design/theme/src/index.ts
-// Re-export next-themes for convenience — all apps import from @nebutra/theme
+// Re-export next-themes for convenience — all apps import from @nebutra/theme.
+// Theme catalog metadata lives in ./registry so CLI/preset/docs/Figma sync all
+// discover the same built-in theme contract.
 
 export type { ThemeProviderProps } from "next-themes";
 export { ThemeProvider, useTheme } from "next-themes";
 
-// Theme IDs must match [data-theme] selectors in themes.css
-export const THEME_IDS = ["neon", "gradient", "dark-dense", "minimal", "vibrant", "ocean"] as const;
-
-export type ThemeId = (typeof THEME_IDS)[number];
+export {
+  BUILT_IN_THEME_IDS,
+  DEFAULT_THEME,
+  getThemeById,
+  isBuiltInThemeId,
+  isThemeId,
+  THEME_IDS,
+  THEME_REGISTRY,
+  type ThemeId,
+  type ThemeRegistry,
+  type ThemeRegistryEntry,
+} from "./registry";

@@ -36,6 +36,7 @@
     "xl": { "$value": "0.75rem", "$type": "dimension" }
   },
   "fontFamily": {
+    "sans": { "$value": "\"Inter\", ui-sans-serif, system-ui, sans-serif", "$type": "fontFamily" },
     "heading": { "$value": "\"Playfair Display\", ui-serif, Georgia, serif", "$type": "fontFamily" }
   },
   "shadow": {

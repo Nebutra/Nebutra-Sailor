@@ -19,10 +19,14 @@
  * Reference: https://styledictionary.com/reference/config/
  */
 
+import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import StyleDictionary from "style-dictionary";
 
-const MULTI_THEMES = ["neon", "gradient", "dark-dense", "minimal", "vibrant", "ocean"];
+const themeRegistry = JSON.parse(
+  await readFile(new URL("../theme/src/registry.json", import.meta.url), "utf8"),
+);
+const MULTI_THEMES = themeRegistry.themes.map((theme) => theme.id);
 
 /**
  * Custom CSS variable namer.
@@ -115,6 +119,79 @@ StyleDictionary.registerTransform({
 
 const filterSkipped = (token) => !token.name?.startsWith("__skip__");
 
+function* walkTokenLeaves(node, path = []) {
+  if (node === null || typeof node !== "object") return;
+  if ("$value" in node) {
+    yield { path, leaf: node };
+    return;
+  }
+  for (const [key, child] of Object.entries(node)) {
+    if (key.startsWith("$")) continue;
+    yield* walkTokenLeaves(child, [...path, key]);
+  }
+}
+
+function nameForTransform(path, nameTransform) {
+  const token = { path };
+  return nameTransform === "name/nebutra/css/multi-theme"
+    ? multiThemeName(token)
+    : pathToCssVarName(token);
+}
+
+function toPascalName(path) {
+  return path
+    .flatMap((part) => String(part).split(/[-_\s]+/u))
+    .filter(Boolean)
+    .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+    .join("");
+}
+
+function tokenSourceKey(token, sources) {
+  const filePath = String(token.filePath ?? "").replace(/\\/gu, "/");
+  return sources.find((source) => filePath.endsWith(source));
+}
+
+function skipName(token, sourceKey) {
+  const source = String(sourceKey ?? "unknown").replace(/[^a-z0-9]+/giu, "-");
+  return `__skip__${source}-${token.path.join("-")}`;
+}
+
+function registerLayeredNameTransform({ name, sources, nameForPath }) {
+  const canonicalKeyByName = new Map();
+  const canonicalPathByName = new Map();
+
+  for (const source of sources) {
+    const tokens = JSON.parse(readFileSync(source, "utf8"));
+    for (const { path } of walkTokenLeaves(tokens)) {
+      const tokenName = nameForPath(path);
+      if (!tokenName) continue;
+      const pathKey = path.join(".");
+      canonicalKeyByName.set(tokenName, `${source}::${pathKey}`);
+      canonicalPathByName.set(tokenName, pathKey);
+    }
+  }
+
+  StyleDictionary.registerTransform({
+    name,
+    type: "name",
+    transform: (token) => {
+      const tokenName = nameForPath(token.path);
+      const sourceKey = tokenSourceKey(token, sources);
+      if (!tokenName) return skipName(token, sourceKey);
+
+      const pathKey = token.path.join(".");
+      const tokenKey = sourceKey ? `${sourceKey}::${pathKey}` : undefined;
+      const isCanonical = tokenKey
+        ? canonicalKeyByName.get(tokenName) === tokenKey
+        : canonicalPathByName.get(tokenName) === pathKey;
+
+      return isCanonical ? tokenName : skipName(token, sourceKey);
+    },
+  });
+
+  return name;
+}
+
 StyleDictionary.registerTransform({
   name: "color/nebutra/passthrough",
   type: "value",
@@ -132,75 +209,87 @@ StyleDictionary.registerTransform({
   transform: (token) => token.$value ?? token.value,
 });
 
-const buildMode = ({
-  mode,
-  selector,
-  sources,
-  outputFile,
-  nameTransform = "name/nebutra/css",
-}) => ({
-  log: { verbosity: "default", warnings: "warn" },
-  preprocessors: ["tokens-studio"],
-  source: sources,
-  platforms: {
-    css: {
-      transforms: [
-        "attribute/cti",
-        "color/nebutra/passthrough",
-        "string/nebutra/passthrough",
-        nameTransform,
-      ],
-      buildPath: "build/css/",
-      options: { usesDtcg: true },
-      files: [
-        {
-          destination: outputFile,
-          format: "css/variables",
-          filter: filterSkipped,
-          options: {
-            selector,
-            outputReferences: false,
-            fileHeader: () => [
-              "@nebutra/design-tokens — generated from W3C DTCG tokens.",
-              "DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.",
-            ],
+const buildMode = ({ mode, selector, sources, outputFile, nameTransform = "name/nebutra/css" }) => {
+  const cssNameTransform = registerLayeredNameTransform({
+    name: `${nameTransform}/${mode}/layered`,
+    sources,
+    nameForPath: (path) => nameForTransform(path, nameTransform),
+  });
+  const tsNameTransform = registerLayeredNameTransform({
+    name: `name/nebutra/pascal/${mode}/layered`,
+    sources,
+    nameForPath: toPascalName,
+  });
+
+  return {
+    log: { verbosity: "default", warnings: "error" },
+    preprocessors: ["tokens-studio"],
+    include: sources.slice(0, -1),
+    source: sources.slice(-1),
+    platforms: {
+      css: {
+        transforms: [
+          "attribute/cti",
+          "color/nebutra/passthrough",
+          "string/nebutra/passthrough",
+          cssNameTransform,
+        ],
+        buildPath: "build/css/",
+        options: { usesDtcg: true },
+        files: [
+          {
+            destination: outputFile,
+            format: "css/variables",
+            filter: filterSkipped,
+            options: {
+              selector,
+              outputReferences: false,
+              fileHeader: () => [
+                "@nebutra/design-tokens — generated from W3C DTCG tokens.",
+                "DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.",
+              ],
+            },
           },
-        },
-      ],
+        ],
+      },
+      ts: {
+        transforms: [
+          "attribute/cti",
+          "color/nebutra/passthrough",
+          "string/nebutra/passthrough",
+          tsNameTransform,
+        ],
+        buildPath: "build/ts/",
+        options: { usesDtcg: true },
+        files: [
+          { destination: `${mode}.ts`, format: "javascript/es6", filter: filterSkipped },
+          {
+            destination: `${mode}.d.ts`,
+            format: "typescript/es6-declarations",
+            filter: filterSkipped,
+          },
+        ],
+      },
+      tailwind: {
+        transforms: [
+          "attribute/cti",
+          "color/nebutra/passthrough",
+          "string/nebutra/passthrough",
+          cssNameTransform,
+        ],
+        buildPath: "build/tailwind/",
+        options: { usesDtcg: true },
+        files: [
+          {
+            destination: `${mode}.preset.cjs`,
+            format: "javascript/module-flat",
+            filter: filterSkipped,
+          },
+        ],
+      },
     },
-    ts: {
-      transforms: [
-        "attribute/cti",
-        "color/nebutra/passthrough",
-        "string/nebutra/passthrough",
-        "name/pascal",
-      ],
-      buildPath: "build/ts/",
-      options: { usesDtcg: true },
-      files: [
-        { destination: `${mode}.ts`, format: "javascript/es6" },
-        { destination: `${mode}.d.ts`, format: "typescript/es6-declarations" },
-      ],
-    },
-    tailwind: {
-      transforms: [
-        "attribute/cti",
-        "color/nebutra/passthrough",
-        "string/nebutra/passthrough",
-        nameTransform,
-      ],
-      buildPath: "build/tailwind/",
-      options: { usesDtcg: true },
-      files: [
-        {
-          destination: `${mode}.preset.cjs`,
-          format: "javascript/module-flat",
-          filter: filterSkipped,
-        },
-      ],
-    },
-  },
-});
+  };
+};
 
 const configs = [
   buildMode({
@@ -666,7 +755,7 @@ await writeFile("build/css/styles.generated.css", stylesCombined, "utf8");
 // Concatenates all multi-theme files with their data-theme selectors.
 const themeFiles = await Promise.all(
   MULTI_THEMES.map(async (name) => {
-    const css = await readFile(`build/css/${name}.css`, "utf8");
+    const css = (await readFile(`build/css/${name}.css`, "utf8")).trimEnd();
     return `/* ─── ${name} theme ─── */\n${css}`;
   }),
 );
@@ -689,7 +778,7 @@ const themesHeader = `/**
 
 `;
 const themesBaseCss = await readFile("static/themes-base.css", "utf8");
-const themesCombined = `${themesHeader}${themeFiles.join("\n\n")}\n\n${themesBaseCss}`;
+const themesCombined = `${themesHeader}${themeFiles.join("\n")}\n${themesBaseCss}`;
 await writeFile("build/css/themes.generated.css", themesCombined, "utf8");
 
 process.stdout.write(
