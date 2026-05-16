@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroller-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/scroller-demo.tsx",
+      "content": "import { Scroller } from \"@nebutra/ui/primitives\";\nimport type { ReactNode } from \"react\";\n\nconst items = Array.from({ length: 6 }, (_, index) => index + 1);\n\nfunction Tile({ children }: { children: ReactNode }) {\n  return (\n    <div className=\"grid h-[var(--scroller-demo-tile-height)] w-[var(--scroller-demo-tile-width)] shrink-0 place-items-center rounded-[var(--radius-md)] border border-border bg-muted text-foreground text-sm\">\n      {children}\n    </div>\n  );\n}\n\nexport function ScrollerDemo() {\n  return (\n    <div className=\"w-full max-w-[var(--scroller-demo-width)] [--scroller-demo-tile-height:128px] [--scroller-demo-tile-width:180px] [--scroller-demo-width:520px]\">\n      <Scroller\n        contentLabel=\"customer logos\"\n        height={180}\n        overflow=\"x\"\n        width=\"100%\"\n        withButtons\n        childrenContainerClassName=\"gap-4\"\n      >\n        {items.map((item) => (\n          <Tile key={item}>Item {item}</Tile>\n        ))}\n      </Scroller>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

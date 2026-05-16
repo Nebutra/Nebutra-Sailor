@@ -912,6 +912,10 @@
       "type": "registry:example"
     },
     {
+      "name": "scroller-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "search-tool-demo",
       "type": "registry:example"
     },

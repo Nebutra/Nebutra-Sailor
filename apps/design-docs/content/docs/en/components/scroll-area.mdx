@@ -1,6 +1,6 @@
 ---
 title: "Scroll Area"
-description: "Custom scrollable container with styled scrollbars, built on Radix UI."
+description: "Legacy docs helper for custom scrollbar examples."
 ---
 
 import React from "react"
@@ -9,11 +9,15 @@ import React from "react"
 
 <ComponentPreview name="scroll-area-demo" className="min-h-[350px] flex items-center justify-center" />
 
+<DeprecatedBanner />
+
+`ScrollArea` remains as a documentation compatibility helper. Use `Scroller` for peer-item
+overflow rails, feeds, snippets, and button-assisted scrolling.
 
 ## Usage
 
 ```tsx
-import { ScrollArea, ScrollBar } from "@nebutra/ui/primitives"
+import { ScrollArea, ScrollBar } from "@/components/mdx-scroll-area"
 ```
 
 ## Props
@@ -22,8 +26,6 @@ import { ScrollArea, ScrollBar } from "@nebutra/ui/primitives"
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `type` | `"auto" \| "always" \| "scroll" \| "hover"` | `"hover"` | When to show the scrollbar |
-| `scrollHideDelay` | `number` | `600` | Delay in ms before hiding scroll bar |
 | `className` | `string` | — | Additional CSS classes |
 | `children` | `ReactNode` | — | Scrollable content |
 

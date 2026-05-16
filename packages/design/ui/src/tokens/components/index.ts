@@ -18,5 +18,6 @@ export { type MultiSelectWidth, multiSelectTokens } from "./multi-select";
 export { type NoteSize, type NoteTone, noteSizes, noteTokens, noteTones } from "./note";
 export { paginationTokens } from "./pagination";
 export { type PhoneChrome, phoneChromes, phoneTokens } from "./phone";
+export { scrollerTokens } from "./scroller";
 export { textareaTokens } from "./textarea";
 export { type ThemeToggleSize, themeToggleTokens } from "./theme-toggle";

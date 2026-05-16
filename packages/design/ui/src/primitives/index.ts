@@ -360,6 +360,7 @@ export * from "./relative-time-card";
 export * from "./resizable";
 export * from "./responsive";
 export * from "./safari";
+export * from "./scroller";
 export * from "./scroll-velocity";
 /**
  * Inline AI tool-call rendering for search/retrieval results. Sibling of

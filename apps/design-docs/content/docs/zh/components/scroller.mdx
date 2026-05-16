@@ -1,0 +1,96 @@
+---
+title: "Scroller"
+description: "展示单轴或双轴溢出的同级项目列表。"
+---
+
+<ComponentPreview name="scroller-demo" className="min-h-[260px] flex items-center justify-center" />
+
+## 安装
+
+```tsx
+import { Scroller } from "@nebutra/ui/primitives";
+```
+
+## 概览
+
+`Scroller` 是同级项目列表的原生滚动容器：适用于 chip 行、卡片轨道、日志流、代码片段和命令面板。它保留浏览器原生滚动与焦点行为，同时提供边缘提示和可选的直接子项步进按钮。
+
+它不是轮播，也不是虚拟列表。每个项目都是 slide 时使用 `Carousel`。超过几百行的数据集，应在 `Scroller` 内部接入虚拟化库。
+
+## 用法
+
+```tsx
+<Scroller height={220} overflow="y" width="100%" contentLabel="deployment events">
+  <div>Queued</div>
+  <div>Building</div>
+  <div>Ready</div>
+</Scroller>
+```
+
+## Props
+
+| Prop | Type | Default | 说明 |
+|---|---|---|---|
+| `overflow` | `"x" \| "y" \| "both"` | `"y"` | 滚动轴。只有真正二维溢出时才使用 `both`。 |
+| `width` | `number \| string` | `"100%"` | 根节点宽度。数字会解析为 px。 |
+| `height` | `number \| string` | `"auto"` | 视口高度。数字会解析为 px。 |
+| `withButtons` | `boolean` | `false` | 添加方向按钮，按直接子项步进滚动。 |
+| `buttonAxis` | `"x" \| "y"` | 自动推导 | 按钮使用的滚动轴。横向默认 x，其余默认 y。 |
+| `childrenContainerClassName` | `string` | — | 作用在直接子项容器上的 class。 |
+| `contentLabel` | `string` | `"content"` | 滚动区域和按钮生成标签使用的可访问名称。 |
+| `previousButtonLabel` | `string` | 自动生成 | 上一个 / 向上 / 向左按钮的可访问标签。 |
+| `nextButtonLabel` | `string` | 自动生成 | 下一个 / 向下 / 向右按钮的可访问标签。 |
+| `edgeAffordance` | `"fade" \| "none"` | `"fade"` | 裁切边缘的视觉提示。 |
+| `scrollBehavior` | `ScrollBehavior` | `"smooth"` | 按钮触发滚动时的行为。 |
+| `className` | `string` | — | 作用在根容器上的额外 class。 |
+
+## 示例
+
+### 纵向
+
+```tsx
+<Scroller height={220} overflow="y" width="100%" contentLabel="activity feed">
+  <ActivityCard />
+  <ActivityCard />
+</Scroller>
+```
+
+### 横向带按钮
+
+```tsx
+<Scroller
+  contentLabel="customer logos"
+  height={180}
+  overflow="x"
+  width="100%"
+  withButtons
+  childrenContainerClassName="gap-4"
+>
+  {logos.map((logo) => (
+    <LogoTile key={logo.id} />
+  ))}
+</Scroller>
+```
+
+### 自由滚动
+
+```tsx
+<Scroller height={220} overflow="both" width="100%" contentLabel="log matrix">
+  <pre>{wideLogOutput}</pre>
+</Scroller>
+```
+
+## 最佳实践
+
+- 用 `Scroller` 展示单轴溢出的同级项目：chip 行、卡片轨道、日志流、代码片段和命令面板。
+- 纵向适合堆叠 feed，横向适合 chip 和 tile rail；只有内容确实二维溢出时才使用 free。
+- 对超过几百项的分页或虚拟化数据集，在 `Scroller` 内部使用虚拟化库，而不是把所有节点直接丢进 DOM。
+- 自动滚动按钮只定位直接子项。如果项目外面又包了一层布局节点，按钮会滚到那层 wrapper，而不是内部项目。
+- 横向 Scroller 应保持项目宽度和 gap 一致，确保步进滚动节奏稳定。
+
+## 可访问性
+
+- 滚动视口是具名 section；内部可聚焦子项应保持阅读顺序。
+- 按钮标签包含方向和 `contentLabel`，例如 `Scroll customer logos left`。
+- Tab 顺序遵循 DOM 顺序。无论视觉滚动方向如何，都应按阅读顺序放置项目。
+- 聚焦到屏幕外后代时，浏览器会使用默认的 scroll-into-view 行为。

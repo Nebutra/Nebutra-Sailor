@@ -1,6 +1,6 @@
 ---
 title: "滚动区域 (Scroll Area)"
-description: "带有自定义样式的自定义可滚动容器，基于 Radix UI 构建。"
+description: "用于自定义滚动条示例的旧文档兼容组件。"
 ---
 
 import React from "react"
@@ -9,11 +9,14 @@ import React from "react"
 
 <ComponentPreview name="scroll-area-demo" className="min-h-[350px] flex items-center justify-center" />
 
+<DeprecatedBanner />
+
+`ScrollArea` 仍作为文档兼容 helper 保留。面向同级项目溢出的 rail、feed、snippet 和按钮辅助滚动，请使用 `Scroller`。
 
 ## 使用方法 (Usage)
 
 ```tsx
-import { ScrollArea, ScrollBar } from "@nebutra/ui/primitives"
+import { ScrollArea, ScrollBar } from "@/components/mdx-scroll-area"
 ```
 
 ## 属性 (Props)
@@ -22,8 +25,6 @@ import { ScrollArea, ScrollBar } from "@nebutra/ui/primitives"
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `type` | `"auto" \| "always" \| "scroll" \| "hover"` | `"hover"` | 何时显示滚动条 |
-| `scrollHideDelay` | `number` | `600` | 隐藏滚动条前的延迟（毫秒） |
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 可滚动内容 |
 

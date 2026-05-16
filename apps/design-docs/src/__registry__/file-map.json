@@ -232,6 +232,7 @@
   "scroll-area-demo": "scroll-area-demo",
   "scroll-area-list-demo": "scroll-area-list-demo",
   "scroll-velocity-demo": "scroll-velocity-demo",
+  "scroller-demo": "scroller-demo",
   "search-tool-demo": "search-tool-demo",
   "select-demo": "select-demo",
   "select-disabled-demo": "select-disabled-demo",

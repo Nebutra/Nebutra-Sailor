@@ -893,6 +893,9 @@ export const ResizableDemo = dynamic(() =>
 export const SafariDemo = dynamic(() =>
   import("@/components/previews/safari-demo").then((m) => ({ default: m.SafariDemo })),
 );
+export const ScrollerDemo = dynamic(() =>
+  import("@/components/previews/scroller-demo").then((m) => ({ default: m.ScrollerDemo })),
+);
 export const ScrollArea2Demo = dynamic(() =>
   import("@/components/previews/scroll-area-2-demo").then((m) => ({ default: m.ScrollArea2Demo })),
 );
@@ -1495,6 +1498,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "resizable-2-demo": { name: "resizable-2-demo", component: Resizable2Demo },
   "resizable-demo": { name: "resizable-demo", component: ResizableDemo },
   "safari-demo": { name: "safari-demo", component: SafariDemo },
+  "scroller-demo": { name: "scroller-demo", component: ScrollerDemo },
   "scroll-area-2-demo": { name: "scroll-area-2-demo", component: ScrollArea2Demo },
   "scroll-area-3-demo": { name: "scroll-area-3-demo", component: ScrollArea3Demo },
   "scroll-area-demo": { name: "scroll-area-demo", component: ScrollAreaDemo },
