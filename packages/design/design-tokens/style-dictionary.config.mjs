@@ -303,7 +303,7 @@ async function buildOklchMap(themePath) {
  * --transition / --focus-ring, --nebutra-brand-blue / --nebutra-brand-cyan) into the
  * generated mode CSS for the given selector.
  */
-function buildExtras({ selector, p3Map, oklchMap, includeBrandBridge, isDark }) {
+function buildExtras({ selector, p3Map, oklchMap, includeBrandBridge }) {
   const lines = [];
 
   // 1. --nebutra-brand-blue / --nebutra-brand-cyan aliases (only in :root for parity).
@@ -329,6 +329,8 @@ function buildExtras({ selector, p3Map, oklchMap, includeBrandBridge, isDark }) 
     `  --gradient-brand-reverse: var(--brand-gradient-reverse);`,
     `  --gradient-brand-radial: var(--brand-gradient-radial);`,
     `  --gradient-brand-glow: var(--brand-gradient-radial);`,
+    `  --gradient-brand-logo: var(--brand-gradient-logo);`,
+    `  --gradient-brand-logo-reverse: var(--brand-gradient-logo-reverse);`,
     `  --gradient-section: var(--brand-gradient-vertical);`,
     `  --gradient-glow: var(--brand-gradient-radial);`,
     `}`,

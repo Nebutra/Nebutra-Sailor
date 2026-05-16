@@ -698,8 +698,9 @@ function buildTokenMap(filePath: string): Record<string, string> {
   if (map["--blue-9"]) map["--brand-primary"] = map["--blue-9"];
   if (map["--cyan-9"]) map["--brand-accent"] = map["--cyan-9"];
   if (map["--blue-9"] && map["--cyan-9"]) {
-    map["--brand-gradient"] =
+    map["--brand-gradient-logo"] =
       `linear-gradient(135deg, ${map["--blue-9"]} 0%, ${map["--cyan-9"]} 100%)`;
+    map["--brand-gradient"] = "linear-gradient(135deg, #254bfa 0%, #057963 100%)";
   }
 
   return map;

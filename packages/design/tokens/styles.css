@@ -112,10 +112,12 @@
   --brand-primary: #0033fe; /** Brand primary — 云毓蓝 */
   --brand-accent: #0bf1c3; /** Brand accent — 云毓青 */
   --brand-tertiary: #8b5cf6;
-  --brand-gradient: linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%); /** Brand gradient — Logo standard 135° */
-  --brand-gradient-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
-  --brand-gradient-vertical: linear-gradient(180deg, #0033fe 0%, #0bf1c3 100%);
-  --brand-gradient-radial: radial-gradient(circle, #0bf1c3 0%, #0033fe 100%);
+  --brand-gradient: linear-gradient(135deg, #254bfa 0%, #057963 100%); /** UI brand gradient — usage-adjusted from the locked VI blue/cyan anchors to reduce saturation and preserve white-text contrast. */
+  --brand-gradient-reverse: linear-gradient(135deg, #057963 0%, #254bfa 100%);
+  --brand-gradient-vertical: linear-gradient(180deg, #254bfa 0%, #057963 100%);
+  --brand-gradient-radial: radial-gradient(circle, #057963 0%, #254bfa 100%);
+  --brand-gradient-logo: linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%); /** Logo/VI standard gradient. Use for brand assets only; product UI should use --brand-gradient. */
+  --brand-gradient-logo-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
   --status-danger: #ef4444;
   --status-warning: #f59e0b;
   --status-success: #22c55e;
@@ -259,6 +261,8 @@
   --gradient-brand-reverse: var(--brand-gradient-reverse);
   --gradient-brand-radial: var(--brand-gradient-radial);
   --gradient-brand-glow: var(--brand-gradient-radial);
+  --gradient-brand-logo: var(--brand-gradient-logo);
+  --gradient-brand-logo-reverse: var(--brand-gradient-logo-reverse);
   --gradient-section: var(--brand-gradient-vertical);
   --gradient-glow: var(--brand-gradient-radial);
 }
@@ -385,10 +389,12 @@
   --brand-primary: #5c7cfa; /** Dark-mode brand primary — visible against dark surfaces (uses --blue-9 = nebutra-blue-400). */
   --brand-accent: #1af7c8; /** Dark-mode brand accent — visible against dark surfaces (uses --cyan-9 = nebutra-cyan-400). */
   --brand-tertiary: #8b5cf6;
-  --brand-gradient: linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%); /** Brand gradient — Logo standard 135° */
-  --brand-gradient-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
-  --brand-gradient-vertical: linear-gradient(180deg, #0033fe 0%, #0bf1c3 100%);
-  --brand-gradient-radial: radial-gradient(circle, #0bf1c3 0%, #0033fe 100%);
+  --brand-gradient: linear-gradient(135deg, #254bfa 0%, #057963 100%); /** UI brand gradient — usage-adjusted from the locked VI blue/cyan anchors to reduce saturation and preserve white-text contrast. */
+  --brand-gradient-reverse: linear-gradient(135deg, #057963 0%, #254bfa 100%);
+  --brand-gradient-vertical: linear-gradient(180deg, #254bfa 0%, #057963 100%);
+  --brand-gradient-radial: radial-gradient(circle, #057963 0%, #254bfa 100%);
+  --brand-gradient-logo: linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%); /** Logo/VI standard gradient. Use for brand assets only; product UI should use --brand-gradient. */
+  --brand-gradient-logo-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
   --status-danger: #ef4444;
   --status-warning: #f59e0b;
   --status-success: #22c55e;
@@ -526,6 +532,8 @@
   --gradient-brand-reverse: var(--brand-gradient-reverse);
   --gradient-brand-radial: var(--brand-gradient-radial);
   --gradient-brand-glow: var(--brand-gradient-radial);
+  --gradient-brand-logo: var(--brand-gradient-logo);
+  --gradient-brand-logo-reverse: var(--brand-gradient-logo-reverse);
   --gradient-section: var(--brand-gradient-vertical);
   --gradient-glow: var(--brand-gradient-radial);
 }

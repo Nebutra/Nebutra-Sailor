@@ -86,6 +86,8 @@ A custom Style Dictionary transform (`name/nebutra/css`) maps DTCG paths to the 
 | `elevation.xs`              | `--elevation-xs`        |
 | `brand.primary`             | `--brand-primary`       |
 | `brand.gradient.primary`    | `--brand-gradient`      |
+| `brand.gradient.logo`       | `--brand-gradient-logo` |
+| `brand.gradient.logo-reverse` | `--brand-gradient-logo-reverse` |
 | `size.container.text`       | `--container-text`      |
 | `size.radius.md`            | `--radius-md`           |
 | `duration.flow`             | `--duration-flow`       |

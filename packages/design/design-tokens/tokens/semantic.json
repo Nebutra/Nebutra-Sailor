@@ -15,20 +15,29 @@
     "tertiary": { "$value": "{color.tertiary-purple}", "$type": "color" },
     "gradient": {
       "primary": {
-        "$value": "linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%)",
+        "$value": "linear-gradient(135deg, #254bfa 0%, #057963 100%)",
         "$type": "gradient",
-        "$description": "Brand gradient — Logo standard 135°"
+        "$description": "UI brand gradient — usage-adjusted from the locked VI blue/cyan anchors to reduce saturation and preserve white-text contrast."
       },
       "reverse": {
-        "$value": "linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%)",
+        "$value": "linear-gradient(135deg, #057963 0%, #254bfa 100%)",
         "$type": "gradient"
       },
       "vertical": {
-        "$value": "linear-gradient(180deg, #0033fe 0%, #0bf1c3 100%)",
+        "$value": "linear-gradient(180deg, #254bfa 0%, #057963 100%)",
         "$type": "gradient"
       },
       "radial": {
-        "$value": "radial-gradient(circle, #0bf1c3 0%, #0033fe 100%)",
+        "$value": "radial-gradient(circle, #057963 0%, #254bfa 100%)",
+        "$type": "gradient"
+      },
+      "logo": {
+        "$value": "linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%)",
+        "$type": "gradient",
+        "$description": "Logo/VI standard gradient. Use for brand assets only; product UI should use --brand-gradient."
+      },
+      "logo-reverse": {
+        "$value": "linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%)",
         "$type": "gradient"
       }
     }

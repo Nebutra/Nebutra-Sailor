@@ -310,7 +310,7 @@ export function CookieBanner() {
             <button
               type="button"
               onClick={saveCustom}
-              className="rounded-md bg-[var(--blue-9)] px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+              className="rounded-md border border-[var(--neutral-12)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] shadow-sm hover:bg-[var(--neutral-11)]"
             >
               Save Preferences / 保存偏好
             </button>
@@ -333,7 +333,7 @@ export function CookieBanner() {
           <button
             type="button"
             onClick={acceptAll}
-            className="rounded-md bg-[var(--blue-9)] px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+            className="rounded-md border border-[var(--neutral-12)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] shadow-sm hover:bg-[var(--neutral-11)]"
           >
             Accept All / 全部接受
           </button>

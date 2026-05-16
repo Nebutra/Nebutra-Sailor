@@ -28,6 +28,11 @@ const CATEGORIES: ReadonlyArray<{ key: CategoryKey; alwaysOn: boolean }> = [
   { key: "marketing", alwaysOn: false },
 ];
 
+const primaryActionClass =
+  "min-w-36 rounded-[var(--radius-md)] border border-[var(--neutral-12)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-semibold text-[var(--neutral-1)] shadow-sm transition-colors hover:border-[var(--neutral-11)] hover:bg-[var(--neutral-11)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)]";
+const secondaryActionClass =
+  "min-w-36 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)] dark:text-white";
+
 /**
  * GDPR/CCPA cookie-consent banner.
  *
@@ -137,7 +142,7 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
                     checked={toggles[key]}
                     disabled={alwaysOn}
                     onChange={() => handleToggle(key)}
-                    className="mt-0.5 h-4 w-4 rounded border-[var(--neutral-7)]"
+                    className="mt-0.5 size-4 rounded border-[var(--neutral-7)]"
                   />
                   <span className="flex-1">
                     <span className="block text-sm font-medium text-[var(--neutral-12)] dark:text-white">
@@ -154,19 +159,10 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
         </div>
 
         <div className="flex shrink-0 flex-col gap-2 sm:flex-row lg:flex-col">
-          <button
-            type="button"
-            onClick={handleAcceptAll}
-            className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-semibold text-white"
-            style={{ background: "var(--brand-gradient)" }}
-          >
+          <button type="button" onClick={handleAcceptAll} className={primaryActionClass}>
             {t("button.acceptAll")}
           </button>
-          <button
-            type="button"
-            onClick={handleSavePreferences}
-            className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] dark:text-white"
-          >
+          <button type="button" onClick={handleSavePreferences} className={secondaryActionClass}>
             {t("button.savePreferences")}
           </button>
         </div>
