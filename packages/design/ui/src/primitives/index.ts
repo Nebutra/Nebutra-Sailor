@@ -393,6 +393,12 @@ export * from "./split-button";
 export * from "./stack";
 export * from "./stars-canvas";
 export * from "./status-badge";
+/**
+ * Geist-style deployment-lifecycle dot — QUEUED/BUILDING animate, terminal
+ * states stay static. Use ONLY for deployments; for other status surfaces
+ * use a Badge with the canonical state vocabulary.
+ */
+export * from "./status-dot";
 export * from "./stepper";
 /**
  * Inline status pill for delegated subagent invocations. Lightest member

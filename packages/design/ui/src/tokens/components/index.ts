@@ -34,7 +34,7 @@ export {
 } from "./spinner";
 export { type SplitButtonTokenSize, splitButtonTokens } from "./split-button";
 export { type SwitchSize, switchSizes, switchTokens } from "./switch";
+export { tableTokens } from "./table";
 export { type TabsSize, tabsSizes, tabsTokens } from "./tabs";
-
 export { textareaTokens } from "./textarea";
 export { type ThemeToggleSize, themeToggleTokens } from "./theme-toggle";
