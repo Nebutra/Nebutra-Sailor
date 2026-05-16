@@ -23,6 +23,71 @@ queue.registerHandler("email", "send", async (job) => {
 });
 ```
 
+## Queuebase-style Jobs
+
+`@nebutra/queue` also exposes a Queuebase-compatible job layer for app-owned
+background jobs: define typed jobs with Zod input, enqueue through a typed
+client, and execute callbacks through a single webhook route.
+
+```ts
+import {
+  createJobClient,
+  createJobRouter,
+  createQueuebaseWebhookHandler,
+  defineQueueJob,
+} from "@nebutra/queue";
+import { z } from "zod";
+
+export const jobs = createJobRouter({
+  sendWelcomeEmail: defineQueueJob({
+    input: z.object({ to: z.string().email(), name: z.string() }),
+    defaults: { retries: 3, backoff: "exponential" },
+    handler: async ({ input, jobId, attempt }) => {
+      await sendWelcomeEmail(input.to, input.name, { jobId, attempt });
+      return { sent: true };
+    },
+  }),
+  dailyCleanup: defineQueueJob({
+    input: z.object({}),
+    schedule: { cron: "0 2 * * *", timezone: "UTC", overlap: "skip" },
+    handler: async () => ({ cleaned: true }),
+  }),
+});
+
+export const jobClient = createJobClient(jobs, {
+  callbackUrl: "https://app.nebutra.com/api/webhooks/queuebase",
+});
+
+export const webhookHandler = createQueuebaseWebhookHandler(jobs);
+```
+
+The default Nebutra web app mounts `queuebaseWebhookHandler` at
+`/api/webhooks/queuebase`. `queuebaseJobClient` uses:
+
+- `QUEUEBASE_API_URL`, defaulting to `http://localhost:3847`
+- `QUEUEBASE_API_KEY`, required by hosted Queuebase
+- `NEXT_PUBLIC_SITE_URL`, `VERCEL_URL`, or `PORT` to derive the callback URL
+
+Local development mirrors Queuebase's callback model:
+
+```bash
+# Terminal 1: Queuebase-compatible dev server / sync process
+npx queuebase dev
+
+# Terminal 2: Nebutra app
+pnpm dev:web
+```
+
+For production, set the env vars on the host and run the provider sync step
+after deployment configuration changes:
+
+```bash
+npx queuebase sync
+```
+
+Use `listQueuebaseSchedules(queuebaseJobs)` to inspect schedule metadata for
+sync tooling without executing handlers.
+
 ## Provider Selection
 
 The factory auto-detects the provider:

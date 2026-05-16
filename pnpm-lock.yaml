@@ -1704,6 +1704,9 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@25.3.5)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.0.1))(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
 
   packages/design/tokens:
     dependencies:
@@ -2381,6 +2384,9 @@ importers:
       '@clack/prompts':
         specifier: ^0.7.0
         version: 0.7.0
+      '@nebutra/theme':
+        specifier: workspace:*
+        version: link:../../design/theme
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -2452,6 +2458,9 @@ importers:
 
   packages/ops/preset:
     dependencies:
+      '@nebutra/theme':
+        specifier: workspace:*
+        version: link:../../design/theme
       zod:
         specifier: ^4.3.6
         version: 4.3.6

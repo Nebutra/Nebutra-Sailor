@@ -35,6 +35,10 @@
     "./sqs": {
       "types": "./dist/providers/sqs.d.ts",
       "import": "./dist/providers/sqs.js"
+    },
+    "./queuebase": {
+      "types": "./dist/queuebase.d.ts",
+      "import": "./dist/queuebase.js"
     }
   },
   "files": [

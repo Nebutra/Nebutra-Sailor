@@ -27,6 +27,31 @@ export { BullMQProvider } from "./providers/bullmq";
 export { MemoryProvider } from "./providers/memory";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
 export { getQStashHandler, getQStashHandlerKeys, QStashProvider } from "./providers/qstash";
+export type {
+  QueuebaseBackoff,
+  QueuebaseClient,
+  QueuebaseClientOptions,
+  QueuebaseEnqueueResult,
+  QueuebaseJobContext,
+  QueuebaseJobDefinition,
+  QueuebaseJobRouter,
+  QueuebaseJobs,
+  QueuebaseSchedule,
+  QueuebaseScheduleConfig,
+  QueuebaseScheduleMetadata,
+} from "./queuebase";
+// ── Queuebase-style typed jobs ──────────────────────────────────────────────
+export {
+  createJobClient,
+  createJobRouter,
+  createQueuebaseWebhookHandler,
+  defineQueueJob,
+  getQueuebaseCallbackUrl,
+  listQueuebaseSchedules,
+  queuebaseJobClient,
+  queuebaseJobs,
+  queuebaseWebhookHandler,
+} from "./queuebase";
 export type { ScheduledJob, ScheduledJobResult } from "./scheduled/index";
 // ── Scheduled (cron) jobs ────────────────────────────────────────────────────
 export {
