@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "material",
+  "type": "registry:ui",
+  "title": "Material",
+  "description": "Surface elevation primitive — 8 Geist-style types (base, small/medium/large, tooltip, menu, modal, fullscreen). Picks chrome from the theme.",
+  "author": "Nebutra <ui.nebutra.com>",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "files": [
+    {
+      "path": "components/ui/material.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/material.tsx",
+      "content": "\"use client\";\n\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport * as React from \"react\";\nimport { cn } from \"../utils/cn\";\n\n// =============================================================================\n// Variants\n// =============================================================================\n\n/**\n * Surface elevation system — maps Geist `type` tokens to @theme shadow + bg.\n * Shadow and background values come entirely from the theme; never hand-crafted.\n *\n * | type        | shadow      | bg            | use case                          |\n * |-------------|-------------|---------------|-----------------------------------|\n * | base        | shadow-sm   | bg-card       | Resting cards (was `card`)        |\n * | small       | shadow-sm   | bg-card       | Smallest raise                    |\n * | medium      | shadow-md   | bg-card       | Medium raise                      |\n * | large       | shadow-lg   | bg-card       | Strong raise                      |\n * | tooltip     | shadow-md   | bg-popover    | Floating tooltip                  |\n * | menu        | shadow-md   | bg-popover    | Dropdowns / popovers              |\n * | modal       | shadow-xl   | bg-popover    | Dialogs / drawers                 |\n * | fullscreen  | shadow-none | bg-background | Full-screen overlays / takeovers  |\n *\n * `card` is kept as a deprecated alias of `base` for back-compat with existing\n * call sites; new code should use the Geist canonical names.\n */\nconst materialVariants = cva(\"overflow-hidden rounded-[var(--radius-lg)]\", {\n  variants: {\n    type: {\n      base: \"bg-card shadow-sm\",\n      small: \"bg-card shadow-sm\",\n      medium: \"bg-card shadow-md\",\n      large: \"bg-card shadow-lg\",\n      tooltip: \"bg-popover shadow-md\",\n      menu: \"bg-popover shadow-md\",\n      modal: \"bg-popover shadow-xl\",\n      fullscreen: \"bg-background shadow-none\",\n      /** @deprecated Use `base` instead. */\n      card: \"bg-card shadow-sm\",\n    },\n  },\n  defaultVariants: { type: \"base\" },\n});\n\n// =============================================================================\n// Types\n// =============================================================================\n\nexport type MaterialType =\n  | \"base\"\n  | \"small\"\n  | \"medium\"\n  | \"large\"\n  | \"tooltip\"\n  | \"menu\"\n  | \"modal\"\n  | \"fullscreen\"\n  /** @deprecated Use `base` instead. */\n  | \"card\";\n\nexport interface MaterialProps\n  extends React.HTMLAttributes<HTMLDivElement>,\n    VariantProps<typeof materialVariants> {\n  /**\n   * Surface elevation level. Picks chrome (radius / fill / stroke / shadow)\n   * based on where the element sits in the layered hierarchy:\n   *   - `base` — resting cards\n   *   - `small` / `medium` / `large` — raised content tiers\n   *   - `tooltip` / `menu` — floating popovers\n   *   - `modal` — dialogs / drawers\n   *   - `fullscreen` — takeovers\n   *\n   * Don't stack two Materials on the same element. If a child needs more\n   * elevation, lift it into its own Material with a higher type.\n   *\n   * @default \"base\"\n   */\n  type?: MaterialType;\n}\n\n// =============================================================================\n// Component\n// =============================================================================\n\nexport const Material = React.forwardRef<HTMLDivElement, MaterialProps>(\n  ({ type, className, children, ...props }, ref) => (\n    <div ref={ref} className={cn(materialVariants({ type }), className)} {...props}>\n      {children}\n    </div>\n  ),\n);\n\nMaterial.displayName = \"Material\";\n"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "--radius-lg": "0.5rem"
+    },
+    "dark": {
+      "--radius-lg": "0.5rem"
+    }
+  },
+  "meta": {
+    "nebutraTokens": [
+      "--radius-lg"
+    ],
+    "nebutraLayer": "business"
+  }
+}

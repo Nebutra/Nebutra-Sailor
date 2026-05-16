@@ -383,6 +383,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     source: "primitives/entity.tsx",
     layer: "dashboard",
   },
+  {
+    name: "material",
+    title: "Material",
+    description:
+      "Surface elevation primitive — 8 Geist-style types (base, small/medium/large, tooltip, menu, modal, fullscreen). Picks chrome from the theme.",
+    source: "primitives/material.tsx",
+    layer: "business",
+  },
 ];
 
 // ---------------------------------------------------------------------------

@@ -52,18 +52,6 @@
       "description": "AI command palette built on cmdk + base-ui dialog."
     },
     {
-      "name": "empty-state",
-      "type": "registry:ui",
-      "title": "Empty State",
-      "description": "Zero-content surface for blank slate, no-results, permission, and error states."
-    },
-    {
-      "name": "feedback",
-      "type": "registry:ui",
-      "title": "Feedback",
-      "description": "Compact feedback widget with emotion, message, topic, and metadata payloads."
-    },
-    {
       "name": "kpi-card",
       "type": "registry:ui",
       "title": "KPI Card",
@@ -194,6 +182,12 @@
       "type": "registry:ui",
       "title": "Entity",
       "description": "Row of descriptive content paired with one or two controls. Compound Entity / Entity.Content / Entity.List."
+    },
+    {
+      "name": "material",
+      "type": "registry:ui",
+      "title": "Material",
+      "description": "Surface elevation primitive — 8 Geist-style types (base, small/medium/large, tooltip, menu, modal, fullscreen). Picks chrome from the theme."
     },
     {
       "name": "nebutra-tokens",
