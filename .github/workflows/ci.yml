@@ -308,10 +308,15 @@ jobs:
             --filter='!./apps/studio' \
             --filter='!./apps/tsekaluk-dev'
         env:
-          SKIP_ENV_VALIDATION: true
+          SKIP_ENV_VALIDATION: "true"
           AUTH_PROVIDER: "clerk"
           NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
           NEXT_TELEMETRY_DISABLED: "1"
+          # Dummy DATABASE_URL so Next.js collect-page-data doesn't fail env
+          # validation when SKIP_ENV_VALIDATION isn't honored inside the build
+          # worker (t3-env reads process.env at module load, build workers may
+          # not inherit env reliably).
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
 
   # ── Web release verification ─────────────────────────────────────────────
   # Production-like web gate: validates generated types, TS, webpack build, and
@@ -344,10 +349,11 @@ jobs:
       - name: Build web app dependency closure
         run: pnpm turbo build --filter="@nebutra/web^..."
         env:
-          SKIP_ENV_VALIDATION: true
+          SKIP_ENV_VALIDATION: "true"
           AUTH_PROVIDER: "clerk"
           NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
           NEXT_TELEMETRY_DISABLED: "1"
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
 
       - name: Verify web release
         run: pnpm verify:web-release
