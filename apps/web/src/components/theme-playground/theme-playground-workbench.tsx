@@ -227,7 +227,7 @@ function TopBar({
   onSurfaceChange: (surface: Surface) => void;
 }) {
   return (
-    <header className="flex min-h-14 items-center justify-between gap-3 border-border/80 border-b bg-background/85 px-4 backdrop-blur-xl">
+    <header className="flex min-h-14 flex-wrap items-center justify-between gap-3 border-border/80 border-b bg-background/85 px-4 backdrop-blur-xl">
       <div className="flex items-center gap-3">
         <NebutraMark />
         <div>
@@ -239,7 +239,7 @@ function TopBar({
         </Badge>
       </div>
 
-      <div className="hidden min-w-0 items-center gap-4 lg:flex">
+      <div className="hidden min-w-0 flex-wrap items-center gap-4 2xl:flex">
         <SegmentedControl
           label="Theme Mode"
           value={mode}
@@ -380,7 +380,7 @@ function PreviewCanvas({
   const style = getThemePreviewStyle(theme.id, mode);
 
   return (
-    <section className="min-w-0 bg-background/55">
+    <section className="min-h-0 min-w-0 bg-background/55">
       <CanvasHeader activeSuite={activeSuite} onSuiteChange={onSuiteChange} />
       <div
         data-theme={theme.id}
@@ -388,11 +388,11 @@ function PreviewCanvas({
         data-surface={surface}
         style={style}
         className={cn(
-          "min-h-[calc(100vh-7rem)] overflow-y-auto bg-background text-foreground",
+          "h-full min-h-[680px] overflow-y-auto bg-background text-foreground",
           densityScale[density],
         )}
       >
-        <div className="grid gap-[var(--playground-gap)] p-[var(--playground-pad)] xl:grid-cols-12">
+        <div className="grid gap-[var(--playground-gap)] p-[var(--playground-pad)] 2xl:grid-cols-12">
           <FormsPanel active={activeSuite === "forms"} />
           <PricingPanel active={activeSuite === "pricing"} />
           <DashboardPanel active={activeSuite === "dashboard"} />
@@ -456,7 +456,7 @@ function FormInput({
 
 function FormsPanel({ active }: { active: boolean }) {
   return (
-    <PreviewCard title="Create an account" active={active} className="xl:col-span-5">
+    <PreviewCard title="Create an account" active={active} className="2xl:col-span-5">
       <p className="mb-4 text-muted-foreground text-xs">Start building in seconds.</p>
       <div className="grid gap-3">
         <FormInput label="Full name" value="Ava Johnson" />
@@ -496,8 +496,8 @@ function PricingPanel({ active }: { active: boolean }) {
   ];
 
   return (
-    <PreviewCard title="Choose your plan" active={active} className="xl:col-span-7">
-      <div className="grid gap-3 md:grid-cols-3">
+    <PreviewCard title="Choose your plan" active={active} className="2xl:col-span-7">
+      <div className="grid gap-3 2xl:grid-cols-3">
         {plans.map((plan) => (
           <div
             key={plan.name}
@@ -526,7 +526,7 @@ function PricingPanel({ active }: { active: boolean }) {
             </ul>
             <button
               className={cn(
-                "mt-5 h-9 w-full rounded-[var(--radius-md)] border font-medium text-xs",
+                "mt-5 min-h-9 w-full rounded-[var(--radius-md)] border px-2 py-1.5 text-center font-medium text-xs leading-tight",
                 plan.popular
                   ? "border-primary bg-primary text-primary-foreground"
                   : "border-border bg-card text-card-foreground",
@@ -551,7 +551,7 @@ function DashboardPanel({ active }: { active: boolean }) {
   ];
 
   return (
-    <PreviewCard title="Project Overview" active={active} className="xl:col-span-7">
+    <PreviewCard title="Project Overview" active={active} className="2xl:col-span-7">
       <div className="grid gap-3 sm:grid-cols-4">
         {stats.map(([label, value, delta]) => (
           <div
@@ -586,7 +586,7 @@ function DashboardPanel({ active }: { active: boolean }) {
 
 function AiChatPanel({ active }: { active: boolean }) {
   return (
-    <PreviewCard title="AI Assistant" active={active} className="xl:col-span-5">
+    <PreviewCard title="AI Assistant" active={active} className="2xl:col-span-5">
       <div className="mb-4 flex items-center gap-2">
         <span className="grid size-7 place-items-center rounded-full bg-primary/15 text-primary">
           <Sparkles className="size-4" />
@@ -623,7 +623,7 @@ function AiChatPanel({ active }: { active: boolean }) {
 
 function ChartsPanel({ active }: { active: boolean }) {
   return (
-    <PreviewCard title="Charts" active={active} className="xl:col-span-12">
+    <PreviewCard title="Charts" active={active} className="2xl:col-span-12">
       <div className="grid gap-3 lg:grid-cols-3">
         <MiniChart title="User Growth" value="1,248" variant="line" />
         <MiniChart title="Revenue" value="$12,426" variant="bar" />
@@ -876,7 +876,7 @@ export function ThemePlaygroundWorkbench() {
   const [activeSuite, setActiveSuite] = useState<PreviewSuite>("forms");
 
   return (
-    <div className="min-h-screen overflow-hidden bg-background text-foreground">
+    <div className="flex min-h-[calc(100vh-9rem)] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background text-foreground shadow-sm">
       <TopBar
         mode={mode}
         density={density}
@@ -885,7 +885,7 @@ export function ThemePlaygroundWorkbench() {
         onDensityChange={setDensity}
         onSurfaceChange={setSurface}
       />
-      <main className="grid min-h-[calc(100vh-3.5rem)] grid-cols-1 overflow-hidden border-border/70 border-t xl:grid-cols-[320px_minmax(0,1fr)_360px]">
+      <main className="grid min-h-0 flex-1 grid-cols-1 overflow-hidden border-border/70 border-t xl:grid-cols-[280px_minmax(0,1fr)_320px]">
         <ThemeRegistryPanel
           themes={THEME_REGISTRY.themes}
           selectedTheme={selectedTheme}

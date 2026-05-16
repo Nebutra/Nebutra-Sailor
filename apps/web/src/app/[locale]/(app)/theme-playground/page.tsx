@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function ThemePlaygroundPage() {
   return (
-    <section className="-m-4 sm:-m-6 lg:-m-8" aria-label="Theme Playground">
+    <section className="min-h-[calc(100vh-9rem)]" aria-label="Theme Playground">
       <ThemePlaygroundWorkbench />
     </section>
   );
