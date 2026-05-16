@@ -1,15 +1,14 @@
-import { Unicorn404 } from "@/components/landing/404/Unicorn404";
+import { FullPageStatus } from "@nebutra/ui/layout";
 
 // Global fallback for routes that don't match a locale (e.g. /wrong)
 export default function GlobalNotFound() {
   return (
-    <main className="flex-grow flex flex-col">
-      <Unicorn404
-        title="Page Not Found"
-        desc="The page you are looking for might have been removed or is temporarily unavailable."
-        homeText="Return Home"
-        docsText="Read Documentation"
-      />
-    </main>
+    <FullPageStatus
+      code="404"
+      title="Page Not Found"
+      description="The link may be outdated, or the page may have moved."
+      primaryAction={{ label: "Back to Nebutra", href: "/" }}
+      secondaryAction={{ label: "Open docs", href: "/docs" }}
+    />
   );
 }

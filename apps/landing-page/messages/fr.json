@@ -1409,9 +1409,9 @@
   },
   "notFound": {
     "title": "Page non trouvée",
-    "desc": "La page que vous recherchez a peut-être été supprimée ou est temporairement indisponible.",
-    "home": "Retour à l'accueil",
-    "docs": "Lire la documentation"
+    "desc": "Le lien est peut-être obsolète, ou la page a été déplacée.",
+    "home": "Retour à Nebutra",
+    "docs": "Ouvrir la doc"
   },
   "impact": {
     "hero_eyebrow": "Livre blanc Vision Nebutra",

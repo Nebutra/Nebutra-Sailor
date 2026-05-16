@@ -1409,9 +1409,9 @@
   },
   "notFound": {
     "title": "Página no encontrada",
-    "desc": "La página que busca puede haber sido eliminada o no está disponible temporalmente.",
-    "home": "Volver al inicio",
-    "docs": "Leer documentación"
+    "desc": "El enlace puede estar desactualizado o la página se movió.",
+    "home": "Volver a Nebutra",
+    "docs": "Abrir docs"
   },
   "impact": {
     "hero_eyebrow": "Documento de Visión Central de Nebutra",

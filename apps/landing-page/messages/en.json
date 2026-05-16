@@ -1409,9 +1409,9 @@
   },
   "notFound": {
     "title": "Page Not Found",
-    "desc": "The page you are looking for might have been removed or is temporarily unavailable.",
-    "home": "Return Home",
-    "docs": "Read Documentation"
+    "desc": "The link may be outdated, or the page may have moved.",
+    "home": "Back to Nebutra",
+    "docs": "Open docs"
   },
   "impact": {
     "hero_eyebrow": "Nebutra Core Vision Whitepaper",

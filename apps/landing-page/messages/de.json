@@ -1409,9 +1409,9 @@
   },
   "notFound": {
     "title": "Seite nicht gefunden",
-    "desc": "Die gesuchte Seite wurde möglicherweise entfernt oder ist vorübergehend nicht verfügbar.",
-    "home": "Zur Startseite",
-    "docs": "Dokumentation lesen"
+    "desc": "Der Link ist möglicherweise veraltet, oder die Seite wurde verschoben.",
+    "home": "Zurück zu Nebutra",
+    "docs": "Docs öffnen"
   },
   "impact": {
     "hero_eyebrow": "Whitepaper zur Kernvision von Nebutra",

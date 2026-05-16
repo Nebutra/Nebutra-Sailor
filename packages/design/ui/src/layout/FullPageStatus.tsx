@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Button } from "../primitives/button";
 
 export interface FullPageStatusAction {
   label: string;
@@ -118,24 +119,19 @@ function ActionButton({
   action: FullPageStatusAction;
   variant: "primary" | "secondary";
 }) {
-  const className =
-    variant === "primary"
-      ? "inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium text-white transition-transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-1"
-      : "inline-flex items-center rounded-lg border border-neutral-7 px-5 py-2.5 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-1";
-
-  const style = variant === "primary" ? { background: "var(--brand-gradient)" } : undefined;
+  const buttonVariant = variant === "primary" ? "ink" : "outline";
 
   if (action.href) {
     return (
-      <Link href={action.href} className={className} style={style}>
-        {action.label}
-      </Link>
+      <Button asChild variant={buttonVariant}>
+        <Link href={action.href}>{action.label}</Link>
+      </Button>
     );
   }
   return (
-    <button type="button" onClick={action.onClick} className={className} style={style}>
+    <Button type="button" onClick={action.onClick} variant={buttonVariant}>
       {action.label}
-    </button>
+    </Button>
   );
 }
 

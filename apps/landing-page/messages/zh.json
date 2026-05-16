@@ -1409,9 +1409,9 @@
   },
   "notFound": {
     "title": "页面未找到",
-    "desc": "您查找的页面可能已被移除或暂时不可用。",
-    "home": "返回首页",
-    "docs": "阅读文档"
+    "desc": "链接可能已过期，或页面已迁移。",
+    "home": "返回 Nebutra",
+    "docs": "打开文档"
   },
   "impact": {
     "hero_eyebrow": "Nebutra 核心愿景白皮书",
