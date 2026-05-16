@@ -1,38 +1,42 @@
 "use client";
 
-import { Menu } from "@nebutra/icons";
 import {
   Button,
   Sheet,
-  SheetClose,
+  SheetBody,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@nebutra/ui/primitives";
-import Link from "next/link";
 
-<Sheet>
-  <SheetTrigger asChild>
-    <Button variant="ghost" size="icon">
-      <Menu className="h-5 w-5" />
-    </Button>
-  </SheetTrigger>
-  <SheetContent side="left" className="w-64">
-    <SheetHeader>
-      <SheetTitle>Navigation</SheetTitle>
-    </SheetHeader>
-    <nav className="gap-2 mt-4 flex flex-col">
-      <SheetClose asChild>
-        <Link href="/docs/components/sheet">Dashboard</Link>
-      </SheetClose>
-      <SheetClose asChild>
-        <Link href="/docs/components/sheet">Settings</Link>
-      </SheetClose>
-    </nav>
-  </SheetContent>
-</Sheet>;
+const sides = ["top", "right", "bottom", "left"] as const;
 
 export function SheetSideDemo() {
-  return null; // Update this with actual rendering logic
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-3">
+      {sides.map((side) => (
+        <Sheet key={side}>
+          <SheetTrigger asChild>
+            <Button variant="outline">Open {side}</Button>
+          </SheetTrigger>
+          <SheetContent side={side}>
+            <SheetHeader>
+              <SheetTitle>
+                {side[0]?.toUpperCase()}
+                {side.slice(1)} Context
+              </SheetTitle>
+              <SheetDescription>This panel slides from the {side} edge.</SheetDescription>
+            </SheetHeader>
+            <SheetBody>
+              <p className="text-muted-foreground text-sm">
+                Choose the side that preserves the spatial relationship with the trigger.
+              </p>
+            </SheetBody>
+          </SheetContent>
+        </Sheet>
+      ))}
+    </div>
+  );
 }

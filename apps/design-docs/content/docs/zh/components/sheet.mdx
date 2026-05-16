@@ -1,63 +1,101 @@
 ---
-title: "抽屉面板 (Sheet)"
-description: "锚定在屏幕边缘的滑出式覆盖面板，基于 Radix UI Dialog 构建。"
+title: "Sheet"
+description: "从屏幕边缘进入的上下文面板，用于查看或编辑关联内容，同时保留页面上下文。"
 ---
 
-## 演示 (Demo)
+## Demo
 
-<ComponentPreview name="sheet-demo" className="min-h-[300px] flex justify-center items-center"  />
+<ComponentPreview name="sheet-demo" className="min-h-[300px] flex justify-center items-center" />
 
-
-## 使用方法 (Usage)
+## 用法
 
 ```tsx
 import {
   Sheet,
-  SheetTrigger,
+  SheetBody,
+  SheetClose,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
   SheetDescription,
   SheetFooter,
-  SheetClose,
-  SheetPortal,
-  SheetOverlay,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+```tsx
+<Sheet>
+  <SheetTrigger asChild>
+    <Button variant="outline">Open Sheet</Button>
+  </SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Deployment Details</SheetTitle>
+      <SheetDescription>Inspect the deployment without leaving the table.</SheetDescription>
+    </SheetHeader>
+    <SheetBody>{/* metadata rows */}</SheetBody>
+    <SheetFooter>
+      <SheetClose asChild>
+        <Button variant="outline">Close</Button>
+      </SheetClose>
+      <Button>Open Deployment</Button>
+    </SheetFooter>
+  </SheetContent>
+</Sheet>
+```
 
-### Sheet (根组件)
+## Props
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `open` | `boolean` | — | 受控的打开状态 |
-| `defaultOpen` | `boolean` | `false` | 非受控的默认打开状态 |
-| `onOpenChange` | `(open: boolean) => void` | — | 打开状态改变时的回调函数 |
+### Sheet
 
-### SheetContent (内容区)
+| Prop | Type | Default | 说明 |
+|------|------|---------|------|
+| `open` | `boolean` | — | 受控打开状态 |
+| `defaultOpen` | `boolean` | `false` | 非受控初始打开状态 |
+| `onOpenChange` | `(open, details) => void` | — | 打开状态变化回调 |
+| `modal` | `boolean \| "trap-focus"` | `"trap-focus"` | 键盘焦点留在面板内，同时允许 toast 等外部指针层可达 |
+| `disablePointerDismissal` | `boolean` | `true` | 禁止点击外部区域自动关闭 |
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | 抽屉滑出的边缘 |
-| `className` | `string` | — | 额外的 CSS 类名 |
-| `children` | `ReactNode` | — | 抽屉内容 |
+### SheetContent
 
-## 示例 (Examples)
+| Prop | Type | Default | 说明 |
+|------|------|---------|------|
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | 面板进入的边缘 |
+| `noOverlay` | `boolean` | `false` | 隐藏遮罩，适合低打扰的详情检查面板 |
+| `overlay` | `boolean` | `true` | 是否渲染遮罩；与 `noOverlay` 同时出现时 `noOverlay` 优先 |
+| `showClose` | `boolean` | `true` | 是否渲染内置关闭图标按钮 |
+| `close` | `boolean` | `true` | `showClose` 的别名 |
 
-### 左侧导航抽屉 (Left-Side Navigation Sheet)
+## 示例
 
-<ComponentPreview name="sheet-side-demo" className="min-h-[250px] flex justify-center items-center"  />
+### 方向
 
+方向应该跟触发位置保持空间关系。
 
-### 底部抽屉 - 移动端 (Bottom Sheet - Mobile)
+<ComponentPreview name="sheet-side-demo" className="min-h-[250px] flex justify-center items-center" />
 
-<ComponentPreview name="sheet-mobile-demo" className="min-h-[250px] flex justify-center items-center"  />
+### 紧凑底部边缘
 
+需要手势驱动的移动端 bottom sheet 时使用 Drawer。`side="bottom"` 只用于非手势的边缘面板，例如全局筛选。
 
-## 可访问性 (Accessibility)
+<ComponentPreview name="sheet-mobile-demo" className="min-h-[250px] flex justify-center items-center" />
 
-- 基于 Radix UI Dialog 构建 —— `SheetContent` 具有 `role="dialog"` 和 `aria-modal="true"` 属性。
-- `SheetTitle` 通过 `aria-labelledby` 进行关联。
-- 打开时焦点会被锁定在抽屉内部。
-- 按下 `Escape` 键会关闭抽屉并将焦点返回触发器。
+## 最佳实践
+
+用 Sheet 展示持续关联的上下文，例如 deployment 详情、日志行检查、成员资料；底层页面仍然应该有参考价值。
+
+阻塞性决策使用 Dialog。移动端手势 bottom sheet 使用 Drawer。不要用 Sheet 确认删除、撤销授权等破坏性操作。
+
+根据触发位置选择 `side`：行详情通常从右侧进入，全局筛选可以从左侧或底部进入。不要在同一次会话中切换方向。
+
+Sheet 默认不会因点击外部区域关闭。始终提供明确的关闭控件，并保留 Escape 关闭。
+
+标题使用 Title Case，命名实体本身，例如 Deployment Details 或 Member Profile。主体以阅读为主，底部操作按钮可选。
+
+## 可访问性
+
+Sheet 基于 Base UI Dialog。根组件默认 `modal="trap-focus"` 且 `disablePointerDismissal`，键盘用户会留在面板内，同时 toast 等指针层仍可达。
+
+`SheetTitle` 提供可访问名称。只有当说明短且关键时，才添加 `SheetDescription`。
+
+内置关闭按钮带有 `aria-label="Close"`。如果隐藏它，必须在 `SheetFooter` 内提供可见关闭控件。

@@ -3,7 +3,6 @@
   "name": "sheet-side-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/icons",
     "@nebutra/ui"
   ],
   "registryDependencies": [
@@ -12,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/sheet-side-demo.tsx",
-      "content": "\"use client\";\n\nimport { Menu } from \"@nebutra/icons\";\nimport {\n  Button,\n  Sheet,\n  SheetClose,\n  SheetContent,\n  SheetHeader,\n  SheetTitle,\n  SheetTrigger,\n} from \"@nebutra/ui/primitives\";\nimport Link from \"next/link\";\n\n<Sheet>\n  <SheetTrigger asChild>\n    <Button variant=\"ghost\" size=\"icon\">\n      <Menu className=\"h-5 w-5\" />\n    </Button>\n  </SheetTrigger>\n  <SheetContent side=\"left\" className=\"w-64\">\n    <SheetHeader>\n      <SheetTitle>Navigation</SheetTitle>\n    </SheetHeader>\n    <nav className=\"gap-2 mt-4 flex flex-col\">\n      <SheetClose asChild>\n        <Link href=\"/docs/components/sheet\">Dashboard</Link>\n      </SheetClose>\n      <SheetClose asChild>\n        <Link href=\"/docs/components/sheet\">Settings</Link>\n      </SheetClose>\n    </nav>\n  </SheetContent>\n</Sheet>;\n\nexport function SheetSideDemo() {\n  return null; // Update this with actual rendering logic\n}\n",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  Sheet,\n  SheetBody,\n  SheetContent,\n  SheetDescription,\n  SheetHeader,\n  SheetTitle,\n  SheetTrigger,\n} from \"@nebutra/ui/primitives\";\n\nconst sides = [\"top\", \"right\", \"bottom\", \"left\"] as const;\n\nexport function SheetSideDemo() {\n  return (\n    <div className=\"flex flex-wrap items-center justify-center gap-3\">\n      {sides.map((side) => (\n        <Sheet key={side}>\n          <SheetTrigger asChild>\n            <Button variant=\"outline\">Open {side}</Button>\n          </SheetTrigger>\n          <SheetContent side={side}>\n            <SheetHeader>\n              <SheetTitle>\n                {side[0]?.toUpperCase()}\n                {side.slice(1)} Context\n              </SheetTitle>\n              <SheetDescription>This panel slides from the {side} edge.</SheetDescription>\n            </SheetHeader>\n            <SheetBody>\n              <p className=\"text-muted-foreground text-sm\">\n                Choose the side that preserves the spatial relationship with the trigger.\n              </p>\n            </SheetBody>\n          </SheetContent>\n        </Sheet>\n      ))}\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

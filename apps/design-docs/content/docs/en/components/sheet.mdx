@@ -1,63 +1,101 @@
 ---
 title: "Sheet"
-description: "Slide-over overlay panel anchored to any edge of the screen, built on Radix UI Dialog."
+description: "A contextual edge panel for inspecting or editing related content without losing page context."
 ---
 
 ## Demo
 
-<ComponentPreview name="sheet-demo" className="min-h-[300px] flex justify-center items-center"  />
-
+<ComponentPreview name="sheet-demo" className="min-h-[300px] flex justify-center items-center" />
 
 ## Usage
 
 ```tsx
 import {
   Sheet,
-  SheetTrigger,
+  SheetBody,
+  SheetClose,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
   SheetDescription,
   SheetFooter,
-  SheetClose,
-  SheetPortal,
-  SheetOverlay,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "@nebutra/ui/primitives"
+```
+
+```tsx
+<Sheet>
+  <SheetTrigger asChild>
+    <Button variant="outline">Open Sheet</Button>
+  </SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Deployment Details</SheetTitle>
+      <SheetDescription>Inspect the deployment without leaving the table.</SheetDescription>
+    </SheetHeader>
+    <SheetBody>{/* metadata rows */}</SheetBody>
+    <SheetFooter>
+      <SheetClose asChild>
+        <Button variant="outline">Close</Button>
+      </SheetClose>
+      <Button>Open Deployment</Button>
+    </SheetFooter>
+  </SheetContent>
+</Sheet>
 ```
 
 ## Props
 
-### Sheet (Root)
+### Sheet
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `open` | `boolean` | — | Controlled open state |
-| `defaultOpen` | `boolean` | `false` | Uncontrolled default open state |
-| `onOpenChange` | `(open: boolean) => void` | — | Callback when open state changes |
+| `defaultOpen` | `boolean` | `false` | Initial uncontrolled open state |
+| `onOpenChange` | `(open, details) => void` | — | Called when open state changes |
+| `modal` | `boolean \| "trap-focus"` | `"trap-focus"` | Keeps keyboard focus in the sheet while allowing outside pointer surfaces such as toasts |
+| `disablePointerDismissal` | `boolean` | `true` | Prevents outside clicks from closing the sheet |
 
 ### SheetContent
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | Edge the sheet slides in from |
-| `className` | `string` | — | Additional CSS classes |
-| `children` | `ReactNode` | — | Sheet content |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | Edge the sheet enters from |
+| `noOverlay` | `boolean` | `false` | Hides the backdrop for low-interruption inspector panels |
+| `overlay` | `boolean` | `true` | Renders the backdrop; `noOverlay` wins when both are provided |
+| `showClose` | `boolean` | `true` | Renders the built-in close icon button |
+| `close` | `boolean` | `true` | Alias for `showClose` |
 
 ## Examples
 
-### Left-Side Navigation Sheet
+### Sides
 
-<ComponentPreview name="sheet-side-demo" className="min-h-[250px] flex justify-center items-center"  />
+Use the side that matches the trigger's spatial relationship.
 
+<ComponentPreview name="sheet-side-demo" className="min-h-[250px] flex justify-center items-center" />
 
-### Bottom Sheet (Mobile)
+### Compact Bottom Edge
 
-<ComponentPreview name="sheet-mobile-demo" className="min-h-[250px] flex justify-center items-center"  />
+For gesture-driven mobile bottom sheets, use Drawer. Use `side="bottom"` on Sheet only for non-gesture edge panels such as global filters.
 
+<ComponentPreview name="sheet-mobile-demo" className="min-h-[250px] flex justify-center items-center" />
+
+## Best Practices
+
+Use Sheet for persistent associated context like deployment details, log row inspection, or a member profile where the underlying page remains useful.
+
+For a blocking decision, use Dialog. For a mobile-only bottom sheet, use Drawer. Do not use Sheet to confirm destructive actions.
+
+Pick `side` from the trigger location: a row inspector slides from the right, and a global filter can slide from the left or bottom. Do not change sides mid-session.
+
+Sheet does not close on outside click by default. Always render an explicit close affordance and honor Escape.
+
+Title is Title Case and names the entity, such as Deployment Details or Member Profile. Body content should be read-mostly, with optional action buttons in the footer.
 
 ## Accessibility
 
-- Built on Radix UI Dialog — `SheetContent` has `role="dialog"` and `aria-modal="true"`.
-- `SheetTitle` is linked via `aria-labelledby`.
-- Focus is trapped inside the sheet while open.
-- `Escape` closes the sheet and returns focus to the trigger.
+Sheet is built on Base UI Dialog. The root defaults to `modal="trap-focus"` and `disablePointerDismissal`, so keyboard users stay inside the panel while pointer-only surfaces like toasts can remain reachable.
+
+`SheetTitle` provides the accessible name. Add `SheetDescription` only when the description is short and load-bearing.
+
+The built-in close button has `aria-label="Close"`. If you hide it, provide a visible close control in `SheetFooter`.

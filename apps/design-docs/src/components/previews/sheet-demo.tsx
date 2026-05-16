@@ -3,6 +3,7 @@
 import {
   Button,
   Sheet,
+  SheetBody,
   SheetClose,
   SheetContent,
   SheetDescription,
@@ -12,6 +13,12 @@ import {
   SheetTrigger,
 } from "@nebutra/ui/primitives";
 
+const rows = [
+  ["Status", "Ready"],
+  ["Region", "iad1"],
+  ["Last Deployment", "2 minutes ago"],
+] as const;
+
 export function SheetDemo() {
   return (
     <Sheet>
@@ -20,19 +27,27 @@ export function SheetDemo() {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when done.
-          </SheetDescription>
+          <SheetTitle>Deployment Details</SheetTitle>
+          <SheetDescription>Inspect the deployment without leaving the table.</SheetDescription>
         </SheetHeader>
-        <div className="py-6">
-          <p className="text-sm text-muted-foreground">Sheet body content.</p>
-        </div>
+        <SheetBody>
+          <dl className="grid gap-3">
+            {rows.map(([label, value]) => (
+              <div
+                className="grid gap-1 rounded-[var(--radius-lg)] border border-border bg-muted/40 p-3"
+                key={label}
+              >
+                <dt className="font-medium text-muted-foreground text-xs">{label}</dt>
+                <dd className="text-foreground text-sm">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </SheetBody>
         <SheetFooter>
           <SheetClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline">Close</Button>
           </SheetClose>
-          <Button type="submit">Save changes</Button>
+          <Button>Open Deployment</Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>
