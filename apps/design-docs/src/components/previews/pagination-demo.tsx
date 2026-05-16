@@ -1,43 +1,19 @@
-"use client";
+import { Pagination } from "@nebutra/ui/primitives";
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@nebutra/ui/primitives";
+const previous = {
+  title: "Home",
+  href: "#home",
+};
+
+const next = {
+  title: "Introduction",
+  href: "#introduction",
+};
 
 export function PaginationDemo() {
   return (
-    <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious href="#prev" />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#1">1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#2" isActive>
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#3">3</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#10">10</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext href="#next" />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+    <div className="w-full max-w-[var(--pagination-demo-width)] [--pagination-demo-width:640px]">
+      <Pagination next={next} previous={previous} />
+    </div>
   );
 }

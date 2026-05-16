@@ -188,11 +188,11 @@ Add it to the column list:
 
 For uses outside `DataTable`, filter the array yourself with `useMemo` before passing to the bare `Table` primitive.
 
-### Pagination
+### Dataset Pagination
 
 `DataTable` does not ship a paginator out of the box. For very large datasets enable virtualization (`enableVirtualization`, `virtualizeThreshold`) to render thousands of rows without paging. For server-side pagination, page the data outside the component and pass the current slice to `data`.
 
-> **TODO:** A first-party `Pagination` primitive is on the roadmap. Until it lands, compose one with `Button` + page-state hooks alongside the table.
+Use `PaginationControl` when a table needs explicit first / previous / next / last controls, page size selection, and a visible `Page x of y` status. Do not use the `Pagination` component here; it is reserved for sibling page navigation.
 
 ### Empty, loading, and error states
 

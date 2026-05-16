@@ -13,7 +13,7 @@ Choose the navigation pattern that matches the depth and frequency of the destin
 | `NavList` / `Sidebar` | Second-level section navigation (settings, admin areas) |
 | `UnderlineNav` / `Tabs` | Peer views of the same resource (overview, activity, settings) |
 | `Breadcrumbs` | Hierarchical location in a nested resource tree |
-| `Pagination` | Moving through a large ordered result set |
+| `Pagination` | Moving between sibling pages in a sequence |
 | `TreeView` | Hierarchical file-system or nested item navigation |
 
 ## Structure
@@ -146,19 +146,18 @@ Breadcrumbs are appropriate for resources nested 2 or more levels deep. Do not a
 
 ### Pagination
 
-Use `Pagination` at the bottom of tables or lists when the total item count exceeds the page size. Pair it with the table pattern — render it below the `DataTable`.
+Use `Pagination` at the bottom of docs articles, blog posts, or onboarding steps when the user moves to the previous or next sibling page.
 
 ```tsx
 import { Pagination } from "@nebutra/ui";
 
 <Pagination
-  pageCount={totalPages}
-  currentPage={page}
-  onPageChange={(p) => setPage(p)}
+  previous={{ title: "Home", href: "/docs" }}
+  next={{ title: "Introduction", href: "/docs/introduction" }}
 />
 ```
 
-For server-side pagination, update the URL on page change and derive `page` from the URL param.
+For large ordered result sets, use `PaginationControl` or a table-specific paging pattern instead.
 
 ### Table of Contents
 
@@ -204,7 +203,7 @@ export default function SettingsLayout({ children }: { children: ReactNode }) {
 - [Sidebar](/atom-components/sidebar) — collapsible persistent sidebar
 - [Tabs](/atom-components/tabs) — client-side tab switcher
 - [Breadcrumb](/atom-components/breadcrumb) — breadcrumb trail atom
-- [Pagination](/atom-components/pagination) — page navigation controls
+- [Pagination](/components/pagination) — sibling page navigation
 - [Tree View](/atom-components/tree-view) — hierarchical nested navigation
 - [Inner Side Menu fragment](/fragment-components/inner-side-menu) — pre-composed settings sidebar
 - [Table of Contents fragment](/fragment-components/table-of-contents) — sticky scroll-spy right rail

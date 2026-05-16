@@ -1,88 +1,63 @@
 ---
-title: "分页 (Pagination)"
-description: "用于在内容页面之间切换的导航控件。"
+title: "分页导航 (Pagination)"
+description: "用于文档、博客和有序流程的上一篇 / 下一篇兄弟页面导航。"
 ---
-
-## 演示 (Demo)
 
 <ComponentPreview name="pagination-demo" className="min-h-[150px] flex justify-center items-center" />
 
-
-## 使用方法 (Usage)
-
-```tsx
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationEllipsis,
-} from "@nebutra/ui/primitives"
-```
-
-## 属性 (Props)
-
-### PaginationLink
-
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `href` | `string` | — | 页面导航 URL |
-| `isActive` | `boolean` | `false` | 标记为当前页面 |
-| `size` | `"default" \| "sm" \| "lg" \| "icon"` | `"icon"` | 按钮尺寸 |
-| `className` | `string` | — | 额外的 CSS 类名 |
-| `children` | `ReactNode` | — | 页码或标签 |
-
-### PaginationPrevious / PaginationNext
-
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `href` | `string` | — | 导航 URL |
-| `className` | `string` | — | 额外的 CSS 类名 |
-
-## 示例 (Examples)
-
-### 受控分页 (Controlled Pagination)
+## 安装
 
 ```tsx
-function PaginatedList({ totalPages }: { totalPages: number }) {
-  const [page, setPage] = useState(1)
-
-  return (
-    <>
-      <DataList page={page} />
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              aria-disabled={page === 1}
-            />
-          </PaginationItem>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-            <PaginationItem key={p}>
-              <PaginationLink isActive={p === page} onClick={() => setPage(p)}>
-                {p}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              aria-disabled={page === totalPages}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </>
-  )
-}
+import { Pagination } from "@nebutra/ui/primitives";
 ```
 
-## 可访问性 (Accessibility)
+## 概览
 
-- 根级 `<nav>` 具有 `aria-label="Pagination"` 属性。
-- 激活的页面链接具有 `aria-current="page"` 属性。
-- `PaginationEllipsis` 具有 `aria-hidden="true"` 属性。
-- “上一页”和“下一页”按钮具有描述性的 `aria-label` 属性。
+`Pagination` 用于兄弟页面之间的顺序导航：文档文章、博客、更新日志、引导步骤。它不是数据集的数字分页器。
+表格行、服务端分页、分页大小选择等场景使用 `PaginationControl` 或表格模式。
+
+序列开头或结尾缺少一侧时，组件会隐藏对应 rail，而不是渲染一个不可点击的禁用链接。
+
+## 用法
+
+```tsx
+const previous = {
+  title: "Home",
+  href: "/docs",
+};
+
+const next = {
+  title: "Introduction",
+  href: "/docs/introduction",
+};
+
+<Pagination previous={previous} next={next} />;
+```
+
+## Props
+
+| 属性 | 类型 | 默认值 | 描述 |
+|---|---|---|---|
+| `previous` | `{ title: string; href: string }` | — | 上一个兄弟页面。序列开头省略。 |
+| `next` | `{ title: string; href: string }` | — | 下一个兄弟页面。序列结尾省略。 |
+| `previousLabel` | `string` | `"Previous"` | 上一页标题上方的方向标签。 |
+| `nextLabel` | `string` | `"Next"` | 下一页标题上方的方向标签。 |
+| `aria-label` | `string` | `"Page navigation"` | 根级导航 landmark 的可访问标签。 |
+| `className` | `string` | — | 传给根级 `<nav>` 的额外类名。 |
+
+## 最佳实践
+
+- `Pagination` 只用于兄弟页面顺序导航。
+- 同一数据集的行翻页使用 `PaginationControl`。
+- `previous.title` 和 `next.title` 只传目标页面名；组件已经渲染方向标签、chevron 和
+  `Go to {direction} page: {title}` aria label。
+- 序列边界省略缺失的一侧，不要传禁用链接。
+- 标题使用 Title Case，并把最有区分度的词放前面；长标题会截断。
+- 不要把 `Page 3 of 10` 这类序号放进 title；那属于数字分页。
+
+## 可访问性
+
+- 根级 `<nav>` 默认 `aria-label="Page navigation"`。
+- 上一页和下一页链接分别带 `rel="prev"`、`rel="next"`。
+- 每个链接都会生成包含目标标题的 aria label。
+- 缺失的 previous 或 next slot 在桌面保留空 rail，移动端隐藏。

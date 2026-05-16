@@ -187,11 +187,11 @@ function RowActions({ row, onEdit, onRevoke }: { row: ApiKey; onEdit: (r: ApiKey
 
 `DataTable` 之外的场景，先用 `useMemo` 自行筛选数组，再传给原生 `Table`。
 
-### 分页
+### 数据集分页
 
 `DataTable` 不附带开箱即用的分页器。超大数据集启用虚拟化（`enableVirtualization`、`virtualizeThreshold`），可以无分页渲染数千行。需要服务端分页时，在组件外做分页，把当前页的切片传给 `data`。
 
-> **TODO：** 第一方 `Pagination` 原语在路线图中。在它落地之前，用 `Button` + 页码状态 hook 自己组合一个，放在表格旁边。
+表格需要首页 / 上一页 / 下一页 / 末页、分页大小选择和 `Page x of y` 状态时，使用 `PaginationControl`。不要在这里使用 `Pagination`；它只服务兄弟页面导航。
 
 ### 空 / 加载 / 错误状态
 
