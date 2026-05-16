@@ -15,6 +15,10 @@ fi
 if [[ -n "${NPM_TOKEN:-}" ]]; then
   echo "Publishing with npm token fallback (OIDC not enabled yet)"
   export NODE_AUTH_TOKEN="${NPM_TOKEN}"
+  # Provenance attestation requires OIDC. With token-only auth, npm publish
+  # exits 0 but silently skips publication for packages where attestation
+  # would be required — disable explicitly so token-fallback is honest.
+  export NPM_CONFIG_PROVENANCE=false
   pnpm exec changeset publish
   exit 0
 fi
