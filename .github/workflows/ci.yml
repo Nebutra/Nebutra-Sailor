@@ -48,6 +48,8 @@ jobs:
             web:
               - 'apps/web/**'
               - 'packages/**'
+              - 'scripts/verify-web-release.mjs'
+              - '.github/workflows/ci.yml'
             api-gateway:
               - 'backends/gateway/**'
               - 'packages/**'
@@ -81,6 +83,10 @@ jobs:
               - 'apps/landing-page/**'
               - 'apps/sleptons/**'
               - 'apps/web/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'scripts/check-e2e-prereqs.mjs'
+              - '.github/workflows/ci.yml'
               - 'packages/design/brand/**'
               - 'packages/design/theme/**'
               - 'packages/design/tokens/**'
@@ -303,6 +309,60 @@ jobs:
             --filter='!./apps/tsekaluk-dev'
         env:
           SKIP_ENV_VALIDATION: true
+          AUTH_PROVIDER: "clerk"
+          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          NEXT_TELEMETRY_DISABLED: "1"
+
+  # ── Web release verification ─────────────────────────────────────────────
+  # Production-like web gate: validates generated types, TS, webpack build, and
+  # fails on new unclassified dependency warnings.
+  web-release-verification:
+    name: Web Release Verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [detect-changes, build]
+    if: needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.packages == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
+      - name: Build web app dependency closure
+        run: pnpm turbo build --filter="@nebutra/web^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+          AUTH_PROVIDER: "clerk"
+          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          NEXT_TELEMETRY_DISABLED: "1"
+
+      - name: Verify web release
+        run: pnpm verify:web-release
+        env:
+          AUTH_PROVIDER: "clerk"
+          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          NEXT_TELEMETRY_DISABLED: "1"
+
+      - name: Upload web release logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: web-release-${{ github.run_id }}
+          path: artifacts/web-release-build.log
+          retention-days: 14
 
   # ── Tests (affected packages only) ──────────────────────────────────────
   test:
@@ -650,13 +710,39 @@ jobs:
       - name: Generate Prisma Client
         run: pnpm db:generate
 
+      - name: Preflight Playwright runtime
+        run: pnpm check:e2e-env
+        env:
+          AUTH_PROVIDER: "clerk"
+          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          NEXT_TELEMETRY_DISABLED: "1"
+          PLAYWRIGHT_BASE_URL: "http://127.0.0.1:3100"
+          APP_BASE_URL: "http://127.0.0.1:3101"
+          API_BASE_URL: "http://127.0.0.1:3102"
+          SLEPTONS_BASE_URL: "http://127.0.0.1:3103"
+          E2E_LANDING_PORT: "3100"
+          E2E_WEB_PORT: "3101"
+          E2E_API_PORT: "3102"
+          E2E_SLEPTONS_PORT: "3103"
+          E2E_AUTH_SMOKE: "0"
+
       - name: Run E2E tests (shard ${{ matrix.shard }}/4)
         run: pnpm exec playwright test --config=e2e/playwright.config.ts --shard=${{ matrix.shard }}/4
         env:
           CI: true
-          APP_BASE_URL: "http://localhost:3001"
-          API_BASE_URL: "http://localhost:3002"
+          PLAYWRIGHT_BASE_URL: "http://127.0.0.1:3100"
+          APP_BASE_URL: "http://127.0.0.1:3101"
+          API_BASE_URL: "http://127.0.0.1:3102"
+          SLEPTONS_BASE_URL: "http://127.0.0.1:3103"
+          E2E_LANDING_PORT: "3100"
+          E2E_WEB_PORT: "3101"
+          E2E_API_PORT: "3102"
+          E2E_SLEPTONS_PORT: "3103"
+          E2E_AUTH_SMOKE: "0"
           SKIP_ENV_VALIDATION: "true"
+          AUTH_PROVIDER: "clerk"
+          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          NEXT_TELEMETRY_DISABLED: "1"
           DATABASE_URL: ${{ secrets.CI_DATABASE_URL || '' }}
           CLERK_SECRET_KEY: ${{ secrets.CI_CLERK_SECRET_KEY || '' }}
 
