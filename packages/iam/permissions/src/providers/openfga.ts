@@ -14,6 +14,12 @@ export interface OpenFGATuple {
   object: string;
 }
 
+export interface OpenFGAProviderConfig {
+  apiUrl?: string | undefined;
+  storeId?: string | undefined;
+  authToken?: string | undefined;
+}
+
 export interface OpenFGACheckRequest {
   tuple_key: {
     user: string;
@@ -43,10 +49,18 @@ export interface OpenFGAListObjectsRequest {
 
 export class OpenFGAProvider implements PermissionProvider {
   private apiUrl: string;
+  private storeId: string | undefined;
+  private authToken: string | undefined;
   private roleDefinitions: Map<string, RoleDefinition> = new Map();
 
-  constructor(apiUrl?: string, roles?: RoleDefinition[]) {
-    this.apiUrl = apiUrl || process.env.OPENFGA_API_URL || "http://localhost:8080";
+  constructor(config?: string | OpenFGAProviderConfig, roles?: RoleDefinition[]) {
+    const resolvedConfig = typeof config === "string" ? { apiUrl: config } : config;
+
+    this.apiUrl = resolvedConfig?.apiUrl || process.env.OPENFGA_API_URL || "http://localhost:8080";
+    const resolvedStoreId = resolvedConfig?.storeId || process.env.OPENFGA_STORE_ID;
+    if (resolvedStoreId !== undefined) this.storeId = resolvedStoreId;
+    const resolvedAuthToken = resolvedConfig?.authToken || process.env.OPENFGA_AUTH_TOKEN;
+    if (resolvedAuthToken !== undefined) this.authToken = resolvedAuthToken;
 
     if (roles) {
       for (const role of roles) {
@@ -64,19 +78,45 @@ export class OpenFGAProvider implements PermissionProvider {
     return definition?.rules || [];
   }
 
+  private endpoint(path: "check" | "list-objects" | "write"): string | null {
+    if (!this.storeId) {
+      logger.error("OpenFGA store id is required", { path });
+      return null;
+    }
+
+    const apiUrl = this.apiUrl.replace(/\/+$/, "");
+    const storeId = encodeURIComponent(this.storeId);
+    return `${apiUrl}/stores/${storeId}/${path}`;
+  }
+
+  private headers(): Record<string, string> {
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+
+    if (this.authToken) {
+      headers.Authorization = `Bearer ${this.authToken}`;
+    }
+
+    return headers;
+  }
+
   async check(user: string, relation: string, object: string): Promise<boolean> {
     const request: OpenFGACheckRequest = {
       tuple_key: {
-        user,
-        relation,
         object,
+        relation,
+        user,
       },
     };
+    const endpoint = this.endpoint("check");
+
+    if (!endpoint) {
+      return false;
+    }
 
     try {
-      const response = await fetch(`${this.apiUrl}/check`, {
+      const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: this.headers(),
         body: JSON.stringify(request),
       });
 
@@ -86,7 +126,7 @@ export class OpenFGAProvider implements PermissionProvider {
       }
 
       const data: OpenFGACheckResponse = await response.json();
-      return data.allowed;
+      return data.allowed === true;
     } catch (error) {
       logger.error("OpenFGA check error", { error, user, relation, object });
       return false;
@@ -99,11 +139,16 @@ export class OpenFGAProvider implements PermissionProvider {
         tuple_keys: tuples,
       },
     };
+    const endpoint = this.endpoint("write");
+
+    if (!endpoint) {
+      throw new Error("OpenFGA write failed: missing store id");
+    }
 
     try {
-      const response = await fetch(`${this.apiUrl}/write`, {
+      const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: this.headers(),
         body: JSON.stringify(request),
       });
 
@@ -123,11 +168,16 @@ export class OpenFGAProvider implements PermissionProvider {
         tuple_keys: tuples,
       },
     };
+    const endpoint = this.endpoint("write");
+
+    if (!endpoint) {
+      throw new Error("OpenFGA delete failed: missing store id");
+    }
 
     try {
-      const response = await fetch(`${this.apiUrl}/write`, {
+      const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: this.headers(),
         body: JSON.stringify(request),
       });
 
@@ -143,15 +193,20 @@ export class OpenFGAProvider implements PermissionProvider {
 
   async listObjects(user: string, relation: string, type: string): Promise<string[]> {
     const request: OpenFGAListObjectsRequest = {
-      user,
       relation,
       type,
+      user,
     };
+    const endpoint = this.endpoint("list-objects");
+
+    if (!endpoint) {
+      return [];
+    }
 
     try {
-      const response = await fetch(`${this.apiUrl}/list_objects`, {
+      const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: this.headers(),
         body: JSON.stringify(request),
       });
 
@@ -195,16 +250,64 @@ export class OpenFGAProvider implements PermissionProvider {
     resource: Resource,
     subject?: unknown,
   ): Promise<boolean> {
-    if (typeof subject !== "string" && typeof subject !== "object") {
+    const user = this.formatUser(context.userId);
+    const object = this.formatObject(resource, subject);
+
+    if (!user || !object) {
       return false;
     }
 
-    const objectId = typeof subject === "string" ? subject : (subject as Record<string, string>).id;
+    return this.check(user, action, object);
+  }
+
+  private formatUser(userId: string): string | null {
+    const trimmed = userId.trim();
+
+    if (!trimmed) {
+      return null;
+    }
+
+    return trimmed.includes(":") ? trimmed : `user:${trimmed}`;
+  }
+
+  private formatObject(resource: Resource, subject: unknown): string | null {
+    const objectId = this.extractSubjectId(subject);
+
     if (!objectId) {
-      return false;
+      return null;
     }
 
-    return this.check(context.userId, action, `${resource}:${objectId}`);
+    if (objectId.includes(":")) {
+      return objectId;
+    }
+
+    const objectType = String(resource).trim();
+
+    if (!objectType) {
+      return null;
+    }
+
+    return `${objectType}:${objectId}`;
+  }
+
+  private extractSubjectId(subject: unknown): string | null {
+    if (typeof subject === "string") {
+      const trimmed = subject.trim();
+      return trimmed || null;
+    }
+
+    if (subject === null || typeof subject !== "object" || Array.isArray(subject)) {
+      return null;
+    }
+
+    const id = (subject as { id?: unknown }).id;
+
+    if (typeof id !== "string") {
+      return null;
+    }
+
+    const trimmed = id.trim();
+    return trimmed || null;
   }
 
   buildAbilityFor(_context: PermissionContext): unknown {
@@ -212,6 +315,9 @@ export class OpenFGAProvider implements PermissionProvider {
   }
 }
 
-export function createOpenFGAProvider(apiUrl?: string, roles?: RoleDefinition[]): OpenFGAProvider {
-  return new OpenFGAProvider(apiUrl, roles);
+export function createOpenFGAProvider(
+  config?: string | OpenFGAProviderConfig,
+  roles?: RoleDefinition[],
+): OpenFGAProvider {
+  return new OpenFGAProvider(config, roles);
 }

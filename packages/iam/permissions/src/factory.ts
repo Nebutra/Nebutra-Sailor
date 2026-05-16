@@ -26,7 +26,17 @@ export class PermissionsManager {
     const roles = config?.roles || getDefaultRoles();
 
     if (detectedType === "openfga") {
-      this.provider = new OpenFGAProvider(config?.openFgaApiUrl, roles);
+      // exactOptionalPropertyTypes: only set keys that have defined values so
+      // the optional `?:` modifier on OpenFGAProviderConfig stays satisfied.
+      const openFgaConfig: {
+        apiUrl?: string;
+        authToken?: string;
+        storeId?: string;
+      } = {};
+      if (config?.openFgaApiUrl !== undefined) openFgaConfig.apiUrl = config.openFgaApiUrl;
+      if (config?.openFgaAuthToken !== undefined) openFgaConfig.authToken = config.openFgaAuthToken;
+      if (config?.openFgaStoreId !== undefined) openFgaConfig.storeId = config.openFgaStoreId;
+      this.provider = new OpenFGAProvider(openFgaConfig, roles);
       logger.info("Initialized OpenFGA permissions provider");
     } else {
       this.provider = new CASLProvider(roles);
