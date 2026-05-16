@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, type ReactNode } from "react";
+import type { ReactNode, Ref } from "react";
 import { cn } from "../utils/cn";
 
 /* -------------------------------------------------------------------------- *\
@@ -10,7 +10,7 @@ import { cn } from "../utils/cn";
  *
  *  Pick the right surface:
  *    - ProjectBanner  → project-wide state needing a resolver action
- *    - Alert / Note   → inline contextual message tied to one field or card
+ *    - Note           → inline contextual message tied to one field or card
  *    - Toast          → transient acknowledgement
  *    - Modal          → blocking confirmation
  *
@@ -57,6 +57,7 @@ export type ProjectBannerProps = {
    * all others. Pass explicitly if you need to override (e.g. a polite error).
    */
   role?: "alert" | "status";
+  ref?: Ref<HTMLElement>;
   className?: string;
 };
 
@@ -94,10 +95,15 @@ const ctaBase = "font-medium underline underline-offset-[5px] transition-colors 
 // Component
 // ---------------------------------------------------------------------------
 
-export const ProjectBanner = forwardRef<HTMLElement, ProjectBannerProps>(function ProjectBanner(
-  { variant = "info", label, icon, callToAction, role, className },
+export function ProjectBanner({
+  variant = "info",
+  label,
+  icon,
+  callToAction,
+  role,
   ref,
-) {
+  className,
+}: ProjectBannerProps) {
   const tokens = variantMap[variant];
   const resolvedRole = role ?? (variant === "error" ? "alert" : "status");
 
@@ -114,9 +120,7 @@ export const ProjectBanner = forwardRef<HTMLElement, ProjectBannerProps>(functio
     >
       <div className="flex w-full flex-col gap-2 px-6 md:flex-row md:items-center md:justify-center">
         <div className="flex items-center gap-2">
-          {icon && (
-            <span className="flex h-4 w-4 shrink-0 items-center justify-center">{icon}</span>
-          )}
+          {icon && <span className="flex size-4 shrink-0 items-center justify-center">{icon}</span>}
           <span>{label}</span>
         </div>
         {callToAction && (
@@ -139,4 +143,4 @@ export const ProjectBanner = forwardRef<HTMLElement, ProjectBannerProps>(functio
       </div>
     </aside>
   );
-});
+}

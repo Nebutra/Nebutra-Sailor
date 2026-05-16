@@ -320,6 +320,7 @@ export * from "./multiple-selector";
 export * from "./navigation-menu";
 export * from "./neuro-noise-bg";
 export * from "./noise-pattern-card";
+export * from "./note";
 export * from "./notification-message-list";
 export * from "./pagination";
 export * from "./pagination-control";

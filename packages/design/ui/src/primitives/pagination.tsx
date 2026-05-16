@@ -54,7 +54,7 @@ function PaginationRail({
   direction,
   label,
 }: {
-  destination?: PaginationDestination;
+  destination: PaginationDestination | undefined;
   direction: "previous" | "next";
   label: string;
 }) {
