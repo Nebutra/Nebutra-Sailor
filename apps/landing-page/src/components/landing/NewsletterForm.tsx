@@ -51,7 +51,7 @@ export function NewsletterForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="rounded-lg bg-[image:var(--brand-gradient)] px-3 py-1.5 text-sm font-medium text-white transition-opacity disabled:opacity-50"
+        className="min-w-16 rounded-lg border border-[color:var(--blue-6)] bg-[color:var(--blue-2)] px-3 py-1.5 text-sm font-medium text-[color:var(--neutral-12)] shadow-[0_1px_2px_rgba(15,23,42,0.05)] transition-colors hover:border-[color:var(--blue-7)] hover:bg-[color:var(--blue-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] disabled:cursor-not-allowed disabled:opacity-60 dark:border-[color:var(--cyan-6)] dark:bg-[color:var(--cyan-2)] dark:text-[color:var(--neutral-12)] dark:hover:bg-[color:var(--cyan-3)]"
       >
         {status === "loading" ? "..." : t("newsletterSubscribe")}
       </button>

@@ -21,11 +21,11 @@ export interface FullPageStatusMeta {
 export interface FullPageStatusProps {
   /** Eyebrow label, e.g. "Error 404" / "Error 500". Rendered monospace, uppercase. */
   code: string;
-  /** Headline. Wrap a word in `accent` to gradient-highlight it. */
+  /** Headline. Keep it direct; use Accent only for subtle neutral emphasis. */
   title: ReactNode;
   /** Single-sentence subcopy. */
   description: string;
-  /** Primary CTA (filled, brand gradient). */
+  /** Primary CTA (filled neutral ink). */
   primaryAction: FullPageStatusAction;
   /** Secondary CTA (outlined). Optional. */
   secondaryAction?: FullPageStatusAction;
@@ -53,10 +53,10 @@ export interface FullPageStatusProps {
  * ```tsx
  * <FullPageStatus
  *   code="Error 404"
- *   title={<>We couldn't find that <FullPageStatus.Accent>page</FullPageStatus.Accent>.</>}
+ *   title={<>We couldn't find that page.</>}
  *   description="The page you're looking for doesn't exist or has been moved."
  *   primaryAction={{ label: "Go to dashboard", href: "/" }}
- *   secondaryAction={{ label: "Contact support", href: "/support" }}
+ *   secondaryAction={{ label: "Open docs", href: "/docs" }}
  * />
  * ```
  */
@@ -135,18 +135,7 @@ function ActionButton({
   );
 }
 
-/** Gradient-highlighted word for use inside a `title` prop. */
+/** Subtle neutral emphasis for use inside a `title` prop. */
 FullPageStatus.Accent = function Accent({ children }: { children: ReactNode }) {
-  return (
-    <span
-      style={{
-        background: "var(--brand-gradient)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        backgroundClip: "text",
-      }}
-    >
-      {children}
-    </span>
-  );
+  return <span className="text-neutral-12">{children}</span>;
 };
