@@ -1,0 +1,58 @@
+---
+title: "消息内容 (Message Content)"
+description: "面向 AI 回复、工具输出与紧凑助手界面的流式 Markdown 渲染器。"
+---
+
+## 使用
+
+当 Markdown 来自模型、工具或流式助手回复时使用 `MessageContent`。它会先修正常见 LLM Markdown 缺陷，再应用 Nebutra 的 prose 契约。
+
+```tsx
+import { MessageContent } from "@nebutra/ui/primitives";
+
+<MessageContent>
+  {`## Deployment Summary
+
+1.
+
+Promote edge config
+
+\`\`\`nonsense
+const unsafe = true
+\`\`\``}
+</MessageContent>;
+```
+
+## 行为
+
+- `1.` 后面跟空行这类破损有序列表，会被合并成有效列表项。
+- 未知 code fence 语言会降级为 `text`。
+- 支持的 code fence 语言刻意保持收敛：shell、JS/TS、JSX/TSX、JSON、HTML、YAML、Markdown、diff 和纯文本。
+- 保持流式友好；可以把 partial chunk 直接作为 `children` 传入。
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `children` | `string` | - | Markdown 源内容。流式场景下可以是 partial chunk。 |
+| `density` | `"compact" \| "comfortable"` | `"comfortable"` | 通过组件 token 调整段落、标题和代码块节奏。 |
+| `inverted` | `boolean` | `false` | 用于深色/品牌色消息气泡中的浅色 prose。 |
+| `className` | `string` | - | 应用于消息根节点。 |
+| `style` | `CSSProperties` | - | 合并在组件 CSS 变量之后。 |
+
+## 设计原则
+
+- AI/chat 文本统一使用 `MessageContent`。作者手写的文档页面继续使用 MDX/Fumadocs 渲染器。
+- 不要在产品界面直接使用原始 `ReactMarkdown`；那会制造分裂的 typography、link、table 和 code 行为。
+- 控件放在 Markdown 外部。Markdown 是正文，不是命令界面。
+- 聊天气泡和 tool call 行内优先使用 `density="compact"`；独立摘要使用 `comfortable`。
+
+## 可访问性
+
+- Markdown 应补充消息容器的可访问标签，而不是替代它。
+- Link 的可访问名称来自实际渲染文本。
+- Code block 尽量提供语言提示；未知提示会降级为 `text`，避免泄漏任意 class。
+
+## Tokens
+
+`MessageContent` 使用 `messageContentTokens` 管理代码块圆角、代码块 padding、行内代码 padding、表格圆角和密度节奏。运行时颜色继续走 semantic prose utilities。

@@ -4,3 +4,4 @@ export { type ButtonSize, buttonTokens } from "./button";
 export { type CardPadding, cardTokens } from "./card";
 export { choiceboxTokens } from "./choicebox";
 export { inputTokens } from "./input";
+export { messageContentTokens } from "./message-content";

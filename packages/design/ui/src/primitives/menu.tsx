@@ -181,9 +181,9 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
           size={GEIST_SIZE_TO_NEBUTRA[size]}
           shape={shape}
           className={className}
-          loading={loading}
-          prefix={prefix}
-          suffix={suffix}
+          {...(loading !== undefined ? { loading } : {})}
+          {...(prefix !== undefined ? { prefix } : {})}
+          {...(suffix !== undefined ? { suffix } : {})}
           {...(ariaLabel !== undefined ? { "aria-label": ariaLabel } : {})}
           {...rest}
         >

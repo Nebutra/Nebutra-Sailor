@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "../utils/cn";
 
 // =============================================================================
@@ -8,6 +8,7 @@ import { cn } from "../utils/cn";
 // =============================================================================
 
 export interface LoadingDotsProps {
+  ref?: React.Ref<HTMLSpanElement>;
   /** Diameter of each dot in pixels. Default: 6 */
   size?: number;
   /** Optional content rendered before the dots (e.g. a label). */
@@ -36,39 +37,36 @@ const KEYFRAMES = `
 // LoadingDots
 // =============================================================================
 
-const LoadingDots = React.forwardRef<HTMLSpanElement, LoadingDotsProps>(
-  ({ size = 6, children, className }, ref) => {
-    return (
-      <>
-        <style>{KEYFRAMES}</style>
-        <span
-          ref={ref}
-          // Geist a11y rule: announce the in-progress label politely so the
-          // surrounding text ("Saving"/"Building") reaches AT users without
-          // interrupting their current speech.
-          aria-live="polite"
-          className={cn("inline-flex items-center gap-1", className)}
-        >
-          {children}
-          <span aria-hidden="true" className="inline-flex items-center gap-[3px]">
-            {[0, 1, 2].map((i) => (
-              <span
-                key={i}
-                className="nbt-loading-dot rounded-full bg-current"
-                style={{
-                  width: size,
-                  height: size,
-                  animation: `loading-dot 1.2s ease-in-out infinite`,
-                  animationDelay: `${i * 0.2}s`,
-                }}
-              />
-            ))}
-          </span>
+function LoadingDots({ ref, size = 6, children, className }: LoadingDotsProps) {
+  return (
+    <>
+      <style>{KEYFRAMES}</style>
+      <span
+        ref={ref}
+        // Geist a11y rule: announce the in-progress label politely so the
+        // surrounding text ("Saving"/"Building") reaches AT users without
+        // interrupting their current speech.
+        aria-live="polite"
+        className={cn("inline-flex items-center gap-1", className)}
+      >
+        {children}
+        <span aria-hidden="true" className="inline-flex items-center gap-[3px]">
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              className="nbt-loading-dot rounded-full bg-current"
+              style={{
+                width: size,
+                height: size,
+                animation: `loading-dot 1.2s ease-in-out infinite`,
+                animationDelay: `${i * 0.2}s`,
+              }}
+            />
+          ))}
         </span>
-      </>
-    );
-  },
-);
-LoadingDots.displayName = "LoadingDots";
+      </span>
+    </>
+  );
+}
 
 export { LoadingDots };

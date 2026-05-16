@@ -14,78 +14,17 @@ import { Square } from "@phosphor-icons/react/dist/ssr";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React from "react";
+import { Button } from "../primitives/button";
 import { Dialog, DialogContent, DialogTitle } from "../primitives/dialog";
+import { Textarea } from "../primitives/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../primitives/tooltip";
 
 // Utility function for className merging
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
-// Embedded CSS for minimal custom styles
-const styles = `
-  *:focus-visible {
-    outline-offset: 0 !important;
-    --ring-offset: 0 !important;
-  }
-  textarea::-webkit-scrollbar {
-    width: 6px;
-  }
-  textarea::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  textarea::-webkit-scrollbar-thumb {
-    background-color: hsl(var(--border));
-    border-radius: 3px;
-  }
-  textarea::-webkit-scrollbar-thumb:hover {
-    background-color: hsl(var(--muted-foreground));
-  }
-`;
-// Inject styles into document
-if (typeof document !== "undefined") {
-  const styleSheet = document.createElement("style");
-  styleSheet.innerText = styles;
-  document.head.appendChild(styleSheet);
-}
-// Textarea Component
-interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  className?: string;
-}
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, ...props }, ref) => <Textarea ref={ref} rows={1} {...props} />,
-);
-Textarea.displayName = "Textarea";
-// Button Component
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "outline" | "ghost";
-  size?: "default" | "sm" | "lg" | "icon";
-}
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "default", size = "default", ...props }, ref) => {
-    const variantClasses = {
-      default: "bg-primary hover:bg-primary/90 text-primary-foreground",
-      outline: "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
-      ghost: "bg-transparent hover:bg-accent hover:text-accent-foreground",
-    };
-    const sizeClasses = {
-      default: "h-10 px-4 py-2",
-      sm: "h-8 px-3 text-sm",
-      lg: "h-12 px-6",
-      icon: "h-8 w-8 rounded-full aspect-[1/1]",
-    };
-    return (
-      <button
-        className={cn(
-          "inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
-          variantClasses[variant],
-          sizeClasses[size],
-          className,
-        )}
-        ref={ref}
-        {...props}
-      />
-    );
-  },
-);
-Button.displayName = "Button";
+
+type PromptTextareaStyle = React.CSSProperties & {
+  "--textarea-min-height"?: string;
+};
 // VoiceRecorder Component
 interface VoiceRecorderProps {
   isRecording: boolean;
@@ -275,7 +214,7 @@ interface PromptInputTextareaProps {
 }
 const PromptInputTextarea: React.FC<
   PromptInputTextareaProps & React.ComponentProps<typeof Textarea>
-> = ({ className, onKeyDown, disableAutosize = false, placeholder, ...props }) => {
+> = ({ className, onKeyDown, disableAutosize = false, placeholder, style, ...props }) => {
   const { value, setValue, maxHeight, onSubmit, disabled } = usePromptInput();
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
   React.useEffect(() => {
@@ -299,7 +238,9 @@ const PromptInputTextarea: React.FC<
       value={value}
       onChange={(e) => setValue(e.target.value)}
       onKeyDown={handleKeyDown}
-      className={cn("text-base", className)}
+      rows={1}
+      style={{ "--textarea-min-height": "2rem", ...style } as PromptTextareaStyle}
+      className={cn("resize-none border-0 shadow-none focus-visible:ring-0", className)}
       disabled={disabled}
       placeholder={placeholder}
       {...props}
