@@ -5,6 +5,9 @@
   "title": "Collapse",
   "description": "Geist-style flat Collapse/CollapseGroup API on top of our Accordion. Single, multiple-open, and standalone modes.",
   "author": "Nebutra <ui.nebutra.com>",
+  "registryDependencies": [
+    "accordion"
+  ],
   "files": [
     {
       "path": "components/ui/collapse.tsx",

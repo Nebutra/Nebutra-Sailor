@@ -3,6 +3,7 @@
   "name": "animated-beam-demo",
   "type": "registry:example",
   "dependencies": [
+    "@nebutra/icons",
     "@nebutra/ui"
   ],
   "registryDependencies": [

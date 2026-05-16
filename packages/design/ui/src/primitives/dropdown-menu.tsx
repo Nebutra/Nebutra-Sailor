@@ -49,7 +49,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <ChevronRight className="ml-auto h-4 w-4" />
+    <ChevronRight className="ml-auto size-4" />
   </BaseMenu.SubmenuTrigger>
 ));
 DropdownMenuSubTrigger.displayName = "DropdownMenuSubTrigger";
@@ -63,7 +63,7 @@ const DropdownMenuSubContent = React.forwardRef<
       <BaseMenu.Popup
         ref={ref}
         className={cn(
-          "z-50 min-w-32 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md p-1 text-popover-foreground shadow-xl transition-all data-[starting-style]:zoom-out-95 data-[ending-style]:zoom-out-95 data-[starting-style]:fade-out-0 data-[ending-style]:fade-out-0",
+          "z-50 min-w-32 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md p-1 text-popover-foreground shadow-xl transition-[opacity,transform,display] duration-flow ease-out data-[starting-style]:zoom-out-95 data-[ending-style]:zoom-out-95 data-[starting-style]:fade-out-0 data-[ending-style]:fade-out-0",
           className,
         )}
         {...props}
@@ -99,7 +99,7 @@ const DropdownMenuContent = React.forwardRef<
         <BaseMenu.Popup
           ref={ref}
           className={cn(
-            "z-50 min-w-32 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md p-1 text-popover-foreground shadow-xl transition-all outline-none data-[starting-style]:zoom-out-95 data-[ending-style]:zoom-out-95 data-[starting-style]:fade-out-0 data-[ending-style]:fade-out-0",
+            "z-50 min-w-32 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md p-1 text-popover-foreground shadow-xl transition-[opacity,transform,display] duration-flow ease-out outline-none data-[starting-style]:zoom-out-95 data-[ending-style]:zoom-out-95 data-[starting-style]:fade-out-0 data-[ending-style]:fade-out-0",
             className,
           )}
           {...props}
@@ -141,9 +141,9 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     {...(checked !== undefined && { checked })}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <BaseMenu.CheckboxItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className="size-4" />
       </BaseMenu.CheckboxItemIndicator>
     </span>
     {children}
@@ -163,9 +163,9 @@ const DropdownMenuRadioItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <BaseMenu.RadioItemIndicator>
-        <Circle className="h-2 w-2 fill-current" />
+        <Circle className="size-2 fill-current" />
       </BaseMenu.RadioItemIndicator>
     </span>
     {children}

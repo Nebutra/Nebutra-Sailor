@@ -556,10 +556,6 @@
       "type": "registry:example"
     },
     {
-      "name": "glowing-effect-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "gradient-animated-text-demo",
       "type": "registry:example"
     },
@@ -765,6 +761,10 @@
     },
     {
       "name": "noise-pattern-card-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "note-demo",
       "type": "registry:example"
     },
     {

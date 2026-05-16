@@ -56,7 +56,7 @@ const AccordionTrigger = React.forwardRef<
     <RadixTrigger
       ref={ref}
       className={cn(
-        "font-medium flex flex-1 items-center justify-between transition-all duration-200 hover:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none [&[data-panel-open]>svg]:rotate-45",
+        "font-medium flex flex-1 items-center justify-between transition-[color,box-shadow] duration-flow ease-out hover:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none [&[data-panel-open]>svg]:rotate-45",
         size === "small" ? "py-2.5 text-sm" : "py-4 text-[15px]",
         className,
       )}
@@ -65,8 +65,8 @@ const AccordionTrigger = React.forwardRef<
       {children}
       <Plus
         className={cn(
-          "shrink-0 text-muted-foreground transition-transform duration-200",
-          size === "small" ? "h-3.5 w-3.5" : "h-4 w-4",
+          "shrink-0 text-muted-foreground transition-transform duration-flow ease-out",
+          size === "small" ? "size-3.5" : "size-4",
         )}
       />
     </RadixTrigger>
@@ -94,7 +94,7 @@ const AccordionContent = React.forwardRef<
   <RadixContent
     ref={ref}
     {...(keepMounted ? { keepMounted: true } : {})}
-    className="text-sm leading-relaxed data-[ending-style]:animate-accordion-up data-[open]:animate-accordion-down overflow-hidden text-muted-foreground transition-all"
+    className="text-sm leading-relaxed data-[ending-style]:animate-accordion-up data-[open]:animate-accordion-down overflow-hidden text-muted-foreground transition-[height,opacity] duration-flow ease-out"
     {...props}
   >
     <div className={cn(size === "small" ? "pb-2.5 pt-0" : "pb-4 pt-0", className)}>{children}</div>

@@ -9,7 +9,8 @@
     "@nebutra/icons"
   ],
   "registryDependencies": [
-    "button"
+    "button",
+    "dropdown-menu"
   ],
   "files": [
     {

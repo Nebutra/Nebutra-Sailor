@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "note-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/note-demo.tsx",
+      "content": "\"use client\";\n\nimport { Button, Note } from \"@nebutra/ui/primitives\";\n\nexport function NoteDemo() {\n  return (\n    <div className=\"grid w-full max-w-2xl gap-3\">\n      <Note label=\"Region Change\" tone=\"warning\">\n        Changing this region restarts all functions.\n      </Note>\n      <Note action={<Button size=\"sm\">Review Usage</Button>} tone=\"secondary\">\n        This workspace is close to its included usage limit.\n      </Note>\n      <Note fill tone=\"success\">\n        Domain ownership was verified.\n      </Note>\n      <Note action={<Button size=\"sm\">Open Logs</Button>} tone=\"error\">\n        Build log streaming failed. Review the latest run before retrying.\n      </Note>\n      <Note tone=\"cyan\">\n        Read the <a href=\"#usage\">usage guide</a> before enabling cross-region replication.\n      </Note>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

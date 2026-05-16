@@ -540,10 +540,6 @@
       "type": "registry:example"
     },
     {
-      "name": "glowing-effect-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "gradient-animated-text-demo",
       "type": "registry:example"
     },

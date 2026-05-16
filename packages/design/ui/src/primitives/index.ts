@@ -240,7 +240,6 @@ export * from "./github-inline-diff";
  *   via `npx shadcn@latest add ...`. See docs/architecture/2026-05-14-registry-dual-track-distribution.md.
  */
 export * from "./globe";
-export * from "./glowing-effect";
 export * from "./gradient-animated-text";
 export * from "./grain-gradient-background";
 export * from "./grid-feature-card";
@@ -360,8 +359,8 @@ export * from "./relative-time-card";
 export * from "./resizable";
 export * from "./responsive";
 export * from "./safari";
-export * from "./scroller";
 export * from "./scroll-velocity";
+export * from "./scroller";
 /**
  * Inline AI tool-call rendering for search/retrieval results. Sibling of
  * EditTool / QuestionTool / McpTool / TodoTool. Rows with `url` render as

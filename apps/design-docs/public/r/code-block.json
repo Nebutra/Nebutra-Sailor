@@ -10,6 +10,9 @@
     "motion",
     "react-syntax-highlighter"
   ],
+  "registryDependencies": [
+    "dropdown-menu"
+  ],
   "files": [
     {
       "path": "components/ui/code-block.tsx",

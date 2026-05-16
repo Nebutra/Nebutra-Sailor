@@ -8,6 +8,9 @@
   "dependencies": [
     "@nebutra/icons"
   ],
+  "registryDependencies": [
+    "middle-truncate"
+  ],
   "files": [
     {
       "path": "components/ui/browser-mockup.tsx",

@@ -572,11 +572,6 @@ export const GithubInlineDiffDemo = dynamic(() =>
 export const GlobeDemo = dynamic(() =>
   import("@/components/previews/globe-demo").then((m) => ({ default: m.GlobeDemo })),
 );
-export const GlowingEffectDemo = dynamic(() =>
-  import("@/components/previews/glowing-effect-demo").then((m) => ({
-    default: m.GlowingEffectDemo,
-  })),
-);
 export const GradientAnimatedTextDemo = dynamic(() =>
   import("@/components/previews/gradient-animated-text-demo").then((m) => ({ default: m.default })),
 );
@@ -767,13 +762,13 @@ export const NoisePatternCardDemo = dynamic(() =>
     default: m.NoisePatternCardDemo,
   })),
 );
+export const NoteDemo = dynamic(() =>
+  import("@/components/previews/note-demo").then((m) => ({ default: m.NoteDemo })),
+);
 export const NotificationMessageListDemo = dynamic(() =>
   import("@/components/previews/notification-message-list-demo").then((m) => ({
     default: m.NotificationMessageListDemo,
   })),
-);
-export const NoteDemo = dynamic(() =>
-  import("@/components/previews/note-demo").then((m) => ({ default: m.NoteDemo })),
 );
 export const PageContainerDemo = dynamic(() =>
   import("@/components/previews/page-container-demo").then((m) => ({
@@ -893,9 +888,6 @@ export const ResizableDemo = dynamic(() =>
 export const SafariDemo = dynamic(() =>
   import("@/components/previews/safari-demo").then((m) => ({ default: m.SafariDemo })),
 );
-export const ScrollerDemo = dynamic(() =>
-  import("@/components/previews/scroller-demo").then((m) => ({ default: m.ScrollerDemo })),
-);
 export const ScrollArea2Demo = dynamic(() =>
   import("@/components/previews/scroll-area-2-demo").then((m) => ({ default: m.ScrollArea2Demo })),
 );
@@ -914,6 +906,9 @@ export const ScrollVelocityDemo = dynamic(() =>
   import("@/components/previews/scroll-velocity-demo").then((m) => ({
     default: m.ScrollVelocityDemo,
   })),
+);
+export const ScrollerDemo = dynamic(() =>
+  import("@/components/previews/scroller-demo").then((m) => ({ default: m.ScrollerDemo })),
 );
 export const SearchToolDemo = dynamic(() =>
   import("@/components/previews/search-tool-demo").then((m) => ({ default: m.SearchToolDemo })),
@@ -1380,7 +1375,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "github-calendar-demo": { name: "github-calendar-demo", component: GithubCalendarDemo },
   "github-inline-diff-demo": { name: "github-inline-diff-demo", component: GithubInlineDiffDemo },
   "globe-demo": { name: "globe-demo", component: GlobeDemo },
-  "glowing-effect-demo": { name: "glowing-effect-demo", component: GlowingEffectDemo },
   "gradient-animated-text-demo": {
     name: "gradient-animated-text-demo",
     component: GradientAnimatedTextDemo,
@@ -1445,11 +1439,11 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "multiple-selector-demo": { name: "multiple-selector-demo", component: MultipleSelectorDemo },
   "navigation-menu-demo": { name: "navigation-menu-demo", component: NavigationMenuDemo },
   "noise-pattern-card-demo": { name: "noise-pattern-card-demo", component: NoisePatternCardDemo },
+  "note-demo": { name: "note-demo", component: NoteDemo },
   "notification-message-list-demo": {
     name: "notification-message-list-demo",
     component: NotificationMessageListDemo,
   },
-  "note-demo": { name: "note-demo", component: NoteDemo },
   "page-container-demo": { name: "page-container-demo", component: PageContainerDemo },
   "pagination-demo": { name: "pagination-demo", component: PaginationDemo },
   "popover-2-demo": { name: "popover-2-demo", component: Popover2Demo },
@@ -1498,12 +1492,12 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "resizable-2-demo": { name: "resizable-2-demo", component: Resizable2Demo },
   "resizable-demo": { name: "resizable-demo", component: ResizableDemo },
   "safari-demo": { name: "safari-demo", component: SafariDemo },
-  "scroller-demo": { name: "scroller-demo", component: ScrollerDemo },
   "scroll-area-2-demo": { name: "scroll-area-2-demo", component: ScrollArea2Demo },
   "scroll-area-3-demo": { name: "scroll-area-3-demo", component: ScrollArea3Demo },
   "scroll-area-demo": { name: "scroll-area-demo", component: ScrollAreaDemo },
   "scroll-area-list-demo": { name: "scroll-area-list-demo", component: ScrollAreaListDemo },
   "scroll-velocity-demo": { name: "scroll-velocity-demo", component: ScrollVelocityDemo },
+  "scroller-demo": { name: "scroller-demo", component: ScrollerDemo },
   "search-tool-demo": { name: "search-tool-demo", component: SearchToolDemo },
   "select-demo": { name: "select-demo", component: SelectDemo },
   "select-disabled-demo": { name: "select-disabled-demo", component: SelectDisabledDemo },
