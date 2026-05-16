@@ -11,6 +11,7 @@ import {
 import { AppShell } from "@nebutra/ui/layout";
 import type { SidebarNavRenderLinkProps, SidebarNavSection, Workspace } from "@nebutra/ui/patterns";
 import { SidebarNav, WorkspaceSwitcher } from "@nebutra/ui/patterns";
+import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type React from "react";
@@ -140,6 +141,7 @@ function DesignSystemShellInner({
   const [workspace, setWorkspace] = useState<string>(WORKSPACES[0].id);
   const breadcrumbs = buildBreadcrumbs(pathname);
   const currentBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
+  const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
 
   const currentWorkspaceLabel = useMemo(
     () =>
@@ -261,6 +263,7 @@ function DesignSystemShellInner({
       <div className={`flex items-center ${collapsed ? "justify-center" : "justify-start px-2"}`}>
         {collapsed ? (
           <span
+            role="img"
             aria-label="Nebutra Sailor"
             className="flex h-8 w-8 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-sm font-semibold text-white"
           >
@@ -376,12 +379,24 @@ function DesignSystemShellInner({
   );
 
   return (
-    <AppShell sidebar={sidebar} header={headerContent} collapsed={collapsed}>
+    <AppShell
+      sidebar={sidebar}
+      header={headerContent}
+      collapsed={collapsed}
+      contentClassName={
+        isWorkspaceCanvasRoute ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6" : undefined
+      }
+    >
       {isDevAuth ? (
         <div
           role="alert"
           aria-live="polite"
-          className="-mx-4 mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-amber-900 sm:-mx-6 md:-mx-8 dark:bg-amber-950/40 dark:text-amber-200"
+          className={cn(
+            "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-amber-900 dark:bg-amber-950/40 dark:text-amber-200",
+            isWorkspaceCanvasRoute
+              ? "-mx-3 sm:-mx-4 md:-mx-5 2xl:-mx-6"
+              : "-mx-4 sm:-mx-6 md:-mx-8",
+          )}
         >
           <AlertTriangle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
           <span>
@@ -393,9 +408,9 @@ function DesignSystemShellInner({
           </span>
         </div>
       ) : null}
-      <div id="main-content" aria-label="Main content" className="content-area">
+      <section id="main-content" aria-label="Main content" className="content-area">
         {children}
-      </div>
+      </section>
     </AppShell>
   );
 }

@@ -50,8 +50,8 @@ const surfaceLabels: Record<Surface, string> = {
 };
 
 const densityScale: Record<Density, string> = {
-  compact: "text-[12px] [--playground-gap:0.75rem] [--playground-pad:0.875rem]",
-  comfortable: "text-[13px] [--playground-gap:1rem] [--playground-pad:1.125rem]",
+  compact: "text-[13px] [--playground-gap:0.875rem] [--playground-pad:1rem]",
+  comfortable: "text-sm [--playground-gap:1.125rem] [--playground-pad:1.25rem]",
 };
 
 function CopyButton({ value, label = "Copy" }: { value: string; label?: string }) {
@@ -121,7 +121,7 @@ function ThemeRegistryPanel({
   }, [query, themes]);
 
   return (
-    <aside className="flex min-h-0 flex-col border-border/80 border-r bg-card/60">
+    <aside className="theme-playground-registry flex min-h-0 flex-col border-border/80 border-r bg-card">
       <div className="border-border/70 border-b p-4">
         <div className="mb-3 flex items-center justify-between gap-3">
           <div>
@@ -227,7 +227,7 @@ function TopBar({
   onSurfaceChange: (surface: Surface) => void;
 }) {
   return (
-    <header className="flex min-h-14 flex-wrap items-center justify-between gap-3 border-border/80 border-b bg-background/85 px-4 backdrop-blur-xl">
+    <header className="grid gap-3 border-border/80 border-b bg-background/85 p-4 backdrop-blur-xl min-[1180px]:grid-cols-[minmax(0,1fr)_auto] min-[1180px]:items-center">
       <div className="flex items-center gap-3">
         <NebutraMark />
         <div>
@@ -239,7 +239,7 @@ function TopBar({
         </Badge>
       </div>
 
-      <div className="hidden min-w-0 flex-wrap items-center gap-4 2xl:flex">
+      <div className="flex min-w-0 flex-wrap items-center gap-3 min-[1180px]:col-span-2 min-[1180px]:justify-end">
         <SegmentedControl
           label="Theme Mode"
           value={mode}
@@ -274,7 +274,7 @@ function TopBar({
         </label>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 min-[1180px]:col-start-2 min-[1180px]:row-start-1 min-[1180px]:justify-end">
         <Button
           variant="outline"
           size="sm"
@@ -336,24 +336,26 @@ function CanvasHeader({
   onSuiteChange: (suite: PreviewSuite) => void;
 }) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 border-border/70 border-b p-4">
+    <div className="grid gap-3 border-border/70 border-b p-4 min-[1080px]:grid-cols-[minmax(0,1fr)_auto_auto] min-[1080px]:items-center">
       <div>
         <h2 className="font-semibold text-foreground text-sm">Live Preview Canvas</h2>
         <p className="mt-1 text-muted-foreground text-xs">
           Same semantic suite, different token payload.
         </p>
       </div>
-      <Tabs value={activeSuite} onValueChange={(value) => onSuiteChange(value as PreviewSuite)}>
-        <TabsList size="sm" className="border border-border bg-card/80">
-          {suites.map((suite) => (
-            <TabsTrigger key={suite.id} value={suite.id}>
-              {suite.icon}
-              {suite.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
-      <select className="h-8 rounded-[var(--radius-md)] border border-border bg-card px-3 text-foreground text-xs outline-none focus-visible:ring-2 focus-visible:ring-ring">
+      <div className="min-w-0 overflow-x-auto">
+        <Tabs value={activeSuite} onValueChange={(value) => onSuiteChange(value as PreviewSuite)}>
+          <TabsList size="sm" className="min-w-max border border-border bg-card/80">
+            {suites.map((suite) => (
+              <TabsTrigger key={suite.id} value={suite.id}>
+                {suite.icon}
+                {suite.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+      </div>
+      <select className="h-8 w-fit rounded-[var(--radius-md)] border border-border bg-card px-3 text-foreground text-xs outline-none focus-visible:ring-2 focus-visible:ring-ring">
         <option>1280 x 800</option>
         <option>1440 x 1024</option>
         <option>390 x 844</option>
@@ -380,7 +382,7 @@ function PreviewCanvas({
   const style = getThemePreviewStyle(theme.id, mode);
 
   return (
-    <section className="min-h-0 min-w-0 bg-background/55">
+    <section className="theme-preview-canvas min-h-0 min-w-0 bg-background/55">
       <CanvasHeader activeSuite={activeSuite} onSuiteChange={onSuiteChange} />
       <div
         data-theme={theme.id}
@@ -392,7 +394,7 @@ function PreviewCanvas({
           densityScale[density],
         )}
       >
-        <div className="grid gap-[var(--playground-gap)] p-[var(--playground-pad)] 2xl:grid-cols-12">
+        <div className="theme-preview-grid gap-[var(--playground-gap)] p-[var(--playground-pad)]">
           <FormsPanel active={activeSuite === "forms"} />
           <PricingPanel active={activeSuite === "pricing"} />
           <DashboardPanel active={activeSuite === "dashboard"} />
@@ -456,7 +458,7 @@ function FormInput({
 
 function FormsPanel({ active }: { active: boolean }) {
   return (
-    <PreviewCard title="Create an account" active={active} className="2xl:col-span-5">
+    <PreviewCard title="Create an account" active={active} className="theme-preview-span-5">
       <p className="mb-4 text-muted-foreground text-xs">Start building in seconds.</p>
       <div className="grid gap-3">
         <FormInput label="Full name" value="Ava Johnson" />
@@ -496,8 +498,8 @@ function PricingPanel({ active }: { active: boolean }) {
   ];
 
   return (
-    <PreviewCard title="Choose your plan" active={active} className="2xl:col-span-7">
-      <div className="grid gap-3 2xl:grid-cols-3">
+    <PreviewCard title="Choose your plan" active={active} className="theme-preview-span-7">
+      <div className="theme-pricing-grid gap-3">
         {plans.map((plan) => (
           <div
             key={plan.name}
@@ -551,8 +553,8 @@ function DashboardPanel({ active }: { active: boolean }) {
   ];
 
   return (
-    <PreviewCard title="Project Overview" active={active} className="2xl:col-span-7">
-      <div className="grid gap-3 sm:grid-cols-4">
+    <PreviewCard title="Project Overview" active={active} className="theme-preview-span-7">
+      <div className="theme-stats-grid gap-3">
         {stats.map(([label, value, delta]) => (
           <div
             key={label}
@@ -586,7 +588,7 @@ function DashboardPanel({ active }: { active: boolean }) {
 
 function AiChatPanel({ active }: { active: boolean }) {
   return (
-    <PreviewCard title="AI Assistant" active={active} className="2xl:col-span-5">
+    <PreviewCard title="AI Assistant" active={active} className="theme-preview-span-5">
       <div className="mb-4 flex items-center gap-2">
         <span className="grid size-7 place-items-center rounded-full bg-primary/15 text-primary">
           <Sparkles className="size-4" />
@@ -623,7 +625,7 @@ function AiChatPanel({ active }: { active: boolean }) {
 
 function ChartsPanel({ active }: { active: boolean }) {
   return (
-    <PreviewCard title="Charts" active={active} className="2xl:col-span-12">
+    <PreviewCard title="Charts" active={active} className="theme-preview-span-12">
       <div className="grid gap-3 lg:grid-cols-3">
         <MiniChart title="User Growth" value="1,248" variant="line" />
         <MiniChart title="Revenue" value="$12,426" variant="bar" />
@@ -708,7 +710,7 @@ function TokenInspector({
   const cliCommand = `nebutra theme inspect ${theme.id} --format json`;
 
   return (
-    <aside className="flex min-h-0 flex-col border-border/80 border-l bg-card/60">
+    <aside className="theme-playground-inspector flex min-h-0 flex-col border-border/80 border-l bg-card">
       <div className="flex items-center justify-between border-border/70 border-b p-4">
         <div>
           <h2 className="font-semibold text-foreground text-sm">Token Inspector</h2>
@@ -876,7 +878,7 @@ export function ThemePlaygroundWorkbench() {
   const [activeSuite, setActiveSuite] = useState<PreviewSuite>("forms");
 
   return (
-    <div className="flex min-h-[calc(100vh-9rem)] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background text-foreground shadow-sm">
+    <div className="theme-playground-frame flex min-h-[calc(100vh-7rem)] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background text-foreground shadow-sm">
       <TopBar
         mode={mode}
         density={density}
@@ -885,7 +887,7 @@ export function ThemePlaygroundWorkbench() {
         onDensityChange={setDensity}
         onSurfaceChange={setSurface}
       />
-      <main className="grid min-h-0 flex-1 grid-cols-1 overflow-hidden border-border/70 border-t xl:grid-cols-[280px_minmax(0,1fr)_320px]">
+      <main className="theme-playground-layout min-h-0 flex-1 overflow-hidden border-border/70 border-t">
         <ThemeRegistryPanel
           themes={THEME_REGISTRY.themes}
           selectedTheme={selectedTheme}

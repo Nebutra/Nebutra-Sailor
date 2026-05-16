@@ -55,6 +55,108 @@
   .content-area {
     min-height: calc(100vh - 4rem);
   }
+
+  /*
+   * Theme playground uses dashboard chrome plus its own tool panels. Its breakpoints
+   * must follow the actual content slot width, not the browser viewport.
+   */
+  .theme-playground-frame {
+    container: theme-playground / inline-size;
+  }
+
+  .theme-playground-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .theme-playground-registry {
+    border-right-width: 0;
+    border-bottom: 1px solid hsl(var(--border) / 0.8);
+  }
+
+  .theme-playground-inspector {
+    border-left-width: 0;
+    border-top: 1px solid hsl(var(--border) / 0.8);
+  }
+
+  .theme-preview-canvas {
+    container: theme-preview / inline-size;
+  }
+
+  .theme-preview-grid,
+  .theme-pricing-grid,
+  .theme-stats-grid {
+    display: grid;
+  }
+
+  .theme-preview-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .theme-pricing-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .theme-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container theme-playground (min-width: 66rem) {
+  .theme-playground-layout {
+    grid-template-columns: minmax(17.5rem, 18rem) minmax(0, 1fr);
+  }
+
+  .theme-playground-registry {
+    border-right: 1px solid hsl(var(--border) / 0.8);
+    border-bottom-width: 0;
+  }
+
+  .theme-playground-inspector {
+    grid-column: 1 / -1;
+    border-left-width: 0;
+    border-top: 1px solid hsl(var(--border) / 0.8);
+  }
+}
+
+@container theme-playground (min-width: 92rem) {
+  .theme-playground-layout {
+    grid-template-columns: minmax(18rem, 19rem) minmax(42rem, 1fr) minmax(20rem, 22rem);
+  }
+
+  .theme-playground-inspector {
+    grid-column: auto;
+    border-left: 1px solid hsl(var(--border) / 0.8);
+    border-top-width: 0;
+  }
+}
+
+@container theme-preview (min-width: 46rem) {
+  .theme-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@container theme-preview (min-width: 66rem) {
+  .theme-preview-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .theme-pricing-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .theme-preview-span-5 {
+    grid-column: span 5 / span 5;
+  }
+
+  .theme-preview-span-7 {
+    grid-column: span 7 / span 7;
+  }
+
+  .theme-preview-span-12 {
+    grid-column: 1 / -1;
+  }
 }
 
 /* Progressive enhancement: route transitions on supporting browsers */
