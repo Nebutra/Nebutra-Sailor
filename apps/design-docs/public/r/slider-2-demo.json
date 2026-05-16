@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/slider-2-demo.tsx",
-      "content": "\"use client\";\n\nimport { Slider } from \"@nebutra/ui/primitives\";\nexport function Slider2Demo() {\n  return (\n    <div className=\"w-full\">\n      <Slider defaultValue={50} min={0} max={100} step={5} />\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { Slider } from \"@nebutra/ui/primitives\";\nexport function Slider2Demo() {\n  return (\n    <div className=\"w-full\">\n      <Slider defaultValue={50} label=\"Opacity\" max={100} min={0} step={5} unit=\"%\" />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

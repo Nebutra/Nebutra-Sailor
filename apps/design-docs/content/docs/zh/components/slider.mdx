@@ -1,58 +1,79 @@
 ---
-title: "滑块 (Slider)"
-description: "带有可拖拽手柄的数值范围选择器，基于 Radix UI 构建。"
+title: "Slider"
+description: "用于近似数值设置的单值范围输入。"
 ---
 
-## 演示 (Demo)
+## Demo
 
 <ComponentPreview name="slider-demo" className="max-w-[400px]" />
 
-
-## 使用方法 (Usage)
+## 用法
 
 ```tsx
 import { Slider } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+```tsx
+const [value, setValue] = useState([50])
 
-原生的 HTML `<input type="range">` 滑块。
+<Slider
+  label="Sample Rate"
+  max={96}
+  min={8}
+  onValueChange={setValue}
+  step={4}
+  unit=" kHz"
+  value={value}
+/>
+```
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `value` | `number[]` | — | 受控的数值数组（每个手柄一个值） |
-| `defaultValue` | `number[]` | `[0]` | 非受控的默认值 |
-| `onValueChange` | `(value: number[]) => void` | — | 拖拽过程中的回调函数 |
-| `onValueCommit` | `(value: number[]) => void` | — | 拖拽结束时的回调函数 |
-| `min` | `number` | `0` | 最小值 |
-| `max` | `number` | `100` | 最大值 |
-| `step` | `number` | `1` | 步进增量 |
-| `disabled` | `boolean` | `false` | 禁用滑块 |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | 滑块方向 |
-| `inverted` | `boolean` | `false` | 反转方向 |
-| `className` | `string` | — | 额外的 CSS 类名 |
+## Props
 
-## 示例 (Examples)
+Slider 渲染原生 `<input type="range">`，因此保留浏览器默认键盘行为。公开 API 同时兼容历史 `number` 形态和 Geist 风格的单项 `number[]` 形态。
 
-### 范围滑块 - 双手柄 (Range Slider - Two Thumbs)
+| Prop | Type | Default | 说明 |
+|------|------|---------|------|
+| `value` | `number \| number[]` | — | 受控值；数组只读取第一项，因为这是单手柄 Slider |
+| `defaultValue` | `number \| number[]` | `min` | 非受控初始值 |
+| `valueMode` | `"number" \| "array"` | inferred | 当没有 value/defaultValue 时强制回调形态 |
+| `onValueChange` | `(value) => void` | — | 数值变化时触发 |
+| `onValueCommit` | `(value) => void` | — | 指针释放或键盘提交时触发 |
+| `min` | `number` | `0` | 产品真实最小值 |
+| `max` | `number` | `100` | 产品真实最大值 |
+| `step` | `number` | `1` | 吸附步进 |
+| `label` | `string` | — | 可见标签和可访问名称 |
+| `unit` | `string` | — | 实时数值后缀 |
+| `showValue` | `boolean` | `true` | 是否用 tabular numerals 显示实时值 |
+| `formatValue` | `(value: number) => ReactNode` | — | 自定义实时值格式化 |
+
+## 示例
+
+### 步进值
 
 <ComponentPreview name="slider-2-demo" className="max-w-[400px]" />
 
-
-### 音量控制 (Volume Control)
+### 音量控制
 
 <ComponentPreview name="slider-3-demo" className="max-w-[400px]" />
 
-
-### 价格范围筛选 (Price Range Filter)
+### 格式化值
 
 <ComponentPreview name="slider-4-demo" className="max-w-[400px]" />
 
+## 最佳实践
 
-## 可访问性 (Accessibility)
+当用户需要选择近似范围，而不是精确值时使用 Slider：带宽上限、透明度、音量、颜色通道。
 
-- 基于 Radix UI Slider 构建 —— 每个手柄都具有 `role="slider"` 属性。
-- 设置了 `aria-valuemin`、`aria-valuemax`、`aria-valuenow` 和 `aria-orientation` 属性。
-- 请添加 `aria-label` 或 `aria-labelledby` 以描述滑块的用途。
-- 键盘操作：使用 `ArrowLeft`/`ArrowRight` (或 `ArrowUp`/`ArrowDown`) 调整数值，使用 `Home`/`End` 调至最小/最大值，使用 `PageUp`/`PageDown` 进行大幅度跳转。
-走
+端口号、内存限制这类精确值应和数字 Input 组合使用。键盘用户通常会直接输入精确值。
+
+使用合理 `step`，例如 `1`、`5`、`10`，避免拖动产生噪声数值。`min` 和 `max` 必须来自真实产品限制。
+
+始终在轨道旁显示实时值，并说明数字代表什么，例如 Sample Rate · 44 kHz。轨道本身不是自解释的。
+
+阈值颜色必须复用产品其它位置已经出现的断点。不要只为 Slider 发明 warning/error 阈值。
+
+## 可访问性
+
+为 Slider 提供可见 `label` 或 `aria-label`。不要拦截原生方向键、Page Up/Down、Home、End 行为。
+
+实时值是视觉上下文。屏幕阅读器仍会从原生 range input 获得 `aria-valuemin`、`aria-valuemax` 和 `aria-valuenow`。

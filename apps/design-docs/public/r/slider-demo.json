@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/slider-demo.tsx",
-      "content": "\"use client\";\n\nimport { Slider } from \"@nebutra/ui/primitives\";\n\nexport function SliderDemo() {\n  return (\n    <div className=\"space-y-4 w-full\">\n      <Slider defaultValue={50} max={100} step={1} />\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { Slider } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function SliderDemo() {\n  const [value, setValue] = useState([50]);\n\n  return (\n    <form className=\"w-full\">\n      <Slider\n        label=\"Sample Rate\"\n        max={96}\n        min={8}\n        onValueChange={setValue}\n        step={4}\n        unit=\" kHz\"\n        value={value}\n      />\n    </form>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

@@ -1,12 +1,11 @@
 ---
 title: "Slider"
-description: "Range value selector with draggable thumb, built on Radix UI."
+description: "A single-value ranged numeric input for approximate settings."
 ---
 
 ## Demo
 
 <ComponentPreview name="slider-demo" className="max-w-[400px]" />
-
 
 ## Usage
 
@@ -14,44 +13,67 @@ description: "Range value selector with draggable thumb, built on Radix UI."
 import { Slider } from "@nebutra/ui/primitives"
 ```
 
+```tsx
+const [value, setValue] = useState([50])
+
+<Slider
+  label="Sample Rate"
+  max={96}
+  min={8}
+  onValueChange={setValue}
+  step={4}
+  unit=" kHz"
+  value={value}
+/>
+```
+
 ## Props
 
-Native HTML `<input type="range">`.
+Slider renders a native `<input type="range">` so it keeps browser keyboard behavior. The public API accepts both the historical `number` shape and the Geist-compatible single-item `number[]` shape.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | `number[]` | — | Controlled value array (one value per thumb) |
-| `defaultValue` | `number[]` | `[0]` | Uncontrolled default value |
-| `onValueChange` | `(value: number[]) => void` | — | Callback during drag |
-| `onValueCommit` | `(value: number[]) => void` | — | Callback when drag ends |
-| `min` | `number` | `0` | Minimum value |
-| `max` | `number` | `100` | Maximum value |
-| `step` | `number` | `1` | Step increment |
-| `disabled` | `boolean` | `false` | Disables the slider |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Slider direction |
-| `inverted` | `boolean` | `false` | Reverses the direction |
-| `className` | `string` | — | Additional CSS classes |
+| `value` | `number \| number[]` | — | Controlled value. Arrays use the first item because this is a single-thumb slider |
+| `defaultValue` | `number \| number[]` | `min` | Initial uncontrolled value |
+| `valueMode` | `"number" \| "array"` | inferred | Forces the callback shape when value/defaultValue is absent |
+| `onValueChange` | `(value) => void` | — | Called while the value changes |
+| `onValueCommit` | `(value) => void` | — | Called on pointer release or slider keyboard commit |
+| `min` | `number` | `0` | Minimum product limit |
+| `max` | `number` | `100` | Maximum product limit |
+| `step` | `number` | `1` | Snapping increment |
+| `label` | `string` | — | Visible label and accessible name |
+| `unit` | `string` | — | Suffix rendered next to the live value |
+| `showValue` | `boolean` | `true` | Renders the live value in tabular numerals |
+| `formatValue` | `(value: number) => ReactNode` | — | Custom live value formatter |
 
 ## Examples
 
-### Range Slider (Two Thumbs)
+### Stepped Value
 
 <ComponentPreview name="slider-2-demo" className="max-w-[400px]" />
-
 
 ### Volume Control
 
 <ComponentPreview name="slider-3-demo" className="max-w-[400px]" />
 
-
-### Price Range Filter
+### Formatted Value
 
 <ComponentPreview name="slider-4-demo" className="max-w-[400px]" />
 
+## Best Practices
+
+Use Slider for ranged numeric input where shape and proximity matter more than precision: bandwidth caps, opacity, audio volume, color channels.
+
+For exact values like a port number or memory limit, pair the slider with a numeric Input. Keyboard users often prefer typing exact values.
+
+Snap to a sensible `step` such as `1`, `5`, or `10` so dragging never produces noisy values. Clamp `min` and `max` to real product limits.
+
+Always render the live value next to the track in tabular numerals and label what the number represents, such as Sample Rate · 44 kHz.
+
+Threshold colors must reuse breakpoints surfaced elsewhere in the UI. Do not invent slider-only warning or error thresholds.
 
 ## Accessibility
 
-- Built on Radix UI Slider — has `role="slider"` on each thumb.
-- Sets `aria-valuemin`, `aria-valuemax`, `aria-valuenow`, and `aria-orientation`.
-- Add `aria-label` or `aria-labelledby` to describe the slider's purpose.
-- Keyboard: `ArrowLeft`/`ArrowRight` (or `ArrowUp`/`ArrowDown`) to adjust value, `Home`/`End` for min/max, `PageUp`/`PageDown` for larger jumps.
+Give the slider a visible `label` or an `aria-label`. Do not intercept native arrow-key, Page Up/Down, Home, or End behavior.
+
+The live value is visual context. Screen readers still receive the native `aria-valuemin`, `aria-valuemax`, and `aria-valuenow` from the range input.

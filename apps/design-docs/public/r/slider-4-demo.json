@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/slider-4-demo.tsx",
-      "content": "\"use client\";\n\nimport { Slider } from \"@nebutra/ui/primitives\";\nexport function Slider4Demo() {\n  return (\n    <div className=\"space-y-2 w-full\">\n      <div className=\"text-sm flex justify-between\">\n        <span>$200</span>\n        <span>$800</span>\n      </div>\n      <Slider defaultValue={500} min={0} max={1000} step={10} />\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { Slider } from \"@nebutra/ui/primitives\";\nexport function Slider4Demo() {\n  return (\n    <div className=\"w-full\">\n      <Slider\n        defaultValue={500}\n        formatValue={(value) => `$${value}`}\n        label=\"Monthly Spend\"\n        max={1000}\n        min={0}\n        step={50}\n      />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

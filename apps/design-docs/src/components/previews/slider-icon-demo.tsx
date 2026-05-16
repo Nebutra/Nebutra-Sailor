@@ -4,9 +4,9 @@ import { Slider } from "@nebutra/ui/primitives";
 
 export function SliderIconDemo() {
   return (
-    <div className="gap-3 flex w-full items-center">
+    <div className="flex w-full items-end gap-3">
       <Volume2 className="h-4 w-4 shrink-0 text-muted-foreground" />
-      <Slider defaultValue={70} max={100} step={1} />
+      <Slider defaultValue={70} label="Volume" max={100} step={5} unit="%" />
     </div>
   );
 }

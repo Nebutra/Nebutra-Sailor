@@ -22,5 +22,6 @@ export { type RadioOrientation, radioOrientations, radioTokens } from "./radio";
 export { scrollerTokens } from "./scroller";
 export { type SelectSize, selectTokens } from "./select";
 export { type SheetSide, sheetSides, sheetTokens } from "./sheet";
+export { sliderTokens } from "./slider";
 export { textareaTokens } from "./textarea";
 export { type ThemeToggleSize, themeToggleTokens } from "./theme-toggle";

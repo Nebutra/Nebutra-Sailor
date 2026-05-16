@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/slider-on-value-change-demo.tsx",
-      "content": "import { Slider } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport default function SliderOnValueChangeDemo() {\n  const [value, setValue] = useState<number>(50);\n\n  return <Slider onValueChange={setValue} value={value} />;\n}\n",
+      "content": "import { Slider } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport default function SliderOnValueChangeDemo() {\n  const [value, setValue] = useState<number>(50);\n\n  return <Slider label=\"Bandwidth Cap\" onValueChange={setValue} unit=\"%\" value={value} />;\n}\n",
       "type": "registry:example"
     }
   ]

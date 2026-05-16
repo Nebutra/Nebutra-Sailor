@@ -6,5 +6,5 @@ import { useState } from "react";
 export default function SliderStatefulDemo() {
   const [value, setValue] = useState<number>(50);
 
-  return <Slider onValueChange={setValue} value={value} />;
+  return <Slider label="Opacity" onValueChange={setValue} unit="%" value={value} />;
 }
