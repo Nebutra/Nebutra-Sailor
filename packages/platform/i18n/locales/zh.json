@@ -131,7 +131,10 @@
       "uploading": "正在上传…",
       "fileTooBig": "文件过大，最大 2MB。",
       "invalidType": "不支持的图片格式，请使用 PNG、JPEG 或 WebP。",
-      "success": "头像已更新。"
+      "success": "头像已更新。",
+      "removeButton": "移除头像",
+      "removed": "头像已移除。",
+      "deleteError": "删除头像失败。"
     },
     "export": {
       "title": "导出我的数据",
@@ -261,6 +264,7 @@
         "confirmPasswordLabel": "确认新密码",
         "revokeOtherSessions": "登出其它设备",
         "submit": "更新密码",
+        "pending": "正在更新密码…",
         "success": "密码已更新。"
       },
       "twoFactor": {
@@ -268,6 +272,8 @@
         "description": "通过身份验证器 App 添加第二道验证步骤。",
         "enabled": "已启用",
         "disabled": "未启用",
+        "enabledHelp": "使用密码登录后，账户会要求输入身份验证器生成的 6 位验证码。",
+        "disabledHelp": "使用身份验证器 App 的 6 位验证码保护你的账户。",
         "enable": "启用两步验证",
         "disable": "停用两步验证",
         "passwordPrompt": "请输入密码以确认",
@@ -278,6 +284,7 @@
         "backupCodesTitle": "备用恢复码",
         "backupCodesDescription": "请将这些恢复码保存在安全的地方。如果你失去对验证器的访问权限，每个恢复码可使用一次。",
         "copyBackupCodes": "复制恢复码",
+        "finishSetup": "完成设置",
         "successEnabled": "两步验证已启用。",
         "successDisabled": "两步验证已停用。"
       },
@@ -307,6 +314,7 @@
         "description": "查看已关联到 Nebutra 账户的 OAuth 登录方式。",
         "connected": "已关联",
         "connect": "关联",
+        "help": "解除关联前，请确保至少保留一种可信登录方式。",
         "unlink": "解除关联",
         "notLinked": "未关联"
       },
@@ -315,6 +323,13 @@
         "description": "使用绑定设备的凭证以实现抗钓鱼登录。",
         "empty": "尚未注册通行密钥",
         "addPasskey": "添加通行密钥",
+        "cancelAdd": "取消",
+        "cancelled": "通行密钥设置已取消，账户没有变化。",
+        "defaultName": "通行密钥 {number}",
+        "nameHelp": "请先为通行密钥设置一个易识别的名称，然后浏览器会请求确认。",
+        "nameLabel": "通行密钥名称",
+        "rename": "重命名",
+        "saveRename": "保存名称",
         "remove": "移除",
         "successAdded": "通行密钥已添加。",
         "successRemoved": "通行密钥已移除。",
@@ -324,6 +339,7 @@
         "title": "设置密码",
         "description": "为账户添加密码，便于在不使用 OAuth 的情况下登录。",
         "submit": "设置密码",
+        "pending": "正在发送密码设置链接…",
         "sentMessage": "我们已向你的邮箱发送了密码设置链接。"
       }
     },
@@ -501,7 +517,9 @@
         "uploading": "上传中…",
         "fileTooBig": "文件过大。最大限制为 2MB。",
         "invalidType": "不支持的图片格式。请使用 PNG、JPEG 或 WebP。",
-        "success": "Logo 已更新。"
+        "success": "Logo 已更新。",
+        "removeButton": "移除 Logo",
+        "removed": "Logo 已移除。"
       },
       "name": {
         "title": "组织名称",

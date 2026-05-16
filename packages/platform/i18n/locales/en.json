@@ -131,7 +131,10 @@
       "uploading": "Uploading…",
       "fileTooBig": "File is too large. Maximum size is 2MB.",
       "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-      "success": "Avatar updated."
+      "success": "Avatar updated.",
+      "removeButton": "Remove avatar",
+      "removed": "Avatar removed.",
+      "deleteError": "Failed to delete avatar."
     },
     "export": {
       "title": "Export my data",
@@ -234,6 +237,7 @@
         "confirmPasswordLabel": "Confirm new password",
         "revokeOtherSessions": "Sign out of other devices",
         "submit": "Update password",
+        "pending": "Updating password…",
         "success": "Password updated successfully."
       },
       "twoFactor": {
@@ -241,6 +245,8 @@
         "description": "Add a second verification step using an authenticator app.",
         "enabled": "Enabled",
         "disabled": "Disabled",
+        "enabledHelp": "Your account asks for a 6-digit authenticator code after password sign-in.",
+        "disabledHelp": "Protect your account with a 6-digit code from an authenticator app.",
         "enable": "Enable two-factor",
         "disable": "Disable two-factor",
         "passwordPrompt": "Confirm your password",
@@ -251,6 +257,7 @@
         "backupCodesTitle": "Backup codes",
         "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
         "copyBackupCodes": "Copy codes",
+        "finishSetup": "Finish setup",
         "successEnabled": "Two-factor authentication enabled.",
         "successDisabled": "Two-factor authentication disabled."
       },
@@ -280,6 +287,7 @@
         "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
         "connected": "Connected",
         "connect": "Connect",
+        "help": "Keep at least one trusted sign-in method available before unlinking a provider.",
         "unlink": "Unlink",
         "notLinked": "Not linked"
       },
@@ -288,6 +296,13 @@
         "description": "Use device-bound credentials for phishing-resistant sign-in.",
         "empty": "No passkeys registered yet",
         "addPasskey": "Add passkey",
+        "cancelAdd": "Cancel",
+        "cancelled": "Passkey setup was cancelled. Nothing changed.",
+        "defaultName": "Passkey {number}",
+        "nameHelp": "Give this passkey a recognizable name before your browser asks for confirmation.",
+        "nameLabel": "Passkey name",
+        "rename": "Rename",
+        "saveRename": "Save name",
         "remove": "Remove",
         "successAdded": "Passkey added.",
         "successRemoved": "Passkey removed.",
@@ -297,6 +312,7 @@
         "title": "Set a password",
         "description": "Add a password to sign in without your OAuth provider.",
         "submit": "Set password",
+        "pending": "Sending password setup link…",
         "sentMessage": "We've sent a password setup link to your email."
       }
     },
@@ -501,7 +517,9 @@
         "uploading": "Uploading…",
         "fileTooBig": "File is too large. Maximum size is 2MB.",
         "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-        "success": "Logo updated."
+        "success": "Logo updated.",
+        "removeButton": "Remove logo",
+        "removed": "Logo removed."
       },
       "name": {
         "title": "Organization name",
