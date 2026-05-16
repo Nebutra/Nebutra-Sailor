@@ -3,7 +3,7 @@
 import { Button } from "@nebutra/ui/components";
 import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useReducer } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
 import type { SecurityCapabilities } from "./security-capabilities";
@@ -38,6 +38,68 @@ async function defaultSubmit(input: ChangePasswordSubmitInput): Promise<void> {
   }
 }
 
+interface ChangePasswordState {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+  revokeOtherSessions: boolean;
+  errorKey: AuthErrorKey | null;
+  success: boolean;
+  pending: boolean;
+}
+
+const INITIAL_CHANGE_PASSWORD_STATE: ChangePasswordState = {
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+  revokeOtherSessions: true,
+  errorKey: null,
+  success: false,
+  pending: false,
+};
+
+type ChangePasswordAction =
+  | { type: "field.currentPassword"; value: string }
+  | { type: "field.newPassword"; value: string }
+  | { type: "field.confirmPassword"; value: string }
+  | { type: "field.revokeOtherSessions"; value: boolean }
+  | { type: "submit.start" }
+  | { type: "submit.validationError"; errorKey: AuthErrorKey }
+  | { type: "submit.success" }
+  | { type: "submit.failure"; errorKey: AuthErrorKey };
+
+function changePasswordReducer(
+  state: ChangePasswordState,
+  action: ChangePasswordAction,
+): ChangePasswordState {
+  switch (action.type) {
+    case "field.currentPassword":
+      return { ...state, currentPassword: action.value };
+    case "field.newPassword":
+      return { ...state, newPassword: action.value };
+    case "field.confirmPassword":
+      return { ...state, confirmPassword: action.value };
+    case "field.revokeOtherSessions":
+      return { ...state, revokeOtherSessions: action.value };
+    case "submit.start":
+      return { ...state, errorKey: null, success: false, pending: true };
+    case "submit.validationError":
+      return { ...state, errorKey: action.errorKey, success: false, pending: false };
+    case "submit.success":
+      return {
+        ...state,
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+        errorKey: null,
+        success: true,
+        pending: false,
+      };
+    case "submit.failure":
+      return { ...state, errorKey: action.errorKey, success: false, pending: false };
+  }
+}
+
 export function ChangePasswordForm({
   capability,
   onSubmit,
@@ -46,13 +108,7 @@ export function ChangePasswordForm({
   const t = useTranslations("auth.security.changePassword");
   const tErrors = useTranslations("auth.errors");
 
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [revokeOtherSessions, setRevokeOtherSessions] = useState(true);
-  const [errorKey, setErrorKey] = useState<AuthErrorKey | null>(null);
-  const [success, setSuccess] = useState(false);
-  const [pending, setPending] = useState(false);
+  const [state, dispatch] = useReducer(changePasswordReducer, INITIAL_CHANGE_PASSWORD_STATE);
 
   if (loading) {
     return (
@@ -93,41 +149,38 @@ export function ChangePasswordForm({
   }
 
   function validate(): AuthErrorKey | null {
-    if (newPassword.length < MIN_PASSWORD_LENGTH) return "passwordTooShort";
-    if (newPassword !== confirmPassword) return "passwordsDontMatch";
-    if (newPassword === currentPassword) return "samePassword";
+    if (state.newPassword.length < MIN_PASSWORD_LENGTH) return "passwordTooShort";
+    if (state.newPassword !== state.confirmPassword) return "passwordsDontMatch";
+    if (state.newPassword === state.currentPassword) return "samePassword";
     return null;
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSuccess(false);
-    setErrorKey(null);
+    dispatch({ type: "submit.start" });
 
     const validationError = validate();
     if (validationError) {
-      setErrorKey(validationError);
+      dispatch({ type: "submit.validationError", errorKey: validationError });
       return;
     }
 
-    setPending(true);
     try {
       const submit = onSubmit ?? defaultSubmit;
-      await submit({ currentPassword, newPassword, revokeOtherSessions });
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-      setSuccess(true);
+      await submit({
+        currentPassword: state.currentPassword,
+        newPassword: state.newPassword,
+        revokeOtherSessions: state.revokeOtherSessions,
+      });
+      dispatch({ type: "submit.success" });
     } catch (error) {
-      setErrorKey(resolveAuthErrorKey(error));
-    } finally {
-      setPending(false);
+      dispatch({ type: "submit.failure", errorKey: resolveAuthErrorKey(error) });
     }
   }
 
   const errorId = "change-password-error";
   const successId = "change-password-success";
-  const errorMessage = errorKey ? tErrors(errorKey) : null;
+  const errorMessage = state.errorKey ? tErrors(state.errorKey) : null;
 
   return (
     <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
@@ -155,10 +208,12 @@ export function ChangePasswordForm({
             autoComplete="current-password"
             id="change-password-current"
             name="currentPassword"
-            onChange={(event) => setCurrentPassword(event.target.value)}
+            onChange={(event) =>
+              dispatch({ type: "field.currentPassword", value: event.target.value })
+            }
             required
             type="password"
-            value={currentPassword}
+            value={state.currentPassword}
           />
         </div>
 
@@ -176,10 +231,10 @@ export function ChangePasswordForm({
             id="change-password-new"
             minLength={MIN_PASSWORD_LENGTH}
             name="newPassword"
-            onChange={(event) => setNewPassword(event.target.value)}
+            onChange={(event) => dispatch({ type: "field.newPassword", value: event.target.value })}
             required
             type="password"
-            value={newPassword}
+            value={state.newPassword}
           />
         </div>
 
@@ -197,10 +252,12 @@ export function ChangePasswordForm({
             id="change-password-confirm"
             minLength={MIN_PASSWORD_LENGTH}
             name="confirmPassword"
-            onChange={(event) => setConfirmPassword(event.target.value)}
+            onChange={(event) =>
+              dispatch({ type: "field.confirmPassword", value: event.target.value })
+            }
             required
             type="password"
-            value={confirmPassword}
+            value={state.confirmPassword}
           />
         </div>
 
@@ -210,11 +267,13 @@ export function ChangePasswordForm({
         >
           <input
             data-allow-native
-            checked={revokeOtherSessions}
-            className="h-4 w-4 rounded border-[var(--neutral-7)] text-[var(--blue-9)]"
+            checked={state.revokeOtherSessions}
+            className="size-4 rounded border-[var(--neutral-7)] text-[var(--blue-9)]"
             id="change-password-revoke"
             name="revokeOtherSessions"
-            onChange={(event) => setRevokeOtherSessions(event.target.checked)}
+            onChange={(event) =>
+              dispatch({ type: "field.revokeOtherSessions", value: event.target.checked })
+            }
             type="checkbox"
           />
           {t("revokeOtherSessions")}
@@ -226,7 +285,7 @@ export function ChangePasswordForm({
           </p>
         )}
 
-        {success && (
+        {state.success && (
           <p
             className="text-sm text-[var(--status-success,hsl(var(--success,142_71%_45%)))]"
             id={successId}
@@ -236,9 +295,15 @@ export function ChangePasswordForm({
           </p>
         )}
 
+        {state.pending && (
+          <p className="text-sm text-[var(--neutral-11)]" role="status">
+            {t("pending")}
+          </p>
+        )}
+
         <div>
-          <Button disabled={pending} htmlType="submit" type="primary">
-            {t("submit")}
+          <Button disabled={state.pending} htmlType="submit" type="primary">
+            {state.pending ? t("pending") : t("submit")}
           </Button>
         </div>
       </form>

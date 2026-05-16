@@ -9,7 +9,7 @@
  *     (browser autofills passkeys in the email field's autocomplete)
  *  3. `registerPasskey()` — account-settings flow to enroll a new credential
  *
- * Plus management helpers (`listPasskeys`, `revokePasskey`) for account
+ * Plus management helpers (`listPasskeys`, `renamePasskey`, `revokePasskey`) for account
  * settings.
  */
 
@@ -35,6 +35,9 @@ interface PasskeyAuthResult {
   token: string;
   user: { id: string; email: string | null; name: string | null };
 }
+
+type AuthenticationResponse = Awaited<ReturnType<typeof startAuthentication>>;
+type RegistrationResponse = Awaited<ReturnType<typeof startRegistration>>;
 
 export class PasskeyError extends Error {
   constructor(
@@ -101,7 +104,7 @@ export async function signInWithPasskey(options?: { email?: string }): Promise<P
   if (!optsRes.ok) throw new PasskeyError("network_error", "Failed to fetch options");
   const optionsJSON = await optsRes.json();
 
-  let authResponse;
+  let authResponse: AuthenticationResponse;
   try {
     authResponse = await startAuthentication({ optionsJSON });
   } catch (error) {
@@ -145,7 +148,7 @@ export async function enablePasskeyConditionalUI(opts: {
 
     if (opts.signal.aborted) return;
 
-    let authResponse;
+    let authResponse: AuthenticationResponse;
     try {
       authResponse = await startAuthentication({
         optionsJSON,
@@ -183,7 +186,7 @@ export async function registerPasskey(opts: { name?: string }): Promise<{ verifi
   if (!optsRes.ok) throw new PasskeyError("network_error");
   const optionsJSON = await optsRes.json();
 
-  let regResponse;
+  let regResponse: RegistrationResponse;
   try {
     regResponse = await startRegistration({ optionsJSON });
   } catch (error) {
@@ -216,5 +219,10 @@ export async function listPasskeys(): Promise<PasskeyDescriptor[]> {
 
 export async function revokePasskey(id: string): Promise<void> {
   const res = await postJson("/revoke", { id });
+  if (!res.ok) throw new PasskeyError("network_error");
+}
+
+export async function renamePasskey(id: string, name: string): Promise<void> {
+  const res = await postJson("/rename", { id, name });
   if (!res.ok) throw new PasskeyError("network_error");
 }

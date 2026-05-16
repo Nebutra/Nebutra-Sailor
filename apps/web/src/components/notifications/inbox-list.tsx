@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 
 // =============================================================================
-// InboxList — shared rendering for both the bell dropdown and the full page
+// InboxList: shared rendering for both the bell dropdown and the full page
 // =============================================================================
 
 export interface InboxNotification {
@@ -66,12 +66,8 @@ export function InboxListSkeleton({ count = 3 }: { count?: number }): React.Reac
   return (
     <ul className="divide-y divide-[var(--neutral-7)]" aria-label="Loading notifications">
       {Array.from({ length: count }).map((_, i) => (
-        <li
-          // biome-ignore lint/suspicious/noArrayIndexKey: skeleton placeholder
-          key={i}
-          className="flex animate-pulse gap-3 px-4 py-3"
-        >
-          <div className="h-8 w-8 rounded-full bg-[var(--neutral-3)]" />
+        <li key={`notification-skeleton-${i}`} className="flex animate-pulse gap-3 px-4 py-3">
+          <div className="size-8 rounded-full bg-[var(--neutral-3)]" />
           <div className="flex-1 space-y-2">
             <div className="h-3 w-1/3 rounded bg-[var(--neutral-3)]" />
             <div className="h-3 w-2/3 rounded bg-[var(--neutral-3)]" />
@@ -92,8 +88,8 @@ export function InboxEmptyState({
       className="flex flex-col items-center justify-center gap-2 px-4 py-10 text-center"
       data-testid="inbox-empty"
     >
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--neutral-2)]">
-        <Bell className="h-5 w-5 text-[var(--neutral-11)]" aria-hidden="true" />
+      <div className="flex size-12 items-center justify-center rounded-full bg-[var(--neutral-2)]">
+        <Bell className="size-5 text-[var(--neutral-11)]" aria-hidden="true" />
       </div>
       <p className="text-sm text-[var(--neutral-11)]">{message}</p>
     </div>
@@ -143,13 +139,13 @@ export function InboxList({
                 aria-label={`Select notification ${item.title}`}
                 checked={checked}
                 onChange={() => onToggleSelect?.(item.id)}
-                className="mt-1 h-4 w-4 cursor-pointer accent-[var(--blue-9)]"
+                className="mt-1 size-4 cursor-pointer accent-[var(--blue-9)]"
                 onClick={(e) => e.stopPropagation()}
               />
             ) : null}
 
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--neutral-2)]">
-              <Icon className="h-4 w-4 text-[var(--neutral-11)]" aria-hidden="true" />
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[var(--neutral-2)]">
+              <Icon className="size-4 text-[var(--neutral-11)]" aria-hidden="true" />
             </div>
 
             <div className="flex-1 min-w-0">
@@ -183,8 +179,9 @@ export function InboxList({
 
             {!item.read ? (
               <span
+                role="status"
                 aria-label="Unread"
-                className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[var(--blue-9)]"
+                className="mt-1.5 size-2 shrink-0 rounded-full bg-[var(--blue-9)]"
               />
             ) : null}
 
@@ -199,7 +196,7 @@ export function InboxList({
                 }}
                 className="rounded-md p-1 text-[var(--neutral-11)] hover:bg-[var(--neutral-3)]"
               >
-                <Trash2 className="h-4 w-4" aria-hidden="true" />
+                <Trash2 className="size-4" aria-hidden="true" />
               </button>
             ) : null}
           </div>
@@ -217,6 +214,8 @@ export function InboxList({
               >
                 {itemContent}
               </Link>
+            ) : variant === "full" && onArchive ? (
+              <div className="block w-full text-left">{itemContent}</div>
             ) : (
               <button
                 type="button"

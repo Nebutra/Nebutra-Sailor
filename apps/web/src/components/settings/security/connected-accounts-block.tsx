@@ -120,6 +120,7 @@ export function ConnectedAccountsBlock({
         <div>
           <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
           <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+          <p className="mt-2 text-xs leading-5 text-[var(--neutral-10)]">{t("help")}</p>
         </div>
       </div>
 

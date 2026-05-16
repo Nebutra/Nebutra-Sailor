@@ -37,28 +37,72 @@ function resolveLogoUrl(key: string): string {
   return `/api/uploads/${encodeURIComponent(key)}`;
 }
 
+function isManagedLogoKey(value: string | null | undefined): value is string {
+  return typeof value === "string" && value.startsWith("org-logos/");
+}
+
+async function deleteManagedLogoKey(key: string | null | undefined) {
+  if (!isManagedLogoKey(key)) return;
+  try {
+    const { getUploadProvider } = await import("@nebutra/uploads");
+    const provider = await getUploadProvider();
+    await provider.deleteFile("org-logos", key);
+  } catch (error) {
+    logger.error("[organizations] Failed to delete logo object", {
+      key,
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+}
+
+type LogoAuthorizationResult =
+  | { ok: true }
+  | {
+      ok: false;
+      response: NextResponse;
+    };
+
+async function authorizeLogoMutation(orgId: string): Promise<LogoAuthorizationResult> {
+  const authState = await getAuth();
+  if (!authState.userId) {
+    return {
+      ok: false,
+      response: NextResponse.json({ error: "Authentication required." }, { status: 401 }),
+    };
+  }
+  if (authState.orgId !== orgId) {
+    return {
+      ok: false,
+      response: NextResponse.json({ error: "Organization mismatch." }, { status: 403 }),
+    };
+  }
+
+  const membership = await getCurrentMembership(orgId, authState.userId);
+  if (!membership) {
+    return {
+      ok: false,
+      response: NextResponse.json({ error: "Organization membership required." }, { status: 403 }),
+    };
+  }
+  if (!adminRoles.has(membership.role)) {
+    return {
+      ok: false,
+      response: NextResponse.json(
+        { error: "You don't have permission to update the organization logo." },
+        { status: 403 },
+      ),
+    };
+  }
+
+  return { ok: true };
+}
+
 export async function POST(request: Request, context: RouteContext) {
   const { orgId } = await context.params;
 
   try {
-    const authState = await getAuth();
-    if (!authState.userId) {
-      return NextResponse.json({ error: "Authentication required." }, { status: 401 });
-    }
-    if (authState.orgId !== orgId) {
-      return NextResponse.json({ error: "Organization mismatch." }, { status: 403 });
-    }
-
-    const membership = await getCurrentMembership(orgId, authState.userId);
-    if (!membership) {
-      return NextResponse.json({ error: "Organization membership required." }, { status: 403 });
-    }
-    if (!adminRoles.has(membership.role)) {
-      return NextResponse.json(
-        { error: "You don't have permission to update the organization logo." },
-        { status: 403 },
-      );
-    }
+    const auth = await authorizeLogoMutation(orgId);
+    if (!auth.ok) return auth.response;
 
     const parsed = requestSchema.safeParse(await request.json().catch(() => null));
     if (!parsed.success) {
@@ -82,11 +126,21 @@ export async function POST(request: Request, context: RouteContext) {
     // this subagent's allowed paths.
     const updateData = { logo: parsed.data.key } as unknown as Record<string, unknown>;
 
+    const previous = await db.organization.findUnique({
+      where: { id: orgId },
+      select: { logo: true } as unknown as { logo: true },
+    });
+
     const updated = await db.organization.update({
       where: { id: orgId },
       data: updateData,
       select: { id: true, name: true, slug: true },
     });
+
+    const previousLogo = (previous as { logo?: string | null } | null)?.logo;
+    if (previousLogo !== parsed.data.key) {
+      await deleteManagedLogoKey(previousLogo);
+    }
 
     return NextResponse.json({
       organization: {
@@ -103,5 +157,44 @@ export async function POST(request: Request, context: RouteContext) {
       error: error instanceof Error ? error.message : "Unknown error",
     });
     return NextResponse.json({ error: "Failed to update organization logo." }, { status: 500 });
+  }
+}
+
+export async function DELETE(_request: Request, context: RouteContext) {
+  const { orgId } = await context.params;
+
+  try {
+    const auth = await authorizeLogoMutation(orgId);
+    if (!auth.ok) return auth.response;
+
+    const previous = await db.organization.findUnique({
+      where: { id: orgId },
+      select: { logo: true } as unknown as { logo: true },
+    });
+
+    const updateData = { logo: null } as unknown as Record<string, unknown>;
+    const updated = await db.organization.update({
+      where: { id: orgId },
+      data: updateData,
+      select: { id: true, name: true, slug: true },
+    });
+
+    await deleteManagedLogoKey((previous as { logo?: string | null } | null)?.logo);
+
+    return NextResponse.json({
+      organization: {
+        id: updated.id,
+        name: updated.name,
+        slug: updated.slug,
+        logo: null,
+        logoUrl: null,
+      },
+    });
+  } catch (error) {
+    logger.error("[organizations] Failed to delete logo", {
+      orgId,
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+    return NextResponse.json({ error: "Failed to delete organization logo." }, { status: 500 });
   }
 }

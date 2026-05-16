@@ -42,7 +42,7 @@ export function SetPasswordForm({ email, onSubmit }: SetPasswordFormProps) {
   const [pending, setPending] = useState(false);
   const [errorKey, setErrorKey] = useState<AuthErrorKey | null>(null);
 
-  async function handleClick() {
+  async function requestPasswordSetup() {
     setErrorKey(null);
     setPending(true);
     try {
@@ -86,9 +86,14 @@ export function SetPasswordForm({ email, onSubmit }: SetPasswordFormProps) {
           {t("sentMessage")}
         </p>
       ) : (
-        <Button disabled={pending} htmlType="button" onClick={handleClick} type="primary">
-          {t("submit")}
+        <Button disabled={pending} htmlType="button" onClick={requestPasswordSetup} type="primary">
+          {pending ? t("pending") : t("submit")}
         </Button>
+      )}
+      {pending && (
+        <p className="mt-3 text-sm text-[var(--neutral-11)]" role="status">
+          {t("pending")}
+        </p>
       )}
     </section>
   );

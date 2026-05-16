@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/components";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
 import type { SecurityCapabilities } from "./security-capabilities";
@@ -47,6 +47,7 @@ const SESSION_STRINGS = {
   unknownIp: "Unknown IP",
   noSessionsReported: "No active sessions were reported.",
   confirmPrompt: "Are you sure?",
+  confirmHelp: "This keeps your current session signed in and signs out every other device.",
   confirm: "Confirm",
   cancel: "Cancel",
   revoking: "Signing out…",
@@ -135,6 +136,64 @@ function formatAbsolute(value: string): string {
 
 const SUCCESS_DISMISS_MS = 3000;
 
+interface ActiveSessionsState {
+  pendingSessionId: string | null;
+  revokingAll: boolean;
+  confirmingAll: boolean;
+  error: string;
+  successMessage: string;
+}
+
+const INITIAL_ACTIVE_SESSIONS_STATE: ActiveSessionsState = {
+  pendingSessionId: null,
+  revokingAll: false,
+  confirmingAll: false,
+  error: "",
+  successMessage: "",
+};
+
+type ActiveSessionsAction =
+  | { type: "confirmAll.open" }
+  | { type: "confirmAll.close" }
+  | { type: "success.clear" }
+  | { type: "revokeOne.start"; sessionId: string }
+  | { type: "revokeOne.success"; message: string }
+  | { type: "revokeOne.failure"; error: string }
+  | { type: "revokeAll.start" }
+  | { type: "revokeAll.success"; message: string }
+  | { type: "revokeAll.failure"; error: string };
+
+function activeSessionsReducer(
+  state: ActiveSessionsState,
+  action: ActiveSessionsAction,
+): ActiveSessionsState {
+  switch (action.type) {
+    case "confirmAll.open":
+      return { ...state, confirmingAll: true };
+    case "confirmAll.close":
+      return { ...state, confirmingAll: false };
+    case "success.clear":
+      return { ...state, successMessage: "" };
+    case "revokeOne.start":
+      return { ...state, pendingSessionId: action.sessionId, error: "", successMessage: "" };
+    case "revokeOne.success":
+      return { ...state, pendingSessionId: null, successMessage: action.message };
+    case "revokeOne.failure":
+      return { ...state, pendingSessionId: null, error: action.error };
+    case "revokeAll.start":
+      return { ...state, revokingAll: true, error: "", successMessage: "" };
+    case "revokeAll.success":
+      return {
+        ...state,
+        revokingAll: false,
+        confirmingAll: false,
+        successMessage: action.message,
+      };
+    case "revokeAll.failure":
+      return { ...state, revokingAll: false, confirmingAll: false, error: action.error };
+  }
+}
+
 export function ActiveSessionsBlock({
   capability,
   sessions,
@@ -144,18 +203,14 @@ export function ActiveSessionsBlock({
   onRevoke,
   onRevokeAllOthers,
 }: ActiveSessionsBlockProps) {
-  const [pendingSessionId, setPendingSessionId] = useState<string | null>(null);
-  const [revokingAll, setRevokingAll] = useState(false);
-  const [confirmingAll, setConfirmingAll] = useState(false);
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [state, dispatch] = useReducer(activeSessionsReducer, INITIAL_ACTIVE_SESSIONS_STATE);
 
   // Auto-clear success message after a few seconds.
   useEffect(() => {
-    if (!successMessage) return;
-    const timer = setTimeout(() => setSuccessMessage(""), SUCCESS_DISMISS_MS);
+    if (!state.successMessage) return;
+    const timer = setTimeout(() => dispatch({ type: "success.clear" }), SUCCESS_DISMISS_MS);
     return () => clearTimeout(timer);
-  }, [successMessage]);
+  }, [state.successMessage]);
 
   async function defaultRevoke(sessionId: string) {
     const response = await fetch("/api/auth/revoke-session", {
@@ -191,35 +246,26 @@ export function ActiveSessionsBlock({
   }
 
   async function handleRevoke(sessionId: string) {
-    setPendingSessionId(sessionId);
-    setError("");
-    setSuccessMessage("");
+    dispatch({ type: "revokeOne.start", sessionId });
 
     try {
       await (onRevoke ?? defaultRevoke)(sessionId);
-      setSuccessMessage(SESSION_STRINGS.successRevoked);
       await onRefresh();
+      dispatch({ type: "revokeOne.success", message: SESSION_STRINGS.successRevoked });
     } catch (err) {
-      setError(resolveErrorMessage(err));
-    } finally {
-      setPendingSessionId(null);
+      dispatch({ type: "revokeOne.failure", error: resolveErrorMessage(err) });
     }
   }
 
   async function handleRevokeAllOthers() {
-    setRevokingAll(true);
-    setError("");
-    setSuccessMessage("");
+    dispatch({ type: "revokeAll.start" });
 
     try {
       await (onRevokeAllOthers ?? defaultRevokeAllOthers)();
-      setSuccessMessage(SESSION_STRINGS.successRevokedAll);
       await onRefresh();
+      dispatch({ type: "revokeAll.success", message: SESSION_STRINGS.successRevokedAll });
     } catch (err) {
-      setError(resolveErrorMessage(err));
-    } finally {
-      setRevokingAll(false);
-      setConfirmingAll(false);
+      dispatch({ type: "revokeAll.failure", error: resolveErrorMessage(err) });
     }
   }
 
@@ -239,32 +285,39 @@ export function ActiveSessionsBlock({
         </span>
       </div>
 
-      {error && <p className="mb-4 text-sm text-[hsl(var(--destructive))]">{error}</p>}
-      {successMessage && (
+      {state.error && <p className="mb-4 text-sm text-[hsl(var(--destructive))]">{state.error}</p>}
+      {state.successMessage && (
         <p className="mb-4 text-sm text-[var(--status-success,_#10b981)]" role="status">
-          {successMessage}
+          {state.successMessage}
         </p>
       )}
 
       {showRevokeAll && capability.available && (
         <div className="mb-4">
-          {confirmingAll ? (
+          {state.confirmingAll ? (
             <div
               className="flex flex-col gap-2 rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-3 md:flex-row md:items-center md:justify-between"
               role="alertdialog"
             >
-              <p className="text-sm text-[var(--neutral-12)]">{SESSION_STRINGS.confirmPrompt}</p>
+              <div>
+                <p className="text-sm font-medium text-[var(--neutral-12)]">
+                  {SESSION_STRINGS.confirmPrompt}
+                </p>
+                <p className="mt-1 text-xs leading-5 text-[var(--neutral-10)]">
+                  {SESSION_STRINGS.confirmHelp}
+                </p>
+              </div>
               <div className="flex gap-2">
                 <Button
-                  disabled={revokingAll}
+                  disabled={state.revokingAll}
                   htmlType="button"
-                  onClick={() => setConfirmingAll(false)}
+                  onClick={() => dispatch({ type: "confirmAll.close" })}
                   variant="outlined"
                 >
                   {SESSION_STRINGS.cancel}
                 </Button>
                 <Button
-                  disabled={revokingAll}
+                  disabled={state.revokingAll}
                   htmlType="button"
                   onClick={handleRevokeAllOthers}
                   variant="filled"
@@ -275,9 +328,9 @@ export function ActiveSessionsBlock({
             </div>
           ) : (
             <Button
-              disabled={revokingAll || otherSessionsCount === 0}
+              disabled={state.revokingAll || otherSessionsCount === 0}
               htmlType="button"
-              onClick={() => setConfirmingAll(true)}
+              onClick={() => dispatch({ type: "confirmAll.open" })}
               variant="outlined"
             >
               {SESSION_STRINGS.revokeAll}
@@ -329,12 +382,14 @@ export function ActiveSessionsBlock({
                 </div>
 
                 <Button
-                  disabled={!capability.available || isCurrent || pendingSessionId === session.id}
+                  disabled={
+                    !capability.available || isCurrent || state.pendingSessionId === session.id
+                  }
                   htmlType="button"
                   onClick={() => handleRevoke(session.id)}
                   variant="outlined"
                 >
-                  {pendingSessionId === session.id
+                  {state.pendingSessionId === session.id
                     ? SESSION_STRINGS.revoking
                     : SESSION_STRINGS.revoke}
                 </Button>

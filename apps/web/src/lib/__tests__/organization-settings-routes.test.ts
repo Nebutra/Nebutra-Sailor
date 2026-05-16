@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const getAuthMock = vi.fn();
 const loggerErrorMock = vi.fn();
+const deleteFileMock = vi.fn();
 
 const dbMock = {
   organization: {
@@ -39,6 +40,7 @@ vi.mock("@nebutra/uploads", () => ({
           headers: { "content-type": contentType },
           expiresIn: 3600,
         }),
+      deleteFile: deleteFileMock,
     }),
 }));
 
@@ -61,6 +63,7 @@ beforeEach(() => {
   dbMock.organization.update.mockReset();
   dbMock.organization.delete.mockReset();
   dbMock.organizationMember.findUnique.mockReset();
+  deleteFileMock.mockReset();
 });
 
 describe("PATCH /api/organizations/[orgId] (rename)", () => {
@@ -385,6 +388,9 @@ describe("POST /api/organizations/[orgId]/logo (finalize)", () => {
   it("persists the logo key on success", async () => {
     getAuthMock.mockResolvedValue({ userId: "admin_1", orgId: "org_alpha" });
     dbMock.organizationMember.findUnique.mockResolvedValue({ id: "m1", role: "ADMIN" });
+    dbMock.organization.findUnique.mockResolvedValue({
+      logo: null,
+    });
     dbMock.organization.update.mockResolvedValue({
       id: "org_alpha",
       name: "Acme",
@@ -409,5 +415,147 @@ describe("POST /api/organizations/[orgId]/logo (finalize)", () => {
       data: { logo: "org-logos/org_alpha/12345.png" },
       select: { id: true, name: true, slug: true },
     });
+  });
+
+  it("deletes the previous managed logo key when replacing it", async () => {
+    getAuthMock.mockResolvedValue({ userId: "admin_1", orgId: "org_alpha" });
+    dbMock.organizationMember.findUnique.mockResolvedValue({ id: "m1", role: "ADMIN" });
+    dbMock.organization.findUnique.mockResolvedValue({
+      logo: "org-logos/org_alpha/old.png",
+    });
+    dbMock.organization.update.mockResolvedValue({
+      id: "org_alpha",
+      name: "Acme",
+      slug: "acme",
+    });
+
+    const { POST } = await loadLogoFinalizeRoute();
+    const response = await POST(
+      new Request("http://localhost/api/organizations/org_alpha/logo", {
+        method: "POST",
+        body: JSON.stringify({ key: "org-logos/org_alpha/new.png" }),
+      }),
+      { params: params() },
+    );
+
+    expect(response.status).toBe(200);
+    expect(deleteFileMock).toHaveBeenCalledWith("org-logos", "org-logos/org_alpha/old.png");
+  });
+
+  it("does not delete external logo URLs when replacing them", async () => {
+    getAuthMock.mockResolvedValue({ userId: "admin_1", orgId: "org_alpha" });
+    dbMock.organizationMember.findUnique.mockResolvedValue({ id: "m1", role: "ADMIN" });
+    dbMock.organization.findUnique.mockResolvedValue({
+      logo: "https://images.example.com/logo.png",
+    });
+    dbMock.organization.update.mockResolvedValue({
+      id: "org_alpha",
+      name: "Acme",
+      slug: "acme",
+    });
+
+    const { POST } = await loadLogoFinalizeRoute();
+    const response = await POST(
+      new Request("http://localhost/api/organizations/org_alpha/logo", {
+        method: "POST",
+        body: JSON.stringify({ key: "org-logos/org_alpha/new.png" }),
+      }),
+      { params: params() },
+    );
+
+    expect(response.status).toBe(200);
+    expect(deleteFileMock).not.toHaveBeenCalled();
+  });
+});
+
+describe("DELETE /api/organizations/[orgId]/logo", () => {
+  it("returns 401 when unauthenticated", async () => {
+    getAuthMock.mockResolvedValue({ userId: null, orgId: null });
+    const { DELETE } = await loadLogoFinalizeRoute();
+    const response = await DELETE(
+      new Request("http://localhost/api/organizations/org_alpha/logo"),
+      {
+        params: params(),
+      },
+    );
+    expect(response.status).toBe(401);
+  });
+
+  it("rejects non-admins", async () => {
+    getAuthMock.mockResolvedValue({ userId: "user_1", orgId: "org_alpha" });
+    dbMock.organizationMember.findUnique.mockResolvedValue({ id: "m1", role: "MEMBER" });
+
+    const { DELETE } = await loadLogoFinalizeRoute();
+    const response = await DELETE(
+      new Request("http://localhost/api/organizations/org_alpha/logo"),
+      {
+        params: params(),
+      },
+    );
+
+    expect(response.status).toBe(403);
+    expect(dbMock.organization.update).not.toHaveBeenCalled();
+  });
+
+  it("clears logo and deletes managed storage key", async () => {
+    getAuthMock.mockResolvedValue({ userId: "admin_1", orgId: "org_alpha" });
+    dbMock.organizationMember.findUnique.mockResolvedValue({ id: "m1", role: "ADMIN" });
+    dbMock.organization.findUnique.mockResolvedValue({
+      logo: "org-logos/org_alpha/current.png",
+    });
+    dbMock.organization.update.mockResolvedValue({
+      id: "org_alpha",
+      name: "Acme",
+      slug: "acme",
+    });
+
+    const { DELETE } = await loadLogoFinalizeRoute();
+    const response = await DELETE(
+      new Request("http://localhost/api/organizations/org_alpha/logo"),
+      {
+        params: params(),
+      },
+    );
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({
+      organization: {
+        id: "org_alpha",
+        name: "Acme",
+        slug: "acme",
+        logo: null,
+        logoUrl: null,
+      },
+    });
+    expect(dbMock.organization.update).toHaveBeenCalledWith({
+      where: { id: "org_alpha" },
+      data: { logo: null },
+      select: { id: true, name: true, slug: true },
+    });
+    expect(deleteFileMock).toHaveBeenCalledWith("org-logos", "org-logos/org_alpha/current.png");
+  });
+
+  it("clears logo without deleting external URLs", async () => {
+    getAuthMock.mockResolvedValue({ userId: "admin_1", orgId: "org_alpha" });
+    dbMock.organizationMember.findUnique.mockResolvedValue({ id: "m1", role: "ADMIN" });
+    dbMock.organization.findUnique.mockResolvedValue({
+      logo: "https://images.example.com/logo.png",
+    });
+    dbMock.organization.update.mockResolvedValue({
+      id: "org_alpha",
+      name: "Acme",
+      slug: "acme",
+    });
+
+    const { DELETE } = await loadLogoFinalizeRoute();
+    const response = await DELETE(
+      new Request("http://localhost/api/organizations/org_alpha/logo"),
+      {
+        params: params(),
+      },
+    );
+
+    expect(response.status).toBe(200);
+    expect(deleteFileMock).not.toHaveBeenCalled();
   });
 });

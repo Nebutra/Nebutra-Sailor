@@ -11,6 +11,9 @@ const dbMock = {
     deleteMany: vi.fn(),
     findMany: vi.fn(),
   },
+  bAPasskey: {
+    updateMany: vi.fn(),
+  },
 };
 
 vi.mock("@/lib/auth", () => ({
@@ -39,6 +42,10 @@ async function loadRevokeSessionRoute() {
   return import("@/app/api/auth/revoke-session/route");
 }
 
+async function loadRenamePasskeyRoute() {
+  return import("@/app/api/auth/passkey/rename/route");
+}
+
 describe("security auth routes", () => {
   beforeEach(() => {
     getAuthMock.mockReset();
@@ -46,6 +53,7 @@ describe("security auth routes", () => {
     dbMock.authAccount.findMany.mockReset();
     dbMock.authSession.findMany.mockReset();
     dbMock.authSession.deleteMany.mockReset();
+    dbMock.bAPasskey.updateMany.mockReset();
   });
 
   describe("GET /api/auth/list-accounts", () => {
@@ -276,6 +284,83 @@ describe("security auth routes", () => {
         error: "Failed to revoke session.",
       });
       expect(loggerErrorMock).toHaveBeenCalled();
+    });
+  });
+
+  describe("POST /api/auth/passkey/rename", () => {
+    it("rejects unauthenticated requests", async () => {
+      getAuthMock.mockResolvedValue({ userId: null });
+
+      const { POST } = await loadRenamePasskeyRoute();
+      const response = await POST(
+        new Request("http://localhost/api/auth/passkey/rename", {
+          method: "POST",
+          body: JSON.stringify({ id: "pk_1", name: "Work YubiKey" }),
+        }),
+      );
+
+      expect(response.status).toBe(401);
+      await expect(response.json()).resolves.toEqual({ error: "Authentication required." });
+      expect(dbMock.bAPasskey.updateMany).not.toHaveBeenCalled();
+    });
+
+    it("renames only the authenticated user's passkey", async () => {
+      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      dbMock.bAPasskey.updateMany.mockResolvedValue({ count: 1 });
+
+      const { POST } = await loadRenamePasskeyRoute();
+      const response = await POST(
+        new Request("http://localhost/api/auth/passkey/rename", {
+          method: "POST",
+          body: JSON.stringify({ id: "pk_1", name: "  Work YubiKey  " }),
+        }),
+      );
+
+      expect(response.status).toBe(200);
+      expect(dbMock.bAPasskey.updateMany).toHaveBeenCalledWith({
+        where: {
+          id: "pk_1",
+          userId: "user_123",
+        },
+        data: {
+          name: "Work YubiKey",
+        },
+      });
+      await expect(response.json()).resolves.toEqual({ ok: true });
+    });
+
+    it("returns 404 when the passkey does not belong to the user", async () => {
+      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      dbMock.bAPasskey.updateMany.mockResolvedValue({ count: 0 });
+
+      const { POST } = await loadRenamePasskeyRoute();
+      const response = await POST(
+        new Request("http://localhost/api/auth/passkey/rename", {
+          method: "POST",
+          body: JSON.stringify({ id: "pk_other", name: "Other key" }),
+        }),
+      );
+
+      expect(response.status).toBe(404);
+      await expect(response.json()).resolves.toEqual({ error: "Passkey not found." });
+    });
+
+    it("validates blank names", async () => {
+      getAuthMock.mockResolvedValue({ userId: "user_123" });
+
+      const { POST } = await loadRenamePasskeyRoute();
+      const response = await POST(
+        new Request("http://localhost/api/auth/passkey/rename", {
+          method: "POST",
+          body: JSON.stringify({ id: "pk_1", name: "   " }),
+        }),
+      );
+
+      expect(response.status).toBe(400);
+      expect(dbMock.bAPasskey.updateMany).not.toHaveBeenCalled();
+      await expect(response.json()).resolves.toEqual({
+        error: "Invalid passkey rename request.",
+      });
     });
   });
 });

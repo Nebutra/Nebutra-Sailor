@@ -51,9 +51,9 @@ export function NotificationPreferenceMatrix({
           }`}
         >
           {runtime.canManagePreferences ? (
-            <ShieldAlert className="h-3.5 w-3.5" aria-hidden />
+            <ShieldAlert className="size-3.5" aria-hidden />
           ) : (
-            <Info className="h-3.5 w-3.5" aria-hidden />
+            <Info className="size-3.5" aria-hidden />
           )}
           {preferenceSource === "provider" ? "Live preferences" : "Defaults preview"}
         </div>
@@ -98,13 +98,13 @@ export function NotificationPreferenceMatrix({
                 <tbody>
                   {section.rows.map((row) => (
                     <tr key={row.id} className="border-b border-[var(--neutral-7)] last:border-b-0">
-                      <td className="px-4 py-4 align-top">
+                      <td className="p-4 align-top">
                         <p className="text-sm font-medium text-[var(--neutral-12)]">{row.label}</p>
                         <p className="mt-1 text-sm text-[var(--neutral-11)]">{row.description}</p>
                       </td>
 
                       {row.cells.slice(0, 3).map((cell) => (
-                        <td key={cell.channel} className="px-4 py-4 align-top">
+                        <td key={cell.channel} className="p-4 align-top">
                           {cell.supported ? (
                             <form action={updateNotificationPreference}>
                               <input data-allow-native type="hidden" name="locale" value={locale} />
@@ -124,6 +124,8 @@ export function NotificationPreferenceMatrix({
                               <button
                                 type="submit"
                                 disabled={!cell.editable}
+                                aria-pressed={cell.enabled}
+                                aria-label={`${cell.enabled ? "Turn off" : "Turn on"} ${row.label} via ${cell.channelLabel}`}
                                 title={cell.reason}
                                 className={`inline-flex min-w-20 items-center justify-center rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${getCellButtonClasses(
                                   cell.enabled,
@@ -134,14 +136,17 @@ export function NotificationPreferenceMatrix({
                               </button>
                             </form>
                           ) : (
-                            <span className="inline-flex rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-10)]">
+                            <span
+                              title={cell.reason}
+                              className="inline-flex rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-10)]"
+                            >
                               N/A
                             </span>
                           )}
                         </td>
                       ))}
 
-                      <td className="px-4 py-4 align-top">
+                      <td className="p-4 align-top">
                         <ul className="space-y-1 text-sm text-[var(--neutral-11)]">
                           {row.cells
                             .filter((cell) => VISIBLE_CHANNELS.has(cell.channel) && cell.reason)

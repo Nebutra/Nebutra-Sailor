@@ -184,6 +184,27 @@ describe("ActiveSessionsBlock", () => {
     expect(screen.getByText("Sign out of all other devices")).toBeDefined();
   });
 
+  it("explains what revoke-all-others will keep and remove before confirmation", async () => {
+    render(
+      <ActiveSessionsBlock
+        capability={capability}
+        sessions={[makeSession({ id: "sess_current" }), makeSession({ id: "sess_other" })]}
+        currentSessionId="sess_current"
+        onRefresh={vi.fn(async () => {})}
+      />,
+    );
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Sign out of all other devices"));
+    });
+
+    expect(
+      screen.getByText(
+        "This keeps your current session signed in and signs out every other device.",
+      ),
+    ).toBeDefined();
+  });
+
   it("calls onRevoke and onRefresh when a row revoke button is clicked", async () => {
     const onRevoke = vi.fn(async () => {});
     const onRefresh = vi.fn(async () => {});

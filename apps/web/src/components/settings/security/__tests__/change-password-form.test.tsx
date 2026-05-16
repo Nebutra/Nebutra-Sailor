@@ -14,6 +14,7 @@ const messages: Record<string, string> = {
   "auth.security.changePassword.confirmPasswordLabel": "Confirm new password",
   "auth.security.changePassword.revokeOtherSessions": "Sign out of other devices",
   "auth.security.changePassword.submit": "Update password",
+  "auth.security.changePassword.pending": "Updating password…",
   "auth.security.changePassword.success": "Password updated successfully.",
   "auth.errors.invalidCredentials": "Email or password is incorrect.",
   "auth.errors.userNotFound": "No account found with that email.",
@@ -80,6 +81,12 @@ function buildPasswordCapability(
   };
 }
 
+function getChangePasswordForm(): HTMLFormElement {
+  const form = screen.getByRole("button", { name: "Update password" }).closest("form");
+  expect(form).toBeInstanceOf(HTMLFormElement);
+  return form as HTMLFormElement;
+}
+
 describe("ChangePasswordForm", () => {
   afterEach(() => {
     cleanup();
@@ -122,7 +129,7 @@ describe("ChangePasswordForm", () => {
     fireEvent.change(screen.getByLabelText("New password"), { target: { value: "short" } });
     fireEvent.change(screen.getByLabelText("Confirm new password"), { target: { value: "short" } });
 
-    fireEvent.submit(screen.getByRole("button", { name: "Update password" }).closest("form")!);
+    fireEvent.submit(getChangePasswordForm());
 
     await waitFor(() => {
       expect(screen.getByText("Password must be at least 8 characters.")).toBeInTheDocument();
@@ -144,7 +151,7 @@ describe("ChangePasswordForm", () => {
       target: { value: "different-1" },
     });
 
-    fireEvent.submit(screen.getByRole("button", { name: "Update password" }).closest("form")!);
+    fireEvent.submit(getChangePasswordForm());
 
     await waitFor(() => {
       expect(screen.getByText("Passwords don't match.")).toBeInTheDocument();
@@ -164,7 +171,7 @@ describe("ChangePasswordForm", () => {
       target: { value: "same-pass-1" },
     });
 
-    fireEvent.submit(screen.getByRole("button", { name: "Update password" }).closest("form")!);
+    fireEvent.submit(getChangePasswordForm());
 
     await waitFor(() => {
       expect(
@@ -188,7 +195,7 @@ describe("ChangePasswordForm", () => {
       target: { value: "new-pass-strong-1" },
     });
 
-    fireEvent.submit(screen.getByRole("button", { name: "Update password" }).closest("form")!);
+    fireEvent.submit(getChangePasswordForm());
 
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledWith({
@@ -236,7 +243,7 @@ describe("ChangePasswordForm", () => {
       target: { value: "new-pass-strong-1" },
     });
 
-    fireEvent.submit(screen.getByRole("button", { name: "Update password" }).closest("form")!);
+    fireEvent.submit(getChangePasswordForm());
 
     await waitFor(() => {
       expect(screen.getByText("Current password is incorrect.")).toBeInTheDocument();
@@ -257,7 +264,7 @@ describe("ChangePasswordForm", () => {
       target: { value: "new-pass-strong-1" },
     });
 
-    fireEvent.submit(screen.getByRole("button", { name: "Update password" }).closest("form")!);
+    fireEvent.submit(getChangePasswordForm());
 
     await waitFor(() => {
       expect(screen.getByText("Something went wrong. Please try again.")).toBeInTheDocument();
@@ -286,11 +293,14 @@ describe("ChangePasswordForm", () => {
     });
 
     const button = screen.getByRole("button", { name: "Update password" });
-    fireEvent.submit(button.closest("form")!);
+    const form = button.closest("form");
+    expect(form).toBeInstanceOf(HTMLFormElement);
+    fireEvent.submit(form as HTMLFormElement);
 
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: "Update password" })).toBeDisabled();
+      expect(screen.getByRole("button", { name: "Updating password…" })).toBeDisabled();
     });
+    expect(screen.getByRole("status")).toHaveTextContent("Updating password…");
 
     (resolveSubmit as (() => void) | null)?.();
 

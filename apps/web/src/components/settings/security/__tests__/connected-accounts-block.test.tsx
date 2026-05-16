@@ -11,6 +11,8 @@ const messages: Record<string, string> = {
     "Review OAuth sign-in methods linked to your Nebutra identity.",
   "auth.security.connectedAccounts.connected": "Connected",
   "auth.security.connectedAccounts.connect": "Connect",
+  "auth.security.connectedAccounts.help":
+    "Keep at least one trusted sign-in method available before unlinking a provider.",
   "auth.security.connectedAccounts.unlink": "Unlink",
   "auth.security.connectedAccounts.notLinked": "Not linked",
   "auth.errors.networkError": "Network error. Check your connection and try again.",
@@ -71,6 +73,11 @@ describe("ConnectedAccountsBlock", () => {
   it("renders all 5 OAuth providers", () => {
     render(<ConnectedAccountsBlock capability={buildCapability()} />);
 
+    expect(
+      screen.getByText(
+        "Keep at least one trusted sign-in method available before unlinking a provider.",
+      ),
+    ).toBeInTheDocument();
     expect(screen.getByText("Google")).toBeInTheDocument();
     expect(screen.getByText("GitHub")).toBeInTheDocument();
     expect(screen.getByText("Apple")).toBeInTheDocument();
@@ -102,9 +109,8 @@ describe("ConnectedAccountsBlock", () => {
 
     render(<ConnectedAccountsBlock capability={buildCapability()} onLink={onLink} />);
 
-    const googleRow = screen.getByText("Google").closest("div")!;
-    const connectBtn = googleRow.parentElement?.querySelector("button");
-    await user.click(connectBtn!);
+    expect(screen.getByText("Google")).toBeInTheDocument();
+    await user.click(screen.getAllByRole("button", { name: "Connect" })[0]);
 
     await waitFor(() => {
       expect(onLink).toHaveBeenCalledWith("google");
@@ -157,9 +163,8 @@ describe("ConnectedAccountsBlock", () => {
 
     render(<ConnectedAccountsBlock capability={buildCapability()} onLink={onLink} />);
 
-    const googleRow = screen.getByText("Google").closest("div")!;
-    const connectBtn = googleRow.parentElement?.querySelector("button");
-    await user.click(connectBtn!);
+    expect(screen.getByText("Google")).toBeInTheDocument();
+    await user.click(screen.getAllByRole("button", { name: "Connect" })[0]);
 
     await waitFor(() => {
       expect(

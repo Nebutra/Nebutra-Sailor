@@ -63,6 +63,24 @@ function buildPresignedUpload(key: string, contentType: string) {
   };
 }
 
+function isManagedAvatarKey(value: string | null | undefined): value is string {
+  return typeof value === "string" && value.startsWith("user-avatars/");
+}
+
+async function deleteManagedAvatarKey(key: string | null | undefined) {
+  if (!isManagedAvatarKey(key)) return;
+  try {
+    const { getUploadProvider } = await import("@nebutra/uploads");
+    const provider = await getUploadProvider();
+    await provider.deleteFile("user-avatars", key);
+  } catch (error) {
+    logger.error("[account:avatar] Failed to delete avatar object", {
+      key,
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+}
+
 /**
  * POST /api/account/avatar
  *
@@ -94,11 +112,20 @@ export async function POST(request: Request) {
         );
       }
 
+      const previous = await db.user.findUnique({
+        where: { id: authState.userId },
+        select: { avatarUrl: true },
+      });
+
       const updated = await db.user.update({
         where: { id: authState.userId },
         data: { avatarUrl: parsed.data.key },
         select: { id: true, name: true, email: true, avatarUrl: true },
       });
+
+      if (previous?.avatarUrl !== parsed.data.key) {
+        await deleteManagedAvatarKey(previous?.avatarUrl);
+      }
 
       return NextResponse.json({
         user: {
@@ -128,5 +155,37 @@ export async function POST(request: Request) {
       error: error instanceof Error ? error.message : "Unknown error",
     });
     return NextResponse.json({ error: "Failed to handle avatar upload." }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const authState = await getAuth(request);
+    if (!authState.userId) {
+      return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+    }
+
+    const previous = await db.user.findUnique({
+      where: { id: authState.userId },
+      select: { avatarUrl: true },
+    });
+
+    const updated = await db.user.update({
+      where: { id: authState.userId },
+      data: { avatarUrl: null },
+      select: { id: true, name: true, email: true, avatarUrl: true },
+    });
+
+    await deleteManagedAvatarKey(previous?.avatarUrl);
+
+    return NextResponse.json({
+      user: updated,
+      avatarUrl: null,
+    });
+  } catch (error) {
+    logger.error("[account:avatar] Failed to delete avatar", {
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+    return NextResponse.json({ error: "Failed to delete avatar." }, { status: 500 });
   }
 }

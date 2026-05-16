@@ -7,15 +7,26 @@ vi.mock("@/lib/auth", () => ({
 vi.mock("@/lib/db", () => ({
   db: {
     user: {
+      findUnique: vi.fn(),
       update: vi.fn(),
     },
   },
+}));
+
+const deleteFileMock = vi.fn();
+
+vi.mock("@nebutra/uploads", () => ({
+  getUploadProvider: () =>
+    Promise.resolve({
+      deleteFile: deleteFileMock,
+    }),
 }));
 
 import { getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
 
 const mockedGetAuth = vi.mocked(getAuth);
+const mockedUserFindUnique = vi.mocked(db.user.findUnique);
 const mockedUserUpdate = vi.mocked(db.user.update);
 
 async function loadRoute() {
@@ -36,7 +47,9 @@ describe("POST /api/account/avatar", () => {
   beforeEach(() => {
     vi.resetModules();
     mockedGetAuth.mockReset();
+    mockedUserFindUnique.mockReset();
     mockedUserUpdate.mockReset();
+    deleteFileMock.mockReset();
   });
 
   afterEach(() => {
@@ -107,6 +120,7 @@ describe("POST /api/account/avatar", () => {
 
   it("finalizes a valid key by writing avatarUrl on the user row", async () => {
     mockedGetAuth.mockResolvedValue(buildAuth());
+    mockedUserFindUnique.mockResolvedValue({ avatarUrl: null } as never);
     mockedUserUpdate.mockResolvedValue({
       id: "user_1",
       name: "Alice",
@@ -134,6 +148,56 @@ describe("POST /api/account/avatar", () => {
     );
   });
 
+  it("cleans up the previous managed avatar key when replacing it", async () => {
+    mockedGetAuth.mockResolvedValue(buildAuth());
+    mockedUserFindUnique.mockResolvedValue({
+      avatarUrl: "user-avatars/user_1/old.png",
+    } as never);
+    mockedUserUpdate.mockResolvedValue({
+      id: "user_1",
+      name: "Alice",
+      email: "alice@example.com",
+      avatarUrl: "user-avatars/user_1/new.png",
+    } as never);
+
+    const { POST } = await loadRoute();
+    const response = await POST(
+      new Request("https://app.example/api/account/avatar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: "user-avatars/user_1/new.png" }),
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(deleteFileMock).toHaveBeenCalledWith("user-avatars", "user-avatars/user_1/old.png");
+  });
+
+  it("does not delete external avatar URLs when replacing them", async () => {
+    mockedGetAuth.mockResolvedValue(buildAuth());
+    mockedUserFindUnique.mockResolvedValue({
+      avatarUrl: "https://avatars.githubusercontent.com/u/1",
+    } as never);
+    mockedUserUpdate.mockResolvedValue({
+      id: "user_1",
+      name: "Alice",
+      email: "alice@example.com",
+      avatarUrl: "user-avatars/user_1/new.png",
+    } as never);
+
+    const { POST } = await loadRoute();
+    const response = await POST(
+      new Request("https://app.example/api/account/avatar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: "user-avatars/user_1/new.png" }),
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(deleteFileMock).not.toHaveBeenCalled();
+  });
+
   it("rejects a finalize key that does not match the user", async () => {
     mockedGetAuth.mockResolvedValue(buildAuth());
     const { POST } = await loadRoute();
@@ -146,5 +210,73 @@ describe("POST /api/account/avatar", () => {
     );
     expect(response.status).toBe(400);
     expect(mockedUserUpdate).not.toHaveBeenCalled();
+  });
+});
+
+describe("DELETE /api/account/avatar", () => {
+  beforeEach(() => {
+    vi.resetModules();
+    mockedGetAuth.mockReset();
+    mockedUserFindUnique.mockReset();
+    mockedUserUpdate.mockReset();
+    deleteFileMock.mockReset();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("returns 401 when there is no session", async () => {
+    mockedGetAuth.mockResolvedValue(buildAuth({ userId: null, isSignedIn: false }));
+    const { DELETE } = await loadRoute();
+    const response = await DELETE(new Request("https://app.example/api/account/avatar"));
+    expect(response.status).toBe(401);
+  });
+
+  it("clears avatarUrl and deletes the managed storage key", async () => {
+    mockedGetAuth.mockResolvedValue(buildAuth());
+    mockedUserFindUnique.mockResolvedValue({
+      avatarUrl: "user-avatars/user_1/current.png",
+    } as never);
+    mockedUserUpdate.mockResolvedValue({
+      id: "user_1",
+      name: "Alice",
+      email: "alice@example.com",
+      avatarUrl: null,
+    } as never);
+
+    const { DELETE } = await loadRoute();
+    const response = await DELETE(new Request("https://app.example/api/account/avatar"));
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({
+      user: { id: "user_1", name: "Alice", email: "alice@example.com", avatarUrl: null },
+      avatarUrl: null,
+    });
+    expect(mockedUserUpdate).toHaveBeenCalledWith({
+      where: { id: "user_1" },
+      data: { avatarUrl: null },
+      select: { id: true, name: true, email: true, avatarUrl: true },
+    });
+    expect(deleteFileMock).toHaveBeenCalledWith("user-avatars", "user-avatars/user_1/current.png");
+  });
+
+  it("clears avatarUrl without deleting external URLs", async () => {
+    mockedGetAuth.mockResolvedValue(buildAuth());
+    mockedUserFindUnique.mockResolvedValue({
+      avatarUrl: "https://images.example.com/avatar.png",
+    } as never);
+    mockedUserUpdate.mockResolvedValue({
+      id: "user_1",
+      name: "Alice",
+      email: "alice@example.com",
+      avatarUrl: null,
+    } as never);
+
+    const { DELETE } = await loadRoute();
+    const response = await DELETE(new Request("https://app.example/api/account/avatar"));
+
+    expect(response.status).toBe(200);
+    expect(deleteFileMock).not.toHaveBeenCalled();
   });
 });

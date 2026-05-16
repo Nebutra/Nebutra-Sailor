@@ -8,6 +8,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 const messages: Record<string, string> = {
   "auth.security.setPassword.title": "Set a password",
   "auth.security.setPassword.description": "Add a password to sign in without your OAuth provider.",
+  "auth.security.setPassword.pending": "Sending password setup link…",
   "auth.security.setPassword.submit": "Set password",
   "auth.security.setPassword.sentMessage": "We've sent a password setup link to your email.",
   "auth.errors.networkError": "Network error. Check your connection and try again.",
@@ -100,6 +101,32 @@ describe("SetPasswordForm", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Something went wrong. Please try again.")).toBeInTheDocument();
+    });
+  });
+
+  it("explains the sending state while the setup email is pending", async () => {
+    const user = userEvent.setup();
+    let resolveSubmit: () => void = () => {};
+    const onSubmit = vi.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveSubmit = resolve;
+        }),
+    );
+
+    render(<SetPasswordForm email="user@example.com" onSubmit={onSubmit} />);
+
+    await user.click(screen.getByRole("button", { name: "Set password" }));
+
+    expect(await screen.findByRole("status")).toHaveTextContent("Sending password setup link…");
+    expect(screen.getByRole("button", { name: "Sending password setup link…" })).toBeDisabled();
+
+    resolveSubmit?.();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("We've sent a password setup link to your email."),
+      ).toBeInTheDocument();
     });
   });
 });

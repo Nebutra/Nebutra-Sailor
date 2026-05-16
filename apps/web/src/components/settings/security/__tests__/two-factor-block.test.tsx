@@ -11,6 +11,10 @@ const messages: Record<string, string> = {
     "Add a second verification step using an authenticator app.",
   "auth.security.twoFactor.enabled": "Enabled",
   "auth.security.twoFactor.disabled": "Disabled",
+  "auth.security.twoFactor.enabledHelp":
+    "Your account asks for a 6-digit authenticator code after password sign-in.",
+  "auth.security.twoFactor.disabledHelp":
+    "Protect your account with a 6-digit code from an authenticator app.",
   "auth.security.twoFactor.enable": "Enable two-factor",
   "auth.security.twoFactor.disable": "Disable two-factor",
   "auth.security.twoFactor.passwordPrompt": "Confirm your password",
@@ -70,6 +74,12 @@ vi.mock("@nebutra/ui/components", () => ({
 import type { SecurityCapabilities } from "../security-capabilities";
 import { type TotpSetupData, TwoFactorBlock } from "../two-factor-block";
 
+function getSubmitForm(name: RegExp): HTMLFormElement {
+  const form = screen.getByRole("button", { name }).closest("form");
+  expect(form).toBeInstanceOf(HTMLFormElement);
+  return form as HTMLFormElement;
+}
+
 function buildAvailableCapability(
   overrides: Partial<SecurityCapabilities["twoFactor"]> = {},
 ): SecurityCapabilities["twoFactor"] {
@@ -128,6 +138,9 @@ describe("TwoFactorBlock", () => {
     render(<TwoFactorBlock capability={buildAvailableCapability()} enabled={false} />);
 
     expect(screen.getByText("Disabled")).toBeInTheDocument();
+    expect(
+      screen.getByText("Protect your account with a 6-digit code from an authenticator app."),
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Enable two-factor" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Disable two-factor" })).not.toBeInTheDocument();
   });
@@ -136,6 +149,11 @@ describe("TwoFactorBlock", () => {
     render(<TwoFactorBlock capability={buildAvailableCapability()} enabled />);
 
     expect(screen.getByText("Enabled")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Your account asks for a 6-digit authenticator code after password sign-in.",
+      ),
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Disable two-factor" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Enable two-factor" })).not.toBeInTheDocument();
   });
@@ -284,9 +302,7 @@ describe("TwoFactorBlock", () => {
 
     await user.click(screen.getByRole("button", { name: "Enable two-factor" }));
     await user.type(await screen.findByLabelText("Confirm your password"), "wrong");
-    fireEvent.submit(
-      screen.getByRole("button", { name: /continue|confirm|next/i }).closest("form")!,
-    );
+    fireEvent.submit(getSubmitForm(/continue|confirm|next/i));
 
     await waitFor(() => {
       expect(screen.getByText("Current password is incorrect.")).toBeInTheDocument();
@@ -330,9 +346,7 @@ describe("TwoFactorBlock", () => {
 
     await user.click(screen.getByRole("button", { name: "Disable two-factor" }));
     await user.type(await screen.findByLabelText("Confirm your password"), "wrong");
-    fireEvent.submit(
-      screen.getByRole("button", { name: /confirm|disable|continue/i }).closest("form")!,
-    );
+    fireEvent.submit(getSubmitForm(/confirm|disable|continue/i));
 
     await waitFor(() => {
       expect(screen.getByText("Current password is incorrect.")).toBeInTheDocument();

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import NextImage from "next/image";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
@@ -17,7 +17,8 @@ interface OrganizationLogoFormProps {
    * presigned-URL/PUT/finalize sequence against `/api/organizations/[orgId]/logo*`.
    */
   uploadPipeline?: (file: File) => Promise<{ logoUrl: string }>;
-  onUpdated?: (next: { logoUrl: string }) => void;
+  deletePipeline?: () => Promise<{ logoUrl: string | null }>;
+  onUpdated?: (next: { logoUrl: string | null }) => void;
 }
 
 async function defaultUploadPipeline(orgId: string, file: File): Promise<{ logoUrl: string }> {
@@ -73,6 +74,66 @@ async function defaultUploadPipeline(orgId: string, file: File): Promise<{ logoU
   return { logoUrl: finalizeBody.organization.logoUrl };
 }
 
+async function defaultDeletePipeline(orgId: string): Promise<{ logoUrl: null }> {
+  const response = await fetch(`/api/organizations/${orgId}/logo`, { method: "DELETE" });
+  const body = (await response.json().catch(() => ({}))) as {
+    error?: string;
+    code?: string;
+  };
+  if (!response.ok) {
+    throw {
+      code: body.code,
+      message: body.error ?? "Failed to delete organization logo.",
+    };
+  }
+  return { logoUrl: null };
+}
+
+async function centerCropSquareImage(file: File): Promise<File> {
+  if (
+    typeof window === "undefined" ||
+    typeof document === "undefined" ||
+    typeof URL === "undefined" ||
+    typeof URL.createObjectURL !== "function"
+  ) {
+    return file;
+  }
+  const objectUrl = URL.createObjectURL(file);
+  try {
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new window.Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error("Failed to load image for cropping."));
+      img.src = objectUrl;
+    });
+    const side = Math.min(image.naturalWidth, image.naturalHeight);
+    if (!side) return file;
+    const canvas = document.createElement("canvas");
+    canvas.width = side;
+    canvas.height = side;
+    const context = canvas.getContext("2d");
+    if (!context) return file;
+    context.drawImage(
+      image,
+      Math.floor((image.naturalWidth - side) / 2),
+      Math.floor((image.naturalHeight - side) / 2),
+      side,
+      side,
+      0,
+      0,
+      side,
+      side,
+    );
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, file.type));
+    if (!blob) return file;
+    return new File([blob], file.name, { type: file.type, lastModified: Date.now() });
+  } catch {
+    return file;
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+}
+
 function initialsFor(name: string): string {
   return name.trim().slice(0, 2).toUpperCase() || "??";
 }
@@ -82,6 +143,7 @@ export function OrganizationLogoForm({
   orgName,
   initialLogoUrl,
   uploadPipeline,
+  deletePipeline,
   onUpdated,
 }: OrganizationLogoFormProps) {
   const t = useTranslations();
@@ -107,7 +169,8 @@ export function OrganizationLogoForm({
     setPending(true);
     try {
       const pipeline = uploadPipeline ?? ((next: File) => defaultUploadPipeline(orgId, next));
-      const result = await pipeline(file);
+      const uploadFile = uploadPipeline ? file : await centerCropSquareImage(file);
+      const result = await pipeline(uploadFile);
       setLogoUrl(result.logoUrl);
       setShowSuccess(true);
       onUpdated?.(result);
@@ -122,6 +185,28 @@ export function OrganizationLogoForm({
       setPending(false);
       // Reset the input so re-selecting the same file fires onChange.
       if (inputRef.current) inputRef.current.value = "";
+    }
+  }
+
+  async function handleDelete() {
+    setErrorMessage("");
+    setShowSuccess(false);
+    setPending(true);
+    try {
+      const pipeline = deletePipeline ?? (() => defaultDeletePipeline(orgId));
+      const result = await pipeline();
+      setLogoUrl(null);
+      setShowSuccess(true);
+      onUpdated?.(result);
+    } catch (err) {
+      const key = resolveAuthErrorKey(err);
+      const fallback =
+        err && typeof err === "object" && "message" in err && typeof err.message === "string"
+          ? err.message
+          : t(`auth.errors.${key}`);
+      setErrorMessage(fallback);
+    } finally {
+      setPending(false);
     }
   }
 
@@ -142,12 +227,9 @@ export function OrganizationLogoForm({
       </p>
 
       <div className="flex items-center gap-4">
-        <div
-          className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-3)]"
-          aria-label="Organization logo preview"
-        >
-          {logoUrl ? (
-            <Image
+        {logoUrl ? (
+          <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-3)]">
+            <NextImage
               src={logoUrl}
               alt={`${orgName} logo`}
               width={80}
@@ -155,12 +237,18 @@ export function OrganizationLogoForm({
               className="size-20 object-cover"
               unoptimized
             />
-          ) : (
+          </div>
+        ) : (
+          <div
+            role="img"
+            className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-3)]"
+            aria-label="Organization logo preview"
+          >
             <span className="text-sm font-semibold text-[var(--neutral-11)]">
               {initialsFor(orgName)}
             </span>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="flex flex-col gap-2">
           {/* TODO: replace with a crop dialog (see Supastarter CropImageDialog reference). */}
@@ -168,6 +256,7 @@ export function OrganizationLogoForm({
             data-allow-native
             ref={inputRef}
             id="organization-logo-input"
+            data-testid="organization-logo-input"
             type="file"
             accept="image/png,image/jpeg,image/webp"
             className="sr-only"
@@ -184,13 +273,25 @@ export function OrganizationLogoForm({
               ? t("organizations.settings.logo.uploading")
               : t("organizations.settings.logo.uploadButton")}
           </label>
+          {logoUrl && (
+            <button
+              type="button"
+              onClick={() => void handleDelete()}
+              disabled={pending}
+              className="text-left text-xs font-medium text-[var(--status-danger)] underline-offset-4 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {t("organizations.settings.logo.removeButton")}
+            </button>
+          )}
         </div>
       </div>
 
       {errorMessage && <p className="mt-3 text-sm text-[var(--status-danger)]">{errorMessage}</p>}
       {showSuccess && (
         <p className="mt-3 text-sm text-[color:var(--status-success)]">
-          {t("organizations.settings.logo.success")}
+          {logoUrl
+            ? t("organizations.settings.logo.success")
+            : t("organizations.settings.logo.removed")}
         </p>
       )}
     </section>

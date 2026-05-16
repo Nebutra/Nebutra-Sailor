@@ -50,6 +50,27 @@ describe("PricingPlanGrid", () => {
     expect(screen.getByRole("article", { name: /enterprise/i })).toBeInTheDocument();
   });
 
+  it("deduplicates free/default plans before rendering cards", () => {
+    render(
+      <PricingPlanGrid
+        plans={[
+          PLANS[0],
+          {
+            ...PLANS[0],
+            id: "default_free",
+            name: "Default",
+            description: "Internal fallback free plan.",
+          },
+          PLANS[1],
+        ]}
+      />,
+    );
+
+    expect(screen.getAllByText("$0")).toHaveLength(1);
+    expect(screen.getByRole("article", { name: /free/i })).toBeInTheDocument();
+    expect(screen.queryByRole("article", { name: /default/i })).not.toBeInTheDocument();
+  });
+
   it("hides the active plan from the grid", () => {
     render(<PricingPlanGrid plans={PLANS} activePlanId="plan_pro" />);
 
@@ -133,6 +154,27 @@ describe("PricingPlanGrid", () => {
     resolve();
   });
 
+  it("ignores duplicate rapid checkout clicks while the first selection is pending", async () => {
+    const user = userEvent.setup();
+    let resolve!: () => void;
+    const pending = new Promise<void>((r) => {
+      resolve = r;
+    });
+    const onSelectPlan = vi.fn().mockReturnValue(pending);
+
+    render(<PricingPlanGrid plans={PLANS} onSelectPlan={onSelectPlan} />);
+
+    const proCard = screen.getByRole("article", { name: /pro/i });
+    const cta = within(proCard).getByRole("button", { name: /choose|select|pro/i });
+    await user.dblClick(cta);
+
+    await waitFor(() => {
+      expect(onSelectPlan).toHaveBeenCalledTimes(1);
+    });
+
+    resolve();
+  });
+
   it("default onSelectPlan posts to /api/billing/checkout and redirects to the response url", async () => {
     const user = userEvent.setup();
     const fetchMock = vi.fn().mockResolvedValue(
@@ -141,7 +183,7 @@ describe("PricingPlanGrid", () => {
         headers: { "content-type": "application/json" },
       }),
     );
-    globalThis.fetch = fetchMock as unknown as typeof fetch;
+    vi.stubGlobal("fetch", fetchMock);
 
     const originalLocation = window.location;
     const setHref = vi.fn();
@@ -187,6 +229,25 @@ describe("PricingPlanGrid", () => {
     });
 
     Object.defineProperty(window, "location", { configurable: true, value: originalLocation });
+  });
+
+  it("surfaces checkout failures through onSelectError without crashing the grid", async () => {
+    const user = userEvent.setup();
+    const checkoutError = new Error("Checkout unavailable.");
+    const onSelectPlan = vi.fn().mockRejectedValue(checkoutError);
+    const onSelectError = vi.fn();
+
+    render(
+      <PricingPlanGrid plans={PLANS} onSelectPlan={onSelectPlan} onSelectError={onSelectError} />,
+    );
+
+    const proCard = screen.getByRole("article", { name: /pro/i });
+    await user.click(within(proCard).getByRole("button", { name: /choose|select|pro/i }));
+
+    await waitFor(() => {
+      expect(onSelectError).toHaveBeenCalledWith(checkoutError, "plan_pro");
+    });
+    expect(within(proCard).getByRole("button", { name: /choose|select|pro/i })).toBeEnabled();
   });
 
   // ── Trial badge ────────────────────────────────────────────────────────────

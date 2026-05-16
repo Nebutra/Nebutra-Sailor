@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -11,18 +11,31 @@ const messages: Record<string, string> = {
     "Use device-bound credentials for phishing-resistant sign-in.",
   "auth.security.passkeys.empty": "No passkeys registered yet",
   "auth.security.passkeys.addPasskey": "Add passkey",
+  "auth.security.passkeys.cancelAdd": "Cancel",
+  "auth.security.passkeys.defaultName": "Passkey {number}",
+  "auth.security.passkeys.nameHelp":
+    "Give this passkey a recognizable name before your browser asks for confirmation.",
+  "auth.security.passkeys.nameLabel": "Passkey name",
+  "auth.security.passkeys.rename": "Rename",
+  "auth.security.passkeys.saveRename": "Save name",
   "auth.security.passkeys.remove": "Remove",
   "auth.security.passkeys.successAdded": "Passkey added.",
   "auth.security.passkeys.successRemoved": "Passkey removed.",
+  "auth.security.passkeys.cancelled": "Passkey setup was cancelled. Nothing changed.",
   "auth.errors.networkError": "Network error. Check your connection and try again.",
   "auth.errors.unknown": "Something went wrong. Please try again.",
 };
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string) => {
-    const fullKey = `${namespace}.${key}`;
-    return messages[fullKey] ?? fullKey;
-  },
+  useTranslations:
+    (namespace: string) => (key: string, values?: Record<string, string | number>) => {
+      const fullKey = `${namespace}.${key}`;
+      const template = messages[fullKey] ?? fullKey;
+      return Object.entries(values ?? {}).reduce(
+        (message, [name, value]) => message.replace(`{${name}}`, String(value)),
+        template,
+      );
+    },
 }));
 
 vi.mock("@nebutra/ui/components", () => ({
@@ -126,6 +139,7 @@ describe("PasskeysBlock", () => {
     });
 
     await user.click(screen.getByRole("button", { name: /Add passkey/ }));
+    await user.click(screen.getByRole("button", { name: /Add passkey/ }));
 
     await waitFor(() => {
       expect(onAdd).toHaveBeenCalled();
@@ -166,9 +180,97 @@ describe("PasskeysBlock", () => {
     });
 
     await user.click(screen.getByRole("button", { name: /Add passkey/ }));
+    await user.click(screen.getByRole("button", { name: /Add passkey/ }));
 
     await waitFor(() => {
       expect(screen.getByText("Something went wrong. Please try again.")).toBeInTheDocument();
+    });
+  });
+
+  it("opens add flow with a default recognizable name and cancels without starting registration", async () => {
+    const onList = vi.fn().mockResolvedValue(SAMPLE_PASSKEYS);
+    const onAdd = vi.fn().mockResolvedValue(undefined);
+
+    render(<PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />);
+
+    await waitFor(() => {
+      expect(screen.getByText("MacBook Pro")).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Add passkey" }));
+
+    expect(screen.getByLabelText("Passkey name")).toHaveValue("Passkey 3");
+    expect(
+      screen.getByText(
+        "Give this passkey a recognizable name before your browser asks for confirmation.",
+      ),
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+
+    expect(onAdd).not.toHaveBeenCalled();
+    expect(screen.queryByLabelText("Passkey name")).not.toBeInTheDocument();
+  });
+
+  it("passes the edited passkey name to onAdd", async () => {
+    const user = userEvent.setup();
+    const onList = vi.fn().mockResolvedValue([]);
+    const onAdd = vi.fn().mockResolvedValue(undefined);
+
+    render(<PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />);
+
+    await waitFor(() => {
+      expect(screen.getByText("No passkeys registered yet")).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole("button", { name: "Add passkey" }));
+    await user.clear(screen.getByLabelText("Passkey name"));
+    await user.type(screen.getByLabelText("Passkey name"), "Office YubiKey");
+    await user.click(screen.getByRole("button", { name: "Add passkey" }));
+
+    await waitFor(() => {
+      expect(onAdd).toHaveBeenCalledWith({ name: "Office YubiKey" });
+    });
+  });
+
+  it("treats browser passkey cancellation as a non-error status", async () => {
+    const user = userEvent.setup();
+    const onList = vi.fn().mockResolvedValue([]);
+    const onAdd = vi.fn().mockRejectedValue({ code: "CANCELLED" });
+
+    render(<PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />);
+
+    await waitFor(() => {
+      expect(screen.getByText("No passkeys registered yet")).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole("button", { name: "Add passkey" }));
+    await user.click(screen.getByRole("button", { name: "Add passkey" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Passkey setup was cancelled. Nothing changed.")).toBeInTheDocument();
+    });
+    expect(screen.queryByText("Something went wrong. Please try again.")).not.toBeInTheDocument();
+  });
+
+  it("renames an existing passkey without removing it", async () => {
+    const user = userEvent.setup();
+    const onList = vi.fn().mockResolvedValue(SAMPLE_PASSKEYS);
+    const onRename = vi.fn().mockResolvedValue(undefined);
+
+    render(<PasskeysBlock capability={buildCapability()} onList={onList} onRename={onRename} />);
+
+    await waitFor(() => {
+      expect(screen.getByText("MacBook Pro")).toBeInTheDocument();
+    });
+
+    await user.click(screen.getAllByRole("button", { name: "Rename" })[0]);
+    await user.clear(screen.getByLabelText("Passkey name"));
+    await user.type(screen.getByLabelText("Passkey name"), "Personal MacBook");
+    await user.click(screen.getByRole("button", { name: "Save name" }));
+
+    await waitFor(() => {
+      expect(onRename).toHaveBeenCalledWith("pk_1", "Personal MacBook");
     });
   });
 });

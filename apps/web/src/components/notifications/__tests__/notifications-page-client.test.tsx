@@ -42,18 +42,11 @@ function makeNotification(
   };
 }
 
-interface FakeFetchResponse {
-  ok: boolean;
-  status?: number;
-  json: () => Promise<unknown>;
-}
-
-function jsonResponse(payload: unknown, ok = true, status = 200): FakeFetchResponse {
-  return {
-    ok,
+function jsonResponse(payload: unknown, status = 200): Response {
+  return new Response(JSON.stringify(payload), {
     status,
-    json: async () => payload,
-  };
+    headers: { "content-type": "application/json" },
+  });
 }
 
 // =============================================================================
@@ -82,7 +75,7 @@ describe("NotificationsPageClient", () => {
       }),
     );
 
-    render(<NotificationsPageClient fetcher={fetcher as unknown as typeof fetch} />);
+    render(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("First note")).toBeInTheDocument();
@@ -91,8 +84,35 @@ describe("NotificationsPageClient", () => {
 
     expect(fetcher).toHaveBeenCalledWith(
       expect.stringContaining("/api/notifications/inbox?limit=50"),
-      expect.any(Object),
+      expect.objectContaining({ credentials: "same-origin" }),
     );
+  });
+
+  it("marks the inbox region busy and disables toolbar actions during initial load", async () => {
+    let resolveFetch!: (value: Response) => void;
+    const fetcher = vi.fn(
+      () =>
+        new Promise<Response>((resolve) => {
+          resolveFetch = resolve;
+        }),
+    );
+
+    render(<NotificationsPageClient fetcher={fetcher} />);
+
+    expect(screen.getByTestId("notifications-page-client")).toHaveAttribute("aria-busy", "true");
+    expect(screen.getByRole("tab", { name: /filter\.all/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: /actions\.markAllRead/i })).toBeDisabled();
+
+    resolveFetch(
+      jsonResponse({
+        success: true,
+        data: { notifications: [], total: 0, unreadCount: 0, nextCursor: null },
+      }),
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("notifications-page-client")).toHaveAttribute("aria-busy", "false");
+    });
   });
 
   it("shows the empty state when no notifications are returned", async () => {
@@ -103,7 +123,7 @@ describe("NotificationsPageClient", () => {
       }),
     );
 
-    render(<NotificationsPageClient fetcher={fetcher as unknown as typeof fetch} />);
+    render(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByTestId("inbox-empty")).toBeInTheDocument();
@@ -139,7 +159,7 @@ describe("NotificationsPageClient", () => {
       });
     });
 
-    render(<NotificationsPageClient fetcher={fetcher as unknown as typeof fetch} />);
+    render(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Mixed note")).toBeInTheDocument();
@@ -169,7 +189,7 @@ describe("NotificationsPageClient", () => {
       }),
     );
 
-    render(<NotificationsPageClient fetcher={fetcher as unknown as typeof fetch} />);
+    render(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Pickable")).toBeInTheDocument();
@@ -203,7 +223,7 @@ describe("NotificationsPageClient", () => {
       });
     });
 
-    render(<NotificationsPageClient fetcher={fetcher as unknown as typeof fetch} />);
+    render(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Bulk one")).toBeInTheDocument();
@@ -243,7 +263,7 @@ describe("NotificationsPageClient", () => {
       });
     });
 
-    render(<NotificationsPageClient fetcher={fetcher as unknown as typeof fetch} />);
+    render(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Unread one")).toBeInTheDocument();
@@ -286,7 +306,7 @@ describe("NotificationsPageClient", () => {
       });
     });
 
-    render(<NotificationsPageClient fetcher={fetcher as unknown as typeof fetch} />);
+    render(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Page one item")).toBeInTheDocument();
@@ -312,7 +332,7 @@ describe("NotificationsPageClient", () => {
 
     const fetcher = vi.fn().mockImplementation(async (_url: string, init?: RequestInit) => {
       if (init?.method === "PATCH") {
-        return jsonResponse({ success: false }, false, 500);
+        return jsonResponse({ success: false }, 500);
       }
       return jsonResponse({
         success: true,
@@ -320,7 +340,7 @@ describe("NotificationsPageClient", () => {
       });
     });
 
-    render(<NotificationsPageClient fetcher={fetcher as unknown as typeof fetch} />);
+    render(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Will fail")).toBeInTheDocument();

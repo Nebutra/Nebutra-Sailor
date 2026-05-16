@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, Check, Sparkles } from "@nebutra/icons";
-import { useMemo, useState, useTransition } from "react";
+import { useMemo, useRef, useState, useTransition } from "react";
 
 export type BillingInterval = "month" | "year";
 
@@ -44,19 +44,36 @@ export interface PricingPlanGridProps {
    * to `/api/billing/checkout` and following `data.url` via `window.location`.
    */
   onSelectPlan?: (planId: string, interval: BillingInterval) => Promise<void>;
+  /** Called when checkout dispatch fails. Use this to show a toast or inline error. */
+  onSelectError?: (error: unknown, planId: string) => void;
   className?: string;
 }
 
 const PLAN_LABEL = "pricing.choosePlan";
+const usdWholeFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+const usdFractionFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 2,
+});
 
 function formatAmount(amountCents: number, currency: string): string {
   const amount = amountCents / 100;
-  // Use Intl.NumberFormat for currency
-  return new Intl.NumberFormat("en-US", {
+  const maximumFractionDigits = amount % 1 === 0 ? 0 : 2;
+
+  if (currency.toUpperCase() === "USD") {
+    return (maximumFractionDigits === 0 ? usdWholeFormatter : usdFractionFormatter).format(amount);
+  }
+
+  return amount.toLocaleString("en-US", {
     style: "currency",
     currency,
-    maximumFractionDigits: amount % 1 === 0 ? 0 : 2,
-  }).format(amount);
+    maximumFractionDigits,
+  });
 }
 
 function findPriceForInterval(
@@ -65,8 +82,22 @@ function findPriceForInterval(
 ): PricingPlanPrice | null {
   const exact = plan.prices.find((p) => p.interval === interval);
   if (exact) return exact;
-  // fallback: any non-one-time price
+  // Fallback to the first recurring price when the selected cadence is absent.
   return plan.prices.find((p) => p.interval !== "one-time") ?? null;
+}
+
+function isFreeLikePlan(plan: PricingPlan): boolean {
+  return plan.tier === "FREE" || (plan.prices.length === 0 && plan.tier !== "ENTERPRISE");
+}
+
+function dedupeDefaultFreePlans(plans: PricingPlan[]): PricingPlan[] {
+  let freePlanSeen = false;
+  return plans.filter((plan) => {
+    if (!isFreeLikePlan(plan)) return true;
+    if (freePlanSeen) return false;
+    freePlanSeen = true;
+    return true;
+  });
 }
 
 async function defaultOnSelectPlan(
@@ -118,10 +149,11 @@ export function PricingPlanGrid({
   activePlanId,
   orgId,
   onSelectPlan,
+  onSelectError,
   className,
 }: PricingPlanGridProps) {
   const visiblePlans = useMemo(
-    () => plans.filter((plan) => plan.id !== activePlanId),
+    () => dedupeDefaultFreePlans(plans).filter((plan) => plan.id !== activePlanId),
     [plans, activePlanId],
   );
 
@@ -135,25 +167,24 @@ export function PricingPlanGrid({
     [visiblePlans],
   );
 
-  const [interval, setInterval] = useState<BillingInterval>("month");
+  const [billingInterval, setBillingInterval] = useState<BillingInterval>("month");
   const [pendingPlanId, setPendingPlanId] = useState<string | null>(null);
+  const pendingPlanRef = useRef<string | null>(null);
   const [, startTransition] = useTransition();
 
   const handleSelect = async (planId: string) => {
-    if (pendingPlanId) return;
+    if (pendingPlanRef.current) return;
+    pendingPlanRef.current = planId;
     setPendingPlanId(planId);
     try {
       const handler =
         onSelectPlan ?? ((id: string, i: BillingInterval) => defaultOnSelectPlan(id, i, orgId));
-      await handler(planId, interval);
+      await handler(planId, billingInterval);
     } catch (error) {
-      // The caller is expected to surface the failure (toast, error boundary).
-      // Re-throwing here would crash the React tree on transient checkout faults,
-      // so we swallow and reset the loading state.
-      // eslint-disable-next-line no-console
-      console.error("[PricingPlanGrid] onSelectPlan failed", error);
+      onSelectError?.(error, planId);
     } finally {
       startTransition(() => {
+        pendingPlanRef.current = null;
         setPendingPlanId(null);
       });
     }
@@ -170,14 +201,14 @@ export function PricingPlanGrid({
           <IntervalTab
             value="month"
             label="Monthly"
-            active={interval === "month"}
-            onSelect={() => setInterval("month")}
+            active={billingInterval === "month"}
+            onSelect={() => setBillingInterval("month")}
           />
           <IntervalTab
             value="year"
             label="Yearly"
-            active={interval === "year"}
-            onSelect={() => setInterval("year")}
+            active={billingInterval === "year"}
+            onSelect={() => setBillingInterval("year")}
           />
         </div>
       )}
@@ -187,7 +218,7 @@ export function PricingPlanGrid({
           <PlanCard
             key={plan.id}
             plan={plan}
-            interval={interval}
+            interval={billingInterval}
             loading={pendingPlanId === plan.id}
             disabled={pendingPlanId !== null && pendingPlanId !== plan.id}
             onSelect={() => handleSelect(plan.id)}
@@ -250,8 +281,8 @@ function isPerSeatPlan(plan: PricingPlan, price: PricingPlanPrice | null): boole
 function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps) {
   const price = findPriceForInterval(plan, interval);
   const recommended = plan.recommended ?? false;
-  const isFree = plan.tier === "FREE" || (plan.prices.length === 0 && plan.tier !== "ENTERPRISE");
-  const ctaLabel = loading ? "Redirecting..." : isFree ? "Included" : `Choose ${plan.name}`;
+  const isFree = isFreeLikePlan(plan);
+  const ctaLabel = loading ? "Redirecting…" : isFree ? "Included" : `Choose ${plan.name}`;
 
   const priceLabel = price ? formatAmount(price.amount, price.currency) : isFree ? "$0" : "Custom";
   const cadenceLabel = price
@@ -271,39 +302,31 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
       data-testid={`pricing-plan-${plan.id}`}
       className={`relative flex flex-col rounded-3xl border p-6 shadow-sm transition ${
         recommended
-          ? "border-[color:var(--brand-primary)] bg-[color:var(--neutral-1)] dark:bg-black/40"
-          : "border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] dark:border-white/10 dark:bg-black/40"
+          ? "border-[color:var(--brand-primary)] bg-[color:var(--neutral-1)]"
+          : "border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)]"
       }`}
     >
       {recommended && (
-        <span className="-top-3 -translate-x-1/2 absolute left-1/2 inline-flex items-center gap-1 rounded-full bg-[color:var(--brand-primary)] px-3 py-1 font-medium text-white text-xs">
+        <span className="-top-3 -translate-x-1/2 absolute left-1/2 inline-flex items-center gap-1 rounded-full bg-[color:var(--brand-primary)] px-3 py-1 font-medium text-[color:var(--neutral-1)] text-xs">
           <Sparkles className="size-3" aria-hidden="true" />
           Recommended
         </span>
       )}
 
       <div>
-        <h3 className="font-semibold text-[color:var(--neutral-12)] text-xl dark:text-white">
-          {plan.name}
-        </h3>
+        <h3 className="font-semibold text-[color:var(--neutral-12)] text-xl">{plan.name}</h3>
         {plan.description && (
-          <p className="mt-2 text-[color:var(--neutral-11)] text-sm dark:text-white/70">
-            {plan.description}
-          </p>
+          <p className="mt-2 text-[color:var(--neutral-11)] text-sm">{plan.description}</p>
         )}
       </div>
 
       <div className="mt-6">
-        <span className="font-semibold text-3xl text-[color:var(--neutral-12)] dark:text-white">
-          {priceLabel}
-        </span>
-        <span className="ml-2 text-[color:var(--neutral-10)] text-sm dark:text-white/50">
-          {cadenceLabel}
-        </span>
+        <span className="font-semibold text-3xl text-[color:var(--neutral-12)]">{priceLabel}</span>
+        <span className="ml-2 text-[color:var(--neutral-10)] text-sm">{cadenceLabel}</span>
         {perSeat && (
           <span
             data-testid={`pricing-plan-${plan.id}-per-seat`}
-            className="ml-1 text-[color:var(--neutral-10)] text-sm dark:text-white/50"
+            className="ml-1 text-[color:var(--neutral-10)] text-sm"
           >
             / seat
           </span>
@@ -315,7 +338,7 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
           {plan.features.map((feature) => (
             <li
               key={feature}
-              className="flex items-start gap-2 text-[color:var(--neutral-11)] text-sm dark:text-white/70"
+              className="flex items-start gap-2 text-[color:var(--neutral-11)] text-sm"
             >
               <Check
                 className="mt-0.5 size-4 shrink-0 text-[color:var(--brand-primary)]"
@@ -343,8 +366,8 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
         aria-label={isFree ? `${plan.name} included` : `Choose ${plan.name}`}
         className={`mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-sm transition ${
           recommended
-            ? "bg-[color:var(--brand-primary)] text-white hover:opacity-90"
-            : "border border-[color:var(--neutral-7)] text-[color:var(--neutral-12)] hover:bg-[color:var(--neutral-3)] dark:border-white/10 dark:text-white dark:hover:bg-white/10"
+            ? "bg-[color:var(--brand-primary)] text-[color:var(--neutral-1)] hover:opacity-90"
+            : "border border-[color:var(--neutral-7)] text-[color:var(--neutral-12)] hover:bg-[color:var(--neutral-3)]"
         } ${loading || disabled || isFree ? "cursor-not-allowed opacity-70" : ""}`}
       >
         {ctaLabel}

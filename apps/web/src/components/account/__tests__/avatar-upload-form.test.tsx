@@ -85,4 +85,44 @@ describe("AvatarUploadForm", () => {
     );
     expect(onUpdated).toHaveBeenCalledWith({ avatarUrl: "https://cdn/avatars/1.png" });
   });
+
+  it("calls delete pipeline and returns to initials", async () => {
+    const deletePipeline = vi.fn().mockResolvedValue({ avatarUrl: null });
+    const onUpdated = vi.fn();
+    render(
+      <AvatarUploadForm
+        initialAvatarUrl="https://cdn/avatars/1.png"
+        fallbackName="Alice Bee"
+        deletePipeline={deletePipeline}
+        onUpdated={onUpdated}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "account.avatar.removeButton" }));
+
+    await waitFor(() => expect(deletePipeline).toHaveBeenCalled());
+    await waitFor(() => expect(screen.getByLabelText(/avatar preview/i).textContent).toMatch(/AB/));
+    expect(screen.getByRole("status").textContent).toBe("account.avatar.removed");
+    expect(onUpdated).toHaveBeenCalledWith({ avatarUrl: null });
+  });
+
+  it("shows delete errors without clearing the current avatar", async () => {
+    const deletePipeline = vi.fn().mockRejectedValue(new Error("Could not delete avatar."));
+    render(
+      <AvatarUploadForm
+        initialAvatarUrl="https://cdn/avatars/1.png"
+        fallbackName="Alice Bee"
+        deletePipeline={deletePipeline}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "account.avatar.removeButton" }));
+
+    await waitFor(() =>
+      expect(screen.getByRole("alert").textContent).toBe("Could not delete avatar."),
+    );
+    expect(screen.getByRole("img", { name: /avatar/i }).getAttribute("src")).toContain(
+      "https://cdn/avatars/1.png",
+    );
+  });
 });
