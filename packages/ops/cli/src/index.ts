@@ -32,6 +32,7 @@ import { registerSecretsCommand } from "./commands/secrets";
 import { registerServicesCommand } from "./commands/services";
 import { registerStatsCommand } from "./commands/stats";
 import { registerTestCommand } from "./commands/test";
+import { registerThemeCommand } from "./commands/theme";
 import { registerUnlinkCommand } from "./commands/unlink";
 import { registerUpgradeCommand } from "./commands/upgrade";
 import { registerWorkflowCommand } from "./commands/workflow";
@@ -140,6 +141,7 @@ async function main() {
   registerWorkflowCommand(program);
   registerBackendCommand(program);
   registerE2eCommand(program);
+  registerThemeCommand(program);
 
   // ─── Platform & ecosystem commands ──────────────────────
   registerAdminCommand(program);
@@ -238,6 +240,8 @@ Examples:
   $ nebutra db migrate                    Run pending database migrations
   $ nebutra generate app blog             Scaffold a new app
   $ nebutra brand palette --primary=#0047FF  Generate token-aligned blue palette
+  $ nebutra theme list --format json    List registry-backed themes
+  $ nebutra theme inspect neon          Inspect a theme governance manifest
   $ nebutra preset list --format json     List available presets
   $ nebutra infra up --lite               Start PostgreSQL + Redis
   $ nebutra test e2e                      Run Playwright E2E tests
