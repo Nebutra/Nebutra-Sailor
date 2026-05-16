@@ -64,6 +64,12 @@
       "description": "Compact feedback widget with emotion, message, topic, and metadata payloads."
     },
     {
+      "name": "show-more",
+      "type": "registry:ui",
+      "title": "Show More",
+      "description": "Count-aware progressive disclosure trigger for long lists and content blocks."
+    },
+    {
       "name": "theme-toggle",
       "type": "registry:ui",
       "title": "Theme Toggle",
@@ -242,6 +248,12 @@
       "type": "registry:ui",
       "title": "Progress",
       "description": "Determinate progress bar with max ceiling, threshold-color map, multi-stage stops with tooltips, and ~1Hz aria-valuenow throttling."
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Loading placeholder with width/height/boxHeight + pill/rounded/squared + animated/show props. Respects prefers-reduced-motion; aria-busy + inert keep focus off the placeholder."
     },
     {
       "name": "nebutra-tokens",

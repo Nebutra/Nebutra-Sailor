@@ -186,6 +186,27 @@ export const feedbackTokens = {
 } as const;
 `;
 
+const SHOW_MORE_REGISTRY_TOKENS = `/**
+ * ShowMore Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const showMoreTokens = {
+  triggerHeight: 32,
+  triggerPaddingX: 12,
+  dividerInset: 20,
+  gap: 8,
+  radius: 9999,
+  iconSize: 16,
+  motion: {
+    duration: 100,
+    easing: "ease-out",
+  },
+} as const;
+`;
+
 const THEME_TOGGLE_REGISTRY_TOKENS = `/**
  * ThemeToggle Component Tokens — standalone registry copy.
  *
@@ -393,6 +414,20 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
       {
         content: FEEDBACK_REGISTRY_TOKENS,
         targetPath: "components/tokens/components/feedback.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "show-more",
+    title: "Show More",
+    description: "Count-aware progressive disclosure trigger for long lists and content blocks.",
+    source: "primitives/show-more.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: SHOW_MORE_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/show-more.ts",
         type: "registry:lib",
       },
     ],
@@ -675,6 +710,14 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     description:
       "Determinate progress bar with max ceiling, threshold-color map, multi-stage stops with tooltips, and ~1Hz aria-valuenow throttling.",
     source: "primitives/progress.tsx",
+    layer: "dashboard",
+  },
+  {
+    name: "skeleton",
+    title: "Skeleton",
+    description:
+      "Loading placeholder with width/height/boxHeight + pill/rounded/squared + animated/show props. Respects prefers-reduced-motion; aria-busy + inert keep focus off the placeholder.",
+    source: "primitives/skeleton.tsx",
     layer: "dashboard",
   },
 ];
