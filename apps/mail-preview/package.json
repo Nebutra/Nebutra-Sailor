@@ -17,6 +17,7 @@
     "@nebutra/email": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",
+    "@nebutra/ui": "workspace:*",
     "geist": "catalog:",
     "next": "catalog:",
     "next-themes": "catalog:",
