@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Server-authoritative creative-canvas engine: scene model, non-overlap placement, write-then-broadcast consistency, tenant-scoped locking",
   "private": false,
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "featureId": "atelier-canvas",
@@ -24,7 +24,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@nebutra/logger": "workspace:*"
+    "@nebutra/logger": "workspace:*",
+    "@nebutra/tenant-store": "workspace:*"
   },
   "peerDependencies": {
     "@nebutra/agents": "workspace:*"

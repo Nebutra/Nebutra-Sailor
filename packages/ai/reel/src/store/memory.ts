@@ -1,23 +1,21 @@
 /**
  * In-memory ReelGraphStore — default for tests and the flag-gated demo.
  *
- * Tenant isolation by `tenantId:graphId` keying; never returns rows across
- * tenants — the same property the atelier-canvas Prisma store gets from RLS.
- * A production Prisma adapter mirrors this shape (one JSON blob per graph +
- * organization_id); deferred from the vertical slice.
+ * Storage mechanics (tenant-keyed map, never returning rows across tenants,
+ * tenant-filtered listing) are delegated to `InMemoryTenantStore` from
+ * `@nebutra/tenant-store`; this class only adds reel's typed `create` / `save`
+ * domain shape. A production Prisma adapter mirrors the same read contract
+ * (one JSON blob per graph + organization_id + RLS).
  */
 
+import { InMemoryTenantStore } from "@nebutra/tenant-store";
 import type { ReelEdge, ReelGraph, ReelGraphStore, ReelNode } from "../types";
 
-function key(tenantId: string, graphId: string): string {
-  return `${tenantId}:${graphId}`;
-}
-
 export class InMemoryReelGraphStore implements ReelGraphStore {
-  private readonly rows = new Map<string, ReelGraph>();
+  private readonly base = new InMemoryTenantStore<ReelGraph>();
 
   async get(tenantId: string, graphId: string): Promise<ReelGraph | null> {
-    return this.rows.get(key(tenantId, graphId)) ?? null;
+    return this.base.read(tenantId, graphId);
   }
 
   async create(tenantId: string, graphId: string, name: string): Promise<ReelGraph> {
@@ -29,8 +27,7 @@ export class InMemoryReelGraphStore implements ReelGraphStore {
       edges: [],
       updatedAt: new Date(),
     };
-    this.rows.set(key(tenantId, graphId), row);
-    return row;
+    return this.base.write(tenantId, graphId, row);
   }
 
   async save(
@@ -39,7 +36,7 @@ export class InMemoryReelGraphStore implements ReelGraphStore {
     nodes: readonly ReelNode[],
     edges: readonly ReelEdge[],
   ): Promise<ReelGraph> {
-    const existing = this.rows.get(key(tenantId, graphId));
+    const existing = await this.base.read(tenantId, graphId);
     const row: ReelGraph = {
       id: graphId,
       tenantId,
@@ -48,16 +45,15 @@ export class InMemoryReelGraphStore implements ReelGraphStore {
       edges,
       updatedAt: new Date(),
     };
-    this.rows.set(key(tenantId, graphId), row);
-    return row;
+    return this.base.write(tenantId, graphId, row);
   }
 
   async list(tenantId: string): Promise<readonly ReelGraph[]> {
-    return [...this.rows.values()].filter((r) => r.tenantId === tenantId);
+    return this.base.listByTenant(tenantId);
   }
 
   /** Test helper. */
   _clear(): void {
-    this.rows.clear();
+    this.base.clear();
   }
 }

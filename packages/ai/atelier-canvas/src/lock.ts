@@ -1,59 +1,39 @@
 /**
  * Per-canvas serialization.
  *
- * The source product used a process-global `asyncio.Lock` per canvas id —
- * correct for a single-user desktop app, wrong for a multi-tenant server
- * (one tenant's lock could be observed by another, and ids may collide).
- * Here the key is `tenantId:canvasId`, so isolation holds.
+ * The generic per-(tenant, resource) serializer now lives in the neutral
+ * lower layer `@nebutra/tenant-store` (so `@nebutra/reel` and future
+ * tenant-scoped features share it without depending on this package). This
+ * module keeps the original `withCanvasLock` / `_resetCanvasLocks` names as
+ * thin, back-compatible aliases so existing callers (e.g. apps/web) keep
+ * working unchanged.
  *
- * Scope is still in-process: it serializes concurrent placements within one
- * server instance. Cross-instance correctness comes from the persist-then-
- * broadcast ordering in `service.ts` (last write wins on the row), not from
- * this lock. A distributed lock (Redis) is a documented future swap and does
- * not change the call sites.
+ * @deprecated Import `withTenantLock` / `_resetTenantLocks` from
+ * `@nebutra/tenant-store` directly in new code. These aliases are retained
+ * only for the existing public surface.
  */
 
-/** Tail of the promise chain per (tenant, canvas). */
-const _tails = new Map<string, Promise<unknown>>();
-
-function key(tenantId: string, canvasId: string): string {
-  return `${tenantId}:${canvasId}`;
-}
+import { _resetTenantLocks, withTenantLock } from "@nebutra/tenant-store";
 
 /**
  * Run `fn` with exclusive access to a single (tenant, canvas). Calls for the
  * same canvas run strictly in submission order; different canvases run freely.
+ *
+ * @deprecated Use `withTenantLock` from `@nebutra/tenant-store`.
  */
-export async function withCanvasLock<T>(
+export function withCanvasLock<T>(
   tenantId: string,
   canvasId: string,
   fn: () => Promise<T>,
 ): Promise<T> {
-  const k = key(tenantId, canvasId);
-  const prev = _tails.get(k) ?? Promise.resolve();
-
-  // Chain onto the previous holder; `.then(fn, fn)` runs `fn` whether the
-  // prior critical section resolved or rejected, so one failure doesn't
-  // deadlock the next waiter.
-  const run = prev.then(fn, fn);
-
-  // The new tail is `run` with its outcome neutralized, so the next waiter
-  // never sees this section's value or error.
-  const tail = run.then(
-    () => undefined,
-    () => undefined,
-  );
-  _tails.set(k, tail);
-
-  try {
-    return await run;
-  } finally {
-    // Bound the map: if no later caller replaced the tail, drop the entry.
-    if (_tails.get(k) === tail) _tails.delete(k);
-  }
+  return withTenantLock(tenantId, canvasId, fn);
 }
 
-/** Test helper — clears all lock chains. */
+/**
+ * Test helper — clears all lock chains.
+ *
+ * @deprecated Use `_resetTenantLocks` from `@nebutra/tenant-store`.
+ */
 export function _resetCanvasLocks(): void {
-  _tails.clear();
+  _resetTenantLocks();
 }

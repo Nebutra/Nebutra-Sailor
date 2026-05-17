@@ -1,23 +1,22 @@
 /**
  * In-memory CanvasStore — the default for tests and the flag-gated demo.
  *
- * Tenant isolation is enforced by keying on `tenantId:canvasId` and never
- * returning rows across tenants, mirroring what RLS does in the Prisma store.
+ * Storage mechanics (tenant-keyed map, never returning rows across tenants,
+ * tenant-filtered listing) are delegated to `InMemoryTenantStore` from
+ * `@nebutra/tenant-store`; this class only adds atelier's typed `create` /
+ * `save` domain shape, mirroring what RLS does in the Prisma store.
  */
 
+import { InMemoryTenantStore } from "@nebutra/tenant-store";
 import type { AtelierCanvas, CanvasScene, CanvasStore } from "../types";
-
-function key(tenantId: string, canvasId: string): string {
-  return `${tenantId}:${canvasId}`;
-}
 
 const EMPTY_SCENE: CanvasScene = { elements: [], files: [] };
 
 export class InMemoryCanvasStore implements CanvasStore {
-  private readonly rows = new Map<string, AtelierCanvas>();
+  private readonly base = new InMemoryTenantStore<AtelierCanvas>();
 
   async get(tenantId: string, canvasId: string): Promise<AtelierCanvas | null> {
-    return this.rows.get(key(tenantId, canvasId)) ?? null;
+    return this.base.read(tenantId, canvasId);
   }
 
   async create(tenantId: string, canvasId: string, name: string): Promise<AtelierCanvas> {
@@ -28,8 +27,7 @@ export class InMemoryCanvasStore implements CanvasStore {
       scene: EMPTY_SCENE,
       updatedAt: new Date(),
     };
-    this.rows.set(key(tenantId, canvasId), row);
-    return row;
+    return this.base.write(tenantId, canvasId, row);
   }
 
   async save(
@@ -38,7 +36,7 @@ export class InMemoryCanvasStore implements CanvasStore {
     scene: CanvasScene,
     thumbnail?: string,
   ): Promise<AtelierCanvas> {
-    const existing = this.rows.get(key(tenantId, canvasId));
+    const existing = await this.base.read(tenantId, canvasId);
     const row: AtelierCanvas = {
       id: canvasId,
       tenantId,
@@ -47,16 +45,15 @@ export class InMemoryCanvasStore implements CanvasStore {
       ...(thumbnail !== undefined ? { thumbnail } : {}),
       updatedAt: new Date(),
     };
-    this.rows.set(key(tenantId, canvasId), row);
-    return row;
+    return this.base.write(tenantId, canvasId, row);
   }
 
   async list(tenantId: string): Promise<readonly AtelierCanvas[]> {
-    return [...this.rows.values()].filter((r) => r.tenantId === tenantId);
+    return this.base.listByTenant(tenantId);
   }
 
   /** Test helper. */
   _clear(): void {
-    this.rows.clear();
+    this.base.clear();
   }
 }

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Typed node-graph dataflow for generative-media production: versioned IO envelope, multi-transport execution, storyboard pipeline",
   "private": false,
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "featureId": "reel",
@@ -24,8 +24,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@nebutra/atelier-canvas": "workspace:*",
-    "@nebutra/logger": "workspace:*"
+    "@nebutra/logger": "workspace:*",
+    "@nebutra/tenant-store": "workspace:*"
   },
   "peerDependencies": {
     "@nebutra/agents": "workspace:*"

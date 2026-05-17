@@ -1,16 +1,17 @@
 /**
- * Graph mutation service — reuses atelier-canvas's consistency primitives.
+ * Graph mutation service — reuses the shared consistency primitive.
  *
  * Rather than re-implement a per-resource mutex and the persist-then-broadcast
- * ordering, we reuse `withCanvasLock` from `@nebutra/atelier-canvas`: it is a
- * generic per-`(tenant, resource-id)` serializer, and the invariant is the
- * same — persist the new graph state BEFORE returning so any realtime
- * broadcast the caller does is a pure optimization (a client that misses it
- * recovers identical state on reload).
+ * ordering, we use `withTenantLock` from `@nebutra/tenant-store` (the neutral
+ * lower layer): a generic per-`(tenant, resource-id)` serializer. The
+ * invariant is the same — persist the new graph state BEFORE returning so any
+ * realtime broadcast the caller does is a pure optimization (a client that
+ * misses it recovers identical state on reload). `reel` no longer depends on
+ * `@nebutra/atelier-canvas`; the two are siblings sharing this lower contract.
  */
 
-import { withCanvasLock } from "@nebutra/atelier-canvas";
 import { logger } from "@nebutra/logger";
+import { withTenantLock } from "@nebutra/tenant-store";
 import type { NodeIOEnvelope, ReelGraph, ReelGraphStore, ReelNode } from "./types";
 
 const log = logger.child({ module: "reel/service" });
@@ -27,7 +28,7 @@ export async function applyNodeOutput(
   nodeId: string,
   output: NodeIOEnvelope,
 ): Promise<{ node: ReelNode; graph: ReelGraph }> {
-  return withCanvasLock(tenantId, graphId, async () => {
+  return withTenantLock(tenantId, graphId, async () => {
     const current =
       (await store.get(tenantId, graphId)) ?? (await store.create(tenantId, graphId, graphId));
 

@@ -11,8 +11,8 @@
  *
  * This is a sibling of `@nebutra/atelier-canvas` (free placement), not an
  * extension of it: a typed `nodes + edges` DAG is a different data model than
- * a flat `elements[]` scene. They share persistence/consistency primitives,
- * not their schema.
+ * a flat `elements[]` scene. They share the lower `@nebutra/tenant-store`
+ * contract (lock + store base), not their schema and not each other.
  */
 
 /** Frozen so an absorbed contract version can never be silently mutated. */

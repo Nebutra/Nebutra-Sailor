@@ -3,8 +3,9 @@
  *
  * Core export: the graph model + NODE_IO_ENVELOPE v1.0 contract + pull-based
  * input resolution + tenant-scoped persistence. Sibling of
- * `@nebutra/atelier-canvas` (free placement); reuses its consistency
- * primitives, not its schema. Transport and storyboard live under subpaths.
+ * `@nebutra/atelier-canvas` (free placement); both build on the shared
+ * `@nebutra/tenant-store` lower layer, not on each other. Transport and
+ * storyboard live under subpaths.
  */
 
 export {
