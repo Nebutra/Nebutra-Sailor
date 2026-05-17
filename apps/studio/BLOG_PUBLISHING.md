@@ -10,6 +10,10 @@ production build.
 2. Publish each locale with `blog:publish`.
 3. Open the returned URL and verify the language switch.
 
+Keep source links in Markdown with normal `[label](https://...)` syntax. The
+publisher preserves them as Portable Text link marks, so references should not
+be rewritten as plain text during bilingual editing.
+
 ```bash
 SANITY_API_TOKEN=... \
 SANITY_WEBHOOK_SECRET=... \
@@ -61,6 +65,32 @@ publishedAt: 2026-05-16T00:00:00.000Z
 ```
 
 CLI flags override frontmatter when both are present.
+
+## Sanity Login Path
+
+For local publishing, run these commands from `apps/studio`, where
+`sanity.cli.ts` defines the project and dataset. Prefer a short-lived Sanity
+token created from the current CLI login instead of storing a long-lived token
+in the repo or shell profile.
+
+```bash
+pnpm dlx sanity@5.13.0 login
+
+TOKEN_JSON="$(pnpm dlx sanity@5.13.0 tokens add "Local Blog Publisher $(date -u +%Y-%m-%dT%H:%M:%SZ)" --role=editor --json --yes)"
+TOKEN_ID="$(TOKEN_JSON="$TOKEN_JSON" node -e 'console.log(JSON.parse(process.env.TOKEN_JSON).id)')"
+SANITY_API_TOKEN="$(TOKEN_JSON="$TOKEN_JSON" node -e 'console.log(JSON.parse(process.env.TOKEN_JSON).key)')"
+
+SANITY_API_TOKEN="$SANITY_API_TOKEN" \
+pnpm --filter @nebutra/studio blog:publish -- \
+  --file content/blog/example.zh.md \
+  --language zh
+
+pnpm dlx sanity@5.13.0 tokens delete "$TOKEN_ID" --yes
+```
+
+`SANITY_WEBHOOK_SECRET` is only required when production has the same secret
+configured for `/api/blog/webhook`. If production has no webhook secret, the
+publisher can revalidate without signing.
 
 ## Dry Run
 

@@ -22,7 +22,7 @@ publishedAt: 2026-05-17T16:30:00.000Z
 
 这些词到底有没有规范？还是创投圈每个人都在自创术语？
 
-把中美主流方法论摊开看会发现：共识是存在的，只是没有人把它系统地写在一处。Sinek 的 Golden Circle 给了底层框架，Jim Collins 的 Vision Framework 给了使命与愿景的边界，Christensen 的 Jobs To Be Done 给了产品和用户层的底层逻辑，Geoffrey Moore 的 Positioning 公式给了战略表述的标准格式，Andy Raskin 的 Strategic Narrative 给了对外讲故事的结构，John Doerr 的 OKR 给了执行层的标准。
+把中美主流方法论摊开看会发现：共识是存在的，只是没有人把它系统地写在一处。[Sinek 的 Golden Circle](https://simonsinek.com/golden-circle) 给了底层框架，[Jim Collins 的 Vision Framework](https://www.jimcollins.com/tools/vision-framework.pdf) 给了使命与愿景的边界，[Christensen 的 Jobs To Be Done](https://strategyn.com/jobs-to-be-done/) 给了产品和用户层的底层逻辑，[Geoffrey Moore 的 Positioning](https://the.gt/geoffrey-moore-positioning-statement/) 公式给了战略表述的标准格式，[Andy Raskin 的 Strategic Narrative](https://www.lennysnewsletter.com/p/the-power-of-strategic-narrative) 给了对外讲故事的结构，[John Doerr 的 OKR](https://www.whatmatters.com/faqs/okr-meaning-definition-example) 给了执行层的标准。
 
 每位大师都只覆盖自己擅长的一块。缺的是一份同时覆盖从“为什么存在”到“下周干什么”的融合规范。
 
@@ -34,13 +34,13 @@ publishedAt: 2026-05-17T16:30:00.000Z
 
 把现有主流框架并排放一起，会看出每一份的覆盖范围和盲区。
 
-- Golden Circle 覆盖 Why、How、What，但缺战略、执行、用户和品牌。
-- Collins/Porras 的 Vision Framework 覆盖使命、价值观和 BHAG，但缺产品、用户和执行。
-- Lenny Rachitsky 的 MVSO 覆盖 Mission、Vision、Strategy、Objectives，但缺品牌身份和对外叙事。
-- Amazon Working Backwards 覆盖产品和用户，但缺顶层使命与品牌。
-- Geoffrey Moore 的 Crossing the Chasm 覆盖定位和用户分层，但缺使命、原则和执行。
-- Play Bigger 覆盖品类与 POV，但缺产品细节和执行。
-- Raskin 的 Strategic Narrative 只覆盖表达层。
+- [Golden Circle](https://simonsinek.com/golden-circle) 覆盖 Why、How、What，但缺战略、执行、用户和品牌。
+- Collins/Porras 的 [Vision Framework](https://www.jimcollins.com/tools/vision-framework.pdf) 覆盖使命、价值观和 BHAG，但缺产品、用户和执行。
+- Lenny Rachitsky 的 [MVSO](https://www.lennysnewsletter.com/p/setting-goals-issue-23-8ac) 覆盖 Mission、Vision、Strategy、Objectives，但缺品牌身份和对外叙事。
+- [Amazon Working Backwards](https://workingbackwards.com/resources/working-backwards-pr-faq/) 覆盖产品和用户，但缺顶层使命与品牌。
+- Geoffrey Moore 的 [Crossing the Chasm](https://www.willpatrick.co.uk/notes/crossing-the-chasm-geoffrey-a-moore) 覆盖定位和用户分层，但缺使命、原则和执行。
+- [Play Bigger](https://www.categorydesignadvisors.com/category-point-of-view-pov-the-superheroes-guide/) 覆盖品类与 POV，但缺产品细节和执行。
+- Raskin 的 [Strategic Narrative](https://www.lennysnewsletter.com/p/the-power-of-strategic-narrative) 只覆盖表达层。
 - OKR 只覆盖执行层。
 
 没有任何一份单独的框架能覆盖整个顶层设计。但把它们叠加起来，恰好能拼出一张完整拼图。九层就是这张拼图的命名规范。
@@ -101,11 +101,11 @@ Mission 是恒星，BHAG 是航标。航标一旦抵达，就必须再设下一�
 
 第一条是 Values 价值观流派，回答“我们是谁、什么不变”。Collins 建议选择 3 到 5 条，不能更多，并通过 Mars Group 思想实验确认：这些价值观即使变成竞争劣势，团队也会坚持。中国一线大厂多数走这条路线。
 
-阿里的新六脉神剑是典型样本：客户第一员工第二股东第三，因为信任所以简单，唯一不变的是变化，今天最好的表现是明天最低的要求，此时此刻非我莫属，认真生活快乐工作。关键机制是价值观在绩效考核中占很高权重。华为四句二十四字则是以客户为中心、以奋斗者为本、长期艰苦奋斗、坚持自我批判。小米后来把“真诚、热爱”放在更显眼的位置。
+[阿里的新六脉神剑](https://tech.sina.cn/i/gn/2019-09-10/detail-iicezueu4870549.d.html) 是典型样本：客户第一员工第二股东第三，因为信任所以简单，唯一不变的是变化，今天最好的表现是明天最低的要求，此时此刻非我莫属，认真生活快乐工作。关键机制是价值观在绩效考核中占很高权重。[华为四句二十四字](https://www.huawei.com/cn/corporate-information) 则是以客户为中心、以奋斗者为本、长期艰苦奋斗、坚持自我批判。[小米](https://www.qimingvc.com/cn/content/%E5%B0%8F%E7%B1%B3%E9%9B%86%E5%9B%A2%E5%88%9B%E5%A7%8B%E4%BA%BA%E9%9B%B7%E5%86%9B%E7%9A%84%E5%85%AC%E5%BC%80%E4%BF%A1%EF%BC%9A-%E5%B0%8F%E7%B1%B3%E6%98%AF%E8%B0%81%EF%BC%8C%E5%B0%8F%E7%B1%B3%E4%B8%BA%E4%BB%80%E4%B9%88%E8%80%8C%E5%A5%8B%E6%96%97) 后来把“真诚、热爱”放在更显眼的位置。
 
 第二条是 Principles / Tenets / Operating Principles 原则流派，回答“具体决策点上怎么做”。美式硅谷公司更偏好这条路线。关键差异是：价值观是“我们是谁”，通常是名词或形容词；原则是“我们怎么做”，通常是动作型陈述句。
 
-Amazon Leadership Principles、Stripe Operating Principles、Linear Method、字节跳动的 Context, Not Control 都属于这条路线。它们不只是贴在墙上的词，而是嵌入招聘、onboarding、绩效、决策复盘和日常沟通的操作系统。
+[Amazon Leadership Principles](https://www.amazon.jobs/content/en/our-workplace/leadership-principles)、[Stripe Operating Principles](https://slab.com/library/templates/stripe-operating-principles/)、[Linear Method](https://linear.app/method)、字节跳动的 [Context, Not Control](https://zhuanlan.zhihu.com/p/402195673) 都属于这条路线。它们不只是贴在墙上的词，而是嵌入招聘、onboarding、绩效、决策复盘和日常沟通的操作系统。
 
 推荐做法是同时拥有两层：3 到 5 条 Values 作为身份层，5 到 10 条 Principles 作为操作层。前者用来对外讲是谁，后者用来对内做决策。
 
@@ -113,7 +113,7 @@ Amazon Leadership Principles、Stripe Operating Principles、Linear Method、字
 
 这一层是九层里最满的一层，因为它要回答四个问题：总体战略是什么、在客户心智中占什么位、属于哪个品类、护城河是什么。
 
-总体战略可以沿用 Lenny Rachitsky 的 Situation、Complication、Resolution 三段结构。陆奇在《启动企业发展的体系》中把战略拆成三步：判断未来，做 In/Out Decision，在市场上占据一个有价值的位置，也就是“鱼塘比”。
+总体战略可以沿用 Lenny Rachitsky 的 Situation、Complication、Resolution 三段结构。陆奇在[《启动企业发展的体系》](https://zhuanlan.zhihu.com/p/450276591)中把战略拆成三步：判断未来，做 In/Out Decision，在市场上占据一个有价值的位置，也就是“鱼塘比”。
 
 定位层最常用的是 Geoffrey Moore 模板：
 
@@ -133,7 +133,7 @@ Amazon Leadership Principles、Stripe Operating Principles、Linear Method、字
 
 ### L5 产品：造什么
 
-核心框架是 Christensen 的 Jobs To Be Done。经典表达是：当人们需要完成一件事时，他们实质上是在雇佣某个产品来替自己做这件事。
+核心框架是 Christensen 的 [Jobs To Be Done](https://strategyn.com/jobs-to-be-done/)。经典表达是：当人们需要完成一件事时，他们实质上是在雇佣某个产品来替自己做这件事。
 
 JTBD 陈述句模板：
 
@@ -141,7 +141,7 @@ JTBD 陈述句模板：
 
 关键洞察是：Jobs are stable; products are not。任务是稳定的，产品不是。技术、产品、竞品都会变，但用户要完成的根本任务不会变。这正是 JTBD 比用户故事更深一层的原因。User Story 是工程实现描述，JTBD 是底层动机，二者不是一个层级。
 
-配套工具是 Amazon Working Backwards / PR-FAQ。动手开发之前，先写一份假新闻稿。结构包括 Heading、Subheading、Summary、Problem、Solution、CEO Quote、Customer Quote、How to get started，后附 5 到 10 条 FAQ。它的价值不是写作，而是一种强制机制，逼产品发起人始终聚焦客户。
+配套工具是 [Amazon Working Backwards / PR-FAQ](https://workingbackwards.com/resources/working-backwards-pr-faq/)。动手开发之前，先写一份假新闻稿。结构包括 Heading、Subheading、Summary、Problem、Solution、CEO Quote、Customer Quote、How to get started，后附 5 到 10 条 FAQ。它的价值不是写作，而是一种强制机制，逼产品发起人始终聚焦客户。
 
 产品层模板：
 
@@ -167,7 +167,7 @@ Geoffrey Moore 的 Crossing the Chasm 给出了用户分层心理图谱：Innova
 
 这一层中文创业圈普遍被低估，而在硅谷已经被视为 CEO 必修。
 
-Andy Raskin 的 Strategic Narrative 五要素是：Shift / Undeniable Change，Stakes / Enemy，Promised Land，Magic Gifts / Capabilities，Evidence。Enemy 不是竞争对手，而是 status quo，是旧世界规则。
+[Andy Raskin 的 Strategic Narrative](https://www.lennysnewsletter.com/p/the-power-of-strategic-narrative) 五要素是：Shift / Undeniable Change，Stakes / Enemy，Promised Land，Magic Gifts / Capabilities，Evidence。Enemy 不是竞争对手，而是 status quo，是旧世界规则。
 
 这一层还包括 Manifesto、Brand Story、Tagline、Elevator Pitch、Messaging Framework、Tone of Voice。Ben Horowitz 被广泛引用的一句话是：没有想清楚故事的公司，就是没有想清楚战略的公司。故事就是战略。如果相信这一点，讲故事就是 CEO 的工作。
 
@@ -179,7 +179,7 @@ Andy Raskin 的 Strategic Narrative 五要素是：Shift / Undeniable Change，S
 
 这一层是品牌人格层。Seed 和 A 阶段可以暂缓，但 B 轮后必须系统化，否则品牌就是空壳。
 
-核心工具是 Jung 12 Brand Archetypes，后来被 Margaret Mark 和 Carol Pearson 系统应用到品牌：Innocent、Sage、Explorer、Ruler、Caregiver、Creator、Jester、Everyman、Lover、Hero、Outlaw、Magician。
+核心工具是 [Jung 12 Brand Archetypes](https://visme.co/blog/brand-archetypes/)，后来被 Margaret Mark 和 Carol Pearson 系统应用到品牌：Innocent、Sage、Explorer、Ruler、Caregiver、Creator、Jester、Everyman、Lover、Hero、Outlaw、Magician。
 
 Apple 常被理解为 Creator + Rebel，Nike 是 Hero，Disney 是 Magician，Google 是 Sage。Archetype 是上游，决定下游的语调、色彩、排版、摄影、动效和微交互语言。原型选错，后面的品牌资产都会拧巴。
 
@@ -189,7 +189,7 @@ Apple 常被理解为 Creator + Rebel，Nike 是 Hero，Disney 是 Magician，Go
 
 ### L9 执行：接下来干什么
 
-终于回到地面。核心工具是 OKR。
+终于回到地面。核心工具是 [OKR](https://en.wikipedia.org/wiki/Objectives_and_key_results)。
 
 OKR 的标准公式是：
 
@@ -286,3 +286,30 @@ Stage 4：A 轮后。季度 review L1 到 L3，半年 review L4 到 L7，周 rev
 本规范是融合规范，不是标准答案。九层不是九步，而是九个视角。真正的顶层设计，是这九层之间的一致性。
 
 九层若割裂，再多 framework 也救不回来；九层若打通，一句 Mission 就能驱动一个 OKR。
+
+## 参考链接
+
+- [Simon Sinek: Golden Circle](https://simonsinek.com/golden-circle)
+- [Jim Collins: Vision Framework PDF](https://www.jimcollins.com/tools/vision-framework.pdf)
+- [Jim Collins: Aligning Action and Values](https://www.jimcollins.com/article_topics/articles/aligning-action.html)
+- [John Doerr / What Matters: OKR Definition](https://www.whatmatters.com/faqs/okr-meaning-definition-example)
+- [OKR on Wikipedia](https://en.wikipedia.org/wiki/Objectives_and_key_results)
+- [Strategyn: Jobs To Be Done](https://strategyn.com/jobs-to-be-done/)
+- [FullStory: Clayton Christensen JTBD summary](https://www.fullstory.com/blog/clayton-christensen-jobs-to-be-done-framework-product-development/)
+- [Geoffrey Moore Positioning Statement Template](https://the.gt/geoffrey-moore-positioning-statement/)
+- [Crossing the Chasm reading notes](https://www.willpatrick.co.uk/notes/crossing-the-chasm-geoffrey-a-moore)
+- [Category Design POV Guide](https://www.categorydesignadvisors.com/category-point-of-view-pov-the-superheroes-guide/)
+- [Working Backwards PR-FAQ Template](https://workingbackwards.com/resources/working-backwards-pr-faq/)
+- [Andy Raskin on Lenny's Podcast](https://www.lennysnewsletter.com/p/the-power-of-strategic-narrative)
+- [Brand Archetypes Guide](https://visme.co/blog/brand-archetypes/)
+- [North Star Metric on Learning Loop](https://learningloop.io/glossary/northstar-metric)
+- [Amazon Leadership Principles](https://www.amazon.jobs/content/en/our-workplace/leadership-principles)
+- [Stripe Operating Principles](https://slab.com/library/templates/stripe-operating-principles/)
+- [Linear Method](https://linear.app/method)
+- [Sequoia Capital: Writing a Business Plan](https://sequoiacap.com/article/writing-a-business-plan/)
+- [华为 corporate information](https://www.huawei.com/cn/corporate-information)
+- [阿里“新六脉神剑”发布](https://tech.sina.cn/i/gn/2019-09-10/detail-iicezueu4870549.d.html)
+- [小米雷军 IPO 公开信](https://www.qimingvc.com/cn/content/%E5%B0%8F%E7%B1%B3%E9%9B%86%E5%9B%A2%E5%88%9B%E5%A7%8B%E4%BA%BA%E9%9B%B7%E5%86%9B%E7%9A%84%E5%85%AC%E5%BC%80%E4%BF%A1%EF%BC%9A-%E5%B0%8F%E7%B1%B3%E6%98%AF%E8%B0%81%EF%BC%8C%E5%B0%8F%E7%B1%B3%E4%B8%BA%E4%BB%80%E4%B9%88%E8%80%8C%E5%A5%8B%E6%96%97)
+- [陆奇：启动企业发展的体系](https://zhuanlan.zhihu.com/p/450276591)
+- [字节跳动 Context, Not Control](https://zhuanlan.zhihu.com/p/402195673)
+- [字节跳动 OKR 观察](https://m.thepaper.cn/newsDetail_forward_11997486)

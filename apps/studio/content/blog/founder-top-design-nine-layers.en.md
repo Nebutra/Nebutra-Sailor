@@ -22,7 +22,7 @@ Read YC and you get one vocabulary. Watch Lu Qi's MiraclePlus lectures and you g
 
 So are these terms actually standardized, or is everyone in venture just inventing their own language?
 
-If you lay the major China-US frameworks side by side, the answer becomes clear: there is real consensus, but it is scattered. Sinek's Golden Circle gives the base layer. Jim Collins' Vision Framework separates mission from vision. Christensen's Jobs To Be Done gives the product and user foundation. Geoffrey Moore's positioning formula gives a standard strategic sentence. Andy Raskin's Strategic Narrative gives the external storytelling structure. John Doerr's OKR gives the execution layer.
+If you lay the major China-US frameworks side by side, the answer becomes clear: there is real consensus, but it is scattered. [Sinek's Golden Circle](https://simonsinek.com/golden-circle) gives the base layer. [Jim Collins' Vision Framework](https://www.jimcollins.com/tools/vision-framework.pdf) separates mission from vision. [Christensen's Jobs To Be Done](https://strategyn.com/jobs-to-be-done/) gives the product and user foundation. [Geoffrey Moore's positioning formula](https://the.gt/geoffrey-moore-positioning-statement/) gives a standard strategic sentence. [Andy Raskin's Strategic Narrative](https://www.lennysnewsletter.com/p/the-power-of-strategic-narrative) gives the external storytelling structure. [John Doerr's OKR](https://www.whatmatters.com/faqs/okr-meaning-definition-example) gives the execution layer.
 
 Each master covers the part they know best. What is missing is one framework that connects “why we exist” to “what we do next week.”
 
@@ -34,7 +34,7 @@ It is not another invented framework. It is a normalization layer. Each layer ma
 
 Put the major frameworks next to each other and their coverage gaps become obvious.
 
-Golden Circle covers Why, How, and What, but not strategy, execution, user segmentation, or brand identity. Collins and Porras' Vision Framework covers mission, values, and BHAG, but not product, user, or execution. Lenny Rachitsky's MVSO covers Mission, Vision, Strategy, and Objectives, but not brand identity or external narrative. Amazon Working Backwards covers product and customer thinking, but not top-level mission or brand. Geoffrey Moore covers positioning and customer adoption, but not mission, principles, or execution. Play Bigger covers category and POV, but not product details or operating cadence. Raskin's Strategic Narrative is one layer. OKR is one layer.
+[Golden Circle](https://simonsinek.com/golden-circle) covers Why, How, and What, but not strategy, execution, user segmentation, or brand identity. Collins and Porras' [Vision Framework](https://www.jimcollins.com/tools/vision-framework.pdf) covers mission, values, and BHAG, but not product, user, or execution. Lenny Rachitsky's [MVSO](https://www.lennysnewsletter.com/p/setting-goals-issue-23-8ac) covers Mission, Vision, Strategy, and Objectives, but not brand identity or external narrative. [Amazon Working Backwards](https://workingbackwards.com/resources/working-backwards-pr-faq/) covers product and customer thinking, but not top-level mission or brand. Geoffrey Moore covers [positioning](https://the.gt/geoffrey-moore-positioning-statement/) and customer adoption, but not mission, principles, or execution. [Play Bigger](https://www.categorydesignadvisors.com/category-point-of-view-pov-the-superheroes-guide/) covers category and POV, but not product details or operating cadence. Raskin's [Strategic Narrative](https://www.lennysnewsletter.com/p/the-power-of-strategic-narrative) is one layer. OKR is one layer.
 
 No single framework covers the whole founder design surface. But stacked together, they form a complete map. The nine layers are the naming convention for that map.
 
@@ -275,3 +275,30 @@ This is a synthesis, not a universal law. The Golden Circle is useful as founder
 The real point is not to craft the perfect statement. It is to align the layers.
 
 If the nine layers are disconnected, no framework can save the company. If they line up, one mission can drive one OKR.
+
+## References
+
+- [Simon Sinek: Golden Circle](https://simonsinek.com/golden-circle)
+- [Jim Collins: Vision Framework PDF](https://www.jimcollins.com/tools/vision-framework.pdf)
+- [Jim Collins: Aligning Action and Values](https://www.jimcollins.com/article_topics/articles/aligning-action.html)
+- [John Doerr / What Matters: OKR Definition](https://www.whatmatters.com/faqs/okr-meaning-definition-example)
+- [OKR on Wikipedia](https://en.wikipedia.org/wiki/Objectives_and_key_results)
+- [Strategyn: Jobs To Be Done](https://strategyn.com/jobs-to-be-done/)
+- [FullStory: Clayton Christensen JTBD summary](https://www.fullstory.com/blog/clayton-christensen-jobs-to-be-done-framework-product-development/)
+- [Geoffrey Moore Positioning Statement Template](https://the.gt/geoffrey-moore-positioning-statement/)
+- [Crossing the Chasm reading notes](https://www.willpatrick.co.uk/notes/crossing-the-chasm-geoffrey-a-moore)
+- [Category Design POV Guide](https://www.categorydesignadvisors.com/category-point-of-view-pov-the-superheroes-guide/)
+- [Working Backwards PR-FAQ Template](https://workingbackwards.com/resources/working-backwards-pr-faq/)
+- [Andy Raskin on Lenny's Podcast](https://www.lennysnewsletter.com/p/the-power-of-strategic-narrative)
+- [Brand Archetypes Guide](https://visme.co/blog/brand-archetypes/)
+- [North Star Metric on Learning Loop](https://learningloop.io/glossary/northstar-metric)
+- [Amazon Leadership Principles](https://www.amazon.jobs/content/en/our-workplace/leadership-principles)
+- [Stripe Operating Principles](https://slab.com/library/templates/stripe-operating-principles/)
+- [Linear Method](https://linear.app/method)
+- [Sequoia Capital: Writing a Business Plan](https://sequoiacap.com/article/writing-a-business-plan/)
+- [Huawei corporate information](https://www.huawei.com/cn/corporate-information)
+- [Alibaba values update](https://tech.sina.cn/i/gn/2019-09-10/detail-iicezueu4870549.d.html)
+- [Xiaomi IPO letter](https://www.qimingvc.com/cn/content/%E5%B0%8F%E7%B1%B3%E9%9B%86%E5%9B%A2%E5%88%9B%E5%A7%8B%E4%BA%BA%E9%9B%B7%E5%86%9B%E7%9A%84%E5%85%AC%E5%BC%80%E4%BF%A1%EF%BC%9A-%E5%B0%8F%E7%B1%B3%E6%98%AF%E8%B0%81%EF%BC%8C%E5%B0%8F%E7%B1%B3%E4%B8%BA%E4%BB%80%E4%B9%88%E8%80%8C%E5%A5%8B%E6%96%97)
+- [Lu Qi: startup development system](https://zhuanlan.zhihu.com/p/450276591)
+- [ByteDance Context, Not Control](https://zhuanlan.zhihu.com/p/402195673)
+- [ByteDance OKR report](https://m.thepaper.cn/newsDetail_forward_11997486)

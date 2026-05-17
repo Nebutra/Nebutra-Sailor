@@ -217,7 +217,10 @@ function markdownToPortableText(markdown, title) {
     const quote = line.match(/^>\s?(.*)$/);
     if (quote) {
       flushParagraph(paragraph, blocks);
-      blocks.push(block("blockquote", quote[1].trim()));
+      const quoteText = quote[1].trim();
+      if (quoteText) {
+        blocks.push(block("blockquote", quoteText));
+      }
       continue;
     }
 
