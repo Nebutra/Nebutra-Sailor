@@ -9,15 +9,18 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./ioredis": {
       "types": "./dist/ioredis.d.ts",
-      "import": "./dist/ioredis.js"
+      "import": "./dist/ioredis.js",
+      "default": "./dist/ioredis.js"
     },
     "./upstash": {
       "types": "./dist/upstash.d.ts",
-      "import": "./dist/upstash.js"
+      "import": "./dist/upstash.js",
+      "default": "./dist/upstash.js"
     },
     "./package.json": "./package.json"
   },

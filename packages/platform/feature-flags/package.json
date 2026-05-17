@@ -2,6 +2,7 @@
   "name": "@nebutra/feature-flags",
   "version": "0.1.1",
   "private": true,
+  "type": "module",
   "description": "Feature flags abstraction - swap providers later",
   "nebutra": {
     "status": "wip",

@@ -24,10 +24,19 @@
  * but not for high-throughput counting.
  */
 
-import bloomFilters from "bloom-filters";
+import * as bloomFiltersNs from "bloom-filters";
 import { getCacheClient } from "../client.js";
 
-const { BloomFilter } = bloomFilters;
+// `bloom-filters` ships as CJS; under Node's ESM resolver the named exports
+// land directly on the namespace, under tsx they're nested under `.default`.
+// Probe both shapes so both pipelines work.
+const bloomFilters =
+  ((bloomFiltersNs as unknown as { default?: unknown }).default as
+    | typeof bloomFiltersNs
+    | undefined) ?? bloomFiltersNs;
+const { BloomFilter } = bloomFilters as unknown as {
+  BloomFilter: typeof bloomFiltersNs.BloomFilter;
+};
 type BloomFilterInstance = InstanceType<typeof BloomFilter>;
 
 export interface BloomFilterOptions {

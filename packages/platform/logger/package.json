@@ -10,16 +10,20 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./otel": {
       "types": "./dist/otel.d.ts",
-      "import": "./dist/otel.js"
+      "import": "./dist/otel.js",
+      "default": "./dist/otel.js"
     },
     "./otel-bootstrap": {
       "types": "./dist/otel-bootstrap.d.ts",
-      "import": "./dist/otel-bootstrap.js"
-    }
+      "import": "./dist/otel-bootstrap.js",
+      "default": "./dist/otel-bootstrap.js"
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",
