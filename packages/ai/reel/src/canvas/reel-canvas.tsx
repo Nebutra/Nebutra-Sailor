@@ -6,14 +6,14 @@
  * A thin composition over the generic `@nebutra/ui` `NodeGraphCanvas`: it
  * supplies the reel-specific edge identity, edge creation, and node
  * presentation (Geist icons per reel node type), and re-stamps `updatedAt`
- * on every accepted mutation. The dependency direction is correct:
- * reel-canvas → (ui, reel); ui depends on neither.
+ * on every accepted mutation. The dependency direction stays one-way:
+ * @nebutra/reel/canvas composes UI primitives; UI never imports reel.
  */
 
 import { Eye, FileText, Image as ImageIcon, Layers, Sparkles, Video } from "@nebutra/icons";
-import type { ReelGraph, ReelNode, ReelNodeType } from "@nebutra/reel";
 import { NodeGraphCanvas, type NodeView } from "@nebutra/ui/components";
 import type { ComponentType } from "react";
+import type { ReelGraph, ReelNode, ReelNodeType } from "../types";
 import { REEL_NODE_LABEL, reelEdgeIdentity, reelMakeEdge, withReelTimestamp } from "./binding";
 
 const REEL_NODE_ICON: Record<ReelNodeType, ComponentType<{ size?: number }>> = {

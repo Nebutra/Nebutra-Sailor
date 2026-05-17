@@ -46,12 +46,12 @@ deprecated back-compat alias.
 | `@nebutra/graph-model` | 10/10 | core |
 | `@nebutra/knowledge-rag` | 61/61 | 94 %+ |
 | `@nebutra/ui` `NodeGraphCanvas` (generic) | 9/9 | adapter 100 % |
-| `@nebutra/reel-canvas` (reel binding) | 8/8 | binding |
+| `@nebutra/reel/canvas` (reel binding) | 8/8 | binding |
 | `@nebutra/collab` | 14/14 | 92 %+ |
 
 Dependency direction (governance): `@nebutra/ui` (generic) →
 `@nebutra/graph-model`; `@nebutra/reel` → `@nebutra/graph-model`;
-`@nebutra/reel-canvas` → (`@nebutra/ui`, `@nebutra/reel`). No generic
+`@nebutra/reel/canvas` → (`@nebutra/ui`, `@nebutra/reel`). No generic
 package depends on a feature package; `reel`↔`atelier-canvas` share only
 `@nebutra/tenant-store`. See `ANTI_PATTERNS.md` §6/§7.
 

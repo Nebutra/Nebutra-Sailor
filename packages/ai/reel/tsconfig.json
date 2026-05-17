@@ -4,6 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "target": "esnext",
+    "jsx": "react-jsx",
     "types": ["node"],
     "incremental": false
   },

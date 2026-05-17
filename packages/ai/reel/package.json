@@ -16,7 +16,9 @@
     ".": "./src/index.ts",
     "./transport": "./src/transport/index.ts",
     "./storyboard": "./src/storyboard/index.ts",
-    "./store/memory": "./src/store/memory.ts"
+    "./store/memory": "./src/store/memory.ts",
+    "./canvas": "./src/canvas/index.ts",
+    "./canvas/binding": "./src/canvas/binding.ts"
   },
   "scripts": {
     "build": "tsup",
@@ -29,16 +31,36 @@
     "@nebutra/tenant-store": "workspace:*"
   },
   "peerDependencies": {
-    "@nebutra/agents": "workspace:*"
+    "@nebutra/agents": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "react": ">=18"
   },
   "peerDependenciesMeta": {
     "@nebutra/agents": {
+      "optional": true
+    },
+    "@nebutra/icons": {
+      "optional": true
+    },
+    "@nebutra/ui": {
+      "optional": true
+    },
+    "react": {
       "optional": true
     }
   },
   "devDependencies": {
     "@nebutra/agents": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "@testing-library/react": "catalog:",
     "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "jsdom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",
     "vitest": "^4.0.18"

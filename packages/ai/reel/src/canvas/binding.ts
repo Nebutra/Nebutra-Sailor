@@ -5,7 +5,7 @@
  * and the generic `@nebutra/ui` editor stays domain-free.
  */
 
-import type { ReelEdge, ReelGraph, ReelNodeType } from "@nebutra/reel";
+import type { ReelEdge, ReelGraph, ReelNodeType } from "../types";
 
 /** Default input port when a connection arrives without a target handle. */
 export const DEFAULT_INPUT_TYPE = "input" as const;

@@ -6,7 +6,7 @@ import { NodeGraphCanvas } from "./node-graph-canvas";
 /**
  * Generic, domain-free node-graph editor. These stories use a tiny inline
  * graph type to show it depends on nothing but `@nebutra/graph-model`. The
- * reel-bound variant ships as `<ReelCanvas>` in `@nebutra/reel-canvas`.
+ * reel-bound variant ships as `<ReelCanvas>` in `@nebutra/reel/canvas`.
  */
 
 interface DemoNode extends GraphNode {

@@ -77,7 +77,7 @@ export {
 export * from "./ascii-text";
 export * from "./changelog-widget";
 // Generic node-graph editor (domain-free; consumes @nebutra/graph-model).
-// The reel binding lives in @nebutra/reel-canvas.
+// The reel binding lives in @nebutra/reel/canvas.
 export {
   NodeGraphCanvas,
   type NodeGraphCanvasProps,

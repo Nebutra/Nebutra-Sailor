@@ -1,5 +1,5 @@
-import type { ReelEdge, ReelGraph } from "@nebutra/reel";
 import { describe, expect, it } from "vitest";
+import type { ReelEdge, ReelGraph } from "../../types";
 import { DEFAULT_INPUT_TYPE, reelEdgeIdentity, reelMakeEdge, withReelTimestamp } from "../binding";
 
 describe("reelEdgeIdentity", () => {

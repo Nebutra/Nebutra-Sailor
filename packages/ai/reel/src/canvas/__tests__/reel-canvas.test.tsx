@@ -1,6 +1,6 @@
-import type { ReelGraph, ReelNode } from "@nebutra/reel";
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import type { ReelGraph, ReelNode } from "../../types";
 
 /**
  * Stub the generic editor: we only verify the reel BINDING wiring (identity,
@@ -23,7 +23,7 @@ const graph: ReelGraph = {
   name: "G",
   nodes: [
     { id: "a", type: "text", x: 0, y: 0, settings: {} },
-    { id: "b", type: "gen-image", x: 10, y: 10, settings: {}, output: undefined },
+    { id: "b", type: "gen-image", x: 10, y: 10, settings: {} },
   ],
   edges: [],
   updatedAt: new Date("2020-01-01T00:00:00.000Z"),

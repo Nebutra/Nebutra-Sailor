@@ -7,7 +7,7 @@
  * Domain-free: it imports NO feature package. The caller injects how to make
  * an edge from a connection (`makeEdge`), an edge's stable identity
  * (`edgeIdentity`), and how to present a node (`renderNode`). The reel
- * binding lives in `@nebutra/reel-canvas`. The graph is the single source of
+ * binding lives in `@nebutra/reel/canvas`. The graph is the single source of
  * truth; every gesture yields a *new* immutable graph (non-structural fields
  * preserved) through `onChange`. Cyclic connections are rejected via the
  * neutral `@nebutra/graph-model` guard.

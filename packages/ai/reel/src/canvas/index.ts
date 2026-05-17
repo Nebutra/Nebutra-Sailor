@@ -1,9 +1,9 @@
 /**
- * @nebutra/reel-canvas — reel binding for the generic node-graph editor.
+ * @nebutra/reel/canvas — reel binding for the generic node-graph editor.
  *
  * Composition layer: depends on `@nebutra/ui` (generic editor) and
- * `@nebutra/reel` (domain model). The generic editor depends on neither —
- * dependency direction is specific → generic.
+ * the reel domain model. The generic editor depends on neither — dependency
+ * direction is specific → generic.
  */
 
 export {

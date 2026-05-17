@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReelGraph } from "@nebutra/reel";
-import { ReelCanvas } from "@nebutra/reel-canvas";
+import { ReelCanvas } from "@nebutra/reel/canvas";
 import { useState } from "react";
 
 /**
