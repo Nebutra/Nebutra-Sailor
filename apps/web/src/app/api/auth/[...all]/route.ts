@@ -58,6 +58,11 @@ function isEmailSignUpRequest(request: Request): boolean {
   return request.method.toUpperCase() === "POST" && url.pathname.endsWith("/sign-up/email");
 }
 
+function isOAuthRequest(request: Request): boolean {
+  const url = new URL(request.url);
+  return url.pathname.includes("/oauth/");
+}
+
 function createAccessGateService() {
   return createAccessGate({
     store: createPrismaAccessInviteStore(
@@ -149,8 +154,8 @@ function extractSignedUpUserId(payload: unknown): string | null {
 async function redeemAccessInviteAfterSignup(
   context: AccessGateSignupContext | null,
   response: Response,
-): Promise<void> {
-  if (!context || response.status < 200 || response.status >= 300) return;
+): Promise<Response | null> {
+  if (!context || response.status < 200 || response.status >= 300) return null;
 
   const payload = await response
     .clone()
@@ -159,7 +164,13 @@ async function redeemAccessInviteAfterSignup(
   const userId = extractSignedUpUserId(payload);
   if (!userId) {
     logger.warn("[auth] access-gate signup succeeded but response had no user id");
-    return;
+    return Response.json(
+      {
+        code: "ACCESS_INVITE_REDEMPTION_FAILED",
+        error: "Invite redemption failed. Contact support before retrying.",
+      },
+      { status: 500 },
+    );
   }
 
   try {
@@ -169,11 +180,19 @@ async function redeemAccessInviteAfterSignup(
       email: context.email,
       ...(context.tenantId ? { tenantId: context.tenantId } : {}),
     });
+    return null;
   } catch (error) {
     logger.error("[auth] access-gate post-signup redemption failed", {
       userId,
       error: error instanceof Error ? error.message : String(error),
     });
+    return Response.json(
+      {
+        code: "ACCESS_INVITE_REDEMPTION_FAILED",
+        error: "Invite redemption failed. Contact support before retrying.",
+      },
+      { status: 500 },
+    );
   }
 }
 
@@ -274,6 +293,16 @@ async function handler(request: Request): Promise<Response> {
     });
   }
 
+  if (isAccessGateEnabled() && isOAuthRequest(request)) {
+    return Response.json(
+      {
+        code: "ACCESS_GATE_OAUTH_DISABLED",
+        error: "OAuth is disabled while invite-only access is enabled.",
+      },
+      { status: 403 },
+    );
+  }
+
   const accessGateContextOrResponse = await readAccessGateSignupContext(request);
   if (accessGateContextOrResponse instanceof Response) return accessGateContextOrResponse;
   const accessGateContext = accessGateContextOrResponse;
@@ -293,8 +322,13 @@ async function handler(request: Request): Promise<Response> {
     });
   }
 
+  const accessGateRedemptionFailure = await redeemAccessInviteAfterSignup(
+    accessGateContext,
+    response,
+  );
+  if (accessGateRedemptionFailure) return accessGateRedemptionFailure;
+
   response = applySessionHint(request, response);
-  await redeemAccessInviteAfterSignup(accessGateContext, response);
 
   try {
     const descriptor = deriveAuditFromRequest(request, response.status);

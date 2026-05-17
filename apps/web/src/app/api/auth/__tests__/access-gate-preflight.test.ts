@@ -106,4 +106,45 @@ describe("/api/auth sign-up access gate preflight", () => {
       tenantId: "tenant_1",
     });
   });
+
+  it("blocks OAuth entrypoints while invite-only access is enabled", async () => {
+    const { GET } = await loadRoute();
+    const response = await GET(
+      new Request("https://app.example/api/auth/oauth/google?callback=/onboarding"),
+    );
+
+    expect(response.status).toBe(403);
+    expect(await response.json()).toMatchObject({ code: "ACCESS_GATE_OAUTH_DISABLED" });
+    expect(middlewareMock).not.toHaveBeenCalled();
+    expect(validateMock).not.toHaveBeenCalled();
+    expect(redeemMock).not.toHaveBeenCalled();
+  });
+
+  it("fails closed when post-signup invite redemption fails", async () => {
+    redeemMock.mockRejectedValueOnce(new Error("compare-and-swap failed"));
+    const { POST } = await loadRoute();
+    const response = await POST(
+      makeSignUpRequest({
+        email: "ada@example.com",
+        password: "pw",
+        accessInviteCode: "neb_valid",
+      }),
+    );
+
+    expect(response.status).toBe(500);
+    expect(await response.json()).toMatchObject({
+      code: "ACCESS_INVITE_REDEMPTION_FAILED",
+      error: "Invite redemption failed. Contact support before retrying.",
+    });
+    expect(validateMock).toHaveBeenCalledWith({
+      plaintextCode: "neb_valid",
+      email: "ada@example.com",
+    });
+    expect(middlewareMock).toHaveBeenCalledTimes(1);
+    expect(redeemMock).toHaveBeenCalledWith({
+      plaintextCode: "neb_valid",
+      redeemedByUserId: "user_new",
+      email: "ada@example.com",
+    });
+  });
 });

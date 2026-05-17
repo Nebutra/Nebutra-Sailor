@@ -15,6 +15,14 @@ import {
 import { OAuthButtons, type OAuthProvider } from "./oauth-buttons";
 import { useCapsLock } from "./use-caps-lock";
 
+interface SsoDiscoveryProvider {
+  id: string;
+  name: string;
+  type: "saml" | "oidc";
+  domain: string;
+  loginUrl: string;
+}
+
 interface SignInFormProps {
   /** OAuth providers actually configured server-side. */
   enabledOAuthProviders?: readonly OAuthProvider[];
@@ -37,6 +45,7 @@ export function SignInForm({
 }: SignInFormProps) {
   const router = useRouter();
   const t = useTranslations("auth.signIn");
+  const accessGateEnabled = process.env.NEXT_PUBLIC_ACCESS_GATE_MODE === "invite";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,10 +55,13 @@ export function SignInForm({
   const [showPassword, setShowPassword] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [passkeyAvailable, setPasskeyAvailable] = useState(false);
+  const [ssoProvider, setSsoProvider] = useState<SsoDiscoveryProvider | null>(null);
   const { capsLockOn, onKeyEvent } = useCapsLock();
   const conditionalUIStartedRef = useRef(false);
+  const ssoDiscoverySeqRef = useRef(0);
 
   const fallbackTarget = returnUrl ?? "/";
+  const shouldRenderOAuth = !accessGateEnabled && (enabledOAuthProviders?.length ?? 0) > 0;
 
   // Browser passkey availability — only render the explicit button if so.
   useEffect(() => {
@@ -106,6 +118,32 @@ export function SignInForm({
       });
   }
 
+  async function discoverSsoProvider() {
+    const normalizedEmail = email.trim().toLowerCase();
+    ssoDiscoverySeqRef.current += 1;
+    const seq = ssoDiscoverySeqRef.current;
+    setSsoProvider(null);
+
+    if (!normalizedEmail.includes("@")) return;
+
+    const params = new URLSearchParams({ email: normalizedEmail });
+    if (returnUrl) params.set("returnUrl", returnUrl);
+
+    try {
+      const response = await fetch(`/api/auth/sso/discovery?${params.toString()}`, {
+        credentials: "include",
+      });
+      if (!response.ok || seq !== ssoDiscoverySeqRef.current) return;
+      const payload = (await response.json().catch(() => null)) as {
+        provider?: SsoDiscoveryProvider | null;
+      } | null;
+      setSsoProvider(payload?.provider ?? null);
+    } catch {
+      // SSO discovery is an enhancement. Password, passkey, and magic-link
+      // sign-in remain available if discovery fails.
+    }
+  }
+
   async function handlePasskey() {
     setPasskeyLoading(true);
     setError("");
@@ -140,7 +178,7 @@ export function SignInForm({
         <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("subtitle")}</p>
       </div>
 
-      {(enabledOAuthProviders?.length ?? 0) > 0 && (
+      {shouldRenderOAuth && (
         <>
           <OAuthButtons mode="signIn" providers={enabledOAuthProviders} returnUrl={returnUrl} />
           <div className="relative my-6">
@@ -167,13 +205,32 @@ export function SignInForm({
             className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
             placeholder={t("emailPlaceholder")}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setSsoProvider(null);
+            }}
+            onBlur={() => {
+              void discoverSsoProvider();
+            }}
             required
             // Conditional UI: the browser uses these hints to surface passkey
             // suggestions in the autocomplete dropdown.
             autoComplete={passkeyEnabled ? "username webauthn" : "email"}
           />
         </div>
+
+        {ssoProvider && (
+          <Button
+            type="button"
+            variant="outline"
+            className="h-11 w-full justify-center border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none hover:bg-[var(--neutral-2)]"
+            onClick={() => {
+              window.location.href = ssoProvider.loginUrl;
+            }}
+          >
+            {t("continueWithProvider", { provider: ssoProvider.name })}
+          </Button>
+        )}
 
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
