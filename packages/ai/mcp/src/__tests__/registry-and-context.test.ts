@@ -3,8 +3,111 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { MCPClient } from "../client/mcpClient";
+import { InMemoryToolConsentStore } from "../consent";
+import { readToolDebug } from "../debug";
+import { McpHost } from "../host";
 import { MCPServerRegistry } from "../registry/serverRegistry";
 import { createContextServerHandlers } from "../server/contextServer";
+
+describe("tool protocol host", () => {
+  it("requires manifest and per-tool consent before executing a connected server", async () => {
+    const consent = new InMemoryToolConsentStore();
+    const host = new McpHost({ consent });
+    const traces: string[] = [];
+
+    expect(() =>
+      host.connectLocal({
+        id: "unsafe",
+        name: "Unsafe",
+        description: "Missing manifest",
+        tools: [],
+        handlers: {},
+      }),
+    ).toThrow(/manifest/i);
+
+    host.connectLocal({
+      id: "notes",
+      name: "Notes",
+      description: "Tenant-scoped notes tools",
+      manifest: {
+        name: "notes",
+        version: "1.0.0",
+        scopes: ["notes:write"],
+      },
+      tools: [
+        {
+          name: "create_note",
+          description: "Create a note",
+          parameters: {},
+        },
+      ],
+      handlers: {
+        create_note: async (args, context) => {
+          traces.push(`${context.tenantId}:${args.title}`);
+          return { id: "note_1" };
+        },
+      },
+    });
+
+    await expect(
+      host.callTool("notes:create_note", { title: "Layer 1" }, { requestId: "r1" }),
+    ).resolves.toMatchObject({
+      success: false,
+      error: expect.stringContaining("tenant"),
+    });
+
+    const context = { requestId: "r2", tenantId: "tenant_a", userId: "user_1" };
+    await expect(
+      host.callTool("notes:create_note", { title: "Layer 1" }, context),
+    ).resolves.toMatchObject({
+      success: false,
+      error: expect.stringContaining("consent"),
+    });
+
+    await consent.grant({
+      tenantId: "tenant_a",
+      userId: "user_1",
+      serverId: "notes",
+      toolName: "create_note",
+      scopes: ["notes:write"],
+    });
+
+    await expect(
+      host.callTool("notes:create_note", { title: "Layer 1" }, context),
+    ).resolves.toMatchObject({
+      success: true,
+      result: { id: "note_1" },
+    });
+    expect(traces).toEqual(["tenant_a:Layer 1"]);
+  });
+
+  it("writes protocol debug entries for inspected calls", async () => {
+    const consent = new InMemoryToolConsentStore();
+    const host = new McpHost({ consent });
+    host.connectLocal({
+      id: "echo",
+      name: "Echo",
+      description: "Echo tools",
+      manifest: { name: "echo", version: "1.0.0", scopes: ["echo:run"] },
+      tools: [{ name: "say", description: "Say a value" }],
+      handlers: {
+        say: async (args) => args,
+      },
+    });
+    await consent.grant({
+      tenantId: "tenant_b",
+      serverId: "echo",
+      toolName: "say",
+      scopes: ["echo:run"],
+    });
+
+    await host.callTool("echo:say", { text: "ok" }, { requestId: "r3", tenantId: "tenant_b" });
+
+    await expect(readToolDebug(1)).resolves.toEqual([
+      expect.objectContaining({ type: "tool_call", serverId: "echo", toolName: "say", ok: true }),
+    ]);
+  });
+});
 
 describe("MCP tool registry access control", () => {
   it("executes registered local tools only when tenant and plan policies pass", async () => {
@@ -91,6 +194,7 @@ describe("context server handlers", () => {
     for (const root of tempRoots.splice(0)) {
       fs.rmSync(root, { recursive: true, force: true });
     }
+    fs.rmSync(path.join(process.cwd(), ".nebutra"), { recursive: true, force: true });
   });
 
   it("lists project resources and returns non-placeholder project structure", async () => {

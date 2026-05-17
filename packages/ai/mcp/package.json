@@ -28,7 +28,8 @@
     "./middleware": "./src/middleware/index.ts"
   },
   "bin": {
-    "nebutra-mcp": "./dist/server/contextServer.js"
+    "nebutra-mcp": "./dist/server/contextServer.js",
+    "nebutra-tool-protocol": "./dist/cli.js"
   },
   "scripts": {
     "prepare": "mkdir -p dist/server && test -f dist/server/contextServer.js || echo '#!/usr/bin/env node' > dist/server/contextServer.js",
@@ -38,7 +39,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@modelcontextprotocol/sdk": "1.27.1",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/event-log": "workspace:*",
+    "@nebutra/trace-store": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {

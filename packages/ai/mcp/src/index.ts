@@ -2,6 +2,13 @@
 
 // Client
 export { MCPClient, mcpClient } from "./client/index";
+export {
+  InMemoryToolConsentStore,
+  type ToolConsentGrant,
+  type ToolConsentStore,
+} from "./consent";
+export { appendToolDebug, readToolDebug, type ToolDebugEntry, toolDebugPath } from "./debug";
+export { McpHost, mcpHost, toolConsentStore } from "./host";
 // Middleware
 export {
   type AuditLogEntry,

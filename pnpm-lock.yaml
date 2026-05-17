@@ -78,7 +78,7 @@ overrides:
   zod: ^4.3.6
   fast-xml-parser: '>=5.5.6'
   body-parser: '>=1.20.3'
-  '@modelcontextprotocol/sdk': '>=1.26.0'
+  '@modelcontextprotocol/sdk': 1.27.1
   '@hono/node-server': '>=1.19.10'
   hono: ^4.12.5
   axios: '>=1.13.5'
@@ -1637,8 +1637,17 @@ importers:
   packages/ai/mcp:
     dependencies:
       '@modelcontextprotocol/sdk':
-        specifier: '>=1.26.0'
+        specifier: 1.27.1
         version: 1.27.1(@cfworker/json-schema@4.1.1)(zod@4.3.6)
+      '@nebutra/errors':
+        specifier: workspace:*
+        version: link:../../platform/errors
+      '@nebutra/event-log':
+        specifier: workspace:*
+        version: link:../event-log
+      '@nebutra/trace-store':
+        specifier: workspace:*
+        version: link:../../platform/trace-store
       zod:
         specifier: ^4.3.6
         version: 4.3.6

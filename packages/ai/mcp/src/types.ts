@@ -77,6 +77,13 @@ export interface ToolExecutionResult {
   tokensUsed?: number;
 }
 
+export interface MCPServerManifest {
+  name: string;
+  version: string;
+  scopes: string[];
+  homepage?: string;
+}
+
 // ============================================
 // MCP Server Registration
 // ============================================
@@ -87,6 +94,7 @@ export interface MCPServerConfig {
   description: string;
   endpoint: string;
   transport: "http" | "websocket" | "stdio" | "local";
+  manifest?: MCPServerManifest;
   tools: ToolDefinition[];
   handlers?: Record<string, MCPToolHandler>;
   authentication?: {
