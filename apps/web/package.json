@@ -22,6 +22,7 @@
     "@nebutra/access-gate": "workspace:*",
     "@nebutra/agents": "workspace:*",
     "@nebutra/analytics": "workspace:*",
+    "@nebutra/atelier-canvas": "workspace:*",
     "@nebutra/audit": "workspace:*",
     "@nebutra/auth": "workspace:*",
     "@nebutra/china-compliance": "workspace:*",

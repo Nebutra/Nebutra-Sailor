@@ -351,6 +351,10 @@ export const FLAGS = {
   BETA_FEATURES: "beta-features",
   EXPERIMENTAL_UI: "experimental-ui",
 
+  // Atelier — agentic creative canvas (off by default; opt-in per tenant).
+  // Kill switch / enable via KILL_SWITCH_ATELIER_CANVAS env or flag store.
+  ATELIER_CANVAS: "atelier-canvas",
+
   // Auth — Wave 2 dev/prod rollout gates.
   // Consumed via `@nebutra/auth/features.ts` (env first, this service second).
   // Names mirror AuthCapabilities in `packages/iam/auth/src/types.ts`.
