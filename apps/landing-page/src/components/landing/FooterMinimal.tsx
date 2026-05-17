@@ -177,6 +177,12 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
       data-testid="footer-minimal"
       className="relative w-full overflow-hidden bg-[color:var(--neutral-1)] dark:bg-black"
     >
+      <div
+        aria-hidden="true"
+        data-testid="footer-gradient-line"
+        className="h-px w-full"
+        style={{ background: "var(--brand-gradient)" }}
+      />
       {/* Final CTA — opt-in via `showFinalCta`; default off to avoid polluting
           non-conversion pages (careers, legal, blog) with a product pitch. */}
       {showFinalCta && (
