@@ -25,7 +25,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./mcp-catalog": "./src/mcp-catalog.ts",
-    "./dispatcher-sse": "./src/dispatcher-sse.ts"
+    "./dispatcher-sse": "./src/dispatcher-sse.ts",
+    "./prisma-rollout": "./src/prisma-rollout.ts"
   },
   "scripts": {
     "build": "tsup",

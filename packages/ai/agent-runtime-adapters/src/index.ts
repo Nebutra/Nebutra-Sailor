@@ -15,3 +15,4 @@
 
 export * from "./dispatcher-sse.js";
 export * from "./mcp-catalog.js";
+export * from "./prisma-rollout.js";
