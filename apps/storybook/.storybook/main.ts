@@ -77,14 +77,62 @@ const config: StorybookConfig = {
       },
 
       resolve: {
-        alias: {
-          "@": resolve(HERE, "../../web/src"),
-          "next/link": resolve(stubsDir, "./next-link.tsx"),
-          "next/image": resolve(stubsDir, "./next-image.tsx"),
-          "next/navigation": resolve(stubsDir, "./next-navigation.tsx"),
-          "next/dynamic": resolve(stubsDir, "./next-dynamic.tsx"),
-          "next/headers": resolve(stubsDir, "./next-headers.ts"),
-        },
+        alias: [
+          { find: /^@\//, replacement: `${resolve(HERE, "../../web/src")}/` },
+          {
+            find: /^@nebutra\/brand$/,
+            replacement: resolve(HERE, "../../../packages/design/brand/src/index.ts"),
+          },
+          {
+            find: /^@nebutra\/brand\/logo$/,
+            replacement: resolve(HERE, "../../../packages/design/brand/src/components/Logo.tsx"),
+          },
+          {
+            find: /^@nebutra\/graph-model$/,
+            replacement: resolve(HERE, "../../../packages/platform/graph-model/src/index.ts"),
+          },
+          {
+            find: /^@nebutra\/icons$/,
+            replacement: resolve(HERE, "../../../packages/design/icons/src/index.ts"),
+          },
+          {
+            find: /^@nebutra\/tokens$/,
+            replacement: resolve(HERE, "../../../packages/design/tokens/src/index.ts"),
+          },
+          {
+            find: /^@nebutra\/tokens\/styles\.css$/,
+            replacement: resolve(HERE, "../../../packages/design/tokens/styles.css"),
+          },
+          {
+            find: /^@nebutra\/ui\/components$/,
+            replacement: resolve(HERE, "../../../packages/design/ui/src/components/index.ts"),
+          },
+          {
+            find: /^@nebutra\/ui\/layout$/,
+            replacement: resolve(HERE, "../../../packages/design/ui/src/layout/index.ts"),
+          },
+          {
+            find: /^@nebutra\/ui\/layouts$/,
+            replacement: resolve(HERE, "../../../packages/design/ui/src/layouts/index.ts"),
+          },
+          {
+            find: /^@nebutra\/ui\/primitives$/,
+            replacement: resolve(HERE, "../../../packages/design/ui/src/primitives/index.ts"),
+          },
+          {
+            find: /^@nebutra\/ui\/typography\/fonts\.css$/,
+            replacement: resolve(HERE, "../../../packages/design/ui/src/typography/fonts.css"),
+          },
+          {
+            find: /^@nebutra\/ui\/utils$/,
+            replacement: resolve(HERE, "../../../packages/design/ui/src/utils/index.ts"),
+          },
+          { find: /^next\/link$/, replacement: resolve(stubsDir, "./next-link.tsx") },
+          { find: /^next\/image$/, replacement: resolve(stubsDir, "./next-image.tsx") },
+          { find: /^next\/navigation$/, replacement: resolve(stubsDir, "./next-navigation.tsx") },
+          { find: /^next\/dynamic$/, replacement: resolve(stubsDir, "./next-dynamic.tsx") },
+          { find: /^next\/headers$/, replacement: resolve(stubsDir, "./next-headers.ts") },
+        ],
       },
 
       optimizeDeps: {

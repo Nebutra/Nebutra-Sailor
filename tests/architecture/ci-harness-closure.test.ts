@@ -146,7 +146,8 @@ describe("ci harness dependency closure", () => {
       "utf8",
     );
 
-    expect(bloomStrategy).toContain('import bloomFilters from "bloom-filters"');
+    expect(bloomStrategy).toContain('import * as bloomFiltersNs from "bloom-filters"');
+    expect(bloomStrategy).toContain(".default");
     expect(bloomStrategy).not.toContain('import { BloomFilter } from "bloom-filters"');
   });
 
