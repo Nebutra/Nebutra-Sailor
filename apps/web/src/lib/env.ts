@@ -45,12 +45,18 @@ export const env = createEnv({
     NEXT_PUBLIC_STUDIO_URL: z.string().url().default("http://localhost:3003"),
 
     // Auth provider selection
-    NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["clerk", "better-auth"]).default("better-auth"),
+    NEXT_PUBLIC_AUTH_PROVIDER: z
+      .enum(["clerk", "better-auth", "nextauth", "supabase", "dev"])
+      .default("better-auth"),
 
     // Clerk auth — only required if using Clerk provider
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1).optional(),
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string().default("/sign-in"),
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string().default("/sign-up"),
+
+    // Supabase auth/storage/realtime — only required if using Supabase surfaces
+    NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional(),
 
     // Sanity CMS
     NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().default("wyfqr24v"),
@@ -77,6 +83,8 @@ export const env = createEnv({
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,

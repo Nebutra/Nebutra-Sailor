@@ -57,7 +57,7 @@ export const ThemeId = z.string().superRefine((value, ctx) => {
 
 export const ApiProtocolId = z.enum(["rest", "orpc", "trpc"]);
 
-export const AuthProviderId = z.enum(["clerk", "better-auth"]);
+export const AuthProviderId = z.enum(["clerk", "better-auth", "nextauth", "supabase"]);
 
 // ─── Config Schema ───
 

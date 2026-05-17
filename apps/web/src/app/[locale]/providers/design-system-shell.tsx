@@ -44,7 +44,7 @@ function HeaderAuthControls({
   const showOrgSwitcher = supportsWorkspaceSwitching && isAuthFeatureEnabledSync("organizations");
 
   return (
-    <div className="hidden items-center gap-1.5 sm:flex">
+    <div className="hidden items-center gap-1 sm:flex">
       {isSignedIn ? (
         <>
           {showOrgSwitcher && <OrgSwitcher />}
@@ -53,9 +53,9 @@ function HeaderAuthControls({
             onClick={openFeedback}
             aria-label="Open feedback dialog"
             title="Feedback"
-            className="inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] px-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+            className="inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] px-2 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
           >
-            <LifeBuoy className="size-4" aria-hidden="true" />
+            <LifeBuoy className="size-3.5" aria-hidden="true" />
             <span className="hidden xl:inline">Feedback</span>
           </button>
           <LocaleSwitcher />
@@ -144,14 +144,6 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
   const breadcrumbs = buildBreadcrumbs(pathname);
   const currentBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
   const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
-
-  const currentWorkspaceLabel = useMemo(
-    () =>
-      supportsWorkspaceSwitching
-        ? (workspaceOptions.find((item) => item.id === workspace)?.label ?? "Starter Workspace")
-        : "Personal workspace",
-    [supportsWorkspaceSwitching, workspace, workspaceOptions],
-  );
 
   const fetchWorkspaces = useCallback(async () => {
     if (!isSignedIn || !supportsWorkspaceSwitching) return;
@@ -267,7 +259,7 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
 
   // ─── Sidebar header slot — logo + workspace switcher ─────────────────────
   const sidebarHeader = (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2">
       <div className={`flex items-center ${collapsed ? "justify-center" : "justify-start px-2"}`}>
         <ViewTransitionLink
           href="/"
@@ -276,7 +268,7 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
         >
           <BrandLogo
             variant={collapsed ? "mark" : "horizontal"}
-            className={collapsed ? "size-8" : "h-7 w-[9.25rem]"}
+            className={collapsed ? "size-7" : "h-6 w-[8.5rem]"}
           />
         </ViewTransitionLink>
       </div>
@@ -294,25 +286,18 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
     </div>
   );
 
-  // ─── Sidebar footer slot — workspace mode info + theme toggle + collapse ─
+  // ─── Sidebar footer slot — theme toggle + collapse ──────────────────────
   const sidebarFooter = (
-    <div className={`flex items-center ${collapsed ? "flex-col gap-2" : "justify-between gap-2"}`}>
-      {!collapsed && (
-        <div className="flex-1 truncate rounded-md border border-border bg-muted/40 p-2 text-xs text-muted-foreground">
-          Workspace: {currentWorkspaceLabel}
-        </div>
-      )}
-      <div className={`flex items-center gap-1 ${collapsed ? "flex-col" : ""}`}>
-        <ThemeToggle compact />
-        <button
-          type="button"
-          onClick={toggle}
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
-        >
-          {collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
-        </button>
-      </div>
+    <div className={`flex items-center gap-1 ${collapsed ? "flex-col" : "justify-end"}`}>
+      <ThemeToggle compact />
+      <button
+        type="button"
+        onClick={toggle}
+        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+      >
+        {collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
+      </button>
     </div>
   );
 
@@ -331,16 +316,16 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
 
   // ─── Header slot — breadcrumbs + quick links + auth controls ─────────────
   const headerContent = (
-    <div className="flex w-full min-w-0 items-center justify-between gap-4">
+    <div className="flex w-full min-w-0 items-center justify-between gap-3">
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-foreground">
+        <p className="truncate font-medium text-[13px] text-foreground">
           {currentBreadcrumb?.label ?? "Dashboard"}
         </p>
         <nav
           aria-label="Breadcrumb"
           className={cn("mt-0.5 hidden md:block", breadcrumbs.length <= 1 && "sr-only")}
         >
-          <ol className="flex min-w-0 items-center gap-1 text-xs text-muted-foreground">
+          <ol className="flex min-w-0 items-center gap-1 text-[11px] text-muted-foreground">
             {breadcrumbs.map((crumb, index) => {
               const isLast = index === breadcrumbs.length - 1;
               return (
@@ -387,7 +372,7 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
             "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-amber-900 dark:bg-amber-950/40 dark:text-amber-200",
             isWorkspaceCanvasRoute
               ? "-mx-3 sm:-mx-4 md:-mx-5 2xl:-mx-6"
-              : "-mx-4 sm:-mx-6 md:-mx-8",
+              : "-mx-3 sm:-mx-4 md:-mx-5 2xl:-mx-6",
           )}
         >
           <AlertTriangle className="size-3.5 shrink-0" aria-hidden="true" />

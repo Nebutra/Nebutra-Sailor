@@ -141,7 +141,7 @@ const TriggerButton = React.forwardRef<HTMLButtonElement, TriggerProps>(
         aria-label="Switch workspace"
         disabled={disabled}
         className={cn(
-          "inline-flex w-full items-center gap-2 rounded-md border border-border bg-background px-2 py-1.5 text-left outline-none transition-colors",
+          "inline-flex w-full items-center gap-2 rounded-md border border-border bg-background px-2 py-1 text-left outline-none transition-colors",
           "hover:bg-accent hover:text-accent-foreground",
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
           "disabled:cursor-not-allowed disabled:opacity-50",
@@ -150,7 +150,7 @@ const TriggerButton = React.forwardRef<HTMLButtonElement, TriggerProps>(
       >
         <WorkspaceAvatar workspace={activeWorkspace} size="sm" />
         <div className="flex min-w-0 flex-1 items-center gap-2">
-          <span className="truncate text-sm font-medium text-foreground">
+          <span className="truncate font-medium text-[13px] text-foreground">
             {activeWorkspace.name}
           </span>
           {showRoleBadge && isOwner && (
@@ -159,7 +159,7 @@ const TriggerButton = React.forwardRef<HTMLButtonElement, TriggerProps>(
             </Badge>
           )}
         </div>
-        <ChevronsUpDown aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground" />
+        <ChevronsUpDown aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
       </button>
     );
   },

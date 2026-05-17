@@ -1,3 +1,4 @@
+import { getConfiguredAuthProvider } from "@nebutra/auth";
 import {
   ChartActivity as Activity,
   ArrowRight,
@@ -15,7 +16,23 @@ import { getAuth, getUser } from "@/lib/auth";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
 import { CommandSkeleton, MetricsSkeleton, RecentSessionsSkeleton } from "./_dashboard-skeletons";
 
-const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const authProvider = getConfiguredAuthProvider();
+const isAuthConfigured =
+  authProvider === "dev"
+    ? process.env.NODE_ENV !== "production"
+    : authProvider === "clerk"
+      ? Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY)
+      : authProvider === "better-auth"
+        ? Boolean(process.env.BETTER_AUTH_SECRET)
+        : authProvider === "nextauth"
+          ? Boolean(process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET)
+          : authProvider === "supabase"
+            ? Boolean(
+                (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL) &&
+                  (process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) &&
+                  process.env.SUPABASE_SERVICE_ROLE_KEY,
+              )
+            : false;
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -59,7 +76,7 @@ async function CommandCenter() {
   const [t, locale, user] = await Promise.all([
     getTranslations("dashboard"),
     getLocale(),
-    hasClerkKey ? getUser().catch(() => null) : Promise.resolve(null),
+    getUser().catch(() => null),
   ]);
 
   const userName = user?.name?.split(" ")[0] || "there";
@@ -68,31 +85,33 @@ async function CommandCenter() {
 
   return (
     <AnimateIn preset="fadeUp">
-      <div className="border-b border-neutral-5 pb-6 dark:border-white/10">
-        <div className="flex max-w-3xl flex-col items-start">
-          <div className="flex items-center gap-2">
-            <span className="size-1.5 rounded-full bg-green-9" aria-hidden="true" />
-            <p className="text-xs font-medium uppercase tracking-[0.12em] text-neutral-10 dark:text-white/45">
-              {dateLabel}
+      <div className="border-b border-neutral-5 pb-4 dark:border-white/10">
+        <div className="flex max-w-5xl flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="size-1.5 rounded-full bg-green-9" aria-hidden="true" />
+              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-10 dark:text-white/45">
+                {dateLabel}
+              </p>
+            </div>
+            <h1 className="mt-2 text-xl font-semibold tracking-tight text-neutral-12 dark:text-white sm:text-2xl">
+              {greeting}, {userName}.
+            </h1>
+            <p className="mt-1.5 max-w-2xl text-[13px] leading-5 text-neutral-11 dark:text-white/60">
+              {t("commandCenter.description")}
             </p>
           </div>
-          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-neutral-12 dark:text-white sm:text-3xl">
-            {greeting}, {userName}.
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-11 dark:text-white/60">
-            {t("commandCenter.description")}
-          </p>
-          <div className="mt-4 flex flex-wrap items-center gap-2">
+          <div className="flex shrink-0 flex-wrap items-center gap-1.5">
             <ViewTransitionLink
               href="/chat"
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-2 text-sm font-medium text-neutral-1 transition-colors hover:bg-neutral-11 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-2.5 py-1.5 text-[13px] font-medium text-neutral-1 transition-colors hover:bg-neutral-11 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
             >
               {t("commandCenter.openSailor")}
-              <ArrowRight className="size-3.5" aria-hidden="true" />
+              <ArrowRight className="size-3" aria-hidden="true" />
             </ViewTransitionLink>
             <ViewTransitionLink
               href="/analytics"
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] px-3 py-2 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/[0.06] dark:hover:text-white"
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/[0.06] dark:hover:text-white"
             >
               {t("commandCenter.viewAnalytics")}
             </ViewTransitionLink>
@@ -107,7 +126,7 @@ async function WorkspaceMetrics() {
   const [t, locale, authState] = await Promise.all([
     getTranslations("dashboard.workspaceSnapshot"),
     getLocale(),
-    hasClerkKey ? getAuth().catch(() => null) : Promise.resolve(null),
+    getAuth().catch(() => null),
   ]);
 
   const tenantId = authState?.orgId || process.env.DEFAULT_DASHBOARD_TENANT_ID;
@@ -155,9 +174,9 @@ async function WorkspaceMetrics() {
   ];
 
   return (
-    <div className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-white/[0.03] sm:p-5">
+    <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-3.5 dark:border-white/10 dark:bg-white/[0.03] sm:p-4">
       <AnimateIn preset="fadeUp">
-        <div className="mb-4 flex flex-col gap-3 border-b border-neutral-5 pb-4 dark:border-white/10 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mb-3 flex flex-col gap-2.5 border-b border-neutral-5 pb-3 dark:border-white/10 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">{t("title")}</h2>
             <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/40">
@@ -169,7 +188,7 @@ async function WorkspaceMetrics() {
               {snapshotMeta.map((item) => (
                 <span
                   key={item.label}
-                  className="inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-2 px-2 py-1 text-[11px] text-neutral-10 dark:bg-white/[0.05] dark:text-white/45"
+                  className="inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] bg-neutral-2 px-1.5 py-0.5 text-[11px] text-neutral-10 dark:bg-white/[0.05] dark:text-white/45"
                 >
                   <span className="font-medium text-neutral-11 dark:text-white/65">
                     {item.label}
@@ -188,12 +207,12 @@ async function WorkspaceMetrics() {
         </div>
       </AnimateIn>
 
-      <AnimateInGroup stagger="fast" className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-4">
+      <AnimateInGroup stagger="fast" className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
         {metrics.map(({ label, value, detail, source, icon: Icon }) => (
           <AnimateIn key={label} preset="fadeUp">
             <ViewTransitionLink href="/analytics" className="block">
-              <div className="rounded-[var(--radius-xl)] bg-neutral-2/70 p-4 ring-1 ring-neutral-5 transition-colors duration-150 hover:bg-neutral-3/70 hover:ring-neutral-7 dark:bg-white/[0.035] dark:ring-white/10 dark:hover:bg-white/[0.06] dark:hover:ring-white/20">
-                <div className="flex items-center justify-between gap-3">
+              <div className="rounded-[var(--radius-lg)] bg-neutral-2/70 p-3 ring-1 ring-neutral-5 transition-colors duration-150 hover:bg-neutral-3/70 hover:ring-neutral-7 dark:bg-white/[0.035] dark:ring-white/10 dark:hover:bg-white/[0.06] dark:hover:ring-white/20">
+                <div className="flex items-center justify-between gap-2">
                   <span className="min-w-0 truncate text-xs font-medium text-neutral-10 dark:text-white/50">
                     {label}
                   </span>
@@ -202,10 +221,10 @@ async function WorkspaceMetrics() {
                     aria-hidden="true"
                   />
                 </div>
-                <p className="mt-2 text-2xl font-semibold tabular-nums text-neutral-12 dark:text-white">
+                <p className="mt-1.5 text-xl font-semibold tabular-nums text-neutral-12 dark:text-white">
                   {value}
                 </p>
-                <div className="mt-2 space-y-1 text-xs text-neutral-10 dark:text-white/45">
+                <div className="mt-1.5 space-y-0.5 text-xs text-neutral-10 dark:text-white/45">
                   <span className="block">{detail}</span>
                   <span className="block text-[11px] text-neutral-9 dark:text-white/35">
                     {source}
@@ -224,13 +243,13 @@ async function WorkspaceMetrics() {
 
 export default function DashboardPage() {
   return (
-    <section className="mx-auto w-full max-w-[1440px] space-y-8">
+    <section className="mx-auto w-full max-w-[1760px] space-y-5">
       {/* Fast: command center and primary action. Keep the dashboard left-aligned and decision-led. */}
       <Suspense fallback={<CommandSkeleton />}>
         <CommandCenter />
       </Suspense>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         {/* Slow: warehouse metrics query. Hide the module until a real warehouse snapshot exists. */}
         <Suspense fallback={<MetricsSkeleton />}>
           <WorkspaceMetrics />
@@ -241,7 +260,7 @@ export default function DashboardPage() {
           <RecentSessions />
         </Suspense>
 
-        {!hasClerkKey && <NoAuthNotice />}
+        {!isAuthConfigured && <NoAuthNotice />}
       </div>
     </section>
   );

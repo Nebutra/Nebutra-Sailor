@@ -26,8 +26,8 @@ import type { AuthConfig } from "./types";
  * For Clerk, consider using clerkMiddleware() directly from @clerk/nextjs/server
  * in your middleware.ts file for best compatibility.
  *
- * For Better Auth, this factory returns a handler suitable for
- * Next.js middleware or edge functions.
+ * For Better Auth, NextAuth, and Supabase, this factory delegates to the
+ * selected provider's normalized middleware handler.
  */
 export async function createAuthMiddleware(
   config: AuthConfig,
@@ -52,8 +52,9 @@ export async function createAuthMiddleware(
       }
     }
 
-    case "better-auth": {
-      // Better Auth: delegate to the provider's middleware handler
+    case "better-auth":
+    case "nextauth":
+    case "supabase": {
       const auth = await (await import("./server")).createAuth(config);
       return auth.middleware();
     }

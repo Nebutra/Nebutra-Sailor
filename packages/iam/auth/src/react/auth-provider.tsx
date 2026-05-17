@@ -20,6 +20,12 @@ type NextAuthProviderLazyComponent = React.ComponentType<{
   children: ReactNode;
 }>;
 
+type SupabaseProviderLazyComponent = React.ComponentType<{
+  supabaseUrl?: string;
+  supabaseAnonKey?: string;
+  children: ReactNode;
+}>;
+
 type DevProviderLazyComponent = React.ComponentType<{
   children: ReactNode;
 }>;
@@ -42,7 +48,7 @@ export interface AuthProviderProps {
  * Root auth provider component — automatically selects the right provider wrapper.
  *
  * This component detects the configured provider and dynamically renders the
- * appropriate provider wrapper (Clerk or Better Auth). Provider-specific
+ * appropriate provider wrapper. Provider-specific
  * dependencies are imported lazily, so unused providers never get bundled.
  *
  * @example
@@ -83,6 +89,19 @@ export function AuthProvider({ provider, children, config }: AuthProviderProps) 
   if (provider === "nextauth") {
     const basePath = (config?.basePath as string) || "/api/auth";
     return <NextAuthProviderLazy basePath={basePath}>{children}</NextAuthProviderLazy>;
+  }
+
+  if (provider === "supabase") {
+    const supabaseUrl = config?.supabaseUrl as string | undefined;
+    const supabaseAnonKey = config?.supabaseAnonKey as string | undefined;
+    const supabaseProps: {
+      supabaseUrl?: string;
+      supabaseAnonKey?: string;
+      children: ReactNode;
+    } = { children };
+    if (supabaseUrl) supabaseProps.supabaseUrl = supabaseUrl;
+    if (supabaseAnonKey) supabaseProps.supabaseAnonKey = supabaseAnonKey;
+    return <SupabaseProviderLazy {...supabaseProps} />;
   }
 
   if (provider === "dev") {
@@ -186,6 +205,46 @@ function NextAuthProviderLazy({ basePath, children }: { basePath?: string; child
   if (basePath) props.basePath = basePath;
 
   return <NextAuthProvider {...props} />;
+}
+
+/**
+ * Lazy-loaded Supabase provider wrapper.
+ * Only imported when provider === "supabase".
+ */
+function SupabaseProviderLazy({
+  supabaseUrl,
+  supabaseAnonKey,
+  children,
+}: {
+  supabaseUrl?: string;
+  supabaseAnonKey?: string;
+  children: ReactNode;
+}) {
+  const [SupabaseProvider, setSupabaseProvider] = useState<SupabaseProviderLazyComponent | null>(
+    null,
+  );
+
+  useEffect(() => {
+    import("./providers/supabase-provider").then((mod) => {
+      setSupabaseProvider(() => mod.SupabaseProvider);
+    });
+  }, []);
+
+  if (!SupabaseProvider) {
+    return (
+      <AuthContextProvider value={createUnauthenticatedAuthContext("supabase", false)}>
+        {children}
+      </AuthContextProvider>
+    );
+  }
+
+  const props: { supabaseUrl?: string; supabaseAnonKey?: string; children: ReactNode } = {
+    children,
+  };
+  if (supabaseUrl) props.supabaseUrl = supabaseUrl;
+  if (supabaseAnonKey) props.supabaseAnonKey = supabaseAnonKey;
+
+  return <SupabaseProvider {...props} />;
 }
 
 /**

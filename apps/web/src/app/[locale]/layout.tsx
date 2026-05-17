@@ -77,6 +77,9 @@ export default async function RootLayout({
   const authProviderConfig: Record<string, unknown> = {};
   if (authProvider === "clerk") {
     authProviderConfig.publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  } else if (authProvider === "supabase") {
+    authProviderConfig.supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    authProviderConfig.supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   }
 
   return (

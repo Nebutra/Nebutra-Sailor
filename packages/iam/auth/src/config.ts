@@ -15,7 +15,13 @@
 
 import type { AuthProviderId } from "./types";
 
-const SUPPORTED: readonly AuthProviderId[] = ["clerk", "better-auth", "nextauth", "dev"];
+const SUPPORTED: readonly AuthProviderId[] = [
+  "clerk",
+  "better-auth",
+  "nextauth",
+  "supabase",
+  "dev",
+];
 
 /**
  * Read the active auth provider from environment. Falls back to `better-auth`

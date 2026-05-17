@@ -27,15 +27,14 @@ describe("getConfiguredAuthProvider", () => {
 
   it("rejects unknown values and falls back to default", () => {
     expect(getConfiguredAuthProvider({ AUTH_PROVIDER: "auth0" })).toBe("better-auth");
-    expect(getConfiguredAuthProvider({ NEXT_PUBLIC_AUTH_PROVIDER: "supabase" })).toBe(
-      "better-auth",
-    );
   });
 
-  it("accepts all three supported providers", () => {
+  it("accepts all supported providers", () => {
     expect(getConfiguredAuthProvider({ AUTH_PROVIDER: "clerk" })).toBe("clerk");
     expect(getConfiguredAuthProvider({ AUTH_PROVIDER: "better-auth" })).toBe("better-auth");
     expect(getConfiguredAuthProvider({ AUTH_PROVIDER: "nextauth" })).toBe("nextauth");
+    expect(getConfiguredAuthProvider({ AUTH_PROVIDER: "supabase" })).toBe("supabase");
+    expect(getConfiguredAuthProvider({ NEXT_PUBLIC_AUTH_PROVIDER: "supabase" })).toBe("supabase");
   });
 });
 
@@ -44,5 +43,6 @@ describe("isClerkProvider", () => {
     expect(isClerkProvider("clerk")).toBe(true);
     expect(isClerkProvider("better-auth")).toBe(false);
     expect(isClerkProvider("nextauth")).toBe(false);
+    expect(isClerkProvider("supabase")).toBe(false);
   });
 });

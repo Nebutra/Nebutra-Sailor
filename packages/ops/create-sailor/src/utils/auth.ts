@@ -9,13 +9,14 @@ import path from "node:path";
  *  - `clerk`      → keep `packages/iam/auth/src/providers/clerk.ts`, drop the others
  *  - `betterauth` → keep `packages/iam/auth/src/providers/better-auth.ts`, drop the others
  *  - `nextauth`   → keep `packages/iam/auth/src/providers/nextauth.ts`, drop the others
+ *  - `supabase`   → keep `packages/iam/auth/src/providers/supabase.ts`, drop the others
  *  - `none`       → remove the entire `packages/auth` directory
  *
  * Silent-skip semantics: if a file targeted for deletion does not exist, we
  * carry on (template may not include it yet).
  */
 
-export type AuthChoice = "clerk" | "betterauth" | "nextauth" | "none";
+export type AuthChoice = "clerk" | "betterauth" | "nextauth" | "supabase" | "none";
 
 function safeRm(target: string): void {
   if (fs.existsSync(target)) {
@@ -34,7 +35,7 @@ function appendEnv(targetDir: string, content: string): void {
 
 function narrowAuthProviderId(
   typesPath: string,
-  providerId: "clerk" | "better-auth" | "nextauth",
+  providerId: "clerk" | "better-auth" | "nextauth" | "supabase",
 ): void {
   if (!fs.existsSync(typesPath)) return;
   const content = fs.readFileSync(typesPath, "utf8");
@@ -69,7 +70,7 @@ export async function applyAuthSelection(targetDir: string, auth: AuthChoice): P
     appendReadmeNote(
       targetDir,
       "\n## Auth\n\nAuth was skipped at scaffold time (`--auth=none`). " +
-        "Add your preferred auth provider manually (e.g. Clerk, Better Auth).\n",
+        "Add your preferred auth provider manually (e.g. Clerk, Better Auth, NextAuth, Supabase).\n",
     );
     return;
   }
@@ -80,6 +81,7 @@ export async function applyAuthSelection(targetDir: string, auth: AuthChoice): P
   if (auth === "clerk") {
     safeRm(path.join(providersDir, "better-auth.ts"));
     safeRm(path.join(providersDir, "nextauth.ts"));
+    safeRm(path.join(providersDir, "supabase.ts"));
     narrowAuthProviderId(typesPath, "clerk");
     appendEnv(targetDir, "# Clerk auth\nCLERK_PUBLISHABLE_KEY=\nCLERK_SECRET_KEY=\n");
     return;
@@ -88,6 +90,7 @@ export async function applyAuthSelection(targetDir: string, auth: AuthChoice): P
   if (auth === "betterauth") {
     safeRm(path.join(providersDir, "clerk.ts"));
     safeRm(path.join(providersDir, "nextauth.ts"));
+    safeRm(path.join(providersDir, "supabase.ts"));
     narrowAuthProviderId(typesPath, "better-auth");
     appendEnv(
       targetDir,
@@ -99,6 +102,7 @@ export async function applyAuthSelection(targetDir: string, auth: AuthChoice): P
   if (auth === "nextauth") {
     safeRm(path.join(providersDir, "clerk.ts"));
     safeRm(path.join(providersDir, "better-auth.ts"));
+    safeRm(path.join(providersDir, "supabase.ts"));
     narrowAuthProviderId(typesPath, "nextauth");
     appendEnv(
       targetDir,
@@ -110,6 +114,23 @@ export async function applyAuthSelection(targetDir: string, auth: AuthChoice): P
         "GOOGLE_CLIENT_SECRET=\n" +
         "GITHUB_CLIENT_ID=\n" +
         "GITHUB_CLIENT_SECRET=\n",
+    );
+    return;
+  }
+
+  if (auth === "supabase") {
+    safeRm(path.join(providersDir, "clerk.ts"));
+    safeRm(path.join(providersDir, "better-auth.ts"));
+    safeRm(path.join(providersDir, "nextauth.ts"));
+    narrowAuthProviderId(typesPath, "supabase");
+    appendEnv(
+      targetDir,
+      "# Supabase Auth\n" +
+        "NEXT_PUBLIC_SUPABASE_URL=\n" +
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY=\n" +
+        "SUPABASE_URL=\n" +
+        "SUPABASE_ANON_KEY=\n" +
+        "SUPABASE_SERVICE_ROLE_KEY=\n",
     );
     return;
   }

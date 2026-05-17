@@ -71,6 +71,7 @@ describe("/api/organizations", () => {
       createdAt: new Date("2026-04-29T00:00:00.000Z"),
     });
     createAuthMock.mockResolvedValue({
+      capabilities: { organizations: true },
       getSession: vi.fn().mockResolvedValue({
         userId: "user_alpha",
         expiresAt: new Date("2026-04-29T01:00:00.000Z"),
@@ -103,5 +104,34 @@ describe("/api/organizations", () => {
       },
     });
     expect(response.headers.get("set-cookie")).toContain("nebutra_active_org=org_alpha");
+  });
+
+  it("does not route NextAuth organization creation through Better Auth", async () => {
+    process.env.AUTH_PROVIDER = "nextauth";
+    process.env.NEXT_PUBLIC_AUTH_PROVIDER = "nextauth";
+
+    createAuthMock.mockResolvedValue({
+      capabilities: { organizations: false },
+      getSession: vi.fn().mockResolvedValue({
+        userId: "user_alpha",
+        expiresAt: new Date("2026-04-29T01:00:00.000Z"),
+      }),
+      createOrganization: vi.fn(),
+    });
+
+    const { POST } = await loadRoute();
+    const response = await POST(
+      new Request("http://localhost/api/organizations", {
+        method: "POST",
+        body: JSON.stringify({ name: "Acme Labs", slug: "acme-labs" }),
+        headers: { "content-type": "application/json" },
+      }),
+    );
+
+    expect(createAuthMock).toHaveBeenCalledWith({ provider: "nextauth" });
+    expect(response.status).toBe(404);
+    await expect(response.json()).resolves.toEqual({
+      error: "Organizations are not enabled for this provider.",
+    });
   });
 });

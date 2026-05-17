@@ -25,6 +25,11 @@ interface OrganizationSummary {
   image: string | null;
 }
 
+type CreateOrganizationResult =
+  | { status: "unauthenticated" }
+  | { status: "unsupported" }
+  | { status: "created"; organization: OrganizationSummary; creatorUserId: string };
+
 function asRecord(value: unknown): Record<string, unknown> | null {
   return value && typeof value === "object" ? (value as Record<string, unknown>) : null;
 }
@@ -71,9 +76,10 @@ async function getOrganizationsForRequest(request: Request): Promise<Organizatio
     return normalizeClerkOrganizations(memberships);
   }
 
-  const auth = await createAuth({ provider: "better-auth" });
+  const auth = await createAuth({ provider });
   const session = await auth.getSession(request);
   if (!session?.userId) return null;
+  if (!auth.capabilities.organizations) return [];
 
   const organizations = await auth.getUserOrganizations(session.userId);
   return organizations.map((organization) => ({
@@ -87,11 +93,11 @@ async function getOrganizationsForRequest(request: Request): Promise<Organizatio
 async function createOrganizationForRequest(
   request: Request,
   input: z.infer<typeof CreateOrganizationSchema>,
-): Promise<{ organization: OrganizationSummary; creatorUserId: string } | null> {
+): Promise<CreateOrganizationResult> {
   if (provider === "clerk") {
     const { auth, clerkClient } = await import("@clerk/nextjs/server");
     const { userId } = await auth();
-    if (!userId) return null;
+    if (!userId) return { status: "unauthenticated" };
 
     const client = await clerkClient();
     const organization = await client.organizations.createOrganization({
@@ -101,6 +107,7 @@ async function createOrganizationForRequest(
     });
 
     return {
+      status: "created",
       organization: {
         id: organization.id,
         name: organization.name,
@@ -111,9 +118,10 @@ async function createOrganizationForRequest(
     };
   }
 
-  const auth = await createAuth({ provider: "better-auth" });
+  const auth = await createAuth({ provider });
   const session = await auth.getSession(request);
-  if (!session?.userId) return null;
+  if (!session?.userId) return { status: "unauthenticated" };
+  if (!auth.capabilities.organizations) return { status: "unsupported" };
 
   const organization = await auth.createOrganization({
     name: input.name,
@@ -122,6 +130,7 @@ async function createOrganizationForRequest(
   });
 
   return {
+    status: "created",
     organization: {
       id: organization.id,
       name: organization.name,
@@ -168,8 +177,15 @@ export async function POST(request: Request) {
   try {
     const created = await createOrganizationForRequest(request, parsed.data);
 
-    if (!created) {
+    if (created.status === "unauthenticated") {
       return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+    }
+
+    if (created.status === "unsupported") {
+      return NextResponse.json(
+        { error: "Organizations are not enabled for this provider." },
+        { status: 404 },
+      );
     }
 
     const { organization, creatorUserId } = created;

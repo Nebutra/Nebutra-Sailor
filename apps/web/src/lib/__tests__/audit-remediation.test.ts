@@ -170,13 +170,13 @@ describe("UI/UX audit remediation invariants", () => {
     const translations = readFromRepo("packages/platform/i18n/locales/en.json");
 
     expect(dashboard).toContain("CommandCenter");
-    expect(dashboard).toContain("max-w-[1440px]");
+    expect(dashboard).toContain("max-w-[1760px]");
     expect(dashboard).toContain("if (!summary?.day) return null");
     expect(dashboard).toContain("if (!tenantId) return null");
     expect(dashboard).toContain("snapshotMeta");
     expect(dashboard).toContain("details.activeUsers");
     expect(dashboard).toContain("meta.latestDay");
-    expect(skeletons).toContain("max-w-3xl");
+    expect(skeletons).toContain("max-w-5xl");
     expect(translations).toContain('"commandCenter"');
     expect(dashboard).not.toContain("Atmospheric brand glow");
     expect(dashboard).not.toContain("max-w-2xl flex-col items-center");
@@ -217,11 +217,34 @@ describe("UI/UX audit remediation invariants", () => {
     expect(dashboard).not.toContain("type MetricMeta");
     expect(dashboard).not.toContain("dailyMeta");
     expect(dashboard).not.toContain("<dl");
-    expect(dashboard).toContain("text-2xl font-semibold");
+    expect(dashboard).toContain("text-xl font-semibold");
+    expect(dashboard).toContain("xl:grid-cols-4");
     expect(dashboard).not.toContain("text-3xl font-semibold tabular-nums");
+    expect(dashboard).not.toContain("2xl:grid-cols-4");
     expect(translations).toContain('"snapshot": "Snapshot"');
     expect(translations).toContain('"cadence": "Cadence"');
     expect(translations).toContain('"tenant": "Tenant"');
+  });
+
+  it("keeps the authenticated dashboard shell high-density instead of touch-first oversized", () => {
+    const appShell = readFromRepo("packages/design/ui/src/layout/app-shell.tsx");
+    const sidebarNav = readFromRepo("packages/design/ui/src/patterns/sidebar-nav/sidebar-nav.tsx");
+    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+    const workspaceSwitcher = readFromRepo(
+      "packages/design/ui/src/patterns/workspace-switcher.tsx",
+    );
+
+    expect(appShell).toContain("const DEFAULT_HEADER_HEIGHT = 48");
+    expect(appShell).toContain("const DEFAULT_SIDEBAR_WIDTH = 224");
+    expect(appShell).toContain("const DEFAULT_COLLAPSED_WIDTH = 52");
+    expect(appShell).toContain("max-w-none px-3 py-4");
+    expect(sidebarNav).toContain("px-2.5 py-1.5 text-[13px]");
+    expect(sidebarNav).toContain(
+      'const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto"',
+    );
+    expect(workspaceSwitcher).toContain("px-2 py-1 text-left");
+    expect(shell).toContain('className={collapsed ? "size-7" : "h-6 w-[8.5rem]"}');
+    expect(shell).not.toContain("Workspace: {currentWorkspaceLabel}");
   });
 
   it("uses real dashboard IA routes with breadcrumb navigation", () => {

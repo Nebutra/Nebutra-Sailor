@@ -6,7 +6,7 @@ Arguments:
 Core options:
   -p, --pm <id>             npm | pnpm | yarn | bun (auto-detected)
       --region <id>         global | cn | hybrid (default: global)
-      --auth <id>           clerk | betterauth | none
+      --auth <id>           clerk | betterauth | nextauth | supabase | none
       --ai <ids>            expert/non-interactive provider seed (e.g. openai,anthropic)
 
 Interactive AI topology:

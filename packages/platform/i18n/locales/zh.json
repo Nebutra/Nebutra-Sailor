@@ -879,7 +879,7 @@
       "evening": "晚上好"
     },
     "commandSurface": {
-      "noAuth": "未配置认证。设置 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY 以启用用户会话。"
+      "noAuth": "当前认证提供商尚未配置完整。设置对应 provider 密钥后即可启用用户会话。"
     },
     "commandCenter": {
       "description": "从一个动作开始：询问 Sailor、查看工作区信号，或把工作路由到自动化界面。",

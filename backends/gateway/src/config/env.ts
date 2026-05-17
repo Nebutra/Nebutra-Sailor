@@ -15,7 +15,36 @@ const betterAuthSchema = z.object({
   BETTER_AUTH_SECRET: z.string().min(1),
 });
 
-const authConfigUnion = z.union([clerkSchema, betterAuthSchema]);
+const nextAuthSchema = z
+  .object({
+    AUTH_PROVIDER: z.literal("nextauth"),
+    CLERK_SECRET_KEY: z.string().optional(),
+    CLERK_WEBHOOK_SECRET: z.string().optional(),
+    BETTER_AUTH_SECRET: z.string().optional(),
+    AUTH_SECRET: z.string().optional(),
+    NEXTAUTH_SECRET: z.string().optional(),
+  })
+  .superRefine((value, ctx) => {
+    if (value.AUTH_SECRET || value.NEXTAUTH_SECRET) return;
+    ctx.addIssue({
+      code: "custom",
+      message: "AUTH_SECRET or NEXTAUTH_SECRET is required when AUTH_PROVIDER=nextauth",
+      path: ["AUTH_SECRET"],
+    });
+  });
+
+const supabaseSchema = z.object({
+  AUTH_PROVIDER: z.literal("supabase"),
+  CLERK_SECRET_KEY: z.string().optional(),
+  CLERK_WEBHOOK_SECRET: z.string().optional(),
+  BETTER_AUTH_SECRET: z.string().optional(),
+  SUPABASE_URL: z.string().url(),
+  SUPABASE_ANON_KEY: z.string().min(1),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+  SUPABASE_WEBHOOK_SECRET: z.string().optional(),
+});
+
+const authConfigUnion = z.union([clerkSchema, betterAuthSchema, nextAuthSchema, supabaseSchema]);
 
 const baseSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
@@ -88,18 +117,33 @@ export type Env = z.infer<typeof envSchema>;
  * Priority:
  * 1. AUTH_PROVIDER env var (explicit override)
  * 2. CLERK_SECRET_KEY present → "clerk" (backward compatibility)
- * 3. BETTER_AUTH_SECRET present → "better-auth"
- * 4. Default to "better-auth" if none are present
+ * 3. AUTH_SECRET / NEXTAUTH_SECRET present → "nextauth"
+ * 4. SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY present → "supabase"
+ * 5. BETTER_AUTH_SECRET present → "better-auth"
+ * 6. Default to "better-auth" if none are present
  */
-export function getAuthProvider(): "clerk" | "better-auth" {
+export function getAuthProvider(): "clerk" | "better-auth" | "nextauth" | "supabase" {
   const explicit = process.env.AUTH_PROVIDER;
-  if (explicit === "clerk" || explicit === "better-auth") {
+  if (
+    explicit === "clerk" ||
+    explicit === "better-auth" ||
+    explicit === "nextauth" ||
+    explicit === "supabase"
+  ) {
     return explicit;
   }
 
   // Backward compatibility: if CLERK_SECRET_KEY is set, assume Clerk
   if (process.env.CLERK_SECRET_KEY) {
     return "clerk";
+  }
+
+  if (process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET) {
+    return "nextauth";
+  }
+
+  if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return "supabase";
   }
 
   if (process.env.BETTER_AUTH_SECRET) {
@@ -119,6 +163,11 @@ export function validateEnv(): Env {
       DATABASE_URL: process.env.DATABASE_URL ?? "postgresql://localhost/dev",
       AUTH_PROVIDER: process.env.AUTH_PROVIDER ?? "clerk",
       CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? "sk_test_placeholder",
+      AUTH_SECRET: process.env.AUTH_SECRET ?? "dev_nextauth_secret_placeholder",
+      SUPABASE_URL: process.env.SUPABASE_URL ?? "http://localhost:54321",
+      SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? "dev_anon_placeholder",
+      SUPABASE_SERVICE_ROLE_KEY:
+        process.env.SUPABASE_SERVICE_ROLE_KEY ?? "dev_service_role_placeholder",
     });
   }
 

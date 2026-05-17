@@ -65,12 +65,12 @@ export interface SidebarNavProps {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const ITEM_BASE_CLASSES =
-  "flex items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors";
+  "flex items-center gap-2 rounded-md px-2.5 py-1.5 text-[13px] leading-5 transition-colors";
 const ITEM_DEFAULT_CLASSES = "text-foreground hover:bg-accent hover:text-accent-foreground";
 const ITEM_ACTIVE_CLASSES = "bg-accent text-accent-foreground font-medium";
 const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
-const ITEM_COLLAPSED_CLASSES = "justify-center px-0 w-10 h-10 mx-auto";
-const ICON_CLASSES = "h-4 w-4 shrink-0";
+const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto";
+const ICON_CLASSES = "size-3.5 shrink-0";
 
 function defaultRenderLink({
   href,
@@ -316,17 +316,17 @@ export function SidebarNav({
         aria-label="Sidebar"
         className={cn(
           "flex h-full flex-col gap-4",
-          collapsed ? "px-2 py-3" : "px-3 py-4",
+          collapsed ? "px-2 py-2.5" : "px-2.5 py-3",
           className,
         )}
       >
         {header ? <div className="shrink-0">{header}</div> : null}
 
-        <div className="flex-1 space-y-6 overflow-y-auto">
+        <div className="flex-1 space-y-4 overflow-y-auto">
           {sections.map((section) => (
             <div key={section.id}>
               {section.label && !collapsed ? (
-                <div className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                <div className="mb-1.5 px-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                   {section.label}
                 </div>
               ) : null}

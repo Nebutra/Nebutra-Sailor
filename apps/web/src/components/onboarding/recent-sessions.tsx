@@ -66,7 +66,7 @@ export async function RecentSessions() {
   const t = await getTranslations("dashboard.recentSessions");
 
   return (
-    <div className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-white/[0.03] sm:p-5">
+    <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-3.5 dark:border-white/10 dark:bg-white/[0.03] sm:p-4">
       <AnimateIn preset="fadeUp">
         <div className="mb-3 flex items-center justify-between">
           <div>
@@ -101,7 +101,7 @@ export async function RecentSessions() {
           return (
             <AnimateIn key={session.id} preset="fadeUp">
               <ViewTransitionLink href={href} className="block">
-                <div className="flex min-h-16 items-center justify-between gap-4 rounded-[var(--radius-xl)] border border-neutral-5 bg-neutral-1 px-3.5 py-3 transition-colors duration-150 hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.05]">
+                <div className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-lg)] border border-neutral-5 bg-neutral-1 px-3 py-2.5 transition-colors duration-150 hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.05]">
                   <div className="min-w-0">
                     <span
                       className={`inline-flex items-center gap-1 rounded-full bg-neutral-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider dark:bg-white/10 ${meta.accent}`}

@@ -23,7 +23,7 @@ export interface AppShellProps {
   defaultCollapsed?: boolean;
   /** Fires whenever the collapsed state changes (both controlled + uncontrolled). */
   onCollapsedChange?: (collapsed: boolean) => void;
-  /** Height in pixels of the sticky header row. Defaults to 56. */
+  /** Height in pixels of the sticky header row. Defaults to 48. */
   headerHeight?: number;
   /** Override the default container styles applied to `<main>`. */
   contentClassName?: string;
@@ -31,9 +31,9 @@ export interface AppShellProps {
   className?: string;
 }
 
-const DEFAULT_SIDEBAR_WIDTH = 240;
-const DEFAULT_COLLAPSED_WIDTH = 64;
-const DEFAULT_HEADER_HEIGHT = 56;
+const DEFAULT_SIDEBAR_WIDTH = 224;
+const DEFAULT_COLLAPSED_WIDTH = 52;
+const DEFAULT_HEADER_HEIGHT = 48;
 
 /**
  * AppShell — top-level dashboard chrome: sidebar + sticky header + scrollable main.
@@ -96,7 +96,7 @@ export function AppShell({
       <aside
         aria-label="Primary"
         className={cn(
-          "hidden shrink-0 overflow-hidden border-r border-neutral-4 bg-neutral-2 md:block",
+          "hidden shrink-0 overflow-hidden border-r border-neutral-4 bg-neutral-2/80 md:block",
           "transition-[width] duration-200 ease-out",
         )}
         style={{ width: railWidth }}
@@ -121,8 +121,8 @@ export function AppShell({
         {header !== undefined && (
           <header
             className={cn(
-              "sticky top-0 z-30 flex items-center gap-3 border-b border-border",
-              "bg-background/80 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:px-6",
+              "sticky top-0 z-30 flex items-center gap-2 border-b border-border",
+              "bg-background/85 px-3 backdrop-blur supports-[backdrop-filter]:bg-background/70 sm:px-4",
             )}
             style={{ height: headerHeight }}
           >
@@ -131,14 +131,14 @@ export function AppShell({
               aria-label="Open navigation menu"
               onClick={() => setMobileOpen(true)}
               className={cn(
-                "inline-flex h-9 w-9 items-center justify-center rounded-md text-foreground/80",
+                "relative inline-flex size-8 items-center justify-center rounded-md text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
                 "hover:bg-muted hover:text-foreground md:hidden",
                 "focus:outline-none focus:ring-2 focus:ring-offset-1",
               )}
             >
-              <Menu className="h-5 w-5" aria-hidden="true" />
+              <Menu className="size-4" aria-hidden="true" />
             </button>
-            <div className="flex min-w-0 flex-1 items-center gap-3">{header}</div>
+            <div className="flex min-w-0 flex-1 items-center gap-2">{header}</div>
           </header>
         )}
 
@@ -150,21 +150,18 @@ export function AppShell({
               aria-label="Open navigation menu"
               onClick={() => setMobileOpen(true)}
               className={cn(
-                "inline-flex h-9 w-9 items-center justify-center rounded-md text-foreground/80",
+                "relative inline-flex size-8 items-center justify-center rounded-md text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
                 "hover:bg-muted hover:text-foreground",
                 "focus:outline-none focus:ring-2 focus:ring-offset-1",
               )}
             >
-              <Menu className="h-5 w-5" aria-hidden="true" />
+              <Menu className="size-4" aria-hidden="true" />
             </button>
           </div>
         )}
 
         <main
-          className={cn(
-            "mx-auto w-full max-w-[var(--container-wide)] px-4 py-6 sm:px-6 md:px-8",
-            contentClassName,
-          )}
+          className={cn("w-full max-w-none px-3 py-4 sm:px-4 md:px-5 2xl:px-6", contentClassName)}
         >
           {children}
         </main>

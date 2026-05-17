@@ -250,6 +250,7 @@ function resolveAuthChoice(raw: string | undefined): AuthChoice {
   const v = raw.toLowerCase();
   if (v === "betterauth" || v === "better-auth") return "betterauth";
   if (v === "nextauth" || v === "next-auth" || v === "authjs" || v === "auth.js") return "nextauth";
+  if (v === "supabase" || v === "supabase-auth") return "supabase";
   if (v === "none") return "none";
   return "clerk";
 }
@@ -425,7 +426,7 @@ async function run(): Promise<void> {
       "--db-host <id>",
       "local | supabase | neon | vercel-postgres | planetscale | railway | aliyun-rds | tencent-cdb | none — managed-provider (region default: supabase global, local cn)",
     )
-    .option("--auth <id>", "clerk | betterauth | nextauth | none")
+    .option("--auth <id>", "clerk | betterauth | nextauth | supabase | none")
     .option(
       "--social-login <ids>",
       "CN social login providers — wechat | qq | dingtalk | workweixin | feishu | weibo (comma-separated)",
@@ -664,6 +665,11 @@ async function run(): Promise<void> {
               value: "nextauth",
               label: "NextAuth (Auth.js v5)",
               hint: "self-hosted, mature, large ecosystem",
+            },
+            {
+              value: "supabase",
+              label: "Supabase Auth",
+              hint: "managed auth with Supabase storage/realtime ecosystem",
             },
             { value: "none", label: "None" },
           ],

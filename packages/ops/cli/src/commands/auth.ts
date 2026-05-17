@@ -10,11 +10,17 @@ interface AuthCommandOptions {
   interactive?: boolean;
 }
 
+interface AuthStatus {
+  provider: string;
+  configured: boolean;
+  keys: Record<string, string>;
+}
+
 /**
  * Format output based on requested format (json or human-readable)
  */
 function formatOutput(
-  result: DelegateResult | Record<string, any>,
+  result: DelegateResult | Record<string, unknown>,
   format?: string,
   label?: string,
 ) {
@@ -63,6 +69,8 @@ function detectAuthProvider(): string {
       const content = fs.readFileSync(configPath, "utf-8");
       if (content.includes("clerk")) return "clerk";
       if (content.includes("better-auth")) return "better-auth";
+      if (content.includes("nextauth")) return "nextauth";
+      if (content.includes("supabase")) return "supabase";
     }
   } catch {
     // Ignore errors
@@ -78,7 +86,7 @@ async function handleAuthStatus(options: AuthCommandOptions) {
   logger.info("Checking authentication configuration...");
 
   const provider = detectAuthProvider();
-  const status: Record<string, any> = {
+  const status: AuthStatus = {
     provider,
     configured: false,
     keys: {},
@@ -95,12 +103,36 @@ async function handleAuthStatus(options: AuthCommandOptions) {
     };
     status.configured =
       !!process.env.CLERK_SECRET_KEY && !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  } else {
+  } else if (provider === "better-auth") {
     status.keys = {
       BETTER_AUTH_SECRET: maskKey(process.env.BETTER_AUTH_SECRET, "secret"),
       BETTER_AUTH_URL: process.env.BETTER_AUTH_URL || "not set",
     };
     status.configured = !!process.env.BETTER_AUTH_SECRET;
+  } else if (provider === "nextauth") {
+    status.keys = {
+      AUTH_SECRET: maskKey(process.env.AUTH_SECRET, "secret"),
+      NEXTAUTH_SECRET: maskKey(process.env.NEXTAUTH_SECRET, "legacy secret"),
+      NEXTAUTH_URL: process.env.NEXTAUTH_URL || "not set",
+      AUTH_URL: process.env.AUTH_URL || "not set",
+      GOOGLE_CLIENT_ID: maskKey(process.env.GOOGLE_CLIENT_ID, "google client"),
+      GITHUB_CLIENT_ID: maskKey(process.env.GITHUB_CLIENT_ID, "github client"),
+    };
+    status.configured = !!(process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET);
+  } else {
+    status.keys = {
+      NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || "not set",
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: maskKey(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, "anon"),
+      SUPABASE_URL: process.env.SUPABASE_URL || "not set",
+      SUPABASE_ANON_KEY: maskKey(process.env.SUPABASE_ANON_KEY, "anon"),
+      SUPABASE_SERVICE_ROLE_KEY: maskKey(process.env.SUPABASE_SERVICE_ROLE_KEY, "service role"),
+      SUPABASE_WEBHOOK_SECRET: maskKey(process.env.SUPABASE_WEBHOOK_SECRET, "webhook"),
+    };
+    status.configured = !!(
+      (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL) &&
+      (process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    );
   }
 
   if (!options.dryRun) {
@@ -119,7 +151,7 @@ async function handleAuthStatus(options: AuthCommandOptions) {
  * Interactive wizard to configure auth provider
  */
 async function handleAuthSetup(provider: string, options: AuthCommandOptions) {
-  const validProviders = ["clerk", "better-auth"];
+  const validProviders = ["clerk", "better-auth", "nextauth", "supabase"];
 
   if (!validProviders.includes(provider.toLowerCase())) {
     logger.error(`Invalid provider: ${provider}. Choose from: ${validProviders.join(", ")}`);
@@ -147,7 +179,7 @@ async function handleAuthSetup(provider: string, options: AuthCommandOptions) {
     logger.info("2. Create endpoint: https://yourdomain.com/api/webhooks/clerk");
     logger.info("3. Copy the signing secret to .env.local:");
     logger.info('   CLERK_WEBHOOK_SECRET="whsec_..."');
-  } else {
+  } else if (providerLower === "better-auth") {
     logger.info("Better Auth setup requires:");
     logger.info("1. Database URL configured (DATABASE_URL env var)");
     logger.info("2. A generated auth secret");
@@ -162,6 +194,36 @@ async function handleAuthSetup(provider: string, options: AuthCommandOptions) {
     logger.info("");
     logger.info("4. Run database migration:");
     logger.info("   pnpm --filter @nebutra/web db:push");
+  } else if (providerLower === "nextauth") {
+    logger.info("NextAuth / Auth.js setup requires:");
+    logger.info("1. A generated Auth.js secret");
+    logger.info("2. NEXTAUTH_URL or AUTH_URL pointing at the web app origin");
+    logger.info("3. OAuth provider credentials for each enabled provider");
+    logger.info("");
+    logger.info("To complete setup:");
+    logger.info("1. Generate a new secret:");
+    logger.info("   openssl rand -base64 32");
+    logger.info("2. Add to the production environment:");
+    logger.info('   AUTH_PROVIDER="nextauth"');
+    logger.info('   NEXT_PUBLIC_AUTH_PROVIDER="nextauth"');
+    logger.info('   AUTH_SECRET="<generated_secret>"');
+    logger.info('   NEXTAUTH_URL="https://app.nebutra.com"');
+    logger.info('   GOOGLE_CLIENT_ID="..."');
+    logger.info('   GOOGLE_CLIENT_SECRET="..."');
+  } else {
+    logger.info("Supabase Auth setup requires:");
+    logger.info("1. Supabase project URL");
+    logger.info("2. Public anon key for browser auth");
+    logger.info("3. Service role key for server-side user/session validation");
+    logger.info("");
+    logger.info("To complete setup:");
+    logger.info('   AUTH_PROVIDER="supabase"');
+    logger.info('   NEXT_PUBLIC_AUTH_PROVIDER="supabase"');
+    logger.info('   NEXT_PUBLIC_SUPABASE_URL="https://xxx.supabase.co"');
+    logger.info('   NEXT_PUBLIC_SUPABASE_ANON_KEY="..."');
+    logger.info('   SUPABASE_URL="https://xxx.supabase.co"');
+    logger.info('   SUPABASE_ANON_KEY="..."');
+    logger.info('   SUPABASE_SERVICE_ROLE_KEY="..."');
   }
 
   if (!options.dryRun) {
@@ -172,7 +234,13 @@ async function handleAuthSetup(provider: string, options: AuthCommandOptions) {
     provider: providerLower,
     setupGuide: `Complete setup by following the instructions above`,
     documentationUrl:
-      providerLower === "clerk" ? "https://clerk.com/docs" : "https://www.better-auth.com",
+      providerLower === "clerk"
+        ? "https://clerk.com/docs"
+        : providerLower === "better-auth"
+          ? "https://www.better-auth.com"
+          : providerLower === "nextauth"
+            ? "https://authjs.dev"
+            : "https://supabase.com/docs/guides/auth",
   };
 
   formatOutput(output, options.format, "auth:setup");
@@ -198,6 +266,21 @@ async function handleAuthKeys(options: AuthCommandOptions) {
       BETTER_AUTH_SECRET: maskKey(process.env.BETTER_AUTH_SECRET, "secret"),
       BETTER_AUTH_URL: process.env.BETTER_AUTH_URL || "not set",
     },
+    nextAuth: {
+      AUTH_SECRET: maskKey(process.env.AUTH_SECRET, "secret"),
+      NEXTAUTH_SECRET: maskKey(process.env.NEXTAUTH_SECRET, "legacy secret"),
+      NEXTAUTH_URL: process.env.NEXTAUTH_URL || "not set",
+      AUTH_URL: process.env.AUTH_URL || "not set",
+      GOOGLE_CLIENT_ID: maskKey(process.env.GOOGLE_CLIENT_ID, "google client"),
+      GITHUB_CLIENT_ID: maskKey(process.env.GITHUB_CLIENT_ID, "github client"),
+    },
+    supabase: {
+      NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || "not set",
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: maskKey(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, "anon"),
+      SUPABASE_URL: process.env.SUPABASE_URL || "not set",
+      SUPABASE_ANON_KEY: maskKey(process.env.SUPABASE_ANON_KEY, "anon"),
+      SUPABASE_SERVICE_ROLE_KEY: maskKey(process.env.SUPABASE_SERVICE_ROLE_KEY, "service role"),
+    },
     common: {
       DATABASE_URL: maskKey(process.env.DATABASE_URL, "database url"),
       JWT_SECRET: maskKey(process.env.JWT_SECRET, "jwt secret"),
@@ -215,6 +298,15 @@ async function handleAuthKeys(options: AuthCommandOptions) {
         secret: !!process.env.BETTER_AUTH_SECRET,
         url: !!process.env.BETTER_AUTH_URL,
       },
+      nextAuth: {
+        secret: !!(process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET),
+        url: !!(process.env.NEXTAUTH_URL || process.env.AUTH_URL),
+      },
+      supabase: {
+        url: !!(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL),
+        anonKey: !!(process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+        serviceRole: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+      },
     },
   };
 
@@ -222,13 +314,20 @@ async function handleAuthKeys(options: AuthCommandOptions) {
     const clerkConfigured = output.configured.clerk.secret && output.configured.clerk.publishable;
     const betterAuthConfigured =
       output.configured.betterAuth.secret && output.configured.betterAuth.url;
+    const nextAuthConfigured = output.configured.nextAuth.secret && output.configured.nextAuth.url;
+    const supabaseConfigured =
+      output.configured.supabase.url &&
+      output.configured.supabase.anonKey &&
+      output.configured.supabase.serviceRole;
 
-    if (!clerkConfigured && !betterAuthConfigured) {
+    if (!clerkConfigured && !betterAuthConfigured && !nextAuthConfigured && !supabaseConfigured) {
       logger.warn("No authentication keys configured");
     } else {
       logger.info("Auth keys status:");
       if (clerkConfigured) logger.success("Clerk configured");
       if (betterAuthConfigured) logger.success("Better Auth configured");
+      if (nextAuthConfigured) logger.success("NextAuth configured");
+      if (supabaseConfigured) logger.success("Supabase configured");
     }
   }
 
@@ -241,7 +340,7 @@ async function handleAuthKeys(options: AuthCommandOptions) {
 export function registerAuthCommand(program: Command) {
   const auth = program
     .command("auth")
-    .description("Manage authentication configuration (Clerk or Better Auth)");
+    .description("Manage authentication configuration (Clerk, Better Auth, NextAuth, or Supabase)");
 
   // nebutra auth status
   auth
@@ -261,7 +360,7 @@ export function registerAuthCommand(program: Command) {
   // nebutra auth setup <provider>
   auth
     .command("setup <provider>")
-    .description("Configure Clerk or Better Auth (interactive wizard)")
+    .description("Configure Clerk, Better Auth, NextAuth, or Supabase (interactive wizard)")
     .option("--dry-run", "Preview without making changes")
     .option("--format <type>", "Output format: json or plain")
     .action(async (provider: string, options) => {

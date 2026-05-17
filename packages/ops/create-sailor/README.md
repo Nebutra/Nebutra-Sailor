@@ -70,7 +70,7 @@ npm create sailor@latest my-app \
 | Flag | Values | Default |
 |------|--------|---------|
 | `--region` | `global` · `cn` · `hybrid` | `global` |
-| `--auth` | `clerk` · `betterauth` · `none` | `clerk` |
+| `--auth` | `clerk` · `betterauth` · `nextauth` · `supabase` · `none` | `clerk` |
 | `--social-login` | `wechat,qq,dingtalk,workweixin,feishu,weibo` (comma-sep) | none |
 | `--payment` | `stripe` · `lemon` · `wechat` · `alipay` · `none` | region-based |
 | `--ai` | expert/non-interactive provider seed, comma-separated ids; omit it to use the governed gateway topology | gateway seed |

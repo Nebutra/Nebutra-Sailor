@@ -869,7 +869,7 @@
       "evening": "Good evening"
     },
     "commandSurface": {
-      "noAuth": "Auth is not configured. Set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY to enable user sessions."
+      "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
     },
     "commandCenter": {
       "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
