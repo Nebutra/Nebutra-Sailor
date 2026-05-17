@@ -1,0 +1,49 @@
+{
+  "name": "@nebutra/collab",
+  "version": "0.1.0",
+  "description": "Multi-tenant, transport-agnostic real-time collaborative sync layer: tenant-partitioned CRDT rooms (Yjs) with pluggable snapshot store + transport seams",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "featureId": "collab",
+    "category": "integrations",
+    "summary": "Tenant-partitioned CRDT room manager (Yjs) with pluggable store + transport seams"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./store/memory": "./src/store/memory.ts",
+    "./transport/loopback": "./src/transport/loopback.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/tenant-store": "workspace:*",
+    "yjs": "^13.6.30"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "^4.0.18",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/integrations/collab#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/integrations/collab"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
