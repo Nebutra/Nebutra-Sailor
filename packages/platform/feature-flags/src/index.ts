@@ -366,6 +366,11 @@ export const FLAGS = {
   // opt-in per tenant). Kill switch via KILL_SWITCH_REEL_STUDIO env.
   REEL_STUDIO: "reel-studio",
 
+  // Canvas — interactive node-graph editor over @nebutra/reel (off by
+  // default; opt-in per tenant). WIP capability absorption (codename
+  // `canvas`): reel-canvas-ui + knowledge-rag + collab.
+  CANVAS_DEMO: "canvas-demo",
+
   // Auth — Wave 2 dev/prod rollout gates.
   // Consumed via `@nebutra/auth/features.ts` (env first, this service second).
   // Names mirror AuthCapabilities in `packages/iam/auth/src/types.ts`.
