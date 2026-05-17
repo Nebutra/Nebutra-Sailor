@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowCircleDown, CheckCircleFill, ClockDashed } from "@nebutra/icons";
 import {
   Avatar,
   AvatarFallback,
@@ -12,159 +13,125 @@ import {
   GitLabAvatar,
 } from "@nebutra/ui/primitives";
 
-const va = (seed: string) => `https://avatar.vercel.sh/${seed}`;
+const gh = (username: string) => `https://avatars.githubusercontent.com/${username}?s=96`;
 
-// ─── Size scale ───────────────────────────────────────────────────────────────
+const GROUP_DEFAULT = [{ username: "leerob" }, { username: "rauchg" }, { username: "shuding" }];
 
-/** xs → xl with gradient avatars + size label */
+const GROUP_OVERFLOW = [
+  { username: "sambecker" },
+  { username: "rauno" },
+  { username: "skllcrn" },
+  { username: "almonk" },
+  { username: "rauchg" },
+];
+
 export function AvatarSizeDemo() {
   return (
-    <div className="gap-6 flex flex-wrap items-end">
+    <div className="flex flex-wrap items-end gap-6">
       {(["xs", "sm", "md", "lg", "xl"] as const).map((size) => (
-        <div key={size} className="gap-2 flex flex-col items-center">
-          <Avatar size={size}>
-            <AvatarImage src={va(`nebutra-${size}`)} alt={size} />
-            <AvatarFallback size={size}>{size.toUpperCase()}</AvatarFallback>
-          </Avatar>
+        <div key={size} className="flex flex-col items-center gap-2">
+          <Avatar size={size} title={`Nebutra ${size}`} src={gh("necolas")} />
           <span className="text-[11px] text-muted-foreground">{size}</span>
         </div>
       ))}
+      <div className="flex flex-col items-center gap-2">
+        <Avatar size={90} placeholder />
+        <span className="text-[11px] text-muted-foreground">90px</span>
+      </div>
     </div>
   );
 }
 
-// ─── Fallback ─────────────────────────────────────────────────────────────────
-
-/** Initials fallback when no image is available */
 export function AvatarFallbackDemo() {
   return (
-    <div className="gap-3 flex">
-      {["AC", "BK", "CL"].map((init) => (
-        <Avatar key={init} size="md">
-          <AvatarFallback size="md">{init}</AvatarFallback>
-        </Avatar>
-      ))}
+    <div className="flex gap-3">
+      <Avatar size={32} title="Ada Lovelace" letter="AL" />
+      <Avatar size={32} title="Grace Hopper" />
+      <Avatar size={32} title="Acme Inc." letter="AI" />
     </div>
   );
 }
 
-// ─── Group ────────────────────────────────────────────────────────────────────
-
-const gh = (u: string) => `https://avatars.githubusercontent.com/${u}?s=64`;
-
-const GROUP_SM = [
-  { src: gh("evilrabbit"), alt: "evilrabbit", fallback: "ER" },
-  { src: gh("leerob"), alt: "leerob", fallback: "LR" },
-  { src: gh("rauchg"), alt: "rauchg", fallback: "RG" },
-];
-
-const GROUP_LG = [
-  { src: gh("sambecker"), alt: "sambecker", fallback: "SB" },
-  { src: gh("rauno"), alt: "rauno", fallback: "RA" },
-  { src: gh("shuding"), alt: "shuding", fallback: "SH" },
-  { src: gh("skllcrn"), alt: "skllcrn", fallback: "SK" },
-  { src: gh("almonk"), alt: "almonk", fallback: "AL" },
-];
-
-/** Two rows: default limit and with overflow +N */
 export function AvatarGroupDemo() {
   return (
-    <div className="gap-4 flex flex-col">
-      {/* 3 members, all visible */}
-      <AvatarGroup items={GROUP_SM} max={4} size="sm" />
-      {/* 5 members, max=4 → shows +2 */}
-      <AvatarGroup items={GROUP_LG} max={4} size="sm" />
+    <div className="flex flex-col items-start gap-4">
+      <AvatarGroup members={GROUP_DEFAULT} size={32} />
+      <AvatarGroup limit={4} members={GROUP_OVERFLOW} size={32} />
     </div>
   );
 }
 
-// ─── Git Platform Avatars ─────────────────────────────────────────────────────
-
-/** GitHub, GitLab, Bitbucket avatars with platform logo badges */
 export function AvatarGitPlatformDemo() {
   return (
-    <div className="gap-6 flex flex-wrap">
-      <div className="gap-2 flex flex-col items-center">
-        <GitHubAvatar username="rauchg" size="md" />
+    <div className="flex flex-wrap gap-6">
+      <div className="flex flex-col items-center gap-2">
+        <GitHubAvatar username="rauchg" size={32} />
         <span className="text-[11px] text-muted-foreground">GitHub</span>
       </div>
-      <div className="gap-2 flex flex-col items-center">
-        <GitLabAvatar username="leerob" size="md" />
+      <div className="flex flex-col items-center gap-2">
+        <GitLabAvatar username="leerob" size={32} />
         <span className="text-[11px] text-muted-foreground">GitLab</span>
       </div>
-      <div className="gap-2 flex flex-col items-center">
-        <BitbucketAvatar username="evilrabbit" size="md" />
+      <div className="flex flex-col items-center gap-2">
+        <BitbucketAvatar username="atlassian" size={32} />
         <span className="text-[11px] text-muted-foreground">Bitbucket</span>
       </div>
     </div>
   );
 }
 
-// ─── AvatarWithIcon ───────────────────────────────────────────────────────────
-
-/** Status / role badges anchored to the bottom-right corner */
 export function AvatarWithIconDemo() {
   return (
-    <div className="gap-6 flex flex-wrap">
-      {/* online */}
-      <div className="gap-2 flex flex-col items-center">
-        <AvatarWithIcon
-          src={gh("rauchg")}
-          alt="rauchg"
-          icon={<span className="h-2 w-2 bg-green-500 block rounded-full" />}
-          iconBackground="bg-background"
-          size="md"
-        />
-        <span className="text-[11px] text-muted-foreground">Online</span>
+    <div className="flex flex-col items-start gap-3.5">
+      <AvatarWithIcon
+        alt="Download queued"
+        icon={<ArrowCircleDown className="text-muted-foreground" size={14} />}
+        iconBackground
+        size={32}
+        src={gh("rauchg")}
+      />
+      <AvatarWithIcon
+        alt="Verified member"
+        icon={<CheckCircleFill className="text-muted-foreground" size={14} />}
+        iconBackground
+        size={32}
+        src={gh("shuding")}
+      />
+      <AvatarWithIcon
+        alt="Pending member"
+        icon={<ClockDashed className="text-muted-foreground" size={14} />}
+        iconBackground
+        size={32}
+        src={gh("leerob")}
+      />
+    </div>
+  );
+}
+
+export function DiceBearAvatarDemo() {
+  return (
+    <div className="flex flex-wrap gap-6">
+      <div className="flex flex-col items-center gap-2">
+        <DiceBearAvatar seed="rauchg" avatarStyle="bottts-neutral" size={32} />
+        <span className="text-[11px] text-muted-foreground">bottts-neutral</span>
       </div>
-      {/* busy */}
-      <div className="gap-2 flex flex-col items-center">
-        <AvatarWithIcon
-          src={gh("shuding")}
-          alt="shuding"
-          icon={<span className="h-2 w-2 bg-yellow-500 block rounded-full" />}
-          iconBackground="bg-background"
-          size="md"
-        />
-        <span className="text-[11px] text-muted-foreground">Busy</span>
+      <div className="flex flex-col items-center gap-2">
+        <DiceBearAvatar seed="leerob" avatarStyle="pixel-art" options={{ radius: 50 }} size={32} />
+        <span className="text-[11px] text-muted-foreground">pixel-art</span>
       </div>
-      {/* offline */}
-      <div className="gap-2 flex flex-col items-center">
-        <AvatarWithIcon
-          src={gh("paco")}
-          alt="paco"
-          icon={<span className="h-2 w-2 block rounded-full bg-muted-foreground" />}
-          iconBackground="bg-background"
-          size="md"
-        />
-        <span className="text-[11px] text-muted-foreground">Offline</span>
+      <div className="flex flex-col items-center gap-2">
+        <DiceBearAvatar seed="guest-123" avatarStyle="lorelei" size={32} />
+        <span className="text-[11px] text-muted-foreground">lorelei</span>
       </div>
     </div>
   );
 }
 
-// ─── DiceBearAvatar ───────────────────────────────────────────────────────────
-
-/** Deterministic generated avatars — same seed always yields same avatar */
-export function DiceBearAvatarDemo() {
+export function AvatarCompositionDemo() {
   return (
-    <div className="gap-6 flex flex-wrap">
-      <div className="gap-2 flex flex-col items-center">
-        <DiceBearAvatar seed="rauchg" avatarStyle="bottts-neutral" size="md" />
-        <span className="text-[11px] text-muted-foreground">bottts-neutral</span>
-      </div>
-      <div className="gap-2 flex flex-col items-center">
-        <DiceBearAvatar seed="leerob" avatarStyle="pixel-art" options={{ radius: 50 }} size="md" />
-        <span className="text-[11px] text-muted-foreground">pixel-art</span>
-      </div>
-      <div className="gap-2 flex flex-col items-center">
-        <DiceBearAvatar seed="guest-123" avatarStyle="fun-emoji" size="md" />
-        <span className="text-[11px] text-muted-foreground">fun-emoji</span>
-      </div>
-      <div className="gap-2 flex flex-col items-center">
-        <DiceBearAvatar seed="my-bot" avatarStyle="bottts" size="md" />
-        <span className="text-[11px] text-muted-foreground">bottts</span>
-      </div>
-    </div>
+    <Avatar size="md">
+      <AvatarImage src={gh("rauchg")} alt="Avatar for rauchg" />
+      <AvatarFallback>RG</AvatarFallback>
+    </Avatar>
   );
 }

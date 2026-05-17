@@ -1,0 +1,131 @@
+---
+title: "Toast"
+description: "用于非阻塞确认反馈的短暂消息。"
+---
+
+## 演示
+
+<ComponentPreview name="toast-demo" />
+
+## 使用方法
+
+在应用根部挂载一次 `Toaster`，然后通过 `useToasts` 或更底层的 `toast` export 触发通知。
+
+```tsx
+import { Toaster } from "@nebutra/ui/primitives";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <Toaster />
+      </body>
+    </html>
+  );
+}
+```
+
+```tsx
+"use client";
+
+import { Button, useToasts } from "@nebutra/ui/primitives";
+
+export function SaveButton() {
+  const toasts = useToasts();
+
+  return (
+    <Button onClick={() => toasts.success("Environment variable saved")}>
+      Save
+    </Button>
+  );
+}
+```
+
+## 属性
+
+### Toaster
+
+`Toaster` 继承 Sonner 的 `ToasterProps`，并套用 Nebutra 默认值。
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `position` | Sonner `Position` | `"bottom-right"` | 把确认反馈放在右下角工具区。 |
+| `visibleToasts` | `number` | `3` | 最大可见堆叠数量。 |
+| `duration` | `number` | `3000` | 默认自动关闭时间。 |
+| `closeButton` | `boolean` | `true` | 给保留或长消息明确关闭入口。 |
+| `containerAriaLabel` | `string` | `"Notifications"` | live region 容器标签。 |
+| `toastOptions` | `ToastOptions` | Nebutra defaults | 覆盖单条 toast 默认值和 classNames。 |
+
+### useToasts
+
+| 方法 | 签名 | 行为 |
+| --- | --- | --- |
+| `message` | `(message: ToastMessage) => ToastId` | 中性确认反馈，可带 action 或 undo。 |
+| `success` | `(text, options?) => ToastId` | 用户动作已完成。 |
+| `warning` | `(text, options?) => ToastId` | 部分完成或可恢复问题。 |
+| `error` | `(text, options?) => ToastId` | 短暂动作失败，并给出恢复文案。 |
+| `dismiss` | `(id?) => ToastId` | 关闭一条或全部通知。 |
+
+## 示例
+
+### 默认
+
+```tsx
+toasts.message({
+  text: "Deployment canceled",
+});
+```
+
+### 保留
+
+```tsx
+toasts.message({
+  text: "Invite link copied",
+  preserve: true,
+});
+```
+
+### 操作
+
+```tsx
+toasts.message({
+  text: "Draft published",
+  action: "View",
+  onAction: () => router.push("/posts/draft"),
+});
+```
+
+### 撤销
+
+```tsx
+toasts.message({
+  text: "Project archived",
+  onUndoAction: () => restoreProject(),
+});
+```
+
+### 状态语义
+
+```tsx
+toasts.success("Domain added");
+toasts.warning("Deployment completed with skipped routes");
+toasts.error("Couldn’t verify domain. Try again.");
+```
+
+## 最佳实践
+
+- Toast 用于用户主动操作后的非阻塞确认：Domain added、Project archived、Deployment canceled。
+- 账单失败、权限拒绝、构建失败这类需要排查的问题不能只靠 toast。短 toast 之外还要有稳定的恢复 UI。
+- 字段校验错误属于输入框；持续存在的配置风险属于 Note 或 Banner。
+- 按用户感知选择方法，而不是按 HTTP 状态码选择方法。
+- 默认 toast 自动关闭。只有用户必须阅读或操作时才用 `preserve`。
+- 撤销 snackbar 使用固定标签 `Undo`，展示时间比普通 toast 更长。
+- 完成类文案使用 `{Noun} {past-participle}`：Blob deleted、Domain added、Environment variable saved。
+- 错误文案使用两句并包含恢复步骤：Couldn’t verify domain. Try again.
+
+## 可访问性
+
+- 区域标签为 `Notifications`，live region 行为由 Sonner 承担。
+- 中性、成功、警告 toast 使用非打断式播报；真正打断流程的错误应转成持久恢复 UI。
+- 不要把主导航放进 toast。瞬时 surface 可能在键盘用户抵达前消失。

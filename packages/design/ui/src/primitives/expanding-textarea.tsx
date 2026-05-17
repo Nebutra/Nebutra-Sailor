@@ -1,37 +1,56 @@
 "use client";
 
-import * as React from "react";
-import { Textarea } from "./textarea";
+"use client";
 
-export type ExpandingTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+import * as React from "react";
+import { Textarea, type TextareaProps } from "./textarea";
+
+export type ExpandingTextareaProps = TextareaProps;
 
 export const ExpandingTextarea = React.forwardRef<HTMLTextAreaElement, ExpandingTextareaProps>(
   ({ className, onChange, ...props }, ref) => {
     const textareaRef = React.useRef<HTMLTextAreaElement | null>(null);
 
-    React.useImperativeHandle(ref, () => textareaRef.current as HTMLTextAreaElement);
+    const setTextareaRef = React.useCallback(
+      (node: HTMLTextAreaElement | null) => {
+        textareaRef.current = node;
 
-    const handleInput = React.useCallback(
-      (e: React.FormEvent<HTMLTextAreaElement>) => {
-        const target = e.currentTarget;
+        if (typeof ref === "function") {
+          ref(node);
+          return;
+        }
+
+        if (ref) {
+          ref.current = node;
+        }
+      },
+      [ref],
+    );
+
+    const resize = React.useCallback(() => {
+      const target = textareaRef.current;
+      if (!target) return;
+
+      target.style.height = "auto";
+      target.style.height = `${target.scrollHeight}px`;
+    }, []);
+
+    React.useLayoutEffect(() => {
+      resize();
+    }, [resize]);
+
+    const handleChange = React.useCallback(
+      (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const target = event.currentTarget;
         target.style.height = "auto";
         target.style.height = `${target.scrollHeight}px`;
-        if (onChange) {
-          // Create a synthetic event that looks enough like a change event
-          onChange(e as unknown as React.ChangeEvent<HTMLTextAreaElement>);
-        }
+        onChange?.(event);
       },
       [onChange],
     );
 
     return (
-      <Textarea
-        ref={textareaRef}
-        className={className}
-        onInput={handleInput}
-        onChange={onChange}
-        {...props}
-      />
+      <Textarea ref={setTextareaRef} className={className} onChange={handleChange} {...props} />
     );
   },
 );

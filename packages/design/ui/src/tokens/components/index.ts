@@ -43,6 +43,7 @@ export {
   themeSwitcherTokens,
 } from "./theme-switcher";
 export { type ThemeToggleSize, themeToggleTokens } from "./theme-toggle";
+export { toastTokens } from "./toast";
 export {
   type ToggleColor,
   type ToggleSize,

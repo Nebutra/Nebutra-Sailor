@@ -34,6 +34,8 @@ const HSL_RE = /\bhsl\(/g;
 const OKLCH_RE = /\boklch\(/g;
 const OUTLINE_HIDDEN_RE = /\b(?:focus-visible:|focus:)?outline-hidden\b/g;
 const GLOBAL_FOCUS_RESET_RE = /\*:focus-visible\s*\{/g;
+const FORM_CONTROL_FOCUS_VISIBLE_RE =
+  /\bfocus-visible:(?:border-ring|ring-\[length:var\(--(?:input|textarea|select)-focus-ring-width\)\]|ring-ring\/30|border-destructive|ring-destructive\/20)\b/g;
 const FOCUS_GOVERNANCE_ROOTS = ["packages/design/ui/src", "apps/landing-page/src"] as const;
 const FORM_CONTROL_FOCUS_REQUIREMENTS = [
   {
@@ -44,6 +46,8 @@ const FORM_CONTROL_FOCUS_REQUIREMENTS = [
       "focus:ring-[length:var(--input-focus-ring-width)]",
       "aria-invalid:focus:border-destructive",
       "aria-invalid:focus:ring-destructive/20",
+      'borderRadius: "var(--input-radius)"',
+      'outline: "none"',
     ],
   },
   {
@@ -54,6 +58,8 @@ const FORM_CONTROL_FOCUS_REQUIREMENTS = [
       "focus:ring-[length:var(--textarea-focus-ring-width)]",
       "aria-invalid:focus:border-destructive",
       "aria-invalid:focus:ring-destructive/20",
+      'borderRadius: "var(--textarea-radius)"',
+      'outline: "none"',
     ],
   },
   {
@@ -64,6 +70,8 @@ const FORM_CONTROL_FOCUS_REQUIREMENTS = [
       "focus:ring-[length:var(--select-focus-ring-width)]",
       "aria-invalid:focus:border-destructive",
       "aria-invalid:focus:ring-destructive/20",
+      'borderRadius: "var(--select-radius)"',
+      'outline: "none"',
     ],
   },
 ] as const;
@@ -414,8 +422,15 @@ function verifyFocusRingGovernance() {
   for (const requirement of FORM_CONTROL_FOCUS_REQUIREMENTS) {
     const content = stripComments(read(requirement.file), requirement.file);
     const missingMarkers = requirement.markers.filter((marker) => !content.includes(marker));
+    const focusVisibleOnlyCount = countMatches(content, FORM_CONTROL_FOCUS_VISIBLE_RE);
+
     if (missingMarkers.length > 0) {
       formControlViolations.push(`${requirement.file} missing ${missingMarkers.join(", ")}`);
+    }
+    if (focusVisibleOnlyCount > 0) {
+      formControlViolations.push(
+        `${requirement.file} contains ${focusVisibleOnlyCount} component focus-visible marker(s); text-like form controls must use :focus so mouse focus cannot leak the native square outline`,
+      );
     }
   }
 

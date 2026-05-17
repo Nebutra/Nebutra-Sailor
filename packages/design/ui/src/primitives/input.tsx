@@ -176,6 +176,8 @@ function getInputStyle(size: InputSize, style: React.CSSProperties | undefined):
     "--input-control-icon-size": `${token.controlIconSize}px`,
     "--input-icon-size": `${token.iconSize}px`,
     "--input-focus-ring-width": `${inputTokens.focusRingWidth}px`,
+    borderRadius: "var(--input-radius)",
+    outline: "none",
     ...style,
   };
 }

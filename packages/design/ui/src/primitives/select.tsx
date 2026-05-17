@@ -29,6 +29,8 @@ function getSelectTriggerStyle(
     "--select-font-size": `${token.fontSize}px`,
     "--select-radius": `${token.radius}px`,
     "--select-focus-ring-width": `${selectTokens.focusRingWidth}px`,
+    borderRadius: "var(--select-radius)",
+    outline: "none",
     ...style,
   };
 }
@@ -156,11 +158,12 @@ function NativeSelect({
   const fallbackDefaultValue =
     placeholder && value === undefined && defaultValue === undefined ? "" : defaultValue;
   const hasAffix = Boolean(prefix || suffix);
+  const nativeSelectStyle = getNativeSelectStyle(size, style);
 
   return (
     <div
       className={cn("grid gap-[var(--select-field-gap)]", wrapperClassName)}
-      style={getNativeSelectStyle(size, style)}
+      style={nativeSelectStyle}
     >
       {label && (
         <Label
@@ -183,13 +186,14 @@ function NativeSelect({
           defaultValue={fallbackDefaultValue}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
+          style={{ borderRadius: "var(--select-radius)", outline: "none" }}
           className={cn(
             "h-[var(--select-height)] w-full appearance-none rounded-[var(--select-radius)] border font-sans",
             "bg-background text-[length:var(--select-font-size)] text-foreground shadow-[var(--shadow-xs)] outline-none",
             "transition-[background-color,border-color,box-shadow,color] duration-[var(--select-duration)] ease-[var(--select-easing)]",
-            "focus-visible:border-ring focus-visible:ring-[length:var(--select-focus-ring-width)] focus-visible:ring-ring/30",
+            "focus:border-ring focus:ring-[length:var(--select-focus-ring-width)] focus:ring-ring/30",
             "disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground",
-            "aria-invalid:border-destructive/60 aria-invalid:focus-visible:border-destructive aria-invalid:focus-visible:ring-destructive/20",
+            "aria-invalid:border-destructive/60 aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive/20",
             variant === "ghost" ? "border-transparent bg-transparent shadow-none" : "border-input",
             prefix
               ? "pl-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]"

@@ -1,17 +1,26 @@
 ---
 title: "多行文本框 (Textarea)"
-description: "具有一致样式的多行文本输入字段。"
+description: "用于备注、描述和较长自由文本的 token 化多行输入原语。"
 ---
 
 ## 演示 (Demo)
 
 <ComponentPreview name="textarea-demo" className="max-w-[400px]" />
 
-
 ## 使用方法 (Usage)
 
 ```tsx
-import { Textarea } from "@nebutra/ui";
+import { Textarea } from "@nebutra/ui/primitives";
+```
+
+```tsx
+<Textarea
+  id="message"
+  label="Message"
+  description="Keep the first sentence user-facing."
+  placeholder="Customers can now..."
+  rows={4}
+/>
 ```
 
 ## 属性 (Props)
@@ -19,42 +28,56 @@ import { Textarea } from "@nebutra/ui";
 支持原生 `<textarea>` 的所有属性，此外还包括：
 
 | 属性 | 类型 | 默认值 | 描述 |
-| ------------- | --------- | ------- | ------------------------------------------------ |
-| `className`   | `string`  | —       | 额外的 CSS 类名。 |
-| `rows`        | `number`  | `3`     | 可见的行数。 |
-| `disabled`    | `boolean` | `false` | 禁用文本框。 |
-| `placeholder` | `string`  | —       | 占位文本。 |
-| `readOnly`    | `boolean` | `false` | 将文本框设置为只读。 |
+| ---- | ---- | ------ | ---- |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | 与表单控件一致的 token 化密度尺寸。 |
+| `label` | `string` | — | 可见字段标签。类型层面要求同时传入 `id`。 |
+| `description` | `string` | — | 通过 `aria-describedby` 关联的辅助说明。渲染字符串错误时会被错误替代。 |
+| `error` | `string \| boolean` | — | 标记字段无效；字符串会渲染内联错误消息。 |
+| `onValueChange` | `(value: string) => void` | — | 除原生 `onChange` 外的 value-first 回调。 |
+| `fieldClassName` | `string` | — | label、辅助说明、错误消息外层容器的类名。 |
 
 ## 示例 (Examples)
 
-### 带有字符计数 (With Character Count)
+### 带字符计数 (With Character Count)
 
-<ComponentPreview name="textarea-2-demo" className="max-w-[400px]" />
+<ComponentPreview name="textarea-with-limit-demo" className="max-w-[400px]" />
 
+### 错误状态 (Error)
+
+```tsx
+<Textarea
+  id="release-notes"
+  label="Release Notes"
+  defaultValue="Fixed things."
+  error="Release notes must name the user-facing change."
+  rows={4}
+/>
+```
 
 ### 禁用状态 (Disabled)
 
-<ComponentPreview name="textarea-3-demo" className="max-w-[400px]" />
+<ComponentPreview name="textarea-disabled-demo" className="max-w-[400px]" />
 
+## 设计原则 (Design Principles)
 
-### 在表单中使用 (In a Form)
-
-```tsx
-<FormField name="bio">
-  <FormItem>
-    <FormLabel>简介 (Bio)</FormLabel>
-    <FormControl>
-      <Textarea placeholder="向大家介绍一下你自己 (Tell us about yourself)" />
-    </FormControl>
-    <FormMessage />
-  </FormItem>
-</FormField>
-```
+- Textarea 只用于天然会换行的内容：发布说明、描述、评论和事故摘要。
+- 视觉保持克制：语义 border、background、text、muted placeholder 和 token 化焦点环，不叠额外阴影。
+- 鼠标和键盘聚焦都由组件的 `:focus` 接管，避免浏览器原生方形 outline 从圆角控件外漏。
+- 只有界面有足够纵向空间时才使用 `ExpandingTextarea`；密集表单和 footer 里固定 rows 更稳。
 
 ## 可访问性 (Accessibility)
 
-通过 `htmlFor`/`id` 与 `<Label>` 关联。支持 `aria-describedby` 以显示表单错误消息。当设置了 `maxLength` 时，会播报字符限制。
+`label`、`description` 和字符串 `error` 会自动关联到 `id`、`aria-describedby`、`aria-invalid`。错误文本使用 `role="alert"`。
 
-如需自动增长行为，请改用 `ExpandingTextarea` 原子组件。
-走
+如果外部组合 label，仍需保持同样契约：`htmlFor` 必须匹配 textarea 的 `id`，辅助说明保持一句话，校验文案要指出字段和约束。
+
+## Tokens
+
+Textarea 的几何尺寸来自 `textareaTokens`，颜色来自运行时语义 CSS 变量：
+
+| Token | 用途 |
+| ----- | ---- |
+| `textareaTokens.sizes` | 每个密度尺寸的最小高度、padding、字号和圆角。 |
+| `textareaTokens.focusRingWidth` | focus 与错误 focus 状态共享的焦点环宽度。 |
+| `textareaTokens.fieldGap` | label、控件和字段消息之间的间距。 |
+| `--background`, `--foreground`, `--input`, `--ring`, `--destructive` | 语义颜色契约。 |

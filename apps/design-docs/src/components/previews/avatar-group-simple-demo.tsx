@@ -5,15 +5,15 @@ import { AvatarGroup } from "@nebutra/ui/primitives";
 export function AvatarGroupSimpleDemo() {
   return (
     <AvatarGroup
-      items={[
-        { alt: "user1", fallback: "U1" },
-        { alt: "user2", fallback: "U2" },
-        { alt: "user3", fallback: "U3" },
-        { alt: "user4", fallback: "U4" },
-        { alt: "user5", fallback: "U5" },
+      members={[
+        { username: "leerob" },
+        { username: "rauchg" },
+        { username: "shuding" },
+        { username: "rauno" },
+        { username: "sambecker" },
       ]}
-      max={4}
-      size="sm"
+      limit={4}
+      size={32}
     />
   );
 }

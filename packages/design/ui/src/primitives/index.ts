@@ -48,6 +48,7 @@ export {
   type AvatarGroupProps,
   AvatarImage,
   type AvatarProps,
+  type AvatarSize,
 } from "./avatar";
 export * from "./avatar-circles";
 export {

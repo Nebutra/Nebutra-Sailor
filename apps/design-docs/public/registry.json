@@ -4,6 +4,12 @@
   "homepage": "https://ui.nebutra.com",
   "items": [
     {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "User, team, or organization identity primitive with numeric sizing, initials fallback, and stacked groups."
+    },
+    {
       "name": "bento-grid",
       "type": "registry:ui",
       "title": "Bento Grid",
@@ -74,6 +80,12 @@
       "type": "registry:ui",
       "title": "Table",
       "description": "Semantic table primitive with compound API, row states, numeric alignment, and Geist-compatible exports."
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Sonner-backed transient notification facade with tokenized styling and Geist-compatible useToasts API."
     },
     {
       "name": "theme-toggle",

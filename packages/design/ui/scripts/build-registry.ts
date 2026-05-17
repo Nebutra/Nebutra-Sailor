@@ -102,6 +102,55 @@ export const contextCardTokens = {
 export type ContextCardWidth = keyof typeof contextCardTokens.width;
 `;
 
+const AVATAR_REGISTRY_TOKENS = `/**
+ * Avatar Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const avatarTokens = {
+  size: {
+    xs: {
+      dimension: 20,
+      fontSize: 8,
+      iconSize: 10,
+      ringWidth: 1,
+    },
+    sm: {
+      dimension: 32,
+      fontSize: 12,
+      iconSize: 14,
+      ringWidth: 2,
+    },
+    md: {
+      dimension: 40,
+      fontSize: 14,
+      iconSize: 16,
+      ringWidth: 2,
+    },
+    lg: {
+      dimension: 56,
+      fontSize: 20,
+      iconSize: 24,
+      ringWidth: 2,
+    },
+    xl: {
+      dimension: 80,
+      fontSize: 28,
+      iconSize: 32,
+      ringWidth: 3,
+    },
+  },
+  group: {
+    overlapOffset: -8,
+    overflowBadge: 20,
+  },
+} as const;
+
+export type AvatarSize = keyof typeof avatarTokens.size;
+`;
+
 const EMPTY_STATE_REGISTRY_TOKENS = `/**
  * Empty State Component Tokens — standalone registry copy.
  *
@@ -245,6 +294,45 @@ export const tableTokens = {
 } as const;
 `;
 
+const TOAST_REGISTRY_TOKENS = `/**
+ * Toast Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const toastTokens = {
+  width: 420,
+  radius: 12,
+  shadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  stack: {
+    visibleToasts: 3,
+    gap: 8,
+    offset: 16,
+    mobileOffset: 16,
+  },
+  duration: {
+    default: 3000,
+    undo: 7000,
+  },
+  action: {
+    radius: 6,
+    paddingX: 12,
+    paddingY: 4,
+  },
+  typography: {
+    titleSize: 14,
+    descriptionSize: 12,
+    lineHeight: 21,
+    titleWeight: 500,
+  },
+  motion: {
+    duration: 300,
+    easing: "cubic-bezier(.25,.75,.6,.98)",
+  },
+} as const;
+`;
+
 const THEME_TOGGLE_REGISTRY_TOKENS = `/**
  * ThemeToggle Component Tokens — standalone registry copy.
  *
@@ -371,6 +459,26 @@ interface ShadcnRegistryItem {
 
 const COMPONENT_REGISTRY: ComponentSpec[] = [
   {
+    name: "avatar",
+    title: "Avatar",
+    description:
+      "User, team, or organization identity primitive with numeric sizing, initials fallback, and stacked groups.",
+    source: "primitives/avatar.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: AVATAR_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/avatar.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/avatar-extended.tsx",
+        targetPath: "components/ui/avatar-extended.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "bento-grid",
     title: "Bento Grid",
     description: "Responsive bento-style feature grid with hover-reveal CTAs.",
@@ -481,6 +589,21 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
       {
         content: TABLE_REGISTRY_TOKENS,
         targetPath: "components/tokens/components/table.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "toast",
+    title: "Toast",
+    description:
+      "Sonner-backed transient notification facade with tokenized styling and Geist-compatible useToasts API.",
+    source: "primitives/toaster.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: TOAST_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/toast.ts",
         type: "registry:lib",
       },
     ],

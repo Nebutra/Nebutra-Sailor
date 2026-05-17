@@ -1,207 +1,151 @@
 ---
-title: "Avatar (头像)"
-description: "具有自动回退到首字母缩写功能的用户头像组件。支持尺寸变体、堆叠分组、Git 平台徽章、状态图标和代码生成的生成头像。"
+title: "Avatar"
+description: "用于表示一个用户、团队或组织。堆叠头像用于表示一组人。"
 ---
 
-## 导入 (Import)
+## 导入
 
 ```tsx
 import {
   Avatar,
-  AvatarImage,
   AvatarFallback,
   AvatarGroup,
+  AvatarImage,
+  AvatarWithIcon,
+  BitbucketAvatar,
+  DiceBearAvatar,
   GitHubAvatar,
   GitLabAvatar,
-  BitbucketAvatar,
-  AvatarWithIcon,
-  DiceBearAvatar,
 } from "@nebutra/ui/primitives";
 ```
 
----
+## 默认
 
-## 尺寸变体 (Size Variants)
-
-通过 `size` 属性提供五种尺寸控制。
+常规头像优先使用便捷 API：图片存在时显示图片，缺失时回退到首字母。
 
 <ComponentPreview name="avatar-size-demo">
   <AvatarSizeDemo />
 
   ```tsx
-<AvatarSizeDemo />
+<Avatar title="Jane Doe" src="/avatar.png" size={32} />
+<Avatar title="Jane Doe" letter="JD" size={32} />
+<Avatar placeholder size={90} />
   ```
 </ComponentPreview>
 
-| `size` | px  | Tailwind 类名         |
-| ------ | --- | --------------------- |
-| `xs`   | 20  | `h-5 w-5`             |
-| `sm`   | 32  | `h-8 w-8`             |
-| `md`   | 40  | `h-10 w-10` (默认)    |
-| `lg`   | 56  | `h-14 w-14`           |
-| `xl`   | 80  | `h-20 w-20`           |
+## 组合式用法
 
----
+当调用方需要完全控制图片和 fallback 时，使用 compound API。
 
-## 降级回退 (Fallback)
-
-当图片 URL 加载失败或未提供时，`AvatarFallback` 会在柔和的背景上呈现用户的首字母。
-
-<ComponentPreview name="avatar-fallback-demo">
-  <AvatarFallbackDemo />
+<ComponentPreview name="avatar-composition-demo">
+  <AvatarCompositionDemo />
 
   ```tsx
-<AvatarFallbackDemo />
+<Avatar size="md">
+  <AvatarImage src="/avatar.png" alt="Avatar for Jane Doe" />
+  <AvatarFallback>JD</AvatarFallback>
+</Avatar>
   ```
 </ComponentPreview>
 
-<Tip>
-  始终为 `Avatar` 和 `AvatarFallback` 传递相同的 `size` — 这能确保字体大小与容器正确匹配。
-</Tip>
+## 头像组
 
----
-
-## 头像组 (Group)
-
-`AvatarGroup` 可以将多个头像堆叠显示，并带有自动的 `+N` 溢出指示器。下面的第二行有 5 个成员并且设置了 `max={4}`，因此显示 `+2`。
+`AvatarGroup` 支持 Geist 风格的 `members`、`limit`、`size={32}`，同时保留现有的 `items`、`max` 和预设尺寸 API。
 
 <ComponentPreview name="avatar-group-demo">
   <AvatarGroupDemo />
 
   ```tsx
-<AvatarGroupDemo />
+<AvatarGroup
+  members={[{ username: "leerob" }, { username: "rauchg" }, { username: "shuding" }]}
+  size={32}
+/>
+
+<AvatarGroup
+  limit={4}
+  members={[
+    { username: "sambecker" },
+    { username: "rauno" },
+    { username: "skllcrn" },
+    { username: "almonk" },
+    { username: "rauchg" },
+  ]}
+  size={32}
+/>
   ```
 </ComponentPreview>
 
-| 属性    | 类型                | 默认值  | 描述                                  |
-| ------- | ------------------- | ------- | ------------------------------------- |
-| `items` | `AvatarGroupItem[]` | —       | `{ src?, alt, fallback }` 的数组对象  |
-| `max`   | `number`            | `4`     | 自动折叠成 `+N` 前的最大头像显示数量 |
-| `size`  | `AvatarSize`        | `"sm"`  | 应用于组内所有头像的尺寸              |
+## Git 平台
 
----
-
-## Git 平台头像 (Git Platform Avatars)
-
-单行代码生成的头像，自动从平台 CDN 获取图片，并在左下角显示**平台标志徽章**。
+平台头像会拉取远程头像，并在左下角显示平台徽章。
 
 <ComponentPreview name="avatar-git-platform-demo">
   <AvatarGitPlatformDemo />
 
   ```tsx
-<AvatarGitPlatformDemo />
+<GitHubAvatar size={32} username="rauchg" />
+<GitLabAvatar size={32} username="leerob" />
+<BitbucketAvatar size={32} username="atlassian" />
   ```
 </ComponentPreview>
 
-| 属性       | 类型         | 默认值  | 描述                           |
-| ---------- | ------------ | ------- | ------------------------------ |
-| `username` | `string`     | —       | 平台用户名 / 工作区别名 (slug) |
-| `size`     | `AvatarSize` | `"sm"`  | 尺寸预设                       |
+## 自定义图标
 
----
-
-## 带状态图标的头像 (Avatar with Status Icon)
-
-`AvatarWithIcon` 在右下角添加一个小徽章。这通常非常适用于在线状态指示器、角色徽章或验证标记。
+`AvatarWithIcon` 用于状态、验证、角色和活动徽章。
 
 <ComponentPreview name="avatar-with-icon-demo">
   <AvatarWithIconDemo />
 
   ```tsx
-<AvatarWithIconDemo />
+<AvatarWithIcon icon={<CheckCircleFill size={14} />} iconBackground size={32} />
   ```
 </ComponentPreview>
 
-| 属性             | 类型         | 默认值            | 描述                            |
-| ---------------- | ------------ | ----------------- | ------------------------------- |
-| `icon`           | `ReactNode`  | —                 | 徽章中的图标元素                |
-| `iconBackground` | `string`     | `"bg-background"` | 徽章的 Tailwind 背景类名        |
-| `src`            | `string`     | —                 | 头像图片 URL                    |
-| `alt`            | `string`     | `"Avatar"`        | 替代文本 (Alt Text)             |
-| `fallback`       | `string`     | 自动首字母        | 图片加载失败时的回退内容        |
-| `size`           | `AvatarSize` | `"md"`            | 尺寸预设                        |
+## 生成头像
 
----
-
-## 生成头像 (DiceBear Generated)
-
-通过 [DiceBear](https://www.dicebear.com/) 过程化生成的头像 — 对于相同的 `seed`，生成结果是确定性的。无需安装额外的 npm 包。
+`DiceBearAvatar` 对同一个 seed 会生成稳定结果。
 
 <ComponentPreview name="dice-bear-avatar-demo">
   <DiceBearAvatarDemo />
 
   ```tsx
-<DiceBearAvatarDemo />
+<DiceBearAvatar seed="team-member" avatarStyle="bottts-neutral" size={32} />
   ```
 </ComponentPreview>
 
-| 属性          | 类型                               | 默认值             | 描述                                    |
-| ------------- | ---------------------------------- | ------------------ | --------------------------------------- |
-| `seed`        | `string`                           | —                  | 确定性种子 (用户名，电子邮件，UUID 等) |
-| `avatarStyle` | `DiceBearStyle`                    | `"bottts-neutral"` | 头像主题样式系列                        |
-| `options`     | `Record<string, string \| number>` | `{}`               | 额外的 DiceBear URL 查询参数            |
-| `size`        | `AvatarSize`                       | `"md"`             | 尺寸预设                                |
-
-<Tip>
-  对系统/机器人实体使用 `bottts-neutral`；对人类占位符使用 `avataaars` 或 `lorelei`；对匿名/访客会话使用 `fun-emoji`。
-</Tip>
-
----
-
-## 智能悬停头像组 (Smart Avatar Group)
-
-`AvatarSmartGroup` 是一个动态的动画头像堆叠组件，由 `framer-motion` 驱动。它可以在悬停或展开组时优雅地显示隐藏的头像。
-
-<ComponentPreview name="avatar-smart-group-demo">
-  <AvatarSmartGroupDemo />
-
-  ```tsx
-<AvatarSmartGroupDemo />
-  ```
-</ComponentPreview>
-
-| 属性                | 类型                                            | 默认值                 | 描述                                                                          |
-| ------------------- | ----------------------------------------------- | ---------------------- | ----------------------------------------------------------------------------- |
-| `avatars`           | `{ src: string; fallback: string; alt: string; }[]` | —                  | 包含图像来源和回退信息的头像对象数组                                            |
-| `maxVisible`        | `number`                                        | `3`                    | 组件处于堆叠状态时可直接看到的最大头像数量                                    |
-| `mode`              | `"expand" \| "stack"`                           | `"stack"`              | 决定布局行为：完全展开或堆叠重叠                                              |
-| `size`              | `"sm" \| "md" \| "lg"`                          | `"md"`                 | 单个头像的尺寸预设                                                            |
-| `onAvatarClick`     | `(avatar) => void`                              | `undefined`            | 可选事件处理程序，点击单个头像时触发                                          |
-
-<Tip>
-  将鼠标悬停在堆叠组件上，或者将 \`mode\` 属性更改为 \`expand\`，可以看到隐藏配置文件的平滑展开动画。
-</Tip>
-
----
-
-## 属性参考 (Props Reference)
+## Props
 
 ### Avatar
 
-| 属性 | 类型 | 默认值 | 描述 |
-| ----------- | -------------------------------------- | ------- | ---------------------- |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | 尺寸预设 |
-| `className` | `string` | — | 额外的 CSS 类名 |
+| Prop | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl" \| number` | `"md"` | 预设尺寸或像素尺寸。 |
+| `src` | `string` | — | 便捷图片地址。 |
+| `title` | `string` | — | 实体名称，用于 fallback 首字母和可访问标签。 |
+| `letter` | `string` | 自动推导 | 1-2 个大写首字母。 |
+| `placeholder` | `boolean` | `false` | 仅用于加载态骨架。 |
 
-### AvatarImage
+### AvatarGroup
 
-| 属性 | 类型 | 描述 |
-| ----- | -------- | --------------------------------- |
-| `src` | `string` | 图片 URL |
-| `alt` | `string` | **必填。** 屏幕阅读器文本 |
+| Prop | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `members` | `AvatarGroupItem[]` | — | Geist 兼容成员列表。 |
+| `items` | `AvatarGroupItem[]` | — | Nebutra 既有成员列表。 |
+| `limit` | `number` | `4` | Geist 兼容的最大显示槽位数。 |
+| `max` | `number` | `4` | `limit` 的既有别名。 |
+| `size` | `AvatarSize \| number` | `"sm"` | 应用于组内所有头像。 |
 
-### AvatarFallback
+## 最佳实践
 
-| 属性 | 类型 | 默认值 | 描述 |
-| --------- | ------------ | ------- | --------------------------------------------------- |
-| `size` | `AvatarSize` | `"md"` | 需匹配父级 Avatar 的尺寸以确保字体正确 |
-| `delayMs` | `number` | `600` | 显示前的延迟时间 — 防止在快速加载时闪烁 |
+- 单个用户、团队或组织使用一个 `Avatar`。
+- 两个及以上堆叠头像使用 `AvatarGroup`，让重叠、尺寸、溢出和可访问标签统一处理。
+- 优先传 `src`，图片缺失时用 `letter` 回退。
+- `placeholder` 只用于加载壳，不作为永久 fallback。
+- `letter` 保持大写，并从实体名称推导，长度为 1-2 个字符。
+- 尺寸跟随相邻文本：紧凑标签旁用 20-24px，常规标签旁用 32px，页面头部或 onboarding 状态用 48-64px。
 
----
+## 可访问性
 
-## 可访问性 (Accessibility)
-
-- 始终为 `AvatarImage` 提供有意义的 `alt` 属性。
-- 当头像触发操作时（例如打开用户菜单），请将其包裹在 `<button aria-label="...">` 中。
-- `AvatarFallback` 的背景色 (`bg-muted`) 与 `text-muted-foreground` 的对比度符合 4.5:1 标准。
-- `DiceBearAvatar` 的 SVG 是装饰性的 — `AvatarFallback` 提供了对应的文字替代方案。
+- `AvatarGroup` 暴露一个组级标签，并隐藏组内重复图片，避免读屏器反复播报。
+- 单个图片头像需要提供有意义的 `title` 或 `alt`。
+- 当头像触发菜单或操作时，用带明确 `aria-label` 的按钮包裹。

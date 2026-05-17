@@ -1,6 +1,6 @@
 ---
 title: "Avatar"
-description: "User profile image with automatic fallback to initials. Supports size variants, stacked groups, git platform badges, status icons, and generated avatars."
+description: "Represents one user, team, or organization. Stacked avatars represent a group of people."
 ---
 
 ## Import
@@ -8,202 +8,144 @@ description: "User profile image with automatic fallback to initials. Supports s
 ```tsx
 import {
   Avatar,
-  AvatarImage,
   AvatarFallback,
   AvatarGroup,
+  AvatarImage,
+  AvatarWithIcon,
+  BitbucketAvatar,
+  DiceBearAvatar,
   GitHubAvatar,
   GitLabAvatar,
-  BitbucketAvatar,
-  AvatarWithIcon,
-  DiceBearAvatar,
 } from "@nebutra/ui/primitives";
 ```
 
----
+## Default
 
-## Size Variants
-
-Five sizes controlled by the `size` prop.
+Use the convenience API for the common image-with-initials case.
 
 <ComponentPreview name="avatar-size-demo">
   <AvatarSizeDemo />
 
   ```tsx
-<AvatarSizeDemo />
+<Avatar title="Jane Doe" src="/avatar.png" size={32} />
+<Avatar title="Jane Doe" letter="JD" size={32} />
+<Avatar placeholder size={90} />
   ```
 </ComponentPreview>
 
-| `size` | px  | Tailwind class        |
-| ------ | --- | --------------------- |
-| `xs`   | 20  | `h-5 w-5`             |
-| `sm`   | 32  | `h-8 w-8`             |
-| `md`   | 40  | `h-10 w-10` (default) |
-| `lg`   | 56  | `h-14 w-14`           |
-| `xl`   | 80  | `h-20 w-20`           |
+## Composition
 
----
+Use the compound API when a consumer needs full control over image and fallback children.
 
-## Fallback
-
-When the image URL fails or is omitted, `AvatarFallback` renders initials on a muted background.
-
-<ComponentPreview name="avatar-fallback-demo">
-  <AvatarFallbackDemo />
+<ComponentPreview name="avatar-composition-demo">
+  <AvatarCompositionDemo />
 
   ```tsx
-<AvatarFallbackDemo />
+<Avatar size="md">
+  <AvatarImage src="/avatar.png" alt="Avatar for Jane Doe" />
+  <AvatarFallback>JD</AvatarFallback>
+</Avatar>
   ```
 </ComponentPreview>
-
-<Tip>
-  Always pass the same `size` to both `Avatar` and `AvatarFallback` — this
-  ensures the font size matches the container.
-</Tip>
-
----
 
 ## Group
 
-`AvatarGroup` stacks avatars with an automatic `+N` overflow indicator. The second row below has 5 members with `max={4}`, showing `+2`.
+`AvatarGroup` accepts the Geist-style `members`, `limit`, and numeric `size` API while preserving the existing `items`, `max`, and preset size API.
 
 <ComponentPreview name="avatar-group-demo">
   <AvatarGroupDemo />
 
   ```tsx
-<AvatarGroupDemo />
+<AvatarGroup
+  members={[{ username: "leerob" }, { username: "rauchg" }, { username: "shuding" }]}
+  size={32}
+/>
+
+<AvatarGroup
+  limit={4}
+  members={[
+    { username: "sambecker" },
+    { username: "rauno" },
+    { username: "skllcrn" },
+    { username: "almonk" },
+    { username: "rauchg" },
+  ]}
+  size={32}
+/>
   ```
 </ComponentPreview>
 
-| Prop    | Type                | Default | Description                           |
-| ------- | ------------------- | ------- | ------------------------------------- |
-| `items` | `AvatarGroupItem[]` | —       | Array of `{ src?, alt, fallback }`    |
-| `max`   | `number`            | `4`     | Max avatars before collapsing to `+N` |
-| `size`  | `AvatarSize`        | `"sm"`  | Size applied to all avatars           |
+## Git
 
----
-
-## Git Platform Avatars
-
-One-line avatars that fetch images from the platform CDN and display a **platform logo badge** at the bottom-left corner.
+Platform avatars fetch the remote profile image and add a small platform badge.
 
 <ComponentPreview name="avatar-git-platform-demo">
   <AvatarGitPlatformDemo />
 
   ```tsx
-<AvatarGitPlatformDemo />
+<GitHubAvatar size={32} username="rauchg" />
+<GitLabAvatar size={32} username="leerob" />
+<BitbucketAvatar size={32} username="atlassian" />
   ```
 </ComponentPreview>
 
-| Prop       | Type         | Default | Description                        |
-| ---------- | ------------ | ------- | ---------------------------------- |
-| `username` | `string`     | —       | Platform username / workspace slug |
-| `size`     | `AvatarSize` | `"sm"`  | Size preset                        |
+## With Custom Icon
 
----
-
-## Avatar with Status Icon
-
-`AvatarWithIcon` adds a small badge anchored to the bottom-right corner. Useful for presence indicators, role badges, or verification marks.
+Use `AvatarWithIcon` for status, verification, role, and activity badges.
 
 <ComponentPreview name="avatar-with-icon-demo">
   <AvatarWithIconDemo />
 
   ```tsx
-<AvatarWithIconDemo />
+<AvatarWithIcon icon={<CheckCircleFill size={14} />} iconBackground size={32} />
   ```
 </ComponentPreview>
 
-| Prop             | Type         | Default           | Description                     |
-| ---------------- | ------------ | ----------------- | ------------------------------- |
-| `icon`           | `ReactNode`  | —                 | Icon element in the badge       |
-| `iconBackground` | `string`     | `"bg-background"` | Tailwind bg class for the badge |
-| `src`            | `string`     | —                 | Avatar image URL                |
-| `alt`            | `string`     | `"Avatar"`        | Alt text                        |
-| `fallback`       | `string`     | auto-initials     | Initials when image fails       |
-| `size`           | `AvatarSize` | `"md"`            | Size preset                     |
+## Generated
 
----
-
-## Generated Avatars (DiceBear)
-
-Procedurally generated avatars via [DiceBear](https://www.dicebear.com/) — deterministic for the same `seed`. No npm package required.
+`DiceBearAvatar` is deterministic for the same seed.
 
 <ComponentPreview name="dice-bear-avatar-demo">
   <DiceBearAvatarDemo />
 
   ```tsx
-<DiceBearAvatarDemo />
+<DiceBearAvatar seed="team-member" avatarStyle="bottts-neutral" size={32} />
   ```
 </ComponentPreview>
 
-| Prop          | Type                               | Default            | Description                                 |
-| ------------- | ---------------------------------- | ------------------ | ------------------------------------------- |
-| `seed`        | `string`                           | —                  | Deterministic seed (username, email, UUID…) |
-| `avatarStyle` | `DiceBearStyle`                    | `"bottts-neutral"` | Avatar collection                           |
-| `options`     | `Record<string, string \| number>` | `{}`               | Extra DiceBear query params                 |
-| `size`        | `AvatarSize`                       | `"md"`             | Size preset                                 |
-
-<Tip>
-  Use `bottts-neutral` for system/bot entities, `avataaars` or `lorelei` for
-  human placeholders, `fun-emoji` for anonymous/guest sessions.
-</Tip>
-
----
-
-## Smart Avatar Group
-
-`AvatarSmartGroup` is a dynamic, animated stack of avatars powered by `framer-motion`. It elegantly reveals hidden avatars upon hovering or expanding the group.
-
-<ComponentPreview name="avatar-smart-group-demo">
-  <AvatarSmartGroupDemo />
-
-  ```tsx
-<AvatarSmartGroupDemo />
-  ```
-</ComponentPreview>
-
-| Prop                | Type                                            | Default                | Description                                                                  |
-| ------------------- | ----------------------------------------------- | ---------------------- | ---------------------------------------------------------------------------- |
-| `avatars`           | `{ src: string; fallback: string; alt: string; }[]` | —                  | Array of avatar objects containing image sources and fallbacks               |
-| `maxVisible`        | `number`                                        | `3`                    | Maximum number of avatars directly visible when the component is stacked     |
-| `mode`              | `"expand" \| "stack"`                           | `"stack"`              | Determines the layout behavior: either fully expanded or stacked with overlap|
-| `size`              | `"sm" \| "md" \| "lg"`                          | `"md"`                 | Size preset for the individual avatars                                       |
-| `onAvatarClick`     | `(avatar) => void`                              | `undefined`            | Optional event handler, triggered when an individual avatar is clicked       |
-
-<Tip>
-  Hover over the stacked component or change the \`mode\` prop to \`expand\` to see the smooth, animated unveiling of the hidden profiles.
-</Tip>
-
----
-
-## Props Reference
+## Props
 
 ### Avatar
 
-| Prop        | Type                                   | Default | Description            |
-| ----------- | -------------------------------------- | ------- | ---------------------- |
-| `size`      | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"`  | Size preset            |
-| `className` | `string`                               | —       | Additional CSS classes |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl" \| number` | `"md"` | Preset or pixel size. |
+| `src` | `string` | — | Convenience image source. |
+| `title` | `string` | — | Literal entity name used for fallback initials and labels. |
+| `letter` | `string` | derived | 1-2 uppercase initials. |
+| `placeholder` | `boolean` | `false` | Loading shell only. |
 
-### AvatarImage
+### AvatarGroup
 
-| Prop  | Type     | Description                       |
-| ----- | -------- | --------------------------------- |
-| `src` | `string` | Image URL                         |
-| `alt` | `string` | **Required.** Screen reader label |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `members` | `AvatarGroupItem[]` | — | Geist-compatible member list. |
+| `items` | `AvatarGroupItem[]` | — | Existing Nebutra member list. |
+| `limit` | `number` | `4` | Geist-compatible max visible slot count. |
+| `max` | `number` | `4` | Existing alias for `limit`. |
+| `size` | `AvatarSize \| number` | `"sm"` | Size applied to every avatar. |
 
-### AvatarFallback
+## Best Practices
 
-| Prop      | Type         | Default | Description                                         |
-| --------- | ------------ | ------- | --------------------------------------------------- |
-| `size`    | `AvatarSize` | `"md"`  | Match parent Avatar size for correct font           |
-| `delayMs` | `number`     | `600`   | Delay before showing — prevents flash on fast loads |
-
----
+- Use a single `Avatar` for one person, team, or organization.
+- For two or more stacked avatars, use `AvatarGroup` so the cluster gets correct overlap, sizing, overflow, and a single accessible label.
+- Pass `src` first and fall back to `letter` when the image is missing.
+- Reserve `placeholder` for the loading shell; never use it as a permanent fallback.
+- Keep `letter` uppercase and derived from the entity name. Use 1-2 letters.
+- Pick a size that matches adjacent type: 20-24px next to compact labels, 32px next to standard labels, and 48-64px in headers or onboarding states.
 
 ## Accessibility
 
-- Always provide a meaningful `alt` on `AvatarImage`.
-- When the avatar triggers an action (e.g., opens a user menu), wrap in `<button aria-label="...">`.
-- `AvatarFallback` background (`bg-muted`) meets 4.5:1 contrast against `text-muted-foreground`.
-- `DiceBearAvatar` SVGs are decorative — the `AvatarFallback` provides a text alternative.
+- `AvatarGroup` exposes one group label and hides individual stacked images from assistive tech to avoid noisy repetition.
+- For individual image avatars, provide a useful `title` or `alt`.
+- When an avatar triggers a menu or action, wrap it in a button with an explicit `aria-label`.

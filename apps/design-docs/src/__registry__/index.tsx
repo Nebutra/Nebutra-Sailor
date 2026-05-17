@@ -90,6 +90,9 @@ export const AvatarCirclesDemo = dynamic(() =>
 export const AvatarSizeDemo = dynamic(() =>
   import("@/components/previews/avatar-demo").then((m) => ({ default: m.AvatarSizeDemo })),
 );
+export const AvatarCompositionDemo = dynamic(() =>
+  import("@/components/previews/avatar-demo").then((m) => ({ default: m.AvatarCompositionDemo })),
+);
 export const AvatarFallbackDemo = dynamic(() =>
   import("@/components/previews/avatar-demo").then((m) => ({ default: m.AvatarFallbackDemo })),
 );
@@ -1009,9 +1012,6 @@ export const SliderOnValueChangeDemo = dynamic(() =>
 export const SliderStatefulDemo = dynamic(() =>
   import("@/components/previews/slider-stateful-demo").then((m) => ({ default: m.default })),
 );
-export const SonnerDemo = dynamic(() =>
-  import("@/components/previews/sonner-demo").then((m) => ({ default: m.SonnerDemo })),
-);
 export const SpinnerDemo = dynamic(() =>
   import("@/components/previews/spinner-demo").then((m) => ({ default: m.SpinnerDemo })),
 );
@@ -1068,6 +1068,9 @@ export const Textarea3Demo = dynamic(() =>
 );
 export const TextareaDemo = dynamic(() =>
   import("@/components/previews/textarea-demo").then((m) => ({ default: m.TextareaDemo })),
+);
+export const ToastDemo = dynamic(() =>
+  import("@/components/previews/toast-demo").then((m) => ({ default: m.ToastDemo })),
 );
 export const TextareaDisabledDemo = dynamic(() =>
   import("@/components/previews/textarea-disabled-demo").then((m) => ({
@@ -1219,6 +1222,10 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "aurora-text-demo": { name: "aurora-text-demo", component: AuroraTextDemo },
   "avatar-circles-demo": { name: "avatar-circles-demo", component: AvatarCirclesDemo },
   "avatar-size-demo": { name: "avatar-size-demo", component: AvatarSizeDemo },
+  "avatar-composition-demo": {
+    name: "avatar-composition-demo",
+    component: AvatarCompositionDemo,
+  },
   "avatar-fallback-demo": { name: "avatar-fallback-demo", component: AvatarFallbackDemo },
   "avatar-group-demo": { name: "avatar-group-demo", component: AvatarGroupDemo },
   "avatar-git-platform-demo": {
@@ -1541,7 +1548,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     component: SliderOnValueChangeDemo,
   },
   "slider-stateful-demo": { name: "slider-stateful-demo", component: SliderStatefulDemo },
-  "sonner-demo": { name: "sonner-demo", component: SonnerDemo },
   "spinner-demo": { name: "spinner-demo", component: SpinnerDemo },
   "stack-demo": { name: "stack-demo", component: StackDemo },
   "stars-canvas-demo": { name: "stars-canvas-demo", component: StarsCanvasDemo },
@@ -1561,6 +1567,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "textarea-2-demo": { name: "textarea-2-demo", component: Textarea2Demo },
   "textarea-3-demo": { name: "textarea-3-demo", component: Textarea3Demo },
   "textarea-demo": { name: "textarea-demo", component: TextareaDemo },
+  "toast-demo": { name: "toast-demo", component: ToastDemo },
   "textarea-disabled-demo": { name: "textarea-disabled-demo", component: TextareaDisabledDemo },
   "textarea-with-limit-demo": {
     name: "textarea-with-limit-demo",

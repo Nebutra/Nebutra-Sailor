@@ -71,6 +71,7 @@
         "components": [
           "button",
           "input",
+          "textarea",
           "checkbox-group",
           "combobox",
           "command-menu",
