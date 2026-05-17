@@ -12,6 +12,7 @@
  * implements {@link ExternalSandbox} over the ./protocol contract.
  */
 
+export * from "./artifact-stream";
 export * from "./commands";
 export * from "./definitions";
 export * from "./dispatcher";
@@ -28,3 +29,4 @@ export * from "./sandbox";
 export * from "./skills";
 export * from "./subagents";
 export * from "./tools";
+export * from "./workbench";
