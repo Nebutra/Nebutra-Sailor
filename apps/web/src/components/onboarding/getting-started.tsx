@@ -67,8 +67,10 @@ export async function GettingStarted() {
   }
   if (!orgId || !userId) return null;
 
-  const state = await readOrgState(orgId, userId);
-  const t = await getTranslations("dashboard.gettingStarted");
+  const [state, t] = await Promise.all([
+    readOrgState(orgId, userId),
+    getTranslations("dashboard.gettingStarted"),
+  ]);
 
   const tasks: OnboardingTask[] = [
     {

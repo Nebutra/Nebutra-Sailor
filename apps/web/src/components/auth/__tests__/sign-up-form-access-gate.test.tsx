@@ -14,6 +14,7 @@ const pushMock = vi.fn();
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: pushMock }),
+  useSearchParams: () => new URLSearchParams("invite=neb_prefilled"),
 }));
 
 vi.mock("next/link", () => ({
@@ -75,13 +76,12 @@ describe("SignUpForm access gate", () => {
     render(<SignUpForm />);
 
     expect(screen.getByLabelText("Invite code")).toBeRequired();
-    expect(screen.getByRole("button", { name: "Create account" })).toBeDisabled();
+    expect(screen.getByLabelText("Invite code")).toHaveValue("neb_prefilled");
 
     await user.type(screen.getByLabelText("First name"), "Ada");
     await user.type(screen.getByLabelText("Last name"), "Lovelace");
     await user.type(screen.getByLabelText("Email"), "ada@example.com");
     await user.type(screen.getByLabelText("Password"), "correct horse battery staple");
-    await user.type(screen.getByLabelText("Invite code"), "neb_123");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
@@ -93,7 +93,7 @@ describe("SignUpForm access gate", () => {
           name: "Ada Lovelace",
           email: "ada@example.com",
           password: "correct horse battery staple",
-          accessInviteCode: "neb_123",
+          accessInviteCode: "neb_prefilled",
         }),
       }),
     );

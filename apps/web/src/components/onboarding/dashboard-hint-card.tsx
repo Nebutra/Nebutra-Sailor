@@ -11,10 +11,8 @@ interface Props {
 }
 
 export function DashboardHintCard({ cookieName }: Props) {
-  const [dismissed, setDismissed] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const tour = useTour();
-
-  if (dismissed) return null;
 
   function dismiss() {
     // 1-year cookie, root path, no JS-only flag (must be readable by server
@@ -22,17 +20,17 @@ export function DashboardHintCard({ cookieName }: Props) {
     const oneYear = 60 * 60 * 24 * 365;
     // biome-ignore lint/suspicious/noDocumentCookie: server-side hint gating needs a root-path cookie; Cookie Store is not universal.
     document.cookie = `${cookieName}=1; max-age=${oneYear}; path=/; SameSite=Lax`;
-    setDismissed(true);
+    setIsVisible(false);
   }
 
   function startTour() {
     dismiss();
-    // Delay slightly so the hint card's exit transition has begun — driver.js
+    // Delay slightly so the hint card's exit transition has begun; driver.js
     // overlay should land on a stable layout.
     setTimeout(() => tour.start(DASHBOARD_TOUR_V1), 80);
   }
 
-  return (
+  return isVisible ? (
     <AnimateIn preset="fadeUp">
       <div className="relative overflow-hidden rounded-2xl border border-blue-6 bg-blue-2/35 p-4 dark:border-blue-7/50 dark:bg-blue-2/10">
         {/* Decorative gradient glow */}
@@ -61,7 +59,7 @@ export function DashboardHintCard({ cookieName }: Props) {
               </kbd>{" "}
               to open the command palette. Pick a{" "}
               <span className="font-medium text-neutral-12 dark:text-white">mode</span> below to
-              focus your work — chat, data, workflow, or search.
+              focus your work: chat, data, workflow, or search.
             </p>
 
             <div className="mt-3 flex items-center gap-2">
@@ -95,5 +93,5 @@ export function DashboardHintCard({ cookieName }: Props) {
         </div>
       </div>
     </AnimateIn>
-  );
+  ) : null;
 }

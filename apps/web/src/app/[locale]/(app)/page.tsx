@@ -26,6 +26,9 @@ import {
 } from "./_dashboard-skeletons";
 
 const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const compactNumberFormatters = new Map<string, Intl.NumberFormat>();
+const usdFormatters = new Map<string, Intl.NumberFormat>();
+const dateLabelFormatters = new Map<string, Intl.DateTimeFormat>();
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -39,18 +42,41 @@ function getGreetingKey(): GreetingKey {
 }
 
 function fmtCompact(n: number, locale: string) {
-  return new Intl.NumberFormat(locale, {
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(n);
+  let formatter = compactNumberFormatters.get(locale);
+  if (!formatter) {
+    formatter = new Intl.NumberFormat(locale, {
+      notation: "compact",
+      maximumFractionDigits: 1,
+    });
+    compactNumberFormatters.set(locale, formatter);
+  }
+  return formatter.format(n);
 }
 
 function fmtUSD(n: number, locale: string) {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(n);
+  let formatter = usdFormatters.get(locale);
+  if (!formatter) {
+    formatter = new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
+    usdFormatters.set(locale, formatter);
+  }
+  return formatter.format(n);
+}
+
+function fmtDateLabel(date: Date, locale: string) {
+  let formatter = dateLabelFormatters.get(locale);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(locale, {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    });
+    dateLabelFormatters.set(locale, formatter);
+  }
+  return formatter.format(date);
 }
 
 // ── Streaming server components ───────────────────────────────────────────────
@@ -58,25 +84,15 @@ function fmtUSD(n: number, locale: string) {
 async function CommandCenter() {
   await connection();
 
-  const t = await getTranslations("dashboard");
-  const locale = await getLocale();
-  let userName = "there";
+  const [t, locale, user] = await Promise.all([
+    getTranslations("dashboard"),
+    getLocale(),
+    hasClerkKey ? getUser().catch(() => null) : Promise.resolve(null),
+  ]);
 
-  if (hasClerkKey) {
-    try {
-      const user = await getUser();
-      userName = user?.name?.split(" ")[0] || "there";
-    } catch {
-      // graceful fallback
-    }
-  }
-
+  const userName = user?.name?.split(" ")[0] || "there";
   const greeting = t(`greeting.${getGreetingKey()}`);
-  const dateLabel = new Intl.DateTimeFormat(locale, {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  }).format(new Date());
+  const dateLabel = fmtDateLabel(new Date(), locale);
 
   return (
     <CommandModeProvider>
@@ -120,19 +136,13 @@ async function CommandCenter() {
 }
 
 async function WorkspaceMetrics() {
-  const t = await getTranslations("dashboard.workspaceSnapshot");
-  const locale = await getLocale();
-  let tenantId = process.env.DEFAULT_DASHBOARD_TENANT_ID || "demo_org";
+  const [t, locale, authState] = await Promise.all([
+    getTranslations("dashboard.workspaceSnapshot"),
+    getLocale(),
+    hasClerkKey ? getAuth().catch(() => null) : Promise.resolve(null),
+  ]);
 
-  if (hasClerkKey) {
-    try {
-      const authState = await getAuth();
-      tenantId = authState.orgId || tenantId;
-    } catch {
-      // graceful fallback
-    }
-  }
-
+  const tenantId = authState?.orgId || process.env.DEFAULT_DASHBOARD_TENANT_ID || "demo_org";
   const summary = await getGrowthSummary(tenantId).catch(() => null);
 
   const metrics = summary?.day
