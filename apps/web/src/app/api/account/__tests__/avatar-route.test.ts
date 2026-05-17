@@ -14,10 +14,20 @@ vi.mock("@/lib/db", () => ({
 }));
 
 const deleteFileMock = vi.fn();
+const createPresignedUploadMock = vi.fn(
+  ({ key, contentType }: { key: string; contentType: string }) =>
+    Promise.resolve({
+      url: `https://uploads.example.com/${key}`,
+      method: "PUT",
+      headers: { "content-type": contentType, "x-upload-provider": "test" },
+      uploadId: key,
+    }),
+);
 
 vi.mock("@nebutra/uploads", () => ({
   getUploadProvider: () =>
     Promise.resolve({
+      createPresignedUpload: createPresignedUploadMock,
       deleteFile: deleteFileMock,
     }),
 }));
@@ -49,6 +59,7 @@ describe("POST /api/account/avatar", () => {
     mockedGetAuth.mockReset();
     mockedUserFindUnique.mockReset();
     mockedUserUpdate.mockReset();
+    createPresignedUploadMock.mockClear();
     deleteFileMock.mockReset();
   });
 
@@ -88,8 +99,16 @@ describe("POST /api/account/avatar", () => {
     };
     expect(body.method).toBe("PUT");
     expect(body.key).toMatch(/^user-avatars\/user_1\/.*\.png$/);
-    expect(body.url).toBeTruthy();
+    expect(body.url).toBe(`https://uploads.example.com/${body.key}`);
     expect(body.headers["content-type"]).toBe("image/png");
+    expect(body.headers["x-upload-provider"]).toBe("test");
+    expect(createPresignedUploadMock).toHaveBeenCalledWith({
+      bucket: "user-avatars",
+      key: body.key,
+      contentType: "image/png",
+      tenantId: "user_1",
+      acl: "public-read",
+    });
   });
 
   it("rejects unsupported content types", async () => {

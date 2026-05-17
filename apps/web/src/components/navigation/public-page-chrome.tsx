@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
 import styles from "./public-page-chrome.module.css";
 
 const MARKETING_ORIGIN = "https://nebutra.com";
@@ -22,10 +24,10 @@ export function PublicPageAnnouncement() {
 export function PublicPageHeader() {
   return (
     <header className={styles.header}>
-      <a className={styles.brand} href="/">
-        <img src="/brand/logo-horizontal-en.svg" alt="Nebutra" width={1062} height={208} />
-      </a>
-      <nav className={styles.nav} aria-label="Nebutra">
+      <Link className={styles.brand} href="/" aria-label={webBrandLabels.homeLink}>
+        <BrandLogo />
+      </Link>
+      <nav className={styles.nav} aria-label={webBrandLabels.primaryNavigation}>
         {publicLinks.map((link) => (
           <a key={link.href} href={link.href}>
             {link.label}
@@ -33,12 +35,12 @@ export function PublicPageHeader() {
         ))}
       </nav>
       <div className={styles.headerActions}>
-        <a className={styles.ghostButton} href="/sign-in">
+        <Link className={styles.ghostButton} href="/sign-in">
           Log in
-        </a>
-        <a className={styles.solidButton} href="/sign-up">
+        </Link>
+        <Link className={styles.solidButton} href="/sign-up">
           Sign up
-        </a>
+        </Link>
       </div>
     </header>
   );
@@ -48,9 +50,9 @@ export function PublicPageFooter() {
   return (
     <footer className={styles.footer}>
       <div>
-        <a className={styles.footerBrand} href="/">
-          <img src="/brand/logo-horizontal-en.svg" alt="Nebutra" width={1062} height={208} />
-        </a>
+        <Link className={styles.footerBrand} href="/" aria-label={webBrandLabels.homeLink}>
+          <BrandLogo />
+        </Link>
         <p className={styles.footerNote}>
           Governed AI infrastructure with predictable recovery surfaces.
         </p>

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { ThemePlaygroundWorkbench } from "@/components/theme-playground/theme-playground-workbench";
 
 export const metadata: Metadata = {
-  title: "Theme Playground | Nebutra Sailor",
-  description: "Live token governance and theme preview workbench for Nebutra Sailor.",
+  title: "Theme Playground",
+  description: "Live token governance and theme preview workbench.",
 };
 
 export default function ThemePlaygroundPage() {

@@ -24,6 +24,7 @@ import { THEME_REGISTRY, type ThemeRegistryEntry } from "@nebutra/theme/registry
 import { Badge, Button, Input, Tabs, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { type ReactNode, useMemo, useState } from "react";
+import { BrandLogo } from "@/components/brand/brand-assets";
 import {
   getThemePreviewStyle,
   getThemeSwatches,
@@ -75,20 +76,16 @@ function CopyButton({ value, label = "Copy" }: { value: string; label?: string }
   );
 }
 
-function NebutraMark() {
-  return (
-    <div className="grid size-7 place-items-center rounded-[var(--radius-md)] border border-primary/30 bg-primary/15 text-primary">
-      <Sparkles className="size-4" />
-    </div>
-  );
+function ThemeBrandMark() {
+  return <BrandLogo variant="mark" className="size-7" />;
 }
 
 function ThemeSwatches({ themeId, size = "md" }: { themeId: string; size?: "sm" | "md" }) {
   return (
     <div className="flex items-center gap-1.5" aria-hidden="true">
-      {getThemeSwatches(themeId).map((color, index) => (
+      {getThemeSwatches(themeId).map((color) => (
         <span
-          key={`${themeId}-${color}-${index}`}
+          key={`${themeId}-${color}`}
           className={cn(
             "rounded-[var(--radius-sm)] border border-white/10 shadow-sm",
             size === "sm" ? "size-4" : "size-5",
@@ -229,10 +226,10 @@ function TopBar({
   return (
     <header className="grid gap-3 border-border/80 border-b bg-background/85 p-4 backdrop-blur-xl min-[1180px]:grid-cols-[minmax(0,1fr)_auto] min-[1180px]:items-center">
       <div className="flex items-center gap-3">
-        <NebutraMark />
+        <ThemeBrandMark />
         <div>
-          <h1 className="font-semibold text-base text-foreground">Nebutra</h1>
-          <p className="hidden text-muted-foreground text-xs sm:block">Theme Playground</p>
+          <BrandLogo className="h-5 w-[6.65rem]" />
+          <p className="mt-0.5 hidden text-muted-foreground text-xs sm:block">Theme Playground</p>
         </div>
         <Badge variant="outline" className="hidden bg-card/70 font-mono text-[11px] sm:inline-flex">
           <Command className="size-3" /> K
@@ -663,9 +660,9 @@ function MiniChart({
       <div className="relative h-28 overflow-hidden rounded-[var(--radius-sm)] border border-border bg-card p-3">
         {variant === "bar" ? (
           <div className="flex h-full items-end gap-3">
-            {bars.map((height, index) => (
+            {bars.map((height) => (
               <span
-                key={index}
+                key={`${title}-${height}`}
                 className="flex-1 rounded-t-[var(--radius-sm)] bg-primary/80"
                 style={{ height: `${height}%` }}
               />
@@ -675,7 +672,7 @@ function MiniChart({
           <>
             <div className="absolute inset-x-3 bottom-3 h-[38%] rounded-t-full bg-primary/15 blur-sm" />
             <svg
-              className="absolute inset-3 h-[calc(100%-1.5rem)] w-[calc(100%-1.5rem)]"
+              className="absolute inset-3 size-[calc(100%-1.5rem)]"
               viewBox="0 0 320 120"
               role="img"
               aria-label={`${title} trend`}

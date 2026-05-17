@@ -1,8 +1,15 @@
 import { BarChart as BarChart3, Coins, Database, Users } from "@nebutra/icons";
 import { Card } from "@nebutra/ui/layout";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
+import { BrandLogo } from "@/components/brand/brand-assets";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
+
+export const metadata: Metadata = {
+  title: "Interactive Demo",
+  description: "Embedded dashboard demo.",
+};
 
 const DEMO_TABS = [
   { id: "analytics", label: "Analytics" },
@@ -36,14 +43,17 @@ export default async function DemoEmbedPage({
   const summary = await getGrowthSummary(process.env.DEFAULT_DASHBOARD_TENANT_ID || "demo_org");
 
   return (
-    <main className="min-h-screen bg-[color:var(--neutral-2)] p-4 text-[color:var(--neutral-12)] dark:bg-black dark:text-white">
+    <main className="min-h-screen bg-[color:var(--neutral-2)] p-4 text-[color:var(--neutral-12)] dark:bg-[color:var(--neutral-1)]">
       <div className="mx-auto max-w-5xl">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-[0.12em] text-[color:var(--blue-11)] uppercase">
               Interactive demo
             </p>
-            <h1 className="text-lg font-semibold">Nebutra Sailor Dashboard</h1>
+            <div className="mt-1 flex items-center gap-2">
+              <BrandLogo className="h-6 w-[7.9rem]" />
+              <span className="text-lg font-semibold">Dashboard</span>
+            </div>
           </div>
           <div className="flex flex-wrap gap-2">
             {DEMO_TABS.map((tab) => (
@@ -66,28 +76,28 @@ export default async function DemoEmbedPage({
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <Card className="p-4">
               <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] dark:text-white/60">
-                <Database className="h-3.5 w-3.5" />
+                <Database className="size-3.5" />
                 Total Events
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.totalEvents.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
               <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] dark:text-white/60">
-                <Users className="h-3.5 w-3.5" />
+                <Users className="size-3.5" />
                 Active Users
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.activeUsers.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
               <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] dark:text-white/60">
-                <BarChart3 className="h-3.5 w-3.5" />
+                <BarChart3 className="size-3.5" />
                 Signups
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.signups.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
               <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] dark:text-white/60">
-                <Coins className="h-3.5 w-3.5" />
+                <Coins className="size-3.5" />
                 Revenue
               </p>
               <p className="mt-2 text-2xl font-semibold">{toCurrency(summary.revenue)}</p>
@@ -150,7 +160,7 @@ export default async function DemoEmbedPage({
                 <div className="col-span-2">Users</div>
                 <div className="col-span-2">Revenue</div>
               </div>
-              <div className="grid grid-cols-12 items-center px-4 py-4 text-sm">
+              <div className="grid grid-cols-12 items-center p-4 text-sm">
                 <div className="col-span-4 font-medium">{summary.tenantId}</div>
                 <div className="col-span-2">
                   <span className="inline-flex rounded-full bg-[color:var(--cyan-3)] px-2.5 py-1 text-xs font-medium text-[color:var(--cyan-11)] dark:bg-[color:var(--cyan-9)]/20 dark:text-[color:var(--cyan-9)]">

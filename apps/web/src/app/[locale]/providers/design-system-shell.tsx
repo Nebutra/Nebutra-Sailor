@@ -17,6 +17,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { OrgSwitcher } from "@/components/navigation/org-switcher";
@@ -268,17 +269,16 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
   const sidebarHeader = (
     <div className="flex flex-col gap-3">
       <div className={`flex items-center ${collapsed ? "justify-center" : "justify-start px-2"}`}>
-        {collapsed ? (
-          <span
-            role="img"
-            aria-label="Nebutra Sailor"
-            className="flex size-8 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-sm font-semibold text-white"
-          >
-            N
-          </span>
-        ) : (
-          <span className="text-lg font-semibold tracking-tight">Nebutra Sailor</span>
-        )}
+        <ViewTransitionLink
+          href="/"
+          aria-label={webBrandLabels.homeLink}
+          className="inline-flex min-w-0 items-center rounded-[var(--radius-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          <BrandLogo
+            variant={collapsed ? "mark" : "horizontal"}
+            className={collapsed ? "size-8" : "h-7 w-[9.25rem]"}
+          />
+        </ViewTransitionLink>
       </div>
       {supportsWorkspaceSwitching && workspacesForSwitcher.length > 0 && (
         <div className={collapsed ? "flex justify-center" : "px-2"}>

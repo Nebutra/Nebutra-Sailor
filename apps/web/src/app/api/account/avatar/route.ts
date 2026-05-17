@@ -1,4 +1,5 @@
 import { logger } from "@nebutra/logger";
+import { getUploadProvider } from "@nebutra/uploads";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getAuth } from "@/lib/auth";
@@ -52,13 +53,20 @@ function resolveAvatarUrl(key: string): string {
   return `/api/uploads/${encodeURIComponent(key)}`;
 }
 
-function buildPresignedUpload(key: string, contentType: string) {
-  const baseUrl = process.env.UPLOADS_BASE_URL?.replace(/\/+$/, "") ?? "";
-  const url = baseUrl ? `${baseUrl}/${key}` : `/api/uploads/${encodeURIComponent(key)}`;
+async function buildPresignedUpload(key: string, contentType: string, userId: string) {
+  const provider = await getUploadProvider();
+  const presigned = await provider.createPresignedUpload({
+    bucket: "user-avatars",
+    key,
+    contentType,
+    tenantId: userId,
+    acl: "public-read",
+  });
+
   return {
-    url,
-    method: "PUT" as const,
-    headers: { "content-type": contentType },
+    url: presigned.url,
+    method: presigned.method,
+    headers: presigned.headers,
     key,
   };
 }
@@ -148,7 +156,7 @@ export async function POST(request: Request) {
 
     const ext = extensionFor(parsed.data.contentType);
     const key = `user-avatars/${authState.userId}/${Date.now()}.${ext}`;
-    const upload = buildPresignedUpload(key, parsed.data.contentType);
+    const upload = await buildPresignedUpload(key, parsed.data.contentType, authState.userId);
     return NextResponse.json(upload);
   } catch (error) {
     logger.error("[account:avatar] Failed to handle avatar upload", {
