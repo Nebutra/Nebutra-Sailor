@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { CommandPalette } from "@/components/command-palette/command-palette";
 import { CommandPaletteProvider } from "@/components/command-palette/command-palette-provider";
+import { LazyCommandPalette } from "./lazy-command-palette";
 
 interface CommandPaletteMountProps {
   children: ReactNode;
@@ -28,7 +28,7 @@ export function CommandPaletteMount({ children }: CommandPaletteMountProps) {
   return (
     <CommandPaletteProvider>
       {children}
-      <CommandPalette />
+      <LazyCommandPalette />
     </CommandPaletteProvider>
   );
 }

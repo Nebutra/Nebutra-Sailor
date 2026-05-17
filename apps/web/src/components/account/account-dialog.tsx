@@ -6,6 +6,7 @@ import {
   CreditCard,
   Command as Keyboard,
   Lifebuoy as LifeBuoy,
+  LoaderCircle as Loader2,
   Envelope as Mail,
   DeviceDesktop as Monitor,
   Moon,
@@ -19,6 +20,8 @@ import {
 import { useTheme } from "@nebutra/tokens";
 import { EmptyState } from "@nebutra/ui/layout";
 import { BrandMark, Dialog, DialogContent } from "@nebutra/ui/primitives";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
@@ -31,7 +34,6 @@ import {
   useState,
 } from "react";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
-import { PersonalizationTab } from "@/components/personalization/personalization-tab";
 
 /**
  * AccountDialog — unified account modal (Profile / Subscription / Billing / Preferences).
@@ -110,6 +112,21 @@ const TABS: ReadonlyArray<TabConfig> = [
   { id: "billing", labelKey: "tabs.billing", icon: Receipt },
   { id: "preferences", labelKey: "tabs.preferences", icon: SettingsIcon },
 ];
+
+const PersonalizationTab = dynamic(
+  () =>
+    import("@/components/personalization/personalization-tab").then(
+      (module) => module.PersonalizationTab,
+    ),
+  {
+    loading: () => (
+      <div className="flex min-h-[240px] items-center justify-center">
+        <Loader2 className="h-5 w-5 animate-spin text-neutral-10 dark:text-white/40" />
+      </div>
+    ),
+    ssr: false,
+  },
+);
 
 function initialsFor(name?: string | null, email?: string | null): string {
   const source = (name ?? "").trim() || (email ?? "").trim();
@@ -251,9 +268,11 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
         <div className="flex items-center gap-4">
           <div className="relative">
             {imageUrl ? (
-              <img
+              <Image
                 src={imageUrl}
                 alt=""
+                width={56}
+                height={56}
                 className="h-14 w-14 rounded-2xl object-cover ring-2 ring-neutral-6 dark:ring-white/10"
               />
             ) : (

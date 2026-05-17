@@ -11,6 +11,7 @@ import {
   User,
 } from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAccountDialog } from "@/components/account/account-dialog";
@@ -93,8 +94,7 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
         className="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-neutral-7 bg-neutral-2 text-xs font-semibold text-neutral-12 transition-colors hover:bg-neutral-3 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
       >
         {user.imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={user.imageUrl}
             alt={user.name ?? user.email ?? "User avatar"}
             width={32}

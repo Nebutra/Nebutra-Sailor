@@ -1,8 +1,21 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
-import { FeedbackDialog } from "./feedback-dialog";
-import { FeedbackDialogProvider } from "./feedback-dialog-provider";
+import { FeedbackDialogProvider, useFeedbackDialog } from "./feedback-dialog-provider";
+
+const FeedbackDialog = dynamic(
+  () => import("./feedback-dialog").then((module) => module.FeedbackDialog),
+  {
+    loading: () => null,
+    ssr: false,
+  },
+);
+
+function FeedbackDialogSlot() {
+  const { open } = useFeedbackDialog();
+  return open ? <FeedbackDialog /> : null;
+}
 
 /**
  * Single mount-point that wires the global feedback dialog into the app.
@@ -14,7 +27,7 @@ export function FeedbackMount({ children }: { children: ReactNode }) {
   return (
     <FeedbackDialogProvider>
       {children}
-      <FeedbackDialog />
+      <FeedbackDialogSlot />
     </FeedbackDialogProvider>
   );
 }

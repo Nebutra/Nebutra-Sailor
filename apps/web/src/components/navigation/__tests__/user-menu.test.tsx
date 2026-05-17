@@ -57,7 +57,7 @@ describe("UserMenu", () => {
     expect(trigger).toBeTruthy();
     const img = trigger.querySelector("img");
     expect(img).not.toBeNull();
-    expect(img?.getAttribute("src")).toContain("https://x/y.png");
+    expect(decodeURIComponent(img?.getAttribute("src") ?? "")).toContain("https://x/y.png");
   });
 
   it("falls back to initials when no imageUrl is set", () => {
