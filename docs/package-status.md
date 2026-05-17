@@ -54,7 +54,7 @@ you contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (7)
+## WIP packages (11)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -68,9 +68,12 @@ and missing functionality.
 | `@nebutra/captcha`       | `--captcha`             | hCaptcha & Aliyun adapters scaffolded only                       |
 | `@nebutra/event-bus`     | (consumed by saga)      | Cross-service pub/sub guarantees not verified                    |
 | `@nebutra/legal`         | (consumed directly)     | Consent persistence + document versioning pending                |
+| `@nebutra/code-index`    | (consumed directly)     | Provider-agnostic contracts and indexing core only; concrete embedder/vector-store adapters are injected |
 | `@nebutra/mcp`           | `--mcp`                 | Context server binary is a placeholder stub                      |
 | `@nebutra/saga`          | (consumed directly)     | No durable journal; compensation logic scaffolded only           |
 | `@nebutra/agent-runtime` | (consumed directly)     | Track-B kernel transport + durable-turn queue binding interface-only; adapters live under subpath exports |
+| `@nebutra/llm-gateway`   | (consumed directly)     | Local experiment; not wired to production API gateway auth, tenant metering, vault-backed key pool, or durable usage ledger |
+| `@nebutra/provider-registry` | (consumed directly) | Local provider trait; not the canonical runtime provider registry |
 
 ## Contributing
 

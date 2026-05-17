@@ -6,6 +6,16 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "A local OpenAI-compatible or Ollama-style endpoint for the default provider"
+    ],
+    "gaps": [
+      "Local provider trait is not a replacement for Vercel AI SDK/provider SDK execution",
+      "No tenant-aware key pool, budget enforcement, or provider health persistence",
+      "Production consumers should use @nebutra/agents or the API gateway upstream pool"
+    ],
     "featureId": "provider-registry",
     "category": "ai",
     "summary": "Provider trait and registry without routing or cache"

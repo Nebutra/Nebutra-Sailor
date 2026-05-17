@@ -33,8 +33,11 @@ export const NEBUTRA_PACKAGE_STATUS: Record<string, PackageStatus> = {
   audit: "wip",
   "feature-flags": "wip",
   captcha: "wip",
+  "code-index": "wip",
   "event-bus": "wip",
+  "llm-gateway": "wip",
   mcp: "wip",
+  "provider-registry": "wip",
   saga: "wip",
 };
 

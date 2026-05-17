@@ -6,6 +6,16 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/provider-registry local-provider experiment"
+    ],
+    "gaps": [
+      "Not wired to the production API gateway auth, tenant metering, or vault-backed key pool",
+      "In-memory cache/debug/usage ledger only; no durable budget enforcement",
+      "Superseded for production model execution by @nebutra/agents plus backends/gateway"
+    ],
     "featureId": "llm-gateway",
     "category": "ai",
     "summary": "Routing, fallback, prefix prompt cache, and cost tracking over provider-registry"
