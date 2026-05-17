@@ -19,6 +19,8 @@ describe("AccessInviteIssuer", () => {
           invites: [
             {
               id: "aic_1",
+              attributionStatus: "dub",
+              canonicalInviteUrl: "https://app.example/sign-up?invite=neb_abc123",
               code: "neb_abc123",
               emailStatus: "sent",
               inviteUrl: "https://app.example/sign-up?invite=neb_abc123",
@@ -56,6 +58,7 @@ describe("AccessInviteIssuer", () => {
     expect(await screen.findByText("neb_abc123")).toBeInTheDocument();
     expect(screen.getByText("https://app.example/sign-up?invite=neb_abc123")).toBeInTheDocument();
     expect(screen.getByText(/email sent/i)).toBeInTheDocument();
+    expect(screen.getByText(/tracked link/i)).toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent("Copy these codes now");
   });
 });

@@ -15,7 +15,7 @@
     "gaps": [
       "Better Auth sign-up preflight and post-signup redemption are wired in apps/web",
       "Admin issue API/UI and email delivery are wired in apps/web",
-      "Dub short-link creation pending"
+      "Dub short-link creation is wired in apps/web when DUB_API_KEY is configured"
     ],
     "featureId": "access-gate",
     "category": "commerce",

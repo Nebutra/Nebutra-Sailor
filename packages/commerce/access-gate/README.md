@@ -1,6 +1,6 @@
 # @nebutra/access-gate
 
-Status: Foundation — core service, Prisma adapter, admin issue UI/API, email delivery, and the `apps/web` Better Auth signup preflight + post-signup redemption are implemented. Dub attribution wiring is still owned by the consuming app.
+Status: Foundation — core service, Prisma adapter, admin issue UI/API, email delivery, optional Dub attribution links, and the `apps/web` Better Auth signup preflight + post-signup redemption are implemented.
 
 `@nebutra/access-gate` provides a provider-agnostic cold-start invite gate:
 
@@ -44,6 +44,9 @@ After Better Auth returns a successful sign-up response, `apps/web` redeems the 
 Admins can issue codes from `/admin` or `POST /api/admin/access-invites`. When
 `issuedToEmail` is present, the API sends a transactional invitation email with
 the generated `/sign-up?invite=...` URL and returns `emailStatus` for each code.
+When `DUB_API_KEY` is configured, the API also creates a tracked short link via
+`@nebutra/analytics` and returns `attributionStatus`, `attributionLinkId`, and
+the canonical invite URL.
 
 ## Usage
 
@@ -74,5 +77,5 @@ await gate.redeem({
 ## Integration Checklist
 
 - Rate-limit issue/redeem endpoints at the app boundary with `@nebutra/rate-limit`.
-- Use `@nebutra/analytics` / Dub short links if attribution is required.
+- Configure `DUB_API_KEY` when invite attribution links are required.
 - Keep tenant-scoped redemption inside the same tenant selected during signup.

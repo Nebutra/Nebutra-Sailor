@@ -8,6 +8,8 @@ import { getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { hasPermission, resolveRole } from "@/lib/permissions";
 
+type LinkAttributionStatus = "canonical" | "dub" | "failed";
+
 const issueSchema = z.object({
   count: z.coerce.number().int().min(1).max(25).default(1),
   scope: z.enum(["platform", "tenant"]).default("platform"),
@@ -35,6 +37,86 @@ function buildInviteUrl(request: Request, code: string): string {
   const url = new URL("/sign-up", baseUrl);
   url.searchParams.set("invite", code);
   return url.toString();
+}
+
+function buildCanonicalInviteUrl(request: Request, input: { code: string; tenantId?: string }) {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || new URL(request.url).origin;
+  const url = new URL("/sign-up", baseUrl);
+  url.searchParams.set("invite", input.code);
+  if (input.tenantId) url.searchParams.set("tenantId", input.tenantId);
+  return url.toString();
+}
+
+function dubConfig():
+  | {
+      apiKey: string;
+      defaultDomain?: string;
+      workspaceId?: string;
+    }
+  | undefined {
+  const apiKey = process.env.DUB_API_KEY;
+  if (!apiKey) return undefined;
+
+  return {
+    apiKey,
+    ...(process.env.DUB_DEFAULT_DOMAIN ? { defaultDomain: process.env.DUB_DEFAULT_DOMAIN } : {}),
+    ...(process.env.DUB_WORKSPACE_ID ? { workspaceId: process.env.DUB_WORKSPACE_ID } : {}),
+  };
+}
+
+async function createAttributedInviteLink(input: {
+  canonicalInviteUrl: string;
+  invite: {
+    codePrefix: string;
+    expiresAt?: Date | null;
+    id: string;
+    tenantId?: string | null;
+  };
+}): Promise<{
+  attributionLinkId: string | null;
+  attributionStatus: LinkAttributionStatus;
+  canonicalInviteUrl: string;
+  inviteUrl: string;
+}> {
+  const config = dubConfig();
+  if (!config) {
+    return {
+      attributionLinkId: null,
+      attributionStatus: "canonical",
+      canonicalInviteUrl: input.canonicalInviteUrl,
+      inviteUrl: input.canonicalInviteUrl,
+    };
+  }
+
+  try {
+    const { createAnalyticsClient } = await import("@nebutra/analytics");
+    const link = await createAnalyticsClient(config).links.create({
+      url: input.canonicalInviteUrl,
+      key: `invite-${input.invite.codePrefix}`,
+      externalId: input.invite.id,
+      tenantId: input.invite.tenantId ?? undefined,
+      expiresAt: input.invite.expiresAt ?? undefined,
+      tags: ["access-gate", "invite"],
+    });
+
+    return {
+      attributionLinkId: link.id,
+      attributionStatus: "dub",
+      canonicalInviteUrl: input.canonicalInviteUrl,
+      inviteUrl: link.shortLink,
+    };
+  } catch (error) {
+    logger.error("[admin.access-invites] Failed to create invite attribution link", {
+      inviteId: input.invite.id,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return {
+      attributionLinkId: null,
+      attributionStatus: "failed",
+      canonicalInviteUrl: input.canonicalInviteUrl,
+      inviteUrl: input.canonicalInviteUrl,
+    };
+  }
 }
 
 async function sendInviteEmailIfRequested(input: {
@@ -116,17 +198,26 @@ export async function POST(request: Request) {
 
     const invites = await Promise.all(
       issued.map(async ({ plaintextCode, invite }) => {
-        const inviteUrl = buildInviteUrl(request, plaintextCode);
+        const attributedLink = await createAttributedInviteLink({
+          canonicalInviteUrl: buildCanonicalInviteUrl(request, {
+            code: plaintextCode,
+            tenantId: invite.tenantId ?? undefined,
+          }),
+          invite,
+        });
         const emailStatus = await sendInviteEmailIfRequested({
           to: parsed.data.issuedToEmail,
-          inviteUrl,
+          inviteUrl: attributedLink.inviteUrl,
           expiresAt: invite.expiresAt,
         });
 
         return {
+          attributionLinkId: attributedLink.attributionLinkId,
+          attributionStatus: attributedLink.attributionStatus,
+          canonicalInviteUrl: attributedLink.canonicalInviteUrl,
           code: plaintextCode,
           emailStatus,
-          inviteUrl,
+          inviteUrl: attributedLink.inviteUrl,
           id: invite.id,
           prefix: invite.codePrefix,
           scope: invite.scope,

@@ -3,6 +3,8 @@
 import { type FormEvent, useState } from "react";
 
 interface IssuedInvite {
+  attributionStatus: "canonical" | "dub" | "failed";
+  canonicalInviteUrl: string;
   code: string;
   emailStatus: "sent" | "skipped" | "failed";
   inviteUrl: string;
@@ -159,6 +161,8 @@ export function AccessInviteIssuer() {
                 </div>
                 <span className="shrink-0 text-[var(--neutral-10)] text-xs">
                   {invite.scope}
+                  {invite.attributionStatus === "dub" ? " · tracked link" : ""}
+                  {invite.attributionStatus === "failed" ? " · link tracking failed" : ""}
                   {invite.emailStatus !== "skipped" ? ` · email ${invite.emailStatus}` : ""}
                   {invite.tenantId ? ` · ${invite.tenantId}` : ""}
                   {invite.expiresAt ? ` · expires ${invite.expiresAt}` : ""}

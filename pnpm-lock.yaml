@@ -1056,6 +1056,9 @@ importers:
       '@nebutra/agents':
         specifier: workspace:*
         version: link:../../packages/ai/agents
+      '@nebutra/analytics':
+        specifier: workspace:*
+        version: link:../../packages/platform/analytics
       '@nebutra/audit':
         specifier: workspace:*
         version: link:../../packages/iam/audit

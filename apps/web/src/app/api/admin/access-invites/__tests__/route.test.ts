@@ -15,6 +15,13 @@ const issueBatchMock = vi.fn(async () => [
 ]);
 const auditLogMock = vi.fn(async () => undefined);
 const sendInvitationEmailMock = vi.fn(async () => ({ id: "email_1", provider: "console" }));
+const createLinkMock = vi.fn(async () => ({
+  id: "dub_1",
+  shortLink: "https://go.example/invite-neb_testcode",
+}));
+const createAnalyticsClientMock = vi.fn(() => ({
+  links: { create: createLinkMock },
+}));
 
 vi.mock("@/lib/auth", () => ({
   getAuth: getAuthMock,
@@ -37,6 +44,10 @@ vi.mock("@nebutra/email", () => ({
   sendInvitationEmail: sendInvitationEmailMock,
 }));
 
+vi.mock("@nebutra/analytics", () => ({
+  createAnalyticsClient: createAnalyticsClientMock,
+}));
+
 vi.mock("@nebutra/logger", () => ({
   logger: { error: vi.fn() },
 }));
@@ -56,10 +67,15 @@ async function loadRoute() {
 
 describe("POST /api/admin/access-invites", () => {
   beforeEach(() => {
+    delete process.env.DUB_API_KEY;
+    delete process.env.DUB_DEFAULT_DOMAIN;
+    delete process.env.DUB_WORKSPACE_ID;
     getAuthMock.mockReset();
     issueBatchMock.mockClear();
     auditLogMock.mockClear();
     sendInvitationEmailMock.mockClear();
+    createLinkMock.mockClear();
+    createAnalyticsClientMock.mockClear();
   });
 
   it("requires admin manage-users permission", async () => {
@@ -107,6 +123,7 @@ describe("POST /api/admin/access-invites", () => {
     expect(await response.json()).toMatchObject({
       invites: [
         {
+          attributionStatus: "canonical",
           code: "neb_testcode",
           emailStatus: "sent",
           id: "aic_1",
@@ -122,11 +139,61 @@ describe("POST /api/admin/access-invites", () => {
         role: "Early access",
       }),
     );
+    expect(createAnalyticsClientMock).not.toHaveBeenCalled();
     expect(auditLogMock).toHaveBeenCalledWith(
       expect.objectContaining({
         action: "admin.access_invite.issued",
         outcome: "success",
         severity: "warning",
+      }),
+    );
+  });
+
+  it("creates a Dub attribution link when configured", async () => {
+    process.env.DUB_API_KEY = "dub_token";
+    process.env.DUB_DEFAULT_DOMAIN = "go.example";
+    getAuthMock.mockResolvedValue({
+      isSignedIn: true,
+      userId: "user_admin",
+      orgId: "org_1",
+      sessionClaims: { org_role: "org:admin" },
+    });
+    const { POST } = await loadRoute();
+
+    const response = await POST(
+      makeRequest({
+        count: 1,
+        scope: "platform",
+        issuedToEmail: "ada@example.com",
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(createAnalyticsClientMock).toHaveBeenCalledWith({
+      apiKey: "dub_token",
+      defaultDomain: "go.example",
+    });
+    expect(createLinkMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        url: "https://app.example/sign-up?invite=neb_testcode",
+        key: "invite-neb_testcode",
+        externalId: "aic_1",
+        tags: ["access-gate", "invite"],
+      }),
+    );
+    expect(await response.json()).toMatchObject({
+      invites: [
+        {
+          attributionLinkId: "dub_1",
+          attributionStatus: "dub",
+          canonicalInviteUrl: "https://app.example/sign-up?invite=neb_testcode",
+          inviteUrl: "https://go.example/invite-neb_testcode",
+        },
+      ],
+    });
+    expect(sendInvitationEmailMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        acceptUrl: "https://go.example/invite-neb_testcode",
       }),
     );
   });

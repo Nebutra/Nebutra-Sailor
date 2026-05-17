@@ -21,6 +21,7 @@
     "@marsidev/react-turnstile": "^1.5.2",
     "@nebutra/access-gate": "workspace:*",
     "@nebutra/agents": "workspace:*",
+    "@nebutra/analytics": "workspace:*",
     "@nebutra/audit": "workspace:*",
     "@nebutra/auth": "workspace:*",
     "@nebutra/china-compliance": "workspace:*",
