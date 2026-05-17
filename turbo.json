@@ -7,7 +7,15 @@
       "dependsOn": ["^build", "build:registry"],
       "inputs": ["$TURBO_DEFAULT$"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-      "env": ["CLERK_SECRET_KEY", "NEXT_PUBLIC_SITE_URL"]
+      "env": [
+        "CLERK_SECRET_KEY",
+        "NEXT_PUBLIC_SITE_URL",
+        "DATABASE_URL",
+        "SKIP_ENV_VALIDATION",
+        "AUTH_PROVIDER",
+        "NEXT_PUBLIC_AUTH_PROVIDER",
+        "NEXT_TELEMETRY_DISABLED"
+      ]
     },
     "build:registry": {
       "dependsOn": ["@nebutra/design-tokens#build"],
