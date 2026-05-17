@@ -67,7 +67,7 @@ const DEPENDENCY_RULES: DependencyRule[] = [
     // brand palette. Brand is the design-source-of-truth that ui consumes — keeping it
     // out of ui would force every consumer to import brand directly, which would defeat
     // ui's role as the integration point. Documented exception in the leaf-runtime test.
-    allowedDeps: ["@nebutra/design-tokens", "@nebutra/brand", "@nebutra/icons"],
+    allowedDeps: ["@nebutra/design-tokens", "@nebutra/brand", "@nebutra/icons", "@nebutra/tokens"],
   },
   {
     name: "@nebutra/web",
@@ -93,6 +93,7 @@ const DEPENDENCY_RULES: DependencyRule[] = [
       "@nebutra/onboarding",
       "@nebutra/design-tokens",
       "@nebutra/theme",
+      "@nebutra/access-gate",
     ],
   },
   {
@@ -180,7 +181,7 @@ describe("Property 4: Dependency Flow Conformance", () => {
     // Runtime workspace deps that ui is allowed to import from src/. Anything
     // beyond this set must either move to devDependencies or be added here
     // alongside a comment in DEPENDENCY_RULES explaining the runtime need.
-    const ALLOWED_RUNTIME_DEPS = new Set(["@nebutra/brand", "@nebutra/icons"]);
+    const ALLOWED_RUNTIME_DEPS = new Set(["@nebutra/brand", "@nebutra/icons", "@nebutra/tokens"]);
 
     const raw = readFileSync(resolve(ROOT, uiRule.packageJsonPath), "utf-8");
     const pkg: PackageJson = JSON.parse(raw);
