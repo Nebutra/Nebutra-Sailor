@@ -13,9 +13,8 @@
       "@nebutra/rate-limit at app route boundary"
     ],
     "gaps": [
-      "Better Auth sign-up preflight and post-signup redemption are wired in apps/web",
-      "Admin issue API/UI and email delivery are wired in apps/web",
-      "Dub short-link creation is wired in apps/web when DUB_API_KEY is configured"
+      "Provider-specific OAuth callback gating remains app-owned beyond apps/web disabling social signup in invite mode",
+      "Full real-database integration tests are environment-owned because scaffolded templates may prune access-gate migrations"
     ],
     "featureId": "access-gate",
     "category": "commerce",

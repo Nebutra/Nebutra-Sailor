@@ -9,7 +9,7 @@ import { db } from "@/lib/db";
 import { hasPermission, resolveRole } from "@/lib/permissions";
 
 type LinkAttributionStatus = "canonical" | "dub" | "failed";
-type AdminAuth = Awaited<ReturnType<typeof getAuth>>;
+type AdminAuth = Awaited<ReturnType<typeof getAuth>> & { userId: string };
 type AccessInviteRow = {
   id: string;
   codePrefix: string;
@@ -59,7 +59,7 @@ async function requireAdmin(request: Request): Promise<AdminAuth | Response> {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  return auth;
+  return auth as AdminAuth;
 }
 
 function issuerQuota(): number {
