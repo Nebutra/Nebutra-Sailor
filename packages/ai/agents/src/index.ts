@@ -25,6 +25,24 @@ export {
   runWithFallback,
   withAnthropicCacheControl,
 } from "./fallback";
+// ─── Generation (image / video modality) ─────────────────────────────────────
+// New modality on the same env-key-gated provider layer as the LLM fallback
+// chain. `mock` is always available so CI / flag-gated demos need no secret.
+export {
+  _resetGenerationRegistry,
+  type GenerationCallOptions,
+  type GenerationContext,
+  type GenerationModality,
+  type GenerationProvider,
+  type GenerationResult,
+  generateImage,
+  generateVideo,
+  type ImageGenerationRequest,
+  listGenerationProviders,
+  mockGenerationProvider,
+  registerGenerationProvider,
+  type VideoGenerationRequest,
+} from "./generation/index";
 // ─── Memory ───────────────────────────────────────────────────────────────────
 export { clearMemory, getMemory, saveMemory } from "./memory";
 export {

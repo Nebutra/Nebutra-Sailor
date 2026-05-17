@@ -17,6 +17,7 @@
     "./tools": "./src/tools.ts",
     "./providers/vercel-ai": "./src/providers/vercel-ai.ts",
     "./providers/langchain": "./src/providers/langchain.ts",
+    "./generation": "./src/generation/index.ts",
     "./sdk": "./src/sdk/index.ts",
     "./sdk/config": "./src/sdk/config.ts",
     "./sdk/models": "./src/sdk/models.ts",
