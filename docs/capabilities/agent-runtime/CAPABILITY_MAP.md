@@ -48,11 +48,16 @@
   — tenant-scoped `runTurn` streamed over SSE, behind `requireAuth` +
   off-by-default `agent-runtime-demo` flag; `ModelInvoker` bridges
   `@nebutra/agents`. Gateway typecheck clean.
-- **Not yet built:** durable rollout store DB adapter (needs a schema model
-  = infra change, deferred — not faked); concrete `@nebutra/mcp`
-  catalog-port adapter + dispatcher socket adapter; real isolation backend
-  (Wasmtime/Firecracker Phase 2). A command-exec tool + sandbox delegation
-  is wired the moment such a tool is registered, not before.
+- **Done (adapters + durable store):** `@nebutra/agent-runtime-adapters`
+  (`mcp-catalog`, `dispatcher-sse`, `prisma-rollout` — 26 tests);
+  `AgentRolloutLine` Prisma model + additive migration
+  `20260519000000_add_agent_rollout_store` + ADR 2026-05-19; gateway route
+  store is env-gated (`AGENT_ROLLOUT_DURABLE=1` → durable Postgres
+  system-of-record, default in-memory). Gateway typecheck clean.
+- **Not yet built:** real isolation backend (Wasmtime/Firecracker Phase 2);
+  a command-exec tool (sandbox delegation activates the moment one is
+  registered). Durable-store activation = standard migrate+generate deploy
+  step (ADR 2026-05-19), not code change — intentionally not faked.
 - **Not deeply mapped:** model catalog manager, apply-patch grammar,
   compaction *generation* logic, tool_search discovery *mechanism*, hooks
   pipeline impl, web_search/image-gen handlers.

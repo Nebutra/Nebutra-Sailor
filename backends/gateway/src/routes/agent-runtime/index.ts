@@ -23,12 +23,19 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import {
   InMemoryRolloutStore,
   type ModelInvoker,
+  PersistentRolloutStore,
+  type RolloutStore,
   runTurn,
   ToolRegistry,
   type TurnConfig,
 } from "@nebutra/agent-runtime";
+import {
+  createPrismaRolloutPersistence,
+  type PrismaRolloutDelegate,
+} from "@nebutra/agent-runtime-adapters/prisma-rollout";
 import type { AgentConfig, AgentResponse } from "@nebutra/agents";
 import { AgentOrchestrator, createAgentContext } from "@nebutra/agents";
+import { getTenantDb } from "@nebutra/db";
 import { FLAGS, featureFlagMiddleware } from "@nebutra/feature-flags";
 import { logger } from "@nebutra/logger";
 import { streamSSE } from "hono/streaming";
@@ -68,6 +75,25 @@ function getOrchestrator(): AgentOrchestrator | null {
     orchestrator = null;
   }
   return orchestrator;
+}
+
+/**
+ * Rollout store selector. Default = process-local in-memory. The durable
+ * Postgres system-of-record is opt-in via `AGENT_ROLLOUT_DURABLE=1` and
+ * requires the migration applied + Prisma client regenerated (see ADR
+ * 2026-05-19). The cast bridges the not-yet-regenerated client without
+ * faking durability: when off, durability is simply not claimed.
+ */
+function rolloutStore(): RolloutStore {
+  if (process.env.AGENT_ROLLOUT_DURABLE !== "1") {
+    return new InMemoryRolloutStore();
+  }
+  return new PersistentRolloutStore(
+    createPrismaRolloutPersistence(async (tid: string) => {
+      const db = await getTenantDb(tid);
+      return (db as unknown as { agentRolloutLine: PrismaRolloutDelegate }).agentRolloutLine;
+    }),
+  );
 }
 
 /** Thin bridge: one round = the orchestrator's reply as a single text item. */
@@ -150,7 +176,7 @@ agentRuntimeRoutes.openapi(turnRoute, async (c) => {
       approvalPolicy: { kind: "on_request" },
       model: modelInvoker(orch, body.input, tenantId, tenant.userId ?? "anonymous", body.threadId),
       tools: new ToolRegistry(),
-      store: new InMemoryRolloutStore(),
+      store: rolloutStore(),
       approvalGate: {
         async request() {
           return { kind: "denied" };
