@@ -161,6 +161,8 @@ describe("ci harness dependency closure", () => {
     expect(playwrightConfig).toContain("3100");
     expect(playwrightConfig).toContain("CORS_ORIGINS");
     expect(playwrightConfig).toContain("next dev --webpack");
+    expect(playwrightConfig).toContain('WATCHPACK_POLLING: "true"');
+    expect(playwrightConfig).toContain('CHOKIDAR_USEPOLLING: "true"');
     expect(playwrightConfig).toContain("timeout: 60_000");
     expect(playwrightConfig).toContain("workers: 1");
     expect(workflow).toContain('PLAYWRIGHT_BASE_URL: "http://127.0.0.1:3100"');
@@ -200,17 +202,31 @@ describe("ci harness dependency closure", () => {
     expect(playwrightConfig).toContain('process.env.E2E_AUTH_SMOKE ??= "0"');
     expect(authSpec).toContain('process.env.E2E_AUTH_SMOKE === "1"');
     expect(dashboardSpec).toContain('process.env.E2E_AUTH_SMOKE === "1"');
+    expect(authSpec).toContain("test.describe.skip");
+    expect(dashboardSpec).toContain("test.describe.skip");
   });
 
   it("keeps marketing smoke navigation on bounded domcontentloaded waits", async () => {
     const helper = await readFile(join(process.cwd(), "e2e/helpers/navigation.ts"), "utf8");
+    const globalSetup = await readFile(join(process.cwd(), "e2e/global-setup.ts"), "utf8");
     const changelogSpec = await readFile(
       join(process.cwd(), "e2e/smoke/changelog.spec.ts"),
       "utf8",
     );
     const footerSpec = await readFile(join(process.cwd(), "e2e/smoke/footer.spec.ts"), "utf8");
+    const playwrightConfig = await readFile(
+      join(process.cwd(), "e2e/playwright.config.ts"),
+      "utf8",
+    );
 
+    expect(playwrightConfig).toContain('globalSetup: "./global-setup.ts"');
+    expect(globalSetup).toContain('"/changelog"');
+    expect(globalSetup).toContain("ROUTE_PREWARM_TIMEOUT_MS");
     expect(helper).toContain('waitUntil: "domcontentloaded"');
+    expect(helper).toContain("NAVIGATION_RETRIES");
+    expect(helper).toContain("page.request.get");
+    expect(helper).toContain("page.goto: Timeout");
+    expect(helper).toContain("net::ERR_ABORTED");
     expect(changelogSpec).toContain("gotoMarketingPage");
     expect(footerSpec).toContain("gotoMarketingPage");
   });
