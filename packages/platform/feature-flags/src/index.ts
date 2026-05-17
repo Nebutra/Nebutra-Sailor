@@ -371,6 +371,11 @@ export const FLAGS = {
   // `canvas`): reel-canvas-ui + knowledge-rag + collab.
   CANVAS_DEMO: "canvas-demo",
 
+  // Cinema — agentic film-production pipeline (off by default; opt-in per
+  // tenant). WIP capability absorption (codename `cinema`): cinema + tts +
+  // video-compose.
+  CINEMA_DEMO: "cinema-demo",
+
   // Auth — Wave 2 dev/prod rollout gates.
   // Consumed via `@nebutra/auth/features.ts` (env first, this service second).
   // Names mirror AuthCapabilities in `packages/iam/auth/src/types.ts`.

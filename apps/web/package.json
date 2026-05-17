@@ -27,6 +27,7 @@
     "@nebutra/audit": "workspace:*",
     "@nebutra/auth": "workspace:*",
     "@nebutra/china-compliance": "workspace:*",
+    "@nebutra/cinema": "workspace:*",
     "@nebutra/db": "workspace:*",
     "@nebutra/design-tokens": "workspace:*",
     "@nebutra/email": "workspace:*",

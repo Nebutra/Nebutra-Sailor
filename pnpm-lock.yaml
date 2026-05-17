@@ -1080,6 +1080,9 @@ importers:
       '@nebutra/china-compliance':
         specifier: workspace:*
         version: link:../../packages/ops/china-compliance
+      '@nebutra/cinema':
+        specifier: workspace:*
+        version: link:../../packages/ai/cinema
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
@@ -1273,9 +1276,6 @@ importers:
       '@nebutra/agent-runtime':
         specifier: workspace:*
         version: link:../../packages/ai/agent-runtime
-      '@nebutra/agent-runtime-adapters':
-        specifier: workspace:*
-        version: link:../../packages/ai/agent-runtime-adapters
       '@nebutra/agents':
         specifier: workspace:*
         version: link:../../packages/ai/agents
@@ -1403,28 +1403,6 @@ importers:
 
   packages/ai/agent-runtime:
     dependencies:
-      zod:
-        specifier: ^4.3.6
-        version: 4.3.6
-    devDependencies:
-      '@types/node':
-        specifier: 'catalog:'
-        version: 22.19.15
-      tsup:
-        specifier: 'catalog:'
-        version: 8.5.1(@swc/core@1.15.18(@swc/helpers@0.5.19))(jiti@2.6.1)(postcss@8.5.8)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: ^4.0.18
-        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.2.0))(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
-
-  packages/ai/agent-runtime-adapters:
-    dependencies:
-      '@nebutra/agent-runtime':
-        specifier: workspace:*
-        version: link:../agent-runtime
       zod:
         specifier: ^4.3.6
         version: 4.3.6
