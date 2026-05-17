@@ -132,39 +132,40 @@ describe("UI/UX audit remediation invariants", () => {
 
     expect(dashboard).toContain("CommandCenter");
     expect(dashboard).toContain("max-w-[1440px]");
-    expect(dashboard).toContain("xl:grid-cols-[minmax(0,1fr)_22rem]");
+    expect(dashboard).toContain("if (!summary?.day) return null");
+    expect(dashboard).toContain("if (!tenantId) return null");
     expect(dashboard).toContain("snapshotMeta");
     expect(dashboard).toContain("details.activeUsers");
-    expect(dashboard).toContain("empty.noSnapshot");
     expect(dashboard).toContain("meta.latestDay");
-    expect(skeletons).toContain("lg:grid-cols-[minmax(0,1fr)_minmax(26rem,34rem)]");
+    expect(skeletons).toContain("max-w-3xl");
     expect(translations).toContain('"commandCenter"');
     expect(dashboard).not.toContain("Atmospheric brand glow");
     expect(dashboard).not.toContain("max-w-2xl flex-col items-center");
     expect(dashboard).not.toContain("DashboardHint");
+    expect(dashboard).not.toContain("GettingStarted");
+    expect(dashboard).not.toContain("CommandSurfaceButton");
+    expect(dashboard).not.toContain("ModePills");
+    expect(dashboard).not.toContain("demo_org");
   });
 
-  it("keeps recent dashboard sessions visible with an honest empty state", () => {
+  it("hides recent dashboard sessions until real sessions exist", () => {
     const recentSessions = readFromRepo("apps/web/src/components/onboarding/recent-sessions.tsx");
-    const translations = readFromRepo("packages/platform/i18n/locales/en.json");
 
-    expect(recentSessions).toContain("emptyTitle");
-    expect(recentSessions).toContain("emptyDescription");
+    expect(recentSessions).toContain("if (sessions.length === 0) return null");
     expect(recentSessions).toContain("space-y-2");
+    expect(recentSessions).not.toContain("emptyTitle");
+    expect(recentSessions).not.toContain("emptyDescription");
     expect(recentSessions).not.toContain("border-dashed");
-    expect(recentSessions).not.toContain("if (sessions.length === 0) return null");
-    expect(translations).toContain('"No recent sessions yet"');
   });
 
-  it("keeps dashboard onboarding as a compact right-rail checklist", () => {
-    const gettingStarted = readFromRepo("apps/web/src/components/onboarding/getting-started.tsx");
+  it("keeps onboarding scaffolding off the dashboard overview", () => {
+    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/page.tsx");
     const skeletons = readFromRepo("apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx");
 
-    expect(gettingStarted).toContain('data-tour-id="getting-started"');
-    expect(gettingStarted).toContain("divide-y divide-neutral-5");
-    expect(gettingStarted).not.toContain("md:grid-cols-2 xl:grid-cols-1");
-    expect(gettingStarted).not.toContain("rounded-xl border p-3.5");
-    expect(skeletons).toContain("space-y-px overflow-hidden");
+    expect(dashboard).not.toContain("GettingStarted");
+    expect(dashboard).not.toContain("OnboardingSkeleton");
+    expect(skeletons).not.toContain("OnboardingSkeleton");
+    expect(skeletons).not.toContain("space-y-px overflow-hidden");
   });
 
   it("uses compact dashboard metric metadata instead of oversized nested cards", () => {

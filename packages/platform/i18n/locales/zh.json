@@ -904,25 +904,14 @@
       },
       "meta": {
         "snapshot": "快照",
-        "source": "来源",
         "cadence": "频率",
         "tenant": "租户",
-        "state": "状态",
         "daily": "每日",
         "latestDay": "{day}",
-        "awaiting": "等待中",
-        "notConnected": "未连接",
         "users": "租户用户",
         "events": "事件流",
         "funnel": "漏斗",
         "billing": "计费"
-      },
-      "empty": {
-        "pending": "待连接",
-        "connectData": "连接数据",
-        "noSnapshot": "暂无仓库快照",
-        "awaitingSignals": "等待信号",
-        "noBillingFeed": "暂无计费数据"
       }
     },
     "recentSessions": {
@@ -931,8 +920,6 @@
       "viewAll": "查看全部 →",
       "newChat": "新建对话",
       "untitled": "未命名会话",
-      "emptyTitle": "暂无最近会话",
-      "emptyDescription": "开始对话、数据审阅、工作流或搜索会话后，它们会固定在这里作为你的工作队列。",
       "messageCount": "{count, plural, =1 {1 条消息} other {# 条消息}}"
     },
     "gettingStarted": {
