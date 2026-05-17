@@ -1,6 +1,32 @@
 import type { ReelGraph } from "@nebutra/reel";
 import { render } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
+
+/**
+ * `@lobehub/ui` exposes only its full barrel (no `./Button` subpath), which
+ * transitively pulls `@emoji-mart/data` JSON that the jsdom test runner can't
+ * import without an attribute. The component uses the real design-system
+ * `Button` in prod/Storybook; for this mount-only smoke test we stub the
+ * barrel with a minimal native button (behaviour is covered by the pure
+ * adapter suite, not here).
+ */
+vi.mock("@lobehub/ui", () => ({
+  Button: ({
+    children,
+    onClick,
+    "aria-label": ariaLabel,
+  }: {
+    children?: ReactNode;
+    onClick?: () => void;
+    "aria-label"?: string;
+  }) => (
+    <button type="button" aria-label={ariaLabel} onClick={onClick}>
+      {children}
+    </button>
+  ),
+}));
+
 import { NodeGraphCanvas } from "../node-graph-canvas";
 
 /**

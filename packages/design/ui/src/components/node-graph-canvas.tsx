@@ -8,8 +8,26 @@
  * immutable `ReelGraph` and surfaced through `onChange`. Edge creation that
  * would make the graph cyclic is rejected via reel's own `hasCycleFrom`
  * guard and reported through an accessible inline status region.
+ *
+ * Design-system utilization: chrome uses the shared `Button` primitive
+ * (re-exported by `@nebutra/ui/components` from @lobehub/ui) and Geist icons
+ * from `@nebutra/icons`; xyflow surfaces are themed through xyflow's own
+ * CSS custom properties bound to Nebutra semantic tokens (no `!important`
+ * overrides). The custom xyflow node is intentionally NOT wrapped in the
+ * heavy `Card` pattern: an xyflow node must own its sizing and the two
+ * connection `Handle`s, which a Card wrapper would obscure — see
+ * docs/capabilities/canvas/ANTI_PATTERNS.md.
  */
 
+import {
+  CrossSmall,
+  Eye,
+  FileText,
+  Image as ImageIcon,
+  Layers,
+  Sparkles,
+  Video,
+} from "@nebutra/icons";
 import type { ReelGraph, ReelNodeType } from "@nebutra/reel";
 import {
   Background,
@@ -26,8 +44,16 @@ import {
   ReactFlowProvider,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import { Button } from "@lobehub/ui";
 import { cva } from "class-variance-authority";
-import { useCallback, useId, useMemo, useState } from "react";
+import {
+  type ComponentType,
+  type CSSProperties,
+  useCallback,
+  useId,
+  useMemo,
+  useState,
+} from "react";
 import { cn } from "../utils/cn";
 import { AnimateIn } from "./animate-in";
 import {
@@ -60,6 +86,32 @@ const NODE_TYPE_LABEL: Record<ReelNodeType, string> = {
   analyze: "Analyze",
 };
 
+/** Geist icon per reel node type — uses @nebutra/icons (product-surface default). */
+const NODE_TYPE_ICON: Record<ReelNodeType, ComponentType<{ size?: number }>> = {
+  text: FileText,
+  image: ImageIcon,
+  "gen-image": Sparkles,
+  "gen-video": Video,
+  storyboard: Layers,
+  analyze: Eye,
+};
+
+/**
+ * Bind xyflow's themeable surfaces to Nebutra semantic tokens via its
+ * documented CSS custom properties (verified against @xyflow/react@12.10.2),
+ * instead of fighting the default stylesheet with `!important`.
+ */
+const XYFLOW_TOKEN_THEME: CSSProperties = {
+  ["--xy-background-pattern-color" as string]: "var(--neutral-6)",
+  ["--xy-edge-stroke" as string]: "var(--neutral-8)",
+  ["--xy-connectionline-stroke" as string]: "var(--neutral-8)",
+  ["--xy-handle-background-color" as string]: "var(--neutral-9)",
+  ["--xy-handle-border-color" as string]: "var(--neutral-7)",
+  ["--xy-controls-button-background-color" as string]: "var(--neutral-2)",
+  ["--xy-controls-button-border-color" as string]: "var(--neutral-7)",
+  ["--xy-controls-button-color" as string]: "var(--neutral-11)",
+};
+
 const nodeCardVariants = cva(
   "min-w-[160px] rounded-lg border bg-neutral-2 px-3 py-2 text-neutral-12 shadow-sm transition-colors",
   {
@@ -76,16 +128,18 @@ const nodeCardVariants = cva(
 /** Single custom node renderer for every reel node type. */
 function ReelFlowNode({ data }: { data: FlowNode["data"] }) {
   const reelType = data.reelType as ReelNodeType;
+  const TypeIcon = NODE_TYPE_ICON[reelType] ?? Layers;
   return (
     <div className={nodeCardVariants({ ready: data.hasOutput })}>
-      <Handle type="target" position={Position.Left} className="!bg-neutral-9" />
-      <div className="text-xs font-medium text-neutral-11 uppercase tracking-wide">
+      <Handle type="target" position={Position.Left} />
+      <div className="flex items-center gap-1.5 text-xs font-medium text-neutral-11 uppercase tracking-wide">
+        <TypeIcon size={13} />
         {NODE_TYPE_LABEL[reelType] ?? reelType}
       </div>
       <div className="mt-0.5 text-sm text-neutral-12">
         {data.hasOutput ? "Has output" : "Not run yet"}
       </div>
-      <Handle type="source" position={Position.Right} className="!bg-neutral-9" />
+      <Handle type="source" position={Position.Right} />
     </div>
   );
 }
@@ -162,6 +216,7 @@ export function NodeGraphCanvas({
   return (
     <AnimateIn preset="emerge">
       <div
+        style={XYFLOW_TOKEN_THEME}
         className={cn(
           "relative h-[480px] w-full overflow-hidden rounded-xl border border-neutral-7 bg-neutral-1",
           className,
@@ -181,25 +236,26 @@ export function NodeGraphCanvas({
             fitView
             proOptions={{ hideAttribution: true }}
           >
-            <Background className="!bg-neutral-1" color="var(--neutral-6)" />
-            <Controls showInteractive={!readOnly} className="!border-neutral-7 !bg-neutral-2" />
+            <Background color="var(--neutral-6)" />
+            <Controls showInteractive={!readOnly} />
             {rejection ? (
               <Panel position="top-center">
                 <div
                   id={statusId}
                   role="alert"
                   aria-live="assertive"
-                  className="rounded-md border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive"
+                  className="flex items-center gap-2 rounded-md border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive"
                 >
-                  {rejection}
-                  <button
-                    type="button"
+                  <span>{rejection}</span>
+                  <Button
+                    size="small"
+                    type="text"
+                    icon={<CrossSmall size={14} />}
                     aria-label="Dismiss connection error"
                     onClick={() => setRejection(null)}
-                    className="ml-3 rounded px-1 text-destructive underline"
                   >
                     Dismiss
-                  </button>
+                  </Button>
                 </div>
               </Panel>
             ) : null}
