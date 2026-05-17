@@ -205,6 +205,45 @@ model OrganizationInvitation {
   @@schema("public")
 }
 
+// ── Notification Center ─────────────────────────────────────────────────────
+// Provider-agnostic notification inbox and user preference storage. The user
+// and tenant identifiers intentionally stay as strings so Clerk, Better Auth,
+// Auth.js, and service tokens can share the same durable notification layer.
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  tenantId  String   @default("") @map("tenant_id")
+  type      String   @db.VarChar(120)
+  title     String   @db.VarChar(200)
+  body      String   @db.Text
+  data      Json     @default("{}")
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId, tenantId, read, createdAt(sort: Desc)])
+  @@index([tenantId, createdAt(sort: Desc)])
+  @@map("notifications")
+  @@schema("public")
+}
+
+model NotificationPreference {
+  id                 String   @id @default(cuid())
+  userId             String   @map("user_id")
+  tenantId           String   @default("") @map("tenant_id")
+  channel            String   @db.VarChar(20)
+  enabled            Boolean  @default(true)
+  disabledCategories String[] @default([]) @map("disabled_categories")
+  frequency          String   @default("immediate") @db.VarChar(20)
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, tenantId, channel])
+  @@index([tenantId, channel])
+  @@map("notification_preferences")
+  @@schema("public")
+}
+
 // ============================================
 // Content
 // ============================================

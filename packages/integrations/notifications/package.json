@@ -9,11 +9,11 @@
     "productionReady": false,
     "requires": [
       "NOVU_API_KEY (managed)",
-      "or direct dispatchers plus durable preference and in-app stores"
+      "or Prisma-backed direct notification stores"
     ],
     "gaps": [
       "Novu provider adapter stubs — no batching, retries limited",
-      "Direct production mode requires injected durable preference and in-app stores",
+      "Direct production mode requires a database migration and generated Prisma client",
       "Provider health telemetry still requires an external monitor; direct delivery attempts now expose retry telemetry"
     ]
   },
@@ -35,6 +35,10 @@
     "./direct": {
       "types": "./dist/providers/direct.d.ts",
       "import": "./dist/providers/direct.js"
+    },
+    "./prisma": {
+      "types": "./dist/prisma.d.ts",
+      "import": "./dist/prisma.js"
     }
   },
   "files": [

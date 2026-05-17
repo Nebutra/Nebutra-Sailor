@@ -36,6 +36,8 @@ export {
   getNotificationProvider,
   setNotificationProvider,
 } from "./factory";
+export type { PrismaNotificationClient, PrismaNotificationStores } from "./prisma";
+export { createPrismaNotificationStores } from "./prisma";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
 export { DirectProvider } from "./providers/direct";
 export { NovuProvider } from "./providers/novu";
