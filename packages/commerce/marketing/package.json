@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/marketing",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Marketing infrastructure for Nebutra - Product Hunt integration, testimonials, social proof, and attribution tracking",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/collab",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Multi-tenant, transport-agnostic real-time collaborative sync layer: tenant-partitioned CRDT rooms (Yjs) with pluggable snapshot store + transport seams",
   "private": false,
   "license": "MIT",
