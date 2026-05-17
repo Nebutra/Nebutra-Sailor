@@ -1543,19 +1543,19 @@ model AuthAccount {
 
 /// @conditional(auth=betterauth)
 model AuthSession {
-  id                    String   @id @default(cuid())
-  userId                String   @map("user_id")
-  token                 String   @unique
-  expiresAt             DateTime @map("expires_at")
-  ipAddress             String?  @map("ip_address")
-  userAgent             String?  @map("user_agent")
+  id                   String   @id @default(cuid())
+  userId               String   @map("user_id")
+  token                String   @unique
+  expiresAt            DateTime @map("expires_at")
+  ipAddress            String?  @map("ip_address")
+  userAgent            String?  @map("user_agent")
   // Active organization id, populated by Better Auth's organization plugin
   // when the user calls `auth.api.setActiveOrganization()`. Read by the
   // tenant bridge middleware in Phase 2 to call `runWithTenant()`.
-  activeOrganizationId  String?  @map("active_organization_id")
-  createdAt             DateTime @default(now()) @map("created_at")
-  updatedAt             DateTime @updatedAt @map("updated_at")
-  user                  AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activeOrganizationId String?  @map("active_organization_id")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+  user                 AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([token])
@@ -1838,4 +1838,28 @@ model BAPasskey {
   @@index([userId])
   @@map("passkey")
   @@schema("auth")
+}
+
+// ============================================
+// Atelier — agentic creative canvas
+// ============================================
+
+// One row per canvas. The scene (Excalidraw-subset elements + files) is a
+// single JSON column — the source product's one-blob-per-canvas shape, but
+// with an organization_id + RLS instead of an implicit single user. The
+// logical canvas id is unique *within* an organization, not globally.
+model AtelierCanvas {
+  pk             String   @id @default(cuid())
+  id             String
+  organizationId String   @map("organization_id")
+  name           String
+  scene          Json     @default("{\"elements\":[],\"files\":[]}")
+  thumbnail      String?
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@unique([organizationId, id])
+  @@index([organizationId, updatedAt])
+  @@map("atelier_canvas")
+  @@schema("public")
 }
