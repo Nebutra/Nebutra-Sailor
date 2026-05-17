@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/auth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Provider-agnostic auth abstraction layer (Clerk, Better Auth, NextAuth/Auth.js v5, Supabase)",
   "type": "module",

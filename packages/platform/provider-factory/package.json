@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/provider-factory",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Neutral provider-resolution primitive: the identical 'explicit ?? env ?? detect-chain ?? fallback' selection + prod-guard shared by every provider-agnostic Nebutra package. No instantiation logic.",
   "private": false,
   "license": "MIT",

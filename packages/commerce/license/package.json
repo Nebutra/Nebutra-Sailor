@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/license",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "License domain logic — issuance, validation, and lifecycle events",
   "private": false,
   "license": "MIT",
