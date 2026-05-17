@@ -23,21 +23,22 @@ infrastructure*; only the differentiated film-production IP is PORT.
 | **Consistency-ranked best-frame selection** | **PORT** | `@nebutra/cinema` `selectBestFrame` |
 | **Novel→compressed→scene/event segmentation** | **PORT** | `@nebutra/cinema` `compressNovel`/`extractScenes` |
 | **Film-director composition template** | **PORT** | `@nebutra/cinema` `runFilmPipeline` |
-| TTS / narration audio | **PORT (next)** | new `@nebutra/tts` — provider abstraction (provider-factory pattern) |
-| FFmpeg mux/concat/transitions | **PORT (next)** | new `@nebutra/video-compose` |
+| TTS / narration audio | **PORT (done)** | `@nebutra/tts` — provider abstraction, zero-config mock, provider-factory selection |
+| FFmpeg mux/concat/transitions | **PORT (done)** | `@nebutra/video-compose` — pure timeline/EDL builder + compositor abstraction |
 | Multi-tenancy / auth (source has none) | **SKIP** | — |
 
-**Net PORT: the `@nebutra/cinema` differentiated IP (delivered)** + two
-generic media-integration packages (`tts`, `video-compose`) scheduled as
-follow-on increments (repo norm: WRAP-new on next touch). The video-pipeline
-*infrastructure* was ≥80 % covered → SKIP-heavy, not an integral product PORT
-(Kill-Criteria honoured).
+**Net PORT (all delivered): `@nebutra/cinema` (differentiated IP) +
+`@nebutra/tts` + `@nebutra/video-compose` (the two video-pipeline gaps).**
+The video-pipeline *infrastructure* was ≥80 % covered → SKIP-heavy, not an
+integral product PORT (Kill-Criteria honoured).
 
 ## Delivered
 
 | Package | Tests |
 |---|---|
 | `@nebutra/cinema` | 11/11 (camera tree incl. acyclic-guard via graph-model, best-frame, novel-segment, film-director) |
+| `@nebutra/tts` | 9/9 (deterministic mock, provider resolution, fail-loud stubs) |
+| `@nebutra/video-compose` | 9/9 (pure timeline/crossfade math, mock compositor) |
 
 Everything in `@nebutra/cinema` is dependency-injected (no model/IO/tenant
 coupling) — unit-testable and tenant-agnostic by construction. The real
