@@ -355,6 +355,9 @@ export const FLAGS = {
   // Off by default; opt-in per tenant. WIP capability absorption.
   AGENT_RUNTIME_DEMO: "agent-runtime-demo",
 
+  // Layer 0 — foundational capability demo (off by default; opt-in per tenant).
+  LAYER0_DEMO: "layer0-demo",
+
   // Atelier — agentic creative canvas (off by default; opt-in per tenant).
   // Kill switch / enable via KILL_SWITCH_ATELIER_CANVAS env or flag store.
   ATELIER_CANVAS: "atelier-canvas",

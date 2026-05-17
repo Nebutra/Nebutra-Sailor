@@ -1,0 +1,32 @@
+{
+  "name": "@nebutra/sandbox-runtime",
+  "version": "0.1.0",
+  "description": "Unified sandbox runtime router for local and remote execution providers",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "featureId": "sandbox-runtime",
+    "category": "ai",
+    "summary": "Sandbox trait, provider router, doctor, and debug tools"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/errors": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

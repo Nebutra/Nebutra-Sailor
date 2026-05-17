@@ -48,6 +48,7 @@ export interface AppErrorOptions {
   statusCode?: number;
   cause?: Error;
   metadata?: Record<string, unknown>;
+  suggestion?: string;
   isOperational?: boolean;
 }
 
@@ -56,6 +57,7 @@ export class AppError extends Error {
   public readonly statusCode: number;
   public readonly isOperational: boolean;
   public readonly metadata?: Record<string, unknown>;
+  public readonly suggestion?: string;
   public readonly timestamp: string;
 
   constructor(options: AppErrorOptions) {
@@ -66,6 +68,9 @@ export class AppError extends Error {
     this.isOperational = options.isOperational ?? true;
     if (options.metadata !== undefined) {
       this.metadata = options.metadata;
+    }
+    if (options.suggestion !== undefined) {
+      this.suggestion = options.suggestion;
     }
     this.timestamp = new Date().toISOString();
 
@@ -83,8 +88,37 @@ export class AppError extends Error {
       message: this.message,
       statusCode: this.statusCode,
       timestamp: this.timestamp,
+      suggestion: this.suggestion,
       metadata: this.metadata,
     };
+  }
+}
+
+export interface CapabilityErrorOptions {
+  statusCode?: number;
+  cause?: Error;
+  metadata?: Record<string, unknown>;
+  suggestion: string;
+  code?: ErrorCode;
+}
+
+export class CapabilityError extends AppError {
+  public readonly capability: string;
+
+  constructor(capability: string, message: string, options: CapabilityErrorOptions) {
+    super({
+      code: options.code ?? ERROR_CODES.EXTERNAL_SERVICE_ERROR,
+      message,
+      statusCode: options.statusCode ?? 502,
+      ...(options.cause !== undefined ? { cause: options.cause } : {}),
+      suggestion: options.suggestion,
+      metadata: {
+        capability,
+        ...(options.metadata ?? {}),
+      },
+    });
+    this.name = "CapabilityError";
+    this.capability = capability;
   }
 }
 
@@ -213,7 +247,12 @@ export function toApiError(error: unknown, requestId?: string): ApiErrorResponse
       error: {
         code: error.code,
         message: error.message,
-        ...(error.metadata !== undefined && { details: error.metadata }),
+        ...((error.metadata !== undefined || error.suggestion !== undefined) && {
+          details: {
+            ...(error.metadata ?? {}),
+            ...(error.suggestion !== undefined && { suggestion: error.suggestion }),
+          },
+        }),
       },
       ...(requestId !== undefined && { requestId }),
     };

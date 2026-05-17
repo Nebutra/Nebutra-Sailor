@@ -77,6 +77,7 @@ describe("FLAGS constants", () => {
     expect(FLAGS.MULTI_TENANT).toBe("multi-tenant");
     expect(FLAGS.TEAM_COLLABORATION).toBe("team-collaboration");
     expect(FLAGS.API_V2).toBe("api-v2");
+    expect(FLAGS.LAYER0_DEMO).toBe("layer0-demo");
   });
 
   it("has unique values for all flags", () => {

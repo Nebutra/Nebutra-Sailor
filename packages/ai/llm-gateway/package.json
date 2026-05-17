@@ -1,0 +1,33 @@
+{
+  "name": "@nebutra/llm-gateway",
+  "version": "0.1.0",
+  "description": "Capability-based LLM gateway with routing, fallback, prefix cache, and usage ledger",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "featureId": "llm-gateway",
+    "category": "ai",
+    "summary": "Routing, fallback, prefix prompt cache, and cost tracking over provider-registry"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/provider-registry": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

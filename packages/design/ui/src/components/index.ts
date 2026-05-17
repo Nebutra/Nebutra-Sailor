@@ -76,6 +76,11 @@ export {
 } from "./animate-in";
 export * from "./ascii-text";
 export * from "./changelog-widget";
+// Reel node-graph editor (consumes @nebutra/reel verbatim)
+export {
+  NodeGraphCanvas,
+  type NodeGraphCanvasProps,
+} from "./node-graph-canvas";
 // Phase 10: Missing root exports
 export * from "./onboarding-checklist";
 export * from "./team-chat";

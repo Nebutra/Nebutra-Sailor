@@ -1,0 +1,35 @@
+{
+  "name": "@nebutra/content-store",
+  "version": "0.1.0",
+  "description": "Local-first semantic filesystem with rebuildable search index",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "featureId": "content-store",
+    "category": "ai",
+    "summary": "File-as-truth content store with frontmatter-aware indexing"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dao-xyz/sqlite3-vec": "0.0.19",
+    "@nebutra/errors": "workspace:*",
+    "better-sqlite3": "12.10.0",
+    "fastembed": "2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

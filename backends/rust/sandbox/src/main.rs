@@ -1,8 +1,8 @@
 //! Nebutra code execution sandbox service.
 //!
 //! Phase 1 (now):  HTTP harness — /health 200, /execute 501, protocol-aligned
-//!                 `/api/v1/sandbox/exec` that is FAIL-CLOSED (never runs
-//!                 untrusted code; returns a structured refusal).
+//!                 `/api/v1/sandbox/exec` that is FAIL-CLOSED for arbitrary
+//!                 code and exposes one isolated built-in hello-world path.
 //! Phase 2:        Wasmtime runner — WASI preview2, per-request memory limits.
 //! Phase 3:        Firecracker microVM runner — full OS-level isolation.
 //!
@@ -14,8 +14,8 @@
 //! `packages/ai/agent-runtime/src/sandbox.ts` (camelCase on the wire).
 //!
 //! ExternalSandbox posture: until a real isolation backend (Wasmtime /
-//! Firecracker) is wired, every exec request is refused. A sandbox that does
-//! not actually isolate is more dangerous than no sandbox, so we never fake it.
+//! Firecracker) is wired, arbitrary exec requests are refused. The only Phase-1
+//! success path is an in-process built-in command with no shell or OS process.
 
 use axum::{
     http::StatusCode,
@@ -37,14 +37,17 @@ enum CapabilityPolicy {
     DangerFullAccess,
     ReadOnly {
         #[serde(default)]
+        #[serde(alias = "networkAccess")]
         network_access: bool,
     },
     ExternalSandbox {
         #[serde(default)]
+        #[serde(alias = "networkAccess")]
         network_access: bool,
     },
     WorkspaceWrite {
         #[serde(default)]
+        #[serde(alias = "networkAccess")]
         network_access: bool,
     },
 }
@@ -75,13 +78,15 @@ struct SandboxExecResult {
 
 /// Decision for an incoming exec request before any execution is attempted.
 enum Admission {
+    /// Allowed only for built-in commands that do not spawn a shell/process.
+    BuiltinEcho(&'static str),
     /// Refused outright (fail-closed); carries an opaque reason.
     Refused(&'static str),
 }
 
 /// Fail-closed admission: tenant scope must be present, the most dangerous
-/// posture is rejected, and — because no real isolation backend is wired —
-/// everything else is also refused rather than executed.
+/// posture is rejected, arbitrary commands are refused, and the hello-world
+/// doctor path is handled by a built-in executor that does not spawn a shell.
 fn admit(req: &SandboxExecRequest) -> Admission {
     if req.tenant_id.trim().is_empty() || req.thread_id.trim().is_empty() {
         return Admission::Refused("missing tenant/thread scope");
@@ -89,7 +94,12 @@ fn admit(req: &SandboxExecRequest) -> Admission {
     if let CapabilityPolicy::DangerFullAccess = req.capability_policy {
         return Admission::Refused("danger_full_access refused for multi-tenant delegation");
     }
-    Admission::Refused("no isolation backend wired (Wasmtime/Firecracker Phase 2)")
+    match req.command.trim() {
+        "echo sandbox ok" | "echo 'sandbox ok'" | "echo \"sandbox ok\"" => {
+            Admission::BuiltinEcho("sandbox ok\n")
+        }
+        _ => Admission::Refused("arbitrary execution requires an isolation backend"),
+    }
 }
 
 #[tokio::main]
@@ -124,7 +134,7 @@ async fn health() -> impl IntoResponse {
     Json(json!({
         "status": "healthy",
         "service": "sandbox",
-        "phase": "stub — Wasmtime not yet wired (fail-closed)"
+        "phase": "builtin-checks — arbitrary exec fail-closed"
     }))
 }
 
@@ -146,6 +156,14 @@ async fn execute_stub() -> impl IntoResponse {
 /// returns a fabricated [`SandboxExecResult`] for unexecuted code.
 async fn exec(Json(req): Json<SandboxExecRequest>) -> impl IntoResponse {
     match admit(&req) {
+        Admission::BuiltinEcho(output) => (
+            StatusCode::OK,
+            Json(json!({
+                "exitCode": 0,
+                "aggregatedOutput": output,
+                "executedOn": "local_builtin",
+            })),
+        ),
         Admission::Refused(reason) => (
             StatusCode::FORBIDDEN,
             Json(json!({
@@ -194,8 +212,8 @@ mod tests {
     }
 
     #[test]
-    fn fail_closed_even_for_safe_posture() {
-        // No isolation backend wired -> still refused, never executed.
+    fn refuses_arbitrary_command_even_for_safe_posture() {
+        // No isolation backend wired -> arbitrary commands are still refused.
         assert!(matches!(
             admit(&req(
                 CapabilityPolicy::ExternalSandbox {
@@ -205,6 +223,18 @@ mod tests {
             )),
             Admission::Refused(_)
         ));
+    }
+
+    #[test]
+    fn allows_builtin_echo_without_shell() {
+        let mut r = req(
+            CapabilityPolicy::ExternalSandbox {
+                network_access: false,
+            },
+            "org_a",
+        );
+        r.command = "echo sandbox ok".into();
+        assert!(matches!(admit(&r), Admission::BuiltinEcho("sandbox ok\n")));
     }
 
     #[test]
