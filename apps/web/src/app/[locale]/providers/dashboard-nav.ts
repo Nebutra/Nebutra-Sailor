@@ -1,3 +1,4 @@
+import { routing } from "@nebutra/i18n/routing";
 import {
   Robot as Bot,
   ChartTrendingUp as ChartSpline,
@@ -82,9 +83,23 @@ export function isWorkspaceId(value: string): value is WorkspaceId {
   return WORKSPACES.some((item) => item.id === value);
 }
 
+const LOCALE_PREFIXES = new Set<string>(routing.locales);
+
+export function stripLocalePrefix(pathname: string) {
+  const segments = pathname.split("/").filter(Boolean);
+  const [firstSegment, ...restSegments] = segments;
+
+  if (firstSegment && LOCALE_PREFIXES.has(firstSegment)) {
+    return restSegments.length > 0 ? `/${restSegments.join("/")}` : "/";
+  }
+
+  return pathname || "/";
+}
+
 export function isActiveRoute(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
+  const normalizedPathname = stripLocalePrefix(pathname);
+  if (href === "/") return normalizedPathname === "/";
+  return normalizedPathname === href || normalizedPathname.startsWith(`${href}/`);
 }
 
 function formatSegment(segment: string) {
@@ -96,11 +111,12 @@ function formatSegment(segment: string) {
 }
 
 export function buildBreadcrumbs(pathname: string) {
-  if (pathname === "/") {
+  const segments = stripLocalePrefix(pathname).split("/").filter(Boolean);
+
+  if (segments.length === 0) {
     return [{ href: "/", label: "Overview" }];
   }
 
-  const segments = pathname.split("/").filter(Boolean);
   const crumbs = [{ href: "/", label: "Overview" }];
 
   segments.forEach((segment, index) => {

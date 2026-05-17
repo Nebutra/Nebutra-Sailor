@@ -165,6 +165,39 @@
         "forbiddenContains": ["emptyTitle", "emptyDescription", "border-dashed"]
       },
       {
+        "name": "web-dashboard-header-chrome-single-source",
+        "description": "Dashboard header chrome must stay quiet and single-purpose: one page title, progressive breadcrumb only when useful, no duplicated top nav.",
+        "file": "apps/web/src/app/[locale]/providers/design-system-shell.tsx",
+        "requiredContains": [
+          "currentBreadcrumb?.label ?? \"Dashboard\"",
+          "breadcrumbs.length <= 1 && \"sr-only\"",
+          "aria-label=\"Open feedback dialog\"",
+          "flex shrink-0 items-center gap-1.5",
+          "<span className=\"hidden xl:inline\">Feedback</span>"
+        ],
+        "forbiddenContains": [
+          "DASHBOARD_NAV_ITEMS.slice",
+          "Workspace</p>",
+          "className=\"hidden gap-2 md:flex\""
+        ]
+      },
+      {
+        "name": "web-dashboard-header-locale-normalization",
+        "description": "Dashboard navigation state and breadcrumbs must normalize locale-prefixed routes from the shared i18n routing source.",
+        "file": "apps/web/src/app/[locale]/providers/dashboard-nav.ts",
+        "requiredContains": [
+          "import { routing } from \"@nebutra/i18n/routing\";",
+          "const LOCALE_PREFIXES = new Set<string>(routing.locales)",
+          "export function stripLocalePrefix(pathname: string)",
+          "const normalizedPathname = stripLocalePrefix(pathname);",
+          "const segments = stripLocalePrefix(pathname).split(\"/\").filter(Boolean);"
+        ],
+        "forbiddenContains": [
+          "const LOCALE_PREFIXES = new Set([\"en\", \"zh\"]);",
+          ".filter((segment, index) => index > 0 || !LOCALE_PREFIXES.has(segment))"
+        ]
+      },
+      {
         "name": "web-dashboard-copy-tokenized-for-locales",
         "description": "Dashboard experience copy must live in shared i18n messages so governance covers English and Chinese routes together.",
         "file": "packages/platform/i18n/locales/en.json",

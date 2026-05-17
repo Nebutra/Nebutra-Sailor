@@ -27,13 +27,7 @@ import { ViewTransitionLink } from "@/components/navigation/view-transition-link
 import { usePermission } from "@/hooks/usePermission";
 import type { WebProductCapabilities } from "@/lib/product-capabilities";
 import { resolvePreferredWorkspaceId } from "@/lib/workspace-selection";
-import {
-  buildBreadcrumbs,
-  DASHBOARD_NAV_GROUPS,
-  DASHBOARD_NAV_ITEMS,
-  isActiveRoute,
-  WORKSPACES,
-} from "./dashboard-nav";
+import { buildBreadcrumbs, DASHBOARD_NAV_GROUPS, isActiveRoute, WORKSPACES } from "./dashboard-nav";
 
 function HeaderAuthControls({
   supportsWorkspaceSwitching,
@@ -49,7 +43,7 @@ function HeaderAuthControls({
   const showOrgSwitcher = supportsWorkspaceSwitching && isAuthFeatureEnabledSync("organizations");
 
   return (
-    <div className="hidden items-center gap-2 sm:flex">
+    <div className="hidden items-center gap-1.5 sm:flex">
       {isSignedIn ? (
         <>
           {showOrgSwitcher && <OrgSwitcher />}
@@ -58,10 +52,10 @@ function HeaderAuthControls({
             onClick={openFeedback}
             aria-label="Open feedback dialog"
             title="Feedback"
-            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-md border border-border bg-background px-2.5 text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+            className="inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] px-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
           >
             <LifeBuoy className="size-4" aria-hidden="true" />
-            <span className="hidden lg:inline">Feedback</span>
+            <span className="hidden xl:inline">Feedback</span>
           </button>
           <LocaleSwitcher />
           <UserMenu />
@@ -70,13 +64,13 @@ function HeaderAuthControls({
         <div className="flex gap-2">
           <Link
             href="/sign-in"
-            className="rounded-md px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 dark:text-white/70 dark:hover:bg-white/10"
+            className="rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 dark:text-white/70 dark:hover:bg-white/10"
           >
             Sign In
           </Link>
           <Link
             href="/sign-up"
-            className="rounded-md bg-[image:var(--brand-gradient)] px-3 py-1.5 text-sm font-medium text-white"
+            className="rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] px-3 py-1.5 text-sm font-medium text-white"
           >
             Sign Up
           </Link>
@@ -343,25 +337,27 @@ function DesignSystemShellInner({
 
   // ─── Header slot — breadcrumbs + quick links + auth controls ─────────────
   const headerContent = (
-    <div className="flex w-full items-center justify-between gap-3">
-      <div className="min-w-0">
-        <p className="hidden text-xs text-muted-foreground min-[360px]:block">Workspace</p>
-        <p className="mt-0.5 truncate text-sm font-medium text-foreground sm:hidden">
+    <div className="flex w-full min-w-0 items-center justify-between gap-4">
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-sm font-medium text-foreground">
           {currentBreadcrumb?.label ?? "Dashboard"}
         </p>
-        <nav aria-label="Breadcrumb" className="mt-0.5 hidden sm:block">
-          <ol className="flex items-center gap-1 text-sm text-muted-foreground">
+        <nav
+          aria-label="Breadcrumb"
+          className={cn("mt-0.5 hidden md:block", breadcrumbs.length <= 1 && "sr-only")}
+        >
+          <ol className="flex min-w-0 items-center gap-1 text-xs text-muted-foreground">
             {breadcrumbs.map((crumb, index) => {
               const isLast = index === breadcrumbs.length - 1;
               return (
-                <li key={crumb.href} className="flex items-center gap-1">
-                  {index > 0 && <ChevronRight className="size-3.5" />}
+                <li key={crumb.href} className="flex min-w-0 items-center gap-1">
+                  {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
                   {isLast ? (
-                    <span className="font-medium text-foreground">{crumb.label}</span>
+                    <span className="truncate font-medium text-foreground">{crumb.label}</span>
                   ) : (
                     <ViewTransitionLink
                       href={crumb.href}
-                      className="transition-colors hover:text-foreground"
+                      className="truncate transition-colors hover:text-foreground"
                     >
                       {crumb.label}
                     </ViewTransitionLink>
@@ -373,19 +369,7 @@ function DesignSystemShellInner({
         </nav>
       </div>
 
-      <div className="hidden gap-2 md:flex">
-        {DASHBOARD_NAV_ITEMS.slice(0, 3).map((item) => (
-          <ViewTransitionLink
-            key={item.label}
-            href={item.href}
-            className="rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
-          >
-            {item.label}
-          </ViewTransitionLink>
-        ))}
-      </div>
-
-      <div className="flex items-center gap-2">
+      <div className="flex shrink-0 items-center gap-1.5">
         {planBadge}
         {notificationCenter}
         <HeaderAuthControls supportsWorkspaceSwitching={supportsWorkspaceSwitching} />
