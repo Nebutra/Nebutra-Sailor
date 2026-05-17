@@ -8,36 +8,25 @@
  * function over a typed graph instead of a mutable React cache.
  */
 
+import {
+  hasCycleFrom as gmHasCycleFrom,
+  inboundEdges as gmInboundEdges,
+} from "@nebutra/graph-model";
 import { mergeEnvelopes } from "./envelope";
 import type { NodeIOEnvelope, ReelEdge, ReelGraph, ReelNode } from "./types";
 
-/** Edges whose target is `nodeId`. */
+/**
+ * Edges whose target is `nodeId`. Thin reel-shaped wrapper over the neutral
+ * `@nebutra/graph-model` traversal — signature kept (graph-first) so the
+ * existing public contract is unchanged.
+ */
 export function inboundEdges(graph: ReelGraph, nodeId: string): readonly ReelEdge[] {
-  return graph.edges.filter((e) => e.to === nodeId);
+  return gmInboundEdges(graph.edges, nodeId);
 }
 
-/** Detect a cycle reachable from `nodeId` (depth-first, edge-following). */
+/** Detect a cycle reachable from `nodeId`. Delegates to graph-model. */
 export function hasCycleFrom(graph: ReelGraph, nodeId: string): boolean {
-  const adjacency = new Map<string, string[]>();
-  for (const e of graph.edges) {
-    const list = adjacency.get(e.from) ?? [];
-    list.push(e.to);
-    adjacency.set(e.from, list);
-  }
-  const visiting = new Set<string>();
-  const done = new Set<string>();
-  const walk = (id: string): boolean => {
-    if (visiting.has(id)) return true;
-    if (done.has(id)) return false;
-    visiting.add(id);
-    for (const next of adjacency.get(id) ?? []) {
-      if (walk(next)) return true;
-    }
-    visiting.delete(id);
-    done.add(id);
-    return false;
-  };
-  return walk(nodeId);
+  return gmHasCycleFrom(graph.edges, nodeId);
 }
 
 /**

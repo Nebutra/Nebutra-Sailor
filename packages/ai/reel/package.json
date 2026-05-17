@@ -24,6 +24,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/graph-model": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/tenant-store": "workspace:*"
   },

@@ -15,6 +15,8 @@
  * contract (lock + store base), not their schema and not each other.
  */
 
+import type { GraphEdge, GraphNode } from "@nebutra/graph-model";
+
 /** Frozen so an absorbed contract version can never be silently mutated. */
 export const NODE_IO_ENVELOPE_VERSION = "1.0" as const;
 
@@ -47,7 +49,8 @@ export interface NodeIOEnvelope {
 
 export type ReelNodeType = "text" | "image" | "gen-image" | "gen-video" | "storyboard" | "analyze";
 
-export interface ReelNode {
+/** A reel node is a `@nebutra/graph-model` node specialized with reel data. */
+export interface ReelNode extends GraphNode {
   readonly id: string;
   readonly type: ReelNodeType;
   readonly x: number;
@@ -58,7 +61,8 @@ export interface ReelNode {
   readonly output?: NodeIOEnvelope;
 }
 
-export interface ReelEdge {
+/** A reel edge is a graph edge tagged with the target input port. */
+export interface ReelEdge extends GraphEdge {
   readonly from: string;
   readonly to: string;
   /** Target input port; pairs with `NodeIOEnvelope.meta.inputType`. */
