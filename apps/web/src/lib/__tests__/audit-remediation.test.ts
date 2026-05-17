@@ -125,6 +125,18 @@ describe("UI/UX audit remediation invariants", () => {
     expect(shell).toContain("Feedback");
   });
 
+  it("keeps subscription plan status out of the dashboard header chrome", () => {
+    const layout = readFromRepo("apps/web/src/app/[locale]/(app)/layout.tsx");
+    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+    const planBadge = readFromRepo("apps/web/src/components/billing/plan-badge.tsx");
+
+    expect(layout).toContain("planBadge={<PlanBadge />}");
+    expect(layout).not.toMatch(/<DesignSystemShell[\s\S]*planBadge=\{planBadge\}/);
+    expect(shell).not.toContain("planBadge");
+    expect(planBadge).toContain("subscription status for billing/account surfaces");
+    expect(planBadge).not.toContain("shell header");
+  });
+
   it("keeps the dashboard overview decision-led instead of welcome-page centered", () => {
     const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/page.tsx");
     const skeletons = readFromRepo("apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx");

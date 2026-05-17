@@ -18,20 +18,14 @@ export default async function AppLayout({
   const { locale } = await params;
   await requireAuth();
 
-  // Render PlanBadge once on the server; pass the element to both the shell
-  // header and the account dialog (subscription tab). PlanBadge depends on
-  // server-only modules (Prisma, next/headers) — it MUST be instantiated
-  // in this Server Component, never imported from a Client Component.
-  const planBadge = <PlanBadge />;
-
   return (
     <OnboardingMount>
       <FeedbackMount>
-        <AccountDialogMount planBadge={planBadge}>
+        {/* PlanBadge depends on server-only modules; keep it in this Server Component. */}
+        <AccountDialogMount planBadge={<PlanBadge />}>
           <CommandPaletteMount>
             <DesignSystemShell
               notificationCenter={<ShellNotificationCenter locale={locale} />}
-              planBadge={planBadge}
               productCapabilities={resolveWebProductCapabilities()}
             >
               {children}

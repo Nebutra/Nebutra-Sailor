@@ -6,11 +6,14 @@ import { getTenantContext } from "@/lib/auth";
 const PROMOTE_UPGRADE_PLANS = new Set(["free", "trial", "starter"]);
 
 function formatPlanLabel(plan: string) {
-  return plan
-    .split(/[\s_-]+/)
-    .filter(Boolean)
-    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-    .join(" ");
+  const segments: string[] = [];
+
+  for (const segment of plan.split(/[\s_-]+/)) {
+    if (!segment) continue;
+    segments.push(segment.charAt(0).toUpperCase() + segment.slice(1));
+  }
+
+  return segments.join(" ");
 }
 
 function fmtCompact(n: number) {
@@ -48,12 +51,12 @@ async function readApiQuota(tenantId: string): Promise<QuotaSnapshot | null> {
 }
 
 /**
- * Server-rendered plan badge for the shell header.
+ * Server-rendered subscription status for billing/account surfaces.
  * Honesty contract:
  *   - Always shows plan label when auth is available
  *   - Shows real quota when metering returns a quota; never invents numbers
  *   - Shows Upgrade CTA only when plan is in PROMOTE_UPGRADE_PLANS
- *   - Returns null on auth failure (shell stays clean)
+ *   - Returns null on auth failure
  */
 export async function PlanBadge() {
   let plan = "free";
@@ -81,7 +84,7 @@ export async function PlanBadge() {
     : "bg-green-9";
 
   return (
-    <div data-tour-id="plan-badge" className="hidden items-center gap-2 sm:flex">
+    <div data-tour-id="plan-badge" className="flex flex-wrap items-center gap-2">
       <ViewTransitionLink
         href="/billing"
         aria-label={
@@ -112,7 +115,7 @@ export async function PlanBadge() {
           className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold text-white transition-opacity hover:opacity-90"
           style={{ background: "var(--brand-gradient)" }}
         >
-          <Sparkles className="h-3 w-3" />
+          <Sparkles className="size-3" />
           Upgrade
         </ViewTransitionLink>
       )}

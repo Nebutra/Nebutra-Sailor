@@ -177,9 +177,21 @@
         ],
         "forbiddenContains": [
           "DASHBOARD_NAV_ITEMS.slice",
+          "planBadge",
           "Workspace</p>",
           "className=\"hidden gap-2 md:flex\""
         ]
+      },
+      {
+        "name": "web-dashboard-plan-status-billing-context-only",
+        "description": "Plan status must stay in subscription or billing context, not as an ambiguous standalone header chip.",
+        "file": "apps/web/src/components/billing/plan-badge.tsx",
+        "requiredContains": [
+          "subscription status for billing/account surfaces",
+          "data-tour-id=\"plan-badge\"",
+          "flex flex-wrap items-center gap-2"
+        ],
+        "forbiddenContains": ["shell header", "hidden items-center gap-2 sm:flex"]
       },
       {
         "name": "web-dashboard-header-locale-normalization",

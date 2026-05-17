@@ -83,7 +83,6 @@ function HeaderAuthControls({
 interface Props {
   children: React.ReactNode;
   notificationCenter?: React.ReactNode;
-  planBadge?: React.ReactNode;
   productCapabilities?: WebProductCapabilities;
 }
 
@@ -126,12 +125,7 @@ function renderNextLink({
   );
 }
 
-function DesignSystemShellInner({
-  children,
-  notificationCenter,
-  planBadge,
-  productCapabilities,
-}: Props) {
+function DesignSystemShellInner({ children, notificationCenter, productCapabilities }: Props) {
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
   const { collapsed, toggle } = useSidebar();
@@ -370,7 +364,6 @@ function DesignSystemShellInner({
       </div>
 
       <div className="flex shrink-0 items-center gap-1.5">
-        {planBadge}
         {notificationCenter}
         <HeaderAuthControls supportsWorkspaceSwitching={supportsWorkspaceSwitching} />
       </div>
