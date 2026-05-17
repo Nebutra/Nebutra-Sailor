@@ -61,6 +61,7 @@
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.700.0",
     "@nebutra/logger": "workspace:*",
+    "@nebutra/provider-factory": "workspace:*",
     "@upstash/qstash": "^2.7.17",
     "bullmq": "^5.34.8",
     "ioredis": "^5.4.2",

@@ -1,4 +1,5 @@
 import { logger } from "@nebutra/logger";
+import { assertProviderAllowed, envPresent, resolveProviderType } from "@nebutra/provider-factory";
 import type { QueueConfig, QueueProvider, QueueProviderType } from "./types";
 
 // =============================================================================
@@ -14,30 +15,29 @@ import type { QueueConfig, QueueProvider, QueueProviderType } from "./types";
 
 let defaultProvider: QueueProvider | null = null;
 
-/**
- * Detect which provider to use based on available environment variables.
- */
-function detectProvider(): QueueProviderType {
-  if (process.env.QSTASH_TOKEN) return "qstash";
-  if (process.env.REDIS_URL) return "bullmq";
-  if (process.env.AWS_SQS_QUEUE_URL) return "sqs";
-  return "memory";
-}
-
-function readConfiguredProvider(): QueueProviderType | undefined {
-  const provider = process.env.QUEUE_PROVIDER?.trim();
-  return provider ? (provider as QueueProviderType) : undefined;
+// Provider selection is delegated to the shared @nebutra/provider-factory
+// primitive (identical precedence + prod-guard across every provider-agnostic
+// package); only the instantiation switch below stays queue-specific.
+function resolveQueueProvider(explicit?: QueueProviderType): QueueProviderType {
+  return resolveProviderType<QueueProviderType>({
+    explicit,
+    envVarName: "QUEUE_PROVIDER",
+    detectors: [
+      { provider: "qstash", when: envPresent("QSTASH_TOKEN") },
+      { provider: "bullmq", when: envPresent("REDIS_URL") },
+      { provider: "sqs", when: envPresent("AWS_SQS_QUEUE_URL") },
+    ],
+    fallback: "memory",
+  });
 }
 
 function assertMemoryProviderAllowed(): void {
-  if (
-    process.env.NODE_ENV === "production" &&
-    process.env.ALLOW_MEMORY_QUEUE_IN_PRODUCTION !== "true"
-  ) {
-    throw new Error(
+  assertProviderAllowed("memory", {
+    disallowedInProd: ["memory"],
+    overrideEnv: "ALLOW_MEMORY_QUEUE_IN_PRODUCTION",
+    message:
       "Refusing to use the in-memory queue provider in production. Configure QSTASH_TOKEN or REDIS_URL, or set ALLOW_MEMORY_QUEUE_IN_PRODUCTION=true for an explicit temporary override.",
-    );
-  }
+  });
 }
 
 /**
@@ -62,7 +62,7 @@ function assertMemoryProviderAllowed(): void {
  * ```
  */
 export async function createQueue(config?: QueueConfig): Promise<QueueProvider> {
-  const providerType = config?.provider ?? readConfiguredProvider() ?? detectProvider();
+  const providerType = resolveQueueProvider(config?.provider);
 
   logger.info("[queue] Creating provider", { provider: providerType });
 
