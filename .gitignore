@@ -89,3 +89,10 @@ apps/*/.source/
 
 # Playwright MCP browser session logs
 .playwright-mcp/
+
+# LLM gateway debug traces — local-only call logs, never commit
+**/.nebutra/debug/
+
+# tsup temp bundled configs — auto-generated next to tsup.config.ts on build,
+# safe to delete, never commit
+**/tsup.config.bundled*.mjs
