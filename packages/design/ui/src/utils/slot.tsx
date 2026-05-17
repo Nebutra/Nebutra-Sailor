@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "./cn";
 
 export interface SlotProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
@@ -30,22 +29,31 @@ export const Slot = React.forwardRef<HTMLElement, SlotProps>(
     }
 
     const childProps = child.props as React.HTMLAttributes<HTMLElement>;
-    return React.cloneElement(child, {
-      ...props,
-      ...childProps,
-      ref: (node: HTMLElement | null) => {
-        if (typeof ref === "function") ref(node);
-        else if (ref) ref.current = node;
+    const mergedRef = (node: HTMLElement | null) => {
+      if (typeof ref === "function") ref(node);
+      else if (ref) ref.current = node;
 
-        const childRef = (child as React.ReactElement & { ref?: React.Ref<HTMLElement> }).ref;
-        if (typeof childRef === "function") childRef(node);
-        else if (childRef && "current" in childRef) {
-          (childRef as React.MutableRefObject<HTMLElement | null>).current = node;
-        }
-      },
-      className: cn(className, childProps.className),
-      style: { ...style, ...childProps.style },
-    } as React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement>);
+      const childRef = (child as React.ReactElement & { ref?: React.Ref<HTMLElement> }).ref;
+      if (typeof childRef === "function") childRef(node);
+      else if (childRef && "current" in childRef) {
+        (childRef as React.MutableRefObject<HTMLElement | null>).current = node;
+      }
+    };
+    // Order matters: slot's props seed → child's existing props override →
+    // explicit className/style/ref take precedence over both (so the slot's
+    // className/style merge with the child's, not the child's alone).
+    const mergedClass = [className, childProps.className].filter(Boolean).join(" ");
+    const merged: Record<string, unknown> = {
+      ...childProps,
+      ...props,
+      ref: mergedRef,
+      className: mergedClass,
+      style: { ...childProps.style, ...style },
+    };
+    return React.cloneElement(
+      child,
+      merged as React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement>,
+    );
   },
 );
 
