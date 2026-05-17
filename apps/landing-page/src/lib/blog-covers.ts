@@ -11,6 +11,7 @@ const COVER_BY_KEY: Record<string, string> = {
   "nebutra-sailor-why-exists": "/images/blog/covers/nebutra-sailor-exists.png",
   "why-nebutra-sailor-exists": "/images/blog/covers/nebutra-sailor-exists.png",
   "why-we-build-nebutra": "/images/blog/covers/why-we-build-nebutra.png",
+  "founder-top-design-nine-layers": "/images/blog/covers/founder-top-design-nine-layers.png",
 };
 
 const COVER_BY_SLUG: Record<string, string> = {
@@ -18,6 +19,8 @@ const COVER_BY_SLUG: Record<string, string> = {
   "why-nebutra-sailor-exists-zh": "/images/blog/covers/nebutra-sailor-exists.png",
   "why-we-build-nebutra": "/images/blog/covers/why-we-build-nebutra.png",
   "why-we-build-nebutra-zh": "/images/blog/covers/why-we-build-nebutra.png",
+  "founder-top-design-nine-layers": "/images/blog/covers/founder-top-design-nine-layers.png",
+  "founder-top-design-nine-layers-zh": "/images/blog/covers/founder-top-design-nine-layers.png",
 };
 
 export function getFallbackBlogCover(post: BlogPostWithSource): BlogCover {

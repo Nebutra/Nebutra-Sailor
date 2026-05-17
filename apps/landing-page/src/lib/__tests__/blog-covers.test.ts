@@ -47,6 +47,21 @@ describe("getFallbackBlogCover", () => {
     });
   });
 
+  it("uses the generated nine-layer founder design cover for both localized slugs", () => {
+    expect(
+      getFallbackBlogCover(
+        makePost({
+          slug: "founder-top-design-nine-layers-zh",
+          title: "Founder 顶层设计的九层结构",
+          translationKey: "founder-top-design-nine-layers",
+        }),
+      ),
+    ).toMatchObject({
+      alt: "Founder 顶层设计的九层结构 cover",
+      src: "/images/blog/covers/founder-top-design-nine-layers.png",
+    });
+  });
+
   it("falls back to the generic Nebutra cover for unmapped posts", () => {
     expect(getFallbackBlogCover(makePost({ slug: "new-post" })).src).toBe(
       "/images/blog/covers/nebutra-default.png",
