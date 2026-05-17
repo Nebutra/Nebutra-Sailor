@@ -1,9 +1,9 @@
 /**
  * Badge Component Tokens — Layer 3
  *
- * Semantic color variants: default, secondary, destructive, outline,
- * success, warning, info, dot.
- * Typography: text-xs font-medium universally (Geist-matching).
+ * Static metadata labels with Geist palette variants, compact sizes, and a
+ * pill variant for link-like chips. Dot support remains for compatibility;
+ * prefer Status Dot for dot-only indicators.
  */
 
 import {
@@ -22,7 +22,7 @@ export const badgeTokens = {
 
   borderRadius: primitiveRadius.full, // pill shape
 
-  /** Dot indicator size for the dot variant */
+  /** Legacy dot indicator size for text-plus-dot badges */
   dotSize: 6, // px
   dotOffset: 4, // gap between dot and label
 } as const;

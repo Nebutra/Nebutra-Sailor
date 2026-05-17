@@ -1,5 +1,29 @@
+import { Shield } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Badge } from "./badge";
+
+const GEIST_VARIANTS = [
+  "gray",
+  "gray-subtle",
+  "blue",
+  "blue-subtle",
+  "purple",
+  "purple-subtle",
+  "amber",
+  "amber-subtle",
+  "red",
+  "red-subtle",
+  "pink",
+  "pink-subtle",
+  "green",
+  "green-subtle",
+  "teal",
+  "teal-subtle",
+  "inverted",
+  "trial",
+  "turbo",
+  "pill",
+] as const;
 
 const meta = {
   title: "Primitives/Badge",
@@ -9,7 +33,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Compact label for status, category, or count. Pill shape, xs font, semibold weight. Includes semantic status variants and dot prop.",
+          "Short, static metadata label for status, plan tier, environment, or role. Use the pill variant for links and keep badge copy to one or two words.",
       },
     },
   },
@@ -26,12 +50,14 @@ const meta = {
         "warning",
         "info",
         "error",
+        ...GEIST_VARIANTS,
       ],
-      description: "Visual style — maps to semantic color tokens",
+      description:
+        "Visual style. Geist variants map meaning to color; pill is for link-like chips.",
     },
     dot: {
       control: "boolean",
-      description: "Show a 6×6px status dot before the label",
+      description: "Legacy text-plus-dot affordance. Prefer Status Dot for dot-only indicators.",
     },
   },
 } satisfies Meta<typeof Badge>;
@@ -42,93 +68,98 @@ type Story = StoryObj<typeof meta>;
 // ─── Core Variants ────────────────────────────────────────────────────────────
 
 export const Default: Story = {
-  args: { children: "Default", variant: "default" },
+  args: { children: "Active", variant: "gray" },
 };
 
-export const Secondary: Story = {
-  args: { children: "Secondary", variant: "secondary" },
-};
-
-export const Destructive: Story = {
-  args: { children: "Destructive", variant: "destructive" },
-};
-
-export const Outline: Story = {
-  args: { children: "Outline", variant: "outline" },
-};
-
-// ─── Semantic Status Variants ─────────────────────────────────────────────────
-
-export const Success: Story = {
-  args: { children: "Success", variant: "success" },
-};
-
-export const Warning: Story = {
-  args: { children: "Warning", variant: "warning" },
-};
-
-export const Info: Story = {
-  args: { children: "Info", variant: "info" },
-};
-
-export const Error: Story = {
-  args: { children: "Error", variant: "error" },
-};
-
-// ─── Dot Variant ──────────────────────────────────────────────────────────────
-
-export const WithDot: Story = {
-  name: "Status Dot",
+export const Sizes: Story = {
   render: () => (
-    <div className="flex flex-wrap gap-2">
-      <Badge variant="success" dot>
-        Live
-      </Badge>
-      <Badge variant="warning" dot>
-        Pending
-      </Badge>
-      <Badge variant="error" dot>
-        Failed
-      </Badge>
-      <Badge variant="outline" dot>
-        Offline
-      </Badge>
+    <div className="flex items-center gap-2">
+      <Badge size="sm">Small</Badge>
+      <Badge size="md">Medium</Badge>
+      <Badge size="lg">Large</Badge>
     </div>
   ),
 };
 
 // ─── All Variants ─────────────────────────────────────────────────────────────
 
-export const AllVariants: Story = {
-  name: "All Variants",
+export const Variants: Story = {
+  name: "Variants",
   render: () => (
-    <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap gap-2">
-        <Badge variant="default">Default</Badge>
-        <Badge variant="secondary">Secondary</Badge>
-        <Badge variant="destructive">Destructive</Badge>
-        <Badge variant="outline">Outline</Badge>
+    <div className="flex max-w-md flex-wrap gap-2">
+      {GEIST_VARIANTS.filter((variant) => variant !== "pill").map((variant) => (
+        <Badge key={variant} variant={variant}>
+          {variant === "trial" ? "Trial" : variant === "turbo" ? "Turborepo" : variant}
+        </Badge>
+      ))}
+    </div>
+  ),
+};
+
+export const WithIcons: Story = {
+  render: () => (
+    <div className="flex flex-col gap-2">
+      {["gray", "blue", "purple", "amber", "red", "pink", "green", "teal"].map((variant) => (
+        <div key={variant} className="flex items-center gap-1">
+          <Badge icon={<Shield />} size="lg" variant={variant as (typeof GEIST_VARIANTS)[number]}>
+            {variant}
+          </Badge>
+          <Badge icon={<Shield />} size="md" variant={variant as (typeof GEIST_VARIANTS)[number]}>
+            {variant}
+          </Badge>
+          <Badge icon={<Shield />} size="sm" variant={variant as (typeof GEIST_VARIANTS)[number]}>
+            {variant}
+          </Badge>
+          <Badge
+            icon={<Shield />}
+            size="sm"
+            variant={`${variant}-subtle` as (typeof GEIST_VARIANTS)[number]}
+          >
+            {variant}
+          </Badge>
+          <Badge
+            icon={<Shield />}
+            size="md"
+            variant={`${variant}-subtle` as (typeof GEIST_VARIANTS)[number]}
+          >
+            {variant}
+          </Badge>
+          <Badge
+            icon={<Shield />}
+            size="lg"
+            variant={`${variant}-subtle` as (typeof GEIST_VARIANTS)[number]}
+          >
+            {variant}
+          </Badge>
+        </div>
+      ))}
+      <div className="flex items-center gap-1">
+        <Badge icon={<Shield />} size="lg" variant="inverted">
+          inverted
+        </Badge>
+        <Badge icon={<Shield />} size="md" variant="inverted">
+          inverted
+        </Badge>
+        <Badge icon={<Shield />} size="sm" variant="inverted">
+          inverted
+        </Badge>
       </div>
-      <div className="flex flex-wrap gap-2">
-        <Badge variant="success">Success</Badge>
-        <Badge variant="warning">Warning</Badge>
-        <Badge variant="info">Info</Badge>
-        <Badge variant="error">Error</Badge>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        <Badge variant="success" dot>
-          Live
-        </Badge>
-        <Badge variant="warning" dot>
-          Pending
-        </Badge>
-        <Badge variant="info" dot>
-          Syncing
-        </Badge>
-        <Badge variant="error" dot>
-          Failed
-        </Badge>
-      </div>
+    </div>
+  ),
+};
+
+export const PillLinks: Story = {
+  render: () => (
+    <div className="flex items-center gap-2">
+      <Badge asChild size="sm" variant="pill">
+        <a href="#badge-pill">Label</a>
+      </Badge>
+      <Badge asChild size="md" variant="pill">
+        <a href="#badge-pill">Label</a>
+      </Badge>
+      <Badge asChild icon={<Shield />} size="lg" variant="pill">
+        <a href="#badge-pill">Label</a>
+      </Badge>
     </div>
   ),
 };

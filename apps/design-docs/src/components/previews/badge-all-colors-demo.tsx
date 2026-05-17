@@ -1,50 +1,50 @@
 "use client";
 
-import { Badge1 } from "@nebutra/ui/primitives";
+import { Badge } from "@nebutra/ui/primitives";
 
 export function BadgeAllColorsDemo() {
   return (
     <div className="gap-2 max-w-sm mx-auto flex w-full flex-col items-center justify-center">
       <div className="gap-2 flex">
-        <Badge1 variant="gray">gray</Badge1>
-        <Badge1 variant="gray-subtle">gray-subtle</Badge1>
+        <Badge variant="gray">gray</Badge>
+        <Badge variant="gray-subtle">gray-subtle</Badge>
       </div>
       <div className="gap-2 flex">
-        <Badge1 variant="blue">blue</Badge1>
-        <Badge1 variant="blue-subtle">blue-subtle</Badge1>
+        <Badge variant="blue">blue</Badge>
+        <Badge variant="blue-subtle">blue-subtle</Badge>
       </div>
       <div className="gap-2 flex">
-        <Badge1 variant="purple">purple</Badge1>
-        <Badge1 variant="purple-subtle">purple-subtle</Badge1>
+        <Badge variant="purple">purple</Badge>
+        <Badge variant="purple-subtle">purple-subtle</Badge>
       </div>
       <div className="gap-2 flex">
-        <Badge1 variant="amber">amber</Badge1>
-        <Badge1 variant="amber-subtle">amber-subtle</Badge1>
+        <Badge variant="amber">amber</Badge>
+        <Badge variant="amber-subtle">amber-subtle</Badge>
       </div>
       <div className="gap-2 flex">
-        <Badge1 variant="red">red</Badge1>
-        <Badge1 variant="red-subtle">red-subtle</Badge1>
+        <Badge variant="red">red</Badge>
+        <Badge variant="red-subtle">red-subtle</Badge>
       </div>
       <div className="gap-2 flex">
-        <Badge1 variant="pink">pink</Badge1>
-        <Badge1 variant="pink-subtle">pink-subtle</Badge1>
+        <Badge variant="pink">pink</Badge>
+        <Badge variant="pink-subtle">pink-subtle</Badge>
       </div>
       <div className="gap-2 flex">
-        <Badge1 variant="green">green</Badge1>
-        <Badge1 variant="green-subtle">green-subtle</Badge1>
+        <Badge variant="green">green</Badge>
+        <Badge variant="green-subtle">green-subtle</Badge>
       </div>
       <div className="gap-2 flex">
-        <Badge1 variant="teal">teal</Badge1>
-        <Badge1 variant="teal-subtle">teal-subtle</Badge1>
+        <Badge variant="teal">teal</Badge>
+        <Badge variant="teal-subtle">teal-subtle</Badge>
       </div>
       <div className="gap-2 flex">
-        <Badge1 variant="inverted">inverted</Badge1>
+        <Badge variant="inverted">inverted</Badge>
       </div>
       <div className="gap-2 flex">
-        <Badge1 variant="trial">trial</Badge1>
+        <Badge variant="trial">trial</Badge>
       </div>
       <div className="gap-2 flex">
-        <Badge1 variant="turbo">turborepo</Badge1>
+        <Badge variant="turbo">turborepo</Badge>
       </div>
     </div>
   );

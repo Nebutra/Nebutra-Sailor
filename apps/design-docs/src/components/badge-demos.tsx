@@ -2,40 +2,41 @@
 
 import { Bell, Shield, LogoSlack as Slack } from "@nebutra/icons";
 import { Badge, type BadgeProps } from "@nebutra/ui/primitives";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 // --- Variants Demo ---
-const CONCOLORS = [
-  "gray",
-  "blue",
-  "purple",
-  "amber",
-  "red",
-  "pink",
-  "green",
-  "teal",
-  "inverted",
-  "trial",
-  "turbo",
+const COLORS = [
+  { label: "gray", variant: "gray" },
+  { label: "gray-subtle", variant: "gray-subtle" },
+  { label: "blue", variant: "blue" },
+  { label: "blue-subtle", variant: "blue-subtle" },
+  { label: "purple", variant: "purple" },
+  { label: "purple-subtle", variant: "purple-subtle" },
+  { label: "amber", variant: "amber" },
+  { label: "amber-subtle", variant: "amber-subtle" },
+  { label: "red", variant: "red" },
+  { label: "red-subtle", variant: "red-subtle" },
+  { label: "pink", variant: "pink" },
+  { label: "pink-subtle", variant: "pink-subtle" },
+  { label: "green", variant: "green" },
+  { label: "green-subtle", variant: "green-subtle" },
+  { label: "teal", variant: "teal" },
+  { label: "teal-subtle", variant: "teal-subtle" },
+  { label: "inverted", variant: "inverted" },
+  { label: "Trial", variant: "trial" },
+  { label: "Turborepo", variant: "turbo" },
 ] as const;
 
-// Colors that have a -subtle variant
-const SUBTLE_COLORS = CONCOLORS.filter((c) => !["inverted", "trial", "turbo"].includes(c));
+const ICON_COLORS = ["gray", "blue", "purple", "amber", "red", "pink", "green", "teal"] as const;
 
 export function BadgeVariantsDemo() {
   return (
-    <div className="flex flex-col gap-3">
-      {CONCOLORS.map((color) => (
-        <div key={color} className="flex flex-wrap items-center gap-2">
-          <Badge variant={color as BadgeProps["variant"]} className="capitalize">
-            {color}
-          </Badge>
-          {!["inverted", "trial", "turbo"].includes(color) && (
-            <Badge variant={`${color}-subtle` as BadgeProps["variant"]} className="capitalize">
-              {color}-Subtle
-            </Badge>
-          )}
-        </div>
+    <div className="flex flex-wrap items-center gap-2">
+      {COLORS.map(({ label, variant }) => (
+        <Badge key={variant} variant={variant as BadgeProps["variant"]}>
+          {label}
+        </Badge>
       ))}
     </div>
   );
@@ -60,7 +61,7 @@ export function BadgeIconDemo() {
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      {SUBTLE_COLORS.map((color) => (
+      {ICON_COLORS.map((color) => (
         <div key={color} className="flex flex-wrap items-center gap-1">
           {/* Solid: lg → md → sm */}
           {SIZES.map((size) => (
@@ -107,46 +108,25 @@ export function BadgePillDemo() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center gap-3">
-        <Badge
-          variant="outline"
-          className="rounded-full font-normal hover:bg-muted/50 transition-colors"
-        >
-          label
+        <Badge asChild size="sm" variant="pill">
+          <Link href="#badge-pill">Label</Link>
         </Badge>
-        <Badge
-          variant="outline"
-          className="rounded-full font-normal hover:bg-muted/50 transition-colors"
-        >
-          label
+        <Badge asChild size="md" variant="pill">
+          <Link href="#badge-pill">Label</Link>
         </Badge>
-        <Badge
-          variant="outline"
-          className="rounded-full font-normal hover:bg-muted/50 transition-colors text-foreground"
-        >
-          label
+        <Badge asChild size="lg" variant="pill">
+          <Link href="#badge-pill">Label</Link>
         </Badge>
       </div>
       <div className="flex flex-wrap items-center gap-3">
-        <Badge
-          variant="outline"
-          icon={<Slack className="text-blue-500" fill="currentColor" />}
-          className="rounded-full font-normal hover:bg-muted/50 transition-colors pr-3 pl-2 py-1"
-        >
-          label
+        <Badge asChild icon={<Slack />} size="sm" variant="pill">
+          <Link href="#badge-pill">Label</Link>
         </Badge>
-        <Badge
-          variant="outline"
-          icon={<Slack className="text-red-500" fill="currentColor" />}
-          className="rounded-full font-normal hover:bg-muted/50 transition-colors pr-3 pl-2 py-1"
-        >
-          label
+        <Badge asChild icon={<Slack />} size="md" variant="pill">
+          <Link href="#badge-pill">Label</Link>
         </Badge>
-        <Badge
-          variant="outline"
-          icon={<Slack className="text-green-500" fill="currentColor" />}
-          className="rounded-full font-normal hover:bg-muted/50 transition-colors pr-3 pl-2 py-1"
-        >
-          label
+        <Badge asChild icon={<Slack />} size="lg" variant="pill">
+          <Link href="#badge-pill">Label</Link>
         </Badge>
       </div>
     </div>

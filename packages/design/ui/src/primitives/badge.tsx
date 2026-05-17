@@ -1,14 +1,13 @@
 "use client";
 
 import { cva, type VariantProps } from "class-variance-authority";
-import type * as React from "react";
+import * as React from "react";
 import { cn } from "../utils/cn";
-import { Slot, Slottable } from "../utils/slot";
 
 // ─── Variants ─────────────────────────────────────────────────────────────────
 
 const badgeVariants = cva(
-  "inline-flex justify-center items-center shrink-0 rounded-full font-sans font-medium whitespace-nowrap tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-transparent",
+  "inline-flex justify-center items-center align-middle shrink-0 rounded-full font-sans font-medium whitespace-nowrap tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-transparent",
   {
     variants: {
       variant: {
@@ -45,7 +44,7 @@ const badgeVariants = cva(
         inverted: "bg-geist-gray-1000 text-geist-gray-100 fill-geist-gray-100",
         trial: "bg-gradient-to-br from-trial-start to-trial-end text-white fill-white",
         turbo: "bg-gradient-to-br from-turbo-start to-turbo-end text-white fill-white",
-        pill: "bg-background text-foreground fill-foreground !border-gray-alpha-400 dark:!border-border",
+        pill: "bg-background text-foreground fill-foreground !border-gray-alpha-400 hover:bg-muted/50 focus-visible:bg-muted/50 dark:!border-border",
         // ─── Semantic tone variants (nav badges, ownership, featured) ─────────
         beta: "border-transparent bg-muted text-muted-foreground",
         new: "border-transparent bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300",
@@ -89,9 +88,9 @@ const dotColorMap: Partial<Record<NonNullable<BadgeProps["variant"]>, string>> =
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLElement>,
     VariantProps<typeof badgeVariants> {
-  /** Renders a 6×6px status dot before the badge label */
+  /** @deprecated Prefer Status Dot for dot-only indicators. Keep text labels redundant with color. */
   dot?: boolean;
-  /** Icon element rendered before the label (auto-sized to 12×12px) */
+  /** Icon element rendered before the label. Decorative icons are hidden from assistive tech. */
   icon?: React.ReactNode;
   /** Render as child element — use with `<a>` for link badges */
   asChild?: boolean;
@@ -107,9 +106,9 @@ function Badge({
   children,
   ...props
 }: BadgeProps) {
-  const Comp = asChild ? Slot : "div";
-  return (
-    <Comp className={cn(badgeVariants({ variant, size }), className)} {...props}>
+  const badgeClassName = cn(badgeVariants({ variant, size }), className);
+  const renderContent = (label: React.ReactNode) => (
+    <>
       {dot && (
         <span
           aria-hidden="true"
@@ -124,8 +123,34 @@ function Badge({
           {icon}
         </span>
       )}
-      <Slottable>{children}</Slottable>
-    </Comp>
+      {label}
+    </>
+  );
+
+  if (asChild) {
+    const childArray = React.Children.toArray(children);
+    const child = childArray.length === 1 ? childArray[0] : null;
+
+    if (React.isValidElement(child)) {
+      const childProps = child.props as React.HTMLAttributes<HTMLElement> & {
+        children?: React.ReactNode;
+      };
+
+      return React.cloneElement(child, {
+        ...props,
+        ...childProps,
+        "data-slot": "badge",
+        className: cn(badgeClassName, childProps.className),
+        style: { ...props.style, ...childProps.style },
+        children: renderContent(childProps.children),
+      } as React.HTMLAttributes<HTMLElement>);
+    }
+  }
+
+  return (
+    <span data-slot="badge" className={badgeClassName} {...props}>
+      {renderContent(children)}
+    </span>
   );
 }
 
