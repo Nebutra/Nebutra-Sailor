@@ -44,10 +44,15 @@
   activation (`activateMcpTools` via injectable catalog port), production
   tenant-scoped rollout store (`PersistentRolloutStore` via injectable
   persistence port). 59 package tests green.
-- **Not yet built:** WS/SSE socket adapter for the dispatcher; live wiring
-  into `backends/gateway` agents route; concrete `@nebutra/mcp` /
-  `@nebutra/audit` adapters for the ports; real isolation backend
-  (Wasmtime/Firecracker Phase 2).
+- **Done (live wiring):** gateway route `POST /api/v1/agent-runtime/turns`
+  — tenant-scoped `runTurn` streamed over SSE, behind `requireAuth` +
+  off-by-default `agent-runtime-demo` flag; `ModelInvoker` bridges
+  `@nebutra/agents`. Gateway typecheck clean.
+- **Not yet built:** durable rollout store DB adapter (needs a schema model
+  = infra change, deferred — not faked); concrete `@nebutra/mcp`
+  catalog-port adapter + dispatcher socket adapter; real isolation backend
+  (Wasmtime/Firecracker Phase 2). A command-exec tool + sandbox delegation
+  is wired the moment such a tool is registered, not before.
 - **Not deeply mapped:** model catalog manager, apply-patch grammar,
   compaction *generation* logic, tool_search discovery *mechanism*, hooks
   pipeline impl, web_search/image-gen handlers.

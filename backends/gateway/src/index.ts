@@ -37,6 +37,7 @@ import { rateLimitMiddleware } from "./middlewares/rateLimit.js";
 import { tenantContextMiddleware } from "./middlewares/tenantContext.js";
 import { usageMeteringMiddleware } from "./middlewares/usageMetering.js";
 import { adminRoutes } from "./routes/admin/index.js";
+import { agentRuntimeRoutes } from "./routes/agent-runtime/index.js";
 import { agentRoutes } from "./routes/agents/index.js";
 import { apiKeysRoutes } from "./routes/ai/api-keys.js";
 import { createAiGatewayRoutes } from "./routes/ai/gateway.js";
@@ -218,6 +219,7 @@ app.route("/system", statusRoutes);
 app.route("/api/v1/legal", consentRoutes);
 app.route("/api/v1/events", eventRoutes);
 app.route("/api/v1/agents", agentRoutes);
+app.route("/api/v1/agent-runtime", agentRuntimeRoutes);
 app.route("/api/v1/ai", aiRoutes);
 
 // AI Gateway — build shared deps once, mount route + register completion worker.

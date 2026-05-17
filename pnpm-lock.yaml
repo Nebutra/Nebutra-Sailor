@@ -1255,6 +1255,9 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.7.6
         version: 0.7.6(hono@4.12.5)(zod@4.3.6)
+      '@nebutra/agent-runtime':
+        specifier: workspace:*
+        version: link:../../packages/ai/agent-runtime
       '@nebutra/agents':
         specifier: workspace:*
         version: link:../../packages/ai/agents
@@ -1291,6 +1294,9 @@ importers:
       '@nebutra/event-bus':
         specifier: workspace:*
         version: link:../../packages/integrations/event-bus
+      '@nebutra/feature-flags':
+        specifier: workspace:*
+        version: link:../../packages/platform/feature-flags
       '@nebutra/gateway-core':
         specifier: workspace:*
         version: link:../../packages/platform/gateway-core
