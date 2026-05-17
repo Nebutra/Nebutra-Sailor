@@ -1,4 +1,5 @@
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import { dirname, join, normalize, relative } from "node:path";
 import type { Database as VecDatabase, Statement as VecStatement } from "@dao-xyz/sqlite3-vec";
 import { CapabilityError } from "@nebutra/errors";
@@ -768,8 +769,8 @@ async function openNodeSqliteDatabase(indexPath: string): Promise<SqlDatabase> {
 }
 
 async function importNodeSqlite(): Promise<NodeSqliteModule> {
-  const load = new Function("return import('node:sqlite')") as () => Promise<NodeSqliteModule>;
-  return load();
+  const require = createRequire(import.meta.url);
+  return require("node:sqlite") as NodeSqliteModule;
 }
 
 class NodeSqliteDatabase implements SqlDatabase {
