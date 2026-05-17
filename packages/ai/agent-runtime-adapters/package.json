@@ -1,0 +1,67 @@
+{
+  "name": "@nebutra/agent-runtime-adapters",
+  "version": "0.1.0",
+  "private": false,
+  "license": "AGPL-3.0",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/agent-runtime ports",
+      "@nebutra/mcp runtime",
+      "@nebutra/audit runtime"
+    ],
+    "gaps": [
+      "Durable rollout-store backend pending governance decision",
+      "Dispatcher socket transport is request/response-shaped, not yet wired to a server"
+    ],
+    "featureId": "agent-runtime-adapters",
+    "category": "ai",
+    "summary": "Concrete, reusable port adapters wiring @nebutra/agent-runtime into @nebutra/mcp, @nebutra/audit, and a transport"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./mcp-catalog": "./src/mcp-catalog.ts",
+    "./dispatcher-sse": "./src/dispatcher-sse.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/agent-runtime": "workspace:*",
+    "zod": "catalog:"
+  },
+  "peerDependencies": {
+    "@nebutra/mcp": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nebutra/mcp": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@nebutra/mcp": "workspace:*",
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/agent-runtime-adapters#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/agent-runtime-adapters"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
