@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReelGraph } from "@nebutra/reel";
-import { NodeGraphCanvas } from "@nebutra/ui/components";
+import { ReelCanvas } from "@nebutra/reel-canvas";
 import { useState } from "react";
 
 /**
@@ -33,7 +33,7 @@ export function CanvasDemoClient() {
 
   return (
     <div className="flex flex-col gap-4">
-      <NodeGraphCanvas graph={graph} onChange={setGraph} />
+      <ReelCanvas graph={graph} onChange={setGraph} />
       <p className="text-[color:var(--neutral-11)] text-sm">
         Drag nodes, connect handles (cycles are rejected), delete to mutate. Live graph:{" "}
         <code>{graph.nodes.length}</code> nodes, <code>{graph.edges.length}</code> edges.

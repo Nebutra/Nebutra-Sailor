@@ -43,8 +43,16 @@ deprecated back-compat alias.
 | Package | Tests | Coverage |
 |---|---|---|
 | `@nebutra/tenant-store` | 10/10 | core |
+| `@nebutra/graph-model` | 10/10 | core |
 | `@nebutra/knowledge-rag` | 61/61 | 94 %+ |
-| `@nebutra/ui` `NodeGraphCanvas` | 14/14 | adapter 100 % |
+| `@nebutra/ui` `NodeGraphCanvas` (generic) | 9/9 | adapter 100 % |
+| `@nebutra/reel-canvas` (reel binding) | 8/8 | binding |
 | `@nebutra/collab` | 14/14 | 92 %+ |
+
+Dependency direction (governance): `@nebutra/ui` (generic) →
+`@nebutra/graph-model`; `@nebutra/reel` → `@nebutra/graph-model`;
+`@nebutra/reel-canvas` → (`@nebutra/ui`, `@nebutra/reel`). No generic
+package depends on a feature package; `reel`↔`atelier-canvas` share only
+`@nebutra/tenant-store`. See `ANTI_PATTERNS.md` §6/§7.
 
 Demo: `apps/web` `/[locale]/demo/canvas` — flag `FLAGS.CANVAS_DEMO`, off by default.

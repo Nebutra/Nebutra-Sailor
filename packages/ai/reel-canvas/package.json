@@ -1,0 +1,55 @@
+{
+  "name": "@nebutra/reel-canvas",
+  "version": "0.1.0",
+  "description": "Reel binding for the generic @nebutra/ui node-graph editor: maps ReelGraph onto the neutral graph contract and supplies reel-specific edge identity, edge creation, and node presentation.",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "featureId": "reel-canvas",
+    "category": "ai",
+    "summary": "Reel <-> generic node-graph editor binding"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/reel": "workspace:*",
+    "@nebutra/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@nebutra/graph-model": "workspace:*",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "catalog:",
+    "@types/react": "^19.2.14",
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/reel-canvas#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/reel-canvas"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,15 +1,14 @@
-import type { ReelGraph } from "@nebutra/reel";
+import type { Graph, GraphEdge, GraphNode } from "@nebutra/graph-model";
 import { render } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 /**
  * `@lobehub/ui` exposes only its full barrel (no `./Button` subpath), which
- * transitively pulls `@emoji-mart/data` JSON that the jsdom test runner can't
- * import without an attribute. The component uses the real design-system
- * `Button` in prod/Storybook; for this mount-only smoke test we stub the
- * barrel with a minimal native button (behaviour is covered by the pure
- * adapter suite, not here).
+ * transitively pulls `@emoji-mart/data` JSON that the jsdom runner can't
+ * import without an attribute. Production uses the real DS `Button`; this
+ * mount-only smoke test stubs the barrel (behaviour is covered by the pure
+ * generic adapter suite).
  */
 vi.mock("@lobehub/ui", () => ({
   Button: ({
@@ -29,35 +28,42 @@ vi.mock("@lobehub/ui", () => ({
 
 import { NodeGraphCanvas } from "../node-graph-canvas";
 
-/**
- * Render smoke test. The behavioural contract is covered exhaustively by the
- * pure adapter suite; here we only assert the component mounts a reel graph
- * without throwing and without calling onChange on first paint.
- */
+interface TNode extends GraphNode {
+  readonly label: string;
+}
+interface TEdge extends GraphEdge {
+  readonly port: string;
+}
 
-const graph: ReelGraph = {
-  id: "smoke",
-  tenantId: "org_1",
-  name: "Smoke",
+const graph: Graph<TNode, TEdge> = {
   nodes: [
-    { id: "a", type: "text", x: 0, y: 0, settings: {} },
-    { id: "b", type: "analyze", x: 200, y: 0, settings: {} },
+    { id: "a", x: 0, y: 0, label: "A" },
+    { id: "b", x: 200, y: 0, label: "B" },
   ],
-  edges: [{ from: "a", to: "b", inputType: "context" }],
-  updatedAt: new Date("2026-01-01T00:00:00.000Z"),
+  edges: [{ from: "a", to: "b", port: "in" }],
 };
 
-describe("<NodeGraphCanvas> — smoke", () => {
-  it("mounts a reel graph without throwing", () => {
-    const onChange = vi.fn();
-    const { container } = render(<NodeGraphCanvas graph={graph} onChange={onChange} />);
+const props = {
+  graph,
+  onChange: vi.fn(),
+  edgeIdentity: (e: TEdge) => `${e.from}->${e.to}:${e.port}`,
+  makeEdge: (from: string, to: string, h: string | null): TEdge => ({
+    from,
+    to,
+    port: h ?? "in",
+  }),
+  renderNode: (n: TNode) => ({ label: n.label }),
+};
+
+describe("<NodeGraphCanvas> — smoke (generic)", () => {
+  it("mounts a generic graph without throwing", () => {
+    const { container } = render(<NodeGraphCanvas {...props} />);
     expect(container.querySelector(".react-flow")).not.toBeNull();
-    expect(onChange).not.toHaveBeenCalled();
+    expect(props.onChange).not.toHaveBeenCalled();
   });
 
   it("mounts in readOnly mode without throwing", () => {
-    const onChange = vi.fn();
-    const { container } = render(<NodeGraphCanvas graph={graph} onChange={onChange} readOnly />);
+    const { container } = render(<NodeGraphCanvas {...props} readOnly />);
     expect(container.querySelector(".react-flow")).not.toBeNull();
   });
 });

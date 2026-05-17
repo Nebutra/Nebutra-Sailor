@@ -1,34 +1,25 @@
 "use client";
 
 /**
- * <NodeGraphCanvas> — interactive editor for a `@nebutra/reel` graph.
+ * <NodeGraphCanvas> — generic interactive editor for any acyclic graph that
+ * conforms to `@nebutra/graph-model` (`GraphNode` / `GraphEdge`).
  *
- * Controlled: it owns no graph state. Every gesture (drag, connect, delete)
- * is translated by the pure `node-graph-canvas-adapter` into a *new*
- * immutable `ReelGraph` and surfaced through `onChange`. Edge creation that
- * would make the graph cyclic is rejected via reel's own `hasCycleFrom`
- * guard and reported through an accessible inline status region.
+ * Domain-free: it imports NO feature package. The caller injects how to make
+ * an edge from a connection (`makeEdge`), an edge's stable identity
+ * (`edgeIdentity`), and how to present a node (`renderNode`). The reel
+ * binding lives in `@nebutra/reel-canvas`. The graph is the single source of
+ * truth; every gesture yields a *new* immutable graph (non-structural fields
+ * preserved) through `onChange`. Cyclic connections are rejected via the
+ * neutral `@nebutra/graph-model` guard.
  *
- * Design-system utilization: chrome uses the shared `Button` primitive
- * (re-exported by `@nebutra/ui/components` from @lobehub/ui) and Geist icons
- * from `@nebutra/icons`; xyflow surfaces are themed through xyflow's own
- * CSS custom properties bound to Nebutra semantic tokens (no `!important`
- * overrides). The custom xyflow node is intentionally NOT wrapped in the
- * heavy `Card` pattern: an xyflow node must own its sizing and the two
- * connection `Handle`s, which a Card wrapper would obscure — see
- * docs/capabilities/canvas/ANTI_PATTERNS.md.
+ * Chrome uses the shared `@lobehub/ui` `Button`; xyflow surfaces are themed
+ * through xyflow CSS custom properties bound to Nebutra semantic tokens. The
+ * custom node is intentionally not `Card`-wrapped (it owns its sizing + the
+ * two connection `Handle`s) — see docs/capabilities/canvas/ANTI_PATTERNS.md.
  */
 
-import {
-  CrossSmall,
-  Eye,
-  FileText,
-  Image as ImageIcon,
-  Layers,
-  Sparkles,
-  Video,
-} from "@nebutra/icons";
-import type { ReelGraph, ReelNodeType } from "@nebutra/reel";
+import type { Graph, GraphEdge, GraphNode } from "@nebutra/graph-model";
+import { CrossSmall } from "@nebutra/icons";
 import {
   Background,
   type Connection,
@@ -46,61 +37,51 @@ import {
 import "@xyflow/react/dist/style.css";
 import { Button } from "@lobehub/ui";
 import { cva } from "class-variance-authority";
-import {
-  type ComponentType,
-  type CSSProperties,
-  useCallback,
-  useId,
-  useMemo,
-  useState,
-} from "react";
+import { type CSSProperties, type ReactNode, useCallback, useId, useMemo, useState } from "react";
 import { cn } from "../utils/cn";
 import { AnimateIn } from "./animate-in";
 import {
   applyNodePositions,
+  type EdgeIdentity,
   type FlowNode,
-  REEL_NODE_FLOW_TYPE,
-  reelToFlow,
+  GRAPH_NODE_FLOW_TYPE,
+  graphToFlow,
+  type MakeEdge,
   removeFlowEdge,
   removeNode,
   tryAddEdge,
 } from "./node-graph-canvas-adapter";
 
-export interface NodeGraphCanvasProps {
-  /** The reel graph to render. Treated as the single source of truth. */
-  readonly graph: ReelGraph;
+/** Domain-supplied presentation for one node. */
+export interface NodeView {
+  readonly label: string;
+  readonly subtitle?: string;
+  readonly icon?: ReactNode;
+  /** Drives the accent border (e.g. "has produced output"). */
+  readonly ready?: boolean;
+}
+
+export interface NodeGraphCanvasProps<
+  N extends GraphNode,
+  E extends GraphEdge,
+  G extends Graph<N, E>,
+> {
+  /** The graph to render. Treated as the single source of truth. */
+  readonly graph: G;
   /** Called with a new immutable graph after every accepted mutation. */
-  readonly onChange: (next: ReelGraph) => void;
+  readonly onChange: (next: G) => void;
+  /** Stable identity for an edge (also used for dedupe + removal). */
+  readonly edgeIdentity: EdgeIdentity<E>;
+  /** Build a domain edge from a connection, or veto it (return null). */
+  readonly makeEdge: MakeEdge<E>;
+  /** Map a node to its visual presentation. */
+  readonly renderNode: (node: N) => NodeView;
   /** When true, the canvas is view/pan/zoom only — no edits. */
   readonly readOnly?: boolean;
   /** Optional extra class on the outer container. */
   readonly className?: string;
 }
 
-const NODE_TYPE_LABEL: Record<ReelNodeType, string> = {
-  text: "Text",
-  image: "Image",
-  "gen-image": "Generate Image",
-  "gen-video": "Generate Video",
-  storyboard: "Storyboard",
-  analyze: "Analyze",
-};
-
-/** Geist icon per reel node type — uses @nebutra/icons (product-surface default). */
-const NODE_TYPE_ICON: Record<ReelNodeType, ComponentType<{ size?: number }>> = {
-  text: FileText,
-  image: ImageIcon,
-  "gen-image": Sparkles,
-  "gen-video": Video,
-  storyboard: Layers,
-  analyze: Eye,
-};
-
-/**
- * Bind xyflow's themeable surfaces to Nebutra semantic tokens via its
- * documented CSS custom properties (verified against @xyflow/react@12.10.2),
- * instead of fighting the default stylesheet with `!important`.
- */
 const XYFLOW_TOKEN_THEME: CSSProperties = {
   ["--xy-background-pattern-color" as string]: "var(--neutral-6)",
   ["--xy-edge-stroke" as string]: "var(--neutral-8)",
@@ -115,47 +96,46 @@ const XYFLOW_TOKEN_THEME: CSSProperties = {
 const nodeCardVariants = cva(
   "min-w-[160px] rounded-lg border bg-neutral-2 px-3 py-2 text-neutral-12 shadow-sm transition-colors",
   {
-    variants: {
-      ready: {
-        true: "border-success",
-        false: "border-neutral-7",
-      },
-    },
+    variants: { ready: { true: "border-success", false: "border-neutral-7" } },
     defaultVariants: { ready: false },
   },
 );
 
-/** Single custom node renderer for every reel node type. */
-function ReelFlowNode({ data }: { data: FlowNode["data"] }) {
-  const reelType = data.reelType as ReelNodeType;
-  const TypeIcon = NODE_TYPE_ICON[reelType] ?? Layers;
-  return (
-    <div className={nodeCardVariants({ ready: data.hasOutput })}>
-      <Handle type="target" position={Position.Left} />
-      <div className="flex items-center gap-1.5 text-xs font-medium text-neutral-11 uppercase tracking-wide">
-        <TypeIcon size={13} />
-        {NODE_TYPE_LABEL[reelType] ?? reelType}
-      </div>
-      <div className="mt-0.5 text-sm text-neutral-12">
-        {data.hasOutput ? "Has output" : "Not run yet"}
-      </div>
-      <Handle type="source" position={Position.Right} />
-    </div>
-  );
-}
-
-const nodeTypes = { [REEL_NODE_FLOW_TYPE]: ReelFlowNode } as const;
-
-export function NodeGraphCanvas({
+export function NodeGraphCanvas<N extends GraphNode, E extends GraphEdge, G extends Graph<N, E>>({
   graph,
   onChange,
+  edgeIdentity,
+  makeEdge,
+  renderNode,
   readOnly = false,
   className,
-}: NodeGraphCanvasProps) {
+}: NodeGraphCanvasProps<N, E, G>) {
   const statusId = useId();
   const [rejection, setRejection] = useState<string | null>(null);
 
-  const { nodes, edges } = useMemo(() => reelToFlow(graph), [graph]);
+  const { nodes, edges } = useMemo(() => graphToFlow(graph, edgeIdentity), [graph, edgeIdentity]);
+
+  const nodeTypes = useMemo(
+    () => ({
+      [GRAPH_NODE_FLOW_TYPE]: ({ data }: { data: FlowNode<N>["data"] }) => {
+        const view = renderNode(data.node);
+        return (
+          <div className={nodeCardVariants({ ready: view.ready ?? false })}>
+            <Handle type="target" position={Position.Left} />
+            <div className="flex items-center gap-1.5 text-xs font-medium text-neutral-11 uppercase tracking-wide">
+              {view.icon}
+              {view.label}
+            </div>
+            {view.subtitle ? (
+              <div className="mt-0.5 text-sm text-neutral-12">{view.subtitle}</div>
+            ) : null}
+            <Handle type="source" position={Position.Right} />
+          </div>
+        );
+      },
+    }),
+    [renderNode],
+  );
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => {
@@ -171,13 +151,12 @@ export function NodeGraphCanvas({
       }
       const positional = changes.some((c) => c.type === "position" && c.dragging === false);
       if (positional) {
-        // Reconcile xyflow's just-finished drag back into the reel graph.
         const moved = nodes.map((n) => {
           const change = changes.find((c) => c.type === "position" && c.id === n.id);
           if (change && change.type === "position" && change.position) {
-            return { ...n, position: change.position } as FlowNode;
+            return { ...n, position: change.position } as FlowNode<N>;
           }
-          return n as FlowNode;
+          return n as FlowNode<N>;
         });
         onChange(applyNodePositions(graph, moved));
       }
@@ -193,16 +172,16 @@ export function NodeGraphCanvas({
       );
       if (removed.length === 0) return;
       let next = graph;
-      for (const r of removed) next = removeFlowEdge(next, r.id);
+      for (const r of removed) next = removeFlowEdge(next, r.id, edgeIdentity);
       onChange(next);
     },
-    [graph, onChange, readOnly],
+    [graph, edgeIdentity, onChange, readOnly],
   );
 
   const onConnect = useCallback(
     (connection: Connection) => {
       if (readOnly) return;
-      const result = tryAddEdge(graph, connection);
+      const result = tryAddEdge(graph, connection, { makeEdge, edgeIdentity });
       if (result.ok) {
         setRejection(null);
         onChange(result.graph);
@@ -210,7 +189,7 @@ export function NodeGraphCanvas({
         setRejection(result.reason);
       }
     },
-    [graph, onChange, readOnly],
+    [graph, edgeIdentity, makeEdge, onChange, readOnly],
   );
 
   return (

@@ -51,6 +51,27 @@ regress to a hand-rolled `<button>` to make tests pass. Production keeps the
 real DS `Button`; the mount-only smoke test `vi.mock("@lobehub/ui", …)` with a
 minimal stub. Behaviour is covered by the pure adapter suite, not the render test.
 
+## 7. A generic library must not depend on a feature package
+
+First cut put `NodeGraphCanvas` in `@nebutra/ui` importing `@nebutra/reel`
+directly — a generic component library depending on a domain feature
+(inverted dependency direction). Fix, same pattern as #6:
+
+- Extract the neutral contract: `@nebutra/graph-model` (generic
+  `GraphNode`/`GraphEdge`/`Graph` + `hasCycleFrom`/`wouldCreateCycle`).
+- `@nebutra/ui` `NodeGraphCanvas` is generic over that contract; domain bits
+  (`edgeIdentity`, `makeEdge`, `renderNode`) are **injected props**. ui
+  depends on `graph-model`, never on `reel`.
+- `@nebutra/reel` types now *extend* the generic ones; `inboundEdges`/
+  `hasCycleFrom` delegate to graph-model with unchanged signatures
+  (contract preserved).
+- The reel binding lives in a new composition package
+  `@nebutra/reel-canvas` → depends on `(@nebutra/ui, @nebutra/reel)`.
+  Dependency direction is always specific → generic.
+
+`peerDependency` was rejected as the fix: it only adjusts the install graph,
+not the inverted *direction* — the generic lib would still "know about" reel.
+
 ## 6. Decouple via a neutral lower layer, not sibling imports
 
 `reel` imported `withCanvasLock` from `@nebutra/atelier-canvas` purely for a

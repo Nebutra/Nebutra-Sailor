@@ -76,11 +76,18 @@ export {
 } from "./animate-in";
 export * from "./ascii-text";
 export * from "./changelog-widget";
-// Reel node-graph editor (consumes @nebutra/reel verbatim)
+// Generic node-graph editor (domain-free; consumes @nebutra/graph-model).
+// The reel binding lives in @nebutra/reel-canvas.
 export {
   NodeGraphCanvas,
   type NodeGraphCanvasProps,
+  type NodeView,
 } from "./node-graph-canvas";
+export type {
+  EdgeIdentity,
+  FlowConnection,
+  MakeEdge,
+} from "./node-graph-canvas-adapter";
 // Phase 10: Missing root exports
 export * from "./onboarding-checklist";
 export * from "./team-chat";

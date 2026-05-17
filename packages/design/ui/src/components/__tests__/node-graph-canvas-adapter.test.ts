@@ -1,187 +1,137 @@
-import type { ReelGraph } from "@nebutra/reel";
+import type { Graph, GraphEdge, GraphNode } from "@nebutra/graph-model";
 import { describe, expect, it } from "vitest";
 import {
   applyNodePositions,
-  edgeId,
-  flowEdgeToReel,
-  reelToFlow,
+  graphToFlow,
   removeFlowEdge,
   removeNode,
   tryAddEdge,
 } from "../node-graph-canvas-adapter";
 
-/**
- * Pure-adapter contract tests. The adapter is the only place reel<->xyflow
- * mapping lives; it must be framework-free and never mutate the input graph.
- */
-
-function sampleGraph(): ReelGraph {
-  return {
-    id: "g1",
-    tenantId: "org_1",
-    name: "Sample",
-    nodes: [
-      { id: "a", type: "text", x: 10, y: 20, settings: { prompt: "hi" } },
-      { id: "b", type: "gen-image", x: 300, y: 40, settings: { model: "x" } },
-      { id: "c", type: "analyze", x: 600, y: 60, settings: {} },
-    ],
-    edges: [
-      { from: "a", to: "b", inputType: "prompt" },
-      { from: "b", to: "c", inputType: "image" },
-    ],
-    updatedAt: new Date("2026-01-01T00:00:00.000Z"),
-  };
+/** Tiny domain specialization to prove the adapter is fully generic. */
+interface TNode extends GraphNode {
+  readonly label: string;
+}
+interface TEdge extends GraphEdge {
+  readonly port: string;
+}
+interface TGraph extends Graph<TNode, TEdge> {
+  readonly id: string;
+  readonly extra: string;
 }
 
-describe("reelToFlow — mapping fidelity", () => {
-  it("preserves id/type/x/y/settings on every node", () => {
-    const { nodes } = reelToFlow(sampleGraph());
-    expect(nodes).toHaveLength(3);
-    const a = nodes.find((n) => n.id === "a");
-    expect(a).toBeDefined();
-    expect(a?.position).toEqual({ x: 10, y: 20 });
-    expect(a?.data.reelType).toBe("text");
-    expect(a?.data.settings).toEqual({ prompt: "hi" });
-  });
+const edgeIdentity = (e: TEdge) => `${e.from}->${e.to}:${e.port}`;
+const makeEdge = (from: string, to: string, h: string | null): TEdge | null => ({
+  from,
+  to,
+  port: h ?? "in",
+});
 
-  it("preserves inputType on every edge (data + targetHandle)", () => {
-    const { edges } = reelToFlow(sampleGraph());
-    expect(edges).toHaveLength(2);
-    const e = edges.find((x) => x.source === "a" && x.target === "b");
-    expect(e?.data?.inputType).toBe("prompt");
-    expect(e?.targetHandle).toBe("prompt");
-    expect(e?.id).toBe(edgeId("a", "b", "prompt"));
-  });
+const base: TGraph = {
+  id: "g",
+  extra: "keep-me",
+  nodes: [
+    { id: "a", x: 0, y: 0, label: "A" },
+    { id: "b", x: 10, y: 10, label: "B" },
+  ],
+  edges: [{ from: "a", to: "b", port: "in" }],
+};
 
-  it("roundtrips a flow edge back to a reel edge preserving inputType", () => {
-    const { edges } = reelToFlow(sampleGraph());
-    const back = flowEdgeToReel(edges[0]);
-    expect(back).toEqual({ from: "a", to: "b", inputType: "prompt" });
+describe("graphToFlow", () => {
+  it("maps nodes/edges and carries the domain node + edge through data", () => {
+    const { nodes, edges } = graphToFlow(base, edgeIdentity);
+    expect(nodes[0]).toMatchObject({ id: "a", position: { x: 0, y: 0 } });
+    expect(nodes[0]?.data.node.label).toBe("A");
+    expect(edges[0]).toMatchObject({ id: "a->b:in", source: "a", target: "b" });
+    expect(edges[0]?.data.edge.port).toBe("in");
   });
 });
 
-describe("applyNodePositions — immutable position sync", () => {
-  it("produces a new graph with updated x/y and does not mutate the original", () => {
-    const original = sampleGraph();
-    const snapshot = JSON.parse(JSON.stringify(original));
-    const { nodes } = reelToFlow(original);
-    const moved = nodes.map((n) => (n.id === "a" ? { ...n, position: { x: 999, y: 888 } } : n));
-
-    const next = applyNodePositions(original, moved);
-
-    expect(next).not.toBe(original);
-    expect(next.nodes).not.toBe(original.nodes);
-    const a = next.nodes.find((n) => n.id === "a");
-    expect(a?.x).toBe(999);
-    expect(a?.y).toBe(888);
-    // settings/type untouched
-    expect(a?.settings).toEqual({ prompt: "hi" });
-    // original unmutated
-    expect(JSON.parse(JSON.stringify(original))).toEqual(snapshot);
-    expect(original.nodes[0].x).toBe(10);
-  });
-
-  it("bumps updatedAt to a fresh Date", () => {
-    const original = sampleGraph();
-    const { nodes } = reelToFlow(original);
-    const next = applyNodePositions(original, nodes);
-    expect(next.updatedAt).toBeInstanceOf(Date);
-    expect(next.updatedAt).not.toBe(original.updatedAt);
+describe("applyNodePositions", () => {
+  it("returns a new graph, preserves non-structural fields, no mutation", () => {
+    const moved = graphToFlow(base, edgeIdentity).nodes.map((n) =>
+      n.id === "a" ? { ...n, position: { x: 99, y: 88 } } : n,
+    );
+    const next = applyNodePositions(base, moved);
+    expect(next).not.toBe(base);
+    expect(next.id).toBe("g");
+    expect(next.extra).toBe("keep-me");
+    expect(next.nodes.find((n) => n.id === "a")).toMatchObject({ x: 99, y: 88, label: "A" });
+    expect(base.nodes.find((n) => n.id === "a")).toMatchObject({ x: 0, y: 0 });
   });
 });
 
-describe("tryAddEdge — acyclic guard", () => {
-  it("accepts an acyclic edge and returns a new immutable graph", () => {
-    const original = sampleGraph();
-    // a -> c is acyclic given a->b->c
-    const result = tryAddEdge(original, {
-      source: "a",
-      target: "c",
-      sourceHandle: null,
-      targetHandle: "context",
-    });
-    expect(result.ok).toBe(true);
-    if (result.ok) {
-      expect(result.graph).not.toBe(original);
-      expect(result.graph.edges).toHaveLength(3);
-      expect(result.graph.edges).toContainEqual({
-        from: "a",
-        to: "c",
-        inputType: "context",
-      });
-      // original unmutated
-      expect(original.edges).toHaveLength(2);
-    }
+describe("tryAddEdge", () => {
+  it("rejects missing endpoints / self-loop / duplicate", () => {
+    expect(
+      tryAddEdge(
+        base,
+        { source: null, target: "b", sourceHandle: null, targetHandle: null },
+        {
+          makeEdge,
+          edgeIdentity,
+        },
+      ).ok,
+    ).toBe(false);
+    expect(
+      tryAddEdge(
+        base,
+        { source: "a", target: "a", sourceHandle: null, targetHandle: null },
+        {
+          makeEdge,
+          edgeIdentity,
+        },
+      ).ok,
+    ).toBe(false);
+    expect(
+      tryAddEdge(
+        base,
+        { source: "a", target: "b", sourceHandle: null, targetHandle: "in" },
+        { makeEdge, edgeIdentity },
+      ).ok,
+    ).toBe(false);
   });
 
-  it("rejects an edge that would introduce a cycle, with a human hint", () => {
-    const original = sampleGraph();
-    // c -> a closes the a->b->c->a loop
-    const result = tryAddEdge(original, {
-      source: "c",
-      target: "a",
-      sourceHandle: null,
-      targetHandle: "prompt",
-    });
-    expect(result.ok).toBe(false);
-    if (!result.ok) {
-      expect(result.reason).toMatch(/cycle/i);
-      expect(result.reason.length).toBeGreaterThan(10);
-    }
-    // graph unchanged
-    expect(original.edges).toHaveLength(2);
+  it("honours a makeEdge veto", () => {
+    const r = tryAddEdge(
+      base,
+      { source: "b", target: "a", sourceHandle: null, targetHandle: null },
+      { makeEdge: () => null, edgeIdentity },
+    );
+    expect(r.ok).toBe(false);
   });
 
-  it("rejects a self-loop", () => {
-    const result = tryAddEdge(sampleGraph(), {
-      source: "a",
-      target: "a",
-      sourceHandle: null,
-      targetHandle: "prompt",
-    });
-    expect(result.ok).toBe(false);
-  });
+  it("rejects a cycle-creating edge but accepts an acyclic one", () => {
+    const cyclic = tryAddEdge(
+      base,
+      { source: "b", target: "a", sourceHandle: null, targetHandle: null },
+      { makeEdge, edgeIdentity },
+    );
+    expect(cyclic.ok).toBe(false);
 
-  it("rejects a connection with no source or target", () => {
-    const result = tryAddEdge(sampleGraph(), {
-      source: null,
-      target: "b",
-      sourceHandle: null,
-      targetHandle: null,
-    } as never);
-    expect(result.ok).toBe(false);
-  });
-
-  it("is idempotent — adding an existing edge is rejected as duplicate", () => {
-    const result = tryAddEdge(sampleGraph(), {
-      source: "a",
-      target: "b",
-      sourceHandle: null,
-      targetHandle: "prompt",
-    });
-    expect(result.ok).toBe(false);
-    if (!result.ok) expect(result.reason).toMatch(/exist/i);
+    const withC: TGraph = {
+      ...base,
+      nodes: [...base.nodes, { id: "c", x: 0, y: 0, label: "C" }],
+    };
+    const acyclic = tryAddEdge(
+      withC,
+      { source: "b", target: "c", sourceHandle: null, targetHandle: null },
+      { makeEdge, edgeIdentity },
+    );
+    expect(acyclic.ok).toBe(true);
+    if (acyclic.ok) expect(acyclic.graph.edges).toHaveLength(2);
   });
 });
 
-describe("removeNode / removeFlowEdge — immutable delete", () => {
-  it("removes a node and its incident edges immutably", () => {
-    const original = sampleGraph();
-    const next = removeNode(original, "b");
-    expect(next).not.toBe(original);
-    expect(next.nodes.map((n) => n.id)).toEqual(["a", "c"]);
-    // both edges touching b are gone
+describe("removeNode / removeFlowEdge", () => {
+  it("removeNode drops the node and incident edges, preserves fields", () => {
+    const next = removeNode(base, "a");
+    expect(next.nodes.map((n) => n.id)).toEqual(["b"]);
     expect(next.edges).toHaveLength(0);
-    expect(original.nodes).toHaveLength(3);
+    expect(next.extra).toBe("keep-me");
   });
-
-  it("removes a single edge by xyflow edge id immutably", () => {
-    const original = sampleGraph();
-    const id = edgeId("a", "b", "prompt");
-    const next = removeFlowEdge(original, id);
-    expect(next).not.toBe(original);
-    expect(next.edges).toHaveLength(1);
-    expect(next.edges[0]).toEqual({ from: "b", to: "c", inputType: "image" });
-    expect(original.edges).toHaveLength(2);
+  it("removeFlowEdge drops the matching edge by identity", () => {
+    const next = removeFlowEdge(base, "a->b:in", edgeIdentity);
+    expect(next.edges).toHaveLength(0);
   });
 });

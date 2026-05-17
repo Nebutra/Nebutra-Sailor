@@ -1,71 +1,70 @@
-import type { ReelGraph } from "@nebutra/reel";
+import type { Graph, GraphEdge, GraphNode } from "@nebutra/graph-model";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { NodeGraphCanvas } from "./node-graph-canvas";
+
+/**
+ * Generic, domain-free node-graph editor. These stories use a tiny inline
+ * graph type to show it depends on nothing but `@nebutra/graph-model`. The
+ * reel-bound variant ships as `<ReelCanvas>` in `@nebutra/reel-canvas`.
+ */
+
+interface DemoNode extends GraphNode {
+  readonly label: string;
+  readonly done?: boolean;
+}
+interface DemoEdge extends GraphEdge {
+  readonly port: string;
+}
+type DemoGraph = Graph<DemoNode, DemoEdge>;
+
+const edgeIdentity = (e: DemoEdge) => `${e.from}->${e.to}:${e.port}`;
+const makeEdge = (from: string, to: string, h: string | null): DemoEdge => ({
+  from,
+  to,
+  port: h ?? "in",
+});
+const renderNode = (n: DemoNode) => ({
+  label: n.label,
+  subtitle: n.done ? "done" : "pending",
+  ready: n.done,
+});
 
 const meta: Meta<typeof NodeGraphCanvas> = {
   title: "Patterns/NodeGraphCanvas",
   component: NodeGraphCanvas,
   tags: ["autodocs"],
-  parameters: { layout: "fullscreen" },
 };
 export default meta;
-
 type Story = StoryObj<typeof NodeGraphCanvas>;
 
-const emptyGraph: ReelGraph = {
-  id: "empty",
-  tenantId: "org_demo",
-  name: "Empty graph",
-  nodes: [],
-  edges: [],
-  updatedAt: new Date("2026-01-01T00:00:00.000Z"),
-};
-
-const sampleDag: ReelGraph = {
-  id: "sample",
-  tenantId: "org_demo",
-  name: "Sample DAG",
-  nodes: [
-    { id: "prompt", type: "text", x: 0, y: 120, settings: { text: "A cat" } },
-    {
-      id: "img",
-      type: "gen-image",
-      x: 280,
-      y: 60,
-      settings: { model: "demo" },
-    },
-    {
-      id: "vid",
-      type: "gen-video",
-      x: 560,
-      y: 60,
-      settings: { seconds: 4 },
-    },
-    { id: "qa", type: "analyze", x: 840, y: 180, settings: {} },
-  ],
-  edges: [
-    { from: "prompt", to: "img", inputType: "prompt" },
-    { from: "img", to: "vid", inputType: "image" },
-    { from: "vid", to: "qa", inputType: "video" },
-  ],
-  updatedAt: new Date("2026-01-01T00:00:00.000Z"),
-};
-
-/** Controlled wrapper so stories reflect real onChange round-trips. */
-function Controlled({ initial, readOnly }: { initial: ReelGraph; readOnly?: boolean }) {
-  const [graph, setGraph] = useState<ReelGraph>(initial);
-  return <NodeGraphCanvas graph={graph} onChange={setGraph} readOnly={readOnly} />;
+function Editor({ seed, readOnly }: { seed: DemoGraph; readOnly?: boolean }) {
+  const [graph, setGraph] = useState<DemoGraph>(seed);
+  return (
+    <NodeGraphCanvas
+      graph={graph}
+      onChange={setGraph}
+      edgeIdentity={edgeIdentity}
+      makeEdge={makeEdge}
+      renderNode={renderNode}
+      readOnly={readOnly}
+    />
+  );
 }
 
-export const EmptyGraph: Story = {
-  render: () => <Controlled initial={emptyGraph} />,
+const EMPTY: DemoGraph = { nodes: [], edges: [] };
+const SAMPLE: DemoGraph = {
+  nodes: [
+    { id: "n1", x: 0, y: 40, label: "Source" },
+    { id: "n2", x: 240, y: 0, label: "Transform", done: true },
+    { id: "n3", x: 240, y: 140, label: "Sink" },
+  ],
+  edges: [
+    { from: "n1", to: "n2", port: "in" },
+    { from: "n2", to: "n3", port: "in" },
+  ],
 };
 
-export const SampleDag: Story = {
-  render: () => <Controlled initial={sampleDag} />,
-};
-
-export const ReadOnly: Story = {
-  render: () => <Controlled initial={sampleDag} readOnly />,
-};
+export const EmptyGraph: Story = { render: () => <Editor seed={EMPTY} /> };
+export const SampleDag: Story = { render: () => <Editor seed={SAMPLE} /> };
+export const ReadOnly: Story = { render: () => <Editor seed={SAMPLE} readOnly /> };
