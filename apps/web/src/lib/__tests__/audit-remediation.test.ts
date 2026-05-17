@@ -116,6 +116,15 @@ describe("UI/UX audit remediation invariants", () => {
     expect(shell).toMatch(/from "@nebutra\/ui\/patterns"/);
   });
 
+  it("exposes the global feedback dialog from the dashboard header", () => {
+    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+
+    expect(shell).toContain("useFeedbackDialog");
+    expect(shell).toContain("openFeedback");
+    expect(shell).toContain('aria-label="Open feedback dialog"');
+    expect(shell).toContain("Feedback");
+  });
+
   it("uses real dashboard IA routes with breadcrumb navigation", () => {
     const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
     const navModel = readFromRepo("apps/web/src/app/[locale]/providers/dashboard-nav.ts");

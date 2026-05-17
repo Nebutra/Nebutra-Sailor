@@ -5,6 +5,7 @@ import { getConfiguredAuthProvider, isAuthFeatureEnabledSync, useAuth } from "@n
 import {
   Warning as AlertTriangle,
   ChevronRight,
+  Lifebuoy as LifeBuoy,
   SidebarLeft as PanelLeftClose,
   SidebarLeft as PanelLeftOpen,
 } from "@nebutra/icons";
@@ -16,6 +17,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { OrgSwitcher } from "@/components/navigation/org-switcher";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
@@ -39,6 +41,7 @@ function HeaderAuthControls({
   supportsWorkspaceSwitching: boolean;
 }) {
   const { isSignedIn } = useAuth();
+  const { openDialog: openFeedback } = useFeedbackDialog();
   // Phase 2 dev rollout: gate the polished OrgSwitcher behind the
   // `organizations` auth feature flag. When off, the legacy native <select>
   // in the sidebar remains the only switcher (it still calls
@@ -50,23 +53,33 @@ function HeaderAuthControls({
       {isSignedIn ? (
         <>
           {showOrgSwitcher && <OrgSwitcher />}
+          <button
+            type="button"
+            onClick={openFeedback}
+            aria-label="Open feedback dialog"
+            title="Feedback"
+            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-md border border-border bg-background px-2.5 text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+          >
+            <LifeBuoy className="size-4" aria-hidden="true" />
+            <span className="hidden lg:inline">Feedback</span>
+          </button>
           <LocaleSwitcher />
           <UserMenu />
         </>
       ) : (
         <div className="flex gap-2">
-          <a
+          <Link
             href="/sign-in"
             className="rounded-md px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 dark:text-white/70 dark:hover:bg-white/10"
           >
             Sign In
-          </a>
-          <a
+          </Link>
+          <Link
             href="/sign-up"
             className="rounded-md bg-[image:var(--brand-gradient)] px-3 py-1.5 text-sm font-medium text-white"
           >
             Sign Up
-          </a>
+          </Link>
         </div>
       )}
     </div>
@@ -132,7 +145,7 @@ function DesignSystemShellInner({
   const isAdmin = can("admin:access");
   const workspaceMode = productCapabilities?.workspace.mode ?? "organization";
   const supportsWorkspaceSwitching = workspaceMode === "organization";
-  const [workspaceOptions, setWorkspaceOptions] = useState<WorkspaceOption[]>(
+  const [workspaceOptions, setWorkspaceOptions] = useState<WorkspaceOption[]>(() =>
     WORKSPACES.map((workspace) => ({
       id: workspace.id,
       label: workspace.label,
@@ -223,28 +236,34 @@ function DesignSystemShellInner({
 
   // ─── Map dashboard nav → SidebarNavSection[] ─────────────────────────────
   const sidebarSections = useMemo<SidebarNavSection[]>(() => {
-    return DASHBOARD_NAV_GROUPS.filter((group) => group.title !== "Admin" || isAdmin).map(
-      (group) => ({
-        id: group.title,
-        label: group.title,
-        items: group.items.map((item) => ({
-          id: item.href,
-          label: item.label,
-          href: item.href,
-          icon: item.icon,
-          badge: item.badge,
-          isActive: isActiveRoute(pathname, item.href),
-          children: item.children?.map((child) => ({
-            id: child.href,
-            label: child.label,
-            href: child.href,
-            icon: child.icon,
-            badge: child.badge,
-            isActive: isActiveRoute(pathname, child.href),
+    return DASHBOARD_NAV_GROUPS.flatMap((group) => {
+      if (group.title === "Admin" && !isAdmin) {
+        return [];
+      }
+
+      return [
+        {
+          id: group.title,
+          label: group.title,
+          items: group.items.map((item) => ({
+            id: item.href,
+            label: item.label,
+            href: item.href,
+            icon: item.icon,
+            badge: item.badge,
+            isActive: isActiveRoute(pathname, item.href),
+            children: item.children?.map((child) => ({
+              id: child.href,
+              label: child.label,
+              href: child.href,
+              icon: child.icon,
+              badge: child.badge,
+              isActive: isActiveRoute(pathname, child.href),
+            })),
           })),
-        })),
-      }),
-    );
+        },
+      ];
+    });
   }, [isAdmin, pathname]);
 
   // ─── Workspaces mapped to WorkspaceSwitcher shape ────────────────────────
@@ -265,7 +284,7 @@ function DesignSystemShellInner({
           <span
             role="img"
             aria-label="Nebutra Sailor"
-            className="flex h-8 w-8 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-sm font-semibold text-white"
+            className="flex size-8 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-sm font-semibold text-white"
           >
             N
           </span>
@@ -301,13 +320,9 @@ function DesignSystemShellInner({
           type="button"
           onClick={toggle}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          className="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+          className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
         >
-          {collapsed ? (
-            <PanelLeftOpen className="h-4 w-4" />
-          ) : (
-            <PanelLeftClose className="h-4 w-4" />
-          )}
+          {collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
         </button>
       </div>
     </div>
@@ -340,7 +355,7 @@ function DesignSystemShellInner({
               const isLast = index === breadcrumbs.length - 1;
               return (
                 <li key={crumb.href} className="flex items-center gap-1">
-                  {index > 0 && <ChevronRight className="h-3.5 w-3.5" />}
+                  {index > 0 && <ChevronRight className="size-3.5" />}
                   {isLast ? (
                     <span className="font-medium text-foreground">{crumb.label}</span>
                   ) : (
@@ -398,9 +413,9 @@ function DesignSystemShellInner({
               : "-mx-4 sm:-mx-6 md:-mx-8",
           )}
         >
-          <AlertTriangle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          <AlertTriangle className="size-3.5 shrink-0" aria-hidden="true" />
           <span>
-            DEV AUTH ACTIVE — synthetic "Dev User", no DB writes. Set{" "}
+            DEV AUTH ACTIVE: synthetic "Dev User", no DB writes. Set{" "}
             <code className="rounded bg-amber-200/50 px-1 font-mono text-[10px] dark:bg-amber-900/40">
               NEXT_PUBLIC_AUTH_PROVIDER
             </code>{" "}
