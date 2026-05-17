@@ -28,6 +28,8 @@ interface AdminDirectoryPanelProps {
   pageSize?: number;
 }
 
+const DEFAULT_PAGE_SIZE = 10;
+
 type DirectoryRow =
   | {
       kind: "user";
@@ -53,11 +55,16 @@ function normalizePage(page: number): number {
   return Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
 }
 
-function buildAdminHref(query: string, page: number): string {
+function normalizePageSize(pageSize: number): number {
+  return Number.isFinite(pageSize) && pageSize > 0 ? Math.floor(pageSize) : DEFAULT_PAGE_SIZE;
+}
+
+function buildAdminHref(query: string, page: number, pageSize: number): string {
   const params = new URLSearchParams();
   const trimmed = query.trim();
   if (trimmed) params.set("q", trimmed);
   if (page > 1) params.set("page", String(page));
+  if (pageSize !== DEFAULT_PAGE_SIZE) params.set("pageSize", String(pageSize));
   const suffix = params.toString();
   return suffix ? `/admin?${suffix}` : "/admin";
 }
@@ -69,11 +76,15 @@ export function AdminDirectoryPanel({
   organizations,
   totalUsers,
   totalOrganizations,
-  pageSize = 10,
+  pageSize = DEFAULT_PAGE_SIZE,
 }: AdminDirectoryPanelProps) {
   const currentPage = normalizePage(page);
-  const totalResults = totalUsers + totalOrganizations;
-  const totalPages = Math.max(1, Math.ceil(totalResults / pageSize));
+  const normalizedPageSize = normalizePageSize(pageSize);
+  const totalPages = Math.max(
+    1,
+    Math.ceil(totalUsers / normalizedPageSize),
+    Math.ceil(totalOrganizations / normalizedPageSize),
+  );
   const hasPrevious = currentPage > 1;
   const hasNext = currentPage < totalPages;
 
@@ -95,6 +106,9 @@ export function AdminDirectoryPanel({
 
         {/* biome-ignore lint/a11y/useSemanticElements: React/jsdom still warn on the HTML search element in tests. */}
         <form action="/admin" role="search" className="flex w-full gap-2 lg:max-w-md">
+          {normalizedPageSize !== DEFAULT_PAGE_SIZE ? (
+            <input name="pageSize" type="hidden" value={String(normalizedPageSize)} />
+          ) : null}
           <input
             data-allow-native
             aria-label="Search users and organizations"
@@ -145,12 +159,13 @@ export function AdminDirectoryPanel({
 
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-sm">
         <p className="text-[var(--neutral-10)]">
-          Page {currentPage} of {totalPages} · {totalResults} results
+          Page {currentPage} of {totalPages} · {totalUsers} users · {totalOrganizations}{" "}
+          organizations
         </p>
         <div className="flex gap-2">
           {hasPrevious ? (
             <Link
-              href={buildAdminHref(query, currentPage - 1)}
+              href={buildAdminHref(query, currentPage - 1, normalizedPageSize)}
               className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-3 py-1.5 font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
             >
               Previous page
@@ -158,7 +173,7 @@ export function AdminDirectoryPanel({
           ) : null}
           {hasNext ? (
             <Link
-              href={buildAdminHref(query, currentPage + 1)}
+              href={buildAdminHref(query, currentPage + 1, normalizedPageSize)}
               className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-3 py-1.5 font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
             >
               Next page
@@ -202,7 +217,31 @@ function DirectoryTable({
 function DirectoryTableRow({ row }: { row: DirectoryRow }) {
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
+  const [impersonating, setImpersonating] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+
+  async function handleImpersonate() {
+    if (row.kind !== "user") return;
+
+    setImpersonating(true);
+    setMessage(null);
+    try {
+      const response = await fetch("/api/admin/impersonate", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ userId: row.id }),
+      });
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => ({}))) as { error?: string };
+        throw new Error(payload.error ?? "Failed to start impersonation.");
+      }
+      globalThis.location.assign("/");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Failed to start impersonation.");
+    } finally {
+      setImpersonating(false);
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -254,14 +293,26 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
         <td className="hidden px-4 py-3 text-[var(--neutral-11)] text-sm sm:table-cell">
           {row.detail}
         </td>
-        <td className="px-4 py-3 text-right">
-          <button
-            type="button"
-            onClick={() => setOpen((value) => !value)}
-            className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-2.5 py-1.5 font-medium text-[var(--neutral-12)] text-xs transition hover:bg-[var(--neutral-2)]"
-          >
-            Edit {row.label}
-          </button>
+        <td className="px-4 py-3">
+          <div className="flex flex-wrap justify-end gap-2">
+            {row.kind === "user" ? (
+              <button
+                type="button"
+                onClick={handleImpersonate}
+                disabled={impersonating}
+                className="rounded-[var(--radius-lg)] border border-[color:var(--brand-primary)]/40 px-2.5 py-1.5 font-medium text-[color:var(--brand-primary)] text-xs transition hover:bg-[color:var(--brand-primary)]/10 disabled:opacity-50"
+              >
+                {impersonating ? "Starting…" : `Impersonate ${row.label}`}
+              </button>
+            ) : null}
+            <button
+              type="button"
+              onClick={() => setOpen((value) => !value)}
+              className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-2.5 py-1.5 font-medium text-[var(--neutral-12)] text-xs transition hover:bg-[var(--neutral-2)]"
+            >
+              Edit {row.label}
+            </button>
+          </div>
           <Link href={row.editHref} className="sr-only">
             Open {row.label}
           </Link>

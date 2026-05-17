@@ -8,6 +8,7 @@ import {
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card } from "@nebutra/ui/layout";
 import { AccessInviteIssuer } from "@/components/admin/access-invite-issuer";
+import { listAdminDirectory } from "@/components/admin/admin-directory-data";
 import { AdminDirectoryPanel } from "@/components/admin/admin-directory-panel";
 
 /**
@@ -51,58 +52,10 @@ const STATS: ReadonlyArray<{
   },
 ];
 
-const DIRECTORY_USERS = [
-  {
-    id: "user_demo_admin",
-    name: "Ada Lovelace",
-    email: "ada@nebutra.example",
-    organizationName: "Nebutra Labs",
-  },
-  {
-    id: "user_demo_support",
-    name: "Grace Hopper",
-    email: "grace@compiler.example",
-    organizationName: "Compiler Labs",
-  },
-  {
-    id: "user_demo_billing",
-    name: "Katherine Johnson",
-    email: "katherine@orbit.example",
-    organizationName: "Orbit Systems",
-  },
-] as const;
-
-const DIRECTORY_ORGANIZATIONS = [
-  {
-    id: "org_demo_nebutra",
-    name: "Nebutra Labs",
-    slug: "nebutra-labs",
-    planName: "Enterprise",
-  },
-  {
-    id: "org_demo_compiler",
-    name: "Compiler Labs",
-    slug: "compiler-labs",
-    planName: "Pro",
-  },
-  {
-    id: "org_demo_orbit",
-    name: "Orbit Systems",
-    slug: "orbit-systems",
-    planName: "Free",
-  },
-] as const;
-
 type AdminSearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 function readParam(value: string | string[] | undefined): string {
   return Array.isArray(value) ? (value[0] ?? "") : (value ?? "");
-}
-
-function matchesQuery(query: string, values: readonly (string | null | undefined)[]) {
-  const needle = query.trim().toLowerCase();
-  if (!needle) return true;
-  return values.some((value) => value?.toLowerCase().includes(needle));
 }
 
 function RetoolBanner() {
@@ -147,14 +100,11 @@ function ChartPlaceholder({ label }: { label: string }) {
 
 export default async function AdminPage({ searchParams }: { searchParams: AdminSearchParams }) {
   const params = await searchParams;
-  const query = readParam(params.q);
-  const page = Number.parseInt(readParam(params.page), 10) || 1;
-  const users = DIRECTORY_USERS.filter((user) =>
-    matchesQuery(query, [user.name, user.email, user.organizationName]),
-  );
-  const organizations = DIRECTORY_ORGANIZATIONS.filter((organization) =>
-    matchesQuery(query, [organization.name, organization.slug, organization.planName]),
-  );
+  const directory = await listAdminDirectory({
+    query: readParam(params.q),
+    page: readParam(params.page),
+    pageSize: readParam(params.pageSize),
+  });
 
   return (
     <>
@@ -198,12 +148,13 @@ export default async function AdminPage({ searchParams }: { searchParams: AdminS
 
       <AnimateIn preset="fadeUp">
         <AdminDirectoryPanel
-          query={query}
-          page={page}
-          users={users}
-          organizations={organizations}
-          totalUsers={users.length}
-          totalOrganizations={organizations.length}
+          query={directory.query}
+          page={directory.page}
+          pageSize={directory.pageSize}
+          users={directory.users}
+          organizations={directory.organizations}
+          totalUsers={directory.totalUsers}
+          totalOrganizations={directory.totalOrganizations}
         />
       </AnimateIn>
     </>

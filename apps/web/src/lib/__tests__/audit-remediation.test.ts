@@ -125,6 +125,31 @@ describe("UI/UX audit remediation invariants", () => {
     expect(shell).toContain("Feedback");
   });
 
+  it("uses governed brand logo assets instead of hardcoded app-shell wordmarks", () => {
+    const brandAssets = readFromRepo("apps/web/src/components/brand/brand-assets.tsx");
+    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+    const publicChrome = readFromRepo("apps/web/src/components/navigation/public-page-chrome.tsx");
+    const demoEmbed = readFromRepo("apps/web/src/app/[locale]/demo/embed/page.tsx");
+    const themePlayground = readFromRepo(
+      "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
+    );
+
+    expect(brandAssets).toContain('source: "packages/design/brand"');
+    expect(brandAssets).toContain('src: "/brand/logo-color.svg"');
+    expect(brandAssets).toContain('src: "/brand/logo-horizontal-en.svg"');
+    expect(brandAssets).toContain("data-brand-source={webBrandAssets.source}");
+    expect(shell).toContain("BrandLogo");
+    expect(shell).toContain("webBrandLabels.homeLink");
+    expect(shell).not.toContain("Nebutra Sailor");
+    expect(shell).not.toContain('role="img"');
+    expect(publicChrome).toContain("BrandLogo");
+    expect(publicChrome).not.toContain('alt="Nebutra"');
+    expect(demoEmbed).toContain("BrandLogo");
+    expect(demoEmbed).not.toContain("Nebutra Sailor Dashboard");
+    expect(themePlayground).toContain("ThemeBrandMark");
+    expect(themePlayground).not.toContain("function NebutraMark");
+  });
+
   it("keeps subscription plan status out of the dashboard header chrome", () => {
     const layout = readFromRepo("apps/web/src/app/[locale]/(app)/layout.tsx");
     const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");

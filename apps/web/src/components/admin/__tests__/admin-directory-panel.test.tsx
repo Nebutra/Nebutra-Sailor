@@ -134,4 +134,85 @@ describe("AdminDirectoryPanel", () => {
     expect(screen.getByText(/page 1 of 4/i)).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /previous page/i })).not.toBeInTheDocument();
   });
+
+  it("preserves page size in search and pagination URL state", () => {
+    render(
+      <AdminDirectoryPanel
+        query="enterprise"
+        page={2}
+        users={USERS}
+        organizations={ORGANIZATIONS}
+        totalUsers={60}
+        totalOrganizations={0}
+        pageSize={25}
+      />,
+    );
+
+    expect(screen.getByDisplayValue("25")).toHaveAttribute("name", "pageSize");
+    expect(screen.getByRole("link", { name: /previous page/i })).toHaveAttribute(
+      "href",
+      "/admin?q=enterprise&pageSize=25",
+    );
+    expect(screen.getByRole("link", { name: /next page/i })).toHaveAttribute(
+      "href",
+      "/admin?q=enterprise&page=3&pageSize=25",
+    );
+  });
+
+  it("starts an audited impersonation session from user rows", async () => {
+    const user = userEvent.setup();
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(JSON.stringify({ ok: true }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      }),
+    );
+    const assignMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    vi.stubGlobal("location", { assign: assignMock });
+
+    render(
+      <AdminDirectoryPanel
+        query="ada"
+        page={1}
+        users={USERS}
+        organizations={[]}
+        totalUsers={2}
+        totalOrganizations={0}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: /impersonate ada lovelace/i }));
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/admin/impersonate",
+      expect.objectContaining({
+        body: JSON.stringify({ userId: "user_1" }),
+        headers: { "content-type": "application/json" },
+        method: "POST",
+      }),
+    );
+    expect(assignMock).toHaveBeenCalledWith("/");
+  });
+
+  it("paginates users and organizations as parallel lists instead of summing both totals", () => {
+    render(
+      <AdminDirectoryPanel
+        query="compiler"
+        page={4}
+        users={[]}
+        organizations={ORGANIZATIONS}
+        totalUsers={10}
+        totalOrganizations={40}
+        pageSize={10}
+      />,
+    );
+
+    expect(screen.getByText(/page 4 of 4/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /previous page/i })).toHaveAttribute(
+      "href",
+      "/admin?q=compiler&page=3",
+    );
+    expect(screen.queryByRole("link", { name: /next page/i })).not.toBeInTheDocument();
+  });
 });

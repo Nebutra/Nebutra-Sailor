@@ -1,14 +1,24 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+interface MockIssuedAccessInvite {
+  plaintextCode: string;
+  invite: {
+    id: string;
+    codePrefix: string;
+    scope: "platform" | "tenant";
+    tenantId?: string | null;
+    expiresAt?: Date | null;
+  };
+}
+
 const getAuthMock = vi.fn();
-const issueBatchMock = vi.fn(async () => [
+const issueBatchMock = vi.fn<() => Promise<MockIssuedAccessInvite[]>>(async () => [
   {
     plaintextCode: "neb_testcode",
     invite: {
       id: "aic_1",
       codePrefix: "neb_testcode",
       scope: "platform",
-      tenantId: undefined,
       expiresAt: new Date("2026-06-01T00:00:00.000Z"),
     },
   },
@@ -219,6 +229,60 @@ describe("POST /api/admin/access-invites", () => {
     expect(sendInvitationEmailMock).toHaveBeenCalledWith(
       expect.objectContaining({
         acceptUrl: "https://go.example/invite-neb_testcode",
+      }),
+    );
+  });
+
+  it("includes tenant context in tenant-scoped invite links", async () => {
+    issueBatchMock.mockResolvedValueOnce([
+      {
+        plaintextCode: "neb_tenantcode",
+        invite: {
+          id: "aic_tenant",
+          codePrefix: "neb_tenantc",
+          scope: "tenant",
+          tenantId: "org_1",
+          expiresAt: null,
+        },
+      },
+    ]);
+    getAuthMock.mockResolvedValue({
+      isSignedIn: true,
+      userId: "user_admin",
+      orgId: "org_1",
+      sessionClaims: { org_role: "org:admin" },
+    });
+    const { POST } = await loadRoute();
+
+    const response = await POST(
+      makeRequest({
+        count: 1,
+        scope: "tenant",
+        tenantId: "org_1",
+        issuedToEmail: "ada@example.com",
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(issueBatchMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        scope: "tenant",
+        tenantId: "org_1",
+      }),
+    );
+    expect(await response.json()).toMatchObject({
+      invites: [
+        {
+          canonicalInviteUrl: "https://app.example/sign-up?invite=neb_tenantcode&tenantId=org_1",
+          inviteUrl: "https://app.example/sign-up?invite=neb_tenantcode&tenantId=org_1",
+          scope: "tenant",
+          tenantId: "org_1",
+        },
+      ],
+    });
+    expect(sendInvitationEmailMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        acceptUrl: "https://app.example/sign-up?invite=neb_tenantcode&tenantId=org_1",
       }),
     );
   });
