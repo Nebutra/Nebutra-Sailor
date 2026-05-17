@@ -48,6 +48,7 @@ export interface ContentRule {
 }
 
 export interface GovernancePolicy {
+  schemaVersion: string;
   policyVersion: string;
   rawTailwindColorBudgets: RawTailwindBudget[];
   budgets?: AggregateBudgets;
@@ -102,6 +103,12 @@ function resolvePolicyPathFromPointer() {
 
   if (pointer.policyFile.includes("..") || path.isAbsolute(pointer.policyFile)) {
     throw new Error(`Invalid policy pointer target: ${pointer.policyFile}`);
+  }
+
+  if (/\.v\d+\./.test(pointer.policyFile)) {
+    throw new Error(
+      `Invalid policy pointer target: ${pointer.policyFile}. Use a canonical policy filename and encode versions inside the policy document.`,
+    );
   }
 
   return path.posix.join("tests/architecture/governance", pointer.policyFile);

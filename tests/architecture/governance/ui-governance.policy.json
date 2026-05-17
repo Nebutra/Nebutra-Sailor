@@ -1,6 +1,7 @@
 {
   "$schema": "./schemas/ui-governance.schema.json",
-  "policyVersion": "2026.05.v2",
+  "schemaVersion": "1.0.0",
+  "policyVersion": "2026.5.0",
   "rawTailwindColorBudgets": [
     {
       "surface": "landing-marketing",
@@ -215,11 +216,13 @@
         ]
       },
       {
-        "name": "web-theme-playground-brand-assets",
-        "description": "Theme playground brand chrome must use official brand assets rather than placeholder icons or hardcoded Nebutra labels.",
+        "name": "web-theme-playground-single-brand-anchor",
+        "description": "Theme Playground content chrome must not repeat the global sidebar brand; the page header should carry product context only.",
         "file": "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
-        "requiredContains": ["BrandLogo", "ThemeBrandMark"],
+        "requiredContains": ["Theme Playground", "Token governance workbench"],
         "forbiddenContains": [
+          "BrandLogo",
+          "ThemeBrandMark",
           "function NebutraMark",
           "font-semibold text-base text-foreground\">Nebutra",
           "grid size-7 place-items-center rounded-[var(--radius-md)] border border-primary/30"

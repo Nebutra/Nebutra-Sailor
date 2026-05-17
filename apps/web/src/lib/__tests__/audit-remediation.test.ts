@@ -146,7 +146,9 @@ describe("UI/UX audit remediation invariants", () => {
     expect(publicChrome).not.toContain('alt="Nebutra"');
     expect(demoEmbed).toContain("BrandLogo");
     expect(demoEmbed).not.toContain("Nebutra Sailor Dashboard");
-    expect(themePlayground).toContain("ThemeBrandMark");
+    expect(themePlayground).toContain("Token governance workbench");
+    expect(themePlayground).not.toContain("BrandLogo");
+    expect(themePlayground).not.toContain("ThemeBrandMark");
     expect(themePlayground).not.toContain("function NebutraMark");
   });
 
@@ -294,7 +296,7 @@ describe("UI/UX audit remediation invariants", () => {
     const sharedPolicyLoader = readFromRepo("scripts/lib/ui-governance-policy.ts");
     const script = readFromRepo("scripts/verify-ui-governance.ts");
     const pointer = readFromRepo("tests/architecture/governance/ui-governance.current.json");
-    const policy = readFromRepo("tests/architecture/governance/ui-governance.v1.json");
+    const policy = readFromRepo("tests/architecture/governance/ui-governance.policy.json");
     const schema = readFromRepo("tests/architecture/governance/schemas/ui-governance.schema.json");
 
     expect(rootPackage).toContain("ui:validate-policy");
@@ -305,11 +307,16 @@ describe("UI/UX audit remediation invariants", () => {
     expect(sharedPolicyLoader).toContain("POLICY_SCHEMA_PATH");
     expect(sharedPolicyLoader).toContain("Ajv");
     expect(sharedPolicyLoader).toContain("loadUiGovernancePolicy");
+    expect(sharedPolicyLoader).toContain("canonical policy filename");
     expect(script).toContain("UI governance verification passed");
     expect(script).toContain("loadUiGovernancePolicy");
     expect(pointer).toContain("policyFile");
+    expect(pointer).toContain("ui-governance.policy.json");
     expect(policy).toContain('"$schema"');
+    expect(policy).toContain('"schemaVersion"');
     expect(policy).toContain('"policyVersion"');
+    expect(policy).not.toContain(".v1");
+    expect(policy).not.toContain(".v2");
     expect(policy).toContain('"rawTailwindColorBudgets"');
     expect(policy).toContain('"componentTierCoverage"');
     expect(policy).toContain('"dependencyBoundaries"');

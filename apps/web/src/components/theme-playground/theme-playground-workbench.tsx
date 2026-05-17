@@ -24,7 +24,6 @@ import { THEME_REGISTRY, type ThemeRegistryEntry } from "@nebutra/theme/registry
 import { Badge, Button, Input, Tabs, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { type ReactNode, useMemo, useState } from "react";
-import { BrandLogo } from "@/components/brand/brand-assets";
 import {
   getThemePreviewStyle,
   getThemeSwatches,
@@ -74,10 +73,6 @@ function CopyButton({ value, label = "Copy" }: { value: string; label?: string }
       {copied ? "Copied" : label}
     </Button>
   );
-}
-
-function ThemeBrandMark() {
-  return <BrandLogo variant="mark" className="size-7" />;
 }
 
 function ThemeSwatches({ themeId, size = "md" }: { themeId: string; size?: "sm" | "md" }) {
@@ -224,19 +219,20 @@ function TopBar({
   onSurfaceChange: (surface: Surface) => void;
 }) {
   return (
-    <header className="grid gap-3 border-border/80 border-b bg-background/85 p-4 backdrop-blur-xl min-[1180px]:grid-cols-[minmax(0,1fr)_auto] min-[1180px]:items-center">
-      <div className="flex items-center gap-3">
-        <ThemeBrandMark />
-        <div>
-          <BrandLogo className="h-5 w-[6.65rem]" />
-          <p className="mt-0.5 hidden text-muted-foreground text-xs sm:block">Theme Playground</p>
+    <header className="grid gap-3 border-border/80 border-b bg-background/85 p-3 backdrop-blur-xl sm:p-4 min-[1180px]:grid-cols-[minmax(0,1fr)_auto] min-[1180px]:items-center">
+      <div className="flex min-w-0 items-center gap-3">
+        <div className="min-w-0">
+          <h1 className="truncate font-semibold text-base text-foreground">Theme Playground</h1>
+          <p className="mt-0.5 hidden text-muted-foreground text-xs sm:block">
+            Token governance workbench
+          </p>
         </div>
         <Badge variant="outline" className="hidden bg-card/70 font-mono text-[11px] sm:inline-flex">
           <Command className="size-3" /> K
         </Badge>
       </div>
 
-      <div className="flex min-w-0 flex-wrap items-center gap-3 min-[1180px]:col-span-2 min-[1180px]:justify-end">
+      <div className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-3 min-[1180px]:col-span-2 min-[1180px]:justify-end">
         <SegmentedControl
           label="Theme Mode"
           value={mode}

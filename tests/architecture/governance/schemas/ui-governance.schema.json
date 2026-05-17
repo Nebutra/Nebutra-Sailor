@@ -5,6 +5,7 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "schemaVersion",
     "policyVersion",
     "rawTailwindColorBudgets",
     "tokenFormatBudget",
@@ -17,9 +18,13 @@
     "$schema": {
       "type": "string"
     },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
     "policyVersion": {
       "type": "string",
-      "minLength": 1
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "rawTailwindColorBudgets": {
       "type": "array",

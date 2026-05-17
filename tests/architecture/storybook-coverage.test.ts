@@ -19,7 +19,9 @@ interface GovernancePolicy {
 }
 
 function loadGovernancePolicy(): GovernancePolicy {
-  const policyPath = resolve(ROOT, "tests/architecture/governance/ui-governance.v1.json");
+  const pointerPath = resolve(ROOT, "tests/architecture/governance/ui-governance.current.json");
+  const pointer = JSON.parse(readFileSync(pointerPath, "utf-8")) as { policyFile: string };
+  const policyPath = resolve(ROOT, "tests/architecture/governance", pointer.policyFile);
   const raw = readFileSync(policyPath, "utf-8");
   return JSON.parse(raw) as GovernancePolicy;
 }
