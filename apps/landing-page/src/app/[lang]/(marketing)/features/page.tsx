@@ -8,6 +8,7 @@ import { FeatureBentoCard } from "@/components/landing/features/FeatureBentoCard
 import { FeatureSmallCard } from "@/components/landing/features/FeatureSmallCard";
 import { LARGE_FEATURES, SMALL_FEATURES } from "@/components/landing/features/features-data";
 import { type Locale, routing } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -21,11 +22,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   const t = await getTranslations({ locale: lang as Locale, namespace: "featuresPage" });
-  return {
-    title: `Features — Nebutra`,
+  return buildPageMetadata({
+    title: "Nebutra Features | AI-Native SaaS Platform",
     description: t("hero.description"),
-    alternates: { canonical: `/${lang}/features` },
-  };
+    path: "/features",
+    locale: lang as Locale,
+  });
 }
 
 export default async function FeaturesPage({ params }: { params: Promise<{ lang: string }> }) {

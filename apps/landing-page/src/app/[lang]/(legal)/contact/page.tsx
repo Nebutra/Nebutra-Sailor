@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { type Locale, routing } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { ContactForm } from "./ContactForm";
 
 export async function generateMetadata({
@@ -12,10 +13,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   const t = await getTranslations({ locale: lang, namespace: "legalPages" });
-  return {
+  return buildPageMetadata({
     title: t("contact.title"),
     description: t("contact.description"),
-  };
+    path: "/contact",
+    locale: lang as Locale,
+  });
 }
 
 export function generateStaticParams() {

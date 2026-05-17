@@ -2,9 +2,11 @@ import { CheckCircle, Status as Circle, Clock } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
+import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -16,11 +18,13 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  return {
+  if (!hasLocale(routing.locales, lang)) return {};
+  return buildPageMetadata({
     title: "Platform Roadmap — Nebutra",
     description: "The capability roadmap for Nebutra's governed AI platform.",
-    alternates: { canonical: `/${lang}/roadmap` },
-  };
+    path: "/roadmap",
+    locale: lang as Locale,
+  });
 }
 
 type PhaseStatus = "done" | "active" | "upcoming";

@@ -18,7 +18,20 @@ vi.mock("next-intl/server", () => ({
 vi.mock("next/image", () => ({
   __esModule: true,
   default: (props: Record<string, unknown>) => {
-    const { alt, src, ...rest } = props as { alt?: string; src?: string };
+    const {
+      alt,
+      fill: _fill,
+      priority: _priority,
+      src,
+      unoptimized: _unoptimized,
+      ...rest
+    } = props as {
+      alt?: string;
+      fill?: boolean;
+      priority?: boolean;
+      src?: string;
+      unoptimized?: boolean;
+    };
     // biome-ignore lint/performance/noImgElement: test stub for next/image
     return <img alt={alt ?? ""} src={String(src ?? "")} {...rest} />;
   },

@@ -9,6 +9,7 @@ import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { InteractiveChangelog, type Release } from "@/components/landing/InteractiveChangelog";
 import { type Locale, routing } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -21,11 +22,17 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  return {
+  const metadata = buildPageMetadata({
     title: "Changelog — Nebutra",
     description: "Every release, shipped with obsessive attention to detail.",
+    path: "/changelog",
+    locale: lang as Locale,
+  });
+
+  return {
+    ...metadata,
     alternates: {
-      canonical: `/${lang}/changelog`,
+      ...metadata.alternates,
       types: {
         "application/rss+xml": "/api/changelog/rss",
         "application/atom+xml": "/api/changelog/atom",

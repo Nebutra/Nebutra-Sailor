@@ -1,8 +1,8 @@
 /// <reference types="@testing-library/jest-dom" />
 // @vitest-environment jsdom
 import * as matchers from "@testing-library/jest-dom/matchers";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act } from "react";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 expect.extend(matchers);
@@ -115,10 +115,11 @@ describe("CookieConsentBanner", () => {
   });
 
   it("Accept all writes a consent record with all toggles true and hides the banner", async () => {
-    const user = userEvent.setup();
     render(<CookieConsentBanner />);
 
-    await user.click(screen.getByRole("button", { name: "Accept all" }));
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Accept all" }));
+    });
 
     await waitFor(() => {
       expect(screen.queryByText("Your privacy choices")).not.toBeInTheDocument();
@@ -135,12 +136,15 @@ describe("CookieConsentBanner", () => {
   });
 
   it("Save preferences writes only the toggled categories and hides the banner", async () => {
-    const user = userEvent.setup();
     render(<CookieConsentBanner />);
 
     // Default: only necessary is checked. Toggle analytics on.
-    await user.click(screen.getByRole("checkbox", { name: /analytics/i }));
-    await user.click(screen.getByRole("button", { name: "Save preferences" }));
+    act(() => {
+      fireEvent.click(screen.getByRole("checkbox", { name: /analytics/i }));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Save preferences" }));
+    });
 
     await waitFor(() => {
       expect(screen.queryByText("Your privacy choices")).not.toBeInTheDocument();
@@ -160,10 +164,11 @@ describe("CookieConsentBanner", () => {
       .spyOn(globalThis, "fetch")
       .mockResolvedValue(new Response(JSON.stringify({ ok: true }), { status: 200 }));
 
-    const user = userEvent.setup();
     render(<CookieConsentBanner apiEndpoint="/api/cookie-consent" />);
 
-    await user.click(screen.getByRole("button", { name: "Accept all" }));
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Accept all" }));
+    });
 
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalled();

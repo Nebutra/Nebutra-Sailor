@@ -10,6 +10,7 @@ import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 import { getExchangeRate } from "@/lib/pricing/exchange-rates";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 const COMMERCIAL_BASE_PRICE_USD = 799;
 
@@ -75,11 +76,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   const t = await getTranslations({ locale: lang as Locale, namespace: "licensing.meta" });
-  return {
+  return buildPageMetadata({
     title: t("title"),
     description: t("description"),
-    alternates: { canonical: `/${lang}/licensing` },
-  };
+    path: "/licensing",
+    locale: lang as Locale,
+  });
 }
 
 export default async function LicensingPage({ params }: { params: Promise<{ lang: string }> }) {

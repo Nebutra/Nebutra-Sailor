@@ -26,7 +26,7 @@ describe("landing UI governance", () => {
     expect(LARGE_FEATURES.length).toBeGreaterThan(0);
 
     for (const feature of LARGE_FEATURES) {
-      expect(feature.href).toMatch(/^https:\/\/nebutra\.com\/docs\/[a-z0-9/-]+$/);
+      expect(feature.href).toMatch(/^https:\/\/docs\.nebutra\.com\/[a-z0-9/-]+$/);
     }
   });
 });

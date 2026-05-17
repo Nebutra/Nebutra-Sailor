@@ -20,7 +20,7 @@ describe("buildPageMetadata", () => {
       path: "/",
       locale: "en",
     });
-    expect(meta.alternates?.canonical).toBe(`${DEFAULT_SITE_URL}/`);
+    expect(meta.alternates?.canonical).toBe(DEFAULT_SITE_URL);
   });
 
   it("builds canonical URL using path and locale (default locale, no prefix)", () => {
@@ -54,9 +54,9 @@ describe("buildPageMetadata", () => {
     });
     const languages = meta.alternates?.languages as Record<string, string>;
     expect(languages).toBeDefined();
-    expect(languages.en).toBe("https://nebutra.com/");
-    expect(languages["zh-Hans"]).toBe("https://nebutra.com/zh/");
-    expect(languages["x-default"]).toBe("https://nebutra.com/");
+    expect(languages.en).toBe("https://nebutra.com");
+    expect(languages["zh-Hans"]).toBe("https://nebutra.com/zh");
+    expect(languages["x-default"]).toBe("https://nebutra.com");
   });
 
   it("populates openGraph and twitter metadata", () => {

@@ -7,13 +7,13 @@ function url(path: string): URL {
 }
 
 describe("docs URL governance", () => {
-  it("keeps public docs links on the nebutra.com product entrypoint", () => {
-    expect(createPublicDocsUrl()).toBe("https://nebutra.com/docs");
+  it("keeps public docs links on the canonical docs host", () => {
+    expect(createPublicDocsUrl()).toBe("https://docs.nebutra.com");
     expect(createPublicDocsUrl("guides/multi-tenancy")).toBe(
-      "https://nebutra.com/docs/guides/multi-tenancy",
+      "https://docs.nebutra.com/guides/multi-tenancy",
     );
     expect(createPublicDocsUrl("/docs/payments/overview")).toBe(
-      "https://nebutra.com/docs/payments/overview",
+      "https://docs.nebutra.com/payments/overview",
     );
   });
 

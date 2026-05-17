@@ -9,6 +9,7 @@ import { SocialProofBar } from "@/components/landing/social-proof-bar";
 import { Link } from "@/i18n/navigation";
 
 import type { Locale } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 import {
   CORE_QUOTE,
@@ -24,10 +25,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
   const t = await getTranslations({ locale: lang as Locale, namespace: "legalPages.about" });
 
-  return {
+  return buildPageMetadata({
     title: t("title"),
     description: t("description"),
-  };
+    path: "/about",
+    locale: lang as Locale,
+  });
 }
 
 export default async function AboutPage({ params }: { params: Promise<{ lang: string }> }) {

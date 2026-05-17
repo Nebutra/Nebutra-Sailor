@@ -18,6 +18,7 @@ import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -30,12 +31,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  return {
+  return buildPageMetadata({
     title: "Security — Nebutra",
     description:
       "Tenant isolation, application-layer encryption, RBAC/ABAC, structured audit logging — built into the Sailor skeleton as installable packages.",
-    alternates: { canonical: `/${lang}/security` },
-  };
+    path: "/security",
+    locale: lang as Locale,
+  });
 }
 
 interface Capability {

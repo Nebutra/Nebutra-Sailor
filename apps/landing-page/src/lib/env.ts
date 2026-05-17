@@ -21,7 +21,7 @@ export const env = createEnv({
     // URLs
     NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3001"),
     NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3002"),
-    NEXT_PUBLIC_DOCS_URL: z.string().url().default("https://nebutra.com/docs"),
+    NEXT_PUBLIC_DOCS_URL: z.string().url().default("https://docs.nebutra.com"),
   },
 
   experimental__runtimeEnv: {

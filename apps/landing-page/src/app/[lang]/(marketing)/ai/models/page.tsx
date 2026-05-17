@@ -11,6 +11,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -23,12 +24,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  return {
+  return buildPageMetadata({
     title: "Supported AI Providers & Models — Nebutra",
     description:
       "AI provider metadata for every major LLM lab, China platform, gateway, and local runtime — wired through Vercel AI SDK. Swap providers with one env var.",
-    alternates: { canonical: `/${lang}/ai/models` },
-  };
+    path: "/ai/models",
+    locale: lang as Locale,
+  });
 }
 
 const CATEGORY_LABEL_EN: Record<ProviderCategory, string> = {

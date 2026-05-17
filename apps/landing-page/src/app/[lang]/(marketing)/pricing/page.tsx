@@ -8,6 +8,7 @@ import { FooterMinimal, Navbar, PricingSection } from "@/components/landing";
 import { PricingComparisonTable } from "@/components/landing/pricing-comparison-table";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 const SOCIAL_AVATARS = [
   { id: "avatar-alpha" },
@@ -35,11 +36,12 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale: lang as Locale, namespace: "metadata" });
   const tp = await getTranslations({ locale: lang as Locale, namespace: "microLanding.pricing" });
-  return {
+  return buildPageMetadata({
     title: `${tp("title")} — ${t("title")}`,
     description: tp("description"),
-    alternates: { canonical: `/${lang}/pricing` },
-  };
+    path: "/pricing",
+    locale: lang as Locale,
+  });
 }
 
 export function generateStaticParams() {
