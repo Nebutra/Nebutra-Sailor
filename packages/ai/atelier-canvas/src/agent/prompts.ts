@@ -7,6 +7,10 @@
  * invariants that make multi-asset generation reliable — exact-quantity
  * preservation, bounded batches, reference-image parsing, and act-without-
  * asking. These rules, not the model choice, are what make output consistent.
+ *
+ * Lives under the `/agent` subpath, not a package parallel to
+ * `@nebutra/agents`: it produces an `AgentConfig` *consumed by* the agents
+ * runtime, it is not a second runtime.
  */
 
 /** Phase 1 — decompose intent into an ordered plan. */

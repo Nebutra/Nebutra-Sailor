@@ -5,7 +5,9 @@
  * roles are expressed here as one prompt with two phases plus one tool — the
  * planner/creator split was orchestration overhead, not product value, and
  * Sailor's `BaseAgent` tool-loop already provides the step iteration the swarm
- * was emulating.
+ * was emulating. `maxSteps` is the `@nebutra/agents` AgentConfig field (the
+ * provider maps it to `stopWhen: stepCountIs(...)` internally) — not an AI SDK
+ * option.
  */
 
 import type { AgentConfig } from "@nebutra/agents";

@@ -3,9 +3,8 @@
  * → server-placed on the tenant's canvas → patch handed back for broadcast.
  *
  * Generation reuses the env-key-gated modality in `@nebutra/agents` (mock when
- * no provider key is present). Placement + persistence reuse the
- * `@nebutra/atelier-canvas` engine. This package only wires them and exposes
- * the result in the `AgentTool` shape the orchestrator expects.
+ * no provider key is present). Placement + persistence reuse this package's
+ * own engine (relative imports — same capability, no cross-package hop).
  *
  * `onPlaced` lets the app broadcast the patch (e.g. via pusher) WITHOUT this
  * package taking a realtime dependency — broadcast is a WRAP at the app layer.
@@ -17,7 +16,8 @@ import {
   generateImage,
   generateVideo,
 } from "@nebutra/agents";
-import { type CanvasStore, placeGeneratedAsset, type ScenePatch } from "@nebutra/atelier-canvas";
+import { placeGeneratedAsset } from "../service";
+import type { CanvasStore, ScenePatch } from "../types";
 
 export interface AtelierToolDeps {
   /** Tenant-scoped persistence (InMemory for demo, Prisma in prod). */

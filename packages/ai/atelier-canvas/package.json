@@ -15,7 +15,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./store/memory": "./src/store/memory.ts",
-    "./store/prisma": "./src/store/prisma.ts"
+    "./store/prisma": "./src/store/prisma.ts",
+    "./agent": "./src/agent/index.ts"
   },
   "scripts": {
     "build": "tsup",
@@ -25,7 +26,16 @@
   "dependencies": {
     "@nebutra/logger": "workspace:*"
   },
+  "peerDependencies": {
+    "@nebutra/agents": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nebutra/agents": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@nebutra/agents": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",

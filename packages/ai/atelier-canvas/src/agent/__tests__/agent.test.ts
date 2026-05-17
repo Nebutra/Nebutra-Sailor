@@ -1,11 +1,13 @@
 /**
- * The generation tool closes the loop end-to-end (mock provider): prompt →
- * asset → server placement → durable scene → broadcast hook.
+ * The /agent subpath closes the loop end-to-end (mock provider): prompt →
+ * asset → server placement → durable scene → broadcast hook. Importing this
+ * module pulls @nebutra/agents (optional peer); the core export does not.
  */
 
 import { createAgentContext } from "@nebutra/agents";
-import { InMemoryCanvasStore, type ScenePatch } from "@nebutra/atelier-canvas";
 import { describe, expect, it } from "vitest";
+import { InMemoryCanvasStore } from "../../store/memory";
+import type { ScenePatch } from "../../types";
 import { createAtelierAgent } from "../agent";
 import { ATELIER_SYSTEM_PROMPT } from "../prompts";
 import { createAtelierGenerationTool } from "../tools";
@@ -40,7 +42,6 @@ describe("createAtelierGenerationTool", () => {
     expect(out.ok).toBe(true);
     expect(out.placed.modality).toBe("image");
 
-    // Durable BEFORE broadcast: store has it and the hook saw the same patch.
     const canvas = await store.get("org_1", "c1");
     expect(canvas?.scene.elements).toHaveLength(1);
     expect(broadcasts).toHaveLength(1);
