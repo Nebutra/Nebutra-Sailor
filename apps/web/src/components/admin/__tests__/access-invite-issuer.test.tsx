@@ -20,6 +20,7 @@ describe("AccessInviteIssuer", () => {
             {
               id: "aic_1",
               code: "neb_abc123",
+              emailStatus: "sent",
               inviteUrl: "https://app.example/sign-up?invite=neb_abc123",
               prefix: "neb_abc123",
               scope: "platform",
@@ -54,6 +55,7 @@ describe("AccessInviteIssuer", () => {
     );
     expect(await screen.findByText("neb_abc123")).toBeInTheDocument();
     expect(screen.getByText("https://app.example/sign-up?invite=neb_abc123")).toBeInTheDocument();
+    expect(screen.getByText(/email sent/i)).toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent("Copy these codes now");
   });
 });

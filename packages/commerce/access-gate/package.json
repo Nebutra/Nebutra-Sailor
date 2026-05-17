@@ -14,7 +14,7 @@
     ],
     "gaps": [
       "Better Auth sign-up preflight and post-signup redemption are wired in apps/web",
-      "Email delivery wiring pending",
+      "Admin issue API/UI and email delivery are wired in apps/web",
       "Dub short-link creation pending"
     ],
     "featureId": "access-gate",

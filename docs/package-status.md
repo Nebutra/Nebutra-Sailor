@@ -49,7 +49,7 @@ you contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/webhooks`      | `--webhooks`           | No — Svix token or signing secret     | Custom retry/DLQ is in-memory only; replay protection incomplete    |
 | `@nebutra/design-sync`   | (auto-detect)          | git-only works zero-config            | Figma push (Variables REST API) is dry-run; Penpot push scaffolded  |
 | `@nebutra/china-compliance` | (env-driven)         | ICP footer + region detection ready   | WeChat OAuth callback route TODO; Aliyun SMS adapter scaffold       |
-| `@nebutra/access-gate`  | `--access-gate`        | Core + Prisma adapter + Better Auth signup gate/redeem work | Email delivery and Dub links pending |
+| `@nebutra/access-gate`  | `--access-gate`        | Core + Prisma adapter + admin issue/email + Better Auth signup gate/redeem work | Dub attribution links pending |
 | `@nebutra/waitlist`      | `--waitlist`           | In-memory store works                 | Prisma adapter TODO; email confirmation + analytics endpoint pending |
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |

@@ -4,6 +4,7 @@ import { type FormEvent, useState } from "react";
 
 interface IssuedInvite {
   code: string;
+  emailStatus: "sent" | "skipped" | "failed";
   inviteUrl: string;
   id: string;
   prefix: string;
@@ -158,6 +159,7 @@ export function AccessInviteIssuer() {
                 </div>
                 <span className="shrink-0 text-[var(--neutral-10)] text-xs">
                   {invite.scope}
+                  {invite.emailStatus !== "skipped" ? ` · email ${invite.emailStatus}` : ""}
                   {invite.tenantId ? ` · ${invite.tenantId}` : ""}
                   {invite.expiresAt ? ` · expires ${invite.expiresAt}` : ""}
                 </span>
