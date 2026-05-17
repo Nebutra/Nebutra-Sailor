@@ -33,8 +33,13 @@ export interface SkillTestReport {
   readonly suggestion?: string;
 }
 
-interface ParsedFrontmatter {
+export interface ParsedFrontmatter {
   readonly [key: string]: unknown;
+}
+
+export interface ParsedSkillDocument {
+  readonly frontmatter: ParsedFrontmatter;
+  readonly body: string;
 }
 
 async function walk(dir: string): Promise<string[]> {
@@ -98,7 +103,7 @@ export async function readSkillDebug(limit = 10): Promise<unknown[]> {
   }
 }
 
-export function parseSkillMarkdown(markdown: string): LoadedSkill {
+export function parseSkillFrontmatter(markdown: string): ParsedSkillDocument {
   if (!markdown.startsWith("---\n")) {
     throw new CapabilityError("tool-registry", "SKILL.md frontmatter is required", {
       suggestion: "Create skills with `pnpm skill:new <name>` so required metadata is present.",
@@ -112,7 +117,14 @@ export function parseSkillMarkdown(markdown: string): LoadedSkill {
       statusCode: 400,
     });
   }
-  const frontmatter = (parseYaml(markdown.slice(4, end).trim()) ?? {}) as ParsedFrontmatter;
+  return {
+    frontmatter: (parseYaml(markdown.slice(4, end).trim()) ?? {}) as ParsedFrontmatter,
+    body: markdown.slice(end + 4).trim(),
+  };
+}
+
+export function parseSkillMarkdown(markdown: string): LoadedSkill {
+  const { frontmatter, body } = parseSkillFrontmatter(markdown);
   const name = asString(frontmatter.name);
   const description = asString(frontmatter.description);
   const version = asString(frontmatter.version);
@@ -138,7 +150,7 @@ export function parseSkillMarkdown(markdown: string): LoadedSkill {
       allowedTools: asStringArray(frontmatter.allowed_tools),
       mcpServers: asStringArray(frontmatter.mcp_servers),
     },
-    body: markdown.slice(end + 4).trim(),
+    body,
   };
 }
 

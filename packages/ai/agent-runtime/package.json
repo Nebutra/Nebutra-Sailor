@@ -14,7 +14,8 @@
     "gaps": [
       "Track-B kernel sidecar transport not yet wired",
       "Durable-turn queue binding is interface-only",
-      "Rollout store backed by in-memory reference impl only"
+      "Rollout store backed by in-memory reference impl only",
+      "Pulsar facade is runnable but still delegates model execution through injected ports"
     ],
     "featureId": "agent-runtime",
     "category": "ai",
@@ -26,6 +27,8 @@
     ".": "./src/index.ts",
     "./model": "./src/model.ts",
     "./protocol": "./src/protocol.ts",
+    "./pulsar": "./src/pulsar.ts",
+    "./orchestration": "./src/orchestration.ts",
     "./policy": "./src/policy.ts",
     "./tools": "./src/tools.ts",
     "./rollout": "./src/rollout.ts",
