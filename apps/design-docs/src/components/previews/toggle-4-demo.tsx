@@ -3,5 +3,5 @@
 import { Toggle } from "@nebutra/ui/primitives";
 
 export function Toggle4Demo() {
-  return <Toggle size="normal" aria-label="Toggle normal size" />;
+  return <Toggle size="normal">Password Protection</Toggle>;
 }

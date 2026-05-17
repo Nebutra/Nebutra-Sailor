@@ -38,3 +38,10 @@ export { tableTokens } from "./table";
 export { type TabsSize, tabsSizes, tabsTokens } from "./tabs";
 export { textareaTokens } from "./textarea";
 export { type ThemeToggleSize, themeToggleTokens } from "./theme-toggle";
+export {
+  type ToggleColor,
+  type ToggleSize,
+  toggleColors,
+  toggleSizes,
+  toggleTokens,
+} from "./toggle";

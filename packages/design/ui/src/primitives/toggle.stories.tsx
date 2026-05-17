@@ -1,24 +1,33 @@
-import { LockClosed as Lock, LockOpen } from "@nebutra/icons";
+import { LockClosedSmall, LockOpenSmall } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
 import { Toggle } from "./toggle";
 
 const meta: Meta<typeof Toggle> = {
   title: "Primitives/Toggle",
   component: Toggle,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "Controlled boolean setting switch for immediate on/off preferences. Use Switch for segmented view selection.",
+      },
+    },
+  },
   argTypes: {
     size: {
       control: "radio",
-      options: ["normal", "large"],
+      options: ["small", "normal", "large"],
     },
     color: {
       control: "radio",
-      options: ["default", "amber", "red", "green"],
+      options: ["default", "blue", "cyan", "success", "warning", "error", "neutral"],
     },
     disabled: { control: "boolean" },
     direction: {
       control: "radio",
-      options: ["switch-first", "switch-last"],
+      options: ["label-first", "switch-first"],
     },
   },
 };
@@ -26,73 +35,97 @@ const meta: Meta<typeof Toggle> = {
 export default meta;
 type Story = StoryObj<typeof Toggle>;
 
+function ControlledToggle({
+  initial = false,
+  children,
+  ...props
+}: Omit<React.ComponentProps<typeof Toggle>, "checked" | "onChange"> & {
+  initial?: boolean;
+}) {
+  const [checked, setChecked] = React.useState(initial);
+
+  return (
+    <Toggle {...props} checked={checked} onChange={setChecked}>
+      {children}
+    </Toggle>
+  );
+}
+
 export const Default: Story = {
-  args: {},
-};
-
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-  },
-};
-
-export const DisabledChecked: Story = {
-  args: {
-    disabled: true,
-    defaultChecked: true,
-  },
-};
-
-export const Sizes: Story = {
-  render: (args) => (
-    <div className="flex gap-4">
-      <Toggle {...args} size="normal" />
-      <Toggle {...args} size="large" />
+  render: () => (
+    <div className="flex items-center gap-6">
+      <ControlledToggle aria-label="Enable firewall" />
+      <ControlledToggle aria-label="Enable firewall" initial />
     </div>
   ),
 };
 
-export const CustomColors: Story = {
-  render: (args) => (
-    <div className="flex gap-4">
-      <Toggle {...args} color="default" defaultChecked />
-      <Toggle {...args} color="amber" defaultChecked />
-      <Toggle {...args} color="red" defaultChecked />
-      <Toggle {...args} color="green" defaultChecked />
+export const Disabled: Story = {
+  render: () => (
+    <div className="flex items-center gap-6">
+      <Toggle aria-label="Enable firewall" checked={false} disabled />
+      <Toggle aria-label="Enable firewall" checked disabled />
+    </div>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <div className="flex items-center gap-6">
+      <ControlledToggle aria-label="Small toggle" size="small" />
+      <ControlledToggle aria-label="Normal toggle" size="normal" />
+      <ControlledToggle aria-label="Large toggle" size="large" />
+    </div>
+  ),
+};
+
+export const SemanticColors: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-6">
+      {(["default", "blue", "cyan", "success", "warning", "error", "neutral"] as const).map(
+        (color) => (
+          <ControlledToggle aria-label={`${color} toggle`} color={color} initial key={color} />
+        ),
+      )}
     </div>
   ),
 };
 
 export const WithIcons: Story = {
-  render: (args) => (
-    <div className="flex items-center gap-4">
-      <Toggle
-        {...args}
-        size="large"
+  render: () => (
+    <div className="flex items-center gap-6">
+      <ControlledToggle
+        aria-label="Enable firewall"
+        color="warning"
         icon={{
-          checked: <Lock className="h-4 w-4" />,
-          unchecked: <LockOpen className="h-4 w-4" />,
+          checked: <LockClosedSmall />,
+          unchecked: <LockOpenSmall />,
         }}
       />
-      <Toggle
-        {...args}
-        color="red"
+      <ControlledToggle
+        aria-label="Enable firewall"
+        color="error"
         icon={{
-          checked: <Lock className="h-3 w-3" />,
-          unchecked: <LockOpen className="h-3 w-3" />,
+          checked: <LockClosedSmall />,
+          unchecked: <LockOpenSmall />,
         }}
+        size="large"
       />
     </div>
   ),
 };
 
 export const WithLabels: Story = {
-  render: (args) => (
-    <div className="flex flex-col gap-4">
-      <Toggle {...args}>Enable Firewall</Toggle>
-      <Toggle {...args} direction="switch-first">
-        Enable Firewall
-      </Toggle>
+  render: () => (
+    <div className="flex flex-col items-start gap-4">
+      <ControlledToggle>Firewall</ControlledToggle>
+      <ControlledToggle direction="switch-first">Password Protection</ControlledToggle>
+      <div className="grid gap-1">
+        <ControlledToggle>Auto-Cancel Builds</ControlledToggle>
+        <p className="text-muted-foreground text-xs">
+          ON cancels queued builds when a newer commit arrives.
+        </p>
+      </div>
     </div>
   ),
 };

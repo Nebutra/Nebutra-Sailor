@@ -21,12 +21,12 @@ export function PopoverSettingsDemo() {
       <PopoverContent side="right" align="start" className="w-64">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <Label htmlFor="notifications">Notifications</Label>
-            <Toggle />
+            <Label id="notifications-label">Notifications</Label>
+            <Toggle aria-labelledby="notifications-label" />
           </div>
           <div className="flex items-center justify-between">
-            <Label htmlFor="marketing">Marketing emails</Label>
-            <Toggle />
+            <Label id="marketing-emails-label">Marketing Emails</Label>
+            <Toggle aria-labelledby="marketing-emails-label" />
           </div>
         </div>
       </PopoverContent>
