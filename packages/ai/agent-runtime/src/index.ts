@@ -14,6 +14,7 @@
 
 export * from "./artifact-stream";
 export * from "./channel-gateway";
+export * from "./command-suggestions";
 export * from "./commands";
 export * from "./definitions";
 export * from "./deployment-status";
@@ -21,6 +22,7 @@ export * from "./design-context";
 export * from "./dispatcher";
 export * from "./durable-turn";
 export * from "./edit-planner";
+export * from "./fuzzy-match";
 export * from "./hook-pipeline";
 export * from "./inbound-admission";
 export * from "./loop";
