@@ -30,6 +30,22 @@
 | 10 | Durable / resumable turn | **WRAP** | `@nebutra/queue` (`defineQueueJob`) | durable-turn job + state store on top of replay model |
 | 11 | **Sandboxed untrusted-code execution** | **PORT** | *nothing exists* | the only true greenfield piece — see governance fork below |
 
+### Build status (honest ledger)
+
+- **Done (built + tested):** #5 contract types, #6 model, #7 rollout
+  model+replay (in-mem ref store only), #8 policy, #9 tool/MCP abstraction
+  (interface; not yet wired to live `@nebutra/mcp`), #11 seam + Rust
+  fail-closed isolator, **plus the agent loop runner** (`runTurn` — the turn
+  engine: model→tool→approval→rollout, bounded, single-threaded, resumable
+  by replay).
+- **Not yet built (interface/model only):** #10 durable/resumable turn (no
+  queue-backed job), protocol transport (types only, no WS/SSE server), live
+  MCP activation, production tenant-scoped rollout store, real isolation
+  backend (Wasmtime/Firecracker Phase 2).
+- **Not deeply mapped:** model catalog manager, apply-patch grammar,
+  compaction *generation* logic, tool_search discovery *mechanism*, hooks
+  pipeline impl, web_search/image-gen handlers.
+
 ## Track B — decoupled, in `backends/rust/sandbox/`
 
 Correction to an earlier overstatement: Track B is **not** a separate repo.

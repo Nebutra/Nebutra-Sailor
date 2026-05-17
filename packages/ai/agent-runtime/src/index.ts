@@ -12,6 +12,7 @@
  * implements {@link ExternalSandbox} over the ./protocol contract.
  */
 
+export * from "./loop.js";
 export * from "./model.js";
 export * from "./policy.js";
 export * from "./protocol.js";
