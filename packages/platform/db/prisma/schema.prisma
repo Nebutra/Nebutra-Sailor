@@ -77,6 +77,24 @@ enum ProductStage {
   @@schema("public")
 }
 
+/// @conditional(access-gate=invite)
+enum AccessInviteScope {
+  PLATFORM
+  TENANT
+
+  @@schema("public")
+}
+
+/// @conditional(access-gate=invite)
+enum AccessInviteStatus {
+  ACTIVE
+  REDEEMED
+  REVOKED
+  EXPIRED
+
+  @@schema("public")
+}
+
 // ============================================
 // Multi-Tenant Core
 // ============================================
@@ -1351,6 +1369,59 @@ model Connector {
 
   @@index([userId, isActive, lastUsedAt(sort: Desc)])
   @@map("connectors")
+  @@schema("public")
+}
+
+// ── Cold-start Access Gate (provider-agnostic) ───────────────────────────────
+// Manus-style invite gate for controlled signup access. Deliberately stores
+// only a hash/prefix of the secret code: plaintext is returned once by the
+// service layer and never persisted. User/tenant ids are plain strings because
+// this gate must work across Better Auth, NextAuth/Auth.js, Clerk, and future
+// providers without hard FK coupling to one auth schema.
+/// @conditional(access-gate=invite)
+model AccessInviteCode {
+  id              String             @id @default(cuid())
+  codeHash        String             @unique @map("code_hash") @db.VarChar(128)
+  codePrefix      String             @map("code_prefix") @db.VarChar(16)
+  scope           AccessInviteScope  @default(PLATFORM)
+  tenantId        String?            @map("tenant_id")
+  issuedByUserId  String             @map("issued_by_user_id")
+  issuedToEmail   String?            @map("issued_to_email") @db.VarChar(254)
+  status          AccessInviteStatus @default(ACTIVE)
+  maxRedemptions  Int                @default(1) @map("max_redemptions")
+  redemptionCount Int                @default(0) @map("redemption_count")
+  expiresAt       DateTime?          @map("expires_at")
+  revokedAt       DateTime?          @map("revoked_at")
+  metadata        Json               @default("{}")
+  createdAt       DateTime           @default(now()) @map("created_at")
+  updatedAt       DateTime           @updatedAt @map("updated_at")
+
+  redemptions AccessInviteRedemption[]
+
+  @@index([issuedByUserId, status, createdAt(sort: Desc)])
+  @@index([tenantId, status])
+  @@index([codePrefix])
+  @@map("access_invite_codes")
+  @@schema("public")
+}
+
+/// @conditional(access-gate=invite)
+model AccessInviteRedemption {
+  id           String   @id @default(cuid())
+  inviteCodeId String   @map("invite_code_id")
+  userId       String   @map("user_id")
+  tenantId     String?  @map("tenant_id")
+  email        String?  @db.VarChar(254)
+  ipAddress    String?  @map("ip_address") @db.VarChar(45)
+  redeemedAt   DateTime @default(now()) @map("redeemed_at")
+  metadata     Json     @default("{}")
+
+  inviteCode AccessInviteCode @relation(fields: [inviteCodeId], references: [id], onDelete: Cascade)
+
+  @@unique([inviteCodeId, userId])
+  @@index([userId, redeemedAt(sort: Desc)])
+  @@index([tenantId, redeemedAt(sort: Desc)])
+  @@map("access_invite_redemptions")
   @@schema("public")
 }
 

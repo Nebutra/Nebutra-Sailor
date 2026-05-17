@@ -79,6 +79,24 @@ export const ProductStage = {
 export type ProductStage = (typeof ProductStage)[keyof typeof ProductStage]
 
 
+export const AccessInviteScope = {
+  PLATFORM: 'PLATFORM',
+  TENANT: 'TENANT'
+} as const
+
+export type AccessInviteScope = (typeof AccessInviteScope)[keyof typeof AccessInviteScope]
+
+
+export const AccessInviteStatus = {
+  ACTIVE: 'ACTIVE',
+  REDEEMED: 'REDEEMED',
+  REVOKED: 'REVOKED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type AccessInviteStatus = (typeof AccessInviteStatus)[keyof typeof AccessInviteStatus]
+
+
 export const AIProvider = {
   OPENAI: 'OPENAI',
   ANTHROPIC: 'ANTHROPIC',

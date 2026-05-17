@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { pruneMigrationsByFlags } from "./prune-migrations";
 import { parseConditionalAnnotations, pruneSchemaByFlags } from "./prune-schema";
 
 const SAMPLE_SCHEMA = `
@@ -49,6 +50,18 @@ model CreditBalance {
   amount Int
 }
 
+/// @conditional(access-gate=invite)
+enum AccessInviteScope {
+  PLATFORM
+  TENANT
+}
+
+/// @conditional(access-gate=invite)
+model AccessInviteCode {
+  id    String @id
+  scope AccessInviteScope
+}
+
 enum UserRole {
   ADMIN
   USER
@@ -76,6 +89,16 @@ describe("parseConditionalAnnotations", () => {
   it("ignores unannotated models", () => {
     const out = parseConditionalAnnotations(SAMPLE_SCHEMA);
     expect(out.find((model) => model.name === "User")).toBeUndefined();
+  });
+
+  it("parses conditional enum blocks", () => {
+    const out = parseConditionalAnnotations(SAMPLE_SCHEMA);
+    const scope = out.find((block) => block.name === "AccessInviteScope");
+    expect(scope).toMatchObject({
+      name: "AccessInviteScope",
+      flag: "access-gate",
+      values: ["invite"],
+    });
   });
 });
 
@@ -138,6 +161,12 @@ describe("pruneSchemaByFlags", () => {
     expect(pruned).toContain("enum UserRole");
   });
 
+  it("removes conditional enum blocks when feature is not selected", () => {
+    const pruned = pruneSchemaByFlags(SAMPLE_SCHEMA, { "access-gate": "none" });
+    expect(pruned).not.toContain("enum AccessInviteScope");
+    expect(pruned).not.toContain("model AccessInviteCode");
+  });
+
   it("is idempotent on already-pruned schema", () => {
     const once = pruneSchemaByFlags(SAMPLE_SCHEMA, { auth: "clerk" });
     const twice = pruneSchemaByFlags(once, { auth: "clerk" });
@@ -158,6 +187,7 @@ describe("pruneSchemaByFlags", () => {
       "billing-mode": "usage",
       idp: "clerk",
       template: "saas",
+      "access-gate": "none",
       community: "none",
     });
     expect(pruned).toContain("generator");
@@ -165,7 +195,59 @@ describe("pruneSchemaByFlags", () => {
     expect(pruned).not.toContain("model AuthUser");
     expect(pruned).not.toContain("model Invoice");
     expect(pruned).not.toContain("model CreditBalance");
+    expect(pruned).not.toContain("enum AccessInviteScope");
+    expect(pruned).not.toContain("enum AccessInviteStatus");
+    expect(pruned).not.toContain("model AccessInviteCode");
+    expect(pruned).not.toContain("model AccessInviteRedemption");
+    expect(pruned).not.toContain("Cold-start Access Gate");
+    expect(pruned).not.toContain("Manus-style invite gate");
     expect(pruned).toContain("model User");
     expect(pruned).toContain("model UsageLedgerEntry");
+  });
+});
+
+describe("pruneMigrationsByFlags", () => {
+  it("removes conditional migration directories when feature is not selected", () => {
+    const root = fs.mkdtempSync(path.join(process.cwd(), "tmp-prune-migrations-"));
+    try {
+      const keepDir = path.join(root, "20260501000000_core");
+      const gatedDir = path.join(root, "20260517000000_add_access_invite_gate");
+      fs.mkdirSync(keepDir, { recursive: true });
+      fs.mkdirSync(gatedDir, { recursive: true });
+      fs.writeFileSync(path.join(keepDir, "migration.sql"), "CREATE TABLE core (id text);\n");
+      fs.writeFileSync(
+        path.join(gatedDir, "migration.sql"),
+        "-- @conditional(access-gate=invite)\nCREATE TABLE access_invite_codes (id text);\n",
+      );
+
+      const result = pruneMigrationsByFlags(root, { "access-gate": "none" });
+
+      expect(result.removed).toEqual(["20260517000000_add_access_invite_gate"]);
+      expect(fs.existsSync(keepDir)).toBe(true);
+      expect(fs.existsSync(gatedDir)).toBe(false);
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it("keeps conditional migrations and strips the marker when feature is selected", () => {
+    const root = fs.mkdtempSync(path.join(process.cwd(), "tmp-prune-migrations-"));
+    try {
+      const gatedDir = path.join(root, "20260517000000_add_access_invite_gate");
+      const migrationPath = path.join(gatedDir, "migration.sql");
+      fs.mkdirSync(gatedDir, { recursive: true });
+      fs.writeFileSync(
+        migrationPath,
+        "-- @conditional(access-gate=invite)\nCREATE TABLE access_invite_codes (id text);\n",
+      );
+
+      const result = pruneMigrationsByFlags(root, { "access-gate": "invite" });
+
+      expect(result.kept).toEqual(["20260517000000_add_access_invite_gate"]);
+      expect(fs.existsSync(gatedDir)).toBe(true);
+      expect(fs.readFileSync(migrationPath, "utf8")).not.toContain("@conditional");
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
   });
 });

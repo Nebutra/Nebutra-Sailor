@@ -15,11 +15,13 @@
  * single source of audit truth for these flows.
  */
 
+import { createAccessGate, createPrismaAccessInviteStore } from "@nebutra/access-gate";
 import { auditLogger } from "@nebutra/audit";
 import type { AuthProvider, AuthProviderId } from "@nebutra/auth";
 import { getAuditableContext, getConfiguredAuthProvider } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
+import { db } from "@/lib/db";
 import { applySessionHint } from "@/lib/session-hint";
 
 type AuditableMaybe = Awaited<ReturnType<typeof getAuditableContext>>;
@@ -34,11 +36,139 @@ const provider = getConfiguredAuthProvider();
 
 let authInstance: AuthProvider | null = null;
 
+interface AccessGateSignupContext {
+  email: string;
+  plaintextCode: string;
+}
+
 async function getAuth(): Promise<AuthProvider> {
   if (!authInstance) {
     authInstance = await createAuth({ provider });
   }
   return authInstance;
+}
+
+function isAccessGateEnabled(): boolean {
+  return process.env.ACCESS_GATE_MODE === "invite";
+}
+
+function isEmailSignUpRequest(request: Request): boolean {
+  const url = new URL(request.url);
+  return request.method.toUpperCase() === "POST" && url.pathname.endsWith("/sign-up/email");
+}
+
+function createAccessGateService() {
+  return createAccessGate({
+    store: createPrismaAccessInviteStore(
+      db as unknown as Parameters<typeof createPrismaAccessInviteStore>[0],
+    ),
+    issuerQuota: 1,
+  });
+}
+
+async function readAccessGateSignupContext(
+  request: Request,
+): Promise<AccessGateSignupContext | Response | null> {
+  if (!isAccessGateEnabled() || !isEmailSignUpRequest(request)) return null;
+
+  const payload = (await request
+    .clone()
+    .json()
+    .catch(() => null)) as {
+    email?: unknown;
+    accessInviteCode?: unknown;
+    inviteCode?: unknown;
+  } | null;
+  const email = typeof payload?.email === "string" ? payload.email : "";
+  const plaintextCode =
+    typeof payload?.accessInviteCode === "string"
+      ? payload.accessInviteCode
+      : typeof payload?.inviteCode === "string"
+        ? payload.inviteCode
+        : "";
+
+  if (!email.trim() || !plaintextCode.trim()) {
+    return Response.json(
+      { code: "ACCESS_INVITE_REQUIRED", error: "A valid invite code is required to sign up." },
+      { status: 400 },
+    );
+  }
+
+  return { email, plaintextCode };
+}
+
+async function enforceAccessGatePreflight(
+  context: AccessGateSignupContext | null,
+): Promise<Response | null> {
+  if (!context) return null;
+
+  try {
+    await createAccessGateService().validate({
+      plaintextCode: context.plaintextCode,
+      email: context.email,
+    });
+    return null;
+  } catch (error) {
+    logger.warn("[auth] access-gate signup preflight rejected", {
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return Response.json(
+      {
+        code: "INVALID_ACCESS_INVITE",
+        error: "Invite code is invalid, expired, or not available.",
+      },
+      { status: 400 },
+    );
+  }
+}
+
+function extractSignedUpUserId(payload: unknown): string | null {
+  if (!payload || typeof payload !== "object") return null;
+  const record = payload as Record<string, unknown>;
+  if (typeof record.id === "string") return record.id;
+  if (record.user && typeof record.user === "object") {
+    const user = record.user as Record<string, unknown>;
+    if (typeof user.id === "string") return user.id;
+  }
+  if (record.data && typeof record.data === "object") {
+    const data = record.data as Record<string, unknown>;
+    if (typeof data.id === "string") return data.id;
+    if (data.user && typeof data.user === "object") {
+      const user = data.user as Record<string, unknown>;
+      if (typeof user.id === "string") return user.id;
+    }
+  }
+  return null;
+}
+
+async function redeemAccessInviteAfterSignup(
+  context: AccessGateSignupContext | null,
+  response: Response,
+): Promise<void> {
+  if (!context || response.status < 200 || response.status >= 300) return;
+
+  const payload = await response
+    .clone()
+    .json()
+    .catch(() => null);
+  const userId = extractSignedUpUserId(payload);
+  if (!userId) {
+    logger.warn("[auth] access-gate signup succeeded but response had no user id");
+    return;
+  }
+
+  try {
+    await createAccessGateService().redeem({
+      plaintextCode: context.plaintextCode,
+      redeemedByUserId: userId,
+      email: context.email,
+    });
+  } catch (error) {
+    logger.error("[auth] access-gate post-signup redemption failed", {
+      userId,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
 }
 
 interface AuditDescriptor {
@@ -138,6 +268,12 @@ async function handler(request: Request): Promise<Response> {
     });
   }
 
+  const accessGateContextOrResponse = await readAccessGateSignupContext(request);
+  if (accessGateContextOrResponse instanceof Response) return accessGateContextOrResponse;
+  const accessGateContext = accessGateContextOrResponse;
+  const accessGateResponse = await enforceAccessGatePreflight(accessGateContext);
+  if (accessGateResponse) return accessGateResponse;
+
   let response: Response;
   try {
     const auth = await getAuth();
@@ -152,6 +288,7 @@ async function handler(request: Request): Promise<Response> {
   }
 
   response = applySessionHint(request, response);
+  await redeemAccessInviteAfterSignup(accessGateContext, response);
 
   try {
     const descriptor = deriveAuditFromRequest(request, response.status);

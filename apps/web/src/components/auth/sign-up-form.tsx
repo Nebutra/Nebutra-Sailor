@@ -11,17 +11,19 @@ type Phase = "details" | "verify";
 
 export function SignUpForm() {
   const router = useRouter();
+  const accessGateEnabled = process.env.NEXT_PUBLIC_ACCESS_GATE_MODE === "invite";
 
   const [phase, _setPhase] = useState<Phase>("details");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [accessInviteCode, setAccessInviteCode] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Lobehub v5 Input uses antd's InputRef, not HTMLInputElement
+  // biome-ignore lint/suspicious/noExplicitAny: Lobehub v5 Input uses antd's InputRef, not HTMLInputElement.
   const codeInputRef = useRef<any>(null);
 
   useEffect(() => {
@@ -44,6 +46,7 @@ export function SignUpForm() {
           name: `${firstName} ${lastName}`.trim(),
           email,
           password,
+          ...(accessGateEnabled ? { accessInviteCode } : {}),
         }),
       });
 
@@ -240,9 +243,30 @@ export function SignUpForm() {
           />
         </div>
 
+        {accessGateEnabled ? (
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="signup-access-invite">Invite code</Label>
+            <Input
+              id="signup-access-invite"
+              value={accessInviteCode}
+              onChange={(e) => setAccessInviteCode(e.target.value)}
+              required
+              autoComplete="off"
+              placeholder="neb_..."
+            />
+            <p className="text-xs text-[var(--neutral-9)]">
+              Nebutra is invite-only while the cold-start gate is enabled.
+            </p>
+          </div>
+        ) : null}
+
         {error && <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>}
 
-        <Button htmlType="submit" className="w-full" disabled={loading}>
+        <Button
+          htmlType="submit"
+          className="w-full"
+          disabled={loading || (accessGateEnabled && !accessInviteCode.trim())}
+        >
           {loading ? "Creating account…" : "Create account"}
         </Button>
       </form>

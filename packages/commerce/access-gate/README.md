@@ -1,0 +1,75 @@
+# @nebutra/access-gate
+
+Status: Foundation — core service, Prisma adapter, and the `apps/web` Better Auth signup preflight + post-signup redemption are implemented. Invite delivery and attribution wiring are still owned by the consuming app.
+
+`@nebutra/access-gate` provides a provider-agnostic cold-start invite gate:
+
+- Founders/admins issue bounded batches of invite codes.
+- Plaintext codes are returned once and never persisted.
+- Stored codes use SHA-256 hashes plus a short prefix for support/debugging.
+- Redemption is compare-and-swap safe through the Prisma adapter.
+- Platform-scoped and tenant-scoped invites are both supported.
+
+## Template Behavior
+
+This repository is both a reference implementation and a reusable template source. The canonical Prisma schema and migration live in `@nebutra/db`, but generated apps should not inherit cold-start business tables unless they opt in.
+
+`create-sailor` therefore defaults to:
+
+```bash
+create-sailor my-app --access-gate none
+```
+
+To include the invite gate schema and migration in a scaffolded app:
+
+```bash
+create-sailor my-app --access-gate invite
+```
+
+The template pruner removes both conditional Prisma schema blocks and conditional migration directories when the feature is not selected.
+
+## App Wiring
+
+`apps/web` supports a fail-closed Better Auth signup preflight:
+
+```bash
+ACCESS_GATE_MODE=invite
+NEXT_PUBLIC_ACCESS_GATE_MODE=invite
+```
+
+When enabled, `/api/auth/sign-up/email` requires `accessInviteCode` in the JSON body and validates it before delegating to Better Auth. The sign-up form shows the invite-code field only when `NEXT_PUBLIC_ACCESS_GATE_MODE=invite`.
+
+After Better Auth returns a successful sign-up response, `apps/web` redeems the code against the created user id when the response payload includes `id`, `user.id`, `data.id`, or `data.user.id`.
+
+## Usage
+
+```ts
+import { createAccessGate, createPrismaAccessInviteStore } from "@nebutra/access-gate";
+import { prisma } from "@nebutra/db";
+
+const gate = createAccessGate({
+  store: createPrismaAccessInviteStore(prisma),
+  issuerQuota: 5,
+});
+
+const [issued] = await gate.issueBatch({
+  count: 1,
+  issuedByUserId: "user_founder",
+  scope: "tenant",
+  tenantId: "org_123",
+  expiresAt: new Date("2026-06-01T00:00:00Z"),
+});
+
+await gate.redeem({
+  plaintextCode: issued.plaintextCode,
+  redeemedByUserId: "user_new",
+  tenantId: "org_123",
+});
+```
+
+## Integration Checklist
+
+- Rate-limit issue/redeem endpoints at the app boundary with `@nebutra/rate-limit`.
+- Deliver invite links through `@nebutra/email`.
+- Use `@nebutra/analytics` / Dub short links if attribution is required.
+- Keep tenant-scoped redemption inside the same tenant selected during signup.

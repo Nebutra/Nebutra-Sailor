@@ -39,6 +39,7 @@ Feature flags (region-based smart defaults):
       --captcha <id>        turnstile | hcaptcha | aliyun-slide | none             [WIP]
       --billing-mode <mode> usage | seat | credits (default: usage)
       --idp <id>            clerk | oauth-server (default: clerk)
+      --access-gate <mode>  none | invite (default: none)
 
 Preview statuses:
   [Foundation] — types + factory complete; adapters need external credentials & may not work out-of-the-box

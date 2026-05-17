@@ -97,6 +97,8 @@ export const ModelName = {
   Skill: 'Skill',
   UserSkill: 'UserSkill',
   Connector: 'Connector',
+  AccessInviteCode: 'AccessInviteCode',
+  AccessInviteRedemption: 'AccessInviteRedemption',
   Referral: 'Referral',
   RedemptionCode: 'RedemptionCode',
   CodeRedemption: 'CodeRedemption',
@@ -915,6 +917,41 @@ export const ConnectorScalarFieldEnum = {
 } as const
 
 export type ConnectorScalarFieldEnum = (typeof ConnectorScalarFieldEnum)[keyof typeof ConnectorScalarFieldEnum]
+
+
+export const AccessInviteCodeScalarFieldEnum = {
+  id: 'id',
+  codeHash: 'codeHash',
+  codePrefix: 'codePrefix',
+  scope: 'scope',
+  tenantId: 'tenantId',
+  issuedByUserId: 'issuedByUserId',
+  issuedToEmail: 'issuedToEmail',
+  status: 'status',
+  maxRedemptions: 'maxRedemptions',
+  redemptionCount: 'redemptionCount',
+  expiresAt: 'expiresAt',
+  revokedAt: 'revokedAt',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AccessInviteCodeScalarFieldEnum = (typeof AccessInviteCodeScalarFieldEnum)[keyof typeof AccessInviteCodeScalarFieldEnum]
+
+
+export const AccessInviteRedemptionScalarFieldEnum = {
+  id: 'id',
+  inviteCodeId: 'inviteCodeId',
+  userId: 'userId',
+  tenantId: 'tenantId',
+  email: 'email',
+  ipAddress: 'ipAddress',
+  redeemedAt: 'redeemedAt',
+  metadata: 'metadata'
+} as const
+
+export type AccessInviteRedemptionScalarFieldEnum = (typeof AccessInviteRedemptionScalarFieldEnum)[keyof typeof AccessInviteRedemptionScalarFieldEnum]
 
 
 export const ReferralScalarFieldEnum = {

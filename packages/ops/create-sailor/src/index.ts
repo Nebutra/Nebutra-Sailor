@@ -61,6 +61,7 @@ import {
 import { applyPaymentSelection, type PaymentChoice } from "./utils/payment";
 import { applyProviderSelection } from "./utils/providers";
 import { pruneTemplate, pruneWaveFeatures } from "./utils/prune";
+import { pruneMigrationsByFlags } from "./utils/prune-migrations";
 import { pruneSchemaByFlags } from "./utils/prune-schema";
 import { applyQueueSelection } from "./utils/queue";
 import { applyScaffoldExtras } from "./utils/scaffold-extras";
@@ -105,6 +106,7 @@ interface CliOptions {
   metering?: string;
   billingMode?: string;
   idp?: string;
+  accessGate?: string;
   // Wave 3-5 feature toggles. Each accepts `true` | `false`; we parse with
   // `parseBoolFlag` so users can write `--cron-jobs=false` from CI scripts.
   cronJobs?: string;
@@ -349,6 +351,7 @@ interface RegionDefaults {
   metering: string;
   billingMode: string;
   idp: string;
+  accessGate: string;
 }
 
 function regionDefaults(region: Region): RegionDefaults {
@@ -395,6 +398,7 @@ function regionDefaults(region: Region): RegionDefaults {
     metering: "auto", // auto-enable if payment is set
     billingMode: "usage", // all regions default to usage-based billing
     idp: "clerk", // all regions default — users pick oauth-server explicitly if self-hosting IDP
+    accessGate: "none", // opt-in: do not ship cold-start business tables by default
   };
 }
 
@@ -453,6 +457,7 @@ async function run(): Promise<void> {
     .option("--metering <mode>", "auto | on | off (default: auto — auto-on when payment is set)")
     .option("--billing-mode <mode>", "usage | seat | credits (default: usage)")
     .option("--idp <id>", "clerk | oauth-server (default: clerk)")
+    .option("--access-gate <mode>", "none | invite (default: none)")
     // Wave 3-5 feature toggles — accept `true|false`; defaults are
     // `true` except `--china-compliance` which auto-flips with --region=cn.
     .option("--cron-jobs <bool>", "true | false — scaffold scheduled cron handlers (default: true)")
@@ -811,6 +816,9 @@ async function run(): Promise<void> {
   const metering = opts.metering ?? rDefaults.metering;
   const billingMode = (opts.billingMode ?? rDefaults.billingMode) as "usage" | "seat" | "credits";
   const idp = (opts.idp ?? rDefaults.idp) as "clerk" | "oauth-server";
+  const accessGate = (opts.accessGate === "invite" ? "invite" : rDefaults.accessGate) as
+    | "none"
+    | "invite";
 
   // Wave 3-5 feature toggles — region-aware defaults, flag overrides.
   const waveToggles = resolveWaveFeatureToggles(
@@ -835,6 +843,7 @@ async function run(): Promise<void> {
     { flag: "webhooks", provider: webhooks },
     { flag: "feature-flags", provider: featureFlags },
     { flag: "captcha", provider: captcha },
+    { flag: "access-gate", provider: accessGate },
   ]);
 
   function emitPreviewWarnings(): void {
@@ -885,6 +894,7 @@ async function run(): Promise<void> {
     metering: metering as NebutraConfig["metering"],
     billingMode,
     idp,
+    accessGate,
     cronJobs: waveToggles.cronJobs,
     auditLog: waveToggles.auditLog,
     apiKeys: waveToggles.apiKeys,
@@ -923,6 +933,7 @@ async function run(): Promise<void> {
     ["SMS", sms],
     ["Deploy Target", deployTarget],
     ["Docs Framework", docs],
+    ["Access gate", accessGate],
   ];
   if (!useJson) {
     steps.forEach(([label, value], i) => {
@@ -1061,16 +1072,19 @@ async function run(): Promise<void> {
       emitJson(useJson, { event: "step", step: "schema-prune", status: "start" });
       try {
         const raw = fs.readFileSync(schemaPath, "utf-8");
-        const pruned = pruneSchemaByFlags(raw, {
+        const schemaFlags = {
           auth,
           payment: paymentChoice,
           "billing-mode": billingMode,
           idp,
           template: "saas", // TODO: wire up once --template flag returns
+          "access-gate": accessGate,
           // community: intentionally not a template flag — Sleptons is Nebutra's own
           // product, stripped from Sailor-Template at mirror-sync time.
-        });
+        };
+        const pruned = pruneSchemaByFlags(raw, schemaFlags);
         fs.writeFileSync(schemaPath, pruned);
+        pruneMigrationsByFlags(path.join(path.dirname(schemaPath), "migrations"), schemaFlags);
         emitJson(useJson, { event: "step", step: "schema-prune", status: "ok" });
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
@@ -1217,8 +1231,9 @@ async function run(): Promise<void> {
       toggles: waveToggles,
     });
 
-    // Schema prune — strip @conditional model blocks that don't match the selection.
-    // Covers: auth, payment, billing-mode, idp, template.
+    // Schema prune — strip @conditional model/enum blocks and gated migrations
+    // that don't match the selection. Covers: auth, payment, billing-mode, idp,
+    // template, access-gate.
     // (community flag was removed — Sleptons is Nebutra's own product, not a template
     // choice. Sleptons models are stripped at mirror-sync time by template-build.ts.)
     if (config.orm === "prisma" && config.database !== "none") {
@@ -1227,14 +1242,17 @@ async function run(): Promise<void> {
         emitJson(useJson, { event: "step", step: "schema-prune", status: "start" });
         try {
           const raw = fs.readFileSync(schemaPath, "utf8");
-          const pruned = pruneSchemaByFlags(raw, {
+          const schemaFlags = {
             auth,
             payment: paymentChoice,
             "billing-mode": billingMode,
             idp,
             template: "saas",
-          });
+            "access-gate": accessGate,
+          };
+          const pruned = pruneSchemaByFlags(raw, schemaFlags);
           fs.writeFileSync(schemaPath, pruned);
+          pruneMigrationsByFlags(path.join(path.dirname(schemaPath), "migrations"), schemaFlags);
           emitJson(useJson, { event: "step", step: "schema-prune", status: "ok" });
         } catch (err) {
           const msg = err instanceof Error ? err.message : String(err);

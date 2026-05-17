@@ -95,6 +95,7 @@ npm create sailor@latest my-app \
 | `--metering` | `auto` · `on` · `off` | `auto` |
 | `--billing-mode` | `usage` · `seat` · `credits` | `usage` |
 | `--idp` | `clerk` · `oauth-server` | `clerk` |
+| `--access-gate` | `none` · `invite` | `none` |
 | `--cron-jobs` | `true` · `false` — scaffold scheduled cron handlers | `true` |
 | `--audit-log` | `true` · `false` — enable `/settings/audit-log` + arch test | `true` |
 | `--api-keys` | `true` · `false` — enable `/settings/api-keys` page | `true` |

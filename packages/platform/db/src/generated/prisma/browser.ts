@@ -248,6 +248,16 @@ export type UserSkill = Prisma.UserSkillModel
  */
 export type Connector = Prisma.ConnectorModel
 /**
+ * Model AccessInviteCode
+ * @conditional(access-gate=invite)
+ */
+export type AccessInviteCode = Prisma.AccessInviteCodeModel
+/**
+ * Model AccessInviteRedemption
+ * @conditional(access-gate=invite)
+ */
+export type AccessInviteRedemption = Prisma.AccessInviteRedemptionModel
+/**
  * Model Referral
  * 
  */

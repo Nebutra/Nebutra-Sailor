@@ -674,6 +674,40 @@ export type EnumOAuthClientStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumOAuthClientStatusFilter<$PrismaModel>
 }
 
+export type EnumAccessInviteScopeFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessInviteScope | Prisma.EnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessInviteScope[] | Prisma.ListEnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AccessInviteScope[] | Prisma.ListEnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAccessInviteScopeFilter<$PrismaModel> | $Enums.AccessInviteScope
+}
+
+export type EnumAccessInviteStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessInviteStatus | Prisma.EnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessInviteStatus[] | Prisma.ListEnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AccessInviteStatus[] | Prisma.ListEnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAccessInviteStatusFilter<$PrismaModel> | $Enums.AccessInviteStatus
+}
+
+export type EnumAccessInviteScopeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessInviteScope | Prisma.EnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessInviteScope[] | Prisma.ListEnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AccessInviteScope[] | Prisma.ListEnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAccessInviteScopeWithAggregatesFilter<$PrismaModel> | $Enums.AccessInviteScope
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAccessInviteScopeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAccessInviteScopeFilter<$PrismaModel>
+}
+
+export type EnumAccessInviteStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessInviteStatus | Prisma.EnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessInviteStatus[] | Prisma.ListEnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AccessInviteStatus[] | Prisma.ListEnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAccessInviteStatusWithAggregatesFilter<$PrismaModel> | $Enums.AccessInviteStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAccessInviteStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAccessInviteStatusFilter<$PrismaModel>
+}
+
 export type EnumLicenseTierFilter<$PrismaModel = never> = {
   equals?: $Enums.LicenseTier | Prisma.EnumLicenseTierFieldRefInput<$PrismaModel>
   in?: $Enums.LicenseTier[] | Prisma.ListEnumLicenseTierFieldRefInput<$PrismaModel>
@@ -1359,6 +1393,40 @@ export type NestedEnumOAuthClientStatusWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumOAuthClientStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumOAuthClientStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumAccessInviteScopeFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessInviteScope | Prisma.EnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessInviteScope[] | Prisma.ListEnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AccessInviteScope[] | Prisma.ListEnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAccessInviteScopeFilter<$PrismaModel> | $Enums.AccessInviteScope
+}
+
+export type NestedEnumAccessInviteStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessInviteStatus | Prisma.EnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessInviteStatus[] | Prisma.ListEnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AccessInviteStatus[] | Prisma.ListEnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAccessInviteStatusFilter<$PrismaModel> | $Enums.AccessInviteStatus
+}
+
+export type NestedEnumAccessInviteScopeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessInviteScope | Prisma.EnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessInviteScope[] | Prisma.ListEnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AccessInviteScope[] | Prisma.ListEnumAccessInviteScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAccessInviteScopeWithAggregatesFilter<$PrismaModel> | $Enums.AccessInviteScope
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAccessInviteScopeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAccessInviteScopeFilter<$PrismaModel>
+}
+
+export type NestedEnumAccessInviteStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessInviteStatus | Prisma.EnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessInviteStatus[] | Prisma.ListEnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AccessInviteStatus[] | Prisma.ListEnumAccessInviteStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAccessInviteStatusWithAggregatesFilter<$PrismaModel> | $Enums.AccessInviteStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAccessInviteStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAccessInviteStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumLicenseTierFilter<$PrismaModel = never> = {

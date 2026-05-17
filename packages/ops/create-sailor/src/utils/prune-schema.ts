@@ -2,7 +2,7 @@
  * prune-schema.ts
  *
  * Parses `/// @conditional(flag=values)` annotations in a Prisma schema and
- * trims model blocks that don't match a given CLI flag selection.
+ * trims model / enum blocks that don't match a given CLI flag selection.
  *
  * Annotation convention (LOCKED):
  *
@@ -12,9 +12,9 @@
  *   }
  *
  * Where:
- *   - `flag` is one of: auth, payment, billing-mode, idp, template, community
+ *   - `flag` is one of: auth, payment, billing-mode, idp, template, access-gate
  *   - `values` is a `|`-separated list (pipe-OR)
- *   - Keep the model iff the caller's selection for `flag` is included in `values`.
+ *   - Keep the block iff the caller's selection for `flag` is included in `values`.
  *   - Unannotated models/blocks are always kept.
  *
  * Uses the official `@mrleebo/prisma-ast` parser for robust, whitespace-tolerant
@@ -24,7 +24,7 @@
 import { type Block, getSchema, printSchema, type Schema } from "@mrleebo/prisma-ast";
 
 export interface ConditionalAnnotation {
-  /** Model name (e.g. "AuthUser") */
+  /** Block name (e.g. "AuthUser" or "AccessInviteScope") */
   name: string;
   /** Annotation flag (e.g. "auth", "payment") */
   flag: string;
@@ -43,9 +43,9 @@ export interface FlagSelection {
  */
 const CONDITIONAL_RE = /^\/\/\/\s*@conditional\(([A-Za-z][A-Za-z0-9_-]*)=([^)]+)\)\s*$/;
 
-/** Is this block a triple-slash `/// ...` doc comment? */
-function isTripleSlashComment(block: Block): boolean {
-  return block.type === "comment" && block.text.trim().startsWith("///");
+/** Is this block a Prisma line comment attached to a conditional block? */
+function isPrismaLineComment(block: Block): boolean {
+  return block.type === "comment" && block.text.trim().startsWith("//");
 }
 
 interface ParsedConditional {
@@ -66,16 +66,16 @@ function parseConditionalText(text: string): ParsedConditional | null {
 }
 
 /**
- * Find the conditional annotation that precedes a model block, if any.
+ * Find the conditional annotation that precedes a prunable block, if any.
  * Looks backwards through immediately preceding comment blocks (skipping
  * nothing — triple-slash comments for a model appear contiguously before it
  * in prisma-ast's block list).
  */
 function findPrecedingConditional(
   blocks: Block[],
-  modelIndex: number,
+  blockIndex: number,
 ): { annIndex: number; parsed: ParsedConditional } | null {
-  for (let i = modelIndex - 1; i >= 0; i--) {
+  for (let i = blockIndex - 1; i >= 0; i--) {
     const block = blocks[i];
     if (block.type === "comment") {
       const parsed = parseConditionalText(block.text);
@@ -87,12 +87,16 @@ function findPrecedingConditional(
   return null;
 }
 
+function isPrunableBlock(block: Block): block is Block & { name: string } {
+  return block.type === "model" || block.type === "enum";
+}
+
 export function parseConditionalAnnotations(schemaSource: string): ConditionalAnnotation[] {
   const schema = getSchema(schemaSource);
   const out: ConditionalAnnotation[] = [];
   for (let i = 0; i < schema.list.length; i++) {
     const block = schema.list[i];
-    if (block.type !== "model") continue;
+    if (!isPrunableBlock(block)) continue;
     const hit = findPrecedingConditional(schema.list, i);
     if (!hit) continue;
     out.push({ name: block.name, flag: hit.parsed.flag, values: hit.parsed.values });
@@ -101,16 +105,16 @@ export function parseConditionalAnnotations(schemaSource: string): ConditionalAn
 }
 
 /**
- * Prune the schema by removing `@conditional` model blocks whose flag/value
+ * Prune the schema by removing `@conditional` model / enum blocks whose flag/value
  * does not match the given selection. Keeps everything else untouched.
  *
  * Behavior:
- *   - Unannotated models: always kept.
- *   - Annotated model matching selection: kept, but its `/// @conditional(...)`
- *     comment is stripped (other `///` doc comments on the model are preserved).
- *   - Annotated model NOT matching selection: removed together with its
+ *   - Unannotated models/enums: always kept.
+ *   - Annotated block matching selection: kept, but its `/// @conditional(...)`
+ *     comment is stripped (other `///` doc comments on the block are preserved).
+ *   - Annotated block NOT matching selection: removed together with its
  *     `@conditional` comment. Other `///` doc comments attached only to that
- *     model are also removed.
+ *     block are also removed.
  */
 export function pruneSchemaByFlags(schemaSource: string, flags: FlagSelection): string {
   const schema = getSchema(schemaSource);
@@ -119,7 +123,7 @@ export function pruneSchemaByFlags(schemaSource: string, flags: FlagSelection): 
 
   for (let i = 0; i < schema.list.length; i++) {
     const block = schema.list[i];
-    if (block.type !== "model") continue;
+    if (!isPrunableBlock(block)) continue;
 
     const hit = findPrecedingConditional(schema.list, i);
     if (!hit) continue;
@@ -133,7 +137,7 @@ export function pruneSchemaByFlags(schemaSource: string, flags: FlagSelection): 
       dropIndices.add(i);
       for (let j = i - 1; j >= 0; j--) {
         const commentBlock = schema.list[j];
-        if (commentBlock.type === "comment" && isTripleSlashComment(commentBlock)) {
+        if (isPrismaLineComment(commentBlock)) {
           dropIndices.add(j);
           continue;
         }

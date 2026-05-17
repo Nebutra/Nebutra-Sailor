@@ -54,6 +54,7 @@ export interface NebutraConfig {
   metering?: "auto" | "on" | "off";
   billingMode?: "usage" | "seat" | "credits";
   idp?: "clerk" | "oauth-server";
+  accessGate?: "none" | "invite";
   // Wave 3-5 feature toggles. Default to enabled for global; some flip
   // based on region (e.g. chinaCompliance auto-true when region=cn).
   cronJobs?: boolean;

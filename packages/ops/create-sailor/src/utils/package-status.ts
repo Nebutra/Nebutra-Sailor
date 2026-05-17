@@ -28,6 +28,7 @@ export const NEBUTRA_PACKAGE_STATUS: Record<string, PackageStatus> = {
   vault: "foundation",
   webhooks: "foundation",
   "china-compliance": "foundation",
+  "access-gate": "foundation",
   // WIP — actively under development, do not use in production
   audit: "wip",
   "feature-flags": "wip",
@@ -69,6 +70,8 @@ export const PROVIDER_STATUS: Record<string, PackageStatus> = {
   turnstile: "wip",
   hcaptcha: "wip",
   "aliyun-slide": "wip",
+  // Access gate (@nebutra/access-gate → foundation)
+  invite: "foundation",
 };
 
 /**
@@ -94,6 +97,7 @@ export const PROVIDER_FLAG_BY_ID: Record<string, string> = {
   turnstile: "captcha",
   hcaptcha: "captcha",
   "aliyun-slide": "captcha",
+  invite: "access-gate",
 };
 
 export interface PreviewSelection {
