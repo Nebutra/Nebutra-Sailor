@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toast-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/toast-demo.tsx",
+      "content": "\"use client\";\n\nimport { Button, Toaster, useToasts } from \"@nebutra/ui/primitives\";\n\nexport function ToastDemo() {\n  const toasts = useToasts();\n\n  return (\n    <div className=\"relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border bg-muted/30 p-6\">\n      <div className=\"flex flex-wrap items-center justify-center gap-2\">\n        <Button\n          variant=\"outline\"\n          onClick={() => {\n            toasts.message({ text: \"Deployment canceled\" });\n          }}\n        >\n          Message\n        </Button>\n        <Button\n          variant=\"default\"\n          onClick={() => {\n            toasts.success(\"Domain added\");\n          }}\n        >\n          Success\n        </Button>\n        <Button\n          variant=\"warning\"\n          onClick={() => {\n            toasts.warning(\"Deployment completed with skipped routes\");\n          }}\n        >\n          Warning\n        </Button>\n        <Button\n          variant=\"destructive\"\n          onClick={() => {\n            toasts.error(\"Couldn’t verify domain. Try again.\");\n          }}\n        >\n          Error\n        </Button>\n        <Button\n          variant=\"secondary\"\n          onClick={() => {\n            toasts.message({\n              text: \"Project archived\",\n              onUndoAction: () => {\n                toasts.success(\"Project restored\");\n              },\n            });\n          }}\n        >\n          Undo\n        </Button>\n      </div>\n      <Toaster />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}
