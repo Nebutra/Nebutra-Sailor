@@ -10,3 +10,4 @@ await writeFile(join(store.filesRoot(), "external.md"), "A file changed outside 
 await store.reindex();
 
 process.stdout.write(`${JSON.stringify(await store.search().query("outside").topK(1), null, 2)}\n`);
+await store.close();

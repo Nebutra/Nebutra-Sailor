@@ -10,3 +10,4 @@ await store.write("hello.md", "hi from Layer 0");
 const hits = await store.search().query("hi").topK(3);
 
 process.stdout.write(`${JSON.stringify(hits, null, 2)}\n`);
+await store.close();

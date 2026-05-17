@@ -11,3 +11,4 @@ await store.write("notes/plain.md", "Cyberpunk but no schema.");
 
 const hits = await store.search().query("cyberpunk").filter({ schema: "brand_profile" }).topK(5);
 process.stdout.write(`${JSON.stringify(hits, null, 2)}\n`);
+await store.close();
