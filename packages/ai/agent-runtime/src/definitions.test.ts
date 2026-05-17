@@ -4,7 +4,7 @@ import {
   DefinitionResolver,
   parseFrontmatter,
   substituteArguments,
-} from "./definitions.js";
+} from "./definitions";
 
 const def = (
   over: Partial<Definition> & Pick<Definition, "slug" | "tenantId" | "sourceTier">,

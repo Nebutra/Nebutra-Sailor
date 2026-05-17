@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { ProtocolDispatcher } from "./dispatcher.js";
+import { ProtocolDispatcher } from "./dispatcher";
 
 function envelope(over: Record<string, unknown> = {}) {
   return {

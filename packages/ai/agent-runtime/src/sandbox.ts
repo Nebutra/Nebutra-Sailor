@@ -14,7 +14,7 @@
  * out of scope for a multi-tenant web product.
  */
 
-import type { CapabilityPolicy } from "./policy.js";
+import type { CapabilityPolicy } from "./policy";
 
 export interface SandboxExecRequest {
   /** Mandatory tenant scope — every delegated exec is tenant-bound. */

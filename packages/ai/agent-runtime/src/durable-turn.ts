@@ -16,9 +16,9 @@
  */
 
 import { z } from "zod";
-import type { ThreadEvent } from "./model.js";
-import { isTurnTerminal } from "./model.js";
-import { type RolloutLine, type RolloutStore, replay } from "./rollout.js";
+import type { ThreadEvent } from "./model";
+import { isTurnTerminal } from "./model";
+import { type RolloutLine, type RolloutStore, replay } from "./rollout";
 
 /** A durable job handed to the queue. Mirrors `@nebutra/queue` job shape. */
 export interface DurableTurnJob {

@@ -26,7 +26,7 @@ import {
   DefinitionResolver,
   type ResolveContext,
   substituteArguments,
-} from "./definitions.js";
+} from "./definitions";
 
 /**
  * A command IS a Definition. No new fields — the distinction between "command"

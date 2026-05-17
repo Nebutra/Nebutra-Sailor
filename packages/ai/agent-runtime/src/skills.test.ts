@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { DefinitionResolver } from "./definitions.js";
-import { buildSkillListing, expandSkill, type SkillRecord } from "./skills.js";
+import { DefinitionResolver } from "./definitions";
+import { buildSkillListing, expandSkill, type SkillRecord } from "./skills";
 
 const skill = (
   over: Partial<SkillRecord> &

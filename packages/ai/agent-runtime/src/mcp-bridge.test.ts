@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 
-import { activateMcpTools, type McpServerCatalogPort } from "./mcp-bridge.js";
-import { type McpClientLike, type ToolDefinition, ToolRegistry } from "./tools.js";
+import { activateMcpTools, type McpServerCatalogPort } from "./mcp-bridge";
+import { type McpClientLike, type ToolDefinition, ToolRegistry } from "./tools";
 
 function def(name: string): ToolDefinition {
   return {

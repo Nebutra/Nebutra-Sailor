@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import type { ThreadItem } from "./model.js";
-import { InMemoryRolloutStore, type RolloutLine, replay } from "./rollout.js";
+import type { ThreadItem } from "./model";
+import { InMemoryRolloutStore, type RolloutLine, replay } from "./rollout";
 import {
   PersistentRolloutStore,
   type RolloutPersistencePort,
   RoundTripError,
-} from "./rollout-store-persistent.js";
+} from "./rollout-store-persistent";
 
 /** In-memory fake satisfying the injectable persistence port. */
 class FakePort implements RolloutPersistencePort {

@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
-import { createDurableTurn, type DurableTurnQueuePort } from "./durable-turn.js";
-import type { ApprovalGate, ModelInvoker, ModelRoundResult } from "./loop.js";
-import { runTurn } from "./loop.js";
-import type { ThreadEvent, TurnConfig } from "./model.js";
-import type { ReviewDecision } from "./policy.js";
-import { InMemoryRolloutStore, type RolloutStore } from "./rollout.js";
-import { ToolRegistry } from "./tools.js";
+import { createDurableTurn, type DurableTurnQueuePort } from "./durable-turn";
+import type { ApprovalGate, ModelInvoker, ModelRoundResult } from "./loop";
+import { runTurn } from "./loop";
+import type { ThreadEvent, TurnConfig } from "./model";
+import type { ReviewDecision } from "./policy";
+import { InMemoryRolloutStore, type RolloutStore } from "./rollout";
+import { ToolRegistry } from "./tools";
 
 const config: TurnConfig = {
   model: "m",

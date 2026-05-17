@@ -19,7 +19,7 @@ import {
   resolveScope,
   type SerializationScope,
   scopeKey,
-} from "./protocol.js";
+} from "./protocol";
 
 // ── Public types ─────────────────────────────────────────────────────────────
 

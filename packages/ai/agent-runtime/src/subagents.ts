@@ -19,8 +19,8 @@
  */
 
 import { z } from "zod";
-import type { Definition, Frontmatter } from "./definitions.js";
-import type { ThreadItem, TurnUsage } from "./model.js";
+import type { Definition, Frontmatter } from "./definitions";
+import type { ThreadItem, TurnUsage } from "./model";
 
 /* ───────────────────────── Subagent definition ─────────────────────────── */
 

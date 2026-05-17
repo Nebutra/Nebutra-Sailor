@@ -13,12 +13,7 @@
 
 import { z } from "zod";
 
-import {
-  adaptMcpTool,
-  type McpClientLike,
-  type ToolDefinition,
-  type ToolRegistry,
-} from "./tools.js";
+import { adaptMcpTool, type McpClientLike, type ToolDefinition, type ToolRegistry } from "./tools";
 
 /**
  * Port over an MCP server catalog (satisfied by `@nebutra/mcp`'s

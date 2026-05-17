@@ -8,9 +8,9 @@
  */
 
 import { describe, expect, it, vi } from "vitest";
-import type { CommandRecord } from "./commands.js";
-import { CommandRegistry, expandCommand } from "./commands.js";
-import type { Frontmatter, SourceTier } from "./definitions.js";
+import type { CommandRecord } from "./commands";
+import { CommandRegistry, expandCommand } from "./commands";
+import type { Frontmatter, SourceTier } from "./definitions";
 
 function fm(over: Partial<Frontmatter> = {}): Frontmatter {
   return {

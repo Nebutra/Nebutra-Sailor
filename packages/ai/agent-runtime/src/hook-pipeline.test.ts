@@ -6,7 +6,7 @@ import {
   matchesMatcher,
   onHookEvent,
   runHooks,
-} from "./hook-pipeline.js";
+} from "./hook-pipeline";
 
 const ctx: HookContext = { tenantId: "org_123", threadId: "th_1" };
 

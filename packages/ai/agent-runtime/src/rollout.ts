@@ -13,7 +13,7 @@
  * reference store ships here.
  */
 
-import type { ThreadEvent, ThreadItem, TurnConfig } from "./model.js";
+import type { ThreadEvent, ThreadItem, TurnConfig } from "./model";
 
 /** Cap mirrors the upstream persisted-output ceiling. */
 export const PERSISTED_OUTPUT_MAX_BYTES = 10_000;

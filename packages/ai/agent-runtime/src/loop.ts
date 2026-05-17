@@ -14,7 +14,7 @@
  * dispatched through the tool registry / external-sandbox seam.
  */
 
-import type { AgentMessageItem, ThreadEvent, ThreadItem, TurnConfig, TurnUsage } from "./model.js";
+import type { AgentMessageItem, ThreadEvent, ThreadItem, TurnConfig, TurnUsage } from "./model";
 import {
   type ApprovalPolicy,
   DENIED,
@@ -22,10 +22,10 @@ import {
   type ReviewDecision,
   type RuleDecision,
   resolveRuleDecision,
-} from "./policy.js";
-import type { ServerRequest } from "./protocol.js";
-import { type RolloutLine, type RolloutStore, sanitizeForPersist } from "./rollout.js";
-import type { ToolDispatchContext, ToolRegistry } from "./tools.js";
+} from "./policy";
+import type { ServerRequest } from "./protocol";
+import { type RolloutLine, type RolloutStore, sanitizeForPersist } from "./rollout";
+import type { ToolDispatchContext, ToolRegistry } from "./tools";
 
 /** A single thing the model emitted in one round. */
 export type ModelEmission =

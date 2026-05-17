@@ -6,7 +6,7 @@ import {
   type PlanAction,
   stripFencedWrapper,
   unescapeEntities,
-} from "./artifact-stream.js";
+} from "./artifact-stream";
 
 // ── Pure helpers ─────────────────────────────────────────────────────────────
 

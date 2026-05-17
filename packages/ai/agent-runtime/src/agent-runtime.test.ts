@@ -1,22 +1,22 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
-import { isTurnTerminal, mergeTurnConfig, type TurnConfig } from "./model.js";
-import { DEFAULT_CAPABILITY_POLICY, DENIED, isApproval, resolveRuleDecision } from "./policy.js";
-import { METHOD_REGISTRY, resolveScope, scopeKey } from "./protocol.js";
+import { isTurnTerminal, mergeTurnConfig, type TurnConfig } from "./model";
+import { DEFAULT_CAPABILITY_POLICY, DENIED, isApproval, resolveRuleDecision } from "./policy";
+import { METHOD_REGISTRY, resolveScope, scopeKey } from "./protocol";
 import {
   InMemoryRolloutStore,
   PERSISTED_OUTPUT_MAX_BYTES,
   replay,
   sanitizeForPersist,
-} from "./rollout.js";
+} from "./rollout";
 import {
   assertSafePosture,
   createHttpSandbox,
   NoExecutorConfiguredError,
   REFUSING_SANDBOX,
   SandboxDelegationError,
-} from "./sandbox.js";
-import { ToolRegistry } from "./tools.js";
+} from "./sandbox";
+import { ToolRegistry } from "./tools";
 
 const baseConfig: TurnConfig = {
   model: "m",

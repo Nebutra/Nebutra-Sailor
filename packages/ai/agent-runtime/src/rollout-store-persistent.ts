@@ -12,7 +12,7 @@
  */
 
 import { z } from "zod";
-import type { RolloutLine, RolloutStore } from "./rollout.js";
+import type { RolloutLine, RolloutStore } from "./rollout";
 
 /**
  * Minimal append-only persistence seam. Implementations MUST persist records

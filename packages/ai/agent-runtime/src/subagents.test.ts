@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import type { Definition, Frontmatter } from "./definitions.js";
-import { DefinitionResolver } from "./definitions.js";
-import type { ThreadItem, TurnUsage } from "./model.js";
+import type { Definition, Frontmatter } from "./definitions";
+import { DefinitionResolver } from "./definitions";
+import type { ThreadItem, TurnUsage } from "./model";
 import {
   assertNotPeeking,
   prepareDispatch,
@@ -9,7 +9,7 @@ import {
   type SubagentRecord,
   settleDeferred,
   TaskRegistry,
-} from "./subagents.js";
+} from "./subagents";
 
 const fm = (over: Partial<Frontmatter> = {}): Frontmatter => ({
   name: "researcher",

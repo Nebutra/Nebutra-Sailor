@@ -31,7 +31,7 @@ import {
   type DefinitionResolver,
   type ResolveContext,
   substituteArguments,
-} from "./definitions.js";
+} from "./definitions";
 
 /** A skill is just a resolvable `Definition`. */
 export type SkillRecord = Definition;

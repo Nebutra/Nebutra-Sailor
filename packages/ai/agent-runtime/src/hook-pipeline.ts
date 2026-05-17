@@ -16,7 +16,7 @@
  */
 
 import { z } from "zod";
-import type { ToolDispatchContext, ToolHooks } from "./tools.js";
+import type { ToolDispatchContext, ToolHooks } from "./tools";
 
 /**
  * Event taxonomy — ported verbatim from the upstream hook system.

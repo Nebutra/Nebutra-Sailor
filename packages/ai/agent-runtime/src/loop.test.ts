@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
-import { type ApprovalGate, type ModelInvoker, type ModelRoundResult, runTurn } from "./loop.js";
-import type { ThreadEvent, TurnConfig } from "./model.js";
-import type { ReviewDecision } from "./policy.js";
-import { InMemoryRolloutStore } from "./rollout.js";
-import { ToolRegistry } from "./tools.js";
+import { type ApprovalGate, type ModelInvoker, type ModelRoundResult, runTurn } from "./loop";
+import type { ThreadEvent, TurnConfig } from "./model";
+import type { ReviewDecision } from "./policy";
+import { InMemoryRolloutStore } from "./rollout";
+import { ToolRegistry } from "./tools";
 
 const config: TurnConfig = {
   model: "m",
