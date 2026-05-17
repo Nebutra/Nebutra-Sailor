@@ -32,6 +32,21 @@ describe("getFallbackBlogCover", () => {
     });
   });
 
+  it("uses the generated Nebutra manifesto cover for both localized slugs", () => {
+    expect(
+      getFallbackBlogCover(
+        makePost({
+          slug: "why-we-build-nebutra-zh",
+          title: "为什么我们要做 Nebutra",
+          translationKey: "why-we-build-nebutra",
+        }),
+      ),
+    ).toMatchObject({
+      alt: "为什么我们要做 Nebutra cover",
+      src: "/images/blog/covers/why-we-build-nebutra.png",
+    });
+  });
+
   it("falls back to the generic Nebutra cover for unmapped posts", () => {
     expect(getFallbackBlogCover(makePost({ slug: "new-post" })).src).toBe(
       "/images/blog/covers/nebutra-default.png",
