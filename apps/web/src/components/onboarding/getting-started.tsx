@@ -117,7 +117,10 @@ export async function GettingStarted() {
   const percent = Math.round((doneCount / total) * 100);
 
   return (
-    <div data-tour-id="getting-started">
+    <div
+      data-tour-id="getting-started"
+      className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-white/[0.03]"
+    >
       <AnimateIn preset="fadeUp">
         <div className="mb-3 flex items-center justify-between gap-4">
           <div className="min-w-0">
@@ -149,7 +152,10 @@ export async function GettingStarted() {
         </div>
       </AnimateIn>
 
-      <AnimateInGroup stagger="fast" className="grid gap-2 md:grid-cols-2 xl:grid-cols-1">
+      <AnimateInGroup
+        stagger="fast"
+        className="divide-y divide-neutral-5 overflow-hidden rounded-[var(--radius-xl)] bg-neutral-2/60 dark:divide-white/10 dark:bg-white/[0.025]"
+      >
         {tasks.map((task) => {
           const Icon = task.icon;
           return (
@@ -159,20 +165,24 @@ export async function GettingStarted() {
                 aria-label={
                   task.done ? `${task.label} (complete)` : `${task.label} — ${task.description}`
                 }
-                className={`group flex items-start gap-3 rounded-xl border p-3.5 transition-colors duration-150 ${
+                className={`group flex items-start gap-3 px-3 py-3 transition-colors duration-150 ${
                   task.done
-                    ? "border-green-6 bg-green-2/40 hover:bg-green-2/60 dark:border-green-7/50 dark:bg-green-2/10 dark:hover:bg-green-2/20"
-                    : "border-neutral-6 bg-neutral-1 hover:border-neutral-8 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.05]"
+                    ? "bg-green-2/35 hover:bg-green-2/55 dark:bg-green-2/10 dark:hover:bg-green-2/20"
+                    : "hover:bg-neutral-3/70 dark:hover:bg-white/[0.05]"
                 }`}
               >
                 <div
-                  className={`flex size-7 shrink-0 items-center justify-center rounded-lg ${
+                  className={`flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] ${
                     task.done
                       ? "bg-green-3 text-green-11 dark:bg-green-3/30 dark:text-green-9"
                       : "bg-neutral-2 text-neutral-11 dark:bg-white/10 dark:text-white/60"
                   }`}
                 >
-                  {task.done ? <Check className="size-3.5" /> : <Icon className="size-3.5" />}
+                  {task.done ? (
+                    <Check className="size-3.5" aria-hidden="true" />
+                  ) : (
+                    <Icon className="size-3.5" aria-hidden="true" />
+                  )}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-2">
@@ -191,6 +201,7 @@ export async function GettingStarted() {
                           ? "text-green-11 dark:text-green-9"
                           : "text-neutral-11 dark:text-white/70"
                       }`}
+                      aria-hidden="true"
                     />
                   </div>
                   <p className="mt-0.5 line-clamp-2 text-xs text-neutral-10 dark:text-white/50">

@@ -893,8 +893,10 @@
         "revenue": "Recognized revenue"
       },
       "meta": {
+        "snapshot": "Snapshot",
         "source": "Source",
         "cadence": "Cadence",
+        "tenant": "Tenant",
         "state": "State",
         "daily": "Daily",
         "latestDay": "{day}",

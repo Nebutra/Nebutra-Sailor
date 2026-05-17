@@ -132,14 +132,16 @@ describe("UI/UX audit remediation invariants", () => {
 
     expect(dashboard).toContain("CommandCenter");
     expect(dashboard).toContain("max-w-[1440px]");
-    expect(dashboard).toContain("xl:grid-cols-[minmax(0,1fr)_24rem]");
+    expect(dashboard).toContain("xl:grid-cols-[minmax(0,1fr)_22rem]");
+    expect(dashboard).toContain("snapshotMeta");
     expect(dashboard).toContain("details.activeUsers");
     expect(dashboard).toContain("empty.noSnapshot");
     expect(dashboard).toContain("meta.latestDay");
-    expect(skeletons).toContain("lg:grid-cols-[minmax(0,1fr)_minmax(28rem,38rem)]");
+    expect(skeletons).toContain("lg:grid-cols-[minmax(0,1fr)_minmax(26rem,34rem)]");
     expect(translations).toContain('"commandCenter"');
     expect(dashboard).not.toContain("Atmospheric brand glow");
     expect(dashboard).not.toContain("max-w-2xl flex-col items-center");
+    expect(dashboard).not.toContain("DashboardHint");
   });
 
   it("keeps recent dashboard sessions visible with an honest empty state", () => {
@@ -148,23 +150,38 @@ describe("UI/UX audit remediation invariants", () => {
 
     expect(recentSessions).toContain("emptyTitle");
     expect(recentSessions).toContain("emptyDescription");
-    expect(recentSessions).toContain("border-dashed");
+    expect(recentSessions).toContain("space-y-2");
+    expect(recentSessions).not.toContain("border-dashed");
     expect(recentSessions).not.toContain("if (sessions.length === 0) return null");
     expect(translations).toContain('"No recent sessions yet"');
   });
 
-  it("uses granular dashboard metric metadata instead of oversized cards", () => {
+  it("keeps dashboard onboarding as a compact right-rail checklist", () => {
+    const gettingStarted = readFromRepo("apps/web/src/components/onboarding/getting-started.tsx");
+    const skeletons = readFromRepo("apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx");
+
+    expect(gettingStarted).toContain('data-tour-id="getting-started"');
+    expect(gettingStarted).toContain("divide-y divide-neutral-5");
+    expect(gettingStarted).not.toContain("md:grid-cols-2 xl:grid-cols-1");
+    expect(gettingStarted).not.toContain("rounded-xl border p-3.5");
+    expect(skeletons).toContain("space-y-px overflow-hidden");
+  });
+
+  it("uses compact dashboard metric metadata instead of oversized nested cards", () => {
     const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/page.tsx");
     const translations = readFromRepo("packages/platform/i18n/locales/en.json");
 
-    expect(dashboard).toContain("type MetricMeta");
-    expect(dashboard).toContain("dailyMeta");
-    expect(dashboard).toContain("<dl");
+    expect(dashboard).toContain("snapshotMeta");
+    expect(dashboard).toContain("meta.snapshot");
+    expect(dashboard).toContain("meta.tenant");
+    expect(dashboard).not.toContain("type MetricMeta");
+    expect(dashboard).not.toContain("dailyMeta");
+    expect(dashboard).not.toContain("<dl");
     expect(dashboard).toContain("text-2xl font-semibold");
     expect(dashboard).not.toContain("text-3xl font-semibold tabular-nums");
-    expect(translations).toContain('"source": "Source"');
+    expect(translations).toContain('"snapshot": "Snapshot"');
     expect(translations).toContain('"cadence": "Cadence"');
-    expect(translations).toContain('"state": "State"');
+    expect(translations).toContain('"tenant": "Tenant"');
   });
 
   it("uses real dashboard IA routes with breadcrumb navigation", () => {

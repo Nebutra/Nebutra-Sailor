@@ -13,7 +13,6 @@ import { CommandModeProvider } from "@/components/command-palette/command-mode-c
 import { CommandSurfaceButton } from "@/components/command-palette/command-surface-button";
 import { ModePills } from "@/components/command-palette/mode-pills";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
-import { DashboardHint } from "@/components/onboarding/dashboard-hint";
 import { GettingStarted } from "@/components/onboarding/getting-started";
 import { RecentSessions } from "@/components/onboarding/recent-sessions";
 import { getAuth, getUser } from "@/lib/auth";
@@ -30,10 +29,6 @@ const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 type GreetingKey = "morning" | "afternoon" | "evening";
-type MetricMeta = {
-  label: string;
-  value: string;
-};
 
 function getGreetingKey(): GreetingKey {
   const h = new Date().getHours();
@@ -83,28 +78,31 @@ async function CommandCenter() {
   return (
     <CommandModeProvider>
       <AnimateIn preset="fadeUp">
-        <div className="grid gap-5 rounded-2xl border border-neutral-6 bg-neutral-1/90 p-5 shadow-sm shadow-neutral-12/[0.03] dark:border-white/10 dark:bg-white/[0.035] dark:shadow-none sm:p-6 lg:grid-cols-[minmax(0,1fr)_minmax(28rem,38rem)] lg:items-end">
+        <div className="grid gap-5 border-b border-neutral-5 pb-6 dark:border-white/10 lg:grid-cols-[minmax(0,1fr)_minmax(26rem,34rem)] lg:items-end">
           <div className="min-w-0">
-            <p className="text-xs font-medium uppercase tracking-[0.12em] text-neutral-10 dark:text-white/40">
-              {dateLabel}
-            </p>
+            <div className="flex items-center gap-2">
+              <span className="size-1.5 rounded-full bg-green-9" aria-hidden="true" />
+              <p className="text-xs font-medium uppercase tracking-[0.12em] text-neutral-10 dark:text-white/45">
+                {dateLabel}
+              </p>
+            </div>
             <h1 className="mt-3 text-2xl font-semibold tracking-tight text-neutral-12 dark:text-white sm:text-3xl">
               {greeting}, {userName}.
             </h1>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-neutral-11 dark:text-white/60">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-11 dark:text-white/60">
               {t("commandCenter.description")}
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-2">
               <ViewTransitionLink
                 href="/chat"
-                className="inline-flex items-center gap-1.5 rounded-md bg-neutral-12 px-3 py-2 text-sm font-medium text-neutral-1 transition-colors hover:bg-neutral-11 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
+                className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-2 text-sm font-medium text-neutral-1 transition-colors hover:bg-neutral-11 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
               >
                 {t("commandCenter.openSailor")}
                 <ArrowRight className="size-3.5" aria-hidden="true" />
               </ViewTransitionLink>
               <ViewTransitionLink
                 href="/analytics"
-                className="inline-flex items-center gap-1.5 rounded-md border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm font-medium text-neutral-12 transition-colors hover:border-neutral-8 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:hover:bg-white/[0.08]"
+                className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] px-3 py-2 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/[0.06] dark:hover:text-white"
               >
                 {t("commandCenter.viewAnalytics")}
               </ViewTransitionLink>
@@ -133,10 +131,10 @@ async function WorkspaceMetrics() {
   const snapshotState = summary?.day
     ? t("meta.latestDay", { day: summary.day })
     : t("meta.awaiting");
-  const dailyMeta = (source: string, state: string = snapshotState): MetricMeta[] => [
-    { label: t("meta.source"), value: source },
+  const snapshotMeta = [
+    { label: t("meta.snapshot"), value: snapshotState },
     { label: t("meta.cadence"), value: t("meta.daily") },
-    { label: t("meta.state"), value: state },
+    { label: t("meta.tenant"), value: tenantId },
   ];
 
   const metrics = summary?.day
@@ -145,28 +143,28 @@ async function WorkspaceMetrics() {
           label: t("metrics.activeUsers"),
           value: fmtCompact(summary.activeUsers, locale),
           detail: t("details.activeUsers"),
-          meta: dailyMeta(t("meta.users")),
+          source: t("meta.users"),
           icon: Users,
         },
         {
           label: t("metrics.totalEvents"),
           value: fmtCompact(summary.totalEvents, locale),
           detail: t("details.totalEvents"),
-          meta: dailyMeta(t("meta.events")),
+          source: t("meta.events"),
           icon: Activity,
         },
         {
           label: t("metrics.conversions"),
           value: fmtCompact(summary.conversions, locale),
           detail: t("details.conversions"),
-          meta: dailyMeta(t("meta.funnel")),
+          source: t("meta.funnel"),
           icon: Rocket,
         },
         {
           label: t("metrics.revenue"),
           value: fmtUSD(summary.revenue, locale),
           detail: t("details.revenue"),
-          meta: dailyMeta(t("meta.billing")),
+          source: t("meta.billing"),
           icon: CreditCard,
         },
       ]
@@ -175,81 +173,89 @@ async function WorkspaceMetrics() {
           label: t("metrics.activeUsers"),
           value: t("empty.pending"),
           detail: t("empty.connectData"),
-          meta: dailyMeta(t("meta.users"), t("meta.notConnected")),
+          source: t("meta.users"),
           icon: Users,
         },
         {
           label: t("metrics.totalEvents"),
           value: "0",
           detail: t("empty.noSnapshot"),
-          meta: dailyMeta(t("meta.events")),
+          source: t("meta.events"),
           icon: Activity,
         },
         {
           label: t("metrics.conversions"),
           value: "0",
           detail: t("empty.awaitingSignals"),
-          meta: dailyMeta(t("meta.funnel")),
+          source: t("meta.funnel"),
           icon: Rocket,
         },
         {
           label: t("metrics.revenue"),
           value: "$0",
           detail: t("empty.noBillingFeed"),
-          meta: dailyMeta(t("meta.billing"), t("meta.notConnected")),
+          source: t("meta.billing"),
           icon: CreditCard,
         },
       ];
 
   return (
-    <div className="rounded-2xl border border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-white/[0.03] sm:p-5">
+    <div className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-white/[0.03] sm:p-5">
       <AnimateIn preset="fadeUp">
-        <div className="mb-3 flex items-center justify-between">
+        <div className="mb-4 flex flex-col gap-3 border-b border-neutral-5 pb-4 dark:border-white/10 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">{t("title")}</h2>
             <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/40">
               {summary?.day ? t("description", { day: summary.day }) : t("empty.noSnapshot")}
             </p>
           </div>
-          <ViewTransitionLink
-            href="/analytics"
-            className="text-xs font-medium text-blue-11 transition-colors hover:text-blue-12 dark:text-blue-9 dark:hover:text-blue-8"
-          >
-            {t("viewAnalytics")}
-          </ViewTransitionLink>
+          <div className="flex flex-wrap items-center gap-2 lg:justify-end">
+            <div className="flex max-w-full flex-wrap items-center gap-1.5">
+              {snapshotMeta.map((item) => (
+                <span
+                  key={item.label}
+                  className="inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-2 px-2 py-1 text-[11px] text-neutral-10 dark:bg-white/[0.05] dark:text-white/45"
+                >
+                  <span className="font-medium text-neutral-11 dark:text-white/65">
+                    {item.label}
+                  </span>
+                  <span className="max-w-32 truncate tabular-nums">{item.value}</span>
+                </span>
+              ))}
+            </div>
+            <ViewTransitionLink
+              href="/analytics"
+              className="text-xs font-medium text-blue-11 transition-colors hover:text-blue-12 dark:text-blue-9 dark:hover:text-blue-8"
+            >
+              {t("viewAnalytics")}
+            </ViewTransitionLink>
+          </div>
         </div>
       </AnimateIn>
 
-      <AnimateInGroup stagger="fast" className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {metrics.map(({ label, value, detail, meta, icon: Icon }) => (
+      <AnimateInGroup stagger="fast" className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-4">
+        {metrics.map(({ label, value, detail, source, icon: Icon }) => (
           <AnimateIn key={label} preset="fadeUp">
             <ViewTransitionLink href="/analytics" className="block">
-              <div className="rounded-xl border border-neutral-6 bg-neutral-1 p-4 transition-colors duration-150 hover:border-neutral-8 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.05]">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-neutral-10 dark:text-white/50">
+              <div className="rounded-[var(--radius-xl)] bg-neutral-2/70 p-4 ring-1 ring-neutral-5 transition-colors duration-150 hover:bg-neutral-3/70 hover:ring-neutral-7 dark:bg-white/[0.035] dark:ring-white/10 dark:hover:bg-white/[0.06] dark:hover:ring-white/20">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="min-w-0 truncate text-xs font-medium text-neutral-10 dark:text-white/50">
                     {label}
                   </span>
-                  <Icon className="size-3.5 text-neutral-9 dark:text-white/25" />
+                  <Icon
+                    className="size-3.5 shrink-0 text-neutral-9 dark:text-white/25"
+                    aria-hidden="true"
+                  />
                 </div>
                 <p className="mt-2 text-2xl font-semibold tabular-nums text-neutral-12 dark:text-white">
                   {value}
                 </p>
-                <p className="mt-1 text-xs text-neutral-10 dark:text-white/45">{detail}</p>
-                <dl className="mt-3 space-y-1.5 border-t border-neutral-5 pt-3 dark:border-white/10">
-                  {meta.map((item) => (
-                    <div
-                      key={`${label}-${item.label}`}
-                      className="flex items-center justify-between gap-3"
-                    >
-                      <dt className="text-[10px] font-medium uppercase tracking-[0.12em] text-neutral-9 dark:text-white/30">
-                        {item.label}
-                      </dt>
-                      <dd className="truncate text-xs font-medium text-neutral-11 dark:text-white/55">
-                        {item.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
+                <div className="mt-2 space-y-1 text-xs text-neutral-10 dark:text-white/45">
+                  <span className="block">{detail}</span>
+                  <span className="block text-[11px] text-neutral-9 dark:text-white/35">
+                    {source}
+                  </span>
+                </div>
               </div>
             </ViewTransitionLink>
           </AnimateIn>
@@ -263,14 +269,14 @@ async function WorkspaceMetrics() {
 
 export default function DashboardPage() {
   return (
-    <section className="mx-auto w-full max-w-[1440px] space-y-7">
+    <section className="mx-auto w-full max-w-[1440px] space-y-8">
       {/* Fast: command center and primary action. Keep the dashboard left-aligned and decision-led. */}
       <Suspense fallback={<CommandSkeleton />}>
         <CommandCenter />
       </Suspense>
 
-      <div className="grid gap-7 xl:grid-cols-[minmax(0,1fr)_24rem] xl:items-start">
-        <div className="space-y-7">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem] xl:items-start">
+        <div className="space-y-6">
           {/* Slow: warehouse metrics query. Render an honest empty state instead of disappearing. */}
           <Suspense fallback={<MetricsSkeleton />}>
             <WorkspaceMetrics />
@@ -282,10 +288,7 @@ export default function DashboardPage() {
           </Suspense>
         </div>
 
-        <aside className="space-y-4">
-          {/* First-visit hint, cookie-gated; secondary guidance, not the hero. */}
-          <DashboardHint />
-
+        <aside className="space-y-5">
           {/* Medium: 4 parallel DB count queries derive real onboarding state */}
           <Suspense fallback={<OnboardingSkeleton />}>
             <GettingStarted />
@@ -301,7 +304,7 @@ export default function DashboardPage() {
 async function NoAuthNotice() {
   const t = await getTranslations("dashboard.commandSurface");
   return (
-    <div className="rounded-xl border border-amber-6 bg-amber-2 px-4 py-3 text-sm text-amber-11">
+    <div className="rounded-[var(--radius-xl)] border border-amber-6 bg-amber-2 px-4 py-3 text-sm text-amber-11">
       {t("noAuth")}
     </div>
   );

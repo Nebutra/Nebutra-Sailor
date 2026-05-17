@@ -109,23 +109,26 @@
     "rules": [
       {
         "name": "web-dashboard-overview-high-resolution-density",
-        "description": "Dashboard overview must be decision-led, wide-canvas, and granular; it must not regress into a centered welcome page or oversized metric cards.",
+        "description": "Dashboard overview must be decision-led, wide-canvas, and compactly granular; it must not regress into a centered welcome page, onboarding billboard, or nested metadata cards.",
         "file": "apps/web/src/app/[locale]/(app)/page.tsx",
         "requiredContains": [
           "CommandCenter",
           "max-w-[1440px]",
-          "xl:grid-cols-[minmax(0,1fr)_24rem]",
-          "type MetricMeta",
-          "dailyMeta",
-          "<dl",
-          "meta.source",
+          "xl:grid-cols-[minmax(0,1fr)_22rem]",
+          "snapshotMeta",
+          "meta.snapshot",
           "meta.cadence",
-          "meta.state",
+          "meta.tenant",
+          "2xl:grid-cols-4",
           "empty.noSnapshot"
         ],
         "forbiddenContains": [
+          "DashboardHint",
           "Atmospheric brand glow",
           "max-w-2xl flex-col items-center",
+          "type MetricMeta",
+          "dailyMeta",
+          "<dl",
           "text-3xl font-semibold tabular-nums"
         ]
       },
@@ -134,10 +137,10 @@
         "description": "Skeletons must mirror the final dashboard information architecture so loading does not feel like a different product.",
         "file": "apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx",
         "requiredContains": [
-          "lg:grid-cols-[minmax(0,1fr)_minmax(28rem,38rem)]",
+          "lg:grid-cols-[minmax(0,1fr)_minmax(26rem,34rem)]",
           "metricCards",
-          "h-36",
-          "md:grid-cols-2 xl:grid-cols-1"
+          "h-28",
+          "space-y-px overflow-hidden"
         ],
         "forbiddenContains": ["max-w-2xl space-y-4 text-center", "justify-center"]
       },
@@ -145,13 +148,24 @@
         "name": "web-dashboard-recent-sessions-stable-empty-state",
         "description": "Recent sessions should preserve dashboard density with an honest empty state instead of disappearing and collapsing the main column.",
         "file": "apps/web/src/components/onboarding/recent-sessions.tsx",
+        "requiredContains": ["emptyTitle", "emptyDescription", "space-y-2", "formatSessionTime"],
+        "forbiddenContains": ["border-dashed", "if (sessions.length === 0) return null"]
+      },
+      {
+        "name": "web-dashboard-getting-started-compact-rail",
+        "description": "Dashboard setup guidance must render as one compact right-rail checklist, not a grid of separate promo cards.",
+        "file": "apps/web/src/components/onboarding/getting-started.tsx",
         "requiredContains": [
-          "emptyTitle",
-          "emptyDescription",
-          "border-dashed",
-          "formatSessionTime"
+          "data-tour-id=\"getting-started\"",
+          "divide-y divide-neutral-5",
+          "rounded-[var(--radius-2xl)]"
         ],
-        "forbiddenContains": ["if (sessions.length === 0) return null"]
+        "forbiddenContains": [
+          "md:grid-cols-2 xl:grid-cols-1",
+          "rounded-xl border p-3.5",
+          "border-green-6",
+          "border-neutral-6 bg-neutral-1 hover:border-neutral-8"
+        ]
       },
       {
         "name": "web-dashboard-copy-tokenized-for-locales",
@@ -159,9 +173,9 @@
         "file": "packages/platform/i18n/locales/en.json",
         "requiredContains": [
           "\"commandCenter\"",
-          "\"source\": \"Source\"",
+          "\"snapshot\": \"Snapshot\"",
           "\"cadence\": \"Cadence\"",
-          "\"state\": \"State\"",
+          "\"tenant\": \"Tenant\"",
           "\"No recent sessions yet\""
         ],
         "forbiddenContains": []
@@ -172,9 +186,9 @@
         "file": "packages/platform/i18n/locales/zh.json",
         "requiredContains": [
           "\"commandCenter\"",
-          "\"source\": \"来源\"",
+          "\"snapshot\": \"快照\"",
           "\"cadence\": \"频率\"",
-          "\"state\": \"状态\"",
+          "\"tenant\": \"租户\"",
           "\"暂无最近会话\""
         ],
         "forbiddenContains": []
