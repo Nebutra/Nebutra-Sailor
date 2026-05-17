@@ -147,7 +147,7 @@ export async function GettingStarted() {
         </div>
       </AnimateIn>
 
-      <AnimateInGroup stagger="fast" className="grid gap-2 sm:grid-cols-2">
+      <AnimateInGroup stagger="fast" className="grid gap-2 md:grid-cols-2 xl:grid-cols-1">
         {tasks.map((task) => {
           const Icon = task.icon;
           return (
@@ -164,13 +164,13 @@ export async function GettingStarted() {
                 }`}
               >
                 <div
-                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${
+                  className={`flex size-7 shrink-0 items-center justify-center rounded-lg ${
                     task.done
                       ? "bg-green-3 text-green-11 dark:bg-green-3/30 dark:text-green-9"
                       : "bg-neutral-2 text-neutral-11 dark:bg-white/10 dark:text-white/60"
                   }`}
                 >
-                  {task.done ? <Check className="h-3.5 w-3.5" /> : <Icon className="h-3.5 w-3.5" />}
+                  {task.done ? <Check className="size-3.5" /> : <Icon className="size-3.5" />}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-2">
@@ -184,7 +184,7 @@ export async function GettingStarted() {
                       {task.label}
                     </p>
                     <ArrowRight
-                      className={`h-3.5 w-3.5 shrink-0 opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-60 ${
+                      className={`size-3.5 shrink-0 opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-60 ${
                         task.done
                           ? "text-green-11 dark:text-green-9"
                           : "text-neutral-11 dark:text-white/70"

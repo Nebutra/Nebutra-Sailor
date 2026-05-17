@@ -125,6 +125,21 @@ describe("UI/UX audit remediation invariants", () => {
     expect(shell).toContain("Feedback");
   });
 
+  it("keeps the dashboard overview decision-led instead of welcome-page centered", () => {
+    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/page.tsx");
+    const skeletons = readFromRepo("apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx");
+    const translations = readFromRepo("packages/platform/i18n/locales/en.json");
+
+    expect(dashboard).toContain("CommandCenter");
+    expect(dashboard).toContain("xl:grid-cols-[minmax(0,1fr)_22rem]");
+    expect(dashboard).toContain("details.activeUsers");
+    expect(dashboard).toContain("empty.noSnapshot");
+    expect(skeletons).toContain("lg:grid-cols-[minmax(0,1fr)_minmax(24rem,34rem)]");
+    expect(translations).toContain('"commandCenter"');
+    expect(dashboard).not.toContain("Atmospheric brand glow");
+    expect(dashboard).not.toContain("max-w-2xl flex-col items-center");
+  });
+
   it("uses real dashboard IA routes with breadcrumb navigation", () => {
     const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
     const navModel = readFromRepo("apps/web/src/app/[locale]/providers/dashboard-nav.ts");

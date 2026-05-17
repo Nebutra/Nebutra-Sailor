@@ -871,6 +871,11 @@
     "commandSurface": {
       "noAuth": "Auth is not configured. Set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY to enable user sessions."
     },
+    "commandCenter": {
+      "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
+      "openSailor": "Open Sailor AI",
+      "viewAnalytics": "View Analytics"
+    },
     "workspaceSnapshot": {
       "title": "Workspace Snapshot",
       "description": "Latest warehouse day · {day}",
@@ -880,6 +885,19 @@
         "totalEvents": "Total Events",
         "conversions": "Conversions",
         "revenue": "Revenue"
+      },
+      "details": {
+        "activeUsers": "Signed-in users",
+        "totalEvents": "Captured events",
+        "conversions": "Qualified actions",
+        "revenue": "Recognized revenue"
+      },
+      "empty": {
+        "pending": "Pending",
+        "connectData": "Connect data",
+        "noSnapshot": "No warehouse snapshot yet",
+        "awaitingSignals": "Awaiting signals",
+        "noBillingFeed": "No billing feed"
       }
     },
     "recentSessions": {

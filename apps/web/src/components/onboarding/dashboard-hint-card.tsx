@@ -20,6 +20,7 @@ export function DashboardHintCard({ cookieName }: Props) {
     // 1-year cookie, root path, no JS-only flag (must be readable by server
     // for the gate in DashboardHint).
     const oneYear = 60 * 60 * 24 * 365;
+    // biome-ignore lint/suspicious/noDocumentCookie: server-side hint gating needs a root-path cookie; Cookie Store is not universal.
     document.cookie = `${cookieName}=1; max-age=${oneYear}; path=/; SameSite=Lax`;
     setDismissed(true);
   }
@@ -33,20 +34,20 @@ export function DashboardHintCard({ cookieName }: Props) {
 
   return (
     <AnimateIn preset="fadeUp">
-      <div className="relative overflow-hidden rounded-2xl border border-blue-6 bg-blue-2/40 p-4 dark:border-blue-7/50 dark:bg-blue-2/10">
+      <div className="relative overflow-hidden rounded-2xl border border-blue-6 bg-blue-2/35 p-4 dark:border-blue-7/50 dark:bg-blue-2/10">
         {/* Decorative gradient glow */}
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 opacity-[0.18] blur-3xl"
+          className="pointer-events-none absolute -right-12 -top-12 size-40 opacity-[0.18] blur-3xl"
           style={{ background: "var(--brand-gradient)" }}
         />
 
         <div className="relative flex items-start gap-3">
           <div
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white"
+            className="flex size-9 shrink-0 items-center justify-center rounded-xl text-white"
             style={{ background: "var(--brand-gradient)" }}
           >
-            <Sparkles className="h-4 w-4" />
+            <Sparkles className="size-4" />
           </div>
 
           <div className="flex-1 pr-6">
@@ -70,7 +71,7 @@ export function DashboardHintCard({ cookieName }: Props) {
                 className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white transition-opacity hover:opacity-90"
                 style={{ background: "var(--brand-gradient)" }}
               >
-                <Compass className="h-3 w-3" />
+                <Compass className="size-3" />
                 Take the 4-step tour
               </button>
               <button
@@ -89,7 +90,7 @@ export function DashboardHintCard({ cookieName }: Props) {
             aria-label="Dismiss hint"
             className="absolute right-0 top-0 rounded-md p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/50 dark:hover:bg-white/10 dark:hover:text-white"
           >
-            <X className="h-3.5 w-3.5" />
+            <X className="size-3.5" />
           </button>
         </div>
       </div>

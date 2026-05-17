@@ -7,6 +7,7 @@ import {
 } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card } from "@nebutra/ui/layout";
+import { AccessInviteIssuer } from "@/components/admin/access-invite-issuer";
 import { AdminDirectoryPanel } from "@/components/admin/admin-directory-panel";
 
 /**
@@ -189,6 +190,10 @@ export default async function AdminPage({ searchParams }: { searchParams: AdminS
             </li>
           </ul>
         </Card>
+      </AnimateIn>
+
+      <AnimateIn preset="fadeUp">
+        <AccessInviteIssuer />
       </AnimateIn>
 
       <AnimateIn preset="fadeUp">

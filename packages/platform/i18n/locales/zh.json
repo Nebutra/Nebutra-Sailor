@@ -881,6 +881,11 @@
     "commandSurface": {
       "noAuth": "未配置认证。设置 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY 以启用用户会话。"
     },
+    "commandCenter": {
+      "description": "从一个动作开始：询问 Sailor、查看工作区信号，或把工作路由到自动化界面。",
+      "openSailor": "打开 Sailor AI",
+      "viewAnalytics": "查看分析"
+    },
     "workspaceSnapshot": {
       "title": "工作区快照",
       "description": "最新仓库日期 · {day}",
@@ -890,6 +895,19 @@
         "totalEvents": "总事件",
         "conversions": "转化",
         "revenue": "收入"
+      },
+      "details": {
+        "activeUsers": "已登录用户",
+        "totalEvents": "已捕获事件",
+        "conversions": "有效动作",
+        "revenue": "已确认收入"
+      },
+      "empty": {
+        "pending": "待连接",
+        "connectData": "连接数据",
+        "noSnapshot": "暂无仓库快照",
+        "awaitingSignals": "等待信号",
+        "noBillingFeed": "暂无计费数据"
       }
     },
     "recentSessions": {

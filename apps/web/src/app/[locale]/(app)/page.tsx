@@ -1,4 +1,10 @@
-import { ChartActivity as Activity, CreditCard, Lightning as Rocket, Users } from "@nebutra/icons";
+import {
+  ChartActivity as Activity,
+  ArrowRight,
+  CreditCard,
+  Lightning as Rocket,
+  Users,
+} from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { connection } from "next/server";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -49,7 +55,7 @@ function fmtUSD(n: number, locale: string) {
 
 // ── Streaming server components ───────────────────────────────────────────────
 
-async function GreetingShell() {
+async function CommandCenter() {
   await connection();
 
   const t = await getTranslations("dashboard");
@@ -73,50 +79,43 @@ async function GreetingShell() {
   }).format(new Date());
 
   return (
-    <div className="relative">
-      {/* Atmospheric brand glow — decorative only */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-56 w-[640px] -translate-x-1/2 -translate-y-10 opacity-[0.055] blur-3xl dark:opacity-[0.09]"
-        style={{ background: "var(--brand-gradient)" }}
-      />
-
-      <CommandModeProvider>
-        <AnimateInGroup
-          stagger="normal"
-          className="relative mx-auto flex max-w-2xl flex-col items-center gap-4 text-center"
-        >
-          <AnimateIn preset="fadeUp">
-            <p className="text-xs font-medium text-neutral-10 dark:text-white/40">{dateLabel}</p>
-          </AnimateIn>
-
-          <AnimateIn preset="fadeUp">
-            <h1 className="text-2xl font-semibold tracking-tight text-neutral-12 dark:text-white">
-              {greeting},{" "}
-              <span
-                style={{
-                  background: "var(--brand-gradient)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                {userName}
-              </span>
-              .
+    <CommandModeProvider>
+      <AnimateIn preset="fadeUp">
+        <div className="grid gap-5 rounded-2xl border border-neutral-6 bg-neutral-1/90 p-5 shadow-sm shadow-neutral-12/[0.03] dark:border-white/10 dark:bg-white/[0.035] dark:shadow-none lg:grid-cols-[minmax(0,1fr)_minmax(24rem,34rem)] lg:items-end">
+          <div className="min-w-0">
+            <p className="text-xs font-medium uppercase tracking-[0.12em] text-neutral-10 dark:text-white/40">
+              {dateLabel}
+            </p>
+            <h1 className="mt-3 text-2xl font-semibold tracking-tight text-neutral-12 dark:text-white sm:text-3xl">
+              {greeting}, {userName}.
             </h1>
-          </AnimateIn>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-11 dark:text-white/60">
+              {t("commandCenter.description")}
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <ViewTransitionLink
+                href="/chat"
+                className="inline-flex items-center gap-1.5 rounded-md bg-neutral-12 px-3 py-2 text-sm font-medium text-neutral-1 transition-colors hover:bg-neutral-11 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
+              >
+                {t("commandCenter.openSailor")}
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </ViewTransitionLink>
+              <ViewTransitionLink
+                href="/analytics"
+                className="inline-flex items-center gap-1.5 rounded-md border border-neutral-7 bg-neutral-1 px-3 py-2 text-sm font-medium text-neutral-12 transition-colors hover:border-neutral-8 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:hover:bg-white/[0.08]"
+              >
+                {t("commandCenter.viewAnalytics")}
+              </ViewTransitionLink>
+            </div>
+          </div>
 
-          <AnimateIn preset="fadeUp" className="w-full">
+          <div className="space-y-3">
             <CommandSurfaceButton />
-          </AnimateIn>
-
-          <AnimateIn preset="fadeUp" className="w-full">
             <ModePills />
-          </AnimateIn>
-        </AnimateInGroup>
-      </CommandModeProvider>
-    </div>
+          </div>
+        </div>
+      </AnimateIn>
+    </CommandModeProvider>
   );
 }
 
@@ -136,35 +135,68 @@ async function WorkspaceMetrics() {
 
   const summary = await getGrowthSummary(tenantId).catch(() => null);
 
-  if (!summary?.day) return null;
-
-  const metrics = [
-    {
-      label: t("metrics.activeUsers"),
-      value: fmtCompact(summary.activeUsers, locale),
-      icon: Users,
-    },
-    {
-      label: t("metrics.totalEvents"),
-      value: fmtCompact(summary.totalEvents, locale),
-      icon: Activity,
-    },
-    {
-      label: t("metrics.conversions"),
-      value: fmtCompact(summary.conversions, locale),
-      icon: Rocket,
-    },
-    { label: t("metrics.revenue"), value: fmtUSD(summary.revenue, locale), icon: CreditCard },
-  ];
+  const metrics = summary?.day
+    ? [
+        {
+          label: t("metrics.activeUsers"),
+          value: fmtCompact(summary.activeUsers, locale),
+          detail: t("details.activeUsers"),
+          icon: Users,
+        },
+        {
+          label: t("metrics.totalEvents"),
+          value: fmtCompact(summary.totalEvents, locale),
+          detail: t("details.totalEvents"),
+          icon: Activity,
+        },
+        {
+          label: t("metrics.conversions"),
+          value: fmtCompact(summary.conversions, locale),
+          detail: t("details.conversions"),
+          icon: Rocket,
+        },
+        {
+          label: t("metrics.revenue"),
+          value: fmtUSD(summary.revenue, locale),
+          detail: t("details.revenue"),
+          icon: CreditCard,
+        },
+      ]
+    : [
+        {
+          label: t("metrics.activeUsers"),
+          value: t("empty.pending"),
+          detail: t("empty.connectData"),
+          icon: Users,
+        },
+        {
+          label: t("metrics.totalEvents"),
+          value: "0",
+          detail: t("empty.noSnapshot"),
+          icon: Activity,
+        },
+        {
+          label: t("metrics.conversions"),
+          value: "0",
+          detail: t("empty.awaitingSignals"),
+          icon: Rocket,
+        },
+        {
+          label: t("metrics.revenue"),
+          value: "$0",
+          detail: t("empty.noBillingFeed"),
+          icon: CreditCard,
+        },
+      ];
 
   return (
-    <div>
+    <div className="rounded-2xl border border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-white/[0.03] sm:p-5">
       <AnimateIn preset="fadeUp">
         <div className="mb-3 flex items-center justify-between">
           <div>
             <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">{t("title")}</h2>
             <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/40">
-              {t("description", { day: summary.day })}
+              {summary?.day ? t("description", { day: summary.day }) : t("empty.noSnapshot")}
             </p>
           </div>
           <ViewTransitionLink
@@ -176,20 +208,21 @@ async function WorkspaceMetrics() {
         </div>
       </AnimateIn>
 
-      <AnimateInGroup stagger="fast" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {metrics.map(({ label, value, icon: Icon }) => (
+      <AnimateInGroup stagger="fast" className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        {metrics.map(({ label, value, detail, icon: Icon }) => (
           <AnimateIn key={label} preset="fadeUp">
             <ViewTransitionLink href="/analytics" className="block">
-              <div className="rounded-xl border border-neutral-6 bg-neutral-1 p-4 transition-all duration-200 hover:border-neutral-8 hover:shadow-md dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-white/20 dark:hover:shadow-none">
+              <div className="rounded-xl border border-neutral-6 bg-neutral-1 p-4 transition-colors duration-150 hover:border-neutral-8 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.05]">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-medium text-neutral-10 dark:text-white/50">
                     {label}
                   </span>
-                  <Icon className="h-3.5 w-3.5 text-neutral-9 dark:text-white/25" />
+                  <Icon className="size-3.5 text-neutral-9 dark:text-white/25" />
                 </div>
                 <p className="mt-2 text-2xl font-semibold tabular-nums text-neutral-12 dark:text-white">
                   {value}
                 </p>
+                <p className="mt-1 text-xs text-neutral-10 dark:text-white/45">{detail}</p>
               </div>
             </ViewTransitionLink>
           </AnimateIn>
@@ -203,31 +236,37 @@ async function WorkspaceMetrics() {
 
 export default function DashboardPage() {
   return (
-    <section className="mx-auto w-full max-w-7xl space-y-12">
-      {/* First-visit hint — cookie-gated; renders null for returning users */}
-      <DashboardHint />
-
-      {/* Fast: auth greeting + command surface + mode pills */}
+    <section className="mx-auto w-full max-w-[1180px] space-y-6">
+      {/* Fast: command center and primary action. Keep the dashboard left-aligned and decision-led. */}
       <Suspense fallback={<CommandSkeleton />}>
-        <GreetingShell />
+        <CommandCenter />
       </Suspense>
 
-      {/* Fast: 1 indexed query on chat_sessions; renders null when empty */}
-      <Suspense fallback={<RecentSessionsSkeleton />}>
-        <RecentSessions />
-      </Suspense>
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem] xl:items-start">
+        <div className="space-y-6">
+          {/* Slow: warehouse metrics query. Render an honest empty state instead of disappearing. */}
+          <Suspense fallback={<MetricsSkeleton />}>
+            <WorkspaceMetrics />
+          </Suspense>
 
-      {/* Medium: 4 parallel DB count queries derive real onboarding state */}
-      <Suspense fallback={<OnboardingSkeleton />}>
-        <GettingStarted />
-      </Suspense>
+          {/* Fast: 1 indexed query on chat_sessions; renders null when empty */}
+          <Suspense fallback={<RecentSessionsSkeleton />}>
+            <RecentSessions />
+          </Suspense>
+        </div>
 
-      {/* Slow: warehouse metrics query */}
-      <Suspense fallback={<MetricsSkeleton />}>
-        <WorkspaceMetrics />
-      </Suspense>
+        <aside className="space-y-4">
+          {/* First-visit hint, cookie-gated; secondary guidance, not the hero. */}
+          <DashboardHint />
 
-      {!hasClerkKey && <NoAuthNotice />}
+          {/* Medium: 4 parallel DB count queries derive real onboarding state */}
+          <Suspense fallback={<OnboardingSkeleton />}>
+            <GettingStarted />
+          </Suspense>
+
+          {!hasClerkKey && <NoAuthNotice />}
+        </aside>
+      </div>
     </section>
   );
 }
