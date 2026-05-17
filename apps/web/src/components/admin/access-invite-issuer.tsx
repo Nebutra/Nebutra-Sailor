@@ -4,6 +4,7 @@ import { type FormEvent, useState } from "react";
 
 interface IssuedInvite {
   code: string;
+  inviteUrl: string;
   id: string;
   prefix: string;
   scope: "platform" | "tenant";
@@ -149,8 +150,13 @@ export function AccessInviteIssuer() {
                 key={invite.id}
                 className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] px-3 py-2"
               >
-                <code className="font-mono text-[var(--neutral-12)] text-sm">{invite.code}</code>
-                <span className="text-[var(--neutral-10)] text-xs">
+                <div className="min-w-0">
+                  <code className="font-mono text-[var(--neutral-12)] text-sm">{invite.code}</code>
+                  <p className="mt-1 truncate font-mono text-[var(--neutral-10)] text-xs">
+                    {invite.inviteUrl}
+                  </p>
+                </div>
+                <span className="shrink-0 text-[var(--neutral-10)] text-xs">
                   {invite.scope}
                   {invite.tenantId ? ` · ${invite.tenantId}` : ""}
                   {invite.expiresAt ? ` · expires ${invite.expiresAt}` : ""}

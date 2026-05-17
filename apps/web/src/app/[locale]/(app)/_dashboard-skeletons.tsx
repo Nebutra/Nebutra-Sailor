@@ -1,4 +1,6 @@
 export function CommandSkeleton() {
+  const modeWidths = [64, 72, 96, 80];
+
   return (
     <div className="grid gap-5 rounded-2xl border border-neutral-6 bg-neutral-1 p-5 lg:grid-cols-[minmax(0,1fr)_minmax(24rem,34rem)] lg:items-end">
       <div className="space-y-3">
@@ -13,9 +15,9 @@ export function CommandSkeleton() {
       <div className="space-y-3">
         <div className="h-14 w-full animate-pulse rounded-2xl border border-neutral-6 bg-neutral-2" />
         <div className="flex gap-2">
-          {[64, 72, 96, 80].map((w, i) => (
+          {modeWidths.map((w) => (
             <div
-              key={i}
+              key={`mode-${w}`}
               className="h-7 animate-pulse rounded-full bg-neutral-2"
               style={{ width: w }}
             />
@@ -27,6 +29,8 @@ export function CommandSkeleton() {
 }
 
 export function MetricsSkeleton() {
+  const metricCards = ["active-users", "total-events", "conversions", "revenue"];
+
   return (
     <div className="rounded-2xl border border-neutral-6 bg-neutral-1 p-4 sm:p-5">
       <div className="flex items-center justify-between">
@@ -37,9 +41,9 @@ export function MetricsSkeleton() {
         <div className="h-3 w-24 animate-pulse rounded bg-neutral-2" />
       </div>
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {[0, 1, 2, 3].map((i) => (
+        {metricCards.map((id) => (
           <div
-            key={i}
+            key={id}
             className="h-20 animate-pulse rounded-xl border border-neutral-6 bg-neutral-2"
           />
         ))}
@@ -49,6 +53,8 @@ export function MetricsSkeleton() {
 }
 
 export function RecentSessionsSkeleton() {
+  const sessionCards = ["session-1", "session-2", "session-3", "session-4"];
+
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
@@ -59,9 +65,9 @@ export function RecentSessionsSkeleton() {
         <div className="h-3 w-20 animate-pulse rounded bg-neutral-2" />
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {[0, 1, 2, 3].map((i) => (
+        {sessionCards.map((id) => (
           <div
-            key={i}
+            key={id}
             className="h-24 animate-pulse rounded-xl border border-neutral-6 bg-neutral-2"
           />
         ))}
@@ -71,6 +77,8 @@ export function RecentSessionsSkeleton() {
 }
 
 export function OnboardingSkeleton() {
+  const tasks = ["team", "api", "integration", "ai"];
+
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
@@ -81,9 +89,9 @@ export function OnboardingSkeleton() {
         <div className="h-1.5 w-24 animate-pulse rounded-full bg-neutral-2" />
       </div>
       <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-1">
-        {[0, 1, 2, 3].map((i) => (
+        {tasks.map((id) => (
           <div
-            key={i}
+            key={id}
             className="h-16 animate-pulse rounded-xl border border-neutral-6 bg-neutral-2"
           />
         ))}

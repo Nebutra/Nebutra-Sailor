@@ -3,7 +3,7 @@
 import { Button, Input } from "@nebutra/ui/components";
 import { Label, Separator } from "@nebutra/ui/primitives";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { OAuthButtons } from "./oauth-buttons";
 
@@ -11,14 +11,16 @@ type Phase = "details" | "verify";
 
 export function SignUpForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const accessGateEnabled = process.env.NEXT_PUBLIC_ACCESS_GATE_MODE === "invite";
+  const initialInviteCode = searchParams.get("invite") ?? "";
 
   const [phase, _setPhase] = useState<Phase>("details");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [accessInviteCode, setAccessInviteCode] = useState("");
+  const [accessInviteCode, setAccessInviteCode] = useState(initialInviteCode);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
