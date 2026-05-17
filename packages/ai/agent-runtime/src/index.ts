@@ -13,6 +13,7 @@
  */
 
 export * from "./artifact-stream";
+export * from "./channel-gateway";
 export * from "./commands";
 export * from "./definitions";
 export * from "./deployment-status";
@@ -21,6 +22,7 @@ export * from "./dispatcher";
 export * from "./durable-turn";
 export * from "./edit-planner";
 export * from "./hook-pipeline";
+export * from "./inbound-admission";
 export * from "./loop";
 export * from "./mcp-bridge";
 export * from "./memory-provider";

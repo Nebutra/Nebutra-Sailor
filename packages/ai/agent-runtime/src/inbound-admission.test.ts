@@ -381,7 +381,8 @@ describe("admitInbound", () => {
       nowMs: 0,
       isReplyToAssistant: true,
     });
-    expect(r1.reason).toBe("debounced");
+    expect(r1.admit).toBe(false);
+    if (!r1.admit) expect(r1.reason).toBe("debounced");
     const i2 = makeInbound({ senderId: "user-7", text: "again" });
     const r2 = admitInbound(i2, policy, {
       debouncer: d,
