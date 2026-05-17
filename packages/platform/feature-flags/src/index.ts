@@ -351,6 +351,10 @@ export const FLAGS = {
   BETA_FEATURES: "beta-features",
   EXPERIMENTAL_UI: "experimental-ui",
 
+  // Agent Runtime — @nebutra/agent-runtime grammar demo.
+  // Off by default; opt-in per tenant. WIP capability absorption.
+  AGENT_RUNTIME_DEMO: "agent-runtime-demo",
+
   // Atelier — agentic creative canvas (off by default; opt-in per tenant).
   // Kill switch / enable via KILL_SWITCH_ATELIER_CANVAS env or flag store.
   ATELIER_CANVAS: "atelier-canvas",

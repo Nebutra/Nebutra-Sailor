@@ -20,6 +20,7 @@
     "@clerk/nextjs": "^7.0.1",
     "@marsidev/react-turnstile": "^1.5.2",
     "@nebutra/access-gate": "workspace:*",
+    "@nebutra/agent-runtime": "workspace:*",
     "@nebutra/agents": "workspace:*",
     "@nebutra/analytics": "workspace:*",
     "@nebutra/atelier-canvas": "workspace:*",
