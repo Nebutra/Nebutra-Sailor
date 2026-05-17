@@ -9,8 +9,8 @@
  *   - Settings navigation
  *
  * Tests that require a full Clerk session use `storageState` from `auth.setup.ts`.
- * All tests here are designed to be runnable in CI without real credentials by
- * exercising the unauthenticated surface and checking structural invariants.
+ * Auth UI tests require a real provider and are opt-in via E2E_AUTH_SMOKE=1.
+ * API health checks stay runnable with local placeholder infrastructure.
  */
 
 import { expect, test } from "@playwright/test";
@@ -21,9 +21,10 @@ const APP_BASE = process.env.APP_BASE_URL ?? "http://localhost:3001";
 // Skip gracefully rather than failing with a connection-refused error.
 const skipWebApp = process.env.CI === "true" && !process.env.APP_BASE_URL;
 const skipApi = process.env.CI === "true" && !process.env.API_BASE_URL;
+const authSmokeEnabled = process.env.E2E_AUTH_SMOKE === "1";
+const authSmokeDescribe = authSmokeEnabled && !skipWebApp ? test.describe : test.describe.skip;
 
-test.describe("Authentication redirect", () => {
-  test.skip(skipWebApp, "Web app not running in CI (set APP_BASE_URL to enable)");
+authSmokeDescribe("Authentication redirect", () => {
   test("unauthenticated / redirects to sign-in", async ({ page }) => {
     const response = await page.goto(APP_BASE + "/");
     // Clerk middleware redirects unauthenticated requests to /sign-in
@@ -42,8 +43,7 @@ test.describe("Authentication redirect", () => {
   });
 });
 
-test.describe("Sign-in page", () => {
-  test.skip(skipWebApp, "Web app not running in CI (set APP_BASE_URL to enable)");
+authSmokeDescribe("Sign-in page", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(APP_BASE + "/sign-in");
   });
@@ -86,8 +86,7 @@ test.describe("Sign-in page", () => {
   });
 });
 
-test.describe("Sign-up page", () => {
-  test.skip(skipWebApp, "Web app not running in CI (set APP_BASE_URL to enable)");
+authSmokeDescribe("Sign-up page", () => {
   test("renders sign-up form", async ({ page }) => {
     await page.goto(APP_BASE + "/sign-up");
     await expect(page).toHaveTitle(/sign.?up|Nebutra/i);
