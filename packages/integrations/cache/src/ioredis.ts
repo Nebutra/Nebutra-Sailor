@@ -1,5 +1,5 @@
 import IORedis, { type Redis as IORedisClient } from "ioredis";
-import type { CacheClient, ScanOptions, SetOptions } from "./types";
+import type { CacheClient, ScanOptions, SetOptions } from "./types.js";
 
 /**
  * ioredis adapter — wraps a standard TCP Redis client (self-hosted Redis,

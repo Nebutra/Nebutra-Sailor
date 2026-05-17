@@ -1,4 +1,4 @@
-import type { CacheBackend, CacheClient } from "./types";
+import type { CacheBackend, CacheClient } from "./types.js";
 
 let cacheInstance: CacheClient | null = null;
 let resolving: Promise<CacheClient> | null = null;
@@ -124,4 +124,4 @@ export const redis = new Proxy({} as CacheClient, {
 
 // Keep the `Redis` type re-export for callers that imported it from this
 // module pre-multi-backend. Now an alias for CacheClient (see types.ts).
-export type { Redis } from "./types";
+export type { Redis } from "./types.js";

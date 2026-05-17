@@ -18,7 +18,8 @@
     "./upstash": {
       "types": "./dist/upstash.d.ts",
       "import": "./dist/upstash.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",

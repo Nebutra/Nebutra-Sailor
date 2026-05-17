@@ -1,6 +1,6 @@
 import { Redis } from "@upstash/redis";
-import { getRedisConfig } from "./env";
-import type { CacheClient, ScanOptions, SetOptions } from "./types";
+import { getRedisConfig } from "./env.js";
+import type { CacheClient, ScanOptions, SetOptions } from "./types.js";
 
 /**
  * Upstash Redis adapter — wraps the @upstash/redis HTTP client.

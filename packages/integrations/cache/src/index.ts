@@ -11,11 +11,11 @@
 // 99% of callers should use `getRedis()` / the `redis` proxy from `./client`
 // and never touch backend classes directly.
 
-export * from "./client";
-export * from "./env";
-export * from "./strategies/bloom";
-export * from "./strategies/lazyRefresh";
-export * from "./strategies/lockCache";
-export * from "./strategies/stampede";
-export * from "./strategies/ttlCache";
-export type * from "./types";
+export * from "./client.js";
+export * from "./env.js";
+export * from "./strategies/bloom.js";
+export * from "./strategies/lazyRefresh.js";
+export * from "./strategies/lockCache.js";
+export * from "./strategies/stampede.js";
+export * from "./strategies/ttlCache.js";
+export type * from "./types.js";

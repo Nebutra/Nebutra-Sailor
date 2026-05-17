@@ -1,6 +1,6 @@
 import { logger } from "@nebutra/logger";
-import { getCacheClient } from "../client";
-import type { CacheClient } from "../types";
+import { getCacheClient } from "../client.js";
+import type { CacheClient } from "../types.js";
 
 async function getRedis(): Promise<CacheClient> {
   return getCacheClient();

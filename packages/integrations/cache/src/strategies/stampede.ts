@@ -1,6 +1,6 @@
-import { getCacheClient } from "../client";
-import type { CacheClient } from "../types";
-import { createLock } from "./lockCache";
+import { getCacheClient } from "../client.js";
+import type { CacheClient } from "../types.js";
+import { createLock } from "./lockCache.js";
 
 async function getRedis(): Promise<CacheClient> {
   return getCacheClient();

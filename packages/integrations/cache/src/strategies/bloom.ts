@@ -25,7 +25,7 @@
  */
 
 import bloomFilters from "bloom-filters";
-import { getCacheClient } from "../client";
+import { getCacheClient } from "../client.js";
 
 const { BloomFilter } = bloomFilters;
 type BloomFilterInstance = InstanceType<typeof BloomFilter>;
