@@ -6,9 +6,12 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { getSystemDb } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
 import {
   buildNotificationPreferenceUpdate,
+  createNotificationProvider,
+  createPrismaNotificationStores,
   getNotificationProvider,
   loadNotificationSettingsSnapshot,
   resolveNotificationRuntimeStatus,
@@ -17,6 +20,37 @@ import { requireAuth, requireOrganization } from "../../middlewares/tenantContex
 
 export const notificationRoutes = new OpenAPIHono();
 notificationRoutes.use("*", requireAuth, requireOrganization);
+
+type RouteNotificationProvider = Awaited<ReturnType<typeof getNotificationProvider>>;
+
+let prismaDirectProvider: Promise<RouteNotificationProvider> | undefined;
+
+function shouldUseManagedNotificationProvider(): boolean {
+  const configuredProvider = process.env.NOTIFICATION_PROVIDER;
+  return (
+    configuredProvider === "novu" ||
+    configuredProvider === "knock" ||
+    Boolean(process.env.NOVU_API_KEY) ||
+    Boolean(process.env.KNOCK_API_KEY)
+  );
+}
+
+async function getRouteNotificationProvider(): Promise<RouteNotificationProvider> {
+  if (shouldUseManagedNotificationProvider()) {
+    return getNotificationProvider();
+  }
+
+  prismaDirectProvider ??= (async () => {
+    const stores = createPrismaNotificationStores(getSystemDb());
+    return createNotificationProvider({
+      provider: "direct",
+      inAppStore: stores.inAppStore,
+      preferenceStore: stores.preferenceStore,
+    });
+  })();
+
+  return prismaDirectProvider;
+}
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
 
@@ -187,7 +221,7 @@ notificationRoutes.openapi(listRoute, async (c) => {
   const query = c.req.valid("query");
 
   try {
-    const provider = await getNotificationProvider();
+    const provider = await getRouteNotificationProvider();
     const runtime = resolveNotificationRuntimeStatus({ provider });
     if (!runtime.canViewInbox) {
       return c.json(
@@ -243,9 +277,11 @@ const settingsRoute = createRoute({
 
 notificationRoutes.openapi(settingsRoute, async (c) => {
   const tenant = c.get("tenant");
+  const provider = await getRouteNotificationProvider();
   const snapshot = await loadNotificationSettingsSnapshot({
     userId: tenant.userId as string,
     tenantId: tenant.organizationId as string,
+    provider,
     inboxLimit: 20,
   });
 
@@ -281,7 +317,7 @@ notificationRoutes.openapi(unreadCountRoute, async (c) => {
   const tenant = c.get("tenant");
 
   try {
-    const provider = await getNotificationProvider();
+    const provider = await getRouteNotificationProvider();
     const runtime = resolveNotificationRuntimeStatus({ provider });
     if (!runtime.canViewInbox) {
       return c.json(
@@ -342,7 +378,7 @@ notificationRoutes.openapi(markReadRoute, async (c) => {
   const { ids } = c.req.valid("json");
 
   try {
-    const provider = await getNotificationProvider();
+    const provider = await getRouteNotificationProvider();
     const runtime = resolveNotificationRuntimeStatus({ provider });
     if (!runtime.canMarkInboxRead) {
       return c.json(
@@ -392,7 +428,7 @@ notificationRoutes.openapi(markAllReadRoute, async (c) => {
   const tenant = c.get("tenant");
 
   try {
-    const provider = await getNotificationProvider();
+    const provider = await getRouteNotificationProvider();
     const runtime = resolveNotificationRuntimeStatus({ provider });
     if (!runtime.canMarkInboxRead) {
       return c.json(
@@ -453,7 +489,7 @@ notificationRoutes.openapi(updateSettingsRoute, async (c) => {
   const { type, channel, enabled } = c.req.valid("json");
 
   try {
-    const provider = await getNotificationProvider();
+    const provider = await getRouteNotificationProvider();
     const runtime = resolveNotificationRuntimeStatus({ provider });
     if (!runtime.canManagePreferences) {
       return c.json(

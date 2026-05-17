@@ -3,13 +3,19 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const {
   buildNotificationPreferenceUpdateMock,
+  createNotificationProviderMock,
+  createPrismaNotificationStoresMock,
   getNotificationProviderMock,
+  getSystemDbMock,
   loadNotificationSettingsSnapshotMock,
   resolveNotificationRuntimeStatusMock,
   verifyServiceTokenMock,
 } = vi.hoisted(() => ({
   buildNotificationPreferenceUpdateMock: vi.fn(),
+  createNotificationProviderMock: vi.fn(),
+  createPrismaNotificationStoresMock: vi.fn(),
   getNotificationProviderMock: vi.fn(),
+  getSystemDbMock: vi.fn(),
   loadNotificationSettingsSnapshotMock: vi.fn(),
   resolveNotificationRuntimeStatusMock: vi.fn(),
   verifyServiceTokenMock: vi.fn(),
@@ -17,9 +23,15 @@ const {
 
 vi.mock("@nebutra/notifications", () => ({
   buildNotificationPreferenceUpdate: buildNotificationPreferenceUpdateMock,
+  createNotificationProvider: createNotificationProviderMock,
+  createPrismaNotificationStores: createPrismaNotificationStoresMock,
   getNotificationProvider: getNotificationProviderMock,
   loadNotificationSettingsSnapshot: loadNotificationSettingsSnapshotMock,
   resolveNotificationRuntimeStatus: resolveNotificationRuntimeStatusMock,
+}));
+
+vi.mock("@nebutra/db", () => ({
+  getSystemDb: getSystemDbMock,
 }));
 
 vi.mock("@nebutra/auth", () => ({
@@ -84,14 +96,64 @@ describe("notification routes", () => {
 
   beforeEach(() => {
     process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
+    process.env.NOTIFICATION_PROVIDER = "novu";
     buildNotificationPreferenceUpdateMock.mockReset();
+    createNotificationProviderMock.mockReset();
+    createPrismaNotificationStoresMock.mockReset();
     getNotificationProviderMock.mockReset();
+    getSystemDbMock.mockReset();
     loadNotificationSettingsSnapshotMock.mockReset();
     resolveNotificationRuntimeStatusMock.mockReset();
     verifyServiceTokenMock.mockReset();
     verifyServiceTokenMock.mockReturnValue(true);
     resolveNotificationRuntimeStatusMock.mockReturnValue(runtimeStatus());
     app = buildApp();
+  });
+
+  it("uses Prisma-backed direct stores for the default self-hosted notification provider", async () => {
+    delete process.env.NOTIFICATION_PROVIDER;
+    delete process.env.NOVU_API_KEY;
+    delete process.env.KNOCK_API_KEY;
+    const db = { notification: {}, notificationPreference: {} };
+    const stores = {
+      inAppStore: { kind: "in-app-store" },
+      preferenceStore: { kind: "preference-store" },
+    };
+    const provider = {
+      name: "direct",
+      getRuntimeMetadata: vi.fn().mockReturnValue({
+        provider: "direct",
+        preferenceStoreMode: "adapter",
+        inAppStoreMode: "adapter",
+      }),
+      getInAppNotifications: vi.fn().mockResolvedValue({
+        notifications: [],
+        total: 0,
+        unreadCount: 0,
+      }),
+    };
+    getSystemDbMock.mockReturnValue(db);
+    createPrismaNotificationStoresMock.mockReturnValue(stores);
+    createNotificationProviderMock.mockResolvedValue(provider);
+
+    const response = await app.request("/?limit=10", {
+      headers: authHeaders(),
+    });
+
+    expect(response.status).toBe(200);
+    expect(getSystemDbMock).toHaveBeenCalledTimes(1);
+    expect(createPrismaNotificationStoresMock).toHaveBeenCalledWith(db);
+    expect(createNotificationProviderMock).toHaveBeenCalledWith({
+      provider: "direct",
+      inAppStore: stores.inAppStore,
+      preferenceStore: stores.preferenceStore,
+    });
+    expect(getNotificationProviderMock).not.toHaveBeenCalled();
+    expect(provider.getInAppNotifications).toHaveBeenCalledWith(
+      "user_alpha",
+      { limit: 10, offset: 0 },
+      "org_alpha",
+    );
   });
 
   it("lists notifications through the provider for the authenticated tenant", async () => {
