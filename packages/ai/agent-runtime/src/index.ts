@@ -15,6 +15,7 @@
 export * from "./artifact-stream";
 export * from "./commands";
 export * from "./definitions";
+export * from "./deployment-status";
 export * from "./design-context";
 export * from "./dispatcher";
 export * from "./durable-turn";
@@ -24,6 +25,7 @@ export * from "./loop";
 export * from "./mcp-bridge";
 export * from "./model";
 export * from "./policy";
+export * from "./project-repo";
 export * from "./protocol";
 export * from "./rollout";
 export * from "./rollout-store-persistent";
