@@ -39,6 +39,14 @@ export interface AggregateBudgets {
   rawTailwindBorderRadius: AggregateBudgetEntry;
 }
 
+export interface ContentRule {
+  name: string;
+  description: string;
+  file: string;
+  requiredContains: string[];
+  forbiddenContains: string[];
+}
+
 export interface GovernancePolicy {
   policyVersion: string;
   rawTailwindColorBudgets: RawTailwindBudget[];
@@ -63,6 +71,9 @@ export interface GovernancePolicy {
     appSurfaces: string[];
     forbiddenImportRegexes: string[];
     customUiAllowedExports: string[];
+  };
+  dashboardExperience: {
+    rules: ContentRule[];
   };
 }
 

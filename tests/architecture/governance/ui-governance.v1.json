@@ -1,6 +1,6 @@
 {
   "$schema": "./schemas/ui-governance.schema.json",
-  "policyVersion": "2026.03.v1",
+  "policyVersion": "2026.05.v2",
   "rawTailwindColorBudgets": [
     {
       "surface": "landing-marketing",
@@ -103,6 +103,82 @@
       "./typography",
       "./typography/fonts.css",
       "./utils"
+    ]
+  },
+  "dashboardExperience": {
+    "rules": [
+      {
+        "name": "web-dashboard-overview-high-resolution-density",
+        "description": "Dashboard overview must be decision-led, wide-canvas, and granular; it must not regress into a centered welcome page or oversized metric cards.",
+        "file": "apps/web/src/app/[locale]/(app)/page.tsx",
+        "requiredContains": [
+          "CommandCenter",
+          "max-w-[1440px]",
+          "xl:grid-cols-[minmax(0,1fr)_24rem]",
+          "type MetricMeta",
+          "dailyMeta",
+          "<dl",
+          "meta.source",
+          "meta.cadence",
+          "meta.state",
+          "empty.noSnapshot"
+        ],
+        "forbiddenContains": [
+          "Atmospheric brand glow",
+          "max-w-2xl flex-col items-center",
+          "text-3xl font-semibold tabular-nums"
+        ]
+      },
+      {
+        "name": "web-dashboard-loading-state-matches-final-ia",
+        "description": "Skeletons must mirror the final dashboard information architecture so loading does not feel like a different product.",
+        "file": "apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx",
+        "requiredContains": [
+          "lg:grid-cols-[minmax(0,1fr)_minmax(28rem,38rem)]",
+          "metricCards",
+          "h-36",
+          "md:grid-cols-2 xl:grid-cols-1"
+        ],
+        "forbiddenContains": ["max-w-2xl space-y-4 text-center", "justify-center"]
+      },
+      {
+        "name": "web-dashboard-recent-sessions-stable-empty-state",
+        "description": "Recent sessions should preserve dashboard density with an honest empty state instead of disappearing and collapsing the main column.",
+        "file": "apps/web/src/components/onboarding/recent-sessions.tsx",
+        "requiredContains": [
+          "emptyTitle",
+          "emptyDescription",
+          "border-dashed",
+          "formatSessionTime"
+        ],
+        "forbiddenContains": ["if (sessions.length === 0) return null"]
+      },
+      {
+        "name": "web-dashboard-copy-tokenized-for-locales",
+        "description": "Dashboard experience copy must live in shared i18n messages so governance covers English and Chinese routes together.",
+        "file": "packages/platform/i18n/locales/en.json",
+        "requiredContains": [
+          "\"commandCenter\"",
+          "\"source\": \"Source\"",
+          "\"cadence\": \"Cadence\"",
+          "\"state\": \"State\"",
+          "\"No recent sessions yet\""
+        ],
+        "forbiddenContains": []
+      },
+      {
+        "name": "web-dashboard-zh-copy-tokenized-for-locales",
+        "description": "Chinese dashboard copy must stay in the shared i18n layer, not hardcoded in app components.",
+        "file": "packages/platform/i18n/locales/zh.json",
+        "requiredContains": [
+          "\"commandCenter\"",
+          "\"source\": \"来源\"",
+          "\"cadence\": \"频率\"",
+          "\"state\": \"状态\"",
+          "\"暂无最近会话\""
+        ],
+        "forbiddenContains": []
+      }
     ]
   },
   "budgets": {

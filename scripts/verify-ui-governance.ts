@@ -387,6 +387,39 @@ function verifyAggregateBudgets(policy: GovernancePolicy) {
   return { colorCount, radiusCount };
 }
 
+function verifyDashboardExperienceGovernance(policy: GovernancePolicy) {
+  const violations: string[] = [];
+
+  for (const rule of policy.dashboardExperience.rules) {
+    const absolutePath = path.join(repoRoot, rule.file);
+    if (!existsSync(absolutePath)) {
+      violations.push(`[${rule.name}] missing governed file: ${rule.file}`);
+      continue;
+    }
+
+    const content = read(rule.file);
+    const missing = rule.requiredContains.filter((marker) => !content.includes(marker));
+    const forbidden = rule.forbiddenContains.filter((marker) => content.includes(marker));
+
+    if (missing.length > 0) {
+      violations.push(
+        `[${rule.name}] ${rule.description}\nMissing required markers in ${rule.file}:\n${missing.map((item) => `- ${item}`).join("\n")}`,
+      );
+    }
+
+    if (forbidden.length > 0) {
+      violations.push(
+        `[${rule.name}] ${rule.description}\nForbidden regression markers found in ${rule.file}:\n${forbidden.map((item) => `- ${item}`).join("\n")}`,
+      );
+    }
+  }
+
+  assert(
+    violations.length === 0,
+    `Dashboard experience governance violation:\n\n${violations.join("\n\n")}`,
+  );
+}
+
 function verifyFocusRingGovernance() {
   const files = FOCUS_GOVERNANCE_ROOTS.flatMap((root) =>
     collectFiles(root, new Set([".ts", ".tsx", ".css"])),
@@ -448,6 +481,7 @@ function main() {
   const _tokenStats = verifyTokenFormatPolicy(policy);
   const tierStats = verifyComponentTierCoverage(policy);
   verifyDependencyBoundaries(policy);
+  verifyDashboardExperienceGovernance(policy);
   const budgetStats = verifyAggregateBudgets(policy);
   for (const _stat of rawColorStats) {
   }
