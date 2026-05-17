@@ -172,14 +172,57 @@
           "currentBreadcrumb?.label ?? \"Dashboard\"",
           "breadcrumbs.length <= 1 && \"sr-only\"",
           "aria-label=\"Open feedback dialog\"",
+          "BrandLogo",
+          "webBrandLabels.homeLink",
           "flex shrink-0 items-center gap-1.5",
           "<span className=\"hidden xl:inline\">Feedback</span>"
         ],
         "forbiddenContains": [
           "DASHBOARD_NAV_ITEMS.slice",
           "planBadge",
+          "Nebutra Sailor",
+          "role=\"img\"",
           "Workspace</p>",
           "className=\"hidden gap-2 md:flex\""
+        ]
+      },
+      {
+        "name": "web-brand-assets-single-source",
+        "description": "Web brand chrome must consume synced logo assets from packages/design/brand instead of retyping or redrawing the brand in app components.",
+        "file": "apps/web/src/components/brand/brand-assets.tsx",
+        "requiredContains": [
+          "source: \"packages/design/brand\"",
+          "src: \"/brand/logo-color.svg\"",
+          "src: \"/brand/logo-horizontal-en.svg\"",
+          "data-brand-source={webBrandAssets.source}",
+          "alt=\"\""
+        ],
+        "forbiddenContains": ["Nebutra Sailor", "alt=\"Nebutra\""]
+      },
+      {
+        "name": "web-public-chrome-brand-assets",
+        "description": "Public recovery chrome should reuse the governed brand logo primitive and labels instead of raw logo image tags or hardcoded brand labels.",
+        "file": "apps/web/src/components/navigation/public-page-chrome.tsx",
+        "requiredContains": [
+          "BrandLogo",
+          "webBrandLabels.homeLink",
+          "webBrandLabels.primaryNavigation"
+        ],
+        "forbiddenContains": [
+          "src=\"/brand/logo-horizontal-en.svg\"",
+          "alt=\"Nebutra\"",
+          "aria-label=\"Nebutra\""
+        ]
+      },
+      {
+        "name": "web-theme-playground-brand-assets",
+        "description": "Theme playground brand chrome must use official brand assets rather than placeholder icons or hardcoded Nebutra labels.",
+        "file": "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
+        "requiredContains": ["BrandLogo", "ThemeBrandMark"],
+        "forbiddenContains": [
+          "function NebutraMark",
+          "font-semibold text-base text-foreground\">Nebutra",
+          "grid size-7 place-items-center rounded-[var(--radius-md)] border border-primary/30"
         ]
       },
       {
