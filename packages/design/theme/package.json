@@ -1,9 +1,10 @@
 {
   "name": "@nebutra/theme",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "description": "CSS-only theme engine — Tailwind v4 @theme tokens + data-theme selectors + next-themes re-export",
+  "private": false,
+  "license": "MIT",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
@@ -29,5 +30,17 @@
   },
   "peerDependencies": {
     "react": "^19"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/design/theme#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/theme"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

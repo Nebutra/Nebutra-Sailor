@@ -57,6 +57,7 @@
     "template:check": "tsx scripts/template-check.ts",
     "template:build": "tsx scripts/template-build.ts",
     "prepare": "node scripts/install-git-hooks.mjs",
+    "verify:release-surface": "node scripts/verify-release-surface.mjs",
     "release": "pnpm build && changeset publish",
     "version:packages": "changeset version",
     "changeset": "changeset",

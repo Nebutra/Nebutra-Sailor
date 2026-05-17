@@ -1,5 +1,5 @@
 ---
-"@nebutra/agent-runtime-adapters": minor
+"@nebutra/agent-runtime": minor
 "@nebutra/gateway": minor
 ---
 

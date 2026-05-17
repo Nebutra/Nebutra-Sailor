@@ -1,8 +1,9 @@
 ---
-"@nebutra/agent-runtime-adapters": minor
+"@nebutra/agent-runtime": minor
 ---
 
-New package: concrete reusable port adapters for `@nebutra/agent-runtime`.
+New adapter subpaths inside `@nebutra/agent-runtime`: concrete reusable port
+adapters for the runtime package.
 
 - `mcp-catalog`: adapts `@nebutra/mcp` `serverRegistry`/`mcpClient` into the
   `McpServerCatalogPort` / `McpClientLike` ports — plan-gated, tenant

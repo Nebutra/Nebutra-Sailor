@@ -1,8 +1,9 @@
 {
   "name": "@nebutra/errors",
   "version": "0.1.0",
-  "private": true,
   "description": "Unified error handling and API error responses",
+  "private": false,
+  "license": "MIT",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -17,5 +18,17 @@
     "@types/node": "^22.19.15",
     "typescript": "catalog:",
     "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/platform/errors#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/platform/errors"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
