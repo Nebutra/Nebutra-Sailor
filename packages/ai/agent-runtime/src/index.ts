@@ -14,8 +14,11 @@
 
 export * from "./artifact-stream";
 export * from "./channel-gateway";
+export * from "./code-review";
 export * from "./command-suggestions";
 export * from "./commands";
+export * from "./commit-message";
+export * from "./context-compaction";
 export * from "./definitions";
 export * from "./deployment-status";
 export * from "./design-context";
