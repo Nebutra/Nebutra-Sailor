@@ -110,6 +110,12 @@
     "chronos:doctor": "pnpm event-log:doctor",
     "chronos:debug": "pnpm event-log:debug",
     "chronos:timeline": "tsx packages/ai/event-log/src/cli.ts timeline",
+    "knowledge-rag:doctor": "tsx packages/ai/knowledge-rag/src/cli.ts doctor",
+    "knowledge-rag:debug": "tsx packages/ai/knowledge-rag/src/cli.ts debug",
+    "collab:doctor": "tsx packages/integrations/collab/src/cli.ts doctor",
+    "collab:debug": "tsx packages/integrations/collab/src/cli.ts debug",
+    "canvas:doctor": "pnpm knowledge-rag:doctor && pnpm collab:doctor",
+    "canvas:debug": "tsx packages/ai/knowledge-rag/src/cli.ts debug && tsx packages/integrations/collab/src/cli.ts debug",
     "layer0:demo": "tsx scripts/layer0-demo.ts"
   },
   "keywords": [
