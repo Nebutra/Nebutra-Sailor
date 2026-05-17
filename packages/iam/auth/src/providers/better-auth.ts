@@ -120,6 +120,23 @@ async function loadOptionalPlugin(name: string): Promise<unknown> {
   return import(/* @vite-ignore */ /* webpackIgnore: true */ path);
 }
 
+export async function loadBetterAuthOneTapPlugin(): Promise<BetterAuthPlugin | undefined> {
+  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) return undefined;
+
+  try {
+    const pluginModule = (await import("better-auth/plugins")) as {
+      oneTap?: (options: { clientId: string }) => BetterAuthPlugin;
+    };
+    if (!pluginModule.oneTap) return undefined;
+    return pluginModule.oneTap({ clientId: process.env.GOOGLE_CLIENT_ID });
+  } catch (error) {
+    logger.warn("Better Auth: one-tap plugin not available — Google One Tap will not mount.", {
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return undefined;
+  }
+}
+
 /** Map a Better Auth user record to our canonical User type. */
 function mapUser(raw: Record<string, unknown> | null): User | null {
   if (!raw) return null;
@@ -627,12 +644,15 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       );
     }
 
+    const oneTapPlugin = await loadBetterAuthOneTapPlugin();
+
     const plugins: BetterAuthPlugin[] = [];
     if (orgPlugin) plugins.push(orgPlugin);
     if (twoFactorPlugin) plugins.push(twoFactorPlugin);
     if (passkeyPlugin) plugins.push(passkeyPlugin);
     if (magicLinkPlugin) plugins.push(magicLinkPlugin);
     if (captchaPlugin) plugins.push(captchaPlugin);
+    if (oneTapPlugin) plugins.push(oneTapPlugin);
 
     const prismaClient = await getPrismaClient(config);
 

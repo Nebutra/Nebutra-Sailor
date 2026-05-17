@@ -60,7 +60,7 @@ function isEmailSignUpRequest(request: Request): boolean {
 
 function isOAuthRequest(request: Request): boolean {
   const url = new URL(request.url);
-  return url.pathname.includes("/oauth/");
+  return url.pathname.includes("/oauth/") || url.pathname.includes("/one-tap/");
 }
 
 function createAccessGateService() {

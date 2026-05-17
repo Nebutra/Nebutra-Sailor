@@ -29,21 +29,39 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
 
 ---
 
-## Authentication (Clerk)
+## Authentication
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Yes | — | Clerk publishable key. Starts with `pk_live_` or `pk_test_`. |
-| `CLERK_SECRET_KEY` | Yes | — | Clerk secret key. Starts with `sk_live_` or `sk_test_`. |
-| `CLERK_WEBHOOK_SECRET` | Yes | — | Signing secret for Clerk webhook payloads. Starts with `whsec_`. |
+| `AUTH_PROVIDER` | No | `better-auth` | Server-side auth provider. One of `better-auth`, `nextauth`, `clerk`, `supabase`, or `dev`. |
+| `NEXT_PUBLIC_AUTH_PROVIDER` | No | `better-auth` | Client-visible auth provider. Keep this aligned with `AUTH_PROVIDER`. |
+| `BETTER_AUTH_SECRET` | If `AUTH_PROVIDER=better-auth` | — | Self-hosted Better Auth signing secret. Generate with `openssl rand -base64 32`. |
+| `BETTER_AUTH_URL` | If `AUTH_PROVIDER=better-auth` | — | Base URL where `/api/auth/*` is served. |
+| `AUTH_SECRET` | If `AUTH_PROVIDER=nextauth` | — | Auth.js / NextAuth signing secret. Generate with `openssl rand -base64 32`. |
+| `NEXTAUTH_URL` | If `AUTH_PROVIDER=nextauth` | — | Dashboard origin for Auth.js callbacks. |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | If `AUTH_PROVIDER=clerk` | — | Clerk publishable key. Starts with `pk_live_` or `pk_test_`. |
+| `CLERK_SECRET_KEY` | If `AUTH_PROVIDER=clerk` | — | Clerk secret key. Starts with `sk_live_` or `sk_test_`. |
+| `CLERK_WEBHOOK_SECRET` | If Clerk webhooks are enabled | — | Signing secret for Clerk webhook payloads. Starts with `whsec_`. |
+| `GOOGLE_CLIENT_ID` | If Google OAuth is enabled | — | Google OAuth web client id for Better Auth or NextAuth. |
+| `GOOGLE_CLIENT_SECRET` | If Google OAuth is enabled | — | Google OAuth web client secret for Better Auth or NextAuth. |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | If Google One Tap is enabled for Better Auth or NextAuth | — | Public Google OAuth web client id used by the landing page One Tap prompt. |
+| `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP` | No | `true` | Set to `false` to disable the landing-page One Tap prompt. |
+| `NEBUTRA_LANDING_ORIGIN` | If NextAuth One Tap is enabled | — | Landing origin allowed to POST to `/api/auth/google-one-tap`. |
+| `NEBUTRA_SESSION_HINT_DOMAIN` | No | — | Optional shared cookie domain for the lightweight cross-subdomain session hint. |
 
 <CodeGroup>
 ```bash .env.local (development)
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxx
-CLERK_SECRET_KEY=sk_test_xxx
-CLERK_WEBHOOK_SECRET=whsec_xxx
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=local-dev-secret
+BETTER_AUTH_URL=http://localhost:3001
+GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=xxx
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
 ```
 ```bash .env (production)
+AUTH_PROVIDER=clerk
+NEXT_PUBLIC_AUTH_PROVIDER=clerk
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxx
 CLERK_SECRET_KEY=sk_live_xxx
 CLERK_WEBHOOK_SECRET=whsec_xxx

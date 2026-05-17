@@ -15,8 +15,8 @@
  *   Plugin paths (`better-auth/plugins/*`) are loaded via the variable-path
  *   `loadOptionalPlugin` helper so Vite skips static resolution at test time.
  */
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { createBetterAuthProvider } from "./better-auth";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createBetterAuthProvider, loadBetterAuthOneTapPlugin } from "./better-auth";
 
 const ORIGINAL_ENV = { ...process.env };
 
@@ -88,5 +88,31 @@ describe("createBetterAuthProvider conditional social providers", () => {
     process.env.GITHUB_CLIENT_ID = "test-id";
     process.env.GITHUB_CLIENT_SECRET = "test-secret";
     expect(() => createBetterAuthProvider({ provider: "better-auth" })).not.toThrow();
+  });
+});
+
+describe("Better Auth Google One Tap plugin loading", () => {
+  afterEach(() => {
+    vi.doUnmock("better-auth/plugins");
+  });
+
+  it("does not mount one-tap without Google OAuth client credentials", async () => {
+    delete process.env.GOOGLE_CLIENT_ID;
+    delete process.env.GOOGLE_CLIENT_SECRET;
+
+    await expect(loadBetterAuthOneTapPlugin()).resolves.toBeUndefined();
+  });
+
+  it("loads Better Auth's official oneTap plugin with the Google client id", async () => {
+    const oneTap = vi.fn((options: unknown) => ({ id: "one-tap", options }));
+    vi.doMock("better-auth/plugins", () => ({ oneTap }));
+    process.env.GOOGLE_CLIENT_ID = "google-client";
+    process.env.GOOGLE_CLIENT_SECRET = "google-secret";
+
+    await expect(loadBetterAuthOneTapPlugin()).resolves.toEqual({
+      id: "one-tap",
+      options: { clientId: "google-client" },
+    });
+    expect(oneTap).toHaveBeenCalledWith({ clientId: "google-client" });
   });
 });

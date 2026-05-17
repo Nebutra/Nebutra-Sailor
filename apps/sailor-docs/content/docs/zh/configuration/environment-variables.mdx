@@ -29,21 +29,39 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
 
 ---
 
-## 身份验证（Clerk）
+## 身份验证
 
 | 变量 | 是否必填 | 默认值 | 说明 |
 |------|----------|--------|------|
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | 是 | — | Clerk 可发布密钥。以 `pk_live_` 或 `pk_test_` 开头。 |
-| `CLERK_SECRET_KEY` | 是 | — | Clerk 密钥。以 `sk_live_` 或 `sk_test_` 开头。 |
-| `CLERK_WEBHOOK_SECRET` | 是 | — | Clerk Webhook 载荷的签名密钥。以 `whsec_` 开头。 |
+| `AUTH_PROVIDER` | 否 | `better-auth` | 服务端认证提供商。可选：`better-auth`、`nextauth`、`clerk`、`supabase`、`dev`。 |
+| `NEXT_PUBLIC_AUTH_PROVIDER` | 否 | `better-auth` | 客户端可见的认证提供商。应与 `AUTH_PROVIDER` 保持一致。 |
+| `BETTER_AUTH_SECRET` | `AUTH_PROVIDER=better-auth` 时 | — | Better Auth 自托管签名密钥。可用 `openssl rand -base64 32` 生成。 |
+| `BETTER_AUTH_URL` | `AUTH_PROVIDER=better-auth` 时 | — | `/api/auth/*` 所在的基础 URL。 |
+| `AUTH_SECRET` | `AUTH_PROVIDER=nextauth` 时 | — | Auth.js / NextAuth 签名密钥。可用 `openssl rand -base64 32` 生成。 |
+| `NEXTAUTH_URL` | `AUTH_PROVIDER=nextauth` 时 | — | Auth.js 回调使用的控制台源站。 |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | `AUTH_PROVIDER=clerk` 时 | — | Clerk 可发布密钥。以 `pk_live_` 或 `pk_test_` 开头。 |
+| `CLERK_SECRET_KEY` | `AUTH_PROVIDER=clerk` 时 | — | Clerk 密钥。以 `sk_live_` 或 `sk_test_` 开头。 |
+| `CLERK_WEBHOOK_SECRET` | 启用 Clerk Webhook 时 | — | Clerk Webhook 载荷的签名密钥。以 `whsec_` 开头。 |
+| `GOOGLE_CLIENT_ID` | 启用 Google OAuth 时 | — | Better Auth 或 NextAuth 使用的 Google OAuth Web Client ID。 |
+| `GOOGLE_CLIENT_SECRET` | 启用 Google OAuth 时 | — | Better Auth 或 NextAuth 使用的 Google OAuth Web Client Secret。 |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Better Auth 或 NextAuth 启用 Google One Tap 时 | — | Landing 页 One Tap 提示使用的公开 Google OAuth Web Client ID。 |
+| `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP` | 否 | `true` | 设置为 `false` 可关闭 Landing 页 One Tap 提示。 |
+| `NEBUTRA_LANDING_ORIGIN` | NextAuth One Tap 启用时 | — | 允许 POST 到 `/api/auth/google-one-tap` 的 Landing 源站。 |
+| `NEBUTRA_SESSION_HINT_DOMAIN` | 否 | — | 可选的跨子域轻量会话提示 Cookie 域。 |
 
 <CodeGroup>
 ```bash .env.local（开发环境）
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxx
-CLERK_SECRET_KEY=sk_test_xxx
-CLERK_WEBHOOK_SECRET=whsec_xxx
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=local-dev-secret
+BETTER_AUTH_URL=http://localhost:3001
+GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=xxx
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
 ```
 ```bash .env（生产环境）
+AUTH_PROVIDER=clerk
+NEXT_PUBLIC_AUTH_PROVIDER=clerk
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxx
 CLERK_SECRET_KEY=sk_live_xxx
 CLERK_WEBHOOK_SECRET=whsec_xxx

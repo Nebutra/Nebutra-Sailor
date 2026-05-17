@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { createNextAuthProvider, mapSession } from "./nextauth";
+import { createNextAuthProvider, mapSession, withDefaultNextAuthCallbacks } from "./nextauth";
 
 describe("mapSession (NextAuth → canonical Session)", () => {
   it("returns null when the payload is null/undefined", () => {
@@ -39,9 +39,10 @@ describe("mapSession (NextAuth → canonical Session)", () => {
     });
 
     expect(session).not.toBeNull();
-    expect("email" in session!).toBe(false);
-    expect("organizationId" in session!).toBe(false);
-    expect("role" in session!).toBe(false);
+    if (!session) throw new Error("expected session");
+    expect("email" in session).toBe(false);
+    expect("organizationId" in session).toBe(false);
+    expect("role" in session).toBe(false);
   });
 
   it("forwards organizationId + role when supplied via custom session callback", () => {
@@ -98,5 +99,59 @@ describe("createNextAuthProvider env validation", () => {
     process.env.NEXTAUTH_SECRET = "legacy-secret";
     const provider = createNextAuthProvider({ provider: "nextauth" });
     expect(provider.provider).toBe("nextauth");
+  });
+});
+
+describe("withDefaultNextAuthCallbacks", () => {
+  it("projects token.sub onto session.user.id when consumers do not provide callbacks", async () => {
+    const options = withDefaultNextAuthCallbacks({});
+    const callbacks = options.callbacks as {
+      session: (args: unknown) => Promise<unknown>;
+    };
+
+    const session = await callbacks.session({
+      session: { user: { email: "ada@example.com", name: "Ada" } },
+      token: { sub: "google-sub-123" },
+    });
+
+    expect(session).toMatchObject({
+      user: {
+        id: "google-sub-123",
+        email: "ada@example.com",
+        name: "Ada",
+      },
+    });
+  });
+
+  it("preserves consumer callbacks and fills the id after they run", async () => {
+    const options = withDefaultNextAuthCallbacks({
+      callbacks: {
+        async jwt({ token }: { token: Record<string, unknown> }) {
+          return { ...token, role: "admin" };
+        },
+        async session({ session }: { session: Record<string, unknown> }) {
+          return { ...session, role: "admin" };
+        },
+      },
+    });
+    const callbacks = options.callbacks as {
+      jwt: (args: unknown) => Promise<unknown>;
+      session: (args: unknown) => Promise<unknown>;
+    };
+
+    const token = await callbacks.jwt({
+      token: { email: "ada@example.com" },
+      user: { id: "user_123" },
+    });
+    const session = await callbacks.session({
+      session: { user: { email: "ada@example.com" } },
+      token,
+    });
+
+    expect(token).toMatchObject({ sub: "user_123", role: "admin" });
+    expect(session).toMatchObject({
+      role: "admin",
+      user: { id: "user_123", email: "ada@example.com" },
+    });
   });
 });

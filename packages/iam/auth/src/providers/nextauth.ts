@@ -90,6 +90,9 @@ interface NextAuthSessionShape {
   role?: string;
 }
 
+type UnknownRecord = Record<string, unknown>;
+type NextAuthCallback = (args: UnknownRecord) => unknown | Promise<unknown>;
+
 // ─── Helpers ───
 
 /**
@@ -111,6 +114,61 @@ export function mapSession(raw: NextAuthSessionShape | null | undefined): Sessio
     ...(email !== undefined ? { email } : {}),
     ...(raw.organizationId !== undefined ? { organizationId: raw.organizationId } : {}),
     ...(raw.role !== undefined ? { role: raw.role } : {}),
+  };
+}
+
+function asRecord(value: unknown): UnknownRecord {
+  return value && typeof value === "object" ? (value as UnknownRecord) : {};
+}
+
+function getString(value: unknown): string | undefined {
+  return typeof value === "string" && value.length > 0 ? value : undefined;
+}
+
+function getUserIdFromCallbackArgs(args: UnknownRecord): string | undefined {
+  const user = asRecord(args.user);
+  const token = asRecord(args.token);
+  const sessionUser = asRecord(asRecord(args.session).user);
+  return getString(token.sub) ?? getString(user.id) ?? getString(sessionUser.id);
+}
+
+/**
+ * Auth.js's default JWT session callback intentionally omits `session.user.id`.
+ * Nebutra's provider contract requires a stable user id, so we layer a small
+ * default callback wrapper while still letting consumers supply their own
+ * callbacks. Consumer callbacks run first; the wrapper only fills missing id
+ * fields afterward.
+ */
+export function withDefaultNextAuthCallbacks(userOptions: UnknownRecord): UnknownRecord {
+  const callbacks = asRecord(userOptions.callbacks);
+  const userJwt = callbacks.jwt as NextAuthCallback | undefined;
+  const userSession = callbacks.session as NextAuthCallback | undefined;
+
+  return {
+    ...userOptions,
+    callbacks: {
+      ...callbacks,
+      async jwt(args: UnknownRecord) {
+        const token = asRecord(userJwt ? await userJwt(args) : args.token);
+        const user = asRecord(args.user);
+        if (!getString(token.sub)) {
+          const userId = getString(user.id);
+          if (userId) token.sub = userId;
+        }
+        return token;
+      },
+      async session(args: UnknownRecord) {
+        const session = asRecord(userSession ? await userSession(args) : args.session);
+        const user = asRecord(session.user);
+        const userId = getUserIdFromCallbackArgs({ ...args, session });
+        if (userId && !getString(user.id)) {
+          session.user = { ...user, id: userId };
+        } else if (Object.keys(user).length > 0) {
+          session.user = user;
+        }
+        return session;
+      },
+    },
   };
 }
 
@@ -227,7 +285,9 @@ export function createNextAuthProvider(config: AuthConfig): AuthProvider {
       );
     }
 
-    const userOptions = (config.options as Record<string, unknown> | undefined) ?? {};
+    const userOptions = withDefaultNextAuthCallbacks(
+      (config.options as Record<string, unknown> | undefined) ?? {},
+    );
     const adapter = userOptions.adapter as unknown;
 
     const nextAuthConfig: Record<string, unknown> = {

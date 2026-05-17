@@ -5,17 +5,38 @@ description: How Nebutra handles auth end-to-end — provider setup, token verif
 
 ## Auth providers
 
-Nebutra supports two auth providers, switchable via a single environment variable:
+Nebutra supports switchable auth providers through `@nebutra/auth`. Keep
+`AUTH_PROVIDER` and `NEXT_PUBLIC_AUTH_PROVIDER` aligned so server routes,
+middleware, React hooks, and the landing page load the same provider path.
 
 | Provider | Best for | Notes |
 |----------|----------|-------|
-| **Clerk** | Production — hosted auth with UI components | Default. Managed dashboard, MFA, social login |
-| **Better Auth** | Self-hosted or compliance-sensitive deployments | Open source, runs in your infrastructure |
+| **Better Auth** | Self-hosted or compliance-sensitive deployments | Default. Open source, Postgres-backed, supports Google One Tap through the official `oneTap` plugin. |
+| **NextAuth / Auth.js v5** | Self-hosted OAuth-heavy deployments | Uses Auth.js session cookies and a Nebutra-owned Google One Tap callback. |
+| **Clerk** | Managed auth with hosted UI components | Uses Clerk's official SDK and `<GoogleOneTap />` component. |
+| **Supabase Auth** | Teams already using Supabase | Hosted auth aligned with Supabase storage/realtime deployments. |
+| **Dev** | Local fixture previews only | Synthetic user and workspace; hard-fails in production. |
 
 ```bash
 # .env
-AUTH_PROVIDER=clerk       # or "better-auth"
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
 ```
+
+## Google One Tap
+
+The landing page chooses the correct One Tap implementation from
+`NEXT_PUBLIC_AUTH_PROVIDER`:
+
+| Provider | One Tap implementation | Required public config |
+|----------|------------------------|------------------------|
+| Better Auth | `better-auth` client `oneTapClient`, POSTs to `/api/auth/one-tap/callback` | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` |
+| NextAuth | Google Identity Services HTML API, POSTs to `/api/auth/google-one-tap` | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` |
+| Clerk | Clerk's official `<GoogleOneTap />` component | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` |
+
+Set `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP=false` to disable the landing prompt.
+When `ACCESS_GATE_MODE=invite`, OAuth and One Tap entrypoints are blocked until
+the invite gate is opened.
 
 ## Clerk setup
 
