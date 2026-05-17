@@ -48,6 +48,9 @@
 
 // Checkout (provider-agnostic abstraction)
 export {
+  type BillingProviderReadiness,
+  type BillingProviderReadinessInput,
+  type BillingProviderReadinessStatus,
   type CheckoutConfig,
   type CheckoutProvider,
   type CheckoutProviderType,
@@ -61,6 +64,7 @@ export {
   detectProvider,
   getCheckout,
   handleCreditPurchaseWebhook,
+  resolveBillingProviderReadiness,
 } from "./checkout/index";
 // China Payment (Alipay + WeChat Pay via aggregator)
 export {

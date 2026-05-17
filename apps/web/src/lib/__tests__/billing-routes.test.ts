@@ -75,6 +75,30 @@ describe("billing API routes", () => {
     expect(response.headers.get("location")).toBe("https://stripe.example/checkout");
   });
 
+  it("redirects form checkout failures back to billing with a recoverable status", async () => {
+    fetchMock.mockResolvedValue(
+      createJsonResponse({ error: "Checkout unavailable" }, { status: 503 }),
+    );
+    const formData = new FormData();
+    formData.set("priceId", "price_pro_monthly");
+
+    const { POST } = await loadCheckoutRoute();
+    const response = await POST(
+      new Request("https://app.example/api/billing/checkout", {
+        method: "POST",
+        body: formData,
+        headers: {
+          referer: "https://app.example/zh/billing?from=settings",
+        },
+      }),
+    );
+
+    expect(response.status).toBe(303);
+    expect(response.headers.get("location")).toBe(
+      "https://app.example/zh/billing?from=settings&billing=checkout-failed",
+    );
+  });
+
   it("preserves localized billing return URLs for portal callbacks", async () => {
     fetchMock.mockResolvedValue(createJsonResponse({ url: "https://stripe.example/portal" }));
 
@@ -121,5 +145,46 @@ describe("billing API routes", () => {
         }),
       }),
     );
+  });
+
+  it("redirects form portal failures back to billing with a recoverable status", async () => {
+    fetchMock.mockResolvedValue(
+      createJsonResponse({ error: "Stripe customer mapping missing" }, { status: 424 }),
+    );
+
+    const { POST } = await loadPortalRoute();
+    const response = await POST(
+      new Request("https://app.example/api/billing/portal", {
+        method: "POST",
+        headers: {
+          referer: "https://app.example/zh/billing?from=settings",
+        },
+      }),
+    );
+
+    expect(response.status).toBe(303);
+    expect(response.headers.get("location")).toBe(
+      "https://app.example/zh/billing?from=settings&billing=portal-failed",
+    );
+  });
+
+  it("keeps JSON portal failure responses for API clients", async () => {
+    fetchMock.mockResolvedValue(
+      createJsonResponse({ error: "Stripe customer mapping missing" }, { status: 424 }),
+    );
+
+    const { POST } = await loadPortalRoute();
+    const response = await POST(
+      new Request("https://app.example/api/billing/portal", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          referer: "https://app.example/zh/billing?from=settings",
+        },
+      }),
+    );
+
+    expect(response.status).toBe(424);
+    await expect(response.json()).resolves.toEqual({ error: "Stripe customer mapping missing" });
   });
 });

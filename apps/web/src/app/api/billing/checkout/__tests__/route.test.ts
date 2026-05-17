@@ -162,6 +162,23 @@ describe("POST /api/billing/checkout", () => {
     expect(upstreamBody.quantity).toBe(7);
   });
 
+  it("forwards trial metadata from pricing selections", async () => {
+    mockedGetAuth.mockResolvedValue(buildAuth(null));
+
+    const { POST } = await loadRoute();
+    const response = await POST(
+      jsonRequest({
+        priceId: "price_pro_trial",
+        trialPeriodDays: 14,
+      }),
+    );
+
+    expect(response.status).toBe(303);
+    const [, init] = fetchSpy.mock.calls[0];
+    const upstreamBody = JSON.parse((init as RequestInit).body as string);
+    expect(upstreamBody.trialPeriodDays).toBe(14);
+  });
+
   it("respects an explicit seats override when provided", async () => {
     mockedGetAuth.mockResolvedValue(buildAuth("org_override"));
 

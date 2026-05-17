@@ -40,7 +40,7 @@ export function resolveBillingReturnUrl(request: Request): string {
 
 export function appendBillingStatus(
   returnUrl: string,
-  status: "checkout-canceled" | "checkout-success",
+  status: "checkout-canceled" | "checkout-failed" | "checkout-success" | "portal-failed",
 ) {
   const url = new URL(returnUrl);
   url.searchParams.set("billing", status);

@@ -5,12 +5,14 @@ const {
   createBillingPortalSessionMock,
   createCheckoutSessionMock,
   getStripeSubscriptionMock,
+  resolveBillingProviderReadinessMock,
   stripeCustomerFindUniqueMock,
   verifyServiceTokenMock,
 } = vi.hoisted(() => ({
   createBillingPortalSessionMock: vi.fn(),
   createCheckoutSessionMock: vi.fn(),
   getStripeSubscriptionMock: vi.fn(),
+  resolveBillingProviderReadinessMock: vi.fn(),
   stripeCustomerFindUniqueMock: vi.fn(),
   verifyServiceTokenMock: vi.fn(),
 }));
@@ -30,6 +32,7 @@ vi.mock("@nebutra/billing", () => ({
     ENTERPRISE: { apiCalls: 1000000 },
   },
   getStripeSubscription: getStripeSubscriptionMock,
+  resolveBillingProviderReadiness: resolveBillingProviderReadinessMock,
 }));
 
 vi.mock("@nebutra/db", () => ({
@@ -92,9 +95,24 @@ describe("billing self-service routes", () => {
     createBillingPortalSessionMock.mockReset();
     createCheckoutSessionMock.mockReset();
     getStripeSubscriptionMock.mockReset();
+    resolveBillingProviderReadinessMock.mockReset();
     stripeCustomerFindUniqueMock.mockReset();
     verifyServiceTokenMock.mockReset();
     verifyServiceTokenMock.mockReturnValue(true);
+    resolveBillingProviderReadinessMock.mockReturnValue({
+      provider: "stripe",
+      status: "ready",
+      checkoutReady: true,
+      portalReady: true,
+      missing: [],
+      title: "Stripe self-service is ready",
+      description:
+        "Checkout and hosted billing portal actions can be exposed for configured plans.",
+    });
+    process.env.BILLING_PROVIDER = "stripe";
+    process.env.STRIPE_SECRET_KEY = "sk_test_123";
+    process.env.STRIPE_PRICE_ID_PRO_MONTHLY = "price_pro_monthly";
+    process.env.STRIPE_PRICE_ID_PRO_YEARLY = "price_pro_yearly";
     app = buildApp();
   });
 
@@ -133,6 +151,37 @@ describe("billing self-service routes", () => {
       url: "https://stripe.example/checkout/cs_alpha",
       sessionId: "cs_alpha",
     });
+  });
+
+  it("forwards seat quantity and trial metadata when creating checkout sessions", async () => {
+    stripeCustomerFindUniqueMock.mockResolvedValue({ stripeId: "cus_alpha" });
+    createCheckoutSessionMock.mockResolvedValue({
+      id: "cs_alpha",
+      url: "https://stripe.example/checkout/cs_alpha",
+    });
+
+    const response = await app.request("/checkout", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        ...authHeaders(),
+      },
+      body: JSON.stringify({
+        priceId: "price_pro_monthly",
+        successUrl: "https://app.example/en/billing?billing=checkout-success",
+        cancelUrl: "https://app.example/en/billing?billing=checkout-canceled",
+        quantity: 7,
+        trialPeriodDays: 14,
+      }),
+    });
+
+    expect(response.status).toBe(200);
+    expect(createCheckoutSessionMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        quantity: 7,
+        trialPeriodDays: 14,
+      }),
+    );
   });
 
   it("returns a dependency error when checkout has no Stripe customer mapping", async () => {
@@ -206,6 +255,38 @@ describe("billing self-service routes", () => {
     });
   });
 
+  it("exposes provider readiness for billing UI and operational checks", async () => {
+    delete process.env.STRIPE_PRICE_ID_PRO_YEARLY;
+    resolveBillingProviderReadinessMock.mockReturnValue({
+      provider: "stripe",
+      status: "degraded",
+      checkoutReady: false,
+      portalReady: true,
+      missing: ["STRIPE_PRICE_ID_PRO_YEARLY"],
+      title: "Stripe is partially configured",
+      description:
+        "Customer portal can be requested, but paid plan checkout stays disabled until every paid plan has a Stripe price id.",
+    });
+
+    const response = await app.request("/provider-status", {
+      method: "GET",
+      headers: authHeaders(),
+    });
+
+    expect(response.status).toBe(200);
+    expect(resolveBillingProviderReadinessMock).toHaveBeenCalledWith({
+      selfServiceEnabled: true,
+      requiredPriceEnvVars: ["STRIPE_PRICE_ID_PRO_MONTHLY", "STRIPE_PRICE_ID_PRO_YEARLY"],
+    });
+    await expect(readJson(response)).resolves.toMatchObject({
+      provider: "stripe",
+      status: "degraded",
+      checkoutReady: false,
+      portalReady: true,
+      missing: ["STRIPE_PRICE_ID_PRO_YEARLY"],
+    });
+  });
+
   it("documents checkout and portal success response bodies in OpenAPI", async () => {
     const contractApp = new OpenAPIHono();
     contractApp.doc("/openapi.json", {
@@ -219,6 +300,12 @@ describe("billing self-service routes", () => {
       paths: Record<
         string,
         {
+          get?: {
+            responses?: Record<
+              string,
+              { content?: { "application/json"?: { schema?: Record<string, unknown> } } }
+            >;
+          };
           post?: {
             responses?: Record<
               string,
@@ -246,6 +333,19 @@ describe("billing self-service routes", () => {
         url: { type: "string", format: "uri" },
       },
       required: ["url"],
+      type: "object",
+    });
+    expect(
+      spec.paths["/provider-status"]?.get?.responses?.["200"]?.content?.["application/json"]
+        ?.schema,
+    ).toMatchObject({
+      properties: {
+        provider: { type: "string" },
+        status: { type: "string" },
+        checkoutReady: { type: "boolean" },
+        portalReady: { type: "boolean" },
+      },
+      required: expect.arrayContaining(["provider", "status", "checkoutReady", "portalReady"]),
       type: "object",
     });
   });

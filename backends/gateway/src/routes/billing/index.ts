@@ -12,6 +12,7 @@ import {
   createCheckoutSession,
   DEFAULT_PLAN_LIMITS,
   getStripeSubscription,
+  resolveBillingProviderReadiness,
 } from "@nebutra/billing";
 import { getSystemDb } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
@@ -28,6 +29,7 @@ const CheckoutRequestSchema = z.object({
   priceId: z.string().startsWith("price_"),
   successUrl: z.string().url(),
   cancelUrl: z.string().url(),
+  quantity: z.number().int().positive().max(10_000).optional(),
   trialPeriodDays: z.number().int().min(0).max(30).optional(),
 });
 
@@ -59,6 +61,27 @@ const UsageResponseSchema = z.object({
     used: z.number(),
   }),
 });
+
+const ProviderStatusResponseSchema = z.object({
+  provider: z.string(),
+  status: z.enum(["disabled", "degraded", "ready"]),
+  checkoutReady: z.boolean(),
+  portalReady: z.boolean(),
+  missing: z.array(z.string()),
+  title: z.string(),
+  description: z.string(),
+});
+
+function resolveGatewayBillingProviderReadiness() {
+  const selfServiceEnabled =
+    process.env.FEATURE_FLAG_BILLING !== "false" &&
+    process.env.NEBUTRA_BILLING_CHECKOUT_MODE !== "none";
+
+  return resolveBillingProviderReadiness({
+    selfServiceEnabled,
+    requiredPriceEnvVars: ["STRIPE_PRICE_ID_PRO_MONTHLY", "STRIPE_PRICE_ID_PRO_YEARLY"],
+  });
+}
 
 async function resolveStripeCustomerId(organizationId: string): Promise<string | null> {
   const customer = await getSystemDb().stripeCustomer.findUnique({
@@ -103,7 +126,7 @@ const checkoutRoute = createRoute({
 
 billingRoutes.openapi(checkoutRoute, async (c) => {
   const tenant = c.get("tenant");
-  const { priceId, successUrl, cancelUrl, trialPeriodDays } = c.req.valid("json");
+  const { priceId, successUrl, cancelUrl, quantity, trialPeriodDays } = c.req.valid("json");
   const organizationId = tenant.organizationId as string;
   const customerId = await resolveStripeCustomerId(organizationId);
 
@@ -119,6 +142,7 @@ billingRoutes.openapi(checkoutRoute, async (c) => {
         successUrl,
         cancelUrl,
         metadata: { organizationId },
+        ...(quantity !== undefined && { quantity }),
         ...(trialPeriodDays !== undefined && { trialPeriodDays }),
       }),
     );
@@ -133,6 +157,27 @@ billingRoutes.openapi(checkoutRoute, async (c) => {
     const apiError = toApiError(err);
     return c.json({ error: apiError.error.message }, 400);
   }
+});
+
+const providerStatusRoute = createRoute({
+  method: "get",
+  path: "/provider-status",
+  tags: ["Billing"],
+  summary: "Get billing provider readiness",
+  responses: {
+    200: {
+      description: "Billing provider readiness",
+      content: { "application/json": { schema: ProviderStatusResponseSchema } },
+    },
+    403: {
+      description: "Organization membership required",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
+  },
+});
+
+billingRoutes.openapi(providerStatusRoute, (c) => {
+  return c.json(resolveGatewayBillingProviderReadiness(), 200);
 });
 
 const portalRoute = createRoute({

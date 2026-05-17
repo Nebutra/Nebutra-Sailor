@@ -101,10 +101,11 @@ function dedupeDefaultFreePlans(plans: PricingPlan[]): PricingPlan[] {
 }
 
 async function defaultOnSelectPlan(
-  planId: string,
+  plan: PricingPlan,
   interval: BillingInterval,
   orgId: string | undefined,
 ) {
+  const price = findPriceForInterval(plan, interval);
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const returnPath = orgId
     ? `${origin}/checkout-return?organizationId=${encodeURIComponent(orgId)}`
@@ -114,14 +115,19 @@ async function defaultOnSelectPlan(
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      planId,
+      planId: plan.id,
       interval,
       redirectUrl: returnPath,
+      ...(price?.trialPeriodDays ? { trialPeriodDays: price.trialPeriodDays } : {}),
+      ...(price?.seatBased || plan.perSeat ? { seatBased: true } : {}),
     }),
   });
 
   if (!response.ok) {
-    throw new Error(`Checkout failed: ${response.status}`);
+    const payload = (await response.json().catch(() => ({}))) as { error?: unknown };
+    throw new Error(
+      typeof payload.error === "string" ? payload.error : `Checkout failed: ${response.status}`,
+    );
   }
 
   const payload = (await response.json()) as { url?: unknown };
@@ -169,19 +175,26 @@ export function PricingPlanGrid({
 
   const [billingInterval, setBillingInterval] = useState<BillingInterval>("month");
   const [pendingPlanId, setPendingPlanId] = useState<string | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const pendingPlanRef = useRef<string | null>(null);
   const [, startTransition] = useTransition();
 
   const handleSelect = async (planId: string) => {
     if (pendingPlanRef.current) return;
+    const plan = visiblePlans.find((candidate) => candidate.id === planId);
+    if (!plan) return;
     pendingPlanRef.current = planId;
     setPendingPlanId(planId);
+    setCheckoutError(null);
     try {
       const handler =
-        onSelectPlan ?? ((id: string, i: BillingInterval) => defaultOnSelectPlan(id, i, orgId));
-      await handler(planId, billingInterval);
+        onSelectPlan ?? ((_id: string, i: BillingInterval) => defaultOnSelectPlan(plan, i, orgId));
+      await handler(plan.id, billingInterval);
     } catch (error) {
       onSelectError?.(error, planId);
+      if (!onSelectPlan) {
+        setCheckoutError(error instanceof Error ? error.message : "Checkout could not start.");
+      }
     } finally {
       startTransition(() => {
         pendingPlanRef.current = null;
@@ -210,6 +223,16 @@ export function PricingPlanGrid({
             active={billingInterval === "year"}
             onSelect={() => setBillingInterval("year")}
           />
+        </div>
+      )}
+
+      {checkoutError && (
+        <div
+          role="alert"
+          className="mb-4 rounded-2xl border border-[color:var(--amber-7)] bg-[color:var(--amber-2)] px-4 py-3 text-[color:var(--amber-11)] text-sm"
+        >
+          {checkoutError} You can retry checkout or contact support if the provider setup is still
+          unavailable.
         </div>
       )}
 

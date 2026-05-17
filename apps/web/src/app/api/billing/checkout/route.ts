@@ -15,6 +15,8 @@ export interface CheckoutRequestBody {
    * the route counts the calling org's members and uses that as the quantity.
    */
   seats?: unknown;
+  /** Optional trial days from plan price metadata. */
+  trialPeriodDays?: unknown;
   /**
    * When true, the route resolves seats from the calling org's member count and
    * forwards it as `quantity` to the gateway checkout factory.
@@ -26,9 +28,11 @@ interface NormalizedBody {
   priceId: string;
   seats: number | null;
   seatBased: boolean;
+  trialPeriodDays: number | null;
   explicitReturnUrl: string | null;
   invalidReturnUrl: boolean;
   wantsJsonResponse: boolean;
+  failureMode: "json" | "redirect";
 }
 
 async function readBody(request: Request): Promise<NormalizedBody> {
@@ -50,9 +54,17 @@ async function readBody(request: Request): Promise<NormalizedBody> {
           ? Math.floor(raw.seats)
           : null,
       seatBased: raw.seatBased === true,
+      trialPeriodDays:
+        typeof raw.trialPeriodDays === "number" &&
+        Number.isFinite(raw.trialPeriodDays) &&
+        raw.trialPeriodDays >= 0 &&
+        raw.trialPeriodDays <= 30
+          ? Math.floor(raw.trialPeriodDays)
+          : null,
       explicitReturnUrl,
       invalidReturnUrl: typeof raw.redirectUrl === "string" && explicitReturnUrl === null,
       wantsJsonResponse: typeof raw.redirectUrl === "string",
+      failureMode: "json",
     };
   }
 
@@ -62,9 +74,11 @@ async function readBody(request: Request): Promise<NormalizedBody> {
       priceId: "",
       seats: null,
       seatBased: false,
+      trialPeriodDays: null,
       explicitReturnUrl: null,
       invalidReturnUrl: false,
       wantsJsonResponse: false,
+      failureMode: "json",
     };
   }
 
@@ -74,7 +88,10 @@ async function readBody(request: Request): Promise<NormalizedBody> {
   const redirectUrl = form.get("redirectUrl");
   const seatsRaw = form.get("seats");
   const seatBasedRaw = form.get("seatBased");
+  const trialPeriodDaysRaw = form.get("trialPeriodDays");
   const seats = typeof seatsRaw === "string" ? Number.parseInt(seatsRaw, 10) : Number.NaN;
+  const trialPeriodDays =
+    typeof trialPeriodDaysRaw === "string" ? Number.parseInt(trialPeriodDaysRaw, 10) : Number.NaN;
   const explicitReturnUrl =
     typeof redirectUrl === "string" ? resolveExplicitReturnUrl(request, redirectUrl) : null;
 
@@ -88,9 +105,14 @@ async function readBody(request: Request): Promise<NormalizedBody> {
           ),
     seats: Number.isFinite(seats) && seats > 0 ? seats : null,
     seatBased: seatBasedRaw === "true" || seatBasedRaw === "1",
+    trialPeriodDays:
+      Number.isFinite(trialPeriodDays) && trialPeriodDays >= 0 && trialPeriodDays <= 30
+        ? trialPeriodDays
+        : null,
     explicitReturnUrl,
     invalidReturnUrl: typeof redirectUrl === "string" && explicitReturnUrl === null,
     wantsJsonResponse: false,
+    failureMode: "redirect",
   };
 }
 
@@ -147,10 +169,21 @@ export async function POST(request: Request) {
   const body = await readBody(request);
   const returnUrl = resolveBillingReturnUrl(request);
 
+  const checkoutFailureResponse = (error: string, status: number) => {
+    if (body.failureMode === "redirect") {
+      return NextResponse.redirect(
+        appendBillingStatus(body.explicitReturnUrl ?? returnUrl, "checkout-failed"),
+        303,
+      );
+    }
+
+    return NextResponse.json({ error }, { status });
+  };
+
   if (!process.env.STRIPE_SECRET_KEY) {
-    return NextResponse.json(
-      { error: "Billing checkout is unavailable because Stripe is not configured." },
-      { status: 503 },
+    return checkoutFailureResponse(
+      "Billing checkout is unavailable because Stripe is not configured.",
+      503,
     );
   }
 
@@ -177,6 +210,7 @@ export async function POST(request: Request) {
     cancelUrl: appendBillingStatus(body.explicitReturnUrl ?? returnUrl, "checkout-canceled"),
   };
   if (quantity !== null) upstreamPayload.quantity = quantity;
+  if (body.trialPeriodDays !== null) upstreamPayload.trialPeriodDays = body.trialPeriodDays;
 
   const response = await fetch(`${API_BASE_URL}/api/v1/billing/checkout`, {
     method: "POST",
@@ -190,14 +224,9 @@ export async function POST(request: Request) {
   const payload = (await response.json().catch(() => ({}))) as { url?: unknown; error?: unknown };
 
   if (!response.ok || typeof payload.url !== "string") {
-    return NextResponse.json(
-      {
-        error:
-          typeof payload.error === "string"
-            ? payload.error
-            : "Billing checkout could not be created.",
-      },
-      { status: response.ok ? 502 : response.status },
+    return checkoutFailureResponse(
+      typeof payload.error === "string" ? payload.error : "Billing checkout could not be created.",
+      response.ok ? 502 : response.status,
     );
   }
 

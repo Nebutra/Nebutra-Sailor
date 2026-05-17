@@ -231,6 +231,58 @@ describe("PricingPlanGrid", () => {
     Object.defineProperty(window, "location", { configurable: true, value: originalLocation });
   });
 
+  it("default checkout forwards selected price trial and seat metadata", async () => {
+    const user = userEvent.setup();
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(JSON.stringify({ url: "https://stripe.example/checkout/session_1" }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const originalLocation = window.location;
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: new Proxy(originalLocation, {
+        set() {
+          return true;
+        },
+        get(target, prop) {
+          if (prop === "origin") return "https://app.example";
+          return Reflect.get(target, prop);
+        },
+      }),
+    });
+
+    render(
+      <PricingPlanGrid
+        plans={[
+          {
+            ...PLANS[1],
+            prices: [{ ...PLANS[1].prices[0], trialPeriodDays: 14, seatBased: true }],
+          },
+        ]}
+        orgId="org_1"
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: /choose pro/i }));
+
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
+    const [, init] = fetchMock.mock.calls[0];
+    expect(JSON.parse((init as RequestInit).body as string)).toMatchObject({
+      planId: "plan_pro",
+      interval: "month",
+      trialPeriodDays: 14,
+      seatBased: true,
+    });
+
+    Object.defineProperty(window, "location", { configurable: true, value: originalLocation });
+  });
+
   it("surfaces checkout failures through onSelectError without crashing the grid", async () => {
     const user = userEvent.setup();
     const checkoutError = new Error("Checkout unavailable.");
@@ -248,6 +300,28 @@ describe("PricingPlanGrid", () => {
       expect(onSelectError).toHaveBeenCalledWith(checkoutError, "plan_pro");
     });
     expect(within(proCard).getByRole("button", { name: /choose|select|pro/i })).toBeEnabled();
+  });
+
+  it("shows an inline recovery message when default checkout fails", async () => {
+    const user = userEvent.setup();
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(JSON.stringify({ error: "Stripe customer mapping is missing." }), {
+          status: 424,
+          headers: { "content-type": "application/json" },
+        }),
+      ),
+    );
+
+    render(<PricingPlanGrid plans={PLANS} orgId="org_1" />);
+
+    const proCard = screen.getByRole("article", { name: /pro/i });
+    await user.click(within(proCard).getByRole("button", { name: /choose|select|pro/i }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      /stripe customer mapping is missing/i,
+    );
   });
 
   // ── Trial badge ────────────────────────────────────────────────────────────

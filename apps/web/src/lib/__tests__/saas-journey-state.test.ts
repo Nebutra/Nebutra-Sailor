@@ -24,6 +24,30 @@ describe("resolveBillingJourneyNotice", () => {
       primaryAction: { href: "./billing", label: "Choose a plan" },
     });
   });
+
+  it("recognizes billing return status values emitted by app API routes", () => {
+    expect(resolveBillingJourneyNotice({ billing: "checkout-success" })).toMatchObject({
+      tone: "success",
+      title: "Checkout complete",
+    });
+    expect(resolveBillingJourneyNotice({ billing: "checkout-canceled" })).toMatchObject({
+      tone: "warning",
+      title: "Checkout canceled",
+    });
+  });
+
+  it("surfaces checkout and portal failures with retry copy", () => {
+    expect(resolveBillingJourneyNotice({ billing: "checkout-failed" })).toMatchObject({
+      tone: "warning",
+      title: "Checkout could not start",
+      primaryAction: { href: "./billing", label: "Retry checkout" },
+    });
+    expect(resolveBillingJourneyNotice({ billing: "portal-failed" })).toMatchObject({
+      tone: "warning",
+      title: "Billing portal unavailable",
+      primaryAction: { href: "./billing", label: "Back to billing" },
+    });
+  });
 });
 
 describe("resolveSelectOrgJourneyCopy", () => {

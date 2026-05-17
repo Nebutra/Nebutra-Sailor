@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { DEFAULT_PRICING } from "../../types";
 import { CREDIT_PURCHASE_METADATA_TYPE, CreditPurchaseInputSchema } from "../types";
 
 describe("CreditPurchaseInputSchema", () => {
@@ -111,6 +112,18 @@ describe("CreditPurchaseInputSchema", () => {
       metadata: { campaign: "spring-sale" },
     });
     expect(parsed.metadata).toEqual({ campaign: "spring-sale" });
+  });
+});
+
+describe("DEFAULT_PRICING SaaS metadata", () => {
+  it("marks the default free plan and paid SaaS subscriptions with seat/trial metadata", () => {
+    const free = DEFAULT_PRICING.find((plan) => plan.id === "free");
+    const proMonthly = DEFAULT_PRICING.find((plan) => plan.id === "pro_monthly");
+    const proYearly = DEFAULT_PRICING.find((plan) => plan.id === "pro_yearly");
+
+    expect(free).toMatchObject({ isDefault: true, amount: 0, trialPeriodDays: 0 });
+    expect(proMonthly).toMatchObject({ seatBased: true, trialPeriodDays: 14 });
+    expect(proYearly).toMatchObject({ seatBased: true, trialPeriodDays: 14 });
   });
 });
 

@@ -122,6 +122,7 @@ export async function createCheckoutSession(options: {
   cancelUrl: string;
   mode?: "subscription" | "payment" | "setup";
   trialPeriodDays?: number;
+  quantity?: number;
   metadata?: Record<string, string>;
 }): Promise<Stripe.Checkout.Session> {
   const stripe = getStripe();
@@ -132,7 +133,7 @@ export async function createCheckoutSession(options: {
     line_items: [
       {
         price: options.priceId,
-        quantity: 1,
+        quantity: options.quantity ?? 1,
       },
     ],
     success_url: options.successUrl,

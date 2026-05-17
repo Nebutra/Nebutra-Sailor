@@ -103,6 +103,10 @@ export interface PricingConfig {
   amount: number; // in cents
   currency: string;
   trialDays: number;
+  trialPeriodDays?: number;
+  seatBased?: boolean;
+  isDefault?: boolean;
+  contactSales?: boolean;
   features: string[];
   limits: PlanLimits;
 }
@@ -117,6 +121,8 @@ export const DEFAULT_PRICING: PricingConfig[] = [
     amount: 0,
     currency: "USD",
     trialDays: 0,
+    trialPeriodDays: 0,
+    isDefault: true,
     features: ["1,000 API calls/month", "10K AI tokens/month", "100MB storage"],
     limits: DEFAULT_PLAN_LIMITS.FREE,
   },
@@ -129,6 +135,8 @@ export const DEFAULT_PRICING: PricingConfig[] = [
     amount: 2900, // $29
     currency: "USD",
     trialDays: 14,
+    trialPeriodDays: 14,
+    seatBased: true,
     features: [
       "50,000 API calls/month",
       "500K AI tokens/month",
@@ -148,6 +156,8 @@ export const DEFAULT_PRICING: PricingConfig[] = [
     amount: 27900, // $279/year (~$23.25/month)
     currency: "USD",
     trialDays: 14,
+    trialPeriodDays: 14,
+    seatBased: true,
     features: [
       "50,000 API calls/month",
       "500K AI tokens/month",
@@ -167,6 +177,8 @@ export const DEFAULT_PRICING: PricingConfig[] = [
     amount: 0, // Custom pricing
     currency: "USD",
     trialDays: 30,
+    trialPeriodDays: 30,
+    contactSales: true,
     features: [
       "Unlimited API calls",
       "Unlimited AI tokens",
