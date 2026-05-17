@@ -15,6 +15,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./transport": "./src/transport/index.ts",
+    "./storyboard": "./src/storyboard/index.ts",
     "./store/memory": "./src/store/memory.ts"
   },
   "scripts": {
