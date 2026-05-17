@@ -5,8 +5,9 @@
  * Web-standard APIs only (`response.text()`, `response.body!.getReader()`).
  */
 
-import { ProtocolDispatcher, type ThreadEvent } from "@nebutra/agent-runtime";
 import { describe, expect, it } from "vitest";
+import { ProtocolDispatcher } from "../dispatcher";
+import type { ThreadEvent } from "../model";
 import { createRpcHandler, sseResponse, subscribeNotifications } from "./dispatcher-sse.js";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -29,7 +30,8 @@ function jsonRequest(body: unknown): Request {
 
 /** Drain an SSE Response body into its raw decoded text. */
 async function drainSse(res: Response): Promise<string> {
-  const reader = res.body!.getReader();
+  if (!res.body) throw new Error("SSE response body is missing");
+  const reader = res.body.getReader();
   const decoder = new TextDecoder();
   let out = "";
   for (;;) {

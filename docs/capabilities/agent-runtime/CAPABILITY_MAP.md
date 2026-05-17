@@ -48,7 +48,7 @@
   — tenant-scoped `runTurn` streamed over SSE, behind `requireAuth` +
   off-by-default `agent-runtime-demo` flag; `ModelInvoker` bridges
   `@nebutra/agents`. Gateway typecheck clean.
-- **Done (adapters + durable store):** `@nebutra/agent-runtime-adapters`
+- **Done (adapters + durable store):** `@nebutra/agent-runtime/adapters/*`
   (`mcp-catalog`, `dispatcher-sse`, `prisma-rollout` — 26 tests);
   `AgentRolloutLine` Prisma model + additive migration
   `20260519000000_add_agent_rollout_store` + ADR 2026-05-19; gateway route

@@ -3,6 +3,10 @@ import { defineConfig } from "tsup";
 export default defineConfig({
   entry: {
     index: "src/index.ts",
+    "adapters/index": "src/adapters/index.ts",
+    "adapters/dispatcher-sse": "src/adapters/dispatcher-sse.ts",
+    "adapters/mcp-catalog": "src/adapters/mcp-catalog.ts",
+    "adapters/prisma-rollout": "src/adapters/prisma-rollout.ts",
     commands: "src/commands.ts",
     definitions: "src/definitions.ts",
     dispatcher: "src/dispatcher.ts",
@@ -25,4 +29,5 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   target: "es2022",
+  external: ["@nebutra/mcp"],
 });

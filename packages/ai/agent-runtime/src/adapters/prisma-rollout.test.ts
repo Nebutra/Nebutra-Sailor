@@ -1,12 +1,8 @@
-import {
-  type ApprovalGate,
-  type ModelInvoker,
-  PersistentRolloutStore,
-  type RolloutLine,
-  replay,
-  runTurn,
-} from "@nebutra/agent-runtime";
 import { describe, expect, it } from "vitest";
+import { type ApprovalGate, type ModelInvoker, runTurn } from "../loop";
+import { type RolloutLine, replay } from "../rollout";
+import { PersistentRolloutStore } from "../rollout-store-persistent";
+import { ToolRegistry } from "../tools";
 import { createPrismaRolloutPersistence, type PrismaRolloutDelegate } from "./prisma-rollout.js";
 
 /** In-memory fake mirroring the agent_rollout_lines table semantics. */
@@ -145,7 +141,7 @@ describe("createPrismaRolloutPersistence", () => {
       },
       approvalPolicy: { kind: "on_request" },
       model,
-      tools: new (await import("@nebutra/agent-runtime")).ToolRegistry(),
+      tools: new ToolRegistry(),
       store,
       approvalGate: gate,
     })) {

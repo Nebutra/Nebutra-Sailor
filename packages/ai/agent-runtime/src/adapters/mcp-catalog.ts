@@ -22,10 +22,11 @@
  * and fully unit-testable.
  */
 
-import type { McpClientLike, McpServerCatalogPort, ToolDefinition } from "@nebutra/agent-runtime";
 import type { MCPContext, MCPServerRegistry, ToolExecutionResult } from "@nebutra/mcp";
 import { mcpClient, serverRegistry } from "@nebutra/mcp";
 import { z } from "zod";
+import type { McpServerCatalogPort } from "../mcp-bridge";
+import type { McpClientLike, ToolDefinition } from "../tools";
 
 /** Narrow structural shapes — we depend on behaviour, not concrete classes. */
 

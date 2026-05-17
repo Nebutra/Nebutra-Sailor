@@ -36,6 +36,7 @@ them.
 | `./tools` | uniform tool/MCP | `ToolRegistry` (registry→router→hooks), `adaptMcpTool` (MCP-as-adapter) |
 | `./rollout` | event-sourced trace | append-only typed log, replay-to-state, compaction marker, per-item persistence policy |
 | `./sandbox` | external-sandbox seam | `ExternalSandbox` delegation interface; fail-closed `REFUSING_SANDBOX` default |
+| `./adapters/*` | reusable concrete bindings | MCP catalog, Web-standard SSE transport, and Prisma rollout persistence without a separate package |
 
 ## Non-negotiables enforced here
 

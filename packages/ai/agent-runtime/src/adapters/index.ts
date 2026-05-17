@@ -1,9 +1,9 @@
 /**
- * @nebutra/agent-runtime-adapters — concrete, reusable port adapters.
+ * @nebutra/agent-runtime/adapters — concrete, reusable port adapters.
  *
- * `@nebutra/agent-runtime` is deliberately dependency-free and ships only
- * injectable ports. This package supplies the concrete wirings so any
- * app/backend can reuse them instead of re-implementing glue:
+ * The root runtime keeps its pure grammar and injectable ports. These subpath
+ * exports supply concrete wirings so apps/backends reuse them instead of
+ * re-implementing glue:
  *
  *  - `./mcp-catalog`    — McpServerCatalogPort + McpClientLike over @nebutra/mcp
  *  - `./dispatcher-sse` — runtime-agnostic SSE transport for ProtocolDispatcher

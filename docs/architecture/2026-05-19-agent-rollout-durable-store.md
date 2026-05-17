@@ -27,7 +27,7 @@ A dedicated, tenant-scoped Postgres table is the rollout system-of-record.
 - Unique `(tenant_id, thread_id, seq)` is the ordering + no-loss guarantee;
   duplicate/missing seq is rejected (fail-loud), not swallowed.
 - The adapter `createPrismaRolloutPersistence` lives in
-  `@nebutra/agent-runtime-adapters` and depends only on a minimal injected
+  `@nebutra/agent-runtime/adapters/prisma-rollout` and depends only on a minimal injected
   `PrismaRolloutDelegate` (the `PrismaAuditDelegate` pattern) — **not** on the
   generated client or `@nebutra/db`, keeping the package dependency-light and
   reusable. A per-tenant resolver lets callers pass `getTenantDb(orgId)` so

@@ -32,7 +32,7 @@ import {
 import {
   createPrismaRolloutPersistence,
   type PrismaRolloutDelegate,
-} from "@nebutra/agent-runtime-adapters/prisma-rollout";
+} from "@nebutra/agent-runtime/adapters/prisma-rollout";
 import type { AgentConfig, AgentResponse } from "@nebutra/agents";
 import { AgentOrchestrator, createAgentContext } from "@nebutra/agents";
 import { getTenantDb } from "@nebutra/db";

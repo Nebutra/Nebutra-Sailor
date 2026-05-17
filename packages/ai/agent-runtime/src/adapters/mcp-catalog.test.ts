@@ -1,8 +1,9 @@
-import { activateMcpTools, type McpServerCatalogPort, ToolRegistry } from "@nebutra/agent-runtime";
 import type { MCPContext, ToolExecutionResult } from "@nebutra/mcp";
 import { MCPServerRegistry } from "@nebutra/mcp";
 import { describe, expect, it, vi } from "vitest";
 import type { z } from "zod";
+import { activateMcpTools, type McpServerCatalogPort } from "../mcp-bridge";
+import { ToolRegistry } from "../tools";
 
 import { createMcpClientPort, createMcpServerCatalog } from "./mcp-catalog.js";
 
@@ -107,7 +108,8 @@ describe("createMcpServerCatalog", () => {
     const forecast = free.find((e) => e.definition.name === "forecast");
 
     expect(forecast).toBeDefined();
-    const schema = forecast!.definition.inputSchema as z.ZodType;
+    if (!forecast) throw new Error("forecast tool missing");
+    const schema = forecast.definition.inputSchema as z.ZodType;
     // Required `city` enforced.
     expect(() => schema.parse({})).toThrow();
     expect(schema.parse({ city: "NYC" })).toMatchObject({ city: "NYC" });

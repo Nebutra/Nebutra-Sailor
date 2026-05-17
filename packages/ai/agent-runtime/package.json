@@ -29,7 +29,11 @@
     "./policy": "./src/policy.ts",
     "./tools": "./src/tools.ts",
     "./rollout": "./src/rollout.ts",
-    "./sandbox": "./src/sandbox.ts"
+    "./sandbox": "./src/sandbox.ts",
+    "./adapters": "./src/adapters/index.ts",
+    "./adapters/mcp-catalog": "./src/adapters/mcp-catalog.ts",
+    "./adapters/dispatcher-sse": "./src/adapters/dispatcher-sse.ts",
+    "./adapters/prisma-rollout": "./src/adapters/prisma-rollout.ts"
   },
   "scripts": {
     "build": "tsup",
@@ -40,7 +44,16 @@
   "dependencies": {
     "zod": "catalog:"
   },
+  "peerDependencies": {
+    "@nebutra/mcp": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nebutra/mcp": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@nebutra/mcp": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",

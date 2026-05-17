@@ -12,8 +12,8 @@
  * structurally satisfies it, so this package stays dependency-light.
  */
 
-import type { RolloutPersistencePort } from "@nebutra/agent-runtime";
 import { z } from "zod";
+import type { RolloutPersistencePort } from "../rollout-store-persistent";
 
 /**
  * Minimal structural slice of `prisma.agentRolloutLine`. Decoupled from the

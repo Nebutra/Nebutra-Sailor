@@ -18,7 +18,9 @@
  *   `event: <ThreadEvent.type>\n` + `data: <JSON(event)>\n\n`
  */
 
-import type { NotificationName, ProtocolDispatcher, ThreadEvent } from "@nebutra/agent-runtime";
+import type { ProtocolDispatcher } from "../dispatcher";
+import type { ThreadEvent } from "../model";
+import type { NotificationName } from "../protocol";
 
 // ── JSON-RPC constants ───────────────────────────────────────────────────────
 
