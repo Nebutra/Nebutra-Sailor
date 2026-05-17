@@ -131,13 +131,40 @@ describe("UI/UX audit remediation invariants", () => {
     const translations = readFromRepo("packages/platform/i18n/locales/en.json");
 
     expect(dashboard).toContain("CommandCenter");
-    expect(dashboard).toContain("xl:grid-cols-[minmax(0,1fr)_22rem]");
+    expect(dashboard).toContain("max-w-[1440px]");
+    expect(dashboard).toContain("xl:grid-cols-[minmax(0,1fr)_24rem]");
     expect(dashboard).toContain("details.activeUsers");
     expect(dashboard).toContain("empty.noSnapshot");
-    expect(skeletons).toContain("lg:grid-cols-[minmax(0,1fr)_minmax(24rem,34rem)]");
+    expect(dashboard).toContain("meta.latestDay");
+    expect(skeletons).toContain("lg:grid-cols-[minmax(0,1fr)_minmax(28rem,38rem)]");
     expect(translations).toContain('"commandCenter"');
     expect(dashboard).not.toContain("Atmospheric brand glow");
     expect(dashboard).not.toContain("max-w-2xl flex-col items-center");
+  });
+
+  it("keeps recent dashboard sessions visible with an honest empty state", () => {
+    const recentSessions = readFromRepo("apps/web/src/components/onboarding/recent-sessions.tsx");
+    const translations = readFromRepo("packages/platform/i18n/locales/en.json");
+
+    expect(recentSessions).toContain("emptyTitle");
+    expect(recentSessions).toContain("emptyDescription");
+    expect(recentSessions).toContain("border-dashed");
+    expect(recentSessions).not.toContain("if (sessions.length === 0) return null");
+    expect(translations).toContain('"No recent sessions yet"');
+  });
+
+  it("uses granular dashboard metric metadata instead of oversized cards", () => {
+    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/page.tsx");
+    const translations = readFromRepo("packages/platform/i18n/locales/en.json");
+
+    expect(dashboard).toContain("type MetricMeta");
+    expect(dashboard).toContain("dailyMeta");
+    expect(dashboard).toContain("<dl");
+    expect(dashboard).toContain("text-2xl font-semibold");
+    expect(dashboard).not.toContain("text-3xl font-semibold tabular-nums");
+    expect(translations).toContain('"source": "Source"');
+    expect(translations).toContain('"cadence": "Cadence"');
+    expect(translations).toContain('"state": "State"');
   });
 
   it("uses real dashboard IA routes with breadcrumb navigation", () => {

@@ -892,6 +892,19 @@
         "conversions": "Qualified actions",
         "revenue": "Recognized revenue"
       },
+      "meta": {
+        "source": "Source",
+        "cadence": "Cadence",
+        "state": "State",
+        "daily": "Daily",
+        "latestDay": "{day}",
+        "awaiting": "Awaiting",
+        "notConnected": "Not connected",
+        "users": "Tenant users",
+        "events": "Event stream",
+        "funnel": "Funnel",
+        "billing": "Billing"
+      },
       "empty": {
         "pending": "Pending",
         "connectData": "Connect data",
@@ -906,6 +919,8 @@
       "viewAll": "View all →",
       "newChat": "New chat",
       "untitled": "Untitled session",
+      "emptyTitle": "No recent sessions yet",
+      "emptyDescription": "Start a chat, data review, workflow, or search session and it will stay here as your working queue.",
       "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
     },
     "gettingStarted": {

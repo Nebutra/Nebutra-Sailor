@@ -2,11 +2,11 @@ export function CommandSkeleton() {
   const modeWidths = [64, 72, 96, 80];
 
   return (
-    <div className="grid gap-5 rounded-2xl border border-neutral-6 bg-neutral-1 p-5 lg:grid-cols-[minmax(0,1fr)_minmax(24rem,34rem)] lg:items-end">
+    <div className="grid gap-5 rounded-2xl border border-neutral-6 bg-neutral-1 p-5 sm:p-6 lg:grid-cols-[minmax(0,1fr)_minmax(28rem,38rem)] lg:items-end">
       <div className="space-y-3">
         <div className="h-3 w-32 animate-pulse rounded bg-neutral-3" />
         <div className="h-8 w-56 animate-pulse rounded bg-neutral-3" />
-        <div className="h-4 w-full max-w-xl animate-pulse rounded bg-neutral-2" />
+        <div className="h-4 w-full max-w-2xl animate-pulse rounded bg-neutral-2" />
         <div className="flex gap-2">
           <div className="h-9 w-32 animate-pulse rounded-md bg-neutral-3" />
           <div className="h-9 w-28 animate-pulse rounded-md bg-neutral-2" />
@@ -44,7 +44,7 @@ export function MetricsSkeleton() {
         {metricCards.map((id) => (
           <div
             key={id}
-            className="h-20 animate-pulse rounded-xl border border-neutral-6 bg-neutral-2"
+            className="h-36 animate-pulse rounded-xl border border-neutral-6 bg-neutral-2"
           />
         ))}
       </div>
