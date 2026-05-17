@@ -1,3 +1,4 @@
+import type { DoctorCheck, DoctorReportBase } from "@nebutra/capability-kit";
 import type * as Y from "yjs";
 
 /**
@@ -40,14 +41,11 @@ export interface CollabRoom {
   destroy(): void;
 }
 
-export interface DoctorCheck {
-  readonly ok: boolean;
-  readonly detail: string;
-}
+// DoctorCheck + the {ok,durationMs} base come from the shared
+// @nebutra/capability-kit contract; collab only adds its specific probe map.
+export type { DoctorCheck };
 
-export interface DoctorReport {
-  readonly ok: boolean;
-  readonly durationMs: number;
+export interface DoctorReport extends DoctorReportBase {
   readonly checks: {
     readonly yjs: DoctorCheck;
     readonly store: DoctorCheck;

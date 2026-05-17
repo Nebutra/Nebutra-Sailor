@@ -1,9 +1,16 @@
 /**
  * Every failure surfaced by this package is a `CollabError`. The contract is
  * deliberately strict: a machine-stable `code` and a human-actionable
- * `suggestion` are MANDATORY constructor args, so no code path can throw a
- * bare `Error` that leaves a caller without a remediation hint.
+ * `suggestion` are MANDATORY, so no code path can throw a bare `Error` that
+ * leaves a caller without a remediation hint.
+ *
+ * Mechanics (code/suggestion/toJSON/empty-suggestion fallback) are inherited
+ * from the shared `@nebutra/capability-kit` `CapabilityError`; this subclass
+ * only pins collab's error name + its package-specific fallback wording, so
+ * the observable contract is unchanged.
  */
+
+import { CapabilityError } from "@nebutra/capability-kit";
 
 export type CollabErrorCode =
   | "COLLAB_INVALID_TENANT"
@@ -21,22 +28,15 @@ export interface CollabErrorInit {
   readonly cause?: unknown;
 }
 
-export class CollabError extends Error {
-  readonly code: CollabErrorCode;
-  readonly suggestion: string;
+export class CollabError extends CapabilityError {
+  declare readonly code: CollabErrorCode;
 
   constructor(message: string, init: CollabErrorInit) {
-    super(message, init.cause === undefined ? undefined : { cause: init.cause });
-    this.name = "CollabError";
-    if (!init.suggestion || init.suggestion.trim().length === 0) {
-      // A CollabError without a suggestion would defeat the whole contract.
-      this.suggestion =
+    super(message, init, {
+      name: "CollabError",
+      emptySuggestionFallback:
         "No suggestion was provided. This is a bug in @nebutra/collab — " +
-        "report it with the failing operation.";
-    } else {
-      this.suggestion = init.suggestion;
-    }
-    this.code = init.code;
-    Object.setPrototypeOf(this, CollabError.prototype);
+        "report it with the failing operation.",
+    });
   }
 }
