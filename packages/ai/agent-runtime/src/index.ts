@@ -12,19 +12,19 @@
  * implements {@link ExternalSandbox} over the ./protocol contract.
  */
 
-export * from "./commands.js";
-export * from "./definitions.js";
-export * from "./dispatcher.js";
-export * from "./durable-turn.js";
-export * from "./hook-pipeline.js";
-export * from "./loop.js";
-export * from "./mcp-bridge.js";
-export * from "./model.js";
-export * from "./policy.js";
-export * from "./protocol.js";
-export * from "./rollout.js";
-export * from "./rollout-store-persistent.js";
-export * from "./sandbox.js";
-export * from "./skills.js";
-export * from "./subagents.js";
-export * from "./tools.js";
+export * from "./commands";
+export * from "./definitions";
+export * from "./dispatcher";
+export * from "./durable-turn";
+export * from "./hook-pipeline";
+export * from "./loop";
+export * from "./mcp-bridge";
+export * from "./model";
+export * from "./policy";
+export * from "./protocol";
+export * from "./rollout";
+export * from "./rollout-store-persistent";
+export * from "./sandbox";
+export * from "./skills";
+export * from "./subagents";
+export * from "./tools";
