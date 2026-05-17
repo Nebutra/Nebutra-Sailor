@@ -1863,3 +1863,22 @@ model AtelierCanvas {
   @@map("atelier_canvas")
   @@schema("public")
 }
+
+// Durable, tenant-scoped rollout log for @nebutra/agent-runtime.
+// Append-only event-sourced turn record; one row per RolloutLine. The
+// (tenant_id, thread_id, seq) unique key is the system-of-record ordering
+// guarantee (fail-loud — unlike the best-effort audit log).
+model AgentRolloutLine {
+  id        String   @id @default(cuid())
+  tenantId  String   @map("tenant_id")
+  threadId  String   @map("thread_id")
+  seq       Int
+  at        DateTime @map("at")
+  payload   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([tenantId, threadId, seq])
+  @@index([tenantId, threadId, seq])
+  @@map("agent_rollout_lines")
+  @@schema("public")
+}
