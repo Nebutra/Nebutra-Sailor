@@ -11,6 +11,10 @@ const featuresPageSource = readFileSync(
   path.join(process.cwd(), "src/app/[lang]/(marketing)/features/page.tsx"),
   "utf8",
 );
+const useCasesSectionSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/use-cases/UseCasesSection.tsx"),
+  "utf8",
+);
 
 describe("landing UI governance", () => {
   it("keeps feature exploration CTAs semantic and localized", () => {
@@ -28,5 +32,12 @@ describe("landing UI governance", () => {
     for (const feature of LARGE_FEATURES) {
       expect(feature.href).toMatch(/^https:\/\/docs\.nebutra\.com\/[a-z0-9/-]+$/);
     }
+  });
+
+  it("keeps use-case demo mockups out of the mobile landing flow", () => {
+    expect(useCasesSectionSource).toContain("hidden w-full");
+    expect(useCasesSectionSource).toContain("lg:block");
+    expect(useCasesSectionSource).toContain("order-1 lg:order-1");
+    expect(useCasesSectionSource).not.toContain("scale-[0.55]");
   });
 });
