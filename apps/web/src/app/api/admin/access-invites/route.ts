@@ -32,13 +32,6 @@ function createGate() {
   });
 }
 
-function buildInviteUrl(request: Request, code: string): string {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || new URL(request.url).origin;
-  const url = new URL("/sign-up", baseUrl);
-  url.searchParams.set("invite", code);
-  return url.toString();
-}
-
 function buildCanonicalInviteUrl(request: Request, input: { code: string; tenantId?: string }) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || new URL(request.url).origin;
   const url = new URL("/sign-up", baseUrl);
