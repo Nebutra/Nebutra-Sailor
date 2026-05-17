@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { CSSProperties } from "react";
 import { Suspense } from "react";
 import { HeroMockupWindow, LogoStrip, Navbar } from "@/components/landing";
-import { HERO_BACKGROUND_VIDEOS } from "@/components/landing/HeroBackgroundVideo";
+import { DesktopProductDemoSection } from "@/components/landing/DesktopProductDemoSection";
 import { HeroSection } from "@/components/landing/HeroSection";
 import type { Locale } from "@/i18n/routing";
 
@@ -27,11 +27,6 @@ const SectionSkeleton = ({
       } as CSSProperties
     }
   />
-);
-
-const ProductDemoSection = dynamic(
-  () => import("@/components/landing/ProductDemoSection").then((m) => m.ProductDemoSection),
-  { loading: () => <SectionSkeleton minH="48rem" mobileMinH="30rem" /> },
 );
 
 const AIConstellationMarquee = dynamic(
@@ -89,25 +84,11 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
   return (
     <Suspense>
-      {/* React 19 hoists these to <head>. preconnect warms TLS to the CDN; the
-          two media-scoped preload links let the browser fetch only the video
-          variant that matches the user's color-scheme. */}
+      {/* React 19 hoists these to <head>. Keep the decorative hero video out of
+          the preload scanner; preconnect is enough and avoids competing with
+          text/CSS during LCP. */}
       <link rel="preconnect" href="https://d8j0ntlcm91z4.cloudfront.net" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://d8j0ntlcm91z4.cloudfront.net" />
-      <link
-        rel="preload"
-        as="video"
-        type="video/mp4"
-        href={HERO_BACKGROUND_VIDEOS.light}
-        media="(prefers-color-scheme: light)"
-      />
-      <link
-        rel="preload"
-        as="video"
-        type="video/mp4"
-        href={HERO_BACKGROUND_VIDEOS.dark}
-        media="(prefers-color-scheme: dark)"
-      />
       <main
         id="main-content"
         className="flex flex-col min-h-screen bg-background overflow-x-hidden"
@@ -131,7 +112,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
 
         {/* 5. Product Demo */}
         <div id="demo" className="scroll-mt-24">
-          <ProductDemoSection />
+          <DesktopProductDemoSection />
         </div>
 
         {/* 6. Capability Matrix */}

@@ -38,7 +38,7 @@ export function HeroBackgroundVideo() {
         preload="metadata"
         tabIndex={-1}
       >
-        <source src={videoSource} type="video/mp4" />
+        <source media="(min-width: 768px)" src={videoSource} type="video/mp4" />
       </video>
       <div className="hero-motion-pattern" />
       <div className="hero-motion-veil" />

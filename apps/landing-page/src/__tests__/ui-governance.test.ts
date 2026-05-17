@@ -94,10 +94,22 @@ describe("landing UI governance", () => {
 
   it("uses mobile-specific section skeleton heights for lazy landing content", () => {
     expect(marketingHomePageSource).toContain("--section-skeleton-mobile-min-h");
-    expect(marketingHomePageSource).toContain('mobileMinH="30rem"');
     expect(marketingHomePageSource).toContain('mobileMinH="34rem"');
     expect(marketingHomePageSource).not.toContain(
       '<section aria-hidden className="w-full" style={{ minHeight: minH }} />',
     );
+  });
+
+  it("keeps the dense product demo desktop-only so mobile does not load hidden demo code", () => {
+    const desktopDemoSource = readFileSync(
+      path.join(process.cwd(), "src/components/landing/DesktopProductDemoSection.tsx"),
+      "utf8",
+    );
+
+    expect(marketingHomePageSource).toContain("<DesktopProductDemoSection />");
+    expect(desktopDemoSource).toContain("ssr: false");
+    expect(desktopDemoSource).toContain('"hidden min-h-[48rem] w-full lg:block"');
+    expect(desktopDemoSource).toContain('"(min-width: 1024px)"');
+    expect(desktopDemoSource).toContain("return null");
   });
 });

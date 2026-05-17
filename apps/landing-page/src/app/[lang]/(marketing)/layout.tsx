@@ -1,7 +1,6 @@
-"use client";
-
-import { domAnimation, LazyMotion } from "framer-motion";
 import type { ReactNode } from "react";
+import { env } from "@/lib/env";
+import { MarketingClientProviders } from "./marketing-client-providers";
 
 /**
  * Marketing route group provides a single LazyMotion provider for the entire
@@ -11,5 +10,15 @@ import type { ReactNode } from "react";
  * features module is loaded exactly once per session.
  */
 export default function MarketingLayout({ children }: { children: ReactNode }) {
-  return <LazyMotion features={domAnimation}>{children}</LazyMotion>;
+  return (
+    <MarketingClientProviders
+      appUrl={env.NEXT_PUBLIC_APP_URL}
+      authProvider={env.NEXT_PUBLIC_AUTH_PROVIDER}
+      clerkPublishableKey={env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      googleClientId={env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+      googleOneTapEnabled={env.NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP !== "false"}
+    >
+      {children}
+    </MarketingClientProviders>
+  );
 }

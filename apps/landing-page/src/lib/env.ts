@@ -22,6 +22,12 @@ export const env = createEnv({
     NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3001"),
     NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3002"),
     NEXT_PUBLIC_DOCS_URL: z.string().url().default("https://docs.nebutra.com"),
+    NEXT_PUBLIC_AUTH_PROVIDER: z
+      .enum(["clerk", "better-auth", "nextauth", "supabase", "dev"])
+      .default("better-auth"),
+    NEXT_PUBLIC_GOOGLE_CLIENT_ID: z.string().optional(),
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().optional(),
+    NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP: z.enum(["true", "false"]).default("true"),
   },
 
   experimental__runtimeEnv: {
@@ -31,6 +37,10 @@ export const env = createEnv({
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     NEXT_PUBLIC_DOCS_URL: process.env.NEXT_PUBLIC_DOCS_URL,
+    NEXT_PUBLIC_AUTH_PROVIDER: process.env.NEXT_PUBLIC_AUTH_PROVIDER,
+    NEXT_PUBLIC_GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP: process.env.NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP,
   },
 });
 
