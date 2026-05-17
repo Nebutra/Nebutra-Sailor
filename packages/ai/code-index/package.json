@@ -1,0 +1,59 @@
+{
+  "name": "@nebutra/code-index",
+  "version": "0.1.0",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "An Embedder adapter (OpenAI / Ollama / Bedrock / OpenAI-compatible / …)",
+      "A VectorStore adapter (local on-disk or hosted)",
+      "@nebutra/tenant for tenant scoping (collection key = tenantId + project)"
+    ],
+    "gaps": [
+      "Ships port contracts + a pure structural/line/markdown chunker + the incremental index engine; concrete embedder/vector-store adapters are injected, not bundled",
+      "Structural chunking uses an injected CodeParser port — no native tree-sitter dependency in this package"
+    ],
+    "featureId": "code-index",
+    "category": "ai",
+    "summary": "Multi-tenant codebase semantic-index grammar: deterministic content-hash chunking (structural / line / markdown), incremental scan, embedding-profile drift recreate, cosine retrieval — all behind provider-agnostic Embedder/VectorStore ports"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./interfaces": "./src/interfaces.ts",
+    "./chunker": "./src/chunker.ts",
+    "./index-engine": "./src/index-engine.ts",
+    "./provider": "./src/provider.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/code-index#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/code-index"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
