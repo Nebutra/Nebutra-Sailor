@@ -22,13 +22,36 @@ const createLinkMock = vi.fn(async () => ({
 const createAnalyticsClientMock = vi.fn(() => ({
   links: { create: createLinkMock },
 }));
+const findManyMock = vi.fn(async () => [
+  {
+    id: "aic_1",
+    codePrefix: "neb_test",
+    scope: "PLATFORM",
+    tenantId: null,
+    issuedByUserId: "user_admin",
+    issuedToEmail: "ada@example.com",
+    status: "ACTIVE",
+    maxRedemptions: 1,
+    redemptionCount: 0,
+    expiresAt: new Date("2026-06-01T00:00:00.000Z"),
+    revokedAt: null,
+    createdAt: new Date("2026-05-01T00:00:00.000Z"),
+    updatedAt: new Date("2026-05-01T00:00:00.000Z"),
+  },
+]);
+const updateManyMock = vi.fn(async () => ({ count: 1 }));
 
 vi.mock("@/lib/auth", () => ({
   getAuth: getAuthMock,
 }));
 
 vi.mock("@/lib/db", () => ({
-  db: {},
+  db: {
+    accessInviteCode: {
+      findMany: findManyMock,
+      updateMany: updateManyMock,
+    },
+  },
 }));
 
 vi.mock("@nebutra/access-gate", () => ({
@@ -76,6 +99,8 @@ describe("POST /api/admin/access-invites", () => {
     sendInvitationEmailMock.mockClear();
     createLinkMock.mockClear();
     createAnalyticsClientMock.mockClear();
+    findManyMock.mockClear();
+    updateManyMock.mockClear();
   });
 
   it("requires admin manage-users permission", async () => {
@@ -196,5 +221,66 @@ describe("POST /api/admin/access-invites", () => {
         acceptUrl: "https://go.example/invite-neb_testcode",
       }),
     );
+  });
+
+  it("lists recent access invites for admins", async () => {
+    getAuthMock.mockResolvedValue({
+      isSignedIn: true,
+      userId: "user_admin",
+      orgId: "org_1",
+      sessionClaims: { org_role: "org:admin" },
+    });
+    const { GET } = await loadRoute();
+
+    const response = await GET(new Request("https://app.example/api/admin/access-invites"));
+
+    expect(response.status).toBe(200);
+    expect(findManyMock).toHaveBeenCalledWith({
+      orderBy: { createdAt: "desc" },
+      take: 50,
+    });
+    expect(await response.json()).toMatchObject({
+      invites: [
+        {
+          id: "aic_1",
+          prefix: "neb_test",
+          scope: "platform",
+          status: "active",
+          issuedToEmail: "ada@example.com",
+        },
+      ],
+    });
+  });
+
+  it("revokes active access invites and audits the operation", async () => {
+    getAuthMock.mockResolvedValue({
+      isSignedIn: true,
+      userId: "user_admin",
+      orgId: "org_1",
+      sessionClaims: { org_role: "org:admin" },
+    });
+    const { PATCH } = await loadRoute();
+
+    const response = await PATCH(
+      new Request("https://app.example/api/admin/access-invites", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id: "aic_1", action: "revoke" }),
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(updateManyMock).toHaveBeenCalledWith({
+      where: { id: "aic_1", status: "ACTIVE" },
+      data: expect.objectContaining({ status: "REVOKED" }),
+    });
+    expect(auditLogMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: "admin.access_invite.revoked",
+        outcome: "success",
+        resource: { type: "access_invite", id: "aic_1" },
+      }),
+    );
+    expect(await response.json()).toMatchObject({ id: "aic_1", status: "revoked" });
   });
 });

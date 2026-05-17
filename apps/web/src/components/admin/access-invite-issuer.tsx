@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useState } from "react";
 
 interface IssuedInvite {
   attributionStatus: "canonical" | "dub" | "failed";
@@ -15,11 +15,39 @@ interface IssuedInvite {
   expiresAt: string | null;
 }
 
+interface ManagedInvite {
+  id: string;
+  prefix: string;
+  scope: "platform" | "tenant";
+  tenantId: string | null;
+  issuedToEmail: string | null;
+  status: "active" | "redeemed" | "revoked" | "expired";
+  redemptionCount: number;
+  maxRedemptions: number;
+  expiresAt: string | null;
+  createdAt: string;
+}
+
 export function AccessInviteIssuer() {
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [issued, setIssued] = useState<IssuedInvite[]>([]);
+  const [managedInvites, setManagedInvites] = useState<ManagedInvite[]>([]);
   const [scope, setScope] = useState<"platform" | "tenant">("platform");
+
+  const loadManagedInvites = useCallback(async () => {
+    const response = await fetch("/api/admin/access-invites");
+    const payload = (await response.json().catch(() => ({}))) as {
+      invites?: ManagedInvite[];
+    };
+    if (response.ok) {
+      setManagedInvites(payload.invites ?? []);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadManagedInvites().catch(() => undefined);
+  }, [loadManagedInvites]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -51,11 +79,28 @@ export function AccessInviteIssuer() {
       }
       setIssued(payload.invites ?? []);
       setMessage("Copy these codes now. Plaintext invite codes are never shown again.");
+      await loadManagedInvites().catch(() => undefined);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Failed to issue invites.");
     } finally {
       setPending(false);
     }
+  }
+
+  async function revokeInvite(id: string) {
+    setMessage(null);
+    const response = await fetch("/api/admin/access-invites", {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ id, action: "revoke" }),
+    });
+    const payload = (await response.json().catch(() => ({}))) as { error?: string };
+    if (!response.ok) {
+      setMessage(payload.error ?? "Failed to revoke invite.");
+      return;
+    }
+    setMessage("Invite revoked.");
+    await loadManagedInvites().catch(() => undefined);
   }
 
   return (
@@ -172,6 +217,54 @@ export function AccessInviteIssuer() {
           </ul>
         </div>
       ) : null}
+
+      <div className="mt-4 rounded-[var(--radius-2xl)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-3">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h3 className="font-medium text-[var(--neutral-12)] text-sm">Recent access invites</h3>
+          <button
+            type="button"
+            onClick={() => void loadManagedInvites()}
+            className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-2 py-1 text-[var(--neutral-11)] text-xs"
+          >
+            Refresh
+          </button>
+        </div>
+        {managedInvites.length === 0 ? (
+          <p className="text-[var(--neutral-10)] text-sm">No access invites issued yet.</p>
+        ) : (
+          <ul className="space-y-2">
+            {managedInvites.map((invite) => (
+              <li
+                key={invite.id}
+                className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] px-3 py-2"
+              >
+                <div className="min-w-0">
+                  <code className="font-mono text-[var(--neutral-12)] text-sm">
+                    {invite.prefix}
+                  </code>
+                  <p className="mt-1 truncate text-[var(--neutral-10)] text-xs">
+                    {invite.issuedToEmail ?? "unbound"} · {invite.scope}
+                    {invite.tenantId ? ` · ${invite.tenantId}` : ""} · redeemed{" "}
+                    {invite.redemptionCount}/{invite.maxRedemptions}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[var(--neutral-10)] text-xs">{invite.status}</span>
+                  {invite.status === "active" ? (
+                    <button
+                      type="button"
+                      onClick={() => void revokeInvite(invite.id)}
+                      className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-2 py-1 text-[var(--neutral-11)] text-xs"
+                    >
+                      Revoke
+                    </button>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </section>
   );
 }

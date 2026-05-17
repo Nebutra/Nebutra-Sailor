@@ -13,27 +13,49 @@ describe("AccessInviteIssuer", () => {
 
   it("issues invite codes and displays plaintext once", async () => {
     const user = userEvent.setup();
-    const fetchMock = vi.fn().mockResolvedValue(
-      new Response(
+    const fetchMock = vi.fn(async (_url: string, init?: RequestInit) => {
+      if (init?.method === "POST") {
+        return new Response(
+          JSON.stringify({
+            invites: [
+              {
+                id: "aic_1",
+                attributionStatus: "dub",
+                canonicalInviteUrl: "https://app.example/sign-up?invite=neb_abc123",
+                code: "neb_abc123",
+                emailStatus: "sent",
+                inviteUrl: "https://app.example/sign-up?invite=neb_abc123",
+                prefix: "neb_abc123",
+                scope: "platform",
+                tenantId: null,
+                expiresAt: null,
+              },
+            ],
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+
+      return new Response(
         JSON.stringify({
           invites: [
             {
               id: "aic_1",
-              attributionStatus: "dub",
-              canonicalInviteUrl: "https://app.example/sign-up?invite=neb_abc123",
-              code: "neb_abc123",
-              emailStatus: "sent",
-              inviteUrl: "https://app.example/sign-up?invite=neb_abc123",
               prefix: "neb_abc123",
               scope: "platform",
               tenantId: null,
+              issuedToEmail: "ada@example.com",
+              status: "active",
+              redemptionCount: 0,
+              maxRedemptions: 1,
               expiresAt: null,
+              createdAt: "2026-05-17T00:00:00.000Z",
             },
           ],
         }),
         { status: 200, headers: { "content-type": "application/json" } },
-      ),
-    );
+      );
+    });
     vi.stubGlobal("fetch", fetchMock);
 
     render(<AccessInviteIssuer />);
@@ -43,7 +65,12 @@ describe("AccessInviteIssuer", () => {
     await user.type(screen.getByLabelText("Email lock"), "ada@example.com");
     await user.click(screen.getByRole("button", { name: "Issue invite codes" }));
 
-    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(fetchMock).toHaveBeenCalledWith(
+        "/api/admin/access-invites",
+        expect.objectContaining({ method: "POST" }),
+      ),
+    );
     expect(fetchMock).toHaveBeenCalledWith(
       "/api/admin/access-invites",
       expect.objectContaining({
@@ -59,6 +86,7 @@ describe("AccessInviteIssuer", () => {
     expect(screen.getByText("https://app.example/sign-up?invite=neb_abc123")).toBeInTheDocument();
     expect(screen.getByText(/email sent/i)).toBeInTheDocument();
     expect(screen.getByText(/tracked link/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Revoke" })).toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent("Copy these codes now");
   });
 });

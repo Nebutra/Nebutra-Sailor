@@ -9,6 +9,31 @@ import { db } from "@/lib/db";
 import { hasPermission, resolveRole } from "@/lib/permissions";
 
 type LinkAttributionStatus = "canonical" | "dub" | "failed";
+type AdminAuth = Awaited<ReturnType<typeof getAuth>>;
+type AccessInviteRow = {
+  id: string;
+  codePrefix: string;
+  scope: "PLATFORM" | "TENANT";
+  tenantId: string | null;
+  issuedByUserId: string;
+  issuedToEmail: string | null;
+  status: "ACTIVE" | "REDEEMED" | "REVOKED" | "EXPIRED";
+  maxRedemptions: number;
+  redemptionCount: number;
+  expiresAt: Date | null;
+  revokedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+type AccessInviteAdminDb = {
+  accessInviteCode: {
+    findMany(args: { orderBy: { createdAt: "desc" }; take: number }): Promise<AccessInviteRow[]>;
+    updateMany(args: {
+      where: { id: string; status: "ACTIVE" };
+      data: { status: "REVOKED"; revokedAt: Date };
+    }): Promise<{ count: number }>;
+  };
+};
 
 const issueSchema = z.object({
   count: z.coerce.number().int().min(1).max(25).default(1),
@@ -17,6 +42,25 @@ const issueSchema = z.object({
   issuedToEmail: z.string().trim().email().optional(),
   expiresAt: z.string().datetime().optional(),
 });
+
+const revokeSchema = z.object({
+  id: z.string().trim().min(1),
+  action: z.literal("revoke"),
+});
+
+async function requireAdmin(request: Request): Promise<AdminAuth | Response> {
+  const auth = await getAuth(request);
+  if (!auth.isSignedIn || !auth.userId) {
+    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  }
+
+  const role = resolveRole(auth.sessionClaims?.org_role as string | undefined);
+  if (!hasPermission(role, "admin:manage_users")) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  return auth;
+}
 
 function issuerQuota(): number {
   const raw = Number.parseInt(process.env.ACCESS_INVITE_ISSUER_QUOTA ?? "25", 10);
@@ -140,15 +184,8 @@ async function sendInviteEmailIfRequested(input: {
 }
 
 export async function POST(request: Request) {
-  const auth = await getAuth(request);
-  if (!auth.isSignedIn || !auth.userId) {
-    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
-  }
-
-  const role = resolveRole(auth.sessionClaims?.org_role as string | undefined);
-  if (!hasPermission(role, "admin:manage_users")) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  }
+  const auth = await requireAdmin(request);
+  if (auth instanceof Response) return auth;
 
   const parsed = issueSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
@@ -226,5 +263,91 @@ export async function POST(request: Request) {
       error: error instanceof Error ? error.message : String(error),
     });
     return NextResponse.json({ error: "Failed to issue access invites." }, { status: 500 });
+  }
+}
+
+function projectInvite(row: AccessInviteRow) {
+  const isExpired = row.status === "ACTIVE" && row.expiresAt !== null && row.expiresAt < new Date();
+
+  return {
+    id: row.id,
+    prefix: row.codePrefix,
+    scope: row.scope.toLowerCase(),
+    tenantId: row.tenantId,
+    issuedByUserId: row.issuedByUserId,
+    issuedToEmail: row.issuedToEmail,
+    status: isExpired ? "expired" : row.status.toLowerCase(),
+    maxRedemptions: row.maxRedemptions,
+    redemptionCount: row.redemptionCount,
+    expiresAt: row.expiresAt?.toISOString() ?? null,
+    revokedAt: row.revokedAt?.toISOString() ?? null,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (auth instanceof Response) return auth;
+
+  try {
+    const rows = await (db as unknown as AccessInviteAdminDb).accessInviteCode.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 50,
+    });
+
+    return NextResponse.json({ invites: rows.map(projectInvite) });
+  } catch (error) {
+    logger.error("[admin.access-invites] Failed to list access invites", {
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return NextResponse.json({ error: "Failed to list access invites." }, { status: 500 });
+  }
+}
+
+export async function PATCH(request: Request) {
+  const auth = await requireAdmin(request);
+  if (auth instanceof Response) return auth;
+
+  const parsed = revokeSchema.safeParse(await request.json().catch(() => null));
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Invalid invite update payload." }, { status: 400 });
+  }
+
+  try {
+    const revokedAt = new Date();
+    const result = await (db as unknown as AccessInviteAdminDb).accessInviteCode.updateMany({
+      where: { id: parsed.data.id, status: "ACTIVE" },
+      data: { status: "REVOKED", revokedAt },
+    });
+
+    if (result.count === 0) {
+      return NextResponse.json(
+        { error: "Invite is not active or does not exist." },
+        { status: 409 },
+      );
+    }
+
+    await auditLogger(request, {
+      actor: { id: auth.userId, type: "user" },
+      tenantId: auth.orgId ?? "system",
+    }).log({
+      action: "admin.access_invite.revoked",
+      outcome: "success",
+      resource: { type: "access_invite", id: parsed.data.id },
+      severity: "warning",
+    });
+
+    return NextResponse.json({
+      id: parsed.data.id,
+      status: "revoked",
+      revokedAt: revokedAt.toISOString(),
+    });
+  } catch (error) {
+    logger.error("[admin.access-invites] Failed to revoke access invite", {
+      inviteId: parsed.data.id,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return NextResponse.json({ error: "Failed to revoke access invite." }, { status: 500 });
   }
 }
