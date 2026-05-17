@@ -42,8 +42,12 @@ const THEMES = ["light", "dark", "system"] as const satisfies readonly Theme[];
 export const THEME_STORAGE_KEY = "theme";
 
 interface ThemeContextValue {
+  /** Whether a real ThemeProvider is present above the consumer. */
+  isProviderBound: boolean;
   /** The raw user preference. May be "system". */
   theme: Theme;
+  /** Provider-level override for demos, locked routes, or embedded previews. */
+  forcedTheme?: Theme | undefined;
   /** The concretely-applied theme — always "light" or "dark". */
   resolvedTheme: ResolvedTheme;
   /** The OS-level preference (always concrete). */
@@ -62,7 +66,9 @@ export function useTheme(): ThemeContextValue {
   const ctx = useContext(ThemeContext);
   if (ctx) return ctx;
   return {
+    isProviderBound: false,
     theme: "system",
+    forcedTheme: undefined,
     resolvedTheme: "light",
     systemTheme: "light",
     setTheme: () => {
@@ -145,6 +151,8 @@ export interface ThemeProviderProps {
   defaultTheme?: Theme;
   /** Whether `"system"` is a valid theme that tracks `prefers-color-scheme`. */
   enableSystem?: boolean;
+  /** Lock the rendered theme and expose read-only state to controls. */
+  forcedTheme?: Theme | undefined;
   /** Suppress CSS transitions during the swap. Default: `true`. */
   disableTransitionOnChange?: boolean;
   /** Storage key under which the preference is persisted. */
@@ -158,17 +166,20 @@ export function ThemeProvider({
   attribute = "class",
   defaultTheme = "system",
   enableSystem = true,
+  forcedTheme,
   disableTransitionOnChange = true,
   storageKey = THEME_STORAGE_KEY,
 }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(() => readStoredTheme(storageKey, defaultTheme));
   const [systemTheme, setSystemTheme] = useState<ResolvedTheme>(() => resolveSystemTheme());
 
+  const effectiveTheme = forcedTheme ?? theme;
   const resolvedTheme: ResolvedTheme =
-    theme === "system" ? (enableSystem ? systemTheme : "light") : theme;
+    effectiveTheme === "system" ? (enableSystem ? systemTheme : "light") : effectiveTheme;
 
   const setTheme = useCallback(
     (next: Theme) => {
+      if (forcedTheme !== undefined) return;
       setThemeState(next);
       try {
         if (next === "system") {
@@ -180,7 +191,7 @@ export function ThemeProvider({
         // localStorage may be disabled — accept the loss
       }
     },
-    [storageKey],
+    [forcedTheme, storageKey],
   );
 
   // Apply the resolved theme to the DOM AND sync the cookie so the next
@@ -218,13 +229,15 @@ export function ThemeProvider({
 
   const value = useMemo<ThemeContextValue>(
     () => ({
+      isProviderBound: true,
       theme,
+      forcedTheme,
       resolvedTheme,
       systemTheme,
       setTheme,
       themes: THEMES,
     }),
-    [theme, resolvedTheme, systemTheme, setTheme],
+    [theme, forcedTheme, resolvedTheme, systemTheme, setTheme],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

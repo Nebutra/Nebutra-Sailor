@@ -1,119 +1,61 @@
 ---
 title: 主题切换器 (ThemeSwitcher)
-description: 精简的胶囊型切换按钮，用于在浅色、深色及系统主题间切换。可集成 next-themes 或任何受控状态。
+description: 绑定 Nebutra 主题 Provider 的 Light / System / Dark 标准选择控件。
 ---
 
-## 演示 (Demo)
+import { ComponentPreview } from "@/components/component-preview";
 
-<ComponentPreview name="theme-switcher-demo"  />
-
+<ComponentPreview name="theme-switcher-demo" />
 
 ## 使用方法 (Usage)
 
 ```tsx
-import { ThemeSwitcher } from "@nebutra/ui";
+import { ThemeProvider } from "@nebutra/tokens";
+import { ThemeSwitcher } from "@nebutra/ui/primitives";
 
-// 非受控模式 (Uncontrolled)
-<ThemeSwitcher defaultValue="system" onChange={(theme) => console.log(theme)} />
+export function AppProviders({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system">
+      {children}
+    </ThemeProvider>
+  );
+}
 
-// 受控模式 (Controlled)
-const [theme, setTheme] = useState("system");
-<ThemeSwitcher value={theme} onChange={setTheme} />
+<ThemeSwitcher />;
 ```
 
 当界面只需要紧凑的浅色/深色二态图标按钮时，使用 `ThemeToggle`。
 
-## 示例 (Examples)
-
-### 配合 next-themes 使用 (With next-themes)
-
-这是最常见的集成模式 —— 直接连接到 `next-themes`：
-
-```tsx
-import { useTheme } from "next-themes";
-import { ThemeSwitcher } from "@nebutra/ui";
-
-function AppThemeSwitcher() {
-  const { theme, setTheme } = useTheme();
-
-  return (
-    <ThemeSwitcher
-      value={theme as "light" | "dark" | "system"}
-      onChange={setTheme}
-    />
-  );
-}
-```
-
-### 独立受控模式 (Standalone Controlled)
-
-```tsx
-const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
-
-<ThemeSwitcher value={theme} onChange={setTheme} />
-```
-
-### 带有默认值的非受控模式 (Uncontrolled with Default)
-
-```tsx
-<ThemeSwitcher defaultValue="dark" />
-```
-
-### 自定义图标 (Custom Icons)
-
-你可以用自定义图标替换默认图标（显示器、太阳、月亮）：
-
-```tsx
-import { Laptop, Sparkles, CloudMoon } from "lucide-react";
-
-<ThemeSwitcher
-  icons={{
-    system: Laptop,
-    light: Sparkles,
-    dark: CloudMoon,
-  }}
-/>
-```
-
-### 自定义无障碍标签 (Custom Accessibility Labels)
-
-```tsx
-<ThemeSwitcher
-  labels={{
-    system: "遵循设备偏好",
-    light: "切换至浅色模式",
-    dark: "切换至深色模式",
-  }}
-/>
-```
-
-### 在导航栏中使用 (In a Navbar)
-
-```tsx
-<nav className="flex items-center justify-between px-6 py-3">
-  <Logo />
-  <div className="flex items-center gap-4">
-    <Links />
-    <ThemeSwitcher value={theme} onChange={setTheme} />
-  </div>
-</nav>
-```
-
 ## 属性 (Props)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `value` | `"light" \| "dark" \| "system"` | — | 受控的主题数值 |
-| `defaultValue` | `"light" \| "dark" \| "system"` | `"system"` | 非受控模式下的初始值 |
-| `onChange` | `(theme: ThemeSwitcherValue) => void` | — | 用户选择主题时触发的回调 |
-| `icons` | `{ system?: ElementType; light?: ElementType; dark?: ElementType }` | Monitor, Sun, Moon | 各模式对应的自定义图标组件 |
-| `labels` | `{ system?: string; light?: string; dark?: string }` | — | 各按钮的无障碍标签 |
-| `className` | `string` | — | 容器的额外 Tailwind 类名 |
+| `size` | `"small" \| "medium"` | `"medium"` | 密集 chrome 中使用 `small`；设置页中使用默认尺寸。 |
+| `disabled` | `boolean` | `false` | 用于只读预览。Provider 设置 `forcedTheme` 时也会自动禁用。 |
+| `name` | `string` | 自动生成 | 原生 radio group 名称。 |
+| `value` | `"system" \| "light" \| "dark"` | provider theme | 兼容受控值，主要用于测试或迁移期。 |
+| `defaultValue` | `"system" \| "light" \| "dark"` | `"system"` | 在没有 `ThemeProvider` 时的 fallback 值。 |
+| `onChange` | `(theme: ThemeSwitcherValue) => void` | — | 兼容回调。Provider 仍然是状态真相源。 |
+| `className` | `string` | — | fieldset 外层额外类名。 |
 
-## 注意事项 (Notes)
+## 最佳实践 (Best Practices)
 
-- **注水安全 (Hydration-safe)**：该组件在服务器端及首次渲染时会渲染一个骨架占位符，以防止 SSR 注水不匹配。实际的主题按钮仅在挂载后显示。
-- 受控模式下（集成 next-themes 或个人状态）请配合使用 `value` + `onChange`。
-- 非受控模式下单独使用 `defaultValue`，此时 ThemeSwitcher 会自行管理状态。
-- 图标会接收用于控制颜色和尺寸 (`h-3.5 w-3.5`) 的 `className` —— 自定义图标组件必须能够接收并处理这些属性。
-走
+ThemeSwitcher 只用于标准 Light / System / Dark 控制。每个 app 放一次，通常在 footer、账户菜单或设置页，不要每个页面重复放。
+
+在 footer、dropdown 等密集 chrome 中传 `size="small"`；设置页使用默认尺寸，让标签有足够呼吸空间。
+
+ThemeSwitcher 读写 `@nebutra/tokens` 的 `ThemeProvider`。该 Provider API 与 `next-themes` 接近，但避开了 React 19 inline script 警告。产品代码不要再把主题状态镜像到本地 React state。
+
+当 Provider 设置 `forcedTheme` 时，控件会自动禁用。手动设置 `disabled` 只用于展示只读预览。
+
+不要用 Switch 或三个图标按钮重造主题选择器。ThemeSwitcher 已处理图标、原生 radio 语义、焦点环和 System 检测。
+
+组件会从主题 key 组合可见标签：`system`、`light`、`dark`。不要逐实例覆写标签，避免翻译和语义漂移。
+
+## 可访问性 (Accessibility)
+
+ThemeSwitcher 渲染原生 `fieldset` 与 radio group。可见 legend 是 “Select a display theme:”，每个选项的可访问名称稳定匹配主题 key。
+
+键盘行为遵循原生 radio：Tab 进入控件，方向键在选项间移动，Space 激活当前选项。
+
+forced 或 disabled 状态下会保留当前选中项，但禁用 radio 输入。

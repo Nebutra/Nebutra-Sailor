@@ -76,6 +76,7 @@
     "@lobehub/ui": "^5.4.0",
     "@nebutra/brand": "workspace:*",
     "@nebutra/icons": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
     "@number-flow/react": "^0.5.5",
     "@paper-design/shaders-react": "^0.0.71",
     "@phosphor-icons/react": "^2.1.10",

@@ -1,179 +1,168 @@
 "use client";
 
 import { DeviceDesktop as Monitor, Moon, Sun } from "@nebutra/icons";
-import { motion } from "framer-motion";
-import type * as React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useTheme } from "@nebutra/tokens";
+import * as React from "react";
+
+import {
+  type ThemeSwitcherSize,
+  themeSwitcherSizes,
+  themeSwitcherTokens,
+} from "../tokens/components/theme-switcher";
 import { cn } from "../utils/cn";
 
-export type ThemeSwitcherValue = "light" | "dark" | "system";
-type ThemeSwitcherIcon = React.ElementType<{ className?: string }>;
+export type ThemeSwitcherValue = "system" | "light" | "dark";
 
-export interface ThemeSwitcherProps {
-  /** Current theme value */
-  value?: ThemeSwitcherValue;
-  /** Default theme value (uncontrolled) */
-  defaultValue?: ThemeSwitcherValue;
-  /** Callback when theme changes */
-  onChange?: (theme: ThemeSwitcherValue) => void;
-  /** Additional class names */
-  className?: string;
-  /** Custom icons for each theme */
-  icons?: {
-    system?: ThemeSwitcherIcon;
-    light?: ThemeSwitcherIcon;
-    dark?: ThemeSwitcherIcon;
-  };
-  /** Labels for accessibility */
-  labels?: {
-    system?: string;
-    light?: string;
-    dark?: string;
-  };
-}
+type ThemeSwitcherCssVar =
+  | "--theme-switcher-height"
+  | "--theme-switcher-padding"
+  | "--theme-switcher-gap"
+  | "--theme-switcher-option-min-width"
+  | "--theme-switcher-option-padding-x"
+  | "--theme-switcher-icon-size"
+  | "--theme-switcher-font-size"
+  | "--theme-switcher-radius"
+  | "--theme-switcher-option-radius"
+  | "--theme-switcher-label-gap"
+  | "--theme-switcher-focus-ring-width"
+  | "--theme-switcher-focus-ring-offset"
+  | "--theme-switcher-duration"
+  | "--theme-switcher-easing";
 
-const DEFAULT_ICONS = {
-  system: Monitor,
-  light: Sun,
-  dark: Moon,
-} satisfies Record<ThemeSwitcherValue, ThemeSwitcherIcon>;
+type ThemeSwitcherCssVars = React.CSSProperties & Record<ThemeSwitcherCssVar, string>;
 
-const DEFAULT_LABELS = {
-  system: "System theme",
-  light: "Light theme",
-  dark: "Dark theme",
+type ThemeSwitcherOption = {
+  icon: React.ComponentType<{ "aria-hidden"?: boolean; className?: string }>;
+  label: ThemeSwitcherValue;
+  value: ThemeSwitcherValue;
 };
 
-/**
- * ThemeSwitcher - Compact theme toggle for light/dark/system modes
- *
- * Can be used standalone or with next-themes.
- *
- * @example Standalone usage
- * ```tsx
- * const [theme, setTheme] = useState<ThemeSwitcherValue>("system");
- * <ThemeSwitcher value={theme} onChange={setTheme} />
- * ```
- *
- * @example With next-themes
- * ```tsx
- * import { useTheme } from "next-themes";
- *
- * function MyThemeSwitcher() {
- *   const { theme, setTheme } = useTheme();
- *   return (
- *     <ThemeSwitcher
- *       value={theme as ThemeSwitcherValue}
- *       onChange={setTheme}
- *     />
- *   );
- * }
- * ```
- */
-export function ThemeSwitcher({
-  value,
-  defaultValue = "system",
-  onChange,
-  className,
-  icons,
-  labels,
-}: ThemeSwitcherProps) {
-  const [internalValue, setInternalValue] = useState<ThemeSwitcherValue>(defaultValue);
-  const [mounted, setMounted] = useState(false);
+const THEME_OPTIONS = [
+  { value: "system", label: "system", icon: Monitor },
+  { value: "light", label: "light", icon: Sun },
+  { value: "dark", label: "dark", icon: Moon },
+] as const satisfies readonly ThemeSwitcherOption[];
 
-  const currentValue = value ?? internalValue;
-
-  const mergedIcons = { ...DEFAULT_ICONS, ...icons };
-  const mergedLabels = { ...DEFAULT_LABELS, ...labels };
-
-  const themes: Array<{
-    key: ThemeSwitcherValue;
-    icon: ThemeSwitcherIcon;
-    label: string;
-  }> = [
-    {
-      key: "system",
-      icon: mergedIcons.system,
-      label: mergedLabels.system,
-    },
-    {
-      key: "light",
-      icon: mergedIcons.light,
-      label: mergedLabels.light,
-    },
-    {
-      key: "dark",
-      icon: mergedIcons.dark,
-      label: mergedLabels.dark,
-    },
-  ];
-
-  const handleThemeClick = useCallback(
-    (themeKey: ThemeSwitcherValue) => {
-      if (value === undefined) {
-        setInternalValue(themeKey);
-      }
-      onChange?.(themeKey);
-    },
-    [value, onChange],
-  );
-
-  // Prevent hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div
-        className={cn(
-          "relative isolate flex h-7 rounded-full bg-background p-1 ring-1 ring-border",
-          className,
-        )}
-      >
-        {themes.map(({ key }) => (
-          <div key={key} className="h-5 w-6 rounded-full" />
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <div
-      className={cn(
-        "relative isolate flex h-7 rounded-full bg-background p-1 ring-1 ring-border",
-        className,
-      )}
-    >
-      {themes.map(({ key, icon: Icon, label }) => {
-        const isActive = currentValue === key;
-
-        return (
-          <button
-            aria-label={label}
-            className="relative h-5 w-6 rounded-full"
-            key={key}
-            onClick={() => handleThemeClick(key)}
-            type="button"
-          >
-            {isActive && (
-              <motion.div
-                className="absolute inset-0 rounded-full bg-secondary shadow-sm"
-                layoutId="theme-switcher-bg"
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              />
-            )}
-            <Icon
-              className={cn(
-                "relative z-10 m-auto h-3.5 w-3.5",
-                isActive ? "text-foreground" : "text-muted-foreground",
-              )}
-            />
-          </button>
-        );
-      })}
-    </div>
-  );
+export interface ThemeSwitcherProps
+  extends Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, "defaultValue" | "onChange"> {
+  /** Controlled compatibility value. Prefer the app-level ThemeProvider state. */
+  value?: ThemeSwitcherValue;
+  /** Initial fallback when rendered outside ThemeProvider. */
+  defaultValue?: ThemeSwitcherValue;
+  /** Compatibility callback for tests or migrations. ThemeProvider remains the source of truth. */
+  onChange?: (theme: ThemeSwitcherValue) => void;
+  /** Read-only preview state. Provider `forcedTheme` also disables the control. */
+  disabled?: boolean;
+  /** Compact size for dense chrome. */
+  size?: ThemeSwitcherSize;
+  /** Form control name when participating in a native form. */
+  name?: string;
 }
+
+function getThemeSwitcherStyle(
+  size: ThemeSwitcherSize,
+  style: React.CSSProperties | undefined,
+): ThemeSwitcherCssVars {
+  const token = themeSwitcherSizes[size];
+
+  return {
+    "--theme-switcher-height": `${token.controlHeight}px`,
+    "--theme-switcher-padding": `${token.padding}px`,
+    "--theme-switcher-gap": `${token.gap}px`,
+    "--theme-switcher-option-min-width": `${token.optionMinWidth}px`,
+    "--theme-switcher-option-padding-x": `${token.optionPaddingX}px`,
+    "--theme-switcher-icon-size": `${token.iconSize}px`,
+    "--theme-switcher-font-size": `${token.fontSize}px`,
+    "--theme-switcher-radius": `${themeSwitcherTokens.radius}px`,
+    "--theme-switcher-option-radius": `${themeSwitcherTokens.optionRadius}px`,
+    "--theme-switcher-label-gap": `${themeSwitcherTokens.labelGap}px`,
+    "--theme-switcher-focus-ring-width": `${themeSwitcherTokens.focusRingWidth}px`,
+    "--theme-switcher-focus-ring-offset": `${themeSwitcherTokens.focusRingOffset}px`,
+    "--theme-switcher-duration": `${themeSwitcherTokens.motion.duration}ms`,
+    "--theme-switcher-easing": themeSwitcherTokens.motion.easing,
+    ...style,
+  };
+}
+
+function isThemeSwitcherValue(value: string | undefined): value is ThemeSwitcherValue {
+  return value === "system" || value === "light" || value === "dark";
+}
+
+export const ThemeSwitcher = React.forwardRef<HTMLFieldSetElement, ThemeSwitcherProps>(
+  (
+    {
+      value,
+      defaultValue = "system",
+      onChange,
+      disabled = false,
+      size = "medium",
+      name,
+      className,
+      style,
+      ...props
+    },
+    ref,
+  ) => {
+    const generatedName = React.useId();
+    const radioName = name ?? generatedName;
+    const { isProviderBound, theme, forcedTheme, setTheme } = useTheme();
+    const [fallbackValue, setFallbackValue] = React.useState<ThemeSwitcherValue>(defaultValue);
+    const providerTheme = isThemeSwitcherValue(theme) ? theme : "system";
+    const selectedTheme = forcedTheme ?? value ?? (isProviderBound ? providerTheme : fallbackValue);
+    const isReadOnly = disabled || forcedTheme !== undefined;
+
+    function handleChange(nextTheme: ThemeSwitcherValue) {
+      if (isReadOnly) return;
+      setFallbackValue(nextTheme);
+      setTheme(nextTheme);
+      onChange?.(nextTheme);
+    }
+
+    return (
+      <fieldset
+        ref={ref}
+        aria-disabled={isReadOnly}
+        className={cn("inline-grid gap-[var(--theme-switcher-label-gap)]", className)}
+        disabled={isReadOnly}
+        style={getThemeSwitcherStyle(size, style)}
+        {...props}
+      >
+        <legend className="text-[length:var(--theme-switcher-font-size)] font-medium text-foreground">
+          Select a display theme:
+        </legend>
+        <div className="inline-flex h-[var(--theme-switcher-height)] items-center gap-[var(--theme-switcher-gap)] rounded-[var(--theme-switcher-radius)] border border-border bg-muted p-[var(--theme-switcher-padding)] text-muted-foreground">
+          {THEME_OPTIONS.map(({ value: optionValue, label, icon: Icon }) => {
+            const checked = selectedTheme === optionValue;
+
+            return (
+              <label
+                key={optionValue}
+                className={cn(
+                  "relative inline-flex h-full min-w-[var(--theme-switcher-option-min-width)] cursor-pointer items-center justify-center gap-[var(--theme-switcher-gap)] rounded-[var(--theme-switcher-option-radius)] px-[var(--theme-switcher-option-padding-x)] text-[length:var(--theme-switcher-font-size)] font-medium transition-[background-color,box-shadow,color,opacity] duration-[var(--theme-switcher-duration)] ease-[var(--theme-switcher-easing)]",
+                  "hover:text-foreground has-[:focus-visible]:ring-[length:var(--theme-switcher-focus-ring-width)] has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-[length:var(--theme-switcher-focus-ring-offset)] has-[:focus-visible]:ring-offset-background",
+                  checked && "bg-background text-foreground shadow-[var(--shadow-xs)]",
+                  isReadOnly && "cursor-not-allowed opacity-60",
+                )}
+              >
+                <input
+                  aria-label={label}
+                  checked={checked}
+                  className="sr-only"
+                  disabled={isReadOnly}
+                  name={radioName}
+                  onChange={() => handleChange(optionValue)}
+                  type="radio"
+                  value={optionValue}
+                />
+                <Icon aria-hidden className="size-[var(--theme-switcher-icon-size)] shrink-0" />
+                <span>{label}</span>
+              </label>
+            );
+          })}
+        </div>
+      </fieldset>
+    );
+  },
+);
 
 ThemeSwitcher.displayName = "ThemeSwitcher";

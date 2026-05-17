@@ -37,6 +37,11 @@ export { type SwitchSize, switchSizes, switchTokens } from "./switch";
 export { tableTokens } from "./table";
 export { type TabsSize, tabsSizes, tabsTokens } from "./tabs";
 export { textareaTokens } from "./textarea";
+export {
+  type ThemeSwitcherSize,
+  themeSwitcherSizes,
+  themeSwitcherTokens,
+} from "./theme-switcher";
 export { type ThemeToggleSize, themeToggleTokens } from "./theme-toggle";
 export {
   type ToggleColor,
