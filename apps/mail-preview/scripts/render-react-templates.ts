@@ -14,8 +14,6 @@ import { REACT_EMAIL_TEMPLATES } from "../../../packages/integrations/email/src/
 
 const distDir = new URL("../dist/", import.meta.url);
 
-await mkdir(distDir, { recursive: true });
-
 const fixtures = {
   welcome: {
     userName: "Ada Lovelace",
@@ -55,10 +53,20 @@ const renderers = [
   { template: REACT_EMAIL_TEMPLATES.receipt, props: fixtures.receipt },
 ];
 
-for (const { template, props } of renderers) {
-  const html = (template.render as (input: typeof props) => string)(props);
-  await writeFile(join(distDir.pathname, template.fileName), html);
-  process.stdout.write(`rendered ${template.fileName}\n`);
+async function main() {
+  await mkdir(distDir, { recursive: true });
+
+  for (const { template, props } of renderers) {
+    const html = (template.render as (input: typeof props) => string)(props);
+    await writeFile(join(distDir.pathname, template.fileName), html);
+    process.stdout.write(`rendered ${template.fileName}\n`);
+  }
+
+  process.stdout.write(`react-email templates: ${renderers.length} rendered\n`);
 }
 
-process.stdout.write(`react-email templates: ${renderers.length} rendered\n`);
+main().catch((error) => {
+  const message = error instanceof Error ? error.message : String(error);
+  process.stderr.write(`mail-preview render failed: ${message}\n`);
+  process.exit(1);
+});

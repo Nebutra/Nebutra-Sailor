@@ -4,30 +4,31 @@ import { EMAIL_TEMPLATE_CATALOG } from "../../../packages/integrations/email/src
 
 const distDir = new URL("../dist/", import.meta.url);
 
-await mkdir(distDir, { recursive: true });
+async function main() {
+  await mkdir(distDir, { recursive: true });
 
-const manifest = await Promise.all(
-  EMAIL_TEMPLATE_CATALOG.map(async (template) => {
-    const previewPath = join(distDir.pathname, template.fileName);
-    const html = await readFile(previewPath, "utf8");
+  const manifest = await Promise.all(
+    EMAIL_TEMPLATE_CATALOG.map(async (template) => {
+      const previewPath = join(distDir.pathname, template.fileName);
+      const html = await readFile(previewPath, "utf8");
 
-    return {
-      ...template,
-      bytes: Buffer.byteLength(html),
-    };
-  }),
-);
+      return {
+        ...template,
+        bytes: Buffer.byteLength(html),
+      };
+    }),
+  );
 
-const links = manifest
-  .map(
-    (template) => `<li>
+  const links = manifest
+    .map(
+      (template) => `<li>
       <a href="./${template.fileName}">${template.label}</a>
       <span>${template.description}</span>
     </li>`,
-  )
-  .join("\n");
+    )
+    .join("\n");
 
-const indexHtml = `<!doctype html>
+  const indexHtml = `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -55,10 +56,17 @@ const indexHtml = `<!doctype html>
 </html>
 `;
 
-await writeFile(
-  join(distDir.pathname, "preview-manifest.json"),
-  `${JSON.stringify(manifest, null, 2)}\n`,
-);
-await writeFile(join(distDir.pathname, "index.html"), indexHtml);
+  await writeFile(
+    join(distDir.pathname, "preview-manifest.json"),
+    `${JSON.stringify(manifest, null, 2)}\n`,
+  );
+  await writeFile(join(distDir.pathname, "index.html"), indexHtml);
 
-process.stdout.write(`mail-preview export wrote ${manifest.length} entries\n`);
+  process.stdout.write(`mail-preview export wrote ${manifest.length} entries\n`);
+}
+
+main().catch((error) => {
+  const message = error instanceof Error ? error.message : String(error);
+  process.stderr.write(`mail-preview export failed: ${message}\n`);
+  process.exit(1);
+});
