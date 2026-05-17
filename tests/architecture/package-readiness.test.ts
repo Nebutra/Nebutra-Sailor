@@ -85,12 +85,13 @@ describe("package readiness governance", () => {
       } else if (status === "foundation") {
         expect(manifest.nebutra?.productionReady, `${manifest.name} productionReady`).toBe(false);
         expect(manifest.nebutra?.gaps?.length ?? 0, `${manifest.name} gaps`).toBeGreaterThan(0);
-        expect(readme, `${manifest.name} README status`).toContain("Status: Foundation");
+        // Match the banner regardless of markdown emphasis (**Foundation**, _Foundation_, etc.).
+        expect(readme, `${manifest.name} README status`).toMatch(/Status:\s*[*_~]*Foundation/i);
         expect(statusDoc, `${manifest.name} docs status`).toContain(`\`${manifest.name}\``);
       } else if (status === "wip") {
         expect(manifest.nebutra?.productionReady, `${manifest.name} productionReady`).toBe(false);
         expect(manifest.nebutra?.gaps?.length ?? 0, `${manifest.name} gaps`).toBeGreaterThan(0);
-        expect(readme, `${manifest.name} README status`).toContain("Status: WIP");
+        expect(readme, `${manifest.name} README status`).toMatch(/Status:\s*[*_~]*WIP/i);
         expect(statusDoc, `${manifest.name} docs status`).toContain(`\`${manifest.name}\``);
       }
     }

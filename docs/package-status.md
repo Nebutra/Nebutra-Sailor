@@ -71,6 +71,7 @@ and missing functionality.
 | `@nebutra/mcp`           | `--mcp`                 | Context server binary is a placeholder stub                      |
 | `@nebutra/saga`          | (consumed directly)     | No durable journal; compensation logic scaffolded only           |
 | `@nebutra/agent-runtime` | (consumed directly)     | Track-B kernel transport + durable-turn queue binding interface-only |
+| `@nebutra/agent-runtime-adapters` | (consumed directly) | Durable rollout-store backend adapter intentionally absent           |
 
 ## Contributing
 
