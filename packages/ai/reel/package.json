@@ -1,0 +1,55 @@
+{
+  "name": "@nebutra/reel",
+  "version": "0.1.0",
+  "description": "Typed node-graph dataflow for generative-media production: versioned IO envelope, multi-transport execution, storyboard pipeline",
+  "private": false,
+  "license": "AGPL-3.0",
+  "type": "module",
+  "nebutra": {
+    "featureId": "reel",
+    "category": "ai",
+    "summary": "Node-graph dataflow + storyboard pipeline for generative media"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./store/memory": "./src/store/memory.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/atelier-canvas": "workspace:*",
+    "@nebutra/logger": "workspace:*"
+  },
+  "peerDependencies": {
+    "@nebutra/agents": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nebutra/agents": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@nebutra/agents": "workspace:*",
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/reel#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/reel"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
