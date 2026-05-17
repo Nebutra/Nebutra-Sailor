@@ -40,19 +40,15 @@ function formatSessionTime(date: Date, locale: string): string {
  *   - Each card links to `/chat?sessionId=X&mode=Y`, restoring full context
  */
 export async function RecentSessions() {
-  let orgId: string | null = null;
-  let userId: string | null = null;
+  const [auth, t, locale] = await Promise.all([
+    getAuth().catch(() => null),
+    getTranslations("dashboard.recentSessions"),
+    getLocale(),
+  ]);
 
-  try {
-    const auth = await getAuth();
-    orgId = auth?.orgId ?? null;
-    userId = auth?.userId ?? null;
-  } catch {
-    return null;
-  }
+  const orgId = auth?.orgId ?? null;
+  const userId = auth?.userId ?? null;
   if (!orgId || !userId) return null;
-
-  const [t, locale] = await Promise.all([getTranslations("dashboard.recentSessions"), getLocale()]);
 
   const sessions = await db.chatSession
     .findMany({
@@ -90,7 +86,7 @@ export async function RecentSessions() {
               href="/chat"
               className="inline-flex items-center gap-1 text-xs font-medium text-blue-11 transition-colors hover:text-blue-12 dark:text-blue-9 dark:hover:text-blue-8"
             >
-              <Plus className="h-3 w-3" />
+              <Plus className="size-3" />
               {t("newChat")}
             </ViewTransitionLink>
           </div>
@@ -115,7 +111,7 @@ export async function RecentSessions() {
                         {meta.label}
                       </span>
                       <span className="text-[10px] text-neutral-10 dark:text-white/40">
-                        {formatSessionTime(new Date(session.lastMessageAt), locale)}
+                        {formatSessionTime(session.lastMessageAt, locale)}
                       </span>
                     </div>
                     <p className="line-clamp-2 text-sm font-medium text-neutral-12 dark:text-white">
