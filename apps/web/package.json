@@ -38,6 +38,7 @@
     "@nebutra/notifications": "workspace:*",
     "@nebutra/onboarding": "workspace:*",
     "@nebutra/queue": "workspace:*",
+    "@nebutra/reel": "workspace:*",
     "@nebutra/theme": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",

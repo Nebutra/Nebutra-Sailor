@@ -359,6 +359,10 @@ export const FLAGS = {
   // Kill switch / enable via KILL_SWITCH_ATELIER_CANVAS env or flag store.
   ATELIER_CANVAS: "atelier-canvas",
 
+  // Reel — node-graph + storyboard generative-media studio (off by default;
+  // opt-in per tenant). Kill switch via KILL_SWITCH_REEL_STUDIO env.
+  REEL_STUDIO: "reel-studio",
+
   // Auth — Wave 2 dev/prod rollout gates.
   // Consumed via `@nebutra/auth/features.ts` (env first, this service second).
   // Names mirror AuthCapabilities in `packages/iam/auth/src/types.ts`.
