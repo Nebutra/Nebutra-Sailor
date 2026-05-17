@@ -67,7 +67,7 @@
     "registry"
   ],
   "author": "Nebutra <hello@nebutra.com> (https://nebutra.com)",
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "homepage": "https://nebutra.com",
   "repository": {
     "type": "git",

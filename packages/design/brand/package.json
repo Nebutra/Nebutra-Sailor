@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Nebutra brand assets, logos, and identity components",
   "private": false,
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "type": "module",
   "sideEffects": false,
   "exports": {

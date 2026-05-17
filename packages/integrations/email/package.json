@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Multi-provider transactional email (Resend, Nodemailer, Console)",
   "private": false,
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "featureId": "email",

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Billing & Monetization infrastructure for Nebutra - Stripe integration, subscriptions, usage, credits",
   "private": false,
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
