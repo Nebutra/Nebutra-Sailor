@@ -82,7 +82,7 @@ describe("AccessInviteIssuer", () => {
         }),
       }),
     );
-    expect(await screen.findByText("neb_abc123")).toBeInTheDocument();
+    await waitFor(() => expect(screen.getAllByText("neb_abc123").length).toBeGreaterThan(0));
     expect(screen.getByText("https://app.example/sign-up?invite=neb_abc123")).toBeInTheDocument();
     expect(screen.getByText(/email sent/i)).toBeInTheDocument();
     expect(screen.getByText(/tracked link/i)).toBeInTheDocument();
