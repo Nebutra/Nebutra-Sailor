@@ -1,0 +1,60 @@
+{
+  "name": "@nebutra/knowledge-rag",
+  "version": "0.1.0",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "active",
+    "productionReady": false,
+    "requires": [
+      "(none) — zero-config: in-memory vector store + deterministic local embedder",
+      "optional: OPENAI_API_KEY or OPENROUTER_API_KEY (real embeddings via @nebutra/agents)",
+      "optional: MEILISEARCH_URL / TYPESENSE_URL / ALGOLIA_APP_ID (keyword leg via @nebutra/search)",
+      "optional: DATABASE_URL (pgvector store)"
+    ],
+    "gaps": [
+      "pgvector store is interface-only (Prisma snippet in README, not migrated)",
+      "reranker interface ships with identity impl only"
+    ]
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@nebutra/agents": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/logger": "workspace:*",
+    "@nebutra/search": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "@vitest/coverage-v8": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/knowledge-rag#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/knowledge-rag"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
