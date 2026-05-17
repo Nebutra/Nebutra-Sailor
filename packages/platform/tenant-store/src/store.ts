@@ -67,6 +67,19 @@ export class InMemoryTenantStore<TRecord extends TenantOwned>
     return [...this.rows.values()].filter((r) => r.tenantId === tenantId);
   }
 
+  /** Delete one record. Returns true if it existed (and belonged to tenant). */
+  async delete(tenantId: string, id: string): Promise<boolean> {
+    const k = key(tenantId, id);
+    const row = this.rows.get(k);
+    if (!row || row.tenantId !== tenantId) return false;
+    return this.rows.delete(k);
+  }
+
+  /** Total record count across all tenants (diagnostics/health only). */
+  size(): number {
+    return this.rows.size;
+  }
+
   /** Test helper. */
   clear(): void {
     this.rows.clear();

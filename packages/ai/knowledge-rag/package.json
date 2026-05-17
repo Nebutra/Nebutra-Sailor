@@ -41,6 +41,7 @@
     "@nebutra/errors": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/search": "workspace:*",
+    "@nebutra/tenant-store": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {

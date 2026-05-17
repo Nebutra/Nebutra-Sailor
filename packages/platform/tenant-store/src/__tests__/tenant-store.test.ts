@@ -96,6 +96,24 @@ describe("InMemoryTenantStore", () => {
     expect(await store.listByTenant("tenantB")).toHaveLength(1);
   });
 
+  it("delete() removes only the targeted record, tenant-checked", async () => {
+    await store.write("tenantA", "1", { id: "1", tenantId: "tenantA", value: 1 });
+    await store.write("tenantA", "2", { id: "2", tenantId: "tenantA", value: 2 });
+    expect(await store.delete("tenantB", "1")).toBe(false); // wrong tenant
+    expect(await store.read("tenantA", "1")).not.toBeNull();
+    expect(await store.delete("tenantA", "1")).toBe(true);
+    expect(await store.read("tenantA", "1")).toBeNull();
+    expect(await store.delete("tenantA", "1")).toBe(false); // already gone
+    expect(await store.listByTenant("tenantA")).toHaveLength(1);
+  });
+
+  it("size() counts records across tenants", async () => {
+    expect(store.size()).toBe(0);
+    await store.write("tenantA", "1", { id: "1", tenantId: "tenantA", value: 1 });
+    await store.write("tenantB", "1", { id: "1", tenantId: "tenantB", value: 1 });
+    expect(store.size()).toBe(2);
+  });
+
   it("clear() empties all tenants", async () => {
     await store.write("t1", "1", { id: "1", tenantId: "t1", value: 1 });
     store.clear();
