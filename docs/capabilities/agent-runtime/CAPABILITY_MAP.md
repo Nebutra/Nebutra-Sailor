@@ -38,10 +38,16 @@
   fail-closed isolator, **plus the agent loop runner** (`runTurn` — the turn
   engine: model→tool→approval→rollout, bounded, single-threaded, resumable
   by replay).
-- **Not yet built (interface/model only):** #10 durable/resumable turn (no
-  queue-backed job), protocol transport (types only, no WS/SSE server), live
-  MCP activation, production tenant-scoped rollout store, real isolation
-  backend (Wasmtime/Firecracker Phase 2).
+- **Done (built + tested, runtime closure):** #10 durable/resumable turn
+  (`createDurableTurn`), protocol dispatcher (`ProtocolDispatcher`,
+  per-scope serialization — WS/SSE socket adapter still out of scope), MCP
+  activation (`activateMcpTools` via injectable catalog port), production
+  tenant-scoped rollout store (`PersistentRolloutStore` via injectable
+  persistence port). 59 package tests green.
+- **Not yet built:** WS/SSE socket adapter for the dispatcher; live wiring
+  into `backends/gateway` agents route; concrete `@nebutra/mcp` /
+  `@nebutra/audit` adapters for the ports; real isolation backend
+  (Wasmtime/Firecracker Phase 2).
 - **Not deeply mapped:** model catalog manager, apply-patch grammar,
   compaction *generation* logic, tool_search discovery *mechanism*, hooks
   pipeline impl, web_search/image-gen handlers.
