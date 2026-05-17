@@ -35,14 +35,14 @@ const app = new Hono()
 
 export default app;`;
 
-const CODE_LINES = CODE_SNIPPET.split("\n").map((line, lineNumber) => ({
-  id: `${lineNumber + 1}:${line}`,
-  line,
-  lineNumber: lineNumber + 1,
-}));
-
 const CODE_TOKEN_REGEX =
   /("(?:[^"\\]|\\.)*"|\/\/.*|\b(?:import|export|const|async|await|return|from|new|default|function|if|else|try|catch)(?=[\s(;,])|\b(?:Hono|z|streamText|openai|authMiddleware)(?=[\s({.])|\b(?:use|post|get|json|toDataStreamResponse)(?=\()|\b(?:model|system|messages|tools|searchDocs|description|parameters|query)(?=:)|\b(?:app|c|req|result|db)\b)/g;
+
+type CodeToken = {
+  className?: string;
+  id: string;
+  value: ReactNode;
+};
 
 function getCodeTokenClassName(token: string) {
   if (token.startsWith("//")) return "text-muted-foreground/50 italic";
@@ -66,31 +66,43 @@ function getCodeTokenClassName(token: string) {
   return "text-[#79c0ff] dark:text-[#79c0ff]";
 }
 
-function renderHighlightedLine(line: string) {
-  const nodes: ReactNode[] = [];
+function tokenizeCodeLine(line: string) {
+  const tokens: CodeToken[] = [];
   let lastIndex = 0;
 
   for (const match of line.matchAll(CODE_TOKEN_REGEX)) {
     const matchIndex = match.index;
     if (matchIndex > lastIndex) {
-      nodes.push(line.slice(lastIndex, matchIndex));
+      tokens.push({
+        id: `${lastIndex}:plain`,
+        value: line.slice(lastIndex, matchIndex),
+      });
     }
 
     const token = match[0];
-    nodes.push(
-      <span key={`${matchIndex}:${token}`} className={getCodeTokenClassName(token)}>
-        {token}
-      </span>,
-    );
+    tokens.push({
+      className: getCodeTokenClassName(token),
+      id: `${matchIndex}:${token}`,
+      value: token,
+    });
     lastIndex = matchIndex + token.length;
   }
 
   if (lastIndex < line.length) {
-    nodes.push(line.slice(lastIndex));
+    tokens.push({
+      id: `${lastIndex}:plain`,
+      value: line.slice(lastIndex),
+    });
   }
 
-  return nodes;
+  return tokens;
 }
+
+const CODE_LINES = CODE_SNIPPET.split("\n").map((line, lineNumber) => ({
+  id: `${lineNumber + 1}:${line}`,
+  lineNumber: lineNumber + 1,
+  tokens: tokenizeCodeLine(line),
+}));
 
 export function HeroMockupWindow() {
   return (
@@ -105,19 +117,19 @@ export function HeroMockupWindow() {
         {/* macOS Title Bar */}
         <div className="relative z-20 flex h-11 w-full items-center justify-between border-b border-border/30 bg-muted/40 px-4 dark:bg-zinc-950/80 backdrop-blur-md">
           <div className="flex items-center gap-2">
-            <div className="h-3 w-3 rounded-full bg-[#ff5f56] shadow-sm" />
-            <div className="h-3 w-3 rounded-full bg-[#ffbd2e] shadow-sm" />
-            <div className="h-3 w-3 rounded-full bg-[#27c93f] shadow-sm" />
+            <div className="size-3 rounded-full bg-[#ff5f56] shadow-sm" />
+            <div className="size-3 rounded-full bg-[#ffbd2e] shadow-sm" />
+            <div className="size-3 rounded-full bg-[#27c93f] shadow-sm" />
           </div>
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[12px] font-semibold tracking-wide text-muted-foreground/70">
-            nebutra-sailor — Code
+          <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 text-[12px] font-semibold tracking-wide text-muted-foreground/70 sm:block">
+            nebutra-sailor: Code
           </div>
           <div className="w-12" /> {/* Spacer */}
         </div>
 
-        <div className="relative z-10 flex flex-col md:flex-row h-[520px] w-full">
+        <div className="relative z-10 flex h-[360px] w-full flex-col sm:h-[440px] md:h-[520px] md:flex-row">
           {/* Left Sidebar — fixed height, vertical scroll inside */}
-          <div className="w-full md:w-[420px] shrink-0 border-b md:border-b-0 md:border-r border-border/30 bg-muted/30 dark:bg-zinc-950/50 flex flex-col overflow-hidden">
+          <div className="hidden w-full shrink-0 flex-col overflow-hidden border-border/30 border-b bg-muted/30 dark:bg-zinc-950/50 md:flex md:w-[420px] md:border-r md:border-b-0">
             <MinimalMonorepoTree />
           </div>
 
@@ -128,7 +140,7 @@ export function HeroMockupWindow() {
               <div className="flex items-center h-full">
                 <div className="flex items-center gap-1.5 px-4 h-full bg-background dark:bg-zinc-950 border-b-2 border-primary text-foreground text-[11px] font-medium">
                   <svg
-                    className="w-3 h-3 text-blue-500 shrink-0"
+                    className="size-3 shrink-0 text-blue-500"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
@@ -138,16 +150,16 @@ export function HeroMockupWindow() {
                   </svg>
                   chat.ts
                 </div>
-                <div className="flex items-center gap-1.5 px-4 h-full text-muted-foreground/50 text-[11px] font-medium hover:text-muted-foreground/80 cursor-default transition-colors">
+                <div className="hidden h-full cursor-default items-center gap-1.5 px-4 font-medium text-[11px] text-muted-foreground/50 transition-colors hover:text-muted-foreground/80 sm:flex">
                   schema.prisma
                 </div>
               </div>
             </div>
             {/* Code content */}
-            <div className="px-4 py-4 overflow-auto h-full relative">
+            <div className="relative h-full overflow-auto p-4">
               <pre className="text-[12.5px] font-mono leading-[1.7] overflow-x-auto h-full text-foreground/80 selection:bg-primary/10">
                 <code>
-                  {CODE_LINES.map(({ id, line, lineNumber }) => (
+                  {CODE_LINES.map(({ id, lineNumber, tokens }) => (
                     <div
                       key={id}
                       className="min-w-fit flex hover:bg-muted/30 transition-colors rounded-sm -mx-1 px-1"
@@ -155,7 +167,17 @@ export function HeroMockupWindow() {
                       <span className="inline-block text-right pr-4 select-none text-[11px] w-7 shrink-0 py-px text-muted-foreground/30">
                         {lineNumber}
                       </span>
-                      <span className="whitespace-pre py-px">{renderHighlightedLine(line)}</span>
+                      <span className="whitespace-pre py-px">
+                        {tokens.map((token) =>
+                          token.className ? (
+                            <span key={token.id} className={token.className}>
+                              {token.value}
+                            </span>
+                          ) : (
+                            <span key={token.id}>{token.value}</span>
+                          ),
+                        )}
+                      </span>
                     </div>
                   ))}
                 </code>

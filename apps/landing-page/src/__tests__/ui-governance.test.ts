@@ -15,6 +15,38 @@ const useCasesSectionSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/use-cases/UseCasesSection.tsx"),
   "utf8",
 );
+const productDemoSectionSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/ProductDemoSection.tsx"),
+  "utf8",
+);
+const heroMockupSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/HeroMockupWindow.tsx"),
+  "utf8",
+);
+const heroInstallPillSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/HeroInstallPill.tsx"),
+  "utf8",
+);
+const mobileDrawerSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/navbar/MobileDrawer.tsx"),
+  "utf8",
+);
+const newsletterFormSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/NewsletterForm.tsx"),
+  "utf8",
+);
+const localeSwitcherSource = readFileSync(
+  path.join(process.cwd(), "src/components/ui/locale-switcher.tsx"),
+  "utf8",
+);
+const themeSwitcherSource = readFileSync(
+  path.join(process.cwd(), "src/components/ui/theme-switcher.tsx"),
+  "utf8",
+);
+const marketingHomePageSource = readFileSync(
+  path.join(process.cwd(), "src/app/[lang]/(marketing)/page.tsx"),
+  "utf8",
+);
 
 describe("landing UI governance", () => {
   it("keeps feature exploration CTAs semantic and localized", () => {
@@ -39,5 +71,33 @@ describe("landing UI governance", () => {
     expect(useCasesSectionSource).toContain("lg:block");
     expect(useCasesSectionSource).toContain("order-1 lg:order-1");
     expect(useCasesSectionSource).not.toContain("scale-[0.55]");
+  });
+
+  it("does not render dense desktop demos in the mobile landing flow", () => {
+    expect(productDemoSectionSource).toContain("hidden lg:col-span-7 lg:block");
+    expect(productDemoSectionSource).not.toContain("h-[450px] md:h-[500px]");
+    expect(heroMockupSource).toContain("h-[360px]");
+    expect(heroMockupSource).toContain("sm:h-[440px]");
+    expect(heroMockupSource).toContain("md:h-[520px]");
+    expect(heroMockupSource).toContain("hidden w-full");
+    expect(heroMockupSource).toContain("md:flex");
+  });
+
+  it("keeps mobile navigation and hero controls at touch-safe target sizes", () => {
+    expect(heroInstallPillSource).toContain("size-11");
+    expect(mobileDrawerSource).toContain("size-11");
+    expect(localeSwitcherSource).toContain("min-h-11");
+    expect(themeSwitcherSource).toContain("size-11");
+    expect(newsletterFormSource).toContain("min-h-11");
+    expect(newsletterFormSource).toContain('type="submit"');
+  });
+
+  it("uses mobile-specific section skeleton heights for lazy landing content", () => {
+    expect(marketingHomePageSource).toContain("--section-skeleton-mobile-min-h");
+    expect(marketingHomePageSource).toContain('mobileMinH="30rem"');
+    expect(marketingHomePageSource).toContain('mobileMinH="34rem"');
+    expect(marketingHomePageSource).not.toContain(
+      '<section aria-hidden className="w-full" style={{ minHeight: minH }} />',
+    );
   });
 });

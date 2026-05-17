@@ -21,7 +21,7 @@ function ThemeOption({
     <button
       type="button"
       className={cn(
-        "relative flex size-10 cursor-pointer items-center justify-center rounded-full transition-all [&_svg]:size-4",
+        "relative flex size-11 cursor-pointer items-center justify-center rounded-full transition-all [&_svg]:size-4",
         isActive
           ? "text-[var(--neutral-12)]"
           : "text-[var(--neutral-9)] hover:text-[var(--neutral-12)]",
@@ -48,7 +48,7 @@ function ThemeSwitcher() {
   const isMounted = useMount();
   const currentTheme = theme ?? "system";
   if (!isMounted) {
-    return <div className="flex h-10 w-[7.5rem]" />;
+    return <div className="flex h-11 w-[8.25rem]" />;
   }
   return (
     <div
