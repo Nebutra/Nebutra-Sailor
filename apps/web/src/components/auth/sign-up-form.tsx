@@ -14,6 +14,7 @@ export function SignUpForm() {
   const searchParams = useSearchParams();
   const accessGateEnabled = process.env.NEXT_PUBLIC_ACCESS_GATE_MODE === "invite";
   const initialInviteCode = searchParams.get("invite") ?? "";
+  const tenantId = searchParams.get("tenantId") ?? undefined;
 
   const [phase, _setPhase] = useState<Phase>("details");
   const [firstName, setFirstName] = useState("");
@@ -48,7 +49,7 @@ export function SignUpForm() {
           name: `${firstName} ${lastName}`.trim(),
           email,
           password,
-          ...(accessGateEnabled ? { accessInviteCode } : {}),
+          ...(accessGateEnabled ? { accessInviteCode, tenantId } : {}),
         }),
       });
 
@@ -187,14 +188,23 @@ export function SignUpForm() {
         <p className="mt-1 text-sm text-[var(--neutral-9)]">Start building today</p>
       </div>
 
-      <OAuthButtons mode="signUp" />
+      {accessGateEnabled ? (
+        <p className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-3 py-2 text-sm text-[var(--neutral-10)]">
+          Social sign-up is disabled while invite-only access is enabled. Use email sign-up with
+          your invite code.
+        </p>
+      ) : (
+        <>
+          <OAuthButtons mode="signUp" />
 
-      <div className="relative">
-        <Separator />
-        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-xs text-[var(--neutral-9)]">
-          Or continue with
-        </span>
-      </div>
+          <div className="relative">
+            <Separator />
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-xs text-[var(--neutral-9)]">
+              Or continue with
+            </span>
+          </div>
+        </>
+      )}
 
       <form onSubmit={handleDetailsSubmit} className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-3">

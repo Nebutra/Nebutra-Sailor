@@ -39,6 +39,7 @@ let authInstance: AuthProvider | null = null;
 interface AccessGateSignupContext {
   email: string;
   plaintextCode: string;
+  tenantId?: string;
 }
 
 async function getAuth(): Promise<AuthProvider> {
@@ -78,6 +79,7 @@ async function readAccessGateSignupContext(
     email?: unknown;
     accessInviteCode?: unknown;
     inviteCode?: unknown;
+    tenantId?: unknown;
   } | null;
   const email = typeof payload?.email === "string" ? payload.email : "";
   const plaintextCode =
@@ -94,7 +96,9 @@ async function readAccessGateSignupContext(
     );
   }
 
-  return { email, plaintextCode };
+  const tenantId = typeof payload?.tenantId === "string" ? payload.tenantId.trim() : "";
+
+  return { email, plaintextCode, ...(tenantId ? { tenantId } : {}) };
 }
 
 async function enforceAccessGatePreflight(
@@ -106,6 +110,7 @@ async function enforceAccessGatePreflight(
     await createAccessGateService().validate({
       plaintextCode: context.plaintextCode,
       email: context.email,
+      ...(context.tenantId ? { tenantId: context.tenantId } : {}),
     });
     return null;
   } catch (error) {
@@ -162,6 +167,7 @@ async function redeemAccessInviteAfterSignup(
       plaintextCode: context.plaintextCode,
       redeemedByUserId: userId,
       email: context.email,
+      ...(context.tenantId ? { tenantId: context.tenantId } : {}),
     });
   } catch (error) {
     logger.error("[auth] access-gate post-signup redemption failed", {

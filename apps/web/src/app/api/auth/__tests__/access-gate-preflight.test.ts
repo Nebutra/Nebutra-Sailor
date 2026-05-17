@@ -88,6 +88,7 @@ describe("/api/auth sign-up access gate preflight", () => {
         email: "ada@example.com",
         password: "pw",
         accessInviteCode: "neb_valid",
+        tenantId: "tenant_1",
       }),
     );
 
@@ -95,12 +96,14 @@ describe("/api/auth sign-up access gate preflight", () => {
     expect(validateMock).toHaveBeenCalledWith({
       plaintextCode: "neb_valid",
       email: "ada@example.com",
+      tenantId: "tenant_1",
     });
     expect(middlewareMock).toHaveBeenCalledTimes(1);
     expect(redeemMock).toHaveBeenCalledWith({
       plaintextCode: "neb_valid",
       redeemedByUserId: "user_new",
       email: "ada@example.com",
+      tenantId: "tenant_1",
     });
   });
 });

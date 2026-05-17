@@ -14,7 +14,7 @@ const pushMock = vi.fn();
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: pushMock }),
-  useSearchParams: () => new URLSearchParams("invite=neb_prefilled"),
+  useSearchParams: () => new URLSearchParams("invite=neb_prefilled&tenantId=tenant_1"),
 }));
 
 vi.mock("next/link", () => ({
@@ -77,6 +77,7 @@ describe("SignUpForm access gate", () => {
 
     expect(screen.getByLabelText("Invite code")).toBeRequired();
     expect(screen.getByLabelText("Invite code")).toHaveValue("neb_prefilled");
+    expect(screen.queryByTestId("oauth-buttons")).not.toBeInTheDocument();
 
     await user.type(screen.getByLabelText("First name"), "Ada");
     await user.type(screen.getByLabelText("Last name"), "Lovelace");
@@ -94,6 +95,7 @@ describe("SignUpForm access gate", () => {
           email: "ada@example.com",
           password: "correct horse battery staple",
           accessInviteCode: "neb_prefilled",
+          tenantId: "tenant_1",
         }),
       }),
     );
