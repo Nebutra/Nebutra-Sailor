@@ -130,13 +130,14 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
 |------|---------|------|
 | `DATABASE_URL` | 是 | PostgreSQL 连接字符串，例如 `postgresql://postgres:postgres@localhost:5432/nebutra` |
 | `REDIS_URL` | 是 | Redis 连接字符串，例如 `redis://localhost:6379` |
-| `CLERK_SECRET_KEY` | 是 | Clerk 后端 API 密钥 — 从 Clerk 控制台获取 |
-| `CLERK_PUBLISHABLE_KEY` | 是 | Clerk 可发布密钥 |
+| `AUTH_PROVIDER` | 否 | 认证提供商：`better-auth`、`nextauth`、`clerk`、`supabase` 或 `dev` |
+| `NEXT_PUBLIC_AUTH_PROVIDER` | 否 | 客户端可见的认证提供商；应与 `AUTH_PROVIDER` 保持一致 |
+| `CLERK_SECRET_KEY` | 使用 Clerk 时 | Clerk 后端 API 密钥 — 从 Clerk 控制台获取 |
+| `CLERK_PUBLISHABLE_KEY` | 使用 Clerk 时 | Clerk 可发布密钥 |
 | `STRIPE_SECRET_KEY` | 是 | Stripe 密钥 |
 | `STRIPE_WEBHOOK_SECRET` | 是 | Stripe Webhook 签名密钥 |
-| `CLERK_WEBHOOK_SECRET` | 是 | Clerk Webhook 签名密钥 |
+| `CLERK_WEBHOOK_SECRET` | 使用 Clerk Webhook 时 | Clerk Webhook 签名密钥 |
 | `CLICKHOUSE_URL` | 是 | ClickHouse HTTP 接口 URL |
-| `AUTH_PROVIDER` | 否 | `clerk`（默认）或 `better-auth` |
 | `QUEUE_PROVIDER` | 否 | `qstash`、`bullmq` 或 `memory`（自动检测） |
 | `PERMISSIONS_PROVIDER` | 否 | `casl`（默认）或 `openfga` |
 
@@ -144,8 +145,14 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
 
 | 变量 | 是否必填 | 说明 |
 |------|---------|------|
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | 是 | Clerk 可发布密钥 |
-| `CLERK_SECRET_KEY` | 是 | Clerk 后端 API 密钥 |
+| `AUTH_PROVIDER` | 否 | 服务端路由选择的认证提供商 |
+| `NEXT_PUBLIC_AUTH_PROVIDER` | 否 | 客户端代码和 Landing One Tap 选择的认证提供商 |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | 使用 Clerk 时 | Clerk 可发布密钥 |
+| `CLERK_SECRET_KEY` | 使用 Clerk 时 | Clerk 后端 API 密钥 |
+| `BETTER_AUTH_SECRET` | 使用 Better Auth 时 | Better Auth 自托管签名密钥 |
+| `AUTH_SECRET` | 使用 NextAuth 时 | Auth.js / NextAuth 签名密钥 |
+| `GOOGLE_CLIENT_ID` | 使用 Google OAuth 时 | Google OAuth Web Client ID |
+| `GOOGLE_CLIENT_SECRET` | 使用 Google OAuth 时 | Google OAuth Web Client Secret |
 | `NEXT_PUBLIC_API_URL` | 是 | API 网关的基础 URL，例如 `http://localhost:3001` |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | 是 | 客户端计费所用的 Stripe 可发布密钥 |
 | `DATABASE_URL` | 是 | PostgreSQL 连接字符串（用于 Server Actions） |
@@ -156,6 +163,9 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
 |------|---------|------|
 | `NEXT_PUBLIC_SANITY_PROJECT_ID` | 是 | Sanity 项目 ID |
 | `NEXT_PUBLIC_SANITY_DATASET` | 是 | Sanity 数据集名称，例如 `production` |
+| `NEXT_PUBLIC_AUTH_PROVIDER` | 否 | 用于选择 Landing One Tap 行为的认证提供商 |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | 启用 Better Auth 或 NextAuth One Tap 时 | 公开 Google OAuth Web Client ID |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | 启用 Clerk One Tap 时 | Clerk 可发布密钥 |
 | `SANITY_API_TOKEN` | 否 | Sanity 读取 Token（草稿预览时需要） |
 
 <Note>

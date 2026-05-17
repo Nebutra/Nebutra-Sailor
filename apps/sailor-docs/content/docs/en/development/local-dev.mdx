@@ -130,13 +130,14 @@ Make sure the following are installed before you begin:
 |----------|----------|-------------|
 | `DATABASE_URL` | Yes | PostgreSQL connection string, e.g. `postgresql://postgres:postgres@localhost:5432/nebutra` |
 | `REDIS_URL` | Yes | Redis connection string, e.g. `redis://localhost:6379` |
-| `CLERK_SECRET_KEY` | Yes | Clerk backend API key — from the Clerk dashboard |
-| `CLERK_PUBLISHABLE_KEY` | Yes | Clerk publishable key |
+| `AUTH_PROVIDER` | No | Auth provider: `better-auth`, `nextauth`, `clerk`, `supabase`, or `dev` |
+| `NEXT_PUBLIC_AUTH_PROVIDER` | No | Client-visible auth provider; keep aligned with `AUTH_PROVIDER` |
+| `CLERK_SECRET_KEY` | If using Clerk | Clerk backend API key — from the Clerk dashboard |
+| `CLERK_PUBLISHABLE_KEY` | If using Clerk | Clerk publishable key |
 | `STRIPE_SECRET_KEY` | Yes | Stripe secret key |
 | `STRIPE_WEBHOOK_SECRET` | Yes | Stripe webhook signing secret |
-| `CLERK_WEBHOOK_SECRET` | Yes | Clerk webhook signing secret |
+| `CLERK_WEBHOOK_SECRET` | If using Clerk webhooks | Clerk webhook signing secret |
 | `CLICKHOUSE_URL` | Yes | ClickHouse HTTP interface URL |
-| `AUTH_PROVIDER` | No | `clerk` (default) or `better-auth` |
 | `QUEUE_PROVIDER` | No | `qstash`, `bullmq`, or `memory` (auto-detected) |
 | `PERMISSIONS_PROVIDER` | No | `casl` (default) or `openfga` |
 
@@ -144,8 +145,14 @@ Make sure the following are installed before you begin:
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Yes | Clerk publishable key |
-| `CLERK_SECRET_KEY` | Yes | Clerk backend API key |
+| `AUTH_PROVIDER` | No | Auth provider selected for server routes |
+| `NEXT_PUBLIC_AUTH_PROVIDER` | No | Auth provider selected for client code and landing One Tap |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | If using Clerk | Clerk publishable key |
+| `CLERK_SECRET_KEY` | If using Clerk | Clerk backend API key |
+| `BETTER_AUTH_SECRET` | If using Better Auth | Self-hosted Better Auth signing secret |
+| `AUTH_SECRET` | If using NextAuth | Auth.js / NextAuth signing secret |
+| `GOOGLE_CLIENT_ID` | If using Google OAuth | Google OAuth web client id |
+| `GOOGLE_CLIENT_SECRET` | If using Google OAuth | Google OAuth web client secret |
 | `NEXT_PUBLIC_API_URL` | Yes | Base URL of the API gateway, e.g. `http://localhost:3001` |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Yes | Stripe publishable key for client-side billing |
 | `DATABASE_URL` | Yes | PostgreSQL connection string (for Server Actions) |
@@ -156,6 +163,9 @@ Make sure the following are installed before you begin:
 |----------|----------|-------------|
 | `NEXT_PUBLIC_SANITY_PROJECT_ID` | Yes | Sanity project ID |
 | `NEXT_PUBLIC_SANITY_DATASET` | Yes | Sanity dataset name, e.g. `production` |
+| `NEXT_PUBLIC_AUTH_PROVIDER` | No | Auth provider used to choose landing One Tap behavior |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | If Better Auth or NextAuth One Tap is enabled | Public Google OAuth web client id |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | If Clerk One Tap is enabled | Clerk publishable key |
 | `SANITY_API_TOKEN` | No | Sanity read token (required for draft previews) |
 
 <Note>
