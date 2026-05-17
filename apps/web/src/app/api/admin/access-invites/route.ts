@@ -1,5 +1,6 @@
 import { createAccessGate, createPrismaAccessInviteStore } from "@nebutra/access-gate";
 import { auditLogger } from "@nebutra/audit";
+import { sendInvitationEmail } from "@nebutra/email";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -34,6 +35,33 @@ function buildInviteUrl(request: Request, code: string): string {
   const url = new URL("/sign-up", baseUrl);
   url.searchParams.set("invite", code);
   return url.toString();
+}
+
+async function sendInviteEmailIfRequested(input: {
+  to?: string;
+  inviteUrl: string;
+  expiresAt?: Date;
+}): Promise<"sent" | "skipped" | "failed"> {
+  if (!input.to) return "skipped";
+
+  try {
+    await sendInvitationEmail({
+      to: input.to,
+      inviterName: "Nebutra Admin",
+      organizationName: "Nebutra",
+      role: "Early access",
+      acceptUrl: input.inviteUrl,
+      expiresAt: input.expiresAt?.toISOString() ?? "No expiry",
+      brandName: "Nebutra",
+    });
+    return "sent";
+  } catch (error) {
+    logger.error("[admin.access-invites] Failed to send access invite email", {
+      to: input.to,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return "failed";
+  }
 }
 
 export async function POST(request: Request) {
@@ -86,17 +114,29 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({
-      invites: issued.map(({ plaintextCode, invite }) => ({
-        code: plaintextCode,
-        inviteUrl: buildInviteUrl(request, plaintextCode),
-        id: invite.id,
-        prefix: invite.codePrefix,
-        scope: invite.scope,
-        tenantId: invite.tenantId ?? null,
-        expiresAt: invite.expiresAt?.toISOString() ?? null,
-      })),
-    });
+    const invites = await Promise.all(
+      issued.map(async ({ plaintextCode, invite }) => {
+        const inviteUrl = buildInviteUrl(request, plaintextCode);
+        const emailStatus = await sendInviteEmailIfRequested({
+          to: parsed.data.issuedToEmail,
+          inviteUrl,
+          expiresAt: invite.expiresAt,
+        });
+
+        return {
+          code: plaintextCode,
+          emailStatus,
+          inviteUrl,
+          id: invite.id,
+          prefix: invite.codePrefix,
+          scope: invite.scope,
+          tenantId: invite.tenantId ?? null,
+          expiresAt: invite.expiresAt?.toISOString() ?? null,
+        };
+      }),
+    );
+
+    return NextResponse.json({ invites });
   } catch (error) {
     logger.error("[admin.access-invites] Failed to issue access invites", {
       error: error instanceof Error ? error.message : String(error),

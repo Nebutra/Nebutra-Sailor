@@ -14,6 +14,7 @@ const issueBatchMock = vi.fn(async () => [
   },
 ]);
 const auditLogMock = vi.fn(async () => undefined);
+const sendInvitationEmailMock = vi.fn(async () => ({ id: "email_1", provider: "console" }));
 
 vi.mock("@/lib/auth", () => ({
   getAuth: getAuthMock,
@@ -30,6 +31,10 @@ vi.mock("@nebutra/access-gate", () => ({
 
 vi.mock("@nebutra/audit", () => ({
   auditLogger: vi.fn(() => ({ log: auditLogMock })),
+}));
+
+vi.mock("@nebutra/email", () => ({
+  sendInvitationEmail: sendInvitationEmailMock,
 }));
 
 vi.mock("@nebutra/logger", () => ({
@@ -54,6 +59,7 @@ describe("POST /api/admin/access-invites", () => {
     getAuthMock.mockReset();
     issueBatchMock.mockClear();
     auditLogMock.mockClear();
+    sendInvitationEmailMock.mockClear();
   });
 
   it("requires admin manage-users permission", async () => {
@@ -102,12 +108,20 @@ describe("POST /api/admin/access-invites", () => {
       invites: [
         {
           code: "neb_testcode",
+          emailStatus: "sent",
           id: "aic_1",
           inviteUrl: "https://app.example/sign-up?invite=neb_testcode",
           prefix: "neb_testcode",
         },
       ],
     });
+    expect(sendInvitationEmailMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: "ada@example.com",
+        acceptUrl: "https://app.example/sign-up?invite=neb_testcode",
+        role: "Early access",
+      }),
+    );
     expect(auditLogMock).toHaveBeenCalledWith(
       expect.objectContaining({
         action: "admin.access_invite.issued",
