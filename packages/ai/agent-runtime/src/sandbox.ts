@@ -62,6 +62,46 @@ export const REFUSING_SANDBOX: ExternalSandbox = {
   },
 };
 
+export class SandboxDelegationError extends Error {
+  constructor(
+    message: string,
+    readonly status: number,
+  ) {
+    super(message);
+    this.name = "SandboxDelegationError";
+  }
+}
+
+/**
+ * The concrete Track-B coupling: delegate execution over HTTP to the decoupled
+ * Rust isolator (`backends/rust/sandbox`, `POST /api/v1/sandbox/exec`). The
+ * isolator is fail-closed; a non-2xx (e.g. 403 refusal) is surfaced as an
+ * error and never coerced into a fabricated result.
+ */
+export function createHttpSandbox(
+  baseUrl: string,
+  fetchImpl: typeof fetch = fetch,
+): ExternalSandbox {
+  const endpoint = `${baseUrl.replace(/\/$/, "")}/api/v1/sandbox/exec`;
+  return {
+    async exec(request: SandboxExecRequest): Promise<SandboxExecResult> {
+      const response = await fetchImpl(endpoint, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(request),
+      });
+      if (!response.ok) {
+        const detail = await response.text().catch(() => "");
+        throw new SandboxDelegationError(
+          `Isolator refused execution (${response.status}): ${detail}`,
+          response.status,
+        );
+      }
+      return (await response.json()) as SandboxExecResult;
+    },
+  };
+}
+
 /** Guard: reject the most dangerous posture unless explicitly opted in. */
 export function assertSafePosture(policy: CapabilityPolicy, allowDanger = false): void {
   if (policy.kind === "danger_full_access" && !allowDanger) {

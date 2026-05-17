@@ -30,13 +30,26 @@
 | 10 | Durable / resumable turn | **WRAP** | `@nebutra/queue` (`defineQueueJob`) | durable-turn job + state store on top of replay model |
 | 11 | **Sandboxed untrusted-code execution** | **PORT** | *nothing exists* | the only true greenfield piece — see governance fork below |
 
-## Track B — decoupled (not this repo)
+## Track B — decoupled, in `backends/rust/sandbox/`
 
-OS sandbox enforcers (Seatbelt/Landlock/bwrap/Windows token), local process
-supervisor, POSIX-append history, embedded SQLite, local keychain — all
-single-host/single-tenant. These stay in the optional Rust kernel sidecar.
-Track A speaks to Track B over the WRAP'd protocol (item #5); the
-`ExternalSandbox` posture the source already anticipates is the seam.
+Correction to an earlier overstatement: Track B is **not** a separate repo.
+`backends/` is Sailor's documented polyglot split (`backends/README.md`:
+"Rust | Safety-critical isolation … | `rust/sandbox/`", decision rule
+"Touches user code execution or encryption? → Rust"). The TS-by-default ADR
+explicitly carves out specialized cases. So the Track-B isolator lives at
+`backends/rust/sandbox/` — same repo, protocol-decoupled, no new ADR needed,
+no app-infra touched (it is an isolated service like `backends/python/ai`).
+
+Decoupling = the protocol/HTTP contract, **not** a repo boundary. Track A
+delegates over `POST /api/v1/sandbox/exec` via `createHttpSandbox()` in
+`agent-runtime/sandbox.ts`; the Rust service mirrors the
+`SandboxExecRequest`/`SandboxExecResult`/`CapabilityPolicy` shapes.
+
+The isolator is **fail-closed**: until a real backend (Wasmtime Phase 2 /
+Firecracker Phase 3) is wired it refuses every exec — a sandbox that does not
+isolate is more dangerous than none, so it is never faked. OS-specific
+enforcers from the source (Seatbelt/Landlock/bwrap/Windows token) are not
+ported; they are replaced by this service's future Wasm/microVM runner.
 
 ---
 

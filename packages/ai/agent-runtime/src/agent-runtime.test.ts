@@ -9,7 +9,13 @@ import {
   replay,
   sanitizeForPersist,
 } from "./rollout.js";
-import { assertSafePosture, NoExecutorConfiguredError, REFUSING_SANDBOX } from "./sandbox.js";
+import {
+  assertSafePosture,
+  createHttpSandbox,
+  NoExecutorConfiguredError,
+  REFUSING_SANDBOX,
+  SandboxDelegationError,
+} from "./sandbox.js";
 import { ToolRegistry } from "./tools.js";
 
 const baseConfig: TurnConfig = {
@@ -135,6 +141,21 @@ describe("sandbox", () => {
   it("refuses danger_full_access without explicit opt-in", () => {
     expect(() => assertSafePosture({ kind: "danger_full_access" })).toThrow();
     expect(() => assertSafePosture({ kind: "danger_full_access" }, true)).not.toThrow();
+  });
+  it("surfaces a fail-closed isolator refusal as an error, never a fake result", async () => {
+    const fakeFetch = (async () =>
+      new Response(JSON.stringify({ error: "execution_refused" }), {
+        status: 403,
+      })) as unknown as typeof fetch;
+    const sandbox = createHttpSandbox("http://isolator:8020", fakeFetch);
+    await expect(
+      sandbox.exec({
+        tenantId: "org_a",
+        threadId: "th_1",
+        command: "rm -rf /",
+        capabilityPolicy: DEFAULT_CAPABILITY_POLICY,
+      }),
+    ).rejects.toBeInstanceOf(SandboxDelegationError);
   });
 });
 
