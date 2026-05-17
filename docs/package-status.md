@@ -70,6 +70,7 @@ and missing functionality.
 | `@nebutra/legal`         | (consumed directly)     | Consent persistence + document versioning pending                |
 | `@nebutra/mcp`           | `--mcp`                 | Context server binary is a placeholder stub                      |
 | `@nebutra/saga`          | (consumed directly)     | No durable journal; compensation logic scaffolded only           |
+| `@nebutra/agent-runtime` | (consumed directly)     | Track-B kernel transport + durable-turn queue binding interface-only |
 
 ## Contributing
 

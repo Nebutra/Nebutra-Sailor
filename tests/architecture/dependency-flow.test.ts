@@ -33,6 +33,9 @@ const EXCLUDED_PACKAGES = new Set([
   "@nebutra/license",
   "@nebutra/agents",
   "@nebutra/notifications",
+  "@nebutra/analytics",
+  "@nebutra/agent-runtime",
+  "@nebutra/atelier-canvas",
 ]);
 
 interface DependencyRule {

@@ -1,6 +1,6 @@
 # @nebutra/agent-runtime
 
-> Status: **WIP** — not yet integrated into a production app. Track-B kernel
+> Status: WIP — not yet integrated into a production app. Track-B kernel
 > transport and durable-turn queue binding are interface-only.
 
 Multi-tenant **agent-runtime grammar**. A faithful re-expression of a terminal
