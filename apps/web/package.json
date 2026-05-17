@@ -40,7 +40,6 @@
     "@nebutra/onboarding": "workspace:*",
     "@nebutra/queue": "workspace:*",
     "@nebutra/reel": "workspace:*",
-    "@nebutra/reel-canvas": "workspace:*",
     "@nebutra/theme": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",

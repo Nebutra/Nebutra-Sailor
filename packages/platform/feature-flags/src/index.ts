@@ -368,7 +368,7 @@ export const FLAGS = {
 
   // Canvas — interactive node-graph editor over @nebutra/reel (off by
   // default; opt-in per tenant). WIP capability absorption (codename
-  // `canvas`): reel-canvas-ui + knowledge-rag + collab.
+  // `canvas`): canvas-ui + knowledge-rag + collab.
   CANVAS_DEMO: "canvas-demo",
 
   // Cinema — agentic film-production pipeline (off by default; opt-in per
