@@ -32,11 +32,16 @@ export const NEBUTRA_PACKAGE_STATUS: Record<string, PackageStatus> = {
   // WIP — actively under development, do not use in production
   audit: "wip",
   "feature-flags": "wip",
+  "agent-runtime": "wip",
+  "browser-control": "wip",
   captcha: "wip",
   "code-index": "wip",
+  "code-execution": "wip",
+  "document-pipeline": "wip",
   "event-bus": "wip",
   "llm-gateway": "wip",
   mcp: "wip",
+  "play-loader": "wip",
   "provider-registry": "wip",
   saga: "wip",
 };

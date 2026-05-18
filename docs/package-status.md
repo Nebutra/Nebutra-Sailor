@@ -54,7 +54,7 @@ you contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (11)
+## WIP packages (15)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -72,7 +72,11 @@ and missing functionality.
 | `@nebutra/mcp`           | `--mcp`                 | Context server binary is a placeholder stub                      |
 | `@nebutra/saga`          | (consumed directly)     | No durable journal; compensation logic scaffolded only           |
 | `@nebutra/agent-runtime` | (consumed directly)     | Track-B kernel transport + durable-turn queue binding interface-only; adapters live under subpath exports |
+| `@nebutra/browser-control` | (consumed directly)   | Execution capability only; mutating browser actions require a configured browser sidecar and injected explorer |
+| `@nebutra/code-execution` | (consumed directly)    | Execution capability only; notebook kernels, remote providers, and approval UI handoff are adapter-gated |
+| `@nebutra/document-pipeline` | (consumed directly) | Execution capability only; complex parsing/OCR sidecars and durable async ingestion are not production-backed |
 | `@nebutra/llm-gateway`   | (consumed directly)     | Local experiment; not wired to production API gateway auth, tenant metering, vault-backed key pool, or durable usage ledger |
+| `@nebutra/play-loader`   | (consumed directly)     | Declarative play loader; runner delegates, remote install, and migration APIs are interface-only |
 | `@nebutra/provider-registry` | (consumed directly) | Local provider trait; not the canonical runtime provider registry |
 
 ## Contributing

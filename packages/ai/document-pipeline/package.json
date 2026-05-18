@@ -6,6 +6,18 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "execution-capability",
+    "requires": [
+      "@nebutra/content-store for file-truth indexing",
+      "@nebutra/sandbox-runtime for parser sidecars"
+    ],
+    "gaps": [
+      "Complex PDF, office, and OCR parsing require a configured parser sidecar",
+      "Embedding is delegated to content-store/model ports rather than owned here",
+      "Async ingestion jobs are not yet backed by a durable queue"
+    ],
     "featureId": "document-pipeline",
     "category": "ai",
     "summary": "Parser router, metadata-preserving chunks, content-store ingest, doctor, and debug tools"

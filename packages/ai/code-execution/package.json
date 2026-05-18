@@ -6,6 +6,18 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "execution-capability",
+    "requires": [
+      "@nebutra/sandbox-runtime for shell and git execution",
+      "@nebutra/event-log for standalone action audit"
+    ],
+    "gaps": [
+      "Notebook kernel execution is adapter-gated",
+      "Remote workspace providers depend on sandbox-runtime configuration",
+      "Approval UI is surfaced as observations; GUI handoff is not wired here"
+    ],
     "featureId": "code-execution",
     "category": "ai",
     "summary": "Shell, read, edit-by-diff, policy, replay, doctor, and debug tools"

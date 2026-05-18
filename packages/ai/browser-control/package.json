@@ -6,6 +6,18 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "execution-capability",
+    "requires": [
+      "@nebutra/sandbox-runtime for isolated browser sidecars",
+      "Tenant-scoped recorder/profile storage"
+    ],
+    "gaps": [
+      "Mutating browser actions require a configured browser sidecar",
+      "First-run exploratory executor is injected, not bundled",
+      "Profile persistence is metadata-only until content-store cookie vault wiring lands"
+    ],
     "featureId": "browser-control",
     "category": "ai",
     "summary": "Browser session trait, first-run recording, replay cache, doctor, and debug tools"
