@@ -12,5 +12,6 @@ export default defineConfig({
     "@nebutra/errors",
     "@nebutra/generation-context",
     "@nebutra/image-pipeline",
+    "@nebutra/reel/storyboard",
   ],
 });

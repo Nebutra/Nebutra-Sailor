@@ -386,4 +386,27 @@ describe("AI package architecture governance", () => {
 
     expect(violations).toEqual([]);
   });
+
+  it("keeps media storyboard plan ownership in @nebutra/reel/storyboard", () => {
+    const reel = byName.get("@nebutra/reel");
+    const videoPipeline = byName.get("@nebutra/video-pipeline");
+    expect(reel, "@nebutra/reel").toBeDefined();
+    expect(videoPipeline, "@nebutra/video-pipeline").toBeDefined();
+    if (!reel || !videoPipeline) return;
+
+    expect(reel.manifest.nebutra?.surface).toBe("media-graph");
+    expect(videoPipeline.manifest.dependencies?.["@nebutra/reel"]).toBe("workspace:*");
+
+    const reelStoryboardSource = readFileSync(
+      join(reel.dir, "src", "storyboard", "shot.ts"),
+      "utf8",
+    );
+    expect(reelStoryboardSource).toMatch(/export\s+interface\s+StoryboardScene\b/);
+    expect(reelStoryboardSource).toMatch(/export\s+interface\s+StoryboardPlan\b/);
+
+    const videoSource = readFileSync(join(videoPipeline.dir, "src", "index.ts"), "utf8");
+    expect(videoSource).toContain("@nebutra/reel/storyboard");
+    expect(videoSource).not.toMatch(/export\s+interface\s+StoryboardScene\b/);
+    expect(videoSource).not.toMatch(/export\s+interface\s+Storyboard\b/);
+  });
 });

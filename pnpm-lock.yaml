@@ -2010,6 +2010,9 @@ importers:
       '@nebutra/image-pipeline':
         specifier: workspace:*
         version: link:../image-pipeline
+      '@nebutra/reel':
+        specifier: workspace:*
+        version: link:../reel
     devDependencies:
       '@types/node':
         specifier: 'catalog:'

@@ -8,29 +8,18 @@ import {
   requireBrandContext,
   summarizeBrandContext,
 } from "@nebutra/generation-context";
+import {
+  type StoryboardPlan,
+  type StoryboardScene,
+  storyboardTotalDuration,
+} from "@nebutra/reel/storyboard";
 
 export type VideoIntent =
   | { type: "brand-film"; durationS: number; theme: string }
   | { type: "turntable"; durationS: number; subject: string }
   | { type: "clip"; durationS: number; prompt: string };
 
-export interface StoryboardScene {
-  readonly id: string;
-  readonly durationS: number;
-  readonly prompt: string;
-  readonly transition: "cut" | "fade" | "match";
-  readonly musicCue?: string;
-  readonly voiceCue?: string;
-}
-
-export interface Storyboard {
-  readonly id: string;
-  readonly tenantId: string;
-  readonly brandId: string;
-  readonly intent: VideoIntent;
-  readonly scenes: readonly StoryboardScene[];
-  readonly totalDurationS: number;
-}
+export type Storyboard = StoryboardPlan<VideoIntent>;
 
 export interface VideoAsset extends GeneratedAsset {
   readonly kind: "video";
@@ -77,10 +66,22 @@ export class VideoPipeline {
     const baseDuration = Math.max(1, Math.floor(intent.durationS / count));
     const scenes = Array.from({ length: count }, (_, index): StoryboardScene => {
       const sceneNumber = index + 1;
+      const durationS =
+        index === count - 1 ? intent.durationS - baseDuration * index : baseDuration;
+      const prompt = `${brand.name} ${intent.type} scene ${sceneNumber}: ${summarizeBrandContext(brand)}`;
       return {
         id: `scene_${sceneNumber}`,
-        durationS: index === count - 1 ? intent.durationS - baseDuration * index : baseDuration,
-        prompt: `${brand.name} ${intent.type} scene ${sceneNumber}: ${summarizeBrandContext(brand)}`,
+        sceneIndex: sceneNumber,
+        prompt,
+        description: prompt,
+        duration: durationS,
+        durationS,
+        status: "draft",
+        outputEnabled: true,
+        selectedImageIndex: -1,
+        outputHistory: [],
+        outputHistoryCursor: -1,
+        referenceImages: brand.referenceImages.map((reference) => reference.path),
         transition: index === 0 ? "cut" : "fade",
         musicCue: brand.toneKeywords.join(", "),
         voiceCue: sceneNumber === 1 ? "introduce the product promise" : "advance the story",
@@ -92,7 +93,7 @@ export class VideoPipeline {
       brandId: brand.brandId,
       intent,
       scenes,
-      totalDurationS: scenes.reduce((sum, scene) => sum + scene.durationS, 0),
+      totalDurationS: storyboardTotalDuration(scenes),
     };
   }
 

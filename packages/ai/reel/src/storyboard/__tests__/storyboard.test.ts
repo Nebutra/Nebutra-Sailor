@@ -14,6 +14,7 @@ import {
   pushOutputHistory,
   type Shot,
   splitScriptIntoShots,
+  storyboardTotalDuration,
 } from "../index";
 
 describe("shot identity", () => {
@@ -65,6 +66,12 @@ describe("output-history ring", () => {
     expect(shot.outputHistory).toHaveLength(MAX_STORYBOARD_OUTPUT_HISTORY);
     expect(shot.outputHistory.at(-1)).toBe("url-24");
     expect(shot.outputHistoryCursor).toBe(MAX_STORYBOARD_OUTPUT_HISTORY - 1);
+  });
+});
+
+describe("storyboard plan helpers", () => {
+  it("sums scene durations from the shared storyboard primitive", () => {
+    expect(storyboardTotalDuration([{ durationS: 2 }, { durationS: 3.5 }])).toBe(5.5);
   });
 });
 

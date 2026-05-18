@@ -39,7 +39,10 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 5. Capability debug storage, CLI command dispatch, and suggestion-bearing base
    errors belong to `@nebutra/capability-kit`; do not hand-roll debug JSONL
    helpers inside individual capability packages.
-6. Legacy experiments stay WIP and blocked from new production consumers until
+6. Media graph facts belong to `@nebutra/reel` subpaths. Video/image/audio
+   pipelines may render or adapt media, but shared storyboard shot/scene/plan
+   types must come from `@nebutra/reel/storyboard`.
+7. Legacy experiments stay WIP and blocked from new production consumers until
    they are either retired or promoted through a separate RFC.
 
 ## 2026 AI SaaS Defaults
@@ -84,6 +87,8 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 - Generation capability packages must not import `@nebutra/agent-runtime`,
   `@nebutra/agents`, `ai`, `@nebutra/llm-gateway`, or
   `@nebutra/provider-registry` from production source.
+- `@nebutra/video-pipeline` must consume storyboard plan primitives from
+  `@nebutra/reel/storyboard`; it should not define a parallel Storyboard model.
 - Product capability packages should not own billing deduction, gateway auth, or
   provider-key selection.
 - Examples may import legacy packages to demonstrate migration, but production

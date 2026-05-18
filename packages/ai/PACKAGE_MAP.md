@@ -19,7 +19,7 @@ the machine-readable source of truth; this file is the human map.
 | `support-contract` | `@nebutra/generation-context` | Shared typed contracts used by capability packages. Must stay dependency-light. |
 | `persistence` | `@nebutra/content-store`, `@nebutra/event-log` | File truth, indexing, immutable event history, rollback, and branch state. |
 | `semantic-index` | `@nebutra/code-index`, `@nebutra/knowledge-rag` | Retrieval/indexing grammar over injected embedding/vector/search ports. |
-| `media-graph` | `@nebutra/reel` | Typed media graph, storyboard graph, IO envelope, and graph persistence. |
+| `media-graph` | `@nebutra/reel` | Typed media graph, storyboard shot/scene/plan primitives, IO envelope, and graph persistence. |
 | `creative-surface` | `@nebutra/atelier-canvas` | Canvas/scene editing surface over lower graph/storage primitives. |
 | `product-orchestration` | `@nebutra/cinema`, `@nebutra/play-loader` | Declarative product workflows over lower runtime/tool/media surfaces. |
 | `gateway-experiment` | `@nebutra/llm-gateway` | Local experiment only; production gateway is outside `packages/ai`. |
@@ -42,5 +42,8 @@ the machine-readable source of truth; this file is the human map.
    `@nebutra/capability-kit`: capability errors, doctor/debug CLI dispatch, and
    `.nebutra/debug/<capability>.jsonl` storage. AI capability packages depend on
    it instead of each owning a copy.
-6. Legacy experiments may remain only while marked WIP and blocked from new
+6. Media storyboards are owned by `@nebutra/reel/storyboard`. Generation
+   packages such as `@nebutra/video-pipeline` consume those types instead of
+   maintaining parallel scene/plan contracts.
+7. Legacy experiments may remain only while marked WIP and blocked from new
    production consumers by architecture tests.

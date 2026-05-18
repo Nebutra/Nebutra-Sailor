@@ -37,7 +37,8 @@
     "@nebutra/capability-kit": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/generation-context": "workspace:*",
-    "@nebutra/image-pipeline": "workspace:*"
+    "@nebutra/image-pipeline": "workspace:*",
+    "@nebutra/reel": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "catalog:",

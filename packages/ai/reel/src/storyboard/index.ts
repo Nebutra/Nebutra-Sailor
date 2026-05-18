@@ -22,6 +22,10 @@ export {
   pushOutputHistory,
   type Shot,
   SIMPLE_NUMERIC_SHOT_ID_RE,
+  type StoryboardPlan,
+  type StoryboardScene,
+  type StoryboardTransition,
+  storyboardTotalDuration,
 } from "./shot";
 export {
   type CompleteFn,

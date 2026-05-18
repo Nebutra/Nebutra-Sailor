@@ -30,6 +30,24 @@ export interface Shot {
   readonly referenceImages: readonly string[];
 }
 
+export type StoryboardTransition = "cut" | "fade" | "match";
+
+export interface StoryboardScene extends Shot {
+  readonly durationS: number;
+  readonly transition: StoryboardTransition;
+  readonly musicCue?: string;
+  readonly voiceCue?: string;
+}
+
+export interface StoryboardPlan<TIntent = unknown> {
+  readonly id: string;
+  readonly tenantId: string;
+  readonly brandId: string;
+  readonly intent: TIntent;
+  readonly scenes: readonly StoryboardScene[];
+  readonly totalDurationS: number;
+}
+
 export const MAX_STORYBOARD_OUTPUT_HISTORY = 20;
 
 export function normalizeShotId(value: unknown): string {
@@ -84,4 +102,10 @@ export function parseShotSourceId(
 export function pushOutputHistory(shot: Shot, outputUrl: string): Shot {
   const next = [...shot.outputHistory, outputUrl].slice(-MAX_STORYBOARD_OUTPUT_HISTORY);
   return { ...shot, outputHistory: next, outputHistoryCursor: next.length - 1 };
+}
+
+export function storyboardTotalDuration(
+  scenes: readonly Pick<StoryboardScene, "durationS">[],
+): number {
+  return scenes.reduce((sum, scene) => sum + scene.durationS, 0);
 }
