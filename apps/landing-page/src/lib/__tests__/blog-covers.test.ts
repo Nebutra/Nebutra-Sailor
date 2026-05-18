@@ -11,6 +11,7 @@ function makePost(overrides: Partial<BlogPostWithSource>): BlogPostWithSource {
     language: "en",
     slug: "post",
     source: "sanity",
+    contentSource: { kind: "original" },
     tags: [],
     title: "Post",
     ...overrides,

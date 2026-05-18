@@ -1,11 +1,22 @@
 import { getImageUrl } from "@nebutra/sanity/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
+import { codeToHtml } from "shiki";
 import type { PortableTextBlock, PortableTextSpan } from "@/lib/blog";
 import { BlogCopyButton } from "./blog-copy-button";
 
 const TEMPLATE_PLACEHOLDER_MARK = "templatePlaceholder";
 const TEMPLATE_PLACEHOLDER_PATTERN = /\[[^[\]\n]{1,120}\]/g;
+const LANGUAGE_ALIASES: Record<string, string> = {
+  js: "javascript",
+  jsx: "jsx",
+  md: "markdown",
+  shell: "bash",
+  sh: "bash",
+  ts: "typescript",
+  tsx: "tsx",
+  txt: "text",
+};
 
 function hasTemplatePlaceholders(text: string): boolean {
   return /\[[^[\]\n]{1,120}\]/.test(text);
@@ -69,27 +80,89 @@ function decorateTemplatePlaceholders(block: PortableTextBlock): PortableTextBlo
   return { ...block, children: block.children.flatMap(splitSpanTemplatePlaceholders) };
 }
 
+function normalizeCodeLanguage(language: string | null | undefined): string {
+  const normalized = language?.trim().toLowerCase() || "text";
+  return LANGUAGE_ALIASES[normalized] ?? normalized;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+async function renderCodeHtml(block: PortableTextBlock): Promise<string> {
+  const code = block.code ?? "";
+  if (!code) return "";
+
+  try {
+    return await codeToHtml(code, {
+      lang: normalizeCodeLanguage(block.language),
+      themes: {
+        light: "github-light",
+        dark: "github-dark",
+      },
+      defaultColor: false,
+    });
+  } catch {
+    return `<pre class="shiki"><code>${escapeHtml(code)}</code></pre>`;
+  }
+}
+
+async function decorateBody(body: PortableTextBlock[]): Promise<PortableTextBlock[]> {
+  return Promise.all(
+    body.filter(hasVisibleText).map(async (block) => {
+      if (block._type === "code") {
+        return { ...block, html: await renderCodeHtml(block) };
+      }
+      return decorateTemplatePlaceholders(block);
+    }),
+  );
+}
+
+function getHeadingId(
+  value: unknown,
+  headingIdByKey: Record<string, string> | undefined,
+): string | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  const key = (value as { _key?: unknown })._key;
+  if (typeof key !== "string") return undefined;
+  return key ? headingIdByKey?.[key] : undefined;
+}
+
 function createPortableTextComponents(
   copyLabel: string,
   copiedLabel: string,
+  headingIdByKey?: Record<string, string>,
 ): PortableTextComponents {
   return {
     block: {
       normal: ({ children }) => (
         <p className="mt-5 text-[1.02rem] leading-8 text-[var(--neutral-11)]">{children}</p>
       ),
-      h2: ({ children }) => (
-        <h2 className="mt-12 border-t border-[var(--neutral-6)] pt-8 text-2xl font-semibold tracking-tight text-[var(--neutral-12)]">
+      h2: ({ children, value }) => (
+        <h2
+          id={getHeadingId(value, headingIdByKey)}
+          className="mt-14 scroll-mt-28 text-2xl font-semibold tracking-tight text-[var(--neutral-12)]"
+        >
           {children}
         </h2>
       ),
-      h3: ({ children }) => (
-        <h3 className="mt-9 text-xl font-semibold tracking-tight text-[var(--neutral-12)]">
+      h3: ({ children, value }) => (
+        <h3
+          id={getHeadingId(value, headingIdByKey)}
+          className="mt-9 scroll-mt-28 text-xl font-semibold tracking-tight text-[var(--neutral-12)]"
+        >
           {children}
         </h3>
       ),
-      h4: ({ children }) => (
-        <h4 className="mt-7 text-base font-semibold tracking-tight text-[var(--neutral-12)]">
+      h4: ({ children, value }) => (
+        <h4
+          id={getHeadingId(value, headingIdByKey)}
+          className="mt-7 scroll-mt-28 text-base font-semibold tracking-tight text-[var(--neutral-12)]"
+        >
           {children}
         </h4>
       ),
@@ -168,6 +241,32 @@ function createPortableTextComponents(
       ),
     },
     types: {
+      code: ({ value }) => {
+        const block = value as PortableTextBlock & { html?: string };
+        const code = block.code ?? "";
+        const language = block.language?.trim() || "text";
+        const filename = block.filename?.trim();
+
+        if (!code) return null;
+
+        return (
+          <figure className="blog-code my-8 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]">
+            <figcaption className="flex min-h-10 items-center justify-between gap-3 border-b border-[var(--neutral-6)] px-4 py-2 font-mono text-xs text-[var(--neutral-10)]">
+              <span className="truncate">{filename || language}</span>
+              <BlogCopyButton
+                value={code}
+                label={copyLabel}
+                copiedLabel={copiedLabel}
+                variant="icon"
+              />
+            </figcaption>
+            <div
+              className="overflow-x-auto"
+              dangerouslySetInnerHTML={{ __html: block.html ?? "" }}
+            />
+          </figure>
+        );
+      },
       image: ({ value }) => {
         const imageUrl = getImageUrl(value as Parameters<typeof getImageUrl>[0], {
           width: 1200,
@@ -193,24 +292,26 @@ function createPortableTextComponents(
   };
 }
 
-export function BlogPortableText({
+export async function BlogPortableText({
   body,
   copyLabel = "Copy original",
   copiedLabel = "Copied",
+  headingIdByKey,
 }: {
   body: PortableTextBlock[] | null | undefined;
   copyLabel?: string;
   copiedLabel?: string;
+  headingIdByKey?: Record<string, string>;
 }) {
   if (!body?.length) return null;
-  const visibleBody = body.filter(hasVisibleText).map(decorateTemplatePlaceholders);
+  const visibleBody = await decorateBody(body);
   if (!visibleBody.length) return null;
 
   return (
-    <div className="max-w-none text-[var(--neutral-11)]">
+    <div className="blog-prose max-w-none text-[var(--neutral-11)]">
       <PortableText
         value={visibleBody}
-        components={createPortableTextComponents(copyLabel, copiedLabel)}
+        components={createPortableTextComponents(copyLabel, copiedLabel, headingIdByKey)}
       />
     </div>
   );

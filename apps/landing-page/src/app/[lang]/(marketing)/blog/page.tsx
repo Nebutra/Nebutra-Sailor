@@ -10,6 +10,7 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { BlogTransitionLink } from "@/components/landing/blog-transition-link";
 import { type Locale, routing } from "@/i18n/routing";
 import { type BlogPostWithSource, getAllPosts, toBlogLanguage } from "@/lib/blog";
 import { getFallbackBlogCover } from "@/lib/blog-covers";
@@ -67,6 +68,12 @@ function estimateReadTime(post: BlogPostWithSource, isZh: boolean): string {
   return isZh ? `${minutes} 分钟阅读` : `${minutes} min read`;
 }
 
+function getPostSourceLabel(post: BlogPostWithSource): string {
+  if (post.contentSource.kind === "commentary") return "Commentary";
+  if (post.contentSource.kind === "syndicated") return "Syndicated";
+  return "Nebutra Originals";
+}
+
 function formatPostDate(post: BlogPostWithSource, isZh: boolean): string | null {
   return post.date
     ? new Date(post.date).toLocaleDateString(isZh ? "zh-CN" : "en-US", {
@@ -92,6 +99,7 @@ function ArticleVisual({
 
   return (
     <div
+      style={{ viewTransitionName: `blog-cover-${post.slug}` }}
       className={
         variant === "featured"
           ? "relative min-h-72 overflow-hidden bg-[var(--neutral-3)] lg:min-h-full"
@@ -124,7 +132,7 @@ function FeaturedPostCard({ post, lang }: { post: BlogPostWithSource; lang: stri
   const authorName = getAuthorName(post.author);
 
   return (
-    <Link
+    <BlogTransitionLink
       href={localizedBlogHref(lang, post.slug)}
       className="group grid overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] shadow-sm transition-shadow hover:shadow-md lg:grid-cols-[0.9fr_1.1fr]"
     >
@@ -134,6 +142,9 @@ function FeaturedPostCard({ post, lang }: { post: BlogPostWithSource; lang: stri
         <div className="mb-5 flex flex-wrap items-center gap-2 text-xs font-medium text-[var(--neutral-11)]">
           <span className="rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-[var(--neutral-12)]">
             {isZh ? "最新文章" : "Latest"}
+          </span>
+          <span className="rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-[var(--neutral-12)]">
+            {getPostSourceLabel(post)}
           </span>
           <span>{estimateReadTime(post, isZh)}</span>
         </div>
@@ -164,7 +175,7 @@ function FeaturedPostCard({ post, lang }: { post: BlogPostWithSource; lang: stri
           </span>
         </div>
       </div>
-    </Link>
+    </BlogTransitionLink>
   );
 }
 
@@ -180,12 +191,17 @@ function PostCard({ post, lang }: { post: BlogPostWithSource; lang: string }) {
   const date = formatPostDate(post, isZh);
 
   return (
-    <Link
+    <BlogTransitionLink
       href={localizedBlogHref(lang, post.slug)}
       className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-shadow hover:shadow-sm"
     >
       <ArticleVisual post={post} imageUrl={imageUrl} />
       <div className="flex flex-1 flex-col p-5">
+        <div className="mb-3">
+          <span className="rounded-full border border-[var(--neutral-7)] px-2 py-0.5 text-xs font-medium text-[var(--neutral-11)]">
+            {getPostSourceLabel(post)}
+          </span>
+        </div>
         <h2 className="text-base font-semibold text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)]">
           {post.title}
         </h2>
@@ -204,7 +220,7 @@ function PostCard({ post, lang }: { post: BlogPostWithSource; lang: string }) {
           <span>{estimateReadTime(post, isZh)}</span>
         </div>
       </div>
-    </Link>
+    </BlogTransitionLink>
   );
 }
 

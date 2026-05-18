@@ -22,21 +22,23 @@ const CACHE_HEADER = {
 
 const themePalette = {
   dark: {
-    bg: "#020617",
-    grid: "rgba(255,255,255,0.04)",
-    glowA: "rgba(0,51,254,0.28)",
-    glowB: "rgba(11,241,195,0.22)",
-    title: "#ffffff",
-    subtitle: "rgba(255,255,255,0.72)",
-    accent: "#0BF1C3",
+    bg: "#141413",
+    grid: "rgba(250,249,245,0.045)",
+    panel: "rgba(250,249,245,0.045)",
+    border: "rgba(250,249,245,0.13)",
+    title: "#faf9f5",
+    subtitle: "rgba(250,249,245,0.72)",
+    muted: "rgba(250,249,245,0.56)",
+    accent: "#7aa7ff",
   },
   light: {
-    bg: "#ffffff",
-    grid: "rgba(0,0,0,0.05)",
-    glowA: "rgba(0,51,254,0.22)",
-    glowB: "rgba(11,241,195,0.20)",
-    title: "#0a0a0a",
-    subtitle: "rgba(10,10,10,0.66)",
+    bg: "#faf9f5",
+    grid: "rgba(20,20,19,0.055)",
+    panel: "rgba(255,255,255,0.58)",
+    border: "rgba(20,20,19,0.14)",
+    title: "#141413",
+    subtitle: "rgba(20,20,19,0.68)",
+    muted: "rgba(20,20,19,0.52)",
     accent: "#0033FE",
   },
 } as const;
@@ -54,10 +56,9 @@ function buildOgTree(title: string, subtitle: string | undefined, palette: Palet
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
-    justifyContent: "flex-end",
-    padding: "80px",
+    justifyContent: "center",
+    padding: "72px",
     backgroundColor: palette.bg,
-    backgroundImage: `radial-gradient(ellipse 80% 50% at 50% 42%, ${palette.glowA} 0%, transparent 72%), radial-gradient(ellipse 60% 40% at 72% 70%, ${palette.glowB} 0%, transparent 75%)`,
   };
 
   const gridStyle: CSSProperties = {
@@ -68,15 +69,26 @@ function buildOgTree(title: string, subtitle: string | undefined, palette: Palet
     display: "flex",
   };
 
+  const panelStyle: CSSProperties = {
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    width: "100%",
+    height: "100%",
+    border: `1px solid ${palette.border}`,
+    backgroundColor: palette.panel,
+    padding: "56px",
+  };
+
   const brandStyle: CSSProperties = {
     display: "flex",
     alignItems: "center",
     gap: "16px",
-    color: palette.accent,
-    fontSize: "28px",
+    color: palette.muted,
+    fontSize: "24px",
     fontWeight: 600,
-    letterSpacing: "0.04em",
-    textTransform: "uppercase",
+    letterSpacing: "0",
   };
 
   const titleStyle: CSSProperties = {
@@ -102,9 +114,25 @@ function buildOgTree(title: string, subtitle: string | undefined, palette: Palet
 
   return div(containerStyle, [
     div(gridStyle),
-    createElement("div", { key: "brand", style: brandStyle }, "Nebutra"),
-    createElement("div", { key: "title", style: titleStyle }, title),
-    subtitle ? createElement("div", { key: "subtitle", style: subtitleStyle }, subtitle) : null,
+    createElement("div", { key: "panel", style: panelStyle }, [
+      createElement("div", { key: "brand", style: brandStyle }, [
+        createElement("span", { key: "name" }, "Nebutra"),
+        createElement("span", { key: "dot", style: { color: palette.accent } }, "Blog"),
+      ]),
+      createElement("div", { key: "copy", style: { display: "flex", flexDirection: "column" } }, [
+        createElement("div", { key: "title", style: titleStyle }, title),
+        subtitle ? createElement("div", { key: "subtitle", style: subtitleStyle }, subtitle) : null,
+      ]),
+      createElement("div", {
+        key: "rule",
+        style: {
+          display: "flex",
+          height: "6px",
+          width: "148px",
+          backgroundColor: palette.accent,
+        },
+      }),
+    ]),
   ]);
 }
 

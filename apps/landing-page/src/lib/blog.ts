@@ -9,6 +9,17 @@ export type { BlogPost };
 
 export type BlogSource = "sanity" | "fallback";
 export type BlogLanguage = "en" | "zh";
+export type BlogContentSourceKind = "original" | "commentary" | "syndicated";
+
+export type BlogContentSource = {
+  kind: BlogContentSourceKind;
+  originalTitle?: string | null;
+  originalUrl?: string | null;
+  originalAuthor?: string | null;
+  publisher?: string | null;
+  license?: string | null;
+  canonicalUrl?: string | null;
+};
 
 export type BlogAuthor = {
   name?: string | null;
@@ -34,6 +45,9 @@ export type PortableTextBlock = {
   asset?: { _ref?: string; _type?: string } | null;
   alt?: string | null;
   caption?: string | null;
+  code?: string | null;
+  language?: string | null;
+  filename?: string | null;
 };
 
 export type BlogPostWithSource = BlogPost & {
@@ -50,6 +64,7 @@ export type BlogPostWithSource = BlogPost & {
   author?: string | BlogAuthor;
   mainImage?: unknown;
   body?: PortableTextBlock[] | null;
+  contentSource: BlogContentSource;
   source: BlogSource;
 };
 
@@ -62,11 +77,27 @@ type SanityPost = {
   translationKey?: string | null;
   publishedAt?: string | null;
   excerpt?: string | null;
+  contentSource?: Partial<BlogContentSource> | null;
   mainImage?: unknown;
   author?: string | BlogAuthor | null;
   categories?: string[] | null;
   body?: PortableTextBlock[] | null;
 };
+
+function normalizeContentSource(source: SanityPost["contentSource"]): BlogContentSource {
+  const kind =
+    source?.kind === "commentary" || source?.kind === "syndicated" ? source.kind : "original";
+
+  return {
+    kind,
+    originalTitle: source?.originalTitle ?? null,
+    originalUrl: source?.originalUrl ?? null,
+    originalAuthor: source?.originalAuthor ?? null,
+    publisher: source?.publisher ?? null,
+    license: source?.license ?? null,
+    canonicalUrl: source?.canonicalUrl ?? null,
+  };
+}
 
 function normalizeSlug(slug: SanityPost["slug"]): string | null {
   if (typeof slug === "string") return slug || null;
@@ -88,6 +119,7 @@ function normalizeFallbackPost(post: BlogPost, idx: number): BlogPostWithSource 
     description: post.excerpt,
     date: post.date,
     tags: [],
+    contentSource: normalizeContentSource(null),
     source: "fallback",
   };
 }
@@ -113,6 +145,7 @@ function normalizeSanityPost(post: SanityPost | null): BlogPostWithSource | null
     author: post.author ?? undefined,
     mainImage: post.mainImage ?? null,
     body: post.body ?? null,
+    contentSource: normalizeContentSource(post.contentSource),
     source: "sanity",
   };
 }

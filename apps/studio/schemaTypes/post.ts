@@ -75,11 +75,111 @@ export const post = defineType({
       rows: 3,
     }),
     defineField({
+      name: "contentSource",
+      title: "Content source",
+      type: "object",
+      description: "Editorial provenance for originals, commentary, and authorized syndication.",
+      fields: [
+        defineField({
+          name: "kind",
+          title: "Kind",
+          type: "string",
+          initialValue: "original",
+          options: {
+            layout: "radio",
+            list: [
+              { title: "Nebutra Originals", value: "original" },
+              { title: "Nebutra Commentary", value: "commentary" },
+              { title: "Authorized Syndication", value: "syndicated" },
+            ],
+          },
+        }),
+        defineField({
+          name: "originalTitle",
+          title: "Original title",
+          type: "string",
+          hidden: ({ parent }) => parent?.kind === "original",
+        }),
+        defineField({
+          name: "originalUrl",
+          title: "Original URL",
+          type: "url",
+          hidden: ({ parent }) => parent?.kind === "original",
+        }),
+        defineField({
+          name: "originalAuthor",
+          title: "Original author",
+          type: "string",
+          hidden: ({ parent }) => parent?.kind === "original",
+        }),
+        defineField({
+          name: "publisher",
+          title: "Publisher / organization",
+          type: "string",
+          hidden: ({ parent }) => parent?.kind === "original",
+        }),
+        defineField({
+          name: "license",
+          title: "License / permission note",
+          type: "string",
+          description: "For example: CC BY 4.0, authorized republication, excerpt/commentary.",
+          hidden: ({ parent }) => parent?.kind === "original",
+        }),
+        defineField({
+          name: "canonicalUrl",
+          title: "Canonical URL",
+          type: "url",
+          description:
+            "Optional SEO canonical override. Use the original source for authorized full syndication.",
+          hidden: ({ parent }) => parent?.kind === "original",
+        }),
+      ],
+    }),
+    defineField({
       name: "body",
       title: "Body",
       type: "array",
       of: [
         { type: "block" },
+        {
+          name: "code",
+          title: "Code block",
+          type: "object",
+          fields: [
+            defineField({
+              name: "language",
+              title: "Language",
+              type: "string",
+              description: "Syntax language, for example tsx, bash, json, or text.",
+            }),
+            defineField({
+              name: "filename",
+              title: "Filename",
+              type: "string",
+            }),
+            defineField({
+              name: "code",
+              title: "Code",
+              type: "text",
+              rows: 12,
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              code: "code",
+              filename: "filename",
+              language: "language",
+            },
+            prepare(selection) {
+              const { code, filename, language } = selection;
+              return {
+                title: filename || language || "Code block",
+                subtitle: typeof code === "string" ? code.split("\n")[0] : undefined,
+              };
+            },
+          },
+        },
         {
           type: "image",
           options: { hotspot: true },

@@ -33,6 +33,13 @@ Options:
   --excerpt <text>          Post excerpt. Defaults to frontmatter excerpt.
   --author <name>           Author name. Defaults to "Tseka Luk".
   --categories <csv>        Category titles. Defaults to "Nebutra".
+  --source-kind <kind>      original | commentary | syndicated. Defaults to original.
+  --source-url <url>        Original source URL for commentary/syndication.
+  --source-title <title>    Original source title.
+  --source-author <name>    Original author.
+  --source-publisher <org>  Original publisher / organization.
+  --source-license <text>   License or permission note.
+  --canonical-url <url>     Optional SEO canonical override.
   --published-at <iso>      Publish datetime. Defaults to now.
   --site-url <url>          Site URL used for revalidation. Defaults to ${DEFAULT_SITE_URL}.
   --dry-run                 Parse and validate only; do not mutate Sanity.
@@ -176,6 +183,35 @@ function block(style, text, extra = {}) {
   };
 }
 
+function parseCodeFenceMeta(rawMeta) {
+  let meta = rawMeta.trim();
+  let filename = null;
+
+  meta = meta.replace(/\b(?:filename|title)=("[^"]+"|'[^']+'|\S+)/, (_, rawValue) => {
+    filename = rawValue.replace(/^["']|["']$/g, "");
+    return "";
+  });
+
+  meta = meta.replace(/\[([^\]]+)\]/, (_, rawValue) => {
+    filename = rawValue.trim();
+    return "";
+  });
+
+  const language = meta.trim().split(/\s+/)[0] || "text";
+  return { language, filename };
+}
+
+function codeBlock(meta, code) {
+  const { language, filename } = parseCodeFenceMeta(meta);
+  return {
+    _type: "code",
+    _key: key(),
+    language,
+    filename,
+    code,
+  };
+}
+
 function flushParagraph(lines, blocks) {
   if (!lines.length) return;
   blocks.push(block("normal", lines.join(" ").replace(/\s+/g, " ").trim()));
@@ -188,7 +224,25 @@ function markdownToPortableText(markdown, title) {
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
   let skippedTitle = false;
 
-  for (const rawLine of lines) {
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
+    const rawLine = lines[lineIndex];
+    const fence = rawLine.match(/^\s*(```|~~~)\s*([^`]*)$/);
+    if (fence) {
+      flushParagraph(paragraph, blocks);
+      const [, marker, meta] = fence;
+      const codeLines = [];
+
+      while (lineIndex + 1 < lines.length) {
+        lineIndex += 1;
+        const nextLine = lines[lineIndex];
+        if (new RegExp(`^\\s*${marker}\\s*$`).test(nextLine)) break;
+        codeLines.push(nextLine);
+      }
+
+      blocks.push(codeBlock(meta, codeLines.join("\n")));
+      continue;
+    }
+
     const line = rawLine.trim();
 
     if (!line) {
@@ -251,6 +305,40 @@ function csv(value, fallback) {
     .split(",")
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function optionalString(value) {
+  return typeof value === "string" && value.trim() ? value.trim() : undefined;
+}
+
+function readOption(args, data, ...keys) {
+  for (const optionKey of keys) {
+    const value = optionalString(args[optionKey]) ?? optionalString(data[optionKey]);
+    if (value) return value;
+  }
+  return undefined;
+}
+
+function compactObject(value) {
+  return Object.fromEntries(Object.entries(value).filter(([, entry]) => entry !== undefined));
+}
+
+function readContentSource(args, data) {
+  const kind =
+    readOption(args, data, "source-kind", "contentSourceKind", "sourceKind") ?? "original";
+  if (!["original", "commentary", "syndicated"].includes(kind)) {
+    throw new Error("--source-kind must be original, commentary, or syndicated.");
+  }
+
+  return compactObject({
+    kind,
+    originalTitle: readOption(args, data, "source-title", "originalTitle", "sourceTitle"),
+    originalUrl: readOption(args, data, "source-url", "originalUrl", "sourceUrl"),
+    originalAuthor: readOption(args, data, "source-author", "originalAuthor", "sourceAuthor"),
+    publisher: readOption(args, data, "source-publisher", "publisher", "sourcePublisher"),
+    license: readOption(args, data, "source-license", "license", "sourceLicense"),
+    canonicalUrl: readOption(args, data, "canonical-url", "canonicalUrl"),
+  });
 }
 
 function requireValue(args, keyName) {
@@ -352,6 +440,7 @@ async function main() {
   const categories = csv(args.categories || data.categories, "Nebutra");
   const publishedAt = args["published-at"] || data.publishedAt || new Date().toISOString();
   const siteUrl = args["site-url"] || DEFAULT_SITE_URL;
+  const contentSource = readContentSource(args, data);
 
   if (!slug) throw new Error("Missing --slug or frontmatter slug.");
   if (!translationKey) throw new Error("Missing --translation-key or frontmatter translationKey.");
@@ -369,6 +458,7 @@ async function main() {
     author,
     categories,
     publishedAt,
+    contentSource,
     blocks: body.length,
   };
 
@@ -390,6 +480,7 @@ async function main() {
     translationKey,
     publishedAt,
     excerpt,
+    contentSource,
     author: { _type: "reference", _ref: authorId },
     categories: categoryIds.map((categoryId) => ({
       _type: "reference",
