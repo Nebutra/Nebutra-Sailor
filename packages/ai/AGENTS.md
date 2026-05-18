@@ -13,7 +13,7 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | Provider metadata | `@nebutra/ai-providers` | Metadata only. It owns provider IDs, categories, status flags, env-var requirements, and scaffolding templates. Do not add runtime SDK calls here. |
 | Public API gateway | `backends/gateway` + `@nebutra/gateway-core` | External `sk-sailor-*` auth, tenant usage metering, upstream pool routing, and response accounting. |
 | Agent protocol/runtime grammar | `@nebutra/agent-runtime` | Thread/turn/item model, policy, tool/MCP bridge, rollout, sandbox seam. It must not own provider SDK execution. |
-| Tool integration | `@nebutra/mcp`, `@nebutra/tool-registry`, `@nebutra/sandbox-runtime` | MCP/tool discovery, consent, audit, and sandbox routing boundaries. |
+| Tool integration | `@nebutra/mcp`, `@nebutra/tool-registry`, `@nebutra/sandbox-runtime` | MCP/tool discovery, SKILL.md parsing/loading, consent, audit, and sandbox routing boundaries. |
 | Execution capability tools | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline` | Deterministic or semi-deterministic tool execution. They must not own Thread/Turn/Item state, prompt generation, model/provider execution, sub-agent scheduling, or approval lifecycle. |
 | Generation capability tools | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media generation surfaces. They may expose local deterministic fallbacks and sidecar adapter ports, but must not own Thread/Turn/Item state, prompt orchestration, model/provider routing, or approval lifecycle. |
 | Shared support contracts | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding` | Single TypeScript owners for facts consumed across surfaces: `BrandContext`, command permission/approval primitives, and deterministic local embeddings. |
@@ -53,7 +53,16 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 9. Deterministic zero-config embeddings belong to `@nebutra/local-embedding`.
    Persistence and RAG packages may choose different dimensions, but must not
    define parallel local hashing/tokenization algorithms.
-10. Legacy experiments stay WIP and blocked from new production consumers until
+10. SKILL.md frontmatter parsing belongs to `@nebutra/tool-registry`.
+   `@nebutra/play-loader` extends the parsed document into Play metadata; it
+   must not parse YAML/frontmatter independently. `@nebutra/agent-runtime`
+   definitions are a separate runtime grammar with source tiers, invocation
+   gates, and tenant merge semantics, so do not merge them into SKILL.md without
+   an RFC.
+11. Runtime tool dispatch belongs to `@nebutra/agent-runtime` as
+   `RuntimeToolRegistry`. Do not confuse it with the SKILL.md package registry
+   in `@nebutra/tool-registry`.
+12. Legacy experiments stay WIP and blocked from new production consumers until
    they are either retired or promoted through a separate RFC.
 
 ## 2026 AI SaaS Defaults
@@ -109,6 +118,13 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 - `@nebutra/content-store` and `@nebutra/knowledge-rag` must consume
   deterministic local embedding helpers from `@nebutra/local-embedding`; do not
   duplicate FNV/hash embedding logic inside either package.
+- `@nebutra/play-loader` must consume parsed SKILL.md documents from
+  `@nebutra/tool-registry`; do not import YAML parsers or call
+  `parseSkillFrontmatter(markdown)` after `parseSkillMarkdown(markdown)`.
+- New runtime code should use `RuntimeToolRegistry` for in-memory tool
+  dispatch. `ToolRegistry` remains a compatibility alias in
+  `@nebutra/agent-runtime`, while `@nebutra/tool-registry` remains the package
+  name for SKILL.md registry semantics.
 - Product capability packages should not own billing deduction, gateway auth, or
   provider-key selection.
 - Examples may import legacy packages to demonstrate migration, but production

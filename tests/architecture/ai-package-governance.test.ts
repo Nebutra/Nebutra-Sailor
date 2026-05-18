@@ -492,4 +492,44 @@ describe("AI package architecture governance", () => {
       }
     }
   });
+
+  it("keeps SKILL.md parsing ownership in @nebutra/tool-registry", () => {
+    const toolRegistry = byName.get("@nebutra/tool-registry");
+    const playLoader = byName.get("@nebutra/play-loader");
+    const agentRuntime = byName.get("@nebutra/agent-runtime");
+    expect(toolRegistry, "@nebutra/tool-registry").toBeDefined();
+    expect(playLoader, "@nebutra/play-loader").toBeDefined();
+    expect(agentRuntime, "@nebutra/agent-runtime").toBeDefined();
+    if (!toolRegistry || !playLoader || !agentRuntime) return;
+
+    expect(toolRegistry.manifest.nebutra?.surface).toBe("tool-registry");
+    expect(playLoader.manifest.dependencies?.["@nebutra/tool-registry"]).toBe("workspace:*");
+
+    const toolRegistrySource = readFileSync(join(toolRegistry.dir, "src", "index.ts"), "utf8");
+    expect(toolRegistrySource).toContain("parseSkillFrontmatter");
+    expect(toolRegistrySource).toContain("frontmatter: ParsedFrontmatter");
+
+    const playLoaderSource = readFileSync(join(playLoader.dir, "src", "index.ts"), "utf8");
+    expect(playLoaderSource).toContain("parseSkillMarkdown");
+    expect(playLoaderSource).not.toContain("parseSkillFrontmatter(markdown)");
+    expect(playLoaderSource).not.toContain('from "yaml"');
+
+    const runtimeDefinitionSource = readFileSync(
+      join(agentRuntime.dir, "src", "definitions.ts"),
+      "utf8",
+    );
+    expect(runtimeDefinitionSource).toContain("DefinitionResolver");
+    expect(runtimeDefinitionSource).toContain("SOURCE_TIERS");
+    expect(runtimeDefinitionSource).toContain("modelInvocable");
+  });
+
+  it("names the agent-runtime tool dispatcher separately from SKILL.md registry ownership", () => {
+    const agentRuntime = byName.get("@nebutra/agent-runtime");
+    expect(agentRuntime, "@nebutra/agent-runtime").toBeDefined();
+    if (!agentRuntime) return;
+
+    const runtimeToolsSource = readFileSync(join(agentRuntime.dir, "src", "tools.ts"), "utf8");
+    expect(runtimeToolsSource).toMatch(/export\s+class\s+RuntimeToolRegistry\b/);
+    expect(runtimeToolsSource).toContain("RuntimeToolRegistry as ToolRegistry");
+  });
 });

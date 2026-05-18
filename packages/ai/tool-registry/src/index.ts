@@ -24,6 +24,7 @@ export interface LoadedSkill {
   readonly meta: SkillMeta;
   readonly body: string;
   readonly path: string;
+  readonly frontmatter: ParsedFrontmatter;
 }
 
 export interface SkillTestReport {
@@ -140,6 +141,7 @@ export function parseSkillMarkdown(markdown: string): LoadedSkill {
   const budget = asRecord(frontmatter.budget);
   return {
     path: "",
+    frontmatter,
     meta: {
       name,
       description,

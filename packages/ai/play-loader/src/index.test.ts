@@ -56,6 +56,15 @@ describe("play-loader", () => {
     expect(play.body).toContain("Create a launch page");
   });
 
+  it("keeps raw play frontmatter on the shared SKILL parser contract", () => {
+    const play = parsePlayMarkdown(playMarkdown);
+
+    expect(play.frontmatter).toMatchObject({
+      kind: "play",
+      required_skills: ["content_store.write", "tool_protocol.call"],
+    });
+  });
+
   it("rejects non-play SKILL.md documents with a fix suggestion", () => {
     const markdown = playMarkdown.replace("kind: play", "kind: skill");
     expect(() => parsePlayMarkdown(markdown)).toThrow(/kind: play/i);

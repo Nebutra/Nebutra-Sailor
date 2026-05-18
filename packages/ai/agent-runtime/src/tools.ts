@@ -52,10 +52,10 @@ export interface ToolHooks {
 }
 
 /**
- * registry -> router -> orchestrator pipeline. MCP tools register via
+ * runtime registry -> router -> orchestrator pipeline. MCP tools register via
  * {@link adaptMcpTool} and are dispatched identically to native tools.
  */
-export class ToolRegistry {
+export class RuntimeToolRegistry {
   readonly #tools = new Map<string, { reg: RegisteredTool; handler: ToolHandler }>();
   readonly #hooks: ToolHooks;
 
@@ -94,6 +94,9 @@ export class ToolRegistry {
     return validated;
   }
 }
+
+/** @deprecated Use RuntimeToolRegistry for new code. */
+export { RuntimeToolRegistry as ToolRegistry };
 
 /** Minimal shape of an MCP client (satisfied by `@nebutra/mcp`'s `mcpClient`). */
 export interface McpClientLike {

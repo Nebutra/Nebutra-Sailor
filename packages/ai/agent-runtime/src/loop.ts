@@ -25,7 +25,7 @@ import {
 } from "./policy";
 import type { ServerRequest } from "./protocol";
 import { type RolloutLine, type RolloutStore, sanitizeForPersist } from "./rollout";
-import type { ToolDispatchContext, ToolRegistry } from "./tools";
+import type { RuntimeToolRegistry, ToolDispatchContext } from "./tools";
 
 /** A single thing the model emitted in one round. */
 export type ModelEmission =
@@ -68,7 +68,7 @@ export interface RunTurnDeps {
   readonly config: TurnConfig;
   readonly approvalPolicy: ApprovalPolicy;
   readonly model: ModelInvoker;
-  readonly tools: ToolRegistry;
+  readonly tools: RuntimeToolRegistry;
   readonly store: RolloutStore;
   readonly approvalGate: ApprovalGate;
   /** Defaults to: everything requires a prompt (safe). */

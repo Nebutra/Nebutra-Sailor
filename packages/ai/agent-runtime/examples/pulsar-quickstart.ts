@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { InMemoryRolloutStore, Pulsar, ToolRegistry } from "../src";
+import { InMemoryRolloutStore, Pulsar, RuntimeToolRegistry } from "../src";
 
-const tools = new ToolRegistry();
+const tools = new RuntimeToolRegistry();
 tools.register(
   { name: "echo", description: "Echo a value", inputSchema: z.object({ value: z.string() }) },
   async (input: { value: string }) => input.value,

@@ -13,7 +13,12 @@
 
 import { z } from "zod";
 
-import { adaptMcpTool, type McpClientLike, type ToolDefinition, type ToolRegistry } from "./tools";
+import {
+  adaptMcpTool,
+  type McpClientLike,
+  type RuntimeToolRegistry,
+  type ToolDefinition,
+} from "./tools";
 
 /**
  * Port over an MCP server catalog (satisfied by `@nebutra/mcp`'s
@@ -41,12 +46,12 @@ export interface ActivateMcpToolsResult {
 
 /**
  * List the tenant/plan-visible MCP tools, adapt each via {@link adaptMcpTool},
- * and register them into the {@link ToolRegistry}. A tool whose name is already
+ * and register them into the {@link RuntimeToolRegistry}. A tool whose name is already
  * registered is skipped (reported, never thrown). Empty/blank tenantId fails
  * closed before any catalog call.
  */
 export async function activateMcpTools(
-  registry: ToolRegistry,
+  registry: RuntimeToolRegistry,
   catalog: McpServerCatalogPort,
   client: McpClientLike,
   ctx: { tenantId: string; plan?: string },

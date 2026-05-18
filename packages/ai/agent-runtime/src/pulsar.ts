@@ -5,7 +5,7 @@ import type { ApprovalPolicy } from "./policy";
 import { DEFAULT_APPROVAL_POLICY } from "./policy";
 import type { RolloutLine, RolloutStore } from "./rollout";
 import { replay } from "./rollout";
-import { ToolRegistry } from "./tools";
+import { RuntimeToolRegistry } from "./tools";
 
 type EventLogKind = "llm_call" | "tool_call" | "sub_agent_call" | "content_write";
 
@@ -37,7 +37,7 @@ export interface PulsarDeps {
   readonly tenantId: string;
   readonly config: TurnConfig;
   readonly model: ModelInvoker;
-  readonly tools: ToolRegistry;
+  readonly tools: RuntimeToolRegistry;
   readonly store: RolloutStore;
   readonly approvalGate: ApprovalGate;
   readonly approvalPolicy: ApprovalPolicy;
@@ -183,7 +183,7 @@ export class PulsarBuilder {
   #tenantId?: string;
   #config?: TurnConfig;
   #model?: ModelInvoker;
-  #tools: ToolRegistry = new ToolRegistry();
+  #tools: RuntimeToolRegistry = new RuntimeToolRegistry();
   #store?: RolloutStore;
   #approvalGate?: ApprovalGate;
   #approvalPolicy: ApprovalPolicy = DEFAULT_APPROVAL_POLICY;
@@ -204,7 +204,7 @@ export class PulsarBuilder {
     return this;
   }
 
-  withTools(tools: ToolRegistry): this {
+  withTools(tools: RuntimeToolRegistry): this {
     this.#tools = tools;
     return this;
   }

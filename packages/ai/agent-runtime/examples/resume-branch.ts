@@ -1,4 +1,4 @@
-import { InMemoryRolloutStore, Pulsar, ToolRegistry } from "../src";
+import { InMemoryRolloutStore, Pulsar, RuntimeToolRegistry } from "../src";
 
 const eventLog = {
   async commit() {
@@ -22,7 +22,7 @@ const pulsar = Pulsar.builder()
       return { emissions: [{ kind: "text", text: "branch me" }] };
     },
   })
-  .withTools(new ToolRegistry())
+  .withTools(new RuntimeToolRegistry())
   .withRolloutStore(new InMemoryRolloutStore())
   .withApprovalGate({
     async request() {

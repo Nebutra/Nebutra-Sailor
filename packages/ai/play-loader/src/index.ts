@@ -1,7 +1,7 @@
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
 import { CapabilityError } from "@nebutra/errors";
-import { parseSkillFrontmatter, parseSkillMarkdown, type SkillMeta } from "@nebutra/tool-registry";
+import { type ParsedFrontmatter, parseSkillMarkdown, type SkillMeta } from "@nebutra/tool-registry";
 
 export interface PlayDependency {
   readonly play: string;
@@ -20,6 +20,7 @@ export interface PlayMeta extends SkillMeta {
 export interface LoadedPlay {
   readonly meta: PlayMeta;
   readonly body: string;
+  readonly frontmatter: ParsedFrontmatter;
   readonly requiredSkills: readonly string[];
   readonly subAgents: readonly PlaySubagent[];
   readonly dependsOnPlays: readonly PlayDependency[];
@@ -128,7 +129,7 @@ function parsePlayDependencies(value: unknown): PlayDependency[] {
 
 export function parsePlayMarkdown(markdown: string): LoadedPlay {
   const loaded = parseSkillMarkdown(markdown);
-  const { frontmatter } = parseSkillFrontmatter(markdown);
+  const { frontmatter } = loaded;
   if (frontmatter.kind !== "play") {
     throw new CapabilityError("play-loader", "Play SKILL.md must set kind: play", {
       suggestion: "Set `kind: play` in frontmatter or keep this document in tool-registry only.",
@@ -140,6 +141,7 @@ export function parsePlayMarkdown(markdown: string): LoadedPlay {
   return {
     meta: { ...loaded.meta, kind: "play" },
     body: loaded.body,
+    frontmatter,
     requiredSkills: asStringArray(frontmatter.required_skills),
     subAgents: parseSubagents(frontmatter.sub_agents),
     dependsOnPlays: parsePlayDependencies(frontmatter.depends_on_plays),

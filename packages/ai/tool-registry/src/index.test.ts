@@ -84,6 +84,7 @@ describe("parseSkillMarkdown", () => {
         "---\nname: demo\ndescription: Demo skill\nversion: 1.0.0\nallowed_tools:\n  - tool.run\n---\nBody",
       ),
     ).toMatchObject({
+      frontmatter: { name: "demo", allowed_tools: ["tool.run"] },
       meta: { name: "demo", allowedTools: ["tool.run"] },
       body: "Body",
     });

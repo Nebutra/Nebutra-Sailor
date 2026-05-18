@@ -12,7 +12,7 @@ the machine-readable source of truth; this file is the human map.
 | `provider-metadata` | `@nebutra/ai-providers` | Metadata only. No runtime SDK calls. |
 | `agent-runtime` | `@nebutra/agent-runtime` | Owns Thread/Turn/Item, policy, approval, pause/resume, rollout, and runtime grammar. No concrete execution or generation package imports. |
 | `tool-protocol` | `@nebutra/mcp` | Owns MCP host/client/server protocol seams. |
-| `tool-registry` | `@nebutra/tool-registry` | Owns SKILL.md discovery, validation, and progressive loading. |
+| `tool-registry` | `@nebutra/tool-registry` | Owns SKILL.md parsing, discovery, validation, and progressive loading. |
 | `execution-router` | `@nebutra/sandbox-runtime` | Owns sandbox provider routing and execution isolation. |
 | `execution-capability` | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline` | Tool-shaped execution abilities. No runtime state or model ownership. |
 | `generation-capability` | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media abilities. No runtime state or model ownership. |
@@ -56,5 +56,11 @@ the machine-readable source of truth; this file is the human map.
    `@nebutra/local-embedding`. `@nebutra/content-store` and
    `@nebutra/knowledge-rag` may configure dimensions, but the hashing/token
    semantics stay single-owner.
-10. Legacy experiments may remain only while marked WIP and blocked from new
+10. SKILL.md parsing is owned by `@nebutra/tool-registry`. `@nebutra/play-loader`
+    extends the parsed document into Play DAG fields and must not parse
+    frontmatter independently.
+11. `@nebutra/agent-runtime` owns `RuntimeToolRegistry` for in-memory dispatch
+    only. That dispatcher is not the SKILL.md package registry and should not be
+    merged with `@nebutra/tool-registry`.
+12. Legacy experiments may remain only while marked WIP and blocked from new
    production consumers by architecture tests.
