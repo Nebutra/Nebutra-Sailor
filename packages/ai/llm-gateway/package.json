@@ -18,6 +18,7 @@
     ],
     "featureId": "llm-gateway",
     "category": "ai",
+    "surface": "gateway-experiment",
     "summary": "Routing, fallback, prefix prompt cache, and cost tracking over provider-registry"
   },
   "main": "./src/index.ts",

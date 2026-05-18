@@ -18,6 +18,7 @@
     ],
     "featureId": "provider-registry",
     "category": "ai",
+    "surface": "legacy-experiment",
     "summary": "Provider trait and registry without routing or cache"
   },
   "main": "./src/index.ts",

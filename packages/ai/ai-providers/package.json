@@ -6,6 +6,10 @@
   "sideEffects": false,
   "type": "module",
   "nebutra": {
+    "featureId": "ai-providers",
+    "category": "ai",
+    "surface": "provider-metadata",
+    "summary": "Provider metadata only; runtime execution belongs to @nebutra/agents",
     "status": "stable",
     "productionReady": true,
     "role": "meta-only",

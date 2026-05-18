@@ -16,7 +16,11 @@
     "gaps": [
       "pgvector store is interface-only (Prisma snippet in README, not migrated)",
       "reranker interface ships with identity impl only"
-    ]
+    ],
+    "featureId": "knowledge-rag",
+    "category": "ai",
+    "surface": "semantic-index",
+    "summary": "Knowledge retrieval grammar with zero-config local embedder and pluggable vector/keyword/rerank ports"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -8,6 +8,7 @@
   "nebutra": {
     "featureId": "tool-registry",
     "category": "ai",
+    "surface": "tool-registry",
     "summary": "Procedure knowledge registry for SKILL.md files"
   },
   "main": "./src/index.ts",

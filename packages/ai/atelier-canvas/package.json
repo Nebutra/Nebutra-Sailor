@@ -8,6 +8,7 @@
   "nebutra": {
     "featureId": "atelier-canvas",
     "category": "ai",
+    "surface": "creative-surface",
     "summary": "Server-authoritative creative-canvas engine"
   },
   "main": "./src/index.ts",

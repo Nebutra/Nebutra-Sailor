@@ -8,6 +8,7 @@
   "nebutra": {
     "featureId": "cinema",
     "category": "ai",
+    "surface": "product-orchestration",
     "summary": "Multi-agent film-production orchestration over the reel media graph"
   },
   "main": "./src/index.ts",

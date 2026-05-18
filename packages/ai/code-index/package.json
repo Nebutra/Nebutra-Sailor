@@ -18,6 +18,7 @@
     ],
     "featureId": "code-index",
     "category": "ai",
+    "surface": "semantic-index",
     "summary": "Multi-tenant codebase semantic-index grammar: deterministic content-hash chunking (structural / line / markdown), incremental scan, embedding-profile drift recreate, cosine retrieval — all behind provider-agnostic Embedder/VectorStore ports"
   },
   "main": "./src/index.ts",

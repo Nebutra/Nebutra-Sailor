@@ -19,6 +19,7 @@
     ],
     "featureId": "agent-runtime",
     "category": "ai",
+    "surface": "agent-runtime",
     "summary": "Multi-tenant agent-runtime grammar: thread/turn/item model, approval+capability policy, tool/MCP abstraction, event-sourced rollout, external-sandbox delegation seam"
   },
   "main": "./src/index.ts",

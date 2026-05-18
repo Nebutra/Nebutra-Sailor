@@ -8,6 +8,7 @@
   "nebutra": {
     "featureId": "sandbox-runtime",
     "category": "ai",
+    "surface": "execution-router",
     "summary": "Sandbox trait, provider router, doctor, and debug tools"
   },
   "main": "./src/index.ts",

@@ -17,6 +17,7 @@
     ],
     "featureId": "mcp",
     "category": "ai",
+    "surface": "tool-protocol",
     "summary": "MCP server primitives (Model Context Protocol)"
   },
   "main": "./src/index.ts",

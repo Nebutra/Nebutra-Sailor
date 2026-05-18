@@ -18,6 +18,7 @@
     ],
     "featureId": "play-loader",
     "category": "ai",
+    "surface": "product-orchestration",
     "summary": "SKILL.md play parser, dependency-chain planner, and agent-runtime runner seam"
   },
   "main": "./src/index.ts",

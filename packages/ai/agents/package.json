@@ -8,6 +8,7 @@
   "nebutra": {
     "featureId": "agents",
     "category": "ai",
+    "surface": "model-runtime",
     "summary": "Nebutra AI runtime: multi-agent orchestration + Vercel AI SDK helpers"
   },
   "main": "./src/index.ts",

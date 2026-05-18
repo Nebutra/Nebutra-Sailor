@@ -8,6 +8,7 @@
   "nebutra": {
     "featureId": "content-store",
     "category": "ai",
+    "surface": "persistence",
     "summary": "File-as-truth content store with frontmatter-aware indexing"
   },
   "main": "./src/index.ts",

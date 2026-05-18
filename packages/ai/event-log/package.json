@@ -8,6 +8,7 @@
   "nebutra": {
     "featureId": "event-log",
     "category": "ai",
+    "surface": "persistence",
     "summary": "Immutable event log, rollback dry-runs, and branches"
   },
   "main": "./src/index.ts",

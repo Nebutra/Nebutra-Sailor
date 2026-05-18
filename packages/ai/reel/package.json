@@ -8,6 +8,7 @@
   "nebutra": {
     "featureId": "reel",
     "category": "ai",
+    "surface": "media-graph",
     "summary": "Node-graph dataflow + storyboard pipeline for generative media"
   },
   "main": "./src/index.ts",

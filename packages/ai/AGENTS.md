@@ -20,6 +20,24 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | RAG/indexing/dataflow | `@nebutra/knowledge-rag`, `@nebutra/code-index`, `@nebutra/reel`, `@nebutra/atelier-canvas`, `@nebutra/cinema` | Product capabilities built on injected model/vector/store/tool ports. |
 | Legacy local experiments | `@nebutra/llm-gateway`, `@nebutra/provider-registry` | `@nebutra/llm-gateway` is not the production gateway; `@nebutra/provider-registry` is a local-provider experiment. Do not add new production consumers. |
 
+The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
+`@nebutra/*` package under `packages/ai` must declare `nebutra.featureId` and
+`nebutra.surface` in `package.json`.
+
+## Consolidation Rules
+
+1. Do not merge packages across surfaces. A runtime grammar package and a
+   deterministic tool package have different owners even when both are small.
+2. If two packages in the same surface own the same fact or public concept,
+   choose one owner and move the other behind a subpath export or delete it.
+3. Shared facts used by multiple capability families must live in a
+   `support-contract` package. Do not duplicate those types in each capability.
+4. Capability packages expose adapters and deterministic APIs; they do not own
+   prompts, provider routing, tenant billing, approval lifecycle, or runtime
+   state.
+5. Legacy experiments stay WIP and blocked from new production consumers until
+   they are either retired or promoted through a separate RFC.
+
 ## 2026 AI SaaS Defaults
 
 1. Use production-proven provider surfaces first: Vercel AI SDK for app/runtime

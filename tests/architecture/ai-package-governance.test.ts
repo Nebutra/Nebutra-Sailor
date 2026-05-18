@@ -7,6 +7,25 @@ const AI_ROOT = join(ROOT, "packages", "ai");
 
 type PackageStatus = "stable" | "foundation" | "wip" | "deprecated";
 
+const ALLOWED_SURFACES = [
+  "agent-runtime",
+  "creative-surface",
+  "execution-capability",
+  "execution-router",
+  "gateway-experiment",
+  "generation-capability",
+  "legacy-experiment",
+  "media-graph",
+  "model-runtime",
+  "persistence",
+  "product-orchestration",
+  "provider-metadata",
+  "semantic-index",
+  "support-contract",
+  "tool-protocol",
+  "tool-registry",
+] as const;
+
 interface PackageJson {
   name?: string;
   scripts?: Record<string, string>;
@@ -14,6 +33,7 @@ interface PackageJson {
   devDependencies?: Record<string, string>;
   peerDependencies?: Record<string, string>;
   nebutra?: {
+    featureId?: string;
     status?: PackageStatus;
     productionReady?: boolean;
     gaps?: string[];
@@ -145,8 +165,49 @@ describe("AI package architecture governance", () => {
     expect(contract).toContain("must not own Thread/Turn/Item");
     expect(contract).toContain("Generation capability tools");
     expect(contract).toContain("@nebutra/generation-context");
+    expect(contract).toContain("packages/ai/PACKAGE_MAP.md");
+    expect(contract).toContain("Consolidation Rules");
     expect(contract).toContain("@nebutra/llm-gateway");
     expect(contract).toContain("not the production gateway");
+  });
+
+  it("requires every AI package to declare a unique featureId and governed surface", () => {
+    const featureOwners = new Map<string, string>();
+    const violations: string[] = [];
+
+    for (const { manifest } of packages) {
+      if (!manifest.name) continue;
+      const featureId = manifest.nebutra?.featureId;
+      const surface = manifest.nebutra?.surface;
+      if (!featureId) {
+        violations.push(`${manifest.name}: missing nebutra.featureId`);
+      } else if (featureOwners.has(featureId)) {
+        violations.push(`${manifest.name}: duplicate featureId ${featureId}`);
+      } else {
+        featureOwners.set(featureId, manifest.name);
+      }
+
+      if (!surface) {
+        violations.push(`${manifest.name}: missing nebutra.surface`);
+      } else if (!ALLOWED_SURFACES.includes(surface as (typeof ALLOWED_SURFACES)[number])) {
+        violations.push(`${manifest.name}: invalid nebutra.surface ${surface}`);
+      }
+    }
+
+    expect(violations).toEqual([]);
+  });
+
+  it("keeps the human package map aligned with package manifests", () => {
+    const packageMap = readFileSync(join(AI_ROOT, "PACKAGE_MAP.md"), "utf8");
+    const missing = packages
+      .map(({ manifest }) => manifest.name)
+      .filter((name): name is string => Boolean(name))
+      .filter((name) => !packageMap.includes(`\`${name}\``));
+
+    for (const surface of ALLOWED_SURFACES) {
+      expect(packageMap, `missing surface ${surface}`).toContain(`\`${surface}\``);
+    }
+    expect(missing).toEqual([]);
   });
 
   it("keeps AI SDK provider execution canonical in @nebutra/agents", () => {
@@ -259,6 +320,24 @@ describe("AI package architecture governance", () => {
         GENERATION_CAPABILITY_FORBIDDEN_IMPORTS,
       )) {
         violations.push({ packageName, ...violation });
+      }
+    }
+
+    expect(violations).toEqual([]);
+  });
+
+  it("keeps BrandContext as a single support-contract-owned fact", () => {
+    const violations: string[] = [];
+    const owner = byName.get("@nebutra/generation-context");
+    expect(owner?.manifest.nebutra?.surface).toBe("support-contract");
+
+    for (const { dir, manifest } of packages) {
+      if (manifest.name === "@nebutra/generation-context") continue;
+      for (const file of collectProductionSourceFiles(join(dir, "src"))) {
+        const source = readFileSync(file, "utf8");
+        if (/^\s*(?:export\s+)?(?:interface|type)\s+BrandContext\s*(?:[=<{])/m.test(source)) {
+          violations.push(file.replace(`${ROOT}/`, ""));
+        }
       }
     }
 
