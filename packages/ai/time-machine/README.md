@@ -1,5 +1,7 @@
 # @nebutra/time-machine
 
+Status: **WIP**
+
 Chronos product surface for founder-facing timeline views, branches, comparisons,
 annotations, and rollback dry-runs.
 

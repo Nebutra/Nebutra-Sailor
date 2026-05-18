@@ -1,5 +1,7 @@
 # @nebutra/outreach-engine
 
+Status: **WIP**
+
 Compliance-first outreach Play product.
 
 The package creates auditable campaign drafts. It does not own lead databases,

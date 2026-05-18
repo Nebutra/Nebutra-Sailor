@@ -1,5 +1,7 @@
 # @nebutra/support-deflector
 
+Status: **WIP**
+
 Confidence-gated customer support Play package.
 
 The package owns ticket triage decisions, not channel transport. Support-channel

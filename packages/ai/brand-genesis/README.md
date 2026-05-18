@@ -1,5 +1,7 @@
 # @nebutra/brand-genesis
 
+Status: **WIP**
+
 `brand-genesis` is the flagship Play package. It distills a one-sentence
 company idea into a `BrandContext`, writes `company/BRAND.md`, then delegates
 asset generation to existing media capabilities.

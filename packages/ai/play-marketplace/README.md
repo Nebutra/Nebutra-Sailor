@@ -1,5 +1,7 @@
 # @nebutra/play-marketplace
 
+Status: **WIP**
+
 Controlled Play registry surface for validating, publishing, searching, and
 installing SKILL.md Plays.
 

@@ -1,5 +1,7 @@
 # @nebutra/saga
 
+Status: **WIP**
+
 > **Status: WIP** — Not yet integrated into any production app. Do not import until this notice is removed.
 
 Saga pattern for distributed transactions.

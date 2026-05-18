@@ -1,5 +1,7 @@
 # @nebutra/idea-plaza
 
+Status: **WIP**
+
 Opt-in idea publishing and fork lineage for Nebutra ecosystem artifacts.
 
 ## Boundary

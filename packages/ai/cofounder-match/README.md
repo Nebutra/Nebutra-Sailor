@@ -1,5 +1,7 @@
 # @nebutra/cofounder-match
 
+Status: **WIP**
+
 Behavior-derived founder profiles, explainable cofounder matching, and
 mutual-consent introduction records.
 

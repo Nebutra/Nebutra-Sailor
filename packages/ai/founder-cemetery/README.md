@@ -1,5 +1,7 @@
 # @nebutra/founder-cemetery
 
+Status: **WIP**
+
 Ethical close-company flow, postmortem analysis, lesson extraction, and memorial
 publication artifacts.
 

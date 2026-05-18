@@ -54,7 +54,7 @@ you contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (21)
+## WIP packages (35)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -84,6 +84,20 @@ and missing functionality.
 | `@nebutra/provider-registry` | (consumed directly) | Local provider trait; not the canonical runtime provider registry |
 | `@nebutra/video-pipeline` | (consumed directly)  | Generation capability only; model-backed clips, ffmpeg composition, and remote quotas are adapter-gated |
 | `@nebutra/voice-realtime` | (consumed directly) | Generation capability only; realtime transport, enrollment storage, and provider sidecars are adapter-gated |
+| `@nebutra/brand-genesis` | (consumed directly)  | Play package distilling idea → BrandContext; asset generation delegated to media capabilities (still adapter-gated) |
+| `@nebutra/cofounder-match` | (consumed directly) | Layer-7 ecosystem product; matching heuristics + persistence layer pending |
+| `@nebutra/founder-cemetery` | (consumed directly) | Layer-7 ecosystem product; postmortem ingestion + curation flow pending |
+| `@nebutra/idea-plaza` | (consumed directly)   | Layer-7 ecosystem product; idea marketplace primitives pending |
+| `@nebutra/landing-builder` | (consumed directly) | Layer-6 play product; landing-page generator + capability map pending |
+| `@nebutra/outreach-engine` | (consumed directly) | Layer-6 play product; outreach campaign primitives + sidecars pending |
+| `@nebutra/play-marketplace` | (consumed directly) | Layer-7 ecosystem product; play discovery + install flow pending |
+| `@nebutra/support-deflector` | (consumed directly) | Layer-6 play product; deflection ranking + KB integration pending |
+| `@nebutra/time-machine` | (consumed directly)   | Layer-7 ecosystem product; snapshot/restore semantics + storage pending |
+| `@nebutra/knowledge-graph` | (consumed directly) | Graph-shaped knowledge primitives; production graph-store adapter sidecar-gated |
+| `@nebutra/ecosystem-safety` | (consumed directly) | Cross-package safety primitives; policy engine + audit hooks pending |
+| `@nebutra/execution-policy` | (consumed directly) | Policy enforcement contracts for agent tool calls; concrete sidecar enforcement is adapter-gated |
+| `@nebutra/local-embedding` | (consumed directly) | Local embedding provider for code-index and retrieval; model adapters and persistence are interface-only |
+| `@nebutra/knowledge-base` | (consumed directly) | Product cognition layer over existing retrieval and ingestion; production wiring + persistence pending |
 
 ## Contributing
 

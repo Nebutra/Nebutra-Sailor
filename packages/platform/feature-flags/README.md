@@ -1,5 +1,7 @@
 # @nebutra/feature-flags
 
+Status: **WIP**
+
 > **Status: WIP** — Not yet integrated into any production app. Do not import until this notice is removed.
 
 Feature flag management.

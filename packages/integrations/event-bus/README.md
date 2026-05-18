@@ -1,5 +1,7 @@
 # @nebutra/event-bus
 
+Status: **WIP**
+
 > **Status: WIP** — Partially integrated (consumed by `@nebutra/saga` and `workflows/pusher`). Not yet used by any production app.
 
 Cross-service event communication.

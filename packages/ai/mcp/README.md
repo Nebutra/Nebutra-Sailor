@@ -1,5 +1,7 @@
 # @nebutra/mcp
 
+Status: **WIP**
+
 > **Status: WIP** — Not yet integrated into any production app. Do not import until this notice is removed.
 
 Model Context Protocol (MCP) for AI agent tool calling.

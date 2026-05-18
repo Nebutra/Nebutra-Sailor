@@ -1,5 +1,7 @@
 # @nebutra/landing-builder
 
+Status: **WIP**
+
 BrandContext-first landing page Play package.
 
 This package owns Play orchestration and static site artifacts only. It does not
