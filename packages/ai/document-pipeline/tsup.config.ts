@@ -7,5 +7,10 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   target: "es2022",
-  external: ["@nebutra/content-store", "@nebutra/errors", "@nebutra/sandbox-runtime"],
+  external: [
+    "@nebutra/capability-kit/debug",
+    "@nebutra/content-store",
+    "@nebutra/errors",
+    "@nebutra/sandbox-runtime",
+  ],
 });

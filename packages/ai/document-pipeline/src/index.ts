@@ -1,5 +1,6 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, extname, join } from "node:path";
+import { readFile } from "node:fs/promises";
+import { extname, join } from "node:path";
+import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { CapabilityError } from "@nebutra/errors";
 
@@ -93,33 +94,11 @@ type RequiredTenant<T extends { readonly tenantId?: string }> = Omit<T, "tenantI
   readonly tenantId: string;
 };
 
-function debugPath(root = process.cwd()): string {
-  return join(root, ".nebutra", "debug", "document-pipeline.jsonl");
-}
-
-async function appendDebug(root: string, entry: Record<string, unknown>): Promise<void> {
-  const path = debugPath(root);
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
-}
-
 export async function readDocumentPipelineDebug(
   root = process.cwd(),
   limit = 20,
 ): Promise<unknown[]> {
-  try {
-    const raw = await readFile(debugPath(root), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("document-pipeline", { root, limit });
 }
 
 function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
@@ -172,24 +151,32 @@ export class DocumentPipeline {
         });
       }
       const parsed = await this.#sidecarParser.parse(required);
-      await appendDebug(this.#debugRoot, {
-        type: "parse",
-        tenantId,
-        parser: "sidecar",
-        path: parsed.path,
-      });
+      await appendCapabilityDebug(
+        "document-pipeline",
+        {
+          type: "parse",
+          tenantId,
+          parser: "sidecar",
+          path: parsed.path,
+        },
+        { root: this.#debugRoot },
+      );
       return parsed;
     }
 
     const raw = await readSource(request.source);
     const parsed = parseNativeDocument(required, raw, parser);
-    await appendDebug(this.#debugRoot, {
-      type: "parse",
-      tenantId,
-      parser,
-      path: parsed.path,
-      chunks: parsed.chunks.length,
-    });
+    await appendCapabilityDebug(
+      "document-pipeline",
+      {
+        type: "parse",
+        tenantId,
+        parser,
+        path: parsed.path,
+        chunks: parsed.chunks.length,
+      },
+      { root: this.#debugRoot },
+    );
     return parsed;
   }
 
@@ -200,13 +187,17 @@ export class DocumentPipeline {
     const targetPath = request.targetPath ?? parsed.path;
     const content = serializeForContentStore(parsed, request.metadata);
     await contentStore.write(targetPath, content);
-    await appendDebug(this.#debugRoot, {
-      type: "ingest",
-      tenantId,
-      path: targetPath,
-      parser: parsed.parser,
-      chunks: parsed.chunks.length,
-    });
+    await appendCapabilityDebug(
+      "document-pipeline",
+      {
+        type: "ingest",
+        tenantId,
+        path: targetPath,
+        parser: parsed.parser,
+        chunks: parsed.chunks.length,
+      },
+      { root: this.#debugRoot },
+    );
     return {
       tenantId,
       path: targetPath,

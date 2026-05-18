@@ -33,6 +33,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/event-log": "workspace:*",
     "@nebutra/sandbox-runtime": "workspace:*"

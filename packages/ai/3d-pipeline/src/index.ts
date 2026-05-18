@@ -1,5 +1,6 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { mkdir, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import {
   assetId,
   type BrandContext,
@@ -35,30 +36,8 @@ export interface MeshPipelineOptions {
   readonly root?: string;
 }
 
-function debugPath(root = process.cwd()): string {
-  return join(root, ".nebutra", "debug", "3d-pipeline.jsonl");
-}
-
-async function appendDebug(root: string, entry: Record<string, unknown>): Promise<void> {
-  const path = debugPath(root);
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
-}
-
 export async function readMeshDebug(root = process.cwd(), limit = 10): Promise<unknown[]> {
-  try {
-    const raw = await readFile(debugPath(root), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("3d-pipeline", { root, limit });
 }
 
 function gltfDocument(brand: BrandContext, intent: MeshIntent): Record<string, unknown> {
@@ -191,7 +170,7 @@ export class MeshPipeline {
       format: "gltf",
       metadata: { intent, brandSource: brand.sourcePath },
     };
-    await appendDebug(this.#root, { type: "mesh", asset });
+    await appendCapabilityDebug("3d-pipeline", { type: "mesh", asset }, { root: this.#root });
     return asset;
   }
 }

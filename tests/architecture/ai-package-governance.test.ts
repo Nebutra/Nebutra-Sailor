@@ -74,6 +74,11 @@ const GENERATION_CAPABILITY_PACKAGES = [
   "@nebutra/3d-pipeline",
 ] as const;
 
+const CAPABILITY_DX_PACKAGES = [
+  ...EXECUTION_CAPABILITY_PACKAGES,
+  ...GENERATION_CAPABILITY_PACKAGES,
+] as const;
+
 const GENERATION_CAPABILITY_FORBIDDEN_IMPORTS = [
   "@nebutra/agent-runtime",
   "@nebutra/agents",
@@ -165,6 +170,8 @@ describe("AI package architecture governance", () => {
     expect(contract).toContain("must not own Thread/Turn/Item");
     expect(contract).toContain("Generation capability tools");
     expect(contract).toContain("@nebutra/generation-context");
+    expect(contract).toContain("@nebutra/capability-kit");
+    expect(contract).toContain("@nebutra/capability-kit/debug");
     expect(contract).toContain("packages/ai/PACKAGE_MAP.md");
     expect(contract).toContain("Consolidation Rules");
     expect(contract).toContain("@nebutra/llm-gateway");
@@ -321,6 +328,42 @@ describe("AI package architecture governance", () => {
       )) {
         violations.push({ packageName, ...violation });
       }
+    }
+
+    expect(violations).toEqual([]);
+  });
+
+  it("centralizes capability DX debug JSONL storage in @nebutra/capability-kit", () => {
+    const violations: string[] = [];
+
+    for (const packageName of CAPABILITY_DX_PACKAGES) {
+      const entry = byName.get(packageName);
+      expect(entry, packageName).toBeDefined();
+      if (!entry) continue;
+
+      expect(entry.manifest.dependencies?.["@nebutra/capability-kit"], packageName).toBe(
+        "workspace:*",
+      );
+
+      for (const file of collectProductionSourceFiles(join(entry.dir, "src"))) {
+        const source = readFileSync(file, "utf8");
+        if (/function\s+debugPath\b/.test(source)) {
+          violations.push(`${file.replace(`${ROOT}/`, "")}: local debugPath`);
+        }
+        if (/function\s+appendDebug\b/.test(source)) {
+          violations.push(`${file.replace(`${ROOT}/`, "")}: local appendDebug`);
+        }
+        if (/readFile\(\s*debugPath\(/.test(source)) {
+          violations.push(`${file.replace(`${ROOT}/`, "")}: local debug reader`);
+        }
+      }
+
+      const sourceText = collectProductionSourceFiles(join(entry.dir, "src"))
+        .map((file) => readFileSync(file, "utf8"))
+        .join("\n");
+      expect(sourceText, `${packageName} should use platform debug helpers`).toContain(
+        "@nebutra/capability-kit/debug",
+      );
     }
 
     expect(violations).toEqual([]);

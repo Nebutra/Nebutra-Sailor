@@ -7,5 +7,10 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   target: "es2022",
-  external: ["@nebutra/audio-pipeline", "@nebutra/errors", "@nebutra/generation-context"],
+  external: [
+    "@nebutra/audio-pipeline",
+    "@nebutra/capability-kit/debug",
+    "@nebutra/errors",
+    "@nebutra/generation-context",
+  ],
 });

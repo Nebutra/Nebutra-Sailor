@@ -1,4 +1,8 @@
+import { mkdtemp } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { appendCapabilityDebug, capabilityDebugPath, readCapabilityDebug } from "../debug";
 import { CapabilityError, runCapabilityCli } from "../index";
 
 describe("CapabilityError", () => {
@@ -102,5 +106,29 @@ describe("runCapabilityCli", () => {
     const c = cap(["wat"]);
     await c.run();
     expect(c.unknown).toBe("wat");
+  });
+});
+
+describe("capability debug storage", () => {
+  it("normalizes debug paths to the standard capability JSONL location", async () => {
+    const root = await mkdtemp(join(tmpdir(), "capability-kit-"));
+    expect(capabilityDebugPath("Image Pipeline", root)).toBe(
+      join(root, ".nebutra", "debug", "image-pipeline.jsonl"),
+    );
+  });
+
+  it("appends timestamped JSONL entries and reads the tail", async () => {
+    const root = await mkdtemp(join(tmpdir(), "capability-kit-"));
+    await appendCapabilityDebug("demo", { type: "first" }, { root });
+    await appendCapabilityDebug("demo", { type: "second" }, { root });
+
+    await expect(readCapabilityDebug("demo", { root, limit: 1 })).resolves.toEqual([
+      expect.objectContaining({ type: "second", at: expect.any(String) }),
+    ]);
+  });
+
+  it("returns an empty debug log when no file exists", async () => {
+    const root = await mkdtemp(join(tmpdir(), "capability-kit-"));
+    await expect(readCapabilityDebug("missing", { root })).resolves.toEqual([]);
   });
 });

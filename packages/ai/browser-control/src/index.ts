@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 
 export type BrowserStrategy = "explore" | "deterministic" | "replay";
@@ -85,30 +86,8 @@ type RequiredTenant<T extends { readonly tenantId?: string }> = Omit<T, "tenantI
   readonly tenantId: string;
 };
 
-function debugPath(root = process.cwd()): string {
-  return join(root, ".nebutra", "debug", "browser-control.jsonl");
-}
-
-async function appendDebug(root: string, entry: Record<string, unknown>): Promise<void> {
-  const path = debugPath(root);
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
-}
-
 export async function readBrowserDebug(root = process.cwd(), limit = 10): Promise<unknown[]> {
-  try {
-    const raw = await readFile(debugPath(root), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("browser-control", { root, limit });
 }
 
 function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
@@ -337,7 +316,11 @@ export class BrowserControl {
       });
     }
     const result = await this.#deterministic.replay(recording);
-    await appendDebug(this.#root, { type: "replay", tenantId, sessionId, result });
+    await appendCapabilityDebug(
+      "browser-control",
+      { type: "replay", tenantId, sessionId, result },
+      { root: this.#root },
+    );
     return result;
   }
 
@@ -352,7 +335,11 @@ export class BrowserControl {
         suggestion: "Configure the first-run browser executor to explore task-shaped pages.",
       });
     }
-    await appendDebug(this.#root, { type: "doctor", checks });
+    await appendCapabilityDebug(
+      "browser-control",
+      { type: "doctor", checks },
+      { root: this.#root },
+    );
     return checks;
   }
 
@@ -395,13 +382,17 @@ export class BrowserControl {
       actions: result.actions,
     };
     await this.#recorder.save(recording);
-    await appendDebug(this.#root, {
-      type: "recording",
-      tenantId: task.tenantId,
-      sessionId,
-      strategy: result.strategy,
-      actions: result.actions.length,
-    });
+    await appendCapabilityDebug(
+      "browser-control",
+      {
+        type: "recording",
+        tenantId: task.tenantId,
+        sessionId,
+        strategy: result.strategy,
+        actions: result.actions.length,
+      },
+      { root: this.#root },
+    );
   }
 }
 

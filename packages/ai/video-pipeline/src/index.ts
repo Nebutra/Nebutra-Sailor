@@ -1,5 +1,6 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import {
   assetId,
   type BrandContext,
@@ -55,30 +56,8 @@ export interface VideoPipelineOptions {
   readonly root?: string;
 }
 
-function debugPath(root = process.cwd()): string {
-  return join(root, ".nebutra", "debug", "video-pipeline.jsonl");
-}
-
-async function appendDebug(root: string, entry: Record<string, unknown>): Promise<void> {
-  const path = debugPath(root);
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
-}
-
 export async function readVideoDebug(root = process.cwd(), limit = 10): Promise<unknown[]> {
-  try {
-    const raw = await readFile(debugPath(root), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("video-pipeline", { root, limit });
 }
 
 function sceneCount(durationS: number): number {
@@ -142,7 +121,7 @@ export class VideoPipeline {
       storyboardId: storyboard.id,
       metadata: { scenes: storyboard.scenes.length },
     };
-    await appendDebug(this.#root, { type: "render", asset });
+    await appendCapabilityDebug("video-pipeline", { type: "render", asset }, { root: this.#root });
     return asset;
   }
 

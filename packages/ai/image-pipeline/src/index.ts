@@ -1,5 +1,6 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 import {
   assetId,
@@ -35,30 +36,8 @@ export interface ImagePipelineOptions {
   readonly comfyUrl?: string;
 }
 
-function debugPath(root = process.cwd()): string {
-  return join(root, ".nebutra", "debug", "image-pipeline.jsonl");
-}
-
-async function appendDebug(root: string, entry: Record<string, unknown>): Promise<void> {
-  const path = debugPath(root);
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
-}
-
 export async function readImageDebug(root = process.cwd(), limit = 10): Promise<unknown[]> {
-  try {
-    const raw = await readFile(debugPath(root), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("image-pipeline", { root, limit });
 }
 
 function intentLabel(intent: ImageIntent): string {
@@ -138,7 +117,11 @@ export class ImagePipeline {
       format: "svg",
       metadata: { intent, brandSource: brand.sourcePath },
     };
-    await appendDebug(this.#root, { type: "generate", asset });
+    await appendCapabilityDebug(
+      "image-pipeline",
+      { type: "generate", asset },
+      { root: this.#root },
+    );
     return asset;
   }
 

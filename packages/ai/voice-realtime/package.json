@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@nebutra/audio-pipeline": "workspace:*",
+    "@nebutra/capability-kit": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/generation-context": "workspace:*"
   },

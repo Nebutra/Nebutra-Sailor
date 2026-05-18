@@ -1,6 +1,7 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { createToneWav } from "@nebutra/audio-pipeline";
+import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import {
   assetId,
   type BrandContext,
@@ -49,30 +50,8 @@ export interface VoiceRealtimeOptions {
   readonly root?: string;
 }
 
-function debugPath(root = process.cwd()): string {
-  return join(root, ".nebutra", "debug", "voice-realtime.jsonl");
-}
-
-async function appendDebug(root: string, entry: Record<string, unknown>): Promise<void> {
-  const path = debugPath(root);
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
-}
-
 export async function readVoiceDebug(root = process.cwd(), limit = 10): Promise<unknown[]> {
-  try {
-    const raw = await readFile(debugPath(root), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("voice-realtime", { root, limit });
 }
 
 export class VoiceRealtime {
@@ -90,7 +69,11 @@ export class VoiceRealtime {
       room: `voice_${input.tenantId}_${input.threadId}`,
       state: "listening",
     };
-    await appendDebug(this.#root, { type: "session", session });
+    await appendCapabilityDebug(
+      "voice-realtime",
+      { type: "session", session },
+      { root: this.#root },
+    );
     return session;
   }
 
@@ -123,7 +106,11 @@ export class VoiceRealtime {
       voiceProfileId: request.voiceProfileId ?? "default",
       metadata: { brandSource: brand.sourcePath },
     };
-    await appendDebug(this.#root, { type: "narration", asset });
+    await appendCapabilityDebug(
+      "voice-realtime",
+      { type: "narration", asset },
+      { root: this.#root },
+    );
     return asset;
   }
 
@@ -137,7 +124,11 @@ export class VoiceRealtime {
       consentRecordedAt: new Date().toISOString(),
       sampleCount: input.samplePaths?.length ?? 0,
     };
-    await appendDebug(this.#root, { type: "enroll", profile });
+    await appendCapabilityDebug(
+      "voice-realtime",
+      { type: "enroll", profile },
+      { root: this.#root },
+    );
     return profile;
   }
 

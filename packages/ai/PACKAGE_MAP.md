@@ -38,5 +38,9 @@ the machine-readable source of truth; this file is the human map.
 4. Capability packages expose deterministic APIs, doctors, debug logs, examples,
    and adapter ports. They do not own prompts, agents, provider routing,
    tenant billing, approval lifecycle, or runtime state.
-5. Legacy experiments may remain only while marked WIP and blocked from new
+5. Cross-capability DX primitives live in the platform package
+   `@nebutra/capability-kit`: capability errors, doctor/debug CLI dispatch, and
+   `.nebutra/debug/<capability>.jsonl` storage. AI capability packages depend on
+   it instead of each owning a copy.
+6. Legacy experiments may remain only while marked WIP and blocked from new
    production consumers by architecture tests.

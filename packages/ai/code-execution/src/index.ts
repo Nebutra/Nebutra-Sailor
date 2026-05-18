@@ -1,5 +1,6 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join, normalize } from "node:path";
+import { readFile, writeFile } from "node:fs/promises";
+import { join, normalize } from "node:path";
+import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 import {
   type ExecRequest,
@@ -141,30 +142,8 @@ export interface CodeExecutorOptions {
   readonly policy?: readonly PolicyRule[];
 }
 
-function debugPath(root = process.cwd()): string {
-  return join(root, ".nebutra", "debug", "code-execution.jsonl");
-}
-
-async function appendDebug(root: string, entry: Record<string, unknown>): Promise<void> {
-  const path = debugPath(root);
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
-}
-
 export async function readExecutionDebug(root = process.cwd(), limit = 20): Promise<unknown[]> {
-  try {
-    const raw = await readFile(debugPath(root), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("code-execution", { root, limit });
 }
 
 function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
@@ -227,7 +206,11 @@ export class CodeExecutor {
       observation = errorObservation(actionId, cause);
     }
 
-    await appendDebug(this.#debugRoot, { type: "action", tenantId, action, observation });
+    await appendCapabilityDebug(
+      "code-execution",
+      { type: "action", tenantId, action, observation },
+      { root: this.#debugRoot },
+    );
     return observation;
   }
 
@@ -237,7 +220,11 @@ export class CodeExecutor {
     readonly policies: number;
   }> {
     const sandbox = await this.#sandboxRuntime.doctor();
-    await appendDebug(this.#debugRoot, { type: "doctor", sandbox });
+    await appendCapabilityDebug(
+      "code-execution",
+      { type: "doctor", sandbox },
+      { root: this.#debugRoot },
+    );
     return { capability: "code-execution", sandbox, policies: this.#policy.length };
   }
 

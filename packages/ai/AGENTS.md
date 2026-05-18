@@ -17,6 +17,7 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | Execution capability tools | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline` | Deterministic or semi-deterministic tool execution. They must not own Thread/Turn/Item state, prompt generation, model/provider execution, sub-agent scheduling, or approval lifecycle. |
 | Generation capability tools | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media generation surfaces. They may expose local deterministic fallbacks and sidecar adapter ports, but must not own Thread/Turn/Item state, prompt orchestration, model/provider routing, or approval lifecycle. |
 | Shared generation contract | `@nebutra/generation-context` | The single TypeScript owner for `BrandContext`, generated-asset provenance, and media license metadata. File truth still lives in content-store. |
+| Capability DX primitives | `@nebutra/capability-kit` | Platform package outside `packages/ai` that owns suggestion-bearing capability errors, doctor/debug CLI switching, and `.nebutra/debug/<capability>.jsonl` helpers. Capability packages must import these primitives instead of re-implementing them. |
 | RAG/indexing/dataflow | `@nebutra/knowledge-rag`, `@nebutra/code-index`, `@nebutra/reel`, `@nebutra/atelier-canvas`, `@nebutra/cinema` | Product capabilities built on injected model/vector/store/tool ports. |
 | Legacy local experiments | `@nebutra/llm-gateway`, `@nebutra/provider-registry` | `@nebutra/llm-gateway` is not the production gateway; `@nebutra/provider-registry` is a local-provider experiment. Do not add new production consumers. |
 
@@ -35,7 +36,10 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 4. Capability packages expose adapters and deterministic APIs; they do not own
    prompts, provider routing, tenant billing, approval lifecycle, or runtime
    state.
-5. Legacy experiments stay WIP and blocked from new production consumers until
+5. Capability debug storage, CLI command dispatch, and suggestion-bearing base
+   errors belong to `@nebutra/capability-kit`; do not hand-roll debug JSONL
+   helpers inside individual capability packages.
+6. Legacy experiments stay WIP and blocked from new production consumers until
    they are either retired or promoted through a separate RFC.
 
 ## 2026 AI SaaS Defaults
@@ -74,6 +78,9 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 - Generation capability packages must import `BrandContext` from
   `@nebutra/generation-context`; do not define parallel brand schemas inside
   individual media packages.
+- Execution and generation capability packages must import debug JSONL helpers
+  from `@nebutra/capability-kit/debug`; do not define local `debugPath`,
+  `appendDebug`, or `readFile(debugPath(...))` variants.
 - Generation capability packages must not import `@nebutra/agent-runtime`,
   `@nebutra/agents`, `ai`, `@nebutra/llm-gateway`, or
   `@nebutra/provider-registry` from production source.
