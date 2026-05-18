@@ -1,0 +1,63 @@
+{
+  "name": "@nebutra/knowledge-base",
+  "version": "0.1.0",
+  "description": "Tenant-scoped company knowledge product layer over content-store, document-pipeline, and knowledge-rag",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "knowledge-product",
+    "requires": [
+      "@nebutra/content-store for file truth",
+      "@nebutra/document-pipeline for parsing and ingestion",
+      "@nebutra/knowledge-rag for retrieval primitives",
+      "@nebutra/integration-vault for external connector invocation"
+    ],
+    "gaps": [
+      "Connectors are port-backed and need real provider wiring per SaaS source",
+      "Entity/relation extraction is deterministic and lightweight until an LLM extractor is injected",
+      "Graph storage is in-memory; durable SQL graph tables are still pending"
+    ],
+    "featureId": "knowledge-base",
+    "category": "ai",
+    "summary": "Product cognition layer for connector sync, memory classes, entity graph, citations, and explainable tenant-scoped search"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/content-store": "workspace:*",
+    "@nebutra/document-pipeline": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/integration-vault": "workspace:*",
+    "@nebutra/knowledge-rag": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/knowledge-base#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/knowledge-base"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

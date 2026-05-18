@@ -15,6 +15,7 @@ const ALLOWED_SURFACES = [
   "gateway-experiment",
   "generation-capability",
   "legacy-experiment",
+  "knowledge-product",
   "media-graph",
   "model-runtime",
   "persistence",
@@ -491,6 +492,31 @@ describe("AI package architecture governance", () => {
         expect(source, file.replace(`${ROOT}/`, "")).not.toMatch(/function\s+hashToken\b/);
       }
     }
+  });
+
+  it("keeps knowledge-base above existing ingestion and retrieval primitives", () => {
+    const knowledgeBase = byName.get("@nebutra/knowledge-base");
+    const knowledgeRag = byName.get("@nebutra/knowledge-rag");
+    const contentStore = byName.get("@nebutra/content-store");
+    const documentPipeline = byName.get("@nebutra/document-pipeline");
+    expect(knowledgeBase, "@nebutra/knowledge-base").toBeDefined();
+    expect(knowledgeRag, "@nebutra/knowledge-rag").toBeDefined();
+    expect(contentStore, "@nebutra/content-store").toBeDefined();
+    expect(documentPipeline, "@nebutra/document-pipeline").toBeDefined();
+    if (!knowledgeBase || !knowledgeRag || !contentStore || !documentPipeline) return;
+
+    expect(knowledgeBase.manifest.nebutra?.surface).toBe("knowledge-product");
+    expect(knowledgeBase.manifest.dependencies?.["@nebutra/knowledge-rag"]).toBe("workspace:*");
+    expect(knowledgeBase.manifest.dependencies?.["@nebutra/content-store"]).toBe("workspace:*");
+    expect(knowledgeBase.manifest.dependencies?.["@nebutra/document-pipeline"]).toBe("workspace:*");
+
+    const source = readFileSync(join(knowledgeBase.dir, "src", "index.ts"), "utf8");
+    expect(source).toContain("@nebutra/knowledge-rag");
+    expect(source).toContain("@nebutra/document-pipeline");
+    expect(source).toContain("@nebutra/content-store");
+    expect(source).not.toMatch(/class\s+LocalHashEmbedder\b/);
+    expect(source).not.toMatch(/class\s+RecursiveCharChunker\b/);
+    expect(source).not.toMatch(/class\s+InMemoryVectorStore\b/);
   });
 
   it("keeps SKILL.md parsing ownership in @nebutra/tool-registry", () => {

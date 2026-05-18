@@ -19,6 +19,7 @@ the machine-readable source of truth; this file is the human map.
 | `support-contract` | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding` | Shared typed contracts used across runtime, persistence, semantic-index, and capability packages. Must stay dependency-light. |
 | `persistence` | `@nebutra/content-store`, `@nebutra/event-log` | File truth, frontmatter/chunking helpers, indexing, immutable event history, rollback, and branch state. |
 | `semantic-index` | `@nebutra/code-index`, `@nebutra/knowledge-rag` | Retrieval/indexing grammar over injected embedding/vector/search ports. |
+| `knowledge-product` | `@nebutra/knowledge-base` | Company cognition over connector sync state, four memory classes, entity/relation graph, citations, and explainable search. |
 | `media-graph` | `@nebutra/reel` | Typed media graph, storyboard shot/scene/plan primitives, IO envelope, and graph persistence. |
 | `creative-surface` | `@nebutra/atelier-canvas` | Canvas/scene editing surface over lower graph/storage primitives. |
 | `product-orchestration` | `@nebutra/cinema`, `@nebutra/play-loader` | Declarative product workflows over lower runtime/tool/media surfaces. |
@@ -62,5 +63,9 @@ the machine-readable source of truth; this file is the human map.
 11. `@nebutra/agent-runtime` owns `RuntimeToolRegistry` for in-memory dispatch
     only. That dispatcher is not the SKILL.md package registry and should not be
     merged with `@nebutra/tool-registry`.
-12. Legacy experiments may remain only while marked WIP and blocked from new
+12. `@nebutra/knowledge-base` owns company cognition, not retrieval mechanics.
+    It consumes `@nebutra/knowledge-rag`, `@nebutra/content-store`, and
+    `@nebutra/document-pipeline` instead of defining local chunk/embed/vector
+    primitives.
+13. Legacy experiments may remain only while marked WIP and blocked from new
    production consumers by architecture tests.

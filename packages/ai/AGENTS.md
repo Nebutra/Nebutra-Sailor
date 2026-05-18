@@ -20,6 +20,7 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | Persistence contracts | `@nebutra/content-store` | File truth, frontmatter parsing/serialization, paragraph chunk helpers, and rebuildable indexes. Parser packages consume these helpers rather than defining file-truth grammar. |
 | Capability DX primitives | `@nebutra/capability-kit` | Platform package outside `packages/ai` that owns suggestion-bearing capability errors, doctor/debug CLI switching, and `.nebutra/debug/<capability>.jsonl` helpers. Capability packages must import these primitives instead of re-implementing them. |
 | RAG/indexing/dataflow | `@nebutra/knowledge-rag`, `@nebutra/code-index`, `@nebutra/reel`, `@nebutra/atelier-canvas`, `@nebutra/cinema` | Product capabilities built on injected model/vector/store/tool ports. |
+| Knowledge product layer | `@nebutra/knowledge-base` | Company cognition over connectors, memory, graph, citations, and explainable search. It consumes lower retrieval/ingestion primitives and must not redefine them. |
 | Legacy local experiments | `@nebutra/llm-gateway`, `@nebutra/provider-registry` | `@nebutra/llm-gateway` is not the production gateway; `@nebutra/provider-registry` is a local-provider experiment. Do not add new production consumers. |
 
 The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
@@ -62,7 +63,12 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 11. Runtime tool dispatch belongs to `@nebutra/agent-runtime` as
    `RuntimeToolRegistry`. Do not confuse it with the SKILL.md package registry
    in `@nebutra/tool-registry`.
-12. Legacy experiments stay WIP and blocked from new production consumers until
+12. Company knowledge cognition belongs to `@nebutra/knowledge-base`.
+   It may own connector sync state, memory classes, entity/relation records,
+   citations, and explain output. It must consume `@nebutra/content-store`,
+   `@nebutra/document-pipeline`, and `@nebutra/knowledge-rag` rather than
+   defining another parser, chunker, embedder, vector store, or reranker.
+13. Legacy experiments stay WIP and blocked from new production consumers until
    they are either retired or promoted through a separate RFC.
 
 ## 2026 AI SaaS Defaults
@@ -125,6 +131,9 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
   dispatch. `ToolRegistry` remains a compatibility alias in
   `@nebutra/agent-runtime`, while `@nebutra/tool-registry` remains the package
   name for SKILL.md registry semantics.
+- `@nebutra/knowledge-base` must not import or define local embedding/chunking
+  implementations. Use `@nebutra/knowledge-rag` for retrieval, `@nebutra/content-store`
+  for file truth, and `@nebutra/document-pipeline` for source parsing.
 - Product capability packages should not own billing deduction, gateway auth, or
   provider-key selection.
 - Examples may import legacy packages to demonstrate migration, but production
