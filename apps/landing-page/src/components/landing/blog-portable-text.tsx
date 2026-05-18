@@ -2,7 +2,7 @@ import { getImageUrl } from "@nebutra/sanity/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
 import type { PortableTextBlock, PortableTextSpan } from "@/lib/blog";
-import { BlogTemplateCopyButton } from "./blog-template-copy-button";
+import { BlogCopyButton } from "./blog-copy-button";
 
 const TEMPLATE_PLACEHOLDER_MARK = "templatePlaceholder";
 const TEMPLATE_PLACEHOLDER_PATTERN = /\[[^[\]\n]{1,120}\]/g;
@@ -107,8 +107,15 @@ function createPortableTextComponents(
 
         return (
           <blockquote className="group relative my-7 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-5 py-4 text-base font-medium leading-8 text-[var(--neutral-12)]">
-            <div className="pr-0 sm:pr-28">{children}</div>
-            <BlogTemplateCopyButton value={text} label={copyLabel} copiedLabel={copiedLabel} />
+            <div className="pr-10">{children}</div>
+            <div className="absolute right-3 top-3">
+              <BlogCopyButton
+                value={text}
+                label={copyLabel}
+                copiedLabel={copiedLabel}
+                variant="icon"
+              />
+            </div>
           </blockquote>
         );
       },

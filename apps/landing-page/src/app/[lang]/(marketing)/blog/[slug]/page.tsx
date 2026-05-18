@@ -10,6 +10,7 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { BlogCopyButton } from "@/components/landing/blog-copy-button";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
 import { type Locale, routing } from "@/i18n/routing";
 import {
@@ -18,6 +19,8 @@ import {
   getLocalizedPostForSiblingSlug,
   getPostBySlug,
   getPostTranslation,
+  type PortableTextBlock,
+  type PortableTextSpan,
   toBlogLanguage,
 } from "@/lib/blog";
 import { getFallbackBlogCover } from "@/lib/blog-covers";
@@ -75,6 +78,62 @@ function extractBodyText(post: BlogPostWithSource): string {
       ?.flatMap((block) => block.children?.map((child) => child.text ?? "") ?? [])
       .join(" ") ?? "";
   return `${post.title} ${post.excerpt} ${bodyText}`.trim();
+}
+
+function getMarkHref(block: PortableTextBlock, mark: string): string | null {
+  const markDef = block.markDefs?.find((def) => def._key === mark);
+  return typeof markDef?.href === "string" ? markDef.href : null;
+}
+
+function getSpanCopyText(span: PortableTextSpan, block: PortableTextBlock): string {
+  let text = span.text ?? "";
+  for (const mark of span.marks ?? []) {
+    const href = getMarkHref(block, mark);
+    if (href) {
+      text = `[${text}](${href})`;
+    } else if (mark === "code") {
+      text = `\`${text}\``;
+    } else if (mark === "strong") {
+      text = `**${text}**`;
+    } else if (mark === "em") {
+      text = `*${text}*`;
+    }
+  }
+  return text;
+}
+
+function getPortableBlockCopyText(block: PortableTextBlock): string | null {
+  if (block._type !== "block") return null;
+
+  const text =
+    block.children
+      ?.map((child) => getSpanCopyText(child, block))
+      .join("")
+      .trim() ?? "";
+  if (!text) return null;
+
+  if (block.listItem) {
+    const indent = "  ".repeat(Math.max((block.level ?? 1) - 1, 0));
+    return block.listItem === "number" ? `${indent}1. ${text}` : `${indent}- ${text}`;
+  }
+
+  if (block.style === "h2") return `## ${text}`;
+  if (block.style === "h3") return `### ${text}`;
+  if (block.style === "h4") return `#### ${text}`;
+  if (block.style === "blockquote") return `> ${text}`;
+
+  return text;
+}
+
+function getPostCopyText(post: BlogPostWithSource): string {
+  const parts = [`# ${post.title}`];
+  if (post.excerpt) parts.push(post.excerpt);
+
+  const body =
+    post.body?.map(getPortableBlockCopyText).filter((part): part is string => Boolean(part)) ?? [];
+  parts.push(...body);
+
+  return parts.join("\n\n").trim();
 }
 
 function estimateReadTime(post: BlogPostWithSource, isZh: boolean): string {
@@ -182,6 +241,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
       })
     : null;
   const authorName = getAuthorName(post.author);
+  const articleCopyText = getPostCopyText(post);
 
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
@@ -247,16 +307,23 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                     {estimateReadTime(post, isZh)}
                   </span>
                 </div>
-                {translation && (
-                  <a
-                    href={languageSwitchPostHref(translationLocale, translation.slug)}
-                    hrefLang={targetLanguage === "zh" ? "zh-CN" : "en"}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
-                  >
-                    <Globe className="size-4" aria-hidden />
-                    {targetLanguage === "zh" ? "阅读中文版" : "Read in English"}
-                  </a>
-                )}
+                <div className="flex flex-wrap gap-2">
+                  <BlogCopyButton
+                    value={articleCopyText}
+                    label={isZh ? "复制原文" : "Copy original"}
+                    copiedLabel={isZh ? "已复制" : "Copied"}
+                  />
+                  {translation && (
+                    <a
+                      href={languageSwitchPostHref(translationLocale, translation.slug)}
+                      hrefLang={targetLanguage === "zh" ? "zh-CN" : "en"}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                    >
+                      <Globe className="size-4" aria-hidden />
+                      {targetLanguage === "zh" ? "阅读中文版" : "Read in English"}
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </AnimateIn>
@@ -280,7 +347,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
           <div className="mx-auto mt-10 max-w-3xl">
             <BlogPortableText
               body={post.body}
-              copyLabel={isZh ? "复制原文" : "Copy original"}
+              copyLabel={isZh ? "复制此段" : "Copy block"}
               copiedLabel={isZh ? "已复制" : "Copied"}
             />
           </div>
