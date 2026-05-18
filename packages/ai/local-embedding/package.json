@@ -1,0 +1,54 @@
+{
+  "name": "@nebutra/local-embedding",
+  "version": "0.1.0",
+  "description": "Deterministic zero-config local text embedding primitive shared by file and RAG indexes",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "requires": [
+      "@nebutra/content-store consumes this for local vector indexing",
+      "@nebutra/knowledge-rag consumes this for zero-config retrieval"
+    ],
+    "gaps": [
+      "This is deterministic local embedding, not a provider-quality semantic model",
+      "No multilingual tokenizer beyond Unicode letter/number tokenization",
+      "No persisted model version registry yet"
+    ],
+    "featureId": "local-embedding",
+    "category": "ai",
+    "summary": "Single owner for deterministic zero-config local embedding semantics"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/local-embedding#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/local-embedding"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

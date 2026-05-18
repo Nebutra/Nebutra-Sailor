@@ -16,7 +16,7 @@ the machine-readable source of truth; this file is the human map.
 | `execution-router` | `@nebutra/sandbox-runtime` | Owns sandbox provider routing and execution isolation. |
 | `execution-capability` | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline` | Tool-shaped execution abilities. No runtime state or model ownership. |
 | `generation-capability` | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media abilities. No runtime state or model ownership. |
-| `support-contract` | `@nebutra/generation-context`, `@nebutra/execution-policy` | Shared typed contracts used across runtime and capability packages. Must stay dependency-light. |
+| `support-contract` | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding` | Shared typed contracts used across runtime, persistence, semantic-index, and capability packages. Must stay dependency-light. |
 | `persistence` | `@nebutra/content-store`, `@nebutra/event-log` | File truth, frontmatter/chunking helpers, indexing, immutable event history, rollback, and branch state. |
 | `semantic-index` | `@nebutra/code-index`, `@nebutra/knowledge-rag` | Retrieval/indexing grammar over injected embedding/vector/search ports. |
 | `media-graph` | `@nebutra/reel` | Typed media graph, storyboard shot/scene/plan primitives, IO envelope, and graph persistence. |
@@ -52,5 +52,9 @@ the machine-readable source of truth; this file is the human map.
    `@nebutra/content-store`. Parser packages such as
    `@nebutra/document-pipeline` consume those helpers instead of maintaining
    parallel Markdown frontmatter semantics.
-9. Legacy experiments may remain only while marked WIP and blocked from new
+9. Deterministic zero-config embeddings are owned by
+   `@nebutra/local-embedding`. `@nebutra/content-store` and
+   `@nebutra/knowledge-rag` may configure dimensions, but the hashing/token
+   semantics stay single-owner.
+10. Legacy experiments may remain only while marked WIP and blocked from new
    production consumers by architecture tests.

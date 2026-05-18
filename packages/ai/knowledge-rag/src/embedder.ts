@@ -9,25 +9,9 @@
 //   fallback chain) when real embeddings are configured.
 // =============================================================================
 
+import { embedTextLocal } from "@nebutra/local-embedding";
 import { KnowledgeRagError } from "./errors";
 import type { Embedder } from "./types";
-
-/** FNV-1a 32-bit hash — fast, deterministic, well-distributed. */
-function fnv1a(input: string): number {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < input.length; i++) {
-    h ^= input.charCodeAt(i);
-    h = Math.imul(h, 0x01000193);
-  }
-  return h >>> 0;
-}
-
-function tokenize(text: string): string[] {
-  return text
-    .toLowerCase()
-    .split(/[^a-z0-9]+/)
-    .filter((t) => t.length > 0);
-}
 
 export class LocalHashEmbedder implements Embedder {
   readonly name = "local-hash";
@@ -45,34 +29,7 @@ export class LocalHashEmbedder implements Embedder {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async embed(texts: string[]): Promise<number[][]> {
-    return texts.map((t) => this.embedOne(t));
-  }
-
-  private embedOne(text: string): number[] {
-    const vec = new Array<number>(this.dim).fill(0);
-    const tokens = tokenize(text);
-    for (const tok of tokens) {
-      // Signed feature hashing reduces collision bias.
-      const h = fnv1a(tok);
-      const idx = h % this.dim;
-      const sign = (h & 1) === 0 ? 1 : -1;
-      vec[idx]! += sign;
-      // Character bigrams add sub-word locality (typo / morphology robustness).
-      for (let i = 0; i < tok.length - 1; i++) {
-        const bg = fnv1a(`#${tok.slice(i, i + 2)}`);
-        vec[bg % this.dim]! += (bg & 1) === 0 ? 0.5 : -0.5;
-      }
-    }
-    let norm = 0;
-    for (const v of vec) norm += v * v;
-    norm = Math.sqrt(norm);
-    if (norm === 0) {
-      // Empty / symbol-only text — deterministic unit vector on axis 0.
-      vec[0] = 1;
-      return vec;
-    }
-    for (let i = 0; i < vec.length; i++) vec[i]! /= norm;
-    return vec;
+    return texts.map((text) => embedTextLocal(text, { dimensions: this.dim }));
   }
 }
 

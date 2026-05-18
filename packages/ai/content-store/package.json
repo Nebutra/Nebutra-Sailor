@@ -24,6 +24,7 @@
   "dependencies": {
     "@dao-xyz/sqlite3-vec": "0.0.19",
     "@nebutra/errors": "workspace:*",
+    "@nebutra/local-embedding": "workspace:*",
     "better-sqlite3": "12.10.0",
     "fastembed": "2.1.0"
   },

@@ -3,6 +3,7 @@ import { createRequire } from "node:module";
 import { dirname, join, normalize, relative } from "node:path";
 import type { Database as VecDatabase, Statement as VecStatement } from "@dao-xyz/sqlite3-vec";
 import { CapabilityError } from "@nebutra/errors";
+import { embedTextLocalFloat32, tokenizeLocalEmbeddingText } from "@nebutra/local-embedding";
 
 export interface ContentStoreOptions {
   readonly tenantId?: string;
@@ -145,39 +146,14 @@ async function walk(dir: string): Promise<string[]> {
   return files;
 }
 
-function tokenize(value: string): string[] {
-  return value.toLowerCase().match(/[\p{L}\p{N}_-]+/gu) ?? [];
-}
-
 function escapeFtsQuery(query: string): string {
-  return tokenize(query)
+  return tokenizeLocalEmbeddingText(query)
     .map((term) => `"${term.replaceAll('"', '""')}"`)
     .join(" ");
 }
 
-function hashToken(token: string): number {
-  let hash = 2_166_136_261;
-  for (const char of token) {
-    hash ^= char.codePointAt(0) ?? 0;
-    hash = Math.imul(hash, 16_777_619);
-  }
-  return hash >>> 0;
-}
-
 function embedText(value: string): Float32Array {
-  const vector = new Float32Array(VECTOR_DIMENSIONS);
-  for (const token of tokenize(value)) {
-    const hash = hashToken(token);
-    const index = hash % VECTOR_DIMENSIONS;
-    vector[index] = (vector[index] ?? 0) + (hash & 1 ? 1 : -1);
-  }
-  const norm = Math.sqrt(vector.reduce((sum, part) => sum + part * part, 0));
-  if (norm > 0) {
-    for (let index = 0; index < vector.length; index += 1) {
-      vector[index] = (vector[index] ?? 0) / norm;
-    }
-  }
-  return vector;
+  return embedTextLocalFloat32(value, { dimensions: VECTOR_DIMENSIONS });
 }
 
 function vectorBlob(vector: Float32Array): Uint8Array {

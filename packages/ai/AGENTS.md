@@ -16,7 +16,7 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | Tool integration | `@nebutra/mcp`, `@nebutra/tool-registry`, `@nebutra/sandbox-runtime` | MCP/tool discovery, consent, audit, and sandbox routing boundaries. |
 | Execution capability tools | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline` | Deterministic or semi-deterministic tool execution. They must not own Thread/Turn/Item state, prompt generation, model/provider execution, sub-agent scheduling, or approval lifecycle. |
 | Generation capability tools | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media generation surfaces. They may expose local deterministic fallbacks and sidecar adapter ports, but must not own Thread/Turn/Item state, prompt orchestration, model/provider routing, or approval lifecycle. |
-| Shared support contracts | `@nebutra/generation-context`, `@nebutra/execution-policy` | Single TypeScript owners for facts consumed across surfaces: `BrandContext` and command permission/approval primitives. |
+| Shared support contracts | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding` | Single TypeScript owners for facts consumed across surfaces: `BrandContext`, command permission/approval primitives, and deterministic local embeddings. |
 | Persistence contracts | `@nebutra/content-store` | File truth, frontmatter parsing/serialization, paragraph chunk helpers, and rebuildable indexes. Parser packages consume these helpers rather than defining file-truth grammar. |
 | Capability DX primitives | `@nebutra/capability-kit` | Platform package outside `packages/ai` that owns suggestion-bearing capability errors, doctor/debug CLI switching, and `.nebutra/debug/<capability>.jsonl` helpers. Capability packages must import these primitives instead of re-implementing them. |
 | RAG/indexing/dataflow | `@nebutra/knowledge-rag`, `@nebutra/code-index`, `@nebutra/reel`, `@nebutra/atelier-canvas`, `@nebutra/cinema` | Product capabilities built on injected model/vector/store/tool ports. |
@@ -50,7 +50,10 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
    chunk helpers belong to `@nebutra/content-store`. Document ingestion
    packages may parse external formats, but must not define a parallel
    frontmatter grammar.
-9. Legacy experiments stay WIP and blocked from new production consumers until
+9. Deterministic zero-config embeddings belong to `@nebutra/local-embedding`.
+   Persistence and RAG packages may choose different dimensions, but must not
+   define parallel local hashing/tokenization algorithms.
+10. Legacy experiments stay WIP and blocked from new production consumers until
    they are either retired or promoted through a separate RFC.
 
 ## 2026 AI SaaS Defaults
@@ -103,6 +106,9 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 - `@nebutra/document-pipeline` must consume frontmatter and paragraph helpers
   from `@nebutra/content-store`; file-truth schema parsing belongs to
   persistence, not parser adapters.
+- `@nebutra/content-store` and `@nebutra/knowledge-rag` must consume
+  deterministic local embedding helpers from `@nebutra/local-embedding`; do not
+  duplicate FNV/hash embedding logic inside either package.
 - Product capability packages should not own billing deduction, gateway auth, or
   provider-key selection.
 - Examples may import legacy packages to demonstrate migration, but production

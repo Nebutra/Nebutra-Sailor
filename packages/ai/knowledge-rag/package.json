@@ -43,6 +43,7 @@
   "dependencies": {
     "@nebutra/agents": "workspace:*",
     "@nebutra/errors": "workspace:*",
+    "@nebutra/local-embedding": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/search": "workspace:*",
     "@nebutra/tenant-store": "workspace:*",

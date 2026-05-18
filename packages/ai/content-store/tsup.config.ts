@@ -7,5 +7,11 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   target: "es2022",
-  external: ["@nebutra/errors", "fastembed", "better-sqlite3", "@dao-xyz/sqlite3-vec"],
+  external: [
+    "@nebutra/errors",
+    "@nebutra/local-embedding",
+    "fastembed",
+    "better-sqlite3",
+    "@dao-xyz/sqlite3-vec",
+  ],
 });

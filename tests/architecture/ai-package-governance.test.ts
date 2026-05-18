@@ -171,6 +171,7 @@ describe("AI package architecture governance", () => {
     expect(contract).toContain("Generation capability tools");
     expect(contract).toContain("@nebutra/generation-context");
     expect(contract).toContain("@nebutra/execution-policy");
+    expect(contract).toContain("@nebutra/local-embedding");
     expect(contract).toContain("@nebutra/capability-kit");
     expect(contract).toContain("@nebutra/capability-kit/debug");
     expect(contract).toContain("packages/ai/PACKAGE_MAP.md");
@@ -464,5 +465,31 @@ describe("AI package architecture governance", () => {
     expect(documentSource).toContain("splitContentParagraphs");
     expect(documentSource).not.toMatch(/function\s+parseFrontmatter\b/);
     expect(documentSource).not.toMatch(/function\s+chunkParagraphs\b/);
+  });
+
+  it("keeps deterministic local embedding ownership in @nebutra/local-embedding", () => {
+    const localEmbedding = byName.get("@nebutra/local-embedding");
+    const contentStore = byName.get("@nebutra/content-store");
+    const knowledgeRag = byName.get("@nebutra/knowledge-rag");
+    expect(localEmbedding, "@nebutra/local-embedding").toBeDefined();
+    expect(contentStore, "@nebutra/content-store").toBeDefined();
+    expect(knowledgeRag, "@nebutra/knowledge-rag").toBeDefined();
+    if (!localEmbedding || !contentStore || !knowledgeRag) return;
+
+    expect(localEmbedding.manifest.nebutra?.surface).toBe("support-contract");
+    expect(contentStore.manifest.dependencies?.["@nebutra/local-embedding"]).toBe("workspace:*");
+    expect(knowledgeRag.manifest.dependencies?.["@nebutra/local-embedding"]).toBe("workspace:*");
+
+    const localEmbeddingSource = readFileSync(join(localEmbedding.dir, "src", "index.ts"), "utf8");
+    expect(localEmbeddingSource).toContain("embedTextLocal");
+    expect(localEmbeddingSource).toContain("tokenizeLocalEmbeddingText");
+
+    for (const entry of [contentStore, knowledgeRag]) {
+      for (const file of collectProductionSourceFiles(join(entry.dir, "src"))) {
+        const source = readFileSync(file, "utf8");
+        expect(source, file.replace(`${ROOT}/`, "")).not.toMatch(/function\s+fnv1a\b/);
+        expect(source, file.replace(`${ROOT}/`, "")).not.toMatch(/function\s+hashToken\b/);
+      }
+    }
   });
 });
