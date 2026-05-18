@@ -178,41 +178,9 @@
                         "ai": {
                           "type": "string",
                           "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "content": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "recsys": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "ecommerce": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "web3": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "billing": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "eventIngest": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
                         }
                       },
-                      "required": [
-                        "ai",
-                        "content",
-                        "recsys",
-                        "ecommerce",
-                        "web3",
-                        "billing",
-                        "eventIngest"
-                      ]
+                      "required": ["ai"]
                     },
                     "uptime": {
                       "type": "number"
@@ -285,41 +253,9 @@
                         "ai": {
                           "type": "string",
                           "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "content": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "recsys": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "ecommerce": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "web3": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "billing": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "eventIngest": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
                         }
                       },
-                      "required": [
-                        "ai",
-                        "content",
-                        "recsys",
-                        "ecommerce",
-                        "web3",
-                        "billing",
-                        "eventIngest"
-                      ]
+                      "required": ["ai"]
                     },
                     "uptime": {
                       "type": "number"
@@ -610,41 +546,9 @@
                         "ai": {
                           "type": "string",
                           "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "content": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "recsys": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "ecommerce": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "web3": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "billing": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "eventIngest": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
                         }
                       },
-                      "required": [
-                        "ai",
-                        "content",
-                        "recsys",
-                        "ecommerce",
-                        "web3",
-                        "billing",
-                        "eventIngest"
-                      ]
+                      "required": ["ai"]
                     },
                     "uptime": {
                       "type": "number"
@@ -717,41 +621,9 @@
                         "ai": {
                           "type": "string",
                           "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "content": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "recsys": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "ecommerce": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "web3": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "billing": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
-                        },
-                        "eventIngest": {
-                          "type": "string",
-                          "enum": ["available", "unavailable", "unknown"]
                         }
                       },
-                      "required": [
-                        "ai",
-                        "content",
-                        "recsys",
-                        "ecommerce",
-                        "web3",
-                        "billing",
-                        "eventIngest"
-                      ]
+                      "required": ["ai"]
                     },
                     "uptime": {
                       "type": "number"
@@ -1900,7 +1772,7 @@
       "post": {
         "tags": ["Events"],
         "summary": "Ingest events",
-        "description": "Accepts a batch of events (1-1000) and forwards them to the event ingest service for processing.",
+        "description": "Accepts a batch of events (1-1000) and persists them to ClickHouse bronze.",
         "requestBody": {
           "required": true,
           "content": {
@@ -1924,6 +1796,38 @@
                               "type": "string",
                               "minLength": 1
                             },
+                            "userId": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "sessionId": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "utmSource": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "utmMedium": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "utmCampaign": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "experimentId": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "requestId": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "traceId": {
+                              "type": "string",
+                              "nullable": true
+                            },
                             "occurredAt": {
                               "anyOf": [
                                 {
@@ -1935,6 +1839,11 @@
                                   "format": "date-time"
                                 }
                               ]
+                            },
+                            "contractVersion": {
+                              "type": "string",
+                              "minLength": 1,
+                              "default": "v1"
                             }
                           },
                           "required": ["tenantId", "occurredAt"]
@@ -1967,19 +1876,47 @@
         },
         "responses": {
           "200": {
-            "description": "Events accepted for processing",
+            "description": "Events accepted",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
-                  "additionalProperties": {}
+                  "properties": {
+                    "accepted": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "duplicated": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["accepted", "duplicated"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Tenant mismatch between authenticated context and event payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "message"]
                 }
               }
             }
           },
           "502": {
-            "description": "Event ingest service unavailable",
+            "description": "Ingest backend (ClickHouse) unavailable",
             "content": {
               "application/json": {
                 "schema": {
@@ -2234,6 +2171,47 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/v1/agent-runtime/turns": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "threadId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "model": {
+                    "type": "string"
+                  }
+                },
+                "required": ["input", "threadId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SSE stream of thread events"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Feature disabled"
+          },
+          "503": {
+            "description": "Model stack unavailable"
           }
         }
       }
@@ -3172,6 +3150,12 @@
                     "type": "string",
                     "format": "uri"
                   },
+                  "quantity": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": true,
+                    "maximum": 10000
+                  },
                   "trialPeriodDays": {
                     "type": "integer",
                     "minimum": 0,
@@ -3254,6 +3238,76 @@
           },
           "503": {
             "description": "Billing service temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/provider-status": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "Get billing provider readiness",
+        "responses": {
+          "200": {
+            "description": "Billing provider readiness",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "provider": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["disabled", "degraded", "ready"]
+                    },
+                    "checkoutReady": {
+                      "type": "boolean"
+                    },
+                    "portalReady": {
+                      "type": "boolean"
+                    },
+                    "missing": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "provider",
+                    "status",
+                    "checkoutReady",
+                    "portalReady",
+                    "missing",
+                    "title",
+                    "description"
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Organization membership required",
             "content": {
               "application/json": {
                 "schema": {
@@ -4128,7 +4182,7 @@
                       "properties": {
                         "provider": {
                           "type": "string",
-                          "enum": ["novu", "direct"]
+                          "enum": ["novu", "knock", "direct"]
                         },
                         "providerLabel": {
                           "type": "string"
