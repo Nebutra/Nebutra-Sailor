@@ -2,7 +2,11 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
-import { emitIndependentLicense, verifyScaffoldMeta } from "./license-emit";
+import {
+  emitIndependentLicense,
+  verifyScaffoldMeta,
+  verifyScaffoldMetaDetailed,
+} from "./license-emit";
 
 const TEMPLATE_FIXTURE = `# Nebutra-Sailor Independent Developer License
 
@@ -92,6 +96,45 @@ describe("emitIndependentLicense", () => {
     const meta = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
     meta.projectName = "hijacked";
     expect(verifyScaffoldMeta(meta)).toBe(false);
+    expect(verifyScaffoldMetaDetailed(meta).reason).toBe("signature_mismatch");
+  });
+
+  it("records the current signingKeyId (Phase 2)", () => {
+    emitIndependentLicense(dir, {
+      projectName: "demo",
+      cliVersion: "1.7.1",
+      templatesRoot,
+    });
+    const meta = JSON.parse(
+      fs.readFileSync(path.join(dir, ".nebutra", "scaffold-meta.json"), "utf-8"),
+    );
+    expect(meta.signingKeyId).toBe("v1");
+  });
+
+  it("Phase 1 back-compat: verifies markers WITHOUT a signingKeyId field", () => {
+    emitIndependentLicense(dir, {
+      projectName: "demo",
+      cliVersion: "1.7.0",
+      templatesRoot,
+    });
+    const metaPath = path.join(dir, ".nebutra", "scaffold-meta.json");
+    const meta = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
+    // Simulate a Phase 1 marker (no signingKeyId) — verifier must fall back to v1.
+    delete meta.signingKeyId;
+    expect(verifyScaffoldMeta(meta)).toBe(true);
+    expect(verifyScaffoldMetaDetailed(meta).reason).toBe("ok");
+  });
+
+  it("rejects markers signed with an unknown keyId", () => {
+    emitIndependentLicense(dir, {
+      projectName: "demo",
+      cliVersion: "1.7.0",
+      templatesRoot,
+    });
+    const metaPath = path.join(dir, ".nebutra", "scaffold-meta.json");
+    const meta = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
+    meta.signingKeyId = "v-future-rotated";
+    expect(verifyScaffoldMetaDetailed(meta).reason).toBe("unknown_signing_key");
   });
 
   it("prepends a license notice to README.md when one exists", () => {

@@ -36,14 +36,22 @@ We're not asking you to transfer copyright—**you keep it**. We're simply askin
 
 ### How it works
 
-1. **For small contributions** (< 100 lines): Your agreement is implicit
-   - By opening a PR, you agree to the CLA terms
-   - No additional signature required
+We use the [cla-assistant.io](https://cla-assistant.io) GitHub Action — see
+[`.github/workflows/cla.yml`](./.github/workflows/cla.yml). When you open a PR:
 
-2. **For significant contributions** (100+ lines of code): A CLA signature may be requested
-   - We'll ask you to sign via [cla-assistant.io](https://cla-assistant.io)
-   - Takes ~2 minutes
-   - You sign once; subsequent PRs don't require re-signing
+1. The CLA bot posts a comment linking to the full agreement at
+   [`docs/legal/CLA.md`](./docs/legal/CLA.md).
+2. Reply to that comment with this exact sentence:
+   > `I have read the CLA Document and I hereby sign the CLA`
+3. The bot stores your signature and flips your PR's `license/cla` check
+   to green.
+4. **You sign once.** Every future PR you open is pre-signed.
+
+Bots in the workflow allowlist (`dependabot`, `github-actions`, `renovate`)
+are never asked to sign. See
+[`docs/legal/contributing-with-cla.md`](./docs/legal/contributing-with-cla.md)
+for the full workflow, edge cases (employer IP, corporate CLA, signature
+revocation), and FAQ.
 
 ### Questions about the CLA?
 

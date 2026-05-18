@@ -247,6 +247,8 @@ Examples:
   $ nebutra test e2e                      Run Playwright E2E tests
   $ nebutra stats                         Monorepo overview
   $ nebutra schema --all                  Full CLI schema (for Agents)
+  $ nebutra license verify                Verify the scaffold-meta HMAC signature
+  $ nebutra license verify --format json  Same, in JSON for Agents
 
   Platform & Ecosystem:
   $ nebutra admin tenants                 List all tenants
