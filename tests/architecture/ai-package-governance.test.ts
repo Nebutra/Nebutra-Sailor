@@ -39,6 +39,27 @@ const AGENT_RUNTIME_FORBIDDEN_IMPORTS = [
   "@nebutra/browser-control",
   "@nebutra/code-execution",
   "@nebutra/document-pipeline",
+  "@nebutra/image-pipeline",
+  "@nebutra/video-pipeline",
+  "@nebutra/audio-pipeline",
+  "@nebutra/voice-realtime",
+  "@nebutra/3d-pipeline",
+] as const;
+
+const GENERATION_CAPABILITY_PACKAGES = [
+  "@nebutra/image-pipeline",
+  "@nebutra/video-pipeline",
+  "@nebutra/audio-pipeline",
+  "@nebutra/voice-realtime",
+  "@nebutra/3d-pipeline",
+] as const;
+
+const GENERATION_CAPABILITY_FORBIDDEN_IMPORTS = [
+  "@nebutra/agent-runtime",
+  "@nebutra/agents",
+  "ai",
+  "@nebutra/llm-gateway",
+  "@nebutra/provider-registry",
 ] as const;
 
 function readPackageJson(packageDir: string): PackageJson {
@@ -122,6 +143,8 @@ describe("AI package architecture governance", () => {
     expect(contract).toContain("metadata only");
     expect(contract).toContain("Execution capability tools");
     expect(contract).toContain("must not own Thread/Turn/Item");
+    expect(contract).toContain("Generation capability tools");
+    expect(contract).toContain("@nebutra/generation-context");
     expect(contract).toContain("@nebutra/llm-gateway");
     expect(contract).toContain("not the production gateway");
   });
@@ -200,5 +223,45 @@ describe("AI package architecture governance", () => {
     if (!entry) return;
 
     expect(importViolations(entry.dir, AGENT_RUNTIME_FORBIDDEN_IMPORTS)).toEqual([]);
+  });
+
+  it("classifies Layer 4 packages as generation capabilities with shared BrandContext", () => {
+    for (const packageName of GENERATION_CAPABILITY_PACKAGES) {
+      const entry = byName.get(packageName);
+      expect(entry, packageName).toBeDefined();
+      if (!entry) continue;
+
+      expect(entry.manifest.nebutra?.status, packageName).toBe("wip");
+      expect(entry.manifest.nebutra?.productionReady, packageName).toBe(false);
+      expect(entry.manifest.nebutra?.surface, packageName).toBe("generation-capability");
+      expect(entry.manifest.dependencies?.["@nebutra/generation-context"], packageName).toBe(
+        "workspace:*",
+      );
+      expect(entry.manifest.nebutra?.gaps?.length ?? 0, packageName).toBeGreaterThanOrEqual(3);
+
+      const examplesDir = join(entry.dir, "examples");
+      const exampleCount = existsSync(examplesDir)
+        ? readdirSync(examplesDir).filter((name) => name.endsWith(".ts")).length
+        : 0;
+      expect(exampleCount, packageName).toBeGreaterThanOrEqual(3);
+      expect(existsSync(join(entry.dir, "README.md")), packageName).toBe(true);
+    }
+  });
+
+  it("keeps generation capabilities out of runtime/model/provider ownership", () => {
+    const violations: Array<{ packageName: string; file: string; imported: string }> = [];
+
+    for (const packageName of GENERATION_CAPABILITY_PACKAGES) {
+      const entry = byName.get(packageName);
+      if (!entry) continue;
+      for (const violation of importViolations(
+        entry.dir,
+        GENERATION_CAPABILITY_FORBIDDEN_IMPORTS,
+      )) {
+        violations.push({ packageName, ...violation });
+      }
+    }
+
+    expect(violations).toEqual([]);
   });
 });

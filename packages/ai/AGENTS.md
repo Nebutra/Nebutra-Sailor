@@ -15,6 +15,8 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | Agent protocol/runtime grammar | `@nebutra/agent-runtime` | Thread/turn/item model, policy, tool/MCP bridge, rollout, sandbox seam. It must not own provider SDK execution. |
 | Tool integration | `@nebutra/mcp`, `@nebutra/tool-registry`, `@nebutra/sandbox-runtime` | MCP/tool discovery, consent, audit, and sandbox routing boundaries. |
 | Execution capability tools | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline` | Deterministic or semi-deterministic tool execution. They must not own Thread/Turn/Item state, prompt generation, model/provider execution, sub-agent scheduling, or approval lifecycle. |
+| Generation capability tools | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media generation surfaces. They may expose local deterministic fallbacks and sidecar adapter ports, but must not own Thread/Turn/Item state, prompt orchestration, model/provider routing, or approval lifecycle. |
+| Shared generation contract | `@nebutra/generation-context` | The single TypeScript owner for `BrandContext`, generated-asset provenance, and media license metadata. File truth still lives in content-store. |
 | RAG/indexing/dataflow | `@nebutra/knowledge-rag`, `@nebutra/code-index`, `@nebutra/reel`, `@nebutra/atelier-canvas`, `@nebutra/cinema` | Product capabilities built on injected model/vector/store/tool ports. |
 | Legacy local experiments | `@nebutra/llm-gateway`, `@nebutra/provider-registry` | `@nebutra/llm-gateway` is not the production gateway; `@nebutra/provider-registry` is a local-provider experiment. Do not add new production consumers. |
 
@@ -51,6 +53,12 @@ files may add stricter rules; this file owns the cross-package boundaries.
 - `@nebutra/agent-runtime` must not hard-import concrete execution capability
   packages. Composition happens through tool registry/adapters so execution
   capabilities remain replaceable.
+- Generation capability packages must import `BrandContext` from
+  `@nebutra/generation-context`; do not define parallel brand schemas inside
+  individual media packages.
+- Generation capability packages must not import `@nebutra/agent-runtime`,
+  `@nebutra/agents`, `ai`, `@nebutra/llm-gateway`, or
+  `@nebutra/provider-registry` from production source.
 - Product capability packages should not own billing deduction, gateway auth, or
   provider-key selection.
 - Examples may import legacy packages to demonstrate migration, but production

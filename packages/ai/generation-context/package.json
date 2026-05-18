@@ -1,0 +1,55 @@
+{
+  "name": "@nebutra/generation-context",
+  "version": "0.1.0",
+  "description": "Shared BrandContext and generated-asset metadata contracts for multimodal pipelines",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "requires": [
+      "@nebutra/content-store as the file-truth owner for BRAND.md"
+    ],
+    "gaps": [
+      "No app-level BRAND.md editor is wired yet",
+      "Reference image validation is schema-only",
+      "License policy enforcement is package-local until media governance lands"
+    ],
+    "featureId": "generation-context",
+    "category": "ai",
+    "summary": "Single shared BrandContext contract for Layer 4 multimodal generation"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/errors": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/generation-context#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/generation-context"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

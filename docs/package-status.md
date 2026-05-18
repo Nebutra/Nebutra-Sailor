@@ -54,7 +54,7 @@ you contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (15)
+## WIP packages (21)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -72,12 +72,18 @@ and missing functionality.
 | `@nebutra/mcp`           | `--mcp`                 | Context server binary is a placeholder stub                      |
 | `@nebutra/saga`          | (consumed directly)     | No durable journal; compensation logic scaffolded only           |
 | `@nebutra/agent-runtime` | (consumed directly)     | Track-B kernel transport + durable-turn queue binding interface-only; adapters live under subpath exports |
+| `@nebutra/3d-pipeline` | (consumed directly)     | Generation capability only; model-backed mesh generation, retopology, and export sidecars are adapter-gated |
+| `@nebutra/audio-pipeline` | (consumed directly)  | Generation capability only; music model adapters and production LUFS measurement are sidecar-gated |
 | `@nebutra/browser-control` | (consumed directly)   | Execution capability only; mutating browser actions require a configured browser sidecar and injected explorer |
 | `@nebutra/code-execution` | (consumed directly)    | Execution capability only; notebook kernels, remote providers, and approval UI handoff are adapter-gated |
 | `@nebutra/document-pipeline` | (consumed directly) | Execution capability only; complex parsing/OCR sidecars and durable async ingestion are not production-backed |
+| `@nebutra/generation-context` | (consumed directly) | Shared BrandContext contract; app editor, reference validation, and media license policy are not production-backed |
+| `@nebutra/image-pipeline` | (consumed directly)  | Generation capability only; model-backed workflows and remote image providers are adapter-gated |
 | `@nebutra/llm-gateway`   | (consumed directly)     | Local experiment; not wired to production API gateway auth, tenant metering, vault-backed key pool, or durable usage ledger |
 | `@nebutra/play-loader`   | (consumed directly)     | Declarative play loader; runner delegates, remote install, and migration APIs are interface-only |
 | `@nebutra/provider-registry` | (consumed directly) | Local provider trait; not the canonical runtime provider registry |
+| `@nebutra/video-pipeline` | (consumed directly)  | Generation capability only; model-backed clips, ffmpeg composition, and remote quotas are adapter-gated |
+| `@nebutra/voice-realtime` | (consumed directly) | Generation capability only; realtime transport, enrollment storage, and provider sidecars are adapter-gated |
 
 ## Contributing
 

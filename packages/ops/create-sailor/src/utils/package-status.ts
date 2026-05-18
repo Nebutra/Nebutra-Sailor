@@ -32,18 +32,24 @@ export const NEBUTRA_PACKAGE_STATUS: Record<string, PackageStatus> = {
   // WIP — actively under development, do not use in production
   audit: "wip",
   "feature-flags": "wip",
+  "3d-pipeline": "wip",
   "agent-runtime": "wip",
+  "audio-pipeline": "wip",
   "browser-control": "wip",
   captcha: "wip",
   "code-index": "wip",
   "code-execution": "wip",
   "document-pipeline": "wip",
   "event-bus": "wip",
+  "generation-context": "wip",
+  "image-pipeline": "wip",
   "llm-gateway": "wip",
   mcp: "wip",
   "play-loader": "wip",
   "provider-registry": "wip",
   saga: "wip",
+  "video-pipeline": "wip",
+  "voice-realtime": "wip",
 };
 
 /**
