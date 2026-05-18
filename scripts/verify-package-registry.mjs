@@ -6,6 +6,10 @@ import { getReleaseSurfaceDiagnostics } from "./lib/release-surface.mjs";
 const DEFAULT_REPOSITORY = "Nebutra/Nebutra-Sailor";
 const GITHUB_API_URL = process.env.GITHUB_API_URL ?? "https://api.github.com";
 const FETCH_RETRY_ATTEMPTS = Number.parseInt(process.env.PACKAGE_REGISTRY_FETCH_RETRIES ?? "4", 10);
+const NPMJS_VISIBILITY_ATTEMPTS = Number.parseInt(
+  process.env.PACKAGE_REGISTRY_NPMJS_VISIBILITY_RETRIES ?? "6",
+  10,
+);
 
 const legacyContainerPackages = new Set([
   "nebutra-billing",
@@ -206,11 +210,23 @@ async function npmjsPackageExists(packageName) {
 }
 
 async function findMissingNpmjsPackages(packageNames) {
-  const missing = [];
+  let missing = [];
 
-  for (const packageName of packageNames) {
-    if (!(await npmjsPackageExists(packageName))) {
-      missing.push(packageName);
+  for (let attempt = 1; attempt <= NPMJS_VISIBILITY_ATTEMPTS; attempt += 1) {
+    missing = [];
+
+    for (const packageName of packageNames) {
+      if (!(await npmjsPackageExists(packageName))) {
+        missing.push(packageName);
+      }
+    }
+
+    if (missing.length === 0) {
+      return [];
+    }
+
+    if (attempt < NPMJS_VISIBILITY_ATTEMPTS) {
+      await sleep(5000);
     }
   }
 

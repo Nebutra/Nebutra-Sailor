@@ -20,6 +20,7 @@ if [[ -n "${NPM_TOKEN:-}" ]]; then
   # would be required — disable explicitly so token-fallback is honest.
   export NPM_CONFIG_PROVENANCE=false
   pnpm exec changeset publish
+  node scripts/ensure-npm-public-access.mjs
   exit 0
 fi
 
