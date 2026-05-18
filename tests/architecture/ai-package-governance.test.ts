@@ -170,6 +170,7 @@ describe("AI package architecture governance", () => {
     expect(contract).toContain("must not own Thread/Turn/Item");
     expect(contract).toContain("Generation capability tools");
     expect(contract).toContain("@nebutra/generation-context");
+    expect(contract).toContain("@nebutra/execution-policy");
     expect(contract).toContain("@nebutra/capability-kit");
     expect(contract).toContain("@nebutra/capability-kit/debug");
     expect(contract).toContain("packages/ai/PACKAGE_MAP.md");
@@ -408,5 +409,37 @@ describe("AI package architecture governance", () => {
     expect(videoSource).toContain("@nebutra/reel/storyboard");
     expect(videoSource).not.toMatch(/export\s+interface\s+StoryboardScene\b/);
     expect(videoSource).not.toMatch(/export\s+interface\s+Storyboard\b/);
+  });
+
+  it("keeps command approval policy ownership in @nebutra/execution-policy", () => {
+    const policy = byName.get("@nebutra/execution-policy");
+    const runtime = byName.get("@nebutra/agent-runtime");
+    const codeExecution = byName.get("@nebutra/code-execution");
+    expect(policy, "@nebutra/execution-policy").toBeDefined();
+    expect(runtime, "@nebutra/agent-runtime").toBeDefined();
+    expect(codeExecution, "@nebutra/code-execution").toBeDefined();
+    if (!policy || !runtime || !codeExecution) return;
+
+    expect(policy.manifest.nebutra?.surface).toBe("support-contract");
+    expect(runtime.manifest.dependencies?.["@nebutra/execution-policy"]).toBe("workspace:*");
+    expect(codeExecution.manifest.dependencies?.["@nebutra/execution-policy"]).toBe("workspace:*");
+
+    const policySource = readFileSync(join(policy.dir, "src", "index.ts"), "utf8");
+    expect(policySource).toContain("DEFAULT_SHELL_APPROVAL_RULES");
+    expect(policySource).toContain("shellApprovalRequired");
+
+    const codeSource = readFileSync(join(codeExecution.dir, "src", "index.ts"), "utf8");
+    expect(codeSource).toContain("@nebutra/execution-policy");
+    expect(codeSource).not.toMatch(/export\s+interface\s+PolicyRule\b/);
+    expect(codeSource).not.toMatch(
+      /export\s+const\s+DefaultPolicy\s*:\s*readonly\s+PolicyRule\[\]/,
+    );
+    expect(codeSource).not.toMatch(/function\s+matchesRule\b/);
+
+    const runtimeCompatSource = readFileSync(
+      join(runtime.dir, "src", "permission-ruleset.ts"),
+      "utf8",
+    );
+    expect(runtimeCompatSource.trim()).toBe('export * from "@nebutra/execution-policy";');
   });
 });

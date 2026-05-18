@@ -1,0 +1,54 @@
+{
+  "name": "@nebutra/execution-policy",
+  "version": "0.1.0",
+  "description": "Shared command permission and approval policy primitives for runtime and execution packages",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "requires": [
+      "@nebutra/agent-runtime consumes this contract for runtime approval grammar",
+      "@nebutra/code-execution consumes this contract for executor policy checks"
+    ],
+    "gaps": [
+      "Session-scoped approval persistence still lives in agent-runtime",
+      "Shell parsing remains prefix-based until a shell AST parser is introduced",
+      "Network and file-write policies are not unified here yet"
+    ],
+    "featureId": "execution-policy",
+    "category": "ai",
+    "summary": "Single shared owner for command permission matching and shell approval defaults"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/execution-policy#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/execution-policy"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

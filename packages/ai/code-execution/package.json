@@ -36,6 +36,7 @@
     "@nebutra/capability-kit": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/event-log": "workspace:*",
+    "@nebutra/execution-policy": "workspace:*",
     "@nebutra/sandbox-runtime": "workspace:*"
   },
   "devDependencies": {

@@ -46,6 +46,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/execution-policy": "workspace:*",
     "zod": "catalog:"
   },
   "peerDependencies": {

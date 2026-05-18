@@ -3,39 +3,21 @@ import { join, normalize } from "node:path";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 import {
+  DEFAULT_SHELL_APPROVAL_RULES,
+  type ShellApprovalMode,
+  type ShellApprovalRule,
+  shellApprovalRequired,
+} from "@nebutra/execution-policy";
+import {
   type ExecRequest,
   type ExecResponse,
   type SandboxHealth,
   SandboxRuntime,
 } from "@nebutra/sandbox-runtime";
 
-export type ApprovalMode = "always" | "once_per_session" | "never";
-
-export interface PolicyRule {
-  readonly match: string | RegExp;
-  readonly requireApproval: ApprovalMode;
-  readonly reason: string;
-}
-
-export const DefaultPolicy: readonly PolicyRule[] = [
-  { match: /^rm\s+-rf\b/, requireApproval: "always", reason: "destructive recursive removal" },
-  {
-    match: /\b(format|mkfs)\b/,
-    requireApproval: "always",
-    reason: "destructive filesystem operation",
-  },
-  {
-    match: /\bDROP\s+(DATABASE|SCHEMA|TABLE)\b/i,
-    requireApproval: "always",
-    reason: "destructive database operation",
-  },
-  {
-    match: /\b(npm|pnpm|yarn)\s+publish\b/,
-    requireApproval: "always",
-    reason: "package publishing",
-  },
-  { match: /^git\s+push\b/, requireApproval: "once_per_session", reason: "remote git mutation" },
-];
+export type ApprovalMode = ShellApprovalMode;
+export type PolicyRule = ShellApprovalRule;
+export const DefaultPolicy = DEFAULT_SHELL_APPROVAL_RULES;
 
 export interface BaseAction {
   readonly tenantId?: string;
@@ -159,10 +141,6 @@ function requireTenant(explicit: string | undefined, fallback: string | undefine
 
 function actionIdFrom(action: Action): string {
   return action.actionId ?? `${action.type}_${Date.now().toString(36)}`;
-}
-
-function matchesRule(command: string, rule: PolicyRule): boolean {
-  return typeof rule.match === "string" ? command.startsWith(rule.match) : rule.match.test(command);
 }
 
 function safeWorkspacePath(root: string, path: string): string {
@@ -374,10 +352,7 @@ export class CodeExecutor {
   }
 
   #approvalRequired(command: string): PolicyRule | null {
-    return (
-      this.#policy.find((rule) => rule.requireApproval !== "never" && matchesRule(command, rule)) ??
-      null
-    );
+    return shellApprovalRequired(command, this.#policy);
   }
 }
 

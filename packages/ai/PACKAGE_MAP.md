@@ -16,7 +16,7 @@ the machine-readable source of truth; this file is the human map.
 | `execution-router` | `@nebutra/sandbox-runtime` | Owns sandbox provider routing and execution isolation. |
 | `execution-capability` | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline` | Tool-shaped execution abilities. No runtime state or model ownership. |
 | `generation-capability` | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media abilities. No runtime state or model ownership. |
-| `support-contract` | `@nebutra/generation-context` | Shared typed contracts used by capability packages. Must stay dependency-light. |
+| `support-contract` | `@nebutra/generation-context`, `@nebutra/execution-policy` | Shared typed contracts used across runtime and capability packages. Must stay dependency-light. |
 | `persistence` | `@nebutra/content-store`, `@nebutra/event-log` | File truth, indexing, immutable event history, rollback, and branch state. |
 | `semantic-index` | `@nebutra/code-index`, `@nebutra/knowledge-rag` | Retrieval/indexing grammar over injected embedding/vector/search ports. |
 | `media-graph` | `@nebutra/reel` | Typed media graph, storyboard shot/scene/plan primitives, IO envelope, and graph persistence. |
@@ -45,5 +45,8 @@ the machine-readable source of truth; this file is the human map.
 6. Media storyboards are owned by `@nebutra/reel/storyboard`. Generation
    packages such as `@nebutra/video-pipeline` consume those types instead of
    maintaining parallel scene/plan contracts.
-7. Legacy experiments may remain only while marked WIP and blocked from new
+7. Command permission matching and shell approval defaults are owned by
+   `@nebutra/execution-policy`. Runtime packages own approval lifecycle;
+   execution packages only evaluate the shared rules.
+8. Legacy experiments may remain only while marked WIP and blocked from new
    production consumers by architecture tests.

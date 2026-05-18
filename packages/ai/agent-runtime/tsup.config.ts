@@ -32,5 +32,5 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   target: "es2022",
-  external: ["@nebutra/mcp"],
+  external: ["@nebutra/execution-policy", "@nebutra/mcp"],
 });

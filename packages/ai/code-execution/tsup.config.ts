@@ -11,6 +11,7 @@ export default defineConfig({
     "@nebutra/capability-kit/debug",
     "@nebutra/errors",
     "@nebutra/event-log",
+    "@nebutra/execution-policy",
     "@nebutra/sandbox-runtime",
   ],
 });
