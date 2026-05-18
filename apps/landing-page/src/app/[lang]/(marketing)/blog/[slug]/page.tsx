@@ -278,7 +278,11 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
 
         <AnimateIn preset="fadeUp" inView>
           <div className="mx-auto mt-10 max-w-3xl">
-            <BlogPortableText body={post.body} />
+            <BlogPortableText
+              body={post.body}
+              copyLabel={isZh ? "复制原文" : "Copy original"}
+              copiedLabel={isZh ? "已复制" : "Copied"}
+            />
           </div>
         </AnimateIn>
       </article>
