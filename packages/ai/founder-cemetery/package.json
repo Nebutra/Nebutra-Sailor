@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/founder-cemetery",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Company closing, postmortem, lesson extraction, and memorial publication surface",
   "private": false,
   "license": "MIT",
