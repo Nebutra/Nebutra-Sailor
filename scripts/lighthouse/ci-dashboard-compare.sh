@@ -182,6 +182,7 @@ run_snapshot_once() {
       export CI=1
       export SKIP_ENV_VALIDATION=true
       export NEBUTRA_SKIP_GIT_HOOKS=1
+      export DATABASE_URL='postgresql://lighthouse:lighthouse@localhost:5432/lighthouse'
 
       rm -f apps/web/.env.local
 
