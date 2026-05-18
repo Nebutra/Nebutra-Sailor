@@ -213,7 +213,7 @@ jobs:
       - uses: pnpm/action-setup@v4
         if: matrix.condition == 'true'
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         if: matrix.condition == 'true'
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -302,7 +302,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
