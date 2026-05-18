@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/support-deflector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Confidence-gated customer support Play package for founder-owned support automation",
   "private": false,
   "license": "MIT",

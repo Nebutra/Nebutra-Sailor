@@ -1,0 +1,8 @@
+# @nebutra/cofounder-match
+
+## 0.1.1
+
+### Patch Changes
+
+- [`445f7ba`](https://github.com/Nebutra/Nebutra-Sailor/commit/445f7baf66634d1681430d76377146e58019d94e) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Add Layer 7 ecosystem product packages for timeline projection, idea publishing,
+  company memorials, cofounder matching, and Play marketplace registry artifacts.
