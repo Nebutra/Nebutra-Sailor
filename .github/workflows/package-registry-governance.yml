@@ -1,0 +1,29 @@
+name: Package Registry Governance
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  verify:
+    name: Verify GitHub Packages state
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Verify package registry governance
+        run: node scripts/verify-package-registry.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGE_REGISTRY_VERIFY_NPMJS: "true"

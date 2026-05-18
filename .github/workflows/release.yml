@@ -157,3 +157,9 @@ jobs:
         run: bash ./scripts/release-publish-github-packages.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify package registry governance
+        run: node scripts/verify-package-registry.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGE_REGISTRY_VERIFY_NPMJS: "true"
