@@ -442,4 +442,27 @@ describe("AI package architecture governance", () => {
     );
     expect(runtimeCompatSource.trim()).toBe('export * from "@nebutra/execution-policy";');
   });
+
+  it("keeps file-truth frontmatter ownership in @nebutra/content-store", () => {
+    const contentStore = byName.get("@nebutra/content-store");
+    const documentPipeline = byName.get("@nebutra/document-pipeline");
+    expect(contentStore, "@nebutra/content-store").toBeDefined();
+    expect(documentPipeline, "@nebutra/document-pipeline").toBeDefined();
+    if (!contentStore || !documentPipeline) return;
+
+    expect(contentStore.manifest.nebutra?.surface).toBe("persistence");
+    expect(documentPipeline.manifest.dependencies?.["@nebutra/content-store"]).toBe("workspace:*");
+
+    const contentSource = readFileSync(join(contentStore.dir, "src", "index.ts"), "utf8");
+    expect(contentSource).toContain("parseContentFrontmatter");
+    expect(contentSource).toContain("serializeContentFrontmatter");
+    expect(contentSource).toContain("splitContentParagraphs");
+
+    const documentSource = readFileSync(join(documentPipeline.dir, "src", "index.ts"), "utf8");
+    expect(documentSource).toContain("parseContentFrontmatter");
+    expect(documentSource).toContain("serializeContentFrontmatter");
+    expect(documentSource).toContain("splitContentParagraphs");
+    expect(documentSource).not.toMatch(/function\s+parseFrontmatter\b/);
+    expect(documentSource).not.toMatch(/function\s+chunkParagraphs\b/);
+  });
 });

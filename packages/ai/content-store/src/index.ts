@@ -90,7 +90,12 @@ function safePath(path: string): string {
   return normalized;
 }
 
-function parseFrontmatter(content: string): { frontmatter: Record<string, string>; body: string } {
+export interface ParsedContentDocument {
+  readonly frontmatter: Record<string, string>;
+  readonly body: string;
+}
+
+export function parseContentFrontmatter(content: string): ParsedContentDocument {
   if (!content.startsWith("---\n")) return { frontmatter: {}, body: content };
   const end = content.indexOf("\n---", 4);
   if (end < 0) return { frontmatter: {}, body: content };
@@ -101,6 +106,32 @@ function parseFrontmatter(content: string): { frontmatter: Record<string, string
     if (idx > 0) frontmatter[line.slice(0, idx).trim()] = line.slice(idx + 1).trim();
   }
   return { frontmatter, body: content.slice(end + 4).trimStart() };
+}
+
+export function serializeContentFrontmatter(
+  frontmatter: Record<string, string>,
+  body: string,
+): string {
+  const frontmatterLines = Object.entries(frontmatter)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, value]) => `${key}: ${value}`);
+  return frontmatterLines.length > 0 ? `---\n${frontmatterLines.join("\n")}\n---\n${body}` : body;
+}
+
+export function splitContentParagraphs(content: string): string[] {
+  return content
+    .split(/\n\s*\n/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+export function chunkContentParagraphs(content: string, maxParagraphs = 4): string[] {
+  const parts = splitContentParagraphs(content);
+  const chunks: string[] = [];
+  for (let i = 0; i < parts.length; i += maxParagraphs) {
+    chunks.push(parts.slice(i, i + maxParagraphs).join("\n\n"));
+  }
+  return chunks.length > 0 ? chunks : [content];
 }
 
 async function walk(dir: string): Promise<string[]> {
@@ -274,15 +305,7 @@ export class ContentStore {
   }
 
   chunk(content: string, maxParagraphs = 4): string[] {
-    const parts = content
-      .split(/\n\s*\n/)
-      .map((part) => part.trim())
-      .filter(Boolean);
-    const chunks: string[] = [];
-    for (let i = 0; i < parts.length; i += maxParagraphs) {
-      chunks.push(parts.slice(i, i + maxParagraphs).join("\n\n"));
-    }
-    return chunks.length > 0 ? chunks : [content];
+    return chunkContentParagraphs(content, maxParagraphs);
   }
 
   async reindex(): Promise<void> {
@@ -330,7 +353,7 @@ export class ContentStore {
   async #indexFile(full: string): Promise<void> {
     const content = await readFile(full, "utf8");
     const rel = relative(this.filesRoot(), full);
-    const { frontmatter, body } = parseFrontmatter(content);
+    const { frontmatter, body } = parseContentFrontmatter(content);
     const doc: IndexedDoc = {
       tenantId: this.#tenantId,
       path: rel,

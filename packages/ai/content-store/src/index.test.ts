@@ -2,7 +2,13 @@ import { access, mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { ContentStore } from "./index";
+import {
+  ContentStore,
+  chunkContentParagraphs,
+  parseContentFrontmatter,
+  serializeContentFrontmatter,
+  splitContentParagraphs,
+} from "./index";
 
 let root: string | undefined;
 let store: ContentStore | undefined;
@@ -84,5 +90,18 @@ describe("ContentStore", () => {
     root = await mkdtemp(join(tmpdir(), "content-store-"));
     store = await ContentStore.open(root);
     expect(store.chunk("a\n\nb\n\nc", 2)).toEqual(["a\n\nb", "c"]);
+  });
+
+  it("owns frontmatter and paragraph helper semantics for ingestion consumers", () => {
+    const parsed = parseContentFrontmatter("---\nschema: note\nmood: calm\n---\nalpha\n\nbeta");
+    expect(parsed).toEqual({
+      frontmatter: { schema: "note", mood: "calm" },
+      body: "alpha\n\nbeta",
+    });
+    expect(serializeContentFrontmatter(parsed.frontmatter, parsed.body)).toBe(
+      "---\nmood: calm\nschema: note\n---\nalpha\n\nbeta",
+    );
+    expect(splitContentParagraphs(parsed.body)).toEqual(["alpha", "beta"]);
+    expect(chunkContentParagraphs("a\n\nb\n\nc", 2)).toEqual(["a\n\nb", "c"]);
   });
 });

@@ -1,7 +1,12 @@
 import { readFile } from "node:fs/promises";
 import { extname, join } from "node:path";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
-import { ContentStore } from "@nebutra/content-store";
+import {
+  ContentStore,
+  parseContentFrontmatter,
+  serializeContentFrontmatter,
+  splitContentParagraphs,
+} from "@nebutra/content-store";
 import { CapabilityError } from "@nebutra/errors";
 
 export type ParserChoice = "auto" | "markdown" | "html" | "text" | "sidecar";
@@ -271,9 +276,9 @@ function parseNativeDocument(
 ): ParsedDocument {
   const mimeType = request.source.mimeType ?? mimeFromPath(request.source.path);
   const { frontmatter, body } =
-    parser === "markdown" ? parseFrontmatter(raw) : { frontmatter: {}, body: raw };
+    parser === "markdown" ? parseContentFrontmatter(raw) : { frontmatter: {}, body: raw };
   const text = parser === "html" ? htmlToText(body) : body;
-  const chunks = chunkParagraphs(text).map((chunk, index) => ({
+  const chunks = splitContentParagraphs(text).map((chunk, index) => ({
     id: `${request.tenantId}:${request.source.path}:${index}`,
     text: chunk,
     metadata: {
@@ -321,34 +326,8 @@ function serializeForContentStore(
     source_mime: parsed.mimeType,
     parser: parsed.parser,
   };
-  const frontmatterLines = Object.entries(frontmatter)
-    .sort(([left], [right]) => left.localeCompare(right))
-    .map(([key, value]) => `${key}: ${value}`);
   const body = parsed.chunks.map((chunk) => chunk.text).join("\n\n");
-  return frontmatterLines.length > 0 ? `---\n${frontmatterLines.join("\n")}\n---\n${body}` : body;
-}
-
-function parseFrontmatter(content: string): {
-  readonly frontmatter: Record<string, string>;
-  readonly body: string;
-} {
-  if (!content.startsWith("---\n")) return { frontmatter: {}, body: content };
-  const end = content.indexOf("\n---", 4);
-  if (end < 0) return { frontmatter: {}, body: content };
-  const raw = content.slice(4, end).trim();
-  const frontmatter: Record<string, string> = {};
-  for (const line of raw.split("\n")) {
-    const idx = line.indexOf(":");
-    if (idx > 0) frontmatter[line.slice(0, idx).trim()] = line.slice(idx + 1).trim();
-  }
-  return { frontmatter, body: content.slice(end + 4).trimStart() };
-}
-
-function chunkParagraphs(content: string): string[] {
-  return content
-    .split(/\n\s*\n/)
-    .map((part) => part.trim())
-    .filter(Boolean);
+  return serializeContentFrontmatter(frontmatter, body);
 }
 
 function htmlToText(html: string): string {
