@@ -46,6 +46,7 @@ import { injectEnv } from "./utils/env";
 import { generateEnvSecrets } from "./utils/env-secrets";
 import { applyFeatureFlagsSelection } from "./utils/feature-flags";
 import { cloneTemplate } from "./utils/git";
+import { emitIndependentLicense } from "./utils/license-emit";
 import { applyMcpSwitch } from "./utils/mcp";
 import { applyMeteringSwitch } from "./utils/metering";
 import { applyMonitoringSelection } from "./utils/monitoring";
@@ -1346,6 +1347,42 @@ async function run(): Promise<void> {
       applied: extras.applied,
       skipped: extras.skipped,
     });
+
+    // Independent Developer License + scaffold marker. Replaces the upstream
+    // AGPL LICENSE inside the scaffolded project; the AGPL text is preserved
+    // as LICENSE-AGPL-REFERENCE.md so the fork-path grant remains visible.
+    emitJson(useJson, { event: "step", step: "license", status: "start" });
+    try {
+      const licenseEmit = emitIndependentLicense(resolvedTarget, {
+        projectName,
+        cliVersion: VERSION,
+      });
+      emitJson(useJson, {
+        event: "step",
+        step: "license",
+        status: "ok",
+        tier: "independent",
+        wrote: licenseEmit.wrote,
+      });
+      if (!useJson) {
+        process.stdout.write(
+          pc.dim(
+            `  License: Nebutra-Sailor Independent Developer License (free for ≤ 1 FTE, < $1M ARR).\n` +
+              `           Upstream AGPL preserved as LICENSE-AGPL-REFERENCE.md.\n`,
+          ),
+        );
+      }
+    } catch (err) {
+      // License emit must not block scaffolding. Log and continue so the
+      // user still gets a working project; they can re-run with --no-install
+      // and inspect the scaffold to recover.
+      emitJson(useJson, {
+        event: "step",
+        step: "license",
+        status: "warn",
+        message: err instanceof Error ? err.message : String(err),
+      });
+    }
 
     // Install dependencies (non-fatal on failure).
     const shouldInstall = opts.install !== false;

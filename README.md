@@ -684,19 +684,28 @@ We love our contributors! Here's how you can help:
 
 ## License
 
-This project is licensed under the **AGPLv3**.
+Nebutra-Sailor uses a **dual-license** model so independent developers can
+ship a commercial product without copyleft while corporate forks still owe
+back to the community.
 
-### What this means:
+| Path                                  | License                                          | Copyleft? |
+| ------------------------------------- | ------------------------------------------------ | --------- |
+| Fork from this GitHub repo            | **AGPL-3.0** ([LICENSE](./LICENSE))              | Yes (Section 13 / network) |
+| Scaffolded with `create-sailor` CLI   | **Nebutra Independent Developer License**        | No, for ≤ 1 FTE & < $1M ARR |
+| Larger teams / higher revenue         | **Startup / Enterprise tier** ([LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md)) | No |
 
-|                        |                                                            |
-| ---------------------- | ---------------------------------------------------------- |
-| **Free to use**        | Personal projects, learning, internal tools                |
-| **Free to modify**     | Create derivative works                                    |
-| **Free to distribute** | With attribution                                           |
-| **Commercial use**     | Requires open source                                       |
-| **Exemption**          | Wuxi Nebutra Intelligence Technology Co., Ltd. and affiliates |
+The CLI-generated path is the **default for indie devs and OPC** — running
+`npx create-sailor my-app` emits a `LICENSE` + `.nebutra/scaffold-meta.json`
+that pins the project to the Independent Developer tier. Fork the source
+repo directly and you keep AGPL — including its network-copyleft clause —
+unless you buy a Startup or Enterprise license.
 
-For commercial licensing inquiries, please contact us.
+Both grants come from the same copyright holder
+(Wuxi Nebutra Intelligence Technology Co., Ltd.). The presence and
+signature of `.nebutra/scaffold-meta.json` at the repo root is what
+distinguishes the two paths.
+
+For commercial licensing inquiries: **legal@nebutra.com**.
 
 ### Brand Assets & Trademarks
 
