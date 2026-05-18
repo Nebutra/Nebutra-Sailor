@@ -1078,18 +1078,6 @@
       "title": "Einmalige Zahlung. Lebenslanger Zugang.",
       "description": "Keine Abonnements. Keine wiederkehrenden Gebühren. Wählen Sie den Plan, der zu Ihrem Team passt.",
       "socialProofText": "Open Source AGPL-3.0 · kommerzielle Lizenz verfügbar.",
-      "solo": {
-        "badge": "EINZELPERSON",
-        "price": "Kostenlos",
-        "period": "für immer",
-        "desc": "Ideal für Einzelentwickler, die Produkte auf der AGPL-Basis validieren.",
-        "cta": "Repository klonen",
-        "f1": "Vollständiger Next.js 16 SaaS-Kern",
-        "f2": "Unbegrenzte persönliche Projekte (kommerzielle Nutzung erlaubt)",
-        "f3": "Vollständiger SaaS-Stack: Auth, Zahlungen, Organisationen, API, Admin-UI, E-Mail, i18n, Hintergrundjobs, Storage und mehr",
-        "f4": "Marketing-Features: Blog, Landing Page, SEO, Analytics",
-        "f5": "AGPLv3 Open-Source-Lizenz"
-      },
       "startup": {
         "badge": "STARTUP",
         "price": "$799",
@@ -1102,12 +1090,24 @@
         "f4": "Priority-Support",
         "f5": "Alles im Solo-Plan"
       },
-      "agency": {
-        "badge": "AGENTUR",
-        "price": "$1.499",
-        "period": "/ einmalig",
+      "independent": {
+        "badge": "INDEPENDENT",
+        "price": "Kostenlos",
+        "period": "für immer",
+        "desc": "Ideal für Einzelentwickler, die Produkte auf der AGPL-Basis validieren.",
+        "cta": "npx create-sailor",
+        "f1": "Vollständiger Next.js 16 SaaS-Kern",
+        "f2": "Unbegrenzte persönliche Projekte (kommerzielle Nutzung erlaubt)",
+        "f3": "Vollständiger SaaS-Stack: Auth, Zahlungen, Organisationen, API, Admin-UI, E-Mail, i18n, Hintergrundjobs, Storage und mehr",
+        "f4": "Marketing-Features: Blog, Landing Page, SEO, Analytics",
+        "f5": "AGPLv3 Open-Source-Lizenz"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE",
+        "price": "Individuell",
+        "period": "",
         "desc": "Für Agenturen und Betreiber, die wiederholbare Kundenplattformen ausliefern.",
-        "cta": "Nebutra für Agenturen holen",
+        "cta": "Vertrieb kontaktieren",
         "f1": "Bis zu 10 Entwickler-Plätze",
         "f2": "Unbegrenzte Kundenprojekte",
         "f3": "30-minütiges Architektur-Gespräch (Onboarding-Call)",
@@ -1663,9 +1663,9 @@
       "subtitle": "Jeder Plan enthält den vollständigen Quellcode. Kommerzielle Lizenzen beinhalten 12 Monate Updates.",
       "ariaTable": "Plan- und Funktionsvergleich",
       "plan": {
-        "individual": "Einzelperson",
         "startup": "Startup",
-        "agency": "Agentur"
+        "independent": "Einzelperson",
+        "enterprise": "Enterprise"
       },
       "feature": {
         "license": {

@@ -31,11 +31,11 @@ export async function PricingSection({
 
   const TIERS = [
     {
-      key: "solo",
+      key: "independent",
       ctaHref: "/get-license",
       highlighted: false,
       featureKeys: ["f1", "f2", "f3", "f4", "f5"] as const,
-      dynamicPrice: t("solo.price"), // Usually "Free"
+      dynamicPrice: t("independent.price"), // "Free"
     },
     {
       key: "startup",
@@ -45,11 +45,11 @@ export async function PricingSection({
       dynamicPrice: formatter.format(799 * exchangeRate),
     },
     {
-      key: "agency",
+      key: "enterprise",
       ctaHref: "/contact",
       highlighted: false,
       featureKeys: ["f1", "f2", "f3", "f4", "f5", "f6"] as const,
-      dynamicPrice: formatter.format(1499 * exchangeRate),
+      dynamicPrice: t("enterprise.price"), // "Custom"
     },
   ] as const;
 

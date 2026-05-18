@@ -56,6 +56,38 @@ export default async function TermsOfServicePage({
         {t("intro2End")}
       </p>
 
+      {/* Scope clarifier — TODO LEGAL: review wording with counsel.
+          Hardcoded English: split SaaS-subscription Terms (this document) from
+          source-code licensing (LICENSE-COMMERCIAL.md / LICENSE-INDEPENDENT.md
+          on scaffold). Without this clarifier, customers conflate the two when
+          conflicts arise. */}
+      <h2>Scope of These Terms</h2>
+      <p>
+        These Terms govern your use of the <strong>Nebutra hosted SaaS services</strong> (the
+        marketing site, dashboard at <code>app.nebutra.com</code>, and related APIs). They do{" "}
+        <strong>not</strong> govern your use of the open-source Nebutra-Sailor codebase.
+      </p>
+      <p>Source-code use is governed by a separate license, whichever applies to you:</p>
+      <ul>
+        <li>
+          <strong>Direct fork from GitHub</strong> — AGPL-3.0 (see{" "}
+          <code>LICENSE-AGPL-REFERENCE.md</code> in the repository).
+        </li>
+        <li>
+          <strong>
+            Project scaffolded with <code>create-sailor</code>
+          </strong>{" "}
+          — the Independent Developer License or a paid Startup / Enterprise commercial tier (see{" "}
+          <code>LICENSE-COMMERCIAL.md</code> and{" "}
+          <a href="https://nebutra.com/get-license">nebutra.com/get-license</a>).
+        </li>
+      </ul>
+      <p>
+        Where these Terms and a source-code license appear to conflict regarding rights to the
+        codebase itself, the source-code license controls. Where they appear to conflict regarding
+        use of the hosted services, these Terms control.
+      </p>
+
       {/* 1. Acceptance of Terms */}
       <h2>{t("acceptance.title")}</h2>
 

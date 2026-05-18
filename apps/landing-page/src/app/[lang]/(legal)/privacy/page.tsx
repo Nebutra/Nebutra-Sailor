@@ -129,6 +129,28 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
         ))}
       </ul>
 
+      {/* CLI telemetry opt-out — applies to `create-sailor` and `nebutra` CLIs.
+          Hardcoded English: the env var name is the same in every locale, and
+          the policy commitment (opt-out is always available, never collects
+          personal data) does not change per region. */}
+      <h2>CLI Telemetry &amp; Opt-Out</h2>
+      <p>
+        The <code>create-sailor</code> scaffolder and the <code>nebutra</code> CLI collect{" "}
+        <strong>anonymous usage analytics</strong> to improve the product (command counts, error
+        categories, scaffold-selection distributions). No personal data, secret values, or
+        repository contents are transmitted.
+      </p>
+      <p>
+        You can opt out at any time by setting <code>NEBUTRA_TELEMETRY=0</code> in your shell
+        environment. The CLI shows a one-time first-run banner on initial use explaining this
+        option, and the choice persists per machine in{" "}
+        <code>~/.config/nebutra/first-run-acked</code>.
+      </p>
+      <p>
+        Opt-out applies immediately — once the variable is set, the CLIs stop sending any telemetry
+        events. We never penalise opted-out users with reduced functionality.
+      </p>
+
       {/* Section 6: California Privacy Rights (CCPA) */}
       <h2>{t("ccpa.title")}</h2>
       <p>{t("ccpa.intro")}</p>

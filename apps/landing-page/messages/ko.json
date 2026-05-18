@@ -1078,18 +1078,6 @@
       "title": "Accelerate your development cycle.",
       "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
       "socialProofText": "오픈소스 AGPL-3.0 · 상업용 라이선스 사용 가능.",
-      "solo": {
-        "badge": "개인",
-        "price": "무료",
-        "period": "영구",
-        "desc": "AGPL 기반 위에서 제품을 검증하는 개인 빌더에게 가장 적합합니다.",
-        "cta": "저장소 복제",
-        "f1": "완전한 Next.js 16 SaaS 코어",
-        "f2": "무제한 개인 프로젝트 (상업적 이용 허용)",
-        "f3": "전체 SaaS 스택: 인증, 결제, 조직, API, 관리자 UI, 이메일, 다국어, 백그라운드 작업, 스토리지 등",
-        "f4": "마케팅 기능: 블로그, 랜딩 페이지, SEO, 분석",
-        "f5": "AGPLv3 오픈소스 라이선스"
-      },
       "startup": {
         "badge": "스타트업",
         "price": "$799",
@@ -1102,12 +1090,24 @@
         "f4": "Priority Support",
         "f5": "Solo의 모든 기능 포함"
       },
-      "agency": {
-        "badge": "에이전시",
-        "price": "$1,499",
-        "period": "lifetime",
+      "independent": {
+        "badge": "INDEPENDENT / 독립 개발자",
+        "price": "무료",
+        "period": "영구",
+        "desc": "AGPL 기반 위에서 제품을 검증하는 개인 빌더에게 가장 적합합니다.",
+        "cta": "npx create-sailor",
+        "f1": "완전한 Next.js 16 SaaS 코어",
+        "f2": "무제한 개인 프로젝트 (상업적 이용 허용)",
+        "f3": "전체 SaaS 스택: 인증, 결제, 조직, API, 관리자 UI, 이메일, 다국어, 백그라운드 작업, 스토리지 등",
+        "f4": "마케팅 기능: 블로그, 랜딩 페이지, SEO, 분석",
+        "f5": "AGPLv3 오픈소스 라이선스"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE / 엔터프라이즈",
+        "price": "맞춤",
+        "period": "",
         "desc": "반복 가능한 클라이언트 플랫폼을 출시하는 에이전시 및 운영자를 위한 플랜입니다.",
-        "cta": "에이전시용 Nebutra 받기",
+        "cta": "영업팀 문의",
         "f1": "Up to 10 Developer Seats",
         "f2": "무제한 클라이언트 프로젝트",
         "f3": "30-min Architecture Consult (Onboarding Call)",
@@ -1605,9 +1605,9 @@
       "title": "현재 단계에 맞는 요금제를 선택하십시오",
       "subtitle": "모든 요금제에 전체 소스 코드가 포함됩니다. 상용 라이선스는 12개월의 업데이트를 포함합니다.",
       "plan": {
-        "individual": "개인",
         "startup": "스타트업",
-        "agency": "에이전시"
+        "independent": "독립",
+        "enterprise": "엔터프라이즈"
       },
       "feature": {
         "license": {

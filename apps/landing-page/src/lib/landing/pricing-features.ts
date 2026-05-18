@@ -5,6 +5,12 @@
  * billing plans. Every license tier ships the full source code — the
  * differences are rights, seats, and support, not features.
  *
+ * Tier model (matches LICENSE-COMMERCIAL.md):
+ *   independent — ≤ 1 FTE & < $1M ARR, free, CLI-emitted Independent Developer
+ *                 License (no copyleft when scaffolded via create-sailor)
+ *   startup     — 2–50 FTE, $799/year, closed-source commercial license
+ *   enterprise  — 50+ FTE or ≥ $1M ARR or white-label / SLA, custom
+ *
  * The billing system's FREE/PRO/ENTERPRISE plans are a configurable demo
  * for products built with Sailor and are intentionally not shown here.
  *
@@ -13,7 +19,7 @@
  * Each plan column header via
  *   landing.comparison.plan.{planId}
  */
-export type PlanId = "individual" | "startup" | "agency";
+export type PlanId = "independent" | "startup" | "enterprise";
 
 export type ComparisonCell = boolean | string;
 
@@ -27,7 +33,7 @@ export interface ComparisonGroup {
   readonly rows: readonly ComparisonRow[];
 }
 
-export const PLAN_IDS: readonly PlanId[] = ["individual", "startup", "agency"] as const;
+export const PLAN_IDS: readonly PlanId[] = ["independent", "startup", "enterprise"] as const;
 
 export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
   {
@@ -35,14 +41,18 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
     rows: [
       {
         id: "type",
-        values: { individual: "AGPL-3.0", startup: "Commercial", agency: "Commercial" },
+        values: {
+          independent: "Independent (no copyleft)",
+          startup: "Commercial",
+          enterprise: "Commercial",
+        },
       },
       {
         id: "projects",
         values: {
-          individual: "Unlimited personal",
+          independent: "1 product, ≤ 1 FTE",
           startup: "Unlimited team",
-          agency: "Unlimited client",
+          enterprise: "Multi-product / multi-division",
         },
       },
     ],
@@ -50,11 +60,15 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
   {
     id: "source",
     rows: [
-      { id: "full-source", values: { individual: true, startup: true, agency: true } },
-      { id: "all-packages", values: { individual: true, startup: true, agency: true } },
+      { id: "full-source", values: { independent: true, startup: true, enterprise: true } },
+      { id: "all-packages", values: { independent: true, startup: true, enterprise: true } },
       {
         id: "update-window",
-        values: { individual: "Perpetual", startup: "12 months", agency: "12 months" },
+        values: {
+          independent: "Annual renewal (free)",
+          startup: "12 months",
+          enterprise: "12 months + roadmap input",
+        },
       },
     ],
   },
@@ -63,7 +77,7 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
     rows: [
       {
         id: "channel",
-        values: { individual: "Community", startup: "Email", agency: "Email" },
+        values: { independent: "Community", startup: "Email", enterprise: "Priority SLA" },
       },
     ],
   },

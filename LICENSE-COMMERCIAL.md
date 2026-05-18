@@ -10,9 +10,12 @@ This exception is designed to support individual developers, bootstrapped founde
 
 ---
 
-## Section 1 — Free License Exception (Individual & OPC)
+## Section 1 — Independent Developer License (≤ 1 FTE & < $1M ARR)
 
-**Eligible users:** Individual developers (solo), one-person companies (OPC/solopreneur), and non-commercial open-source projects.
+**Eligible users:** Independent developers — solo builders, one-person
+companies (OPC/solopreneur), and non-commercial open-source projects.
+Eligibility requires **≤ 1 full-time equivalent (FTE)** working on the
+product and **annual revenue under $1,000,000 USD**.
 
 ### What you get
 

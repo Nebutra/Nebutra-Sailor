@@ -1075,44 +1075,44 @@
       }
     },
     "pricing": {
-      "title": "One-time purchase. Lifetime access.",
-      "description": "No subscriptions. No recurring fees. Pick the plan that fits your team and start building today.",
-      "socialProofText": "Open-source AGPL-3.0 · commercial license available.",
-      "solo": {
-        "badge": "INDIVIDUAL",
+      "title": "Start free. Scale when you're ready.",
+      "description": "Independent and OPC developers ship for free. Annual commercial licenses unlock closed-source use for growing teams. Pick the tier that fits and start building today.",
+      "socialProofText": "AGPL-3.0 on fork · Independent Developer License via CLI · annual commercial tiers for teams.",
+      "independent": {
+        "badge": "INDEPENDENT",
         "price": "Free",
         "period": "forever",
-        "desc": "Best for individual builders validating products on the AGPL foundation.",
-        "cta": "Clone Repository",
+        "desc": "Solo builders and one-person companies (≤ 1 FTE, < $1M ARR). No copyleft when scaffolded via create-sailor.",
+        "cta": "npx create-sailor",
         "f1": "Complete Next.js 16 SaaS core",
-        "f2": "Unlimited Personal Projects (Commercial use allowed)",
+        "f2": "Unlimited personal projects (commercial use allowed)",
         "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more — plus thin admin + Retool/Metabase recipes (we don't ship bloated CRUD; we ship the integration patterns top SaaS use)",
         "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "AGPLv3 Open Source License"
+        "f5": "Independent Developer License (no AGPL copyleft when scaffolded with the CLI)"
       },
       "startup": {
         "badge": "STARTUP",
         "price": "$799",
         "period": "/ year",
-        "desc": "For small teams building on the Nebutra platform baseline.",
+        "desc": "For teams of 2–50 people. Closed-source commercial use, annual renewal.",
         "cta": "Get Nebutra for Startups",
-        "f1": "Closed-source use (commercial license)",
-        "f2": "Unlimited Team Projects",
+        "f1": "Closed-source use (commercial license, 2–50 FTE)",
+        "f2": "Unlimited team projects",
         "f3": "12 months of updates included",
         "f4": "Email support",
-        "f5": "Everything in Solo"
+        "f5": "Everything in Independent"
       },
-      "agency": {
-        "badge": "AGENCY",
-        "price": "$1,499",
-        "period": "/ year",
-        "desc": "For agencies and operators shipping repeatable client platforms.",
-        "cta": "Get Nebutra for Agencies",
-        "f1": "White-label rights (commercial license)",
-        "f2": "Unlimited Client Projects",
-        "f3": "12 months of updates included",
-        "f4": "White-label potential",
-        "f5": "Everything in Startup",
+      "enterprise": {
+        "badge": "ENTERPRISE",
+        "price": "Custom",
+        "period": "",
+        "desc": "50+ FTE, ≥ $1M ARR, or white-label / SLA needs. Custom contract with priority support.",
+        "cta": "Contact sales",
+        "f1": "Unlimited use across your organization (commercial license)",
+        "f2": "White-label rights (with written approval)",
+        "f3": "Priority support with SLA (2-hour critical, 24-hour standard)",
+        "f4": "Custom contract negotiation and roadmap input",
+        "f5": "Multi-product / multi-division licensing",
         "f6": "Everything in Startup"
       }
     },
@@ -1662,9 +1662,9 @@
       "title": "Pick the plan that fits the stage you are in",
       "subtitle": "Every plan includes the full source code. Commercial licenses include 12 months of updates.",
       "plan": {
-        "individual": "Individual",
+        "independent": "Independent",
         "startup": "Startup",
-        "agency": "Agency"
+        "enterprise": "Enterprise"
       },
       "feature": {
         "license": {

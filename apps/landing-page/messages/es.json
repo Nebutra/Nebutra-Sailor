@@ -1078,18 +1078,6 @@
       "title": "Compra única. Acceso de por vida.",
       "description": "Sin suscripciones. Sin tarifas recurrentes. Elija el plan que se adapte a su equipo y empiece a construir hoy.",
       "socialProofText": "Código abierto AGPL-3.0 · licencia comercial disponible.",
-      "solo": {
-        "badge": "INDIVIDUAL",
-        "price": "Gratis",
-        "period": "para siempre",
-        "desc": "Ideal para constructores individuales que validan productos sobre la base AGPL.",
-        "cta": "Clonar Repositorio",
-        "f1": "Núcleo SaaS completo con Next.js 16",
-        "f2": "Proyectos personales ilimitados (uso comercial permitido)",
-        "f3": "Stack SaaS completo: Auth, Pagos, Organizaciones, API, Admin UI, Email, i18n, Tareas en segundo plano, Almacenamiento y más",
-        "f4": "Funciones de marketing: Blog, Landing page, SEO, Análisis",
-        "f5": "Licencia de código abierto AGPLv3"
-      },
       "startup": {
         "badge": "STARTUP",
         "price": "$799",
@@ -1102,12 +1090,24 @@
         "f4": "Soporte por correo electrónico",
         "f5": "Todo lo del plan Solo"
       },
-      "agency": {
-        "badge": "AGENCIA",
-        "price": "$1,499",
-        "period": "/ año",
+      "independent": {
+        "badge": "INDEPENDENT",
+        "price": "Gratis",
+        "period": "para siempre",
+        "desc": "Ideal para constructores individuales que validan productos sobre la base AGPL.",
+        "cta": "npx create-sailor",
+        "f1": "Núcleo SaaS completo con Next.js 16",
+        "f2": "Proyectos personales ilimitados (uso comercial permitido)",
+        "f3": "Stack SaaS completo: Auth, Pagos, Organizaciones, API, Admin UI, Email, i18n, Tareas en segundo plano, Almacenamiento y más",
+        "f4": "Funciones de marketing: Blog, Landing page, SEO, Análisis",
+        "f5": "Licencia de código abierto AGPLv3"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE",
+        "price": "Personalizado",
+        "period": "",
         "desc": "Para agencias y operadores que desarrollan plataformas de clientes repetibles.",
-        "cta": "Obtener Nebutra para Agencias",
+        "cta": "Contactar ventas",
         "f1": "Derechos de white-label (licencia comercial)",
         "f2": "Proyectos de clientes ilimitados",
         "f3": "12 meses de actualizaciones incluidas",
@@ -1662,9 +1662,9 @@
       "title": "Elija el plan que se adapta a la etapa en la que se encuentra",
       "subtitle": "Todos los planes incluyen el código fuente completo. Las licencias comerciales incluyen 12 meses de actualizaciones.",
       "plan": {
-        "individual": "Individual",
         "startup": "Startup",
-        "agency": "Agencia"
+        "independent": "Independent",
+        "enterprise": "Empresa"
       },
       "feature": {
         "license": {

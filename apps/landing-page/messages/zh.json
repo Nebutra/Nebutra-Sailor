@@ -1078,18 +1078,6 @@
       "title": "一次买断。终身访问。",
       "description": "告别续订焦虑。选择最适合您团队的并发方案，即刻开始构建。",
       "socialProofText": "开源 AGPL-3.0 · 提供商业授权选项。",
-      "solo": {
-        "badge": "INDIVIDUAL / 个人",
-        "price": "免费",
-        "period": "永久",
-        "desc": "适合在 AGPL 基础上快速验证产品方向的个人开发者。",
-        "cta": "克隆代码库",
-        "f1": "完整的 Next.js 16 SaaS 核心",
-        "f2": "无限量的个人独立商用级应用接入授权",
-        "f3": "完整的全栈拓扑：多租户管控、计费引擎、行级安全；轻量管理后台 + Retool/Metabase 集成范式（不堆砌冗余 CRUD，沿用头部 SaaS 真正在用的内部工具链）",
-        "f4": "强劲的增长飞轮：原生博客系统、SEO 预渲机制及转化跟踪",
-        "f5": "AGPLv3 开源协议限制"
-      },
       "startup": {
         "badge": "STARTUP / 敏捷初创",
         "price": "$799",
@@ -1102,12 +1090,24 @@
         "f4": "邮件支持",
         "f5": "包含 Solo 架构下的全额度能力特权"
       },
-      "agency": {
-        "badge": "AGENCY / 商业工坊",
-        "price": "$1,499",
-        "period": "/ 年",
+      "independent": {
+        "badge": "INDEPENDENT / 独立开发者",
+        "price": "免费",
+        "period": "永久",
+        "desc": "适合在 AGPL 基础上快速验证产品方向的个人开发者。",
+        "cta": "npx create-sailor",
+        "f1": "完整的 Next.js 16 SaaS 核心",
+        "f2": "无限量的个人独立商用级应用接入授权",
+        "f3": "完整的全栈拓扑：多租户管控、计费引擎、行级安全；轻量管理后台 + Retool/Metabase 集成范式（不堆砌冗余 CRUD，沿用头部 SaaS 真正在用的内部工具链）",
+        "f4": "强劲的增长飞轮：原生博客系统、SEO 预渲机制及转化跟踪",
+        "f5": "AGPLv3 开源协议限制"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE / 企业版",
+        "price": "定制",
+        "period": "",
         "desc": "适合交付可重复客户平台的代理商与运营团队。",
-        "cta": "购买 Agency 商业授权",
+        "cta": "联系销售",
         "f1": "白标商用授权",
         "f2": "支持向乙方客户无限量出售产品闭源程序的再分发许可",
         "f3": "12 个月更新覆盖",
@@ -1662,9 +1662,9 @@
       "title": "按当前阶段选择最合适的套餐",
       "subtitle": "所有套餐都包含完整源代码以及对应版本线的终身更新。",
       "plan": {
-        "individual": "个人版",
         "startup": "初创版",
-        "agency": "商业版"
+        "independent": "独立开发者版",
+        "enterprise": "企业版版"
       },
       "feature": {
         "license": {
