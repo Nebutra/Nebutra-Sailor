@@ -23,6 +23,48 @@ interface GenerateComponentOptions extends GenerateOptions {
   sizes?: string;
 }
 
+interface GeneratePackageOptions extends GenerateOptions {
+  category?: string;
+}
+
+// Canonical categorized-packages layout — keep in sync with packages/<cat>/
+// in the monorepo and CLAUDE.md. Listing them here makes the CLI surface the
+// authoritative set when users supply --category.
+export const PACKAGE_CATEGORIES = [
+  "design",
+  "iam",
+  "commerce",
+  "integrations",
+  "platform",
+  "ops",
+  "ai",
+] as const;
+type PackageCategory = (typeof PACKAGE_CATEGORIES)[number];
+
+function isPackageCategory(value: string): value is PackageCategory {
+  return (PACKAGE_CATEGORIES as readonly string[]).includes(value);
+}
+
+/**
+ * Resolve where a `nebutra generate package` should be placed.
+ * Returns the relative path under the monorepo root (e.g. "packages/iam/foo").
+ * Throws with a clear error if --category is missing or invalid.
+ */
+function resolvePackagePath(packageName: string, category: string | undefined): string {
+  if (!category) {
+    throw new Error(
+      `--category is required. Valid categories: ${PACKAGE_CATEGORIES.join(", ")}. ` +
+        `Example: nebutra generate package ${packageName} --category iam`,
+    );
+  }
+  if (!isPackageCategory(category)) {
+    throw new Error(
+      `Unknown category "${category}". Valid categories: ${PACKAGE_CATEGORIES.join(", ")}.`,
+    );
+  }
+  return `packages/${category}/${packageName}`;
+}
+
 /**
  * Template for Next.js app (Next.js 16 + Tailwind v4)
  */
@@ -336,7 +378,7 @@ export const AllSizes: Story = {
 async function getFilesToCreate(
   type: string,
   name: string,
-  _options: GenerateOptions,
+  options: GenerateOptions & { category?: string },
 ): Promise<Array<{ path: string; size: number }>> {
   const root = findMonorepoRoot();
   const files: Array<{ path: string; size: number }> = [];
@@ -360,12 +402,15 @@ async function getFilesToCreate(
       throw new Error(`Unknown generate type: ${type}`);
   }
 
+  const packageRelPath =
+    type === "package" ? resolvePackagePath(name, options.category) : undefined;
+
   for (const [filePath, content] of Object.entries(templates)) {
     const fullPath =
       type === "app"
         ? join(root, "apps", name, filePath)
         : type === "package"
-          ? join(root, "packages", name, filePath)
+          ? join(root, packageRelPath ?? `packages/${name}`, filePath)
           : join(root, "backends/gateway", filePath);
 
     files.push({
@@ -380,7 +425,11 @@ async function getFilesToCreate(
 /**
  * Create files for the generated resource
  */
-async function createFiles(type: string, name: string): Promise<Array<string>> {
+async function createFiles(
+  type: string,
+  name: string,
+  options: { category?: string } = {},
+): Promise<Array<string>> {
   const root = findMonorepoRoot();
   const createdFiles: string[] = [];
 
@@ -403,15 +452,20 @@ async function createFiles(type: string, name: string): Promise<Array<string>> {
       throw new Error(`Unknown generate type: ${type}`);
   }
 
+  const packageRelPath =
+    type === "package" ? resolvePackagePath(name, options.category) : undefined;
+
   for (const [filePath, content] of Object.entries(templates)) {
     let fullPath: string;
 
     if (type === "app") {
       fullPath = join(root, "apps", name, filePath);
     } else if (type === "package") {
-      fullPath = join(root, "packages", name, filePath);
+      fullPath = join(root, packageRelPath ?? `packages/${name}`, filePath);
     } else if (type === "component") {
-      fullPath = join(root, "packages/ui", filePath);
+      // Component scaffolder targets the UI library under the categorized
+      // layout (was `packages/ui` pre-2026-05).
+      fullPath = join(root, "packages/design/ui", filePath);
     } else {
       fullPath = join(root, "backends/gateway", filePath);
     }
@@ -479,9 +533,19 @@ export async function generateAppCommand(appName: string, options: GenerateAppOp
 }
 
 /**
- * Generate package command
+ * Generate package command — emits a new `@nebutra/<name>` package under
+ * the categorized layout `packages/<category>/<name>/`.
  */
-export async function generatePackageCommand(packageName: string, options: GenerateOptions) {
+export async function generatePackageCommand(packageName: string, options: GeneratePackageOptions) {
+  // Validate --category up front so dry-run also surfaces the error.
+  let location: string;
+  try {
+    location = resolvePackagePath(packageName, options.category);
+  } catch (error) {
+    logger.error(error instanceof Error ? error.message : String(error));
+    process.exit(ExitCode.INVALID_ARGS);
+  }
+
   if (options.dryRun) {
     const files = await getFilesToCreate("package", packageName, options);
     const output = {
@@ -489,7 +553,8 @@ export async function generatePackageCommand(packageName: string, options: Gener
       timestamp: new Date().toISOString(),
       type: "package",
       name: packageName,
-      location: `packages/${packageName}`,
+      category: options.category,
+      location,
       files: files.map((f) => ({
         path: f.path,
         sizeBytes: f.size,
@@ -505,15 +570,15 @@ export async function generatePackageCommand(packageName: string, options: Gener
   const spinner = logger.spinner();
 
   try {
-    spinner.start(`Generating package ${pc.cyan(packageName)}...`);
+    spinner.start(`Generating package ${pc.cyan(packageName)} in ${pc.dim(location)}...`);
 
-    const files = await createFiles("package", packageName);
+    const files = await createFiles("package", packageName, { category: options.category });
 
     spinner.stop(`Created package ${pc.cyan(packageName)}`, 0);
 
     logger.success(`Package created with ${files.length} files`);
     logger.info(`Next steps:`);
-    logger.info(`  Edit packages/${packageName}/src/index.ts`);
+    logger.info(`  Edit ${location}/src/index.ts`);
     logger.info(`  Run: pnpm --filter @nebutra/${packageName} build`);
 
     process.exit(ExitCode.SUCCESS);
@@ -659,13 +724,17 @@ export function registerGenerateCommand(program: any) {
 
   generate
     .command("package <name>")
-    .description("Scaffold a new package (@nebutra/<name>)")
+    .description(
+      `Scaffold a new categorized package (@nebutra/<name>). Categories: ${PACKAGE_CATEGORIES.join(", ")}`,
+    )
+    .requiredOption("--category <category>", `Package category: ${PACKAGE_CATEGORIES.join(" | ")}`)
     .option("--dry-run", "Preview changes without writing files")
     .option("--yes", "Skip all prompts")
     .action(async (name: string, options: any) => {
       const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
       await generatePackageCommand(name, {
         ...options,
+        category: options.category,
         dryRun: options.dryRun || false,
         yes: globalOptions.yes || false,
       });

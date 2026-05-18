@@ -24,13 +24,18 @@ interface PresetDefinition {
 }
 
 /**
- * All available presets with their definitions
+ * All available presets with their definitions.
+ *
+ * `apps` lists workspace directories that exist in a freshly-scaffolded
+ * Nebutra-Sailor project. Keep this list in sync with `apps/` in the
+ * monorepo — listing apps that don't exist confuses external users running
+ * `nebutra preset apply`. Backends and packages are configured separately.
  */
 const PRESETS: Record<string, PresetDefinition> = {
   "ai-saas": {
     name: "ai-saas",
     description: "Full-stack AI SaaS platform with auth, billing, and analytics",
-    apps: ["web", "landing-page", "backends/gateway", "studio", "admin"],
+    apps: ["web", "landing-page", "backends/gateway", "studio"],
     features: ["billing", "ai", "search", "analytics", "sso"],
     theme: "vibrant",
     stack: ["Next.js 16", "Hono", "Prisma", "PostgreSQL", "OpenAI API"],
@@ -38,7 +43,7 @@ const PRESETS: Record<string, PresetDefinition> = {
   marketing: {
     name: "marketing",
     description: "Marketing website with blog and CMS integration",
-    apps: ["landing-page", "blog", "studio"],
+    apps: ["landing-page", "studio"],
     features: ["blog", "growth", "analytics", "newsletter"],
     theme: "minimal",
     stack: ["Next.js 16", "Sanity CMS", "Mailgun"],
@@ -46,7 +51,7 @@ const PRESETS: Record<string, PresetDefinition> = {
   dashboard: {
     name: "dashboard",
     description: "Enterprise dashboard with admin panel and RBAC",
-    apps: ["web", "admin", "backends/gateway"],
+    apps: ["web", "backends/gateway"],
     features: ["billing", "admin", "analytics", "sso"],
     theme: "dark-dense",
     stack: ["Next.js 16", "Hono", "Prisma", "PostgreSQL"],
@@ -54,23 +59,23 @@ const PRESETS: Record<string, PresetDefinition> = {
   overseas: {
     name: "overseas",
     description: "Global SaaS with multi-language and localization support",
-    apps: ["web", "landing-page", "backends/gateway", "blog"],
-    features: ["billing", "ai", "search", "i18n"],
+    apps: ["web", "landing-page", "backends/gateway"],
+    features: ["billing", "ai", "search", "i18n", "blog"],
     theme: "ocean",
     stack: ["Next.js 16", "i18next", "Hono"],
   },
   growth: {
     name: "growth",
     description: "Growth-focused platform with community and content",
-    apps: ["web", "landing-page", "blog"],
-    features: ["growth", "analytics", "newsletter", "community"],
+    apps: ["web", "landing-page"],
+    features: ["growth", "analytics", "newsletter", "community", "blog"],
     theme: "vibrant",
     stack: ["Next.js 16", "Mailgun", "Mixpanel"],
   },
   creative: {
     name: "creative",
     description: "Creative portfolio and landing page builder",
-    apps: ["landing-page", "blog"],
+    apps: ["landing-page"],
     features: ["blog", "growth"],
     theme: "gradient",
     stack: ["Next.js 16", "Framer Motion"],
@@ -78,7 +83,7 @@ const PRESETS: Record<string, PresetDefinition> = {
   "blog-portfolio": {
     name: "blog-portfolio",
     description: "Personal blog and portfolio site",
-    apps: ["landing-page", "blog"],
+    apps: ["landing-page"],
     features: ["blog"],
     theme: "minimal",
     stack: ["Next.js 16"],
@@ -107,11 +112,9 @@ const PRESETS: Record<string, PresetDefinition> = {
       "landing-page",
       "backends/gateway",
       "studio",
-      "admin",
-      "blog",
       "storybook",
       "design-docs",
-      "docs",
+      "sailor-docs",
     ],
     features: [
       "billing",

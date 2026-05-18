@@ -216,6 +216,77 @@ async function main() {
         logger.warn("No .env or .env.local found. Some features may not work properly.");
       }
 
+      // ─── Monorepo-layout drift checks ───────────────────────
+      // The 2026-05 restructure moved apps/api-gateway → backends/gateway and
+      // adopted categorized packages (packages/<category>/<name>). Surface
+      // drift so users know to migrate.
+
+      const legacyApiGateway = path.join(root, "apps/api-gateway");
+      if (fs.existsSync(legacyApiGateway)) {
+        logger.warn(
+          "Legacy `apps/api-gateway/` present. Expected `backends/gateway/` — see CLAUDE.md for the W2.x restructure.",
+        );
+      }
+
+      const backendsGateway = path.join(root, "backends/gateway");
+      if (fs.existsSync(backendsGateway)) {
+        logger.success("backends/gateway/ present");
+      } else if (fs.existsSync(path.join(root, "backends"))) {
+        // backends/ exists but gateway doesn't — scaffold-only projects may
+        // not include it. Quiet pass.
+      }
+
+      // Categorized packages: packages/<category>/<name>/package.json should
+      // exist (e.g. packages/design/ui, packages/iam/auth). Flat
+      // packages/<name>/ that the CLI generates without --category is drift.
+      const packagesDir = path.join(root, "packages");
+      if (fs.existsSync(packagesDir)) {
+        const KNOWN_CATEGORIES = new Set([
+          "design",
+          "iam",
+          "commerce",
+          "integrations",
+          "platform",
+          "ops",
+          "ai",
+        ]);
+        try {
+          const entries = fs.readdirSync(packagesDir, { withFileTypes: true });
+          const flatPackages: string[] = [];
+          for (const entry of entries) {
+            if (!entry.isDirectory()) continue;
+            if (KNOWN_CATEGORIES.has(entry.name)) continue;
+            // A directory that is not a known category AND has its own
+            // package.json is a flat (uncategorized) package — drift.
+            const pkgPath = path.join(packagesDir, entry.name, "package.json");
+            if (fs.existsSync(pkgPath)) flatPackages.push(entry.name);
+          }
+          if (flatPackages.length > 0) {
+            logger.warn(
+              `Found ${flatPackages.length} uncategorized package(s) under packages/: ${flatPackages.join(", ")}. ` +
+                "Expected packages/<category>/<name>/ — see CLAUDE.md.",
+            );
+          } else {
+            logger.success("Packages follow categorized layout");
+          }
+        } catch {
+          // ignore — best-effort check
+        }
+      }
+
+      // Scaffold-meta marker: present iff project was created via
+      // create-sailor. Missing is fine for direct forks, but if a stale
+      // .nebutra/ dir without scaffold-meta.json exists, that's drift.
+      const scaffoldMetaDir = path.join(root, ".nebutra");
+      const scaffoldMetaFile = path.join(scaffoldMetaDir, "scaffold-meta.json");
+      if (fs.existsSync(scaffoldMetaFile)) {
+        logger.success(".nebutra/scaffold-meta.json present (CLI-scaffolded project)");
+      } else if (fs.existsSync(scaffoldMetaDir)) {
+        logger.warn(
+          ".nebutra/ directory exists but scaffold-meta.json is missing. Run `nebutra license verify` for details.",
+        );
+      }
+
       if (hasErrors) {
         logger.error("Doctor found critical issues that require your attention.");
         process.exit(ExitCode.CONFIG_ERROR);

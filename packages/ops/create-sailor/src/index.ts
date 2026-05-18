@@ -45,6 +45,7 @@ import { applyEmailSelection } from "./utils/email";
 import { injectEnv } from "./utils/env";
 import { generateEnvSecrets } from "./utils/env-secrets";
 import { applyFeatureFlagsSelection } from "./utils/feature-flags";
+import { maybeShowFirstRunBanner } from "./utils/first-run";
 import { cloneTemplate } from "./utils/git";
 import { emitIndependentLicense } from "./utils/license-emit";
 import { applyMcpSwitch } from "./utils/mcp";
@@ -510,7 +511,12 @@ async function run(): Promise<void> {
   const autoYes = Boolean(opts.yes);
   const nonInteractive = autoYes || !process.stdin.isTTY;
 
-  if (!useJson) showBanner();
+  if (!useJson) {
+    // Show telemetry opt-out banner once per machine (no-op on subsequent
+    // runs because of the shared ~/.config/nebutra/first-run-acked marker).
+    maybeShowFirstRunBanner();
+    showBanner();
+  }
   emitJson(useJson, { event: "start", version: VERSION });
 
   // Pre-check: the scaffolded project uses pnpm workspaces + Turborepo and
