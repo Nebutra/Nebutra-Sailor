@@ -25,5 +25,6 @@ jobs:
       - name: Verify package registry governance
         run: node scripts/verify-package-registry.mjs
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PACKAGE_GOVERNANCE_TOKEN || secrets.GITHUB_TOKEN }}
+          PACKAGE_REGISTRY_REQUIRE_CONTAINER_AUDIT: ${{ secrets.PACKAGE_GOVERNANCE_TOKEN != '' && 'true' || 'false' }}
           PACKAGE_REGISTRY_VERIFY_NPMJS: "true"

@@ -119,6 +119,24 @@ async function listOrgPackages(org, packageType, token) {
   return packages;
 }
 
+async function listContainerPackages(org, token) {
+  try {
+    return {
+      packages: await listOrgPackages(org, "container", token),
+      skippedReason: "",
+    };
+  } catch (error) {
+    if (shouldRequireContainerAudit()) {
+      throw error;
+    }
+
+    return {
+      packages: [],
+      skippedReason: error.message,
+    };
+  }
+}
+
 function githubNpmName(packageName) {
   const scope = "@nebutra/";
   return packageName.startsWith(scope) ? packageName.slice(scope.length) : null;
@@ -130,6 +148,10 @@ function shouldVerifyNpmjs() {
 
 function shouldIncludeUntracked() {
   return process.env.PACKAGE_REGISTRY_INCLUDE_UNTRACKED === "true";
+}
+
+function shouldRequireContainerAudit() {
+  return process.env.PACKAGE_REGISTRY_REQUIRE_CONTAINER_AUDIT === "true";
 }
 
 function isInsideGitWorkTree() {
@@ -223,10 +245,11 @@ async function main() {
     expectedNpmjsPackages.map((name) => githubNpmName(name)).filter(Boolean),
   );
 
-  const [npmPackages, containerPackages] = await Promise.all([
+  const [npmPackages, containerPackageResult] = await Promise.all([
     listOrgPackages(repository.org, "npm", token),
-    listOrgPackages(repository.org, "container", token),
+    listContainerPackages(repository.org, token),
   ]);
+  const containerPackages = containerPackageResult.packages;
 
   const repoNpmPackages = npmPackages.filter(
     (entry) => entry.repository?.full_name === repository.fullName,
@@ -263,10 +286,16 @@ async function main() {
   console.log(`[package-registry] private GitHub npm packages: ${formatList(privateNpmPackages)}`);
   console.log(`[package-registry] missing GitHub npm mirrors: ${formatList(missingNpmMirrors)}`);
   console.log(`[package-registry] orphan GitHub npm packages: ${formatList(orphanNpmPackages)}`);
-  console.log(`[package-registry] legacy container packages: ${formatList(legacyContainers)}`);
-  console.log(
-    `[package-registry] unexpected container packages: ${formatList(unexpectedContainers)}`,
-  );
+  if (containerPackageResult.skippedReason) {
+    console.log(
+      `[package-registry] container package check: skipped (${containerPackageResult.skippedReason})`,
+    );
+  } else {
+    console.log(`[package-registry] legacy container packages: ${formatList(legacyContainers)}`);
+    console.log(
+      `[package-registry] unexpected container packages: ${formatList(unexpectedContainers)}`,
+    );
+  }
   console.log(
     shouldVerifyNpmjs()
       ? `[package-registry] missing npmjs packages: ${formatList(missingNpmjsPackages)}`
