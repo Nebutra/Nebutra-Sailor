@@ -673,7 +673,7 @@ export function registerGenerateCommand(program: any) {
 
   generate
     .command("route <path>")
-    .description("Scaffold a Hono API route in api-gateway")
+    .description("Scaffold a Hono API route in backends/gateway")
     .option("--dry-run", "Preview changes without writing files")
     .option("--yes", "Skip all prompts")
     .action(async (path: string, options: any) => {

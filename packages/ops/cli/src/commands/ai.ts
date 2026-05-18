@@ -328,7 +328,7 @@ async function handleAiModels(options: AiCommandOptions) {
 
 /**
  * Handle 'nebutra ai agents' command
- * Scan for available agents in the api-gateway
+ * Scan for available agents in backends/gateway
  */
 async function handleAiAgents(options: AiCommandOptions) {
   if (options.format !== "json") {
@@ -336,7 +336,7 @@ async function handleAiAgents(options: AiCommandOptions) {
   }
 
   try {
-    // Try to find agents in the api-gateway
+    // Try to find agents in backends/gateway
     const agentsPath = resolve(process.cwd(), "backends/gateway/src/routes/agents");
     let agents: Array<{ name: string; path: string; description?: string }> = [];
 

@@ -1,12 +1,21 @@
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { runCli } from "./helpers.js";
+
+const PKG_VERSION = (
+  JSON.parse(
+    readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "package.json"), "utf8"),
+  ) as { version: string }
+).version;
 
 describe("CLI", () => {
   it("should output version with --version", async () => {
     const result = await runCli(["--version"]);
 
     expect(result.exitCode).toBe(0);
-    expect(result.stdout).toContain("0.1.0");
+    expect(result.stdout).toContain(PKG_VERSION);
   });
 
   it("should show help text with --help", async () => {

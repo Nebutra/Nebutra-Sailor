@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { Command } from "commander";
 import { addCommand } from "./commands/add";
 import { registerAdminCommand } from "./commands/admin";
@@ -57,7 +60,11 @@ import { maybeNotifyUpdate } from "./utils/update-notifier";
 // renaming a command, ALWAYS keep the old form as a `.alias()` so existing
 // docs/scripts continue to work.
 
-const VERSION = "0.1.0";
+// Read version from package.json at module load. Same relative path works for
+// both `tsx src/index.ts` (dev) and `node dist/index.js` (prod) because src/
+// and dist/ are siblings under packages/ops/cli/.
+const PKG_JSON_PATH = join(dirname(fileURLToPath(import.meta.url)), "..", "package.json");
+const VERSION = (JSON.parse(readFileSync(PKG_JSON_PATH, "utf8")) as { version: string }).version;
 
 async function main() {
   // Show first-run telemetry opt-out banner (gated by TTY + env + marker)

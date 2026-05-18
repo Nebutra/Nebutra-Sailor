@@ -30,7 +30,7 @@ const PRESETS: Record<string, PresetDefinition> = {
   "ai-saas": {
     name: "ai-saas",
     description: "Full-stack AI SaaS platform with auth, billing, and analytics",
-    apps: ["web", "landing-page", "api-gateway", "studio", "admin"],
+    apps: ["web", "landing-page", "backends/gateway", "studio", "admin"],
     features: ["billing", "ai", "search", "analytics", "sso"],
     theme: "vibrant",
     stack: ["Next.js 16", "Hono", "Prisma", "PostgreSQL", "OpenAI API"],
@@ -46,7 +46,7 @@ const PRESETS: Record<string, PresetDefinition> = {
   dashboard: {
     name: "dashboard",
     description: "Enterprise dashboard with admin panel and RBAC",
-    apps: ["web", "admin", "api-gateway"],
+    apps: ["web", "admin", "backends/gateway"],
     features: ["billing", "admin", "analytics", "sso"],
     theme: "dark-dense",
     stack: ["Next.js 16", "Hono", "Prisma", "PostgreSQL"],
@@ -54,7 +54,7 @@ const PRESETS: Record<string, PresetDefinition> = {
   overseas: {
     name: "overseas",
     description: "Global SaaS with multi-language and localization support",
-    apps: ["web", "landing-page", "api-gateway", "blog"],
+    apps: ["web", "landing-page", "backends/gateway", "blog"],
     features: ["billing", "ai", "search", "i18n"],
     theme: "ocean",
     stack: ["Next.js 16", "i18next", "Hono"],
@@ -105,7 +105,7 @@ const PRESETS: Record<string, PresetDefinition> = {
     apps: [
       "web",
       "landing-page",
-      "api-gateway",
+      "backends/gateway",
       "studio",
       "admin",
       "blog",

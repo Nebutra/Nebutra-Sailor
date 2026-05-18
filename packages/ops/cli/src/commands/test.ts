@@ -38,7 +38,7 @@ const VALID_APPS = [
   "landing-page",
   "web",
   "storybook",
-  "api-gateway",
+  "backends/gateway",
   "design-docs",
   "studio",
   "docs",

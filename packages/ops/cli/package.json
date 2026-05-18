@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
-    "@nebutra/theme": "workspace:*",
+    "@nebutra/theme": "^0.1.0",
     "commander": "^12.1.0",
     "node-fetch": "^3.3.2",
     "picocolors": "^1.1.0"
