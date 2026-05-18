@@ -1,0 +1,62 @@
+{
+  "name": "@nebutra/play-marketplace",
+  "version": "0.1.0",
+  "description": "Local registry, publishing, install, metrics, and billing handoff surface for SKILL.md Plays",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "ecosystem-product",
+    "requires": [
+      "@nebutra/play-loader for SKILL.md validation",
+      "@nebutra/content-store for registry artifacts",
+      "@nebutra/event-log for publish and install checkpoints"
+    ],
+    "gaps": [
+      "Remote registry transport is represented as a local signed index",
+      "Paid billing is represented as a provider-neutral handoff manifest",
+      "Verified review queues are metadata-only until marketplace operations exist"
+    ],
+    "featureId": "play-marketplace",
+    "category": "ai",
+    "summary": "SKILL.md Play marketplace surface with quality gates and real usage stats"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/content-store": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/event-log": "workspace:*",
+    "@nebutra/play-loader": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/play-marketplace#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/play-marketplace"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

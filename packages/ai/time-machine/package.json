@@ -1,0 +1,62 @@
+{
+  "name": "@nebutra/time-machine",
+  "version": "0.1.0",
+  "description": "Chronos product surface for timeline browsing, branching, comparison, and rollback previews",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "ecosystem-product",
+    "requires": [
+      "@nebutra/event-log for append-only truth",
+      "@nebutra/content-store for annotation artifacts",
+      "@nebutra/capability-kit for debug and doctor surfaces"
+    ],
+    "gaps": [
+      "GUI star-map layout is represented as a data contract until the dashboard surface is wired",
+      "Rollback apply remains intentionally absent; only dry-run plans are exposed",
+      "Large binary media diffing is represented as metadata until sandbox diff workers are available"
+    ],
+    "featureId": "time-machine",
+    "category": "ai",
+    "summary": "Founder-facing view over event-log history without owning event truth"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/content-store": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/event-log": "workspace:*",
+    "@nebutra/generation-context": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/time-machine#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/time-machine"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -24,6 +24,7 @@ the machine-readable source of truth; this file is the human map.
 | `creative-surface` | `@nebutra/atelier-canvas` | Canvas/scene editing surface over lower graph/storage primitives. |
 | `product-orchestration` | `@nebutra/cinema`, `@nebutra/play-loader` | Declarative product workflows over lower runtime/tool/media surfaces. |
 | `play-product` | `@nebutra/brand-genesis`, `@nebutra/landing-builder`, `@nebutra/outreach-engine`, `@nebutra/support-deflector` | Complete user-story Plays that compose lower capabilities. Owns orchestration and SKILL.md assets, not primitive generation. |
+| `ecosystem-product` | `@nebutra/time-machine`, `@nebutra/idea-plaza`, `@nebutra/founder-cemetery`, `@nebutra/cofounder-match`, `@nebutra/play-marketplace` | Network-effect product surfaces over lower persistence, knowledge, and Play primitives. Owns explicit opt-in workflows, lineage, annotations, marketplace records, and consent gates. |
 | `gateway-experiment` | `@nebutra/llm-gateway` | Local experiment only; production gateway is outside `packages/ai`. |
 | `legacy-experiment` | `@nebutra/provider-registry` | Local provider trait experiment only. New production consumers are forbidden. |
 
@@ -74,5 +75,9 @@ the machine-readable source of truth; this file is the human map.
     SKILL.md Plays. They must not define new media providers, agent-loop state
     machines, BrandContext schemas, channel transports, sender credentials,
     deploy credentials, or parser primitives.
-14. Legacy experiments may remain only while marked WIP and blocked from new
+14. Ecosystem product packages may project lower-layer data into public,
+    network-effect, or marketplace workflows. They must not redefine event-log,
+    content-store, SKILL.md parsing, auth, billing, chat transport, public
+    registry transport, or global moderation systems.
+15. Legacy experiments may remain only while marked WIP and blocked from new
    production consumers by architecture tests.

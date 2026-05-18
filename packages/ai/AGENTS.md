@@ -22,6 +22,7 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | RAG/indexing/dataflow | `@nebutra/knowledge-rag`, `@nebutra/code-index`, `@nebutra/reel`, `@nebutra/atelier-canvas`, `@nebutra/cinema` | Product capabilities built on injected model/vector/store/tool ports. |
 | Knowledge product layer | `@nebutra/knowledge-base` | Company cognition over connectors, memory, graph, citations, and explainable search. It consumes lower retrieval/ingestion primitives and must not redefine them. |
 | Play product layer | `@nebutra/brand-genesis`, `@nebutra/landing-builder`, `@nebutra/outreach-engine`, `@nebutra/support-deflector` | Complete user-story Plays over lower capabilities. Owns orchestration and SKILL.md assets only. |
+| Ecosystem product layer | `@nebutra/time-machine`, `@nebutra/idea-plaza`, `@nebutra/founder-cemetery`, `@nebutra/cofounder-match`, `@nebutra/play-marketplace` | Network-effect product surfaces over lower persistence, knowledge, and Play primitives. They own explicit opt-in workflows, lineage, annotations, marketplace records, and consent gates, not event truth, content truth, runtime loops, transports, or billing credentials. |
 | Legacy local experiments | `@nebutra/llm-gateway`, `@nebutra/provider-registry` | `@nebutra/llm-gateway` is not the production gateway; `@nebutra/provider-registry` is a local-provider experiment. Do not add new production consumers. |
 
 The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
@@ -76,7 +77,13 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
    user-story bundles. They must not own agent-loop internals, media generation
    providers, deploy credentials, sender credentials, channel transports,
    BrandContext schemas, or prompt islands outside SKILL.md.
-14. Legacy experiments stay WIP and blocked from new production consumers until
+14. Ecosystem product packages such as `@nebutra/time-machine`,
+   `@nebutra/idea-plaza`, `@nebutra/founder-cemetery`,
+   `@nebutra/cofounder-match`, and `@nebutra/play-marketplace` may project
+   lower-layer data into network-effect workflows. They must not redefine
+   event-log, content-store, SKILL.md parsing, auth, billing, chat transport,
+   public registry transport, or global moderation systems.
+15. Legacy experiments stay WIP and blocked from new production consumers until
    they are either retired or promoted through a separate RFC.
 
 ## 2026 AI SaaS Defaults
@@ -155,6 +162,18 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 - `@nebutra/support-deflector` must not own customer channel transports. It
   owns confidence-gated ticket decisions only; support-channel bridges remain
   adapter seams.
+- `@nebutra/time-machine` must not own event or content truth. It consumes
+  `@nebutra/event-log` and `@nebutra/content-store`, and rollback apply remains
+  outside the package.
+- `@nebutra/idea-plaza` and `@nebutra/founder-cemetery` must default to private
+  data, require explicit publication intent, and write audit-friendly snapshots
+  rather than exposing cross-tenant source stores.
+- `@nebutra/cofounder-match` must not own identity providers or chat transport.
+  It owns activity-derived profiles, explainable matching, and mutual-consent
+  handoff artifacts.
+- `@nebutra/play-marketplace` must validate Plays through `@nebutra/play-loader`.
+  It must not parse SKILL.md locally, own payment credentials, or mark quality
+  metrics as production stats before telemetry exists.
 - Product capability packages should not own billing deduction, gateway auth, or
   provider-key selection.
 - Examples may import legacy packages to demonstrate migration, but production

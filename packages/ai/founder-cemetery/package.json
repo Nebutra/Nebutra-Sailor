@@ -1,0 +1,62 @@
+{
+  "name": "@nebutra/founder-cemetery",
+  "version": "0.1.0",
+  "description": "Company closing, postmortem, lesson extraction, and memorial publication surface",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "ecosystem-product",
+    "requires": [
+      "@nebutra/content-store for memorial artifacts",
+      "@nebutra/event-log for closure checkpoints",
+      "@nebutra/capability-kit for debug and doctor surfaces"
+    ],
+    "gaps": [
+      "Memorial video output is represented as a handoff manifest until video composition is wired",
+      "Multi-founder legal signing is represented as explicit consent signatures",
+      "Global pattern matching remains local until the ecosystem KB is online"
+    ],
+    "featureId": "founder-cemetery",
+    "category": "ai",
+    "summary": "Ethical close-company flow and evidence-backed memorial product surface"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/content-store": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/event-log": "workspace:*",
+    "@nebutra/generation-context": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/founder-cemetery#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/founder-cemetery"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

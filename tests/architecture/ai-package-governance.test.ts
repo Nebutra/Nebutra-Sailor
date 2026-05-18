@@ -10,6 +10,7 @@ type PackageStatus = "stable" | "foundation" | "wip" | "deprecated";
 const ALLOWED_SURFACES = [
   "agent-runtime",
   "creative-surface",
+  "ecosystem-product",
   "execution-capability",
   "execution-router",
   "gateway-experiment",
@@ -90,6 +91,22 @@ const GENERATION_CAPABILITY_FORBIDDEN_IMPORTS = [
 ] as const;
 
 const PLAY_PRODUCT_FORBIDDEN_IMPORTS = [
+  "@nebutra/agent-runtime",
+  "@nebutra/agents",
+  "ai",
+  "@nebutra/llm-gateway",
+  "@nebutra/provider-registry",
+] as const;
+
+const ECOSYSTEM_PRODUCT_PACKAGES = [
+  "@nebutra/time-machine",
+  "@nebutra/idea-plaza",
+  "@nebutra/founder-cemetery",
+  "@nebutra/cofounder-match",
+  "@nebutra/play-marketplace",
+] as const;
+
+const ECOSYSTEM_PRODUCT_FORBIDDEN_IMPORTS = [
   "@nebutra/agent-runtime",
   "@nebutra/agents",
   "ai",
@@ -600,6 +617,76 @@ describe("AI package architecture governance", () => {
       for (const pattern of item.forbiddenSource) {
         expect(source).not.toMatch(pattern);
       }
+    }
+  });
+
+  it("keeps Layer 7 ecosystem products above lower primitives without re-owning them", () => {
+    const expected = [
+      {
+        name: "@nebutra/time-machine",
+        skill: ["plays", "timeline_view", "SKILL.md"],
+        required: ["@nebutra/event-log", "@nebutra/content-store"],
+        forbiddenSource: [/class\s+EventLog\b/, /class\s+ContentStore\b/, /rollbackApply\b/],
+      },
+      {
+        name: "@nebutra/idea-plaza",
+        skill: ["plays", "publish_idea", "SKILL.md"],
+        required: ["@nebutra/event-log", "@nebutra/content-store"],
+        forbiddenSource: [/class\s+GlobalRegistry\b/, /class\s+ModerationQueue\b/],
+      },
+      {
+        name: "@nebutra/founder-cemetery",
+        skill: ["plays", "close_company", "SKILL.md"],
+        required: ["@nebutra/event-log", "@nebutra/content-store"],
+        forbiddenSource: [/deleteCompany\b/, /class\s+LegalSignatureProvider\b/],
+      },
+      {
+        name: "@nebutra/cofounder-match",
+        skill: ["plays", "seek_cofounder", "SKILL.md"],
+        required: ["@nebutra/event-log", "@nebutra/content-store"],
+        forbiddenSource: [/class\s+ChatTransport\b/, /class\s+IdentityProvider\b/],
+      },
+      {
+        name: "@nebutra/play-marketplace",
+        skill: ["plays", "publish_play", "SKILL.md"],
+        required: ["@nebutra/play-loader", "@nebutra/event-log", "@nebutra/content-store"],
+        forbiddenSource: [/parseSkillFrontmatter\b/, /from\s+["']yaml["']/],
+      },
+    ];
+
+    expect(expected.map((item) => item.name)).toEqual([...ECOSYSTEM_PRODUCT_PACKAGES]);
+
+    for (const item of expected) {
+      const pkg = byName.get(item.name);
+      expect(pkg, item.name).toBeDefined();
+      if (!pkg) continue;
+      expect(pkg.manifest.nebutra?.surface).toBe("ecosystem-product");
+      for (const dependency of item.required) {
+        expect(pkg.manifest.dependencies?.[dependency], `${item.name} ${dependency}`).toBe(
+          "workspace:*",
+        );
+      }
+      expect(importViolations(pkg.dir, ECOSYSTEM_PRODUCT_FORBIDDEN_IMPORTS)).toEqual([]);
+      expect(existsSync(join(pkg.dir, ...item.skill))).toBe(true);
+      expect(existsSync(join(pkg.dir, "README.md")), item.name).toBe(true);
+
+      const examplesDir = join(pkg.dir, "examples");
+      const exampleCount = existsSync(examplesDir)
+        ? readdirSync(examplesDir).filter((name) => name.endsWith(".ts")).length
+        : 0;
+      expect(exampleCount, item.name).toBeGreaterThanOrEqual(3);
+
+      const source = readFileSync(join(pkg.dir, "src", "index.ts"), "utf8");
+      for (const pattern of item.forbiddenSource) {
+        expect(source).not.toMatch(pattern);
+      }
+    }
+
+    const marketplace = byName.get("@nebutra/play-marketplace");
+    expect(marketplace).toBeDefined();
+    if (marketplace) {
+      const source = readFileSync(join(marketplace.dir, "src", "index.ts"), "utf8");
+      expect(source).toContain("parsePlayMarkdown");
     }
   });
 
