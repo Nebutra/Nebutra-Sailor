@@ -1565,6 +1565,58 @@ importers:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.2.0))(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
 
+  packages/ai/brand-genesis:
+    dependencies:
+      '@nebutra/3d-pipeline':
+        specifier: workspace:*
+        version: link:../3d-pipeline
+      '@nebutra/audio-pipeline':
+        specifier: workspace:*
+        version: link:../audio-pipeline
+      '@nebutra/capability-kit':
+        specifier: workspace:*
+        version: link:../../platform/capability-kit
+      '@nebutra/content-store':
+        specifier: workspace:*
+        version: link:../content-store
+      '@nebutra/errors':
+        specifier: workspace:*
+        version: link:../../platform/errors
+      '@nebutra/event-log':
+        specifier: workspace:*
+        version: link:../event-log
+      '@nebutra/generation-context':
+        specifier: workspace:*
+        version: link:../generation-context
+      '@nebutra/image-pipeline':
+        specifier: workspace:*
+        version: link:../image-pipeline
+      '@nebutra/play-loader':
+        specifier: workspace:*
+        version: link:../play-loader
+      '@nebutra/video-pipeline':
+        specifier: workspace:*
+        version: link:../video-pipeline
+      '@nebutra/voice-realtime':
+        specifier: workspace:*
+        version: link:../voice-realtime
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.19.15
+      tsup:
+        specifier: 'catalog:'
+        version: 8.5.1(@swc/core@1.15.18(@swc/helpers@0.5.19))(jiti@2.6.1)(postcss@8.5.8)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
+      tsx:
+        specifier: 'catalog:'
+        version: 4.21.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@28.1.0(@noble/hashes@2.2.0))(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+
   packages/ai/browser-control:
     dependencies:
       '@nebutra/capability-kit':

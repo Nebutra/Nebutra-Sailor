@@ -21,6 +21,7 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | Capability DX primitives | `@nebutra/capability-kit` | Platform package outside `packages/ai` that owns suggestion-bearing capability errors, doctor/debug CLI switching, and `.nebutra/debug/<capability>.jsonl` helpers. Capability packages must import these primitives instead of re-implementing them. |
 | RAG/indexing/dataflow | `@nebutra/knowledge-rag`, `@nebutra/code-index`, `@nebutra/reel`, `@nebutra/atelier-canvas`, `@nebutra/cinema` | Product capabilities built on injected model/vector/store/tool ports. |
 | Knowledge product layer | `@nebutra/knowledge-base` | Company cognition over connectors, memory, graph, citations, and explainable search. It consumes lower retrieval/ingestion primitives and must not redefine them. |
+| Play product layer | `@nebutra/brand-genesis` | Complete user-story Plays over lower capabilities. Owns orchestration and SKILL.md assets only. |
 | Legacy local experiments | `@nebutra/llm-gateway`, `@nebutra/provider-registry` | `@nebutra/llm-gateway` is not the production gateway; `@nebutra/provider-registry` is a local-provider experiment. Do not add new production consumers. |
 
 The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
@@ -68,7 +69,12 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
    citations, and explain output. It must consume `@nebutra/content-store`,
    `@nebutra/document-pipeline`, and `@nebutra/knowledge-rag` rather than
    defining another parser, chunker, embedder, vector store, or reranker.
-13. Legacy experiments stay WIP and blocked from new production consumers until
+13. Complete Play products belong to play product packages such as
+   `@nebutra/brand-genesis`. These packages may coordinate lower capabilities,
+   store SKILL.md declarations, and produce user-story bundles. They must not
+   own agent-loop internals, media generation providers, BrandContext schemas,
+   or prompt islands outside SKILL.md.
+14. Legacy experiments stay WIP and blocked from new production consumers until
    they are either retired or promoted through a separate RFC.
 
 ## 2026 AI SaaS Defaults
@@ -134,6 +140,9 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 - `@nebutra/knowledge-base` must not import or define local embedding/chunking
   implementations. Use `@nebutra/knowledge-rag` for retrieval, `@nebutra/content-store`
   for file truth, and `@nebutra/document-pipeline` for source parsing.
+- `@nebutra/brand-genesis` must not import `@nebutra/agent-runtime` or define
+  media primitives. It composes `@nebutra/generation-context`, content/event
+  persistence, and generation capability packages through a SKILL.md Play.
 - Product capability packages should not own billing deduction, gateway auth, or
   provider-key selection.
 - Examples may import legacy packages to demonstrate migration, but production

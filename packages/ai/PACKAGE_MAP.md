@@ -23,6 +23,7 @@ the machine-readable source of truth; this file is the human map.
 | `media-graph` | `@nebutra/reel` | Typed media graph, storyboard shot/scene/plan primitives, IO envelope, and graph persistence. |
 | `creative-surface` | `@nebutra/atelier-canvas` | Canvas/scene editing surface over lower graph/storage primitives. |
 | `product-orchestration` | `@nebutra/cinema`, `@nebutra/play-loader` | Declarative product workflows over lower runtime/tool/media surfaces. |
+| `play-product` | `@nebutra/brand-genesis` | Complete user-story Plays that compose lower capabilities. Owns orchestration and SKILL.md assets, not primitive generation. |
 | `gateway-experiment` | `@nebutra/llm-gateway` | Local experiment only; production gateway is outside `packages/ai`. |
 | `legacy-experiment` | `@nebutra/provider-registry` | Local provider trait experiment only. New production consumers are forbidden. |
 
@@ -67,5 +68,9 @@ the machine-readable source of truth; this file is the human map.
     It consumes `@nebutra/knowledge-rag`, `@nebutra/content-store`, and
     `@nebutra/document-pipeline` instead of defining local chunk/embed/vector
     primitives.
-13. Legacy experiments may remain only while marked WIP and blocked from new
+13. Play product packages such as `@nebutra/brand-genesis` may orchestrate lower
+    capabilities and write SKILL.md Plays. They must not define new media
+    providers, agent-loop state machines, BrandContext schemas, or parser
+    primitives.
+14. Legacy experiments may remain only while marked WIP and blocked from new
    production consumers by architecture tests.
