@@ -16,7 +16,7 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | Tool integration | `@nebutra/mcp`, `@nebutra/tool-registry`, `@nebutra/sandbox-runtime` | MCP/tool discovery, SKILL.md parsing/loading, consent, audit, and sandbox routing boundaries. |
 | Execution capability tools | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline` | Deterministic or semi-deterministic tool execution. They must not own Thread/Turn/Item state, prompt generation, model/provider execution, sub-agent scheduling, or approval lifecycle. |
 | Generation capability tools | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media generation surfaces. They may expose local deterministic fallbacks and sidecar adapter ports, but must not own Thread/Turn/Item state, prompt orchestration, model/provider routing, or approval lifecycle. |
-| Shared support contracts | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding` | Single TypeScript owners for facts consumed across surfaces: `BrandContext`, command permission/approval primitives, and deterministic local embeddings. |
+| Shared support contracts | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding`, `@nebutra/ecosystem-safety` | Single TypeScript owners for facts consumed across surfaces: `BrandContext`, command permission/approval primitives, deterministic local embeddings, and public-disclosure safety checks. |
 | Persistence contracts | `@nebutra/content-store` | File truth, frontmatter parsing/serialization, paragraph chunk helpers, and rebuildable indexes. Parser packages consume these helpers rather than defining file-truth grammar. |
 | Capability DX primitives | `@nebutra/capability-kit` | Platform package outside `packages/ai` that owns suggestion-bearing capability errors, doctor/debug CLI switching, and `.nebutra/debug/<capability>.jsonl` helpers. Capability packages must import these primitives instead of re-implementing them. |
 | RAG/indexing/dataflow | `@nebutra/knowledge-rag`, `@nebutra/code-index`, `@nebutra/reel`, `@nebutra/atelier-canvas`, `@nebutra/cinema` | Product capabilities built on injected model/vector/store/tool ports. |
@@ -56,34 +56,44 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 9. Deterministic zero-config embeddings belong to `@nebutra/local-embedding`.
    Persistence and RAG packages may choose different dimensions, but must not
    define parallel local hashing/tokenization algorithms.
-10. SKILL.md frontmatter parsing belongs to `@nebutra/tool-registry`.
+10. Public-disclosure PII and secret scanning belongs to
+   `@nebutra/ecosystem-safety`. Ecosystem packages may decide whether an action
+   is publishable, cloneable, or memorialized, but they must not define local
+   email/secret regexes or parallel sensitive-field scanners.
+11. SKILL.md frontmatter parsing belongs to `@nebutra/tool-registry`.
    `@nebutra/play-loader` extends the parsed document into Play metadata; it
    must not parse YAML/frontmatter independently. `@nebutra/agent-runtime`
    definitions are a separate runtime grammar with source tiers, invocation
    gates, and tenant merge semantics, so do not merge them into SKILL.md without
    an RFC.
-11. Runtime tool dispatch belongs to `@nebutra/agent-runtime` as
+12. Runtime tool dispatch belongs to `@nebutra/agent-runtime` as
    `RuntimeToolRegistry`. Do not confuse it with the SKILL.md package registry
    in `@nebutra/tool-registry`.
-12. Company knowledge cognition belongs to `@nebutra/knowledge-base`.
+13. Company knowledge cognition belongs to `@nebutra/knowledge-base`.
    It may own connector sync state, memory classes, entity/relation records,
    citations, and explain output. It must consume `@nebutra/content-store`,
    `@nebutra/document-pipeline`, and `@nebutra/knowledge-rag` rather than
    defining another parser, chunker, embedder, vector store, or reranker.
-13. Complete Play products belong to play product packages such as
+14. Complete Play products belong to play product packages such as
    `@nebutra/brand-genesis`, `@nebutra/landing-builder`,
    `@nebutra/outreach-engine`, and `@nebutra/support-deflector`. These packages
    may coordinate lower capabilities, store SKILL.md declarations, and produce
    user-story bundles. They must not own agent-loop internals, media generation
    providers, deploy credentials, sender credentials, channel transports,
    BrandContext schemas, or prompt islands outside SKILL.md.
-14. Ecosystem product packages such as `@nebutra/time-machine`,
+15. Ecosystem product packages such as `@nebutra/time-machine`,
    `@nebutra/idea-plaza`, `@nebutra/founder-cemetery`,
    `@nebutra/cofounder-match`, and `@nebutra/play-marketplace` may project
    lower-layer data into network-effect workflows. They must not redefine
    event-log, content-store, SKILL.md parsing, auth, billing, chat transport,
    public registry transport, or global moderation systems.
-15. Legacy experiments stay WIP and blocked from new production consumers until
+16. Similar ecosystem words are not automatically the same primitive. Plaza
+   publish levels are fork visibility depth (`surface` / `detail` /
+   `cloneable`); Cemetery publish levels are audience and permanence (`private`
+   / `community` / `public`); Match consent is bilateral interest. Do not merge
+   them into a generic `PublishLevel` or `Consent` type without a real shared
+   state machine.
+17. Legacy experiments stay WIP and blocked from new production consumers until
    they are either retired or promoted through a separate RFC.
 
 ## 2026 AI SaaS Defaults
@@ -139,6 +149,9 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 - `@nebutra/content-store` and `@nebutra/knowledge-rag` must consume
   deterministic local embedding helpers from `@nebutra/local-embedding`; do not
   duplicate FNV/hash embedding logic inside either package.
+- `@nebutra/idea-plaza` and `@nebutra/founder-cemetery` must consume
+  public-disclosure checks from `@nebutra/ecosystem-safety`; do not define local
+  email/secret regexes or sensitive-field scanner types.
 - `@nebutra/play-loader` must consume parsed SKILL.md documents from
   `@nebutra/tool-registry`; do not import YAML parsers or call
   `parseSkillFrontmatter(markdown)` after `parseSkillMarkdown(markdown)`.

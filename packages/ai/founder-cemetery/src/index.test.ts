@@ -80,4 +80,25 @@ describe("founder-cemetery", () => {
     });
     await expect(readFounderCemeteryDebug(root)).resolves.toEqual(expect.any(Array));
   });
+
+  it("refuses non-private memorials with sensitive fields unless redactions are explicit", async () => {
+    const runtime = await open();
+    const analysis = await runtime.analyzeDeath({
+      companyId: "loop",
+      companyName: "Loop",
+      timelineSummaries: ["A customer alice@example.com churned during the final sales push"],
+    });
+
+    await expect(
+      runtime.publishMemorial({
+        analysis,
+        lessons: await runtime.extractLessons(analysis),
+        publishLevel: "community",
+        consentSignatures: ["alice"],
+      }),
+    ).rejects.toMatchObject({
+      capability: "founder-cemetery",
+      suggestion: expect.stringContaining("redactions"),
+    });
+  });
 });

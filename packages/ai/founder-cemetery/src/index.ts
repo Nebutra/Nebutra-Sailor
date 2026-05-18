@@ -2,6 +2,7 @@ import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
+import { assertPublicDisclosureSafe } from "@nebutra/ecosystem-safety";
 import { CapabilityError } from "@nebutra/errors";
 import { EventLog } from "@nebutra/event-log";
 import { assetId } from "@nebutra/generation-context";
@@ -62,6 +63,7 @@ export interface PublishMemorialRequest {
   readonly lessons: readonly Lesson[];
   readonly publishLevel: MemorialPublishLevel;
   readonly consentSignatures: readonly string[];
+  readonly redactions?: readonly string[];
 }
 
 export interface Memorial {
@@ -71,6 +73,7 @@ export interface Memorial {
   readonly coolingOffUntil: string;
   readonly eventId: string;
   readonly lessons: readonly Lesson[];
+  readonly redactions: readonly string[];
 }
 
 export interface FounderCemeteryDoctorReport {
@@ -125,6 +128,17 @@ function inferCause(evidence: readonly string[]): DeathCause {
 
 function coolingOffDate(): string {
   return new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+}
+
+function memorialDisclosureBody(request: PublishMemorialRequest): string {
+  return [
+    request.analysis.companyName,
+    request.analysis.narrative,
+    request.analysis.evidence.join("\n"),
+    request.lessons
+      .map((lesson) => [lesson.title, lesson.lessonText, lesson.evidence.join("\n")].join("\n"))
+      .join("\n"),
+  ].join("\n");
 }
 
 export class FounderCemetery {
@@ -216,6 +230,14 @@ export class FounderCemetery {
         statusCode: 400,
       });
     }
+    if (request.publishLevel !== "private") {
+      assertPublicDisclosureSafe({
+        capability: "founder-cemetery",
+        content: memorialDisclosureBody(request),
+        ...(request.redactions !== undefined ? { redactions: request.redactions } : {}),
+        suggestion: "Review detected private values and pass redactions before publishing.",
+      });
+    }
 
     const slug = slugify(request.analysis.companyName) || request.analysis.companyId;
     const path = `cemetery/${slug}.json`;
@@ -226,6 +248,7 @@ export class FounderCemetery {
       publishLevel: request.publishLevel,
       coolingOffUntil: coolingOffDate(),
       consentSignatures: request.consentSignatures,
+      redactions: request.redactions ?? [],
       causes: request.analysis.causes,
       lessons: request.lessons,
       narrative: request.analysis.narrative,
@@ -252,6 +275,7 @@ export class FounderCemetery {
       coolingOffUntil: memorial.coolingOffUntil,
       eventId,
       lessons: request.lessons,
+      redactions: memorial.redactions,
     };
   }
 

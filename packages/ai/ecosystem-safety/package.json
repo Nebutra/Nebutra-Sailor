@@ -1,0 +1,55 @@
+{
+  "name": "@nebutra/ecosystem-safety",
+  "version": "0.1.0",
+  "description": "Shared public-disclosure safety primitives for ecosystem publishing surfaces",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "requires": [
+      "@nebutra/errors for suggestion-bearing disclosure failures"
+    ],
+    "gaps": [
+      "PII detection is deterministic and conservative, not a full DLP engine",
+      "Human review queues remain product-package handoffs",
+      "Regional legal policy is not encoded here"
+    ],
+    "featureId": "ecosystem-safety",
+    "category": "ai",
+    "summary": "Single shared owner for public-disclosure sensitive-field scanning"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/errors": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/ecosystem-safety#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/ecosystem-safety"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

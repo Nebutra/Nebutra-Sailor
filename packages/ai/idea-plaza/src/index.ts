@@ -2,17 +2,15 @@ import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
+import { assertPublicDisclosureSafe } from "@nebutra/ecosystem-safety";
 import { CapabilityError } from "@nebutra/errors";
 import { EventLog } from "@nebutra/event-log";
 import { assetId } from "@nebutra/generation-context";
 
-export type PublishLevel = "surface" | "detail" | "cloneable";
+export type IdeaPublishLevel = "surface" | "detail" | "cloneable";
 export type FeedSort = "hot" | "new" | "near_you";
-
-export interface SensitiveField {
-  readonly kind: "email" | "secret";
-  readonly value: string;
-}
+export type { SensitiveField } from "@nebutra/ecosystem-safety";
+export { scanForSensitiveFields } from "@nebutra/ecosystem-safety";
 
 export interface CemeteryWarning {
   readonly title: string;
@@ -22,7 +20,7 @@ export interface CemeteryWarning {
 export interface PublishIdeaRequest {
   readonly title: string;
   readonly oneLine: string;
-  readonly level: PublishLevel;
+  readonly level: IdeaPublishLevel;
   readonly body?: string;
   readonly tags: readonly string[];
   readonly redactions?: readonly string[];
@@ -33,7 +31,7 @@ export interface PublishedIdea {
   readonly ideaId: string;
   readonly title: string;
   readonly oneLine: string;
-  readonly level: PublishLevel;
+  readonly level: IdeaPublishLevel;
   readonly tags: readonly string[];
   readonly redactions: readonly string[];
   readonly cemeteryWarnings: readonly CemeteryWarning[];
@@ -83,21 +81,6 @@ export interface IdeaPlazaOptions {
   readonly eventLog?: EventLog;
 }
 
-const EMAIL_RE = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
-const SECRET_RE = /\b(?:sk|pk|api|key|token)[-_]?[A-Za-z0-9]{8,}\b/g;
-
-export function scanForSensitiveFields(content: string): SensitiveField[] {
-  const emails = [...content.matchAll(EMAIL_RE)].map((match) => ({
-    kind: "email" as const,
-    value: match[0],
-  }));
-  const secrets = [...content.matchAll(SECRET_RE)].map((match) => ({
-    kind: "secret" as const,
-    value: match[0],
-  }));
-  return [...emails, ...secrets];
-}
-
 function requireTenant(value: string | undefined): string {
   if (!value?.trim()) {
     throw new CapabilityError("idea-plaza", "Idea Plaza requires tenant context", {
@@ -142,14 +125,12 @@ export class IdeaPlaza {
   }
 
   async publish(request: PublishIdeaRequest): Promise<PublishedIdea> {
-    const sensitive = scanForSensitiveFields(bodyForScan(request));
-    if (sensitive.length > 0 && (request.redactions?.length ?? 0) === 0) {
-      throw new CapabilityError("idea-plaza", "Sensitive fields require explicit redaction", {
-        suggestion: "Review detected private values and pass redactions before publishing.",
-        metadata: { sensitiveKinds: sensitive.map((item) => item.kind) },
-        statusCode: 400,
-      });
-    }
+    assertPublicDisclosureSafe({
+      capability: "idea-plaza",
+      content: bodyForScan(request),
+      ...(request.redactions !== undefined ? { redactions: request.redactions } : {}),
+      suggestion: "Review detected private values and pass redactions before publishing.",
+    });
 
     const ideaId = assetId("idea", `${request.title}_${request.oneLine}`);
     const publicationPath = `plaza/ideas/${ideaId}.json`;

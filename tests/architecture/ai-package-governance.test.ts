@@ -1,5 +1,6 @@
+import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const ROOT = process.cwd();
@@ -27,6 +28,11 @@ const ALLOWED_SURFACES = [
   "support-contract",
   "tool-protocol",
   "tool-registry",
+] as const;
+
+const PUBLIC_DISCLOSURE_SAFETY_CONSUMERS = [
+  "@nebutra/idea-plaza",
+  "@nebutra/founder-cemetery",
 ] as const;
 
 interface PackageJson {
@@ -119,10 +125,17 @@ function readPackageJson(packageDir: string): PackageJson {
 }
 
 function discoverAiPackages(): Array<{ dir: string; manifest: PackageJson }> {
-  return readdirSync(AI_ROOT, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => join(AI_ROOT, entry.name))
-    .filter((dir) => existsSync(join(dir, "package.json")))
+  const trackedPackageJsonPaths = execFileSync(
+    "git",
+    ["ls-files", "--cached", "packages/ai/*/package.json"],
+    { cwd: ROOT, encoding: "utf8" },
+  )
+    .trim()
+    .split("\n")
+    .filter(Boolean);
+
+  return trackedPackageJsonPaths
+    .map((path) => join(ROOT, dirname(path)))
     .map((dir) => ({ dir, manifest: readPackageJson(dir) }))
     .filter(({ manifest }) => manifest.name?.startsWith("@nebutra/"));
 }
@@ -518,6 +531,60 @@ describe("AI package architecture governance", () => {
         expect(source, file.replace(`${ROOT}/`, "")).not.toMatch(/function\s+hashToken\b/);
       }
     }
+  });
+
+  it("centralizes public-disclosure safety in @nebutra/ecosystem-safety", () => {
+    const safety = byName.get("@nebutra/ecosystem-safety");
+    expect(safety, "@nebutra/ecosystem-safety").toBeDefined();
+    if (!safety) return;
+
+    expect(safety.manifest.nebutra?.surface).toBe("support-contract");
+
+    const safetySource = readFileSync(join(safety.dir, "src", "index.ts"), "utf8");
+    expect(safetySource).toContain("scanForSensitiveFields");
+    expect(safetySource).toContain("assertPublicDisclosureSafe");
+
+    for (const packageName of PUBLIC_DISCLOSURE_SAFETY_CONSUMERS) {
+      const entry = byName.get(packageName);
+      expect(entry, packageName).toBeDefined();
+      if (!entry) continue;
+
+      expect(entry.manifest.dependencies?.["@nebutra/ecosystem-safety"], packageName).toBe(
+        "workspace:*",
+      );
+
+      const source = readFileSync(join(entry.dir, "src", "index.ts"), "utf8");
+      expect(source, packageName).toContain("@nebutra/ecosystem-safety");
+      expect(source, packageName).not.toMatch(/const\s+EMAIL_RE\b/);
+      expect(source, packageName).not.toMatch(/const\s+SECRET_RE\b/);
+      expect(source, packageName).not.toMatch(/function\s+scanForSensitiveFields\b/);
+      expect(source, packageName).not.toMatch(/export\s+interface\s+SensitiveField\b/);
+    }
+  });
+
+  it("keeps ecosystem publication and consent concepts intentionally separate", () => {
+    const ideaPlaza = byName.get("@nebutra/idea-plaza");
+    const cemetery = byName.get("@nebutra/founder-cemetery");
+    const match = byName.get("@nebutra/cofounder-match");
+    expect(ideaPlaza, "@nebutra/idea-plaza").toBeDefined();
+    expect(cemetery, "@nebutra/founder-cemetery").toBeDefined();
+    expect(match, "@nebutra/cofounder-match").toBeDefined();
+    if (!ideaPlaza || !cemetery || !match) return;
+
+    const ideaSource = readFileSync(join(ideaPlaza.dir, "src", "index.ts"), "utf8");
+    const cemeterySource = readFileSync(join(cemetery.dir, "src", "index.ts"), "utf8");
+    const matchSource = readFileSync(join(match.dir, "src", "index.ts"), "utf8");
+
+    expect(ideaSource).toContain(
+      'export type IdeaPublishLevel = "surface" | "detail" | "cloneable"',
+    );
+    expect(ideaSource).not.toMatch(/export\s+type\s+PublishLevel\b/);
+    expect(cemeterySource).toContain(
+      'export type MemorialPublishLevel = "private" | "community" | "public"',
+    );
+    expect(cemeterySource).not.toContain("IdeaPublishLevel");
+    expect(matchSource).not.toContain("consentSignatures");
+    expect(matchSource).not.toContain("MemorialPublishLevel");
   });
 
   it("keeps knowledge-base above existing ingestion and retrieval primitives", () => {

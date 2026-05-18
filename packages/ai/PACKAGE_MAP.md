@@ -16,7 +16,7 @@ the machine-readable source of truth; this file is the human map.
 | `execution-router` | `@nebutra/sandbox-runtime` | Owns sandbox provider routing and execution isolation. |
 | `execution-capability` | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline` | Tool-shaped execution abilities. No runtime state or model ownership. |
 | `generation-capability` | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media abilities. No runtime state or model ownership. |
-| `support-contract` | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding` | Shared typed contracts used across runtime, persistence, semantic-index, and capability packages. Must stay dependency-light. |
+| `support-contract` | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding`, `@nebutra/ecosystem-safety` | Shared typed contracts used across runtime, persistence, semantic-index, ecosystem, and capability packages. Must stay dependency-light. |
 | `persistence` | `@nebutra/content-store`, `@nebutra/event-log` | File truth, frontmatter/chunking helpers, indexing, immutable event history, rollback, and branch state. |
 | `semantic-index` | `@nebutra/code-index`, `@nebutra/knowledge-rag` | Retrieval/indexing grammar over injected embedding/vector/search ports. |
 | `knowledge-product` | `@nebutra/knowledge-base` | Company cognition over connector sync state, four memory classes, entity/relation graph, citations, and explainable search. |
@@ -59,25 +59,35 @@ the machine-readable source of truth; this file is the human map.
    `@nebutra/local-embedding`. `@nebutra/content-store` and
    `@nebutra/knowledge-rag` may configure dimensions, but the hashing/token
    semantics stay single-owner.
-10. SKILL.md parsing is owned by `@nebutra/tool-registry`. `@nebutra/play-loader`
+10. Public-disclosure sensitive-field scanning is owned by
+    `@nebutra/ecosystem-safety`. Plaza and Cemetery may own their publication
+    state machines, but they must not define local email/secret regexes or
+    parallel PII scanner types.
+11. SKILL.md parsing is owned by `@nebutra/tool-registry`. `@nebutra/play-loader`
     extends the parsed document into Play DAG fields and must not parse
     frontmatter independently.
-11. `@nebutra/agent-runtime` owns `RuntimeToolRegistry` for in-memory dispatch
+12. `@nebutra/agent-runtime` owns `RuntimeToolRegistry` for in-memory dispatch
     only. That dispatcher is not the SKILL.md package registry and should not be
     merged with `@nebutra/tool-registry`.
-12. `@nebutra/knowledge-base` owns company cognition, not retrieval mechanics.
+13. `@nebutra/knowledge-base` owns company cognition, not retrieval mechanics.
     It consumes `@nebutra/knowledge-rag`, `@nebutra/content-store`, and
     `@nebutra/document-pipeline` instead of defining local chunk/embed/vector
     primitives.
-13. Play product packages such as `@nebutra/brand-genesis`,
+14. Play product packages such as `@nebutra/brand-genesis`,
     `@nebutra/landing-builder`, `@nebutra/outreach-engine`, and
     `@nebutra/support-deflector` may orchestrate lower capabilities and write
     SKILL.md Plays. They must not define new media providers, agent-loop state
     machines, BrandContext schemas, channel transports, sender credentials,
     deploy credentials, or parser primitives.
-14. Ecosystem product packages may project lower-layer data into public,
+15. Ecosystem product packages may project lower-layer data into public,
     network-effect, or marketplace workflows. They must not redefine event-log,
     content-store, SKILL.md parsing, auth, billing, chat transport, public
     registry transport, or global moderation systems.
-15. Legacy experiments may remain only while marked WIP and blocked from new
+16. Plaza publish levels and Cemetery publish levels are intentionally separate:
+    Plaza levels describe fork visibility depth (`surface`, `detail`,
+    `cloneable`), while Cemetery levels describe memorial audience and
+    permanence (`private`, `community`, `public`). Cofounder Match mutual
+    interest is a separate bilateral consent gate. Do not merge these into a
+    generic publication or consent enum for neatness alone.
+17. Legacy experiments may remain only while marked WIP and blocked from new
    production consumers by architecture tests.
