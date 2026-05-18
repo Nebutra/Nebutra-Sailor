@@ -1,0 +1,63 @@
+{
+  "name": "@nebutra/landing-builder",
+  "version": "0.1.0",
+  "description": "BrandContext-first landing page Play package for generating deployable launch sites",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "play-product",
+    "requires": [
+      "@nebutra/play-loader for SKILL.md play parsing",
+      "@nebutra/generation-context for BrandContext",
+      "@nebutra/content-store for generated site file truth",
+      "@nebutra/event-log for Time Machine checkpoints"
+    ],
+    "gaps": [
+      "Preview is a deterministic static artifact until sandbox-backed Vite preview is wired",
+      "Deployment is represented as a handoff manifest until integration-vault deploy adapters are available"
+    ],
+    "featureId": "landing-builder",
+    "category": "ai",
+    "summary": "Brand-aware landing page Play product over lower content and execution capabilities"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/content-store": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/event-log": "workspace:*",
+    "@nebutra/generation-context": "workspace:*",
+    "@nebutra/play-loader": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/landing-builder#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/landing-builder"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

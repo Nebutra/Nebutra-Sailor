@@ -1,0 +1,63 @@
+{
+  "name": "@nebutra/support-deflector",
+  "version": "0.1.0",
+  "description": "Confidence-gated customer support Play package for founder-owned support automation",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "play-product",
+    "requires": [
+      "@nebutra/play-loader for SKILL.md play parsing",
+      "@nebutra/generation-context for founder and brand voice",
+      "@nebutra/content-store for support memory file truth",
+      "@nebutra/event-log for ticket decisions"
+    ],
+    "gaps": [
+      "Channel bridges are represented as adapter handoffs until support-channel connectors are configured",
+      "Confidence scoring is deterministic and conservative until historical ticket feedback is available"
+    ],
+    "featureId": "support-deflector",
+    "category": "ai",
+    "summary": "Support Play product that triages tickets into auto-answer, suggest, or escalate decisions"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/content-store": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/event-log": "workspace:*",
+    "@nebutra/generation-context": "workspace:*",
+    "@nebutra/play-loader": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/support-deflector#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/support-deflector"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

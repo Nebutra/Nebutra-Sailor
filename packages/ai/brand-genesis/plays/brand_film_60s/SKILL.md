@@ -37,7 +37,7 @@ required_skills:
   - mesh_pipeline.from_image
   - content_store.write
 required_plays:
-  - landing_page_v1
+  - one_pager
 sub_agents:
   - role: brand_strategist
     allowed_skills: [llm_gateway.complete, content_store.write]

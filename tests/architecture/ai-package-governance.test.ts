@@ -554,6 +554,55 @@ describe("AI package architecture governance", () => {
     expect(source).not.toMatch(/class\s+VideoPipeline\b/);
   });
 
+  it("keeps Layer 6 play products as SKILL.md orchestration packages", () => {
+    const expected = [
+      {
+        name: "@nebutra/landing-builder",
+        skill: ["plays", "one_pager", "SKILL.md"],
+        required: ["@nebutra/play-loader", "@nebutra/generation-context", "@nebutra/content-store"],
+        forbiddenSource: [
+          /class\s+BrandContext\b/,
+          /class\s+CodeExecutor\b/,
+          /class\s+VitePreview\b/,
+        ],
+      },
+      {
+        name: "@nebutra/outreach-engine",
+        skill: ["plays", "outreach_campaign", "SKILL.md"],
+        required: ["@nebutra/play-loader", "@nebutra/content-store"],
+        forbiddenSource: [/class\s+EmailSender\b/, /class\s+CrmClient\b/, /class\s+LeadDatabase\b/],
+      },
+      {
+        name: "@nebutra/support-deflector",
+        skill: ["plays", "ticket_triage", "SKILL.md"],
+        required: ["@nebutra/play-loader", "@nebutra/content-store"],
+        forbiddenSource: [
+          /class\s+SupportChannelBridge\b/,
+          /class\s+MessagingBridge\b/,
+          /class\s+EmailChannel\b/,
+        ],
+      },
+    ];
+
+    for (const item of expected) {
+      const pkg = byName.get(item.name);
+      expect(pkg, item.name).toBeDefined();
+      if (!pkg) continue;
+      expect(pkg.manifest.nebutra?.surface).toBe("play-product");
+      for (const dependency of item.required) {
+        expect(pkg.manifest.dependencies?.[dependency], `${item.name} ${dependency}`).toBe(
+          "workspace:*",
+        );
+      }
+      expect(importViolations(pkg.dir, PLAY_PRODUCT_FORBIDDEN_IMPORTS)).toEqual([]);
+      expect(existsSync(join(pkg.dir, ...item.skill))).toBe(true);
+      const source = readFileSync(join(pkg.dir, "src", "index.ts"), "utf8");
+      for (const pattern of item.forbiddenSource) {
+        expect(source).not.toMatch(pattern);
+      }
+    }
+  });
+
   it("keeps SKILL.md parsing ownership in @nebutra/tool-registry", () => {
     const toolRegistry = byName.get("@nebutra/tool-registry");
     const playLoader = byName.get("@nebutra/play-loader");

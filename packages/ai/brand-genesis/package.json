@@ -19,7 +19,7 @@
     "gaps": [
       "Generated media uses deterministic local fallbacks until model-backed providers are configured",
       "Storyboard editing is represented as an orchestration checkpoint, not yet a GUI step",
-      "Landing page handoff is a manifest placeholder until landing-builder is implemented"
+      "Landing page handoff is minimal inside Brand Genesis; @nebutra/landing-builder owns the standalone site Play"
     ],
     "featureId": "brand-genesis",
     "category": "ai",
