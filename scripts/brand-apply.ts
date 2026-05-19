@@ -9,9 +9,13 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { fileURLToPath } from "node:url";
 import { type BrandConfig, DEFAULT_BRAND } from "./brand-types";
 
-const ROOT = path.resolve(import.meta.dirname, "..");
+// `import.meta.dirname` is unset under tsx CJS transform on Node 25.
+// Compute it from `import.meta.url` for cross-runtime compatibility.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, "..");
 
 // ANSI colors
 const _c = {
@@ -118,7 +122,9 @@ function copyCustomAssets(_config: BrandConfig): void {
 function updateBrandMetadata(config: BrandConfig): void {
   logStep("Updating brand metadata");
 
-  const metadataPath = path.join(ROOT, "packages", "brand", "src", "metadata.ts");
+  // brand package moved under packages/design/ in the 2026-05 categorized
+  // layout — keep the path in sync with the actual workspace location.
+  const metadataPath = path.join(ROOT, "packages", "design", "brand", "src", "metadata.ts");
 
   const newContent = `/**
  * ${config.brand.name} Brand Metadata
@@ -279,6 +285,9 @@ function updateREADMEs(config: BrandConfig): void {
   const templates = [
     { template: "README.template.md", output: "README.md" },
     { template: "README.zh-CN.template.md", output: "README.zh-CN.md" },
+    // Japanese was orphan-edited for ~6 months — wire it back into the
+    // pipeline so future brand:apply runs keep all three READMEs aligned.
+    { template: "README.ja.template.md", output: "README.ja.md" },
   ];
 
   for (const { template, output } of templates) {

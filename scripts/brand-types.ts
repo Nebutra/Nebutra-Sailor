@@ -180,7 +180,10 @@ export const DEFAULT_BRAND: BrandConfig = {
     linkedin: "https://linkedin.com/company/nebutra",
   },
   repo: {
-    owner: "TsekaLuk",
+    // Org account that hosts the canonical repo. The personal account
+    // `TsekaLuk` was the pre-org origin and is preserved in git history,
+    // but the live remote is github.com/Nebutra/Nebutra-Sailor.
+    owner: "Nebutra",
     name: "Nebutra-Sailor",
   },
   colors: {

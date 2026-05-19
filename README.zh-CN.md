@@ -35,6 +35,20 @@
     </a>
   </p>
   <p>
+    <a href="https://securityscorecards.dev/viewer/?uri=github.com/Nebutra/Nebutra-Sailor">
+      <img src="https://api.securityscorecards.dev/projects/github.com/Nebutra/Nebutra-Sailor/badge" alt="OpenSSF Scorecard" />
+    </a>
+    <a href="https://socket.dev/npm/package/nebutra">
+      <img src="https://socket.dev/api/badge/npm/package/nebutra" alt="Socket Security" />
+    </a>
+    <a href="https://www.npmjs.com/package/nebutra">
+      <img src="https://img.shields.io/npm/v/nebutra?label=nebutra&color=cb3837&logo=npm" alt="npm: nebutra" />
+    </a>
+    <a href="https://www.npmjs.com/package/create-sailor">
+      <img src="https://img.shields.io/npm/v/create-sailor?label=create-sailor&color=cb3837&logo=npm" alt="npm: create-sailor" />
+    </a>
+  </p>
+  <p>
     <a href="https://x.com/nebutra">
       <img src="https://img.shields.io/badge/follow-nebutra-18181b?style=flat-square&logo=x&logoColor=fff" alt="X" />
     </a>
@@ -49,11 +63,37 @@
 <br />
 <br />
 
+> **License 一览** —— npm 上发布的所有包都是 **AGPL-3.0-only**。如果你直接
+> `npm install @nebutra/*` 用在面向网络的产品里，AGPL 网络-Copyleft
+> 条款会触发——除非你 (a) 用 `npx create-sailor` 脚手架（独立开发者
+> 授权，≤ 1 FTE 且 < $1M ARR 免费，**无 Copyleft**），或者 (b) 持有
+> [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) 里的 Startup
+> ($799/年) 或 Enterprise 商业授权。完整边界和边缘情况参见下方
+> [License](#license) 章节和
+> [docs/legal/licensing-faq.md](docs/legal/licensing-faq.md)。
+
+> **30 秒上手** —— 零 SaaS 密钥即可启动:
+> ```bash
+> npx create-sailor@latest my-app --preset=minimal --yes
+> cd my-app && pnpm dev   # → http://localhost:3000
+> ```
+> `minimal` 预设只生成 `apps/web` + IAM + 本地 Postgres，让黄金路径
+> 能在本地 DB 上跑起来。之后再用 `nebutra add <provider>` 接入
+> Stripe / Clerk / Resend 等。
+
+<br />
+
 ## 简介
 
 Nebutra Sailor 是一个企业级、AI 原生的 SaaS 单体仓库架构，专为构建可治理的现代多租户平台而设计。它为 AI 网关、智能体工作流、计费、认证、合规和白标产品交付提供可落地的平台基线。
 
 采用 Next.js 16、React 19、Prisma 7 和 Vercel AI SDK 构建，Sailor 把 AI 当作需要治理的运行时能力：供应商拓扑、模型路由、可观测性、租户隔离和合规钩子都属于平台基线。
+
+### 谁在构建这个项目
+
+Nebutra-Sailor 由 **无锡云毓智能科技有限公司**（Wuxi Nebutra Intelligence Technology Co., Ltd.）维护。日常工程负责人是 **Tseka Luk**（[@tsekaluk](https://github.com/tsekaluk) · `legal@nebutra.com`）。项目采用双授权（dual-license）模型，让独立开发者和 OPC 可以在不被 Copyleft 限制的情况下构建商业产品，同时确保企业 fork 仍需回馈社区——详见下方 [License](#license) 章节。
+
+我们以 `@nebutra/*` 这个 npm scope 发布所有包，外加两个 CLI（`nebutra` 和 `create-sailor`）。发布流程通过 [changesets](https://github.com/changesets/changesets) 驱动，并以手动 `workflow_dispatch` 作为发版门槛；每次发布会生成 SBOM 验证（见 [release.yml](.github/workflows/release.yml)）。安全报告请走 [SECURITY.md](SECURITY.md)；商务/授权咨询请发 `legal@nebutra.com`。
 
 ### 品牌愿景
 
@@ -684,6 +724,24 @@ pnpm brand:apply
 4. 推送分支 (git push origin feat/amazing-feature)
 5. 发起 Pull Request
 ```
+
+<br />
+
+## 版本与发布节奏
+
+所有已发布的包目前都在 **0.x 版本区间**，公共 API 仍在收敛。按
+[SemVer §4](https://semver.org/lang/zh-CN/#spec-item-4)，主版本号为零意味着
+**任何 0.x 发布都可能包含破坏性变更**——在生产环境请精确锁定版本
+(`"nebutra": "0.3.1"`)，不要用 caret 范围，等我们切到 1.0 之后再放开。
+
+- 版本由 [changesets](https://github.com/changesets/changesets) 驱动。每个改动已发布包的 PR 都必须包含 `.changeset/*.md` 声明 patch/minor/major 意图——CI 会强制这个 gate。
+- 每个包的 `CHANGELOG.md` 由 `changeset version` 生成并与版本号一同提交（例如 [`packages/ops/cli/CHANGELOG.md`](packages/ops/cli/CHANGELOG.md)）。
+- Release 工作流是**手动触发**（`workflow_dispatch`）——不会在 PR 合并后突然发版。我们会成批协调相关改动后才切版本。
+- 1.0 之前的重大 API 改动（例如 CLI 命令重命名、包的目录重新分类）会先发 **release candidate**：`nebutra@0.4.0-rc.0` 落在 `next` dist-tag，浸泡 ≥ 1 周后才升为 `latest`。安装 RC：`npm i nebutra@next`。
+- npm 发布会附带 **provenance attestation**（一旦 npm registry 端启用了 trusted-publishing；工作流端已经接好——见 [`release.yml`](.github/workflows/release.yml) 的 `NPM_CONFIG_PROVENANCE: "true"`）。验证已发布的 tarball：`npm view <pkg> --json | jq .dist.attestations`。
+
+我们会以发布 `1.0.0` 来标志 **API 稳定**。在那之前，请把当前的 API 理解为
+"形态可生产，细节仍在演进"。
 
 <br />
 

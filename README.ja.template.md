@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  <a href="https://{{domains.landing}}">
+  <a href="https://nebutra.com">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" />
       <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-horizontal-en.svg" />
@@ -12,10 +12,11 @@
   </a>
   <br />
   <br />
-  <h3>{{brand.tagline}}</h3>
+  <h3>オープンソース AI ネイティブ SaaS プラットフォーム基盤</h3>
+  <p><em>AI ゲートウェイ、課金、認証、コンプライアンス、ホワイトラベル提供のためのガバナンス可能なマルチテナント基盤。</em></p>
   <br />
   <p>
-    <a href="https://{{domains.landing}}"><strong>公式サイト</strong></a> · 
+    <a href="https://nebutra.com"><strong>公式サイト</strong></a> · 
     <a href="#概要"><strong>概要</strong></a> · 
     <a href="#技術スタック"><strong>技術スタック</strong></a> · 
     <a href="#クイックスタート"><strong>クイックスタート</strong></a> · 
@@ -32,41 +33,140 @@
       <img src="https://img.shields.io/badge/ライセンス-AGPLv3-6366f1?style=for-the-badge" alt="License" />
     </a>
   </p>
+  <p>
+    <a href="https://securityscorecards.dev/viewer/?uri=github.com/{{repo.full}}">
+      <img src="https://api.securityscorecards.dev/projects/github.com/{{repo.full}}/badge" alt="OpenSSF Scorecard" />
+    </a>
+    <a href="https://socket.dev/npm/package/nebutra">
+      <img src="https://socket.dev/api/badge/npm/package/nebutra" alt="Socket Security" />
+    </a>
+    <a href="https://www.npmjs.com/package/nebutra">
+      <img src="https://img.shields.io/npm/v/nebutra?label=nebutra&color=cb3837&logo=npm" alt="npm: nebutra" />
+    </a>
+    <a href="https://www.npmjs.com/package/create-sailor">
+      <img src="https://img.shields.io/npm/v/create-sailor?label=create-sailor&color=cb3837&logo=npm" alt="npm: create-sailor" />
+    </a>
+  </p>
 </div>
 
 <br />
 <br />
 
+> **ライセンス概要** —— npm で公開されているパッケージはすべて **AGPL-3.0-only** です。
+> `npm install @nebutra/*` をネットワーク経由のプロダクトに使う場合、
+> AGPL のネットワーク Copyleft 条項が発動します — ただし (a)
+> `npx create-sailor` でスキャフォールドするか（Independent Developer
+> License、≤ 1 FTE & < $1M ARR で無料、**Copyleft なし**）、
+> (b) [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) の Startup
+> ($799/年) または Enterprise 商用ライセンスを取得した場合は除きます。
+> 完全な対応表とエッジケースは下記の [License](#license) セクションと
+> [docs/legal/licensing-faq.md](docs/legal/licensing-faq.md) を参照してください。
+
+> **30 秒で起動** —— SaaS の API キーは一切不要:
+> ```bash
+> npx create-sailor@latest my-app --preset=minimal --yes
+> cd my-app && pnpm dev   # → http://localhost:3000
+> ```
+> `minimal` プリセットは `apps/web` + IAM + ローカル Postgres
+> のみを生成し、ゴールデンパスをローカル DB で起動できるようにします。
+> Stripe / Clerk / Resend などは後から `nebutra add <provider>`
+> で追加できます。
+
+<br />
+
 ## 概要
 
-{{brand.name}} は、モダンなマルチテナントプラットフォームを構築するための、エンタープライズグレードの AI ネイティブ SaaS モノレポアーキテクチャです。コンテンツコミュニティ、レコメンドシステム、EC 連携、Web3 アプリケーションのための、実戦で検証された基盤を提供します。
+{{brand.name}} Sailor は、ガバナンス可能なモダンなマルチテナントプラットフォームを構築するための、エンタープライズグレードの AI ネイティブ SaaS モノレポアーキテクチャです。AI ゲートウェイ、エージェントワークフロー、課金、認証、コンプライアンス、ホワイトラベル提供のための実用的な基盤を提供します。
 
-Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベクトル検索、インテリジェントワークフローをネイティブサポートする「AI ファースト」の思想を体現しています。
+Next.js 16、React 19、Prisma 7、Vercel AI SDK で構築され、AI をガバナンスが必要なランタイム能力として扱います。プロバイダートポロジー、モデルルーティング、可観測性、テナント分離、コンプライアンスフックがプラットフォーム基盤に含まれます。
 
-### ブランドビジョン
+### このプロジェクトの作り手
 
-{{brand.vision}}
+{{repo.name}} は **{{company.name}}**（{{company.nameCN}}）によってメンテナンスされています。日々のエンジニアリング責任者は **Tseka Luk**（[@tsekaluk](https://github.com/tsekaluk) · `legal@nebutra.com`）。本プロジェクトはデュアルライセンスモデルを採用しており、ソロファウンダーや OPC が Copyleft の制約を受けずに商用プロダクトを構築できる一方、企業のフォークはコミュニティへの還元義務を負います — 詳細は下記の [License](#license) セクションをご覧ください。
 
-### なぜ {{brand.name}} を選ぶのか？
+`@nebutra/*` の npm スコープに加え、`nebutra` と `create-sailor` の 2 つの CLI を公開しています。リリースは [changesets](https://github.com/changesets/changesets) で駆動され、手動の `workflow_dispatch` をリリースゲートとしています。各リリースで SBOM 認証を生成します（[release.yml](.github/workflows/release.yml) 参照）。セキュリティ報告は [SECURITY.md](SECURITY.md) へ、商用 / ライセンスに関する問い合わせは `legal@nebutra.com` までどうぞ。
 
-**Vibe Business 時代のために**：{{brand.name}} は「AI で作れる」と「収益を生むプロダクトを出荷できる」のギャップを埋める。
+### 会社について
 
-> **Vibe Coding** は「作る」問題を解決し、**Vibe Business** は「稼ぐ」問題を解決する。
+<div align="center">
+<h4>{{brand.name}} Intelligence</h4>
+  <sub>無錫雲毓智能科技有限公司</sub>
+  <br /><br />
+  <p>
+    ガバナンス可能なプロダクト基盤を構築する AI ネイティブインフラ企業<br />
+    マルチテナント SaaS、エージェントワークフロー、ローンチ運用、グローバル提供を支えます
+  </p>
+  <p align="center">長期的な堀はスターターではなく、変化し続ける AI 能力をガバナンス可能で出荷できるシステムに変える力です。</p>
+</div>
+
+> AI はデモの構築を助けます。Sailor はより難しい本番レイヤー、つまりガバナンス、セキュリティ、アーキテクチャ、スケーラビリティ、収益運用に焦点を当てます。
 >
-> 0 から 90 は簡単—AI がコードを書く。本当の挑戦は残りの 10%：セキュリティ、アーキテクチャ、スケーラビリティ、そしてデモを収益を生むプロダクトにすること。
->
-> **グロースハック** × **AI ネイティブ**：データ駆動の実験、バイラルループ、コンバージョン最適化—インテリジェントオートメーションで加速。
+> 目的はウィザードでプロバイダーを一つずつ選ぶことではありません。プロバイダー、リージョン、テナント、コンプライアンス境界をまたいで進化できる AI トポロジーを運用することです。
 
-- **🚀 本番環境対応** — 実際のエンタープライズ導入で実証されたアーキテクチャパターン
-- **🤖 AI ネイティブ** — LLM、Multi-Agent、MCP の組み込みサポート
-- **🏢 マルチテナント** — 行レベルセキュリティ、テナント分離、テナント別カスタマイズを標準装備
-- **⚡ モダンスタック** — Next.js 16、React 19、TypeScript 5.6+、TailwindCSS 4.0
-- **💳 課金機能内蔵** — データベース駆動のプラン設定、Stripe 連携、使用量計測、機能権限管理
-- **📋 法務・コンプライアンス** — Cookie 同意、プライバシー制御、GDPR/CCPA 対応基盤
-- **🔐 セキュリティ優先** — WAF、RLS、Prompt Injection 防御
-- **🌍 グローバル対応** — i18n、CDN、エッジキャッシュ、マルチリージョンデプロイ
-- **👤 一人会社 Ready** — Multi-Agent ワークフロー、自動化 CI/CD
-- **🦄 ユニコーン志向** — Demo → プロダクト → 収益、速度と信頼性を両立
+<br />
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="25%">
+  <h3>🚀</h3>
+  <strong>グローバル化</strong><br />
+  <sub>Day 1 から世界市場へ</sub>
+</td>
+<td align="center" width="25%">
+  <h3>🤖</h3>
+  <strong>AI ネイティブ</strong><br />
+  <sub>LLM · Multi-Agent · MCP</sub>
+</td>
+<td align="center" width="25%">
+  <h3>💼</h3>
+  <strong>プラットフォームガバナンス</strong><br />
+  <sub>トポロジー · 契約 · CI</sub>
+</td>
+<td align="center" width="25%">
+  <h3>🦄</h3>
+  <strong>ローンチ基盤</strong><br />
+  <sub>認証 · 課金 · AI ゲートウェイ</sub>
+</td>
+</tr>
+</table>
+</div>
+
+#### マニフェスト
+
+- 加速度の時代に技術的な壁は長く続かない。真の堀は、継続的な想像力、トレンドへの鋭い感度、素早いエラー修正、そして誰より速くアイデアを現実にする実行力。
+- 保守的な選択は一見安全だが、実はより攻めの賭けだ。変わらないことは世界が変わらないと賭けること。唯一の不変は変化。
+
+### なぜ Sailor を選ぶのか？
+
+**ガバナンス可能な AI ネイティブプロダクトのために**：Sailor は「AI がデモを作った」と「運用、監査、課金、拡張ができるプロダクト基盤」の間のギャップを埋めます。
+
+<table>
+<tr>
+<td width="50%">
+
+|     | 特徴               | 説明                             |
+| :-: | :----------------- | :------------------------------- |
+| 🚀  | **本番環境対応**   | エンタープライズ実証済みパターン |
+| 🤖  | **AI ネイティブ**  | LLM・Embeddings・RAG・MCP Agent  |
+| 🏢  | **マルチテナント** | RLS・テナント分離・カスタマイズ  |
+| ⚡  | **モダンスタック** | Next.js 16・React 19・TypeScript 5.9 |
+| 💳  | **課金機能内蔵**   | Stripe・使用量計測・機能権限     |
+
+</td>
+<td width="50%">
+
+|     | 特徴                       | 説明                            |
+| :-: | :------------------------- | :------------------------------ |
+| 📋  | **法務・コンプライアンス** | GDPR/CCPA・Cookie 同意          |
+| 🔐  | **セキュリティ優先**       | WAF・RLS・プロンプト注入制御    |
+| 🌍  | **グローバル対応**         | i18n・CDN・エッジキャッシュ     |
+| 👤  | **運用対応**               | マルチエージェント・自動化 CI/CD |
+| 🚢  | **ローンチ対応**           | デモ → プロダクト → 収益        |
+
+</td>
+</tr>
+</table>
 
 ## ハイライト
 
@@ -375,7 +475,7 @@ Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベ�
 
 ## プラットフォーム機能
 
-{{brand.name}} は **プロバイダー非依存** です。以下の各プラットフォームパッケージは環境変数からバックエンドを自動検出するため、アプリケーションコードを変更せずにプロバイダーを切り替えられます。各パッケージはテスト用の in-memory 実装と、[tests/architecture/](tests/architecture/) のアーキテクチャテストで強制される厳格な TypeScript 契約を備えています。
+Sailor は **プロバイダー非依存** です。以下の各プラットフォームパッケージは環境変数からバックエンドを自動検出するため、アプリケーションコードを変更せずにプロバイダーを切り替えられます。各パッケージはテスト用の in-memory 実装と、[tests/architecture/](tests/architecture/) のアーキテクチャテストで強制される厳格な TypeScript 契約を備えています。
 
 <table>
 <tr><th>機能</th><th>パッケージ</th><th>プロバイダー（自動検出）</th></tr>
@@ -406,14 +506,43 @@ Next.js 16、React 19、Prisma 7 など最新技術で構築され、LLM、ベ�
 
 <br />
 
+## CLI と公式サイト
+
+### npm から CLI を使う
+
+新規プロジェクトでは、モノレポ全体を clone して削るのではなく、npm から開始できます。
+
+```bash
+# 新しい Sailor プロジェクトを作成
+npx create-sailor@latest
+npm create sailor@latest
+pnpm create sailor@latest
+bunx create-sailor@latest
+
+# 既存の Sailor プロジェクトを運用
+npx nebutra --help
+npm install -g nebutra
+```
+
+| パッケージ | 用途 |
+| ---------- | ---- |
+| [`create-sailor`](https://www.npmjs.com/package/create-sailor) | リージョン対応のデフォルト値とトポロジー優先の AI ゲートウェイ設定で、新しい {{brand.name}} Sailor プロジェクトを作成します。 |
+| [`nebutra`](https://www.npmjs.com/package/nebutra) | 既存プロジェクトを運用します。機能レジストリの追加、AI プロバイダーガバナンス、ゲートウェイルーティング、Schema、診断に使います。 |
+
+### nebutra.com
+
+[`nebutra.com`](https://nebutra.com) は {{brand.name}} Sailor の公開プロダクト入口であり、私たち自身がこのプラットフォームを dogfooding する場所です。今後のプロダクト更新、商用ライセンス、ホステッド機能、ローンチワークフロー、このモノレポで構築した実例は公式サイトで継続的に公開します。
+
+<br />
+
 ## クイックスタート
 
 ### 必要環境
 
 | ツール  | バージョン                                |
 | ------- | ----------------------------------------- |
-| Node.js | `v20+`                                    |
-| pnpm    | `v9+`                                     |
+| Node.js | `v22+`                                    |
+| pnpm    | `v10.32+`                                 |
 | Python  | `3.11+` <sub>（マイクロサービス用）</sub> |
 
 ### インストール
@@ -453,15 +582,41 @@ pnpm db:generate && pnpm dev
 │   ├── landing-page/      # マーケティングサイト
 │   ├── web/               # メイン SaaS ダッシュボード
 │   ├── studio/            # Sanity CMS
-│   └── api-gateway/       # BFF レイヤー
+│   ├── api-gateway/       # BFF レイヤー
+│   ├── design-docs/       # コンポーネントドキュメント (Fumadocs)
+│   ├── docs/              # Mintlify ドキュメントサイト
+│   ├── idp/               # アイデンティティプロバイダー
+│   └── storybook/         # コンポーネント Playground
 ├── packages/
+│   ├── create-sailor/     # CLI スキャフォールド (npx create-sailor)
+│   ├── i18n/              # next-intl ルーティング & ロケール管理
+│   ├── marketing/         # 高コンバージョン UI (Waitlist, Pricing, FAQ)
+│   ├── email/             # トランザクションメール (Magic Link, Resend)
+│   ├── agents/            # Vercel AI SDK ラッパー、エージェント、ストリーミング補助
+│   ├── ai-providers/      # マルチプロバイダー AI レジストリとメタデータ
 │   ├── billing/           # Stripe 課金、プラン、使用量計測
 │   ├── brand/             # ブランドアセット、ガイドライン
-│   ├── marketing/         # 高コンバージョン UI (Waitlist, Pricing, FAQ)
-│   ├── design-system/     # デザイントークン、テーマ
+│   ├── preset/            # 機能ベースのテンプレート設定
+│   ├── theme/             # グローバルテーマトークン & CSS 変数
+│   ├── ui/                # Radix + HeroUI + Lobe UI コンポーネント
+│   ├── icons/             # Geist アイコンライブラリ
+│   ├── identity/          # 認証ヘルパー & テナント ID
+│   ├── contracts/         # 共有 TypeScript 型 & Zod スキーマ
 │   ├── legal/             # Cookie 同意、プライバシー、GDPR/CCPA
+│   ├── db/                # Prisma 7 スキーマ & クライアント
+│   ├── cache/             # Redis キャッシュ戦略
+│   ├── rate-limit/        # マルチテナントレート制限
+│   ├── mcp/               # AI エージェント用 Model Context Protocol
+│   ├── logger/            # 構造化ロギング
 │   └── ...                # その他多数
-├── services/              # マイクロサービス
+├── services/
+│   ├── ai/                # Python FastAPI - LLM、Embeddings
+│   ├── billing/           # 課金マイクロサービス
+│   ├── content/           # Python FastAPI - 投稿、フィード
+│   ├── recsys/            # Python - レコメンドエンジン
+│   ├── ecommerce/         # Python - Shopify/Shopline 連携
+│   ├── event-ingest/      # イベント取り込みパイプライン
+│   └── web3/              # Python - ブロックチェーンインデクサー
 └── infra/                 # インフラ設定
 ```
 
@@ -471,11 +626,31 @@ pnpm db:generate && pnpm dev
 
 コントリビューションを歓迎します！
 
-|                    |                                                         |
-| ------------------ | ------------------------------------------------------- |
+|                    |                                                                  |
+| ------------------ | ---------------------------------------------------------------- |
 | **バグ報告**       | [Issue を作成](https://github.com/{{repo.full}}/issues) |
-| **機能リクエスト** | Issue で提案                                            |
-| **プルリクエスト** | 機能追加やバグ修正の PR を送信                          |
+| **機能リクエスト** | Issue で提案                                                     |
+| **プルリクエスト** | 機能追加やバグ修正の PR を送信                                   |
+
+<br />
+
+## バージョン管理とリリース運用
+
+公開中のすべてのパッケージは公開 API が安定するまで **0.x の範囲**にあります。
+[SemVer §4](https://semver.org/lang/ja/#spec-item-4) に従い、メジャーバージョンが
+ゼロである契約は **0.x のいずれのリリースも破壊的変更を含む可能性がある**
+ことを意味します — 本番環境では `"nebutra": "0.3.1"` のように厳密な
+バージョンに固定し、caret 範囲は使わないでください。1.0 を切るまでは
+このポリシーが続きます。
+
+- バージョン管理は [changesets](https://github.com/changesets/changesets) によって駆動されます。公開対象パッケージに触れる PR は `.changeset/*.md` を含めて patch/minor/major を宣言する必要があります — CI でこのゲートを強制しています。
+- 各パッケージの `CHANGELOG.md` は `changeset version` が生成し、バージョンアップと同じコミットでコミットされます（例: [`packages/ops/cli/CHANGELOG.md`](packages/ops/cli/CHANGELOG.md)）。
+- リリースワークフローは **手動**（`workflow_dispatch`）です — PR マージで突然リリースされることはありません。関連する変更をまとめて一括でリリースを切ります。
+- 1.0 前のメジャー API 変更（例: CLI コマンドの改名、パッケージ分類）は最初に **release candidate** を発行します: `nebutra@0.4.0-rc.0` を `next` dist-tag に乗せ、1 週間以上の soak テストを経てから `latest` に昇格させます。RC のインストール: `npm i nebutra@next`。
+- npm 公開には **provenance attestation** が付与されます（npm レジストリ側で trusted-publishing が有効化された時点で。ワークフロー側はすでに準備済み — [`release.yml`](.github/workflows/release.yml) の `NPM_CONFIG_PROVENANCE: "true"` 参照）。公開済み tarball の検証: `npm view <pkg> --json | jq .dist.attestations`。
+
+**API 安定**のシグナルとして `1.0.0` をリリースします。それまでは現行サーフェスを
+「形は本番対応、細部は進化中」とお考えください。
 
 <br />
 
@@ -483,13 +658,13 @@ pnpm db:generate && pnpm dev
 
 **AGPLv3**
 
-|              |                                    |
-| ------------ | ---------------------------------- |
-| **無料利用** | 個人プロジェクト、学習、社内ツール |
-| **変更可能** | 派生物の作成                       |
-| **配布可能** | 帰属表示付きで                     |
-| **商用利用** | オープンソース化が必要             |
-| **免除**     | {{license.commercialExempt}}       |
+|              |                                        |
+| ------------ | -------------------------------------- |
+| **無料利用** | 個人プロジェクト、学習、社内ツール     |
+| **変更可能** | 派生物の作成                           |
+| **配布可能** | 帰属表示付きで                         |
+| **商用利用** | オープンソース化が必要                 |
+| **免除**     | 無錫雲毓智能科技有限公司および関連会社 |
 
 <br />
 
@@ -498,7 +673,7 @@ pnpm db:generate && pnpm dev
 <br />
 
 <div align="center">
-  <a href="https://{{domains.landing}}">
+  <a href="https://nebutra.com">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" width="100">
       <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-mono.svg" width="100">
@@ -508,9 +683,9 @@ pnpm db:generate && pnpm dev
   <br />
   <br />
   <sub>
-    <strong>一つ一つのコミットで、未来を創造する。</strong>
+<strong>すべてのリリースで、成長が稼働する。</strong>
   </sub>
   <br />
   <br />
-  <sub>© {{company.year}}-現在 {{company.name}}</sub>
+  <sub>© 2024-現在 <strong>無錫雲毓智能科技有限公司</strong></sub>
 </div>

@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  <a href="https://{{domains.landing}}">
+  <a href="https://nebutra.com">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" />
       <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-horizontal-en.svg" />
@@ -12,14 +12,15 @@
   </a>
   <br />
   <br />
-  <h3>{{brand.tagline}}</h3>
+  <h3>Open-Source AI-Native SaaS Platform Baseline</h3>
+  <p><em>Governed multi-tenant product infrastructure for AI gateways, billing, auth, compliance, and white-label delivery.</em></p>
   <br />
   <p>
-    <a href="https://{{domains.landing}}"><strong>Website</strong></a> · 
-    <a href="#introduction"><strong>Introduction</strong></a> · 
-    <a href="#tech-stack"><strong>Tech Stack</strong></a> · 
-    <a href="#getting-started"><strong>Quick Start</strong></a> · 
-    <a href="#contributing"><strong>Contributing</strong></a>
+    <a href="https://nebutra.com"><strong>Website</strong></a> · 
+    <a href="#-introduction"><strong>Introduction</strong></a> · 
+    <a href="#-tech-stack"><strong>Tech Stack</strong></a> · 
+    <a href="#-getting-started"><strong>Quick Start</strong></a> · 
+    <a href="#-contributing"><strong>Contributing</strong></a>
   </p>
   <p>
     <a href="https://github.com/{{repo.full}}/stargazers">
@@ -32,41 +33,150 @@
       <img src="https://img.shields.io/badge/license-AGPLv3-6366f1?style=for-the-badge" alt="License" />
     </a>
   </p>
+  <p>
+    <a href="https://securityscorecards.dev/viewer/?uri=github.com/{{repo.full}}">
+      <img src="https://api.securityscorecards.dev/projects/github.com/{{repo.full}}/badge" alt="OpenSSF Scorecard" />
+    </a>
+    <a href="https://socket.dev/npm/package/nebutra">
+      <img src="https://socket.dev/api/badge/npm/package/nebutra" alt="Socket Security" />
+    </a>
+    <a href="https://www.npmjs.com/package/nebutra">
+      <img src="https://img.shields.io/npm/v/nebutra?label=nebutra&color=cb3837&logo=npm" alt="npm: nebutra" />
+    </a>
+    <a href="https://www.npmjs.com/package/create-sailor">
+      <img src="https://img.shields.io/npm/v/create-sailor?label=create-sailor&color=cb3837&logo=npm" alt="npm: create-sailor" />
+    </a>
+  </p>
+  <p>
+    <a href="https://x.com/nebutra">
+      <img src="https://img.shields.io/badge/follow-nebutra-18181b?style=flat-square&logo=x&logoColor=fff" alt="X" />
+    </a>
+  </p>
+  <p>
+    <a href="https://discord.gg/nebutra">
+      <img src="https://img.shields.io/discord/000000000000000000?style=flat-square&logo=discord&color=5865F2&logoColor=fff&label=Discord" alt="Discord" />
+    </a>
+  </p>
 </div>
 
 <br />
 <br />
 
+> **License at a glance** — published npm packages are **AGPL-3.0-only**.
+> If you `npm install @nebutra/*` into a network-served product you take
+> on AGPL's network-copyleft clause unless you (a) scaffold with
+> `npx create-sailor` (Independent Developer License, free for ≤ 1 FTE
+> & < $1M ARR, **no copyleft**) or (b) hold a Startup ($799/yr) or
+> Enterprise tier from [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md).
+> Full matrix and edge cases: [License](#license) section below, plus
+> [docs/legal/licensing-faq.md](docs/legal/licensing-faq.md).
+
+> **Try it in 30 seconds** — zero SaaS keys required:
+> ```bash
+> npx create-sailor@latest my-app --preset=minimal --yes
+> cd my-app && pnpm dev   # → http://localhost:3000
+> ```
+> The `minimal` preset scaffolds only `apps/web` + IAM + Postgres so the
+> golden path boots against a local DB. Add Stripe / Clerk / Resend
+> later via `nebutra add <provider>`.
+
+<br />
+
 ## Introduction
 
-{{brand.name}} is an enterprise-grade, AI-native SaaS monorepo architecture designed for building modern multi-tenant platforms. It provides a battle-tested foundation for content communities, recommendation systems, e-commerce integrations, and Web3 applications.
+{{brand.name}} Sailor is an enterprise-grade, AI-native SaaS monorepo architecture designed for building governed multi-tenant platforms. It provides a practical baseline for AI gateways, agent workflows, billing, auth, compliance, and white-label product delivery.
 
-Built with the latest technologies including Next.js 16, React 19, and Prisma 7, it embraces an "AI-first" philosophy with native support for LLMs, vector search, and intelligent workflows.
+Built with Next.js 16, React 19, Prisma 7, and the Vercel AI SDK, Sailor treats AI as a governed runtime surface: provider topology, model routing, observability, tenant isolation, and compliance hooks are part of the platform baseline.
+
+### Who's building this
+
+{{repo.name}} is maintained by **{{company.name}}** Day-to-day engineering lead is **Tseka Luk** ([@tsekaluk](https://github.com/tsekaluk) · `legal@nebutra.com`). The project ships under a dual-license model designed so solo founders and OPCs can build commercial products on it without copyleft, while corporate forks still owe back to the community — see the [License](#license) section.
+
+We publish to npm under the `@nebutra/*` scope plus two CLIs (`nebutra`, `create-sailor`). Releases run through [changesets](https://github.com/changesets/changesets) on a manual `workflow_dispatch` gate; SBOMs are attested on every release ([release.yml](.github/workflows/release.yml)). Security reports → [SECURITY.md](SECURITY.md); commercial / licensing inquiries → `legal@nebutra.com`.
 
 ### Brand Vision
 
-{{brand.vision}}
+Nebula • Nurture • Ultra • Future
 
-### Why {{brand.name}}?
+- Nebula: Aggregate data, tools, and intelligence into usable products.
+- Nurture: Incubate AI-native apps via automated toolchains and “digital employees.”
+- Ultra: Ship reliable engineering and value-first outcomes.
+- Future: Make AI productivity accessible to everyone.
 
-**For the Vibe Business era**: {{brand.name}} bridges the gap between _"I can build it with AI"_ and _"I can ship a profitable product"_.
+### About the Company
 
-> **Vibe Coding** solves the problem of _building it_; **Vibe Business** solves the problem of _making it profitable_.
->
-> Going from 0 to 90 is easy—AI handles the coding. The real challenge is the last 10%: security, architecture, scalability, and turning a demo into a product that generates revenue.
->
-> **Growth Hacking** meets **AI-Native**: Data-driven experimentation, viral loops, and conversion optimization—now supercharged by intelligent automation.
+<div align="center">
+  <h4>{{brand.name}} Intelligence</h4>
+  <sub>{{company.name}}</sub>
+  <br /><br />
+  <p>
+    AI-native infrastructure company building governed product baselines<br />
+    for multi-tenant SaaS, agent workflows, launch operations, and global delivery
+  </p>
+  <p align="center">The durable moat is not a starter template. It is the ability to turn changing AI capabilities into governed, shippable systems.</p>
+</div>
 
-- **🚀 Production-Ready** — Battle-tested architecture patterns used in real enterprise deployments
-- **🤖 AI-Native** — Built-in support for LLMs, Multi-Agent, and AI agents via MCP
-- **🏢 Multi-Tenant** — Row-level security, tenant isolation, and per-tenant customization out of the box
-- **⚡ Modern Stack** — Next.js 16, React 19, TypeScript 5.6+, TailwindCSS 4.0
-- **💳 Billing Built-in** — Database-driven plans, Stripe integration, usage metering, and feature entitlements
-- **📋 Legal & Compliance** — Cookie consent, privacy controls, GDPR/CCPA compliance infrastructure
-- **🔐 Security-First** — WAF, RLS, Prompt Injection protection built-in
-- **🌍 Global-Ready** — i18n, CDN, edge caching, and multi-region deployment support
-- **👤 One-Person Ready** — Multi-Agent workflows and automated CI/CD for solo founders
-- **🦄 For Unicorns** — Demo → Product → Revenue patterns that balance velocity with reliability
+> AI can help build the demo. Sailor focuses on the harder production layer: governance, security, architecture, scalability, and revenue operations.
+
+<br />
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="25%">
+  <h3>🚀</h3>
+  <strong>Global First</strong><br />
+  <sub>Day 1 worldwide markets</sub>
+</td>
+<td align="center" width="25%">
+  <h3>🤖</h3>
+  <strong>AI-Native</strong><br />
+  <sub>LLMs · Multi-Agent · MCP</sub>
+</td>
+<td align="center" width="25%">
+  <h3>💼</h3>
+  <strong>Platform Governance</strong><br />
+  <sub>Topology · Contracts · CI</sub>
+</td>
+<td align="center" width="25%">
+  <h3>🦄</h3>
+  <strong>Launch Infrastructure</strong><br />
+  <sub>Auth · Billing · AI Gateway</sub>
+</td>
+</tr>
+</table>
+</div>
+
+### Why Sailor?
+
+**For governed AI-native products**: Sailor bridges the gap between _"AI helped me build a demo"_ and _"this is a product platform we can operate, audit, bill, and scale"_.
+
+<table>
+<tr>
+<td width="50%">
+
+|     | Feature              | Description                            |
+| :-: | :------------------- | :------------------------------------- |
+| 🚀  | **Production-Ready** | Battle-tested enterprise patterns      |
+| 🤖  | **AI-Native**        | LLM · Embeddings · RAG · MCP Agent     |
+| 🏢  | **Multi-Tenant**     | RLS · Isolation · Customization        |
+| ⚡  | **Modern Stack**     | Next.js 16 · React 19 · TypeScript 5.9 |
+| 💳  | **Billing Built-in** | Stripe · Usage metering · Entitlements |
+
+</td>
+<td width="50%">
+
+|     | Feature                | Description                      |
+| :-: | :--------------------- | :------------------------------- |
+| 📋  | **Legal & Compliance** | GDPR/CCPA · Cookie consent       |
+| 🔐  | **Security-First**     | WAF · RLS · Prompt injection controls |
+| 🌍  | **Global-Ready**       | i18n · CDN · Edge caching        |
+| 👤  | **Operator-Ready**     | Multi-Agent · Automated CI/CD    |
+| 🚢  | **Launch-Ready**       | Demo → Product → Revenue         |
+
+</td>
+</tr>
+</table>
 
 ## Highlights
 
@@ -119,7 +229,7 @@ Built with the latest technologies including Next.js 16, React 19, and Prisma 7,
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Docker" /><br />
       <strong>Modular Local DX</strong>
-      <br />Docker Compose profiles (<code>ai</code>, <code>recsys</code>) to boot only what's needed.
+      <br />Docker Compose profiles (<code>ai</code>) to boot only what's needed.
     </td>
   </tr>
   <tr>
@@ -188,20 +298,20 @@ Built with the latest technologies including Next.js 16, React 19, and Prisma 7,
 </td>
 </tr>
 <tr>
+<td><strong>BFF</strong></td>
+<td>
+  <a href="https://hono.dev/"><img src="https://img.shields.io/badge/Hono-E36002?style=flat-square&logo=hono&logoColor=white&v=1" alt="Hono" /></a>
+  <a href="https://www.prisma.io/"><img src="https://img.shields.io/badge/Prisma_7-2D3748?style=flat-square&logo=prisma&logoColor=white&v=1" alt="Prisma" /></a>
+  <a href="https://zod.dev/"><img src="https://img.shields.io/badge/Zod-3E67B1?style=flat-square&logo=zod&logoColor=white&v=1" alt="Zod" /></a>
+</td>
+</tr>
+<tr>
 <td><strong>Backend (Python)</strong></td>
 <td>
   <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white&v=1" alt="FastAPI" /></a>
   <a href="https://www.uvicorn.org/"><img src="https://img.shields.io/badge/Uvicorn-499848?style=flat-square" alt="Uvicorn" /></a>
   <a href="https://docs.pydantic.dev/"><img src="https://img.shields.io/badge/Pydantic_v2-E92063?style=flat-square&logo=pydantic&logoColor=white&v=1" alt="Pydantic" /></a>
   <img src="https://img.shields.io/badge/Python_3.11+-3776AB?style=flat-square&logo=python&logoColor=white&v=1" alt="Python" />
-</td>
-</tr>
-<tr>
-<td><strong>BFF</strong></td>
-<td>
-  <a href="https://hono.dev/"><img src="https://img.shields.io/badge/Hono-E36002?style=flat-square&logo=hono&logoColor=white&v=1" alt="Hono" /></a>
-  <a href="https://www.prisma.io/"><img src="https://img.shields.io/badge/Prisma_7-2D3748?style=flat-square&logo=prisma&logoColor=white&v=1" alt="Prisma" /></a>
-  <a href="https://zod.dev/"><img src="https://img.shields.io/badge/Zod-3E67B1?style=flat-square&logo=zod&logoColor=white&v=1" alt="Zod" /></a>
 </td>
 </tr>
 <tr>
@@ -375,7 +485,7 @@ Built with the latest technologies including Next.js 16, React 19, and Prisma 7,
 
 ## Platform Capabilities
 
-{{brand.name}} is **provider-agnostic**: every platform package below auto-detects its backend from environment variables, so customers swap providers without changing application code. Each package ships an in-memory implementation for tests and a strict TypeScript contract enforced by architecture tests under [tests/architecture/](tests/architecture/).
+Sailor is **provider-agnostic**: every platform package below auto-detects its backend from environment variables, so customers swap providers without changing application code. Each package ships an in-memory implementation for tests and a strict TypeScript contract enforced by architecture tests under [tests/architecture/](tests/architecture/).
 
 <table>
 <tr><th>Capability</th><th>Package</th><th>Providers (auto-detected)</th></tr>
@@ -402,7 +512,131 @@ Built with the latest technologies including Next.js 16, React 19, and Prisma 7,
 <tr><td>Feature flags</td><td><code>@nebutra/feature-flags</code></td><td>Database-backed with env-driven overrides</td></tr>
 <tr><td>Design tokens</td><td><code>@nebutra/design-sync</code></td><td>W3C DTCG ↔ Figma · Penpot · git-only</td></tr>
 <tr><td>Status aggregation</td><td><code>@nebutra/status</code></td><td>OpenStatus · Atlassian StatusPage</td></tr>
+<tr><td>Admin tooling</td><td><code>@nebutra/admin-tooling</code></td><td>Thin admin (dashboard + impersonate only) + integration recipes for Retool, Metabase, Hex — Sailor expects you to use best-of-breed internal tools instead of self-building. See <a href="./docs/admin/">docs/admin/</a>.</td></tr>
 </table>
+
+<br />
+
+## Project Structure
+
+```
+{{repo.name}}/
+├── apps/                      # User-facing apps (Next.js)
+│   ├── landing-page/      # Marketing site (nebutra.com)
+│   ├── web/               # Main SaaS dashboard (app.nebutra.com)
+│   ├── studio/            # Sanity CMS (studio.nebutra.com)
+│   ├── design-docs/       # Component documentation (Fumadocs)
+│   ├── sailor-docs/       # Public product docs (docs.nebutra.com)
+│   ├── idp/               # Identity provider service (OAuth 2.0 / OIDC)
+│   ├── storybook/         # Component playground
+│   ├── mail-preview/      # Email template preview
+│   ├── sleptons/          # Sleptons companion app
+│   └── tsekaluk-dev/      # Author dev playground
+├── packages/                  # Shared TS libraries (categorized in W3b)
+│   ├── ai/                # 3 pkgs — agents, ai-providers, mcp
+│   ├── commerce/          # 7 pkgs — billing, contracts, marketing, metering, license, legal, waitlist
+│   ├── design/            # 7 pkgs — ui, tokens, brand, theme, icons, design-tokens, design-sync
+│   ├── iam/               # 8 pkgs — auth, audit, vault, oauth-server, permissions, tenant, identity, captcha
+│   ├── integrations/      # 11 pkgs — queue, search, email, notifications, storage, webhooks, cache, sms, uploads, event-bus, saga
+│   ├── ops/               # 6 pkgs — cli, create-sailor, preset, sanity, supabase, china-compliance
+│   └── platform/          # 13 pkgs — db, logger, rate-limit, feature-flags, gateway-core, errors, config, health, status, alerting, analytics, repositories, i18n
+├── backends/                  # No-UI backends (split by language à la vercel/vercel)
+│   ├── gateway/               # TypeScript / Hono — BFF, auth, tenancy, routing
+│   └── python/                # FastAPI — only when ML/batch/specialized libs justify
+│       ├── _shared/           # Cross-service primitives (auth, db, queue client)
+│       └── ai/                # LLM, embeddings, agent orchestration
+├── infra/                     # Infrastructure (split by concern in W2.2)
+│   ├── iac/                   # terraform + k8s + ecs + cloudflare + railway
+│   ├── runtime/               # nginx + docker + analytics + compose files
+│   ├── data/                  # database (RLS) + clickhouse (init + dbt)
+│   └── ops/                   # observability + deployment scripts
+├── workflows/                 # Event-driven business workflows (extracted in W2.3)
+│   ├── inngest/               # Serverless background jobs + cron
+│   ├── n8n/                   # Visual workflow automation
+│   └── pusher/                # Real-time messaging glue
+├── e2e/                       # Playwright E2E tests (smoke / golden / sleptons)
+├── tests/                     # Architecture invariants + load tests + UI governance
+└── docs/                      # Architecture documentation
+```
+
+<br />
+
+## Documentation
+
+Each component has its own README with setup instructions and API documentation:
+
+<table>
+<tr>
+<td><strong>Services</strong></td>
+<td>
+  <a href="backends/python/ai/">AI</a>
+</td>
+</tr>
+<tr>
+<td><strong>Packages</strong></td>
+<td>
+  <a href="packages/commerce/billing/">Billing</a> · 
+  <a href="packages/commerce/legal/">Legal</a> · 
+  <a href="packages/design/ui/">UI</a> ·
+  <a href="packages/design/tokens/">Tokens</a> ·
+  <a href="packages/commerce/marketing/">Marketing UI</a> · 
+  <a href="packages/design/brand/">Brand</a> · 
+  <a href="packages/platform/db/">DB</a> · 
+  <a href="packages/integrations/cache/">Cache</a> · 
+  <a href="packages/platform/rate-limit/">Rate Limit</a> · 
+  <a href="packages/ai/mcp/">MCP</a> · 
+  <a href="packages/ai/ai-providers/">AI Providers</a> · 
+  <a href="packages/platform/analytics/">Analytics</a>
+</td>
+</tr>
+<tr>
+<td><strong>Design Docs</strong></td>
+<td>
+  <a href="apps/design-docs/">Design System Docs</a> (Fumadocs)
+</td>
+</tr>
+<tr>
+<td><strong>Infrastructure</strong></td>
+<td>
+  <a href="infra/runtime/docker/">Docker</a> · 
+  <a href="infra/iac/k8s/">Kubernetes</a> · 
+  <a href="infra/iac/terraform/">Terraform</a> · 
+  <a href="workflows/inngest/">Inngest</a> · 
+  <a href="workflows/n8n/">n8n</a> · 
+  <a href="workflows/pusher/">Pusher</a> · 
+  <a href="infra/ops/observability/">Observability</a>
+</td>
+</tr>
+</table>
+
+<br />
+
+## CLI & Website
+
+### Use the CLI from npm
+
+For new projects, start from npm instead of cloning and pruning the full monorepo:
+
+```bash
+# Scaffold a new Sailor project
+npx create-sailor@latest
+npm create sailor@latest
+pnpm create sailor@latest
+bunx create-sailor@latest
+
+# Operate an existing Sailor project
+npx nebutra --help
+npm install -g nebutra
+```
+
+| Package | Use it for |
+| ------- | ---------- |
+| [`create-sailor`](https://www.npmjs.com/package/create-sailor) | Bootstrap a new {{brand.name}} Sailor project with region-aware defaults and topology-first AI gateway setup. |
+| [`nebutra`](https://www.npmjs.com/package/nebutra) | Operate an existing project: feature registry installs, AI provider governance, gateway routing, schemas, and diagnostics. |
+
+### nebutra.com
+
+[`nebutra.com`](https://nebutra.com) is the public product surface for {{brand.name}} Sailor and the place where we dogfood the platform ourselves. We will use it to publish product updates, commercial licensing, hosted capabilities, launch workflows, and real examples built on this monorepo.
 
 <br />
 
@@ -410,11 +644,11 @@ Built with the latest technologies including Next.js 16, React 19, and Prisma 7,
 
 ### Prerequisites
 
-| Tool    | Version                                |
-| ------- | -------------------------------------- |
-| Node.js | `v20+`                                 |
-| pnpm    | `v9+`                                  |
-| Python  | `3.11+` <sub>(for microservices)</sub> |
+<table>
+<tr><td><strong>Node.js</strong></td><td><code>v22+</code></td></tr>
+<tr><td><strong>pnpm</strong></td><td><code>v10.32+</code></td></tr>
+<tr><td><strong>Python</strong></td><td><code>3.11+</code> <sub>(for microservices)</sub></td></tr>
+</table>
 
 ### Quick Start
 
@@ -448,62 +682,6 @@ pnpm db:generate && pnpm dev
 
 <br />
 
-## Project Structure
-
-```
-{{repo.name}}/
-├── apps/
-│   ├── landing-page/      # Marketing site
-│   ├── web/               # Main SaaS dashboard
-│   ├── studio/            # Sanity CMS
-│   └── api-gateway/       # BFF layer
-├── packages/
-│   ├── marketing/         # Conversion-optimized UI (Waitlist, Pricing, FAQ)
-│   ├── ai-providers/      # Multi-provider AI SDK (OpenRouter, OpenAI, etc)
-│   ├── billing/           # Stripe billing, plans, usage metering
-│   ├── brand/             # Brand assets, guidelines & programmatic tokens
-│   ├── design-system/     # Design tokens, marketing themes, Primer base
-│   ├── legal/             # Cookie consent, privacy, GDPR/CCPA compliance
-│   ├── ui/                # Lobe UI + Lobe Icons + Design System
-│   ├── db/                # Prisma 7 schema & client
-│   ├── supabase/          # Supabase Realtime, Storage, Edge Functions
-│   ├── sanity/            # Sanity CMS client & schemas
-│   ├── captcha/           # Cloudflare Turnstile integration
-│   ├── storage/           # R2/S3 storage client
-│   ├── cache/             # Redis caching strategies
-│   ├── rate-limit/        # Multi-tenant rate limiting
-│   ├── event-bus/         # Cross-service messaging
-│   ├── saga/              # Distributed transactions
-│   ├── mcp/               # Model Context Protocol for AI agents
-│   ├── config/            # Shared configuration utilities
-│   ├── errors/            # Standardized error handling
-│   ├── feature-flags/     # Feature flag management
-│   ├── alerting/          # Multi-channel alerting
-│   ├── audit/             # Compliance audit logging
-│   ├── health/            # Health check utilities
-│   ├── status/            # OpenStatus integration
-│   └── analytics/         # Dub-powered link tracking & conversions
-├── services/
-│   ├── ai/                # Python FastAPI - LLM, embeddings
-│   ├── content/           # Python FastAPI - posts, feed
-│   ├── recsys/            # Python - recommendation engine
-│   ├── ecommerce/         # Python - Shopify/Shopline sync
-│   └── web3/              # Python - blockchain indexer
-├── infra/
-│   ├── cloudflare/        # CDN, WAF, R2 configs
-│   ├── docker/            # Container configurations
-│   ├── k8s/               # Kubernetes manifests
-│   ├── railway/           # Railway deployment
-│   ├── terraform/         # IaC configurations
-│   ├── inngest/           # TypeScript workflow definitions
-│   ├── n8n/               # Visual workflow automation
-│   ├── pusher/            # Real-time communication (Pusher/Soketi)
-│   └── observability/     # Logging, tracing, metrics
-└── docs/                  # Architecture documentation
-```
-
-<br />
-
 ## White-label
 
 Fork this repo and customize it for your own brand:
@@ -524,27 +702,77 @@ See [WHITELABEL.md](WHITELABEL.md) for full documentation.
 
 ## Contributing
 
-We welcome contributions of all kinds.
+We love our contributors! Here's how you can help:
 
-|                      |                                                          |
-| -------------------- | -------------------------------------------------------- |
+|                      |                                                                   |
+| -------------------- | ----------------------------------------------------------------- |
 | **Report Bugs**      | [Open an issue](https://github.com/{{repo.full}}/issues) |
-| **Feature Requests** | Suggest via issues                                       |
-| **Pull Requests**    | Submit PRs for features or fixes                         |
+| **Feature Requests** | Suggest new features via issues                                   |
+| **Pull Requests**    | Submit PRs for features or fixes                                  |
+
+### Development Workflow
+
+```
+1. Fork the repository
+2. Create a feature branch (git checkout -b feat/amazing-feature)
+3. Commit your changes (git commit -m 'feat: add amazing feature')
+4. Push to the branch (git push origin feat/amazing-feature)
+5. Open a Pull Request
+```
+
+<br />
+
+## Versioning & Release Cadence
+
+Every published package is in the **0.x range** while public APIs are still
+settling. Per [SemVer §4](https://semver.org/#spec-item-4), the major-version-zero
+contract means **any 0.x release may include breaking changes** — pin to an
+exact version (`"nebutra": "0.3.1"`) rather than a caret range in production
+until we cut a 1.0.
+
+- Versioning is driven by [changesets](https://github.com/changesets/changesets). Each PR that touches a published package must include a `.changeset/*.md` declaring patch/minor/major intent — CI enforces this gate.
+- Per-package `CHANGELOG.md` is generated by `changeset version` and committed alongside the version bump (see e.g. [`packages/ops/cli/CHANGELOG.md`](packages/ops/cli/CHANGELOG.md)).
+- The Release workflow is **manual** (`workflow_dispatch`) — no surprise releases on PR merges. We batch related changes and cut a coordinated release.
+- Pre-1.0 major API moves (e.g. CLI command renames, package categorization) ship as a **release candidate** first: `nebutra@0.4.0-rc.0` lands on the `next` dist-tag, soaks for ≥ 1 week, then graduates to `latest`. Install RCs with `npm i nebutra@next`.
+- npm publishes carry **provenance attestations** once npm trusted-publishing is enabled at the registry side (the workflow side is already wired — see [`release.yml`](.github/workflows/release.yml) `NPM_CONFIG_PROVENANCE: "true"`). Verify a published tarball with `npm view <pkg> --json | jq .dist.attestations`.
+
+We will signal **API stability** by cutting a `1.0.0` release. Until then,
+treat the surface as "production-ready in shape, evolving in detail."
 
 <br />
 
 ## License
 
-**AGPLv3**
+{{repo.name}} uses a **dual-license** model so independent developers can
+ship a commercial product without copyleft while corporate forks still owe
+back to the community.
 
-|                        |                                             |
-| ---------------------- | ------------------------------------------- |
-| **Free to use**        | Personal projects, learning, internal tools |
-| **Free to modify**     | Create derivative works                     |
-| **Free to distribute** | With attribution                            |
-| **Commercial use**     | Requires open source                        |
-| **Exemption**          | {{license.commercialExempt}}                |
+| Path                                  | License                                          | Copyleft? |
+| ------------------------------------- | ------------------------------------------------ | --------- |
+| Fork from this GitHub repo            | **AGPL-3.0** ([LICENSE](./LICENSE))              | Yes (Section 13 / network) |
+| Scaffolded with `create-sailor` CLI   | **{{brand.name}} Independent Developer License**        | No, for ≤ 1 FTE & < $1M ARR |
+| Larger teams / higher revenue         | **Startup / Enterprise tier** ([LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md)) | No |
+
+The CLI-generated path is the **default for indie devs and OPC** — running
+`npx create-sailor my-app` emits a `LICENSE` + `.nebutra/scaffold-meta.json`
+that pins the project to the Independent Developer tier. Fork the source
+repo directly and you keep AGPL — including its network-copyleft clause —
+unless you buy a Startup or Enterprise license.
+
+Both grants come from the same copyright holder
+({{company.name}}). The presence and
+signature of `.nebutra/scaffold-meta.json` at the repo root is what
+distinguishes the two paths.
+
+For commercial licensing inquiries: **legal@nebutra.com**.
+
+### Brand Assets & Trademarks
+
+While the source code is open-source, the **brand assets** (the "{{brand.name}}" name, "{{brand.name}} Sailor", logos, icons, and illustrations) are protected trademarks of {{company.name}}
+
+You may not use our brand assets to endorse your own products or services. If you clone or fork this repository to build your own product, you **must** replace all {{brand.name}} logos and branding with your own.
+
+Please see our [Trademark Policy](TRADEMARK.md) and [Brand Guidelines](BRAND_GUIDELINES.md) for more information.
 
 <br />
 
@@ -553,19 +781,32 @@ We welcome contributions of all kinds.
 <br />
 
 <div align="center">
-  <a href="https://{{domains.landing}}">
+  <a href="https://nebutra.com">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" width="100">
-      <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-mono.svg" width="100">
-      <img alt="{{brand.name}}" src="packages/design/brand/assets/logo/logo-mono.svg" width="100">
+      <source media="(prefers-color-scheme: dark)" srcset="packages/design/brand/assets/logo/logo-inverse.svg" width="120">
+      <source media="(prefers-color-scheme: light)" srcset="packages/design/brand/assets/logo/logo-mono.svg" width="120">
+      <img alt="{{brand.name}}" src="packages/design/brand/assets/logo/logo-mono.svg" width="120">
     </picture>
   </a>
   <br />
   <br />
-  <sub>
-    <strong>Shipping the future, one commit at a time.</strong>
-  </sub>
+  <p>
+<strong>Every release, growth goes live.</strong>
+  </p>
+  <p>
+    <sub>Made by <a href="https://nebutra.com"><strong>{{brand.name}} Intelligence</strong></a> · © 2024-present <strong>{{company.name}}</strong></sub>
+  </p>
   <br />
-  <br />
-  <sub>© {{company.year}}-present {{company.name}}</sub>
+  <p>
+    <a href="https://nebutra.com">Website</a>
+  </p>
+  <p>
+    <a href="https://x.com/nebutra">X</a>
+  </p>
+  <p>
+    <a href="https://discord.gg/nebutra">Discord</a>
+  </p>
+  <p>
+    <a href="mailto:contact@nebutra.com">Contact</a>
+  </p>
 </div>

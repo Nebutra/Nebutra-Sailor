@@ -33,9 +33,45 @@
       <img src="https://img.shields.io/badge/ライセンス-AGPLv3-6366f1?style=for-the-badge" alt="License" />
     </a>
   </p>
+  <p>
+    <a href="https://securityscorecards.dev/viewer/?uri=github.com/Nebutra/Nebutra-Sailor">
+      <img src="https://api.securityscorecards.dev/projects/github.com/Nebutra/Nebutra-Sailor/badge" alt="OpenSSF Scorecard" />
+    </a>
+    <a href="https://socket.dev/npm/package/nebutra">
+      <img src="https://socket.dev/api/badge/npm/package/nebutra" alt="Socket Security" />
+    </a>
+    <a href="https://www.npmjs.com/package/nebutra">
+      <img src="https://img.shields.io/npm/v/nebutra?label=nebutra&color=cb3837&logo=npm" alt="npm: nebutra" />
+    </a>
+    <a href="https://www.npmjs.com/package/create-sailor">
+      <img src="https://img.shields.io/npm/v/create-sailor?label=create-sailor&color=cb3837&logo=npm" alt="npm: create-sailor" />
+    </a>
+  </p>
 </div>
 
 <br />
+<br />
+
+> **ライセンス概要** —— npm で公開されているパッケージはすべて **AGPL-3.0-only** です。
+> `npm install @nebutra/*` をネットワーク経由のプロダクトに使う場合、
+> AGPL のネットワーク Copyleft 条項が発動します — ただし (a)
+> `npx create-sailor` でスキャフォールドするか（Independent Developer
+> License、≤ 1 FTE & < $1M ARR で無料、**Copyleft なし**）、
+> (b) [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) の Startup
+> ($799/年) または Enterprise 商用ライセンスを取得した場合は除きます。
+> 完全な対応表とエッジケースは下記の [License](#license) セクションと
+> [docs/legal/licensing-faq.md](docs/legal/licensing-faq.md) を参照してください。
+
+> **30 秒で起動** —— SaaS の API キーは一切不要:
+> ```bash
+> npx create-sailor@latest my-app --preset=minimal --yes
+> cd my-app && pnpm dev   # → http://localhost:3000
+> ```
+> `minimal` プリセットは `apps/web` + IAM + ローカル Postgres
+> のみを生成し、ゴールデンパスをローカル DB で起動できるようにします。
+> Stripe / Clerk / Resend などは後から `nebutra add <provider>`
+> で追加できます。
+
 <br />
 
 ## 概要
@@ -43,6 +79,12 @@
 Nebutra Sailor は、ガバナンス可能なモダンなマルチテナントプラットフォームを構築するための、エンタープライズグレードの AI ネイティブ SaaS モノレポアーキテクチャです。AI ゲートウェイ、エージェントワークフロー、課金、認証、コンプライアンス、ホワイトラベル提供のための実用的な基盤を提供します。
 
 Next.js 16、React 19、Prisma 7、Vercel AI SDK で構築され、AI をガバナンスが必要なランタイム能力として扱います。プロバイダートポロジー、モデルルーティング、可観測性、テナント分離、コンプライアンスフックがプラットフォーム基盤に含まれます。
+
+### このプロジェクトの作り手
+
+Nebutra-Sailor は **Wuxi Nebutra Intelligence Technology Co., Ltd.**（无锡云毓智能科技有限公司）によってメンテナンスされています。日々のエンジニアリング責任者は **Tseka Luk**（[@tsekaluk](https://github.com/tsekaluk) · `legal@nebutra.com`）。本プロジェクトはデュアルライセンスモデルを採用しており、ソロファウンダーや OPC が Copyleft の制約を受けずに商用プロダクトを構築できる一方、企業のフォークはコミュニティへの還元義務を負います — 詳細は下記の [License](#license) セクションをご覧ください。
+
+`@nebutra/*` の npm スコープに加え、`nebutra` と `create-sailor` の 2 つの CLI を公開しています。リリースは [changesets](https://github.com/changesets/changesets) で駆動され、手動の `workflow_dispatch` をリリースゲートとしています。各リリースで SBOM 認証を生成します（[release.yml](.github/workflows/release.yml) 参照）。セキュリティ報告は [SECURITY.md](SECURITY.md) へ、商用 / ライセンスに関する問い合わせは `legal@nebutra.com` までどうぞ。
 
 ### 会社について
 
@@ -589,6 +631,26 @@ Nebutra-Sailor/
 | **バグ報告**       | [Issue を作成](https://github.com/Nebutra/Nebutra-Sailor/issues) |
 | **機能リクエスト** | Issue で提案                                                     |
 | **プルリクエスト** | 機能追加やバグ修正の PR を送信                                   |
+
+<br />
+
+## バージョン管理とリリース運用
+
+公開中のすべてのパッケージは公開 API が安定するまで **0.x の範囲**にあります。
+[SemVer §4](https://semver.org/lang/ja/#spec-item-4) に従い、メジャーバージョンが
+ゼロである契約は **0.x のいずれのリリースも破壊的変更を含む可能性がある**
+ことを意味します — 本番環境では `"nebutra": "0.3.1"` のように厳密な
+バージョンに固定し、caret 範囲は使わないでください。1.0 を切るまでは
+このポリシーが続きます。
+
+- バージョン管理は [changesets](https://github.com/changesets/changesets) によって駆動されます。公開対象パッケージに触れる PR は `.changeset/*.md` を含めて patch/minor/major を宣言する必要があります — CI でこのゲートを強制しています。
+- 各パッケージの `CHANGELOG.md` は `changeset version` が生成し、バージョンアップと同じコミットでコミットされます（例: [`packages/ops/cli/CHANGELOG.md`](packages/ops/cli/CHANGELOG.md)）。
+- リリースワークフローは **手動**（`workflow_dispatch`）です — PR マージで突然リリースされることはありません。関連する変更をまとめて一括でリリースを切ります。
+- 1.0 前のメジャー API 変更（例: CLI コマンドの改名、パッケージ分類）は最初に **release candidate** を発行します: `nebutra@0.4.0-rc.0` を `next` dist-tag に乗せ、1 週間以上の soak テストを経てから `latest` に昇格させます。RC のインストール: `npm i nebutra@next`。
+- npm 公開には **provenance attestation** が付与されます（npm レジストリ側で trusted-publishing が有効化された時点で。ワークフロー側はすでに準備済み — [`release.yml`](.github/workflows/release.yml) の `NPM_CONFIG_PROVENANCE: "true"` 参照）。公開済み tarball の検証: `npm view <pkg> --json | jq .dist.attestations`。
+
+**API 安定**のシグナルとして `1.0.0` をリリースします。それまでは現行サーフェスを
+「形は本番対応、細部は進化中」とお考えください。
 
 <br />
 
