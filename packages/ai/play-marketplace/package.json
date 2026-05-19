@@ -38,6 +38,7 @@
     "@nebutra/content-store": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/event-log": "workspace:*",
+    "@nebutra/generation-context": "workspace:*",
     "@nebutra/play-loader": "workspace:*"
   },
   "devDependencies": {
