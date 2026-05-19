@@ -37,25 +37,46 @@ async function isPubliclyVisible(packageName) {
 
 function setPublicAccess(packageName) {
   console.log(`[npm-access] setting public access for ${packageName}`);
-  execFileSync("npm", ["access", "public", packageName, "--registry", NPM_REGISTRY_URL], {
-    stdio: "inherit",
-  });
+  // npm 9+ replaced `npm access public <pkg>` with
+  // `npm access set status=public <pkg>`. Newer runners ship an npm that
+  // rejects the old form with EUSAGE ("public is not a valid access
+  // command"), failing the whole release.
+  execFileSync(
+    "npm",
+    ["access", "set", "status=public", packageName, "--registry", NPM_REGISTRY_URL],
+    { stdio: "inherit" },
+  );
 }
 
 async function main() {
   const packageNames = publicScopedPackages();
   let updatedCount = 0;
+  const failures = [];
 
   for (const packageName of packageNames) {
     if (await isPubliclyVisible(packageName)) {
       continue;
     }
 
-    setPublicAccess(packageName);
-    updatedCount += 1;
+    try {
+      setPublicAccess(packageName);
+      updatedCount += 1;
+    } catch (error) {
+      // A single missing/private package shouldn't kill the whole release —
+      // changeset publish has already shipped the bumped tarballs. Log and
+      // continue so the operator can investigate after the workflow ends.
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`[npm-access] failed to set public access for ${packageName}: ${message}`);
+      failures.push(packageName);
+    }
   }
 
   console.log(`[npm-access] public access repaired for ${updatedCount} package(s)`);
+  if (failures.length > 0) {
+    console.warn(
+      `[npm-access] ${failures.length} package(s) need manual review: ${failures.join(", ")}`,
+    );
+  }
 }
 
 main().catch((error) => {
