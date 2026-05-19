@@ -367,10 +367,23 @@
       }
     },
     "onlyBuiltDependencies": [
+      "@bundled-es-modules/glob",
+      "@clerk/shared",
+      "@dao-xyz/sqlite3-vec",
       "@parcel/watcher",
+      "@prisma/engines",
       "@sentry/cli",
+      "@swc/core",
+      "better-sqlite3",
+      "core-js",
       "esbuild",
-      "msgpackr-extract"
+      "lefthook",
+      "msgpackr-extract",
+      "onnxruntime-node",
+      "prisma",
+      "protobufjs",
+      "sharp",
+      "style-dictionary"
     ],
     "allowedDeprecatedVersions": {
       "@novu/node": "*",

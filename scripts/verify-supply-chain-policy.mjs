@@ -6,10 +6,23 @@ const root = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
 const failures = [];
 
 const approvedBuildScripts = new Set([
+  "@bundled-es-modules/glob",
+  "@clerk/shared",
+  "@dao-xyz/sqlite3-vec",
   "@parcel/watcher",
+  "@prisma/engines",
   "@sentry/cli",
+  "@swc/core",
+  "better-sqlite3",
+  "core-js",
   "esbuild",
+  "lefthook",
   "msgpackr-extract",
+  "onnxruntime-node",
+  "prisma",
+  "protobufjs",
+  "sharp",
+  "style-dictionary",
 ]);
 const pullRequestTargetAllowlist = new Set(["cla.yml", "labeler.yml"]);
 const oidcWriteAllowlist = new Set(["docker-build-push.yml", "release.yml", "scorecard.yml"]);
