@@ -1,5 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { CapabilityError } from "@nebutra/errors";
@@ -58,16 +59,6 @@ export interface CofounderMatchOptions {
   readonly eventLog?: EventLog;
 }
 
-function requireTenant(value: string | undefined): string {
-  if (!value?.trim()) {
-    throw new CapabilityError("cofounder-match", "Cofounder Match requires tenant context", {
-      suggestion: "Pass tenantId so profile and consent artifacts stay tenant-scoped.",
-      statusCode: 400,
-    });
-  }
-  return value;
-}
-
 function skillVector(input: Partial<Record<SkillArea, number>>): Record<SkillArea, number> {
   return {
     code: input.code ?? 0,
@@ -114,7 +105,14 @@ export class CofounderMatch {
     options: Required<Pick<CofounderMatchOptions, "tenantId" | "contentStore" | "eventLog">> &
       Pick<CofounderMatchOptions, "debugRoot">,
   ) {
-    this.#tenantId = requireTenant(options.tenantId);
+    this.#tenantId = requireCapabilityTenant({
+      explicit: options.tenantId,
+      onMissing: () =>
+        new CapabilityError("cofounder-match", "Cofounder Match requires tenant context", {
+          suggestion: "Pass tenantId so profile and consent artifacts stay tenant-scoped.",
+          statusCode: 400,
+        }),
+    });
     this.#debugRoot = options.debugRoot ?? process.cwd();
     this.#contentStore = options.contentStore;
     this.#eventLog = options.eventLog;

@@ -7,10 +7,11 @@
   "nebutra": {
     "status": "wip",
     "productionReady": false,
+    "surface": "semantic-index",
     "requires": [
       "A GraphStore adapter (Postgres + recursive CTE, or any edge store)",
       "A VectorRetriever adapter (e.g. @nebutra/code-index or any vector backend) — injected, not bundled",
-      "@nebutra/tenant for tenant/source scoping"
+      "Caller-supplied tenantId + source values for fail-closed SourceScope derivation"
     ],
     "gaps": [
       "Ships the zero-LLM typed-edge extractor, markdown-canonical temporal-fact model, idempotent consolidate, and graph/backlink-boosted fusion as pure logic over injected GraphStore/VectorRetriever ports; concrete stores are host-injected, not bundled",

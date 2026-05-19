@@ -1,5 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { CapabilityError } from "@nebutra/errors";
@@ -71,18 +72,6 @@ export interface LandingBuilderOptions {
 }
 
 const PLAY_NAME = "one_pager" as const;
-
-function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
-  const tenantId = explicit ?? fallback;
-  if (!tenantId?.trim()) {
-    throw new CapabilityError("landing-builder", "Landing Builder requires tenant context", {
-      suggestion:
-        "Pass tenantId on the input, BrandContext, or construct LandingBuilder with tenantId.",
-      statusCode: 400,
-    });
-  }
-  return tenantId;
-}
 
 function colorByRole(brand: BrandContext, role: string, fallback: string): string {
   return brand.palette.find((color) => color.role === role)?.hex ?? fallback;
@@ -217,7 +206,16 @@ export class LandingBuilder {
   }
 
   async runOnePager(input: OnePagerInput): Promise<SitePackage> {
-    const tenantId = requireTenant(input.tenantId ?? input.brand.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: input.tenantId ?? input.brand.tenantId,
+      fallback: this.#tenantId,
+      onMissing: () =>
+        new CapabilityError("landing-builder", "Landing Builder requires tenant context", {
+          suggestion:
+            "Pass tenantId on the input, BrandContext, or construct LandingBuilder with tenantId.",
+          statusCode: 400,
+        }),
+    });
     const html = renderOnePagerHtml(input);
     const css = renderThemeCss(input.brand);
     const manifest = deployManifest(input);

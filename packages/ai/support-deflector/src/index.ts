@@ -1,5 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { CapabilityError } from "@nebutra/errors";
@@ -78,17 +79,6 @@ export interface SupportDeflectorOptions {
   readonly debugRoot?: string;
   readonly contentStore?: ContentStore;
   readonly eventLog?: EventLog;
-}
-
-function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
-  const tenantId = explicit ?? fallback;
-  if (!tenantId?.trim()) {
-    throw new CapabilityError("support-deflector", "Support Deflector requires tenant context", {
-      suggestion: "Pass tenantId with the ticket or construct SupportDeflector with tenantId.",
-      statusCode: 400,
-    });
-  }
-  return tenantId;
 }
 
 function includesAny(text: string, terms: readonly string[]): boolean {
@@ -216,7 +206,15 @@ export class SupportDeflector {
   }
 
   async handleTicket(input: HandleTicketInput): Promise<SupportDecision> {
-    const tenantId = requireTenant(input.ticket.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: input.ticket.tenantId,
+      fallback: this.#tenantId,
+      onMissing: () =>
+        new CapabilityError("support-deflector", "Support Deflector requires tenant context", {
+          suggestion: "Pass tenantId with the ticket or construct SupportDeflector with tenantId.",
+          statusCode: 400,
+        }),
+    });
     const decision = decideTicket(input.ticket, input.articles, input.policy);
     const artifactPath = `support/tickets/${input.ticket.id}.json`;
     const content = `${JSON.stringify({ ticket: input.ticket, decision }, null, 2)}\n`;

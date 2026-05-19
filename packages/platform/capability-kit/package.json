@@ -7,8 +7,9 @@
   "type": "module",
   "nebutra": {
     "featureId": "capability-kit",
+    "surface": "support-contract",
     "category": "platform",
-    "summary": "Shared capability error, doctor-report, cli runner, and debug JSONL storage"
+    "summary": "Shared capability error, doctor-report, cli runner, tenant fallback selection, and debug JSONL storage"
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

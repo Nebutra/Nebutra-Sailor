@@ -1,5 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { assertPublicDisclosureSafe } from "@nebutra/ecosystem-safety";
@@ -91,16 +92,6 @@ export interface FounderCemeteryOptions {
   readonly eventLog?: EventLog;
 }
 
-function requireTenant(value: string | undefined): string {
-  if (!value?.trim()) {
-    throw new CapabilityError("founder-cemetery", "Founder Cemetery requires tenant context", {
-      suggestion: "Pass tenantId so closure artifacts stay tenant-scoped.",
-      statusCode: 400,
-    });
-  }
-  return value;
-}
-
 function slugify(value: string): string {
   return value
     .toLowerCase()
@@ -151,7 +142,14 @@ export class FounderCemetery {
     options: Required<Pick<FounderCemeteryOptions, "tenantId" | "contentStore" | "eventLog">> &
       Pick<FounderCemeteryOptions, "debugRoot">,
   ) {
-    this.#tenantId = requireTenant(options.tenantId);
+    this.#tenantId = requireCapabilityTenant({
+      explicit: options.tenantId,
+      onMissing: () =>
+        new CapabilityError("founder-cemetery", "Founder Cemetery requires tenant context", {
+          suggestion: "Pass tenantId so closure artifacts stay tenant-scoped.",
+          statusCode: 400,
+        }),
+    });
     this.#debugRoot = options.debugRoot ?? process.cwd();
     this.#contentStore = options.contentStore;
     this.#eventLog = options.eventLog;

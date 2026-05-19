@@ -1,5 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { CapabilityError } from "@nebutra/errors";
@@ -67,16 +68,6 @@ export interface TimeMachineOptions {
   readonly eventLog?: EventLog;
 }
 
-function requireTenant(value: string | undefined): string {
-  if (!value?.trim()) {
-    throw new CapabilityError("time-machine", "Time Machine requires tenant context", {
-      suggestion: "Pass tenantId when opening TimeMachine so timeline reads stay tenant-scoped.",
-      statusCode: 400,
-    });
-  }
-  return value;
-}
-
 function nodeKind(event: EventRecord): TimelineNodeKind {
   if (event.traceId.includes("branch")) return "branch";
   if (event.traceId.includes("decision")) return "decision";
@@ -112,7 +103,15 @@ export class TimeMachine {
     options: Required<Pick<TimeMachineOptions, "tenantId" | "contentStore" | "eventLog">> &
       Pick<TimeMachineOptions, "debugRoot">,
   ) {
-    this.#tenantId = requireTenant(options.tenantId);
+    this.#tenantId = requireCapabilityTenant({
+      explicit: options.tenantId,
+      onMissing: () =>
+        new CapabilityError("time-machine", "Time Machine requires tenant context", {
+          suggestion:
+            "Pass tenantId when opening TimeMachine so timeline reads stay tenant-scoped.",
+          statusCode: 400,
+        }),
+    });
     this.#debugRoot = options.debugRoot ?? process.cwd();
     this.#contentStore = options.contentStore;
     this.#eventLog = options.eventLog;

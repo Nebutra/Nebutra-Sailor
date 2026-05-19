@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { extname, join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import {
   ContentStore,
@@ -106,18 +107,6 @@ export async function readDocumentPipelineDebug(
   return readCapabilityDebug("document-pipeline", { root, limit });
 }
 
-function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
-  const tenantId = explicit ?? fallback;
-  if (!tenantId) {
-    throw new CapabilityError("document-pipeline", "Document ingestion requires tenant context", {
-      suggestion:
-        "Pass tenantId on the request or construct DocumentPipeline with a tenantId default.",
-      statusCode: 400,
-    });
-  }
-  return tenantId;
-}
-
 export class DocumentPipeline {
   readonly #tenantId: string | undefined;
   readonly #root: string;
@@ -143,7 +132,16 @@ export class DocumentPipeline {
   }
 
   async parse(request: ParseRequest): Promise<ParsedDocument> {
-    const tenantId = requireTenant(request.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: request.tenantId,
+      fallback: this.#tenantId,
+      onMissing: () =>
+        new CapabilityError("document-pipeline", "Document ingestion requires tenant context", {
+          suggestion:
+            "Pass tenantId on the request or construct DocumentPipeline with a tenantId default.",
+          statusCode: 400,
+        }),
+    });
     const required: RequiredTenant<ParseRequest> = { ...request, tenantId };
     const parser = this.#chooseParser(required);
     if (parser === "sidecar") {
@@ -186,7 +184,16 @@ export class DocumentPipeline {
   }
 
   async ingest(request: IngestRequest): Promise<IngestResult> {
-    const tenantId = requireTenant(request.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: request.tenantId,
+      fallback: this.#tenantId,
+      onMissing: () =>
+        new CapabilityError("document-pipeline", "Document ingestion requires tenant context", {
+          suggestion:
+            "Pass tenantId on the request or construct DocumentPipeline with a tenantId default.",
+          statusCode: 400,
+        }),
+    });
     const contentStore = await this.#resolveContentStore(tenantId);
     const parsed = await this.parse({ ...request, tenantId });
     const targetPath = request.targetPath ?? parsed.path;

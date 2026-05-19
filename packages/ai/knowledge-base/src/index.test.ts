@@ -142,7 +142,7 @@ describe("KnowledgeBase", () => {
     await base.ingest({ path: "daily/brief.md", content: "Daily brief mentions churn risk." });
 
     await expect(base.explain({ text: "churn" })).resolves.toMatchObject({
-      path: ["knowledge-rag", "content-store", "memory", "entity-graph", "citation"],
+      path: ["knowledge-rag", "content-store", "memory", "knowledge-graph", "citation"],
     });
     await expect(base.doctor()).resolves.toMatchObject({
       capability: "knowledge-base",

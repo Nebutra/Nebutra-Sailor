@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 
 const ROOT = process.cwd();
 const AI_ROOT = join(ROOT, "packages", "ai");
+const CAPABILITY_KIT_DIR = join(ROOT, "packages", "platform", "capability-kit");
 
 type PackageStatus = "stable" | "foundation" | "wip" | "deprecated";
 
@@ -33,6 +34,22 @@ const ALLOWED_SURFACES = [
 const PUBLIC_DISCLOSURE_SAFETY_CONSUMERS = [
   "@nebutra/idea-plaza",
   "@nebutra/founder-cemetery",
+] as const;
+
+const CAPABILITY_TENANT_FALLBACK_CONSUMERS = [
+  "@nebutra/browser-control",
+  "@nebutra/code-execution",
+  "@nebutra/document-pipeline",
+  "@nebutra/brand-genesis",
+  "@nebutra/landing-builder",
+  "@nebutra/outreach-engine",
+  "@nebutra/support-deflector",
+  "@nebutra/knowledge-base",
+  "@nebutra/time-machine",
+  "@nebutra/idea-plaza",
+  "@nebutra/founder-cemetery",
+  "@nebutra/cofounder-match",
+  "@nebutra/play-marketplace",
 ] as const;
 
 interface PackageJson {
@@ -214,6 +231,9 @@ describe("AI package architecture governance", () => {
     expect(contract).toContain("@nebutra/local-embedding");
     expect(contract).toContain("@nebutra/capability-kit");
     expect(contract).toContain("@nebutra/capability-kit/debug");
+    expect(contract).toContain("requireCapabilityTenant");
+    expect(contract).toContain("@nebutra/tenant");
+    expect(contract).toContain("runtime-local tenant admission");
     expect(contract).toContain("packages/ai/PACKAGE_MAP.md");
     expect(contract).toContain("Consolidation Rules");
     expect(contract).toContain("@nebutra/llm-gateway");
@@ -411,6 +431,41 @@ describe("AI package architecture governance", () => {
     expect(violations).toEqual([]);
   });
 
+  it("centralizes capability tenant fallback selection in @nebutra/capability-kit", () => {
+    const capabilityKit = readPackageJson(CAPABILITY_KIT_DIR);
+    expect(capabilityKit.nebutra?.surface).toBe("support-contract");
+
+    const kitSource = readFileSync(join(CAPABILITY_KIT_DIR, "src", "index.ts"), "utf8");
+    expect(kitSource).toContain("selectCapabilityTenant");
+    expect(kitSource).toContain("requireCapabilityTenant");
+
+    const violations: string[] = [];
+    for (const packageName of CAPABILITY_TENANT_FALLBACK_CONSUMERS) {
+      const entry = byName.get(packageName);
+      expect(entry, packageName).toBeDefined();
+      if (!entry) continue;
+
+      expect(entry.manifest.dependencies?.["@nebutra/capability-kit"], packageName).toBe(
+        "workspace:*",
+      );
+
+      const sourceText = collectProductionSourceFiles(join(entry.dir, "src"))
+        .map((file) => {
+          const source = readFileSync(file, "utf8");
+          if (/function\s+requireTenant\b/.test(source)) {
+            violations.push(`${file.replace(`${ROOT}/`, "")}: local requireTenant`);
+          }
+          return source;
+        })
+        .join("\n");
+      expect(sourceText, `${packageName} should use platform tenant fallback helpers`).toContain(
+        "requireCapabilityTenant",
+      );
+    }
+
+    expect(violations).toEqual([]);
+  });
+
   it("keeps BrandContext as a single support-contract-owned fact", () => {
     const violations: string[] = [];
     const owner = byName.get("@nebutra/generation-context");
@@ -589,27 +644,36 @@ describe("AI package architecture governance", () => {
 
   it("keeps knowledge-base above existing ingestion and retrieval primitives", () => {
     const knowledgeBase = byName.get("@nebutra/knowledge-base");
+    const knowledgeGraph = byName.get("@nebutra/knowledge-graph");
     const knowledgeRag = byName.get("@nebutra/knowledge-rag");
     const contentStore = byName.get("@nebutra/content-store");
     const documentPipeline = byName.get("@nebutra/document-pipeline");
     expect(knowledgeBase, "@nebutra/knowledge-base").toBeDefined();
+    expect(knowledgeGraph, "@nebutra/knowledge-graph").toBeDefined();
     expect(knowledgeRag, "@nebutra/knowledge-rag").toBeDefined();
     expect(contentStore, "@nebutra/content-store").toBeDefined();
     expect(documentPipeline, "@nebutra/document-pipeline").toBeDefined();
-    if (!knowledgeBase || !knowledgeRag || !contentStore || !documentPipeline) return;
+    if (!knowledgeBase || !knowledgeGraph || !knowledgeRag || !contentStore || !documentPipeline) {
+      return;
+    }
 
     expect(knowledgeBase.manifest.nebutra?.surface).toBe("knowledge-product");
+    expect(knowledgeGraph.manifest.nebutra?.surface).toBe("semantic-index");
+    expect(knowledgeBase.manifest.dependencies?.["@nebutra/knowledge-graph"]).toBe("workspace:*");
     expect(knowledgeBase.manifest.dependencies?.["@nebutra/knowledge-rag"]).toBe("workspace:*");
     expect(knowledgeBase.manifest.dependencies?.["@nebutra/content-store"]).toBe("workspace:*");
     expect(knowledgeBase.manifest.dependencies?.["@nebutra/document-pipeline"]).toBe("workspace:*");
 
     const source = readFileSync(join(knowledgeBase.dir, "src", "index.ts"), "utf8");
+    expect(source).toContain("@nebutra/knowledge-graph");
     expect(source).toContain("@nebutra/knowledge-rag");
     expect(source).toContain("@nebutra/document-pipeline");
     expect(source).toContain("@nebutra/content-store");
     expect(source).not.toMatch(/class\s+LocalHashEmbedder\b/);
     expect(source).not.toMatch(/class\s+RecursiveCharChunker\b/);
     expect(source).not.toMatch(/class\s+InMemoryVectorStore\b/);
+    expect(source).not.toMatch(/function\s+localGraph\b/);
+    expect(source).not.toMatch(/text\.matchAll\(\s*\/\\b\[A-Z\]/);
   });
 
   it("keeps brand-genesis as a play product over lower generation capabilities", () => {

@@ -1,10 +1,20 @@
 import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { DocumentPipeline, type IngestRequest } from "@nebutra/document-pipeline";
 import { CapabilityError } from "@nebutra/errors";
 import type { IntegrationVault, InvokeResult } from "@nebutra/integration-vault";
+import {
+  type EntityResolver,
+  edgeKey,
+  extractLinks,
+  extractLooseMentionEdges,
+  type GraphEdge,
+  type PageId,
+  sourceScope,
+} from "@nebutra/knowledge-graph";
 import {
   createKnowledgeRag,
   type KnowledgeRag,
@@ -197,16 +207,11 @@ export interface KnowledgeBaseOptions {
 
 const MEMORY_KINDS: readonly MemoryKind[] = ["episodic", "semantic", "procedural", "working"];
 
-function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
-  const tenantId = explicit ?? fallback;
-  if (!tenantId?.trim()) {
-    throw new CapabilityError("knowledge-base", "Knowledge operations require tenant context", {
-      suggestion:
-        "Pass tenantId on the request or construct KnowledgeBase with a tenantId default.",
-      statusCode: 400,
-    });
-  }
-  return tenantId;
+function missingTenantError(): CapabilityError {
+  return new CapabilityError("knowledge-base", "Knowledge operations require tenant context", {
+    suggestion: "Pass tenantId on the request or construct KnowledgeBase with a tenantId default.",
+    statusCode: 400,
+  });
 }
 
 function nowIso(): string {
@@ -253,43 +258,126 @@ function matchesQuery(text: string, query: string): boolean {
   return terms.some((term) => haystack.includes(term));
 }
 
-function localGraph(
+const GRAPH_DIR_PATTERN = /^(people|companies|products|decisions|metrics|topics|meetings|media)$/;
+
+const selfWiringResolver: EntityResolver = {
+  async resolve(name) {
+    return { pageId: name, resolutionType: "unqualified" };
+  },
+};
+
+function pageIdFromSource(sourceRef: string): PageId {
+  const slug = sourceRef
+    .replace(/\.[^.]+$/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+  return `documents/${slug || "source"}`;
+}
+
+function entityNameFromPageId(pageId: PageId): string {
+  const slug = pageId.split("/").at(-1) ?? pageId;
+  return slug
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((part) => part.slice(0, 1).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function entityTypeFromPageId(pageId: PageId): KnowledgeEntity["type"] {
+  const dir = pageId.split("/")[0];
+  switch (dir) {
+    case "people":
+      return "person";
+    case "companies":
+      return "company";
+    case "products":
+      return "product";
+    case "decisions":
+      return "decision";
+    case "metrics":
+      return "metric";
+    default:
+      return "topic";
+  }
+}
+
+async function deriveKnowledgeGraph(
   text: string,
   tenantId: string,
-  sourceRef?: string,
-): {
+  sourceRef: string,
+): Promise<{
   entities: KnowledgeEntity[];
   relations: KnowledgeRelation[];
-} {
-  const seen = new Set<string>();
-  const candidates = Array.from(text.matchAll(/\b[A-Z][a-zA-Z0-9_-]{2,}\b/g))
-    .map((match) => match[0])
-    .filter((name) => !["The", "This", "That", "And", "For"].includes(name));
-  const entities = candidates.flatMap((name): KnowledgeEntity[] => {
-    const key = name.toLowerCase();
-    if (seen.has(key)) return [];
-    seen.add(key);
-    return [
-      {
-        id: idFrom("entity", [tenantId, key]),
-        tenantId,
-        name,
-        type: /mrr|wau|churn|revenue/i.test(name) ? "metric" : "topic",
-        ...(sourceRef !== undefined ? { sourceRef } : {}),
-        confidence: 0.45,
-      },
-    ];
+}> {
+  const scope = sourceScope({ tenantId, source: sourceRef });
+  const pageId = pageIdFromSource(sourceRef);
+  const { edges } = await extractLinks({
+    pageId,
+    body: text,
+    frontmatter: {},
+    mode: "batch",
+    dirPattern: GRAPH_DIR_PATTERN,
+    resolver: selfWiringResolver,
   });
-  const relations = entities.slice(1).map((entity, index) => ({
-    id: idFrom("relation", [tenantId, entities[0]?.id ?? "root", entity.id]),
+  const edgeByKey = new Map<ReturnType<typeof edgeKey>, GraphEdge>();
+  for (const edge of [
+    ...edges,
+    ...extractLooseMentionEdges({
+      pageId,
+      body: text,
+      targetDir: "topics",
+    }),
+  ]) {
+    edgeByKey.set(edgeKey(edge), edge);
+  }
+  const allEdges = [...edgeByKey.values()];
+
+  const pageIds = new Set<PageId>();
+  for (const edge of allEdges) {
+    pageIds.add(edge.fromPageId);
+    pageIds.add(edge.toPageId);
+  }
+
+  const pageIdList = [...pageIds];
+  const entities = pageIdList.map(
+    (entityPageId): KnowledgeEntity => ({
+      id: idFrom("entity", [tenantId, String(scope), entityPageId]),
+      tenantId,
+      name: entityNameFromPageId(entityPageId),
+      type: entityTypeFromPageId(entityPageId),
+      sourceRef,
+      confidence: entityPageId === pageId ? 0.4 : 0.75,
+    }),
+  );
+  const byPageId = new Map(
+    entities.map((entity, index) => [pageIdList[index] as PageId, entity.id]),
+  );
+
+  return {
+    entities,
+    relations: allEdges.map((edge, index) =>
+      relationFromEdge(edge, byPageId, tenantId, sourceRef, index),
+    ),
+  };
+}
+
+function relationFromEdge(
+  edge: GraphEdge,
+  byPageId: ReadonlyMap<PageId, string>,
+  tenantId: string,
+  sourceRef: string,
+  index: number,
+): KnowledgeRelation {
+  return {
+    id: idFrom("relation", [tenantId, edgeKey(edge)]),
     tenantId,
-    fromEntityId: entities[0]?.id ?? entity.id,
-    toEntityId: entity.id,
-    label: "co_occurs_with",
-    ...(sourceRef !== undefined ? { sourceRef } : {}),
-    confidence: 0.35 + index * 0.01,
-  }));
-  return { entities, relations };
+    fromEntityId: byPageId.get(edge.fromPageId) ?? idFrom("entity", [tenantId, edge.fromPageId]),
+    toEntityId: byPageId.get(edge.toPageId) ?? idFrom("entity", [tenantId, edge.toPageId]),
+    label: edge.linkType,
+    sourceRef,
+    confidence: edge.linkSource === "frontmatter" ? 0.82 : 0.72 + index * 0.01,
+  };
 }
 
 class VaultConnectorPort implements ConnectorSyncPort {
@@ -379,7 +467,11 @@ export class KnowledgeBase {
   }
 
   async ingest(request: IngestKnowledgeRequest): Promise<{ path: string; chunks: number }> {
-    const tenantId = requireTenant(request.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: request.tenantId,
+      fallback: this.#tenantId,
+      onMissing: missingTenantError,
+    });
     const ingestRequest: IngestRequest = {
       tenantId,
       source: { type: "inline", path: request.path, content: request.content },
@@ -395,7 +487,7 @@ export class KnowledgeBase {
       text: request.content,
       meta: { path: request.path, ...(request.metadata ?? {}) },
     });
-    this.#rememberGraph(tenantId, request.content, request.path);
+    await this.#rememberGraph(tenantId, request.content, request.path);
     await this.#debug({
       type: "ingest",
       tenantId,
@@ -406,7 +498,11 @@ export class KnowledgeBase {
   }
 
   async addConnector(config: ConnectorConfig): Promise<ConnectorRecord> {
-    const tenantId = requireTenant(config.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: config.tenantId,
+      fallback: this.#tenantId,
+      onMissing: missingTenantError,
+    });
     const record: ConnectorRecord = {
       ...config,
       tenantId,
@@ -420,7 +516,11 @@ export class KnowledgeBase {
   }
 
   async syncConnector(id: string, tenantIdInput?: string): Promise<ConnectorRecord> {
-    const tenantId = requireTenant(tenantIdInput, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: tenantIdInput,
+      fallback: this.#tenantId,
+      onMissing: missingTenantError,
+    });
     const key = `${tenantId}:${id}`;
     const existing = this.#connectors.get(key);
     if (!existing) {
@@ -470,7 +570,11 @@ export class KnowledgeBase {
   }
 
   async remember(memory: KnowledgeMemoryInput): Promise<KnowledgeMemory> {
-    const tenantId = requireTenant(memory.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: memory.tenantId,
+      fallback: this.#tenantId,
+      onMissing: missingTenantError,
+    });
     const full = { ...memory, tenantId, createdAt: nowIso() } as KnowledgeMemory;
     this.#memories.set(`${tenantId}:${full.id}`, full);
     await this.#rag.ingest({
@@ -484,7 +588,11 @@ export class KnowledgeBase {
   }
 
   async search(query: KnowledgeSearchQuery): Promise<KnowledgeSearchResult> {
-    const tenantId = requireTenant(query.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: query.tenantId,
+      fallback: this.#tenantId,
+      onMissing: missingTenantError,
+    });
     const topK = query.topK ?? 5;
     const chunks = await this.#rag.query({ query: query.text, tenantId, topK });
     const contentHits = await this.#contentStore
@@ -552,7 +660,11 @@ export class KnowledgeBase {
   }
 
   async entityByName(name: string, tenantIdInput?: string): Promise<KnowledgeEntity | undefined> {
-    const tenantId = requireTenant(tenantIdInput, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: tenantIdInput,
+      fallback: this.#tenantId,
+      onMissing: missingTenantError,
+    });
     const normalized = name.toLowerCase();
     return [...this.#entities.values()].find(
       (entity) => entity.tenantId === tenantId && entity.name.toLowerCase() === normalized,
@@ -563,7 +675,11 @@ export class KnowledgeBase {
     actorOrEntity: string,
     tenantIdInput?: string,
   ): Promise<readonly EpisodicMemory[]> {
-    const tenantId = requireTenant(tenantIdInput, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: tenantIdInput,
+      fallback: this.#tenantId,
+      onMissing: missingTenantError,
+    });
     return [...this.#memories.values()]
       .filter(
         (memory): memory is EpisodicMemory =>
@@ -575,12 +691,20 @@ export class KnowledgeBase {
   }
 
   async listConnectors(tenantIdInput?: string): Promise<readonly ConnectorRecord[]> {
-    const tenantId = requireTenant(tenantIdInput, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: tenantIdInput,
+      fallback: this.#tenantId,
+      onMissing: missingTenantError,
+    });
     return [...this.#connectors.values()].filter((connector) => connector.tenantId === tenantId);
   }
 
   async stats(tenantIdInput?: string): Promise<KnowledgeBaseStats> {
-    const tenantId = requireTenant(tenantIdInput, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: tenantIdInput,
+      fallback: this.#tenantId,
+      onMissing: missingTenantError,
+    });
     const memories = Object.fromEntries(MEMORY_KINDS.map((kind) => [kind, 0])) as Record<
       MemoryKind,
       number
@@ -610,7 +734,7 @@ export class KnowledgeBase {
       query: result.query,
       tenantId: result.tenantId,
       citations: result.citations,
-      path: ["knowledge-rag", "content-store", "memory", "entity-graph", "citation"],
+      path: ["knowledge-rag", "content-store", "memory", "knowledge-graph", "citation"],
     };
   }
 
@@ -652,8 +776,8 @@ export class KnowledgeBase {
     await this.#contentStore.close();
   }
 
-  #rememberGraph(tenantId: string, text: string, sourceRef: string): void {
-    const { entities, relations } = localGraph(text, tenantId, sourceRef);
+  async #rememberGraph(tenantId: string, text: string, sourceRef: string): Promise<void> {
+    const { entities, relations } = await deriveKnowledgeGraph(text, tenantId, sourceRef);
     for (const entity of entities) this.#entities.set(entity.id, entity);
     for (const relation of relations) this.#relations.set(relation.id, relation);
   }

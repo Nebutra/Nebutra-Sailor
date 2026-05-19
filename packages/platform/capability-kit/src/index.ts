@@ -8,6 +8,9 @@
  *  - `DoctorReportBase` / `DoctorCheck`: the shared health-report shape.
  *  - `runCapabilityCli`: the `doctor` / `debug <arg>` argv switch that ~9
  *    `src/cli.ts` files copied verbatim.
+ *  - `selectCapabilityTenant` / `requireCapabilityTenant`: package-local
+ *    explicit-tenant/default-tenant selection. Request-scoped tenant context,
+ *    RLS, and tenant isolation still belong to `@nebutra/tenant`.
  */
 
 export interface CapabilityErrorInit {
@@ -51,6 +54,33 @@ export class CapabilityError extends Error {
       suggestion: this.suggestion,
     };
   }
+}
+
+export interface CapabilityTenantSelection {
+  readonly explicit?: string | undefined;
+  readonly fallback?: string | undefined;
+}
+
+export interface RequireCapabilityTenantOptions extends CapabilityTenantSelection {
+  readonly onMissing: () => Error;
+}
+
+export function selectCapabilityTenant(selection: CapabilityTenantSelection): string | null {
+  if (selection.explicit !== undefined) {
+    const explicit = selection.explicit.trim();
+    return explicit.length > 0 ? explicit : null;
+  }
+
+  const fallback = selection.fallback?.trim();
+  if (fallback) return fallback;
+
+  return null;
+}
+
+export function requireCapabilityTenant(options: RequireCapabilityTenantOptions): string {
+  const tenantId = selectCapabilityTenant(options);
+  if (tenantId) return tenantId;
+  throw options.onMissing();
 }
 
 /** One health probe result. */

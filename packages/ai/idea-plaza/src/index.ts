@@ -1,5 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { assertPublicDisclosureSafe } from "@nebutra/ecosystem-safety";
@@ -81,16 +82,6 @@ export interface IdeaPlazaOptions {
   readonly eventLog?: EventLog;
 }
 
-function requireTenant(value: string | undefined): string {
-  if (!value?.trim()) {
-    throw new CapabilityError("idea-plaza", "Idea Plaza requires tenant context", {
-      suggestion: "Pass tenantId so publish snapshots stay tenant-scoped.",
-      statusCode: 400,
-    });
-  }
-  return value;
-}
-
 function bodyForScan(request: PublishIdeaRequest): string {
   return [request.title, request.oneLine, request.body ?? "", request.tags.join(" ")].join("\n");
 }
@@ -107,7 +98,14 @@ export class IdeaPlaza {
     options: Required<Pick<IdeaPlazaOptions, "tenantId" | "contentStore" | "eventLog">> &
       Pick<IdeaPlazaOptions, "debugRoot">,
   ) {
-    this.#tenantId = requireTenant(options.tenantId);
+    this.#tenantId = requireCapabilityTenant({
+      explicit: options.tenantId,
+      onMissing: () =>
+        new CapabilityError("idea-plaza", "Idea Plaza requires tenant context", {
+          suggestion: "Pass tenantId so publish snapshots stay tenant-scoped.",
+          statusCode: 400,
+        }),
+    });
     this.#debugRoot = options.debugRoot ?? process.cwd();
     this.#contentStore = options.contentStore;
     this.#eventLog = options.eventLog;

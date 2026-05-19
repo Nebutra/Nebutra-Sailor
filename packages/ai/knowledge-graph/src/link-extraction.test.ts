@@ -15,6 +15,7 @@ import {
   DEFAULT_DIR_PATTERN,
   DEFAULT_RULES,
   extractLinks,
+  extractLooseMentionEdges,
   FRONTMATTER_LINK_MAP,
 } from "./link-extraction";
 
@@ -134,6 +135,33 @@ describe("code stripping", () => {
     });
     expect(r.edges).toHaveLength(1);
     expect(r.edges[0]?.toPageId).toBe("p:acme");
+  });
+});
+
+describe("loose mention fallback", () => {
+  it("turns unlinked capitalized mentions into deterministic mention edges", () => {
+    const edges = extractLooseMentionEdges({
+      pageId: "documents/brand",
+      body: "Loop helps indie developers. Alice disliked pricing. `Config` is code.",
+    });
+
+    expect(edges.map((edge) => edge.toPageId)).toEqual(["topics/loop", "topics/alice"]);
+    expect(edges.every((edge) => edge.linkType === "mentions")).toBe(true);
+  });
+
+  it("keeps fallback references under the caller-selected directory", () => {
+    const edges = extractLooseMentionEdges({
+      pageId: "documents/brand",
+      body: "MRR changed after Loop launched.",
+      targetDir: "metrics",
+    });
+
+    expect(edges[0]).toMatchObject({
+      fromPageId: "documents/brand",
+      toPageId: "metrics/mrr",
+      linkSource: "markdown",
+      resolutionType: "unqualified",
+    });
   });
 });
 

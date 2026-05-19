@@ -3,7 +3,12 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { appendCapabilityDebug, capabilityDebugPath, readCapabilityDebug } from "../debug";
-import { CapabilityError, runCapabilityCli } from "../index";
+import {
+  CapabilityError,
+  requireCapabilityTenant,
+  runCapabilityCli,
+  selectCapabilityTenant,
+} from "../index";
 
 describe("CapabilityError", () => {
   it("carries code + suggestion and serializes via toJSON", () => {
@@ -46,6 +51,30 @@ describe("CapabilityError", () => {
     const cause = new Error("root");
     const e = new CapabilityError("wrap", { code: "E", suggestion: "s", cause });
     expect(e.cause).toBe(cause);
+  });
+});
+
+describe("capability tenant selection", () => {
+  it("selects an explicit tenant before a fallback tenant", () => {
+    expect(selectCapabilityTenant({ explicit: "tenant-a", fallback: "tenant-b" })).toBe("tenant-a");
+  });
+
+  it("falls back to the package default tenant only when no explicit tenant is provided", () => {
+    expect(selectCapabilityTenant({ fallback: " tenant-b " })).toBe("tenant-b");
+    expect(selectCapabilityTenant({ explicit: "  ", fallback: " tenant-b " })).toBeNull();
+    expect(selectCapabilityTenant({ explicit: "  ", fallback: "  " })).toBeNull();
+  });
+
+  it("lets callers preserve package-specific missing-tenant errors", () => {
+    expect(() =>
+      requireCapabilityTenant({
+        onMissing: () =>
+          new CapabilityError("missing", {
+            code: "tenant_missing",
+            suggestion: "pass tenantId",
+          }),
+      }),
+    ).toThrowError(CapabilityError);
   });
 });
 

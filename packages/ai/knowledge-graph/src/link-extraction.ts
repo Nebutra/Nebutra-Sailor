@@ -172,6 +172,13 @@ export interface ExtractLinksResult {
   readonly unresolved: string[];
 }
 
+export interface ExtractLooseMentionEdgesInput {
+  readonly pageId: PageId;
+  readonly body: string;
+  readonly targetDir?: string;
+  readonly stopWords?: readonly string[];
+}
+
 // ─── Internal candidate model ───────────────────────────────────────────────
 
 interface Candidate {
@@ -303,6 +310,69 @@ function frontmatterRefs(value: unknown): string[] {
     return value.filter((v): v is string => typeof v === "string" && v.trim() !== "");
   }
   return [];
+}
+
+const DEFAULT_LOOSE_MENTION_STOP_WORDS = new Set([
+  "A",
+  "An",
+  "And",
+  "For",
+  "In",
+  "No",
+  "That",
+  "The",
+  "This",
+  "To",
+  "With",
+]);
+
+function looseMentionSlug(name: string): string {
+  return name
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
+/**
+ * Deterministic, low-confidence fallback for product layers that need a
+ * browseable graph before an LLM/entity resolver is configured. Explicit
+ * references still belong to {@link extractLinks}; this only turns unlinked
+ * capitalized prose mentions into `mentions` edges under a caller-chosen dir.
+ */
+export function extractLooseMentionEdges(
+  input: ExtractLooseMentionEdgesInput,
+): readonly GraphEdge[] {
+  const stripped = stripCode(input.body);
+  const targetDir = input.targetDir ?? "topics";
+  const stopWords = new Set([...DEFAULT_LOOSE_MENTION_STOP_WORDS, ...(input.stopWords ?? [])]);
+  const seen = new Set<string>();
+  const edges: GraphEdge[] = [];
+
+  for (const match of stripped.matchAll(/\b[A-Z][a-zA-Z0-9_-]{2,}\b/g)) {
+    const name = match[0];
+    if (stopWords.has(name)) continue;
+    const slug = looseMentionSlug(name);
+    if (!slug || seen.has(slug)) continue;
+    seen.add(slug);
+
+    const at = match.index + Math.floor(name.length / 2);
+    const start = Math.max(0, at - Math.floor(CONTEXT_WINDOW / 2));
+    const end = Math.min(stripped.length, at + Math.floor(CONTEXT_WINDOW / 2));
+
+    edges.push({
+      fromPageId: input.pageId,
+      toPageId: `${targetDir}/${slug}`,
+      linkType: "mentions",
+      context: stripped.slice(start, end),
+      linkSource: "markdown",
+      originPageId: input.pageId,
+      originField: undefined,
+      resolutionType: "unqualified",
+    });
+  }
+
+  return edges;
 }
 
 /**

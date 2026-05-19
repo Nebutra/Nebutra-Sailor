@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { join, normalize } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 import {
@@ -128,17 +129,6 @@ export async function readExecutionDebug(root = process.cwd(), limit = 20): Prom
   return readCapabilityDebug("code-execution", { root, limit });
 }
 
-function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
-  const tenantId = explicit ?? fallback;
-  if (!tenantId) {
-    throw new CapabilityError("code-execution", "Code execution requires tenant context", {
-      suggestion: "Pass tenantId on the action or construct CodeExecutor with a tenantId default.",
-      statusCode: 400,
-    });
-  }
-  return tenantId;
-}
-
 function actionIdFrom(action: Action): string {
   return action.actionId ?? `${action.type}_${Date.now().toString(36)}`;
 }
@@ -173,7 +163,16 @@ export class CodeExecutor {
   }
 
   async run(action: Action): Promise<Observation> {
-    const tenantId = requireTenant(action.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: action.tenantId,
+      fallback: this.#tenantId,
+      onMissing: () =>
+        new CapabilityError("code-execution", "Code execution requires tenant context", {
+          suggestion:
+            "Pass tenantId on the action or construct CodeExecutor with a tenantId default.",
+          statusCode: 400,
+        }),
+    });
     const actionId = actionIdFrom(action);
     const started = Date.now();
     let observation: Observation;

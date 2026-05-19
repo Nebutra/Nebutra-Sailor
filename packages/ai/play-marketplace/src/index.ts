@@ -1,5 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { CapabilityError } from "@nebutra/errors";
@@ -84,16 +85,6 @@ export interface PlayMarketplaceOptions {
   readonly eventLog?: EventLog;
 }
 
-function requireTenant(value: string | undefined): string {
-  if (!value?.trim()) {
-    throw new CapabilityError("play-marketplace", "Play Marketplace requires tenant context", {
-      suggestion: "Pass tenantId so registry and install artifacts stay tenant-scoped.",
-      statusCode: 400,
-    });
-  }
-  return value;
-}
-
 function isPaid(pricing: Pricing): boolean {
   return pricing.model !== "free";
 }
@@ -120,7 +111,14 @@ export class PlayMarketplace {
     options: Required<Pick<PlayMarketplaceOptions, "tenantId" | "contentStore" | "eventLog">> &
       Pick<PlayMarketplaceOptions, "debugRoot">,
   ) {
-    this.#tenantId = requireTenant(options.tenantId);
+    this.#tenantId = requireCapabilityTenant({
+      explicit: options.tenantId,
+      onMissing: () =>
+        new CapabilityError("play-marketplace", "Play Marketplace requires tenant context", {
+          suggestion: "Pass tenantId so registry and install artifacts stay tenant-scoped.",
+          statusCode: 400,
+        }),
+    });
     this.#debugRoot = options.debugRoot ?? process.cwd();
     this.#contentStore = options.contentStore;
     this.#eventLog = options.eventLog;

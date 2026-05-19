@@ -2,6 +2,7 @@ import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { type MeshAsset, MeshPipeline } from "@nebutra/3d-pipeline";
 import { type AudioAsset, AudioPipeline } from "@nebutra/audio-pipeline";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore, serializeContentFrontmatter } from "@nebutra/content-store";
 import { CapabilityError } from "@nebutra/errors";
@@ -102,17 +103,6 @@ const CHECKPOINTS = [
   "video_rendered",
   "final_compose",
 ] as const;
-
-function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
-  const tenantId = explicit ?? fallback;
-  if (!tenantId?.trim()) {
-    throw new CapabilityError("brand-genesis", "Brand Genesis requires tenant context", {
-      suggestion: "Pass tenantId on the input or construct BrandGenesis with tenantId.",
-      statusCode: 400,
-    });
-  }
-  return tenantId;
-}
 
 function normalizeBrandId(name: string): string {
   return name
@@ -339,7 +329,15 @@ export class BrandGenesis {
   }
 
   async run(input: BrandFilmInput): Promise<BrandPackage> {
-    const tenantId = requireTenant(input.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: input.tenantId,
+      fallback: this.#tenantId,
+      onMissing: () =>
+        new CapabilityError("brand-genesis", "Brand Genesis requires tenant context", {
+          suggestion: "Pass tenantId on the input or construct BrandGenesis with tenantId.",
+          statusCode: 400,
+        }),
+    });
     const draft = distillBrandIdea(input);
     const brand = brandContextFromDraft(draft, tenantId);
     const brandMarkdown = renderBrandMarkdown(draft, brand);

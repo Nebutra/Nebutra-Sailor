@@ -12,12 +12,13 @@
     "requires": [
       "@nebutra/content-store for file truth",
       "@nebutra/document-pipeline for parsing and ingestion",
+      "@nebutra/knowledge-graph for deterministic entity-edge derivation",
       "@nebutra/knowledge-rag for retrieval primitives",
       "@nebutra/integration-vault for external connector invocation"
     ],
     "gaps": [
       "Connectors are port-backed and need real provider wiring per SaaS source",
-      "Entity/relation extraction is deterministic and lightweight until an LLM extractor is injected",
+      "Entity/relation derivation uses deterministic knowledge-graph fallbacks until an LLM extractor is injected",
       "Graph storage is in-memory; durable SQL graph tables are still pending"
     ],
     "featureId": "knowledge-base",
@@ -40,6 +41,7 @@
     "@nebutra/document-pipeline": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/integration-vault": "workspace:*",
+    "@nebutra/knowledge-graph": "workspace:*",
     "@nebutra/knowledge-rag": "workspace:*"
   },
   "devDependencies": {

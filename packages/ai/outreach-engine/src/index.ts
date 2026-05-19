@@ -1,5 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { CapabilityError } from "@nebutra/errors";
@@ -96,17 +97,6 @@ export interface OutreachEngineOptions {
   readonly debugRoot?: string;
   readonly contentStore?: ContentStore;
   readonly eventLog?: EventLog;
-}
-
-function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
-  const tenantId = explicit ?? fallback;
-  if (!tenantId?.trim()) {
-    throw new CapabilityError("outreach-engine", "Outreach Engine requires tenant context", {
-      suggestion: "Pass tenantId before creating or persisting a campaign.",
-      statusCode: 400,
-    });
-  }
-  return tenantId;
 }
 
 function slug(value: string): string {
@@ -223,7 +213,15 @@ export class OutreachEngine {
   }
 
   async createCampaign(input: CampaignInput): Promise<CampaignPackage> {
-    const tenantId = requireTenant(input.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: input.tenantId,
+      fallback: this.#tenantId,
+      onMissing: () =>
+        new CapabilityError("outreach-engine", "Outreach Engine requires tenant context", {
+          suggestion: "Pass tenantId before creating or persisting a campaign.",
+          statusCode: 400,
+        }),
+    });
     const icp = defineIcp(input.icpDescription);
     const sequence = buildEmailSequence({
       product: input.product,

@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 
@@ -88,18 +89,6 @@ type RequiredTenant<T extends { readonly tenantId?: string }> = Omit<T, "tenantI
 
 export async function readBrowserDebug(root = process.cwd(), limit = 10): Promise<unknown[]> {
   return readCapabilityDebug("browser-control", { root, limit });
-}
-
-function requireTenant(explicit: string | undefined, fallback: string | undefined): string {
-  const tenantId = explicit ?? fallback;
-  if (!tenantId) {
-    throw new CapabilityError("browser-control", "Browser execution requires tenant context", {
-      suggestion:
-        "Pass tenantId on the request or construct BrowserControl with a tenantId default.",
-      statusCode: 400,
-    });
-  }
-  return tenantId;
 }
 
 function sessionIdFrom(task: BrowserTask): string {
@@ -262,7 +251,16 @@ export class BrowserControl {
   }
 
   async task(task: BrowserTask): Promise<BrowserTaskResult> {
-    const tenantId = requireTenant(task.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: task.tenantId,
+      fallback: this.#tenantId,
+      onMissing: () =>
+        new CapabilityError("browser-control", "Browser execution requires tenant context", {
+          suggestion:
+            "Pass tenantId on the request or construct BrowserControl with a tenantId default.",
+          statusCode: 400,
+        }),
+    });
     const requiredTask: RequiredTenant<BrowserTask> = { ...task, tenantId };
 
     if (task.prefer === "deterministic" && task.startUrl) {
@@ -290,7 +288,16 @@ export class BrowserControl {
     url: string,
     options: { tenantId?: string; sessionId?: string } = {},
   ): Promise<BrowserSession> {
-    const tenantId = requireTenant(options.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: options.tenantId,
+      fallback: this.#tenantId,
+      onMissing: () =>
+        new CapabilityError("browser-control", "Browser execution requires tenant context", {
+          suggestion:
+            "Pass tenantId on the request or construct BrowserControl with a tenantId default.",
+          statusCode: 400,
+        }),
+    });
     if (!this.#deterministic.open) {
       throw new CapabilityError("browser-control", "Deterministic browser open is unavailable", {
         suggestion:
@@ -305,7 +312,16 @@ export class BrowserControl {
   }
 
   async replay(sessionId: string, options: { tenantId?: string } = {}): Promise<BrowserTaskResult> {
-    const tenantId = requireTenant(options.tenantId, this.#tenantId);
+    const tenantId = requireCapabilityTenant({
+      explicit: options.tenantId,
+      fallback: this.#tenantId,
+      onMissing: () =>
+        new CapabilityError("browser-control", "Browser execution requires tenant context", {
+          suggestion:
+            "Pass tenantId on the request or construct BrowserControl with a tenantId default.",
+          statusCode: 400,
+        }),
+    });
     const recording = await this.#recorder.load(tenantId, sessionId);
     if (!recording) {
       throw new CapabilityError("browser-control", "Browser recording not found", {
