@@ -7,6 +7,7 @@
  * Run with: pnpm brand:apply
  */
 
+import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -271,6 +272,24 @@ export type LogoAssets = typeof logoAssets;
 `;
 
   fs.writeFileSync(metadataPath, newContent, "utf-8");
+
+  // The template above produces output that Biome flags (quoted object
+  // keys from JSON.stringify, missing trailing commas, trailing whitespace
+  // on blank lines). Run `biome check --write` over the just-generated
+  // file so `pnpm brand:apply` always leaves a lint-clean tree — this is
+  // what kept CI red on commit `(prev)`.
+  try {
+    execFileSync(
+      "pnpm",
+      ["exec", "biome", "check", "--write", "--no-errors-on-unmatched", metadataPath],
+      { cwd: ROOT, stdio: "pipe" },
+    );
+  } catch {
+    // Biome exits non-zero when it can't auto-fix every diagnostic; the
+    // file is still written with whatever fixes did apply, and the CI
+    // lint job will surface anything that survived.
+  }
+
   logSuccess("Updated packages/design/brand/src/metadata.ts");
 }
 
