@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { appendCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 import { blake3 } from "@noble/hashes/blake3.js";
 import { bytesToHex } from "@noble/hashes/utils.js";
@@ -125,7 +126,7 @@ export class EventLog {
       objectHashes,
     };
     await appendJsonl(this.eventsPath(), record);
-    await appendJsonl(join(process.cwd(), ".nebutra", "debug", "event-log.jsonl"), record);
+    await appendCapabilityDebug("event-log", { ...record });
     return id;
   }
 

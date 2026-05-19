@@ -2,6 +2,11 @@ import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { dirname, join, normalize, relative } from "node:path";
 import type { Database as VecDatabase, Statement as VecStatement } from "@dao-xyz/sqlite3-vec";
+import {
+  appendCapabilityDebug,
+  capabilityDebugPath,
+  readCapabilityDebug,
+} from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 import { embedTextLocalFloat32, tokenizeLocalEmbeddingText } from "@nebutra/local-embedding";
 
@@ -212,29 +217,15 @@ function frontmatterWhere(
 }
 
 export function contentDebugPath(): string {
-  return join(process.cwd(), ".nebutra", "debug", "content-store.jsonl");
+  return capabilityDebugPath("content-store");
 }
 
 async function appendContentDebug(entry: Record<string, unknown>): Promise<void> {
-  const path = contentDebugPath();
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
+  await appendCapabilityDebug("content-store", entry);
 }
 
 export async function readContentDebug(limit = 10): Promise<unknown[]> {
-  try {
-    const raw = await readFile(contentDebugPath(), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("content-store", { limit });
 }
 
 export class ContentStore {

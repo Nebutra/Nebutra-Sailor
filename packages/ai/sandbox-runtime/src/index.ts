@@ -1,5 +1,8 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import {
+  appendCapabilityDebug,
+  capabilityDebugPath,
+  readCapabilityDebug,
+} from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 
 export interface ExecHints {
@@ -45,15 +48,11 @@ export interface SandboxRuntimeConfig {
 }
 
 export function sandboxDebugPath(): string {
-  return join(process.cwd(), ".nebutra", "debug", "sandbox-runtime.jsonl");
+  return capabilityDebugPath("sandbox-runtime");
 }
 
 async function appendSandboxDebug(entry: Record<string, unknown>): Promise<void> {
-  const path = sandboxDebugPath();
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
+  await appendCapabilityDebug("sandbox-runtime", entry);
 }
 
 export function createLocalMacSandbox(
@@ -198,15 +197,5 @@ export class SandboxRuntime {
 }
 
 export async function readSandboxDebug(limit = 10): Promise<unknown[]> {
-  try {
-    const raw = await readFile(sandboxDebugPath(), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("sandbox-runtime", { limit });
 }

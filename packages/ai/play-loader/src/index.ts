@@ -1,5 +1,6 @@
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
+import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 import { type ParsedFrontmatter, parseSkillMarkdown, type SkillMeta } from "@nebutra/tool-registry";
 
@@ -80,30 +81,12 @@ function normalizePlayName(name: string): string {
     .replace(/^_+|_+$/g, "");
 }
 
-function playDebugPath(): string {
-  return join(process.cwd(), ".nebutra", "debug", "play-loader.jsonl");
-}
-
 async function appendPlayDebug(entry: Record<string, unknown>): Promise<void> {
-  const path = playDebugPath();
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
+  await appendCapabilityDebug("play-loader", entry);
 }
 
 export async function readPlayDebug(limit = 10): Promise<unknown[]> {
-  try {
-    const raw = await readFile(playDebugPath(), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("play-loader", { limit });
 }
 
 function parseSubagents(value: unknown): PlaySubagent[] {

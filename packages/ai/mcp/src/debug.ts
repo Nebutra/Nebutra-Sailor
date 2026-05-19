@@ -1,5 +1,8 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import {
+  appendCapabilityDebug,
+  capabilityDebugPath,
+  readCapabilityDebug,
+} from "@nebutra/capability-kit/debug";
 
 export interface ToolDebugEntry {
   readonly at: string;
@@ -15,29 +18,15 @@ export interface ToolDebugEntry {
 }
 
 export function toolDebugPath(): string {
-  return join(process.cwd(), ".nebutra", "debug", "tool-protocol.jsonl");
+  return capabilityDebugPath("tool-protocol");
 }
 
 export async function appendToolDebug(
   entry: Omit<ToolDebugEntry, "at"> & { at?: string },
 ): Promise<void> {
-  const path = toolDebugPath();
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
+  await appendCapabilityDebug("tool-protocol", entry);
 }
 
 export async function readToolDebug(limit = 10): Promise<ToolDebugEntry[]> {
-  try {
-    const raw = await readFile(toolDebugPath(), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as ToolDebugEntry);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("tool-protocol", { limit }) as Promise<ToolDebugEntry[]>;
 }

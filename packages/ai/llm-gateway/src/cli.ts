@@ -1,4 +1,4 @@
-import { readDebug } from "@nebutra/provider-registry";
+import { readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { LlmGateway } from "./index";
 
 const command = process.argv[2] ?? "doctor";
@@ -19,7 +19,7 @@ if (command === "doctor") {
   );
 } else if (command === "debug") {
   const id = process.argv[3];
-  const entries = await readDebug("llm-gateway", id ? 50 : 10);
+  const entries = await readCapabilityDebug("llm-gateway", { limit: id ? 50 : 10 });
   process.stdout.write(`${JSON.stringify({ capability: "llm-gateway", id, entries }, null, 2)}\n`);
 } else {
   process.stderr.write(`Unknown llm-gateway command: ${command}\n`);

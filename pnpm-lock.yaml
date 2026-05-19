@@ -1431,6 +1431,9 @@ importers:
 
   packages/ai/agent-runtime:
     dependencies:
+      '@nebutra/capability-kit':
+        specifier: workspace:*
+        version: link:../../platform/capability-kit
       '@nebutra/execution-policy':
         specifier: workspace:*
         version: link:../execution-policy
@@ -1753,6 +1756,9 @@ importers:
       '@dao-xyz/sqlite3-vec':
         specifier: 0.0.19
         version: 0.0.19
+      '@nebutra/capability-kit':
+        specifier: workspace:*
+        version: link:../../platform/capability-kit
       '@nebutra/errors':
         specifier: workspace:*
         version: link:../../platform/errors
@@ -1828,6 +1834,9 @@ importers:
 
   packages/ai/event-log:
     dependencies:
+      '@nebutra/capability-kit':
+        specifier: workspace:*
+        version: link:../../platform/capability-kit
       '@nebutra/content-store':
         specifier: workspace:*
         version: link:../content-store
@@ -2116,6 +2125,9 @@ importers:
 
   packages/ai/llm-gateway:
     dependencies:
+      '@nebutra/capability-kit':
+        specifier: workspace:*
+        version: link:../../platform/capability-kit
       '@nebutra/errors':
         specifier: workspace:*
         version: link:../../platform/errors
@@ -2156,6 +2168,9 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: 1.27.1
         version: 1.27.1(@cfworker/json-schema@4.1.1)(zod@4.3.6)
+      '@nebutra/capability-kit':
+        specifier: workspace:*
+        version: link:../../platform/capability-kit
       '@nebutra/errors':
         specifier: workspace:*
         version: link:../../platform/errors
@@ -2212,6 +2227,9 @@ importers:
 
   packages/ai/play-loader:
     dependencies:
+      '@nebutra/capability-kit':
+        specifier: workspace:*
+        version: link:../../platform/capability-kit
       '@nebutra/errors':
         specifier: workspace:*
         version: link:../../platform/errors
@@ -2268,6 +2286,9 @@ importers:
 
   packages/ai/provider-registry:
     dependencies:
+      '@nebutra/capability-kit':
+        specifier: workspace:*
+        version: link:../../platform/capability-kit
       '@nebutra/errors':
         specifier: workspace:*
         version: link:../../platform/errors
@@ -2339,6 +2360,9 @@ importers:
 
   packages/ai/sandbox-runtime:
     dependencies:
+      '@nebutra/capability-kit':
+        specifier: workspace:*
+        version: link:../../platform/capability-kit
       '@nebutra/errors':
         specifier: workspace:*
         version: link:../../platform/errors
@@ -2429,6 +2453,9 @@ importers:
 
   packages/ai/tool-registry:
     dependencies:
+      '@nebutra/capability-kit':
+        specifier: workspace:*
+        version: link:../../platform/capability-kit
       '@nebutra/content-store':
         specifier: workspace:*
         version: link:../content-store

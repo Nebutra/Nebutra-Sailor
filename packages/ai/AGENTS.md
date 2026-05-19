@@ -18,7 +18,7 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | Generation capability tools | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media generation surfaces. They may expose local deterministic fallbacks and sidecar adapter ports, but must not own Thread/Turn/Item state, prompt orchestration, model/provider routing, or approval lifecycle. |
 | Shared support contracts | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding`, `@nebutra/ecosystem-safety` | Single TypeScript owners for facts consumed across surfaces: `BrandContext`, command permission/approval primitives, deterministic local embeddings, and public-disclosure safety checks. |
 | Persistence contracts | `@nebutra/content-store` | File truth, frontmatter parsing/serialization, paragraph chunk helpers, and rebuildable indexes. Parser packages consume these helpers rather than defining file-truth grammar. |
-| Capability DX primitives | `@nebutra/capability-kit` | Platform package outside `packages/ai` that owns suggestion-bearing capability errors, doctor/debug CLI switching, package-local tenant fallback selection, and `.nebutra/debug/<capability>.jsonl` helpers. Capability packages must import these primitives instead of re-implementing them. |
+| Capability DX primitives | `@nebutra/capability-kit` | Platform package outside `packages/ai` that owns suggestion-bearing capability errors, doctor/debug CLI switching, package-local tenant fallback selection, and `.nebutra/debug/<capability>.jsonl` helpers. AI packages must import these primitives instead of re-implementing them. |
 | RAG/indexing/dataflow | `@nebutra/knowledge-rag`, `@nebutra/knowledge-graph`, `@nebutra/code-index`, `@nebutra/reel`, `@nebutra/atelier-canvas`, `@nebutra/cinema` | Product capabilities built on injected model/vector/store/tool/graph ports. |
 | Knowledge product layer | `@nebutra/knowledge-base` | Company cognition over connectors, memory, graph, citations, and explainable search. It consumes lower retrieval/ingestion primitives and must not redefine them. |
 | Play product layer | `@nebutra/brand-genesis`, `@nebutra/landing-builder`, `@nebutra/outreach-engine`, `@nebutra/support-deflector` | Complete user-story Plays over lower capabilities. Owns orchestration and SKILL.md assets only. |
@@ -42,7 +42,7 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
    state.
 5. Capability debug storage, CLI command dispatch, and suggestion-bearing base
    errors belong to `@nebutra/capability-kit`; do not hand-roll debug JSONL
-   helpers inside individual capability packages.
+   path, append, or tail-read helpers inside individual AI packages.
 6. Capability package tenant selection belongs to `@nebutra/capability-kit`.
    This means the local explicit `tenantId` vs constructor/open default fallback
    primitive. It is intentionally not `@nebutra/tenant`, which owns
@@ -139,9 +139,11 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 - Generation capability packages must import `BrandContext` from
   `@nebutra/generation-context`; do not define parallel brand schemas inside
   individual media packages.
-- Execution and generation capability packages must import debug JSONL helpers
+- AI packages must import debug JSONL helpers
   from `@nebutra/capability-kit/debug`; do not define local `debugPath`,
-  `appendDebug`, or `readFile(debugPath(...))` variants.
+  `appendDebug`, `.nebutra/debug` path joins, or `readFile(debugPath(...))`
+  variants. Package-specific `readXDebug` compatibility wrappers are allowed
+  only when they delegate directly to `readCapabilityDebug`.
 - Capability, Play product, Knowledge product, and Ecosystem product packages
   must import `requireCapabilityTenant` from `@nebutra/capability-kit` when
   selecting between an explicit request tenant and a constructor/open default

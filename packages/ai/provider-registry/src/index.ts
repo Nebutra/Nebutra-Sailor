@@ -1,5 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { appendCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 
 export { CapabilityError } from "@nebutra/errors";
@@ -73,36 +72,6 @@ function promptFromMessages(messages: readonly ProviderMessage[]): string {
     .join("\n");
 }
 
-async function readJsonlTail(path: string, limit: number): Promise<unknown[]> {
-  try {
-    const raw = await readFile(path, "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
-}
-
-export function debugPath(codename = "provider-registry"): string {
-  return join(process.cwd(), ".nebutra", "debug", `${codename}.jsonl`);
-}
-
-export async function appendDebug(codename: string, entry: Record<string, unknown>): Promise<void> {
-  const path = debugPath(codename);
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
-}
-
-export async function readDebug(codename = "provider-registry", limit = 10): Promise<unknown[]> {
-  return readJsonlTail(debugPath(codename), limit);
-}
-
 export function createLocalModelProvider(options: LocalModelProviderOptions = {}): LLMProvider {
   const model = options.model ?? process.env.LOCAL_MODEL_NAME ?? "llama3.2";
   const baseUrl = (
@@ -169,7 +138,7 @@ export function createLocalModelProvider(options: LocalModelProviderOptions = {}
         ...(Object.keys(usage).length > 0 && { usage }),
         raw,
       };
-      await appendDebug("provider-registry", {
+      await appendCapabilityDebug("provider-registry", {
         type: "completion",
         provider: "local-model",
         model,

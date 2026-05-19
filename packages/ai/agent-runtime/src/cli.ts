@@ -1,23 +1,6 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { readCapabilityDebug } from "@nebutra/capability-kit/debug";
 
 const command = process.argv[2] ?? "doctor";
-
-async function readDebug(capability: string, limit = 20): Promise<unknown[]> {
-  try {
-    const raw = await readFile(join(process.cwd(), ".nebutra", "debug", `${capability}.jsonl`), {
-      encoding: "utf8",
-    });
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
-}
 
 if (command === "doctor") {
   process.stdout.write(
@@ -38,7 +21,7 @@ if (command === "doctor") {
       {
         capability: "agent-runtime",
         threadId,
-        entries: await readDebug("agent-runtime"),
+        entries: await readCapabilityDebug("agent-runtime", { limit: 20 }),
         suggestion:
           "Use a RolloutStore-backed host to replay full thread events; this CLI reports local debug lines.",
       },
@@ -54,7 +37,7 @@ if (command === "doctor") {
         capability: "agent-runtime",
         command,
         threadId,
-        entries: await readDebug("agent-runtime"),
+        entries: await readCapabilityDebug("agent-runtime", { limit: 20 }),
       },
       null,
       2,

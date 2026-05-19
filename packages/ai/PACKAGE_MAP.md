@@ -43,8 +43,9 @@ the machine-readable source of truth; this file is the human map.
    tenant billing, approval lifecycle, or runtime state.
 5. Cross-capability DX primitives live in the platform package
    `@nebutra/capability-kit`: capability errors, doctor/debug CLI dispatch, and
-   `.nebutra/debug/<capability>.jsonl` storage. AI capability packages depend on
-   it instead of each owning a copy.
+   `.nebutra/debug/<capability>.jsonl` storage. AI packages depend on it instead
+   of each owning a local path, append, or tail-read copy. Package-specific
+   `readXDebug` compatibility wrappers may exist only as thin delegates.
 6. Capability tenant fallback selection lives in `@nebutra/capability-kit`.
    This is only the local primitive for explicit request `tenantId` vs
    constructor/open default `tenantId`. `@nebutra/tenant` remains the owner for

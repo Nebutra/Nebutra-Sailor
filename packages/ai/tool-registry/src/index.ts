@@ -1,6 +1,7 @@
 import { type FSWatcher, watch } from "node:fs";
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join, relative } from "node:path";
+import { mkdir, readdir, readFile } from "node:fs/promises";
+import { join, relative } from "node:path";
+import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore } from "@nebutra/content-store";
 import { CapabilityError } from "@nebutra/errors";
 import { parse as parseYaml } from "yaml";
@@ -78,30 +79,12 @@ function normalizeSkillName(name: string): string {
     .replace(/^_+|_+$/g, "");
 }
 
-function skillDebugPath(): string {
-  return join(process.cwd(), ".nebutra", "debug", "tool-registry.jsonl");
-}
-
 async function appendSkillDebug(entry: Record<string, unknown>): Promise<void> {
-  const path = skillDebugPath();
-  await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, `${JSON.stringify({ at: new Date().toISOString(), ...entry })}\n`, {
-    flag: "a",
-  });
+  await appendCapabilityDebug("tool-registry", entry);
 }
 
 export async function readSkillDebug(limit = 10): Promise<unknown[]> {
-  try {
-    const raw = await readFile(skillDebugPath(), "utf8");
-    return raw
-      .trim()
-      .split("\n")
-      .filter(Boolean)
-      .slice(-limit)
-      .map((line) => JSON.parse(line) as unknown);
-  } catch {
-    return [];
-  }
+  return readCapabilityDebug("tool-registry", { limit });
 }
 
 export function parseSkillFrontmatter(markdown: string): ParsedSkillDocument {

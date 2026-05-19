@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.27.1",
+    "@nebutra/capability-kit": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/event-log": "workspace:*",
     "@nebutra/trace-store": "workspace:*",

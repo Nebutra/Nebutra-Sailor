@@ -1,6 +1,6 @@
+import { appendCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
 import {
-  appendDebug,
   type LLMProvider,
   type ProviderCompletion,
   type ProviderMessage,
@@ -119,7 +119,7 @@ export class LlmGateway {
         this.#cache.set(cacheKey, { response });
         const entry = { requestId, decision, ok: true };
         this.#debug.push(entry);
-        await appendDebug("llm-gateway", { type: "complete", ...entry });
+        await appendCapabilityDebug("llm-gateway", { type: "complete", ...entry });
         return response;
       } catch (error) {
         lastError = error;
@@ -130,7 +130,7 @@ export class LlmGateway {
           error: error instanceof Error ? error.message : String(error),
         };
         this.#debug.push(entry);
-        await appendDebug("llm-gateway", { type: "fallback", ...entry });
+        await appendCapabilityDebug("llm-gateway", { type: "fallback", ...entry });
       }
     }
 

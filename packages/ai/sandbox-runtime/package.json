@@ -22,6 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
     "@nebutra/errors": "workspace:*"
   },
   "devDependencies": {

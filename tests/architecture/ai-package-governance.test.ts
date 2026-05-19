@@ -431,6 +431,25 @@ describe("AI package architecture governance", () => {
     expect(violations).toEqual([]);
   });
 
+  it("keeps debug JSONL file IO out of AI package source", () => {
+    const violations: string[] = [];
+
+    for (const { dir, manifest } of packages) {
+      for (const file of collectProductionSourceFiles(join(dir, "src"))) {
+        const source = readFileSync(file, "utf8");
+        const relative = file.replace(`${ROOT}/`, "");
+        if (/function\s+(debugPath|appendDebug|readDebug)\b/.test(source)) {
+          violations.push(`${manifest.name}: ${relative}: local debug helper function`);
+        }
+        if (/join\(\s*process\.cwd\(\)\s*,\s*["']\.nebutra["']\s*,\s*["']debug["']/.test(source)) {
+          violations.push(`${manifest.name}: ${relative}: local .nebutra/debug path`);
+        }
+      }
+    }
+
+    expect(violations).toEqual([]);
+  });
+
   it("centralizes capability tenant fallback selection in @nebutra/capability-kit", () => {
     const capabilityKit = readPackageJson(CAPABILITY_KIT_DIR);
     expect(capabilityKit.nebutra?.surface).toBe("support-contract");

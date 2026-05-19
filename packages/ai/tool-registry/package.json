@@ -22,6 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
     "@nebutra/content-store": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "yaml": "2.8.2"

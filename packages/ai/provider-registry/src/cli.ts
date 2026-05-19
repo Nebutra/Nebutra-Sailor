@@ -1,4 +1,5 @@
-import { ProviderRegistry, readDebug } from "./index";
+import { readCapabilityDebug } from "@nebutra/capability-kit/debug";
+import { ProviderRegistry } from "./index";
 
 const command = process.argv[2] ?? "doctor";
 
@@ -9,7 +10,7 @@ if (command === "doctor") {
   );
 } else if (command === "debug") {
   const id = process.argv[3];
-  const entries = await readDebug("provider-registry", id ? 50 : 10);
+  const entries = await readCapabilityDebug("provider-registry", { limit: id ? 50 : 10 });
   process.stdout.write(
     `${JSON.stringify({ capability: "provider-registry", id, entries }, null, 2)}\n`,
   );
