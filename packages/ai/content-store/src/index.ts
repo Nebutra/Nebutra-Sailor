@@ -562,12 +562,21 @@ export class ContentStore {
       );
     `);
 
-    try {
-      await this.#db.exec(
-        `CREATE VIRTUAL TABLE IF NOT EXISTS chunk_vectors
-         USING vec0(embedding float[${VECTOR_DIMENSIONS}])`,
-      );
-    } catch {
+    if (process.env.NEBUTRA_CONTENT_STORE_ENABLE_VEC0 === "1") {
+      try {
+        await this.#db.exec(
+          `CREATE VIRTUAL TABLE IF NOT EXISTS chunk_vectors
+           USING vec0(embedding float[${VECTOR_DIMENSIONS}])`,
+        );
+      } catch {
+        await this.#db.exec(`
+          CREATE TABLE IF NOT EXISTS chunk_vectors (
+            rowid INTEGER PRIMARY KEY,
+            embedding BLOB NOT NULL
+          );
+        `);
+      }
+    } else {
       await this.#db.exec(`
         CREATE TABLE IF NOT EXISTS chunk_vectors (
           rowid INTEGER PRIMARY KEY,
