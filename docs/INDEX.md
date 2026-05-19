@@ -91,6 +91,12 @@ Complete navigation to all project documentation.
 | [Component Library Policy](./COMPONENT-LIBRARY-POLICY.md) | External component governance    |
 | [Marketing Infrastructure](./MARKETING-INFRASTRUCTURE.md) | Landing page & marketing spec    |
 
+## Security
+
+| Document                                                         | Description                    |
+| ---------------------------------------------------------------- | ------------------------------ |
+| [Supply Chain Governance](./security/supply-chain-governance.md) | pnpm and workflow guardrails   |
+
 ## External Resources
 
 | Resource     | URL                                        | Description                                            |
