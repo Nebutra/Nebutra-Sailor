@@ -207,6 +207,45 @@ export const logoAssets = {
 } as const;
 
 /**
+ * Font asset paths (relative to package). Static — independent of brand
+ * config because font files do not rename with the brand. Re-exported
+ * from \`./index.ts\` so consumers can resolve weights from a typed map.
+ */
+export const fontAssets = {
+  poppins: {
+    thin: "assets/fonts/poppins/Poppins-Thin.otf",
+    thinItalic: "assets/fonts/poppins/Poppins-ThinItalic.otf",
+    extraLight: "assets/fonts/poppins/Poppins-ExtraLight.otf",
+    extraLightItalic: "assets/fonts/poppins/Poppins-ExtraLightItalic.otf",
+    light: "assets/fonts/poppins/Poppins-Light.otf",
+    lightItalic: "assets/fonts/poppins/Poppins-LightItalic.otf",
+    regular: "assets/fonts/poppins/Poppins-Regular.otf",
+    italic: "assets/fonts/poppins/Poppins-Italic.otf",
+    medium: "assets/fonts/poppins/Poppins-Medium.otf",
+    mediumItalic: "assets/fonts/poppins/Poppins-MediumItalic.otf",
+    semiBold: "assets/fonts/poppins/Poppins-SemiBold.otf",
+    semiBoldItalic: "assets/fonts/poppins/Poppins-SemiBoldItalic.otf",
+    bold: "assets/fonts/poppins/Poppins-Bold.otf",
+    boldItalic: "assets/fonts/poppins/Poppins-BoldItalic.otf",
+    extraBold: "assets/fonts/poppins/Poppins-ExtraBold.otf",
+    extraBoldItalic: "assets/fonts/poppins/Poppins-ExtraBoldItalic.otf",
+    black: "assets/fonts/poppins/Poppins-Black.otf",
+    blackItalic: "assets/fonts/poppins/Poppins-BlackItalic.otf",
+  },
+  vivoSans: {
+    thin: "assets/fonts/vivo-sans/vivoSans-Thin.ttf",
+    extraLight: "assets/fonts/vivo-sans/vivoSans-ExtraLight.ttf",
+    light: "assets/fonts/vivo-sans/vivoSans-Light.ttf",
+    regular: "assets/fonts/vivo-sans/vivoSans-Regular.ttf",
+    medium: "assets/fonts/vivo-sans/vivoSans-Medium.ttf",
+    demiBold: "assets/fonts/vivo-sans/vivoSans-DemiBold.ttf",
+    bold: "assets/fonts/vivo-sans/vivoSans-Bold.ttf",
+    extraBold: "assets/fonts/vivo-sans/vivoSans-ExtraBold.ttf",
+    heavy: "assets/fonts/vivo-sans/vivoSans-Heavy.ttf",
+  },
+} as const;
+
+/**
  * Favicon assets
  */
 export const faviconAssets = {
