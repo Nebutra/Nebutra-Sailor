@@ -6,6 +6,8 @@ const CHAR_PER_TOKEN_HEURISTIC = 3.5;
 
 type EncodingName = "o200k_base" | "cl100k_base";
 
+const encodingCache = new Map<EncodingName, ReturnType<typeof getEncoding>>();
+
 /**
  * Best-effort mapping from a model identifier to the correct tiktoken
  * encoding. If the model is unknown we return `null` so the caller falls
@@ -35,6 +37,17 @@ function resolveEncoding(model: string): EncodingName | null {
   return null;
 }
 
+function getCachedEncoding(encodingName: EncodingName): ReturnType<typeof getEncoding> {
+  const cached = encodingCache.get(encodingName);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  const encoding = getEncoding(encodingName);
+  encodingCache.set(encodingName, encoding);
+  return encoding;
+}
+
 /**
  * Count tokens using the correct tiktoken encoding for a given model.
  *
@@ -58,7 +71,7 @@ export function countTokens(text: string, model: string): number {
     // js-tiktoken exposes two APIs; `encodingForModel` is stricter about the
     // model id, so we prefer the raw `getEncoding` path which is guaranteed
     // to work for the encoding names we mapped above.
-    const enc = getEncoding(encodingName);
+    const enc = getCachedEncoding(encodingName);
     return enc.encode(text).length;
   } catch (error) {
     logger.warn("tiktoken-fallback: encoding failed, using char heuristic", {

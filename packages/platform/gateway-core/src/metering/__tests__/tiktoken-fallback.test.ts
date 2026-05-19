@@ -6,7 +6,7 @@ describe("countTokens", () => {
     const count = countTokens("hello world", "gpt-4o");
     expect(count).toBeGreaterThan(0);
     expect(Number.isInteger(count)).toBe(true);
-  });
+  }, 15_000);
 
   it("returns 0 for empty string", () => {
     expect(countTokens("", "gpt-4o")).toBe(0);
@@ -54,7 +54,7 @@ describe("estimateUsage", () => {
     expect(usage.completionTokens).toBeGreaterThan(0);
     expect(usage.totalTokens).toBe(usage.promptTokens + usage.completionTokens);
     expect(usage.model).toBe("gpt-4o");
-  });
+  }, 15_000);
 
   it("returns zero for empty inputs", () => {
     const usage = estimateUsage([], "", "gpt-4o");
