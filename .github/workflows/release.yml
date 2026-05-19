@@ -88,12 +88,17 @@ jobs:
           title: "chore(release): version packages"
           version: pnpm version:packages
           publish: bash ./scripts/release-publish.sh
+          createGithubReleases: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TRUSTED_PUBLISHING: ${{ vars.NPM_TRUSTED_PUBLISHING }}
           NPM_CONFIG_PROVENANCE: "true"
           LEFTHOOK: "0"
+
+      - name: Push release tags
+        if: steps.changesets.outputs.published == 'true'
+        run: node scripts/push-release-tags.mjs
 
   provenance:
     name: Artifact Attestation
