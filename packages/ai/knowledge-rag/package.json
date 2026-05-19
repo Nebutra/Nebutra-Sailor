@@ -41,6 +41,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@nebutra/ai-primitives": "workspace:*",
     "@nebutra/agents": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/local-embedding": "workspace:*",
