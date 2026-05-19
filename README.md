@@ -48,11 +48,37 @@
 <br />
 <br />
 
+> **License at a glance** — published npm packages are **AGPL-3.0-only**.
+> If you `npm install @nebutra/*` into a network-served product you take
+> on AGPL's network-copyleft clause unless you (a) scaffold with
+> `npx create-sailor` (Independent Developer License, free for ≤ 1 FTE
+> & < $1M ARR, **no copyleft**) or (b) hold a Startup ($799/yr) or
+> Enterprise tier from [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md).
+> Full matrix and edge cases: [License](#license) section below, plus
+> [docs/legal/licensing-faq.md](docs/legal/licensing-faq.md).
+
+> **Try it in 30 seconds** — zero SaaS keys required:
+> ```bash
+> npx create-sailor@latest my-app --preset=minimal --yes
+> cd my-app && pnpm dev   # → http://localhost:3000
+> ```
+> The `minimal` preset scaffolds only `apps/web` + IAM + Postgres so the
+> golden path boots against a local DB. Add Stripe / Clerk / Resend
+> later via `nebutra add <provider>`.
+
+<br />
+
 ## Introduction
 
 Nebutra Sailor is an enterprise-grade, AI-native SaaS monorepo architecture designed for building governed multi-tenant platforms. It provides a practical baseline for AI gateways, agent workflows, billing, auth, compliance, and white-label product delivery.
 
 Built with Next.js 16, React 19, Prisma 7, and the Vercel AI SDK, Sailor treats AI as a governed runtime surface: provider topology, model routing, observability, tenant isolation, and compliance hooks are part of the platform baseline.
+
+### Who's building this
+
+Nebutra-Sailor is maintained by **Wuxi Nebutra Intelligence Technology Co., Ltd.** Day-to-day engineering lead is **Tseka Luk** ([@tsekaluk](https://github.com/tsekaluk) · `legal@nebutra.com`). The project ships under a dual-license model designed so solo founders and OPCs can build commercial products on it without copyleft, while corporate forks still owe back to the community — see the [License](#license) section.
+
+We publish to npm under the `@nebutra/*` scope plus two CLIs (`nebutra`, `create-sailor`). Releases run through [changesets](https://github.com/changesets/changesets) on a manual `workflow_dispatch` gate; SBOMs are attested on every release ([release.yml](.github/workflows/release.yml)). Security reports → [SECURITY.md](SECURITY.md); commercial / licensing inquiries → `legal@nebutra.com`.
 
 ### Brand Vision
 

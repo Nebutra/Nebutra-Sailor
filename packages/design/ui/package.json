@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Unified UI component library — Lobe UI + Radix + HeroUI + layout components",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "sideEffects": false,
   "exports": {

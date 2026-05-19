@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Tenant-scoped SaaS OAuth and credential vault for tool calling",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "featureId": "integration-vault",

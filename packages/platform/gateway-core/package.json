@@ -32,5 +32,6 @@
     "typescript": "catalog:",
     "vitest": "catalog:",
     "@vitest/coverage-v8": "catalog:"
-  }
+  },
+  "license": "AGPL-3.0-only"
 }

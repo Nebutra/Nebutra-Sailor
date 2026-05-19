@@ -68,7 +68,10 @@ export function resolveWaveFeatureToggles(
   const chinaDefault = region === "cn";
   return {
     cronJobs: parseBoolFlag(flags.cronJobs, true),
-    auditLog: parseBoolFlag(flags.auditLog, true),
+    // `@nebutra/audit` is still WIP per docs/package-status.md (event schema
+    // + retention/export pending). Default off so a fresh scaffold doesn't
+    // ship the audit-log surface until the backing package stabilizes.
+    auditLog: parseBoolFlag(flags.auditLog, false),
     apiKeys: parseBoolFlag(flags.apiKeys, true),
     webhooks: parseBoolFlag(flags.webhooks, true),
     commandPalette: parseBoolFlag(flags.commandPalette, true),

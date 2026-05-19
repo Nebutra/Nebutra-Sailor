@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Confidence-gated customer support Play package for founder-owned support automation",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "status": "wip",

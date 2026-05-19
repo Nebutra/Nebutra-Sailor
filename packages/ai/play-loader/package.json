@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Declarative SKILL.md play loader and dependency planner",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "status": "wip",

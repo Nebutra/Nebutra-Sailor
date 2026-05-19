@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Neutral provider-resolution primitive: the identical 'explicit ?? env ?? detect-chain ?? fallback' selection + prod-guard shared by every provider-agnostic Nebutra package. No instantiation logic.",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "featureId": "provider-factory",

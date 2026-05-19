@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Provider-agnostic text-to-speech / narration synthesis. Zero-config deterministic mock default; ElevenLabs/OpenAI/Volces adapters wired via the shared provider-factory pattern.",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "featureId": "tts",

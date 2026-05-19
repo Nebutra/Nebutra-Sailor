@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Behavior-verified cofounder profile, matching, and mutual-consent introduction surface",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "status": "wip",

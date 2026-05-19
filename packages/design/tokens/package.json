@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Unified theme tokens and theme-provider entry for Nebutra apps",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "sideEffects": [
     "./styles.css"

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Provider-agnostic identity adapter layer (Clerk-first, Auth.js-ready)",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

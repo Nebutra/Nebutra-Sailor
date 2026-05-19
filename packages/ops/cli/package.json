@@ -19,7 +19,7 @@
     "test:watch": "vitest"
   },
   "author": "Nebutra <hello@nebutra.com> (https://nebutra.com)",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "homepage": "https://nebutra.com",
   "repository": {
     "type": "git",

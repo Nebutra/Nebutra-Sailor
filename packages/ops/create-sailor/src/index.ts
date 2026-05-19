@@ -396,7 +396,11 @@ function regionDefaults(region: Region): RegionDefaults {
     webhooks: "none",
     cms: "none",
     featureFlags: "none",
-    captcha: region === "cn" ? "aliyun-slide" : "turnstile",
+    // `@nebutra/captcha` adapters (turnstile / hcaptcha / aliyun-slide) are
+    // still WIP per docs/package-status.md. Default to `none` so a fresh
+    // scaffold never ships an "[WIP]" surface the user did not opt into;
+    // they can flip it on explicitly via `--captcha=turnstile`.
+    captcha: "none",
     mcp: "on", // Sailor core value
     metering: "auto", // auto-enable if payment is set
     billingMode: "usage", // all regions default to usage-based billing
@@ -461,12 +465,13 @@ async function run(): Promise<void> {
     .option("--billing-mode <mode>", "usage | seat | credits (default: usage)")
     .option("--idp <id>", "clerk | oauth-server (default: clerk)")
     .option("--access-gate <mode>", "none | invite (default: none)")
-    // Wave 3-5 feature toggles — accept `true|false`; defaults are
-    // `true` except `--china-compliance` which auto-flips with --region=cn.
+    // Wave 3-5 feature toggles — accept `true|false`. Defaults are `true`
+    // except `--audit-log` (backing package is WIP, opt-in) and
+    // `--china-compliance` (auto-flips with --region=cn).
     .option("--cron-jobs <bool>", "true | false — scaffold scheduled cron handlers (default: true)")
     .option(
       "--audit-log <bool>",
-      "true | false — enable /settings/audit-log + arch test (default: true)",
+      "true | false — enable /settings/audit-log + arch test (default: false — @nebutra/audit is WIP)",
     )
     .option("--api-keys <bool>", "true | false — enable /settings/api-keys page (default: true)")
     .option("--command-palette <bool>", "true | false — enable ⌘K command palette (default: true)")

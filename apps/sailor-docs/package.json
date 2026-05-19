@@ -63,5 +63,6 @@
     "tailwindcss": "^4.2.1",
     "tsx": "^4.21.0",
     "typescript": "catalog:"
-  }
+  },
+  "license": "AGPL-3.0-only"
 }

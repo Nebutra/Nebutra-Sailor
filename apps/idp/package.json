@@ -29,5 +29,6 @@
     "@types/oidc-provider": "^9.1.0",
     "tailwindcss": "^4.2.1",
     "typescript": "catalog:"
-  }
+  },
+  "license": "AGPL-3.0-only"
 }

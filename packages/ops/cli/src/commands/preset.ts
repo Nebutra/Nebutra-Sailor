@@ -96,6 +96,15 @@ const PRESETS: Record<string, PresetDefinition> = {
     theme: "vibrant",
     stack: ["Next.js 16", "Hono", "Redis", "Socket.io"],
   },
+  minimal: {
+    name: "minimal",
+    description:
+      "Zero-SaaS-dependency local-only baseline (web + iam + db). Boots with `pnpm dev` against a local Postgres — no Stripe/Clerk/Resend keys required. Built for first-impression demos and offline development.",
+    apps: ["web"],
+    features: ["iam"],
+    theme: "minimal",
+    stack: ["Next.js 16", "Prisma", "PostgreSQL (local)"],
+  },
   "one-person": {
     name: "one-person",
     description: "Solo founder landing page and quick launch",

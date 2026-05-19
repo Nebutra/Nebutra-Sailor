@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Append-only event log with content-addressed snapshots",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "featureId": "event-log",

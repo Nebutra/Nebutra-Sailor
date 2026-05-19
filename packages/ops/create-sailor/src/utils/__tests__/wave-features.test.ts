@@ -30,12 +30,14 @@ describe("parseBoolFlag", () => {
 });
 
 describe("resolveWaveFeatureToggles", () => {
-  it("defaults every wave 3-5 toggle to true for global region", () => {
+  it("defaults wave 3-5 toggles for global region (stable on, WIP off)", () => {
     const result = resolveWaveFeatureToggles({}, "global");
 
     expect(result).toEqual({
       cronJobs: true,
-      auditLog: true,
+      // auditLog defaults to false — @nebutra/audit is WIP per
+      // docs/package-status.md; do not ship the surface by default.
+      auditLog: false,
       apiKeys: true,
       webhooks: true,
       commandPalette: true,
@@ -50,9 +52,9 @@ describe("resolveWaveFeatureToggles", () => {
     const result = resolveWaveFeatureToggles({}, "cn");
 
     expect(result.chinaCompliance).toBe(true);
-    // Other defaults are unchanged.
+    // Other stable defaults are unchanged; auditLog stays off (WIP).
     expect(result.cronJobs).toBe(true);
-    expect(result.auditLog).toBe(true);
+    expect(result.auditLog).toBe(false);
   });
 
   it("respects explicit overrides over region defaults", () => {

@@ -42,5 +42,6 @@
     "tsx": "^4.21.0",
     "typescript": "catalog:",
     "vitest": "catalog:"
-  }
+  },
+  "license": "AGPL-3.0-only"
 }

@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Pure timeline / edit-decision-list builder + provider-agnostic video compositor (concat, crossfade transitions, mux). Zero-config deterministic mock default; ffmpeg adapter documented.",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "featureId": "video-compose",

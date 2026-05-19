@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Unified sandbox runtime router for local and remote execution providers",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "featureId": "sandbox-runtime",

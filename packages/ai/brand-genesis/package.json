@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "BrandContext-first flagship play for creating a complete brand package from one idea",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "status": "wip",

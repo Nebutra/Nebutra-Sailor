@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Company closing, postmortem, lesson extraction, and memorial publication surface",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "status": "wip",

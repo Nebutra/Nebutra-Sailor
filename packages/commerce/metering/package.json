@@ -2,7 +2,7 @@
   "name": "@nebutra/metering",
   "version": "0.1.0",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "status": "production",

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Deterministic zero-config local text embedding primitive shared by file and RAG indexes",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "status": "wip",

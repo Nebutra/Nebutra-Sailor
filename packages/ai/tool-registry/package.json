@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "SKILL.md registry with progressive disclosure and content-store backing",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "featureId": "tool-registry",

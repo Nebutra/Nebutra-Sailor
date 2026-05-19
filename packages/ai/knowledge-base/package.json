@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Tenant-scoped company knowledge product layer over content-store, document-pipeline, and knowledge-rag",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "status": "wip",

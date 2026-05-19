@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Local-first semantic filesystem with rebuildable search index",
   "private": false,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
     "featureId": "content-store",

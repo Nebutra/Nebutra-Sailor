@@ -85,5 +85,6 @@
     "tailwindcss": "^4.2.1",
     "typescript": "catalog:",
     "vitest": "^4.0.18"
-  }
+  },
+  "license": "AGPL-3.0-only"
 }
