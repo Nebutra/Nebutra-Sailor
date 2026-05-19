@@ -211,7 +211,10 @@ run_snapshot_once() {
         exit 1
       fi
 
-      CHROME_PATH=\$(ls /ms-playwright/chromium-*/chrome-linux/chrome 2>/dev/null | head -n 1 || true)
+      CHROME_PATH=\$(ls /ms-playwright/chromium-*/chrome-linux64/chrome 2>/dev/null | head -n 1 || true)
+      if [[ -z "\$CHROME_PATH" ]]; then
+        CHROME_PATH=\$(ls /ms-playwright/chromium-*/chrome-linux/chrome 2>/dev/null | head -n 1 || true)
+      fi
       if [[ -z "\$CHROME_PATH" ]]; then
         CHROME_PATH=\$(ls /ms-playwright/chromium_headless_shell-*/chrome-linux/headless_shell 2>/dev/null | head -n 1 || true)
       fi
@@ -229,22 +232,41 @@ run_snapshot_once() {
       export CHROME_PATH
       echo Using CHROME_PATH=\$CHROME_PATH
 
-      pnpm dlx lighthouse 'http://127.0.0.1:${PORT}${TARGET_PATH}' \
-        --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
-        --output=json \
-        --output-path='/out/${output_json}' \
-        --only-categories=performance,accessibility,best-practices,seo \
-        --form-factor=mobile \
-        --screenEmulation.mobile=true \
-        --screenEmulation.width=390 \
-        --screenEmulation.height=844 \
-        --screenEmulation.deviceScaleFactor=2.625 \
-        --throttling-method=simulate \
-        --throttling.cpuSlowdownMultiplier=4 \
-        --throttling.requestLatencyMs=150 \
-        --throttling.downloadThroughputKbps=1638.4 \
-        --throttling.uploadThroughputKbps=675 \
-        --quiet
+      LIGHTHOUSE_STATUS=1
+      for LIGHTHOUSE_ATTEMPT in 1 2 3; do
+        rm -f '/out/${output_json}.tmp'
+        set +e
+        pnpm dlx lighthouse 'http://127.0.0.1:${PORT}${TARGET_PATH}' \
+          --chrome-flags='--headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu --disable-setuid-sandbox' \
+          --output=json \
+          --output-path='/out/${output_json}.tmp' \
+          --only-categories=performance,accessibility,best-practices,seo \
+          --form-factor=mobile \
+          --screenEmulation.mobile=true \
+          --screenEmulation.width=390 \
+          --screenEmulation.height=844 \
+          --screenEmulation.deviceScaleFactor=2.625 \
+          --throttling-method=simulate \
+          --throttling.cpuSlowdownMultiplier=4 \
+          --throttling.requestLatencyMs=150 \
+          --throttling.downloadThroughputKbps=1638.4 \
+          --throttling.uploadThroughputKbps=675 \
+          --quiet
+        LIGHTHOUSE_STATUS=\$?
+        set -e
+
+        if [[ "\$LIGHTHOUSE_STATUS" -eq 0 ]]; then
+          mv '/out/${output_json}.tmp' '/out/${output_json}'
+          break
+        fi
+
+        echo "Lighthouse attempt \${LIGHTHOUSE_ATTEMPT}/3 failed." >&2
+        sleep 3
+      done
+
+      if [[ "\$LIGHTHOUSE_STATUS" -ne 0 ]]; then
+        exit "\$LIGHTHOUSE_STATUS"
+      fi
 
       kill \$APP_PID >/dev/null 2>&1 || true
       wait \$APP_PID 2>/dev/null || true
