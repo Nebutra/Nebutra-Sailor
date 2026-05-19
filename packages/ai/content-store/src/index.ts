@@ -1,6 +1,6 @@
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
-import { dirname, join, normalize, relative } from "node:path";
+import { basename, dirname, join, normalize, relative } from "node:path";
 import type { Database as VecDatabase, Statement as VecStatement } from "@dao-xyz/sqlite3-vec";
 import {
   appendCapabilityDebug,
@@ -203,14 +203,12 @@ function frontmatterWhere(
   return Object.entries(filters)
     .map(([key, value]) => {
       values.push(key, value);
-      const keyPosition = values.length - 1;
-      const valuePosition = values.length;
       return `EXISTS (
         SELECT 1 FROM document_frontmatter fm
         WHERE fm.tenant_id = ${documentAlias}.tenant_id
           AND fm.path = ${documentAlias}.path
-          AND fm.key = ?${keyPosition}
-          AND fm.value = ?${valuePosition}
+          AND fm.key = ?
+          AND fm.value = ?
       )`;
     })
     .join(" AND ");
@@ -333,7 +331,7 @@ export class ContentStore {
       await this.#deleteIndexedPath(rel);
       await this.#run(
         `INSERT INTO documents (tenant_id, path, schema, frontmatter_json, body, updated_at)
-         VALUES (?1, ?2, ?3, ?4, ?5, ?6)`,
+         VALUES (?, ?, ?, ?, ?, ?)`,
         [
           doc.tenantId,
           doc.path,
@@ -347,7 +345,7 @@ export class ContentStore {
       for (const [key, value] of Object.entries(doc.frontmatter)) {
         await this.#run(
           `INSERT INTO document_frontmatter (tenant_id, path, key, value)
-           VALUES (?1, ?2, ?3, ?4)`,
+           VALUES (?, ?, ?, ?)`,
           [doc.tenantId, doc.path, key, value],
         );
       }
@@ -356,21 +354,21 @@ export class ContentStore {
         const chunk = doc.chunks[index] ?? "";
         await this.#run(
           `INSERT INTO chunks (tenant_id, path, chunk_index, schema, chunk)
-           VALUES (?1, ?2, ?3, ?4, ?5)`,
+           VALUES (?, ?, ?, ?, ?)`,
           [doc.tenantId, doc.path, index, doc.frontmatter.schema ?? null, chunk],
         );
         const id = numberFrom((await this.#get("SELECT last_insert_rowid() AS id"))?.id);
         await this.#run(
           `INSERT INTO chunks_fts (rowid, tenant_id, path, schema, chunk)
-           VALUES (?1, ?2, ?3, ?4, ?5)`,
+           VALUES (?, ?, ?, ?, ?)`,
           [id, doc.tenantId, doc.path, doc.frontmatter.schema ?? null, chunk],
         );
         await this.#run(
           `INSERT INTO chunk_vector_meta (chunk_id, tenant_id, path, chunk_index)
-           VALUES (?1, ?2, ?3, ?4)`,
+           VALUES (?, ?, ?, ?)`,
           [id, doc.tenantId, doc.path, index],
         );
-        await this.#run("INSERT INTO chunk_vectors (rowid, embedding) VALUES (?1, ?2)", [
+        await this.#run("INSERT INTO chunk_vectors (rowid, embedding) VALUES (?, ?)", [
           id,
           vectorBlob(embedText(chunk)),
         ]);
@@ -407,9 +405,9 @@ export class ContentStore {
        FROM chunks_fts
        JOIN chunks c ON c.id = chunks_fts.rowid
        JOIN documents d ON d.tenant_id = c.tenant_id AND d.path = c.path
-       WHERE chunks_fts MATCH ?1 AND d.tenant_id = ?2${filterSql ? ` AND ${filterSql}` : ""}
+       WHERE chunks_fts MATCH ? AND d.tenant_id = ?${filterSql ? ` AND ${filterSql}` : ""}
        ORDER BY rank ASC, d.path ASC
-       LIMIT ?${values.length}`,
+       LIMIT ?`,
       values,
     );
     return dedupeHits(
@@ -445,13 +443,13 @@ export class ContentStore {
     values.push(k);
     const rows = await this.#all(
       `SELECT d.tenant_id, d.path, d.schema, c.chunk AS excerpt,
-              vec_distance_l2(v.embedding, ?1) AS distance
+              vec_distance_l2(v.embedding, ?) AS distance
        FROM chunk_vectors v
        JOIN chunks c ON c.id = v.rowid
        JOIN documents d ON d.tenant_id = c.tenant_id AND d.path = c.path
-       WHERE d.tenant_id = ?2${filterSql ? ` AND ${filterSql}` : ""}
+       WHERE d.tenant_id = ?${filterSql ? ` AND ${filterSql}` : ""}
        ORDER BY distance ASC, d.path ASC
-       LIMIT ?${values.length}`,
+       LIMIT ?`,
       values,
     );
     return dedupeHits(
@@ -479,7 +477,7 @@ export class ContentStore {
        FROM chunk_vectors v
        JOIN chunks c ON c.id = v.rowid
        JOIN documents d ON d.tenant_id = c.tenant_id AND d.path = c.path
-       WHERE d.tenant_id = ?1${filterSql ? ` AND ${filterSql}` : ""}`,
+       WHERE d.tenant_id = ?${filterSql ? ` AND ${filterSql}` : ""}`,
       values,
     );
     const probe = embedText(query);
@@ -510,9 +508,9 @@ export class ContentStore {
         `SELECT d.tenant_id, d.path, d.schema, COALESCE(c.chunk, d.body) AS excerpt
          FROM documents d
          LEFT JOIN chunks c ON c.tenant_id = d.tenant_id AND c.path = d.path AND c.chunk_index = 0
-         WHERE d.tenant_id = ?1${filterSql ? ` AND ${filterSql}` : ""}
+         WHERE d.tenant_id = ?${filterSql ? ` AND ${filterSql}` : ""}
          ORDER BY d.path ASC
-         LIMIT ?${values.length}`,
+         LIMIT ?`,
         values,
       )
     ).map((row) => ({
@@ -583,47 +581,44 @@ export class ContentStore {
   }
 
   async #clearTenantIndex(): Promise<void> {
-    const rows = await this.#all("SELECT id FROM chunks WHERE tenant_id = ?1", [this.#tenantId]);
+    const rows = await this.#all("SELECT id FROM chunks WHERE tenant_id = ?", [this.#tenantId]);
     await this.#transaction(async () => {
       for (const row of rows) {
         const id = numberFrom(row.id);
-        await this.#run("DELETE FROM chunks_fts WHERE rowid = ?1", [id]);
-        await this.#run("DELETE FROM chunk_vectors WHERE rowid = ?1", [id]);
-        await this.#run("DELETE FROM chunk_vector_meta WHERE chunk_id = ?1", [id]);
+        await this.#run("DELETE FROM chunks_fts WHERE rowid = ?", [id]);
+        await this.#run("DELETE FROM chunk_vectors WHERE rowid = ?", [id]);
+        await this.#run("DELETE FROM chunk_vector_meta WHERE chunk_id = ?", [id]);
       }
-      await this.#run("DELETE FROM document_frontmatter WHERE tenant_id = ?1", [this.#tenantId]);
-      await this.#run("DELETE FROM chunks WHERE tenant_id = ?1", [this.#tenantId]);
-      await this.#run("DELETE FROM documents WHERE tenant_id = ?1", [this.#tenantId]);
+      await this.#run("DELETE FROM document_frontmatter WHERE tenant_id = ?", [this.#tenantId]);
+      await this.#run("DELETE FROM chunks WHERE tenant_id = ?", [this.#tenantId]);
+      await this.#run("DELETE FROM documents WHERE tenant_id = ?", [this.#tenantId]);
     });
   }
 
   async #deleteIndexedPath(path: string): Promise<void> {
-    const rows = await this.#all("SELECT id FROM chunks WHERE tenant_id = ?1 AND path = ?2", [
+    const rows = await this.#all("SELECT id FROM chunks WHERE tenant_id = ? AND path = ?", [
       this.#tenantId,
       path,
     ]);
     for (const row of rows) {
       const id = numberFrom(row.id);
-      await this.#run("DELETE FROM chunks_fts WHERE rowid = ?1", [id]);
-      await this.#run("DELETE FROM chunk_vectors WHERE rowid = ?1", [id]);
-      await this.#run("DELETE FROM chunk_vector_meta WHERE chunk_id = ?1", [id]);
+      await this.#run("DELETE FROM chunks_fts WHERE rowid = ?", [id]);
+      await this.#run("DELETE FROM chunk_vectors WHERE rowid = ?", [id]);
+      await this.#run("DELETE FROM chunk_vector_meta WHERE chunk_id = ?", [id]);
     }
-    await this.#run("DELETE FROM chunks WHERE tenant_id = ?1 AND path = ?2", [
+    await this.#run("DELETE FROM chunks WHERE tenant_id = ? AND path = ?", [this.#tenantId, path]);
+    await this.#run("DELETE FROM documents WHERE tenant_id = ? AND path = ?", [
       this.#tenantId,
       path,
     ]);
-    await this.#run("DELETE FROM documents WHERE tenant_id = ?1 AND path = ?2", [
-      this.#tenantId,
-      path,
-    ]);
-    await this.#run("DELETE FROM document_frontmatter WHERE tenant_id = ?1 AND path = ?2", [
+    await this.#run("DELETE FROM document_frontmatter WHERE tenant_id = ? AND path = ?", [
       this.#tenantId,
       path,
     ]);
   }
 
   async #indexedCount(): Promise<number> {
-    const row = await this.#get("SELECT COUNT(*) AS count FROM documents WHERE tenant_id = ?1", [
+    const row = await this.#get("SELECT COUNT(*) AS count FROM documents WHERE tenant_id = ?", [
       this.#tenantId,
     ]);
     return numberFrom(row?.count);
@@ -695,13 +690,45 @@ async function openSqliteDatabase(indexPath: string): Promise<SqlDatabase> {
         database: string;
         loadExtension?: string | false;
       }): Promise<VecDatabase>;
+      resolveNativeExtensionPath?: () => string | undefined;
     };
-    const database = await sqliteVec.createDatabase({ database: indexPath });
+    const loadExtension = compatibleSqliteVecExtension(sqliteVec.resolveNativeExtensionPath);
+    if (loadExtension === false) {
+      throw new Error("No compatible sqlite-vec native extension available");
+    }
+    const database = await sqliteVec.createDatabase({
+      database: indexPath,
+      loadExtension,
+    });
     await database.open();
     return new VecSqliteDatabase(database);
   } catch {
     return openNodeSqliteDatabase(indexPath);
   }
+}
+
+function compatibleSqliteVecExtension(
+  resolveNativeExtensionPath: (() => string | undefined) | undefined,
+): string | false {
+  const extensionPath = resolveNativeExtensionPath?.();
+  if (extensionPath === undefined) return false;
+  return basename(extensionPath) ===
+    `sqlite-vec-${sqliteVecPlatformTriple()}.${sqliteVecLibraryExt()}`
+    ? extensionPath
+    : false;
+}
+
+function sqliteVecPlatformTriple(): string {
+  if (process.platform === "darwin") return `darwin-${process.arch}`;
+  if (process.platform === "win32") return `win32-${process.arch}`;
+  if (process.platform === "linux") return `linux-${process.arch}-gnu`;
+  return `${process.platform}-${process.arch}`;
+}
+
+function sqliteVecLibraryExt(): string {
+  if (process.platform === "darwin") return "dylib";
+  if (process.platform === "win32") return "dll";
+  return "so";
 }
 
 class VecSqliteDatabase implements SqlDatabase {
