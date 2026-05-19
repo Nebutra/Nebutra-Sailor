@@ -1,5 +1,6 @@
 import { remarkFeedbackBlock } from "fumadocs-core/mdx-plugins/remark-feedback-block";
 import { defineConfig, defineDocs, frontmatterSchema } from "fumadocs-mdx/config";
+import lastModified from "fumadocs-mdx/plugins/last-modified";
 import { remarkMdxMermaid } from "fumadocs-mermaid";
 import {
   createFileSystemGeneratorCache,
@@ -27,6 +28,7 @@ export const docs = defineDocs({
 });
 
 export default defineConfig({
+  plugins: [lastModified()],
   mdxOptions: {
     remarkPlugins: [
       remarkComponent,
