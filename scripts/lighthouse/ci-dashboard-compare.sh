@@ -260,7 +260,7 @@ run_snapshot_once() {
           break
         fi
 
-        echo "Lighthouse attempt \${LIGHTHOUSE_ATTEMPT}/3 failed." >&2
+        printf 'Lighthouse attempt %s/3 failed.\n' \$LIGHTHOUSE_ATTEMPT >&2
         sleep 3
       done
 
