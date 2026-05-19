@@ -212,8 +212,21 @@ function listCommandNames(): string[] {
   return subcommands.map((command) => command.name);
 }
 
-function outputJSON(data: unknown): void {
-  process.stdout.write(`${JSON.stringify(data, null, 2)}\n`);
+function writeStdout(text: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    process.stdout.write(text, (error) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+
+      resolve();
+    });
+  });
+}
+
+async function outputJSON(data: unknown): Promise<void> {
+  await writeStdout(`${JSON.stringify(data, null, 2)}\n`);
 }
 
 function isExitSignal(error: unknown): error is Error {
@@ -229,17 +242,17 @@ export async function schemaCommand(
 
   try {
     if (options.all === true) {
-      outputJSON(getFullSchema(version));
+      await outputJSON(getFullSchema(version));
       process.exit(0);
     }
 
     if (options.list === true) {
-      outputJSON(listCommandNames());
+      await outputJSON(listCommandNames());
       process.exit(0);
     }
 
     if (options.exitCodes === true || options["exit-codes"] === true) {
-      outputJSON(EXIT_CODES);
+      await outputJSON(EXIT_CODES);
       process.exit(0);
     }
 
@@ -254,7 +267,7 @@ export async function schemaCommand(
         process.exit(ExitCode.NOT_FOUND);
       }
 
-      outputJSON(schema);
+      await outputJSON(schema);
       process.exit(0);
     }
 
