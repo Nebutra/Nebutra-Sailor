@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/landing-builder",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "BrandContext-first landing page Play package for generating deployable launch sites",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "wip",

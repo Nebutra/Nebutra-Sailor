@@ -1,5 +1,11 @@
 # create-sailor
 
+## 1.7.3
+
+### Patch Changes
+
+- Publish registry package metadata under the MIT license.
+
 ## 1.7.2
 
 ### Patch Changes
@@ -7,7 +13,6 @@
 - [`94adc0a`](https://github.com/Nebutra/Nebutra-Sailor/commit/94adc0ad7d305e92ef62411768b04f8fd79cdb48) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Close drift between the CLI/scaffolder surface and the current monorepo.
 
   `nebutra`:
-
   - Read VERSION from package.json at module load (was hardcoded "0.1.0"
     while published as 0.3.0, breaking --version and update-notifier).
   - Switch `@nebutra/theme` dep from `workspace:*` to published `^0.1.0`
@@ -31,7 +36,6 @@
     pre-merger `packages/ui`).
 
   `create-sailor`:
-
   - Show the same `NEBUTRA_TELEMETRY` first-run banner that the runtime
     CLI shows, using a shared `~/.config/nebutra/first-run-acked` marker
     so the banner only fires once per machine across both tools. Users
@@ -49,7 +53,6 @@
   new code can opt into Drizzle's SQL-shaped query builder while existing
   auth / billing / audit / oauth flows keep working against Prisma. The
   Drizzle package ships with:
-
   - `drizzle.config.ts` targeting Postgres
   - `src/schema/{auth,tenant,billing}.ts` — read-mostly mirrors of the core
     Better Auth (user/session/account/verification/organization/member/

@@ -1,5 +1,33 @@
 # @nebutra/web
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/agent-runtime@0.2.1
+  - @nebutra/agents@1.1.1
+  - @nebutra/atelier-canvas@1.0.1
+  - @nebutra/audit@0.1.1
+  - @nebutra/cinema@0.2.1
+  - @nebutra/design-tokens@0.1.1
+  - @nebutra/email@0.1.1
+  - @nebutra/icons@0.1.1
+  - @nebutra/logger@0.1.1
+  - @nebutra/metering@0.1.1
+  - @nebutra/notifications@0.1.2
+  - @nebutra/queue@0.1.2
+  - @nebutra/reel@1.0.1
+  - @nebutra/theme@0.1.1
+  - @nebutra/tokens@0.1.1
+  - @nebutra/ui@0.2.1
+  - @nebutra/uploads@0.1.1
+  - @nebutra/webhooks@0.1.2
+  - @nebutra/auth@0.1.2
+  - @nebutra/analytics@0.0.3
+  - @nebutra/feature-flags@0.1.2
+  - @nebutra/db@0.1.1
+
 ## 0.1.1
 
 ### Patch Changes

@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/tenant-store",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Neutral lowest-layer multi-tenant primitives: per-(tenant,resource) serialization lock + tenant-scoped in-memory store base. Depended on by atelier-canvas and reel; depends on neither.",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "featureId": "tenant-store",

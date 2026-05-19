@@ -3711,8 +3711,8 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0
       '@nebutra/theme':
-        specifier: ^0.1.0
-        version: 0.1.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: workspace:*
+        version: link:../../design/theme
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -7396,11 +7396,6 @@ packages:
 
   '@napi-rs/wasm-runtime@1.1.1':
     resolution: {integrity: sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A==}
-
-  '@nebutra/theme@0.1.0':
-    resolution: {integrity: sha512-lcI9XMLCmGzKOg8PFWCE9t1CyIBR/UxXgNmtISqYJX/g47PH/nat1s5f+u/qpLZp7OWvuLTSyqrcFJq3kCZbrA==}
-    peerDependencies:
-      react: ^19
 
   '@next/bundle-analyzer@16.2.6':
     resolution: {integrity: sha512-amPkVtHCTJAdBwyhhl5+qztHk24O4JlASgrWqh15AmnYi74apfZR46NGC0u4pM6BMAU1mYld4WdzD3cRBP3dOA==}
@@ -23818,13 +23813,6 @@ snapshots:
       '@emnapi/runtime': 1.8.1
       '@tybys/wasm-util': 0.10.1
     optional: true
-
-  '@nebutra/theme@0.1.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
-    dependencies:
-      next-themes: 0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      react: 19.2.4
-    transitivePeerDependencies:
-      - react-dom
 
   '@next/bundle-analyzer@16.2.6':
     dependencies:

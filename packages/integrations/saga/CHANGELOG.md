@@ -1,5 +1,16 @@
 # @nebutra/saga
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/billing@0.1.2
+  - @nebutra/email@0.1.1
+  - @nebutra/logger@0.1.1
+  - @nebutra/auth@0.1.2
+  - @nebutra/event-bus@0.1.1
+
 ## 0.1.1
 
 ### Patch Changes

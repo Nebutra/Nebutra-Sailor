@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/code-execution",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Action and observation execution layer backed by sandbox-runtime",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "wip",

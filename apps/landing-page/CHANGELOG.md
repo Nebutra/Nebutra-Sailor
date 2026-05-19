@@ -1,5 +1,21 @@
 # @nebutra/landing-page
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/billing@0.1.2
+  - @nebutra/brand@0.1.1
+  - @nebutra/icons@0.1.1
+  - @nebutra/license@0.1.2
+  - @nebutra/logger@0.1.1
+  - @nebutra/tokens@0.1.1
+  - @nebutra/ui@0.2.1
+  - @nebutra/auth@0.1.2
+  - @nebutra/db@0.1.1
+  - @nebutra/marketing@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

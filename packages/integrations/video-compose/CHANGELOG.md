@@ -1,11 +1,20 @@
 # @nebutra/video-compose
 
+## 0.2.1
+
+### Patch Changes
+
+- Publish registry package metadata under the MIT license.
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@0.2.1
+  - @nebutra/provider-factory@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes
 
 - [`6c92e1f`](https://github.com/Nebutra/Nebutra-Sailor/commit/6c92e1f8535fbbe4dff6af071781ec031e224c44) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - `cinema` follow-on — the two video-pipeline gaps (PORT, delivered).
-
   - **New `@nebutra/tts`**: provider-agnostic narration synthesis. Deterministic
     zero-config mock default (active); ElevenLabs/OpenAI/Volces selected via the
     shared `@nebutra/provider-factory`, fail-loud stubs until landed. Multi-tenant

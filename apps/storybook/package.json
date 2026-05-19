@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/storybook",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--max-old-space-size=8192' storybook dev --port 6006 --no-open",

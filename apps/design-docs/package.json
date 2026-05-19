@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/design-docs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "predev": "fumadocs-mdx && node scripts/build-registry.mjs && tsx ../../packages/design/ui/scripts/build-registry.ts",

@@ -1,5 +1,15 @@
 # @nebutra/sleptons
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/icons@0.1.1
+  - @nebutra/tokens@0.1.1
+  - @nebutra/ui@0.2.1
+  - @nebutra/db@0.1.1
+
 ## 0.1.1
 
 ### Patch Changes

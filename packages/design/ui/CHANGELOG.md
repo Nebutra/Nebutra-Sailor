@@ -1,11 +1,22 @@
 # @nebutra/ui
 
+## 0.2.1
+
+### Patch Changes
+
+- Publish registry package metadata under the MIT license.
+
+- Updated dependencies []:
+  - @nebutra/brand@0.1.1
+  - @nebutra/graph-model@0.2.1
+  - @nebutra/icons@0.1.1
+  - @nebutra/tokens@0.1.1
+
 ## 0.2.0
 
 ### Minor Changes
 
 - [`34bd161`](https://github.com/Nebutra/Nebutra-Sailor/commit/34bd16140436c966896bf7a2276e8c20777c256f) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Capability absorption — codename `canvas` (clean-room, architecture-translation only).
-
   - **New `@nebutra/tenant-store`** (Step-0 governance): neutral lower layer —
     `withTenantLock` + `InMemoryTenantStore` + `TenantScopedStore`. `reel` and
     `atelier-canvas` now both depend on it and no longer on each other;
@@ -28,7 +39,6 @@
   copied; TDD with all suites green. See `docs/capabilities/canvas/`.
 
 - [`d0b0e62`](https://github.com/Nebutra/Nebutra-Sailor/commit/d0b0e623a322e35f9ce2ae8d117e803b803b5e0b) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Dependency-direction governance: generic UI no longer depends on a feature.
-
   - **New `@nebutra/graph-model`**: neutral structural DAG contract
     (`GraphNode`/`GraphEdge`/`Graph` + `inboundEdges`/`hasCycleFrom`/
     `wouldCreateCycle`).

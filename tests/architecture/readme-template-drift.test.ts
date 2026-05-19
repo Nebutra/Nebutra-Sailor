@@ -30,17 +30,24 @@ const LOCALES = [
   { rendered: "README.zh-CN.md", template: "README.zh-CN.template.md" },
   { rendered: "README.ja.md", template: "README.ja.template.md" },
 ];
+const BRAND_APPLY_SIDE_EFFECTS = [".env.example", "packages/design/brand/src/metadata.ts"];
 
 describe("README template drift", () => {
   it("every rendered README matches what `brand:apply` would emit from its template", () => {
     // Snapshot current rendered files so we can restore them after the
     // brand:apply run modifies them in place.
-    const snapshots = LOCALES.map(({ rendered }) => {
-      const src = join(ROOT, rendered);
-      const tmpPath = join(tmpdir(), `readme-drift-${Date.now()}-${rendered}`);
-      copyFileSync(src, tmpPath);
-      return { src, tmpPath, originalBytes: readFileSync(src, "utf8") };
-    });
+    const snapshots = [...LOCALES.map(({ rendered }) => rendered), ...BRAND_APPLY_SIDE_EFFECTS].map(
+      (relativePath) => {
+        const src = join(ROOT, relativePath);
+        const tmpPath = join(
+          tmpdir(),
+          `readme-drift-${Date.now()}-${relativePath.replaceAll("/", "__")}`,
+        );
+        copyFileSync(src, tmpPath);
+        return { src, tmpPath, originalBytes: readFileSync(src, "utf8") };
+      },
+    );
+    const readmeSnapshots = snapshots.slice(0, LOCALES.length);
 
     try {
       // Run the script. It exits non-zero on internal failure; vitest
@@ -50,8 +57,8 @@ describe("README template drift", () => {
         stdio: "pipe",
       });
 
-      // Compare post-run bytes against the snapshot.
-      for (const { src, originalBytes } of snapshots) {
+      // Compare post-run bytes against the README snapshot.
+      for (const { src, originalBytes } of readmeSnapshots) {
         const after = readFileSync(src, "utf8");
         expect(
           after,

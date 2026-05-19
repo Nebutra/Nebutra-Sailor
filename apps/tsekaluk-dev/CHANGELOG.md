@@ -1,5 +1,20 @@
 # @nebutra/tsekaluk-dev
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/agents@1.1.1
+  - @nebutra/brand@0.1.1
+  - @nebutra/icons@0.1.1
+  - @nebutra/logger@0.1.1
+  - @nebutra/tokens@0.1.1
+  - @nebutra/ui@0.2.1
+  - @nebutra/analytics@0.0.3
+  - @nebutra/db@0.1.1
+  - @nebutra/marketing@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

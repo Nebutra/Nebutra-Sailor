@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/cofounder-match",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Behavior-verified cofounder profile, matching, and mutual-consent introduction surface",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "wip",

@@ -1,5 +1,14 @@
 # @nebutra/code-index
 
+## 0.2.1
+
+### Patch Changes
+
+- Publish registry package metadata under the MIT license.
+
+- Updated dependencies []:
+  - @nebutra/ai-primitives@0.1.1
+
 ## 0.2.0
 
 ### Minor Changes

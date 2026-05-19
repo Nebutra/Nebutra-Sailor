@@ -1,11 +1,37 @@
 # @nebutra/gateway
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/agent-runtime@0.2.1
+  - @nebutra/agents@1.1.1
+  - @nebutra/audit@0.1.1
+  - @nebutra/billing@0.1.2
+  - @nebutra/cache@0.0.2
+  - @nebutra/email@0.1.1
+  - @nebutra/errors@0.1.1
+  - @nebutra/license@0.1.2
+  - @nebutra/logger@0.1.1
+  - @nebutra/notifications@0.1.2
+  - @nebutra/queue@0.1.2
+  - @nebutra/search@0.1.1
+  - @nebutra/vault@0.1.1
+  - @nebutra/auth@0.1.2
+  - @nebutra/analytics@0.0.3
+  - @nebutra/gateway-core@0.1.2
+  - @nebutra/sms@0.1.1
+  - @nebutra/feature-flags@0.1.2
+  - @nebutra/event-bus@0.1.1
+  - @nebutra/db@0.1.1
+  - @nebutra/repositories@0.0.2
+
 ## 0.2.0
 
 ### Minor Changes
 
 - [`67f9cd0`](https://github.com/Nebutra/Nebutra-Sailor/commit/67f9cd02c0ee908f0579efadc4292d535a758c16) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Durable rollout-store backend (the agent-runtime system-of-record).
-
   - New Prisma model `AgentRolloutLine` → table `agent_rollout_lines`, additive
     migration `20260519000000_add_agent_rollout_store` (one CREATE TABLE).
   - `createPrismaRolloutPersistence` in `@nebutra/agent-runtime-adapters`:
@@ -17,7 +43,6 @@
     migrate+generate deploy step (ADR 2026-05-19), not faked durability.
 
 - [`22d150d`](https://github.com/Nebutra/Nebutra-Sailor/commit/22d150d0279d2a9daa31d7cb94d6e14da72b38bf) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Wire `@nebutra/agent-runtime` live into the gateway.
-
   - New route `POST /api/v1/agent-runtime/turns`: drives a tenant-scoped turn
     via `runTurn`, streamed to the client over SSE. Gated by `requireAuth` and
     the off-by-default `agent-runtime-demo` feature flag.

@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/play-marketplace",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Local registry, publishing, install, metrics, and billing handoff surface for SKILL.md Plays",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "wip",

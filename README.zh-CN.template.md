@@ -31,7 +31,10 @@
       <img src="https://img.shields.io/github/forks/{{repo.full}}?style=for-the-badge&logo=github&color=14b8a6&logoColor=fff" alt="GitHub Forks" />
     </a>
     <a href="https://github.com/{{repo.full}}/blob/main/LICENSE">
-      <img src="https://img.shields.io/badge/许可证-AGPLv3-6366f1?style=for-the-badge" alt="License" />
+      <img src="https://img.shields.io/badge/仓库-AGPLv3-6366f1?style=for-the-badge" alt="Repository License" />
+    </a>
+    <a href="#许可证">
+      <img src="https://img.shields.io/badge/npm%20包-MIT-14b8a6?style=for-the-badge" alt="npm Package License" />
     </a>
   </p>
   <p>
@@ -63,9 +66,8 @@
 <br />
 <br />
 
-> **License 一览** —— npm 上发布的所有包都是 **AGPL-3.0-only**。如果你直接
-> `npm install @nebutra/*` 用在面向网络的产品里，AGPL 网络-Copyleft
-> 条款会触发——除非你 (a) 用 `npx create-sailor` 脚手架（独立开发者
+> **License 一览** —— npm 上发布的包都是 **MIT**。直接 fork 源码仓库仍然是
+> **AGPL-3.0-only**，除非你 (a) 用 `npx create-sailor` 脚手架（独立开发者
 > 授权，≤ 1 FTE 且 < $1M ARR 免费，**无 Copyleft**），或者 (b) 持有
 > [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) 里的 Startup
 > ($799/年) 或 Enterprise 商业授权。完整边界和边缘情况参见下方
@@ -747,14 +749,16 @@ pnpm brand:apply
 
 ## 许可证
 
-本项目采用 **AGPLv3**。
+{{repo.name}} 采用双许可证模型：npm 发布包走 **MIT**，直接 fork 本仓库仍走
+**AGPLv3**。
 
 |                |                                    |
 | -------------- | ---------------------------------- |
+| **npm 安装包** | MIT，无 Copyleft                   |
+| **直接 fork**  | AGPLv3，网络使用需开源             |
 | **免费使用**   | 个人项目、学习和内部工具           |
 | **可自由修改** | 创建衍生作品                       |
 | **可自由分发** | 需注明出处                         |
-| **商业使用**   | 需开源                             |
 | **豁免**       | {{company.nameCN}}及关联组织 |
 
 如需商业授权，请与我们联系。

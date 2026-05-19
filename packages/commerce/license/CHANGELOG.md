@@ -1,5 +1,17 @@
 # @nebutra/license
 
+## 0.1.2
+
+### Patch Changes
+
+- Publish registry package metadata under the MIT license.
+
+- Updated dependencies []:
+  - @nebutra/email@0.1.1
+  - @nebutra/logger@0.1.1
+  - @nebutra/queue@0.1.2
+  - @nebutra/db@0.1.1
+
 ## 0.1.1
 
 ### Patch Changes

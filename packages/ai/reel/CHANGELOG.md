@@ -1,11 +1,24 @@
 # @nebutra/reel
 
+## 1.0.1
+
+### Patch Changes
+
+- Publish registry package metadata under the MIT license.
+
+- Updated dependencies []:
+  - @nebutra/agents@1.1.1
+  - @nebutra/graph-model@0.2.1
+  - @nebutra/icons@0.1.1
+  - @nebutra/logger@0.1.1
+  - @nebutra/tenant-store@0.2.1
+  - @nebutra/ui@0.2.1
+
 ## 1.0.0
 
 ### Minor Changes
 
 - [`d0b0e62`](https://github.com/Nebutra/Nebutra-Sailor/commit/d0b0e623a322e35f9ce2ae8d117e803b803b5e0b) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Dependency-direction governance: generic UI no longer depends on a feature.
-
   - **New `@nebutra/graph-model`**: neutral structural DAG contract
     (`GraphNode`/`GraphEdge`/`Graph` + `inboundEdges`/`hasCycleFrom`/
     `wouldCreateCycle`).
@@ -24,7 +37,6 @@
   `docs/capabilities/canvas/ANTI_PATTERNS.md` §7.
 
 - [`4f5687f`](https://github.com/Nebutra/Nebutra-Sailor/commit/4f5687fd3fc55529486d6356e010bcaeffe131c8) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Add the Reel node-graph + storyboard generative-media capability.
-
   - `@nebutra/reel`: new package — a typed node+edge graph with the absorbed
     **NODE_IO_ENVELOPE v1.0** contract kept exactly (versioned, type-erased
     inter-node payload), pull-based input resolution, cycle detection, and a
@@ -46,7 +58,6 @@
 ### Patch Changes
 
 - [`34bd161`](https://github.com/Nebutra/Nebutra-Sailor/commit/34bd16140436c966896bf7a2276e8c20777c256f) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Capability absorption — codename `canvas` (clean-room, architecture-translation only).
-
   - **New `@nebutra/tenant-store`** (Step-0 governance): neutral lower layer —
     `withTenantLock` + `InMemoryTenantStore` + `TenantScopedStore`. `reel` and
     `atelier-canvas` now both depend on it and no longer on each other;

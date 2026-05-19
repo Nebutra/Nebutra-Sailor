@@ -30,7 +30,10 @@
       <img src="https://img.shields.io/github/forks/Nebutra/Nebutra-Sailor?style=for-the-badge&logo=github&color=14b8a6&logoColor=fff" alt="GitHub Forks" />
     </a>
     <a href="https://github.com/Nebutra/Nebutra-Sailor/blob/main/LICENSE">
-      <img src="https://img.shields.io/badge/ライセンス-AGPLv3-6366f1?style=for-the-badge" alt="License" />
+      <img src="https://img.shields.io/badge/repo-AGPLv3-6366f1?style=for-the-badge" alt="Repository License" />
+    </a>
+    <a href="#ライセンス">
+      <img src="https://img.shields.io/badge/npm%20packages-MIT-14b8a6?style=for-the-badge" alt="npm Package License" />
     </a>
   </p>
   <p>
@@ -52,10 +55,9 @@
 <br />
 <br />
 
-> **ライセンス概要** —— npm で公開されているパッケージはすべて **AGPL-3.0-only** です。
-> `npm install @nebutra/*` をネットワーク経由のプロダクトに使う場合、
-> AGPL のネットワーク Copyleft 条項が発動します — ただし (a)
-> `npx create-sailor` でスキャフォールドするか（Independent Developer
+> **ライセンス概要** —— npm で公開されているパッケージは **MIT** です。
+> ソースリポジトリを直接 fork する場合は **AGPL-3.0-only** のままです — ただし
+> (a) `npx create-sailor` でスキャフォールドするか（Independent Developer
 > License、≤ 1 FTE & < $1M ARR で無料、**Copyleft なし**）、
 > (b) [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) の Startup
 > ($799/年) または Enterprise 商用ライセンスを取得した場合は除きます。
@@ -656,14 +658,16 @@ Nebutra-Sailor/
 
 ## ライセンス
 
-**AGPLv3**
+npm 公開パッケージは **MIT**、このリポジトリを直接 fork する場合は
+**AGPLv3** です。
 
 |              |                                        |
 | ------------ | -------------------------------------- |
+| **npm パッケージ** | MIT、Copyleft なし                     |
+| **直接 fork** | AGPLv3、ネットワーク利用時はソース公開が必要 |
 | **無料利用** | 個人プロジェクト、学習、社内ツール     |
 | **変更可能** | 派生物の作成                           |
 | **配布可能** | 帰属表示付きで                         |
-| **商用利用** | オープンソース化が必要                 |
 | **免除**     | 無錫雲毓智能科技有限公司および関連会社 |
 
 <br />
