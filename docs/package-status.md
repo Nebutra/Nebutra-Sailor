@@ -54,7 +54,7 @@ you contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (35)
+## WIP packages (36)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -98,6 +98,7 @@ and missing functionality.
 | `@nebutra/execution-policy` | (consumed directly) | Policy enforcement contracts for agent tool calls; concrete sidecar enforcement is adapter-gated |
 | `@nebutra/local-embedding` | (consumed directly) | Local embedding provider for code-index and retrieval; model adapters and persistence are interface-only |
 | `@nebutra/knowledge-base` | (consumed directly) | Product cognition layer over existing retrieval and ingestion; production wiring + persistence pending |
+| `@nebutra/ai-primitives` | (consumed directly) | Shared low-level utilities for the AI package family (scopedKey, sha256, cosineSimilarity, clamp, estimateTokens); interfaces still settling |
 
 ## Contributing
 
