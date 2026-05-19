@@ -90,7 +90,7 @@ catalog:
 
   # ── Docs / MDX ─────────────────────────────────────────────────────────────
   fumadocs-core: ^16.6.12
-  fumadocs-mdx: ^14.2.9
+  fumadocs-mdx: ^14.2.10
   fumadocs-ui: ^16.6.12
   "@types/mdx": ^2.0.13
   mermaid: ^11.15.0

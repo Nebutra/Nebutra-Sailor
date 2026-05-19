@@ -36,6 +36,15 @@ catalogs:
     '@vitest/coverage-v8':
       specifier: ^4.1.4
       version: 4.1.4
+    fumadocs-core:
+      specifier: ^16.6.12
+      version: 16.6.12
+    fumadocs-mdx:
+      specifier: ^14.2.10
+      version: 14.2.10
+    fumadocs-ui:
+      specifier: ^16.6.12
+      version: 16.6.12
     geist:
       specifier: ^1.3.1
       version: 1.7.0
@@ -250,11 +259,11 @@ importers:
         specifier: ^12.35.0
         version: 12.35.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       fumadocs-core:
-        specifier: ^16.6.12
+        specifier: 'catalog:'
         version: 16.6.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(algoliasearch@5.50.0)(lucide-react@0.577.0(react@19.2.4))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6)
       fumadocs-mdx:
-        specifier: ^14.2.9
-        version: 14.2.9(54ed0172a7daad9dd8db06c9dfd99d3f)
+        specifier: 'catalog:'
+        version: 14.2.10(54ed0172a7daad9dd8db06c9dfd99d3f)
       fumadocs-mermaid:
         specifier: ^1.3.1
         version: 1.3.1(fumadocs-ui@16.6.12(@emotion/is-prop-valid@1.4.0)(@takumi-rs/image-response@0.71.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(fumadocs-core@16.6.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(algoliasearch@5.50.0)(lucide-react@0.577.0(react@19.2.4))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tailwindcss@4.2.1))(lucide-react@0.577.0(react@19.2.4))(mermaid@11.15.0)(next-themes@0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
@@ -271,7 +280,7 @@ importers:
         specifier: ^5.1.5
         version: 5.1.5(a678815d1ddf68f0de8a5f3dbf104eb8)
       fumadocs-ui:
-        specifier: ^16.6.12
+        specifier: 'catalog:'
         version: 16.6.12(@emotion/is-prop-valid@1.4.0)(@takumi-rs/image-response@0.71.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(fumadocs-core@16.6.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(algoliasearch@5.50.0)(lucide-react@0.577.0(react@19.2.4))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tailwindcss@4.2.1)
       geist:
         specifier: 'catalog:'
@@ -656,11 +665,11 @@ importers:
         specifier: ^12.35.0
         version: 12.35.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       fumadocs-core:
-        specifier: ^16.6.12
+        specifier: 'catalog:'
         version: 16.6.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(algoliasearch@5.50.0)(lucide-react@0.577.0(react@19.2.4))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6)
       fumadocs-mdx:
-        specifier: ^14.2.9
-        version: 14.2.9(54ed0172a7daad9dd8db06c9dfd99d3f)
+        specifier: 'catalog:'
+        version: 14.2.10(54ed0172a7daad9dd8db06c9dfd99d3f)
       fumadocs-mermaid:
         specifier: ^1.3.1
         version: 1.3.1(fumadocs-ui@16.6.12(@emotion/is-prop-valid@1.4.0)(@takumi-rs/image-response@0.71.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(fumadocs-core@16.6.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(algoliasearch@5.50.0)(lucide-react@0.577.0(react@19.2.4))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tailwindcss@4.2.1))(lucide-react@0.577.0(react@19.2.4))(mermaid@11.15.0)(next-themes@0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
@@ -677,7 +686,7 @@ importers:
         specifier: ^5.1.5
         version: 5.1.5(a678815d1ddf68f0de8a5f3dbf104eb8)
       fumadocs-ui:
-        specifier: ^16.6.12
+        specifier: 'catalog:'
         version: 16.6.12(@emotion/is-prop-valid@1.4.0)(@takumi-rs/image-response@0.71.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(fumadocs-core@16.6.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(algoliasearch@5.50.0)(lucide-react@0.577.0(react@19.2.4))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tailwindcss@4.2.1)
       geist:
         specifier: 'catalog:'
@@ -14343,6 +14352,37 @@ packages:
 
   fumadocs-mdx@14.2.9:
     resolution: {integrity: sha512-5QbFj3KyNgojjpUsD5Xw2W+ofN9l1WiIxzthwFzGoHOLIoJkdCN4AjHcINC+YSo89d/oZlradrrKRd3uHwVKBA==}
+    hasBin: true
+    peerDependencies:
+      '@fumadocs/mdx-remote': ^1.4.0
+      '@types/mdast': '*'
+      '@types/mdx': '*'
+      '@types/react': ^19.2.14
+      fumadocs-core: ^15.0.0 || ^16.0.0
+      mdast-util-directive: '*'
+      next: ^16.2.6
+      react: '*'
+      vite: 7.3.3
+    peerDependenciesMeta:
+      '@fumadocs/mdx-remote':
+        optional: true
+      '@types/mdast':
+        optional: true
+      '@types/mdx':
+        optional: true
+      '@types/react':
+        optional: true
+      mdast-util-directive:
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      vite:
+        optional: true
+
+  fumadocs-mdx@14.2.10:
+    resolution: {integrity: sha512-0gITZiJb92c7xJwSMdcGBEY2+pFcRvklSNwxIAMTy4gjnuLZANjaXKw+qJ6E5+s9dO0IGlimHv5zyMYLjReg0w==}
     hasBin: true
     peerDependencies:
       '@fumadocs/mdx-remote': ^1.4.0
@@ -32108,6 +32148,37 @@ snapshots:
       - supports-color
 
   fumadocs-mdx@14.2.9(54ed0172a7daad9dd8db06c9dfd99d3f):
+    dependencies:
+      '@mdx-js/mdx': 3.1.1
+      '@standard-schema/spec': 1.1.0
+      chokidar: 5.0.0
+      esbuild: 0.27.3
+      estree-util-value-to-estree: 3.5.0
+      fumadocs-core: 16.6.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(algoliasearch@5.50.0)(lucide-react@0.577.0(react@19.2.4))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6)
+      js-yaml: 4.1.1
+      mdast-util-mdx: 3.0.0
+      mdast-util-to-markdown: 2.1.2
+      picocolors: 1.1.1
+      picomatch: 4.0.4
+      tinyexec: 1.0.2
+      tinyglobby: 0.2.15
+      unified: 11.0.5
+      unist-util-remove-position: 5.0.0
+      unist-util-visit: 5.1.0
+      vfile: 6.0.3
+      zod: 4.3.6
+    optionalDependencies:
+      '@fumadocs/mdx-remote': 1.4.6(@types/mdx@2.0.13)(@types/react@19.2.14)(fumadocs-core@16.6.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(algoliasearch@5.50.0)(lucide-react@0.577.0(react@19.2.4))(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6))(react@19.2.4)
+      '@types/mdast': 4.0.4
+      '@types/mdx': 2.0.13
+      '@types/react': 19.2.14
+      next: 16.2.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react: 19.2.4
+      vite: 7.3.3(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3)
+    transitivePeerDependencies:
+      - supports-color
+
+  fumadocs-mdx@14.2.10(54ed0172a7daad9dd8db06c9dfd99d3f):
     dependencies:
       '@mdx-js/mdx': 3.1.1
       '@standard-schema/spec': 1.1.0
