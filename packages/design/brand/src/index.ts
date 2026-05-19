@@ -51,7 +51,6 @@ export {
   brand,
   colors,
   faviconAssets,
-  fontAssets,
   logoAssets,
   ogImageDimensions,
   typography,
