@@ -62,6 +62,8 @@
  * every sort/slice works on a fresh copy.
  */
 
+import { clamp } from "@nebutra/ai-primitives";
+
 import { z } from "zod";
 import {
   cosineSimilarity,
@@ -327,10 +329,6 @@ function resolveKnobs(
 ): FusionKnobs {
   const preset = MODE_PRESETS[mode ?? "balanced"];
   return { ...preset, ...(overrides ?? {}) };
-}
-
-function clamp(x: number, lo: number, hi: number): number {
-  return Math.min(hi, Math.max(lo, x));
 }
 
 // ─── The fusion pipeline ────────────────────────────────────────────────────

@@ -40,6 +40,8 @@
  * ones; the version bumps only on a breaking change (none yet ⇒ `1`).
  */
 
+import { clamp } from "@nebutra/ai-primitives";
+
 import { z } from "zod";
 import {
   cosineSimilarity,
@@ -482,10 +484,6 @@ const trajectoryOptsSchema = z
 
 /** Options for {@link computeTrajectory}. */
 export type TrajectoryOptions = z.infer<typeof trajectoryOptsSchema>;
-
-function clamp(n: number, lo: number, hi: number): number {
-  return Math.min(hi, Math.max(lo, n));
-}
 
 /**
  * Build the per-metric {@link Trajectory} from a fact set.

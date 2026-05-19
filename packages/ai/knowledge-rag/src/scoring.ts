@@ -5,6 +5,7 @@
 // blend of the vector and keyword retrieval legs.
 // =============================================================================
 
+import { clamp, cosineSimilarity as primitiveCosineSimilarity } from "@nebutra/ai-primitives";
 import { KnowledgeRagError } from "./errors";
 
 /**
@@ -19,18 +20,7 @@ export function cosineSimilarity(a: readonly number[], b: readonly number[]): nu
         "Ensure all chunks were embedded with the same embedder/model as the query. Re-ingest after switching embedder.",
     });
   }
-  let dot = 0;
-  let na = 0;
-  let nb = 0;
-  for (let i = 0; i < a.length; i++) {
-    const x = a[i]!;
-    const y = b[i]!;
-    dot += x * y;
-    na += x * x;
-    nb += y * y;
-  }
-  if (na === 0 || nb === 0) return 0;
-  return dot / (Math.sqrt(na) * Math.sqrt(nb));
+  return primitiveCosineSimilarity(a, b, { onMismatch: "throw" });
 }
 
 /**
@@ -48,11 +38,6 @@ export function normalizeScores(scores: readonly number[]): number[] {
   const range = max - min;
   if (range === 0) return scores.map(() => 1);
   return scores.map((s) => (s - min) / range);
-}
-
-/** Clamp a number into [lo, hi]. */
-function clamp(x: number, lo: number, hi: number): number {
-  return Math.min(hi, Math.max(lo, x));
 }
 
 /**

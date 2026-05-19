@@ -73,6 +73,10 @@
  * is never mutated; every transformation builds new arrays/strings.
  */
 
+import {
+  type BaseTokenEstimator,
+  estimateTokens as estimatePrimitiveTokens,
+} from "@nebutra/ai-primitives";
 import { z } from "zod";
 
 /** Tokenizers undercount real BPE by ~15-30%; scale the base estimate up. */
@@ -134,7 +138,7 @@ export type Transcript = readonly Message[];
 export type Summarize = (prompt: string) => Promise<string>;
 
 /** Caller-injected cheap token heuristic; defaults to chars/4. */
-export type BaseEstimator = (text: string) => number;
+export type BaseEstimator = BaseTokenEstimator;
 
 /** The eligibility signal this module keys on (also the failure sentinel). */
 export const COMPACT_SENTINEL = "compact";
@@ -170,7 +174,7 @@ const compactInputSchema = z.object({
  * from the model's server-side counting. Always rounds UP — see header.
  */
 export function estimateTokens(text: string, base: BaseEstimator = defaultBase): number {
-  return Math.ceil(base(text) * TOKEN_CORRECTION);
+  return estimatePrimitiveTokens(text, { base, correction: TOKEN_CORRECTION });
 }
 
 /**

@@ -25,6 +25,7 @@
  * — no host filesystem access (resource base is an injected indirection).
  */
 
+import { estimateTokens as estimatePrimitiveTokens } from "@nebutra/ai-primitives";
 import { z } from "zod";
 import {
   type Definition,
@@ -38,8 +39,32 @@ export type SkillRecord = Definition;
 
 /** Tiers treated as first-party (never truncated, never dropped). */
 const FIRST_PARTY_TIERS: ReadonlySet<string> = new Set(["bundled", "builtin"]);
+const REGEX_META_CHARS = new Set([
+  ".",
+  "+",
+  "?",
+  "^",
+  "$",
+  "{",
+  "}",
+  "(",
+  ")",
+  "|",
+  "[",
+  "]",
+  "\\",
+]);
 
 const isFirstParty = (s: SkillRecord): boolean => FIRST_PARTY_TIERS.has(s.sourceTier);
+
+/**
+ * Listing budgets preserve the catalog degradation contract: very tight lower-
+ * tier budgets should still degrade to names-only before dropping. Context
+ * compaction uses the corrected 1.3 estimate; this listing surface deliberately
+ * uses the shared primitive with no correction.
+ */
+const estimateListingTokens = (text: string): number =>
+  estimatePrimitiveTokens(text, { correction: 1 });
 
 // ── Phase 1: listing ─────────────────────────────────────────────────────────
 
@@ -66,14 +91,11 @@ const listingOptionsSchema = z.object({
 });
 export type SkillListingOptions = z.input<typeof listingOptionsSchema>;
 
-/** Cheap, deterministic token estimate (≈4 chars/token). */
-const estimateTokens = (text: string): number => Math.ceil(text.length / 4);
-
 /** Minimal glob: `**` = any chars, `*` = any chars except `/`, else exact. */
 function globToRegExp(glob: string): RegExp {
   let out = "^";
   for (let i = 0; i < glob.length; i++) {
-    const c = glob[i]!;
+    const c = glob.charAt(i);
     if (c === "*") {
       if (glob[i + 1] === "*") {
         out += ".*";
@@ -81,7 +103,7 @@ function globToRegExp(glob: string): RegExp {
       } else {
         out += "[^/]*";
       }
-    } else if (".+?^${}()|[]\\".includes(c)) {
+    } else if (REGEX_META_CHARS.has(c)) {
       out += `\\${c}`;
     } else {
       out += c;
@@ -158,7 +180,7 @@ export function buildSkillListing(
         firstParty: true,
       };
       entries.push(entry);
-      used += estimateTokens(renderEntry(entry));
+      used += estimateListingTokens(renderEntry(entry));
       continue;
     }
 
@@ -169,7 +191,7 @@ export function buildSkillListing(
       degraded: false,
       firstParty: false,
     };
-    const fullCost = estimateTokens(renderEntry(full));
+    const fullCost = estimateListingTokens(renderEntry(full));
     if (used + fullCost <= budget) {
       entries.push(full);
       used += fullCost;
@@ -183,7 +205,7 @@ export function buildSkillListing(
       degraded: true,
       firstParty: false,
     };
-    const nameCost = estimateTokens(renderEntry(nameOnly));
+    const nameCost = estimateListingTokens(renderEntry(nameOnly));
     if (used + nameCost <= budget) {
       entries.push(nameOnly);
       used += nameCost;

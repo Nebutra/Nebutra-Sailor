@@ -4,10 +4,12 @@
 > (39 packages). It identifies where the same **fact / primitive** exists in
 > more than one package, classifies each as *extractable duplicate* vs
 > *principled-distinct boundary*, names the correct single owner, and specifies
-> how to lock the boundaries. **No code was changed by this audit.** Execution
-> (owner package, rewire, architecture test) is deliberately deferred — see
-> §5 (every `packages/ai/*/package.json` is concurrently held by other
-> sessions; a cross-package rewire now would silently clobber that work).
+> how to lock the boundaries.
+>
+> **Follow-up status:** the package manifest churn that originally blocked
+> rewiring has cleared. The extractable pure helpers are now owned by
+> `@nebutra/ai-primitives`; this document remains the boundary ledger for what
+> was merged and what must stay separate.
 
 ## 1. Method
 
@@ -67,17 +69,21 @@ Dependency analysis:
 Each is a real architectural distinction; a "tidy" merge would be a regression.
 State the principle so a future merge attempt is self-evidently wrong:
 
-- **`code-index` ↔ `knowledge-graph`** — indexed unit differs: AST *code
+- **`code-index ≠ knowledge-graph`** — indexed unit differs: AST *code
   symbols* vs typed *prose entities + bitemporal facts*. `knowledge-graph`
   consumes a vector signal **only through its injected `VectorRetriever`
   port**, never `code-index` directly (its module header already documents "no
   hard dependency either way"). Principle: *different indexed unit; coupling is
   via port, not package.*
-- **`knowledge-rag` fusion ↔ `knowledge-graph` fusion** (#7) — `knowledge-rag`
+- **RRF 秩融合 ≠ weighted score blending** (#7) — `knowledge-rag`
   fuses two **scores** (min-max normalize + weighted blend); `knowledge-graph`
   fuses N **rank** lists (RRF) plus graph-structural boosts a flat store
   cannot compute. Principle: *score-fusion vs rank+structure-fusion are
   different algorithms, not a refactor target.*
+- **三套 chunker 不合并** (#12) — `knowledge-rag` owns prose-window chunking,
+  `code-index` owns code-structural chunking, and `content-store` owns
+  paragraph/file-truth chunking. Principle: *input domain differs; only shared
+  file-truth helpers belong in `content-store`.*
 - **The three `VectorStore`/`VectorRetriever` ports** (#9) — collection-
   lifecycle (`ensure/recreate/upsert/deleteByFilePath`, `CollectionKey`) vs
   doc-scoped (`queryByVector(tenantId,…)/deleteByDoc`) vs injection-seam
