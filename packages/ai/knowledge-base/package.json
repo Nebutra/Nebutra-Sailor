@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/knowledge-base",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Tenant-scoped company knowledge product layer over content-store, document-pipeline, and knowledge-rag",
   "private": false,
   "license": "AGPL-3.0-only",
