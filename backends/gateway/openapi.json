@@ -2177,6 +2177,9 @@
     },
     "/api/v1/agent-runtime/turns": {
       "post": {
+        "tags": ["Agent Runtime"],
+        "operationId": "createAgentRuntimeTurn",
+        "summary": "Run an agent runtime turn",
         "requestBody": {
           "content": {
             "application/json": {

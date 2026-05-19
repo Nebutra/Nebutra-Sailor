@@ -127,6 +127,9 @@ function modelInvoker(
 const turnRoute = createRoute({
   method: "post",
   path: "/turns",
+  tags: ["Agent Runtime"],
+  operationId: "createAgentRuntimeTurn",
+  summary: "Run an agent runtime turn",
   request: {
     body: {
       content: {
