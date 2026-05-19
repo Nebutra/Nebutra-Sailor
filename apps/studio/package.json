@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@sanity/client": "^7.16.0",
-    "@sanity/vision": "^5.13.0",
+    "@sanity/vision": "^5.25.1",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "sanity": "^5.13.0",
+    "sanity": "^5.25.1",
     "styled-components": "^6.3.11"
   },
   "devDependencies": {

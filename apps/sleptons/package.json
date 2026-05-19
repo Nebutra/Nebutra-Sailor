@@ -12,7 +12,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@clerk/nextjs": "^7.0.1",
+    "@clerk/nextjs": "^7.3.7",
     "@nebutra/db": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",

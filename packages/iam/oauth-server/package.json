@@ -23,9 +23,10 @@
     "@nebutra/identity": "workspace:*"
   },
   "devDependencies": {
+    "tsx": "catalog:",
     "tsup": "^8.4.0",
     "typescript": "catalog:",
-    "vitest": "^3.0.0",
+    "vitest": "catalog:",
     "@types/oidc-provider": "^9.1.0"
   },
   "license": "AGPL-3.0-only"

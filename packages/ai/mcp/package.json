@@ -40,7 +40,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.27.1",
+    "@modelcontextprotocol/sdk": "1.29.0",
     "@nebutra/capability-kit": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/event-log": "workspace:*",
