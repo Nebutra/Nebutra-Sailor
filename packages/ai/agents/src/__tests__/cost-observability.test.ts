@@ -31,7 +31,7 @@ describe("withAnthropicCacheControl()", () => {
 });
 
 describe("isRetryableError()", () => {
-  it.each([429, 500, 502, 503, 504, 408])("marks status %i as retryable", (statusCode) => {
+  it.each([429, 500, 502, 503, 504, 408])("marks status %i as retryable", (statusCode: number) => {
     expect(isRetryableError({ statusCode })).toBe(true);
   });
 
