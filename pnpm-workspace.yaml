@@ -4,6 +4,18 @@ packages:
   - "backends/python/*"
   - "backends/gateway"
 
+# Supply-chain guardrails.
+# - Wait 24h before resolving newly published package versions. This matches
+#   pnpm 11's hardened default while keeping security hotfixes usable.
+# - Fail installs when a dependency with a lifecycle script is not explicitly
+#   reviewed in root package.json `pnpm.onlyBuiltDependencies`.
+# - Ignore pnpmfile hooks so dependency resolution cannot execute project-local
+#   JavaScript during install.
+minimumReleaseAge: 1440
+trustPolicy: no-downgrade
+strictDepBuilds: true
+ignorePnpmfile: true
+
 # =============================================================================
 # pnpm Catalog — single source of truth for shared dependency versions.
 # Reference in any package.json as: "typescript": "catalog:"
@@ -28,7 +40,7 @@ catalog:
   # ── Next.js ────────────────────────────────────────────────────────────────
   next: ^16.2.6
   next-themes: ^0.4.6
-  next-intl: ^4.8.3
+  next-intl: ^4.12.0
   "@next/bundle-analyzer": ^16.2.6
 
   # ── Fonts ──────────────────────────────────────────────────────────────────
@@ -54,6 +66,7 @@ catalog:
   prisma: ^7.4.2
 
   # ── Testing ────────────────────────────────────────────────────────────────
+  vite: ^7.3.3
   vitest: ^4.1.4
   "@vitest/coverage-v8": ^4.1.4
   "@vitejs/plugin-react": ^5.1.4
@@ -80,10 +93,10 @@ catalog:
   fumadocs-mdx: ^14.2.9
   fumadocs-ui: ^16.6.12
   "@types/mdx": ^2.0.13
-  mermaid: ^11.12.3
+  mermaid: ^11.15.0
 
   # ── Backend / infra ────────────────────────────────────────────────────────
-  hono: ^4.12.5
+  hono: ^4.12.19
   ioredis: ^5.4.2
   svix: ^1.86.0
 
