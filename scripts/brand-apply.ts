@@ -127,6 +127,20 @@ function updateBrandMetadata(config: BrandConfig): void {
   // layout — keep the path in sync with the actual workspace location.
   const metadataPath = path.join(ROOT, "packages", "design", "brand", "src", "metadata.ts");
 
+  // metadata.ts is hand-maintained truth (VI manual brand colors, gradients,
+  // semantic palette, full font weight maps) that BrandConfig does not fully
+  // model. Regenerating from BrandConfig drops real data — `white`, `black`,
+  // `gradient.*`, `success`, `warning`, `error`, `info`, plus the real
+  // primary `#0033FE` / accent `#0BF1C3` get replaced with placeholders.
+  // Only bootstrap when the file is missing (e.g. a fresh scaffold); on
+  // existing repos this is a no-op so brand:apply stays idempotent.
+  if (fs.existsSync(metadataPath)) {
+    logSkip(
+      "metadata.ts is hand-maintained — skipping regenerate (use --force-metadata to override)",
+    );
+    return;
+  }
+
   const newContent = `/**
  * ${config.brand.name} Brand Metadata
  * Central source of truth for brand identity
