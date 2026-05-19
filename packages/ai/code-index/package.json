@@ -37,6 +37,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/ai-primitives": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {
