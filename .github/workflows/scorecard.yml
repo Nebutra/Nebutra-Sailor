@@ -1,0 +1,52 @@
+name: OpenSSF Scorecard
+
+# Publishes a public OpenSSF Scorecard for the repository — a recognized
+# supply-chain trust signal that quantifies how a project's release
+# practices stack up against known-vulnerable patterns (branch protection,
+# pinned actions, signed commits, SAST, fuzzing, etc.).
+#
+# Results land on https://securityscorecards.dev/viewer/?uri=github.com/Nebutra/Nebutra-Sailor
+# and the Scorecard badge in README.md links to the live score.
+
+on:
+  # Re-score weekly so newly-merged hardening (e.g. pinning an action) shows
+  # up without waiting for the next push. Off-hours UTC keeps it cheap.
+  schedule:
+    - cron: "30 3 * * 1"
+  # Re-score on default-branch pushes for fast feedback when policy changes.
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions: read-all
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-latest
+    permissions:
+      # Required by the action to upload SARIF to code-scanning.
+      security-events: write
+      # Required for OIDC token used by the publish-results option.
+      id-token: write
+      contents: read
+      actions: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Run Scorecard
+        uses: ossf/scorecard-action@v2.4.0
+        with:
+          results_file: scorecard-results.sarif
+          results_format: sarif
+          # `publish_results: true` posts the score publicly so the
+          # badge and viewer URL stay in sync with the latest analysis.
+          publish_results: true
+
+      - name: Upload SARIF to code-scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: scorecard-results.sarif
