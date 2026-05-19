@@ -20,7 +20,9 @@ import * as path from "node:path";
 // Configuration
 const CONFIG = {
   // Directories to scan
-  scanDirs: ["apps", "packages/ui"],
+  // `packages/ui` moved under `packages/design/` in the 2026-05 categorized
+  // monorepo restructure — keep the scan path in sync with the workspace.
+  scanDirs: ["apps", "packages/design/ui"],
 
   // Approved internal packages
   approvedPackages: ["@nebutra/ui"],

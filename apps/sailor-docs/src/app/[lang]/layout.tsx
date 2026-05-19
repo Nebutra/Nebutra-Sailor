@@ -152,7 +152,7 @@ export default async function RootLayout({
                 ),
               }}
               i18n={true}
-              githubUrl="https://github.com/TsekaLuk/Nebutra-Sailor"
+              githubUrl="https://github.com/Nebutra/Nebutra-Sailor"
             >
               {children}
             </DocsLayout>

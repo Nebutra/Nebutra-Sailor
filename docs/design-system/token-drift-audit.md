@@ -20,7 +20,7 @@
 | 6 | `packages/design/brand/src/metadata.ts` | 96 | `colors.gradient.primary` (stop) | `"#0033FE"` |
 | 7 | `packages/design/brand/src/guidelines/color.ts` | 66 | `brandGradient.primary.stops[0].color` | `"#0033FE"` |
 
-**Verdict: 7 raw-value definition points across 2 files.** The `packages/ui` chain (`primitive.ts` → `tailwind.preset.ts`) delegates to `colors.primary[500]` from `@nebutra/brand`, so it adds no additional raw literal — it references the brand source.
+**Verdict: 7 raw-value definition points across 2 files.** The `packages/design/ui` chain (`primitive.ts` → `tailwind.preset.ts`) delegates to `colors.primary[500]` from `@nebutra/brand`, so it adds no additional raw literal — it references the brand source.
 
 ---
 

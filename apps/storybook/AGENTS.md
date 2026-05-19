@@ -13,7 +13,7 @@ It owns:
 - local docs and demo stories under `src/stories/`
 - app-level build output configuration for Chromatic and static exports
 
-It does not own the canonical component implementations in `packages/ui`.
+It does not own the canonical component implementations in `packages/design/ui`.
 
 ## Source Of Truth
 
@@ -32,10 +32,10 @@ Do not treat `dist/` or `.turbo/` logs as implementation truth.
 
 - Keep Storybook runtime and addon setup in `.storybook/`; do not bury framework
   configuration inside stories.
-- Shared component behavior belongs in `packages/ui`; this app should only host
+- Shared component behavior belongs in `packages/design/ui`; this app should only host
   the Storybook surface and app-local showcase stories.
 - If a story documents a shared component contract, prefer updating the
-  co-located story in `packages/ui` rather than creating a divergent local copy.
+  co-located story in `packages/design/ui` rather than creating a divergent local copy.
 
 ## Generated And Derived Files
 

@@ -630,8 +630,8 @@ export function LicenseWizard() {
                   <div className="space-y-4">
                     <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
                       <p className="text-sm text-[var(--neutral-11)]">
-                        If you operate as a single-seat business, you can choose either the
-                        Individual or Single-Owner Company license below.
+                        If you operate as a single-seat business, you qualify for the Independent
+                        Developer License below (≤ 1 FTE & &lt; $1M ARR, free).
                       </p>
                     </div>
                     <div className="grid gap-4">

@@ -33,7 +33,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <DocsPage
       toc={(page.data as { toc: React.ComponentProps<typeof DocsPage>["toc"] }).toc}
-      lastUpdate={(page.data as { _exports?: { lastModified?: Date } })._exports?.lastModified}
+      lastUpdate={(page.data as { lastModified?: Date }).lastModified}
       editOnGithub={{
         repo: "Nebutra-Sailor",
         owner: "TsekaLuk",
@@ -67,7 +67,7 @@ export default async function Page({ params }: PageProps) {
         <LLMCopyButton markdownUrl={`/llms.mdx/docs/${page.path}`} />
         <ViewOptions
           markdownUrl={`/llms.mdx/docs/${page.path}`}
-          githubUrl={`https://github.com/TsekaLuk/Nebutra-Sailor/blob/main/apps/sailor-docs/content/docs/${page.path}`}
+          githubUrl={`https://github.com/Nebutra/Nebutra-Sailor/blob/main/apps/sailor-docs/content/docs/${page.path}`}
         />
         {(page.data as { figma?: string }).figma && (
           <FigmaLink href={(page.data as { figma: string }).figma} />
