@@ -316,6 +316,13 @@ jobs:
         run: pnpm --filter @nebutra/gateway build
 
       - name: pnpm deploy → self-contained bundle
+        # `pnpm deploy` resolves dependencies in $RUNNER_TEMP/stage-api,
+        # which is OUTSIDE the repo, so the repo's .npmrc (where we set
+        # trust-policy=permissive for next-auth's beta provenance gap)
+        # is not consulted. Pass the policy via NPM_CONFIG_TRUST_POLICY
+        # so pnpm picks it up from the environment regardless of cwd.
+        env:
+          NPM_CONFIG_TRUST_POLICY: permissive
         run: |
           set -euo pipefail
           STAGE="$RUNNER_TEMP/stage-api"
