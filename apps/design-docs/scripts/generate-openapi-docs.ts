@@ -1,10 +1,14 @@
 import { generateFiles } from "fumadocs-openapi";
 import { createOpenAPI } from "fumadocs-openapi/server";
 
+const OPENAPI_DOCUMENT_ID = "openapi.json";
+
 // Create a standalone OpenAPI instance for the generation script
 // (separate from the one in src/lib/openapi.ts to avoid Next.js-specific imports)
 const openapi = createOpenAPI({
-  input: ["./openapi.json"],
+  input: () => ({
+    [OPENAPI_DOCUMENT_ID]: `./${OPENAPI_DOCUMENT_ID}`,
+  }),
 });
 
 void generateFiles({
