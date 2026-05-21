@@ -45,6 +45,57 @@ mkdir -p "$DEPLOY_ROOT"
 find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' \
      ! -name "nebutra-*-${SHA}.tar.gz" -mtime +0 -delete 2>/dev/null || true
 
+preserve_runtime_env() {
+  local app_root="$1" release="$2"
+  local previous_env="$app_root/current/.env"
+  local release_env="$release/.env"
+
+  if [ -f "$previous_env" ] && [ ! -f "$release_env" ]; then
+    cp -p "$previous_env" "$release_env"
+    log "preserved runtime env: $previous_env -> $release_env"
+  fi
+}
+
+load_runtime_env() {
+  local app="$1" release="$2"
+  local app_root="$DEPLOY_ROOT/$app"
+  local loaded=""
+  local env_file
+  local candidates=(
+    "$DEPLOY_ROOT/.env"
+    "$DEPLOY_ROOT/.env.production"
+    "$DEPLOY_ROOT/web/current/.env"
+    "$app_root/.env"
+    "$app_root/current/.env"
+    "$release/.env"
+  )
+
+  set -a
+  for env_file in "${candidates[@]}"; do
+    if [ -f "$env_file" ]; then
+      # shellcheck disable=SC1090
+      . "$env_file"
+      loaded="${loaded}${loaded:+, }$env_file"
+    fi
+  done
+  set +a
+
+  if [ -n "$loaded" ]; then
+    log "loaded runtime env for $app: $loaded"
+  else
+    log "no runtime env files found for $app"
+  fi
+
+  if [ "$app" = "api" ]; then
+    local missing=()
+    [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
+    [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
+    if [ "${#missing[@]}" -gt 0 ]; then
+      fail "api runtime env missing required keys after env load: ${missing[*]}"
+    fi
+  fi
+}
+
 deploy_one() {
   local app="$1" pm2_name="$2"
   local tarball="/tmp/nebutra-${app}-${SHA}.tar.gz"
@@ -85,10 +136,12 @@ deploy_one() {
   log "extract $tarball -> $release"
   tar -xzf "$tarball" -C "$release"
 
+  preserve_runtime_env "$app_root" "$release"
   ln -snf "$release" "$app_root/current"
   log "$app current -> $release"
 
   rm -f "$tarball"
+  load_runtime_env "$app" "$release"
 
   # Decide between zero-downtime reload and force-recreate.
   #
