@@ -109,13 +109,54 @@ load_existing_pm2_env() {
     return 0
   fi
 
-  if ! command -v jq >/dev/null 2>&1; then
-    log "cannot inherit runtime env from pm2 $pm2_name: jq not installed"
+  local count=0
+  local line key value
+  local pm2_env_lines=""
+
+  if command -v jq >/dev/null 2>&1; then
+    pm2_env_lines=$(pm2 jlist 2>/dev/null \
+      | jq -r --arg name "$pm2_name" '
+          .[]
+          | select(.name == $name)
+          | .pm2_env
+          | to_entries[]
+          | select(.value | type == "string" or type == "number" or type == "boolean")
+          | select(.key | test("^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|SUPABASE_|STRIPE_|OPENAI_|NEXT_PUBLIC_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"))
+          | "\(.key)=\(.value | tostring)"
+        ' || true)
+  elif command -v python3 >/dev/null 2>&1; then
+    pm2_env_lines=$(pm2 jlist 2>/dev/null | python3 - "$pm2_name" <<'PY' || true
+import json
+import re
+import sys
+
+name = sys.argv[1]
+allow = re.compile(
+    r"^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|SUPABASE_|STRIPE_|OPENAI_|"
+    r"NEXT_PUBLIC_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"
+)
+
+try:
+    procs = json.load(sys.stdin)
+except Exception:
+    sys.exit(0)
+
+for proc in procs:
+    if proc.get("name") != name:
+        continue
+    for key, value in proc.get("pm2_env", {}).items():
+        if not allow.match(key):
+            continue
+        if isinstance(value, (str, int, float, bool)):
+            print(f"{key}={value}")
+    break
+PY
+)
+  else
+    log "cannot inherit runtime env from pm2 $pm2_name: jq/python3 not installed"
     return 0
   fi
 
-  local count=0
-  local line key value
   while IFS= read -r line; do
     key="${line%%=*}"
     value="${line#*=}"
@@ -123,16 +164,7 @@ load_existing_pm2_env() {
       export "$key=$value"
       count=$((count + 1))
     fi
-  done < <(pm2 jlist 2>/dev/null \
-    | jq -r --arg name "$pm2_name" '
-        .[]
-        | select(.name == $name)
-        | .pm2_env
-        | to_entries[]
-        | select(.value | type == "string" or type == "number" or type == "boolean")
-        | select(.key | test("^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|SUPABASE_|STRIPE_|OPENAI_|NEXT_PUBLIC_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"))
-        | "\(.key)=\(.value | tostring)"
-      ' || true)
+  done <<< "$pm2_env_lines"
 
   if [ "$count" -gt 0 ]; then
     log "inherited $count runtime env keys from existing pm2 $pm2_name"
