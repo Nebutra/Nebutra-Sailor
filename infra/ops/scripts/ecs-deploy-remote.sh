@@ -96,10 +96,54 @@ load_runtime_env() {
       [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
       [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
       if [ "${#missing[@]}" -gt 0 ]; then
+        bootstrap_api_runtime_env "$app_root"
+        # shellcheck disable=SC1090
+        . "$app_root/.env"
+        missing=()
+        [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
+        [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
+      fi
+      if [ "${#missing[@]}" -gt 0 ]; then
         fail "api runtime env missing required keys after env load: ${missing[*]}"
       fi
     fi
   fi
+}
+
+bootstrap_api_runtime_env() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+  local secret=""
+
+  if [ -f "$env_file" ]; then
+    return 0
+  fi
+
+  if command -v openssl >/dev/null 2>&1; then
+    secret="$(openssl rand -hex 32)"
+  elif command -v python3 >/dev/null 2>&1; then
+    secret="$(python3 - <<'PY'
+import secrets
+print(secrets.token_hex(32))
+PY
+)"
+  else
+    secret="$(date -u +%s%N)-api-bootstrap-secret"
+  fi
+
+  mkdir -p "$app_root"
+  umask 077
+  cat > "$env_file" <<EOF
+NODE_ENV=production
+PORT=3002
+HOSTNAME=127.0.0.1
+DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/nebutra?schema=public
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=$secret
+EOF
+  chmod 600 "$env_file"
+  log "bootstrapped minimal api runtime env: $env_file"
 }
 
 load_existing_pm2_env() {
