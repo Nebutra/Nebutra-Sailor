@@ -1,41 +1,89 @@
 ---
-title: "Contribution Guidelines"
-description: "How to add or update components in the design system."
+title: Contribution Gate
+description: How to change Nebutra Design System without adding semantic drift.
+layer: guide
+owner: Design Systems
+lastVerified: "2026-05-21"
 ---
 
-## Rules
+Changing the design system is a governance act. A contribution is accepted when it improves UX, keeps downstream DX legible, and reduces total system debt.
+
+## Before You Add Anything
 
 <Warning>
-  Do not introduce new visual styles not already present in the codebase. If a pattern does not exist in production, it does not belong in the Design System.
+  Do not create a new component because a pasted design looks different. First prove the existing primitive, variant, or composition cannot express the semantic job.
 </Warning>
 
-1. **Extract, don't invent** — All additions must be extracted from existing app implementations
-2. **No inline CSS** — Use Design Tokens, Tailwind classes, or component Props
-3. **No duplicate semantics** — Consolidate overlapping components before adding new ones
-4. **Document first** — Add the MDX page before or alongside the implementation
+Use this decision order:
 
-## Adding a new atom component
+1. **Reuse** an existing primitive or composition.
+2. **Extend** an existing API with a variant, slot, or token when the semantic job belongs there.
+3. **Promote** a repeated local pattern into the system when it appears across product surfaces.
+4. **Create** a new primitive only when no existing surface can own the behavior without corrupting its API.
 
-1. Identify it in `apps/docs-hub/design-system/src/` or `packages/design/ui/src/primitives/`
-2. Ensure it has no semantic overlap with existing components
-3. Add `atom-components/<name>.mdx` with Demo / Usage / Props / Examples / Accessibility sections
-4. Export it from `@nebutra/ui` if it belongs at that layer
+## Required Evidence
 
-## Adding a new fragment component
+| Evidence | What it proves |
+| --- | --- |
+| Source path | The component or pattern exists in product code or the package source. |
+| Token mapping | Styling consumes semantic/component tokens, not raw palette drift. |
+| API decision | Names, variants, and controlled/uncontrolled state are typed clearly. |
+| Storybook coverage | Default, variants, edge cases, accessibility, and dark mode render. |
+| MDX docs | Usage, anatomy, state machine, props, and accessibility are documented. |
+| Registry decision | Standalone install is either generated or explicitly out of scope. |
 
-1. Identify the composed pattern in app code
-2. Add `fragment-components/<name>.mdx` with Demo / Usage / Props / Examples / Accessibility sections
-3. Ensure all constituent atoms are documented
+## Page Requirements
 
-## Updating an existing component
+Every component page should include:
 
-1. Update the MDX page
-2. Update the component source in `apps/docs-hub/design-system/src/`
-3. Run `pnpm --filter @nebutra/ui build` to verify the build passes
+- `ComponentPreview` that renders the real component or a faithful demo;
+- installation/import section with canonical package path;
+- usage example that does not depend on hidden MDX globals;
+- anatomy or API ownership notes for compound components;
+- variant and state coverage, including empty/loading/error/disabled where relevant;
+- accessibility contract with semantic element, keyboard behavior, focus behavior, and ARIA links;
+- registry command when the component is in `public/registry.json` or `public/r`.
+
+## Frontmatter
+
+Add governance metadata as the component matures:
+
+```yaml
+status: stable
+layer: primitive
+owner: Design Systems
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/button.tsx
+primitive: Button
+substrate: native
+registry: true
+storybook: packages/design/ui/src/primitives/button.stories.tsx
+tokens:
+  - --button-bg-primary
+a11y:
+  - keyboard
+  - focus-visible
+lastVerified: "2026-05-21"
+```
 
 ## Prohibited
 
-- ❌ New visual styles not present in production
-- ❌ Designing a "better version" of an existing component
-- ❌ Inline CSS in Design System components
-- ❌ Components with overlapping or ambiguous semantics
+- Raw brand or palette values in component docs unless the page is explicitly explaining the token source.
+- `transition: all` or hard-coded animation timing when motion tokens exist.
+- Styling through internal child selectors in public examples.
+- Saying a primitive is built on Radix/Base UI/native HTML when the source says otherwise.
+- Updating only Storybook or only MDX when the component API changed.
+- Keeping a rotten API solely to avoid migration work. Compatibility can be staged; semantic drift should not be preserved.
+
+## Validation
+
+Run the focused docs checks before shipping:
+
+```bash
+pnpm --filter @nebutra/design-docs lint:ia
+pnpm --filter @nebutra/design-docs lint:links
+pnpm --filter @nebutra/design-docs typecheck
+pnpm --filter @nebutra/design-docs build
+```
+
+If a global repo check fails from unrelated packages, name the blocker and still provide focused proof for the touched docs, registry, and component surfaces.

@@ -1,6 +1,6 @@
 ---
 title: "标签 (Label)"
-description: "基于 Radix UI Label 原语构建的可访问表单标签组件。"
+description: "基于原生 label 元素构建的可访问表单标签组件。"
 ---
 
 ## 演示 (Demo)
@@ -43,7 +43,7 @@ import { Label } from "@nebutra/ui/primitives"
 
 ## 可访问性 (Accessibility)
 
-- 基于 Radix UI Label 构建 —— 渲染为原生 `<label>` 元素。
+- 基于原生 `<label>` 元素构建。
 - 点击标签会通过 `htmlFor` 将焦点转移到关联的控件上。
 - 当关联控件被禁用时，标签会自动反映禁用的光标状态。
 - 不要使用 `<span>` 或 `<div>` 作为标签 —— 始终使用此 `Label` 组件。

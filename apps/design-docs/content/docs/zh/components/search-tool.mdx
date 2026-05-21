@@ -1,0 +1,57 @@
+---
+title: Search Tool
+description: 搜索/检索结果的 chat-inline 工具调用渲染，强调真实链接和可滚动结果面板。
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/search-tool.tsx
+primitive: SearchTool
+substrate: custom
+registry: true
+lastVerified: "2026-05-21"
+---
+
+<ComponentPreview name="search-tool-demo" />
+
+## 安装
+
+```tsx
+import { SearchTool, type SearchResult } from "@nebutra/ui/primitives";
+```
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/search-tool.json
+```
+
+## 用法
+
+`SearchTool` 在 chat reply 内渲染 “Found N results” 状态。展开后展示 query strip 和结果列表。
+
+```tsx
+const results: SearchResult[] = [
+  {
+    title: "United UA837 SFO to NRT",
+    source: "google.com/flights",
+    url: "https://www.google.com/flights",
+  },
+];
+
+<SearchTool query="best flights to Tokyo" results={results} />
+```
+
+## 真实可点击性
+
+带 `url` 的行渲染为真实 `<a target="_blank" rel="noopener noreferrer">`。没有 `url` 的行就是普通 `<li>`，没有假 hover、没有 `cursor-pointer`。
+
+## 状态模型
+
+| 状态 | 渲染 |
+| --- | --- |
+| `pending` | shimmer “Searching...” header，不可展开 |
+| `completed` | “Found N result(s)” header；有结果时可展开 |
+
+## 可访问性
+
+- 外层为 `<section aria-busy aria-label="Search: ...">`。
+- toggle 使用 `aria-expanded` 和 `aria-controls`。
+- 结果列表是 `<ul aria-label="Search results">`。

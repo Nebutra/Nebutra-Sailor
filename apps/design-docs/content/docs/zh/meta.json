@@ -4,14 +4,18 @@
     "index",
     "--- 概览 ---",
     "introduction",
+    "architecture",
     "how-to-use",
     "contributing",
-    "--- 基础 ---",
+    "--- 系统基础 ---",
     "...foundations",
+    "--- 组件系统 ---",
     "...components",
-    "--- 组合 ---",
+    "--- 产品组合 ---",
     "...fragment-components",
-    "--- 模式 ---",
-    "...patterns"
+    "--- 运行模式 ---",
+    "...patterns",
+    "--- API 契约 ---",
+    "...api"
   ]
 }

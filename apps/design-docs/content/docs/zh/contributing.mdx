@@ -1,41 +1,89 @@
 ---
-title: "Contribution Guidelines"
-description: "How to add or update components in the design system."
+title: 贡献门禁
+description: 如何修改 Nebutra Design System 而不引入语义漂移。
+layer: guide
+owner: Design Systems
+lastVerified: "2026-05-21"
 ---
 
-## Rules
+修改设计系统就是治理行为。一个贡献只有在同时改善 UX、让下游 DX 更清楚、并减少总系统债务时才成立。
+
+## 新增之前先证明
 
 <Warning>
-  Do not introduce new visual styles not already present in the codebase. If a pattern does not exist in production, it does not belong in the Design System.
+  不要因为粘贴来的设计看起来不同就新建组件。先证明现有 primitive、variant 或 composition 无法表达这个语义任务。
 </Warning>
 
-1. **Extract, don't invent** — All additions must be extracted from existing app implementations
-2. **No inline CSS** — Use Design Tokens, Tailwind classes, or component Props
-3. **No duplicate semantics** — Consolidate overlapping components before adding new ones
-4. **Document first** — Add the MDX page before or alongside the implementation
+决策顺序：
 
-## Adding a new atom component
+1. **复用** 已有 primitive 或 composition。
+2. 当语义任务属于已有组件时，通过 variant、slot 或 token **扩展** API。
+3. 当本地模式在多个产品表面重复出现时，再 **提升** 到系统。
+4. 只有没有任何现有表面能承载行为且不会腐蚀 API 时，才 **新建** primitive。
 
-1. Identify it in `apps/docs-hub/design-system/src/` or `packages/design/ui/src/primitives/`
-2. Ensure it has no semantic overlap with existing components
-3. Add `atom-components/<name>.mdx` with Demo / Usage / Props / Examples / Accessibility sections
-4. Export it from `@nebutra/ui` if it belongs at that layer
+## 必要证据
 
-## Adding a new fragment component
+| 证据 | 证明什么 |
+| --- | --- |
+| Source path | 组件或模式存在于产品代码或 package source。 |
+| Token mapping | 样式消费 semantic/component tokens，而不是 raw palette drift。 |
+| API decision | 命名、variants、controlled/uncontrolled state 的类型设计清楚。 |
+| Storybook coverage | default、variants、edge cases、a11y、dark mode 都能渲染。 |
+| MDX docs | usage、anatomy、state machine、props、accessibility 已记录。 |
+| Registry decision | standalone install 已生成，或明确不属于本次范围。 |
 
-1. Identify the composed pattern in app code
-2. Add `fragment-components/<name>.mdx` with Demo / Usage / Props / Examples / Accessibility sections
-3. Ensure all constituent atoms are documented
+## 页面要求
 
-## Updating an existing component
+每个组件页应包含：
 
-1. Update the MDX page
-2. Update the component source in `apps/docs-hub/design-system/src/`
-3. Run `pnpm --filter @nebutra/ui build` to verify the build passes
+- 渲染真实组件或可信 demo 的 `ComponentPreview`；
+- 带 canonical package path 的安装/导入说明；
+- 不依赖隐藏 MDX globals 的 usage 示例；
+- compound components 的 anatomy 或 API ownership 说明；
+- variant 和 state 覆盖，包括相关的 empty/loading/error/disabled；
+- 可访问性契约：语义元素、键盘行为、焦点行为、ARIA 关联；
+- 如果组件进入 `public/registry.json` 或 `public/r`，提供 registry command。
 
-## Prohibited
+## Frontmatter
 
-- ❌ New visual styles not present in production
-- ❌ Designing a "better version" of an existing component
-- ❌ Inline CSS in Design System components
-- ❌ Components with overlapping or ambiguous semantics
+组件成熟时补齐治理元数据：
+
+```yaml
+status: stable
+layer: primitive
+owner: Design Systems
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/button.tsx
+primitive: Button
+substrate: native
+registry: true
+storybook: packages/design/ui/src/primitives/button.stories.tsx
+tokens:
+  - --button-bg-primary
+a11y:
+  - keyboard
+  - focus-visible
+lastVerified: "2026-05-21"
+```
+
+## 禁止项
+
+- 在组件文档里写 raw brand 或 palette 值，除非该页面明确在解释 token source。
+- 已有 motion tokens 时，仍写 `transition: all` 或硬编码动效时长。
+- 在公开示例里通过内部子节点选择器改样式。
+- 源码已经迁移后，文档仍写组件基于 Radix/Base UI/native HTML 的错误底层。
+- 组件 API 变化时只改 Storybook 或只改 MDX。
+- 只因为“不破坏现有调用”就保留腐烂 API。兼容可以分阶段；语义漂移不能被保护。
+
+## 验证
+
+交付前运行聚焦检查：
+
+```bash
+pnpm --filter @nebutra/design-docs lint:ia
+pnpm --filter @nebutra/design-docs lint:links
+pnpm --filter @nebutra/design-docs typecheck
+pnpm --filter @nebutra/design-docs build
+```
+
+如果全仓检查被无关 package 阻塞，必须明确 blocker，同时给出本次 docs、registry 和 component surface 的聚焦证明。

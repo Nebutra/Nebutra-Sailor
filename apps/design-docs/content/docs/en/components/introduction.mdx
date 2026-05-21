@@ -1,51 +1,52 @@
 ---
-title: "Atom Components"
-description: "Primitive UI building blocks — the smallest reusable units."
+title: Component System
+description: Governed UI surfaces organized by product job, not by visual novelty.
+layer: guide
+owner: Design Systems
+lastVerified: "2026-05-21"
 ---
 
-## Demo
+## How To Choose
 
-<ComponentPreview name="introduction-demo"  />
+Start with the product job:
 
+| Job | Start here |
+| --- | --- |
+| Capture user input | [Input](/en/docs/components/input), [Textarea](/en/docs/components/textarea), [Select](/en/docs/components/select), [Form](/en/docs/components/form) |
+| Confirm or interrupt | [Dialog](/en/docs/components/dialog), [Alert Dialog](/en/docs/components/alert-dialog), [Project Banner](/en/docs/components/project-banner), [Note](/en/docs/components/note) |
+| Navigate large surfaces | [Tabs](/en/docs/components/tabs), [Pagination](/en/docs/components/pagination), [Navigation Menu](/en/docs/components/navigation-menu), [Sidebar](/en/docs/components/sidebar) |
+| Explain system work | [Message Content](/en/docs/components/message-content), [MCP Tool](/en/docs/components/mcp-tool), [Todo Tool](/en/docs/components/todo-tool), [Search Tool](/en/docs/components/search-tool) |
+| Show structured data | [Table](/en/docs/components/table), [Description](/en/docs/components/description), [Relative Time Card](/en/docs/components/relative-time-card), [Context Card](/en/docs/components/context-card) |
+| Build page structure | [Box](/en/docs/components/box), [Flex](/en/docs/components/flex), [Stack](/en/docs/components/stack), [Material](/en/docs/components/material) |
 
-## Overview
+## Taxonomy
 
-| Component | Description |
-|-----------|-------------|
-| [Accordion](/en/docs/components/accordion) | Collapsible content sections |
-| [Alert](/en/docs/components/alert) | Contextual feedback messages |
-| [Alert Dialog](/en/docs/components/alert-dialog) | Modal alert requiring confirmation |
-| [Aspect Ratio](/en/docs/components/aspect-ratio) | Maintain consistent width/height ratios |
-| [Avatar](/en/docs/components/avatar) | User profile images with fallback |
-| [Badge](/en/docs/components/badge) | Status indicators and labels |
-| [Breadcrumb](/en/docs/components/breadcrumb) | Hierarchical navigation trail |
-| [Button](/en/docs/components/button) | Interactive click targets |
-| [Card](/en/docs/components/card) | Content grouping container |
-| [Carousel](/en/docs/components/carousel) | Scrollable content slider |
-| [Checkbox](/en/docs/components/checkbox) | Binary selection control |
-| [Collapsible](/en/docs/components/collapsible) | Show/hide content toggle |
-| [Combobox](/en/docs/components/combobox) | Searchable select input |
-| [Command](/en/docs/components/command) | Command palette interface |
-| [Context Menu](/en/docs/components/context-menu) | Right-click contextual actions |
-| [Dialog](/en/docs/components/dialog) | Modal overlay dialog |
-| [Drawer](/en/docs/components/drawer) | Slide-in panel overlay |
-| [Dropdown Menu](/en/docs/components/dropdown-menu) | Contextual action list |
-| [Input](/en/docs/components/input) | Text input field |
-| [Label](/en/docs/components/label) | Form field label |
-| [Pagination](/en/docs/components/pagination) | Sibling page navigation |
-| [Popover](/en/docs/components/popover) | Floating content container |
-| [Progress](/en/docs/components/progress) | Task completion indicator |
-| [Radio Group](/en/docs/components/radio-group) | Single-choice selection |
-| [Select](/en/docs/components/select) | Dropdown selection control |
-| [Separator](/en/docs/components/separator) | Visual content divider |
-| [Sheet](/en/docs/components/sheet) | Slide-over panel |
-| [Sidebar](/en/docs/components/sidebar) | Navigation sidebar layout |
-| [Skeleton](/en/docs/components/skeleton) | Loading placeholder |
-| [Slider](/en/docs/components/slider) | Range value selector |
-| [Switch](/en/docs/components/switch) | Toggle on/off control |
-| [Table](/en/docs/components/table) | Tabular data display |
-| [Tabs](/en/docs/components/tabs) | Tabbed content panels |
-| [Textarea](/en/docs/components/textarea) | Multi-line text input |
-| [Toggle](/en/docs/components/toggle) | Two-state button |
-| [Toggle Group](/en/docs/components/toggle-group) | Related toggle controls |
-| [Tooltip](/en/docs/components/tooltip) | Contextual hover information |
+The sidebar groups components by consumer intent:
+
+- **Core Forms & Actions**: controls that collect or submit user intent.
+- **Navigation & Commands**: movement, command execution, and large-surface orientation.
+- **Overlays & Disclosure**: content that appears conditionally above or within the current page.
+- **Feedback & Status**: system state, validation, progress, loading, and empty states.
+- **Data Display**: structured information, metadata, files, code, and cards.
+- **Layout & Typography**: primitives that shape product density and reading hierarchy.
+- **AI & Agent Surfaces**: chat, tool calls, agent plans, and generated output.
+- **Motion & Text Effects**: effects that must clarify hierarchy or state, not decorate by default.
+- **Visual Systems & Backgrounds**: high-touch visuals isolated from operational SaaS surfaces.
+- **Marketing & Content Blocks**: acquisition or editorial sections, not dashboard primitives.
+- **Media & Mockups**: representational surfaces for product screenshots, maps, video, and device frames.
+
+## Component Maturity
+
+| Status | Meaning |
+| --- | --- |
+| `stable` | Public API is expected to remain compatible. Docs, stories, tokens, and a11y contract are aligned. |
+| `beta` | API is usable but still settling. Breaking changes require migration notes. |
+| `experimental` | Visual/API direction is being tested. Avoid spreading into product-critical flows without review. |
+| `deprecated` | Do not use for new work. The docs page must name the replacement. |
+
+## Governance Rules
+
+1. Pick the narrowest primitive that owns the behavior.
+2. Do not use decorative components inside operational workflows unless the pattern page says so.
+3. If a component is in the registry, docs must explain whether package imports or standalone install is canonical for the consuming context.
+4. If a page needs a demo-only component, keep it under previews and do not document it as a production primitive.

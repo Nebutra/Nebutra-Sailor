@@ -1,0 +1,52 @@
+---
+title: Subagent Tool
+description: 委托 subagent 调用的 chat-inline 状态 pill，是 tool-family 中最轻量的成员。
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/subagent-tool.tsx
+primitive: SubagentTool
+substrate: custom
+registry: true
+lastVerified: "2026-05-21"
+---
+
+<ComponentPreview name="subagent-tool-demo" />
+
+## 安装
+
+```tsx
+import { SubagentTool } from "@nebutra/ui/primitives";
+```
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/subagent-tool.json
+```
+
+## 用法
+
+`SubagentTool` 在 assistant 委托 subagent 工作时渲染单行状态。它没有 body、没有展开面板、没有滚动区域。
+
+```tsx
+<SubagentTool
+  state="pending"
+  description="Reading apps/design-docs/content"
+  elapsedTime="6s"
+/>
+```
+
+## 状态模型
+
+| 状态 | 渲染 |
+| --- | --- |
+| `pending` | shimmer “Running Subagent” + 可选描述 + elapsed time |
+| `completed` | 静态 “Completed Subagent” + 可选描述 + elapsed time |
+| `interrupted` | muted interrupted 状态，隐藏描述和 elapsed time |
+
+## Elapsed time ownership
+
+`elapsedTime` 是上游已经格式化好的字符串。组件本身不跑 timer，避免 chat thread 内多个行各自 tick 造成抖动。
+
+## 可访问性
+
+外层是 `<output role="status" aria-live="polite">`。elapsed-time span 带 `aria-label="Elapsed time: ..."`。

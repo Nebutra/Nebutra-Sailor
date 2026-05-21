@@ -71,7 +71,7 @@ import { Description } from "@nebutra/ui/primitives"
 
 ## 可访问性 (Accessibility)
 
-- 工具提示基于 `ContextCard` (Radix Tooltip) 构建，具有 200ms 的悬停延迟。
+- 工具提示基于 `ContextCard` 构建；`ContextCard` 使用 Base UI Popover，并带有 200ms 的悬停延迟。
 - 键盘可达：通过聚焦信息图标来显示工具提示。
 - 屏幕阅读器通过 `role="tooltip"` 播报工具提示内容。
 - 使用 `Escape` 键可关闭工具提示。

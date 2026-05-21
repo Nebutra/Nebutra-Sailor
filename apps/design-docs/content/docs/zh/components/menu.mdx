@@ -11,7 +11,7 @@ import { User, Settings, LogOut, ChevronRight, Lock, Command, Plus } from "lucid
 
 ## 概述 (Overview)
 
-`Menu` 是一个基于 `DropdownMenu` (Radix) 构建的语义下拉组件。它公开了一个高级 API，在每个条目上都提供了 `prefix`、`suffix`、`locked`、`disabled` 和 `href` 插槽 —— 涵盖了所有标准的 UI 菜单变体，而无需在应用侧暴露 Radix 的内部细节。
+`Menu` 是一个基于 Nebutra `DropdownMenu` 构建的语义下拉组件，当前底层由 Base UI Menu 承载。它公开了一个高级 API，在每个条目上都提供了 `prefix`、`suffix`、`locked`、`disabled` 和 `href` 插槽 —— 涵盖了所有标准的 UI 菜单变体，而无需在应用侧暴露底层实现细节。
 
 当您需要原始构建块（如复选框项、单选组或子菜单）时，请直接使用 `DropdownMenu`。对于标准的导航和操作列表，请使用 `Menu`。
 
@@ -36,7 +36,7 @@ import { User, Settings, LogOut, ChevronRight, Lock, Command, Plus } from "lucid
 
 ## 链接条目 (Link Items)
 
-当提供 `href` 属性时，条目会自动渲染为 `<a>` 标签。通过 Radix 的 `asChild` 机制保留了键盘和鼠标导航功能。
+当提供 `href` 属性时，条目会自动渲染为 `<a>` 标签。键盘和鼠标导航通过 `DropdownMenu` 的 render-slot bridge 保留。
 
 <ComponentPreview name="menu-4-demo" className="min-h-[200px] flex justify-center items-start pt-10" />
 
@@ -50,7 +50,7 @@ import { User, Settings, LogOut, ChevronRight, Lock, Command, Plus } from "lucid
 
 ## 属性 (Props)
 
-该 API 与 Radix DropdownMenu 完全对应，但 `.Item` 接受自定义的渲染属性。
+该 API 与 Nebutra `DropdownMenu` content props 对齐，但 `.Item` 接受自定义渲染属性。
 
 ### `Menu.Trigger`
 
@@ -63,7 +63,7 @@ import { User, Settings, LogOut, ChevronRight, Lock, Command, Plus } from "lucid
 
 ### `Menu.Content`
 
-继承 Radix `DropdownMenuContent` 的属性。
+继承 Nebutra `DropdownMenuContent` 的属性。
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|

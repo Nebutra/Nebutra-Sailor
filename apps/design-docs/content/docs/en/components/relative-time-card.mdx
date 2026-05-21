@@ -107,7 +107,7 @@ The first paint is deterministic: the short absolute UTC date is rendered server
 ## Accessibility
 
 - Default trigger is a semantic `<time dateTime={ISO}>` element.
-- The popover is built on `ContextCard.Trigger` (Radix Tooltip) — keyboard focus opens it on `focus-visible`.
+- The popover is built on `ContextCard.Trigger` — keyboard focus opens it on `focus-visible`.
 - The popover content omits the relative label on the first paint (matching SSR) and adds it after hydration — there is no flash of "0 seconds ago" garbage.
 
 ## Known debt

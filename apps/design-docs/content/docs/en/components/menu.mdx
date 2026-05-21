@@ -11,7 +11,7 @@ import { User, Settings, LogOut, ChevronRight, Lock, Command, Plus } from "lucid
 
 ## Overview
 
-`Menu` is a semantic dropdown component built on top of `DropdownMenu` (Radix). It exposes a high-level API with `prefix`, `suffix`, `locked`, `disabled`, and `href` slots on each item — covering all standard UI Menu variants without exposing Radix internals at the usage site.
+`Menu` is a semantic dropdown component built on top of Nebutra `DropdownMenu`, which currently uses Base UI Menu under the hood. It exposes a high-level API with `prefix`, `suffix`, `locked`, `disabled`, and `href` slots on each item — covering all standard UI Menu variants without exposing substrate internals at the usage site.
 
 Use `DropdownMenu` directly when you need raw building blocks like checkbox items, radio groups, or sub-menus. Use `Menu` for standard navigation and action lists.
 
@@ -36,7 +36,7 @@ Locked items are permission-gated — visible but non-interactive, automatically
 
 ## Link Items
 
-Automatically renders the item as an `<a>` tag when the `href` prop is provided. Keyboard and mouse navigation is preserved via Radix `asChild`.
+Automatically renders the item as an `<a>` tag when the `href` prop is provided. Keyboard and mouse navigation is preserved through the `DropdownMenu` render-slot bridge.
 
 <ComponentPreview name="menu-4-demo" className="min-h-[200px] flex justify-center items-start pt-10" />
 
@@ -50,7 +50,7 @@ You can completely replace the `Menu.Trigger` appearance by overriding classes o
 
 ## Props
 
-The API mirrors Radix DropdownMenu exactly, but the `.Item` accepts custom rendering props.
+The API mirrors Nebutra `DropdownMenu` content props, but the `.Item` accepts custom rendering props.
 
 ### `Menu.Trigger`
 
@@ -63,7 +63,7 @@ Extends `<button>` HTML attributes.
 
 ### `Menu.Content`
 
-Extends Radix `DropdownMenuContent` props.
+Extends Nebutra `DropdownMenuContent` props.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|

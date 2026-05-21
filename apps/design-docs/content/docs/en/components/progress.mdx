@@ -1,6 +1,6 @@
 ---
 title: "Progress"
-description: "Visual indicator of task completion progress, built on Radix UI."
+description: "Visual indicator of task completion progress, built on Base UI."
 ---
 
 ## Demo
@@ -136,13 +136,14 @@ Built on Base UI progress primitive.
   ```
 </ComponentPreview>
 
-### Custom Color
+### Semantic Tone
 
 <ComponentPreview name="progress-4-demo" className="max-w-[400px]">
   <div className="w-full">
       <Progress
         value={75}
-        className="w-full [&>div]:bg-green-500"
+        type="success"
+        className="w-full"
       />
     </div>
 
@@ -150,7 +151,8 @@ Built on Base UI progress primitive.
 <div className="w-full">
       <Progress
         value={75}
-        className="w-full [&>div]:bg-green-500"
+        type="success"
+        className="w-full"
       />
     </div>
   ```
@@ -168,7 +170,7 @@ Built on Base UI progress primitive.
 
 ## Accessibility
 
-- Built on Radix UI Progress — has `role="progressbar"`.
+- Built on Base UI Progress — has `role="progressbar"`.
 - Sets `aria-valuemin="0"`, `aria-valuemax` (default 100), and `aria-valuenow` based on `value`.
 - `aria-label` or `aria-labelledby` should be added for context.
 - Indeterminate state (`value={null}`) omits `aria-valuenow`.

@@ -1,52 +1,52 @@
 ---
-title: "Atom 组件 (Atom Components)"
-description: "基础 UI 构建块 —— 最小的可复用单元。"
+title: 组件系统
+description: 按产品任务组织的受治理 UI 表面，而不是按视觉新奇程度堆清单。
+layer: guide
+owner: Design Systems
+lastVerified: "2026-05-21"
 ---
 
-## 演示 (Demo)
+## 如何选择
 
-<ComponentPreview name="introduction-demo"  />
+先从产品任务出发：
 
+| 任务 | 起点 |
+| --- | --- |
+| 收集用户输入 | [Input](/zh/docs/components/input), [Textarea](/zh/docs/components/textarea), [Select](/zh/docs/components/select), [Form](/zh/docs/components/form) |
+| 确认或打断 | [Dialog](/zh/docs/components/dialog), [Alert Dialog](/zh/docs/components/alert-dialog), [Project Banner](/zh/docs/components/project-banner), [Note](/zh/docs/components/note) |
+| 导航大型界面 | [Tabs](/zh/docs/components/tabs), [Pagination](/zh/docs/components/pagination), [Navigation Menu](/zh/docs/components/navigation-menu), [Sidebar](/zh/docs/components/sidebar) |
+| 解释系统工作 | [Message Content](/zh/docs/components/message-content), [MCP Tool](/zh/docs/components/mcp-tool), [Todo Tool](/zh/docs/components/todo-tool), [Search Tool](/zh/docs/components/search-tool) |
+| 展示结构化数据 | [Table](/zh/docs/components/table), [Description](/zh/docs/components/description), [Relative Time Card](/zh/docs/components/relative-time-card), [Context Card](/zh/docs/components/context-card) |
+| 构建页面结构 | [Box](/zh/docs/components/box), [Flex](/zh/docs/components/flex), [Stack](/zh/docs/components/stack), [Material](/zh/docs/components/material) |
 
-## 概览 (Overview)
+## 分类法
 
-| 组件 | 描述 |
-|-----------|-------------|
-| [手风琴 (Accordion)](/zh/docs/components/accordion) | 可折叠的内容区域 |
-| [警告 (Alert)](/zh/docs/components/alert) | 上下文相关的反馈信息 |
-| [警告对话框 (Alert Dialog)](/zh/docs/components/alert-dialog) | 需要确认的模态弹窗 |
-| [高宽比 (Aspect Ratio)](/zh/docs/components/aspect-ratio) | 保持一致的宽高比例 |
-| [头像 (Avatar)](/zh/docs/components/avatar) | 带有回退机制的用户个人资料图片 |
-| [徽章 (Badge)](/zh/docs/components/badge) | 状态指示器和标签 |
-| [面包屑 (Breadcrumb)](/zh/docs/components/breadcrumb) | 层级导航路径 |
-| [按钮 (Button)](/zh/docs/components/button) | 交互式点击目标 |
-| [卡片 (Card)](/zh/docs/components/card) | 内容分组容器 |
-| [轮播 (Carousel)](/zh/docs/components/carousel) | 可滚动的内空容器 |
-| [复选框 (Checkbox)](/zh/docs/components/checkbox) | 二元选择控件 |
-| [可折叠组件 (Collapsible)](/zh/docs/components/collapsible) | 显示/隐藏内容切换器 |
-| [组合框 (Combobox)](/zh/docs/components/combobox) | 可搜索的选择输入框 |
-| [命令 (Command)](/zh/docs/components/command) | 命令面板界面 |
-| [右键菜单 (Context Menu)](/zh/docs/components/context-menu) | 右键点击触发的上下文操作 |
-| [对话框 (Dialog)](/zh/docs/components/dialog) | 模态遮罩对话框 |
-| [抽屉 (Drawer)](/zh/docs/components/drawer) | 侧边滑入的面板 |
-| [下拉菜单 (Dropdown Menu)](/zh/docs/components/dropdown-menu) | 上下文动作列表 |
-| [输入框 (Input)](/zh/docs/components/input) | 文本输入字段 |
-| [标签 (Label)](/zh/docs/components/label) | 表单字段标签 |
-| [分页导航 (Pagination)](/zh/docs/components/pagination) | 兄弟页面导航 |
-| [气泡卡片 (Popover)](/zh/docs/components/popover) | 浮动内容容器 |
-| [进度条 (Progress)](/zh/docs/components/progress) | 任务完成进度指示器 |
-| [单选按钮组 (Radio Group)](/zh/docs/components/radio-group) | 单项选择控件 |
-| [选择器 (Select)](/zh/docs/components/select) | 下拉选择控件 |
-| [分割线 (Separator)](/zh/docs/components/separator) | 视觉上的内容分隔线 |
-| [侧滑面板 (Sheet)](/zh/docs/components/sheet) | 侧边覆盖面板 |
-| [侧边栏 (Sidebar)](/zh/docs/components/sidebar) | 导航侧边栏布局 |
-| [骨架屏 (Skeleton)](/zh/docs/components/skeleton) | 加载占位符 |
-| [滑块 (Slider)](/zh/docs/components/slider) | 范围数值选择器 |
-| [开关 (Switch)](/zh/docs/components/switch) | 开关状态切换控件 |
-| [表格 (Table)](/zh/docs/components/table) | 表格化数据展示 |
-| [标签页 (Tabs)](/zh/docs/components/tabs) | 选项卡内容面板 |
-| [文本域 (Textarea)](/zh/docs/components/textarea) | 多行文本输入 |
-| [切换器 (Toggle)](/zh/docs/components/toggle) | 二态按钮 |
-| [切换按钮组 (Toggle Group)](/zh/docs/components/toggle-group) | 相关的切换控件组 |
-| [文字提示 (Tooltip)](/zh/docs/components/tooltip) | 上下文相关的悬停提示信息 |
-走
+侧边栏按消费者意图组织：
+
+- **核心表单与操作**：收集或提交用户意图的 controls。
+- **导航与命令**：页面移动、命令执行和大型界面定位。
+- **弹层与展开**：在当前页面上方或内部条件性出现的内容。
+- **反馈与状态**：系统状态、校验、进度、加载和空状态。
+- **数据展示**：结构化信息、元数据、文件、代码和 cards。
+- **布局与排版**：塑造产品密度和阅读层级的 primitives。
+- **AI 与 Agent 表面**：chat、tool calls、agent plans 和 generated output。
+- **动效与文本效果**：用于澄清层级或状态的效果，而不是默认装饰。
+- **视觉系统与背景**：与运营型 SaaS surface 隔离的高表现视觉。
+- **营销与内容区块**：获客或 editorial sections，不是 dashboard primitives。
+- **媒体与样机**：产品截图、地图、视频和设备框的表达性 surface。
+
+## 组件成熟度
+
+| 状态 | 含义 |
+| --- | --- |
+| `stable` | Public API 预期保持兼容。Docs、stories、tokens 和 a11y contract 已对齐。 |
+| `beta` | API 可用但仍在收敛。Breaking changes 必须有迁移说明。 |
+| `experimental` | 视觉/API 方向仍在测试。不要未经 review 扩散到关键产品流。 |
+| `deprecated` | 新工作禁用。页面必须说明替代方案。 |
+
+## 治理规则
+
+1. 选择能承载行为的最窄 primitive。
+2. 除非 pattern 页面明确允许，不要把装饰组件放进运营工作流。
+3. 组件进入 registry 时，docs 必须说明 package import 和 standalone install 在不同消费场景下的权威关系。
+4. 如果页面需要 demo-only component，就留在 previews，不要把它写成生产 primitive。

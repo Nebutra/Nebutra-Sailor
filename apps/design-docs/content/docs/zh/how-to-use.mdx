@@ -1,172 +1,103 @@
 ---
-title: "How to Use"
-description: "Install and consume the design system in your app."
+title: 使用方式
+description: 安装 tokens、导入受治理 primitives，并选择正确分发路径。
+layer: guide
+owner: Design Systems
+lastVerified: "2026-05-21"
 ---
 
-## Installation
+## 先选择消费路径
+
+| 场景 | 使用 | 原因 |
+| --- | --- | --- |
+| Nebutra monorepo 应用 | npm workspace package imports | 让 source、types、stories 和 docs 保持一致。 |
+| 外部 Next.js/React 应用 | shadcn-compatible registry | 将 standalone source 复制到宿主项目。 |
+| 品牌/VI 工作 | `@nebutra/brand` source data | 让身份数据和运行时 UI 样式分离。 |
+
+## Monorepo 接入
 
 <Steps>
-  <Step title="Add the dependency">
-    The design system is a workspace package. Add it to your app's `package.json`:
-
-    ```json
-    {
-      "dependencies": {
-        "@nebutra/ui": "workspace:*"
-      }
-    }
-    ```
-
-    Then install from the repo root:
+  <Step title="安装 package 依赖">
+    在 repo root 为目标应用添加依赖：
 
     ```bash
-    pnpm install
+    pnpm add @nebutra/ui @nebutra/tokens @nebutra/icons --filter <app-name>
     ```
   </Step>
 
-  <Step title="Wrap your app with DesignSystemProvider">
-    Add the provider to your root layout. This sets up theme context and CSS variables.
+  <Step title="只在应用入口引入一次 token CSS">
+    在 app-level CSS 入口添加：
+
+    ```css
+    @import "@nebutra/tokens/styles.css";
+    ```
+  </Step>
+
+  <Step title="在应用根部接入主题状态">
+    使用 `@nebutra/tokens` 的 `ThemeProvider`。它会把 resolved theme 写入 DOM，并保存偏好以支持 SSR-safe 渲染。
 
     ```tsx
-    // app/layout.tsx (Next.js App Router)
-    import { DesignSystemProvider } from "@nebutra/ui";
+    "use client";
 
-    export default function RootLayout({ children }: { children: React.ReactNode }) {
+    import { ThemeProvider } from "@nebutra/tokens";
+
+    export function Providers({ children }: { children: React.ReactNode }) {
       return (
-        <html>
-          <body>
-            <DesignSystemProvider>{children}</DesignSystemProvider>
-          </body>
-        </html>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
       );
     }
     ```
   </Step>
 
-  <Step title="Import and use components">
-    All exports are available from the single package entry point:
+  <Step title="从最窄稳定路径导入">
+    优先使用明确的 public subpath。需要受治理核心 primitive 子集时，使用 `@nebutra/ui/primitives/canonical`。
 
     ```tsx
-    import { Button, Card, Badge } from "@nebutra/ui";
-
-    export function MyPage() {
-      return (
-        <Card>
-          <Badge variant="secondary">New</Badge>
-          <Button>Get started</Button>
-        </Card>
-      );
-    }
+    import { Button, Input, Select } from "@nebutra/ui/primitives";
+    import { PageHeader } from "@nebutra/ui/layout";
+    import { Search } from "@nebutra/icons";
+    import { cn } from "@nebutra/ui/utils";
     ```
   </Step>
 </Steps>
 
-## Package Structure
+## Registry 接入
 
-The Nebutra design system is organized into a monorepo workspace. Here is a high-level overview of the structure:
+只有在外部项目复制 standalone component 时使用 registry：
 
-<Files>
-  <Folder name="packages" defaultOpen>
-    <Folder name="ui" defaultOpen>
-      <Folder name="src">
-        <Folder name="primitives">
-          <File name="button.tsx" />
-          <File name="card.tsx" />
-          <File name="index.ts" />
-        </Folder>
-        <Folder name="patterns">
-          <File name="page-header.tsx" />
-          <File name="index.ts" />
-        </Folder>
-      </Folder>
-      <File name="package.json" />
-    </Folder>
-    <Folder name="tokens">
-      <File name="package.json" />
-      <File name="colors.ts" />
-    </Folder>
-  </Folder>
-  <Folder name="apps">
-    <Folder name="design-docs">
-      <File name="package.json" />
-    </Folder>
-  </Folder>
-</Files>
-
-## Available Export Paths
-
-<TypeTable
-  type={{
-    '@nebutra/ui': {
-      description: 'All components, hooks, and utilities',
-      type: 'Module',
-    },
-    '@nebutra/ui/theme': {
-      description: 'Color tokens, brand overrides, marketing tokens',
-      type: 'Module',
-    },
-    '@nebutra/ui/typography': {
-      description: 'Font families, type scale, fluid presets',
-      type: 'Module',
-    },
-    '@nebutra/ui/layout': {
-      description: 'UI components only',
-      type: 'Module',
-    },
-    '@nebutra/ui/icons': {
-      description: 'Octicons re-exports',
-      type: 'Module',
-    },
-    '@nebutra/ui/utils': {
-      description: '`cn`, breakpoint helpers',
-      type: 'Module',
-    },
-    '@nebutra/ui/hooks': {
-      description: '`useDesignSystem`, `useTheme`',
-      type: 'Module',
-    },
-  }}
-/>
-
-## Theme Mode
-
-Use `useDesignSystem` to read and toggle the current color mode:
-
-```tsx
-import { useDesignSystem } from "@nebutra/ui";
-
-function ThemeToggle() {
-  const { toggleMode, resolvedMode } = useDesignSystem();
-  return (
-    <button onClick={toggleMode}>
-      {resolvedMode === "dark" ? "Light mode" : "Dark mode"}
-    </button>
-  );
-}
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/button.json
 ```
 
-## Brand Overrides
+Registry manifest 是 shadcn-compatible 分发产物。它可以携带复制出来的源码和 token fallback，但语义权威仍然是 package source 与 MDX docs。
 
-Apply brand-specific colors and typography without touching global tokens:
+## Import Path Policy
+
+| Import | 用于 | 不适合 |
+| --- | --- | --- |
+| `@nebutra/ui/primitives` | 受治理 UI primitives 与产品表面 | 只需要 canonical core 子集时。 |
+| `@nebutra/ui/primitives/canonical` | 只想暴露更小决策面的稳定 primitives | 需要 experimental 或装饰性 surfaces。 |
+| `@nebutra/ui/layout` | Page shell 与重复 layout helpers | 正在写低层 primitive。 |
+| `@nebutra/ui/patterns` | 有意保持高层的 docs/product patterns | 正在写可复用 primitive。 |
+| `@nebutra/tokens` | ThemeProvider 与运行时主题状态 | 组件代码里只需要 CSS 变量时。 |
+| `@nebutra/tokens/styles.css` | 运行时 CSS variables | 不要在组件文件里 import。 |
+
+## Styling Rules
 
 ```tsx
-import { createTheme, DesignSystemProvider } from "@nebutra/ui";
+// Good: 通过组件 API 消费 semantic/component tokens。
+<Button intent="primary">Deploy</Button>
 
-const brandTheme = createTheme("light", {
-  colors: {
-    accent: {
-      fg: "#your-brand-color",
-      emphasis: "#your-brand-emphasis",
-    },
-  },
-  typography: {
-    fontFamily: {
-      normal: '"YourBrandFont", Inter, sans-serif',
-    },
-  },
-});
+// Good: 组合本地布局时使用 CSS variables。
+<div className="border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]" />
 
-<DesignSystemProvider theme={brandTheme}>{children}</DesignSystemProvider>
+// Bad: 产品 UI 里硬编码漂移色。
+<div className="bg-blue-600 text-white" />
+
+// Bad: 从 docs 或 app code 穿透组件内部结构。
+<Progress className="[&>div]:bg-green-500" />
 ```
 
-See [Theming](/zh/docs/foundations/theming) for the full `BrandOverrides` interface.
+如果组件无法通过公开 API 表达某个状态，就提升缺失的 semantic/component token 或 variant。不要把 workaround 写成文档范式。

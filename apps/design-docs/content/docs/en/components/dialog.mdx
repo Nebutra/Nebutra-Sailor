@@ -1,6 +1,6 @@
 ---
 title: "Dialog"
-description: "Accessible modal overlay for focused interactions, built on Radix UI."
+description: "Accessible modal overlay for focused interactions, built on Base UI."
 ---
 
 import { DialogDemo } from "@/components/previews/dialog-demo";
@@ -78,7 +78,7 @@ import {
 
 ### Dialog (Root)
 
-Extends `@radix-ui/react-dialog` `Root` props.
+Extends Base UI Dialog root props.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -178,7 +178,7 @@ const [open, setOpen] = useState(false)
 
 ## Accessibility
 
-- Built on Radix UI Dialog — follows the WAI-ARIA [Dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
+- Built on Base UI Dialog — follows the WAI-ARIA [Dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
 - `DialogContent` has `role="dialog"` and `aria-modal="true"`.
 - `DialogTitle` is linked via `aria-labelledby` for screen reader announcement.
 - `DialogDescription` is linked via `aria-describedby`.

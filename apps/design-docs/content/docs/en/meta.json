@@ -4,14 +4,18 @@
     "index",
     "--- Overview ---",
     "introduction",
+    "architecture",
     "how-to-use",
     "contributing",
-    "--- Foundations ---",
+    "--- System Foundations ---",
     "...foundations",
+    "--- Component System ---",
     "...components",
-    "--- Compositions ---",
+    "--- Product Compositions ---",
     "...fragment-components",
-    "--- Patterns ---",
-    "...patterns"
+    "--- Operating Patterns ---",
+    "...patterns",
+    "--- API Contracts ---",
+    "...api"
   ]
 }

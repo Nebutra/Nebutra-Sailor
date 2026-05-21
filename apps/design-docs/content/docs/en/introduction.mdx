@@ -1,78 +1,67 @@
 ---
-title: "Overview"
-description: "Nebutra Design System — a unified UI foundation extracted from production Nebutra applications."
+title: Overview
+description: A production design system for AI-native SaaS products.
+layer: guide
+owner: Design Systems
+lastVerified: "2026-05-21"
 ---
 
 <IntroductionHero />
 
----
+## What This System Is
 
-## Foundations
+Nebutra Design System is a governed UI platform for AI-native SaaS products. It packages the decisions that should be shared across Nebutra applications: token semantics, primitive APIs, composition rules, accessibility contracts, and external registry distribution.
 
-The core visual identity, design tokens, and foundational rules that govern our product ecosystem.
+It is deliberately narrower than a design inspiration library. A surface belongs here only when it reduces product variance, gives downstream developers a better API, or turns a repeated production pattern into a reusable contract.
 
-<CardGroup cols={3}>
-  <Card title="Brand Assets" icon="fingerprint" href="/en/docs/foundations/brand">Logo usage, #0033FE / #0BF1C3 color specs, brand gradients, and official typography. Sourced from the 云毓智能 VI manual.</Card>
-  <Card title="Color" icon="palette" href="/en/docs/foundations/brand-colors">Semantic color tokens, dark-mode mappings, and Tailwind CSS 4 `@theme` variables.</Card>
-  <Card title="Typography" icon="type" href="/en/docs/foundations/typography">Poppins (EN) and vivo Sans (CN) type scales, weights, and line-height rules.</Card>
-  <Card title="Grid & Layout" icon="layout-grid" href="/en/docs/foundations/grid">12-column fluid grid, container widths, spacing scale, and common layout patterns.</Card>
-  <Card title="Theming" icon="sun-moon" href="/en/docs/foundations/theming">Light / dark mode architecture using CSS variables and `next-themes`.</Card>
-  <Card title="Icons" icon="sparkles" href="/en/docs/foundations/icons">Lucide icon library integration, sizing conventions, and stroke-width rules.</Card>
-</CardGroup>
-
----
-
-## Primitives
-
-The foundational React components that serve as the building blocks for all Nebutra applications.
+## What To Read First
 
 <CardGroup cols={2}>
-  <Card title="Atom Primitives" icon="circle" href="/en/docs/components/introduction">**57 foundational elements** — Button, Input, Badge, Avatar, and Card. Precision-engineered components that map directly to `@nebutra/ui` exports.</Card>
-  <Card title="Compositions" icon="puzzle" href="/en/docs/fragment-components/introduction">**18 assembled blocks** — MetricCard, PageHeader, FilterBar, and EmptyState. Production-ready, composite sections built entirely from primitive elements.</Card>
+  <Card title="Information Architecture" icon="layers" href="/en/docs/architecture">
+    The source-of-truth model for docs, registry, tokens, primitives, and product patterns.
+  </Card>
+  <Card title="Brand & Tokens" icon="palette" href="/en/docs/foundations/brand-colors">
+    Runtime token truth, brand anchors, dark-mode mapping, and Tailwind CSS v4 integration.
+  </Card>
+  <Card title="Component System" icon="package" href="/en/docs/components/introduction">
+    Find the right primitive by product job instead of browsing a long alphabetical gallery.
+  </Card>
+  <Card title="Operating Patterns" icon="workflow" href="/en/docs/patterns/introduction">
+    Cross-component rules for forms, tables, navigation, modality, charts, and empty states.
+  </Card>
 </CardGroup>
 
----
+## Design Principles
 
-## Patterns
+| Principle | Operational meaning |
+| --- | --- |
+| Token truth over visual memory | Runtime UI consumes `@nebutra/tokens/styles.css`; component examples should not hard-code palette drift. |
+| Public API over DOM piercing | Consumers extend variants, props, and documented slots; they do not target internal child selectors. |
+| Native semantics first | Prefer native elements and proven primitives. If Base UI, custom logic, or another substrate owns behavior, docs say that explicitly. |
+| Product density over decorative flourish | SaaS surfaces should be quiet, scannable, and precise. Motion and visual effects earn their place by clarifying state or hierarchy. |
+| Storybook and docs converge | Stories prove states; docs explain contracts. If they disagree, one of them is stale. |
 
-High-level layout and interaction conventions used across all Nebutra apps.
+## Package Map
 
-<CardGroup cols={2}>
-  <Card title="UI Patterns" icon="layers" href="/en/docs/patterns/introduction">Forms, tables, navigation, modality, charts, and empty-state patterns.</Card>
-  <Card title="Accessibility" icon="accessibility" href="/en/docs/foundations/accessibility">WCAG 2.1 AA compliance checklist, focus management, and ARIA conventions.</Card>
-</CardGroup>
+| Package | Role |
+| --- | --- |
+| `@nebutra/tokens` | Runtime CSS variables, theme provider, and light/dark token semantics. |
+| `@nebutra/ui` | Public UI package, including primitives, components, layout, patterns, hooks, and utilities. |
+| `@nebutra/icons` | Nebutra icon facade, with Geist icons preferred for product UI. |
+| `@nebutra/brand` | Brand source data for VI and identity work, not app runtime styling. |
 
----
+## Distribution Paths
 
-## Principles
+Use package imports inside Nebutra apps:
 
-<AccordionGroup>
-  <Accordion title="Production-obsessed source of truth">
-    Every token, component, and pattern documented here is extracted from live, shipped code. We do not design in a vacuum. If a pattern isn't serving users in production, it doesn't exist here.
-  </Accordion>
-  <Accordion title="Systemic reuse over rogue creation">
-    Before engineering a new component, rigorously search the primitives catalogue. If a close match exists, extend it through the variant API. Systemic fragmentation is the enemy of enterprise scale.
-  </Accordion>
-  <Accordion title="Abstract, don't refactor">
-    New code follows the system immediately. Existing code migrates gradually.
-    We do not hold up shipping to achieve perfect consistency everywhere at once.
-  </Accordion>
-  <Accordion title="No inline CSS">
-    All styling uses design tokens (CSS variables), Tailwind utility classes, or component `variant` props.
-    Inline `style=` is forbidden except for truly dynamic values (e.g. chart colours at runtime).
-  </Accordion>
-  <Accordion title="Minimal scope — only high-frequency UI is formalised">
-    We document components and patterns that appear on 3 or more distinct pages.
-    One-off UI stays local to the feature — it does not belong in the system.
-  </Accordion>
-</AccordionGroup>
+```tsx
+import { Button, Input } from "@nebutra/ui/primitives";
+```
 
----
+Use the registry only when installing a standalone copy into an external project:
 
-## Package Reference
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/button.json
+```
 
-| Package | Contents | Import |
-|---------|----------|--------|
-| `@nebutra/ui` | All atom + pattern components | `import { Button } from "@nebutra/ui"` |
-| `@nebutra/tokens` | Raw design tokens (JS/CSS) | `import tokens from "@nebutra/tokens"` |
-| `@nebutra/tailwind-preset` | Shared Tailwind config | `tailwind.config.ts → presets` |
+The package source and MDX docs remain the design authority in both cases.

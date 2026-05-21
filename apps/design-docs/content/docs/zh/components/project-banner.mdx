@@ -1,0 +1,52 @@
+---
+title: Project Banner
+description: 项目级状态的全宽、不可随意关闭 banner，用于必须解决的问题。
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/project-banner.tsx
+primitive: ProjectBanner
+substrate: native
+registry: true
+lastVerified: "2026-05-21"
+---
+
+<ComponentPreview name="project-banner-demo" />
+
+## 安装
+
+```tsx
+import { ProjectBanner } from "@nebutra/ui/primitives";
+```
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/project-banner.json
+```
+
+## 用法
+
+用于需要项目所有者解决的横向状态：账单逾期、正在 rollback、攻击防护模式、即将阻塞部署的 trial 过期。
+
+```tsx
+<ProjectBanner
+  variant="warning"
+  label="Production deployments are paused for this project"
+  callToAction={{ label: "Review Deployments", href: "/deployments" }}
+/>
+```
+
+## 不要用于
+
+- 单个字段或 card 内的上下文信息：使用 `Note`。
+- 瞬时成功反馈：使用 `Toast`。
+- 阻塞确认：使用 `Modal` 或 `AlertDialog`。
+
+## 行为契约
+
+- 默认不可关闭。能关闭而不解决的问题，不应该升级为 project banner。
+- 同一页面只放一个 banner。
+- 必须提供能解决状态的 `callToAction`。
+
+## 可访问性
+
+`error` 默认使用 `role="alert"`，其他 variant 默认使用 `role="status"`。可以通过 `role` 覆盖，但不要降低真实紧急状态。

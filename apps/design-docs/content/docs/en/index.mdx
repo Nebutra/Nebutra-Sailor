@@ -1,69 +1,66 @@
 ---
-title: Introduction
-description: Welcome to the Nebutra Design System documentation.
+title: Design System
+description: Governed tokens, primitives, compositions, and registry contracts for Nebutra products.
+layer: guide
+owner: Design Systems
+lastVerified: "2026-05-21"
 ---
 
-Welcome to the **Nebutra Design System**. This is the official component library and design language for all Nebutra SaaS products, engineered with React, Tailwind CSS v4, and framer-motion.
+Nebutra Design System is the production UI contract for Nebutra products. It is not a moodboard and it is not a demo shelf: every page should tell a consumer which layer owns the decision, which API to import, which token family to trust, and which pattern to reuse before creating something new.
 
 <Cards>
-  <Card 
-    title="Getting Started" 
+  <Card
+    title="System Architecture"
+    href="/en/docs/architecture"
+    description="Read the source-of-truth model for tokens, primitives, compositions, patterns, and registry distribution."
+  />
+  <Card
+    title="Install & Consume"
     href="/en/docs/how-to-use"
-    description="Install the package and set up your environment in under 2 minutes." 
+    description="Wire @nebutra/tokens, import governed primitives, and understand the registry distribution path."
   />
-  <Card 
-    title="Component Gallery" 
-    href="/en/docs/components" 
-    description="Explore our rich collection of interactive and accessible components." 
+  <Card
+    title="Component System"
+    href="/en/docs/components"
+    description="Browse primitives by product job: forms, overlays, feedback, data display, AI surfaces, motion, and media."
   />
-  <Card 
-    title="Design Philosophy" 
-    href="/en/docs/foundations/brand"
-    description="Learn about the color systems, typography, and motion guidelines." 
-  />
-  <Card 
-    title="Figma UI Kit" 
-    href="https://figma.com/community" 
-    description="Grab our complete Figma variables and component variants." 
-    external
+  <Card
+    title="Contribution Gate"
+    href="/en/docs/contributing"
+    description="Use the acceptance checklist before adding or changing a design-system surface."
   />
 </Cards>
 
-## Why Nebutra?
+## Working Model
 
-Nebutra is built on top of modern primitives to ensure maximum performance and DX (Developer Experience).
+| Layer | Source of truth | Consumer decision |
+| --- | --- | --- |
+| Brand data | `@nebutra/brand` | Use for VI, brand narrative, and source data. Runtime UI does not import it directly. |
+| Runtime tokens | `@nebutra/tokens/styles.css` | Import once per app. Components consume semantic/component CSS variables. |
+| Primitives | `@nebutra/ui/primitives` or `@nebutra/ui/primitives/canonical` | Use when building product surfaces. Extend through variants before creating siblings. |
+| Compositions | `fragment-components` and product patterns | Use for repeated SaaS page sections, not one-off marketing flourishes. |
+| Registry | `https://ui.nebutra.com/r/<name>.json` | External copy-paste distribution; npm remains canonical inside this monorepo. |
 
-<CardGroup>
-  <Card 
-    title="Beautiful by Default" 
-    icon={<Sparkles className="text-blue-500" />}
-    description="Carefully crafted aesthetics with premium typography, refined spacing, and seamless dark mode support out of the box."
-  />
-  <Card 
-    title="Highly Performant" 
-    icon={<Zap className="text-yellow-500" />}
-    description="Optimized for React Server Components. Minimal client-side JavaScript overhead and zero runtime CSS footprint with Tailwind v4."
-  />
-  <Card 
-    title="Accessible (a11y)" 
-    icon={<UserCircle className="text-green-500" />}
-    description="Fully compliant with WAI-ARIA standards. Keyboard navigation and screen reader support are strictly enforced."
-  />
-  <Card 
-    title="Copy & Paste Driven" 
-    icon={<FileCode className="text-purple-500" />}
-    description="Instead of bloated npm packages, take ownership of the code. We give you full control to adjust and tweak every component."
-  />
+## Fast Paths
+
+<CardGroup cols={2}>
+  <Card title="Foundations" icon="layers" href="/en/docs/foundations/brand-colors">
+    Token truth, typography, motion, accessibility, and brand usage rules.
+  </Card>
+  <Card title="Core Forms" icon="square-pen" href="/en/docs/components/input">
+    Inputs, labels, selects, checkboxes, radios, switches, sliders, and validation contracts.
+  </Card>
+  <Card title="AI Surfaces" icon="sparkles" href="/en/docs/components/message-content">
+    Message content, tool-call rows, todo/status surfaces, and agent planning primitives.
+  </Card>
+  <Card title="Registry" icon="package" href="/registry">
+    Public shadcn-compatible manifests for external consumers.
+  </Card>
 </CardGroup>
 
-## Quick Start 
+## Non-Negotiables
 
-Ready to dive in? Jump directly into a playground or install via CLI.
-
-```bash title="Terminal"
-npm install @nebutra/ui my-project
-```
-
-<Callout type="info">
-  **Note for early adopters:** We are currently in public beta. If you encounter any visual quirks or hydration issues, please open an issue on our GitHub repository.
-</Callout>
+1. Component docs must describe the current implementation substrate. Radix, Base UI, native HTML, and custom primitives are not interchangeable labels.
+2. Examples must route through public APIs and semantic/component tokens. A demo that pierces an internal child selector is documentation debt.
+3. English and Chinese docs stay structurally paired. If a page is public in one locale, it needs a counterpart or an explicit governance exception.
+4. Registry items are distribution artifacts, not design authority. The MDX docs and package source define the contract.

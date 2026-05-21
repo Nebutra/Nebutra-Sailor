@@ -1,0 +1,54 @@
+---
+title: Relative Time Card
+description: 简短相对时间标签，hover/focus 时展示 UTC 与本地绝对时间。
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/relative-time-card.tsx
+primitive: RelativeTimeCard
+substrate: custom
+registry: true
+lastVerified: "2026-05-21"
+---
+
+<ComponentPreview name="relative-time-card-demo" />
+
+## 安装
+
+```tsx
+import { RelativeTimeCard } from "@nebutra/ui/primitives";
+```
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/relative-time-card.json
+```
+
+## 用法
+
+用于表格单元格、实体行、deploy 列表和 activity feed 等可扫描时间戳。正文里超过约 7 天的静态日期，直接显示绝对日期。
+
+```tsx
+<RelativeTimeCard date={deployment.createdAt} />
+```
+
+## 不要预格式化
+
+传入 `number`、`Date` 或 ISO/RFC 字符串。不要把 `"2m ago"` 作为 children 传入；formatter 已经定义短标签。
+
+```tsx
+// Good
+<RelativeTimeCard date={new Date("2026-03-14T12:34:56Z")} />
+
+// Bad
+<RelativeTimeCard date={Date.now()}>{"2m ago"}</RelativeTimeCard>
+```
+
+## Hydration safety
+
+服务端和客户端首屏都先渲染确定性的 UTC 绝对时间。挂载后再升级为相对时间并启动自适应 tick，避免 hydration mismatch。
+
+## 可访问性
+
+- 默认 trigger 是语义化 `<time dateTime={ISO}>`。
+- Popover 内容由 `ContextCard` 提供。
+- 本地时区行挂载后才出现，避免服务端猜测用户 locale。

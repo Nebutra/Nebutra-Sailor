@@ -1,172 +1,103 @@
 ---
-title: "How to Use"
-description: "Install and consume the design system in your app."
+title: How to Use
+description: Install tokens, import governed primitives, and choose the right distribution path.
+layer: guide
+owner: Design Systems
+lastVerified: "2026-05-21"
 ---
 
-## Installation
+## Choose the Consumption Path
+
+| Context | Use | Why |
+| --- | --- | --- |
+| Nebutra monorepo app | npm workspace package imports | Keeps source, types, stories, and docs aligned. |
+| External Next.js/React app | shadcn-compatible registry | Copies standalone source into the host project. |
+| Brand/VI work | `@nebutra/brand` source data | Keeps identity data separate from runtime UI styling. |
+
+## Monorepo Setup
 
 <Steps>
-  <Step title="Add the dependency">
-    The design system is a workspace package. Add it to your app's `package.json`:
-
-    ```json
-    {
-      "dependencies": {
-        "@nebutra/ui": "workspace:*"
-      }
-    }
-    ```
-
-    Then install from the repo root:
+  <Step title="Install package dependencies">
+    Add the package you consume from the repo root:
 
     ```bash
-    pnpm install
+    pnpm add @nebutra/ui @nebutra/tokens @nebutra/icons --filter <app-name>
     ```
   </Step>
 
-  <Step title="Wrap your app with DesignSystemProvider">
-    Add the provider to your root layout. This sets up theme context and CSS variables.
+  <Step title="Import runtime token CSS once">
+    Add the token stylesheet in the app-level CSS entry:
+
+    ```css
+    @import "@nebutra/tokens/styles.css";
+    ```
+  </Step>
+
+  <Step title="Wire theme state at the app root">
+    Use `ThemeProvider` from `@nebutra/tokens`. It writes the resolved theme to the DOM and stores the preference for SSR-safe rendering.
 
     ```tsx
-    // app/layout.tsx (Next.js App Router)
-    import { DesignSystemProvider } from "@nebutra/ui";
+    "use client";
 
-    export default function RootLayout({ children }: { children: React.ReactNode }) {
+    import { ThemeProvider } from "@nebutra/tokens";
+
+    export function Providers({ children }: { children: React.ReactNode }) {
       return (
-        <html>
-          <body>
-            <DesignSystemProvider>{children}</DesignSystemProvider>
-          </body>
-        </html>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
       );
     }
     ```
   </Step>
 
-  <Step title="Import and use components">
-    All exports are available from the single package entry point:
+  <Step title="Import from the narrowest stable path">
+    Prefer explicit public subpaths. Use `@nebutra/ui/primitives/canonical` when you intentionally want only governed core primitives.
 
     ```tsx
-    import { Button, Card, Badge } from "@nebutra/ui";
-
-    export function MyPage() {
-      return (
-        <Card>
-          <Badge variant="secondary">New</Badge>
-          <Button>Get started</Button>
-        </Card>
-      );
-    }
+    import { Button, Input, Select } from "@nebutra/ui/primitives";
+    import { PageHeader } from "@nebutra/ui/layout";
+    import { Search } from "@nebutra/icons";
+    import { cn } from "@nebutra/ui/utils";
     ```
   </Step>
 </Steps>
 
-## Package Structure
+## Registry Setup
 
-The Nebutra design system is organized into a monorepo workspace. Here is a high-level overview of the structure:
+Use registry installation only when copying a standalone component into an external project:
 
-<Files>
-  <Folder name="packages" defaultOpen>
-    <Folder name="ui" defaultOpen>
-      <Folder name="src">
-        <Folder name="primitives">
-          <File name="button.tsx" />
-          <File name="card.tsx" />
-          <File name="index.ts" />
-        </Folder>
-        <Folder name="patterns">
-          <File name="page-header.tsx" />
-          <File name="index.ts" />
-        </Folder>
-      </Folder>
-      <File name="package.json" />
-    </Folder>
-    <Folder name="tokens">
-      <File name="package.json" />
-      <File name="colors.ts" />
-    </Folder>
-  </Folder>
-  <Folder name="apps">
-    <Folder name="design-docs">
-      <File name="package.json" />
-    </Folder>
-  </Folder>
-</Files>
-
-## Available Export Paths
-
-<TypeTable
-  type={{
-    '@nebutra/ui': {
-      description: 'All components, hooks, and utilities',
-      type: 'Module',
-    },
-    '@nebutra/ui/theme': {
-      description: 'Color tokens, brand overrides, marketing tokens',
-      type: 'Module',
-    },
-    '@nebutra/ui/typography': {
-      description: 'Font families, type scale, fluid presets',
-      type: 'Module',
-    },
-    '@nebutra/ui/layout': {
-      description: 'UI components only',
-      type: 'Module',
-    },
-    '@nebutra/ui/icons': {
-      description: 'Octicons re-exports',
-      type: 'Module',
-    },
-    '@nebutra/ui/utils': {
-      description: '`cn`, breakpoint helpers',
-      type: 'Module',
-    },
-    '@nebutra/ui/hooks': {
-      description: '`useDesignSystem`, `useTheme`',
-      type: 'Module',
-    },
-  }}
-/>
-
-## Theme Mode
-
-Use `useDesignSystem` to read and toggle the current color mode:
-
-```tsx
-import { useDesignSystem } from "@nebutra/ui";
-
-function ThemeToggle() {
-  const { toggleMode, resolvedMode } = useDesignSystem();
-  return (
-    <button onClick={toggleMode}>
-      {resolvedMode === "dark" ? "Light mode" : "Dark mode"}
-    </button>
-  );
-}
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/button.json
 ```
 
-## Brand Overrides
+Registry manifests are shadcn-compatible distribution artifacts. They may include copied source and token fallbacks, but the package source and MDX docs remain the authority for semantics.
 
-Apply brand-specific colors and typography without touching global tokens:
+## Import Path Policy
+
+| Import | Use for | Avoid when |
+| --- | --- | --- |
+| `@nebutra/ui/primitives` | Governed UI primitives and product surfaces | You need only the canonical core subset. |
+| `@nebutra/ui/primitives/canonical` | Stable primitives for app teams that want a smaller decision surface | You need experimental or decorative surfaces. |
+| `@nebutra/ui/layout` | Page shells and repeated layout helpers | You are composing a low-level primitive. |
+| `@nebutra/ui/patterns` | Docs/product patterns that are intentionally higher-level | You are writing a reusable primitive. |
+| `@nebutra/tokens` | ThemeProvider and runtime token state | You only need a CSS variable in component code. |
+| `@nebutra/tokens/styles.css` | Runtime CSS variables | Never import inside a component file. |
+
+## Styling Rules
 
 ```tsx
-import { createTheme, DesignSystemProvider } from "@nebutra/ui";
+// Good: semantic/component tokens through the component API.
+<Button intent="primary">Deploy</Button>
 
-const brandTheme = createTheme("light", {
-  colors: {
-    accent: {
-      fg: "#your-brand-color",
-      emphasis: "#your-brand-emphasis",
-    },
-  },
-  typography: {
-    fontFamily: {
-      normal: '"YourBrandFont", Inter, sans-serif',
-    },
-  },
-});
+// Good: CSS variables when composing local layout.
+<div className="border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]" />
 
-<DesignSystemProvider theme={brandTheme}>{children}</DesignSystemProvider>
+// Bad: raw palette drift in product UI.
+<div className="bg-blue-600 text-white" />
+
+// Bad: piercing component internals from docs or app code.
+<Progress className="[&>div]:bg-green-500" />
 ```
 
-See [Theming](/en/docs/foundations/theming) for the full `BrandOverrides` interface.
+If a component cannot express a needed state without internal selectors or raw palette classes, promote the missing semantic/component token or variant. Do not normalize the workaround in docs.
