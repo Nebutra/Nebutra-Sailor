@@ -90,6 +90,7 @@ const ENTRIES: Record<string, string> = {
   "icons/index": "src/icons/index.ts",
   "theme/index": "src/theme/index.ts",
   "primitives/index": "src/primitives/index.ts",
+  "primitives/canonical": "src/primitives/canonical.ts",
   "patterns/index": "src/patterns/index.ts",
   "typography/index": "src/typography/index.ts",
   "hooks/index": "src/hooks/index.ts",

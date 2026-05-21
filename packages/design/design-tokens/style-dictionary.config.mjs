@@ -20,7 +20,7 @@
  */
 
 import { readFileSync } from "node:fs";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, rm, writeFile } from "node:fs/promises";
 import StyleDictionary from "style-dictionary";
 
 const themeRegistry = JSON.parse(
@@ -262,7 +262,7 @@ const buildMode = ({ mode, selector, sources, outputFile, nameTransform = "name/
         buildPath: "build/ts/",
         options: { usesDtcg: true },
         files: [
-          { destination: `${mode}.ts`, format: "javascript/es6", filter: filterSkipped },
+          { destination: `${mode}.js`, format: "javascript/es6", filter: filterSkipped },
           {
             destination: `${mode}.d.ts`,
             format: "typescript/es6-declarations",
@@ -321,12 +321,35 @@ const configs = [
   ),
 ];
 
+const tsExportModes = ["light", "dark", ...MULTI_THEMES];
+
+function toNamespaceIdentifier(value) {
+  return value.replace(/-([a-z])/gu, (_, char) => char.toUpperCase());
+}
+
+// The TS platform used to emit `.ts` runtime files. Clear the directory before
+// generation so package builds cannot publish stale, non-runtime artifacts next
+// to the current `.js` entrypoints.
+await rm("build/ts", { recursive: true, force: true });
+
 for (const cfg of configs) {
   const sd = new StyleDictionary(cfg);
   await sd.hasInitialized;
   await sd.cleanAllPlatforms();
   await sd.buildAllPlatforms();
 }
+
+const tsIndex = `${tsExportModes
+  .map((mode) => `export * as ${toNamespaceIdentifier(mode)} from "./${mode}.js";`)
+  .join("\n")}
+`;
+const tsIndexDts = `${tsExportModes
+  .map((mode) => `export * as ${toNamespaceIdentifier(mode)} from "./${mode}.js";`)
+  .join("\n")}
+`;
+
+await writeFile("build/ts/index.js", tsIndex, "utf8");
+await writeFile("build/ts/index.d.ts", tsIndexDts, "utf8");
 
 // ─── Post-processing ─────────────────────────────────────────────────────────
 //

@@ -5,9 +5,13 @@
   "private": false,
   "license": "MIT",
   "type": "module",
-  "main": "./build/ts/tokens.js",
-  "types": "./build/ts/tokens.d.ts",
+  "main": "./build/ts/index.js",
+  "types": "./build/ts/index.d.ts",
   "exports": {
+    ".": {
+      "types": "./build/ts/index.d.ts",
+      "import": "./build/ts/index.js"
+    },
     "./tokens/core.json": "./tokens/core.json",
     "./tokens/semantic.json": "./tokens/semantic.json",
     "./tokens/themes/light.json": "./tokens/themes/light.json",

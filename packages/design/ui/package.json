@@ -1,11 +1,13 @@
 {
   "name": "@nebutra/ui",
   "version": "0.2.1",
-  "description": "Unified UI component library — Lobe UI + Radix + HeroUI + layout components",
+  "description": "Nebutra design-system UI primitives, patterns, layouts, and token-integrated components",
   "private": false,
   "license": "MIT",
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -34,6 +36,10 @@
     "./primitives": {
       "types": "./dist/primitives/index.d.ts",
       "import": "./dist/primitives/index.js"
+    },
+    "./primitives/canonical": {
+      "types": "./dist/primitives/canonical.d.ts",
+      "import": "./dist/primitives/canonical.js"
     },
     "./patterns": {
       "types": "./dist/patterns/index.d.ts",

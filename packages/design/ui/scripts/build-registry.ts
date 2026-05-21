@@ -51,7 +51,7 @@ const TOKENS_LIGHT = join(
   "design-tokens",
   "build",
   "ts",
-  "light.ts",
+  "light.js",
 );
 const TOKENS_DARK = join(
   REPO_ROOT,
@@ -60,7 +60,7 @@ const TOKENS_DARK = join(
   "design-tokens",
   "build",
   "ts",
-  "dark.ts",
+  "dark.js",
 );
 const OUT_DIR = join(REPO_ROOT, "apps", "design-docs", "public", "r");
 const OUT_INDEX = join(REPO_ROOT, "apps", "design-docs", "public", "registry.json");
