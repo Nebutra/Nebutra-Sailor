@@ -361,6 +361,7 @@ jobs:
           AUTH_PROVIDER: "clerk"
           NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
           NEXT_TELEMETRY_DISABLED: "1"
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
 
       - name: Upload web release logs
         uses: actions/upload-artifact@v4
@@ -701,8 +702,13 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Build workspace packages (required by landing-page webServer)
-        run: pnpm turbo build --filter="./packages/*"
+      - name: Build E2E server dependency closures
+        run: |
+          pnpm turbo build \
+            --filter="@nebutra/landing-page^..." \
+            --filter="@nebutra/web^..." \
+            --filter="@nebutra/gateway^..." \
+            --filter="@nebutra/sleptons^..."
         env:
           SKIP_ENV_VALIDATION: true
       - name: Sync brand assets to app public directories
@@ -887,6 +893,7 @@ jobs:
         env:
           ANALYZE: "true"
           SKIP_ENV_VALIDATION: true
+          NODE_OPTIONS: "--max-old-space-size=6144"
 
       - name: Upload bundle analysis report
         uses: actions/upload-artifact@v4
