@@ -1,7 +1,7 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { logger } from "@nebutra/logger";
-import { requireAuth } from "@/middlewares/tenantContext.js";
-import { ingestEvents } from "@/services/event-ingest.js";
+import { requireAuth } from "../../middlewares/tenantContext.js";
+import { ingestEvents } from "../../services/event-ingest.js";
 
 const eventContextSchema = z.object({
   tenantId: z.string().min(1),

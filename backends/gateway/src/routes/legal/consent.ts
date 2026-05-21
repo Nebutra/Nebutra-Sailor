@@ -3,7 +3,7 @@ import { getSystemDb, getTenantDb, type Prisma } from "@nebutra/db";
 import { DatabaseError, NotFoundError, toApiError } from "@nebutra/errors";
 import { logger } from "@nebutra/logger";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
-import { requireAuth, requireOrganization } from "@/middlewares/tenantContext.js";
+import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 
 // AUDIT(no-tenant): /legal/documents and /contact are unauthenticated public
 // endpoints (legal documents are global; contact form submissions precede
