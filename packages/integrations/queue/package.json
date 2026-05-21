@@ -1,8 +1,8 @@
 {
   "name": "@nebutra/queue",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "foundation",

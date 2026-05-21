@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/storybook",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--max-old-space-size=8192' storybook dev --port 6006 --no-open",
@@ -13,7 +13,7 @@
     "@nebutra/ui": "workspace:*",
     "cmdk": "^1.1.1",
     "next": "^16.2.6",
-    "next-intl": "^3.26.5",
+    "next-intl": "^4.12.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
@@ -29,11 +29,11 @@
     "@types/node": "^22.19.15",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.4",
+    "@vitejs/plugin-react": "catalog:",
     "storybook": "8.6.17",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
-    "vite": "^6.4.1"
+    "vite": "catalog:"
   },
   "license": "AGPL-3.0-only"
 }

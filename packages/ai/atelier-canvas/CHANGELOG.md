@@ -1,11 +1,21 @@
 # @nebutra/atelier-canvas
 
+## 1.0.1
+
+### Patch Changes
+
+- Publish registry package metadata under the MIT license.
+
+- Updated dependencies []:
+  - @nebutra/agents@1.1.1
+  - @nebutra/logger@0.1.1
+  - @nebutra/tenant-store@0.2.1
+
 ## 1.0.0
 
 ### Minor Changes
 
 - [`092a1ce`](https://github.com/Nebutra/Nebutra-Sailor/commit/092a1ce810965e2d81767642e4bad05b80df81f4) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Add the Atelier agentic creative-canvas capability.
-
   - `@nebutra/agents`: new image/video **generation modality**
     (`@nebutra/agents/generation`) on the same env-key-gated provider layer as
     the LLM fallback chain, with a deterministic always-available mock provider.
@@ -23,7 +33,6 @@
 ### Patch Changes
 
 - [`34bd161`](https://github.com/Nebutra/Nebutra-Sailor/commit/34bd16140436c966896bf7a2276e8c20777c256f) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Capability absorption — codename `canvas` (clean-room, architecture-translation only).
-
   - **New `@nebutra/tenant-store`** (Step-0 governance): neutral lower layer —
     `withTenantLock` + `InMemoryTenantStore` + `TenantScopedStore`. `reel` and
     `atelier-canvas` now both depend on it and no longer on each other;

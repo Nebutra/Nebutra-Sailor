@@ -26,6 +26,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Verify supply-chain policy
+        run: node scripts/verify-supply-chain-policy.mjs
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 

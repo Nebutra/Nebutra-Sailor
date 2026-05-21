@@ -1,12 +1,23 @@
 # @nebutra/agent-runtime
 
+## 0.2.1
+
+### Patch Changes
+
+- Publish registry package metadata under the MIT license.
+
+- Updated dependencies []:
+  - @nebutra/ai-primitives@0.1.1
+  - @nebutra/capability-kit@0.2.1
+  - @nebutra/execution-policy@0.1.1
+  - @nebutra/mcp@0.1.2
+
 ## 0.2.0
 
 ### Minor Changes
 
 - [`fab751f`](https://github.com/Nebutra/Nebutra-Sailor/commit/fab751f39639251bfa006b1bfbcd8cd62f94626a) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - New adapter subpaths inside `@nebutra/agent-runtime`: concrete reusable port
   adapters for the runtime package.
-
   - `mcp-catalog`: adapts `@nebutra/mcp` `serverRegistry`/`mcpClient` into the
     `McpServerCatalogPort` / `McpClientLike` ports — plan-gated, tenant
     fail-closed, schema-less MCP tools still yield usable definitions,
@@ -22,7 +33,6 @@
   governance decision — documented in the README).
 
 - [`4865ac9`](https://github.com/Nebutra/Nebutra-Sailor/commit/4865ac9bff6dd83635bc33e4aeb348b087dee7c7) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Absorb the IDE-coding-agent delta (over the already-absorbed CLI core).
-
   - `code-review`: a pure unified-diff parser, branch-base resolution, a
     confidence-banded review prompt (CRITICAL ≥95% / WARNING ≥85% /
     SUGGESTION ≥75% / below → omit) with an untrusted-content injection guard
@@ -43,7 +53,6 @@
   impurity is an injected model/summarize port. 632 package tests.
 
 - [`67f9cd0`](https://github.com/Nebutra/Nebutra-Sailor/commit/67f9cd02c0ee908f0579efadc4292d535a758c16) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Durable rollout-store backend (the agent-runtime system-of-record).
-
   - New Prisma model `AgentRolloutLine` → table `agent_rollout_lines`, additive
     migration `20260519000000_add_agent_rollout_store` (one CREATE TABLE).
   - `createPrismaRolloutPersistence` in `@nebutra/agent-runtime-adapters`:
@@ -55,7 +64,6 @@
     migrate+generate deploy step (ADR 2026-05-19), not faked durability.
 
 - [`bb1b126`](https://github.com/Nebutra/Nebutra-Sailor/commit/bb1b126e82379d88da10f43a86d9d07bccc3a224) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Absorb the git-backed-project delta (over the already-absorbed core).
-
   - `project-repo`: durable project = git repo. Metadata + per-conversation
     jsonl logs persisted as committed files (one commit per turn); history /
     restore by commit SHA (commit graph IS the history — distinct from
@@ -71,7 +79,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
   renamed `DeploymentCommitRef`). 252 package tests.
 
 - [`da6bfea`](https://github.com/Nebutra/Nebutra-Sailor/commit/da6bfeaf6c323a9aecefdd65c481a9852aee25b9) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Add `@nebutra/agent-runtime`: a multi-tenant agent-runtime grammar.
-
   - New package re-expresses a coding-agent runtime _design_ in Sailor grammar —
     thread/turn/item model + event lifecycle, two-axis approval/capability
     policy, uniform tool/MCP abstraction, event-sourced rollout with compaction,
@@ -85,7 +92,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
 
 - [`3c5c43e`](https://github.com/Nebutra/Nebutra-Sailor/commit/3c5c43e1c07c03da936d2948408f8abb4b113321) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Absorb the differentiated coding-agent-harness capabilities (the delta over
   the already-absorbed core).
-
   - `definitions`: shared layered-tier resolver (precedence + dual
     availability/enabled gate) + frontmatter parser — backs commands, skills,
     subagents from one kernel.
@@ -106,7 +112,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
   transports deliberately dropped for multi-tenant safety). 135 package tests.
 
 - [`a29b2d9`](https://github.com/Nebutra/Nebutra-Sailor/commit/a29b2d997416edc4e421b31b777724ae70e4da54) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Add the agent loop runner — the turn engine.
-
   - `runTurn()` drives a turn `loop { model_call → emit items → execute tools
 → feed results back }` until the model stops requesting tools or a bounded
     step ceiling is hit. Single-threaded (shared context, no conflicting
@@ -120,7 +125,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
     thrown to the caller.
 
 - [`cd34724`](https://github.com/Nebutra/Nebutra-Sailor/commit/cd347242ab6874931a74aa72aa9a0d183f7dd5d3) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Absorb the multi-channel-gateway delta (over the already-absorbed core).
-
   - `channel-gateway`: channel-agnostic `InboundMessage`/`OutboundMessage`
     normalization, a `ChannelAdapter` port (parseInbound returns null for
     non-message events, never throws on junk), tenant-scoped `ChannelRegistry`,
@@ -138,7 +142,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
 - [`447e948`](https://github.com/Nebutra/Nebutra-Sailor/commit/447e948a7153446e7bc3769395c1687c9f27c991) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Close the runtime gap — four capabilities, all tenant-scoped & fail-closed,
   each behind an injectable port so the package keeps zero datastore/queue
   dependency ("no infra change" stays honest):
-
   - **Durable / resumable turn** (`durable-turn.ts`): `createDurableTurn` wraps
     `runTurn` behind a `DurableTurnQueuePort`; `resume` replays the rollout and
     re-drives an unfinished turn, idempotent and cross-tenant isolated.
@@ -155,7 +158,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
     seq, faithful round-trip, cross-tenant isolation, typed round-trip errors.
 
 - [`b1b9b72`](https://github.com/Nebutra/Nebutra-Sailor/commit/b1b9b7251ef6b1b84e5211dd9b4ae14a1be4b05a) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Absorb the self-improving-loop delta (over the already-absorbed core).
-
   - `memory-provider`: pluggable cross-session `MemoryProvider` port (full
     lifecycle: initialize/prefetch/syncTurn/onSessionEnd/onSessionSwitch/
     onPreCompress/onDelegation/systemPromptBlock) + a `MemoryManager` that
@@ -172,7 +174,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
   backends are injected ports. 288 package tests.
 
 - [`5ed8c38`](https://github.com/Nebutra/Nebutra-Sailor/commit/5ed8c38362e86bad51786383b81cc921b11d1b18) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Absorb the coding-agent share/permission delta (over the already-absorbed core).
-
   - `permission-ruleset`: `Rule{permission,pattern,action:allow|deny|ask}` +
     `evaluate(...rulesets)` first-match over both dimensions with fail-safe
     `ask` default, a `wildcardMatch` with the faithful trailing `" *"`-optional
@@ -188,7 +189,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
   where stateless; transport/crypto/store injected. 496 package tests.
 
 - [`77c0105`](https://github.com/Nebutra/Nebutra-Sailor/commit/77c0105ce89a4ff0f5e86229cce9c2561c1b1c5f) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Absorb the site-clone / targeted-edit delta (over the already-absorbed core).
-
   - `design-context`: website → structured generation seed
     `{content, brand{colors,fonts}, screenshot, title}` — pure normalizer +
     injected `ScrapeProvider` port (no network/provider lock-in),
@@ -202,7 +202,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
   injected ports. 219 package tests.
 
 - [`1e2d929`](https://github.com/Nebutra/Nebutra-Sailor/commit/1e2d9298f4f093cbe81199e7dcd3991116d01ea2) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Absorb the terminal-suggestion delta (over the already-absorbed core).
-
   - `fuzzy-match`: smart-case subsequence fuzzy match returning
     `{score, indices}` (lowercase query ⇒ case-insensitive; any uppercase ⇒
     case-sensitive), case-insensitive + ignore-spaces variants (indices map to
@@ -219,7 +218,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
   426 package tests.
 
 - [`509338e`](https://github.com/Nebutra/Nebutra-Sailor/commit/509338ee5ffc537c108f06cd1fc24a811a5e05b8) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Concrete Track-B coupling for the agent-runtime external-sandbox seam.
-
   - Add `createHttpSandbox(baseUrl)`: an `ExternalSandbox` that delegates
     execution over HTTP to the decoupled Rust isolator
     (`backends/rust/sandbox`, `POST /api/v1/sandbox/exec`).
@@ -231,7 +229,6 @@ failed`), latest-status + timeline-from-commits derivations, explicit
 
 - [`efe764d`](https://github.com/Nebutra/Nebutra-Sailor/commit/efe764d60085352eae304dc37dc22fda8920e587) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Absorb the web-app-builder delta (the differentiated capabilities over the
   already-absorbed harness core).
-
   - `artifact-stream`: streaming artifact/action protocol — a chunk-fed
     incremental parser for an `<artifact>` of ordered
     `<action type=file|shell|start|build|data>` blocks (split-tag safe, no

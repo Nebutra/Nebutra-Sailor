@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/integration-vault",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tenant-scoped SaaS OAuth and credential vault for tool calling",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "featureId": "integration-vault",

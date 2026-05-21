@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/idea-plaza",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Explicit opt-in idea publishing, lineage, and fork surface over Nebutra company artifacts",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "wip",

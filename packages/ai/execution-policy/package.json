@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/execution-policy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared command permission and approval policy primitives for runtime and execution packages",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "wip",

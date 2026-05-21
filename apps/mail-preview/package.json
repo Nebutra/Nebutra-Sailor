@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/mail-preview",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "Live preview app for @nebutra/email — Next.js dev tool + static export scripts",
   "scripts": {

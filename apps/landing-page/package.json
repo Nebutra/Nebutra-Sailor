@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/landing-page",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
@@ -14,8 +14,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@chenglou/pretext": "^0.0.3",
-    "@clerk/nextjs": "^7.0.1",
+    "@chenglou/pretext": "^0.0.5",
+    "@clerk/nextjs": "^7.3.7",
     "@lottiefiles/dotlottie-react": "^0.18.3",
     "@nebutra/ai-providers": "workspace:*",
     "@nebutra/auth": "workspace:*",
@@ -41,7 +41,7 @@
     "framer-motion": "^12.35.0",
     "geist": "catalog:",
     "next": "^16.2.6",
-    "next-intl": "^4.8.3",
+    "next-intl": "^4.12.0",
     "next-themes": "^0.4.6",
     "react": "19.2.4",
     "react-activity-calendar": "^3.1.1",
@@ -60,10 +60,10 @@
     "@types/node": "^22.19.15",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^4.0.0",
+    "@vitejs/plugin-react": "catalog:",
     "tailwindcss": "^4.2.1",
     "typescript": "catalog:",
-    "vitest": "^2.0.0"
+    "vitest": "catalog:"
   },
   "license": "AGPL-3.0-only"
 }

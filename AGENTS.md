@@ -283,6 +283,9 @@ Route groups: `admin/`, `ai/`, `billing/`, `events/`, `legal/`, `webhooks/`
 - `chromatic.yml` — Storybook visual regression
 - `lighthouse-dashboard.yml` — Performance monitoring
 
+Supply-chain policy lives in `docs/security/supply-chain-governance.md` and is
+enforced by `pnpm supply-chain:verify`.
+
 Change detection: Turborepo `--affected` + `dorny/paths-filter` for conditional jobs.
 
 ---
@@ -331,6 +334,7 @@ const key = "sk-proj-xxxxx";
 | `pnpm lint` | Biome lint |
 | `pnpm test` | Run unit tests |
 | `pnpm e2e` | Run E2E tests |
+| `pnpm supply-chain:verify` | Verify pnpm/workflow supply-chain guardrails |
 | `pnpm db:generate` | Generate Prisma client |
 | `pnpm db:studio` | Open Prisma Studio |
 | `pnpm infra:up` | Start Docker infrastructure |

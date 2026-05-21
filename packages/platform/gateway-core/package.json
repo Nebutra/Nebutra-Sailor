@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/gateway-core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
@@ -16,7 +16,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "hono": "^4.6.0",
+    "hono": "catalog:",
     "@nebutra/logger": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/db": "workspace:*",

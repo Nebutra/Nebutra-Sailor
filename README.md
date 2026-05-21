@@ -30,7 +30,10 @@
       <img src="https://img.shields.io/github/forks/Nebutra/Nebutra-Sailor?style=for-the-badge&logo=github&color=14b8a6&logoColor=fff" alt="GitHub Forks" />
     </a>
     <a href="https://github.com/Nebutra/Nebutra-Sailor/blob/main/LICENSE">
-      <img src="https://img.shields.io/badge/license-AGPLv3-6366f1?style=for-the-badge" alt="License" />
+      <img src="https://img.shields.io/badge/repo-AGPLv3-6366f1?style=for-the-badge" alt="Repository License" />
+    </a>
+    <a href="#license">
+      <img src="https://img.shields.io/badge/npm%20packages-MIT-14b8a6?style=for-the-badge" alt="npm Package License" />
     </a>
   </p>
   <p>
@@ -62,11 +65,10 @@
 <br />
 <br />
 
-> **License at a glance** — published npm packages are **AGPL-3.0-only**.
-> If you `npm install @nebutra/*` into a network-served product you take
-> on AGPL's network-copyleft clause unless you (a) scaffold with
+> **License at a glance** — published npm packages are **MIT**. Forking the
+> source repository directly remains **AGPL-3.0-only** unless you scaffold with
 > `npx create-sailor` (Independent Developer License, free for ≤ 1 FTE
-> & < $1M ARR, **no copyleft**) or (b) hold a Startup ($799/yr) or
+> & < $1M ARR, **no copyleft**) or hold a Startup ($799/yr) or
 > Enterprise tier from [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md).
 > Full matrix and edge cases: [License](#license) section below, plus
 > [docs/legal/licensing-faq.md](docs/legal/licensing-faq.md).
@@ -749,6 +751,7 @@ back to the community.
 
 | Path                                  | License                                          | Copyleft? |
 | ------------------------------------- | ------------------------------------------------ | --------- |
+| Install published npm packages        | **MIT** (`@nebutra/*`, `nebutra`, `create-sailor`) | No |
 | Fork from this GitHub repo            | **AGPL-3.0** ([LICENSE](./LICENSE))              | Yes (Section 13 / network) |
 | Scaffolded with `create-sailor` CLI   | **Nebutra Independent Developer License**        | No, for ≤ 1 FTE & < $1M ARR |
 | Larger teams / higher revenue         | **Startup / Enterprise tier** ([LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md)) | No |

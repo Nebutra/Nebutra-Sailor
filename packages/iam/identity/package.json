@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/identity",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provider-agnostic identity adapter layer (Clerk-first, Auth.js-ready)",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

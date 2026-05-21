@@ -127,6 +127,7 @@ function modelInvoker(
 const turnRoute = createRoute({
   method: "post",
   path: "/turns",
+  tags: ["Agent Runtime"],
   operationId: "createAgentRuntimeTurn",
   summary: "Run an agent runtime turn",
   description: "Starts a tenant-scoped agent runtime turn and streams events over SSE.",

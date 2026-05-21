@@ -58,8 +58,8 @@ The following are **in scope** for vulnerability reports:
 
 - `apps/web` — authenticated dashboard
 - `apps/landing-page` — public marketing site
-- `apps/api-gateway` — Hono API gateway
-- `services/*` — Python microservices
+- `backends/gateway` — Hono API gateway
+- `backends/python/*` — Python microservices (active tier only — see ADR 2026-05-10)
 - `packages/*` — shared libraries
 
 The following are **out of scope**:

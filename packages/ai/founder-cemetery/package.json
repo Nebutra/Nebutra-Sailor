@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/founder-cemetery",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Company closing, postmortem, lesson extraction, and memorial publication surface",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "wip",

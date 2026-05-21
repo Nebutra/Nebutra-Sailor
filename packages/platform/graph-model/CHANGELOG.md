@@ -1,11 +1,16 @@
 # @nebutra/graph-model
 
+## 0.2.1
+
+### Patch Changes
+
+- Publish registry package metadata under the MIT license.
+
 ## 0.2.0
 
 ### Minor Changes
 
 - [`d0b0e62`](https://github.com/Nebutra/Nebutra-Sailor/commit/d0b0e623a322e35f9ce2ae8d117e803b803b5e0b) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Dependency-direction governance: generic UI no longer depends on a feature.
-
   - **New `@nebutra/graph-model`**: neutral structural DAG contract
     (`GraphNode`/`GraphEdge`/`Graph` + `inboundEdges`/`hasCycleFrom`/
     `wouldCreateCycle`).

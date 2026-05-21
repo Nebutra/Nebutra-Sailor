@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/analytics",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "description": "Link attribution, conversion tracking, and product analytics (Dub + PostHog)",
   "main": "./dist/index.js",

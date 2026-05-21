@@ -37,6 +37,8 @@ semantics.
 pnpm --filter @nebutra/gateway test
 pnpm --filter @nebutra/gateway typecheck
 pnpm --filter @nebutra/gateway generate:spec
+pnpm --filter @nebutra/gateway lint:spec
 ```
 
 Run `generate:spec` whenever route contracts or OpenAPI annotations change.
+Run `lint:spec` after regenerating the spec to catch OpenAPI governance drift.

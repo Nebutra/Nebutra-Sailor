@@ -49,7 +49,7 @@ my-app/ contains only the reusable skeleton
 - Build config: `turbo.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`,
   `biome.json`
 - The `create-sailor` CLI itself
-- API gateway skeleton (`apps/api-gateway`)
+- API gateway skeleton (`backends/gateway`)
 - `e2e/` and `tests/` (skeleton tests, minus Nebutra-only specs)
 
 ## Adding new Nebutra business code

@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/ecosystem-safety",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared public-disclosure safety primitives for ecosystem publishing surfaces",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "wip",

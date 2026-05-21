@@ -1,5 +1,15 @@
 # @nebutra/cinema
 
+## 0.2.1
+
+### Patch Changes
+
+- Publish registry package metadata under the MIT license.
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@0.2.1
+  - @nebutra/graph-model@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes
@@ -10,7 +20,6 @@
   New `@nebutra/cinema`: the differentiated agentic film-production IP from a
   research video pipeline, re-expressed as pure, dependency-injected
   orchestration on Sailor primitives:
-
   - `buildCameraTree` / `resolveContinuityChain` — acyclic, root-anchored
     camera-continuity tree (cross-shot temporal continuity); acyclic invariant
     reuses `@nebutra/graph-model` (no re-derived cycle detection).

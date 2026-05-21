@@ -9,8 +9,8 @@
 | **Spec version** | `design-md@2026.05` |
 | **Project** | Nebutra-Sailor (`@nebutra/*`) |
 | **Status** | Stable — mature tokens, expanding component surface |
-| **Source of truth** | `packages/tokens/styles.css` (CSS variables) + `packages/brand/src/` (TS primitives) |
-| **License** | Proprietary (internal). Public API of components published under MIT (see each package). |
+| **Source of truth** | `packages/design/tokens/styles.css` (CSS variables) + `packages/design/brand/src/` (TS primitives) |
+| **License** | Published `@nebutra/*` packages are **AGPL-3.0-only**. Commercial exception path: see [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md). |
 
 Layered package map:
 

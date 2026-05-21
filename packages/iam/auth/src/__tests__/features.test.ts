@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { AuthFeature } from "../features";
 
 /**
  * Tests for the dual-source auth feature-flag layer.
@@ -16,6 +17,8 @@ const ENV_KEYS = {
   magicLink: "NEXT_PUBLIC_AUTH_MAGIC_LINK",
   impersonation: "NEXT_PUBLIC_AUTH_IMPERSONATION",
 } as const;
+
+type AuthEnvKey = (typeof ENV_KEYS)[AuthFeature];
 
 function clearAllAuthEnv(): void {
   for (const key of Object.values(ENV_KEYS)) {
@@ -181,7 +184,7 @@ describe("features — ENV_KEY mapping covers all AuthFeature names", () => {
     ["twoFactor", "NEXT_PUBLIC_AUTH_TWO_FACTOR"],
     ["magicLink", "NEXT_PUBLIC_AUTH_MAGIC_LINK"],
     ["impersonation", "NEXT_PUBLIC_AUTH_IMPERSONATION"],
-  ] as const)("%s → reads %s", async (feature, envKey) => {
+  ] as const)("%s → reads %s", async (feature: AuthFeature, envKey: AuthEnvKey) => {
     process.env[envKey] = "1";
     const { isAuthFeatureEnabledSync } = await loadFresh();
     expect(isAuthFeatureEnabledSync(feature)).toBe(true);

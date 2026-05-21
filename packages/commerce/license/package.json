@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/license",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "License domain logic — issuance, validation, and lifecycle events",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "featureId": "license",

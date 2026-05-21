@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/graph-model",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Neutral structural DAG contract: generic GraphNode/GraphEdge/Graph types + pure cycle/inbound algorithms. Depended on by reel and the ui node-graph editor; depends on neither.",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "featureId": "graph-model",

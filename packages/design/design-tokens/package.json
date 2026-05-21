@@ -1,9 +1,9 @@
 {
   "name": "@nebutra/design-tokens",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "W3C DTCG ($value/$type) tokens — SSOT, Style Dictionary 4 pipeline. Coexists with @nebutra/tokens; not a replacement.",
   "private": false,
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "type": "module",
   "main": "./build/ts/tokens.js",
   "types": "./build/ts/tokens.d.ts",

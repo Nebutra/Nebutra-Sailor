@@ -1,5 +1,12 @@
 # @nebutra/analytics
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/billing@0.1.2
+
 ## 0.0.2
 
 ### Patch Changes

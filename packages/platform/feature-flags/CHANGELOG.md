@@ -1,11 +1,18 @@
 # @nebutra/feature-flags
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/cache@0.0.2
+  - @nebutra/db@0.1.1
+
 ## 0.1.1
 
 ### Patch Changes
 
 - [`da6bfea`](https://github.com/Nebutra/Nebutra-Sailor/commit/da6bfeaf6c323a9aecefdd65c481a9852aee25b9) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Add `@nebutra/agent-runtime`: a multi-tenant agent-runtime grammar.
-
   - New package re-expresses a coding-agent runtime _design_ in Sailor grammar —
     thread/turn/item model + event lifecycle, two-axis approval/capability
     policy, uniform tool/MCP abstraction, event-sourced rollout with compaction,
@@ -18,7 +25,6 @@
     in `apps/web`.
 
 - [`092a1ce`](https://github.com/Nebutra/Nebutra-Sailor/commit/092a1ce810965e2d81767642e4bad05b80df81f4) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Add the Atelier agentic creative-canvas capability.
-
   - `@nebutra/agents`: new image/video **generation modality**
     (`@nebutra/agents/generation`) on the same env-key-gated provider layer as
     the LLM fallback chain, with a deterministic always-available mock provider.
@@ -34,7 +40,6 @@
   required).
 
 - [`34bd161`](https://github.com/Nebutra/Nebutra-Sailor/commit/34bd16140436c966896bf7a2276e8c20777c256f) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Capability absorption — codename `canvas` (clean-room, architecture-translation only).
-
   - **New `@nebutra/tenant-store`** (Step-0 governance): neutral lower layer —
     `withTenantLock` + `InMemoryTenantStore` + `TenantScopedStore`. `reel` and
     `atelier-canvas` now both depend on it and no longer on each other;
@@ -57,7 +62,6 @@
   copied; TDD with all suites green. See `docs/capabilities/canvas/`.
 
 - [`4f5687f`](https://github.com/Nebutra/Nebutra-Sailor/commit/4f5687fd3fc55529486d6356e010bcaeffe131c8) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Add the Reel node-graph + storyboard generative-media capability.
-
   - `@nebutra/reel`: new package — a typed node+edge graph with the absorbed
     **NODE_IO_ENVELOPE v1.0** contract kept exactly (versioned, type-erased
     inter-node payload), pull-based input resolution, cycle detection, and a

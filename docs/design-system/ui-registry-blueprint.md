@@ -531,7 +531,7 @@ Build script 在生成 registry JSON 时检测硬编码 hex 值并 warn，防止
 **策略：**
 1. Registry JSON `files` 数组支持测试文件（`type: "registry:test"`）
 2. 每个 registry 组件附带 render test + snapshot
-3. 内部 `packages/ui` vitest 维持 80% 覆盖
+3. 内部 `packages/design/ui` vitest 维持 80% 覆盖
 
 ### 7.4 Bundle 体积
 
