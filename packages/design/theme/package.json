@@ -14,9 +14,8 @@
     "./themes.css": "./themes.css"
   },
   "scripts": {
-    "prebuild": "corepack pnpm --filter @nebutra/design-tokens build",
-    "build": "node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/themes.generated.css', './themes.css'); console.log('themes.css regenerated from @nebutra/design-tokens')\"",
-    "sync": "corepack pnpm --filter @nebutra/design-tokens build && node -e \"require('node:fs').copyFileSync('../design-tokens/build/css/themes.generated.css', './themes.css')\"",
+    "build": "node scripts/sync-themes.mjs",
+    "sync": "corepack pnpm --filter @nebutra/design-tokens build && node scripts/sync-themes.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
