@@ -8,6 +8,7 @@
 import {
   primitiveFontSize,
   primitiveRadius,
+  primitiveShadow,
   primitiveSizing,
   primitiveSpacing,
   primitiveTransition,
@@ -58,6 +59,23 @@ export const selectTokens = {
   focusRingWidth: 3,
   fieldGap: primitiveSpacing[2],
   messageGap: primitiveSpacing[2],
+  content: {
+    minWidth: primitiveSpacing[16] * 2,
+    maxHeight: primitiveSpacing[24] * 4,
+    radius: primitiveRadius.xl,
+    padding: primitiveSpacing[1],
+    sideOffset: primitiveSpacing[1],
+    shadow: primitiveShadow.xl,
+    fontSize: primitiveFontSize.sm,
+  },
+  item: {
+    radius: primitiveRadius.md,
+    paddingX: primitiveSpacing[2],
+    paddingY: primitiveSpacing[2] - primitiveSpacing[1] / 2,
+    indicatorInset: primitiveSpacing[2],
+    indicatorSize: primitiveSizing.xs - primitiveSpacing[1] / 2,
+    indicatorIconSize: primitiveFontSize.base,
+  },
   motion: {
     duration: primitiveTransition.duration.flow,
     easing: primitiveTransition.easing.default,

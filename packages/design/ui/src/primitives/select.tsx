@@ -7,6 +7,7 @@ import * as React from "react";
 import { type SelectSize, selectTokens } from "../tokens/components/select";
 import { cn } from "../utils/cn";
 import { ErrorMessage } from "./error-message";
+import { formControlFocusClassNames, formControlInvalidClassNames } from "./form-control";
 import { Label } from "./label";
 
 type SelectTriggerCssVars = React.CSSProperties & {
@@ -51,6 +52,23 @@ type NativeSelectCssVar =
   | "--select-easing";
 
 type NativeSelectCssVars = React.CSSProperties & Record<NativeSelectCssVar, string>;
+
+type SelectContentCssVars = React.CSSProperties & {
+  "--select-content-max-height"?: string;
+  "--select-content-min-width"?: string;
+  "--select-content-padding"?: string;
+  "--select-content-radius"?: string;
+  "--select-content-shadow"?: string;
+  "--select-font-size"?: string;
+  "--select-duration"?: string;
+  "--select-easing"?: string;
+  "--select-item-radius"?: string;
+  "--select-item-padding-x"?: string;
+  "--select-item-padding-y"?: string;
+  "--select-item-indicator-inset"?: string;
+  "--select-item-indicator-size"?: string;
+  "--select-item-indicator-icon-size"?: string;
+};
 
 export type SelectVariant = "default" | "ghost";
 
@@ -101,6 +119,26 @@ function getNativeSelectStyle(
     "--select-message-gap": `${selectTokens.messageGap}px`,
     "--select-duration": `${selectTokens.motion.duration}ms`,
     "--select-easing": selectTokens.motion.easing,
+    ...style,
+  };
+}
+
+function getSelectContentStyle(style: React.CSSProperties | undefined): SelectContentCssVars {
+  return {
+    "--select-content-max-height": `${selectTokens.content.maxHeight}px`,
+    "--select-content-min-width": `${selectTokens.content.minWidth}px`,
+    "--select-content-padding": `${selectTokens.content.padding}px`,
+    "--select-content-radius": `${selectTokens.content.radius}px`,
+    "--select-content-shadow": selectTokens.content.shadow,
+    "--select-font-size": `${selectTokens.content.fontSize}px`,
+    "--select-duration": `${selectTokens.motion.duration}ms`,
+    "--select-easing": selectTokens.motion.easing,
+    "--select-item-radius": `${selectTokens.item.radius}px`,
+    "--select-item-padding-x": `${selectTokens.item.paddingX}px`,
+    "--select-item-padding-y": `${selectTokens.item.paddingY}px`,
+    "--select-item-indicator-inset": `${selectTokens.item.indicatorInset}px`,
+    "--select-item-indicator-size": `${selectTokens.item.indicatorSize}px`,
+    "--select-item-indicator-icon-size": `${selectTokens.item.indicatorIconSize}px`,
     ...style,
   };
 }
@@ -186,14 +224,14 @@ function NativeSelect({
           defaultValue={fallbackDefaultValue}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
-          style={{ borderRadius: "var(--select-radius)", outline: "none" }}
+          style={{ borderRadius: "var(--select-radius)" }}
           className={cn(
             "h-[var(--select-height)] w-full appearance-none rounded-[var(--select-radius)] border font-sans",
             "bg-background text-[length:var(--select-font-size)] text-foreground shadow-[var(--shadow-xs)] outline-none",
             "transition-[background-color,border-color,box-shadow,color] duration-[var(--select-duration)] ease-[var(--select-easing)]",
-            "focus:border-ring focus:ring-[length:var(--select-focus-ring-width)] focus:ring-ring/30",
+            formControlFocusClassNames.select,
             "disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground",
-            "aria-invalid:border-destructive/60 aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive/20",
+            formControlInvalidClassNames.select,
             variant === "ghost" ? "border-transparent bg-transparent shadow-none" : "border-input",
             prefix
               ? "pl-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]"
@@ -280,8 +318,9 @@ const SelectTrigger = React.forwardRef<
       "flex h-[var(--select-height)] w-full items-center justify-between whitespace-nowrap rounded-[var(--select-radius)] border border-input bg-background",
       "px-[var(--select-padding-x)] text-[length:var(--select-font-size)] text-foreground shadow-[var(--shadow-xs)]",
       "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
-      "outline-none focus:border-ring focus:ring-[length:var(--select-focus-ring-width)] focus:ring-ring/30",
-      "disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive/60 aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive/20 [&>span]:line-clamp-1",
+      formControlFocusClassNames.select,
+      "disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+      formControlInvalidClassNames.select,
       className,
     )}
     style={getSelectTriggerStyle(size, style)}
@@ -314,29 +353,43 @@ const SelectContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof BaseSelect.Popup> & {
     position?: "item-aligned" | "popper";
   }
->(({ className, children, position: _position = "popper", ...props }, ref) => (
+>(({ className, children, position = "popper", style, ...props }, ref) => (
   <BaseSelect.Portal>
-    <BaseSelect.Positioner sideOffset={4}>
+    <BaseSelect.Positioner
+      alignItemWithTrigger={position === "item-aligned"}
+      sideOffset={selectTokens.content.sideOffset}
+    >
       <BaseSelect.Popup
         ref={ref}
         className={cn(
-          "relative z-50 max-h-96 min-w-32 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md text-popover-foreground shadow-xl outline-none transition-[opacity,transform,display] duration-200 data-starting-style:animate-in data-starting-style:fade-in-0 data-starting-style:zoom-in-95 data-ending-style:animate-out data-ending-style:fade-out-0 data-ending-style:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          "relative z-50 max-h-[var(--select-content-max-height)] min-w-[var(--select-content-min-width)] overflow-hidden rounded-[var(--select-content-radius)] border bg-background/90 backdrop-blur-md text-popover-foreground shadow-[var(--select-content-shadow)] outline-none transition-[opacity,transform,display] duration-[var(--select-duration)] ease-[var(--select-easing)] data-starting-style:animate-in data-starting-style:fade-in-0 data-starting-style:zoom-in-95 data-ending-style:animate-out data-ending-style:fade-out-0 data-ending-style:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
           className,
         )}
+        style={getSelectContentStyle(style)}
         {...props}
       >
-        <div className="p-1 h-full w-full">{children}</div>
+        <BaseSelect.List className="h-full w-full p-[var(--select-content-padding)]">
+          {children}
+        </BaseSelect.List>
       </BaseSelect.Popup>
     </BaseSelect.Positioner>
   </BaseSelect.Portal>
 ));
 SelectContent.displayName = "SelectContent";
 
-const SelectLabel = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("px-2 py-1.5 text-sm font-semibold", className)} {...props} />
-  ),
-);
+const SelectLabel = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<typeof BaseSelect.GroupLabel>
+>(({ className, ...props }, ref) => (
+  <BaseSelect.GroupLabel
+    ref={ref}
+    className={cn(
+      "px-[var(--select-item-padding-x)] py-[var(--select-item-padding-y)] text-[length:var(--select-font-size)] font-semibold",
+      className,
+    )}
+    {...props}
+  />
+));
 SelectLabel.displayName = "SelectLabel";
 
 const SelectItem = React.forwardRef<
@@ -346,14 +399,14 @@ const SelectItem = React.forwardRef<
   <BaseSelect.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-pointer select-none items-center rounded-[var(--radius-sm)] py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
+      "relative flex w-full cursor-pointer select-none items-center rounded-[var(--select-item-radius)] py-[var(--select-item-padding-y)] pl-[var(--select-item-padding-x)] pr-[calc(var(--select-item-indicator-inset)+var(--select-item-indicator-size)+var(--select-item-padding-x))] text-[length:var(--select-font-size)] outline-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
       className,
     )}
     {...props}
   >
-    <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute right-[var(--select-item-indicator-inset)] flex size-[var(--select-item-indicator-size)] items-center justify-center">
       <BaseSelect.ItemIndicator render={<span />}>
-        <Check className="h-4 w-4" />
+        <Check className="size-[var(--select-item-indicator-icon-size)]" />
       </BaseSelect.ItemIndicator>
     </span>
     <BaseSelect.ItemText render={<span />}>{children}</BaseSelect.ItemText>

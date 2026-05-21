@@ -1,6 +1,10 @@
 "use client";
 
+import type * as React from "react";
+
 import { cn } from "../utils/cn";
+import { LoadingDots } from "./loading-dots";
+import { Spinner, type SpinnerVariant } from "./spinner";
 
 export interface LoaderProps {
   variant?:
@@ -30,406 +34,146 @@ export interface TextLoaderProps extends LoaderSizeProps {
   text?: string | undefined;
 }
 
-/**
- * CircularLoader - Simple spinning circle loader
- */
-export function CircularLoader({ className, size = "md" }: LoaderSizeProps) {
-  const sizeClasses = {
-    sm: "size-4",
-    md: "size-5",
-    lg: "size-6",
-  };
+const spinnerSizes = {
+  sm: "sm",
+  md: "md",
+  lg: "lg",
+} as const satisfies Record<NonNullable<LoaderSizeProps["size"]>, "sm" | "md" | "lg">;
 
+const dotSizes = {
+  sm: 4,
+  md: 5,
+  lg: 6,
+} as const satisfies Record<NonNullable<LoaderSizeProps["size"]>, number>;
+
+const textSizes = {
+  sm: "text-xs",
+  md: "text-sm",
+  lg: "text-base",
+} as const satisfies Record<NonNullable<LoaderSizeProps["size"]>, string>;
+
+const spinnerVariantByLoader = {
+  circular: "default",
+  classic: "default",
+  pulse: "ring",
+  "pulse-dot": "ring",
+  wave: "bars",
+  bars: "bars",
+  terminal: "default",
+} as const satisfies Record<string, SpinnerVariant>;
+
+function TokenizedSpinner({
+  className,
+  size = "md",
+  variant = "default",
+}: LoaderSizeProps & { variant?: SpinnerVariant }) {
   return (
-    <div
-      className={cn(
-        "border-primary animate-spin rounded-full border-2 border-t-transparent",
-        sizeClasses[size],
-        className,
-      )}
+    <Spinner className={className} label="Loading" size={spinnerSizes[size]} variant={variant} />
+  );
+}
+
+function TokenizedDots({
+  className,
+  size = "md",
+  children,
+}: LoaderSizeProps & { children?: React.ReactNode }) {
+  return (
+    <LoadingDots
+      className={cn("font-medium text-primary", textSizes[size], className)}
+      size={dotSizes[size]}
     >
-      <span className="sr-only">Loading</span>
-    </div>
+      {children}
+    </LoadingDots>
   );
 }
 
-/**
- * ClassicLoader - iOS-style spinner with fading bars
- */
-export function ClassicLoader({ className, size = "md" }: LoaderSizeProps) {
-  const sizeClasses = {
-    sm: "size-4",
-    md: "size-5",
-    lg: "size-6",
-  };
+/** @deprecated Use Spinner directly for single-action loading feedback. */
+export function CircularLoader(props: LoaderSizeProps) {
+  return <TokenizedSpinner {...props} variant={spinnerVariantByLoader.circular} />;
+}
 
-  const barSizes = {
-    sm: { height: "6px", width: "1.5px" },
-    md: { height: "8px", width: "2px" },
-    lg: { height: "10px", width: "2.5px" },
-  };
+/** @deprecated Use Spinner directly for single-action loading feedback. */
+export function ClassicLoader(props: LoaderSizeProps) {
+  return <TokenizedSpinner {...props} variant={spinnerVariantByLoader.classic} />;
+}
 
-  return (
-    <div className={cn("relative", sizeClasses[size], className)}>
-      <div className="absolute h-full w-full">
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="bg-primary absolute animate-[spinner-fade_1.2s_linear_infinite] rounded-full"
-            style={{
-              top: "0",
-              left: "50%",
-              marginLeft: size === "sm" ? "-0.75px" : size === "lg" ? "-1.25px" : "-1px",
-              transformOrigin: `${size === "sm" ? "0.75px" : size === "lg" ? "1.25px" : "1px"} ${size === "sm" ? "10px" : size === "lg" ? "14px" : "12px"}`,
-              transform: `rotate(${i * 30}deg)`,
-              opacity: 0,
-              animationDelay: `${i * 0.1}s`,
-              height: barSizes[size].height,
-              width: barSizes[size].width,
-            }}
-          />
-        ))}
-      </div>
-      <span className="sr-only">Loading</span>
-    </div>
-  );
+/** @deprecated Use Spinner directly for single-action loading feedback. */
+export function PulseLoader(props: LoaderSizeProps) {
+  return <TokenizedSpinner {...props} variant={spinnerVariantByLoader.pulse} />;
+}
+
+/** @deprecated Use Spinner directly for single-action loading feedback. */
+export function PulseDotLoader(props: LoaderSizeProps) {
+  return <TokenizedSpinner {...props} variant={spinnerVariantByLoader["pulse-dot"]} />;
+}
+
+/** @deprecated Use LoadingDots directly for inline progress copy. */
+export function DotsLoader(props: LoaderSizeProps) {
+  return <TokenizedDots {...props} />;
+}
+
+/** @deprecated Use LoadingDots directly for inline progress copy. */
+export function TypingLoader(props: LoaderSizeProps) {
+  return <TokenizedDots {...props} />;
+}
+
+/** @deprecated Use Spinner directly for single-action loading feedback. */
+export function WaveLoader(props: LoaderSizeProps) {
+  return <TokenizedSpinner {...props} variant={spinnerVariantByLoader.wave} />;
+}
+
+/** @deprecated Use Spinner directly for single-action loading feedback. */
+export function BarsLoader(props: LoaderSizeProps) {
+  return <TokenizedSpinner {...props} variant={spinnerVariantByLoader.bars} />;
+}
+
+/** @deprecated Use Spinner directly for single-action loading feedback. */
+export function TerminalLoader(props: LoaderSizeProps) {
+  return <TokenizedSpinner {...props} variant={spinnerVariantByLoader.terminal} />;
+}
+
+/** @deprecated Use LoadingDots directly for inline progress copy. */
+export function TextBlinkLoader({ text = "Thinking", ...props }: TextLoaderProps) {
+  return <TokenizedDots {...props}>{text}</TokenizedDots>;
+}
+
+/** @deprecated Use LoadingDots directly for inline progress copy. */
+export function TextShimmerLoader({ text = "Thinking", ...props }: TextLoaderProps) {
+  return <TokenizedDots {...props}>{text}</TokenizedDots>;
+}
+
+/** @deprecated Use LoadingDots directly for inline progress copy. */
+export function TextDotsLoader({ text = "Thinking", ...props }: TextLoaderProps) {
+  return <TokenizedDots {...props}>{text}</TokenizedDots>;
 }
 
 /**
- * PulseLoader - Pulsing ring animation
- */
-export function PulseLoader({ className, size = "md" }: LoaderSizeProps) {
-  const sizeClasses = {
-    sm: "size-4",
-    md: "size-5",
-    lg: "size-6",
-  };
-
-  return (
-    <div className={cn("relative", sizeClasses[size], className)}>
-      <div className="border-primary absolute inset-0 animate-[thin-pulse_1.5s_ease-in-out_infinite] rounded-full border-2" />
-      <span className="sr-only">Loading</span>
-    </div>
-  );
-}
-
-/**
- * PulseDotLoader - Single pulsing dot
- */
-export function PulseDotLoader({ className, size = "md" }: LoaderSizeProps) {
-  const sizeClasses = {
-    sm: "size-1",
-    md: "size-2",
-    lg: "size-3",
-  };
-
-  return (
-    <div
-      className={cn(
-        "bg-primary animate-[pulse-dot_1.2s_ease-in-out_infinite] rounded-full",
-        sizeClasses[size],
-        className,
-      )}
-    >
-      <span className="sr-only">Loading</span>
-    </div>
-  );
-}
-
-/**
- * DotsLoader - Three bouncing dots
- */
-export function DotsLoader({ className, size = "md" }: LoaderSizeProps) {
-  const dotSizes = {
-    sm: "h-1.5 w-1.5",
-    md: "h-2 w-2",
-    lg: "h-2.5 w-2.5",
-  };
-
-  const containerSizes = {
-    sm: "h-4",
-    md: "h-5",
-    lg: "h-6",
-  };
-
-  return (
-    <div className={cn("flex items-center space-x-1", containerSizes[size], className)}>
-      {[...Array(3)].map((_, i) => (
-        <div
-          key={i}
-          className={cn(
-            "bg-primary animate-[bounce-dots_1.4s_ease-in-out_infinite] rounded-full",
-            dotSizes[size],
-          )}
-          style={{
-            animationDelay: `${i * 160}ms`,
-          }}
-        />
-      ))}
-      <span className="sr-only">Loading</span>
-    </div>
-  );
-}
-
-/**
- * TypingLoader - Chat typing indicator style
- */
-export function TypingLoader({ className, size = "md" }: LoaderSizeProps) {
-  const dotSizes = {
-    sm: "h-1 w-1",
-    md: "h-1.5 w-1.5",
-    lg: "h-2 w-2",
-  };
-
-  const containerSizes = {
-    sm: "h-4",
-    md: "h-5",
-    lg: "h-6",
-  };
-
-  return (
-    <div className={cn("flex items-center space-x-1", containerSizes[size], className)}>
-      {[...Array(3)].map((_, i) => (
-        <div
-          key={i}
-          className={cn("bg-primary animate-[typing_1s_infinite] rounded-full", dotSizes[size])}
-          style={{
-            animationDelay: `${i * 250}ms`,
-          }}
-        />
-      ))}
-      <span className="sr-only">Loading</span>
-    </div>
-  );
-}
-
-/**
- * WaveLoader - Audio wave style bars
- */
-export function WaveLoader({ className, size = "md" }: LoaderSizeProps) {
-  const barWidths = {
-    sm: "w-0.5",
-    md: "w-0.5",
-    lg: "w-1",
-  };
-
-  const containerSizes = {
-    sm: "h-4",
-    md: "h-5",
-    lg: "h-6",
-  };
-
-  const heights = {
-    sm: ["6px", "9px", "12px", "9px", "6px"],
-    md: ["8px", "12px", "16px", "12px", "8px"],
-    lg: ["10px", "15px", "20px", "15px", "10px"],
-  };
-
-  return (
-    <div className={cn("flex items-center gap-0.5", containerSizes[size], className)}>
-      {[...Array(5)].map((_, i) => (
-        <div
-          key={i}
-          className={cn(
-            "bg-primary animate-[wave_1s_ease-in-out_infinite] rounded-full",
-            barWidths[size],
-          )}
-          style={{
-            animationDelay: `${i * 100}ms`,
-            height: heights[size][i],
-          }}
-        />
-      ))}
-      <span className="sr-only">Loading</span>
-    </div>
-  );
-}
-
-/**
- * BarsLoader - Three scaling bars
- */
-export function BarsLoader({ className, size = "md" }: LoaderSizeProps) {
-  const barWidths = {
-    sm: "w-1",
-    md: "w-1.5",
-    lg: "w-2",
-  };
-
-  const containerSizes = {
-    sm: "h-4 gap-1",
-    md: "h-5 gap-1.5",
-    lg: "h-6 gap-2",
-  };
-
-  return (
-    <div className={cn("flex", containerSizes[size], className)}>
-      {[...Array(3)].map((_, i) => (
-        <div
-          key={i}
-          className={cn(
-            "bg-primary h-full animate-[wave-bars_1.2s_ease-in-out_infinite]",
-            barWidths[size],
-          )}
-          style={{
-            animationDelay: `${i * 0.2}s`,
-          }}
-        />
-      ))}
-      <span className="sr-only">Loading</span>
-    </div>
-  );
-}
-
-/**
- * TerminalLoader - Terminal cursor style
- */
-export function TerminalLoader({ className, size = "md" }: LoaderSizeProps) {
-  const cursorSizes = {
-    sm: "h-3 w-1.5",
-    md: "h-4 w-2",
-    lg: "h-5 w-2.5",
-  };
-
-  const textSizes = {
-    sm: "text-xs",
-    md: "text-sm",
-    lg: "text-base",
-  };
-
-  const containerSizes = {
-    sm: "h-4",
-    md: "h-5",
-    lg: "h-6",
-  };
-
-  return (
-    <div className={cn("flex items-center space-x-1", containerSizes[size], className)}>
-      <span className={cn("text-primary font-mono", textSizes[size])}>{">"}</span>
-      <div className={cn("bg-primary animate-[blink_1s_step-end_infinite]", cursorSizes[size])} />
-      <span className="sr-only">Loading</span>
-    </div>
-  );
-}
-
-/**
- * TextBlinkLoader - Blinking text between primary and muted
- */
-export function TextBlinkLoader({ text = "Thinking", className, size = "md" }: TextLoaderProps) {
-  const textSizes = {
-    sm: "text-xs",
-    md: "text-sm",
-    lg: "text-base",
-  };
-
-  return (
-    <div
-      className={cn(
-        "animate-[text-blink_2s_ease-in-out_infinite] font-medium",
-        textSizes[size],
-        className,
-      )}
-    >
-      {text}
-    </div>
-  );
-}
-
-/**
- * TextShimmerLoader - Gradient shimmer effect on text
- */
-export function TextShimmerLoader({ text = "Thinking", className, size = "md" }: TextLoaderProps) {
-  const textSizes = {
-    sm: "text-xs",
-    md: "text-sm",
-    lg: "text-base",
-  };
-
-  return (
-    <div
-      className={cn(
-        "bg-[linear-gradient(to_right,var(--muted-foreground)_40%,var(--foreground)_60%,var(--muted-foreground)_80%)]",
-        "bg-[200%_auto] bg-clip-text font-medium text-transparent",
-        "animate-[shimmer_4s_infinite_linear]",
-        textSizes[size],
-        className,
-      )}
-    >
-      {text}
-    </div>
-  );
-}
-
-/**
- * TextDotsLoader - Text with animated trailing dots
- */
-export function TextDotsLoader({ className, text = "Thinking", size = "md" }: TextLoaderProps) {
-  const textSizes = {
-    sm: "text-xs",
-    md: "text-sm",
-    lg: "text-base",
-  };
-
-  return (
-    <div className={cn("inline-flex items-center", className)}>
-      <span className={cn("text-primary font-medium", textSizes[size])}>{text}</span>
-      <span className="inline-flex">
-        <span className="text-primary animate-[loading-dots_1.4s_infinite_0.2s]">.</span>
-        <span className="text-primary animate-[loading-dots_1.4s_infinite_0.4s]">.</span>
-        <span className="text-primary animate-[loading-dots_1.4s_infinite_0.6s]">.</span>
-      </span>
-    </div>
-  );
-}
-
-/**
- * Loader - Universal loader component with multiple variants
+ * Legacy loader facade.
  *
- * @example Basic circular loader
- * ```tsx
- * <Loader />
- * ```
- *
- * @example Terminal style for AI/chat contexts
- * ```tsx
- * <Loader variant="terminal" />
- * ```
- *
- * @example Text with dots for "Thinking..." effect
- * ```tsx
- * <Loader variant="loading-dots" text="Processing" />
- * ```
- *
- * @example Different sizes
- * ```tsx
- * <Loader variant="dots" size="lg" />
- * ```
+ * The design-system contract intentionally keeps one canonical spinner and one
+ * inline dots primitive. Historical variants remain source-compatible but no
+ * longer own private keyframes, durations, or easing curves.
  */
 export function Loader({ variant = "circular", size = "md", text, className }: LoaderProps) {
   switch (variant) {
-    case "circular":
-      return <CircularLoader size={size} className={className} />;
-    case "classic":
-      return <ClassicLoader size={size} className={className} />;
+    case "dots":
+    case "typing":
+    case "text-blink":
+    case "text-shimmer":
+    case "loading-dots":
+      return <TextDotsLoader text={text} size={size} className={className} />;
     case "pulse":
       return <PulseLoader size={size} className={className} />;
     case "pulse-dot":
       return <PulseDotLoader size={size} className={className} />;
-    case "dots":
-      return <DotsLoader size={size} className={className} />;
-    case "typing":
-      return <TypingLoader size={size} className={className} />;
     case "wave":
       return <WaveLoader size={size} className={className} />;
     case "bars":
       return <BarsLoader size={size} className={className} />;
     case "terminal":
       return <TerminalLoader size={size} className={className} />;
-    case "text-blink":
-      return <TextBlinkLoader text={text} size={size} className={className} />;
-    case "text-shimmer":
-      return <TextShimmerLoader text={text} size={size} className={className} />;
-    case "loading-dots":
-      return <TextDotsLoader text={text} size={size} className={className} />;
+    case "classic":
+      return <ClassicLoader size={size} className={className} />;
     default:
       return <CircularLoader size={size} className={className} />;
   }

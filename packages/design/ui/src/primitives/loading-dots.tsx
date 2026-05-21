@@ -33,6 +33,8 @@ const KEYFRAMES = `
 }
 `;
 
+const loadingDotDelayMultipliers = [0, 1, 2] as const;
+
 // =============================================================================
 // LoadingDots
 // =============================================================================
@@ -51,15 +53,15 @@ function LoadingDots({ ref, size = 6, children, className }: LoadingDotsProps) {
       >
         {children}
         <span aria-hidden="true" className="inline-flex items-center gap-[3px]">
-          {[0, 1, 2].map((i) => (
+          {loadingDotDelayMultipliers.map((delayMultiplier) => (
             <span
-              key={i}
+              key={delayMultiplier}
               className="nbt-loading-dot rounded-full bg-current"
               style={{
                 width: size,
                 height: size,
-                animation: `loading-dot 1.2s ease-in-out infinite`,
-                animationDelay: `${i * 0.2}s`,
+                animation: "loading-dot var(--duration-cinematic) var(--ease-in-out) infinite",
+                animationDelay: `calc(var(--duration-flow) * ${delayMultiplier})`,
               }}
             />
           ))}

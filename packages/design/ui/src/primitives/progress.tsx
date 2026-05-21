@@ -4,6 +4,7 @@ import { Progress as BaseProgress } from "@base-ui/react/progress";
 import { cva, type VariantProps } from "class-variance-authority";
 import { motion } from "motion/react";
 import * as React from "react";
+import { easings, motionDurations } from "../tokens/motion";
 import { cn } from "../utils/cn";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
@@ -60,7 +61,7 @@ const progressVariants = cva("relative overflow-hidden rounded-full", {
 });
 
 const progressIndicatorVariants = cva(
-  "h-full w-full flex-1 rounded-full transition-all duration-500 ease-out",
+  "h-full w-full flex-1 rounded-full transition-[background-color,transform] duration-cinematic ease-out motion-reduce:transition-none",
   {
     variants: {
       variant: {
@@ -229,7 +230,10 @@ const Progress = React.forwardRef<React.ElementRef<typeof BaseProgress.Root>, Pr
                 <motion.div
                   initial={{ transform: "translateX(-100%)" }}
                   animate={{ transform: `translateX(-${100 - pct}%)` }}
-                  transition={{ duration: animated ? 1.2 : 0, ease: "easeInOut" }}
+                  transition={{
+                    duration: animated ? motionDurations.cinematic / 1000 : 0,
+                    ease: easings.easeInOut,
+                  }}
                 />
               }
             />
@@ -239,21 +243,22 @@ const Progress = React.forwardRef<React.ElementRef<typeof BaseProgress.Root>, Pr
           {stops && stops.length > 0 && (
             <TooltipProvider delayDuration={150}>
               <div className="pointer-events-none absolute inset-0">
-                {stops.map((stop, i) => {
+                {stops.map((stop) => {
                   const stopPct = Math.min(Math.max(stop.value, 0), 100);
                   const reached = pct >= stopPct;
                   return (
-                    <Tooltip key={`${stopPct}-${i}`}>
+                    <Tooltip key={`${stopPct}-${stop.ariaLabel ?? "marker"}`}>
                       <TooltipTrigger asChild>
                         <span
-                          aria-label={stop.ariaLabel}
                           aria-hidden={!stop.ariaLabel ? "true" : undefined}
                           className={cn(
                             "pointer-events-auto -translate-x-1/2 -translate-y-1/2 absolute top-1/2 inline-block h-1.5 w-1.5 rounded-full border border-background transition-colors",
                             reached ? "bg-foreground" : "bg-muted-foreground/60",
                           )}
                           style={{ left: `${stopPct}%` }}
-                        />
+                        >
+                          {stop.ariaLabel && <span className="sr-only">{stop.ariaLabel}</span>}
+                        </span>
                       </TooltipTrigger>
                       {stop.tooltip && (
                         <TooltipContent side="top" className="text-xs">
@@ -273,7 +278,11 @@ const Progress = React.forwardRef<React.ElementRef<typeof BaseProgress.Root>, Pr
             className="text-right font-semibold text-muted-foreground text-xs tabular-nums"
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: animated ? 0.3 : 0, duration: 0.2 }}
+            transition={{
+              delay: animated ? motionDurations.reveal / 1000 : 0,
+              duration: motionDurations.flow / 1000,
+              ease: easings.easeOut,
+            }}
           >
             {Math.round(pct)}%
           </motion.div>

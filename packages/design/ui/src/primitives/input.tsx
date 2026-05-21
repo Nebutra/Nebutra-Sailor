@@ -6,6 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { type InputSize, inputTokens } from "../tokens/components/input";
 import { cn } from "../utils/cn";
+import { formControlFocusClassNames, formControlInvalidClassNames } from "./form-control";
 import { Kbd } from "./kbd";
 
 type InputCssVars = React.CSSProperties & {
@@ -29,12 +30,12 @@ const inputVariants = cva(
     "px-[var(--input-padding-x)] text-[length:var(--input-font-size)] text-foreground shadow-[var(--shadow-xs)]",
     "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out",
     "placeholder:text-muted-foreground",
-    "outline-none focus:border-ring focus:ring-[length:var(--input-focus-ring-width)] focus:ring-ring/30",
+    formControlFocusClassNames.input,
     "disabled:cursor-not-allowed disabled:opacity-50",
     "read-only:bg-muted/70 read-only:cursor-default",
     "file:h-full file:border-0 file:border-e file:border-solid file:border-input file:bg-transparent",
     "file:me-[var(--input-padding-x)] file:pe-[var(--input-padding-x)] file:text-[length:var(--input-font-size)] file:font-medium file:text-foreground",
-    "aria-invalid:border-destructive/60 aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive/20",
+    formControlInvalidClassNames.input,
     "[&[type=search]::-webkit-search-cancel-button]:appearance-none",
     "[&[type=search]::-webkit-search-decoration]:appearance-none",
     "[&[type=search]::-webkit-search-results-button]:appearance-none",
