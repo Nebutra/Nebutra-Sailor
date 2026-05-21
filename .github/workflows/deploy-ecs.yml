@@ -316,20 +316,17 @@ jobs:
         run: pnpm --filter @nebutra/gateway build
 
       - name: pnpm deploy → self-contained bundle
-        # `pnpm deploy` resolves dependencies in $RUNNER_TEMP/stage-api,
-        # which is OUTSIDE the repo, so the repo's .npmrc (where we set
-        # trust-policy=permissive for next-auth's beta provenance gap)
-        # is not consulted. Pass the policy via NPM_CONFIG_TRUST_POLICY
-        # so pnpm picks it up from the environment regardless of cwd.
-        env:
-          NPM_CONFIG_TRUST_POLICY: permissive
         run: |
           set -euo pipefail
           STAGE="$RUNNER_TEMP/stage-api"
           rm -rf "$STAGE"
-          # `pnpm deploy` produces a directory with the workspace package's
-          # production deps fully resolved and hoisted — perfect for a server.
-          pnpm deploy --filter @nebutra/gateway --prod --legacy "$STAGE"
+          # `pnpm deploy` resolves into $STAGE (outside the repo), so the
+          # repo's .npmrc trust-policy is not consulted. NPM_CONFIG_TRUST_POLICY
+          # also isn't honored (pnpm 10 didn't add that mapping for the new
+          # config). Use the CLI flag form — `--config.<name>=<value>` is the
+          # contract that ships in pnpm 10 for one-shot config overrides.
+          pnpm --config.trust-policy=permissive deploy \
+            --filter @nebutra/gateway --prod --legacy "$STAGE"
           ls -la "$STAGE"
           tar -czf "$RUNNER_TEMP/nebutra-api-${{ github.sha }}.tar.gz" -C "$STAGE" .
 
