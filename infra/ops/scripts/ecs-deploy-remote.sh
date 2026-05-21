@@ -112,7 +112,88 @@ load_runtime_env() {
         fail "api runtime env missing required keys after env load: ${missing[*]}"
       fi
     fi
+
+    refresh_bootstrapped_api_database_url "$app_root"
   fi
+}
+
+refresh_bootstrapped_api_database_url() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+  local discovered_url=""
+
+  if [ -n "${DATABASE_URL:-}" ] &&
+     [[ "$DATABASE_URL" != "postgresql://postgres:postgres@127.0.0.1:5432/nebutra"* ]]; then
+    return 0
+  fi
+
+  discovered_url="$(discover_local_postgres_url || true)"
+  if [ -z "$discovered_url" ]; then
+    return 0
+  fi
+
+  export DATABASE_URL="$discovered_url"
+
+  if [ -f "$env_file" ]; then
+    local tmp
+    tmp="$(mktemp)"
+    awk -v url="$discovered_url" '
+      BEGIN { replaced = 0 }
+      /^DATABASE_URL=/ {
+        print "DATABASE_URL=" url
+        replaced = 1
+        next
+      }
+      { print }
+      END {
+        if (replaced == 0) {
+          print "DATABASE_URL=" url
+        }
+      }
+    ' "$env_file" > "$tmp"
+    cat "$tmp" > "$env_file"
+    rm -f "$tmp"
+    chmod 600 "$env_file"
+  fi
+
+  log "refreshed bootstrapped api DATABASE_URL from local postgres container"
+}
+
+discover_local_postgres_url() {
+  if ! command -v docker >/dev/null 2>&1; then
+    return 0
+  fi
+
+  local container password database
+  for container in nebutra-postgres-lite nebutra-postgres postgres; do
+    if ! docker inspect "$container" >/dev/null 2>&1; then
+      continue
+    fi
+
+    password="$(docker inspect "$container" \
+      --format '{{range .Config.Env}}{{println .}}{{end}}' 2>/dev/null \
+      | awk -F= '$1 == "POSTGRES_PASSWORD" { print substr($0, length($1) + 2); exit }')"
+    database="$(docker inspect "$container" \
+      --format '{{range .Config.Env}}{{println .}}{{end}}' 2>/dev/null \
+      | awk -F= '$1 == "POSTGRES_DB" { print substr($0, length($1) + 2); exit }')"
+
+    if [ -n "$password" ]; then
+      database="${database:-nebutra}"
+      if command -v python3 >/dev/null 2>&1; then
+        python3 - "$password" "$database" <<'PY'
+import sys
+from urllib.parse import quote
+
+password = quote(sys.argv[1], safe="")
+database = quote(sys.argv[2], safe="")
+print(f"postgresql://postgres:{password}@127.0.0.1:5432/{database}?schema=public")
+PY
+      else
+        echo "postgresql://postgres:${password}@127.0.0.1:5432/${database}?schema=public"
+      fi
+      return 0
+    fi
+  done
 }
 
 bootstrap_api_runtime_env() {
