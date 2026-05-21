@@ -177,6 +177,26 @@ for p in procs:
   log "pm2 logs for $pm2_name (last 40 lines, no stream):"
   pm2 logs "$pm2_name" --nostream --lines 40 --raw --no-color 2>&1 | tail -50 || true
 
+  if [ "$pm2_name" = "api-gateway" ]; then
+    log "wait for api-gateway local health"
+    local code="000"
+    for attempt in 1 2 3 4 5 6 7 8 9 10; do
+      code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 \
+        "http://127.0.0.1:3002/health" 2>/dev/null || echo "000")
+      if [ "$code" = "200" ]; then
+        log "api-gateway local health -> $code"
+        break
+      fi
+      if [ "$attempt" -eq 10 ]; then
+        log "api-gateway local health failed after $attempt attempts (last code: $code)"
+        pm2 describe "$pm2_name" --no-color 2>&1 || true
+        pm2 logs "$pm2_name" --nostream --lines 160 --raw --no-color 2>&1 | tail -180 || true
+        fail "api-gateway failed local health check"
+      fi
+      sleep 6
+    done
+  fi
+
   # Retention — keep latest N, drop the rest. find sorts by mtime via -printf
   # to avoid SC2012 issues with `ls`. Release names are timestamped so this is
   # equivalent to lexical sort.

@@ -94,7 +94,11 @@ module.exports = {
         PORT: 3002,
         HOSTNAME: "127.0.0.1",
       },
-      max_memory_restart: "300M",
+      // Gateway imports Prisma, provider SDKs, workers, and Hono route graphs
+      // at startup. The real ECS process settles near the old 300M limit,
+      // causing PM2 memory restarts before nginx/Cloudflare smoke tests can
+      // hit a stable listener.
+      max_memory_restart: "700M",
       instances: 1,
       exec_mode: "fork",
       autorestart: true,
