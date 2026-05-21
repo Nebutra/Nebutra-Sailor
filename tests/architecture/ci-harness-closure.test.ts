@@ -164,7 +164,7 @@ describe("ci harness dependency closure", () => {
     expect(playwrightConfig).toContain("next dev --webpack");
     expect(playwrightConfig).toContain('WATCHPACK_POLLING: "true"');
     expect(playwrightConfig).toContain('CHOKIDAR_USEPOLLING: "true"');
-    expect(playwrightConfig).toContain("timeout: 60_000");
+    expect(playwrightConfig).toContain("timeout: process.env.CI ? 300_000 : 60_000");
     expect(playwrightConfig).toContain("workers: 1");
     expect(workflow).toContain('PLAYWRIGHT_BASE_URL: "http://127.0.0.1:3100"');
     expect(workflow).toContain('APP_BASE_URL: "http://127.0.0.1:3101"');
@@ -215,14 +215,23 @@ describe("ci harness dependency closure", () => {
       "utf8",
     );
     const footerSpec = await readFile(join(process.cwd(), "e2e/smoke/footer.spec.ts"), "utf8");
+    const landingSpec = await readFile(join(process.cwd(), "e2e/smoke/landing.spec.ts"), "utf8");
+    const newsletterSpec = await readFile(
+      join(process.cwd(), "e2e/smoke/newsletter.spec.ts"),
+      "utf8",
+    );
+    const showcaseSpec = await readFile(join(process.cwd(), "e2e/smoke/showcase.spec.ts"), "utf8");
     const playwrightConfig = await readFile(
       join(process.cwd(), "e2e/playwright.config.ts"),
       "utf8",
     );
 
     expect(playwrightConfig).toContain('globalSetup: "./global-setup.ts"');
-    expect(globalSetup).toContain('"/changelog"');
+    expect(globalSetup).toContain('"/api/e2e/health"');
     expect(globalSetup).toContain("ROUTE_PREWARM_TIMEOUT_MS");
+    expect(helper).toContain('process.env.CI === "true"');
+    expect(helper).toContain("isCi ? 120_000 : 30_000");
+    expect(helper).toContain("isCi ? 45_000 : 8_000");
     expect(helper).toContain('waitUntil: "domcontentloaded"');
     expect(helper).toContain("NAVIGATION_RETRIES");
     expect(helper).toContain("page.request.get");
@@ -230,6 +239,9 @@ describe("ci harness dependency closure", () => {
     expect(helper).toContain("net::ERR_ABORTED");
     expect(changelogSpec).toContain("gotoMarketingPage");
     expect(footerSpec).toContain("gotoMarketingPage");
+    expect(landingSpec).toContain("gotoMarketingPage");
+    expect(newsletterSpec).toContain("gotoMarketingPage");
+    expect(showcaseSpec).toContain("gotoMarketingPage");
   });
 
   it("backs footer design smoke assertions with a real component marker", async () => {
