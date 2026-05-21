@@ -56,6 +56,15 @@ preserve_runtime_env() {
   fi
 }
 
+source_runtime_env_file() {
+  local env_file="$1"
+
+  set -a
+  # shellcheck disable=SC1090
+  . "$env_file"
+  set +a
+}
+
 load_runtime_env() {
   local app="$1" release="$2" pm2_name="$3"
   local app_root="$DEPLOY_ROOT/$app"
@@ -70,15 +79,12 @@ load_runtime_env() {
     "$release/.env"
   )
 
-  set -a
   for env_file in "${candidates[@]}"; do
     if [ -f "$env_file" ]; then
-      # shellcheck disable=SC1090
-      . "$env_file"
+      source_runtime_env_file "$env_file"
       loaded="${loaded}${loaded:+, }$env_file"
     fi
   done
-  set +a
 
   if [ -n "$loaded" ]; then
     log "loaded runtime env for $app: $loaded"
@@ -97,8 +103,7 @@ load_runtime_env() {
       [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
       if [ "${#missing[@]}" -gt 0 ]; then
         bootstrap_api_runtime_env "$app_root"
-        # shellcheck disable=SC1090
-        . "$app_root/.env"
+        source_runtime_env_file "$app_root/.env"
         missing=()
         [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
         [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
