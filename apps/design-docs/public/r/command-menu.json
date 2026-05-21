@@ -34,6 +34,15 @@
       "--motion-duration-flow",
       "--radius-lg"
     ],
-    "nebutraLayer": "business"
+    "nebutraLayer": "business",
+    "docs": {
+      "status": "experimental",
+      "layer": "primitive",
+      "package": "@nebutra/ui",
+      "source": "packages/design/ui/src/primitives/command-menu.tsx",
+      "substrate": "custom",
+      "registry": true,
+      "lastVerified": "2026-05-21"
+    }
   }
 }

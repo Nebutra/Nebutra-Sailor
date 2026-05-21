@@ -37,6 +37,15 @@
       "--toast-title-weight",
       "--toast-width"
     ],
-    "nebutraLayer": "business"
+    "nebutraLayer": "business",
+    "docs": {
+      "status": "stable",
+      "layer": "primitive",
+      "package": "@nebutra/ui",
+      "source": "packages/design/ui/src/primitives/toaster.tsx",
+      "substrate": "mixed",
+      "registry": true,
+      "lastVerified": "2026-05-21"
+    }
   }
 }

@@ -1,7 +1,6 @@
 ---
 title: Todo Tool
 description: Flat streaming todo list rendered inline when the AI calls the Claude TodoWrite tool. Distinct from AgentPlan (dashboard hierarchical).
-status: experimental
 ---
 
 <ComponentPreview name="todo-tool-demo" />
@@ -88,6 +87,12 @@ Keys derive from `id` (if provided) or a deterministic `${idx}-${content[0..16]}
 ## Reuses
 
 - [`TextShimmer`](/en/docs/components/text-shimmer) for the loading-state header.
+
+## Design Contract
+
+- Use `TodoTool` only for flat chat-inline TodoWrite state. Interactive planning belongs in `AgentPlan`.
+- Preserve the upstream `in_progress` wire enum; do not normalize it into dashboard status strings inside this primitive.
+- Empty ready-state lists render nothing so chat streams do not show decorative empty shells.
 
 ## Tool-family siblings
 

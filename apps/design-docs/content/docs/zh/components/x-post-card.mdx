@@ -114,4 +114,3 @@ export default function TweetSection() {
 - `ClientXPostCard` 是实际执行渲染的组件 —— `XPostCard` 仅负责将其包裹在 Suspense 中。
 - 请在服务端组件（Server Components）或任何需要 Suspense 边界的地方使用 `XPostCard`。
 - 如果未提供 `onError`，则会显示 `react-tweet` 默认的 `TweetNotFound`（推文未找到）组件。
-走

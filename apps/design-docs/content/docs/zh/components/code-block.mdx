@@ -179,4 +179,16 @@ pnpm add react-syntax-highlighter @types/react-syntax-highlighter
 - 高亮行和差异行的样式使用内联 `rgba()` 颜色，能够自适应深浅色模式。
 - 差异标记（`+`/`-`) 通过限定范围的 CSS `::before` 伪元素渲染。
 - 切换文件标签页时，手动选择的语言将被重置。
-走
+
+## 可访问性 (Accessibility)
+
+- 复制控件和语言选择器必须保留可见文本或明确的可访问名称。
+- 行号只是辅助导航。不要只靠颜色表达 `highlightedLines`、`addedLines` 或 `removedLines`。
+- 长代码块应设置 `maxHeight`，让键盘用户可以越过代码区域，而不是被迫穿过整页代码。
+- 需要精确 code review 时，视觉 diff 标记应配合说明文字或评论，明确指出变更含义。
+
+## 设计契约 (Design Contract)
+
+- `CodeBlock` 用于代码检查、安装片段和多文件示例。标识符和短命令使用 inline code。
+- 示例必须可执行且聚焦；一个代码块只讲一个操作，不要变成小型文章。
+- 优先通过 `title` 自动识别语言；只有用户确实需要比较语法时才暴露 `showLanguageSwitcher`。

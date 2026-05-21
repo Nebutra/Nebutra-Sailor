@@ -9,12 +9,16 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const PUBLIC_DIR = join(process.cwd(), "public");
+let registryIndexCache: RegistryIndex | undefined;
 
 export interface RegistryIndexEntry {
   name: string;
   type: string;
   title?: string;
   description?: string;
+  meta?: {
+    docs?: RegistryDocsMetadata;
+  };
 }
 
 export interface RegistryIndex {
@@ -42,7 +46,21 @@ export interface RegistryItem {
   registryDependencies?: string[];
   files: RegistryItemFile[];
   cssVars?: { light: Record<string, string>; dark: Record<string, string> };
-  meta?: { nebutraTokens?: string[]; nebutraLayer?: string };
+  meta?: {
+    nebutraTokens?: string[];
+    nebutraLayer?: string;
+    docs?: RegistryDocsMetadata;
+  };
+}
+
+export interface RegistryDocsMetadata {
+  status: "stable" | "beta" | "deprecated" | "experimental";
+  layer: "foundation" | "primitive" | "composition" | "pattern" | "registry" | "api" | "guide";
+  package: "@nebutra/ui" | "@nebutra/tokens";
+  source: string;
+  substrate: "native" | "custom" | "mixed";
+  registry: true;
+  lastVerified: string;
 }
 
 /**
@@ -51,9 +69,12 @@ export interface RegistryItem {
  * distribution drift rather than a useful fallback.
  */
 export function loadRegistryIndex(): RegistryIndex {
+  if (registryIndexCache) return registryIndexCache;
+
   try {
     const raw = readFileSync(join(PUBLIC_DIR, "registry.json"), "utf-8");
-    return JSON.parse(raw) as RegistryIndex;
+    registryIndexCache = JSON.parse(raw) as RegistryIndex;
+    return registryIndexCache;
   } catch (error) {
     throw new Error(
       "Missing or invalid public/registry.json. Run `pnpm --filter @nebutra/design-docs prebuild` or `pnpm --filter @nebutra/ui build:registry` before rendering registry routes.",
@@ -69,4 +90,8 @@ export function loadRegistryItem(name: string): RegistryItem | null {
   } catch {
     return null;
   }
+}
+
+export function getRegistryDocsMetadata(name: string): RegistryDocsMetadata | undefined {
+  return loadRegistryIndex().items.find((item) => item.name === name)?.meta?.docs;
 }

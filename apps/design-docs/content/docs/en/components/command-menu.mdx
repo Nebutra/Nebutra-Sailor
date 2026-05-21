@@ -9,6 +9,8 @@ description: "Dialog-backed command palette for global, keyboard-first product a
 
 Use `Command` directly for embedded search surfaces. Use `Menu` or `ContextMenu` for commands tied to a visible trigger or a single row.
 
+<ComponentPreview name="command-menu-demo" className="min-h-[320px] w-full" />
+
 ## Installation
 
 ```tsx
@@ -154,7 +156,7 @@ useEffect(() => {
 | `CommandMenu.Shortcut` | Keyboard shortcut hint rendered through `Kbd` |
 | `CommandMenu.Separator` | Visual divider between groups |
 
-## Design principles
+## Design Contract
 
 - Open into the root page and keep useful defaults visible when the input is empty.
 - Group commands by product scope. If a flat list exceeds roughly 30 items or crosses resource types, split into pages.

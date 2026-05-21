@@ -81,3 +81,16 @@ import { User, Settings, LogOut, ChevronRight, Lock, Command, Plus } from "lucid
 | `href` | `string` | — | 将条目渲染为导航到该 URL 的 `<a>` 标签 |
 | `onSelect` | `(e: Event) => void` | — | 条目被选中时的回调 |
 | `className` | `string` | — | 额外的 CSS 类名 |
+
+## 可访问性 (Accessibility)
+
+- `Menu` 继承 `DropdownMenu` 的菜单角色、roving focus、Escape 关闭和 typeahead 行为。
+- 权限受限但需要被发现的动作使用 `locked`；临时不可用的动作使用 `disabled`。
+- `prefix` 和 `suffix` 图标默认应为装饰性，除非它们表达了标签没有覆盖的信息。
+- 链接条目仍应读起来像动作。不要把无关导航和危险命令混在同一个菜单里。
+
+## 设计契约 (Design Contract)
+
+- `Menu` 用于短动作列表或导航列表，其中每一行拥有相同密度和交互模型。
+- 需要 checkbox、radio group、separator、级联 submenu 或自定义 item composition 时，直接使用底层 `DropdownMenu`。
+- 菜单应保持稳定。如果用户需要扫描、比较或编辑多个字段，改用 Popover、Dialog 或页面级 settings surface。

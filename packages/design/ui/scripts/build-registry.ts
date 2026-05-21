@@ -384,6 +384,34 @@ export const themeToggleTokens = {
 export type ThemeToggleSize = keyof typeof themeToggleTokens.sizes;
 `;
 
+const DOCS_LAST_VERIFIED = "2026-05-21";
+
+const DOCS_STATUS_BY_NAME: Readonly<Record<string, DocsStatus>> = {
+  accordion: "stable",
+  avatar: "stable",
+  choicebox: "beta",
+  "dropdown-menu": "stable",
+  progress: "stable",
+  skeleton: "stable",
+  table: "stable",
+  toast: "stable",
+  tooltip: "stable",
+};
+
+const DOCS_SUBSTRATE_BY_NAME: Readonly<Record<string, DocsSubstrate>> = {
+  accordion: "mixed",
+  avatar: "mixed",
+  "dropdown-menu": "mixed",
+  progress: "mixed",
+  skeleton: "native",
+  table: "native",
+  toast: "mixed",
+  tooltip: "mixed",
+  "file-attachment": "native",
+  "project-banner": "native",
+  "status-dot": "native",
+};
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
@@ -395,6 +423,27 @@ type RegistryLayer =
   | "animation"
   | "decoration"
   | "business";
+
+type DocsStatus = "stable" | "beta" | "deprecated" | "experimental";
+type DocsLayer =
+  | "foundation"
+  | "primitive"
+  | "composition"
+  | "pattern"
+  | "registry"
+  | "api"
+  | "guide";
+type DocsSubstrate = "native" | "custom" | "mixed";
+
+interface DocsMetadata {
+  status: DocsStatus;
+  layer: DocsLayer;
+  package: "@nebutra/ui" | "@nebutra/tokens";
+  source: string;
+  substrate: DocsSubstrate;
+  registry: true;
+  lastVerified: string;
+}
 
 interface ComponentSpec {
   /** kebab-case registry name */
@@ -409,6 +458,8 @@ interface ComponentSpec {
   layer: RegistryLayer;
   /** registry:ui | registry:theme */
   type?: "registry:ui" | "registry:theme";
+  /** Docs governance metadata. Defaults are generated from the source path. */
+  docs?: Partial<Omit<DocsMetadata, "package" | "source" | "registry" | "lastVerified">>;
   /** path written into the consumer project */
   targetPath?: string;
   /** additional files required by relative imports in the emitted component */
@@ -449,6 +500,7 @@ interface ShadcnRegistryItem {
   meta: {
     nebutraTokens: string[];
     nebutraLayer: RegistryLayer;
+    docs: DocsMetadata;
   };
 }
 
@@ -1200,6 +1252,18 @@ function readExtraFile(source: string): string {
   return readFileSync(join(UI_ROOT, "src", source), "utf-8");
 }
 
+function buildDocsMetadata(spec: ComponentSpec): DocsMetadata {
+  return {
+    status: spec.docs?.status ?? DOCS_STATUS_BY_NAME[spec.name] ?? "experimental",
+    layer: spec.docs?.layer ?? "primitive",
+    package: "@nebutra/ui",
+    source: `packages/design/ui/src/${spec.source}`,
+    substrate: spec.docs?.substrate ?? DOCS_SUBSTRATE_BY_NAME[spec.name] ?? "custom",
+    registry: true,
+    lastVerified: DOCS_LAST_VERIFIED,
+  };
+}
+
 function buildOne(
   spec: ComponentSpec,
   knownRegistry: Set<string>,
@@ -1219,6 +1283,7 @@ function buildOne(
   const fallbacks = buildCssVarFallbacks(cssVarsUsed, lightMap, darkMap);
 
   const targetPath = spec.targetPath ?? `components/ui/${spec.name}.tsx`;
+  const docs = buildDocsMetadata(spec);
 
   const item: ShadcnRegistryItem = {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
@@ -1247,6 +1312,7 @@ function buildOne(
     meta: {
       nebutraTokens: cssVarsUsed,
       nebutraLayer: spec.layer,
+      docs,
     },
   };
 
@@ -1301,6 +1367,15 @@ function buildThemeEntry(
     meta: {
       nebutraTokens: tokens,
       nebutraLayer: "decoration",
+      docs: {
+        status: "stable",
+        layer: "foundation",
+        package: "@nebutra/tokens",
+        source: "packages/design/tokens/src/index.ts",
+        substrate: "custom",
+        registry: true,
+        lastVerified: DOCS_LAST_VERIFIED,
+      },
     },
   };
 }
@@ -1350,12 +1425,18 @@ function main(): void {
         type: c.type ?? "registry:ui",
         title: c.title,
         description: c.description,
+        meta: {
+          docs: buildDocsMetadata(c),
+        },
       })),
       {
         name: themeItem.name,
         type: themeItem.type,
         title: themeItem.title,
         description: themeItem.description,
+        meta: {
+          docs: themeItem.meta.docs,
+        },
       },
     ],
   };

@@ -1,14 +1,6 @@
 ---
 title: AnimateIn
 description: Entrance animation primitive with branded presets, staggered groups, and reduced-motion handling.
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/animate-in.tsx
-primitive: AnimateIn
-substrate: custom
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 ## Installation
@@ -55,8 +47,27 @@ Use `AnimateInGroup` when sibling items should enter in a single rhythm:
 | `fadeUp` | List/card entrance with vertical lift. |
 | `scale` | Small surface pop-in. |
 
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `preset` | `"emerge" \| "flow" \| "fade" \| "fadeUp" \| "scale"` | `"emerge"` | Branded entrance recipe. |
+| `delay` | `"none" \| "short" \| "normal" \| "long"` | `"none"` | Tokenized delay before the element enters. |
+| `duration` | `"short" \| "normal" \| "slow"` | `"normal"` | Tokenized transition duration. |
+| `inView` | `boolean` | `false` | Starts motion when the element enters the viewport. |
+| `once` | `boolean` | `true` | When `inView` is set, animate only the first time by default. |
+| `className` | `string` | - | Class applied to the motion wrapper. |
+
+`AnimateInGroup` accepts `stagger`, `inView`, `once`, `className`, and `children`. Group-level `stagger` is tokenized as `"none"`, `"tight"`, `"normal"`, or `"slow"`.
+
 ## Accessibility
 
 - Respects `prefers-reduced-motion`.
 - Reduced-motion users receive opacity-only transitions.
 - Uses `LazyMotion` so framer-motion features are lazy-loaded.
+
+## Design Contract
+
+- Use `AnimateIn` for entrance hierarchy only; do not use it for hover, active, loading, or attention-seeking effects.
+- Consume motion presets through this primitive instead of raw `motion.div` values, so duration, easing, reduced-motion, and lazy-loading stay consistent.
+- Prefer `opacity` and `transform` recipes. If a design requires layout-affecting animation, promote a new motion preset first.

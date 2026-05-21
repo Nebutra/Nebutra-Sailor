@@ -1,14 +1,6 @@
 ---
 title: Search Tool
 description: 搜索/检索结果的 chat-inline 工具调用渲染，强调真实链接和可滚动结果面板。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/search-tool.tsx
-primitive: SearchTool
-substrate: custom
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 <ComponentPreview name="search-tool-demo" />
@@ -55,3 +47,9 @@ const results: SearchResult[] = [
 - 外层为 `<section aria-busy aria-label="Search: ...">`。
 - toggle 使用 `aria-expanded` 和 `aria-controls`。
 - 结果列表是 `<ul aria-label="Search results">`。
+
+## 设计契约
+
+- `SearchTool` 只用于对话 UI 中的检索/搜索结果轨迹。
+- 看起来可点击的行必须是真实 anchor。没有 URL 的结果不能加 pointer 或 hover 假 affordance。
+- 展开面板必须保留 query 文本，截图或复制片段时仍能保留搜索上下文。

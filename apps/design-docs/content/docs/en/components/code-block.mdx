@@ -179,3 +179,16 @@ Language is inferred from file extension when `language` is not provided:
 - Highlighted and diff line styles use inline `rgba()` colors that adapt to light/dark mode.
 - Diff markers (`+`/`-`) are rendered via scoped CSS `::before` pseudo-elements.
 - The language switcher resets when switching between file tabs.
+
+## Accessibility
+
+- Copy controls and language selectors must keep visible text or an explicit accessible name.
+- Line numbers are secondary navigation. Do not rely on color alone to communicate `highlightedLines`, `addedLines`, or `removedLines`.
+- Long code blocks should use `maxHeight` so keyboard users can move past them without traversing a full page of code.
+- When exact code review is required, pair visual diff markers with prose or comments that name the change.
+
+## Design Contract
+
+- Use `CodeBlock` for code inspection, installation snippets, and multi-file examples. Use inline code for identifiers and short commands.
+- Keep examples executable and scoped; a code block should teach one operation, not become a miniature article.
+- Prefer language auto-detection from `title`; only expose `showLanguageSwitcher` when users genuinely need to compare syntaxes.

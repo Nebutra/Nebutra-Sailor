@@ -18,10 +18,19 @@ import { Skeleton } from "@nebutra/ui/primitives"
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `className` | `string` | — | **必填。** 通过 Tailwind 类设置宽度、高度和圆角。 |
+| `width` | `number \| string` | — | 宽度，数字按 px 处理，也可传 CSS 长度。 |
+| `height` | `number \| string` | — | 高度，数字按 px 处理，也可传 CSS 长度。 |
+| `boxHeight` | `number \| string` | — | 外层最小高度，用于稳定布局。 |
+| `pill` | `boolean` | `false` | 全圆角形状。 |
+| `rounded` | `boolean` | `false` | 标准 radius-md 形状。 |
+| `squared` | `boolean` | `false` | 更紧的 radius-sm 形状。 |
+| `animated` | `boolean` | `true` | 开启动画，同时遵守 reduced motion。 |
+| `show` | `boolean` | `true` | 为 false 且存在 children 时，直接渲染 children。 |
+| `children` | `ReactNode` | — | 可选的 loaded content，用于保持几何尺寸。 |
+| `className` | `string` | — | 额外布局 class。 |
 
 <Info>
-  `Skeleton` 没有固定尺寸 —— 请始终通过 `className` 提供 `w-*`、`h-*` 以及可选的 `rounded-*` 工具类，以匹配它所替换的内容形状。
+  优先使用 `width` / `height` / `boxHeight` 保持稳定几何。`className` 用于布局位置，不用于临时覆盖颜色或动效。
 </Info>
 
 ## 示例 (Examples)
@@ -69,4 +78,9 @@ function UserCard({ userId }: { userId: string }) {
   <Skeleton className="h-12 w-12 rounded-full" />
 </div>
 ```
-走
+
+## 设计契约
+
+- 只有最终布局已知时才使用 `Skeleton`。未知等待状态应使用 `LoadingDots` 或 progress surface。
+- 骨架屏必须匹配加载后内容的形状和占位尺寸；它是布局稳定器，不是装饰背景。
+- 数据加载完成后，`show={false}` 应直接渲染 children，不保留额外 wrapper。

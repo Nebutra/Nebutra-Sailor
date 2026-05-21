@@ -174,3 +174,9 @@ Built on Base UI progress primitive.
 - Sets `aria-valuemin="0"`, `aria-valuemax` (default 100), and `aria-valuenow` based on `value`.
 - `aria-label` or `aria-labelledby` should be added for context.
 - Indeterminate state (`value={null}`) omits `aria-valuenow`.
+
+## Design Contract
+
+- Use `Progress` for measurable task completion. Use `LoadingDots` or `Skeleton` when completion percentage is unknown.
+- Do not encode business meaning in arbitrary colors. Use `type`, threshold colors, or stage stops tied to semantic state.
+- Keep animated progress subtle and avoid per-frame announcements; the primitive throttles assistive updates so busy tasks do not spam screen readers.

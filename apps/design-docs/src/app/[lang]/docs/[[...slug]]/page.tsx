@@ -6,12 +6,15 @@ import { FigmaLink } from "@/components/figma-link";
 import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
 import { DeprecatedBanner, StatusBadge } from "@/components/status-badge";
 import { onPageFeedbackAction } from "@/lib/github";
+import { getRegistryDocsMetadata, type RegistryDocsMetadata } from "@/lib/registry";
 import { getPageImage, source } from "@/lib/source";
-import { useMDXComponents } from "../../../../../mdx-components";
+import { getMDXComponents } from "../../../../../mdx-components";
 
 interface PageProps {
   params: Promise<{ slug?: string[]; lang: string }>;
 }
+
+const mdxComponents = getMDXComponents();
 
 export default async function Page({ params }: PageProps) {
   const { slug, lang } = await params;
@@ -19,7 +22,7 @@ export default async function Page({ params }: PageProps) {
   if (!page) notFound();
 
   const MDX = (page.data as { body: React.ComponentType<{ components: MDXComponents }> }).body;
-  const components = useMDXComponents({});
+  const docsMetadata = resolveDocsMetadata(slug, page.data);
 
   return (
     <DocsPage
@@ -40,20 +43,12 @@ export default async function Page({ params }: PageProps) {
     >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
-      {(page.data as { status?: string }).status && (
+      {docsMetadata?.status && (
         <div className="mt-2 mb-4 gap-2 flex items-center">
-          <StatusBadge
-            status={
-              (
-                page.data as {
-                  status: "stable" | "beta" | "deprecated" | "experimental";
-                }
-              ).status ?? "stable"
-            }
-          />
+          <StatusBadge status={docsMetadata.status} />
         </div>
       )}
-      {(page.data as { status?: string }).status === "deprecated" && <DeprecatedBanner />}
+      {docsMetadata?.status === "deprecated" && <DeprecatedBanner />}
       <div className="gap-2 pt-2 pb-6 flex flex-row items-center border-b">
         <LLMCopyButton markdownUrl={`/llms.mdx/docs/${page.path}`} />
         <ViewOptions
@@ -65,11 +60,25 @@ export default async function Page({ params }: PageProps) {
         )}
       </div>
       <DocsBody>
-        <MDX components={components} />
+        <MDX components={mdxComponents} />
       </DocsBody>
       <Feedback onSendAction={onPageFeedbackAction} />
     </DocsPage>
   );
+}
+
+function resolveDocsMetadata(
+  slug: string[] | undefined,
+  data: unknown,
+): Pick<RegistryDocsMetadata, "status"> | undefined {
+  const registryName = slug?.at(-1);
+  if (registryName) {
+    const registryMetadata = getRegistryDocsMetadata(registryName);
+    if (registryMetadata) return registryMetadata;
+  }
+
+  const status = (data as { status?: RegistryDocsMetadata["status"] }).status;
+  return status ? { status } : undefined;
 }
 
 export async function generateStaticParams() {

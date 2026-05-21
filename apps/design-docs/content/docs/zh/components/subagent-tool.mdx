@@ -1,14 +1,6 @@
 ---
 title: Subagent Tool
 description: 委托 subagent 调用的 chat-inline 状态 pill，是 tool-family 中最轻量的成员。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/subagent-tool.tsx
-primitive: SubagentTool
-substrate: custom
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 <ComponentPreview name="subagent-tool-demo" />
@@ -50,3 +42,9 @@ npx shadcn@latest add https://ui.nebutra.com/r/subagent-tool.json
 ## 可访问性
 
 外层是 `<output role="status" aria-live="polite">`。elapsed-time span 带 `aria-label="Elapsed time: ..."`。
+
+## 设计契约
+
+- `SubagentTool` 只表达一行 delegation 状态。如果子代理有步骤、结果或日志，应升级为更完整的 planning surface。
+- 计时器归上游所有，保证多个 row 的秒数同步跳动。
+- 不要增加状态 icon；文案和 live-region 行为才是语义契约。

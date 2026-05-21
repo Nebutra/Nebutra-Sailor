@@ -70,3 +70,16 @@ All other `<div>` props are forwarded to the container element.
 - The content area height is determined by `children` content; when no content is provided, it falls back to a `aspect-video` empty state
 - No `next/image` dependency — uses a plain `<img>` tag for the `imageSrc` convenience prop
 - Dark mode is fully supported via Tailwind `dark:` classes
+
+## Accessibility
+
+- Navigation glyphs and traffic lights are decorative browser chrome. Keep them out of the tab order unless a product flow makes them real controls.
+- Provide meaningful `imageAlt` when `imageSrc` shows a product state; use an empty alt only for decorative placeholders.
+- The address copy control must keep an accessible name because the address text is visually nested inside a mock frame.
+- Do not use `Browser` to replace an iframe or live application surface. It is a static presentation frame.
+
+## Design Contract
+
+- Use `Browser` for product screenshots, docs previews, and launch-page evidence where browser context helps comprehension.
+- Prefer real `children` for inspectable UI demos and `imageSrc` for static captured states.
+- Keep the frame subordinate to the content. If the browser chrome dominates the composition, use a plain image or card instead.

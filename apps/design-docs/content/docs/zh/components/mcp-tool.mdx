@@ -1,14 +1,6 @@
 ---
 title: MCP Tool
 description: MCP 工具调用的 chat-inline 渲染：动词化标题、优先级参数和可展开输出面板。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/mcp-tool.tsx
-primitive: McpTool
-substrate: custom
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 <ComponentPreview name="mcp-tool-demo" />
@@ -49,3 +41,9 @@ npx shadcn@latest add https://ui.nebutra.com/r/mcp-tool.json
 - 展开按钮关联 `aria-expanded` 和 `aria-controls`。
 - 输出区域是 `<pre role="region" aria-label="Tool output">`。
 - interrupted 状态使用 `role="status"`。
+
+## 设计契约
+
+- `McpTool` 只用于 MCP 调用记录。普通命令输出、日志或本地文件编辑需要独立 primitive。
+- `name` 传入 MCP server 的原始工具名；归一化只是展示逻辑，不能引入翻译表。
+- 输出截断必须诚实。如果消费方需要完整导出，应增加明确动作，而不是静默放大 inline panel。

@@ -70,6 +70,15 @@
       "--container-content",
       "--container-wide"
     ],
-    "nebutraLayer": "decoration"
+    "nebutraLayer": "decoration",
+    "docs": {
+      "status": "stable",
+      "layer": "foundation",
+      "package": "@nebutra/tokens",
+      "source": "packages/design/tokens/src/index.ts",
+      "substrate": "custom",
+      "registry": true,
+      "lastVerified": "2026-05-21"
+    }
   }
 }

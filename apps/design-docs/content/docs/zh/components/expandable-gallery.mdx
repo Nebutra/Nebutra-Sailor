@@ -1,14 +1,6 @@
 ---
 title: Expandable Gallery
 description: 扇形照片堆叠，激活后展开为响应式网格。适合展示型内容区块。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/expandable-gallery.tsx
-primitive: ExpandableGallery
-substrate: custom
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 <ComponentPreview name="expandable-gallery-demo" />
@@ -59,3 +51,9 @@ const photos: GalleryPhoto[] = [
 - 键盘 focus 与 hover 共享同等可见反馈。
 - 展开态图片不再假装可点击，作为展示内容处理。
 - 使用原生 `<img>`，保持 registry 分发的框架中立性。
+
+## 设计契约
+
+- 仅当折叠照片堆栈是内容钩子、展开网格是主要查看表面时使用 `ExpandableGallery`。
+- 折叠态必须保持紧凑；如果页面需要默认展示所有图片，应使用普通 gallery grid。
+- 单张照片的 `rotation` / `x` / `y` / `zIndex` 只表达视觉排布，不承载排序、选择或状态语义。

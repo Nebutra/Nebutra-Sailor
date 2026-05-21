@@ -1,14 +1,6 @@
 ---
 title: Relative Time Card
 description: 简短相对时间标签，hover/focus 时展示 UTC 与本地绝对时间。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/relative-time-card.tsx
-primitive: RelativeTimeCard
-substrate: custom
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 <ComponentPreview name="relative-time-card-demo" />
@@ -52,3 +44,9 @@ npx shadcn@latest add https://ui.nebutra.com/r/relative-time-card.json
 - 默认 trigger 是语义化 `<time dateTime={ISO}>`。
 - Popover 内容由 `ContextCard` 提供。
 - 本地时区行挂载后才出现，避免服务端猜测用户 locale。
+
+## 设计契约
+
+- `RelativeTimeCard` 用于密集产品界面里可检查的时间戳，不用于正文叙述。
+- 只传原始日期；格式化、tick 节奏、hydration 策略都由 primitive 拥有。
+- 不要再给触发器套第二层 tooltip/popover；绝对时间披露已经是它的交互契约。

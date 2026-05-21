@@ -1,7 +1,6 @@
 ---
 title: File Attachment
 description: Chip / thumbnail display for an attached file. Use in chat composers, message bubbles, or attachment lists.
-status: experimental
 ---
 
 <ComponentPreview name="file-attachment-demo" />
@@ -96,6 +95,12 @@ Pass `onRemove` to render a small × button that surfaces on hover, focus-within
 - Remove button uses `aria-label="Remove <filename>"` for unambiguous SR readout.
 - Remove button is hidden by default but reveals on hover OR `focus-visible` OR `group-focus-within` — keyboard and touch users can still trigger removal.
 - Image `<img>` uses `loading="lazy"` and `alt={filename}` for a meaningful description.
+
+## Design Contract
+
+- Use `FileAttachment` for user-supplied files only. AI tool output belongs in the chat tool-family primitives.
+- Keep file identity first: filename is mandatory, size is secondary, and the thumbnail never replaces the filename in chip mode.
+- Removal must remain keyboard reachable. Do not re-hide `onRemove` behind hover-only CSS when composing custom upload rows.
 
 ## Why `<img>` and not `next/image`?
 

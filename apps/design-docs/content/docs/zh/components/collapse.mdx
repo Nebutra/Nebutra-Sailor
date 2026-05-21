@@ -1,14 +1,6 @@
 ---
 title: Collapse
 description: 基于 Nebutra Accordion 的 Geist-style flat Collapse/CollapseGroup API。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/collapse.tsx
-primitive: Collapse
-substrate: mixed
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 ## 安装
@@ -22,6 +14,10 @@ Standalone registry 安装：
 ```bash
 npx shadcn@latest add https://ui.nebutra.com/r/collapse.json
 ```
+
+## 演示
+
+<ComponentPreview name="collapse-demo" className="min-h-[260px] w-full" />
 
 ## 用法
 
@@ -42,6 +38,39 @@ npx shadcn@latest add https://ui.nebutra.com/r/collapse.json
 </CollapseGroup>
 ```
 
+## Props
+
+### Collapse
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | required | 面板标题。命名主题，而不是动作。 |
+| `defaultExpanded` | `boolean` | `false` | 初始非受控展开状态。 |
+| `size` | `"default" \| "small"` | `"default"` | 继承自 Accordion 的密度变体。 |
+| `keepMounted` | `boolean` | `true` | 关闭后仍保留 DOM，支持浏览器页内查找和爬虫。 |
+| `disabled` | `boolean` | `false` | 禁用触发器。 |
+| `children` | `ReactNode` | required | 面板内容。 |
+
+### CollapseGroup
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `multiple` | `boolean` | `false` | 允许多个子面板同时展开。 |
+| `size` | `"default" \| "small"` | - | 应用到没有单独设置 size 的子项。 |
+| `children` | `ReactNode` | required | `Collapse` 子项。 |
+
 ## 与 Accordion 的关系
 
 `Collapse` 是 Nebutra `Accordion` 的 facade。它不应该 fork 焦点管理、ARIA wiring 或动画行为。行为需要改变时，除非差异只属于 flat Geist API，否则先修 Accordion。
+
+## 可访问性
+
+- 继承 Accordion 的 button、region、`aria-expanded` 和 `aria-controls` wiring。
+- `keepMounted` 默认 true，浏览器页内查找仍能命中折叠内容。
+- 禁用面板原因不明显时，必须提供相邻解释文案。
+
+## 设计契约
+
+- `Collapse` 用于多数用户可跳过的可选/高级内容，不用于主要页面结构。
+- 兄弟项需要协调展开状态时使用 `CollapseGroup`；单个披露使用 standalone `Collapse`。
+- 共享行为先修 `Accordion`。`Collapse` 应保持 flat API facade，而不是行为 fork。

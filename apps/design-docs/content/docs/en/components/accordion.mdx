@@ -86,3 +86,9 @@ A compact variant with reduced padding and smaller text, matching the Geist Coll
 - Each `AccordionTrigger` renders a `<button>` with `aria-expanded` and `aria-controls`.
 - Each `AccordionContent` has `role="region"` and `aria-labelledby` pointing to its trigger.
 - Keyboard navigation: `Enter`/`Space` toggles, `Tab` moves focus between items.
+
+## Design Contract
+
+- Use `Accordion` for progressive disclosure inside a page, not for navigation trees or command menus.
+- Keep trigger labels short and stable; changing the label when content opens makes scan position harder to preserve.
+- Match `size` across `AccordionTrigger` and `AccordionContent` so density is a container decision, not a per-row accident.

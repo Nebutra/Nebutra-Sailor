@@ -1,14 +1,6 @@
 ---
 title: Todo Tool
 description: AI 调用 TodoWrite 时内联渲染的扁平只读 todo list，区别于 dashboard 里的 AgentPlan。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/todo-tool.tsx
-primitive: TodoTool
-substrate: custom
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 <ComponentPreview name="todo-tool-demo" />
@@ -58,3 +50,9 @@ const todos: TodoItem[] = [
 - 容器是 `<ol aria-label="To-dos">`。
 - 当前进行项使用 `aria-current="step"`。
 - 完成项使用 `<s>`，同时提供视觉和语义删除线。
+
+## 设计契约
+
+- `TodoTool` 只用于 chat-inline TodoWrite 状态。交互式计划管理属于 `AgentPlan`。
+- 保留上游 `in_progress` wire enum，不在这个 primitive 内转换成 dashboard status。
+- ready 态空数组渲染为 `null`，避免聊天流出现装饰性空壳。

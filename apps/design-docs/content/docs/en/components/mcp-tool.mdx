@@ -1,7 +1,6 @@
 ---
 title: MCP Tool
 description: Inline AI tool-call rendering for MCP invocations — verb-conjugated header, priority-sorted args, expandable output panel.
-status: experimental
 ---
 
 <ComponentPreview name="mcp-tool-demo" />
@@ -111,6 +110,12 @@ Useful when a chat thread implements an "expand all" toggle across multiple tool
 ## Reuses
 
 - [`TextShimmer`](/en/docs/components/text-shimmer) for the pending-state header.
+
+## Design Contract
+
+- Use `McpTool` only for MCP invocation records. Generic command output, logs, or local file edits need their own primitive.
+- Preserve the raw tool name in `name`; normalization is display-only and must not introduce a translation map.
+- Keep output truncation honest. If a consumer needs full output export, add an explicit action rather than silently increasing the inline panel.
 
 ## Tool-family siblings
 

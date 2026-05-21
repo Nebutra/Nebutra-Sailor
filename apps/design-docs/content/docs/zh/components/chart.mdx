@@ -1,14 +1,6 @@
 ---
 title: Chart
 description: 基于 Recharts 的图表 wrapper，提供 theme-aware color config、tooltip 和 legend helpers。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/chart.tsx
-primitive: ChartContainer
-substrate: custom
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 ## 安装
@@ -27,6 +19,10 @@ Standalone registry 安装：
 ```bash
 npx shadcn@latest add https://ui.nebutra.com/r/chart.json
 ```
+
+## 演示
+
+<ComponentPreview name="chart-demo" className="min-h-[360px] w-full" />
 
 ## 用法
 
@@ -49,6 +45,27 @@ const chartConfig = {
 </ChartContainer>
 ```
 
+## Props
+
+### ChartContainer
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `config` | `ChartConfig` | required | series 的 label、icon、color/theme 映射。 |
+| `children` | `ResponsiveContainer["children"]` | required | 渲染在 responsive container 内的 Recharts 图表 primitive。 |
+| `className` | `string` | - | 布局 class。必须提供稳定高度或宽高比。 |
+| `id` | `string` | auto | 可选稳定 id，用于生成 CSS 变量 scope。 |
+
+### ChartTooltipContent
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `indicator` | `"line" \| "dot" \| "dashed"` | `"dot"` | series 指示器样式。 |
+| `hideLabel` | `boolean` | `false` | 隐藏 tooltip label 行。 |
+| `hideIndicator` | `boolean` | `false` | 隐藏 series marker。 |
+| `labelKey` | `string` | - | 用于解析 label metadata 的 config key。 |
+| `nameKey` | `string` | - | 用于解析 item metadata 的 config key。 |
+
 ## 何时使用
 
 - 用于定量比较：趋势、占比或多序列数据。
@@ -58,3 +75,15 @@ const chartConfig = {
 ## 相关模式
 
 查看 [Charts](/zh/docs/patterns/charts) 了解更高层的图表组合规则、loading states 和 dashboard layout 指南。
+
+## 可访问性
+
+- Recharts 支持时传入 `accessibilityLayer`，让键盘和辅助技术可以检查图表数据。
+- 精确数值重要时，图表旁必须配 summary 句或表格。
+- 不能只依赖颜色。Series label、tooltip 文案和 legend 必须能识别数据。
+
+## 设计契约
+
+- `ChartContainer` 负责 theme-aware CSS 变量注入；消费方用 `var(--color-seriesKey)` 填充 series。
+- 使用应用主题里的语义 chart token，不使用临时 Tailwind 色值。
+- 容器必须有稳定高度/宽高比。数据流式更新时尺寸跳动会破坏 dashboard 扫描。

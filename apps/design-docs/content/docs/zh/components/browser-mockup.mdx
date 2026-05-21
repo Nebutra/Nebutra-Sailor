@@ -70,4 +70,16 @@ import { Browser } from "@nebutra/ui/primitives";
 - 内容区域的高度由 `children` 内容决定；如果未提供内容，则回退到 `aspect-video` 的空状态。
 - 无 `next/image` 依赖 —— 为 `imageSrc` 便捷属性使用普通的 `<img>` 标签。
 - 通过 Tailwind 的 `dark:` 类名完全支持暗黑模式。
-走
+
+## 可访问性 (Accessibility)
+
+- 导航图标和红绿灯按钮是装饰性浏览器 chrome。除非产品流程真的让它们可操作，否则不要放进 tab 顺序。
+- 当 `imageSrc` 展示产品状态时，必须提供有意义的 `imageAlt`；只有纯装饰占位才使用空 alt。
+- 地址复制控件必须保留可访问名称，因为地址文本被视觉上嵌在 mock frame 内。
+- 不要用 `Browser` 替代 iframe 或真实应用界面。它只是静态展示框架。
+
+## 设计契约 (Design Contract)
+
+- `Browser` 用于产品截图、文档 preview、发布页证据等“浏览器上下文有助理解”的场景。
+- 可检查的 UI demo 优先用真实 `children`，静态捕获状态使用 `imageSrc`。
+- 框架必须服务内容。如果 browser chrome 比内容更抢眼，改用普通图片或 card。

@@ -34,6 +34,32 @@ import { ComponentPreview } from "@/components/component-preview";
 <ComponentPreview name="tooltip-rich-content-demo" className="min-h-[150px] flex justify-center items-center"  />
 
 
+## Props
+
+### Tooltip / TooltipProvider
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `delayDuration` | `number` | `150` | 打开前延迟，单位毫秒。Provider 层值会应用到内部 tooltip。 |
+| `children` | `ReactNode` | - | Root、trigger、content 的组合内容。 |
+
+### TooltipTrigger
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | 使用子元素作为 trigger，而不是额外包裹。 |
+| `children` | `ReactNode` | - | 可见触发器。纯图标 trigger 必须自带可访问名称。 |
+
+### TooltipContent
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"top"` | 首选出现方向。 |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | 相对 trigger 的对齐方式。 |
+| `sideOffset` | `number` | `4` | 与 trigger 的距离，单位 px。 |
+| `alignOffset` | `number` | `0` | 对齐方向偏移，单位 px。 |
+| `className` | `string` | - | 应用到 popup 的额外 class。 |
+
 ## 可访问性 (Accessibility)
 
 - 基于 Base UI Tooltip 构建 —— 遵循 WAI-ARIA [文字提示模式](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)。
@@ -41,3 +67,9 @@ import { ComponentPreview } from "@/components/component-preview";
 - 在获得焦点和悬停时均会打开 —— 方便键盘用户使用。
 - 按下 `Escape` 键会关闭文字提示。
 - 不要仅在文字提示中放置核心、非冗余的信息 —— 它们在触摸设备上无法通过悬停访问。
+
+## 设计契约
+
+- Tooltip 内容解释约束、范围或限制，不能重复可见 label。
+- Tooltip 内容保持非交互。需要动作时使用 Popover、ContextCard、Dialog 或 inline control。
+- 纯图标 trigger 必须自带 `aria-label`；tooltip 文案只是补充上下文，不能替代控件名称。

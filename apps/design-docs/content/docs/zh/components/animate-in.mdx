@@ -1,14 +1,6 @@
 ---
 title: AnimateIn
 description: 带品牌预设、分组 stagger 和 reduced-motion 处理的入场动效原语。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/animate-in.tsx
-primitive: AnimateIn
-substrate: custom
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 ## 安装
@@ -55,8 +47,27 @@ npx shadcn@latest add https://ui.nebutra.com/r/animate-in.json
 | `fadeUp` | 列表/card 带轻微上移动效。 |
 | `scale` | 小型表面的 pop-in。 |
 
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `preset` | `"emerge" \| "flow" \| "fade" \| "fadeUp" \| "scale"` | `"emerge"` | 品牌化进入动效配方。 |
+| `delay` | `"none" \| "short" \| "normal" \| "long"` | `"none"` | token 化延迟。 |
+| `duration` | `"short" \| "normal" \| "slow"` | `"normal"` | token 化时长。 |
+| `inView` | `boolean` | `false` | 元素进入视口后再启动动效。 |
+| `once` | `boolean` | `true` | 配合 `inView` 时默认只触发一次。 |
+| `className` | `string` | - | 应用在 motion wrapper 上的类名。 |
+
+`AnimateInGroup` 接收 `stagger`、`inView`、`once`、`className` 和 `children`。`stagger` 只能使用 `"none"`、`"tight"`、`"normal"`、`"slow"`。
+
 ## 可访问性
 
 - 遵守 `prefers-reduced-motion`。
 - reduced-motion 用户只看到 opacity transition。
 - 使用 `LazyMotion`，避免一次性加载全部 framer-motion features。
+
+## 设计契约
+
+- `AnimateIn` 只用于进入层级，不用于 hover、active、loading 或吸引注意的效果。
+- 消费方必须走这个 primitive，而不是散落 raw `motion.div`，这样 duration、easing、reduced-motion 和 lazy-loading 才能一致。
+- 优先使用 `opacity` / `transform`。如果设计需要影响 layout 的动效，先提升新的 motion preset。

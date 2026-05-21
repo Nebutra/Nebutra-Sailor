@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui",
+    "recharts"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/chart-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  ChartContainer,\n  ChartTooltip,\n  ChartTooltipContent,\n  type ChartConfig,\n} from \"@nebutra/ui/primitives\";\nimport { useEffect, useState } from \"react\";\nimport { Bar, BarChart, CartesianGrid, XAxis } from \"recharts\";\n\nconst data = [\n  { month: \"Jan\", apiCalls: 186 },\n  { month: \"Feb\", apiCalls: 305 },\n  { month: \"Mar\", apiCalls: 237 },\n  { month: \"Apr\", apiCalls: 273 },\n  { month: \"May\", apiCalls: 209 },\n  { month: \"Jun\", apiCalls: 314 },\n];\n\nconst chartConfig = {\n  apiCalls: {\n    label: \"API Calls\",\n    color: \"hsl(var(--chart-1))\",\n  },\n} satisfies ChartConfig;\n\nexport function ChartDemo() {\n  const [mounted, setMounted] = useState(false);\n\n  useEffect(() => {\n    setMounted(true);\n  }, []);\n\n  if (!mounted) {\n    return <div className=\"h-72 w-full max-w-lg rounded-[var(--radius-lg)] bg-muted/40\" />;\n  }\n\n  return (\n    <ChartContainer config={chartConfig} className=\"h-72 w-full max-w-lg\">\n      <BarChart data={data} accessibilityLayer>\n        <CartesianGrid vertical={false} />\n        <XAxis dataKey=\"month\" tickLine={false} axisLine={false} tickMargin={8} />\n        <ChartTooltip content={<ChartTooltipContent />} />\n        <Bar dataKey=\"apiCalls\" fill=\"var(--color-apiCalls)\" radius={4} />\n      </BarChart>\n    </ChartContainer>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

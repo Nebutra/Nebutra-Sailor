@@ -18,6 +18,15 @@
   ],
   "meta": {
     "nebutraTokens": [],
-    "nebutraLayer": "dataviz"
+    "nebutraLayer": "dataviz",
+    "docs": {
+      "status": "experimental",
+      "layer": "primitive",
+      "package": "@nebutra/ui",
+      "source": "packages/design/ui/src/primitives/globe.tsx",
+      "substrate": "custom",
+      "registry": true,
+      "lastVerified": "2026-05-21"
+    }
   }
 }

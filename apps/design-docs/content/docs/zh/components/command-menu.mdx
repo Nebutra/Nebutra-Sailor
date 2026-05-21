@@ -9,6 +9,8 @@ description: "用于全局键盘优先产品操作的 Dialog 命令面板。"
 
 嵌入式搜索界面请直接使用 `Command`。绑定在可见按钮或单行资源上的操作，请使用 `Menu` 或 `ContextMenu`。
 
+<ComponentPreview name="command-menu-demo" className="min-h-[320px] w-full" />
+
 ## 安装 (Installation)
 
 ```tsx
@@ -154,7 +156,7 @@ useEffect(() => {
 | `CommandMenu.Shortcut` | 通过 `Kbd` 渲染的键盘快捷键提示 |
 | `CommandMenu.Separator` | 组与组之间的视觉分隔线 |
 
-## 设计原则 (Design principles)
+## 设计契约
 
 - 打开后进入根页面；输入为空时也要展示最近或默认操作。
 - 按产品范围分组。平铺列表超过约 30 项，或跨越多个资源类型时，应拆成页面。

@@ -25,6 +25,15 @@
     "nebutraTokens": [
       "--radius-lg"
     ],
-    "nebutraLayer": "dashboard"
+    "nebutraLayer": "dashboard",
+    "docs": {
+      "status": "experimental",
+      "layer": "primitive",
+      "package": "@nebutra/ui",
+      "source": "packages/design/ui/src/primitives/entity.tsx",
+      "substrate": "custom",
+      "registry": true,
+      "lastVerified": "2026-05-21"
+    }
   }
 }

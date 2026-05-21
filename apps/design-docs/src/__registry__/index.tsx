@@ -283,6 +283,9 @@ export const CarouselVerticalDemo = dynamic(() =>
     default: m.CarouselVerticalDemo,
   })),
 );
+export const ChartDemo = dynamic(() =>
+  import("@/components/previews/chart-demo").then((m) => ({ default: m.ChartDemo })),
+);
 export const CheckboxDemo = dynamic(() =>
   import("@/components/previews/checkbox-demo").then((m) => ({ default: m.CheckboxDemo })),
 );
@@ -306,6 +309,9 @@ export const ChoiceboxRadioDemo = dynamic(() =>
 );
 export const CodeBlockDemo = dynamic(() =>
   import("@/components/previews/code-block-demo").then((m) => ({ default: m.CodeBlockDemo })),
+);
+export const CollapseDemo = dynamic(() =>
+  import("@/components/previews/collapse-demo").then((m) => ({ default: m.CollapseDemo })),
 );
 export const Collapsible2Demo = dynamic(() =>
   import("@/components/previews/collapsible-2-demo").then((m) => ({ default: m.Collapsible2Demo })),
@@ -391,6 +397,9 @@ export const CommandDialogSimpleDemo = dynamic(() =>
   import("@/components/previews/command-dialog-simple-demo").then((m) => ({
     default: m.CommandDialogSimpleDemo,
   })),
+);
+export const CommandMenuDemo = dynamic(() =>
+  import("@/components/previews/command-menu-demo").then((m) => ({ default: m.CommandMenuDemo })),
 );
 export const ConfettiDemo = dynamic(
   () => import("@/components/previews/confetti-demo").then((m) => ({ default: m.ConfettiDemo })),
@@ -746,6 +755,9 @@ export const MiddleTruncateDemo = dynamic(() =>
   import("@/components/previews/middle-truncate-demo").then((m) => ({
     default: m.MiddleTruncateDemo,
   })),
+);
+export const ModalDemo = dynamic(() =>
+  import("@/components/previews/modal-demo").then((m) => ({ default: m.ModalDemo })),
 );
 export const MultiSelectDemo = dynamic(() =>
   import("@/components/previews/multi-select-demo").then((m) => ({ default: m.MultiSelectDemo })),
@@ -1290,6 +1302,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "carousel-demo": { name: "carousel-demo", component: CarouselDemo },
   "carousel-multiple-demo": { name: "carousel-multiple-demo", component: CarouselMultipleDemo },
   "carousel-vertical-demo": { name: "carousel-vertical-demo", component: CarouselVerticalDemo },
+  "chart-demo": { name: "chart-demo", component: ChartDemo },
   "checkbox-demo": { name: "checkbox-demo", component: CheckboxDemo },
   "checkbox-group-demo": { name: "checkbox-group-demo", component: CheckboxGroupDemo },
   "checkbox-indeterminate-demo": {
@@ -1299,6 +1312,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "choicebox-demo": { name: "choicebox-demo", component: ChoiceboxDemo },
   "choicebox-radio-demo": { name: "choicebox-radio-demo", component: ChoiceboxRadioDemo },
   "code-block-demo": { name: "code-block-demo", component: CodeBlockDemo },
+  "collapse-demo": { name: "collapse-demo", component: CollapseDemo },
   "collapsible-2-demo": { name: "collapsible-2-demo", component: Collapsible2Demo },
   "collapsible-demo": { name: "collapsible-demo", component: CollapsibleDemo },
   "color-badge-demo": { name: "color-badge-demo", component: ColorBadgeDemo },
@@ -1328,6 +1342,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     name: "command-dialog-simple-demo",
     component: CommandDialogSimpleDemo,
   },
+  "command-menu-demo": { name: "command-menu-demo", component: CommandMenuDemo },
   "confetti-demo": { name: "confetti-demo", component: ConfettiDemo },
   "context-card-demo": { name: "context-card-demo", component: ContextCardDemo },
   "context-menu-demo": { name: "context-menu-demo", component: ContextMenuDemo },
@@ -1442,6 +1457,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     component: MessageWithReactionsDemo,
   },
   "middle-truncate-demo": { name: "middle-truncate-demo", component: MiddleTruncateDemo },
+  "modal-demo": { name: "modal-demo", component: ModalDemo },
   "multi-select-demo": { name: "multi-select-demo", component: MultiSelectDemo },
   "multiple-selector-demo": { name: "multiple-selector-demo", component: MultipleSelectorDemo },
   "navigation-menu-demo": { name: "navigation-menu-demo", component: NavigationMenuDemo },

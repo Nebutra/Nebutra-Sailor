@@ -34,6 +34,32 @@ import { ComponentPreview } from "@/components/component-preview";
 <ComponentPreview name="tooltip-rich-content-demo" className="min-h-[150px] flex justify-center items-center"  />
 
 
+## Props
+
+### Tooltip / TooltipProvider
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `delayDuration` | `number` | `150` | Open delay in milliseconds. Provider-level value applies to nested tooltips. |
+| `children` | `ReactNode` | - | Root, trigger, and content composition. |
+
+### TooltipTrigger
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Renders the child element as the trigger instead of wrapping it. |
+| `children` | `ReactNode` | - | Visible trigger. Icon-only triggers must provide their own accessible name. |
+
+### TooltipContent
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"top"` | Preferred placement side. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | Alignment against the trigger. |
+| `sideOffset` | `number` | `4` | Distance from trigger in pixels. |
+| `alignOffset` | `number` | `0` | Alignment offset in pixels. |
+| `className` | `string` | - | Additional class on the popup. |
+
 ## Accessibility
 
 - Built on Base UI Tooltip — follows the WAI-ARIA [Tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
@@ -41,3 +67,9 @@ import { ComponentPreview } from "@/components/component-preview";
 - Opens on focus as well as hover — keyboard users can access tooltips.
 - Pressing `Escape` closes the tooltip.
 - Do not place essential, non-redundant information only in tooltips — they are not accessible on touch devices.
+
+## Design Contract
+
+- Tooltip content explains a constraint, scope, or limit; it must not repeat the visible label.
+- Keep tooltip content non-interactive. Put actions in a Popover, ContextCard, Dialog, or inline control instead.
+- Icon-only triggers must carry their own `aria-label`; tooltip copy adds context but never becomes the control name.

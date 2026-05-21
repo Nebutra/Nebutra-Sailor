@@ -7,283 +7,800 @@
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
-      "description": "User, team, or organization identity primitive with numeric sizing, initials fallback, and stacked groups."
+      "description": "User, team, or organization identity primitive with numeric sizing, initials fallback, and stacked groups.",
+      "meta": {
+        "docs": {
+          "status": "stable",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/avatar.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "bento-grid",
       "type": "registry:ui",
       "title": "Bento Grid",
-      "description": "Responsive bento-style feature grid with hover-reveal CTAs."
+      "description": "Responsive bento-style feature grid with hover-reveal CTAs.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/bento-grid.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "pricing-card",
       "type": "registry:ui",
       "title": "Pricing Card",
-      "description": "Composable pricing card with glass header, plan badges, price slots."
+      "description": "Composable pricing card with glass header, plan badges, price slots.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/pricing-card.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "feature-card",
       "type": "registry:ui",
       "title": "Feature Card",
-      "description": "Feature card with corner bracket decorators, header, body, and dual-mode imagery."
+      "description": "Feature card with corner bracket decorators, header, body, and dual-mode imagery.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/feature-card.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "animate-in",
       "type": "registry:ui",
       "title": "AnimateIn",
-      "description": "Entrance animation primitive with emerge / flow / fade presets, lazy-loaded framer-motion."
+      "description": "Entrance animation primitive with emerge / flow / fade presets, lazy-loaded framer-motion.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/animate-in.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "magic-card",
       "type": "registry:ui",
       "title": "Magic Card",
-      "description": "Spotlight cursor-tracking card with gradient border highlight."
+      "description": "Spotlight cursor-tracking card with gradient border highlight.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/magic-card.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "globe",
       "type": "registry:ui",
       "title": "Globe (WebGL)",
-      "description": "Interactive WebGL globe powered by cobe — heavy peer dependency."
+      "description": "Interactive WebGL globe powered by cobe — heavy peer dependency.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/globe.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "chart",
       "type": "registry:ui",
       "title": "Chart",
-      "description": "Recharts wrapper with theme-aware color tokens and tooltip primitives."
+      "description": "Recharts wrapper with theme-aware color tokens and tooltip primitives.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/chart.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "command-menu",
       "type": "registry:ui",
       "title": "Command Menu",
-      "description": "AI command palette built on cmdk + base-ui dialog."
+      "description": "AI command palette built on cmdk + base-ui dialog.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/command-menu.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "empty-state",
       "type": "registry:ui",
       "title": "Empty State",
-      "description": "Zero-content surface for blank slate, no-results, permission, and error states."
+      "description": "Zero-content surface for blank slate, no-results, permission, and error states.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/empty-state.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "feedback",
       "type": "registry:ui",
       "title": "Feedback",
-      "description": "Compact feedback widget with emotion, message, topic, and metadata payloads."
+      "description": "Compact feedback widget with emotion, message, topic, and metadata payloads.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/feedback.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "show-more",
       "type": "registry:ui",
       "title": "Show More",
-      "description": "Count-aware progressive disclosure trigger for long lists and content blocks."
+      "description": "Count-aware progressive disclosure trigger for long lists and content blocks.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/show-more.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "table",
       "type": "registry:ui",
       "title": "Table",
-      "description": "Semantic table primitive with compound API, row states, numeric alignment, and Geist-compatible exports."
+      "description": "Semantic table primitive with compound API, row states, numeric alignment, and Geist-compatible exports.",
+      "meta": {
+        "docs": {
+          "status": "stable",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/table.tsx",
+          "substrate": "native",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "toast",
       "type": "registry:ui",
       "title": "Toast",
-      "description": "Sonner-backed transient notification facade with tokenized styling and Geist-compatible useToasts API."
+      "description": "Sonner-backed transient notification facade with tokenized styling and Geist-compatible useToasts API.",
+      "meta": {
+        "docs": {
+          "status": "stable",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/toaster.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "theme-toggle",
       "type": "registry:ui",
       "title": "Theme Toggle",
-      "description": "Binary sun/moon icon-button for light and dark mode switching. Tokenized motion and reduced-motion aware."
+      "description": "Binary sun/moon icon-button for light and dark mode switching. Tokenized motion and reduced-motion aware.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/theme-toggle.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "kpi-card",
       "type": "registry:ui",
       "title": "KPI Card",
-      "description": "Dashboard KPI card with trend chevrons and lucide iconography."
+      "description": "Dashboard KPI card with trend chevrons and lucide iconography.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/kpi-card.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "metric-card",
       "type": "registry:ui",
       "title": "Metric Card",
-      "description": "Linear / Vercel / Supabase inspired SaaS dashboard metric tile."
+      "description": "Linear / Vercel / Supabase inspired SaaS dashboard metric tile.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/metric-card.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "text-shimmer",
       "type": "registry:ui",
       "title": "Text Shimmer",
-      "description": "Animated text shimmer used as the streaming-header substrate for the chat tool-family."
+      "description": "Animated text shimmer used as the streaming-header substrate for the chat tool-family.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/text-shimmer.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "loading-dots",
       "type": "registry:ui",
       "title": "Loading Dots",
-      "description": "Three-dot bouncing loader; reused inside EditTool's approval footer."
+      "description": "Three-dot bouncing loader; reused inside EditTool's approval footer.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/loading-dots.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "edit-tool",
       "type": "registry:ui",
       "title": "Edit Tool",
-      "description": "Inline AI tool-call rendering for file edits — Cursor / Claude Code-style diff block with optional approval footer."
+      "description": "Inline AI tool-call rendering for file edits — Cursor / Claude Code-style diff block with optional approval footer.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/edit-tool.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "question-tool",
       "type": "registry:ui",
       "title": "Question Tool",
-      "description": "Inline AI tool-call rendering of a multi-step questionnaire — single / multi / text question kinds."
+      "description": "Inline AI tool-call rendering of a multi-step questionnaire — single / multi / text question kinds.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/question-tool.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "mcp-tool",
       "type": "registry:ui",
       "title": "MCP Tool",
-      "description": "Inline AI tool-call rendering for MCP invocations — verb conjugation, priority-sorted args, expandable output panel."
+      "description": "Inline AI tool-call rendering for MCP invocations — verb conjugation, priority-sorted args, expandable output panel.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/mcp-tool.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "todo-tool",
       "type": "registry:ui",
       "title": "Todo Tool",
-      "description": "Flat streaming todo list for the Claude TodoWrite tool — sibling of EditTool / McpTool / SearchTool."
+      "description": "Flat streaming todo list for the Claude TodoWrite tool — sibling of EditTool / McpTool / SearchTool.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/todo-tool.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "search-tool",
       "type": "registry:ui",
       "title": "Search Tool",
-      "description": "Inline AI tool-call rendering for search/retrieval results — honest-link rows, scrollable result panel."
+      "description": "Inline AI tool-call rendering for search/retrieval results — honest-link rows, scrollable result panel.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/search-tool.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "subagent-tool",
       "type": "registry:ui",
       "title": "Subagent Tool",
-      "description": "Single-line status pill for delegated subagent invocations — lightest member of the chat tool-family."
+      "description": "Single-line status pill for delegated subagent invocations — lightest member of the chat tool-family.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/subagent-tool.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "file-attachment",
       "type": "registry:ui",
       "title": "File Attachment",
-      "description": "Chip / thumbnail display for an attached file in a chat composer or message bubble. Keyboard-accessible removal."
+      "description": "Chip / thumbnail display for an attached file in a chat composer or message bubble. Keyboard-accessible removal.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/file-attachment.tsx",
+          "substrate": "native",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "expandable-gallery",
       "type": "registry:ui",
       "title": "Expandable Gallery",
-      "description": "Fanned photo stack that animates into a responsive grid. Tab/Enter expands; outside-click or Back collapses."
+      "description": "Fanned photo stack that animates into a responsive grid. Tab/Enter expands; outside-click or Back collapses.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/expandable-gallery.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
-      "description": "Base UI Tooltip wrapper for concise, non-interactive explanatory text."
+      "description": "Base UI Tooltip wrapper for concise, non-interactive explanatory text.",
+      "meta": {
+        "docs": {
+          "status": "stable",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/tooltip.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "accordion",
       "type": "registry:ui",
       "title": "Accordion",
-      "description": "Base UI accordion primitive with tokenized focus and disclosure motion. Used by Collapse."
+      "description": "Base UI accordion primitive with tokenized focus and disclosure motion. Used by Collapse.",
+      "meta": {
+        "docs": {
+          "status": "stable",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/accordion.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "dropdown-menu",
       "type": "registry:ui",
       "title": "Dropdown Menu",
-      "description": "Base UI menu primitive with keyboard navigation, checkbox/radio items, and submenu support."
+      "description": "Base UI menu primitive with keyboard navigation, checkbox/radio items, and submenu support.",
+      "meta": {
+        "docs": {
+          "status": "stable",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/dropdown-menu.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "context-card",
       "type": "registry:ui",
       "title": "Context Card",
-      "description": "Geist-style hover/focus card built on Base UI Popover for compact entity metadata."
+      "description": "Geist-style hover/focus card built on Base UI Popover for compact entity metadata.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/context-card.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "relative-time-card",
       "type": "registry:ui",
       "title": "Relative Time Card",
-      "description": "Short relative-time label with hover popover showing absolute UTC + local time. Adaptive tick cadence."
+      "description": "Short relative-time label with hover popover showing absolute UTC + local time. Adaptive tick cadence.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/relative-time-card.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "project-banner",
       "type": "registry:ui",
       "title": "Project Banner",
-      "description": "Full-width, non-dismissible banner for project-wide states needing resolution. Four severity variants + ARIA live region."
+      "description": "Full-width, non-dismissible banner for project-wide states needing resolution. Four severity variants + ARIA live region.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/project-banner.tsx",
+          "substrate": "native",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "browser-mockup",
       "type": "registry:ui",
       "title": "Browser",
-      "description": "Geist-style browser chrome around a screenshot or demo. Middle-truncating address bar, aspect-locked image viewport."
+      "description": "Geist-style browser chrome around a screenshot or demo. Middle-truncating address bar, aspect-locked image viewport.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/browser-mockup.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "middle-truncate",
       "type": "registry:ui",
       "title": "Middle Truncate",
-      "description": "Accessible middle truncation for long IDs, URLs, and file paths while preserving copy text."
+      "description": "Accessible middle truncation for long IDs, URLs, and file paths while preserving copy text.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/middle-truncate.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "choicebox",
       "type": "registry:ui",
       "title": "Choicebox",
-      "description": "Card-style selection control with radio (single) and checkbox (multi) modes. Roving tabindex + arrow-key navigation."
+      "description": "Card-style selection control with radio (single) and checkbox (multi) modes. Roving tabindex + arrow-key navigation.",
+      "meta": {
+        "docs": {
+          "status": "beta",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/choicebox.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
-      "description": "Syntax-highlighted code viewer with copy + diff lines. Accepts Geist single-file children API or Nebutra multi-file tabs."
+      "description": "Syntax-highlighted code viewer with copy + diff lines. Accepts Geist single-file children API or Nebutra multi-file tabs.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/code-block.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "collapse",
       "type": "registry:ui",
       "title": "Collapse",
-      "description": "Geist-style flat Collapse/CollapseGroup API on top of our Accordion. Single, multiple-open, and standalone modes."
+      "description": "Geist-style flat Collapse/CollapseGroup API on top of our Accordion. Single, multiple-open, and standalone modes.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/collapse.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "description",
       "type": "registry:ui",
       "title": "Description",
-      "description": "Definition-list metadata block (<dl>/<dt>/<dd>). Title Case key + emphasized value, optional tooltip on the label."
+      "description": "Definition-list metadata block (<dl>/<dt>/<dd>). Title Case key + emphasized value, optional tooltip on the label.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/description.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "entity",
       "type": "registry:ui",
       "title": "Entity",
-      "description": "Row of descriptive content paired with one or two controls. Compound Entity / Entity.Content / Entity.List."
+      "description": "Row of descriptive content paired with one or two controls. Compound Entity / Entity.Content / Entity.List.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/entity.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "material",
       "type": "registry:ui",
       "title": "Material",
-      "description": "Surface elevation primitive — 8 Geist-style types (base, small/medium/large, tooltip, menu, modal, fullscreen). Picks chrome from the theme."
+      "description": "Surface elevation primitive — 8 Geist-style types (base, small/medium/large, tooltip, menu, modal, fullscreen). Picks chrome from the theme.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/material.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "menu",
       "type": "registry:ui",
       "title": "Menu",
-      "description": "Geist-style flat MenuContainer / MenuButton / Menu / MenuItem / MenuLink / MenuItemLocked / MenuSection API on top of DropdownMenu."
+      "description": "Geist-style flat MenuContainer / MenuButton / Menu / MenuItem / MenuLink / MenuItemLocked / MenuSection API on top of DropdownMenu.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/menu.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "modal",
       "type": "registry:ui",
       "title": "Modal",
-      "description": "Geist-style compound Modal API on top of Dialog. active/onClickOutside/sticky/initialFocusRef + Body/Header/Title/Subtitle/Inset/Actions/Action."
+      "description": "Geist-style compound Modal API on top of Dialog. active/onClickOutside/sticky/initialFocusRef + Body/Header/Title/Subtitle/Inset/Actions/Action.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/modal.tsx",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "progress",
       "type": "registry:ui",
       "title": "Progress",
-      "description": "Determinate progress bar with max ceiling, threshold-color map, multi-stage stops with tooltips, and ~1Hz aria-valuenow throttling."
+      "description": "Determinate progress bar with max ceiling, threshold-color map, multi-stage stops with tooltips, and ~1Hz aria-valuenow throttling.",
+      "meta": {
+        "docs": {
+          "status": "stable",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/progress.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "skeleton",
       "type": "registry:ui",
       "title": "Skeleton",
-      "description": "Loading placeholder with width/height/boxHeight + pill/rounded/squared + animated/show props. Respects prefers-reduced-motion; aria-busy + inert keep focus off the placeholder."
+      "description": "Loading placeholder with width/height/boxHeight + pill/rounded/squared + animated/show props. Respects prefers-reduced-motion; aria-busy + inert keep focus off the placeholder.",
+      "meta": {
+        "docs": {
+          "status": "stable",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/skeleton.tsx",
+          "substrate": "native",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "status-dot",
       "type": "registry:ui",
       "title": "Status Dot",
-      "description": "Deployment-lifecycle dot (QUEUED/BUILDING/READY/ERROR/CANCELED/DELETED). QUEUED+BUILDING pulse; terminal states static. Semantic-token colored, decorative-mode aria-hidden when paired with text."
+      "description": "Deployment-lifecycle dot (QUEUED/BUILDING/READY/ERROR/CANCELED/DELETED). QUEUED+BUILDING pulse; terminal states static. Semantic-token colored, decorative-mode aria-hidden when paired with text.",
+      "meta": {
+        "docs": {
+          "status": "experimental",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/status-dot.tsx",
+          "substrate": "native",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     },
     {
       "name": "nebutra-tokens",
       "type": "registry:theme",
       "title": "Nebutra Tokens",
-      "description": "Drops the Nebutra design-system CSS variables (brand, neutral, status, container scale) into globals.css. No TSX."
+      "description": "Drops the Nebutra design-system CSS variables (brand, neutral, status, container scale) into globals.css. No TSX.",
+      "meta": {
+        "docs": {
+          "status": "stable",
+          "layer": "foundation",
+          "package": "@nebutra/tokens",
+          "source": "packages/design/tokens/src/index.ts",
+          "substrate": "custom",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
     }
   ]
 }

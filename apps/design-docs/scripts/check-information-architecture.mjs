@@ -15,11 +15,56 @@ import path from "node:path";
 import process from "node:process";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
+const REPO_ROOT = path.resolve(ROOT, "..", "..");
 const DOCS_DIR = path.join(ROOT, "content", "docs");
 const SECTIONS = ["components", "foundations", "fragment-components", "patterns"];
 const LANGS = ["en", "zh"];
+const LOCALIZED_FRONTMATTER_KEYS = new Set(["title", "description"]);
+const REGISTRY_OWNED_FRONTMATTER_KEYS = [
+  "status",
+  "layer",
+  "package",
+  "source",
+  "primitive",
+  "substrate",
+  "registry",
+  "lastVerified",
+];
+const DOCS_METADATA_ENUMS = {
+  status: new Set(["stable", "beta", "deprecated", "experimental"]),
+  layer: new Set(["foundation", "primitive", "composition", "pattern", "registry", "api", "guide"]),
+  package: new Set(["@nebutra/ui", "@nebutra/tokens"]),
+  substrate: new Set(["native", "custom", "mixed"]),
+};
 
 const registryOnlyAllowlist = new Map();
+
+const registryDocTemplateBacklog = new Map([
+  ["description", "missing registry governance frontmatter"],
+  ["edit-tool", "missing source/package/layer governance frontmatter"],
+  ["empty-state", "missing registry governance frontmatter"],
+  ["entity", "missing registry governance frontmatter and accessibility contract"],
+  ["feature-card", "missing registry governance frontmatter and accessibility contract"],
+  ["globe", "missing registry governance frontmatter and accessibility contract"],
+  ["kpi-card", "needs preview and accessibility contract"],
+  ["magic-card", "missing registry governance frontmatter and accessibility contract"],
+  ["material", "missing registry governance frontmatter"],
+  ["metric-card", "needs preview and registry governance frontmatter"],
+  ["middle-truncate", "missing registry governance frontmatter"],
+  ["pricing-card", "missing registry governance frontmatter and accessibility contract"],
+  ["question-tool", "missing source/package/layer governance frontmatter and props table"],
+  ["text-shimmer", "missing registry governance frontmatter and accessibility contract"],
+  ["theme-toggle", "missing registry governance frontmatter"],
+]);
+
+const previewlessRegistryDocAllowlist = new Map([
+  ["animate-in", "motion wrapper documented through usage rather than a static preview"],
+  ["kpi-card", "dashboard composition queued for a real product-state preview"],
+  ["loading-dots", "micro feedback primitive covered by props and accessibility docs"],
+  ["metric-card", "fragment component queued for a product dashboard preview"],
+  ["show-more", "disclosure primitive queued for overflow-content preview"],
+  ["status-dot", "micro status primitive covered by props and accessibility docs"],
+]);
 
 const demoOnlyPreviewAllowlist = new Map([
   ["alert-dialog-custom-demo", "variant fixture for alert-dialog visual regression"],
@@ -96,6 +141,20 @@ function readJson(file) {
   return JSON.parse(fs.readFileSync(file, "utf8"));
 }
 
+function parseFrontmatter(file) {
+  const source = fs.readFileSync(file, "utf8");
+  const match = source.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return {};
+
+  const fields = {};
+  for (const line of match[1].split("\n")) {
+    const field = line.match(/^([A-Za-z][\w-]*):\s*(.*)$/);
+    if (!field) continue;
+    fields[field[1]] = field[2].trim().replace(/^"|"$/g, "");
+  }
+  return fields;
+}
+
 function listMdxSlugs(dir) {
   if (!fs.existsSync(dir)) return [];
   return fs
@@ -159,6 +218,31 @@ function assertLocaleParity(section) {
   }
   if (missingEn.length > 0) {
     fail(`en/${section} is missing pages present in zh: ${missingEn.join(", ")}`);
+  }
+}
+
+function assertLocaleFrontmatterParity(section) {
+  const enDir = path.join(DOCS_DIR, "en", section);
+  const zhDir = path.join(DOCS_DIR, "zh", section);
+  for (const slug of listMdxSlugs(enDir)) {
+    const enFile = path.join(enDir, `${slug}.mdx`);
+    const zhFile = path.join(zhDir, `${slug}.mdx`);
+    if (!fs.existsSync(zhFile)) continue;
+
+    const enFrontmatter = parseFrontmatter(enFile);
+    const zhFrontmatter = parseFrontmatter(zhFile);
+    const governanceKeys = new Set(
+      [...Object.keys(enFrontmatter), ...Object.keys(zhFrontmatter)].filter(
+        (key) => !LOCALIZED_FRONTMATTER_KEYS.has(key),
+      ),
+    );
+
+    for (const key of governanceKeys) {
+      if (enFrontmatter[key] === zhFrontmatter[key]) continue;
+      fail(
+        `${section}/${slug}.mdx frontmatter "${key}" must match across en/zh: en=${enFrontmatter[key] ?? "∅"} zh=${zhFrontmatter[key] ?? "∅"}`,
+      );
+    }
   }
 }
 
@@ -246,6 +330,147 @@ function assertRegistryDocs() {
   }
 }
 
+function assertStructuredFrontmatterContracts() {
+  const registry = readJson(path.join(ROOT, "public", "registry.json"));
+  const registryItems = new Set(registry.items.map((item) => item.name));
+
+  for (const lang of LANGS) {
+    for (const section of SECTIONS) {
+      for (const slug of listMdxSlugs(path.join(DOCS_DIR, lang, section))) {
+        const file = path.join(DOCS_DIR, lang, section, `${slug}.mdx`);
+        const frontmatter = parseFrontmatter(file);
+
+        if (registryItems.has(slug)) {
+          for (const key of REGISTRY_OWNED_FRONTMATTER_KEYS) {
+            if (!frontmatter[key]) continue;
+            fail(
+              `${relative(file)} frontmatter "${key}" duplicates registry-owned metadata. Keep localized title/description in MDX and move governance metadata to public/registry.json.`,
+            );
+          }
+        }
+
+        if (frontmatter.registry === "true" && !registryItems.has(slug)) {
+          fail(`${relative(file)} has registry: true but no matching registry item "${slug}".`);
+        }
+      }
+    }
+  }
+}
+
+function findDocsFile(lang, slug) {
+  for (const section of SECTIONS) {
+    const file = path.join(DOCS_DIR, lang, section, `${slug}.mdx`);
+    if (fs.existsSync(file)) {
+      return { file, section };
+    }
+  }
+  return undefined;
+}
+
+function assertRegistryDocTemplateContracts() {
+  const registry = readJson(path.join(ROOT, "public", "registry.json"));
+  const registryItems = new Set(registry.items.map((item) => item.name));
+  const requiredRegistryMetadataKeys = [
+    "status",
+    "layer",
+    "package",
+    "source",
+    "substrate",
+    "registry",
+    "lastVerified",
+  ];
+  const componentSections = new Set(["components", "fragment-components"]);
+
+  for (const item of registry.items) {
+    const docs = findDocsFile("en", item.name);
+    if (!docs) continue;
+
+    const source = fs.readFileSync(docs.file, "utf8");
+    const docsMetadata = item.meta?.docs ?? {};
+    const missing = [];
+
+    for (const key of requiredRegistryMetadataKeys) {
+      if (!docsMetadata[key]) {
+        missing.push(`registry.meta.docs:${key}`);
+      }
+    }
+
+    for (const [key, allowedValues] of Object.entries(DOCS_METADATA_ENUMS)) {
+      if (!docsMetadata[key]) continue;
+      if (allowedValues.has(String(docsMetadata[key]))) continue;
+      fail(
+        `registry item "${item.name}" meta.docs.${key} has unsupported value: ${docsMetadata[key]}`,
+      );
+    }
+
+    if (docsMetadata.registry !== true) {
+      missing.push("registry.meta.docs:registry=true");
+    }
+
+    if (docsMetadata.source) {
+      const sourceFile = path.join(REPO_ROOT, docsMetadata.source);
+      if (path.isAbsolute(docsMetadata.source)) {
+        fail(`registry item "${item.name}" meta.docs.source must be repo-relative, not absolute.`);
+      } else if (!fs.existsSync(sourceFile)) {
+        fail(
+          `registry item "${item.name}" meta.docs.source does not exist: ${docsMetadata.source}`,
+        );
+      }
+    }
+
+    if (componentSections.has(docs.section)) {
+      if (
+        !/<ComponentPreview\s+[^>]*name=["'][^"']+["']/.test(source) &&
+        !previewlessRegistryDocAllowlist.has(item.name)
+      ) {
+        missing.push("ComponentPreview");
+      }
+
+      if (!/^##\s+Props\b/m.test(source)) {
+        missing.push("Props");
+      }
+
+      if (!/^##\s+Accessibility\b/m.test(source)) {
+        missing.push("Accessibility");
+      }
+
+      if (!/^##\s+(Design Contract|Best Practices|Governance)\b/im.test(source)) {
+        missing.push("Design Contract");
+      }
+    } else if (
+      docs.section === "foundations" &&
+      !/^##\s+(Design Contract|Best Practices|Governance)\b/im.test(source)
+    ) {
+      missing.push("Design Contract");
+    }
+
+    const backlogReason = registryDocTemplateBacklog.get(item.name);
+    if (missing.length > 0 && !backlogReason) {
+      fail(
+        `${relative(docs.file)} registry docs template is incomplete: ${missing.join(", ")}. Either migrate it or add it to registryDocTemplateBacklog with a specific reason.`,
+      );
+    }
+
+    if (missing.length === 0 && backlogReason) {
+      fail(
+        `${relative(docs.file)} is still listed in registryDocTemplateBacklog after satisfying the template contract.`,
+      );
+    }
+  }
+
+  for (const name of registryDocTemplateBacklog.keys()) {
+    if (!registryItems.has(name)) {
+      fail(`registryDocTemplateBacklog references missing registry item: ${name}`);
+    }
+  }
+
+  for (const name of previewlessRegistryDocAllowlist.keys()) {
+    if (!registryItems.has(name)) {
+      fail(`previewlessRegistryDocAllowlist references missing registry item: ${name}`);
+    }
+  }
+}
+
 function assertNoStaleSubstrateCopy() {
   const staleSubstratePattern =
     /(built on Radix|基于 Radix|@radix-ui\/react-(dialog|tooltip|popover|progress|separator|label|dropdown-menu|alert-dialog))/i;
@@ -280,10 +505,13 @@ for (const lang of LANGS) {
 
 for (const section of SECTIONS) {
   assertLocaleParity(section);
+  assertLocaleFrontmatterParity(section);
 }
 
 assertPreviewRegistry();
 assertRegistryDocs();
+assertStructuredFrontmatterContracts();
+assertRegistryDocTemplateContracts();
 assertNoStaleSubstrateCopy();
 assertBrandTokenTruth();
 

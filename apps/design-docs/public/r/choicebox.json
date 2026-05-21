@@ -31,6 +31,15 @@
       "--radius-lg",
       "--radius-sm"
     ],
-    "nebutraLayer": "business"
+    "nebutraLayer": "business",
+    "docs": {
+      "status": "beta",
+      "layer": "primitive",
+      "package": "@nebutra/ui",
+      "source": "packages/design/ui/src/primitives/choicebox.tsx",
+      "substrate": "custom",
+      "registry": true,
+      "lastVerified": "2026-05-21"
+    }
   }
 }

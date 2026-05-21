@@ -75,3 +75,9 @@ You can nest `DropdownMenuSub` within `DropdownMenuContent` to create cascading 
 - `DropdownMenuContent` has `role="menu"` with `aria-labelledby` pointing to the trigger.
 - Each item has `role="menuitem"`, `role="menuitemcheckbox"`, or `role="menuitemradio"`.
 - Keyboard: `ArrowUp`/`ArrowDown` to navigate, `Enter`/`Space` to select, `Escape` to close.
+
+## Design Contract
+
+- Use `DropdownMenu` for compact secondary actions. Primary destructive or form-submitting actions should stay visible.
+- Menu rows must be commands, toggles, or navigation targets. Do not place form fields or rich interactive controls inside menu content.
+- Submenus are for stable taxonomies only; if users need to compare options, use a Dialog, Popover, or page-level picker instead.

@@ -1,7 +1,6 @@
 ---
 title: Expandable Gallery
 description: Fanned photo stack that animates into a responsive grid — Tab/Enter to expand, outside-click or Back to collapse.
-status: experimental
 ---
 
 <ComponentPreview name="expandable-gallery-demo" />
@@ -105,6 +104,12 @@ type GalleryPhoto = {
 - `whileFocus` mirrors `whileHover` — keyboard users see the same lift animation that mouse users get.
 - Expanded cards are decorative `<motion.div aria-hidden="true">` — clicks would no-op, so the cards are not announced as interactive.
 - Back button uses semantic `<button type="button">`; the arrow icon is `aria-hidden` (label text carries the meaning).
+
+## Design Contract
+
+- Use `ExpandableGallery` only when the collapsed photo stack is the content hook and the expanded grid is the primary inspection surface.
+- Keep the collapsed stack compact; if the page needs every image visible by default, use a normal gallery grid instead.
+- Per-photo positioning is presentation-only and must not encode ordering, selection, or status. Semantic state belongs in surrounding copy or controls.
 
 ## Framework neutrality
 

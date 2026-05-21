@@ -10,6 +10,7 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { BlogComments } from "@/components/landing/blog-comments";
 import { BlogCopyButton } from "@/components/landing/blog-copy-button";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
 import { type Locale, routing } from "@/i18n/routing";
@@ -24,6 +25,7 @@ import {
   toBlogLanguage,
 } from "@/lib/blog";
 import { getFallbackBlogCover } from "@/lib/blog-covers";
+import { env } from "@/lib/env";
 
 type Params = { lang: string; slug: string };
 
@@ -351,6 +353,33 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
               copiedLabel={isZh ? "已复制" : "Copied"}
             />
           </div>
+        </AnimateIn>
+
+        <AnimateIn preset="fadeUp" inView>
+          <BlogComments
+            appUrl={env.NEXT_PUBLIC_APP_URL}
+            translationKey={post.translationKey ?? post.slug}
+            slug={post.slug}
+            language={blogLanguage}
+            labels={{
+              title: isZh ? "讨论" : "Discussion",
+              subtitle: isZh
+                ? "使用 Nebutra 账号参与评论。评论会先进入审核队列。"
+                : "Join with your Nebutra account. New comments enter moderation first.",
+              empty: isZh ? "还没有评论。来写下第一条。" : "No comments yet. Start the thread.",
+              signIn: isZh ? "登录后评论" : "Sign in to comment",
+              placeholder: isZh ? "写下你的想法..." : "Share your thought...",
+              submit: isZh ? "发布评论" : "Post comment",
+              submitting: isZh ? "发布中" : "Posting",
+              pending: isZh ? "待审核" : "Pending",
+              error: isZh
+                ? "评论暂时不可用，请稍后再试。"
+                : "Comments are unavailable. Try again later.",
+              like: isZh ? "点赞" : "Like",
+              liked: isZh ? "已点赞" : "Liked",
+              signInToLike: isZh ? "登录后点赞" : "Sign in to like",
+            }}
+          />
         </AnimateIn>
       </article>
 

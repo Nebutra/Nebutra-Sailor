@@ -1,125 +1,102 @@
 ---
 title: "Modal"
-description: "General-purpose overlay dialog for forms, detail views, and multi-step flows."
+description: "用于阻塞式决策、聚焦表单和高风险确认流程的 compound dialog surface。"
 ---
 
-## Demo
+## 演示 (Demo)
+
+<ComponentPreview name="modal-demo" className="min-h-[320px] w-full" />
+
+## 用法 (Usage)
+
+`Modal` 是构建在 Nebutra `Dialog` 之上的 compound API。它保留 Geist modal 的使用模型，同时把 focus management、title wiring、body spacing、inset panel 和 action row 收敛到统一 primitive 中。
 
 ```tsx
-<Modal open={isOpen} onOpenChange={setIsOpen} title="Edit project">
-  <Modal.Body>
-    <FormItemLayout label="Project name" htmlFor="project-name">
-      <Input id="project-name" defaultValue={project.name} />
-    </FormItemLayout>
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setIsOpen(false)}>Cancel</Button>
-    <Button onClick={handleSave}>Save changes</Button>
-  </Modal.Footer>
-</Modal>
-```
+import { Button, Input, Modal } from "@nebutra/ui/primitives";
+import { useRef, useState } from "react";
 
-## Usage
-
-```tsx
-import { Modal } from "@nebutra/ui";
-import { useState } from "react";
-
-export function CreatePipelineButton() {
-  const [open, setOpen] = useState(false);
+export function CreateProjectModal() {
+  const [active, setActive] = useState(false);
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>New pipeline</Button>
+      <Button onClick={() => setActive(true)}>New Project</Button>
 
-      <Modal
-        open={open}
-        onOpenChange={setOpen}
-        title="Create pipeline"
-        description="Configure your new data pipeline."
-        size="lg"
+      <Modal.Modal
+        active={active}
+        onClickOutside={() => setActive(false)}
+        initialFocusRef={cancelRef}
       >
         <Modal.Body>
-          <CreatePipelineForm onSuccess={() => setOpen(false)} />
+          <Modal.Header>
+            <Modal.Title>Create Project</Modal.Title>
+            <Modal.Subtitle>
+              Create a workspace-scoped project with default observability.
+            </Modal.Subtitle>
+          </Modal.Header>
+
+          <Modal.Inset>
+            <Input aria-label="Project name" placeholder="Nebula Control Plane" />
+          </Modal.Inset>
         </Modal.Body>
-      </Modal>
+
+        <Modal.Actions>
+          <Modal.Action ref={cancelRef} type="secondary" onClick={() => setActive(false)}>
+            Cancel
+          </Modal.Action>
+          <Modal.Action onClick={() => setActive(false)}>Create Project</Modal.Action>
+        </Modal.Actions>
+      </Modal.Modal>
     </>
   );
 }
 ```
 
-## Props
+## 属性 (Props)
 
-### `Modal`
+### `Modal.Modal`
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 描述 |
 |---|---|---|---|
-| `open` | `boolean` | — | Controls dialog open state |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when the dialog requests a state change |
-| `title` | `string` | — | Dialog heading text |
-| `description` | `string` | — | Muted subtitle below the title |
-| `size` | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Max-width of the dialog panel |
-| `hideCloseButton` | `boolean` | `false` | Hides the default X close button |
-| `className` | `string` | — | Additional classes on the dialog panel |
-| `children` | `React.ReactNode` | — | Dialog content (use sub-components for layout) |
+| `active` | `boolean` | — | 受控打开状态。 |
+| `onClickOutside` | `() => void` | — | 用户通过外部点击或 Escape 请求关闭时调用。 |
+| `sticky` | `boolean` | `false` | body 在面板内滚动，actions 固定在底部。 |
+| `initialFocusRef` | `RefObject<HTMLElement \| null>` | — | 打开后聚焦的元素；危险流程应指向 Cancel。 |
+| `className` | `string` | — | dialog content panel 的额外类名。 |
+| `children` | `ReactNode` | — | compound modal 内容。 |
 
-### `Modal.Body`
+### 布局部件 (Layout Parts)
 
-Scrollable content region. Accepts any `React.ReactNode`.
+| 部件 | 类型 | 描述 |
+|---|---|---|
+| `Modal.Body` | `HTMLAttributes<HTMLDivElement>` | 主内容区域；`sticky` 为 true 时在内部滚动。 |
+| `Modal.Header` | `HTMLAttributes<HTMLDivElement>` | 标题和说明组合。 |
+| `Modal.Title` | `HTMLAttributes<HTMLHeadingElement>` | 自动把 `aria-labelledby` 接到 dialog content。 |
+| `Modal.Subtitle` | `HTMLAttributes<HTMLParagraphElement>` | 辅助说明文案。 |
+| `Modal.Inset` | `HTMLAttributes<HTMLDivElement>` | 用于表单行、元数据或风险上下文的 recessed panel。 |
+| `Modal.Actions` | `HTMLAttributes<HTMLDivElement>` | 底部动作行。 |
 
-### `Modal.Footer`
+### `Modal.Action`
 
-Sticky footer anchored to the bottom of the dialog, right-aligned by default.
-
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 描述 |
 |---|---|---|---|
-| `align` | `"start" \| "end" \| "between"` | `"end"` | Horizontal alignment of footer actions |
-| `children` | `React.ReactNode` | — | Action buttons |
+| `type` | `"primary" \| "secondary"` | `"primary"` | 视觉动作优先级，映射到 Button variants。 |
+| `buttonType` | `"button" \| "submit" \| "reset"` | `"button"` | 用于表单集成的原生 button type。 |
+| `fullWidth` | `boolean` | `false` | 让动作按钮横向铺满。 |
+| `prefix` | `ReactNode` | — | 可选前置图标。 |
 
-## Examples
+## 可访问性 (Accessibility)
 
-### Small confirmation-style modal
+- Focus trap、Escape 关闭、关闭后回到触发器由底层 `Dialog` 提供。
+- `Modal.Title` 会自动通过 `aria-labelledby` 关联 dialog；不要手动重复 title id。
+- 危险或高风险决策应通过 `initialFocusRef` 默认聚焦 Cancel。
+- 主动作在源码顺序中放最后，让键盘和屏幕阅读器用户先经过 review/cancel 选项。
+- 高风险删除动作使用 `DestructiveActionModal`，或在 `Modal.Inset` 内加入 typed confirmation gate。
 
-```tsx
-<Modal open={open} onOpenChange={setOpen} title="Remove member?" size="sm">
-  <Modal.Body>
-    <p className="text-sm text-gray-600">
-      Alex Johnson will lose access to this workspace immediately.
-    </p>
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setOpen(false)}>Cancel</Button>
-    <Button variant="danger" onClick={handleRemove}>Remove</Button>
-  </Modal.Footer>
-</Modal>
-```
+## 设计契约 (Design Contract)
 
-### Full-screen on mobile, large on desktop
-
-```tsx
-<Modal open={open} onOpenChange={setOpen} title="Import data" size="lg">
-  <Modal.Body>
-    <ImportWizard />
-  </Modal.Body>
-</Modal>
-```
-
-### Without a footer
-
-```tsx
-<Modal open={open} onOpenChange={setOpen} title="Keyboard shortcuts">
-  <Modal.Body>
-    <ShortcutList />
-  </Modal.Body>
-</Modal>
-```
-
-## Accessibility
-
-- Renders as a native `<dialog>` element with `role="dialog"`.
-- `aria-labelledby` points to the title; `aria-describedby` points to the description when provided.
-- Focus is trapped inside the dialog while open (first focusable element receives focus on open).
-- Focus returns to the trigger element on close.
-- Pressing `Escape` closes the dialog and fires `onOpenChange(false)`.
-- The backdrop click closes the dialog by default.
-- Scrollable `Modal.Body` has `tabIndex={0}` to allow keyboard scrolling.
+- 只有当页面其余区域必须被阻塞，直到用户完成决策或聚焦任务时，才使用 `Modal`。
+- 周边页面上下文仍需可读时使用 `Sheet` 或 `Drawer`；字段很多的常规创建/编辑流程应放到独立页面。
+- 标题使用简短 Title Case 陈述，不写问句。副标题使用 sentence case，说明后果、作用域或下一步。
+- 普通流程保持两个动作按钮。超过两个动作通常说明这个流程应该升级为页面级 surface。

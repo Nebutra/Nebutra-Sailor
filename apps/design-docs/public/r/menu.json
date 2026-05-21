@@ -32,6 +32,15 @@
     "nebutraTokens": [
       "--radius-md"
     ],
-    "nebutraLayer": "business"
+    "nebutraLayer": "business",
+    "docs": {
+      "status": "experimental",
+      "layer": "primitive",
+      "package": "@nebutra/ui",
+      "source": "packages/design/ui/src/primitives/menu.tsx",
+      "substrate": "custom",
+      "registry": true,
+      "lastVerified": "2026-05-21"
+    }
   }
 }

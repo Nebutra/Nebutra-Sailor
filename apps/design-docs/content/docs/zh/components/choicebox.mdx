@@ -134,6 +134,12 @@ const [value, setValue] = useState<string[]>([]);
 - 键盘操作：方向键在单选条目间导航（ roving tabindex ）；Tab + 空格/回车键操作多选条目。
 - 焦点环：2px 品牌色及 2px 偏移。
 
+## 设计契约
+
+- 当每个选项需要说明文案或选中后内容时使用 `Choicebox`。只有短 label 时应使用 Radio 或 CheckboxGroup。
+- 一个 group 只表达一种决策模型：radio 表示互斥，checkbox 表示可叠加。
+- 禁用选项必须用相邻文案或 Tooltip 解释原因；静默禁用的卡片会被理解为坏掉。
+
 ## 另请参阅 (See Also)
 
 - [Checkbox](/zh/docs/components/checkbox) — 标准复选框控件

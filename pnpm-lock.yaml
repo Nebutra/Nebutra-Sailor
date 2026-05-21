@@ -1161,6 +1161,9 @@ importers:
       '@nebutra/reel':
         specifier: workspace:*
         version: link:../../packages/ai/reel
+      '@nebutra/sanity':
+        specifier: workspace:*
+        version: link:../../packages/ops/sanity
       '@nebutra/theme':
         specifier: workspace:*
         version: link:../../packages/design/theme

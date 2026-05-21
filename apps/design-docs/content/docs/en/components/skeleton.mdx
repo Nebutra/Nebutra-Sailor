@@ -18,11 +18,20 @@ import { Skeleton } from "@nebutra/ui/primitives"
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `className` | `string` | — | **Required.** Set width, height, and border-radius via Tailwind classes |
+| `width` | `number \| string` | — | Width in px or any CSS length |
+| `height` | `number \| string` | — | Height in px or any CSS length |
+| `boxHeight` | `number \| string` | — | Outer minimum height to keep layout stable |
+| `pill` | `boolean` | `false` | Fully rounded shape |
+| `rounded` | `boolean` | `false` | Canonical radius-md shape |
+| `squared` | `boolean` | `false` | Tighter radius-sm shape |
+| `animated` | `boolean` | `true` | Enables pulse animation while respecting reduced motion |
+| `show` | `boolean` | `true` | When false and children are provided, renders children unwrapped |
+| `children` | `ReactNode` | — | Optional loaded content used to preserve geometry |
+| `className` | `string` | — | Additional layout class |
 
 <Info>
-  `Skeleton` has no fixed size — always provide `className` with `w-*`, `h-*`,
-  and optionally `rounded-*` utilities to match the shape of the content it replaces.
+  Prefer `width` / `height` / `boxHeight` for stable geometry. Use `className`
+  for layout placement, not one-off color or motion overrides.
 </Info>
 
 ## Examples
@@ -70,3 +79,9 @@ function UserCard({ userId }: { userId: string }) {
   <Skeleton className="h-12 w-12 rounded-full" />
 </div>
 ```
+
+## Design Contract
+
+- Use `Skeleton` only when the eventual layout is known. Unknown wait states should use `LoadingDots` or a progress surface.
+- Match the shape and footprint of the loaded content; skeletons are layout stabilizers, not decorative placeholders.
+- Once data is loaded, `show={false}` should get out of the way and render children without an extra wrapper.

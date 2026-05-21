@@ -75,4 +75,9 @@ import {
 - `DropdownMenuContent` 具有 `role="menu"` 属性，并带有指向触发器的 `aria-labelledby`。
 - 每个条目分别具有 `role="menuitem"`、`role="menuitemcheckbox"` 或 `role="menuitemradio"`。
 - 键盘操作：`ArrowUp`/`ArrowDown` 导航，`Enter`/`Space` 选择，`Escape` 关闭。
-走
+
+## 设计契约
+
+- `DropdownMenu` 用于紧凑的次级动作。主要破坏性动作或提交动作应保持可见。
+- 菜单行只能是命令、切换项或导航目标，不要把表单字段或复杂交互控件塞进 menu content。
+- Submenu 只用于稳定分类；如果用户需要比较选项，改用 Dialog、Popover 或页面级 picker。

@@ -1,48 +1,53 @@
 ---
 title: "Modal"
-description: "General-purpose overlay dialog for forms, detail views, and multi-step flows."
+description: "Compound dialog surface for blocking decisions, focused forms, and high-stakes confirmation flows."
 ---
 
 ## Demo
 
-```tsx
-<Modal open={isOpen} onOpenChange={setIsOpen} title="Edit project">
-  <Modal.Body>
-    <FormItemLayout label="Project name" htmlFor="project-name">
-      <Input id="project-name" defaultValue={project.name} />
-    </FormItemLayout>
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setIsOpen(false)}>Cancel</Button>
-    <Button onClick={handleSave}>Save changes</Button>
-  </Modal.Footer>
-</Modal>
-```
+<ComponentPreview name="modal-demo" className="min-h-[320px] w-full" />
 
 ## Usage
 
-```tsx
-import { Modal } from "@nebutra/ui";
-import { useState } from "react";
+`Modal` is a compound API layered on top of Nebutra `Dialog`. It keeps the public surface close to the Geist modal pattern while centralizing focus management, title wiring, body spacing, inset panels, and action rows.
 
-export function CreatePipelineButton() {
-  const [open, setOpen] = useState(false);
+```tsx
+import { Button, Input, Modal } from "@nebutra/ui/primitives";
+import { useRef, useState } from "react";
+
+export function CreateProjectModal() {
+  const [active, setActive] = useState(false);
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>New pipeline</Button>
+      <Button onClick={() => setActive(true)}>New Project</Button>
 
-      <Modal
-        open={open}
-        onOpenChange={setOpen}
-        title="Create pipeline"
-        description="Configure your new data pipeline."
-        size="lg"
+      <Modal.Modal
+        active={active}
+        onClickOutside={() => setActive(false)}
+        initialFocusRef={cancelRef}
       >
         <Modal.Body>
-          <CreatePipelineForm onSuccess={() => setOpen(false)} />
+          <Modal.Header>
+            <Modal.Title>Create Project</Modal.Title>
+            <Modal.Subtitle>
+              Create a workspace-scoped project with default observability.
+            </Modal.Subtitle>
+          </Modal.Header>
+
+          <Modal.Inset>
+            <Input aria-label="Project name" placeholder="Nebula Control Plane" />
+          </Modal.Inset>
         </Modal.Body>
-      </Modal>
+
+        <Modal.Actions>
+          <Modal.Action ref={cancelRef} type="secondary" onClick={() => setActive(false)}>
+            Cancel
+          </Modal.Action>
+          <Modal.Action onClick={() => setActive(false)}>Create Project</Modal.Action>
+        </Modal.Actions>
+      </Modal.Modal>
     </>
   );
 }
@@ -50,76 +55,48 @@ export function CreatePipelineButton() {
 
 ## Props
 
-### `Modal`
+### `Modal.Modal`
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
-| `open` | `boolean` | — | Controls dialog open state |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when the dialog requests a state change |
-| `title` | `string` | — | Dialog heading text |
-| `description` | `string` | — | Muted subtitle below the title |
-| `size` | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Max-width of the dialog panel |
-| `hideCloseButton` | `boolean` | `false` | Hides the default X close button |
-| `className` | `string` | — | Additional classes on the dialog panel |
-| `children` | `React.ReactNode` | — | Dialog content (use sub-components for layout) |
+| `active` | `boolean` | — | Controlled open state. |
+| `onClickOutside` | `() => void` | — | Called when the dialog requests close through outside click or Escape. |
+| `sticky` | `boolean` | `false` | Keeps actions pinned while the body scrolls inside the panel. |
+| `initialFocusRef` | `RefObject<HTMLElement \| null>` | — | Element to focus after open; use Cancel for destructive flows. |
+| `className` | `string` | — | Additional classes for the dialog content panel. |
+| `children` | `ReactNode` | — | Compound modal content. |
 
-### `Modal.Body`
+### Layout Parts
 
-Scrollable content region. Accepts any `React.ReactNode`.
+| Part | Type | Description |
+|---|---|---|
+| `Modal.Body` | `HTMLAttributes<HTMLDivElement>` | Main content region; scrolls when `sticky` is true. |
+| `Modal.Header` | `HTMLAttributes<HTMLDivElement>` | Title/subtitle group. |
+| `Modal.Title` | `HTMLAttributes<HTMLHeadingElement>` | Auto-wires `aria-labelledby` to the dialog content. |
+| `Modal.Subtitle` | `HTMLAttributes<HTMLParagraphElement>` | Secondary explanatory copy. |
+| `Modal.Inset` | `HTMLAttributes<HTMLDivElement>` | Recessed panel for form rows, metadata, or risk context. |
+| `Modal.Actions` | `HTMLAttributes<HTMLDivElement>` | Footer action row. |
 
-### `Modal.Footer`
-
-Sticky footer anchored to the bottom of the dialog, right-aligned by default.
+### `Modal.Action`
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
-| `align` | `"start" \| "end" \| "between"` | `"end"` | Horizontal alignment of footer actions |
-| `children` | `React.ReactNode` | — | Action buttons |
-
-## Examples
-
-### Small confirmation-style modal
-
-```tsx
-<Modal open={open} onOpenChange={setOpen} title="Remove member?" size="sm">
-  <Modal.Body>
-    <p className="text-sm text-gray-600">
-      Alex Johnson will lose access to this workspace immediately.
-    </p>
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setOpen(false)}>Cancel</Button>
-    <Button variant="danger" onClick={handleRemove}>Remove</Button>
-  </Modal.Footer>
-</Modal>
-```
-
-### Full-screen on mobile, large on desktop
-
-```tsx
-<Modal open={open} onOpenChange={setOpen} title="Import data" size="lg">
-  <Modal.Body>
-    <ImportWizard />
-  </Modal.Body>
-</Modal>
-```
-
-### Without a footer
-
-```tsx
-<Modal open={open} onOpenChange={setOpen} title="Keyboard shortcuts">
-  <Modal.Body>
-    <ShortcutList />
-  </Modal.Body>
-</Modal>
-```
+| `type` | `"primary" \| "secondary"` | `"primary"` | Visual action priority mapped to Button variants. |
+| `buttonType` | `"button" \| "submit" \| "reset"` | `"button"` | Native button type for form integrations. |
+| `fullWidth` | `boolean` | `false` | Stretches the action across the row. |
+| `prefix` | `ReactNode` | — | Optional leading glyph. |
 
 ## Accessibility
 
-- Renders as a native `<dialog>` element with `role="dialog"`.
-- `aria-labelledby` points to the title; `aria-describedby` points to the description when provided.
-- Focus is trapped inside the dialog while open (first focusable element receives focus on open).
-- Focus returns to the trigger element on close.
-- Pressing `Escape` closes the dialog and fires `onOpenChange(false)`.
-- The backdrop click closes the dialog by default.
-- Scrollable `Modal.Body` has `tabIndex={0}` to allow keyboard scrolling.
+- Focus trap, Escape-to-close, and return-focus behavior come from the underlying `Dialog`.
+- `Modal.Title` automatically links to the dialog through `aria-labelledby`; do not manually duplicate title IDs.
+- Use `initialFocusRef` to place focus on Cancel for destructive or high-risk decisions.
+- Keep the primary action last in source order so keyboard and screen reader users encounter review/cancel options first.
+- For high-stakes destructive actions, use `DestructiveActionModal` or add a typed confirmation gate inside `Modal.Inset`.
+
+## Design Contract
+
+- Use `Modal` only when the rest of the page must be blocked until the user decides or completes a focused task.
+- Use `Sheet` or `Drawer` when surrounding page context should remain readable, and use a dedicated page for routine create/edit flows with many fields.
+- Titles are short Title Case statements, not questions. Subtitles are sentence case and should explain consequence, scope, or next step.
+- Keep actions to two buttons in normal flows. More than two actions usually means the flow belongs in a page-level surface.

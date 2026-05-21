@@ -1,7 +1,6 @@
 ---
 title: Relative Time Card
 description: Short relative-time label with hover popover showing absolute UTC + local time.
-status: experimental
 ---
 
 <ComponentPreview name="relative-time-card-demo" />
@@ -109,6 +108,12 @@ The first paint is deterministic: the short absolute UTC date is rendered server
 - Default trigger is a semantic `<time dateTime={ISO}>` element.
 - The popover is built on `ContextCard.Trigger` — keyboard focus opens it on `focus-visible`.
 - The popover content omits the relative label on the first paint (matching SSR) and adds it after hydration — there is no flash of "0 seconds ago" garbage.
+
+## Design Contract
+
+- Use `RelativeTimeCard` for inspectable timestamps in dense product surfaces, not prose copy.
+- Pass raw dates only. Formatting, ticking cadence, and hydration behavior are owned by the primitive.
+- Do not stack a second tooltip or popover around the trigger; the absolute-time disclosure is already the interaction contract.
 
 ## Known debt
 

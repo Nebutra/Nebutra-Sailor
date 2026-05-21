@@ -19,6 +19,15 @@
   ],
   "meta": {
     "nebutraTokens": [],
-    "nebutraLayer": "marketing"
+    "nebutraLayer": "marketing",
+    "docs": {
+      "status": "experimental",
+      "layer": "primitive",
+      "package": "@nebutra/ui",
+      "source": "packages/design/ui/src/primitives/expandable-gallery.tsx",
+      "substrate": "custom",
+      "registry": true,
+      "lastVerified": "2026-05-21"
+    }
   }
 }

@@ -1,14 +1,6 @@
 ---
 title: Status Dot
 description: 用于 deployment lifecycle 的状态点，覆盖 queued、building、ready、error、canceled、deleted。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/status-dot.tsx
-primitive: StatusDot
-substrate: native
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 ## 安装
@@ -57,3 +49,9 @@ npx shadcn@latest add https://ui.nebutra.com/r/status-dot.json
 | `titlePrefix` | `string` | `"Deployment"` | 用于组合 accessible label 的前缀。 |
 | `decorative` | `boolean` | `false` | 当旁边文案已经命名状态时，把 dot 从 assistive tech 中隐藏。 |
 | `className` | `string` | - | 额外布局 class。 |
+
+## 设计契约
+
+- `StatusDot` 只用于 deployment lifecycle。通用实体状态需要独立 status primitive 和独立枚举。
+- 脉冲表示活动中，不表示严重程度。只有 `QUEUED` 与 `BUILDING` 动起来。
+- 如果同一行已有状态文案，传 `decorative`；否则渲染 `label` 或保留默认可访问名称。

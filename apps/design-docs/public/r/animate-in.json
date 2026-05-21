@@ -19,6 +19,15 @@
   ],
   "meta": {
     "nebutraTokens": [],
-    "nebutraLayer": "animation"
+    "nebutraLayer": "animation",
+    "docs": {
+      "status": "experimental",
+      "layer": "primitive",
+      "package": "@nebutra/ui",
+      "source": "packages/design/ui/src/primitives/animate-in.tsx",
+      "substrate": "custom",
+      "registry": true,
+      "lastVerified": "2026-05-21"
+    }
   }
 }

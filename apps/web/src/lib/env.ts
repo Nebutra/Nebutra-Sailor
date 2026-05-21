@@ -35,6 +35,10 @@ export const env = createEnv({
     // to the shared parent (.nebutra.com).
     NEBUTRA_LANDING_ORIGIN: z.string().url().optional(),
     NEBUTRA_SESSION_HINT_DOMAIN: z.string().optional(),
+
+    // Sanity write token for first-party blog comments. Missing token keeps
+    // public reads working but returns 503 for comment creation.
+    SANITY_API_TOKEN: z.string().optional(),
   },
 
   client: {

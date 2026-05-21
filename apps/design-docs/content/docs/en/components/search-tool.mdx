@@ -1,7 +1,6 @@
 ---
 title: Search Tool
 description: Inline AI tool-call rendering for search/retrieval results — honest-link rows, scrollable result panel.
-status: experimental
 ---
 
 <ComponentPreview name="search-tool-demo" />
@@ -108,6 +107,12 @@ const [open, setOpen] = useState(false);
 ## Reuses
 
 - [`TextShimmer`](/en/docs/components/text-shimmer) for the pending-state header.
+
+## Design Contract
+
+- Use `SearchTool` only for retrieval/search result traces in conversational UI.
+- Rows that look clickable must be real anchors. Never add pointer styling to URL-less results.
+- Keep query text visible in the expanded panel so copied screenshots preserve the search context without surrounding chat history.
 
 ## Tool-family siblings
 

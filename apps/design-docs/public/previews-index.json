@@ -260,6 +260,10 @@
       "type": "registry:example"
     },
     {
+      "name": "chart-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "checkbox-demo",
       "type": "registry:example"
     },
@@ -281,6 +285,10 @@
     },
     {
       "name": "code-block-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "collapse-demo",
       "type": "registry:example"
     },
     {
@@ -373,6 +381,10 @@
     },
     {
       "name": "command-dialog-simple-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "command-menu-demo",
       "type": "registry:example"
     },
     {
@@ -745,6 +757,10 @@
     },
     {
       "name": "middle-truncate-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "modal-demo",
       "type": "registry:example"
     },
     {

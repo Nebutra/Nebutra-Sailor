@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "command-menu-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/command-menu-demo.tsx",
+      "content": "\"use client\";\n\nimport { Button, CommandMenu } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function CommandMenuDemo() {\n  const [open, setOpen] = useState(false);\n\n  const close = () => setOpen(false);\n\n  return (\n    <div className=\"flex min-h-64 items-center justify-center\">\n      <Button onClick={() => setOpen(true)}>Open Command Menu</Button>\n      <CommandMenu.Root\n        open={open}\n        setOpen={setOpen}\n        description=\"Search commands and run global product actions.\"\n      >\n        <CommandMenu.Input placeholder=\"What do you need?\" />\n        <CommandMenu.Results count={4} />\n        <CommandMenu.List>\n          <CommandMenu.Group heading=\"Project\">\n            <CommandMenu.Item value=\"deploy-project\" onSelect={close}>\n              Deploy Project\n            </CommandMenu.Item>\n            <CommandMenu.Item value=\"invite-member\" onSelect={close}>\n              Invite Team Member\n            </CommandMenu.Item>\n          </CommandMenu.Group>\n          <CommandMenu.Group heading=\"System\">\n            <CommandMenu.Item value=\"open-audit-log\" onSelect={close}>\n              Open Audit Log\n            </CommandMenu.Item>\n            <CommandMenu.Item disabled value=\"rotate-secrets\" onSelect={close}>\n              Rotate Secrets\n            </CommandMenu.Item>\n          </CommandMenu.Group>\n        </CommandMenu.List>\n      </CommandMenu.Root>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

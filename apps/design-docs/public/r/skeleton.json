@@ -28,6 +28,15 @@
       "--radius-md",
       "--radius-sm"
     ],
-    "nebutraLayer": "dashboard"
+    "nebutraLayer": "dashboard",
+    "docs": {
+      "status": "stable",
+      "layer": "primitive",
+      "package": "@nebutra/ui",
+      "source": "packages/design/ui/src/primitives/skeleton.tsx",
+      "substrate": "native",
+      "registry": true,
+      "lastVerified": "2026-05-21"
+    }
   }
 }

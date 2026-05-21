@@ -167,6 +167,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@nebutra/ui/primitives"
 - Group-level `disabled` propagates to all items via context (replaces `<fieldset disabled>` inheritance)
 - Focus ring: 2px primary color with 2px offset
 
+## Design Contract
+
+- Use `Choicebox` when each option needs explanatory copy or selected-only content. Plain labels belong in Radio or CheckboxGroup.
+- Keep one group to one decision model: radio for mutually exclusive choices, checkbox for additive choices.
+- Disabled choices must explain why through adjacent copy or Tooltip; a silent disabled card reads as broken.
+
 ## See Also
 
 - [Checkbox](/en/docs/components/checkbox) — Standard checkbox control

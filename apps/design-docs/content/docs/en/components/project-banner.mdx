@@ -1,7 +1,6 @@
 ---
 title: Project Banner
 description: Full-width, non-dismissible banner for project-wide states that require resolution.
-status: experimental
 ---
 
 <ComponentPreview name="project-banner-demo" />
@@ -103,3 +102,9 @@ The TypeScript types prevent passing both `href` and `onClick` in the same CTA, 
 - `error` defaults to `role="alert"` (assertive). All other variants use `role="status"` (polite).
 - The button CTA is a real `<button type="button">`, not a `<div onClick>` — Tab and Enter both activate.
 - Icon glyphs render inside a `<span>` wrapper; the surrounding `<span>` for `label` is intentionally not `<p>`, so the label can contain inline interactive children (e.g. a `Tooltip`) without invalid HTML.
+
+## Design Contract
+
+- Use `ProjectBanner` for project-wide operational state with a resolver action. It is not a decorative alert or marketing callout.
+- Render at most one banner in a project surface. If multiple conditions are active, resolve priority upstream and pass only the highest-impact state.
+- Variant color is semantic. Do not override it with campaign, brand, or team-specific colors.

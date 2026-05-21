@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "modal-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/modal-demo.tsx",
+      "content": "\"use client\";\n\nimport { Button, Input, Modal } from \"@nebutra/ui/primitives\";\nimport { useRef, useState } from \"react\";\n\nexport function ModalDemo() {\n  const [active, setActive] = useState(false);\n  const cancelRef = useRef<HTMLButtonElement>(null);\n\n  return (\n    <div className=\"flex min-h-64 items-center justify-center\">\n      <Button onClick={() => setActive(true)}>Open Modal</Button>\n      <Modal.Modal\n        active={active}\n        onClickOutside={() => setActive(false)}\n        initialFocusRef={cancelRef}\n      >\n        <Modal.Body>\n          <Modal.Header>\n            <Modal.Title>Create Project</Modal.Title>\n            <Modal.Subtitle>Choose a readable project name before provisioning begins.</Modal.Subtitle>\n          </Modal.Header>\n          <Modal.Inset>\n            <label className=\"grid gap-2 text-sm\">\n              Project name\n              <Input defaultValue=\"nebutra-production\" />\n            </label>\n          </Modal.Inset>\n        </Modal.Body>\n        <Modal.Actions>\n          <Modal.Action ref={cancelRef} type=\"secondary\" onClick={() => setActive(false)}>\n            Cancel\n          </Modal.Action>\n          <Modal.Action type=\"primary\" onClick={() => setActive(false)}>\n            Create\n          </Modal.Action>\n        </Modal.Actions>\n      </Modal.Modal>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

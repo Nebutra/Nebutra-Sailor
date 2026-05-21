@@ -128,3 +128,16 @@ Default grid: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3`, `auto-rows-[22rem]`, 
 - On **mobile**, the CTA is always visible below the description.
 - The background slot renders in a `div` container at the top of the card — use `absolute inset-0` positioning inside the background for full coverage.
 - Icon animates to 75% scale on hover (`group-hover:scale-75`), and content slides up (`group-hover:-translate-y-10`).
+
+## Accessibility
+
+- `BentoCard` renders one link target when `href` is provided. Do not nest extra links or buttons inside the `background` slot.
+- Keep `name` short enough to remain a useful accessible label for the card action.
+- Decorative backgrounds should be hidden from assistive technology. Use real text in `name` and `description`, not text baked into imagery.
+- Preserve visible focus on the card link; hover-only CTA reveal must not hide the navigation affordance from keyboard users.
+
+## Design Contract
+
+- Use `BentoGrid` for editorial feature groups where card rhythm and comparison matter more than dense data scanning.
+- Keep one primary action per card. If a card needs multiple actions, graduate it to a normal surface with explicit controls.
+- The `background` slot is visual atmosphere, not product-critical content. Product screenshots must remain readable without depending on hover.

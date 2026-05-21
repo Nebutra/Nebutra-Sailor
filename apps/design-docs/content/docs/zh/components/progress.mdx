@@ -136,13 +136,14 @@ import { Progress } from "@nebutra/ui/primitives"
   ```
 </ComponentPreview>
 
-### 自定义颜色 (Custom Color)
+### 语义色调 (Semantic Tone)
 
 <ComponentPreview name="progress-4-demo" className="max-w-[400px]">
   <div className="w-full">
       <Progress
         value={75}
-        className="w-full [&>div]:bg-green-500"
+        type="success"
+        className="w-full"
       />
     </div>
 
@@ -150,7 +151,8 @@ import { Progress } from "@nebutra/ui/primitives"
 <div className="w-full">
       <Progress
         value={75}
-        className="w-full [&>div]:bg-green-500"
+        type="success"
+        className="w-full"
       />
     </div>
   ```
@@ -172,4 +174,9 @@ import { Progress } from "@nebutra/ui/primitives"
 - 根据 `value` 设置 `aria-valuemin="0"`、`aria-valuemax` (默认为 100) 和 `aria-valuenow`。
 - 应添加 `aria-label` 或 `aria-labelledby` 以提供上下文信息。
 - 待定状态 (`value={null}`) 会省略 `aria-valuenow`。
-走
+
+## 设计契约
+
+- `Progress` 用于可度量的任务完成度。无法知道百分比时使用 `LoadingDots` 或 `Skeleton`。
+- 不要用任意颜色编码业务含义。使用 `type`、threshold colors 或与语义状态绑定的 stage stops。
+- 动画进度应保持克制，避免逐帧播报；primitive 会节流辅助技术更新，避免长任务刷屏。

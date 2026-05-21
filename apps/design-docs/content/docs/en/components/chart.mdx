@@ -1,14 +1,6 @@
 ---
 title: Chart
 description: Recharts wrapper with theme-aware color config, tooltip primitives, and legend helpers.
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/chart.tsx
-primitive: ChartContainer
-substrate: custom
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 ## Installation
@@ -27,6 +19,10 @@ Standalone registry install:
 ```bash
 npx shadcn@latest add https://ui.nebutra.com/r/chart.json
 ```
+
+## Demo
+
+<ComponentPreview name="chart-demo" className="min-h-[360px] w-full" />
 
 ## Usage
 
@@ -49,6 +45,27 @@ const chartConfig = {
 </ChartContainer>
 ```
 
+## Props
+
+### ChartContainer
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `config` | `ChartConfig` | required | Series labels, icons, and color/theme mapping. |
+| `children` | `ResponsiveContainer["children"]` | required | Recharts chart primitive rendered inside a responsive container. |
+| `className` | `string` | - | Layout class. Set a stable height or aspect ratio. |
+| `id` | `string` | auto | Optional stable id for generated CSS variables. |
+
+### ChartTooltipContent
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `indicator` | `"line" \| "dot" \| "dashed"` | `"dot"` | Series indicator style. |
+| `hideLabel` | `boolean` | `false` | Hide the tooltip label row. |
+| `hideIndicator` | `boolean` | `false` | Hide the series marker. |
+| `labelKey` | `string` | - | Config key used to resolve label metadata. |
+| `nameKey` | `string` | - | Config key used to resolve item metadata. |
+
 ## When To Use
 
 - Use for quantitative comparison: trends, breakdowns, or multi-series data.
@@ -58,3 +75,15 @@ const chartConfig = {
 ## Related Pattern
 
 See [Charts](/en/docs/patterns/charts) for higher-level chart composition rules, loading states, and dashboard layout guidance.
+
+## Accessibility
+
+- Pass Recharts `accessibilityLayer` where supported so keyboard and assistive tech can inspect chart data.
+- Pair every chart with a nearby summary sentence or table when exact values matter.
+- Do not rely on color alone. Series labels, tooltip copy, and legends must identify the data.
+
+## Design Contract
+
+- `ChartContainer` owns theme-aware CSS variable injection; consumers fill series with `var(--color-seriesKey)`.
+- Use semantic chart tokens from the app theme, not arbitrary Tailwind color classes.
+- Set a stable height/aspect ratio at the container. Charts that resize while data streams make dashboards harder to scan.

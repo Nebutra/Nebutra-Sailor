@@ -1,14 +1,6 @@
 ---
 title: File Attachment
 description: 用于 chat composer、消息气泡或附件列表的文件 chip / thumbnail。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/file-attachment.tsx
-primitive: FileAttachment
-substrate: native
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 <ComponentPreview name="file-attachment-demo" />
@@ -51,3 +43,9 @@ npx shadcn@latest add https://ui.nebutra.com/r/file-attachment.json
 - 移除按钮使用 `aria-label="Remove <filename>"`。
 - 图片 thumbnail 使用有意义的 `alt={filename}`。
 - 文件类型 icon 由扩展名和 `isImage` 推导，避免调用方重复判断。
+
+## 设计契约
+
+- `FileAttachment` 只表示用户提供的文件。AI 工具输出应使用 chat tool-family primitives。
+- 文件身份优先：`filename` 必填，`size` 是辅助信息，thumbnail 不能在 chip 模式替代文件名。
+- 移除操作必须保持键盘可达，不能在组合上传列表时退回 hover-only。

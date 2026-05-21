@@ -81,3 +81,16 @@ Extends Nebutra `DropdownMenuContent` props.
 | `href` | `string` | — | Renders item as `<a>` navigating to this URL |
 | `onSelect` | `(e: Event) => void` | — | Called on item selection |
 | `className` | `string` | — | Additional CSS classes |
+
+## Accessibility
+
+- `Menu` inherits menu roles, roving focus, Escape handling, and typeahead behavior from `DropdownMenu`.
+- Use `locked` for permission-gated actions that should remain discoverable. Use `disabled` for temporarily unavailable actions.
+- `prefix` and `suffix` icons must be decorative unless they add information not already present in the label.
+- Link items must still read as actions. Avoid mixing unrelated navigation and destructive commands in the same menu.
+
+## Design Contract
+
+- Use `Menu` for short action or navigation lists where every row has the same density and interaction model.
+- Use raw `DropdownMenu` when the menu needs checkbox items, radio groups, separators, nested submenus, or custom item composition.
+- Keep menus stable. If users need to scan, compare, or edit multiple fields, use a Popover, Dialog, or page-level settings surface.

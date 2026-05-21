@@ -1,14 +1,6 @@
 ---
 title: Project Banner
 description: 项目级状态的全宽、不可随意关闭 banner，用于必须解决的问题。
-status: experimental
-layer: primitive
-package: "@nebutra/ui"
-source: packages/design/ui/src/primitives/project-banner.tsx
-primitive: ProjectBanner
-substrate: native
-registry: true
-lastVerified: "2026-05-21"
 ---
 
 <ComponentPreview name="project-banner-demo" />
@@ -50,3 +42,9 @@ npx shadcn@latest add https://ui.nebutra.com/r/project-banner.json
 ## 可访问性
 
 `error` 默认使用 `role="alert"`，其他 variant 默认使用 `role="status"`。可以通过 `role` 覆盖，但不要降低真实紧急状态。
+
+## 设计契约
+
+- `ProjectBanner` 用于项目级运营状态并必须指向解决动作；它不是装饰性 alert 或营销 callout。
+- 同一个项目表面最多渲染一个 banner。多条件同时存在时，上游应先决定优先级。
+- 颜色语义由 variant 决定，不能被 campaign、brand 或团队定制色覆盖。

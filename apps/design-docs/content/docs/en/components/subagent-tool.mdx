@@ -1,7 +1,6 @@
 ---
 title: Subagent Tool
 description: Inline status pill for delegated subagent invocations — lightest member of the chat tool-family.
-status: experimental
 ---
 
 <ComponentPreview name="subagent-tool-demo" />
@@ -79,6 +78,12 @@ In `interrupted` state, both `description` and `elapsedTime` are suppressed rega
 ## Reuses
 
 - [`TextShimmer`](/en/docs/components/text-shimmer) for the pending state header.
+
+## Design Contract
+
+- Use `SubagentTool` for one-line delegation status only. If the subagent has child steps, results, or logs, graduate to a richer planning surface.
+- Keep timer ownership outside the primitive so multiple rows tick in sync.
+- Do not add icons for state. The copy and live-region behavior are the semantic contract.
 
 ## Tool-family siblings
 
