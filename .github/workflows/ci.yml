@@ -892,6 +892,7 @@ jobs:
         env:
           ANALYZE: "true"
           SKIP_ENV_VALIDATION: true
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
           NODE_OPTIONS: "--max-old-space-size=6144"
 
       - name: Upload bundle analysis report
