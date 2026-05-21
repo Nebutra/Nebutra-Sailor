@@ -46,20 +46,19 @@ export interface RegistryItem {
 }
 
 /**
- * Read the top-level registry index. Returns an empty index if missing —
- * the registry build script must run during `prebuild` to populate it.
+ * Read the top-level registry index. Missing registry output is a build error:
+ * this app publicly serves ui.nebutra.com, so an empty registry would be silent
+ * distribution drift rather than a useful fallback.
  */
 export function loadRegistryIndex(): RegistryIndex {
   try {
     const raw = readFileSync(join(PUBLIC_DIR, "registry.json"), "utf-8");
     return JSON.parse(raw) as RegistryIndex;
-  } catch {
-    return {
-      $schema: "https://ui.shadcn.com/schema/registry.json",
-      name: "nebutra-ui",
-      homepage: "https://ui.nebutra.com",
-      items: [],
-    };
+  } catch (error) {
+    throw new Error(
+      "Missing or invalid public/registry.json. Run `pnpm --filter @nebutra/design-docs prebuild` or `pnpm --filter @nebutra/ui build:registry` before rendering registry routes.",
+      { cause: error },
+    );
   }
 }
 
