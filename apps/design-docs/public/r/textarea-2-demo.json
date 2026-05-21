@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/textarea-2-demo.tsx",
-      "content": "\"use client\";\n\nimport { Textarea } from \"@nebutra/ui/primitives\";\nexport function Textarea2Demo() {\n  return (\n    <div className=\"gap-1 flex w-full flex-col\">\n      <Textarea defaultValue=\"\" placeholder=\"Type here...\" maxLength={500} />\n      <span className=\"text-xs w-full text-right text-muted-foreground\">0/500</span>\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { Textarea } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function Textarea2Demo() {\n  const [value, setValue] = useState(\"\");\n  const maxLength = 500;\n\n  return (\n    <div className=\"gap-1 flex w-full flex-col\">\n      <Textarea\n        id=\"release-notes\"\n        label=\"Release Notes\"\n        value={value}\n        onValueChange={setValue}\n        placeholder=\"Type here...\"\n        maxLength={maxLength}\n      />\n      <span className=\"w-full text-right text-muted-foreground text-xs\">\n        {value.length}/{maxLength}\n      </span>\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

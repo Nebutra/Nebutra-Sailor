@@ -1,12 +1,19 @@
 import path from "node:path";
 import { readFiles, scanURLs, validateFiles } from "next-validate-link";
 
-const cwd = process.cwd();
+const cwd = path.resolve(import.meta.dirname, "..");
 const supportedLanguages = ["en", "zh"];
+
+process.chdir(cwd);
 
 const files = await readFiles("content/docs/**/*.{md,mdx}", {
   pathToUrl,
 });
+
+if (files.length === 0) {
+  console.error("design-docs link lint found no docs files; check the docs root.");
+  process.exit(1);
+}
 
 const docsRoutes = new Map();
 for (const file of files) {
@@ -45,6 +52,8 @@ for (const route of docsRoutes.keys()) {
   }
 }
 
+const knownDocsRoutes = new Set(scanned.urls.keys());
+
 const results = await validateFiles(files, {
   scanned,
   markdown: {
@@ -61,8 +70,11 @@ const results = await validateFiles(files, {
     url.startsWith("#"),
 });
 
+const missingDocsRoutes = findMissingDocsRoutes(files, knownDocsRoutes);
 const invalidFiles = results.filter((result) => result.errors.length > 0);
-const invalidLinks = invalidFiles.reduce((total, result) => total + result.errors.length, 0);
+const invalidLinks =
+  invalidFiles.reduce((total, result) => total + result.errors.length, 0) +
+  missingDocsRoutes.length;
 
 if (invalidLinks === 0) {
   // biome-ignore lint/suspicious/noConsole: CLI lint script — stdout is the expected output channel
@@ -70,20 +82,30 @@ if (invalidLinks === 0) {
   process.exit(0);
 }
 
-console.warn(
-  `::warning::design-docs link lint found ${invalidLinks} invalid local links in ${invalidFiles.length} files; keeping advisory to avoid CI noise from existing docs debt.`,
+console.error(
+  `design-docs link lint found ${invalidLinks} invalid local links in ${invalidFiles.length} files.`,
 );
 
 for (const result of invalidFiles.slice(0, 20)) {
   for (const error of result.errors.slice(0, 5)) {
     const reason = error.reason instanceof Error ? error.reason.message : error.reason;
-    console.warn(`${result.file}:${error.line}:${error.column} ${error.url} (${reason})`);
+    console.error(`${result.file}:${error.line}:${error.column} ${error.url} (${reason})`);
   }
 }
 
-if (invalidFiles.length > 20) {
-  console.warn(`... ${invalidFiles.length - 20} more files omitted.`);
+for (const error of missingDocsRoutes.slice(0, 50)) {
+  console.error(`${error.file}:${error.line}:${error.column} ${error.url} (${error.reason})`);
 }
+
+if (invalidFiles.length > 20) {
+  console.error(`... ${invalidFiles.length - 20} more files omitted.`);
+}
+
+if (missingDocsRoutes.length > 50) {
+  console.error(`... ${missingDocsRoutes.length - 50} more strict docs-route errors omitted.`);
+}
+
+process.exit(1);
 
 function pathToUrl(filePath) {
   const relativePath = path.relative(cwd, path.resolve(cwd, filePath)).split(path.sep).join("/");
@@ -100,4 +122,55 @@ function pathToUrl(filePath) {
 function toPopulateValue(route) {
   const [, lang, , ...slug] = route.split("/");
   return slug.length > 0 ? { value: { lang, slug } } : { value: { lang } };
+}
+
+function findMissingDocsRoutes(filesToCheck, knownRoutes) {
+  const errors = [];
+  const seen = new Set();
+  const docsLinkPattern =
+    /(?:\]\(|\bhref=["'])(\/(?:en|zh)\/docs(?:\/[^)"'\s#?]*)?|\/design-system(?:\/[^)"'\s#?]*)?)(?:[#?][^)"']*)?/g;
+
+  for (const file of filesToCheck) {
+    for (const match of file.content.matchAll(docsLinkPattern)) {
+      const url = normalizeDocsUrl(match[1]);
+      if (knownRoutes.has(url)) {
+        continue;
+      }
+
+      const key = `${file.path}:${match.index}:${url}`;
+      if (seen.has(key)) {
+        continue;
+      }
+      seen.add(key);
+
+      const { line, column } = getLineColumn(file.content, match.index ?? 0);
+      errors.push({
+        file: file.path,
+        line,
+        column,
+        url,
+        reason: "docs route is not backed by a source MDX file",
+      });
+    }
+  }
+
+  return errors;
+}
+
+function normalizeDocsUrl(url) {
+  const withoutHashOrQuery = url.split(/[?#]/, 1)[0].replace(/\/$/, "");
+  if (withoutHashOrQuery === "/design-system") {
+    return "/en/docs";
+  }
+
+  return withoutHashOrQuery.replace(/^\/design-system(?=\/|$)/, "/en/docs") || "/";
+}
+
+function getLineColumn(source, index) {
+  const before = source.slice(0, index);
+  const lines = before.split("\n");
+  return {
+    line: lines.length,
+    column: lines.at(-1).length + 1,
+  };
 }

@@ -1032,10 +1032,6 @@
       "type": "registry:example"
     },
     {
-      "name": "sonner-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "spinner-demo",
       "type": "registry:example"
     },
@@ -1125,6 +1121,10 @@
     },
     {
       "name": "theme-toggle-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "toast-demo",
       "type": "registry:example"
     },
     {

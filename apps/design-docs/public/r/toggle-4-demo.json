@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/toggle-4-demo.tsx",
-      "content": "\"use client\";\n\nimport { Toggle } from \"@nebutra/ui/primitives\";\n\nexport function Toggle4Demo() {\n  return <Toggle size=\"normal\" aria-label=\"Toggle normal size\" />;\n}\n",
+      "content": "\"use client\";\n\nimport { Toggle } from \"@nebutra/ui/primitives\";\n\nexport function Toggle4Demo() {\n  return <Toggle size=\"normal\">Password Protection</Toggle>;\n}\n",
       "type": "registry:example"
     }
   ]

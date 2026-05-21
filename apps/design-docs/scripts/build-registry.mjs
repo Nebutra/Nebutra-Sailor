@@ -326,6 +326,27 @@ for (const { file } of entries) {
   }
 }
 
+const currentPreviewRegistryFiles = new Set(
+  uniqueFileBasenames.map((basename) => `${basename}.json`),
+);
+
+for (const filename of fs.readdirSync(PUBLIC_R_DIR)) {
+  if (currentPreviewRegistryFiles.has(filename) || !filename.endsWith(".json")) {
+    continue;
+  }
+
+  const manifestPath = path.join(PUBLIC_R_DIR, filename);
+  try {
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+    if (manifest.type === "registry:example") {
+      fs.unlinkSync(manifestPath);
+      process.stdout.write(`[registry] Removed stale preview manifest public/r/${filename}\n`);
+    }
+  } catch {
+    // Keep non-JSON or hand-authored files in public/r untouched.
+  }
+}
+
 for (const basename of uniqueFileBasenames) {
   const sourceFile = path.join(PREVIEWS_DIR, `${basename}.tsx`);
   const content = fs.readFileSync(sourceFile, "utf-8");

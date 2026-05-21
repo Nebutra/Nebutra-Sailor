@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/textarea-3-demo.tsx",
-      "content": "\"use client\";\n\nimport { Textarea } from \"@nebutra/ui/primitives\";\nexport function Textarea3Demo() {\n  return (\n    <div className=\"w-full\">\n      <Textarea disabled value=\"This field is read-only\" />\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport { Textarea } from \"@nebutra/ui/primitives\";\nexport function Textarea3Demo() {\n  return (\n    <div className=\"w-full\">\n      <Textarea aria-label=\"Disabled message\" disabled readOnly value=\"This field is read-only\" />\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

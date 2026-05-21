@@ -1077,12 +1077,10 @@ export const TextareaWithLimitDemo = dynamic(() =>
     default: m.TextareaWithLimitDemo,
   })),
 );
-export const ThemeSwitcherDemo = dynamic(
-  () =>
-    import("@/components/previews/theme-switcher-demo").then((m) => ({
-      default: m.ThemeSwitcherDemo,
-    })),
-  { ssr: false },
+export const ThemeSwitcherDemo = dynamic(() =>
+  import("@/components/previews/theme-switcher-demo").then((m) => ({
+    default: m.ThemeSwitcherDemo,
+  })),
 );
 export const ThemeToggleDemo = dynamic(
   () =>
