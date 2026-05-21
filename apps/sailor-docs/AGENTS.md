@@ -57,4 +57,5 @@ generator code instead of editing build output.
 Run the smallest credible validation after changes:
 
 - `pnpm --filter @nebutra/sailor-docs typecheck`
+- `pnpm --filter @nebutra/sailor-docs lint:links`
 - `pnpm --filter @nebutra/sailor-docs build`

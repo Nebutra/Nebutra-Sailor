@@ -855,5 +855,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
 // Export a direct getter so MDX remote compiler can inject it without React hooks rules
 export function getMDXComponents(): MDXComponents {
+  // biome-ignore lint/correctness/useHookAtTopLevel: Next MDX names this component factory useMDXComponents, but it is not a React hook.
   return useMDXComponents({});
 }
