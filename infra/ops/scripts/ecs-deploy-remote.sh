@@ -361,7 +361,7 @@ for p in procs:
     local code="000"
     for attempt in 1 2 3 4 5 6 7 8 9 10; do
       code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 \
-        "http://127.0.0.1:3002/health" 2>/dev/null || echo "000")
+        "http://127.0.0.1:3002/api/misc/health" 2>/dev/null || echo "000")
       if [ "$code" = "200" ]; then
         log "api-gateway local health -> $code"
         break

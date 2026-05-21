@@ -533,7 +533,7 @@ jobs:
           declare -A targets=()
           [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing]="https://nebutra.com"
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && targets[web]="https://app.nebutra.com"
-          [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/health"
+          [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/api/misc/health"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && targets[design-docs]="https://design.nebutra.com"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://docs.nebutra.com"
           ok_codes='^(200|301|302|307)$'
