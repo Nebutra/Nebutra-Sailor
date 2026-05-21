@@ -73,10 +73,16 @@ For local publishing, run these commands from `apps/studio`, where
 token created from the current CLI login instead of storing a long-lived token
 in the repo or shell profile.
 
-```bash
-pnpm dlx sanity@5.13.0 login
+Use the project-local Sanity CLI instead of a pinned `pnpm dlx sanity@...`
+command. The Studio package and CLI must resolve to the same `sanity` version;
+pinning an older `dlx` version can fail with a CLI/Studio mismatch after the app
+upgrades.
 
-TOKEN_JSON="$(pnpm dlx sanity@5.13.0 tokens add "Local Blog Publisher $(date -u +%Y-%m-%dT%H:%M:%SZ)" --role=editor --json --yes)"
+```bash
+pnpm install --frozen-lockfile
+pnpm --filter @nebutra/studio exec sanity login
+
+TOKEN_JSON="$(pnpm --filter @nebutra/studio exec sanity tokens add "Local Blog Publisher $(date -u +%Y-%m-%dT%H:%M:%SZ)" --role=editor --json --yes)"
 TOKEN_ID="$(TOKEN_JSON="$TOKEN_JSON" node -e 'console.log(JSON.parse(process.env.TOKEN_JSON).id)')"
 SANITY_API_TOKEN="$(TOKEN_JSON="$TOKEN_JSON" node -e 'console.log(JSON.parse(process.env.TOKEN_JSON).key)')"
 
@@ -85,7 +91,7 @@ pnpm --filter @nebutra/studio blog:publish -- \
   --file content/blog/example.zh.md \
   --language zh
 
-pnpm dlx sanity@5.13.0 tokens delete "$TOKEN_ID" --yes
+pnpm --filter @nebutra/studio exec sanity tokens delete "$TOKEN_ID" --yes
 ```
 
 `SANITY_WEBHOOK_SECRET` is only required when production has the same secret

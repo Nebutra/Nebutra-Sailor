@@ -179,12 +179,14 @@ function assertRegistryDocs() {
 function assertNoStaleSubstrateCopy() {
   const staleSubstratePattern =
     /(built on Radix|基于 Radix|@radix-ui\/react-(dialog|tooltip|popover|progress|separator|label|dropdown-menu|alert-dialog))/i;
-  for (const file of collectMdxFiles(path.join(DOCS_DIR))) {
-    const source = fs.readFileSync(file, "utf8");
-    if (staleSubstratePattern.test(source)) {
-      fail(
-        `${relative(file)} contains stale Radix substrate copy; document the current primitive contract.`,
-      );
+  for (const lang of LANGS) {
+    for (const file of collectMdxFiles(path.join(DOCS_DIR, lang, "components"))) {
+      const source = fs.readFileSync(file, "utf8");
+      if (staleSubstratePattern.test(source)) {
+        fail(
+          `${relative(file)} contains stale Radix substrate copy; document the current primitive contract.`,
+        );
+      }
     }
   }
 }
