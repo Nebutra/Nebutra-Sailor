@@ -1,15 +1,20 @@
 "use client";
 
 import { Separator as BaseSeparator } from "@base-ui/react/separator";
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "../utils/cn";
 
 // Base UI natively supports exactOptionalPropertyTypes and doesn't need withHtmlProps.
 
-const Separator = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BaseSeparator> & { decorative?: boolean }
->(({ className, orientation = "horizontal", decorative: _decorative = true, ...props }, ref) => (
+const Separator = ({
+  className,
+  orientation = "horizontal",
+  decorative: _decorative = true,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseSeparator> & { decorative?: boolean } & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <BaseSeparator
     ref={ref}
     orientation={orientation}
@@ -20,7 +25,7 @@ const Separator = React.forwardRef<
     )}
     {...props}
   />
-));
+);
 Separator.displayName = "Separator";
 
 export { Separator };

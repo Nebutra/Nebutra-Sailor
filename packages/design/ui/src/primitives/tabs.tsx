@@ -406,7 +406,7 @@ function TabsList({
   children,
   ...props
 }: TabsListProps) {
-  const context = React.useContext(TabsContext);
+  const context = React.use(TabsContext);
   const resolvedVariant = variant ?? context.variant;
   const resolvedShape = shape ?? context.shape;
   const resolvedActivateOnFocus = activateOnFocus ?? context.activationMode === "automatic";
@@ -449,7 +449,7 @@ function TabsList({
 }
 
 function TabsTrigger({ badge, children, className, disabled, icon, ...props }: TabsTriggerProps) {
-  const context = React.useContext(TabsContext);
+  const context = React.use(TabsContext);
   const isDisabled = disabled ?? context.disabled;
 
   return (

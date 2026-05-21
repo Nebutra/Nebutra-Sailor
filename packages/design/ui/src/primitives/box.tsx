@@ -82,29 +82,27 @@ function getSpacingClass(prefix: string, value: SpacingScale | undefined): strin
 
 type BoxInternalProps = BoxProps<React.ElementType>;
 
-const BoxBase = React.forwardRef<HTMLElement, BoxInternalProps>(function BoxInner(
-  {
-    as,
-    className,
-    p,
-    px,
-    py,
-    pt,
-    pr,
-    pb,
-    pl,
-    m,
-    mx,
-    my,
-    mt,
-    mr,
-    mb,
-    ml,
-    children,
-    ...props
-  }: BoxInternalProps,
+const BoxBase = function BoxInner({
+  as,
+  className,
+  p,
+  px,
+  py,
+  pt,
+  pr,
+  pb,
+  pl,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
+  children,
   ref,
-) {
+  ...props
+}: BoxInternalProps & { ref?: React.Ref<HTMLElement> | undefined }) {
   const spacingClasses = cn(
     // Padding
     getSpacingClass("p", p),
@@ -135,7 +133,7 @@ const BoxBase = React.forwardRef<HTMLElement, BoxInternalProps>(function BoxInne
     },
     children,
   );
-});
+};
 
 BoxBase.displayName = "Box";
 

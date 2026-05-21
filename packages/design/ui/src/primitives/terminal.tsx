@@ -1,7 +1,7 @@
 "use client";
 
 import { type MotionProps, motion, useInView } from "motion/react";
-import { Children, createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Children, createContext, use, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "../utils/cn";
 
 // =============================================================================
@@ -15,10 +15,10 @@ interface SequenceContextValue {
 }
 
 const SequenceContext = createContext<SequenceContextValue | null>(null);
-const useSequence = () => useContext(SequenceContext);
+const useSequence = () => use(SequenceContext);
 
 const ItemIndexContext = createContext<number | null>(null);
-const useItemIndex = () => useContext(ItemIndexContext);
+const useItemIndex = () => use(ItemIndexContext);
 
 // =============================================================================
 // Types

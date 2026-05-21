@@ -140,10 +140,15 @@ function ContextMenuItemContent({
 
 export const ContextMenuRoot = BaseContextMenu.Root;
 
-export const ContextMenuTrigger = React.forwardRef<
-  React.ElementRef<typeof BaseContextMenu.Trigger>,
-  React.ComponentPropsWithoutRef<typeof BaseContextMenu.Trigger> & { asChild?: boolean }
->(({ asChild, children, render, ...props }, ref) => {
+export const ContextMenuTrigger = ({
+  asChild,
+  children,
+  render,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Trigger> & { asChild?: boolean } & {
+  ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.Trigger>> | undefined;
+}) => {
   const renderElement: BaseContextMenu.Trigger.Props["render"] =
     asChild && React.isValidElement(children) ? children : render;
   return (
@@ -153,175 +158,185 @@ export const ContextMenuTrigger = React.forwardRef<
       {...(renderElement ? props : { ...props, children })}
     />
   );
-});
+};
 ContextMenuTrigger.displayName = "ContextMenu.Trigger";
 
-export const ContextMenuContent = React.forwardRef<
-  React.ElementRef<typeof BaseContextMenu.Popup>,
-  ContextMenuContentProps
->(
-  (
-    {
-      className,
-      alignOffset = 0,
-      align = "start",
-      sideOffset = 4,
-      side = "bottom",
-      style,
-      ...props
-    },
-    ref,
-  ) => (
-    <BaseContextMenu.Portal>
-      <BaseContextMenu.Positioner
-        alignOffset={alignOffset}
-        align={align}
-        sideOffset={sideOffset}
-        side={side}
-      >
-        <BaseContextMenu.Popup
-          ref={ref}
-          className={cn(contextMenuContentClassName, className)}
-          style={{
-            maxHeight: "var(--context-menu-max-height, var(--available-height))",
-            ...style,
-          }}
-          {...props}
-        />
-      </BaseContextMenu.Positioner>
-    </BaseContextMenu.Portal>
-  ),
+export const ContextMenuContent = ({
+  className,
+  alignOffset = 0,
+  align = "start",
+  sideOffset = 4,
+  side = "bottom",
+  style,
+  ref,
+  ...props
+}: ContextMenuContentProps & {
+  ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.Popup>> | undefined;
+}) => (
+  <BaseContextMenu.Portal>
+    <BaseContextMenu.Positioner
+      alignOffset={alignOffset}
+      align={align}
+      sideOffset={sideOffset}
+      side={side}
+    >
+      <BaseContextMenu.Popup
+        ref={ref}
+        className={cn(contextMenuContentClassName, className)}
+        style={{
+          maxHeight: "var(--context-menu-max-height, var(--available-height))",
+          ...style,
+        }}
+        {...props}
+      />
+    </BaseContextMenu.Positioner>
+  </BaseContextMenu.Portal>
 );
 ContextMenuContent.displayName = "ContextMenu.Content";
 
 export const ContextMenuGroup = BaseContextMenu.Group;
 ContextMenuGroup.displayName = "ContextMenu.Group";
 
-export const ContextMenuLabel = React.forwardRef<
-  React.ElementRef<typeof BaseContextMenu.GroupLabel>,
-  ContextMenuLabelProps
->(({ className, ...props }, ref) => (
+export const ContextMenuLabel = ({
+  className,
+  ref,
+  ...props
+}: ContextMenuLabelProps & {
+  ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.GroupLabel>> | undefined;
+}) => (
   <BaseContextMenu.GroupLabel
     ref={ref}
     className={cn("px-2 py-1 text-xs font-medium text-muted-foreground", className)}
     {...props}
   />
-));
+);
 ContextMenuLabel.displayName = "ContextMenu.Label";
 
-export const ContextMenuSeparator = React.forwardRef<
-  React.ElementRef<typeof BaseContextMenu.Separator>,
-  ContextMenuSeparatorProps
->(({ className, ...props }, ref) => (
+export const ContextMenuSeparator = ({
+  className,
+  ref,
+  ...props
+}: ContextMenuSeparatorProps & {
+  ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.Separator>> | undefined;
+}) => (
   <BaseContextMenu.Separator
     ref={ref}
     className={cn("-mx-1 my-1 h-px bg-border", className)}
     {...props}
   />
-));
+);
 ContextMenuSeparator.displayName = "ContextMenu.Separator";
 
-export const ContextMenuItem = React.forwardRef<
-  React.ElementRef<typeof BaseContextMenu.Item>,
-  ContextMenuItemProps
->(
-  (
-    {
-      children,
-      onSelect,
-      disabled,
-      href,
-      target,
-      rel,
-      prefix,
-      suffix,
-      variant = "default",
-      value,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    const inner = (
-      <ContextMenuItemContent prefix={prefix} suffix={suffix}>
-        {children}
-      </ContextMenuItemContent>
-    );
+export const ContextMenuItem = ({
+  children,
+  onSelect,
+  disabled,
+  href,
+  target,
+  rel,
+  prefix,
+  suffix,
+  variant = "default",
+  value,
+  className,
+  ref,
+  ...props
+}: ContextMenuItemProps & {
+  ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.Item>> | undefined;
+}) => {
+  const inner = (
+    <ContextMenuItemContent prefix={prefix} suffix={suffix}>
+      {children}
+    </ContextMenuItemContent>
+  );
 
-    if (href) {
-      return (
-        <BaseContextMenu.LinkItem
-          ref={ref}
-          href={href}
-          target={target}
-          rel={rel}
-          data-value={value}
-          data-variant={variant}
-          className={cn(contextMenuItemClassName, className)}
-          {...props}
-        >
-          {inner}
-        </BaseContextMenu.LinkItem>
-      );
-    }
-
+  if (href) {
     return (
-      <BaseContextMenu.Item
+      <BaseContextMenu.LinkItem
         ref={ref}
+        href={href}
+        target={target}
+        rel={rel}
         data-value={value}
         data-variant={variant}
-        disabled={disabled}
-        onClick={onSelect}
         className={cn(contextMenuItemClassName, className)}
         {...props}
       >
         {inner}
-      </BaseContextMenu.Item>
+      </BaseContextMenu.LinkItem>
     );
-  },
-);
-ContextMenuItem.displayName = "ContextMenu.Item";
+  }
 
-export const ContextMenuCheckboxItem = React.forwardRef<
-  React.ElementRef<typeof BaseContextMenu.CheckboxItem>,
-  ContextMenuCheckboxItemProps
->(
-  (
-    { children, prefix, suffix, onSelect, value, className, checked, defaultChecked, ...props },
-    ref,
-  ) => (
-    <BaseContextMenu.CheckboxItem
+  return (
+    <BaseContextMenu.Item
       ref={ref}
-      checked={checked}
-      defaultChecked={defaultChecked}
       data-value={value}
+      data-variant={variant}
+      disabled={disabled}
       onClick={onSelect}
-      className={cn(contextMenuItemClassName, "pl-8", className)}
+      className={cn(contextMenuItemClassName, className)}
       {...props}
     >
-      <BaseContextMenu.CheckboxItemIndicator className={contextMenuIndicatorClassName}>
-        <Check className="size-4" />
-      </BaseContextMenu.CheckboxItemIndicator>
-      <ContextMenuItemContent prefix={prefix} suffix={suffix}>
-        {children}
-      </ContextMenuItemContent>
-    </BaseContextMenu.CheckboxItem>
-  ),
+      {inner}
+    </BaseContextMenu.Item>
+  );
+};
+ContextMenuItem.displayName = "ContextMenu.Item";
+
+export const ContextMenuCheckboxItem = ({
+  children,
+  prefix,
+  suffix,
+  onSelect,
+  value,
+  className,
+  checked,
+  defaultChecked,
+  ref,
+  ...props
+}: ContextMenuCheckboxItemProps & {
+  ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.CheckboxItem>> | undefined;
+}) => (
+  <BaseContextMenu.CheckboxItem
+    ref={ref}
+    checked={checked}
+    defaultChecked={defaultChecked}
+    data-value={value}
+    onClick={onSelect}
+    className={cn(contextMenuItemClassName, "pl-8", className)}
+    {...props}
+  >
+    <BaseContextMenu.CheckboxItemIndicator className={contextMenuIndicatorClassName}>
+      <Check className="size-4" />
+    </BaseContextMenu.CheckboxItemIndicator>
+    <ContextMenuItemContent prefix={prefix} suffix={suffix}>
+      {children}
+    </ContextMenuItemContent>
+  </BaseContextMenu.CheckboxItem>
 );
 ContextMenuCheckboxItem.displayName = "ContextMenu.CheckboxItem";
 
-export const ContextMenuRadioGroup = React.forwardRef<
-  React.ElementRef<typeof BaseContextMenu.RadioGroup>,
-  ContextMenuRadioGroupProps
->(({ onValueChange, ...props }, ref) => (
-  <BaseContextMenu.RadioGroup ref={ref} onValueChange={onValueChange} {...props} />
-));
+export const ContextMenuRadioGroup = ({
+  onValueChange,
+  ref,
+  ...props
+}: ContextMenuRadioGroupProps & {
+  ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.RadioGroup>> | undefined;
+}) => <BaseContextMenu.RadioGroup ref={ref} onValueChange={onValueChange} {...props} />;
 ContextMenuRadioGroup.displayName = "ContextMenu.RadioGroup";
 
-export const ContextMenuRadioItem = React.forwardRef<
-  React.ElementRef<typeof BaseContextMenu.RadioItem>,
-  ContextMenuRadioItemProps
->(({ children, prefix, suffix, onSelect, className, value, ...props }, ref) => (
+export const ContextMenuRadioItem = ({
+  children,
+  prefix,
+  suffix,
+  onSelect,
+  className,
+  value,
+  ref,
+  ...props
+}: ContextMenuRadioItemProps & {
+  ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.RadioItem>> | undefined;
+}) => (
   <BaseContextMenu.RadioItem
     ref={ref}
     value={value}
@@ -336,15 +351,22 @@ export const ContextMenuRadioItem = React.forwardRef<
       {children}
     </ContextMenuItemContent>
   </BaseContextMenu.RadioItem>
-));
+);
 ContextMenuRadioItem.displayName = "ContextMenu.RadioItem";
 
 export const ContextMenuSub = BaseContextMenu.SubmenuRoot;
 
-export const ContextMenuSubTrigger = React.forwardRef<
-  React.ElementRef<typeof BaseContextMenu.SubmenuTrigger>,
-  ContextMenuSubTriggerProps
->(({ children, prefix, suffix, onSelect, className, ...props }, ref) => (
+export const ContextMenuSubTrigger = ({
+  children,
+  prefix,
+  suffix,
+  onSelect,
+  className,
+  ref,
+  ...props
+}: ContextMenuSubTriggerProps & {
+  ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.SubmenuTrigger>> | undefined;
+}) => (
   <BaseContextMenu.SubmenuTrigger
     ref={ref}
     onClick={onSelect}
@@ -355,22 +377,23 @@ export const ContextMenuSubTrigger = React.forwardRef<
       {children}
     </ContextMenuItemContent>
   </BaseContextMenu.SubmenuTrigger>
-));
+);
 ContextMenuSubTrigger.displayName = "ContextMenu.SubTrigger";
 
 export const ContextMenuSubContent = ContextMenuContent;
 ContextMenuSubContent.displayName = "ContextMenu.SubContent";
 
-export const ContextMenuShortcut = React.forwardRef<
-  HTMLSpanElement,
-  React.ComponentPropsWithoutRef<"span">
->(({ className, ...props }, ref) => (
+export const ContextMenuShortcut = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<"span"> & { ref?: React.Ref<HTMLSpanElement> | undefined }) => (
   <span
     ref={ref}
     className={cn("ml-auto text-xs tabular-nums text-muted-foreground", className)}
     {...props}
   />
-));
+);
 ContextMenuShortcut.displayName = "ContextMenu.Shortcut";
 
 export const ContextMenu = Object.assign(ContextMenuRoot, {

@@ -1,6 +1,6 @@
 "use client";
 import { ChevronRight, MoreHorizontal } from "@nebutra/icons";
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "../utils";
 import { Slot } from "../utils/slot";
 // =============================================================================
@@ -77,33 +77,40 @@ export type BreadcrumbEllipsisProps = React.ComponentPropsWithoutRef<"span">;
  * </Breadcrumb>
  * ```
  */
-const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(({ ...props }, ref) => (
+const Breadcrumb = ({
+  ref,
+  ...props
+}: BreadcrumbProps & { ref?: React.Ref<HTMLElement> | undefined }) => (
   <nav ref={ref} aria-label="breadcrumb" {...props} />
-));
+);
 Breadcrumb.displayName = "Breadcrumb";
 /**
  * BreadcrumbList - Ordered list container for breadcrumb items
  */
-const BreadcrumbList = React.forwardRef<HTMLOListElement, BreadcrumbListProps>(
-  ({ className, ...props }, ref) => (
-    <ol
-      ref={ref}
-      className={cn(
-        "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
-        className,
-      )}
-      {...props}
-    />
-  ),
+const BreadcrumbList = ({
+  className,
+  ref,
+  ...props
+}: BreadcrumbListProps & { ref?: React.Ref<HTMLOListElement> | undefined }) => (
+  <ol
+    ref={ref}
+    className={cn(
+      "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
+      className,
+    )}
+    {...props}
+  />
 );
 BreadcrumbList.displayName = "BreadcrumbList";
 /**
  * BreadcrumbItem - Individual breadcrumb item wrapper
  */
-const BreadcrumbItem = React.forwardRef<HTMLLIElement, BreadcrumbItemProps>(
-  ({ className, ...props }, ref) => (
-    <li ref={ref} className={cn("inline-flex items-center gap-1.5", className)} {...props} />
-  ),
+const BreadcrumbItem = ({
+  className,
+  ref,
+  ...props
+}: BreadcrumbItemProps & { ref?: React.Ref<HTMLLIElement> | undefined }) => (
+  <li ref={ref} className={cn("inline-flex items-center gap-1.5", className)} {...props} />
 );
 BreadcrumbItem.displayName = "BreadcrumbItem";
 /**
@@ -126,34 +133,39 @@ BreadcrumbItem.displayName = "BreadcrumbItem";
  * </BreadcrumbLink>
  * ```
  */
-const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
-  ({ asChild, className, ...props }, ref) => {
-    const Comp = asChild ? Slot : "a";
-    return (
-      <Comp
-        ref={ref}
-        className={cn("transition-colors hover:text-foreground", className)}
-        {...props}
-      />
-    );
-  },
-);
+const BreadcrumbLink = ({
+  asChild,
+  className,
+  ref,
+  ...props
+}: BreadcrumbLinkProps & { ref?: React.Ref<HTMLAnchorElement> | undefined }) => {
+  const Comp = asChild ? Slot : "a";
+  return (
+    <Comp
+      ref={ref}
+      className={cn("transition-colors hover:text-foreground", className)}
+      {...props}
+    />
+  );
+};
 BreadcrumbLink.displayName = "BreadcrumbLink";
 /**
  * BreadcrumbPage - Current page indicator (non-interactive)
  */
-const BreadcrumbPage = React.forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
-  ({ className, ...props }, ref) => (
-    // biome-ignore lint/a11y/useSemanticElements: ARIA pattern
-    <span
-      ref={ref}
-      role="link"
-      aria-disabled="true"
-      aria-current="page"
-      className={cn("font-normal text-foreground", className)}
-      {...props}
-    />
-  ),
+const BreadcrumbPage = ({
+  className,
+  ref,
+  ...props
+}: BreadcrumbPageProps & { ref?: React.Ref<HTMLSpanElement> | undefined }) => (
+  // biome-ignore lint/a11y/useSemanticElements: ARIA pattern
+  <span
+    ref={ref}
+    role="link"
+    aria-disabled="true"
+    aria-current="page"
+    className={cn("font-normal text-foreground", className)}
+    {...props}
+  />
 );
 BreadcrumbPage.displayName = "BreadcrumbPage";
 /**

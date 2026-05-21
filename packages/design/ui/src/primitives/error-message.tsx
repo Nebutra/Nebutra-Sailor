@@ -1,7 +1,7 @@
 "use client";
 
 import { Warning as AlertCircle, External as ExternalLink } from "@nebutra/icons";
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "../utils/cn";
 import { Button, ButtonLink } from "./button";
 
@@ -139,43 +139,48 @@ function getActionTarget(link: string | undefined): React.AnchorHTMLAttributes<H
  * // Structured with action link
  * <ErrorMessage error={{ message: "The request failed.", action: "Contact Us", link: "/contact" }} />
  */
-export const ErrorMessage = React.forwardRef<HTMLSpanElement, ErrorMessageProps>(
-  ({ children, label, size = "medium", error, className }, ref) => {
-    const sz = size;
+export const ErrorMessage = ({
+  ref,
+  children,
+  label,
+  size = "medium",
+  error,
+  className,
+}: ErrorMessageProps & { ref?: React.Ref<HTMLSpanElement> | undefined }) => {
+  const sz = size;
 
-    // Resolve content from either `error` prop or `children`
-    const message = error?.message ?? children;
+  // Resolve content from either `error` prop or `children`
+  const message = error?.message ?? children;
 
-    return (
-      <span
-        ref={ref}
-        role="alert"
-        className={cn("inline-flex items-center gap-1.5 text-destructive", textSize[sz], className)}
-      >
-        <AlertCircle size={iconSize[sz]} aria-hidden="true" className="shrink-0" />
+  return (
+    <span
+      ref={ref}
+      role="alert"
+      className={cn("inline-flex items-center gap-1.5 text-destructive", textSize[sz], className)}
+    >
+      <AlertCircle size={iconSize[sz]} aria-hidden="true" className="shrink-0" />
 
-        <span>
-          {label && <span className="font-medium">{label}:&nbsp;</span>}
-          {message}
-          {error?.action && error.link && (
-            <>
-              {" "}
-              <a
-                href={error.link}
-                className="underline underline-offset-2 hover:no-underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {error.action}
-                <ExternalLink size={10} aria-hidden="true" className="ml-0.5 inline" />
-              </a>
-            </>
-          )}
-        </span>
+      <span>
+        {label && <span className="font-medium">{label}:&nbsp;</span>}
+        {message}
+        {error?.action && error.link && (
+          <>
+            {" "}
+            <a
+              href={error.link}
+              className="underline underline-offset-2 hover:no-underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {error.action}
+              <ExternalLink size={10} aria-hidden="true" className="ml-0.5 inline" />
+            </a>
+          </>
+        )}
       </span>
-    );
-  },
-);
+    </span>
+  );
+};
 ErrorMessage.displayName = "ErrorMessage";
 
 /**
@@ -184,113 +189,109 @@ ErrorMessage.displayName = "ErrorMessage";
  * Use `ErrorMessage` only for legacy inline text. Field validation should prefer
  * the owning form/input primitive.
  */
-const ErrorSurface = React.forwardRef<HTMLDivElement, ErrorProps>(
-  (
-    {
-      children,
-      label,
-      showLabel = true,
-      title,
-      size = "medium",
-      error,
-      errorId,
-      errorIdLabel = "Request ID",
-      live = "polite",
-      action,
-      link,
-      onAction,
-      actionLoading = false,
-      className,
-      role,
-      ...props
-    },
-    ref,
-  ) => {
-    const message = error?.message ?? children;
-    const resolvedTitle = title ?? error?.title;
-    const resolvedAction = action ?? error?.action;
-    const resolvedLink = link ?? error?.link;
-    const resolvedErrorId = errorId ?? error?.id;
-    const resolvedRole = role ?? (live === "assertive" ? "alert" : "status");
-    const ariaLive = live === "off" ? undefined : live;
+const ErrorSurface = ({
+  children,
+  label,
+  showLabel = true,
+  title,
+  size = "medium",
+  error,
+  errorId,
+  errorIdLabel = "Request ID",
+  live = "polite",
+  action,
+  link,
+  onAction,
+  actionLoading = false,
+  className,
+  role,
+  ref,
+  ...props
+}: ErrorProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const message = error?.message ?? children;
+  const resolvedTitle = title ?? error?.title;
+  const resolvedAction = action ?? error?.action;
+  const resolvedLink = link ?? error?.link;
+  const resolvedErrorId = errorId ?? error?.id;
+  const resolvedRole = role ?? (live === "assertive" ? "alert" : "status");
+  const ariaLive = live === "off" ? undefined : live;
 
-    return (
-      <div
-        ref={ref}
-        role={resolvedRole}
-        aria-live={ariaLive}
-        className={cn(
-          "flex w-full border border-destructive/25 bg-destructive/5 text-foreground",
-          surfaceSize[size],
-          className,
-        )}
-        {...props}
+  return (
+    <div
+      ref={ref}
+      role={resolvedRole}
+      aria-live={ariaLive}
+      className={cn(
+        "flex w-full border border-destructive/25 bg-destructive/5 text-foreground",
+        surfaceSize[size],
+        className,
+      )}
+      {...props}
+    >
+      <span
+        aria-hidden="true"
+        className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-destructive/20 bg-background text-destructive"
       >
-        <span
-          aria-hidden="true"
-          className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-destructive/20 bg-background text-destructive"
-        >
-          <AlertCircle size={surfaceIconSize[size]} />
-        </span>
+        <AlertCircle size={surfaceIconSize[size]} />
+      </span>
 
-        <div className="min-w-0 flex-1">
-          {label && showLabel ? (
-            <p className="mb-1 text-xs font-medium uppercase tracking-normal text-destructive">
-              {label}
-            </p>
-          ) : null}
+      <div className="min-w-0 flex-1">
+        {label && showLabel ? (
+          <p className="mb-1 text-xs font-medium uppercase tracking-normal text-destructive">
+            {label}
+          </p>
+        ) : null}
 
-          {resolvedTitle ? (
-            <p className="font-semibold leading-6 text-foreground">{resolvedTitle}</p>
-          ) : null}
+        {resolvedTitle ? (
+          <p className="font-semibold leading-6 text-foreground">{resolvedTitle}</p>
+        ) : null}
 
-          {message ? (
-            <p className={cn("leading-5 text-muted-foreground", resolvedTitle && "mt-1")}>
-              {message}
-            </p>
-          ) : null}
+        {message ? (
+          <p className={cn("leading-5 text-muted-foreground", resolvedTitle && "mt-1")}>
+            {message}
+          </p>
+        ) : null}
 
-          {resolvedErrorId ? (
-            <details className="mt-3 text-xs text-muted-foreground">
-              <summary className="cursor-pointer select-none text-foreground">
-                Diagnostic details
-              </summary>
-              <code className="mt-2 block overflow-x-auto rounded-[var(--radius-sm)] border bg-background px-2 py-1 font-mono text-xs text-muted-foreground">
-                {errorIdLabel}: {resolvedErrorId}
-                {error?.code ? ` (${error.code})` : ""}
-              </code>
-            </details>
-          ) : null}
+        {resolvedErrorId ? (
+          <details className="mt-3 text-xs text-muted-foreground">
+            <summary className="cursor-pointer select-none text-foreground">
+              Diagnostic details
+            </summary>
+            <code className="mt-2 block overflow-x-auto rounded-[var(--radius-sm)] border bg-background px-2 py-1 font-mono text-xs text-muted-foreground">
+              {errorIdLabel}: {resolvedErrorId}
+              {error?.code ? ` (${error.code})` : ""}
+            </code>
+          </details>
+        ) : null}
 
-          {resolvedAction ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {resolvedLink ? (
-                <ButtonLink
-                  href={resolvedLink}
-                  size="sm"
-                  variant="outline"
-                  {...getActionTarget(resolvedLink)}
-                >
-                  {resolvedAction}
-                </ButtonLink>
-              ) : (
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  loading={actionLoading}
-                  onClick={onAction}
-                >
-                  {resolvedAction}
-                </Button>
-              )}
-            </div>
-          ) : null}
-        </div>
+        {resolvedAction ? (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {resolvedLink ? (
+              <ButtonLink
+                href={resolvedLink}
+                size="sm"
+                variant="outline"
+                {...getActionTarget(resolvedLink)}
+              >
+                {resolvedAction}
+              </ButtonLink>
+            ) : (
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                loading={actionLoading}
+                onClick={onAction}
+              >
+                {resolvedAction}
+              </Button>
+            )}
+          </div>
+        ) : null}
       </div>
-    );
-  },
-);
+    </div>
+  );
+};
 ErrorSurface.displayName = "Error";
 
 export { ErrorSurface as Error };

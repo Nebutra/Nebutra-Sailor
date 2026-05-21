@@ -99,94 +99,93 @@ const emptyStateCssVars = (size: EmptyStateSize) =>
     "--empty-state-description-line-height": `${emptyStateTokens.typography.descriptionLineHeight}px`,
   }) satisfies React.CSSProperties & Record<EmptyStateCssVar, string>;
 
-const EmptyStateIcon = React.forwardRef<HTMLDivElement, EmptyStateIconProps>(
-  ({ className, icon, ...props }, ref) => (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        "flex size-[var(--empty-state-icon-size)] shrink-0 items-center justify-center rounded-[var(--empty-state-icon-radius)] bg-muted",
-        className,
-      )}
-      {...props}
-    >
-      {icon}
-    </div>
-  ),
+const EmptyStateIcon = ({
+  className,
+  icon,
+  ref,
+  ...props
+}: EmptyStateIconProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <div
+    ref={ref}
+    aria-hidden="true"
+    className={cn(
+      "flex size-[var(--empty-state-icon-size)] shrink-0 items-center justify-center rounded-[var(--empty-state-icon-radius)] bg-muted",
+      className,
+    )}
+    {...props}
+  >
+    {icon}
+  </div>
 );
 EmptyStateIcon.displayName = "EmptyState.Icon";
 
-const EmptyStateRoot = React.forwardRef<HTMLElement, EmptyStateRootProps>(
-  (
-    {
-      className,
-      title,
-      description,
-      icon,
-      children,
-      action,
-      link,
-      style,
-      variant = "blank-slate",
-      size = "md",
-      align = "center",
-      live = false,
-      ...props
-    },
-    ref,
-  ) => {
-    const actions = children ?? [action, link].filter(Boolean);
-    const hasActions = React.Children.toArray(actions).length > 0;
+const EmptyStateRoot = ({
+  className,
+  title,
+  description,
+  icon,
+  children,
+  action,
+  link,
+  style,
+  variant = "blank-slate",
+  size = "md",
+  align = "center",
+  live = false,
+  ref,
+  ...props
+}: EmptyStateRootProps & { ref?: React.Ref<HTMLElement> | undefined }) => {
+  const actions = children ?? [action, link].filter(Boolean);
+  const hasActions = React.Children.toArray(actions).length > 0;
 
-    return (
-      <section
-        ref={ref}
-        aria-live={live ? "polite" : undefined}
+  return (
+    <section
+      ref={ref}
+      aria-live={live ? "polite" : undefined}
+      className={cn(
+        "flex min-h-[var(--empty-state-min-height)] w-full flex-col justify-center rounded-[var(--empty-state-radius)] px-[var(--empty-state-padding-x)] py-[var(--empty-state-padding-y)]",
+        variantClassName[variant],
+        align === "center" ? "items-center text-center" : "items-start text-left",
+        className,
+      )}
+      style={{ ...emptyStateCssVars(size), ...style }}
+      {...props}
+    >
+      <div
         className={cn(
-          "flex min-h-[var(--empty-state-min-height)] w-full flex-col justify-center rounded-[var(--empty-state-radius)] px-[var(--empty-state-padding-x)] py-[var(--empty-state-padding-y)]",
-          variantClassName[variant],
-          align === "center" ? "items-center text-center" : "items-start text-left",
-          className,
+          "flex max-w-[var(--empty-state-content-max-width)] flex-col gap-[var(--empty-state-stack-gap)]",
+          align === "center" ? "items-center" : "items-start",
         )}
-        style={{ ...emptyStateCssVars(size), ...style }}
-        {...props}
       >
-        <div
-          className={cn(
-            "flex max-w-[var(--empty-state-content-max-width)] flex-col gap-[var(--empty-state-stack-gap)]",
-            align === "center" ? "items-center" : "items-start",
-          )}
-        >
-          {icon ? (
-            <div className={cn("[&>div]:bg-muted", iconToneClassName[variant])}>{icon}</div>
-          ) : null}
+        {icon ? (
+          <div className={cn("[&>div]:bg-muted", iconToneClassName[variant])}>{icon}</div>
+        ) : null}
 
-          <div className="space-y-[var(--empty-state-copy-gap)]">
-            <h3 className="font-[var(--empty-state-title-weight)] text-[length:var(--empty-state-title-size)] leading-[var(--empty-state-title-line-height)] text-foreground">
-              {title}
-            </h3>
-            {description ? (
-              <p className="max-w-[var(--empty-state-description-max-width)] text-[length:var(--empty-state-description-size)] leading-[var(--empty-state-description-line-height)] text-muted-foreground">
-                {description}
-              </p>
-            ) : null}
-          </div>
-
-          {hasActions ? (
-            <div
-              className={cn(
-                "flex flex-wrap gap-[var(--empty-state-actions-gap)]",
-                align === "center" ? "justify-center" : "justify-start",
-              )}
-            >
-              {actions}
-            </div>
+        <div className="space-y-[var(--empty-state-copy-gap)]">
+          <h3 className="font-[var(--empty-state-title-weight)] text-[length:var(--empty-state-title-size)] leading-[var(--empty-state-title-line-height)] text-foreground">
+            {title}
+          </h3>
+          {description ? (
+            <p className="max-w-[var(--empty-state-description-max-width)] text-[length:var(--empty-state-description-size)] leading-[var(--empty-state-description-line-height)] text-muted-foreground">
+              {description}
+            </p>
           ) : null}
         </div>
-      </section>
-    );
-  },
-);
+
+        {hasActions ? (
+          <div
+            className={cn(
+              "flex flex-wrap gap-[var(--empty-state-actions-gap)]",
+              align === "center" ? "justify-center" : "justify-start",
+            )}
+          >
+            {actions}
+          </div>
+        ) : null}
+      </div>
+    </section>
+  );
+};
 EmptyStateRoot.displayName = "EmptyState.Root";
 
 export const EmptyState = {

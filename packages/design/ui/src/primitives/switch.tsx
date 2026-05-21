@@ -33,7 +33,7 @@ type SwitchContextValue = {
 const SwitchContext = React.createContext<SwitchContextValue | null>(null);
 
 function useSwitchContext() {
-  const context = React.useContext(SwitchContext);
+  const context = React.use(SwitchContext);
 
   if (!context) {
     throw new Error("Switch.Control must be rendered inside Switch.");
@@ -93,21 +93,19 @@ function getSwitchControlStyle(size: SwitchSize, style: React.CSSProperties | un
   >;
 }
 
-const SwitchRoot = React.forwardRef<HTMLDivElement, SwitchProps>(function SwitchRoot(
-  {
-    children,
-    name,
-    size = "medium",
-    defaultValue,
-    value,
-    disabled,
-    onValueChange,
-    style,
-    className,
-    ...props
-  },
+const SwitchRoot = function SwitchRoot({
+  children,
+  name,
+  size = "medium",
+  defaultValue,
+  value,
+  disabled,
+  onValueChange,
+  style,
+  className,
   ref,
-) {
+  ...props
+}: SwitchProps & { ref?: React.Ref<HTMLDivElement> | undefined }) {
   const generatedName = React.useId();
   const resolvedName = name ?? generatedName;
   const context = React.useMemo<SwitchContextValue>(
@@ -140,7 +138,7 @@ const SwitchRoot = React.forwardRef<HTMLDivElement, SwitchProps>(function Switch
       </div>
     </SwitchContext.Provider>
   );
-});
+};
 
 export interface SwitchControlProps
   extends Omit<React.LabelHTMLAttributes<HTMLLabelElement>, "children" | "onChange"> {
@@ -155,23 +153,21 @@ export interface SwitchControlProps
   value: string;
 }
 
-const SwitchControl = React.forwardRef<HTMLLabelElement, SwitchControlProps>(function SwitchControl(
-  {
-    checked,
-    className,
-    defaultChecked,
-    disabled,
-    icon,
-    label,
-    name,
-    onChange,
-    size,
-    style,
-    value,
-    ...props
-  },
+const SwitchControl = function SwitchControl({
+  checked,
+  className,
+  defaultChecked,
+  disabled,
+  icon,
+  label,
+  name,
+  onChange,
+  size,
+  style,
+  value,
   ref,
-) {
+  ...props
+}: SwitchControlProps & { ref?: React.Ref<HTMLLabelElement> | undefined }) {
   const context = useSwitchContext();
   const resolvedSize = size ?? context.size;
   const isControlled = checked !== undefined || context.value !== undefined;
@@ -236,7 +232,7 @@ const SwitchControl = React.forwardRef<HTMLLabelElement, SwitchControlProps>(fun
       </span>
     </label>
   );
-});
+};
 
 SwitchRoot.displayName = "Switch";
 SwitchControl.displayName = "Switch.Control";

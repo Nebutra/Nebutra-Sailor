@@ -8,10 +8,14 @@ import { buttonVariants } from "./button";
 const AlertDialog = BaseAlertDialog.Root;
 const AlertDialogPortal = BaseAlertDialog.Portal;
 
-const AlertDialogTrigger = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Trigger> & { asChild?: boolean }
->(({ asChild, children, ...props }, ref) => {
+const AlertDialogTrigger = ({
+  asChild,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Trigger> & { asChild?: boolean } & {
+  ref?: React.Ref<HTMLButtonElement> | undefined;
+}) => {
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseAlertDialog.Trigger
@@ -26,13 +30,16 @@ const AlertDialogTrigger = React.forwardRef<
       {children}
     </BaseAlertDialog.Trigger>
   );
-});
+};
 AlertDialogTrigger.displayName = "AlertDialogTrigger";
 
-const AlertDialogOverlay = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Backdrop>
->(({ className, ...props }, ref) => (
+const AlertDialogOverlay = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Backdrop> & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <BaseAlertDialog.Backdrop
     ref={ref}
     className={cn(
@@ -41,13 +48,17 @@ const AlertDialogOverlay = React.forwardRef<
     )}
     {...props}
   />
-));
+);
 AlertDialogOverlay.displayName = "AlertDialogOverlay";
 
-const AlertDialogContent = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Popup>
->(({ className, children, ...props }, ref) => (
+const AlertDialogContent = ({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Popup> & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <AlertDialogPortal>
     <AlertDialogOverlay />
     <BaseAlertDialog.Popup
@@ -61,7 +72,7 @@ const AlertDialogContent = React.forwardRef<
       {children}
     </BaseAlertDialog.Popup>
   </AlertDialogPortal>
-));
+);
 AlertDialogContent.displayName = "AlertDialogContent";
 
 const AlertDialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -77,31 +88,42 @@ const AlertDialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDiv
 );
 AlertDialogFooter.displayName = "AlertDialogFooter";
 
-const AlertDialogTitle = React.forwardRef<
-  HTMLHeadingElement,
-  React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Title>
->(({ className, ...props }, ref) => (
+const AlertDialogTitle = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Title> & {
+  ref?: React.Ref<HTMLHeadingElement> | undefined;
+}) => (
   <BaseAlertDialog.Title ref={ref} className={cn("text-lg font-semibold", className)} {...props} />
-));
+);
 AlertDialogTitle.displayName = "AlertDialogTitle";
 
-const AlertDialogDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Description>
->(({ className, ...props }, ref) => (
+const AlertDialogDescription = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Description> & {
+  ref?: React.Ref<HTMLParagraphElement> | undefined;
+}) => (
   <BaseAlertDialog.Description
     ref={ref}
     className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
-));
+);
 AlertDialogDescription.displayName = "AlertDialogDescription";
 
 // Base UI doesn't have an explicit 'Action' or 'Cancel' component. We render native Close triggers.
-const AlertDialogAction = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { asChild?: boolean }
->(({ className, asChild, children, ...props }, ref) => {
+const AlertDialogAction = ({
+  className,
+  asChild,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { asChild?: boolean } & {
+  ref?: React.Ref<HTMLButtonElement> | undefined;
+}) => {
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseAlertDialog.Close
@@ -117,14 +139,19 @@ const AlertDialogAction = React.forwardRef<
       {children}
     </BaseAlertDialog.Close>
   );
-});
+};
 AlertDialogAction.displayName = "AlertDialogAction";
 
 // Base UI's <Close> acts exactly like a Cancel when mapped as a trigger.
-const AlertDialogCancel = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { asChild?: boolean }
->(({ className, asChild, children, ...props }, ref) => {
+const AlertDialogCancel = ({
+  className,
+  asChild,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { asChild?: boolean } & {
+  ref?: React.Ref<HTMLButtonElement> | undefined;
+}) => {
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseAlertDialog.Close
@@ -144,7 +171,7 @@ const AlertDialogCancel = React.forwardRef<
       {children}
     </BaseAlertDialog.Close>
   );
-});
+};
 AlertDialogCancel.displayName = "AlertDialogCancel";
 
 export {

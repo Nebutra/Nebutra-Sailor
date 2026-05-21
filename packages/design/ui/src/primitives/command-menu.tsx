@@ -96,10 +96,15 @@ CommandMenuRoot.displayName = "CommandMenu.Root";
 // CommandMenuItem
 // =============================================================================
 
-export const CommandMenuItem = React.forwardRef<
-  React.ElementRef<typeof CommandItem>,
-  CommandMenuItemProps
->(({ callback, className, onSelect, ...props }, ref) => {
+export const CommandMenuItem = ({
+  callback,
+  className,
+  onSelect,
+  ref,
+  ...props
+}: CommandMenuItemProps & {
+  ref?: React.Ref<React.ElementRef<typeof CommandItem>> | undefined;
+}) => {
   const handleSelect = React.useCallback(
     (value: string) => {
       onSelect?.(value);
@@ -109,47 +114,59 @@ export const CommandMenuItem = React.forwardRef<
   );
 
   return <CommandItem ref={ref} onSelect={handleSelect} className={className} {...props} />;
-});
+};
 CommandMenuItem.displayName = "CommandMenu.Item";
 
 // =============================================================================
 // Pass-through sub-components (typed aliases)
 // =============================================================================
 
-export const CommandMenuInput = React.forwardRef<
-  React.ElementRef<typeof CommandInput>,
-  CommandInputProps
->((props, ref) => <CommandInput ref={ref} {...props} />);
+export const CommandMenuInput = ({
+  ref,
+  ...props
+}: CommandInputProps & { ref?: React.Ref<React.ElementRef<typeof CommandInput>> | undefined }) => (
+  <CommandInput ref={ref} {...props} />
+);
 CommandMenuInput.displayName = "CommandMenu.Input";
 
-export const CommandMenuList = React.forwardRef<
-  React.ElementRef<typeof CommandList>,
-  CommandListProps
->((props, ref) => <CommandList ref={ref} {...props} />);
+export const CommandMenuList = ({
+  ref,
+  ...props
+}: CommandListProps & { ref?: React.Ref<React.ElementRef<typeof CommandList>> | undefined }) => (
+  <CommandList ref={ref} {...props} />
+);
 CommandMenuList.displayName = "CommandMenu.List";
 
-export const CommandMenuEmpty = React.forwardRef<
-  React.ElementRef<typeof CommandEmpty>,
-  CommandEmptyProps
->((props, ref) => <CommandEmpty ref={ref} {...props} />);
+export const CommandMenuEmpty = ({
+  ref,
+  ...props
+}: CommandEmptyProps & { ref?: React.Ref<React.ElementRef<typeof CommandEmpty>> | undefined }) => (
+  <CommandEmpty ref={ref} {...props} />
+);
 CommandMenuEmpty.displayName = "CommandMenu.Empty";
 
-export const CommandMenuResults = React.forwardRef<
-  React.ElementRef<typeof CommandResults>,
-  CommandResultsProps
->((props, ref) => <CommandResults ref={ref} {...props} />);
+export const CommandMenuResults = ({
+  ref,
+  ...props
+}: CommandResultsProps & {
+  ref?: React.Ref<React.ElementRef<typeof CommandResults>> | undefined;
+}) => <CommandResults ref={ref} {...props} />;
 CommandMenuResults.displayName = "CommandMenu.Results";
 
-export const CommandMenuGroup = React.forwardRef<
-  React.ElementRef<typeof CommandGroup>,
-  CommandGroupProps
->((props, ref) => <CommandGroup ref={ref} {...props} />);
+export const CommandMenuGroup = ({
+  ref,
+  ...props
+}: CommandGroupProps & { ref?: React.Ref<React.ElementRef<typeof CommandGroup>> | undefined }) => (
+  <CommandGroup ref={ref} {...props} />
+);
 CommandMenuGroup.displayName = "CommandMenu.Group";
 
-export const CommandMenuSeparator = React.forwardRef<
-  React.ElementRef<typeof CommandSeparator>,
-  CommandSeparatorProps
->((props, ref) => <CommandSeparator ref={ref} {...props} />);
+export const CommandMenuSeparator = ({
+  ref,
+  ...props
+}: CommandSeparatorProps & {
+  ref?: React.Ref<React.ElementRef<typeof CommandSeparator>> | undefined;
+}) => <CommandSeparator ref={ref} {...props} />;
 CommandMenuSeparator.displayName = "CommandMenu.Separator";
 
 export const CommandMenuShortcut = ({ ...props }: CommandShortcutProps) => (

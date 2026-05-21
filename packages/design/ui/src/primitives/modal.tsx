@@ -2,12 +2,11 @@
 
 import {
   createContext,
-  forwardRef,
   type HTMLAttributes,
   type ReactNode,
   type Ref,
   type RefObject,
-  useContext,
+  use,
   useEffect,
   useId,
   useMemo,
@@ -69,7 +68,7 @@ type ModalContextValue = {
 const ModalContext = createContext<ModalContextValue | null>(null);
 
 function useModalContext(): ModalContextValue {
-  const ctx = useContext(ModalContext);
+  const ctx = use(ModalContext);
   if (!ctx) throw new Error("Modal.* must be used inside <Modal.Modal>");
   return ctx;
 }
@@ -150,10 +149,11 @@ function ModalRoot({
 
 export type ModalBodyProps = HTMLAttributes<HTMLDivElement>;
 
-const ModalBody = forwardRef<HTMLDivElement, ModalBodyProps>(function ModalBody(
-  { className, ...rest },
+const ModalBody = function ModalBody({
+  className,
   ref,
-) {
+  ...rest
+}: ModalBodyProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   const { sticky } = useModalContext();
   return (
     <div
@@ -166,7 +166,7 @@ const ModalBody = forwardRef<HTMLDivElement, ModalBodyProps>(function ModalBody(
       {...rest}
     />
   );
-});
+};
 
 // ---------------------------------------------------------------------------
 // Modal.Header / Modal.Title / Modal.Subtitle
@@ -174,23 +174,26 @@ const ModalBody = forwardRef<HTMLDivElement, ModalBodyProps>(function ModalBody(
 
 export type ModalHeaderProps = HTMLAttributes<HTMLDivElement>;
 
-const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(function ModalHeader(
-  { className, children, ...rest },
+const ModalHeader = function ModalHeader({
+  className,
+  children,
   ref,
-) {
+  ...rest
+}: ModalHeaderProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   return (
     <DialogHeader ref={ref} className={cn("space-y-2 text-left", className)} {...rest}>
       {children}
     </DialogHeader>
   );
-});
+};
 
 export type ModalTitleProps = HTMLAttributes<HTMLHeadingElement>;
 
-const ModalTitle = forwardRef<HTMLHeadingElement, ModalTitleProps>(function ModalTitle(
-  { className, ...rest },
+const ModalTitle = function ModalTitle({
+  className,
   ref,
-) {
+  ...rest
+}: ModalTitleProps & { ref?: Ref<HTMLHeadingElement> | undefined }) {
   const { titleId } = useModalContext();
   // DialogTitle (Base UI) already renders <h2> with the right sizing. The
   // context-provided id wires aria-labelledby on the popup automatically.
@@ -202,14 +205,15 @@ const ModalTitle = forwardRef<HTMLHeadingElement, ModalTitleProps>(function Moda
       {...rest}
     />
   );
-});
+};
 
 export type ModalSubtitleProps = HTMLAttributes<HTMLParagraphElement>;
 
-const ModalSubtitle = forwardRef<HTMLParagraphElement, ModalSubtitleProps>(function ModalSubtitle(
-  { className, ...rest },
+const ModalSubtitle = function ModalSubtitle({
+  className,
   ref,
-) {
+  ...rest
+}: ModalSubtitleProps & { ref?: Ref<HTMLParagraphElement> | undefined }) {
   return (
     <p
       ref={ref}
@@ -217,7 +221,7 @@ const ModalSubtitle = forwardRef<HTMLParagraphElement, ModalSubtitleProps>(funct
       {...rest}
     />
   );
-});
+};
 
 // ---------------------------------------------------------------------------
 // Modal.Inset
@@ -225,10 +229,11 @@ const ModalSubtitle = forwardRef<HTMLParagraphElement, ModalSubtitleProps>(funct
 
 export type ModalInsetProps = HTMLAttributes<HTMLDivElement>;
 
-const ModalInset = forwardRef<HTMLDivElement, ModalInsetProps>(function ModalInset(
-  { className, ...rest },
+const ModalInset = function ModalInset({
+  className,
   ref,
-) {
+  ...rest
+}: ModalInsetProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   return (
     <div
       ref={ref}
@@ -236,7 +241,7 @@ const ModalInset = forwardRef<HTMLDivElement, ModalInsetProps>(function ModalIns
       {...rest}
     />
   );
-});
+};
 
 // ---------------------------------------------------------------------------
 // Modal.Actions / Modal.Action
@@ -244,10 +249,12 @@ const ModalInset = forwardRef<HTMLDivElement, ModalInsetProps>(function ModalIns
 
 export type ModalActionsProps = HTMLAttributes<HTMLDivElement>;
 
-const ModalActions = forwardRef<HTMLDivElement, ModalActionsProps>(function ModalActions(
-  { className, children, ...rest },
+const ModalActions = function ModalActions({
+  className,
+  children,
   ref,
-) {
+  ...rest
+}: ModalActionsProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   const { sticky } = useModalContext();
   return (
     <DialogFooter
@@ -262,7 +269,7 @@ const ModalActions = forwardRef<HTMLDivElement, ModalActionsProps>(function Moda
       {children}
     </DialogFooter>
   );
-});
+};
 
 export interface ModalActionProps extends Omit<ButtonProps, "variant" | "size" | "type"> {
   /** Geist Modal.Action "type" — primary or secondary. @default "primary" */
@@ -276,10 +283,16 @@ export interface ModalActionProps extends Omit<ButtonProps, "variant" | "size" |
   ref?: Ref<HTMLButtonElement>;
 }
 
-const ModalAction = forwardRef<HTMLButtonElement, ModalActionProps>(function ModalAction(
-  { type = "primary", fullWidth, prefix, buttonType = "button", className, children, ...rest },
+const ModalAction = function ModalAction({
+  type = "primary",
+  fullWidth,
+  prefix,
+  buttonType = "button",
+  className,
+  children,
   ref,
-) {
+  ...rest
+}: ModalActionProps & { ref?: Ref<HTMLButtonElement> | undefined }) {
   return (
     <Button
       ref={ref}
@@ -297,7 +310,7 @@ const ModalAction = forwardRef<HTMLButtonElement, ModalActionProps>(function Mod
       {children}
     </Button>
   );
-});
+};
 
 // ---------------------------------------------------------------------------
 // Compound export — Modal.Modal / Modal.Body / Modal.Header / Modal.Title /

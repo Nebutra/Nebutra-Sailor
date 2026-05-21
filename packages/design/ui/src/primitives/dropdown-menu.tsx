@@ -11,18 +11,22 @@ type DropdownMenuTriggerProps = React.ComponentProps<typeof BaseMenu.Trigger> & 
   asChild?: boolean;
 };
 
-const DropdownMenuTrigger = React.forwardRef<HTMLButtonElement, DropdownMenuTriggerProps>(
-  ({ asChild, children, render, ...props }, ref) => {
-    const renderElement = asChild && React.isValidElement(children) ? children : render;
-    return (
-      <BaseMenu.Trigger
-        ref={ref}
-        render={renderElement as React.ComponentProps<typeof BaseMenu.Trigger>["render"]}
-        {...(renderElement ? props : { ...props, children })}
-      />
-    );
-  },
-);
+const DropdownMenuTrigger = ({
+  asChild,
+  children,
+  render,
+  ref,
+  ...props
+}: DropdownMenuTriggerProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
+  const renderElement = asChild && React.isValidElement(children) ? children : render;
+  return (
+    <BaseMenu.Trigger
+      ref={ref}
+      render={renderElement as React.ComponentProps<typeof BaseMenu.Trigger>["render"]}
+      {...(renderElement ? props : { ...props, children })}
+    />
+  );
+};
 DropdownMenuTrigger.displayName = "DropdownMenuTrigger";
 
 const DropdownMenuGroup = BaseMenu.Group;
@@ -33,12 +37,15 @@ const DropdownMenuSub = BaseMenu.SubmenuRoot;
 
 const DropdownMenuRadioGroup = BaseMenu.RadioGroup;
 
-const DropdownMenuSubTrigger = React.forwardRef<
-  React.ElementRef<typeof BaseMenu.SubmenuTrigger>,
-  React.ComponentPropsWithoutRef<typeof BaseMenu.SubmenuTrigger> & {
-    inset?: boolean;
-  }
->(({ className, inset, children, ...props }, ref) => (
+const DropdownMenuSubTrigger = ({
+  className,
+  inset,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseMenu.SubmenuTrigger> & {
+  inset?: boolean;
+} & { ref?: React.Ref<React.ElementRef<typeof BaseMenu.SubmenuTrigger>> | undefined }) => (
   <BaseMenu.SubmenuTrigger
     ref={ref}
     className={cn(
@@ -51,13 +58,16 @@ const DropdownMenuSubTrigger = React.forwardRef<
     {children}
     <ChevronRight className="ml-auto size-4" />
   </BaseMenu.SubmenuTrigger>
-));
+);
 DropdownMenuSubTrigger.displayName = "DropdownMenuSubTrigger";
 
-const DropdownMenuSubContent = React.forwardRef<
-  React.ElementRef<typeof BaseMenu.Popup>,
-  React.ComponentPropsWithoutRef<typeof BaseMenu.Popup>
->(({ className, ...props }, ref) => (
+const DropdownMenuSubContent = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseMenu.Popup> & {
+  ref?: React.Ref<React.ElementRef<typeof BaseMenu.Popup>> | undefined;
+}) => (
   <BaseMenu.Portal>
     <BaseMenu.Positioner>
       <BaseMenu.Popup
@@ -70,7 +80,7 @@ const DropdownMenuSubContent = React.forwardRef<
       />
     </BaseMenu.Positioner>
   </BaseMenu.Portal>
-));
+);
 DropdownMenuSubContent.displayName = "DropdownMenuSubContent";
 
 export interface DropdownMenuContentProps
@@ -81,41 +91,45 @@ export interface DropdownMenuContentProps
   side?: React.ComponentProps<typeof BaseMenu.Positioner>["side"];
 }
 
-const DropdownMenuContent = React.forwardRef<
-  React.ElementRef<typeof BaseMenu.Popup>,
-  DropdownMenuContentProps
->(
-  (
-    { className, sideOffset = 4, align = "center", alignOffset = 0, side = "bottom", ...props },
-    ref,
-  ) => (
-    <BaseMenu.Portal>
-      <BaseMenu.Positioner
-        sideOffset={sideOffset}
-        align={align}
-        alignOffset={alignOffset}
-        side={side}
-      >
-        <BaseMenu.Popup
-          ref={ref}
-          className={cn(
-            "z-50 min-w-32 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md p-1 text-popover-foreground shadow-xl transition-[opacity,transform,display] duration-flow ease-out outline-none data-[starting-style]:zoom-out-95 data-[ending-style]:zoom-out-95 data-[starting-style]:fade-out-0 data-[ending-style]:fade-out-0",
-            className,
-          )}
-          {...props}
-        />
-      </BaseMenu.Positioner>
-    </BaseMenu.Portal>
-  ),
+const DropdownMenuContent = ({
+  className,
+  sideOffset = 4,
+  align = "center",
+  alignOffset = 0,
+  side = "bottom",
+  ref,
+  ...props
+}: DropdownMenuContentProps & {
+  ref?: React.Ref<React.ElementRef<typeof BaseMenu.Popup>> | undefined;
+}) => (
+  <BaseMenu.Portal>
+    <BaseMenu.Positioner
+      sideOffset={sideOffset}
+      align={align}
+      alignOffset={alignOffset}
+      side={side}
+    >
+      <BaseMenu.Popup
+        ref={ref}
+        className={cn(
+          "z-50 min-w-32 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md p-1 text-popover-foreground shadow-xl transition-[opacity,transform,display] duration-flow ease-out outline-none data-[starting-style]:zoom-out-95 data-[ending-style]:zoom-out-95 data-[starting-style]:fade-out-0 data-[ending-style]:fade-out-0",
+          className,
+        )}
+        {...props}
+      />
+    </BaseMenu.Positioner>
+  </BaseMenu.Portal>
 );
 DropdownMenuContent.displayName = "DropdownMenuContent";
 
-const DropdownMenuItem = React.forwardRef<
-  React.ElementRef<typeof BaseMenu.Item>,
-  React.ComponentPropsWithoutRef<typeof BaseMenu.Item> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...props }, ref) => (
+const DropdownMenuItem = ({
+  className,
+  inset,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseMenu.Item> & {
+  inset?: boolean;
+} & { ref?: React.Ref<React.ElementRef<typeof BaseMenu.Item>> | undefined }) => (
   <BaseMenu.Item
     ref={ref}
     className={cn(
@@ -125,13 +139,18 @@ const DropdownMenuItem = React.forwardRef<
     )}
     {...props}
   />
-));
+);
 DropdownMenuItem.displayName = "DropdownMenuItem";
 
-const DropdownMenuCheckboxItem = React.forwardRef<
-  React.ElementRef<typeof BaseMenu.CheckboxItem>,
-  React.ComponentPropsWithoutRef<typeof BaseMenu.CheckboxItem>
->(({ className, children, checked, ...props }, ref) => (
+const DropdownMenuCheckboxItem = ({
+  className,
+  children,
+  checked,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseMenu.CheckboxItem> & {
+  ref?: React.Ref<React.ElementRef<typeof BaseMenu.CheckboxItem>> | undefined;
+}) => (
   <BaseMenu.CheckboxItem
     ref={ref}
     className={cn(
@@ -148,13 +167,17 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     </span>
     {children}
   </BaseMenu.CheckboxItem>
-));
+);
 DropdownMenuCheckboxItem.displayName = "DropdownMenuCheckboxItem";
 
-const DropdownMenuRadioItem = React.forwardRef<
-  React.ElementRef<typeof BaseMenu.RadioItem>,
-  React.ComponentPropsWithoutRef<typeof BaseMenu.RadioItem>
->(({ className, children, ...props }, ref) => (
+const DropdownMenuRadioItem = ({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseMenu.RadioItem> & {
+  ref?: React.Ref<React.ElementRef<typeof BaseMenu.RadioItem>> | undefined;
+}) => (
   <BaseMenu.RadioItem
     ref={ref}
     className={cn(
@@ -170,34 +193,40 @@ const DropdownMenuRadioItem = React.forwardRef<
     </span>
     {children}
   </BaseMenu.RadioItem>
-));
+);
 DropdownMenuRadioItem.displayName = "DropdownMenuRadioItem";
 
-const DropdownMenuLabel = React.forwardRef<
-  React.ElementRef<typeof BaseMenu.GroupLabel>,
-  React.ComponentPropsWithoutRef<typeof BaseMenu.GroupLabel> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...props }, ref) => (
+const DropdownMenuLabel = ({
+  className,
+  inset,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseMenu.GroupLabel> & {
+  inset?: boolean;
+} & { ref?: React.Ref<React.ElementRef<typeof BaseMenu.GroupLabel>> | undefined }) => (
   <BaseMenu.GroupLabel
     ref={ref}
     className={cn("px-2 py-1.5 text-sm font-semibold", inset && "pl-8", className)}
     {...props}
   />
-));
+);
 DropdownMenuLabel.displayName = "DropdownMenuLabel";
 
-const DropdownMenuSeparator = React.forwardRef<
-  React.ElementRef<typeof BaseMenu.Separator>,
-  React.ComponentPropsWithoutRef<typeof BaseMenu.Separator>
->(({ className, orientation = "horizontal", ...props }, ref) => (
+const DropdownMenuSeparator = ({
+  className,
+  orientation = "horizontal",
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseMenu.Separator> & {
+  ref?: React.Ref<React.ElementRef<typeof BaseMenu.Separator>> | undefined;
+}) => (
   <BaseMenu.Separator
     ref={ref}
     orientation={orientation}
     className={cn("-mx-1 my-1 h-px bg-muted", className)}
     {...props}
   />
-));
+);
 DropdownMenuSeparator.displayName = "DropdownMenuSeparator";
 
 const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {

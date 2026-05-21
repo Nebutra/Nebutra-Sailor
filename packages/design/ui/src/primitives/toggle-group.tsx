@@ -51,7 +51,7 @@ interface ToggleGroupContextValue extends VariantProps<typeof toggleGroupItemVar
 const ToggleGroupContext = React.createContext<ToggleGroupContextValue | null>(null);
 
 function useToggleGroup() {
-  const context = React.useContext(ToggleGroupContext);
+  const context = React.use(ToggleGroupContext);
   if (!context) {
     throw new Error("ToggleGroup internal components must be used within a ToggleGroup");
   }
@@ -69,50 +69,46 @@ export interface ToggleGroupProps
   disabled?: boolean;
 }
 
-const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      type = "single",
-      value: controlledValue,
-      defaultValue,
-      onValueChange,
-      disabled,
-      children,
-      ...props
+const ToggleGroup = ({
+  className,
+  variant,
+  size,
+  type = "single",
+  value: controlledValue,
+  defaultValue,
+  onValueChange,
+  disabled,
+  children,
+  ref,
+  ...props
+}: ToggleGroupProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const [uncontrolledValue, setUncontrolledValue] = React.useState<string | string[]>(
+    defaultValue !== undefined ? defaultValue : type === "single" ? "" : [],
+  );
+
+  const isControlled = controlledValue !== undefined;
+  const value = isControlled ? controlledValue : uncontrolledValue;
+
+  const handleValueChange = React.useCallback(
+    (newValue: string | string[]) => {
+      if (!isControlled) {
+        setUncontrolledValue(newValue);
+      }
+      onValueChange?.(newValue);
     },
-    ref,
-  ) => {
-    const [uncontrolledValue, setUncontrolledValue] = React.useState<string | string[]>(
-      defaultValue !== undefined ? defaultValue : type === "single" ? "" : [],
-    );
+    [isControlled, onValueChange],
+  );
 
-    const isControlled = controlledValue !== undefined;
-    const value = isControlled ? controlledValue : uncontrolledValue;
-
-    const handleValueChange = React.useCallback(
-      (newValue: string | string[]) => {
-        if (!isControlled) {
-          setUncontrolledValue(newValue);
-        }
-        onValueChange?.(newValue);
-      },
-      [isControlled, onValueChange],
-    );
-
-    return (
-      <div ref={ref} className={cn(toggleGroupVariants({ variant }), className)} {...props}>
-        <ToggleGroupContext.Provider
-          value={{ variant, size, type, value, onValueChange: handleValueChange, disabled }}
-        >
-          {children}
-        </ToggleGroupContext.Provider>
-      </div>
-    );
-  },
-);
+  return (
+    <div ref={ref} className={cn(toggleGroupVariants({ variant }), className)} {...props}>
+      <ToggleGroupContext.Provider
+        value={{ variant, size, type, value, onValueChange: handleValueChange, disabled }}
+      >
+        {children}
+      </ToggleGroupContext.Provider>
+    </div>
+  );
+};
 ToggleGroup.displayName = "ToggleGroup";
 
 export interface ToggleGroupItemProps
@@ -121,60 +117,66 @@ export interface ToggleGroupItemProps
   value: string;
 }
 
-const ToggleGroupItem = React.forwardRef<HTMLButtonElement, ToggleGroupItemProps>(
-  ({ className, variant, size, value, children, ...props }, ref) => {
-    const context = useToggleGroup();
-    const isDisabled = context.disabled || props.disabled;
+const ToggleGroupItem = ({
+  className,
+  variant,
+  size,
+  value,
+  children,
+  ref,
+  ...props
+}: ToggleGroupItemProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
+  const context = useToggleGroup();
+  const isDisabled = context.disabled || props.disabled;
 
-    const isSelected = React.useMemo(() => {
-      if (context.type === "single") {
-        return context.value === value;
-      }
-      return Array.isArray(context.value) && context.value.includes(value);
-    }, [context.value, context.type, value]);
+  const isSelected = React.useMemo(() => {
+    if (context.type === "single") {
+      return context.value === value;
+    }
+    return Array.isArray(context.value) && context.value.includes(value);
+  }, [context.value, context.type, value]);
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (isDisabled) return;
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isDisabled) return;
 
-      if (context.type === "single") {
-        // If clicking an already selected item in single mode, we often allow deselect.
-        // Standard radix-ui also does this unless forced otherwise.
-        context.onValueChange(isSelected ? "" : value);
+    if (context.type === "single") {
+      // If clicking an already selected item in single mode, we often allow deselect.
+      // Standard radix-ui also does this unless forced otherwise.
+      context.onValueChange(isSelected ? "" : value);
+    } else {
+      const currentArray = Array.isArray(context.value) ? context.value : [];
+      if (isSelected) {
+        context.onValueChange(currentArray.filter((v) => v !== value));
       } else {
-        const currentArray = Array.isArray(context.value) ? context.value : [];
-        if (isSelected) {
-          context.onValueChange(currentArray.filter((v) => v !== value));
-        } else {
-          context.onValueChange([...currentArray, value]);
-        }
+        context.onValueChange([...currentArray, value]);
       }
+    }
 
-      props.onClick?.(e);
-    };
+    props.onClick?.(e);
+  };
 
-    return (
-      <button
-        ref={ref}
-        type="button"
-        disabled={isDisabled}
-        data-state={isSelected ? "on" : "off"}
-        aria-pressed={isSelected}
-        className={cn(
-          toggleGroupItemVariants({
-            variant: variant ?? context.variant,
-            size: size ?? context.size,
-          }),
-          className,
-          "focus:z-10", // Prevent focus outline from being clipped by siblings
-        )}
-        onClick={handleClick}
-        {...props}
-      >
-        {children}
-      </button>
-    );
-  },
-);
+  return (
+    <button
+      ref={ref}
+      type="button"
+      disabled={isDisabled}
+      data-state={isSelected ? "on" : "off"}
+      aria-pressed={isSelected}
+      className={cn(
+        toggleGroupItemVariants({
+          variant: variant ?? context.variant,
+          size: size ?? context.size,
+        }),
+        className,
+        "focus:z-10", // Prevent focus outline from being clipped by siblings
+      )}
+      onClick={handleClick}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
 ToggleGroupItem.displayName = "ToggleGroupItem";
 
 export { ToggleGroup, ToggleGroupItem, toggleGroupItemVariants, toggleGroupVariants };

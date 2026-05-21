@@ -67,7 +67,7 @@ interface ChoiceboxContextType {
 }
 const ChoiceboxContext = React.createContext<ChoiceboxContextType | null>(null);
 function useChoiceboxContext(): ChoiceboxContextType {
-  const context = React.useContext(ChoiceboxContext);
+  const context = React.use(ChoiceboxContext);
   if (!context) {
     throw new Error("ChoiceboxGroup.Item must be used within a ChoiceboxGroup");
   }

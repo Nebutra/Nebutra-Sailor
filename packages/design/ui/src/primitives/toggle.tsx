@@ -97,135 +97,131 @@ function getToggleStyle(
   } satisfies ToggleCssVars;
 }
 
-const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>(
-  (
-    {
-      "aria-label": ariaLabel,
-      "aria-labelledby": ariaLabelledBy,
-      checked: checkedProp,
-      children,
-      className,
-      color = "default",
-      defaultChecked = false,
-      direction = "label-first",
-      disabled,
-      icon,
-      id,
-      labelCasing = "title",
-      onChange,
-      onCheckedChange,
-      size = "small",
-      style,
-      ...inputProps
-    },
-    ref,
-  ) => {
-    const isControlled = checkedProp !== undefined;
-    const [internalChecked, setInternalChecked] = React.useState(defaultChecked);
-    const generatedId = React.useId();
-    const inputId = id ?? generatedId;
-    const checked = isControlled ? checkedProp : internalChecked;
-    const hasVisibleLabel = children != null;
-    const visualDirection = direction === "switch-last" ? "label-first" : direction;
+const Toggle = ({
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  checked: checkedProp,
+  children,
+  className,
+  color = "default",
+  defaultChecked = false,
+  direction = "label-first",
+  disabled,
+  icon,
+  id,
+  labelCasing = "title",
+  onChange,
+  onCheckedChange,
+  size = "small",
+  style,
+  ref,
+  ...inputProps
+}: ToggleProps & { ref?: React.Ref<HTMLInputElement> | undefined }) => {
+  const isControlled = checkedProp !== undefined;
+  const [internalChecked, setInternalChecked] = React.useState(defaultChecked);
+  const generatedId = React.useId();
+  const inputId = id ?? generatedId;
+  const checked = isControlled ? checkedProp : internalChecked;
+  const hasVisibleLabel = children != null;
+  const visualDirection = direction === "switch-last" ? "label-first" : direction;
 
-    React.useEffect(() => {
-      if (
-        process.env.NODE_ENV !== "production" &&
-        !hasVisibleLabel &&
-        ariaLabel === undefined &&
-        ariaLabelledBy === undefined
-      ) {
-        globalThis.console.warn(
-          "Toggle requires an accessible name. Pass children, aria-label, or aria-labelledby.",
-        );
-      }
-    }, [ariaLabel, ariaLabelledBy, hasVisibleLabel]);
+  React.useEffect(() => {
+    if (
+      process.env.NODE_ENV !== "production" &&
+      !hasVisibleLabel &&
+      ariaLabel === undefined &&
+      ariaLabelledBy === undefined
+    ) {
+      globalThis.console.warn(
+        "Toggle requires an accessible name. Pass children, aria-label, or aria-labelledby.",
+      );
+    }
+  }, [ariaLabel, ariaLabelledBy, hasVisibleLabel]);
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-      const nextChecked = event.currentTarget.checked;
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const nextChecked = event.currentTarget.checked;
 
-      if (!isControlled) {
-        setInternalChecked(nextChecked);
-      }
-
-      onCheckedChange?.(nextChecked, event);
-      onChange?.(nextChecked, event);
+    if (!isControlled) {
+      setInternalChecked(nextChecked);
     }
 
-    const accessibilityProps = {
-      ...(hasVisibleLabel || ariaLabel === undefined ? {} : { "aria-label": ariaLabel }),
-      ...(ariaLabelledBy === undefined ? {} : { "aria-labelledby": ariaLabelledBy }),
-    };
-    const checkedProps = isControlled ? { checked } : { defaultChecked };
+    onCheckedChange?.(nextChecked, event);
+    onChange?.(nextChecked, event);
+  }
 
-    const control = (
-      <label className="relative inline-flex shrink-0" htmlFor={inputId}>
-        <input
-          ref={ref}
-          className="peer sr-only"
-          disabled={disabled}
-          id={inputId}
-          onChange={handleChange}
-          type="checkbox"
-          {...accessibilityProps}
-          {...checkedProps}
-          {...inputProps}
-        />
+  const accessibilityProps = {
+    ...(hasVisibleLabel || ariaLabel === undefined ? {} : { "aria-label": ariaLabel }),
+    ...(ariaLabelledBy === undefined ? {} : { "aria-labelledby": ariaLabelledBy }),
+  };
+  const checkedProps = isControlled ? { checked } : { defaultChecked };
+
+  const control = (
+    <label className="relative inline-flex shrink-0" htmlFor={inputId}>
+      <input
+        ref={ref}
+        className="peer sr-only"
+        disabled={disabled}
+        id={inputId}
+        onChange={handleChange}
+        type="checkbox"
+        {...accessibilityProps}
+        {...checkedProps}
+        {...inputProps}
+      />
+      <span
+        aria-hidden="true"
+        className={cn(
+          "relative inline-flex h-[var(--toggle-track-height)] w-[var(--toggle-track-width)] items-center rounded-[var(--toggle-radius)] border bg-[var(--toggle-track-off)] p-px",
+          "border-[var(--toggle-track-border)] transition-[background-color,border-color] duration-[var(--toggle-duration)] ease-[var(--toggle-easing)]",
+          "peer-checked:bg-[var(--toggle-track-on)]",
+          "peer-checked:[&>span]:translate-x-[var(--toggle-thumb-translate)] peer-checked:[&>span]:text-[var(--toggle-icon-on)]",
+          "peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background",
+          "peer-disabled:cursor-not-allowed peer-disabled:opacity-60",
+          "motion-reduce:transition-none",
+        )}
+      >
         <span
-          aria-hidden="true"
           className={cn(
-            "relative inline-flex h-[var(--toggle-track-height)] w-[var(--toggle-track-width)] items-center rounded-[var(--toggle-radius)] border bg-[var(--toggle-track-off)] p-px",
-            "border-[var(--toggle-track-border)] transition-[background-color,border-color] duration-[var(--toggle-duration)] ease-[var(--toggle-easing)]",
-            "peer-checked:bg-[var(--toggle-track-on)]",
-            "peer-checked:[&>span]:translate-x-[var(--toggle-thumb-translate)] peer-checked:[&>span]:text-[var(--toggle-icon-on)]",
-            "peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background",
-            "peer-disabled:cursor-not-allowed peer-disabled:opacity-60",
-            "motion-reduce:transition-none",
+            "flex size-[var(--toggle-thumb-size)] translate-x-0 items-center justify-center rounded-[var(--toggle-radius)] bg-[var(--toggle-thumb)] shadow-[var(--toggle-thumb-shadow)]",
+            "text-[var(--toggle-icon-off)] transition-[color,transform] duration-[var(--toggle-duration)] ease-[var(--toggle-easing)]",
+            "motion-reduce:transition-none [&_svg]:size-[var(--toggle-icon-size)]",
           )}
         >
-          <span
-            className={cn(
-              "flex size-[var(--toggle-thumb-size)] translate-x-0 items-center justify-center rounded-[var(--toggle-radius)] bg-[var(--toggle-thumb)] shadow-[var(--toggle-thumb-shadow)]",
-              "text-[var(--toggle-icon-off)] transition-[color,transform] duration-[var(--toggle-duration)] ease-[var(--toggle-easing)]",
-              "motion-reduce:transition-none [&_svg]:size-[var(--toggle-icon-size)]",
-            )}
-          >
-            {icon != null && (
-              <span className="inline-flex">{checked ? icon.checked : icon.unchecked}</span>
-            )}
-          </span>
+          {icon != null && (
+            <span className="inline-flex">{checked ? icon.checked : icon.unchecked}</span>
+          )}
         </span>
-      </label>
-    );
-
-    const label = hasVisibleLabel ? (
-      <label
-        data-label-casing={labelCasing}
-        htmlFor={inputId}
-        className={cn(
-          "select-none font-medium text-[length:var(--toggle-label-font-size)] text-muted-foreground leading-none",
-        )}
-      >
-        {children}
-      </label>
-    ) : null;
-
-    return (
-      <span
-        className={cn(
-          "inline-flex items-center gap-[var(--toggle-gap)] py-[var(--toggle-padding-y)]",
-          disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
-          className,
-        )}
-        style={getToggleStyle(size, color, style)}
-      >
-        {visualDirection === "label-first" && label}
-        {control}
-        {visualDirection === "switch-first" && label}
       </span>
-    );
-  },
-);
+    </label>
+  );
+
+  const label = hasVisibleLabel ? (
+    <label
+      data-label-casing={labelCasing}
+      htmlFor={inputId}
+      className={cn(
+        "select-none font-medium text-[length:var(--toggle-label-font-size)] text-muted-foreground leading-none",
+      )}
+    >
+      {children}
+    </label>
+  ) : null;
+
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-[var(--toggle-gap)] py-[var(--toggle-padding-y)]",
+        disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
+        className,
+      )}
+      style={getToggleStyle(size, color, style)}
+    >
+      {visualDirection === "label-first" && label}
+      {control}
+      {visualDirection === "switch-first" && label}
+    </span>
+  );
+};
 
 Toggle.displayName = "Toggle";
 

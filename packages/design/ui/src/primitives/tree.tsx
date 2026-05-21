@@ -7,8 +7,8 @@ import {
   createContext,
   type HTMLAttributes,
   type ReactNode,
+  use,
   useCallback,
-  useContext,
   useId,
   useState,
 } from "react";
@@ -30,7 +30,7 @@ type TreeContextType = {
 const TreeContext = createContext<TreeContextType | undefined>(undefined);
 
 const useTree = () => {
-  const context = useContext(TreeContext);
+  const context = use(TreeContext);
   if (!context) {
     throw new Error("Tree components must be used within a TreeProvider");
   }
@@ -47,7 +47,7 @@ type TreeNodeContextType = {
 const TreeNodeContext = createContext<TreeNodeContextType | undefined>(undefined);
 
 const useTreeNode = () => {
-  const context = useContext(TreeNodeContext);
+  const context = use(TreeNodeContext);
   if (!context) {
     throw new Error("TreeNode components must be used within a TreeNode");
   }

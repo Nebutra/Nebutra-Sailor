@@ -3,11 +3,11 @@
 import { ChevronDown, LockClosed } from "@nebutra/icons";
 import {
   createContext,
-  forwardRef,
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
-  useContext,
+  type Ref,
+  use,
   useMemo,
 } from "react";
 import { cn } from "../utils/cn";
@@ -74,7 +74,7 @@ type MenuContextValue = { position: MenuPosition };
 const MenuContext = createContext<MenuContextValue | null>(null);
 
 function useMenuPosition(): MenuPosition {
-  return useContext(MenuContext)?.position ?? "bottom-start";
+  return use(MenuContext)?.position ?? "bottom-start";
 }
 
 // ---------------------------------------------------------------------------
@@ -130,25 +130,23 @@ const GEIST_SIZE_TO_NEBUTRA = {
   large: "lg",
 } as const;
 
-export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(function MenuButton(
-  {
-    showChevron,
-    type = "primary",
-    variant,
-    size = "medium",
-    shape = "default",
-    svgOnly,
-    children,
-    className,
-    onClick,
-    prefix,
-    suffix,
-    loading,
-    "aria-label": ariaLabel,
-    ...rest
-  },
+export const MenuButton = function MenuButton({
+  showChevron,
+  type = "primary",
+  variant,
+  size = "medium",
+  shape = "default",
+  svgOnly,
+  children,
+  className,
+  onClick,
+  prefix,
+  suffix,
+  loading,
+  "aria-label": ariaLabel,
   ref,
-) {
+  ...rest
+}: MenuButtonProps & { ref?: Ref<HTMLButtonElement> | undefined }) {
   const isUnstyled = variant === "unstyled";
 
   // For the bare-button path, narrow to just the HTML attributes we know are
@@ -199,7 +197,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
       )}
     </DropdownMenuTrigger>
   );
-});
+};
 
 // ---------------------------------------------------------------------------
 // Menu (the popup)
@@ -210,10 +208,14 @@ export interface MenuProps extends Omit<DropdownMenuContentProps, "side" | "alig
   width?: number | string;
 }
 
-export const Menu = forwardRef<HTMLDivElement, MenuProps>(function Menu(
-  { width, style, className, children, ...rest },
+export const Menu = function Menu({
+  width,
+  style,
+  className,
+  children,
   ref,
-) {
+  ...rest
+}: MenuProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   const { side, align } = splitPosition(useMenuPosition());
   const widthStyle = width !== undefined ? { width } : {};
   return (
@@ -228,7 +230,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>(function Menu(
       {children}
     </DropdownMenuContent>
   );
-});
+};
 
 // ---------------------------------------------------------------------------
 // MenuItem
@@ -254,10 +256,17 @@ export interface MenuItemProps {
   children: ReactNode;
 }
 
-export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(function MenuItem(
-  { onClick, href, disabled, prefix, suffix, type = "default", className, children },
+export const MenuItem = function MenuItem({
   ref,
-) {
+  onClick,
+  href,
+  disabled,
+  prefix,
+  suffix,
+  type = "default",
+  className,
+  children,
+}: MenuItemProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   const content = (
     <span className="flex flex-1 items-center gap-2">
       {prefix && (
@@ -306,7 +315,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(function MenuI
       {content}
     </DropdownMenuItem>
   );
-});
+};
 
 // ---------------------------------------------------------------------------
 // MenuLink — shortcut for href-only items
@@ -316,9 +325,12 @@ export interface MenuLinkProps extends Omit<MenuItemProps, "onClick" | "href"> {
   href: string;
 }
 
-export const MenuLink = forwardRef<HTMLDivElement, MenuLinkProps>(function MenuLink(props, ref) {
+export const MenuLink = function MenuLink({
+  ref,
+  ...props
+}: MenuLinkProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   return <MenuItem ref={ref} {...props} />;
-});
+};
 
 // ---------------------------------------------------------------------------
 // MenuItemLocked — permission-gated; visually disabled + lock icon suffix
@@ -329,15 +341,17 @@ export interface MenuItemLockedProps extends Omit<MenuItemProps, "disabled" | "t
   onClick?: () => void;
 }
 
-export const MenuItemLocked = forwardRef<HTMLDivElement, MenuItemLockedProps>(
-  function MenuItemLocked({ children, ...rest }, ref) {
-    return (
-      <MenuItem ref={ref} disabled suffix={<LockClosed aria-hidden="true" />} {...rest}>
-        {children}
-      </MenuItem>
-    );
-  },
-);
+export const MenuItemLocked = function MenuItemLocked({
+  children,
+  ref,
+  ...rest
+}: MenuItemLockedProps & { ref?: Ref<HTMLDivElement> | undefined }) {
+  return (
+    <MenuItem ref={ref} disabled suffix={<LockClosed aria-hidden="true" />} {...rest}>
+      {children}
+    </MenuItem>
+  );
+};
 
 // ---------------------------------------------------------------------------
 // MenuSection — labeled group of items
@@ -352,10 +366,14 @@ export interface MenuSectionProps
   children: ReactNode;
 }
 
-export const MenuSection = forwardRef<HTMLDivElement, MenuSectionProps>(function MenuSection(
-  { title, showDivider, children, className, ...rest },
+export const MenuSection = function MenuSection({
+  title,
+  showDivider,
+  children,
+  className,
   ref,
-) {
+  ...rest
+}: MenuSectionProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   return (
     <>
       {showDivider && <DropdownMenuSeparator />}
@@ -369,4 +387,4 @@ export const MenuSection = forwardRef<HTMLDivElement, MenuSectionProps>(function
       </DropdownMenuGroup>
     </>
   );
-});
+};

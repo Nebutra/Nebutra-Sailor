@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { cn } from "../utils/cn";
 
 export interface LightRaysProps extends React.HTMLAttributes<HTMLDivElement> {
-  ref?: React.Ref<HTMLDivElement>;
+  ref?: React.Ref<HTMLDivElement> | undefined;
   /** Total number of animated rays */
   count?: number;
   /** Base colour used for the gradients */

@@ -2,7 +2,7 @@
 
 import { MagnifyingGlass as Search } from "@nebutra/icons";
 import { Command as CommandPrimitive } from "cmdk";
-import * as React from "react";
+import type * as React from "react";
 
 import { cn } from "../utils/cn";
 import { Dialog, DialogContent } from "./dialog";
@@ -89,17 +89,19 @@ const commandFrameClassName = cn(
  * </CommandDialog>
  * ```
  */
-const Command = React.forwardRef<React.ElementRef<typeof CommandPrimitive>, CommandProps>(
-  ({ className, ...props }, ref) => (
-    <CommandPrimitive
-      ref={ref}
-      className={cn(
-        "flex h-full w-full flex-col overflow-hidden rounded-[var(--radius-md)] bg-popover text-popover-foreground",
-        className,
-      )}
-      {...props}
-    />
-  ),
+const Command = ({
+  className,
+  ref,
+  ...props
+}: CommandProps & { ref?: React.Ref<React.ElementRef<typeof CommandPrimitive>> | undefined }) => (
+  <CommandPrimitive
+    ref={ref}
+    className={cn(
+      "flex h-full w-full flex-col overflow-hidden rounded-[var(--radius-md)] bg-popover text-popover-foreground",
+      className,
+    )}
+    {...props}
+  />
 );
 Command.displayName = CommandPrimitive.displayName;
 
@@ -113,10 +115,13 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   );
 };
 
-const CommandInput = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Input>,
-  CommandInputProps
->(({ className, ...props }, ref) => (
+const CommandInput = ({
+  className,
+  ref,
+  ...props
+}: CommandInputProps & {
+  ref?: React.Ref<React.ElementRef<typeof CommandPrimitive.Input>> | undefined;
+}) => (
   <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
     <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
     <CommandPrimitive.Input
@@ -128,33 +133,39 @@ const CommandInput = React.forwardRef<
       {...props}
     />
   </div>
-));
+);
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 
-const CommandList = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.List>,
-  CommandListProps
->(({ className, ...props }, ref) => (
+const CommandList = ({
+  className,
+  ref,
+  ...props
+}: CommandListProps & {
+  ref?: React.Ref<React.ElementRef<typeof CommandPrimitive.List>> | undefined;
+}) => (
   <CommandPrimitive.List
     ref={ref}
     className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden", className)}
     {...props}
   />
-));
+);
 CommandList.displayName = CommandPrimitive.List.displayName;
 
-const CommandEmpty = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Empty>,
-  CommandEmptyProps
->((props, ref) => (
-  <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />
-));
+const CommandEmpty = ({
+  ref,
+  ...props
+}: CommandEmptyProps & {
+  ref?: React.Ref<React.ElementRef<typeof CommandPrimitive.Empty>> | undefined;
+}) => <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />;
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
 
-const CommandGroup = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Group>,
-  CommandGroupProps
->(({ className, ...props }, ref) => (
+const CommandGroup = ({
+  className,
+  ref,
+  ...props
+}: CommandGroupProps & {
+  ref?: React.Ref<React.ElementRef<typeof CommandPrimitive.Group>> | undefined;
+}) => (
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
@@ -163,25 +174,31 @@ const CommandGroup = React.forwardRef<
     )}
     {...props}
   />
-));
+);
 CommandGroup.displayName = CommandPrimitive.Group.displayName;
 
-const CommandSeparator = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Separator>,
-  CommandSeparatorProps
->(({ className, ...props }, ref) => (
+const CommandSeparator = ({
+  className,
+  ref,
+  ...props
+}: CommandSeparatorProps & {
+  ref?: React.Ref<React.ElementRef<typeof CommandPrimitive.Separator>> | undefined;
+}) => (
   <CommandPrimitive.Separator
     ref={ref}
     className={cn("-mx-1 h-px bg-border", className)}
     {...props}
   />
-));
+);
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
 
-const CommandItem = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Item>,
-  CommandItemProps
->(({ className, ...props }, ref) => (
+const CommandItem = ({
+  className,
+  ref,
+  ...props
+}: CommandItemProps & {
+  ref?: React.Ref<React.ElementRef<typeof CommandPrimitive.Item>> | undefined;
+}) => (
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
@@ -190,7 +207,7 @@ const CommandItem = React.forwardRef<
     )}
     {...props}
   />
-));
+);
 CommandItem.displayName = CommandPrimitive.Item.displayName;
 
 const defaultResultsLabel = (count: number | undefined, search: string) => {
@@ -199,18 +216,24 @@ const defaultResultsLabel = (count: number | undefined, search: string) => {
   return `${count} command results available for ${search}.`;
 };
 
-const CommandResults = React.forwardRef<HTMLDivElement, CommandResultsProps>(
-  ({ className, count, search = "", label = defaultResultsLabel, children, ...props }, ref) => (
-    <div
-      ref={ref}
-      aria-atomic="true"
-      aria-live="polite"
-      className={cn("sr-only", className)}
-      {...props}
-    >
-      {children ?? label(count, search)}
-    </div>
-  ),
+const CommandResults = ({
+  className,
+  count,
+  search = "",
+  label = defaultResultsLabel,
+  children,
+  ref,
+  ...props
+}: CommandResultsProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <div
+    ref={ref}
+    aria-atomic="true"
+    aria-live="polite"
+    className={cn("sr-only", className)}
+    {...props}
+  >
+    {children ?? label(count, search)}
+  </div>
 );
 CommandResults.displayName = "CommandResults";
 

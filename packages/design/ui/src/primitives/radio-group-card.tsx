@@ -4,21 +4,28 @@
 
 import { Radio as BaseRadio } from "@base-ui/react/radio";
 import { RadioGroup as BaseRadioGroup } from "@base-ui/react/radio-group";
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "../utils/cn";
 
-const RadioGroupCard = React.forwardRef<
-  React.ComponentRef<typeof BaseRadioGroup>,
-  React.ComponentPropsWithoutRef<typeof BaseRadioGroup>
->(({ className, ...props }, ref) => {
+const RadioGroupCard = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseRadioGroup> & {
+  ref?: React.Ref<React.ComponentRef<typeof BaseRadioGroup>> | undefined;
+}) => {
   return <BaseRadioGroup className={cn("grid gap-2", className)} {...props} ref={ref} />;
-});
+};
 RadioGroupCard.displayName = "RadioGroupCard";
 
-const RadioGroupCardItem = React.forwardRef<
-  React.ComponentRef<typeof BaseRadio.Root>,
-  React.ComponentPropsWithoutRef<typeof BaseRadio.Root>
->(({ className, children, ...props }, ref) => {
+const RadioGroupCardItem = ({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseRadio.Root> & {
+  ref?: React.Ref<React.ComponentRef<typeof BaseRadio.Root>> | undefined;
+}) => {
   return (
     <BaseRadio.Root
       ref={ref}
@@ -31,7 +38,7 @@ const RadioGroupCardItem = React.forwardRef<
       {children}
     </BaseRadio.Root>
   );
-});
+};
 RadioGroupCardItem.displayName = "RadioGroupCardItem";
 
 export { RadioGroupCard, RadioGroupCardItem };

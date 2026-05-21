@@ -122,7 +122,7 @@ function computeMiddleTruncation(
   return best;
 }
 
-function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null): void {
+function assignRef<T>(ref: React.Ref<T> | undefined, value: T | null): void {
   if (typeof ref === "function") {
     ref(value);
     return;
@@ -136,116 +136,110 @@ function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null): void {
 const useIsomorphicLayoutEffect =
   typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
 
-export const MiddleTruncate = React.forwardRef<HTMLSpanElement, MiddleTruncateProps>(
-  (
-    {
-      value,
-      minStartChars = DEFAULT_MIN_START_CHARS,
-      minEndChars = DEFAULT_MIN_END_CHARS,
-      ellipsis = DEFAULT_ELLIPSIS,
-      className,
-      onCopy,
-      "aria-label": ariaLabel,
-      ...props
+export const MiddleTruncate = ({
+  value,
+  minStartChars = DEFAULT_MIN_START_CHARS,
+  minEndChars = DEFAULT_MIN_END_CHARS,
+  ellipsis = DEFAULT_ELLIPSIS,
+  className,
+  onCopy,
+  "aria-label": ariaLabel,
+  ref: forwardedRef,
+  ...props
+}: MiddleTruncateProps & { ref?: React.Ref<HTMLSpanElement> | undefined }) => {
+  const localRef = React.useRef<HTMLSpanElement | null>(null);
+  const [measurements, setMeasurements] = React.useState({ width: 0, font: "" });
+
+  const setRef = React.useCallback(
+    (node: HTMLSpanElement | null) => {
+      localRef.current = node;
+      assignRef(forwardedRef, node);
     },
-    forwardedRef,
-  ) => {
-    const localRef = React.useRef<HTMLSpanElement | null>(null);
-    const [measurements, setMeasurements] = React.useState({ width: 0, font: "" });
+    [forwardedRef],
+  );
 
-    const setRef = React.useCallback(
-      (node: HTMLSpanElement | null) => {
-        localRef.current = node;
-        assignRef(forwardedRef, node);
-      },
-      [forwardedRef],
-    );
+  useIsomorphicLayoutEffect(() => {
+    const node = localRef.current;
+    if (!node) return undefined;
 
-    useIsomorphicLayoutEffect(() => {
-      const node = localRef.current;
-      if (!node) return undefined;
+    let frame = 0;
+    const updateMeasurements = () => {
+      frame = 0;
+      const style = window.getComputedStyle(node);
+      const container = node.parentElement ?? node;
+      setMeasurements({
+        width: container.getBoundingClientRect().width,
+        font: getCanvasFont(style),
+      });
+    };
 
-      let frame = 0;
-      const updateMeasurements = () => {
-        frame = 0;
-        const style = window.getComputedStyle(node);
-        const container = node.parentElement ?? node;
-        setMeasurements({
-          width: container.getBoundingClientRect().width,
-          font: getCanvasFont(style),
-        });
-      };
+    const scheduleUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateMeasurements);
+    };
 
-      const scheduleUpdate = () => {
-        if (frame) return;
-        frame = window.requestAnimationFrame(updateMeasurements);
-      };
+    updateMeasurements();
 
-      updateMeasurements();
+    if (document.fonts) {
+      void document.fonts.ready.then(scheduleUpdate);
+    }
 
-      if (document.fonts) {
-        void document.fonts.ready.then(scheduleUpdate);
-      }
-
-      if (typeof ResizeObserver === "undefined") {
-        window.addEventListener("resize", scheduleUpdate);
-        return () => {
-          if (frame) window.cancelAnimationFrame(frame);
-          window.removeEventListener("resize", scheduleUpdate);
-        };
-      }
-
-      const observer = new ResizeObserver(scheduleUpdate);
-      observer.observe(node.parentElement ?? node);
-
+    if (typeof ResizeObserver === "undefined") {
+      window.addEventListener("resize", scheduleUpdate);
       return () => {
         if (frame) window.cancelAnimationFrame(frame);
-        observer.disconnect();
+        window.removeEventListener("resize", scheduleUpdate);
       };
-    }, []);
+    }
 
-    const parts = React.useMemo(
-      () =>
-        computeMiddleTruncation(
-          value,
-          measurements.width,
-          measurements.font,
-          ellipsis,
-          minStartChars,
-          minEndChars,
-        ),
-      [ellipsis, measurements.font, measurements.width, minEndChars, minStartChars, value],
-    );
+    const observer = new ResizeObserver(scheduleUpdate);
+    observer.observe(node.parentElement ?? node);
 
-    const handleCopy = React.useCallback(
-      (event: React.ClipboardEvent<HTMLSpanElement>) => {
-        onCopy?.(event);
-        if (event.defaultPrevented) return;
-        event.clipboardData.setData("text/plain", value);
-        event.preventDefault();
-      },
-      [onCopy, value],
-    );
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, []);
 
-    const visibleText = parts.truncated ? `${parts.head}${ellipsis}${parts.tail}` : value;
-    const hasAccessibleOverride = ariaLabel !== undefined;
-    const hideVisibleTextFromAssistiveTech = parts.truncated || hasAccessibleOverride;
+  const parts = React.useMemo(
+    () =>
+      computeMiddleTruncation(
+        value,
+        measurements.width,
+        measurements.font,
+        ellipsis,
+        minStartChars,
+        minEndChars,
+      ),
+    [ellipsis, measurements.font, measurements.width, minEndChars, minStartChars, value],
+  );
 
-    return (
-      <span
-        ref={setRef}
-        className={cn("inline-block min-w-0 max-w-full whitespace-nowrap", className)}
-        data-truncated={parts.truncated ? "" : undefined}
-        onCopy={handleCopy}
-        {...props}
-      >
-        <span aria-hidden={hideVisibleTextFromAssistiveTech ? "true" : undefined}>
-          {visibleText}
-        </span>
-        {hideVisibleTextFromAssistiveTech && <span className="sr-only">{ariaLabel ?? value}</span>}
-      </span>
-    );
-  },
-);
+  const handleCopy = React.useCallback(
+    (event: React.ClipboardEvent<HTMLSpanElement>) => {
+      onCopy?.(event);
+      if (event.defaultPrevented) return;
+      event.clipboardData.setData("text/plain", value);
+      event.preventDefault();
+    },
+    [onCopy, value],
+  );
+
+  const visibleText = parts.truncated ? `${parts.head}${ellipsis}${parts.tail}` : value;
+  const hasAccessibleOverride = ariaLabel !== undefined;
+  const hideVisibleTextFromAssistiveTech = parts.truncated || hasAccessibleOverride;
+
+  return (
+    <span
+      ref={setRef}
+      className={cn("inline-block min-w-0 max-w-full whitespace-nowrap", className)}
+      data-truncated={parts.truncated ? "" : undefined}
+      onCopy={handleCopy}
+      {...props}
+    >
+      <span aria-hidden={hideVisibleTextFromAssistiveTech ? "true" : undefined}>{visibleText}</span>
+      {hideVisibleTextFromAssistiveTech && <span className="sr-only">{ariaLabel ?? value}</span>}
+    </span>
+  );
+};
 
 MiddleTruncate.displayName = "MiddleTruncate";

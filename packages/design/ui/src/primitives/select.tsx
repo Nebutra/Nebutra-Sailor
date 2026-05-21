@@ -284,18 +284,24 @@ function Select(props: SelectProps) {
 
 Select.displayName = "Select";
 
-const SelectGroup = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BaseSelect.Group>
->(({ className, ...props }, ref) => (
-  <BaseSelect.Group ref={ref} className={cn("p-1", className)} {...props} />
-));
+const SelectGroup = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseSelect.Group> & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => <BaseSelect.Group ref={ref} className={cn("p-1", className)} {...props} />;
 SelectGroup.displayName = "SelectGroup";
 
-const SelectValue = React.forwardRef<
-  HTMLSpanElement,
-  React.ComponentPropsWithoutRef<typeof BaseSelect.Value> & { placeholder?: React.ReactNode }
->(({ className, placeholder, children, ...props }, ref) => {
+const SelectValue = ({
+  className,
+  placeholder,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseSelect.Value> & { placeholder?: React.ReactNode } & {
+  ref?: React.Ref<HTMLSpanElement> | undefined;
+}) => {
   return (
     <BaseSelect.Value ref={ref} className={cn("truncate", className)} {...props}>
       {children ||
@@ -305,13 +311,19 @@ const SelectValue = React.forwardRef<
         })}
     </BaseSelect.Value>
   );
-});
+};
 SelectValue.displayName = "SelectValue";
 
-const SelectTrigger = React.forwardRef<
-  HTMLButtonElement,
-  Omit<React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger>, "size"> & { size?: SelectSize }
->(({ className, children, size = "medium", style, ...props }, ref) => (
+const SelectTrigger = ({
+  className,
+  children,
+  size = "medium",
+  style,
+  ref,
+  ...props
+}: Omit<React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger>, "size"> & {
+  size?: SelectSize;
+} & { ref?: React.Ref<HTMLButtonElement> | undefined }) => (
   <BaseSelect.Trigger
     ref={ref}
     className={cn(
@@ -331,29 +343,31 @@ const SelectTrigger = React.forwardRef<
       <ChevronDown className="h-4 w-4 opacity-50" />
     </BaseSelect.Icon>
   </BaseSelect.Trigger>
-));
+);
 SelectTrigger.displayName = "SelectTrigger";
 
 // Mocking ScrollUp/Down since Base UI usually handles scrolling natively with CSS or uses different abstractions.
 // Returning null prevents API breakages for downstream consumers.
-const SelectScrollUpButton = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
->((_props, _ref) => null);
+const SelectScrollUpButton = ({
+  ref: _ref,
+}: React.ComponentPropsWithoutRef<"div"> & { ref?: React.Ref<HTMLDivElement> | undefined }) => null;
 SelectScrollUpButton.displayName = "SelectScrollUpButton";
 
-const SelectScrollDownButton = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
->((_props, _ref) => null);
+const SelectScrollDownButton = ({
+  ref: _ref,
+}: React.ComponentPropsWithoutRef<"div"> & { ref?: React.Ref<HTMLDivElement> | undefined }) => null;
 SelectScrollDownButton.displayName = "SelectScrollDownButton";
 
-const SelectContent = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BaseSelect.Popup> & {
-    position?: "item-aligned" | "popper";
-  }
->(({ className, children, position = "popper", style, ...props }, ref) => (
+const SelectContent = ({
+  className,
+  children,
+  position = "popper",
+  style,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseSelect.Popup> & {
+  position?: "item-aligned" | "popper";
+} & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
   <BaseSelect.Portal>
     <BaseSelect.Positioner
       alignItemWithTrigger={position === "item-aligned"}
@@ -374,13 +388,16 @@ const SelectContent = React.forwardRef<
       </BaseSelect.Popup>
     </BaseSelect.Positioner>
   </BaseSelect.Portal>
-));
+);
 SelectContent.displayName = "SelectContent";
 
-const SelectLabel = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BaseSelect.GroupLabel>
->(({ className, ...props }, ref) => (
+const SelectLabel = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseSelect.GroupLabel> & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <BaseSelect.GroupLabel
     ref={ref}
     className={cn(
@@ -389,13 +406,17 @@ const SelectLabel = React.forwardRef<
     )}
     {...props}
   />
-));
+);
 SelectLabel.displayName = "SelectLabel";
 
-const SelectItem = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BaseSelect.Item>
->(({ className, children, ...props }, ref) => (
+const SelectItem = ({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseSelect.Item> & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <BaseSelect.Item
     ref={ref}
     className={cn(
@@ -411,19 +432,19 @@ const SelectItem = React.forwardRef<
     </span>
     <BaseSelect.ItemText render={<span />}>{children}</BaseSelect.ItemText>
   </BaseSelect.Item>
-));
+);
 SelectItem.displayName = "SelectItem";
 
-const SelectSeparator: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<"div"> & React.RefAttributes<HTMLDivElement>
-> = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
-  ({ className, ...props }, ref) => (
-    <BaseSelect.Separator
-      ref={ref}
-      className={cn("-mx-1 my-1 h-px bg-muted", className)}
-      {...props}
-    />
-  ),
+const SelectSeparator = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<"div"> & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <BaseSelect.Separator
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    {...props}
+  />
 );
 SelectSeparator.displayName = "SelectSeparator";
 

@@ -91,98 +91,93 @@ function isInvalid(
   );
 }
 
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  (
-    {
-      className,
-      style,
-      size = "md",
-      label,
-      description,
-      error,
-      fieldClassName,
-      id,
-      onChange,
-      onValueChange,
-      "aria-describedby": ariaDescribedBy,
-      "aria-invalid": ariaInvalid,
-      ...props
+const Textarea = ({
+  className,
+  style,
+  size = "md",
+  label,
+  description,
+  error,
+  fieldClassName,
+  id,
+  onChange,
+  onValueChange,
+  "aria-describedby": ariaDescribedBy,
+  "aria-invalid": ariaInvalid,
+  ref,
+  ...props
+}: TextareaProps & { ref?: React.Ref<HTMLTextAreaElement> | undefined }) => {
+  const baseId = React.useId();
+  const textareaId = id ?? (label || description || typeof error === "string" ? baseId : undefined);
+  const resolvedInvalid = isInvalid(error, ariaInvalid);
+  const descriptionId = description && textareaId ? `${textareaId}-description` : undefined;
+  const errorId = typeof error === "string" && textareaId ? `${textareaId}-error` : undefined;
+  const describedBy = joinDescriptionIds(ariaDescribedBy, descriptionId, errorId);
+
+  const handleChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      onValueChange?.(event.currentTarget.value);
+      onChange?.(event);
     },
-    ref,
-  ) => {
-    const baseId = React.useId();
-    const textareaId =
-      id ?? (label || description || typeof error === "string" ? baseId : undefined);
-    const resolvedInvalid = isInvalid(error, ariaInvalid);
-    const descriptionId = description && textareaId ? `${textareaId}-description` : undefined;
-    const errorId = typeof error === "string" && textareaId ? `${textareaId}-error` : undefined;
-    const describedBy = joinDescriptionIds(ariaDescribedBy, descriptionId, errorId);
+    [onChange, onValueChange],
+  );
 
-    const handleChange = React.useCallback(
-      (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        onValueChange?.(event.currentTarget.value);
-        onChange?.(event);
-      },
-      [onChange, onValueChange],
-    );
+  const control = (
+    <textarea
+      className={cn(
+        "flex min-h-[var(--textarea-min-height)] w-full resize-y rounded-[var(--textarea-radius)] border border-input bg-background",
+        "px-[var(--textarea-padding-x)] py-[var(--textarea-padding-y)] text-[length:var(--textarea-font-size)] text-foreground shadow-[var(--shadow-xs)]",
+        "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
+        formControlFocusClassNames.textarea,
+        "disabled:cursor-not-allowed disabled:opacity-50 read-only:cursor-default read-only:bg-muted/70",
+        formControlInvalidClassNames.textarea,
+        className,
+      )}
+      ref={ref}
+      id={textareaId}
+      aria-invalid={resolvedInvalid || undefined}
+      aria-describedby={describedBy}
+      style={getTextareaStyle(size, style)}
+      onChange={handleChange}
+      {...props}
+    />
+  );
 
-    const control = (
-      <textarea
-        className={cn(
-          "flex min-h-[var(--textarea-min-height)] w-full resize-y rounded-[var(--textarea-radius)] border border-input bg-background",
-          "px-[var(--textarea-padding-x)] py-[var(--textarea-padding-y)] text-[length:var(--textarea-font-size)] text-foreground shadow-[var(--shadow-xs)]",
-          "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
-          formControlFocusClassNames.textarea,
-          "disabled:cursor-not-allowed disabled:opacity-50 read-only:cursor-default read-only:bg-muted/70",
-          formControlInvalidClassNames.textarea,
-          className,
-        )}
-        ref={ref}
-        id={textareaId}
-        aria-invalid={resolvedInvalid || undefined}
-        aria-describedby={describedBy}
-        style={getTextareaStyle(size, style)}
-        onChange={handleChange}
-        {...props}
-      />
-    );
+  if (!label && !description && typeof error !== "string" && !fieldClassName) {
+    return control;
+  }
 
-    if (!label && !description && typeof error !== "string" && !fieldClassName) {
-      return control;
-    }
+  return (
+    <div
+      data-slot="textarea-field"
+      className={cn("grid gap-[var(--textarea-field-gap)]", fieldClassName)}
+      style={getTextareaFieldStyle()}
+    >
+      {label && (
+        <label
+          htmlFor={textareaId}
+          className="text-[length:var(--textarea-label-size)] font-medium text-foreground"
+        >
+          {label}
+        </label>
+      )}
 
-    return (
-      <div
-        data-slot="textarea-field"
-        className={cn("grid gap-[var(--textarea-field-gap)]", fieldClassName)}
-        style={getTextareaFieldStyle()}
-      >
-        {label && (
-          <label
-            htmlFor={textareaId}
-            className="text-[length:var(--textarea-label-size)] font-medium text-foreground"
-          >
-            {label}
-          </label>
-        )}
+      {control}
 
-        {control}
+      {description && !error && (
+        <p id={descriptionId} className={fieldMessageClassName}>
+          {description}
+        </p>
+      )}
 
-        {description && !error && (
-          <p id={descriptionId} className={fieldMessageClassName}>
-            {description}
-          </p>
-        )}
-
-        {typeof error === "string" && (
-          <p id={errorId} role="alert" className={fieldErrorClassName}>
-            {error}
-          </p>
-        )}
-      </div>
-    );
-  },
-);
+      {typeof error === "string" && (
+        <p id={errorId} role="alert" className={fieldErrorClassName}>
+          {error}
+        </p>
+      )}
+    </div>
+  );
+};
 Textarea.displayName = "Textarea";
 
 export { Textarea };

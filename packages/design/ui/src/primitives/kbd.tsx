@@ -79,49 +79,55 @@ function getModifierSymbols(platform: Platform): Record<Modifier, string> {
   return platform === "apple" ? appleModifierSymbols : otherModifierSymbols;
 }
 
-const Kbd = React.forwardRef<HTMLElement, KbdProps>(
-  (
-    { meta, shift, alt, ctrl, small, children, className, "aria-label": ariaLabel, ...props },
-    ref,
-  ) => {
-    const platform = usePlatform();
-    const symbols = getModifierSymbols(platform);
-    const activeModifiers = modifierOrder.filter((modifier) => {
-      if (modifier === "meta") return meta;
-      if (modifier === "shift") return shift;
-      if (modifier === "alt") return alt;
-      return ctrl;
-    });
-    const normalizedKey = normalizeKey(children);
-    const visualParts = [
-      ...activeModifiers.map((modifier) => symbols[modifier]),
-      normalizedKey,
-    ].filter(Boolean);
-    const accessibleName =
-      ariaLabel ??
-      [
-        ...activeModifiers.map((modifier) => modifierLabels[modifier]),
-        typeof normalizedKey === "string" ? normalizedKey : undefined,
-      ]
-        .filter(Boolean)
-        .join(" ");
+const Kbd = ({
+  meta,
+  shift,
+  alt,
+  ctrl,
+  small,
+  children,
+  className,
+  "aria-label": ariaLabel,
+  ref,
+  ...props
+}: KbdProps & { ref?: React.Ref<HTMLElement> | undefined }) => {
+  const platform = usePlatform();
+  const symbols = getModifierSymbols(platform);
+  const activeModifiers = modifierOrder.filter((modifier) => {
+    if (modifier === "meta") return meta;
+    if (modifier === "shift") return shift;
+    if (modifier === "alt") return alt;
+    return ctrl;
+  });
+  const normalizedKey = normalizeKey(children);
+  const visualParts = [
+    ...activeModifiers.map((modifier) => symbols[modifier]),
+    normalizedKey,
+  ].filter(Boolean);
+  const accessibleName =
+    ariaLabel ??
+    [
+      ...activeModifiers.map((modifier) => modifierLabels[modifier]),
+      typeof normalizedKey === "string" ? normalizedKey : undefined,
+    ]
+      .filter(Boolean)
+      .join(" ");
 
-    return (
-      <kbd
-        ref={ref as React.Ref<HTMLElement>}
-        aria-label={accessibleName || undefined}
-        className={cn(
-          "inline-flex select-none items-center justify-center gap-0.5 rounded-[var(--radius-sm)] border border-border bg-muted font-mono font-medium leading-none text-muted-foreground tabular-nums",
-          small ? "min-h-4 min-w-4 px-1 py-0 text-xs" : "min-h-5 min-w-5 px-1.5 py-0.5 text-xs",
-          className,
-        )}
-        {...props}
-      >
-        {visualParts.join("")}
-      </kbd>
-    );
-  },
-);
+  return (
+    <kbd
+      ref={ref as React.Ref<HTMLElement>}
+      aria-label={accessibleName || undefined}
+      className={cn(
+        "inline-flex select-none items-center justify-center gap-0.5 rounded-[var(--radius-sm)] border border-border bg-muted font-mono font-medium leading-none text-muted-foreground tabular-nums",
+        small ? "min-h-4 min-w-4 px-1 py-0 text-xs" : "min-h-5 min-w-5 px-1.5 py-0.5 text-xs",
+        className,
+      )}
+      {...props}
+    >
+      {visualParts.join("")}
+    </kbd>
+  );
+};
 Kbd.displayName = "Kbd";
 
 export { Kbd };

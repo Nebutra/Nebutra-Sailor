@@ -1,7 +1,7 @@
 "use client";
 
 import { type HTMLMotionProps, motion, type Variants } from "framer-motion";
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "../utils/cn";
 
 export interface InteractiveCardProps extends Omit<HTMLMotionProps<"div">, "ref"> {
@@ -112,36 +112,42 @@ function AnimatedExportIcon() {
  * />
  * ```
  */
-export const InteractiveCard = React.forwardRef<HTMLDivElement, InteractiveCardProps>(
-  ({ className, step, title, description, icon, ...props }, ref) => {
-    return (
-      <motion.div
-        ref={ref}
-        className={cn(
-          "relative w-full max-w-sm overflow-hidden rounded-[var(--radius-2xl)] border bg-card p-8 text-center shadow-sm",
-          className,
-        )}
-        initial="initial"
-        whileHover="hover"
-        aria-label={`${title}: ${description}`}
-        role="group"
-        {...props}
-      >
-        {/* Render provided icon or default animated one */}
-        {icon || <AnimatedExportIcon />}
+export const InteractiveCard = ({
+  className,
+  step,
+  title,
+  description,
+  icon,
+  ref,
+  ...props
+}: InteractiveCardProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  return (
+    <motion.div
+      ref={ref}
+      className={cn(
+        "relative w-full max-w-sm overflow-hidden rounded-[var(--radius-2xl)] border bg-card p-8 text-center shadow-sm",
+        className,
+      )}
+      initial="initial"
+      whileHover="hover"
+      aria-label={`${title}: ${description}`}
+      role="group"
+      {...props}
+    >
+      {/* Render provided icon or default animated one */}
+      {icon || <AnimatedExportIcon />}
 
-        {/* Text Content */}
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-            {step}
-          </p>
-          <h3 className="text-2xl font-bold text-card-foreground">{title}</h3>
-          <p className="text-base text-muted-foreground">{description}</p>
-        </div>
-      </motion.div>
-    );
-  },
-);
+      {/* Text Content */}
+      <div className="flex flex-col items-center gap-2">
+        <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+          {step}
+        </p>
+        <h3 className="text-2xl font-bold text-card-foreground">{title}</h3>
+        <p className="text-base text-muted-foreground">{description}</p>
+      </div>
+    </motion.div>
+  );
+};
 
 InteractiveCard.displayName = "InteractiveCard";
 

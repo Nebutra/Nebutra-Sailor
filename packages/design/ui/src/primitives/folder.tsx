@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import { cn } from "../utils/cn";
 
 /* -------------------------------------------------------------------------- *\
@@ -217,10 +217,14 @@ function buildPaperVariants(s: FolderSizeTokens): {
 // Component
 // ---------------------------------------------------------------------------
 
-export const Folder = forwardRef<HTMLDivElement | HTMLButtonElement, FolderProps>(function Folder(
-  { color = "blue", size = "lg", label, onClick, className },
+export const Folder = function Folder({
   ref,
-) {
+  color = "blue",
+  size = "lg",
+  label,
+  onClick,
+  className,
+}: FolderProps & { ref?: Ref<HTMLDivElement | HTMLButtonElement> | undefined }) {
   const c = colorMap[color];
   const s = sizeMap[size];
   const v = buildPaperVariants(s);
@@ -321,4 +325,4 @@ export const Folder = forwardRef<HTMLDivElement | HTMLButtonElement, FolderProps
       {children}
     </motion.div>
   );
-});
+};

@@ -174,122 +174,118 @@ export type ProgressProps = Omit<
 // Component
 // ---------------------------------------------------------------------------
 
-const Progress = React.forwardRef<React.ElementRef<typeof BaseProgress.Root>, ProgressProps>(
-  function Progress(
-    {
-      className,
-      value = 0,
-      max = 100,
-      variant,
-      type,
-      colors,
-      stops,
-      size,
-      showValue = false,
-      animated = true,
-      label,
-      ...props
-    },
-    ref,
-  ) {
-    const isIndeterminate = value === undefined || value === null;
-    const rawPct = isIndeterminate ? 0 : ((value as number) / max) * 100;
-    const pct = Math.min(Math.max(rawPct, 0), 100);
-    const throttledPct = useThrottled(pct);
+const Progress = function Progress({
+  className,
+  value = 0,
+  max = 100,
+  variant,
+  type,
+  colors,
+  stops,
+  size,
+  showValue = false,
+  animated = true,
+  label,
+  ref,
+  ...props
+}: ProgressProps & { ref?: React.Ref<React.ElementRef<typeof BaseProgress.Root>> | undefined }) {
+  const isIndeterminate = value === undefined || value === null;
+  const rawPct = isIndeterminate ? 0 : ((value as number) / max) * 100;
+  const pct = Math.min(Math.max(rawPct, 0), 100);
+  const throttledPct = useThrottled(pct);
 
-    // Geist `type` wins over legacy `variant` if both passed.
-    const resolvedVariant: VariantProps<typeof progressVariants>["variant"] = type
-      ? GEIST_TYPE_TO_VARIANT[type]
-      : (variant ?? "default");
+  // Geist `type` wins over legacy `variant` if both passed.
+  const resolvedVariant: VariantProps<typeof progressVariants>["variant"] = type
+    ? GEIST_TYPE_TO_VARIANT[type]
+    : (variant ?? "default");
 
-    const thresholdColor = colors ? pickThresholdColor(colors, pct) : undefined;
+  const thresholdColor = colors ? pickThresholdColor(colors, pct) : undefined;
 
-    return (
-      <div className="w-full space-y-2">
-        {label && <div className="text-left font-medium text-foreground text-sm">{label}</div>}
-        <div className="relative">
-          <BaseProgress.Root
-            {...props}
-            ref={ref}
-            value={isIndeterminate ? null : (value as number)}
-            max={max}
-            // Throttled aria-valuenow — Base UI reads from valueProp; we
-            // override the DOM attr on the same node so AT updates ~1Hz.
-            aria-valuenow={isIndeterminate ? undefined : Math.round(throttledPct)}
-            className={cn(progressVariants({ variant: resolvedVariant, size }), className)}
-          >
-            <BaseProgress.Indicator
-              className={cn(
-                progressIndicatorVariants({
-                  variant: resolvedVariant === "outline" ? "default" : resolvedVariant,
-                }),
-                isIndeterminate && "animate-pulse",
-              )}
-              style={thresholdColor ? { backgroundColor: thresholdColor } : undefined}
-              render={
-                <motion.div
-                  initial={{ transform: "translateX(-100%)" }}
-                  animate={{ transform: `translateX(-${100 - pct}%)` }}
-                  transition={{
-                    duration: animated ? motionDurations.cinematic / 1000 : 0,
-                    ease: easings.easeInOut,
-                  }}
-                />
-              }
-            />
-          </BaseProgress.Root>
+  return (
+    <div className="w-full space-y-2">
+      {label && <div className="text-left font-medium text-foreground text-sm">{label}</div>}
+      <div className="relative">
+        <BaseProgress.Root
+          {...props}
+          ref={ref}
+          value={isIndeterminate ? null : (value as number)}
+          max={max}
+          // Throttled aria-valuenow — Base UI reads from valueProp; we
+          // override the DOM attr on the same node so AT updates ~1Hz.
+          aria-valuenow={isIndeterminate ? undefined : Math.round(throttledPct)}
+          className={cn(progressVariants({ variant: resolvedVariant, size }), className)}
+        >
+          <BaseProgress.Indicator
+            className={cn(
+              progressIndicatorVariants({
+                variant: resolvedVariant === "outline" ? "default" : resolvedVariant,
+              }),
+              isIndeterminate && "animate-pulse",
+            )}
+            style={thresholdColor ? { backgroundColor: thresholdColor } : undefined}
+            render={
+              <motion.div
+                initial={{ transform: "translateX(-100%)" }}
+                animate={{ transform: `translateX(-${100 - pct}%)` }}
+                transition={{
+                  duration: animated ? motionDurations.cinematic / 1000 : 0,
+                  ease: easings.easeInOut,
+                }}
+              />
+            }
+          />
+        </BaseProgress.Root>
 
-          {/* Stops — dot markers at given % values, each with an optional tooltip */}
-          {stops && stops.length > 0 && (
-            <TooltipProvider delayDuration={150}>
-              <div className="pointer-events-none absolute inset-0">
-                {stops.map((stop) => {
-                  const stopPct = Math.min(Math.max(stop.value, 0), 100);
-                  const reached = pct >= stopPct;
-                  return (
-                    <Tooltip key={`${stopPct}-${stop.ariaLabel ?? "marker"}`}>
-                      <TooltipTrigger asChild>
-                        <span
-                          aria-hidden={!stop.ariaLabel ? "true" : undefined}
-                          className={cn(
-                            "pointer-events-auto -translate-x-1/2 -translate-y-1/2 absolute top-1/2 inline-block h-1.5 w-1.5 rounded-full border border-background transition-colors",
-                            reached ? "bg-foreground" : "bg-muted-foreground/60",
-                          )}
-                          style={{ left: `${stopPct}%` }}
-                        >
-                          {stop.ariaLabel && <span className="sr-only">{stop.ariaLabel}</span>}
-                        </span>
-                      </TooltipTrigger>
-                      {stop.tooltip && (
-                        <TooltipContent side="top" className="text-xs">
-                          {stop.tooltip}
-                        </TooltipContent>
-                      )}
-                    </Tooltip>
-                  );
-                })}
-              </div>
-            </TooltipProvider>
-          )}
-        </div>
-
-        {showValue && !isIndeterminate && (
-          <motion.div
-            className="text-right font-semibold text-muted-foreground text-xs tabular-nums"
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: animated ? motionDurations.reveal / 1000 : 0,
-              duration: motionDurations.flow / 1000,
-              ease: easings.easeOut,
-            }}
-          >
-            {Math.round(pct)}%
-          </motion.div>
+        {/* Stops — dot markers at given % values, each with an optional tooltip */}
+        {stops && stops.length > 0 && (
+          <TooltipProvider delayDuration={150}>
+            <div className="pointer-events-none absolute inset-0">
+              {stops.map((stop) => {
+                const stopPct = Math.min(Math.max(stop.value, 0), 100);
+                const reached = pct >= stopPct;
+                return (
+                  <Tooltip key={`${stopPct}-${stop.ariaLabel ?? "marker"}`}>
+                    <TooltipTrigger asChild>
+                      <span
+                        aria-hidden={!stop.ariaLabel ? "true" : undefined}
+                        className={cn(
+                          "pointer-events-auto -translate-x-1/2 -translate-y-1/2 absolute top-1/2 inline-block h-1.5 w-1.5 rounded-full border border-background transition-colors",
+                          reached ? "bg-foreground" : "bg-muted-foreground/60",
+                        )}
+                        style={{ left: `${stopPct}%` }}
+                      >
+                        {stop.ariaLabel && <span className="sr-only">{stop.ariaLabel}</span>}
+                      </span>
+                    </TooltipTrigger>
+                    {stop.tooltip && (
+                      <TooltipContent side="top" className="text-xs">
+                        {stop.tooltip}
+                      </TooltipContent>
+                    )}
+                  </Tooltip>
+                );
+              })}
+            </div>
+          </TooltipProvider>
         )}
       </div>
-    );
-  },
-);
+
+      {showValue && !isIndeterminate && (
+        <motion.div
+          className="text-right font-semibold text-muted-foreground text-xs tabular-nums"
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: animated ? motionDurations.reveal / 1000 : 0,
+            duration: motionDurations.flow / 1000,
+            ease: easings.easeOut,
+          }}
+        >
+          {Math.round(pct)}%
+        </motion.div>
+      )}
+    </div>
+  );
+};
 
 export { Progress, progressIndicatorVariants, progressVariants };

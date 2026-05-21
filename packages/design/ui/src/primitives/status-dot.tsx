@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import { cn } from "../utils/cn";
 
 /* -------------------------------------------------------------------------- *\
@@ -112,10 +112,14 @@ export interface StatusDotProps {
 // Component
 // ---------------------------------------------------------------------------
 
-export const StatusDot = forwardRef<HTMLSpanElement, StatusDotProps>(function StatusDot(
-  { state, label, titlePrefix = "This deployment", decorative = false, className },
+export const StatusDot = function StatusDot({
   ref,
-) {
+  state,
+  label,
+  titlePrefix = "This deployment",
+  decorative = false,
+  className,
+}: StatusDotProps & { ref?: Ref<HTMLSpanElement> | undefined }) {
   const meta = STATE_META[state];
   const title = `${titlePrefix} ${meta.title}`;
   const animated = ANIMATED_STATES.has(state);
@@ -137,4 +141,4 @@ export const StatusDot = forwardRef<HTMLSpanElement, StatusDotProps>(function St
       {label && <span className="font-sans text-foreground text-sm leading-4">{meta.label}</span>}
     </span>
   );
-});
+};

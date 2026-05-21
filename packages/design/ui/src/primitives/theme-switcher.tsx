@@ -88,81 +88,77 @@ function isThemeSwitcherValue(value: string | undefined): value is ThemeSwitcher
   return value === "system" || value === "light" || value === "dark";
 }
 
-export const ThemeSwitcher = React.forwardRef<HTMLFieldSetElement, ThemeSwitcherProps>(
-  (
-    {
-      value,
-      defaultValue = "system",
-      onChange,
-      disabled = false,
-      size = "medium",
-      name,
-      className,
-      style,
-      ...props
-    },
-    ref,
-  ) => {
-    const generatedName = React.useId();
-    const radioName = name ?? generatedName;
-    const { isProviderBound, theme, forcedTheme, setTheme } = useTheme();
-    const [fallbackValue, setFallbackValue] = React.useState<ThemeSwitcherValue>(defaultValue);
-    const providerTheme = isThemeSwitcherValue(theme) ? theme : "system";
-    const selectedTheme = forcedTheme ?? value ?? (isProviderBound ? providerTheme : fallbackValue);
-    const isReadOnly = disabled || forcedTheme !== undefined;
+export const ThemeSwitcher = ({
+  value,
+  defaultValue = "system",
+  onChange,
+  disabled = false,
+  size = "medium",
+  name,
+  className,
+  style,
+  ref,
+  ...props
+}: ThemeSwitcherProps & { ref?: React.Ref<HTMLFieldSetElement> | undefined }) => {
+  const generatedName = React.useId();
+  const radioName = name ?? generatedName;
+  const { isProviderBound, theme, forcedTheme, setTheme } = useTheme();
+  const [fallbackValue, setFallbackValue] = React.useState<ThemeSwitcherValue>(defaultValue);
+  const providerTheme = isThemeSwitcherValue(theme) ? theme : "system";
+  const selectedTheme = forcedTheme ?? value ?? (isProviderBound ? providerTheme : fallbackValue);
+  const isReadOnly = disabled || forcedTheme !== undefined;
 
-    function handleChange(nextTheme: ThemeSwitcherValue) {
-      if (isReadOnly) return;
-      setFallbackValue(nextTheme);
-      setTheme(nextTheme);
-      onChange?.(nextTheme);
-    }
+  function handleChange(nextTheme: ThemeSwitcherValue) {
+    if (isReadOnly) return;
+    setFallbackValue(nextTheme);
+    setTheme(nextTheme);
+    onChange?.(nextTheme);
+  }
 
-    return (
-      <fieldset
-        ref={ref}
-        aria-disabled={isReadOnly}
-        className={cn("inline-grid gap-[var(--theme-switcher-label-gap)]", className)}
-        disabled={isReadOnly}
-        style={getThemeSwitcherStyle(size, style)}
-        {...props}
-      >
-        <legend className="text-[length:var(--theme-switcher-font-size)] font-medium text-foreground">
-          Select a display theme:
-        </legend>
-        <div className="inline-flex h-[var(--theme-switcher-height)] items-center gap-[var(--theme-switcher-gap)] rounded-[var(--theme-switcher-radius)] border border-border bg-muted p-[var(--theme-switcher-padding)] text-muted-foreground">
-          {THEME_OPTIONS.map(({ value: optionValue, label, icon: Icon }) => {
-            const checked = selectedTheme === optionValue;
+  return (
+    <fieldset
+      ref={ref}
+      aria-disabled={isReadOnly}
+      className={cn("inline-grid gap-[var(--theme-switcher-label-gap)]", className)}
+      disabled={isReadOnly}
+      style={getThemeSwitcherStyle(size, style)}
+      {...props}
+    >
+      <legend className="text-[length:var(--theme-switcher-font-size)] font-medium text-foreground">
+        Select a display theme:
+      </legend>
+      <div className="inline-flex h-[var(--theme-switcher-height)] items-center gap-[var(--theme-switcher-gap)] rounded-[var(--theme-switcher-radius)] border border-border bg-muted p-[var(--theme-switcher-padding)] text-muted-foreground">
+        {THEME_OPTIONS.map(({ value: optionValue, label, icon: Icon }) => {
+          const checked = selectedTheme === optionValue;
 
-            return (
-              <label
-                key={optionValue}
-                className={cn(
-                  "relative inline-flex h-full min-w-[var(--theme-switcher-option-min-width)] cursor-pointer items-center justify-center gap-[var(--theme-switcher-gap)] rounded-[var(--theme-switcher-option-radius)] px-[var(--theme-switcher-option-padding-x)] text-[length:var(--theme-switcher-font-size)] font-medium transition-[background-color,box-shadow,color,opacity] duration-[var(--theme-switcher-duration)] ease-[var(--theme-switcher-easing)]",
-                  "hover:text-foreground has-[:focus-visible]:ring-[length:var(--theme-switcher-focus-ring-width)] has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-[length:var(--theme-switcher-focus-ring-offset)] has-[:focus-visible]:ring-offset-background",
-                  checked && "bg-background text-foreground shadow-[var(--shadow-xs)]",
-                  isReadOnly && "cursor-not-allowed opacity-60",
-                )}
-              >
-                <input
-                  aria-label={label}
-                  checked={checked}
-                  className="sr-only"
-                  disabled={isReadOnly}
-                  name={radioName}
-                  onChange={() => handleChange(optionValue)}
-                  type="radio"
-                  value={optionValue}
-                />
-                <Icon aria-hidden className="size-[var(--theme-switcher-icon-size)] shrink-0" />
-                <span>{label}</span>
-              </label>
-            );
-          })}
-        </div>
-      </fieldset>
-    );
-  },
-);
+          return (
+            <label
+              key={optionValue}
+              className={cn(
+                "relative inline-flex h-full min-w-[var(--theme-switcher-option-min-width)] cursor-pointer items-center justify-center gap-[var(--theme-switcher-gap)] rounded-[var(--theme-switcher-option-radius)] px-[var(--theme-switcher-option-padding-x)] text-[length:var(--theme-switcher-font-size)] font-medium transition-[background-color,box-shadow,color,opacity] duration-[var(--theme-switcher-duration)] ease-[var(--theme-switcher-easing)]",
+                "hover:text-foreground has-[:focus-visible]:ring-[length:var(--theme-switcher-focus-ring-width)] has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-[length:var(--theme-switcher-focus-ring-offset)] has-[:focus-visible]:ring-offset-background",
+                checked && "bg-background text-foreground shadow-[var(--shadow-xs)]",
+                isReadOnly && "cursor-not-allowed opacity-60",
+              )}
+            >
+              <input
+                aria-label={label}
+                checked={checked}
+                className="sr-only"
+                disabled={isReadOnly}
+                name={radioName}
+                onChange={() => handleChange(optionValue)}
+                type="radio"
+                value={optionValue}
+              />
+              <Icon aria-hidden className="size-[var(--theme-switcher-icon-size)] shrink-0" />
+              <span>{label}</span>
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+};
 
 ThemeSwitcher.displayName = "ThemeSwitcher";

@@ -137,171 +137,167 @@ function playToggleSound(lastPlayedAt: React.MutableRefObject<number>) {
   }
 }
 
-export const ThemeToggle = React.forwardRef<HTMLButtonElement, ThemeToggleProps>(
-  (
-    {
-      value,
-      defaultValue,
-      onChange,
-      size = "md",
-      sound = false,
-      applyToDocument = false,
-      labels,
-      className,
-      style,
-      disabled,
-      type = "button",
-      onClick,
-      ...props
-    },
-    ref,
-  ) => {
-    const rawId = React.useId();
-    const maskId = `theme-toggle-mask-${rawId.replace(/:/g, "")}`;
-    const shouldReduceMotion = useReducedMotion();
-    const lastSoundAt = React.useRef(0);
-    const [mounted, setMounted] = React.useState(false);
-    const [internalValue, setInternalValue] = React.useState<ThemeToggleValue>(
-      defaultValue ?? "light",
-    );
+export const ThemeToggle = ({
+  value,
+  defaultValue,
+  onChange,
+  size = "md",
+  sound = false,
+  applyToDocument = false,
+  labels,
+  className,
+  style,
+  disabled,
+  type = "button",
+  onClick,
+  ref,
+  ...props
+}: ThemeToggleProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
+  const rawId = React.useId();
+  const maskId = `theme-toggle-mask-${rawId.replace(/:/g, "")}`;
+  const shouldReduceMotion = useReducedMotion();
+  const lastSoundAt = React.useRef(0);
+  const [mounted, setMounted] = React.useState(false);
+  const [internalValue, setInternalValue] = React.useState<ThemeToggleValue>(
+    defaultValue ?? "light",
+  );
 
-    React.useEffect(() => {
-      if (value === undefined && defaultValue === undefined) {
-        setInternalValue(readDocumentTheme());
-      }
-      setMounted(true);
-    }, [defaultValue, value]);
+  React.useEffect(() => {
+    if (value === undefined && defaultValue === undefined) {
+      setInternalValue(readDocumentTheme());
+    }
+    setMounted(true);
+  }, [defaultValue, value]);
 
-    const currentValue = value ?? internalValue;
-    const isDark = currentValue === "dark";
-    const actionLabel = isDark
-      ? (labels?.light ?? DEFAULT_LABELS.light)
-      : (labels?.dark ?? DEFAULT_LABELS.dark);
-    const transition: Transition =
-      shouldReduceMotion || !mounted
-        ? themeToggleTokens.motion.instant
-        : themeToggleTokens.motion.morph;
-    const pressTransition: Transition = shouldReduceMotion
+  const currentValue = value ?? internalValue;
+  const isDark = currentValue === "dark";
+  const actionLabel = isDark
+    ? (labels?.light ?? DEFAULT_LABELS.light)
+    : (labels?.dark ?? DEFAULT_LABELS.dark);
+  const transition: Transition =
+    shouldReduceMotion || !mounted
       ? themeToggleTokens.motion.instant
-      : themeToggleTokens.motion.press;
-    const interactionMotionProps =
-      !disabled && !shouldReduceMotion
-        ? {
-            whileHover: { scale: themeToggleTokens.motion.hoverScale },
-            whileTap: { scale: themeToggleTokens.motion.tapScale },
-          }
-        : {};
+      : themeToggleTokens.motion.morph;
+  const pressTransition: Transition = shouldReduceMotion
+    ? themeToggleTokens.motion.instant
+    : themeToggleTokens.motion.press;
+  const interactionMotionProps =
+    !disabled && !shouldReduceMotion
+      ? {
+          whileHover: { scale: themeToggleTokens.motion.hoverScale },
+          whileTap: { scale: themeToggleTokens.motion.tapScale },
+        }
+      : {};
 
-    React.useEffect(() => {
-      if (applyToDocument && mounted) {
-        applyDocumentTheme(currentValue);
-      }
-    }, [applyToDocument, currentValue, mounted]);
+  React.useEffect(() => {
+    if (applyToDocument && mounted) {
+      applyDocumentTheme(currentValue);
+    }
+  }, [applyToDocument, currentValue, mounted]);
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      onClick?.(event);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onClick?.(event);
 
-      if (event.defaultPrevented || disabled) return;
+    if (event.defaultPrevented || disabled) return;
 
-      const nextValue: ThemeToggleValue = isDark ? "light" : "dark";
+    const nextValue: ThemeToggleValue = isDark ? "light" : "dark";
 
-      if (value === undefined) {
-        setInternalValue(nextValue);
-      }
+    if (value === undefined) {
+      setInternalValue(nextValue);
+    }
 
-      if (applyToDocument) {
-        applyDocumentTheme(nextValue);
-      }
+    if (applyToDocument) {
+      applyDocumentTheme(nextValue);
+    }
 
-      onChange?.(nextValue);
+    onChange?.(nextValue);
 
-      if (sound) {
-        playToggleSound(lastSoundAt);
-      }
-    };
+    if (sound) {
+      playToggleSound(lastSoundAt);
+    }
+  };
 
-    return (
-      <motion.button
-        {...props}
-        {...interactionMotionProps}
-        aria-label={actionLabel}
-        aria-pressed={isDark}
-        className={cn(
-          "inline-flex size-[var(--theme-toggle-size)] shrink-0 items-center justify-center rounded-[var(--theme-toggle-radius)] p-[var(--theme-toggle-padding)] text-foreground",
-          "transition-[background-color,color,box-shadow] duration-[var(--theme-toggle-duration)] ease-[var(--theme-toggle-easing)]",
-          "hover:bg-accent hover:text-accent-foreground",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-          "disabled:pointer-events-none disabled:opacity-50",
-          "motion-reduce:transition-none",
-          className,
-        )}
-        disabled={disabled}
-        onClick={handleClick}
-        ref={ref}
-        style={getThemeToggleStyle(size, style)}
-        transition={pressTransition}
-        type={type}
+  return (
+    <motion.button
+      {...props}
+      {...interactionMotionProps}
+      aria-label={actionLabel}
+      aria-pressed={isDark}
+      className={cn(
+        "inline-flex size-[var(--theme-toggle-size)] shrink-0 items-center justify-center rounded-[var(--theme-toggle-radius)] p-[var(--theme-toggle-padding)] text-foreground",
+        "transition-[background-color,color,box-shadow] duration-[var(--theme-toggle-duration)] ease-[var(--theme-toggle-easing)]",
+        "hover:bg-accent hover:text-accent-foreground",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "disabled:pointer-events-none disabled:opacity-50",
+        "motion-reduce:transition-none",
+        className,
+      )}
+      disabled={disabled}
+      onClick={handleClick}
+      ref={ref}
+      style={getThemeToggleStyle(size, style)}
+      transition={pressTransition}
+      type={type}
+    >
+      <motion.svg
+        animate={{ rotate: isDark ? 270 : 0 }}
+        aria-hidden="true"
+        className="size-[var(--theme-toggle-icon-size)] overflow-visible"
+        fill="none"
+        initial={false}
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth={themeToggleTokens.icon.strokeWidth}
+        transition={transition}
+        viewBox="0 0 24 24"
       >
-        <motion.svg
-          animate={{ rotate: isDark ? 270 : 0 }}
-          aria-hidden="true"
-          className="size-[var(--theme-toggle-icon-size)] overflow-visible"
-          fill="none"
-          initial={false}
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeWidth={themeToggleTokens.icon.strokeWidth}
-          transition={transition}
-          viewBox="0 0 24 24"
-        >
-          <mask id={maskId}>
-            <rect fill="white" height="100%" width="100%" x="0" y="0" />
-            <motion.circle
-              animate={{ cx: isDark ? 17 : 33, cy: isDark ? 8 : 0 }}
-              fill="black"
-              initial={false}
-              r={themeToggleTokens.icon.maskRadius}
-              transition={transition}
-            />
-          </mask>
-
+        <mask id={maskId}>
+          <rect fill="white" height="100%" width="100%" x="0" y="0" />
           <motion.circle
-            animate={{
-              r: isDark ? themeToggleTokens.icon.moonRadius : themeToggleTokens.icon.sunRadius,
-            }}
-            cx={themeToggleTokens.icon.center}
-            cy={themeToggleTokens.icon.center}
-            fill="currentColor"
+            animate={{ cx: isDark ? 17 : 33, cy: isDark ? 8 : 0 }}
+            fill="black"
             initial={false}
-            mask={`url(#${maskId})`}
-            stroke="none"
+            r={themeToggleTokens.icon.maskRadius}
             transition={transition}
           />
+        </mask>
 
-          <motion.g
-            animate={{
-              opacity: isDark ? 0 : 1,
-              rotate: isDark ? -30 : 0,
-              scale: isDark ? 0 : 1,
-            }}
-            initial={false}
-            style={{ transformOrigin: "12px 12px" }}
-            transition={transition}
-          >
-            <line x1="12" x2="12" y1="1" y2="3" />
-            <line x1="12" x2="12" y1="21" y2="23" />
-            <line x1="1" x2="3" y1="12" y2="12" />
-            <line x1="21" x2="23" y1="12" y2="12" />
-            <line x1="5.64" x2="4.22" y1="5.64" y2="4.22" />
-            <line x1="18.36" x2="19.78" y1="5.64" y2="4.22" />
-            <line x1="5.64" x2="4.22" y1="18.36" y2="19.78" />
-            <line x1="18.36" x2="19.78" y1="18.36" y2="19.78" />
-          </motion.g>
-        </motion.svg>
-      </motion.button>
-    );
-  },
-);
+        <motion.circle
+          animate={{
+            r: isDark ? themeToggleTokens.icon.moonRadius : themeToggleTokens.icon.sunRadius,
+          }}
+          cx={themeToggleTokens.icon.center}
+          cy={themeToggleTokens.icon.center}
+          fill="currentColor"
+          initial={false}
+          mask={`url(#${maskId})`}
+          stroke="none"
+          transition={transition}
+        />
+
+        <motion.g
+          animate={{
+            opacity: isDark ? 0 : 1,
+            rotate: isDark ? -30 : 0,
+            scale: isDark ? 0 : 1,
+          }}
+          initial={false}
+          style={{ transformOrigin: "12px 12px" }}
+          transition={transition}
+        >
+          <line x1="12" x2="12" y1="1" y2="3" />
+          <line x1="12" x2="12" y1="21" y2="23" />
+          <line x1="1" x2="3" y1="12" y2="12" />
+          <line x1="21" x2="23" y1="12" y2="12" />
+          <line x1="5.64" x2="4.22" y1="5.64" y2="4.22" />
+          <line x1="18.36" x2="19.78" y1="5.64" y2="4.22" />
+          <line x1="5.64" x2="4.22" y1="18.36" y2="19.78" />
+          <line x1="18.36" x2="19.78" y1="18.36" y2="19.78" />
+        </motion.g>
+      </motion.svg>
+    </motion.button>
+  );
+};
 
 ThemeToggle.displayName = "ThemeToggle";
 

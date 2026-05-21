@@ -28,7 +28,7 @@ function FlowNode({
   title,
   description,
 }: {
-  ref: React.Ref<HTMLDivElement>;
+  ref: React.Ref<HTMLDivElement> | undefined;
   icon: React.ReactNode;
   title: string;
   description: string;

@@ -62,7 +62,7 @@ type MessageContentCssVars = React.CSSProperties & {
 };
 
 export interface MessageContentProps {
-  ref?: React.Ref<HTMLDivElement>;
+  ref?: React.Ref<HTMLDivElement> | undefined;
   /** Markdown source. Can be a partial chunk during streaming. */
   children: string;
   /** Visual density. `compact` removes most prose margins. */

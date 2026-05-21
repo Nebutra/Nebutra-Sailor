@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, LoaderCircle as Loader2 } from "@nebutra/icons";
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, use, useCallback, useMemo, useState } from "react";
 
 import { cn } from "../utils/cn";
 import { Button } from "./button";
@@ -48,7 +48,7 @@ const STEPPER_FALLBACK: StepperContextValue = {
 };
 
 export function useStepperContext() {
-  const context = useContext(StepperContext);
+  const context = use(StepperContext);
   if (!context) {
     return STEPPER_FALLBACK;
   }

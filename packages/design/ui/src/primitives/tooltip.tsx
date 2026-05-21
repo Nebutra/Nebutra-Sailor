@@ -68,10 +68,14 @@ const Tooltip = ({
   );
 };
 
-const TooltipTrigger = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<typeof BaseTooltip.Trigger> & { asChild?: boolean }
->(({ asChild, children, ...props }, ref) => {
+const TooltipTrigger = ({
+  asChild,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseTooltip.Trigger> & { asChild?: boolean } & {
+  ref?: React.Ref<HTMLButtonElement> | undefined;
+}) => {
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseTooltip.Trigger
@@ -86,41 +90,41 @@ const TooltipTrigger = React.forwardRef<
       {children}
     </BaseTooltip.Trigger>
   );
-});
+};
 TooltipTrigger.displayName = "TooltipTrigger";
 
-const TooltipContent = React.forwardRef<
-  React.ElementRef<typeof BaseTooltip.Popup>,
-  React.ComponentPropsWithoutRef<typeof BaseTooltip.Popup> & {
-    side?: "top" | "right" | "bottom" | "left";
-    align?: "start" | "center" | "end";
-    sideOffset?: number;
-    alignOffset?: number;
-  }
->(
-  (
-    { className, side = "top", align = "center", sideOffset = 4, alignOffset = 0, ...props },
-    ref,
-  ) => (
-    <BaseTooltip.Portal>
-      <BaseTooltip.Positioner
-        side={side}
-        align={align}
-        sideOffset={sideOffset}
-        alignOffset={alignOffset}
-        className="z-50"
-      >
-        <BaseTooltip.Popup
-          ref={ref}
-          className={cn(
-            "z-50 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md px-3 py-1.5 text-sm text-popover-foreground shadow-xl transition-[opacity,transform,display] duration-200 data-starting-style:animate-in data-starting-style:fade-in-0 data-starting-style:zoom-in-95 data-ending-style:animate-out data-ending-style:fade-out-0 data-ending-style:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-            className,
-          )}
-          {...props}
-        />
-      </BaseTooltip.Positioner>
-    </BaseTooltip.Portal>
-  ),
+const TooltipContent = ({
+  className,
+  side = "top",
+  align = "center",
+  sideOffset = 4,
+  alignOffset = 0,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseTooltip.Popup> & {
+  side?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
+  sideOffset?: number;
+  alignOffset?: number;
+} & { ref?: React.Ref<React.ElementRef<typeof BaseTooltip.Popup>> | undefined }) => (
+  <BaseTooltip.Portal>
+    <BaseTooltip.Positioner
+      side={side}
+      align={align}
+      sideOffset={sideOffset}
+      alignOffset={alignOffset}
+      className="z-50"
+    >
+      <BaseTooltip.Popup
+        ref={ref}
+        className={cn(
+          "z-50 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md px-3 py-1.5 text-sm text-popover-foreground shadow-xl transition-[opacity,transform,display] duration-200 data-starting-style:animate-in data-starting-style:fade-in-0 data-starting-style:zoom-in-95 data-ending-style:animate-out data-ending-style:fade-out-0 data-ending-style:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          className,
+        )}
+        {...props}
+      />
+    </BaseTooltip.Positioner>
+  </BaseTooltip.Portal>
 );
 TooltipContent.displayName = "TooltipContent";
 

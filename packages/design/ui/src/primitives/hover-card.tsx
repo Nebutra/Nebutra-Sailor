@@ -49,14 +49,14 @@ const HoverCard = ({
   );
 };
 
-const HoverCardTrigger: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof BasePopover.Trigger> & {
-    asChild?: boolean;
-  } & React.RefAttributes<HTMLButtonElement>
-> = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<typeof BasePopover.Trigger> & { asChild?: boolean }
->(({ asChild, children, ...props }, ref) => {
+const HoverCardTrigger = ({
+  asChild,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BasePopover.Trigger> & { asChild?: boolean } & {
+  ref?: React.Ref<HTMLButtonElement> | undefined;
+}) => {
   if (asChild && React.isValidElement(children)) {
     return (
       <BasePopover.Trigger
@@ -71,17 +71,21 @@ const HoverCardTrigger: React.ForwardRefExoticComponent<
       {children}
     </BasePopover.Trigger>
   );
-});
+};
 HoverCardTrigger.displayName = "HoverCardTrigger";
 
-const HoverCardContent = React.forwardRef<
-  React.ElementRef<typeof BasePopover.Popup>,
-  React.ComponentPropsWithoutRef<typeof BasePopover.Popup> & {
-    align?: "start" | "center" | "end";
-    sideOffset?: number;
-    side?: "top" | "right" | "bottom" | "left";
-  }
->(({ className, align = "center", sideOffset = 4, side = "bottom", ...props }, ref) => (
+const HoverCardContent = ({
+  className,
+  align = "center",
+  sideOffset = 4,
+  side = "bottom",
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BasePopover.Popup> & {
+  align?: "start" | "center" | "end";
+  sideOffset?: number;
+  side?: "top" | "right" | "bottom" | "left";
+} & { ref?: React.Ref<React.ElementRef<typeof BasePopover.Popup>> | undefined }) => (
   <BasePopover.Portal>
     <BasePopover.Positioner side={side} align={align} sideOffset={sideOffset}>
       <BasePopover.Popup
@@ -94,7 +98,7 @@ const HoverCardContent = React.forwardRef<
       />
     </BasePopover.Positioner>
   </BasePopover.Portal>
-));
+);
 HoverCardContent.displayName = "HoverCardContent";
 
 export { HoverCard, HoverCardContent, HoverCardTrigger };

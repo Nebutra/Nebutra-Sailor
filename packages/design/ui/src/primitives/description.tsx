@@ -1,7 +1,7 @@
 "use client";
 
 import { Information as Info } from "@nebutra/icons";
-import { forwardRef, type ReactNode } from "react";
+import type { ReactNode, Ref } from "react";
 import { cn } from "../utils/cn";
 import { ContextCard } from "./context-card";
 
@@ -62,10 +62,13 @@ export interface DescriptionProps {
  * />
  * ```
  */
-export const Description = forwardRef<HTMLDListElement, DescriptionProps>(function Description(
-  { title, content, tooltip, className },
+export const Description = function Description({
   ref,
-) {
+  title,
+  content,
+  tooltip,
+  className,
+}: DescriptionProps & { ref?: Ref<HTMLDListElement> | undefined }) {
   return (
     <dl ref={ref} className={cn("font-sans", className)}>
       <dt className="flex items-center gap-1 text-muted-foreground text-sm capitalize">
@@ -79,4 +82,4 @@ export const Description = forwardRef<HTMLDListElement, DescriptionProps>(functi
       <dd className="mt-1 font-medium text-foreground text-sm">{content}</dd>
     </dl>
   );
-});
+};

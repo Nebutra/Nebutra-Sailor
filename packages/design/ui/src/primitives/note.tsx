@@ -58,7 +58,7 @@ export interface NoteBaseProps
   disabled?: boolean;
   /** `error` defaults to alert; every other tone defaults to note. */
   role?: "note" | "alert" | "status";
-  ref?: React.Ref<HTMLDivElement>;
+  ref?: React.Ref<HTMLDivElement> | undefined;
 }
 
 export type NoteProps = NoteBaseProps & NoteToneProps;

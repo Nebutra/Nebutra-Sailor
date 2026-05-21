@@ -8,7 +8,7 @@ import { cn } from "../utils/cn";
 // =============================================================================
 
 export interface LoadingDotsProps {
-  ref?: React.Ref<HTMLSpanElement>;
+  ref?: React.Ref<HTMLSpanElement> | undefined;
   /** Diameter of each dot in pixels. Default: 6 */
   size?: number;
   /** Optional content rendered before the dots (e.g. a label). */

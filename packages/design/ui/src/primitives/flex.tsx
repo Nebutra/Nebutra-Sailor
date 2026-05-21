@@ -69,39 +69,35 @@ const directionMap = {
   "col-reverse": "flex-col-reverse",
 };
 
-export const Flex = React.forwardRef<HTMLDivElement, FlexProps>(
-  (
+export const Flex = ({
+  as: Component = "div",
+  className,
+  gap = 4,
+  align = "center",
+  justify = "start",
+  wrap = false,
+  direction = "row",
+  children,
+  ref,
+  ...props
+}: FlexProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  return React.createElement(
+    Component,
     {
-      as: Component = "div",
-      className,
-      gap = 4,
-      align = "center",
-      justify = "start",
-      wrap = false,
-      direction = "row",
-      children,
-      ...props
+      ...props,
+      ref,
+      className: cn(
+        "flex",
+        directionMap[direction],
+        gapMap[gap],
+        alignMap[align],
+        justifyMap[justify],
+        wrap && "flex-wrap",
+        className,
+      ),
     },
-    ref,
-  ) => {
-    return React.createElement(
-      Component,
-      {
-        ...props,
-        ref,
-        className: cn(
-          "flex",
-          directionMap[direction],
-          gapMap[gap],
-          alignMap[align],
-          justifyMap[justify],
-          wrap && "flex-wrap",
-          className,
-        ),
-      },
-      children,
-    );
-  },
-);
+    children,
+  );
+};
 
 Flex.displayName = "Flex";

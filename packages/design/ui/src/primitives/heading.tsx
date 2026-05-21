@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import { type TextColor, textColors, textStyles } from "../tokens/typography";
 import { cn } from "../utils/cn";
 
@@ -49,28 +49,33 @@ const alignMap = {
   right: "text-right",
 };
 
-export const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
-  (
-    { level = 2, as, color = "default", display = false, align, className, children, ...props },
-    ref,
-  ) => {
-    const Component = as || (`h${level}` as HeadingElement);
+export const Heading = ({
+  level = 2,
+  as,
+  color = "default",
+  display = false,
+  align,
+  className,
+  children,
+  ref,
+  ...props
+}: HeadingProps & { ref?: React.Ref<HTMLHeadingElement> | undefined }) => {
+  const Component = as || (`h${level}` as HeadingElement);
 
-    const styleClass =
-      display && (level === 1 || level === 2) ? displayStyle[level as 1 | 2] : levelToStyle[level];
+  const styleClass =
+    display && (level === 1 || level === 2) ? displayStyle[level as 1 | 2] : levelToStyle[level];
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const Comp = Component as any;
-    return (
-      <Comp
-        ref={ref}
-        className={cn(styleClass, textColors[color], align && alignMap[align], className)}
-        {...props}
-      >
-        {children}
-      </Comp>
-    );
-  },
-);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const Comp = Component as any;
+  return (
+    <Comp
+      ref={ref}
+      className={cn(styleClass, textColors[color], align && alignMap[align], className)}
+      {...props}
+    >
+      {children}
+    </Comp>
+  );
+};
 
 Heading.displayName = "Heading";

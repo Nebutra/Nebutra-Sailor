@@ -2,7 +2,7 @@
 
 import { Accordion as BaseAccordion } from "@base-ui/react/accordion";
 import { Plus } from "@nebutra/icons";
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "../utils/cn";
 import { withHtmlProps } from "../utils/primitive-props";
 
@@ -29,29 +29,35 @@ const Accordion = BaseAccordion.Root;
 // Item
 // =============================================================================
 
-const AccordionItem = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div"> & { value: string; disabled?: boolean }
->(({ className, ...props }, ref) => (
+const AccordionItem = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<"div"> & { value: string; disabled?: boolean } & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <RadixItem
     ref={ref}
     className={cn("border-b border-border/70 last:border-b-0", className)}
     {...props}
   />
-));
+);
 AccordionItem.displayName = "AccordionItem";
 
 // =============================================================================
 // Trigger
 // =============================================================================
 
-const AccordionTrigger = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<"button"> & {
-    /** Size variant matching Geist Collapse */
-    size?: AccordionSize;
-  }
->(({ className, children, size = "default", ...props }, ref) => (
+const AccordionTrigger = ({
+  className,
+  children,
+  size = "default",
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<"button"> & {
+  /** Size variant matching Geist Collapse */
+  size?: AccordionSize;
+} & { ref?: React.Ref<HTMLButtonElement> | undefined }) => (
   <RadixHeader className="flex">
     <RadixTrigger
       ref={ref}
@@ -71,26 +77,30 @@ const AccordionTrigger = React.forwardRef<
       />
     </RadixTrigger>
   </RadixHeader>
-));
+);
 AccordionTrigger.displayName = "AccordionTrigger";
 
 // =============================================================================
 // Content
 // =============================================================================
 
-const AccordionContent = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div"> & {
-    /** Size variant matching Geist Collapse */
-    size?: AccordionSize;
-    /**
-     * Keep the panel content in the DOM when closed. Lets browser find-in-page
-     * and search crawlers hit hidden content. Forwarded to Base UI's Panel.
-     * @default false (Base UI's default)
-     */
-    keepMounted?: boolean;
-  }
->(({ className, children, size = "default", keepMounted, ...props }, ref) => (
+const AccordionContent = ({
+  className,
+  children,
+  size = "default",
+  keepMounted,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<"div"> & {
+  /** Size variant matching Geist Collapse */
+  size?: AccordionSize;
+  /**
+   * Keep the panel content in the DOM when closed. Lets browser find-in-page
+   * and search crawlers hit hidden content. Forwarded to Base UI's Panel.
+   * @default false (Base UI's default)
+   */
+  keepMounted?: boolean;
+} & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
   <RadixContent
     ref={ref}
     {...(keepMounted ? { keepMounted: true } : {})}
@@ -99,7 +109,7 @@ const AccordionContent = React.forwardRef<
   >
     <div className={cn(size === "small" ? "pb-2.5 pt-0" : "pb-4 pt-0", className)}>{children}</div>
   </RadixContent>
-));
+);
 AccordionContent.displayName = "AccordionContent";
 
 // =============================================================================

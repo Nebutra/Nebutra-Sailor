@@ -10,41 +10,44 @@ const MenubarContext = React.createContext<{
   setActiveMenu: (menu: string | null) => void;
 }>({ activeMenu: null, setActiveMenu: () => {} });
 
-const Menubar = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, children, ...props }, ref) => {
-    const [activeMenu, setActiveMenu] = React.useState<string | null>(null);
+const Menubar = ({
+  className,
+  children,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const [activeMenu, setActiveMenu] = React.useState<string | null>(null);
 
-    // Close on click outside
-    React.useEffect(() => {
-      const handleClickOutside = () => setActiveMenu(null);
-      document.addEventListener("click", handleClickOutside);
-      return () => document.removeEventListener("click", handleClickOutside);
-    }, []);
+  // Close on click outside
+  React.useEffect(() => {
+    const handleClickOutside = () => setActiveMenu(null);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
-    return (
-      <MenubarContext.Provider value={{ activeMenu, setActiveMenu }}>
-        <div
-          ref={ref}
-          onClick={(e) => e.stopPropagation()}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.stopPropagation();
-            }
-          }}
-          tabIndex={0}
-          role="menubar"
-          className={cn(
-            "flex h-10 items-center space-x-1 rounded-[var(--radius-md)] border border-border bg-background p-1",
-            className,
-          )}
-          {...props}
-        >
-          {children}
-        </div>
-      </MenubarContext.Provider>
-    );
-  },
-);
+  return (
+    <MenubarContext.Provider value={{ activeMenu, setActiveMenu }}>
+      <div
+        ref={ref}
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.stopPropagation();
+          }
+        }}
+        tabIndex={0}
+        role="menubar"
+        className={cn(
+          "flex h-10 items-center space-x-1 rounded-[var(--radius-md)] border border-border bg-background p-1",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </div>
+    </MenubarContext.Provider>
+  );
+};
 Menubar.displayName = "Menubar";
 
 const MenubarMenuContext = React.createContext<{
@@ -53,7 +56,7 @@ const MenubarMenuContext = React.createContext<{
 }>({ value: "", isOpen: false });
 
 const MenubarMenu = ({ children }: { children: React.ReactNode }) => {
-  const { activeMenu } = React.useContext(MenubarContext);
+  const { activeMenu } = React.use(MenubarContext);
   const value = React.useId();
   const isOpen = activeMenu === value;
 
@@ -68,12 +71,15 @@ const MenubarPortal = ({ children }: { children: React.ReactNode }) => <>{childr
 
 const MenubarGroup = ({ children }: { children: React.ReactNode }) => <>{children}</>;
 
-const MenubarTrigger = React.forwardRef<
-  HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...props }, ref) => {
-  const { activeMenu, setActiveMenu } = React.useContext(MenubarContext);
-  const { value, isOpen } = React.useContext(MenubarMenuContext);
+const MenubarTrigger = ({
+  className,
+  ref,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  ref?: React.Ref<HTMLButtonElement> | undefined;
+}) => {
+  const { activeMenu, setActiveMenu } = React.use(MenubarContext);
+  const { value, isOpen } = React.use(MenubarMenuContext);
 
   return (
     <button
@@ -93,7 +99,7 @@ const MenubarTrigger = React.forwardRef<
       {...props}
     />
   );
-});
+};
 MenubarTrigger.displayName = "MenubarTrigger";
 
 const MenubarSubContext = React.createContext<{
@@ -116,11 +122,16 @@ const MenubarSub = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const MenubarSubTrigger = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { inset?: boolean }
->(({ className, inset, children, ...props }, ref) => {
-  const { isOpen } = React.useContext(MenubarSubContext);
+const MenubarSubTrigger = ({
+  className,
+  inset,
+  children,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { inset?: boolean } & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => {
+  const { isOpen } = React.use(MenubarSubContext);
   return (
     <div
       ref={ref}
@@ -136,70 +147,74 @@ const MenubarSubTrigger = React.forwardRef<
       <ChevronRight className="ml-auto h-4 w-4" />
     </div>
   );
-});
+};
 MenubarSubTrigger.displayName = "MenubarSubTrigger";
 
-const MenubarSubContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    const { isOpen } = React.useContext(MenubarSubContext);
+const MenubarSubContent = ({
+  className,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const { isOpen } = React.use(MenubarSubContext);
 
-    if (!isOpen) return null;
+  if (!isOpen) return null;
 
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          "absolute top-0 left-full z-50 min-w-[8rem] ml-1 overflow-hidden rounded-[var(--radius-md)] border border-border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in zoom-in-95 duration-200 slide-in-from-left-2",
-          className,
-        )}
-        {...props}
-      />
-    );
-  },
-);
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "absolute top-0 left-full z-50 min-w-[8rem] ml-1 overflow-hidden rounded-[var(--radius-md)] border border-border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in zoom-in-95 duration-200 slide-in-from-left-2",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 MenubarSubContent.displayName = "MenubarSubContent";
 
-const MenubarContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
-    align?: "start" | "center" | "end";
-    alignOffset?: number;
-    sideOffset?: number;
-  }
->(
-  (
-    {
-      className,
-      align: _align = "start",
-      alignOffset: _alignOffset = -4,
-      sideOffset: _sideOffset = 8,
-      ...props
-    },
-    ref,
-  ) => {
-    const { isOpen } = React.useContext(MenubarMenuContext);
+const MenubarContent = ({
+  className,
+  align: _align = "start",
+  alignOffset: _alignOffset = -4,
+  sideOffset: _sideOffset = 8,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & {
+  align?: "start" | "center" | "end";
+  alignOffset?: number;
+  sideOffset?: number;
+} & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const { isOpen } = React.use(MenubarMenuContext);
 
-    if (!isOpen) return null;
+  if (!isOpen) return null;
 
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          "absolute top-full left-0 mt-[8px] z-50 min-w-[12rem] overflow-hidden rounded-[var(--radius-md)] border border-border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in slide-in-from-top-2 duration-200",
-          className,
-        )}
-        {...props}
-      />
-    );
-  },
-);
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "absolute top-full left-0 mt-[8px] z-50 min-w-[12rem] overflow-hidden rounded-[var(--radius-md)] border border-border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in slide-in-from-top-2 duration-200",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 MenubarContent.displayName = "MenubarContent";
 
-const MenubarItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { inset?: boolean; disabled?: boolean; asChild?: boolean }
->(({ className, inset, disabled, asChild, children, ...props }, ref) => {
-  const { setActiveMenu } = React.useContext(MenubarContext);
+const MenubarItem = ({
+  className,
+  inset,
+  disabled,
+  asChild,
+  children,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & {
+  inset?: boolean;
+  disabled?: boolean;
+  asChild?: boolean;
+} & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const { setActiveMenu } = React.use(MenubarContext);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (disabled) {
@@ -251,13 +266,19 @@ const MenubarItem = React.forwardRef<
       {children}
     </div>
   );
-});
+};
 MenubarItem.displayName = "MenubarItem";
 
-const MenubarCheckboxItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { checked?: boolean; disabled?: boolean }
->(({ className, children, checked, disabled, ...props }, ref) => (
+const MenubarCheckboxItem = ({
+  className,
+  children,
+  checked,
+  disabled,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { checked?: boolean; disabled?: boolean } & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <div
     ref={ref}
     data-disabled={disabled ? "" : undefined}
@@ -272,13 +293,18 @@ const MenubarCheckboxItem = React.forwardRef<
     </span>
     {children}
   </div>
-));
+);
 MenubarCheckboxItem.displayName = "MenubarCheckboxItem";
 
-const MenubarRadioItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { value?: string; disabled?: boolean }
->(({ className, children, disabled, ...props }, ref) => (
+const MenubarRadioItem = ({
+  className,
+  children,
+  disabled,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { value?: string; disabled?: boolean } & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <div
     ref={ref}
     data-disabled={disabled ? "" : undefined}
@@ -294,29 +320,35 @@ const MenubarRadioItem = React.forwardRef<
     </span>
     {children}
   </div>
-));
+);
 MenubarRadioItem.displayName = "MenubarRadioItem";
 
 const MenubarRadioGroup = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div {...props}>{children}</div>
 );
 
-const MenubarLabel = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { inset?: boolean }
->(({ className, inset, ...props }, ref) => (
+const MenubarLabel = ({
+  className,
+  inset,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { inset?: boolean } & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <div
     ref={ref}
     className={cn("px-2 py-1.5 text-sm font-semibold", inset && "pl-8", className)}
     {...props}
   />
-));
+);
 MenubarLabel.displayName = "MenubarLabel";
 
-const MenubarSeparator = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />
-  ),
+const MenubarSeparator = ({
+  className,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <div ref={ref} className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />
 );
 MenubarSeparator.displayName = "MenubarSeparator";
 

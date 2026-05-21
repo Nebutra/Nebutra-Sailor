@@ -1,7 +1,7 @@
 "use client";
 
 import { cva, type VariantProps } from "class-variance-authority";
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "../utils/cn";
 import { Slot } from "../utils/slot";
 
@@ -170,47 +170,43 @@ export interface ButtonProps
   shadow?: boolean | "sm" | "md" | "lg";
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      shape,
-      asChild = false,
-      loading = false,
-      disabled,
-      prefix,
-      suffix,
-      shadow,
-      children,
-      ...props
-    },
-    ref,
-  ) => {
-    const Comp = asChild ? Slot : "button";
-    const isDisabled = disabled ?? loading;
-    const shadowClass = resolveShadowClass(shadow);
+const Button = ({
+  className,
+  variant,
+  size,
+  shape,
+  asChild = false,
+  loading = false,
+  disabled,
+  prefix,
+  suffix,
+  shadow,
+  children,
+  ref,
+  ...props
+}: ButtonProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
+  const Comp = asChild ? Slot : "button";
+  const isDisabled = disabled ?? loading;
+  const shadowClass = resolveShadowClass(shadow);
 
-    return (
-      <Comp
-        ref={ref}
-        className={cn(buttonVariants({ variant, size, shape }), shadowClass, className)}
-        disabled={isDisabled}
-        aria-busy={loading || undefined}
-        {...props}
-      >
-        {asChild ? (
-          children
-        ) : (
-          <ButtonContent loading={loading} prefix={prefix} suffix={suffix} size={size}>
-            {children}
-          </ButtonContent>
-        )}
-      </Comp>
-    );
-  },
-);
+  return (
+    <Comp
+      ref={ref}
+      className={cn(buttonVariants({ variant, size, shape }), shadowClass, className)}
+      disabled={isDisabled}
+      aria-busy={loading || undefined}
+      {...props}
+    >
+      {asChild ? (
+        children
+      ) : (
+        <ButtonContent loading={loading} prefix={prefix} suffix={suffix} size={size}>
+          {children}
+        </ButtonContent>
+      )}
+    </Comp>
+  );
+};
 Button.displayName = "Button";
 
 // ─── ButtonLink ───────────────────────────────────────────────────────────────
@@ -228,51 +224,47 @@ export interface ButtonLinkProps
   loading?: boolean;
 }
 
-const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      shape,
-      prefix,
-      suffix,
-      shadow,
-      loading = false,
-      children,
-      ...props
-    },
-    ref,
-  ) => {
-    const shadowClass = resolveShadowClass(shadow);
+const ButtonLink = ({
+  className,
+  variant,
+  size,
+  shape,
+  prefix,
+  suffix,
+  shadow,
+  loading = false,
+  children,
+  ref,
+  ...props
+}: ButtonLinkProps & { ref?: React.Ref<HTMLAnchorElement> | undefined }) => {
+  const shadowClass = resolveShadowClass(shadow);
 
-    const loadingProps = loading
-      ? {
-          "aria-busy": "true" as const,
-          "aria-disabled": "true" as const,
-          tabIndex: -1,
-        }
-      : {};
+  const loadingProps = loading
+    ? {
+        "aria-busy": "true" as const,
+        "aria-disabled": "true" as const,
+        tabIndex: -1,
+      }
+    : {};
 
-    return (
-      <a
-        ref={ref}
-        className={cn(
-          buttonVariants({ variant, size, shape }),
-          shadowClass,
-          loading && "pointer-events-none opacity-50",
-          className,
-        )}
-        {...loadingProps}
-        {...props}
-      >
-        <ButtonContent loading={loading} prefix={prefix} suffix={suffix} size={size}>
-          {children}
-        </ButtonContent>
-      </a>
-    );
-  },
-);
+  return (
+    <a
+      ref={ref}
+      className={cn(
+        buttonVariants({ variant, size, shape }),
+        shadowClass,
+        loading && "pointer-events-none opacity-50",
+        className,
+      )}
+      {...loadingProps}
+      {...props}
+    >
+      <ButtonContent loading={loading} prefix={prefix} suffix={suffix} size={size}>
+        {children}
+      </ButtonContent>
+    </a>
+  );
+};
 ButtonLink.displayName = "ButtonLink";
 
 export { Button, ButtonLink, buttonVariants };

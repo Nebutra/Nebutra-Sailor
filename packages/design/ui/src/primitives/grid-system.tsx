@@ -328,212 +328,199 @@ function gridCssVars(columns: number, rows: number, guideWidth: string) {
 // Grid.System
 // =============================================================================
 
-const GridSystem = React.forwardRef<HTMLDivElement, GridSystemProps>(
-  (
-    {
-      className,
-      debug = false,
-      guideWidth = gridTokens.guide.width,
-      unstable_useContainer = false,
-      children,
-      style,
-      columns,
-      rows,
-      rowHeight,
-      showGuides = true,
-      hideGuides,
-      ...props
-    },
-    ref,
-  ) => {
-    const guideWidthValue = toCssLength(guideWidth);
-    const contextValue = React.useMemo<GridSystemContextValue>(
-      () => ({
-        debug,
-        guideWidth: guideWidthValue,
-        useContainer: unstable_useContainer,
-      }),
-      [debug, guideWidthValue, unstable_useContainer],
+const GridSystem = ({
+  className,
+  debug = false,
+  guideWidth = gridTokens.guide.width,
+  unstable_useContainer = false,
+  children,
+  style,
+  columns,
+  rows,
+  rowHeight,
+  showGuides = true,
+  hideGuides,
+  ref,
+  ...props
+}: GridSystemProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const guideWidthValue = toCssLength(guideWidth);
+  const contextValue = React.useMemo<GridSystemContextValue>(
+    () => ({
+      debug,
+      guideWidth: guideWidthValue,
+      useContainer: unstable_useContainer,
+    }),
+    [debug, guideWidthValue, unstable_useContainer],
+  );
+
+  const legacyGridProps = {
+    ...(rows !== undefined ? { rows } : {}),
+    ...(rowHeight !== undefined ? { rowHeight } : {}),
+    ...(showGuides ? (hideGuides !== undefined ? { hideGuides } : {}) : { hideGuides: "both" }),
+  } satisfies Omit<GridProps, "children" | "columns">;
+
+  const content =
+    columns !== undefined ? (
+      <GridRoot columns={columns} {...legacyGridProps}>
+        {children}
+      </GridRoot>
+    ) : (
+      children
     );
 
-    const legacyGridProps = {
-      ...(rows !== undefined ? { rows } : {}),
-      ...(rowHeight !== undefined ? { rowHeight } : {}),
-      ...(showGuides ? (hideGuides !== undefined ? { hideGuides } : {}) : { hideGuides: "both" }),
-    } satisfies Omit<GridProps, "children" | "columns">;
-
-    const content =
-      columns !== undefined ? (
-        <GridRoot columns={columns} {...legacyGridProps}>
-          {children}
-        </GridRoot>
-      ) : (
-        children
-      );
-
-    return (
-      <GridSystemContext.Provider value={contextValue}>
-        <div
-          ref={ref}
-          data-grid-system=""
-          data-debug={debug ? "" : undefined}
-          className={cn("w-full min-w-0", className)}
-          style={{
-            containerType: unstable_useContainer ? "inline-size" : undefined,
-            ...style,
-          }}
-          {...props}
-        >
-          {content}
-        </div>
-      </GridSystemContext.Provider>
-    );
-  },
-);
+  return (
+    <GridSystemContext.Provider value={contextValue}>
+      <div
+        ref={ref}
+        data-grid-system=""
+        data-debug={debug ? "" : undefined}
+        className={cn("w-full min-w-0", className)}
+        style={{
+          containerType: unstable_useContainer ? "inline-size" : undefined,
+          ...style,
+        }}
+        {...props}
+      >
+        {content}
+      </div>
+    </GridSystemContext.Provider>
+  );
+};
 GridSystem.displayName = "Grid.System";
 
 // =============================================================================
 // Grid
 // =============================================================================
 
-const GridRoot = React.forwardRef<HTMLDivElement, GridProps>(
-  (
-    {
-      className,
-      columns,
-      rows,
-      height,
-      hideGuides,
-      rowHeight,
-      debug,
-      guideWidth,
-      children,
-      style,
-      ...props
-    },
-    ref,
-  ) => {
-    const system = React.useContext(GridSystemContext);
-    const id = React.useId();
-    const scopedClassName = toScopedClassName(id, "grid");
-    const baseColumns = resolveResponsiveBase(columns, 1);
-    const baseRows = resolveResponsiveBase(rows, 1);
-    const resolvedDebug = debug ?? system.debug;
-    const resolvedGuideWidth =
-      guideWidth !== undefined ? toCssLength(guideWidth) : system.guideWidth;
-    const responsiveCss = createGridResponsiveCss({
-      className: scopedClassName,
-      columns,
-      rows,
-      height,
-      useContainer: system.useContainer,
-      baseColumns,
-      baseRows,
-    });
+const GridRoot = ({
+  className,
+  columns,
+  rows,
+  height,
+  hideGuides,
+  rowHeight,
+  debug,
+  guideWidth,
+  children,
+  style,
+  ref,
+  ...props
+}: GridProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const system = React.use(GridSystemContext);
+  const id = React.useId();
+  const scopedClassName = toScopedClassName(id, "grid");
+  const baseColumns = resolveResponsiveBase(columns, 1);
+  const baseRows = resolveResponsiveBase(rows, 1);
+  const resolvedDebug = debug ?? system.debug;
+  const resolvedGuideWidth = guideWidth !== undefined ? toCssLength(guideWidth) : system.guideWidth;
+  const responsiveCss = createGridResponsiveCss({
+    className: scopedClassName,
+    columns,
+    rows,
+    height,
+    useContainer: system.useContainer,
+    baseColumns,
+    baseRows,
+  });
 
-    return (
-      <>
-        {responsiveCss ? <style>{responsiveCss}</style> : null}
-        <div
-          ref={ref}
-          data-grid=""
-          data-debug={resolvedDebug ? "" : undefined}
-          className={cn(
-            scopedClassName,
-            "relative isolate grid w-full min-w-0 overflow-hidden rounded-[var(--grid-radius)]",
-            "min-h-[calc(var(--grid-rows)*var(--grid-cell-min-block-size))]",
-            guideBorderClassName(hideGuides),
-            className,
-          )}
-          style={{
-            ...gridCssVars(baseColumns, baseRows, resolvedGuideWidth),
-            gridTemplateColumns: trackTemplate(baseColumns),
-            ...(rows !== undefined ? { gridTemplateRows: trackTemplate(baseRows) } : {}),
-            ...(rowHeight !== undefined ? { gridAutoRows: toCssLength(rowHeight) } : {}),
-            ...(height === "preserve-aspect-ratio"
-              ? { aspectRatio: `${baseColumns} / ${baseRows}` }
-              : height !== undefined
-                ? { height: toCssLength(height) }
-                : {}),
-            backgroundImage: guideBackgroundImage(hideGuides),
-            backgroundSize: guideBackgroundSize(hideGuides),
-            backgroundRepeat: "repeat",
-            ...style,
-          }}
-          {...props}
-        >
-          {children}
-        </div>
-      </>
-    );
-  },
-);
+  return (
+    <>
+      {responsiveCss ? <style>{responsiveCss}</style> : null}
+      <div
+        ref={ref}
+        data-grid=""
+        data-debug={resolvedDebug ? "" : undefined}
+        className={cn(
+          scopedClassName,
+          "relative isolate grid w-full min-w-0 overflow-hidden rounded-[var(--grid-radius)]",
+          "min-h-[calc(var(--grid-rows)*var(--grid-cell-min-block-size))]",
+          guideBorderClassName(hideGuides),
+          className,
+        )}
+        style={{
+          ...gridCssVars(baseColumns, baseRows, resolvedGuideWidth),
+          gridTemplateColumns: trackTemplate(baseColumns),
+          ...(rows !== undefined ? { gridTemplateRows: trackTemplate(baseRows) } : {}),
+          ...(rowHeight !== undefined ? { gridAutoRows: toCssLength(rowHeight) } : {}),
+          ...(height === "preserve-aspect-ratio"
+            ? { aspectRatio: `${baseColumns} / ${baseRows}` }
+            : height !== undefined
+              ? { height: toCssLength(height) }
+              : {}),
+          backgroundImage: guideBackgroundImage(hideGuides),
+          backgroundSize: guideBackgroundSize(hideGuides),
+          backgroundRepeat: "repeat",
+          ...style,
+        }}
+        {...props}
+      >
+        {children}
+      </div>
+    </>
+  );
+};
 GridRoot.displayName = "Grid";
 
 // =============================================================================
 // Grid.Cell
 // =============================================================================
 
-const GridCell = React.forwardRef<HTMLDivElement, GridCellProps>(
-  (
-    {
-      className,
-      column,
-      row,
-      span,
-      solid = false,
-      hideGuides,
-      hideRowGuides,
-      hideColumnGuides,
-      children,
-      style,
-      ...props
-    },
-    ref,
-  ) => {
-    const system = React.useContext(GridSystemContext);
-    const id = React.useId();
-    const scopedClassName = toScopedClassName(id, "cell");
-    const gridColumn = resolveCellColumn(column, span);
-    const gridRow = resolveOptionalBase(row);
-    const responsiveCss = createCellResponsiveCss({
-      className: scopedClassName,
-      column,
-      row,
-      span,
-      useContainer: system.useContainer,
-    });
-    const clipsGuides =
-      solid || hideGuides === true || hideRowGuides !== undefined || hideColumnGuides !== undefined;
+const GridCell = ({
+  className,
+  column,
+  row,
+  span,
+  solid = false,
+  hideGuides,
+  hideRowGuides,
+  hideColumnGuides,
+  children,
+  style,
+  ref,
+  ...props
+}: GridCellProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const system = React.use(GridSystemContext);
+  const id = React.useId();
+  const scopedClassName = toScopedClassName(id, "cell");
+  const gridColumn = resolveCellColumn(column, span);
+  const gridRow = resolveOptionalBase(row);
+  const responsiveCss = createCellResponsiveCss({
+    className: scopedClassName,
+    column,
+    row,
+    span,
+    useContainer: system.useContainer,
+  });
+  const clipsGuides =
+    solid || hideGuides === true || hideRowGuides !== undefined || hideColumnGuides !== undefined;
 
-    return (
-      <>
-        {responsiveCss ? <style>{responsiveCss}</style> : null}
-        <div
-          ref={ref}
-          data-grid-cell=""
-          data-solid={clipsGuides ? "" : undefined}
-          className={cn(
-            scopedClassName,
-            "relative min-h-[var(--grid-cell-min-block-size)] min-w-0 overflow-hidden p-[var(--grid-cell-padding)]",
-            "text-foreground focus-within:z-10 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
-            clipsGuides && "bg-[var(--grid-cell-solid-background)]",
-            !clipsGuides && system.debug && "bg-[var(--grid-cell-debug-background)]",
-            className,
-          )}
-          style={{
-            ...(gridColumn !== undefined ? { gridColumn } : {}),
-            ...(gridRow !== undefined ? { gridRow: gridLineValue(gridRow) } : {}),
-            ...style,
-          }}
-          {...props}
-        >
-          {children}
-        </div>
-      </>
-    );
-  },
-);
+  return (
+    <>
+      {responsiveCss ? <style>{responsiveCss}</style> : null}
+      <div
+        ref={ref}
+        data-grid-cell=""
+        data-solid={clipsGuides ? "" : undefined}
+        className={cn(
+          scopedClassName,
+          "relative min-h-[var(--grid-cell-min-block-size)] min-w-0 overflow-hidden p-[var(--grid-cell-padding)]",
+          "text-foreground focus-within:z-10 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
+          clipsGuides && "bg-[var(--grid-cell-solid-background)]",
+          !clipsGuides && system.debug && "bg-[var(--grid-cell-debug-background)]",
+          className,
+        )}
+        style={{
+          ...(gridColumn !== undefined ? { gridColumn } : {}),
+          ...(gridRow !== undefined ? { gridRow: gridLineValue(gridRow) } : {}),
+          ...style,
+        }}
+        {...props}
+      >
+        {children}
+      </div>
+    </>
+  );
+};
 GridCell.displayName = "Grid.Cell";
 
 // =============================================================================

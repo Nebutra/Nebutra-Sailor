@@ -3,9 +3,9 @@
 import {
   Children,
   cloneElement,
-  forwardRef,
   isValidElement,
   type ReactNode,
+  type Ref,
   useId,
   useMemo,
 } from "react";
@@ -86,10 +86,13 @@ export type CollapseGroupProps = {
 // CollapseGroup
 // ---------------------------------------------------------------------------
 
-export const CollapseGroup = forwardRef<HTMLDivElement, CollapseGroupProps>(function CollapseGroup(
-  { multiple = false, size, children, className },
+export const CollapseGroup = function CollapseGroup({
   ref,
-) {
+  multiple = false,
+  size,
+  children,
+  className,
+}: CollapseGroupProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   // Walk children, stamp each Collapse with an auto-generated value, and
   // aggregate `defaultExpanded` flags into the Accordion's `defaultValue`.
   const groupId = useId();
@@ -131,25 +134,23 @@ export const CollapseGroup = forwardRef<HTMLDivElement, CollapseGroupProps>(func
       {stampedChildren}
     </Accordion>
   );
-});
+};
 
 // ---------------------------------------------------------------------------
 // Collapse
 // ---------------------------------------------------------------------------
 
-export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(function Collapse(
-  {
-    title,
-    defaultExpanded = false,
-    size = "default",
-    keepMounted = true,
-    disabled,
-    children,
-    className,
-    __value,
-  },
+export const Collapse = function Collapse({
   ref,
-) {
+  title,
+  defaultExpanded = false,
+  size = "default",
+  keepMounted = true,
+  disabled,
+  children,
+  className,
+  __value,
+}: CollapseProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   // Standalone mode: render our own single-item Accordion. CollapseGroup mode:
   // we receive __value and the parent owns the Accordion.
   const standaloneId = useId();
@@ -185,4 +186,4 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(function Colla
       {item}
     </Accordion>
   );
-});
+};

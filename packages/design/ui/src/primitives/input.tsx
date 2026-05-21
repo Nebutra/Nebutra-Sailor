@@ -150,7 +150,7 @@ export type InputProps = NativeInputProps &
   (LabelledInputProps | UnlabelledInputProps) &
   VariantProps<typeof inputVariants>;
 
-function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null) {
+function assignRef<T>(ref: React.Ref<T> | undefined, value: T | null) {
   if (typeof ref === "function") {
     ref(value);
     return;
@@ -207,7 +207,10 @@ function joinDescriptionIds(...ids: Array<string | undefined>) {
   return ids.filter(Boolean).join(" ") || undefined;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+const Input = ({
+  ref: forwardedRef,
+  ...props
+}: InputProps & { ref?: React.Ref<HTMLInputElement> | undefined }) => {
   const {
     className,
     type = "text",
@@ -488,7 +491,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
       )}
     </div>
   );
-});
+};
 Input.displayName = "Input";
 
 export { Input, inputControlButtonVariants, inputVariants };

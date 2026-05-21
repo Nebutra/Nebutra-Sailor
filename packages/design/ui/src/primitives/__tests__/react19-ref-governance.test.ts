@@ -1,24 +1,24 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const migratedPrimitiveFiles = [
-  "input.tsx",
-  "textarea.tsx",
-  "select.tsx",
-  "toggle-group.tsx",
-  "progress.tsx",
-] as const;
+const primitivesDir = join(process.cwd(), "src", "primitives");
 
-const sourceFor = (filename: (typeof migratedPrimitiveFiles)[number]) =>
-  readFileSync(join(process.cwd(), "src", "primitives", filename), "utf8");
+const primitiveFiles = readdirSync(primitivesDir)
+  .filter((filename) => filename.endsWith(".tsx"))
+  .sort();
+
+const sourceFor = (filename: string) => readFileSync(join(primitivesDir, filename), "utf8");
 
 describe("React 19 ref governance", () => {
-  it.each(migratedPrimitiveFiles)("does not use forwardRef in %s", (filename) => {
+  it.each(primitiveFiles)("does not use legacy React 18 primitive APIs in %s", (filename) => {
     const source = sourceFor(filename);
 
+    expect(source).not.toMatch(/\bforwardRef\b/u);
     expect(source).not.toMatch(/\bReact\.forwardRef\b/u);
     expect(source).not.toMatch(/\bForwardRefExoticComponent\b/u);
     expect(source).not.toMatch(/\bForwardedRef\b/u);
+    expect(source).not.toMatch(/\bReact\.useContext\b/u);
+    expect(source).not.toMatch(/\buseContext\b/u);
   });
 });

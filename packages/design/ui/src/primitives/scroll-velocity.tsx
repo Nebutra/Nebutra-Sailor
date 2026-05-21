@@ -10,7 +10,7 @@ import {
   useTransform,
   useVelocity,
 } from "motion/react";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { cn } from "../utils";
 
 // =============================================================================
@@ -134,7 +134,7 @@ export function ScrollVelocityContainer({
  * Can be used standalone or within ScrollVelocityContainer for shared velocity.
  */
 export function ScrollVelocityRow(props: ScrollVelocityRowProps) {
-  const sharedVelocityFactor = useContext(ScrollVelocityContext);
+  const sharedVelocityFactor = use(ScrollVelocityContext);
 
   if (sharedVelocityFactor) {
     return <ScrollVelocityRowImpl {...props} velocityFactor={sharedVelocityFactor} />;

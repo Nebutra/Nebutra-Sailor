@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, type Ref, useEffect, useState } from "react";
 import { cn } from "../utils/cn";
 import { ContextCard, type ContextCardSide } from "./context-card";
 
@@ -208,32 +208,36 @@ function useRelativeLabel(target: Date): { label: string; mounted: boolean } {
 // Component
 // ---------------------------------------------------------------------------
 
-export const RelativeTimeCard = forwardRef<HTMLTimeElement, RelativeTimeCardProps>(
-  function RelativeTimeCard({ date, side = "top", children, className }, ref) {
-    const target = normalizeDate(date);
-    const { label, mounted } = useRelativeLabel(target);
-    const iso = target.toISOString();
+export const RelativeTimeCard = function RelativeTimeCard({
+  ref,
+  date,
+  side = "top",
+  children,
+  className,
+}: RelativeTimeCardProps & { ref?: Ref<HTMLTimeElement> | undefined }) {
+  const target = normalizeDate(date);
+  const { label, mounted } = useRelativeLabel(target);
+  const iso = target.toISOString();
 
-    const trigger =
-      children !== undefined ? (
-        children
-      ) : (
-        <time
-          ref={ref}
-          dateTime={iso}
-          className={cn(
-            "cursor-default tabular-nums underline decoration-dotted decoration-muted-foreground/60 underline-offset-2",
-            className,
-          )}
-        >
-          {label}
-        </time>
-      );
-
-    return (
-      <ContextCard.Trigger side={side} content={<CardContent target={target} mounted={mounted} />}>
-        {trigger}
-      </ContextCard.Trigger>
+  const trigger =
+    children !== undefined ? (
+      children
+    ) : (
+      <time
+        ref={ref}
+        dateTime={iso}
+        className={cn(
+          "cursor-default tabular-nums underline decoration-dotted decoration-muted-foreground/60 underline-offset-2",
+          className,
+        )}
+      >
+        {label}
+      </time>
     );
-  },
-);
+
+  return (
+    <ContextCard.Trigger side={side} content={<CardContent target={target} mounted={mounted} />}>
+      {trigger}
+    </ContextCard.Trigger>
+  );
+};

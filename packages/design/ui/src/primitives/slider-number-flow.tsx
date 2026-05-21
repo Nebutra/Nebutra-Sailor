@@ -2,13 +2,17 @@
 
 import { Slider as BaseSlider } from "@base-ui/react/slider";
 import NumberFlow, { continuous } from "@number-flow/react";
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "../utils";
 
-export const SliderNumberFlow = React.forwardRef<
-  React.ElementRef<typeof BaseSlider.Root>,
-  React.ComponentPropsWithoutRef<typeof BaseSlider.Root>
->(({ className, value, ...props }, ref) => (
+export const SliderNumberFlow = ({
+  className,
+  value,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseSlider.Root> & {
+  ref?: React.Ref<React.ElementRef<typeof BaseSlider.Root>> | undefined;
+}) => (
   <BaseSlider.Root
     ref={ref}
     {...(value != null ? { value } : {})}
@@ -41,6 +45,6 @@ export const SliderNumberFlow = React.forwardRef<
       )}
     </BaseSlider.Thumb>
   </BaseSlider.Root>
-));
+);
 
 SliderNumberFlow.displayName = "SliderNumberFlow";

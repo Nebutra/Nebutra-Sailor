@@ -56,35 +56,25 @@ const justifyMap = {
   around: "justify-around",
 };
 
-export const Stack = React.forwardRef<HTMLDivElement, StackProps>(
-  (
+export const Stack = ({
+  as: Component = "div",
+  className,
+  gap = 4,
+  align = "stretch",
+  justify = "start",
+  children,
+  ref,
+  ...props
+}: StackProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  return React.createElement(
+    Component,
     {
-      as: Component = "div",
-      className,
-      gap = 4,
-      align = "stretch",
-      justify = "start",
-      children,
-      ...props
+      ...props,
+      ref,
+      className: cn("flex flex-col", gapMap[gap], alignMap[align], justifyMap[justify], className),
     },
-    ref,
-  ) => {
-    return React.createElement(
-      Component,
-      {
-        ...props,
-        ref,
-        className: cn(
-          "flex flex-col",
-          gapMap[gap],
-          alignMap[align],
-          justifyMap[justify],
-          className,
-        ),
-      },
-      children,
-    );
-  },
-);
+    children,
+  );
+};
 
 Stack.displayName = "Stack";

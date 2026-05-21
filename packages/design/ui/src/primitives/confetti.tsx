@@ -7,16 +7,8 @@ import type {
 } from "canvas-confetti";
 import confetti from "canvas-confetti";
 import type React from "react";
-import type { ReactNode } from "react";
-import {
-  createContext,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-} from "react";
+import type { ReactNode, Ref } from "react";
+import { createContext, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from "react";
 import { cn } from "../utils";
 import { Button } from "./button";
 
@@ -54,7 +46,7 @@ export type ConfettiRef = ConfettiApi | null;
  * - Ref-based imperative control
  * - Context provider for nested triggers
  */
-export interface ConfettiProps extends React.ComponentPropsWithRef<"canvas"> {
+export interface ConfettiProps extends React.ComponentPropsWithoutRef<"canvas"> {
   /** Confetti animation options */
   options?: ConfettiOptions;
   /** Global canvas-confetti options */
@@ -111,7 +103,10 @@ const ConfettiContext = createContext<ConfettiApi>({} as ConfettiApi);
  * />
  * ```
  */
-export const Confetti = forwardRef<ConfettiRef, ConfettiProps>((props, ref) => {
+export const Confetti = ({
+  ref,
+  ...props
+}: ConfettiProps & { ref?: Ref<ConfettiRef> | undefined }) => {
   const {
     options,
     globalOptions = { resize: true, useWorker: true },
@@ -166,7 +161,7 @@ export const Confetti = forwardRef<ConfettiRef, ConfettiProps>((props, ref) => {
       {children}
     </ConfettiContext.Provider>
   );
-});
+};
 
 Confetti.displayName = "Confetti";
 

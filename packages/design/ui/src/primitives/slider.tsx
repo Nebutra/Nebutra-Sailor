@@ -105,7 +105,10 @@ function formatSliderValue(value: number, unit: string | undefined) {
   return unit ? `${value}${unit}` : value;
 }
 
-export const Slider = React.forwardRef<HTMLInputElement, SliderProps>((props, ref) => {
+export const Slider = ({
+  ref,
+  ...props
+}: SliderProps & { ref?: React.Ref<HTMLInputElement> | undefined }) => {
   const {
     className,
     wrapperClassName,
@@ -242,7 +245,7 @@ export const Slider = React.forwardRef<HTMLInputElement, SliderProps>((props, re
       />
     </div>
   );
-});
+};
 
 Slider.displayName = "Slider";
 export default Slider;

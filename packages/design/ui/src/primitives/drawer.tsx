@@ -191,7 +191,7 @@ function DrawerContent({
   style,
   ...props
 }: DrawerContentProps) {
-  const rootContext = React.useContext(DrawerRootContext);
+  const rootContext = React.use(DrawerRootContext);
   const resolvedHeight = formatDrawerHeight(height ?? rootContext.height);
   const contentStyle =
     resolvedHeight === undefined

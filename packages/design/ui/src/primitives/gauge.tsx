@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "../utils/cn";
 
 const gaugeSizes = {
@@ -201,123 +201,117 @@ function getValueTextClass(size: GaugeSize): string {
  * Use Progress for determinate task progress. Pair Gauge with adjacent text and
  * connect it via `aria-labelledby` whenever the visual is not self-evident.
  */
-export const Gauge = React.forwardRef<HTMLDivElement, GaugeProps>(
-  (
-    {
-      value,
-      size = "medium",
-      colors,
-      secondaryColor,
-      showValue = false,
-      label,
-      children,
-      arcPriority = "default",
-      indeterminate = false,
-      className,
-      style,
-      "aria-label": ariaLabel,
-      "aria-labelledby": ariaLabelledBy,
-      ...props
-    },
-    ref,
-  ) => {
-    const normalizedSize = normalizeSize(size);
-    const normalizedPriority = normalizeArcPriority(arcPriority);
-    const clampedValue = clampValue(value);
-    const radius = normalizedSize.key === "tiny" ? 42.5 : 45;
-    const circumference = 2 * Math.PI * radius;
-    const geometry = getArcGeometry(
-      clampedValue,
-      circumference,
-      gapPercentBySize[normalizedSize.key],
-      normalizedPriority,
-    );
-    const shouldShowValue = (showValue || label === true) && normalizedSize.key !== "tiny";
-    const centerOverlay = label !== true && label !== false ? label : children;
-    const primaryColor = resolvePrimaryColor(clampedValue, colors);
-    const trackColor = resolveSecondaryColor(colors, secondaryColor);
-    const accessibleLabel =
-      ariaLabel ?? (indeterminate ? "Calculating value" : `${Math.round(clampedValue)} percent`);
+export const Gauge = ({
+  value,
+  size = "medium",
+  colors,
+  secondaryColor,
+  showValue = false,
+  label,
+  children,
+  arcPriority = "default",
+  indeterminate = false,
+  className,
+  style,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  ref,
+  ...props
+}: GaugeProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const normalizedSize = normalizeSize(size);
+  const normalizedPriority = normalizeArcPriority(arcPriority);
+  const clampedValue = clampValue(value);
+  const radius = normalizedSize.key === "tiny" ? 42.5 : 45;
+  const circumference = 2 * Math.PI * radius;
+  const geometry = getArcGeometry(
+    clampedValue,
+    circumference,
+    gapPercentBySize[normalizedSize.key],
+    normalizedPriority,
+  );
+  const shouldShowValue = (showValue || label === true) && normalizedSize.key !== "tiny";
+  const centerOverlay = label !== true && label !== false ? label : children;
+  const primaryColor = resolvePrimaryColor(clampedValue, colors);
+  const trackColor = resolveSecondaryColor(colors, secondaryColor);
+  const accessibleLabel =
+    ariaLabel ?? (indeterminate ? "Calculating value" : `${Math.round(clampedValue)} percent`);
 
-    return (
-      <div
-        {...props}
-        ref={ref}
-        role="progressbar"
-        aria-label={ariaLabelledBy ? undefined : accessibleLabel}
-        aria-labelledby={ariaLabelledBy}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={indeterminate ? undefined : clampedValue}
-        aria-busy={indeterminate || undefined}
-        className={cn("relative inline-flex shrink-0 items-center justify-center", className)}
-        style={{ width: normalizedSize.pixels, height: normalizedSize.pixels, ...style }}
+  return (
+    <div
+      {...props}
+      ref={ref}
+      role="progressbar"
+      aria-label={ariaLabelledBy ? undefined : accessibleLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={indeterminate ? undefined : clampedValue}
+      aria-busy={indeterminate || undefined}
+      className={cn("relative inline-flex shrink-0 items-center justify-center", className)}
+      style={{ width: normalizedSize.pixels, height: normalizedSize.pixels, ...style }}
+    >
+      <svg
+        aria-hidden="true"
+        fill="none"
+        height={normalizedSize.pixels}
+        width={normalizedSize.pixels}
+        viewBox="0 0 100 100"
       >
-        <svg
+        <circle
+          cx="50"
+          cy="50"
+          r={radius}
+          stroke={trackColor}
+          strokeDasharray={`${indeterminate ? circumference : geometry.secondaryLength} ${circumference}`}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="10"
+          className="origin-center transition-[stroke-dasharray,stroke] duration-300 ease-out motion-reduce:transition-none"
+          style={{ transform: `rotate(${geometry.secondaryRotation}deg) scaleY(-1)` }}
+        />
+
+        {(clampedValue > 0 || normalizedPriority === "equal" || indeterminate) && (
+          <g
+            className={cn(indeterminate && "origin-center animate-spin motion-reduce:animate-none")}
+          >
+            <circle
+              cx="50"
+              cy="50"
+              r={radius}
+              stroke={primaryColor}
+              strokeDasharray={`${indeterminate ? circumference * 0.25 : geometry.primaryLength} ${circumference}`}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="10"
+              className="origin-center transition-[stroke-dasharray,stroke] duration-300 ease-out motion-reduce:transition-none"
+              style={{ transform: `rotate(${geometry.primaryRotation}deg)` }}
+            />
+          </g>
+        )}
+      </svg>
+
+      {shouldShowValue && !indeterminate ? (
+        <span
           aria-hidden="true"
-          fill="none"
-          height={normalizedSize.pixels}
-          width={normalizedSize.pixels}
-          viewBox="0 0 100 100"
-        >
-          <circle
-            cx="50"
-            cy="50"
-            r={radius}
-            stroke={trackColor}
-            strokeDasharray={`${indeterminate ? circumference : geometry.secondaryLength} ${circumference}`}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="10"
-            className="origin-center transition-[stroke-dasharray,stroke] duration-300 ease-out motion-reduce:transition-none"
-            style={{ transform: `rotate(${geometry.secondaryRotation}deg) scaleY(-1)` }}
-          />
-
-          {(clampedValue > 0 || normalizedPriority === "equal" || indeterminate) && (
-            <g
-              className={cn(
-                indeterminate && "origin-center animate-spin motion-reduce:animate-none",
-              )}
-            >
-              <circle
-                cx="50"
-                cy="50"
-                r={radius}
-                stroke={primaryColor}
-                strokeDasharray={`${indeterminate ? circumference * 0.25 : geometry.primaryLength} ${circumference}`}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="10"
-                className="origin-center transition-[stroke-dasharray,stroke] duration-300 ease-out motion-reduce:transition-none"
-                style={{ transform: `rotate(${geometry.primaryRotation}deg)` }}
-              />
-            </g>
+          className={cn(
+            "pointer-events-none absolute inset-0 flex items-center justify-center tabular-nums text-foreground",
+            getValueTextClass(normalizedSize.key),
           )}
-        </svg>
+        >
+          {Math.round(clampedValue)}
+        </span>
+      ) : null}
 
-        {shouldShowValue && !indeterminate ? (
-          <span
-            aria-hidden="true"
-            className={cn(
-              "pointer-events-none absolute inset-0 flex items-center justify-center tabular-nums text-foreground",
-              getValueTextClass(normalizedSize.key),
-            )}
-          >
-            {Math.round(clampedValue)}
-          </span>
-        ) : null}
-
-        {centerOverlay && !shouldShowValue ? (
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 flex items-center justify-center text-muted-foreground"
-          >
-            {centerOverlay}
-          </span>
-        ) : null}
-      </div>
-    );
-  },
-);
+      {centerOverlay && !shouldShowValue ? (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center text-muted-foreground"
+        >
+          {centerOverlay}
+        </span>
+      ) : null}
+    </div>
+  );
+};
 
 Gauge.displayName = "Gauge";

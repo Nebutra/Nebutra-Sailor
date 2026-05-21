@@ -1,7 +1,7 @@
 "use client";
 
 import type * as React from "react";
-import { createContext, type HTMLAttributes, useContext } from "react";
+import { createContext, type HTMLAttributes, use } from "react";
 import { cn } from "../utils";
 import { Badge, type BadgeProps } from "./badge";
 
@@ -18,7 +18,7 @@ const AnnouncementContext = createContext<AnnouncementContextType>({
 });
 
 const useAnnouncementContext = () => {
-  const context = useContext(AnnouncementContext);
+  const context = use(AnnouncementContext);
   if (!context) {
     throw new Error("Announcement compound components must be used within Announcement");
   }

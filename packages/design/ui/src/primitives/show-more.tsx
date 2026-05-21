@@ -75,110 +75,106 @@ function callExpandedChange(props: ShowMoreControlledProps, expanded: boolean) {
   onClick?.(expanded);
 }
 
-export const ShowMore = React.forwardRef<HTMLDivElement, ShowMoreProps>(
-  (
-    {
-      expanded,
-      controls,
-      hiddenCount,
-      noBorder = false,
-      expandedLabel = "Show Less",
-      collapsedLabel,
-      focusTargetRef,
-      focusOnExpand = true,
-      disabled = false,
-      className,
-      buttonClassName,
-      dividerClassName,
-      onExpandedChange,
-      onClick,
-      style,
-      ...props
-    },
-    ref,
-  ) => {
-    const wasExpanded = React.useRef(expanded);
-    const label = expanded ? expandedLabel : getCollapsedLabel(hiddenCount, collapsedLabel);
+export const ShowMore = ({
+  expanded,
+  controls,
+  hiddenCount,
+  noBorder = false,
+  expandedLabel = "Show Less",
+  collapsedLabel,
+  focusTargetRef,
+  focusOnExpand = true,
+  disabled = false,
+  className,
+  buttonClassName,
+  dividerClassName,
+  onExpandedChange,
+  onClick,
+  style,
+  ref,
+  ...props
+}: ShowMoreProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const wasExpanded = React.useRef(expanded);
+  const label = expanded ? expandedLabel : getCollapsedLabel(hiddenCount, collapsedLabel);
 
-    React.useEffect(() => {
-      if (focusOnExpand && expanded && !wasExpanded.current) {
-        focusTargetRef?.current?.focus();
-      }
+  React.useEffect(() => {
+    if (focusOnExpand && expanded && !wasExpanded.current) {
+      focusTargetRef?.current?.focus();
+    }
 
-      wasExpanded.current = expanded;
-    }, [expanded, focusOnExpand, focusTargetRef]);
+    wasExpanded.current = expanded;
+  }, [expanded, focusOnExpand, focusTargetRef]);
 
-    const cssVars = {
-      "--show-more-trigger-height": `${showMoreTokens.triggerHeight}px`,
-      "--show-more-trigger-padding-x": `${showMoreTokens.triggerPaddingX}px`,
-      "--show-more-divider-inset": `${showMoreTokens.dividerInset}px`,
-      "--show-more-gap": `${showMoreTokens.gap}px`,
-      "--show-more-radius": `${showMoreTokens.radius}px`,
-      "--show-more-icon-size": `${showMoreTokens.iconSize}px`,
-      "--show-more-duration": `${showMoreTokens.motion.duration}ms`,
-      "--show-more-easing": showMoreTokens.motion.easing,
-      ...style,
-    } satisfies React.CSSProperties & Record<ShowMoreCssVar, string | number>;
+  const cssVars = {
+    "--show-more-trigger-height": `${showMoreTokens.triggerHeight}px`,
+    "--show-more-trigger-padding-x": `${showMoreTokens.triggerPaddingX}px`,
+    "--show-more-divider-inset": `${showMoreTokens.dividerInset}px`,
+    "--show-more-gap": `${showMoreTokens.gap}px`,
+    "--show-more-radius": `${showMoreTokens.radius}px`,
+    "--show-more-icon-size": `${showMoreTokens.iconSize}px`,
+    "--show-more-duration": `${showMoreTokens.motion.duration}ms`,
+    "--show-more-easing": showMoreTokens.motion.easing,
+    ...style,
+  } satisfies React.CSSProperties & Record<ShowMoreCssVar, string | number>;
 
-    const actionProps: ShowMoreControlledProps =
-      typeof onExpandedChange === "function"
-        ? { onExpandedChange }
-        : { onClick: onClick as (expanded: boolean) => void };
+  const actionProps: ShowMoreControlledProps =
+    typeof onExpandedChange === "function"
+      ? { onExpandedChange }
+      : { onClick: onClick as (expanded: boolean) => void };
 
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          "flex w-full items-center justify-center px-[var(--show-more-divider-inset)]",
-          className,
-        )}
-        style={cssVars}
-        {...props}
-      >
-        {!noBorder && (
-          <div
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "flex w-full items-center justify-center px-[var(--show-more-divider-inset)]",
+        className,
+      )}
+      style={cssVars}
+      {...props}
+    >
+      {!noBorder && (
+        <div
+          aria-hidden="true"
+          className={cn("h-px flex-1 bg-[var(--neutral-7)]", dividerClassName)}
+        />
+      )}
+
+      <div className="shrink-0 bg-[var(--neutral-1)] px-[var(--show-more-gap)]">
+        <button
+          type="button"
+          aria-controls={controls}
+          aria-expanded={expanded}
+          disabled={disabled}
+          className={cn(
+            "inline-flex items-center justify-center gap-1 whitespace-nowrap border border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] font-medium text-sm",
+            "h-[var(--show-more-trigger-height)] rounded-[var(--show-more-radius)] px-[var(--show-more-trigger-padding-x)]",
+            "transition-[background-color,border-color,color] duration-[var(--show-more-duration)] ease-[var(--show-more-easing)]",
+            "hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]",
+            "disabled:pointer-events-none disabled:opacity-50",
+            "motion-reduce:transition-none",
+            buttonClassName,
+          )}
+          onClick={() => callExpandedChange(actionProps, !expanded)}
+        >
+          {label}
+          <ChevronDown
             aria-hidden="true"
-            className={cn("h-px flex-1 bg-[var(--neutral-7)]", dividerClassName)}
-          />
-        )}
-
-        <div className="shrink-0 bg-[var(--neutral-1)] px-[var(--show-more-gap)]">
-          <button
-            type="button"
-            aria-controls={controls}
-            aria-expanded={expanded}
-            disabled={disabled}
             className={cn(
-              "inline-flex items-center justify-center gap-1 whitespace-nowrap border border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] font-medium text-sm",
-              "h-[var(--show-more-trigger-height)] rounded-[var(--show-more-radius)] px-[var(--show-more-trigger-padding-x)]",
-              "transition-[background-color,border-color,color] duration-[var(--show-more-duration)] ease-[var(--show-more-easing)]",
-              "hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]",
-              "disabled:pointer-events-none disabled:opacity-50",
-              "motion-reduce:transition-none",
-              buttonClassName,
+              "size-[var(--show-more-icon-size)] transition-transform duration-[var(--show-more-duration)] ease-[var(--show-more-easing)] motion-reduce:transition-none",
+              expanded && "rotate-180",
             )}
-            onClick={() => callExpandedChange(actionProps, !expanded)}
-          >
-            {label}
-            <ChevronDown
-              aria-hidden="true"
-              className={cn(
-                "size-[var(--show-more-icon-size)] transition-transform duration-[var(--show-more-duration)] ease-[var(--show-more-easing)] motion-reduce:transition-none",
-                expanded && "rotate-180",
-              )}
-            />
-          </button>
-        </div>
-
-        {!noBorder && (
-          <div
-            aria-hidden="true"
-            className={cn("h-px flex-1 bg-[var(--neutral-7)]", dividerClassName)}
           />
-        )}
+        </button>
       </div>
-    );
-  },
-);
+
+      {!noBorder && (
+        <div
+          aria-hidden="true"
+          className={cn("h-px flex-1 bg-[var(--neutral-7)]", dividerClassName)}
+        />
+      )}
+    </div>
+  );
+};
 ShowMore.displayName = "ShowMore";

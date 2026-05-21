@@ -108,73 +108,72 @@ export type AvatarProps = Omit<
   children?: React.ReactNode;
 };
 
-const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(
-  (
-    {
-      className,
-      size = "md",
-      src,
-      alt,
-      title,
-      letter,
-      username,
-      placeholder,
-      fallbackDelayMs,
-      children,
-      style,
-      ...props
-    },
-    ref,
-  ) => {
-    const label = normalizeAvatarLabel({ alt, title, username });
-    const fallback = letter ?? getAvatarInitials(title ?? username ?? alt ?? "");
-    const contextTitle = title ?? alt ?? username;
-    const contextValue: AvatarContextValue =
-      contextTitle === undefined ? { size } : { size, title: contextTitle };
-    const shouldRenderConvenienceContent =
-      children === undefined && (src !== undefined || placeholder === true || fallback.length > 0);
+const Avatar = ({
+  className,
+  size = "md",
+  src,
+  alt,
+  title,
+  letter,
+  username,
+  placeholder,
+  fallbackDelayMs,
+  children,
+  style,
+  ref,
+  ...props
+}: AvatarProps & { ref?: React.Ref<HTMLSpanElement> | undefined }) => {
+  const label = normalizeAvatarLabel({ alt, title, username });
+  const fallback = letter ?? getAvatarInitials(title ?? username ?? alt ?? "");
+  const contextTitle = title ?? alt ?? username;
+  const contextValue: AvatarContextValue =
+    contextTitle === undefined ? { size } : { size, title: contextTitle };
+  const shouldRenderConvenienceContent =
+    children === undefined && (src !== undefined || placeholder === true || fallback.length > 0);
 
-    return (
-      <AvatarContext.Provider value={contextValue}>
-        <BaseAvatar.Root
-          ref={ref}
-          className={cn(
-            "relative flex shrink-0 overflow-hidden rounded-full bg-muted",
-            getAvatarRootClass(size),
-            className,
-          )}
-          style={getAvatarStyle(size, style)}
-          {...props}
-        >
-          {shouldRenderConvenienceContent ? (
-            <>
-              {src && <AvatarImage src={src} alt={label} />}
-              <AvatarFallback size={size} delay={fallbackDelayMs}>
-                {placeholder ? <span className="sr-only">Loading avatar</span> : fallback}
-              </AvatarFallback>
-            </>
-          ) : (
-            children
-          )}
-        </BaseAvatar.Root>
-      </AvatarContext.Provider>
-    );
-  },
-);
+  return (
+    <AvatarContext.Provider value={contextValue}>
+      <BaseAvatar.Root
+        ref={ref}
+        className={cn(
+          "relative flex shrink-0 overflow-hidden rounded-full bg-muted",
+          getAvatarRootClass(size),
+          className,
+        )}
+        style={getAvatarStyle(size, style)}
+        {...props}
+      >
+        {shouldRenderConvenienceContent ? (
+          <>
+            {src && <AvatarImage src={src} alt={label} />}
+            <AvatarFallback size={size} delay={fallbackDelayMs}>
+              {placeholder ? <span className="sr-only">Loading avatar</span> : fallback}
+            </AvatarFallback>
+          </>
+        ) : (
+          children
+        )}
+      </BaseAvatar.Root>
+    </AvatarContext.Provider>
+  );
+};
 Avatar.displayName = "Avatar";
 
 // ─── AvatarImage ──────────────────────────────────────────────────────────────
 
-const AvatarImage = React.forwardRef<
-  HTMLImageElement,
-  React.ComponentPropsWithoutRef<typeof BaseAvatar.Image>
->(({ className, ...props }, ref) => (
+const AvatarImage = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseAvatar.Image> & {
+  ref?: React.Ref<HTMLImageElement> | undefined;
+}) => (
   <BaseAvatar.Image
     ref={ref}
     className={cn("aspect-square h-full w-full object-cover", className)}
     {...props}
   />
-));
+);
 AvatarImage.displayName = "AvatarImage";
 
 // ─── AvatarFallback ───────────────────────────────────────────────────────────
@@ -184,33 +183,39 @@ export type AvatarFallbackProps = React.ComponentPropsWithoutRef<typeof BaseAvat
   size?: AvatarSize;
 };
 
-const AvatarFallback = React.forwardRef<HTMLSpanElement, AvatarFallbackProps>(
-  ({ className, size, children, "aria-label": ariaLabel, style, ...props }, ref) => {
-    const context = React.useContext(AvatarContext);
-    const resolvedSize = size ?? context?.size ?? "md";
-    const fallbackLabel =
-      ariaLabel ??
-      (typeof children === "string" && children.trim().length > 0
-        ? `Avatar with initials: ${children}`
-        : context?.title);
+const AvatarFallback = ({
+  className,
+  size,
+  children,
+  "aria-label": ariaLabel,
+  style,
+  ref,
+  ...props
+}: AvatarFallbackProps & { ref?: React.Ref<HTMLSpanElement> | undefined }) => {
+  const context = React.use(AvatarContext);
+  const resolvedSize = size ?? context?.size ?? "md";
+  const fallbackLabel =
+    ariaLabel ??
+    (typeof children === "string" && children.trim().length > 0
+      ? `Avatar with initials: ${children}`
+      : context?.title);
 
-    return (
-      <BaseAvatar.Fallback
-        ref={ref}
-        aria-label={fallbackLabel}
-        className={cn(
-          "flex h-full w-full items-center justify-center rounded-full bg-muted font-medium text-muted-foreground",
-          getAvatarFallbackClass(resolvedSize),
-          className,
-        )}
-        style={getAvatarStyle(resolvedSize, style)}
-        {...props}
-      >
-        {children}
-      </BaseAvatar.Fallback>
-    );
-  },
-);
+  return (
+    <BaseAvatar.Fallback
+      ref={ref}
+      aria-label={fallbackLabel}
+      className={cn(
+        "flex h-full w-full items-center justify-center rounded-full bg-muted font-medium text-muted-foreground",
+        getAvatarFallbackClass(resolvedSize),
+        className,
+      )}
+      style={getAvatarStyle(resolvedSize, style)}
+      {...props}
+    >
+      {children}
+    </BaseAvatar.Fallback>
+  );
+};
 AvatarFallback.displayName = "AvatarFallback";
 
 // ─── AvatarGroup ──────────────────────────────────────────────────────────────

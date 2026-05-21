@@ -186,7 +186,7 @@ interface ComboboxContextValue {
 const ComboboxContext = React.createContext<ComboboxContextValue | null>(null);
 
 function useComboboxContext(): ComboboxContextValue {
-  const ctx = React.useContext(ComboboxContext);
+  const ctx = React.use(ComboboxContext);
   if (!ctx) {
     throw new Error("Combobox sub-components must be used within <Combobox>");
   }
@@ -197,10 +197,14 @@ function useComboboxContext(): ComboboxContextValue {
 // ComboboxOption (sub-component)
 // =============================================================================
 
-const ComboboxOptionItem = React.forwardRef<
-  React.ElementRef<typeof CommandItem>,
-  ComboboxOptionProps
->(({ value, label, disabled, className, children }, ref) => {
+const ComboboxOptionItem = ({
+  ref,
+  value,
+  label,
+  disabled,
+  className,
+  children,
+}: ComboboxOptionProps & { ref?: React.Ref<React.ElementRef<typeof CommandItem>> | undefined }) => {
   const { selectedValue, onSelect } = useComboboxContext();
   const isSelected = selectedValue === value;
 
@@ -227,15 +231,18 @@ const ComboboxOptionItem = React.forwardRef<
       {children ?? label ?? value}
     </CommandItem>
   );
-});
+};
 ComboboxOptionItem.displayName = "Combobox.Option";
 
 // =============================================================================
 // ComboboxInput (sub-component)
 // =============================================================================
 
-const ComboboxInput = React.forwardRef<React.ElementRef<typeof CommandInput>, ComboboxInputProps>(
-  (props, ref) => <CommandInput ref={ref} {...props} />,
+const ComboboxInput = ({
+  ref,
+  ...props
+}: ComboboxInputProps & { ref?: React.Ref<React.ElementRef<typeof CommandInput>> | undefined }) => (
+  <CommandInput ref={ref} {...props} />
 );
 ComboboxInput.displayName = "Combobox.Input";
 
@@ -243,8 +250,11 @@ ComboboxInput.displayName = "Combobox.Input";
 // ComboboxEmpty (sub-component)
 // =============================================================================
 
-const ComboboxEmpty = React.forwardRef<React.ElementRef<typeof CommandEmpty>, ComboboxEmptyProps>(
-  (props, ref) => <CommandEmpty ref={ref} {...props} />,
+const ComboboxEmpty = ({
+  ref,
+  ...props
+}: ComboboxEmptyProps & { ref?: React.Ref<React.ElementRef<typeof CommandEmpty>> | undefined }) => (
+  <CommandEmpty ref={ref} {...props} />
 );
 ComboboxEmpty.displayName = "Combobox.Empty";
 
@@ -252,10 +262,12 @@ ComboboxEmpty.displayName = "Combobox.Empty";
 // ComboboxGroup (sub-component)
 // =============================================================================
 
-const ComboboxGroupSub = React.forwardRef<
-  React.ElementRef<typeof CommandGroup>,
-  ComboboxGroupProps
->((props, ref) => <CommandGroup ref={ref} {...props} />);
+const ComboboxGroupSub = ({
+  ref,
+  ...props
+}: ComboboxGroupProps & { ref?: React.Ref<React.ElementRef<typeof CommandGroup>> | undefined }) => (
+  <CommandGroup ref={ref} {...props} />
+);
 ComboboxGroupSub.displayName = "Combobox.Group";
 
 // =============================================================================
@@ -264,21 +276,27 @@ ComboboxGroupSub.displayName = "Combobox.Group";
 
 const ComboboxSeparator = CommandSeparator;
 
-const ComboboxList = React.forwardRef<React.ElementRef<typeof CommandList>, ComboboxListProps>(
-  ({ children, className, emptyMessage = "No results found.", maxWidth, style, ...props }, ref) => {
-    const listStyle = {
-      ...style,
-      ...(maxWidth ? { maxWidth: toCssLength(maxWidth) } : undefined),
-    } satisfies React.CSSProperties;
+const ComboboxList = ({
+  children,
+  className,
+  emptyMessage = "No results found.",
+  maxWidth,
+  style,
+  ref,
+  ...props
+}: ComboboxListProps & { ref?: React.Ref<React.ElementRef<typeof CommandList>> | undefined }) => {
+  const listStyle = {
+    ...style,
+    ...(maxWidth ? { maxWidth: toCssLength(maxWidth) } : undefined),
+  } satisfies React.CSSProperties;
 
-    return (
-      <CommandList ref={ref} className={className} style={listStyle} {...props}>
-        <CommandEmpty>{emptyMessage}</CommandEmpty>
-        {children}
-      </CommandList>
-    );
-  },
-);
+  return (
+    <CommandList ref={ref} className={className} style={listStyle} {...props}>
+      <CommandEmpty>{emptyMessage}</CommandEmpty>
+      {children}
+    </CommandList>
+  );
+};
 ComboboxList.displayName = "Combobox.List";
 
 // =============================================================================

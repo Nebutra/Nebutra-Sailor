@@ -10,15 +10,21 @@ const CollapsibleContext = React.createContext<{
   disabled?: boolean | undefined;
 }>({});
 
-const Collapsible = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
-    open?: boolean;
-    defaultOpen?: boolean;
-    onOpenChange?: (open: boolean) => void;
-    disabled?: boolean;
-  }
->(({ className, open: openProp, defaultOpen, onOpenChange, disabled, children, ...props }, ref) => {
+const Collapsible = ({
+  className,
+  open: openProp,
+  defaultOpen,
+  onOpenChange,
+  disabled,
+  children,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & {
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  disabled?: boolean;
+} & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen || false);
   const isControlled = openProp !== undefined;
   const open = isControlled ? openProp : uncontrolledOpen;
@@ -46,14 +52,19 @@ const Collapsible = React.forwardRef<
       </div>
     </CollapsibleContext.Provider>
   );
-});
+};
 Collapsible.displayName = "Collapsible";
 
-const CollapsibleTrigger = React.forwardRef<
-  HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean }
->(({ className, asChild, children, ...props }, ref) => {
-  const { open, onOpenChange, disabled } = React.useContext(CollapsibleContext);
+const CollapsibleTrigger = ({
+  className,
+  asChild,
+  children,
+  ref,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean } & {
+  ref?: React.Ref<HTMLButtonElement> | undefined;
+}) => {
+  const { open, onOpenChange, disabled } = React.use(CollapsibleContext);
 
   const handleClick = React.useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -92,37 +103,40 @@ const CollapsibleTrigger = React.forwardRef<
       {children}
     </button>
   );
-});
+};
 CollapsibleTrigger.displayName = "CollapsibleTrigger";
 
-const CollapsibleContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, children, ...props }, ref) => {
-    const { open } = React.useContext(CollapsibleContext);
+const CollapsibleContent = ({
+  className,
+  children,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const { open } = React.use(CollapsibleContext);
 
-    return (
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="content"
-            initial="collapsed"
-            animate="open"
-            exit="collapsed"
-            variants={{
-              open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 },
-            }}
-            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-            className="overflow-hidden"
-          >
-            <div ref={ref} data-state="open" className={cn("", className)} {...props}>
-              {children}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    );
-  },
-);
+  return (
+    <AnimatePresence initial={false}>
+      {open && (
+        <motion.div
+          key="content"
+          initial="collapsed"
+          animate="open"
+          exit="collapsed"
+          variants={{
+            open: { opacity: 1, height: "auto" },
+            collapsed: { opacity: 0, height: 0 },
+          }}
+          transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+          className="overflow-hidden"
+        >
+          <div ref={ref} data-state="open" className={cn("", className)} {...props}>
+            {children}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
 CollapsibleContent.displayName = "CollapsibleContent";
 
 export { Collapsible, CollapsibleContent, CollapsibleTrigger };

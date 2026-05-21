@@ -9,10 +9,14 @@ import { cn } from "../utils/cn";
 const Dialog = BaseDialog.Root;
 const DialogPortal = BaseDialog.Portal;
 
-const DialogTrigger = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<typeof BaseDialog.Trigger> & { asChild?: boolean }
->(({ asChild, children, ...props }, ref) => {
+const DialogTrigger = ({
+  asChild,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseDialog.Trigger> & { asChild?: boolean } & {
+  ref?: React.Ref<HTMLButtonElement> | undefined;
+}) => {
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseDialog.Trigger
@@ -27,13 +31,17 @@ const DialogTrigger = React.forwardRef<
       {children}
     </BaseDialog.Trigger>
   );
-});
+};
 DialogTrigger.displayName = "DialogTrigger";
 
-const DialogClose = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<typeof BaseDialog.Close> & { asChild?: boolean }
->(({ asChild, children, ...props }, ref) => {
+const DialogClose = ({
+  asChild,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseDialog.Close> & { asChild?: boolean } & {
+  ref?: React.Ref<HTMLButtonElement> | undefined;
+}) => {
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseDialog.Close
@@ -48,13 +56,16 @@ const DialogClose = React.forwardRef<
       {children}
     </BaseDialog.Close>
   );
-});
+};
 DialogClose.displayName = "DialogClose";
 
-const DialogOverlay = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BaseDialog.Backdrop>
->(({ className, ...props }, ref) => (
+const DialogOverlay = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseDialog.Backdrop> & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <BaseDialog.Backdrop
     ref={ref}
     className={cn(
@@ -63,13 +74,17 @@ const DialogOverlay = React.forwardRef<
     )}
     {...props}
   />
-));
+);
 DialogOverlay.displayName = "DialogOverlay";
 
-const DialogContent = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<typeof BaseDialog.Popup>
->(({ className, children, ...props }, ref) => (
+const DialogContent = ({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseDialog.Popup> & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
   <DialogPortal>
     <DialogOverlay />
     <BaseDialog.Popup
@@ -87,53 +102,63 @@ const DialogContent = React.forwardRef<
       </DialogClose>
     </BaseDialog.Popup>
   </DialogPortal>
-));
+);
 DialogContent.displayName = "DialogContent";
 
-const DialogHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn("flex flex-col space-y-1.5 text-center sm:text-left", className)}
-      {...props}
-    />
-  ),
+const DialogHeader = ({
+  className,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col space-y-1.5 text-center sm:text-left", className)}
+    {...props}
+  />
 );
 DialogHeader.displayName = "DialogHeader";
 
-const DialogFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)}
-      {...props}
-    />
-  ),
+const DialogFooter = ({
+  className,
+  ref,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)}
+    {...props}
+  />
 );
 DialogFooter.displayName = "DialogFooter";
 
-const DialogTitle = React.forwardRef<
-  HTMLHeadingElement,
-  React.ComponentPropsWithoutRef<typeof BaseDialog.Title>
->(({ className, ...props }, ref) => (
+const DialogTitle = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseDialog.Title> & {
+  ref?: React.Ref<HTMLHeadingElement> | undefined;
+}) => (
   <BaseDialog.Title
     ref={ref}
     className={cn("text-lg font-semibold leading-none tracking-tight", className)}
     {...props}
   />
-));
+);
 DialogTitle.displayName = "DialogTitle";
 
-const DialogDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.ComponentPropsWithoutRef<typeof BaseDialog.Description>
->(({ className, ...props }, ref) => (
+const DialogDescription = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof BaseDialog.Description> & {
+  ref?: React.Ref<HTMLParagraphElement> | undefined;
+}) => (
   <BaseDialog.Description
     ref={ref}
     className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
-));
+);
 DialogDescription.displayName = "DialogDescription";
 
 export {

@@ -1,4 +1,4 @@
-import { forwardRef, type ReactNode } from "react";
+import type { ReactNode, Ref } from "react";
 import { cn } from "../utils/cn";
 
 /* -------------------------------------------------------------------------- *\
@@ -378,10 +378,11 @@ const PLACEHOLDER: Partial<Record<FileFormat, () => ReactNode>> = {
 // Component
 // ---------------------------------------------------------------------------
 
-export const FileCard = forwardRef<HTMLDivElement, FileCardProps>(function FileCard(
-  { format, className },
+export const FileCard = function FileCard({
   ref,
-) {
+  format,
+  className,
+}: FileCardProps & { ref?: Ref<HTMLDivElement> | undefined }) {
   const Renderer = PLACEHOLDER[format] ?? DefaultPlaceholder;
   const bannerCls = BANNER_COLOR[format];
 
@@ -400,4 +401,4 @@ export const FileCard = forwardRef<HTMLDivElement, FileCardProps>(function FileC
       </div>
     </div>
   );
-});
+};

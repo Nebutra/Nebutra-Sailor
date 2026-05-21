@@ -108,156 +108,158 @@ function focusFirstPanelTarget(panel: HTMLElement | null) {
 // ContextCardTrigger
 // =============================================================================
 
-const ContextCardTrigger = React.forwardRef<HTMLButtonElement, ContextCardTriggerProps>(
-  (
-    {
-      content,
-      side = "top",
-      align = "center",
-      sideOffset = 8,
-      alignOffset = 0,
-      width = "md",
-      openDelay = contextCardTokens.motion.openDelay,
-      closeDelay = contextCardTokens.motion.closeDelay,
-      children,
-      className,
-    },
-    forwardedRef,
-  ) => {
-    const [open, setOpen] = React.useState(false);
-    const triggerRef = React.useRef<HTMLButtonElement | null>(null);
-    const panelRef = React.useRef<HTMLDivElement | null>(null);
-    const openTimerRef = React.useRef<number | null>(null);
-    const closeTimerRef = React.useRef<number | null>(null);
+const ContextCardTrigger = ({
+  ref: forwardedRef,
+  content,
+  side = "top",
+  align = "center",
+  sideOffset = 8,
+  alignOffset = 0,
+  width = "md",
+  openDelay = contextCardTokens.motion.openDelay,
+  closeDelay = contextCardTokens.motion.closeDelay,
+  children,
+  className,
+}: ContextCardTriggerProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
+  const [open, setOpen] = React.useState(false);
+  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+  const panelRef = React.useRef<HTMLDivElement | null>(null);
+  const openTimerRef = React.useRef<number | null>(null);
+  const closeTimerRef = React.useRef<number | null>(null);
 
-    const clearTimers = React.useCallback(() => {
-      if (openTimerRef.current) window.clearTimeout(openTimerRef.current);
-      if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
-      openTimerRef.current = null;
-      closeTimerRef.current = null;
-    }, []);
+  const clearTimers = React.useCallback(() => {
+    if (openTimerRef.current) window.clearTimeout(openTimerRef.current);
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    openTimerRef.current = null;
+    closeTimerRef.current = null;
+  }, []);
 
-    const scheduleOpen = React.useCallback(() => {
-      clearTimers();
-      openTimerRef.current = window.setTimeout(() => setOpen(true), openDelay);
-    }, [clearTimers, openDelay]);
+  const scheduleOpen = React.useCallback(() => {
+    clearTimers();
+    openTimerRef.current = window.setTimeout(() => setOpen(true), openDelay);
+  }, [clearTimers, openDelay]);
 
-    const scheduleClose = React.useCallback(() => {
-      clearTimers();
-      closeTimerRef.current = window.setTimeout(() => setOpen(false), closeDelay);
-    }, [clearTimers, closeDelay]);
+  const scheduleClose = React.useCallback(() => {
+    clearTimers();
+    closeTimerRef.current = window.setTimeout(() => setOpen(false), closeDelay);
+  }, [clearTimers, closeDelay]);
 
-    const closeNow = React.useCallback(() => {
-      clearTimers();
-      setOpen(false);
-    }, [clearTimers]);
+  const closeNow = React.useCallback(() => {
+    clearTimers();
+    setOpen(false);
+  }, [clearTimers]);
 
-    React.useEffect(() => clearTimers, [clearTimers]);
+  React.useEffect(() => clearTimers, [clearTimers]);
 
-    const triggerElement = React.isValidElement(children) ? children : <span>{children}</span>;
-    const renderTrigger = triggerElement as React.ReactElement<Record<string, unknown>>;
+  const triggerElement = React.isValidElement(children) ? children : <span>{children}</span>;
+  const renderTrigger = triggerElement as React.ReactElement<Record<string, unknown>>;
 
-    return (
-      <BasePopover.Root open={open} onOpenChange={setOpen}>
-        <BasePopover.Trigger
-          ref={composeRefs(triggerRef, forwardedRef)}
-          render={renderTrigger}
-          onMouseEnter={scheduleOpen}
-          onMouseLeave={scheduleClose}
-          onFocus={scheduleOpen}
-          onBlur={scheduleClose}
-          onKeyDown={(event) => {
-            if (event.key === "Escape") {
-              closeNow();
-              triggerRef.current?.focus();
-              return;
-            }
-            if ((event.key === "ArrowDown" || event.key === "Enter") && !open) {
-              event.preventDefault();
-              clearTimers();
-              setOpen(true);
-              window.requestAnimationFrame(() => focusFirstPanelTarget(panelRef.current));
-            }
-          }}
-        />
-        <BasePopover.Portal>
-          <BasePopover.Positioner
-            side={side}
-            align={align}
-            sideOffset={sideOffset}
-            alignOffset={alignOffset}
-            className="z-50"
+  return (
+    <BasePopover.Root open={open} onOpenChange={setOpen}>
+      <BasePopover.Trigger
+        ref={composeRefs(triggerRef, forwardedRef)}
+        render={renderTrigger}
+        onMouseEnter={scheduleOpen}
+        onMouseLeave={scheduleClose}
+        onFocus={scheduleOpen}
+        onBlur={scheduleClose}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            closeNow();
+            triggerRef.current?.focus();
+            return;
+          }
+          if ((event.key === "ArrowDown" || event.key === "Enter") && !open) {
+            event.preventDefault();
+            clearTimers();
+            setOpen(true);
+            window.requestAnimationFrame(() => focusFirstPanelTarget(panelRef.current));
+          }
+        }}
+      />
+      <BasePopover.Portal>
+        <BasePopover.Positioner
+          side={side}
+          align={align}
+          sideOffset={sideOffset}
+          alignOffset={alignOffset}
+          className="z-50"
+        >
+          <BasePopover.Popup
+            ref={panelRef}
+            tabIndex={-1}
+            onMouseEnter={scheduleOpen}
+            onMouseLeave={scheduleClose}
+            onFocus={scheduleOpen}
+            onBlur={scheduleClose}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                closeNow();
+                triggerRef.current?.focus();
+              }
+            }}
+            style={contextCardCssVars(width) as React.CSSProperties}
+            className={cn(
+              "z-50 flex w-[var(--context-card-width)] flex-col gap-[var(--context-card-stack-gap)] overflow-hidden",
+              "rounded-[var(--context-card-radius)] border border-border bg-popover",
+              "px-[var(--context-card-padding-x)] py-[var(--context-card-padding-y)]",
+              "text-[length:var(--context-card-body-size)] text-popover-foreground shadow-md outline-none",
+              "transition-[opacity,transform,display] duration-[var(--context-card-duration)] ease-[var(--context-card-easing)]",
+              "data-starting-style:opacity-0 data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-ending-style:scale-[0.98]",
+              "motion-reduce:transition-none motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:scale-100",
+              "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              "data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom",
+              className,
+            )}
           >
-            <BasePopover.Popup
-              ref={panelRef}
-              tabIndex={-1}
-              onMouseEnter={scheduleOpen}
-              onMouseLeave={scheduleClose}
-              onFocus={scheduleOpen}
-              onBlur={scheduleClose}
-              onKeyDown={(event) => {
-                if (event.key === "Escape") {
-                  closeNow();
-                  triggerRef.current?.focus();
-                }
-              }}
-              style={contextCardCssVars(width) as React.CSSProperties}
-              className={cn(
-                "z-50 flex w-[var(--context-card-width)] flex-col gap-[var(--context-card-stack-gap)] overflow-hidden",
-                "rounded-[var(--context-card-radius)] border border-border bg-popover",
-                "px-[var(--context-card-padding-x)] py-[var(--context-card-padding-y)]",
-                "text-[length:var(--context-card-body-size)] text-popover-foreground shadow-md outline-none",
-                "transition-[opacity,transform,display] duration-[var(--context-card-duration)] ease-[var(--context-card-easing)]",
-                "data-starting-style:opacity-0 data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-ending-style:scale-[0.98]",
-                "motion-reduce:transition-none motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:scale-100",
-                "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                "data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom",
-                className,
-              )}
-            >
-              {content}
-            </BasePopover.Popup>
-          </BasePopover.Positioner>
-        </BasePopover.Portal>
-      </BasePopover.Root>
-    );
-  },
-);
+            {content}
+          </BasePopover.Popup>
+        </BasePopover.Positioner>
+      </BasePopover.Portal>
+    </BasePopover.Root>
+  );
+};
 ContextCardTrigger.displayName = "ContextCard.Trigger";
 
-const ContextCardEntity = React.forwardRef<HTMLDivElement, ContextCardEntityProps>(
-  ({ title, description, metadata, action, className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn("flex flex-col gap-[var(--context-card-section-gap)]", className)}
-      {...props}
-    >
-      <div className="flex flex-col gap-[var(--context-card-row-gap)]">
-        <p className="truncate font-medium leading-tight text-popover-foreground">{title}</p>
-        {description ? (
-          <p className="text-muted-foreground text-[length:var(--context-card-metadata-size)] leading-snug">
-            {description}
-          </p>
-        ) : null}
-      </div>
-      {metadata?.length ? (
-        <dl className="grid gap-[var(--context-card-row-gap)] text-[length:var(--context-card-metadata-size)]">
-          {metadata.map((item) => (
-            <div
-              key={item.id ?? String(item.label)}
-              className="grid grid-cols-[minmax(5rem,auto)_1fr] items-baseline gap-[var(--context-card-section-gap)]"
-            >
-              <dt className="text-muted-foreground">{item.label}</dt>
-              <dd className="min-w-0 truncate text-right text-popover-foreground">
-                {item.value ?? CONTEXT_CARD_FALLBACK}
-              </dd>
-            </div>
-          ))}
-        </dl>
+const ContextCardEntity = ({
+  title,
+  description,
+  metadata,
+  action,
+  className,
+  ref,
+  ...props
+}: ContextCardEntityProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col gap-[var(--context-card-section-gap)]", className)}
+    {...props}
+  >
+    <div className="flex flex-col gap-[var(--context-card-row-gap)]">
+      <p className="truncate font-medium leading-tight text-popover-foreground">{title}</p>
+      {description ? (
+        <p className="text-muted-foreground text-[length:var(--context-card-metadata-size)] leading-snug">
+          {description}
+        </p>
       ) : null}
-      {action ? <div className="pt-[var(--context-card-row-gap)]">{action}</div> : null}
     </div>
-  ),
+    {metadata?.length ? (
+      <dl className="grid gap-[var(--context-card-row-gap)] text-[length:var(--context-card-metadata-size)]">
+        {metadata.map((item) => (
+          <div
+            key={item.id ?? String(item.label)}
+            className="grid grid-cols-[minmax(5rem,auto)_1fr] items-baseline gap-[var(--context-card-section-gap)]"
+          >
+            <dt className="text-muted-foreground">{item.label}</dt>
+            <dd className="min-w-0 truncate text-right text-popover-foreground">
+              {item.value ?? CONTEXT_CARD_FALLBACK}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    ) : null}
+    {action ? <div className="pt-[var(--context-card-row-gap)]">{action}</div> : null}
+  </div>
 );
 ContextCardEntity.displayName = "ContextCard.Entity";
 
