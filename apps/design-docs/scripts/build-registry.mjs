@@ -20,6 +20,7 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const PREVIEWS_DIR = path.join(ROOT, "src", "components", "previews");
 const OUTPUT_DIR = path.join(ROOT, "src", "__registry__");
 const OUTPUT_FILE = path.join(OUTPUT_DIR, "index.tsx");
+const GENERATED_LINE_WIDTH = 100;
 
 // Files to skip (will be deleted once migration is done)
 const SKIP_FILES = new Set(["dynamic-demos.tsx"]);
@@ -208,11 +209,32 @@ const lines = [
 // Named exports — so mdx-components.tsx can do:
 //   import { AccordionDemo, ButtonDemo } from "@/components/__registry__"
 for (const { exportName, file, key, isDefault, ssrOff: autoSsrOff } of entries) {
-  const ssrOff = SSR_EXCLUDE.has(key) || autoSsrOff ? `, { ssr: false }` : "";
+  const ssrOff = SSR_EXCLUDE.has(key) || autoSsrOff;
   const accessor = isDefault ? "m.default" : `m.${exportName}`;
-  lines.push(
-    `export const ${exportName} = dynamic(() => import("@/components/previews/${file}").then(m => ({ default: ${accessor} }))${ssrOff});`,
-  );
+  const compactImport = `import("@/components/previews/${file}").then((m) => ({ default: ${accessor} }))`;
+  if (ssrOff) {
+    lines.push(`export const ${exportName} = dynamic(`);
+    if (`  () => ${compactImport},`.length <= GENERATED_LINE_WIDTH) {
+      lines.push(`  () => ${compactImport},`);
+    } else {
+      lines.push(`  () =>`);
+      lines.push(`    import("@/components/previews/${file}").then((m) => ({`);
+      lines.push(`      default: ${accessor},`);
+      lines.push(`    })),`);
+    }
+    lines.push(`  { ssr: false },`);
+    lines.push(`);`);
+  } else {
+    lines.push(`export const ${exportName} = dynamic(() =>`);
+    if (`  ${compactImport},`.length <= GENERATED_LINE_WIDTH) {
+      lines.push(`  ${compactImport},`);
+    } else {
+      lines.push(`  import("@/components/previews/${file}").then((m) => ({`);
+      lines.push(`    default: ${accessor},`);
+      lines.push(`  })),`);
+    }
+    lines.push(`);`);
+  }
 }
 
 lines.push(``);
@@ -221,7 +243,15 @@ lines.push(
 );
 
 for (const { key, exportName } of entries) {
-  lines.push(`  "${key}": { name: "${key}", component: ${exportName} },`);
+  const compactEntry = `  "${key}": { name: "${key}", component: ${exportName} },`;
+  if (compactEntry.length <= GENERATED_LINE_WIDTH) {
+    lines.push(compactEntry);
+  } else {
+    lines.push(`  "${key}": {`);
+    lines.push(`    name: "${key}",`);
+    lines.push(`    component: ${exportName},`);
+    lines.push(`  },`);
+  }
 }
 
 lines.push(`};`);

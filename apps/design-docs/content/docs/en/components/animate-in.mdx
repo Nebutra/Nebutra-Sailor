@@ -1,0 +1,62 @@
+---
+title: AnimateIn
+description: Entrance animation primitive with branded presets, staggered groups, and reduced-motion handling.
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/animate-in.tsx
+primitive: AnimateIn
+substrate: custom
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## Installation
+
+```tsx
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/primitives";
+```
+
+Standalone registry install:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/animate-in.json
+```
+
+## Usage
+
+Use `AnimateIn` for short entrance transitions where motion clarifies page hierarchy. Do not wrap every element on a dense dashboard; motion should help the user track state, not add visual noise.
+
+```tsx
+<AnimateIn preset="emerge" inView>
+  <section>Usage report</section>
+</AnimateIn>
+```
+
+Use `AnimateInGroup` when sibling items should enter in a single rhythm:
+
+```tsx
+<AnimateInGroup stagger="normal" inView>
+  {items.map((item) => (
+    <AnimateIn key={item.id} preset="fadeUp">
+      <Card>{item.title}</Card>
+    </AnimateIn>
+  ))}
+</AnimateInGroup>
+```
+
+## Presets
+
+| Preset | Use for |
+| --- | --- |
+| `emerge` | Default Nebutra materialize-in entrance. |
+| `flow` | Horizontal streaming motion. |
+| `fade` | Minimal opacity-only entrance. |
+| `fadeUp` | List/card entrance with vertical lift. |
+| `scale` | Small surface pop-in. |
+
+## Accessibility
+
+- Respects `prefers-reduced-motion`.
+- Reduced-motion users receive opacity-only transitions.
+- Uses `LazyMotion` so framer-motion features are lazy-loaded.

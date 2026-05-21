@@ -1,0 +1,59 @@
+---
+title: Status Dot
+description: Deployment-lifecycle dot for queued, building, ready, error, canceled, and deleted states.
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/status-dot.tsx
+primitive: StatusDot
+substrate: native
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## Installation
+
+```tsx
+import { StatusDot } from "@nebutra/ui/primitives";
+```
+
+Standalone registry install:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/status-dot.json
+```
+
+## Usage
+
+`StatusDot` is for deployment lifecycle state only. Do not reuse it for arbitrary workflow, queue, or billing status.
+
+```tsx
+<StatusDot state="BUILDING" titlePrefix="Production deployment" label />
+```
+
+## States
+
+| State | Motion |
+| --- | --- |
+| `QUEUED` | Pulses |
+| `BUILDING` | Pulses |
+| `READY` | Static |
+| `ERROR` | Static |
+| `CANCELED` | Static |
+| `DELETED` | Static |
+
+## Accessibility
+
+- Default `aria-label` is composed from `titlePrefix` and state copy.
+- Pass `decorative` when adjacent visible text already names the state.
+- Color is not the only signal; `label` renders sentence-cased state text.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `"QUEUED" \| "BUILDING" \| "READY" \| "ERROR" \| "CANCELED" \| "DELETED"` | required | Deployment lifecycle state. |
+| `label` | `boolean` | `false` | Renders visible state text next to the dot. |
+| `titlePrefix` | `string` | `"Deployment"` | Prefix used to compose the accessible label. |
+| `decorative` | `boolean` | `false` | Hides the dot from assistive tech when nearby copy already names the state. |
+| `className` | `string` | - | Additional layout class. |

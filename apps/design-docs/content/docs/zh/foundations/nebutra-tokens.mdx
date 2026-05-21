@@ -1,0 +1,42 @@
+---
+title: Nebutra Tokens
+description: Nebutra 运行时 CSS 变量的 registry bootstrap manifest。
+status: stable
+layer: foundation
+package: "@nebutra/tokens"
+source: packages/design/tokens/styles.css
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## 这个页面负责什么
+
+`nebutra-tokens` 是给 standalone Nebutra components 使用的 registry bootstrap manifest。它会把 registry components 需要的运行时 CSS 变量写入宿主 app。
+
+monorepo 内部仍以 package stylesheet 为准：
+
+```css
+@import "@nebutra/tokens/styles.css";
+```
+
+外部 registry 消费者可以安装 manifest：
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/nebutra-tokens.json
+```
+
+## Token Families
+
+| Family | Examples | Purpose |
+| --- | --- | --- |
+| Neutral | `--neutral-1`, `--neutral-12` | surface 与 foreground ramps。 |
+| Brand | `--brand-primary`, `--brand-accent`, `--brand-gradient` | Nebutra identity anchors。 |
+| Accent scales | `--blue-9`, `--cyan-9` | 产品交互和 accent rails。 |
+| Status | `--status-danger`, `--status-warning`, `--status-success` | 语义状态颜色。 |
+| Containers | `--container-text`, `--container-content`, `--container-wide` | layout width rails。 |
+
+## 治理规则
+
+- 运行时 UI 消费 `@nebutra/tokens/styles.css`。
+- 组件示例应该使用 semantic/component variables，而不是 raw hex。
+- Registry copies 可以包含 token fallback CSS，但它们不定义真相源。

@@ -1084,7 +1084,9 @@ export const ThemeSwitcherDemo = dynamic(() =>
 );
 export const ThemeToggleDemo = dynamic(
   () =>
-    import("@/components/previews/theme-toggle-demo").then((m) => ({ default: m.ThemeToggleDemo })),
+    import("@/components/previews/theme-toggle-demo").then((m) => ({
+      default: m.ThemeToggleDemo,
+    })),
   { ssr: false },
 );
 export const ToastDemo = dynamic(() =>

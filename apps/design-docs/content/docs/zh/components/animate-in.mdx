@@ -1,0 +1,62 @@
+---
+title: AnimateIn
+description: 带品牌预设、分组 stagger 和 reduced-motion 处理的入场动效原语。
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/animate-in.tsx
+primitive: AnimateIn
+substrate: custom
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## 安装
+
+```tsx
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/primitives";
+```
+
+Standalone registry 安装：
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/animate-in.json
+```
+
+## 用法
+
+`AnimateIn` 用于短入场动效，前提是动效能帮助用户理解页面层级。不要把密集 dashboard 上的每个元素都包一层；动效应该澄清状态，而不是制造噪音。
+
+```tsx
+<AnimateIn preset="emerge" inView>
+  <section>Usage report</section>
+</AnimateIn>
+```
+
+同级列表需要统一节奏时使用 `AnimateInGroup`：
+
+```tsx
+<AnimateInGroup stagger="normal" inView>
+  {items.map((item) => (
+    <AnimateIn key={item.id} preset="fadeUp">
+      <Card>{item.title}</Card>
+    </AnimateIn>
+  ))}
+</AnimateInGroup>
+```
+
+## Presets
+
+| Preset | 用途 |
+| --- | --- |
+| `emerge` | 默认 Nebutra materialize-in 入场。 |
+| `flow` | 横向流动动效。 |
+| `fade` | 最克制的 opacity-only 入场。 |
+| `fadeUp` | 列表/card 带轻微上移动效。 |
+| `scale` | 小型表面的 pop-in。 |
+
+## 可访问性
+
+- 遵守 `prefers-reduced-motion`。
+- reduced-motion 用户只看到 opacity transition。
+- 使用 `LazyMotion`，避免一次性加载全部 framer-motion features。

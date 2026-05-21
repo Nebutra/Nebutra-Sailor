@@ -1,0 +1,47 @@
+---
+title: Collapse
+description: Geist-style flat Collapse/CollapseGroup API on top of Nebutra Accordion.
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/collapse.tsx
+primitive: Collapse
+substrate: mixed
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## Installation
+
+```tsx
+import { Collapse, CollapseGroup } from "@nebutra/ui/primitives";
+```
+
+Standalone registry install:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/collapse.json
+```
+
+## Usage
+
+Use `Collapse` when a consumer expects the Geist-style `title` and `defaultExpanded` API. Use `Accordion` directly when you need the full compound primitive.
+
+```tsx
+<Collapse title="Advanced settings" defaultExpanded>
+  <p>Only show details most users can skip.</p>
+</Collapse>
+```
+
+Coordinate siblings with `CollapseGroup`:
+
+```tsx
+<CollapseGroup multiple>
+  <Collapse title="Request">...</Collapse>
+  <Collapse title="Response">...</Collapse>
+</CollapseGroup>
+```
+
+## Relationship To Accordion
+
+`Collapse` is a facade over Nebutra `Accordion`. It should not fork focus management, ARIA wiring, or animation behavior. If behavior needs to change, fix Accordion first unless the difference is specific to the flat Geist API.

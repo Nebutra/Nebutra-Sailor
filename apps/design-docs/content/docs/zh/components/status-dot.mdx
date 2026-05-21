@@ -1,0 +1,59 @@
+---
+title: Status Dot
+description: 用于 deployment lifecycle 的状态点，覆盖 queued、building、ready、error、canceled、deleted。
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/status-dot.tsx
+primitive: StatusDot
+substrate: native
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## 安装
+
+```tsx
+import { StatusDot } from "@nebutra/ui/primitives";
+```
+
+Standalone registry 安装：
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/status-dot.json
+```
+
+## 用法
+
+`StatusDot` 只用于 deployment lifecycle state。不要把它复用到任意 workflow、queue 或 billing 状态。
+
+```tsx
+<StatusDot state="BUILDING" titlePrefix="Production deployment" label />
+```
+
+## 状态
+
+| State | Motion |
+| --- | --- |
+| `QUEUED` | pulse |
+| `BUILDING` | pulse |
+| `READY` | static |
+| `ERROR` | static |
+| `CANCELED` | static |
+| `DELETED` | static |
+
+## 可访问性
+
+- 默认 `aria-label` 由 `titlePrefix` 和状态文案组合。
+- 当旁边已有可见文字命名状态时，传入 `decorative`。
+- 颜色不是唯一信号；`label` 会渲染 sentence-cased 状态文本。
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state` | `"QUEUED" \| "BUILDING" \| "READY" \| "ERROR" \| "CANCELED" \| "DELETED"` | required | Deployment lifecycle state。 |
+| `label` | `boolean` | `false` | 在点旁边渲染可见状态文字。 |
+| `titlePrefix` | `string` | `"Deployment"` | 用于组合 accessible label 的前缀。 |
+| `decorative` | `boolean` | `false` | 当旁边文案已经命名状态时，把 dot 从 assistive tech 中隐藏。 |
+| `className` | `string` | - | 额外布局 class。 |

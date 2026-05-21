@@ -19,20 +19,67 @@ const DOCS_DIR = path.join(ROOT, "content", "docs");
 const SECTIONS = ["components", "foundations", "fragment-components", "patterns"];
 const LANGS = ["en", "zh"];
 
-const registryOnlyAllowlist = new Map([
-  [
-    "animate-in",
-    "motion helper consumed by demos and registry installs before a dedicated docs page exists",
-  ],
-  ["chart", "documented through patterns/charts until the chart primitive API is stabilized"],
-  ["collapse", "Geist facade over Accordion; docs currently live under collapsible"],
-  ["loading-dots", "small feedback primitive documented through spinner/loader surfaces"],
-  [
-    "nebutra-tokens",
-    "registry bootstrap item; canonical docs live in foundations/theming and tailwind",
-  ],
-  ["status-dot", "micro-status primitive used by registry demos before a dedicated component page"],
+const registryOnlyAllowlist = new Map();
+
+const demoOnlyPreviewAllowlist = new Map([
+  ["alert-dialog-custom-demo", "variant fixture for alert-dialog visual regression"],
+  ["avatar-dicebear-simple-demo", "registry/simple avatar fixture"],
+  ["avatar-fallback-demo", "variant exported from avatar-demo file"],
+  ["avatar-fallback-simple-demo", "registry/simple avatar fixture"],
+  ["avatar-git-simple-demo", "registry/simple avatar fixture"],
+  ["avatar-group-simple-demo", "registry/simple avatar fixture"],
+  ["avatar-smart-group-demo", "registry/simple avatar fixture"],
+  ["badge-pill-demo", "density fixture covered by badge matrix docs"],
+  ["breadcrumb-ellipsis-demo", "overflow fixture for breadcrumb docs"],
+  ["card-with-icon-demo", "card variant fixture"],
+  ["carousel-multiple-demo", "carousel variant fixture"],
+  ["carousel-vertical-demo", "carousel orientation fixture"],
+  ["checkbox-indeterminate-demo", "checkbox state fixture"],
+  ["choicebox-radio-demo", "choicebox radio-mode fixture"],
+  ["combobox-3-demo", "combobox scenario fixture"],
+  ["combobox-4-demo", "combobox scenario fixture"],
+  ["combobox-5-demo", "combobox scenario fixture"],
+  ["combobox-6-demo", "combobox scenario fixture"],
+  ["combobox-7-demo", "combobox scenario fixture"],
+  ["combobox-8-demo", "combobox scenario fixture"],
+  ["combobox-9-demo", "combobox scenario fixture"],
+  ["combobox-10-demo", "combobox scenario fixture"],
+  ["command-dialog-simple-demo", "simple command-dialog fixture"],
+  ["dialog-destructive-demo", "dialog destructive-flow fixture"],
+  ["drawer-side-right-demo", "drawer placement fixture"],
+  ["dropdown-menu-radio-group-demo", "dropdown-menu radio-group fixture"],
+  ["dropdown-menu-sub-demo", "dropdown-menu sub-menu fixture"],
+  ["grid-system-demo", "foundation grid visual fixture"],
+  ["hex-grid-demo", "brand pattern visual fixture"],
+  ["input-2-demo", "input secondary fixture"],
+  ["introduction-demo", "legacy component-index fixture"],
+  ["label-description-demo", "label helper-text fixture"],
+  ["label-disabled-demo", "label disabled-state fixture"],
+  ["page-container-demo", "fragment component fixture"],
+  ["popover-controlled-demo", "popover controlled-state fixture"],
+  ["popover-settings-demo", "popover settings-content fixture"],
+  ["progress-custom-color-demo", "progress threshold-color fixture"],
+  ["progress-indeterminate-demo", "progress indeterminate fixture"],
+  ["progress-with-label-demo", "progress label fixture"],
+  ["radio-group-horizontal-demo", "radio-group layout fixture"],
+  ["reaction-chip-demo", "content-block fixture"],
+  ["scroll-area-list-demo", "scroll-area overflow fixture"],
+  ["separator-vertical-demo", "separator orientation fixture"],
+  ["separator-with-text-demo", "separator label fixture"],
+  ["separator-with-text-i-18n-demo", "separator i18n label fixture"],
+  ["skeleton-list-demo", "skeleton list fixture"],
+  ["slider-icon-demo", "slider icon-control fixture"],
+  ["slider-number-flow-demo", "slider animated-number fixture"],
+  ["slider-on-value-change-demo", "slider callback fixture"],
+  ["slider-stateful-demo", "slider controlled-state fixture"],
+  ["textarea-2-demo", "textarea secondary fixture"],
+  ["textarea-3-demo", "textarea secondary fixture"],
+  ["toggle-group-single-demo", "toggle-group single-select fixture"],
+  ["toggle-large-demo", "toggle size fixture"],
+  ["toggle-small-demo", "toggle size fixture"],
 ]);
+
+const previewDeletionCandidates = new Map();
 
 const failures = [];
 const warnings = [];
@@ -147,8 +194,31 @@ function assertPreviewRegistry() {
   }
 
   const orphaned = [...previewKeys].filter((name) => !previewRefs.has(name)).sort();
-  if (orphaned.length > 0) {
-    warn(`${orphaned.length} generated previews are not linked from MDX; classify or delete them.`);
+  const unclassified = orphaned.filter(
+    (name) => !demoOnlyPreviewAllowlist.has(name) && !previewDeletionCandidates.has(name),
+  );
+  if (unclassified.length > 0) {
+    fail(
+      `generated previews need an MDX link, demo-only allowlist, or deletion: ${unclassified.join(", ")}`,
+    );
+  }
+
+  const staleAllowlist = [...demoOnlyPreviewAllowlist.keys()].filter(
+    (name) => !previewKeys.has(name),
+  );
+  if (staleAllowlist.length > 0) {
+    fail(
+      `demo-only preview allowlist references missing generated previews: ${staleAllowlist.join(", ")}`,
+    );
+  }
+
+  const existingDeletionCandidates = [...previewDeletionCandidates.keys()].filter((name) =>
+    previewKeys.has(name),
+  );
+  if (existingDeletionCandidates.length > 0) {
+    fail(
+      `preview deletion candidates still exist and should be removed: ${existingDeletionCandidates.join(", ")}`,
+    );
   }
 }
 

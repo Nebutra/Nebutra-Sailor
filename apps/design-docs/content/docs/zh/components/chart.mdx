@@ -1,0 +1,60 @@
+---
+title: Chart
+description: 基于 Recharts 的图表 wrapper，提供 theme-aware color config、tooltip 和 legend helpers。
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/chart.tsx
+primitive: ChartContainer
+substrate: custom
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## 安装
+
+```tsx
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@nebutra/ui/primitives";
+```
+
+Standalone registry 安装：
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/chart.json
+```
+
+## 用法
+
+`ChartContainer` 包裹 Recharts primitives，并通过 `ChartConfig` 注入 series label 与 color。
+
+```tsx
+const chartConfig = {
+  apiCalls: {
+    label: "API Calls",
+    color: "hsl(var(--chart-1))",
+  },
+} satisfies ChartConfig;
+
+<ChartContainer config={chartConfig} className="h-[280px]">
+  <BarChart data={data}>
+    <XAxis dataKey="month" />
+    <ChartTooltip content={<ChartTooltipContent />} />
+    <Bar dataKey="apiCalls" fill="var(--color-apiCalls)" />
+  </BarChart>
+</ChartContainer>
+```
+
+## 何时使用
+
+- 用于定量比较：趋势、占比或多序列数据。
+- 单个 headline value 足够时使用 `KpiCard`。
+- 精确值比视觉比较更重要时使用 table。
+
+## 相关模式
+
+查看 [Charts](/zh/docs/patterns/charts) 了解更高层的图表组合规则、loading states 和 dashboard layout 指南。

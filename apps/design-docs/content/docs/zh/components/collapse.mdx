@@ -1,0 +1,47 @@
+---
+title: Collapse
+description: 基于 Nebutra Accordion 的 Geist-style flat Collapse/CollapseGroup API。
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/collapse.tsx
+primitive: Collapse
+substrate: mixed
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## 安装
+
+```tsx
+import { Collapse, CollapseGroup } from "@nebutra/ui/primitives";
+```
+
+Standalone registry 安装：
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/collapse.json
+```
+
+## 用法
+
+当消费者需要 Geist-style 的 `title` 和 `defaultExpanded` API 时使用 `Collapse`。需要完整 compound primitive 时直接使用 `Accordion`。
+
+```tsx
+<Collapse title="Advanced settings" defaultExpanded>
+  <p>Only show details most users can skip.</p>
+</Collapse>
+```
+
+使用 `CollapseGroup` 协调同级面板：
+
+```tsx
+<CollapseGroup multiple>
+  <Collapse title="Request">...</Collapse>
+  <Collapse title="Response">...</Collapse>
+</CollapseGroup>
+```
+
+## 与 Accordion 的关系
+
+`Collapse` 是 Nebutra `Accordion` 的 facade。它不应该 fork 焦点管理、ARIA wiring 或动画行为。行为需要改变时，除非差异只属于 flat Geist API，否则先修 Accordion。

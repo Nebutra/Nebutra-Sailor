@@ -1,0 +1,60 @@
+---
+title: Chart
+description: Recharts wrapper with theme-aware color config, tooltip primitives, and legend helpers.
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/chart.tsx
+primitive: ChartContainer
+substrate: custom
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## Installation
+
+```tsx
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@nebutra/ui/primitives";
+```
+
+Standalone registry install:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/chart.json
+```
+
+## Usage
+
+`ChartContainer` wraps Recharts primitives and injects series labels/colors through `ChartConfig`.
+
+```tsx
+const chartConfig = {
+  apiCalls: {
+    label: "API Calls",
+    color: "hsl(var(--chart-1))",
+  },
+} satisfies ChartConfig;
+
+<ChartContainer config={chartConfig} className="h-[280px]">
+  <BarChart data={data}>
+    <XAxis dataKey="month" />
+    <ChartTooltip content={<ChartTooltipContent />} />
+    <Bar dataKey="apiCalls" fill="var(--color-apiCalls)" />
+  </BarChart>
+</ChartContainer>
+```
+
+## When To Use
+
+- Use for quantitative comparison: trends, breakdowns, or multi-series data.
+- Use `KpiCard` when a single headline value is enough.
+- Use a table when the exact value matters more than visual comparison.
+
+## Related Pattern
+
+See [Charts](/en/docs/patterns/charts) for higher-level chart composition rules, loading states, and dashboard layout guidance.
