@@ -25,7 +25,8 @@ pnpm --filter @nebutra/studio blog:publish -- \
   --title "为什么我们要做 Nebutra" \
   --excerpt "关于 2026 年这个奇怪的时刻..." \
   --author "Tseka Luk" \
-  --categories "Nebutra,Founder Notes"
+  --categories "Nebutra,Founder Notes" \
+  --main-image ./content/blog/covers/why-we-build-nebutra.png
 ```
 
 English uses the same `translation-key` and a different slug:
@@ -56,6 +57,7 @@ translationKey: why-we-build-nebutra
 excerpt: On the strange 2026 moment...
 author: Tseka Luk
 categories: Nebutra,Founder Notes
+mainImage: ./content/blog/covers/why-we-build-nebutra.png
 publishedAt: 2026-05-16T00:00:00.000Z
 ---
 

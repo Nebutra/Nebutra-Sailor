@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { createHmac, randomUUID } from "node:crypto";
+import { createReadStream } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { createClient } from "@sanity/client";
@@ -33,6 +34,7 @@ Options:
   --excerpt <text>          Post excerpt. Defaults to frontmatter excerpt.
   --author <name>           Author name. Defaults to "Tseka Luk".
   --categories <csv>        Category titles. Defaults to "Nebutra".
+  --main-image <path>       Optional local image file to upload as the post cover.
   --published-at <iso>      Publish datetime. Defaults to now.
   --site-url <url>          Site URL used for revalidation. Defaults to ${DEFAULT_SITE_URL}.
   --dry-run                 Parse and validate only; do not mutate Sanity.
@@ -297,6 +299,21 @@ async function findOrCreateCategory(client, title) {
   return created._id;
 }
 
+async function uploadMainImage(client, imagePath) {
+  const absolutePath = path.resolve(imagePath);
+  const asset = await client.assets.upload("image", createReadStream(absolutePath), {
+    filename: path.basename(absolutePath),
+  });
+
+  return {
+    _type: "image",
+    asset: {
+      _type: "reference",
+      _ref: asset._id,
+    },
+  };
+}
+
 async function revalidatePost({ siteUrl, slug, language }) {
   const body = JSON.stringify({ _type: "post", slug: { current: slug }, language });
   const headers = { "content-type": "application/json" };
@@ -350,6 +367,7 @@ async function main() {
   const excerpt = args.excerpt || data.excerpt || "";
   const author = args.author || data.author || "Tseka Luk";
   const categories = csv(args.categories || data.categories, "Nebutra");
+  const mainImage = args["main-image"] || data.mainImage || data["main-image"] || null;
   const publishedAt = args["published-at"] || data.publishedAt || new Date().toISOString();
   const siteUrl = args["site-url"] || DEFAULT_SITE_URL;
 
@@ -368,6 +386,7 @@ async function main() {
     excerptLength: excerpt.length,
     author,
     categories,
+    mainImage: mainImage ? path.basename(mainImage) : null,
     publishedAt,
     blocks: body.length,
   };
@@ -382,6 +401,7 @@ async function main() {
   const categoryIds = await Promise.all(
     categories.map((category) => findOrCreateCategory(client, category)),
   );
+  const mainImageField = mainImage ? await uploadMainImage(client, mainImage) : null;
 
   const documentFields = {
     title,
@@ -396,6 +416,7 @@ async function main() {
       _ref: categoryId,
       _key: key(),
     })),
+    ...(mainImageField ? { mainImage: mainImageField } : {}),
     body,
   };
 
