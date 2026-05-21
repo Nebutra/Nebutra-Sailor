@@ -270,10 +270,12 @@ import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
+import type { ComponentType, PropsWithChildren } from "react";
 // Registry demos: import via @/__registry__ for lazy-loading
 // Direct demos: import directly when used as inline MDX children (not via ComponentPreview name=)
 import {
   AnimatedCircularProgressBarDemo,
+  AvatarCompositionDemo,
   AvatarFallbackDemo,
   AvatarGitPlatformDemo,
   AvatarGroupDemo,
@@ -389,7 +391,22 @@ import {
 } from "@/components/typography-demos";
 import { onBlockFeedbackAction } from "@/lib/github";
 
-const CommandMenu = {
+type MDXNamespaceComponent<TNamespace extends Record<string, unknown>> =
+  ComponentType<PropsWithChildren> & TNamespace;
+
+function createMDXNamespace<TNamespace extends Record<string, unknown>>(
+  displayName: string,
+  namespace: TNamespace,
+): MDXNamespaceComponent<TNamespace> {
+  function Namespace({ children }: PropsWithChildren) {
+    return <>{children}</>;
+  }
+
+  Namespace.displayName = displayName;
+  return Object.assign(Namespace, namespace);
+}
+
+const CommandMenu = createMDXNamespace("CommandMenu", {
   Root: CommandMenuRoot,
   Input: CommandMenuInput,
   List: CommandMenuList,
@@ -398,9 +415,9 @@ const CommandMenu = {
   Item: CommandMenuItem,
   Shortcut: CommandMenuShortcut,
   Separator: CommandMenuSeparator,
-} as const;
+} as const);
 
-const ContextMenu = {
+const ContextMenu = createMDXNamespace("ContextMenu", {
   Root: ContextMenuRoot,
   Trigger: ContextMenuTrigger,
   Content: ContextMenuContent,
@@ -408,10 +425,10 @@ const ContextMenu = {
   Item: ContextMenuItem,
   Label: ContextMenuLabel,
   Separator: ContextMenuSeparator,
-} as const;
+} as const);
 
 // Create a pseudo-Menu object from DropdownMenu primitives for the Docs
-const Menu = {
+const Menu = createMDXNamespace("Menu", {
   Root: DropdownMenu,
   Trigger: DropdownMenuTrigger,
   Content: DropdownMenuContent,
@@ -424,7 +441,7 @@ const Menu = {
   Sub: DropdownMenuSub,
   SubTrigger: DropdownMenuSubTrigger,
   SubContent: DropdownMenuSubContent,
-} as const;
+} as const);
 
 const Combobox = Object.assign(ComboboxRoot, {
   Input: ComboboxInput,
@@ -485,6 +502,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     AvatarFallbackDemo,
     AvatarGroupDemo,
     AvatarGitPlatformDemo,
+    AvatarCompositionDemo,
     DiceBearAvatarDemo,
     ButtonDemo,
     CheckboxDemo,
@@ -586,7 +604,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     "ContextMenu.Item": ContextMenuItem,
     "ContextMenu.Label": ContextMenuLabel,
     "ContextMenu.Separator": ContextMenu.Separator,
-    Menu: Menu as unknown as React.ComponentType<Record<string, unknown>>,
+    Menu,
     "Menu.Root": Menu.Root,
     "Menu.Trigger": Menu.Trigger,
     "Menu.Content": Menu.Content,
@@ -681,7 +699,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     TooltipTrigger,
     TooltipContent,
     TooltipProvider,
-    ContextMenu: ContextMenu as unknown as React.ComponentType<Record<string, unknown>>,
+    ContextMenu,
     Progress,
     Skeleton,
     Slider,
@@ -739,7 +757,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     CommandItem,
     CommandShortcut,
     CommandSeparator,
-    CommandMenu: CommandMenu as unknown as React.ComponentType<Record<string, unknown>>,
+    CommandMenu,
     Collapsible,
     CollapsibleTrigger,
     CollapsibleContent,
@@ -853,5 +871,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
 // Export a direct getter so MDX remote compiler can inject it without React hooks rules
 export function getMDXComponents(): MDXComponents {
+  // biome-ignore lint/correctness/useHookAtTopLevel: Next MDX names this component factory useMDXComponents, but it is not a React hook.
   return useMDXComponents({});
 }
