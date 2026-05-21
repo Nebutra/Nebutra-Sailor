@@ -8,24 +8,33 @@ description: "短固定列表选择控件，提供原生 shorthand 和 compound 
 ## 安装
 
 ```tsx
-import { Select } from "@nebutra/ui/primitives";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@nebutra/ui/primitives";
 ```
 
 ## 概览
 
-`Select` 适用于短固定列表，输入搜索没有收益的场景：框架、区域、套餐、小型状态过滤。主 API 渲染原生 `<select>`，保留浏览器焦点、表单提交、移动端 picker 和 `optgroup` 支持。
+`Select` 适用于短固定列表，输入搜索没有收益的场景：框架、区域、套餐、小型状态过滤。产品界面里需要展开菜单仍保持 Nebutra 视觉系统时，优先使用 compound listbox API。
 
-复杂分组菜单仍可使用 compound listbox API（`SelectTrigger`、`SelectContent`、`SelectItem`）。需要过滤时使用 `Combobox`，允许多选时使用 `MultiSelect`。
+原生 shorthand 仍保留给真实表单提交、移动端系统 picker 和 `optgroup` 语义。它展开后的 `<option>` popup 由浏览器/系统控制，不作为主视觉 demo。需要过滤时使用 `Combobox`，允许多选时使用 `MultiSelect`。
 
 ## 用法
 
 ```tsx
-const options = [
-  { value: "nextjs", label: "Next.js" },
-  { value: "react", label: "React" },
-];
-
-<Select label="Framework" placeholder="Select a framework" options={options} />;
+<Select>
+  <SelectTrigger>
+    <SelectValue placeholder="Select a framework" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="nextjs">Next.js</SelectItem>
+    <SelectItem value="react">React</SelectItem>
+  </SelectContent>
+</Select>;
 ```
 
 也支持原生 `<option>` 和 `<optgroup>` children：
@@ -42,6 +51,8 @@ const options = [
 ## Props
 
 ### 原生 Select
+
+当产品需求明确需要浏览器原生控件时使用 native shorthand：经典表单提交、移动端 OS picker 或 `optgroup` 语义。不要依赖展开后的原生 option popup 承载品牌样式。
 
 | Prop | Type | Default | 说明 |
 |---|---|---|---|
@@ -73,7 +84,7 @@ import {
 } from "@nebutra/ui/primitives";
 ```
 
-compound API 保留 Base UI listbox 行为，适合更像菜单的分组选择。
+compound API 保留 Base UI listbox 行为，适合更像菜单的分组选择，并且拥有展开 surface、圆角、阴影和焦点样式的控制权。
 
 | Component | 作用 |
 |---|---|
@@ -109,7 +120,8 @@ compound API 保留 Base UI listbox 行为，适合更像菜单的分组选择�
 
 ## 最佳实践
 
-- 短固定列表优先使用 `Select`，大约十项以内且搜索没有收益。
+- 需要展开菜单符合 Nebutra surface 样式时，优先使用 compound `Select`。
+- 只有浏览器表单语义、移动端 picker 或 `optgroup` 支持比展开 popup 样式更重要时，才使用 native shorthand。
 - 需要过滤时改用 `Combobox`；允许多选时使用 `MultiSelect`。
 - 超过约十项的原生列表用 `<optgroup>` 分组；compound API 也可以用 `SelectGroup` 处理菜单式分组。
 - 标签使用简短 Title Case 名词，例如 `Framework`、`Region`。

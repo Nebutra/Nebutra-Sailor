@@ -8,28 +8,38 @@ description: "Short fixed-list selection control with a native shorthand and com
 ## Installation
 
 ```tsx
-import { Select } from "@nebutra/ui/primitives";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@nebutra/ui/primitives";
 ```
 
 ## Overview
 
-`Select` is the default control for short, fixed lists where typing adds nothing: frameworks,
-regions, plans, and small status filters. The primary API renders a native `<select>` so browser
-focus, form submission, mobile pickers, and `optgroup` support stay intact.
+`Select` is for short, fixed lists where typing adds nothing: frameworks, regions, plans, and small
+status filters. Use the compound listbox API for product surfaces where the opened menu must stay
+inside Nebutra's visual system.
 
-The compound listbox API (`SelectTrigger`, `SelectContent`, `SelectItem`) is still available for
-advanced grouped menus. Use `Combobox` once filtering is useful and `MultiSelect` when users can
-choose more than one value.
+The native shorthand remains available for real form submission, mobile pickers, and `optgroup`
+support. Its opened `<option>` popup is browser/OS controlled, so it is not used as the primary
+visual demo. Use `Combobox` once filtering is useful and `MultiSelect` when users can choose more
+than one value.
 
 ## Usage
 
 ```tsx
-const options = [
-  { value: "nextjs", label: "Next.js" },
-  { value: "react", label: "React" },
-];
-
-<Select label="Framework" placeholder="Select a framework" options={options} />;
+<Select>
+  <SelectTrigger>
+    <SelectValue placeholder="Select a framework" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="nextjs">Next.js</SelectItem>
+    <SelectItem value="react">React</SelectItem>
+  </SelectContent>
+</Select>;
 ```
 
 Native `<option>` and `<optgroup>` children are also supported:
@@ -46,6 +56,10 @@ Native `<option>` and `<optgroup>` children are also supported:
 ## Props
 
 ### Native Select
+
+Use the native shorthand when the browser control itself is the product requirement: classic form
+submit, mobile OS picker, or `optgroup` semantics. Do not rely on the opened native option popup for
+brand styling.
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
@@ -77,7 +91,8 @@ import {
 } from "@nebutra/ui/primitives";
 ```
 
-The compound API keeps the Base UI listbox behavior for grouped menu-like selection.
+The compound API keeps the Base UI listbox behavior for grouped menu-like selection and owns the
+opened menu surface, radius, shadow, and focus treatment.
 
 | Component | Purpose |
 |---|---|
@@ -113,7 +128,9 @@ The compound API keeps the Base UI listbox behavior for grouped menu-like select
 
 ## Best Practices
 
-- Pick `Select` for short, fixed lists under about ten items where typing adds nothing.
+- Pick compound `Select` for visible product menus that must match Nebutra surface styling.
+- Pick native shorthand only when browser form semantics, mobile picker behavior, or `optgroup`
+  support is more important than styling the opened popup.
 - Switch to `Combobox` when filtering helps; use `MultiSelect` when more than one value can be
   chosen.
 - Group native lists past about ten items with `<optgroup>`. The compound API also supports
