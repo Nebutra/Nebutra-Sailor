@@ -1,0 +1,62 @@
+---
+title: KPI Card
+description: 用于 dashboard 的 KPI 卡片，包含数值、图标、趋势和可选描述。
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/kpi-card.tsx
+primitive: KpiCard
+substrate: native
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## 安装
+
+```tsx
+import { KpiCard } from "@nebutra/ui/primitives";
+```
+
+或通过 registry 安装 standalone copy：
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/kpi-card.json
+```
+
+## 用法
+
+`KpiCard` 是紧凑的 dashboard 统计卡片。适合展示一个关键数值、一个图标，以及可选的周同比趋势。
+
+```tsx
+import { ChartTrendingUp } from "@nebutra/icons";
+import { KpiCard } from "@nebutra/ui/primitives";
+
+<KpiCard
+  title="Active tenants"
+  value={1284}
+  icon={<ChartTrendingUp className="size-5" />}
+  trend={{ value: 12, isPositive: true }}
+  description="Enterprise workspaces only"
+/>
+```
+
+## 何时使用
+
+- 用于 dashboard 顶部三到六个可比较指标。
+- 详情页里的 key/value 元数据优先使用 `Description`。
+- 如果用户需要趋势形状，而不仅是趋势方向，使用 chart component。
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | — | 简短指标名称。 |
+| `value` | `string \| number` | — | 主数值。数字会被 locale-format。 |
+| `icon` | `ReactNode` | — | 装饰性指标图标。 |
+| `trend` | `{ value: number; isPositive: boolean }` | — | 以升/降/持平形式展示的百分比趋势。 |
+| `description` | `string` | — | 趋势下方的补充说明。 |
+| `className` | `string` | — | 外层 card class。 |
+
+## 治理备注
+
+这是已经进入 registry 的 dashboard primitive，但在升级到 `stable` 前仍需要 Storybook 和 token backfill。

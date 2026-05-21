@@ -1,0 +1,62 @@
+---
+title: KPI Card
+description: Dashboard KPI card with value, icon, trend, and optional supporting description.
+status: experimental
+layer: primitive
+package: "@nebutra/ui"
+source: packages/design/ui/src/primitives/kpi-card.tsx
+primitive: KpiCard
+substrate: native
+registry: true
+lastVerified: "2026-05-21"
+---
+
+## Installation
+
+```tsx
+import { KpiCard } from "@nebutra/ui/primitives";
+```
+
+Or install standalone through the registry:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/kpi-card.json
+```
+
+## Usage
+
+`KpiCard` is a compact dashboard statistic card. Use it for high-level operational metrics that need a single value, an icon, and an optional week-over-week trend.
+
+```tsx
+import { ChartTrendingUp } from "@nebutra/icons";
+import { KpiCard } from "@nebutra/ui/primitives";
+
+<KpiCard
+  title="Active tenants"
+  value={1284}
+  icon={<ChartTrendingUp className="size-5" />}
+  trend={{ value: 12, isPositive: true }}
+  description="Enterprise workspaces only"
+/>
+```
+
+## When To Use
+
+- Use for dashboard summary rows with three to six comparable metrics.
+- Use `Description` for key/value metadata inside detail pages.
+- Use a chart component when the user needs trend shape, not just trend direction.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | — | Short metric label. |
+| `value` | `string \| number` | — | Primary metric value. Numbers are locale-formatted. |
+| `icon` | `ReactNode` | — | Decorative metric icon. |
+| `trend` | `{ value: number; isPositive: boolean }` | — | Percent trend shown as up/down/flat treatment. |
+| `description` | `string` | — | Supporting copy below the trend. |
+| `className` | `string` | — | Outer card class. |
+
+## Governance Note
+
+This is a registry-visible dashboard primitive, but it still needs Storybook and token backfill before graduating from `experimental`.
