@@ -57,7 +57,7 @@ preserve_runtime_env() {
 }
 
 load_runtime_env() {
-  local app="$1" release="$2"
+  local app="$1" release="$2" pm2_name="$3"
   local app_root="$DEPLOY_ROOT/$app"
   local loaded=""
   local env_file
@@ -91,8 +91,53 @@ load_runtime_env() {
     [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
     [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
     if [ "${#missing[@]}" -gt 0 ]; then
-      fail "api runtime env missing required keys after env load: ${missing[*]}"
+      load_existing_pm2_env "$pm2_name"
+      missing=()
+      [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
+      [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
+      if [ "${#missing[@]}" -gt 0 ]; then
+        fail "api runtime env missing required keys after env load: ${missing[*]}"
+      fi
     fi
+  fi
+}
+
+load_existing_pm2_env() {
+  local pm2_name="$1"
+
+  if ! pm2 describe "$pm2_name" >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if ! command -v jq >/dev/null 2>&1; then
+    log "cannot inherit runtime env from pm2 $pm2_name: jq not installed"
+    return 0
+  fi
+
+  local count=0
+  local line key value
+  while IFS= read -r line; do
+    key="${line%%=*}"
+    value="${line#*=}"
+    if [ -n "$key" ] && [ "$key" != "$line" ]; then
+      export "$key=$value"
+      count=$((count + 1))
+    fi
+  done < <(pm2 jlist 2>/dev/null \
+    | jq -r --arg name "$pm2_name" '
+        .[]
+        | select(.name == $name)
+        | .pm2_env
+        | to_entries[]
+        | select(.value | type == "string" or type == "number" or type == "boolean")
+        | select(.key | test("^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|SUPABASE_|STRIPE_|OPENAI_|NEXT_PUBLIC_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"))
+        | "\(.key)=\(.value | tostring)"
+      ' || true)
+
+  if [ "$count" -gt 0 ]; then
+    log "inherited $count runtime env keys from existing pm2 $pm2_name"
+  else
+    log "no inheritable runtime env keys found in existing pm2 $pm2_name"
   fi
 }
 
@@ -141,7 +186,7 @@ deploy_one() {
   log "$app current -> $release"
 
   rm -f "$tarball"
-  load_runtime_env "$app" "$release"
+  load_runtime_env "$app" "$release" "$pm2_name"
 
   # Decide between zero-downtime reload and force-recreate.
   #
