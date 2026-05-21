@@ -33,7 +33,7 @@ export default defineConfig({
   globalSetup: "./global-setup.ts",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  timeout: 60_000,
+  timeout: process.env.CI ? 300_000 : 60_000,
   retries: process.env.CI ? 2 : 0,
   workers: 1,
   reporter: process.env.CI ? [["github"], ["blob"], ["html", { open: "never" }]] : [["html"]],

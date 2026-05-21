@@ -1,8 +1,10 @@
 import { expect, test } from "@playwright/test";
 
+import { gotoMarketingPage } from "../helpers/navigation";
+
 test.describe("Newsletter Signup", () => {
   test("newsletter form is visible in footer", async ({ page }) => {
-    await page.goto("/");
+    await gotoMarketingPage(page, "/");
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(500);
 
@@ -14,7 +16,7 @@ test.describe("Newsletter Signup", () => {
   });
 
   test("newsletter form validates email", async ({ page }) => {
-    await page.goto("/");
+    await gotoMarketingPage(page, "/");
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(500);
 
@@ -33,7 +35,7 @@ test.describe("Newsletter Signup", () => {
   });
 
   test("newsletter form accepts valid email", async ({ page }) => {
-    await page.goto("/");
+    await gotoMarketingPage(page, "/");
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(500);
 

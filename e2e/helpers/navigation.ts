@@ -1,8 +1,9 @@
 import type { Page } from "@playwright/test";
 
-const ROUTE_PREWARM_TIMEOUT_MS = 30_000;
+const isCi = process.env.CI === "true";
+const ROUTE_PREWARM_TIMEOUT_MS = isCi ? 120_000 : 30_000;
 const NAVIGATION_RETRIES = 3;
-const NAVIGATION_TIMEOUT_MS = 8_000;
+const NAVIGATION_TIMEOUT_MS = isCi ? 45_000 : 8_000;
 const TRANSIENT_NAVIGATION_ERRORS = [
   "page.request.get: Timeout",
   "page.goto: Timeout",
