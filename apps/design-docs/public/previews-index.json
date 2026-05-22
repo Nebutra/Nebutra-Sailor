@@ -36,6 +36,10 @@
       "type": "registry:example"
     },
     {
+      "name": "animate-in-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "animated-beam-demo",
       "type": "registry:example"
     },
@@ -672,6 +676,10 @@
       "type": "registry:example"
     },
     {
+      "name": "kpi-card-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "label-2-demo",
       "type": "registry:example"
     },
@@ -705,6 +713,10 @@
     },
     {
       "name": "loader-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "loading-dots-demo",
       "type": "registry:example"
     },
     {
@@ -756,6 +768,10 @@
       "type": "registry:example"
     },
     {
+      "name": "metric-card-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "middle-truncate-demo",
       "type": "registry:example"
     },
@@ -773,6 +789,10 @@
     },
     {
       "name": "navigation-menu-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "nebutra-tokens-demo",
       "type": "registry:example"
     },
     {
@@ -996,6 +1016,10 @@
       "type": "registry:example"
     },
     {
+      "name": "show-more-demo",
+      "type": "registry:example"
+    },
+    {
       "name": "sidebar-demo",
       "type": "registry:example"
     },
@@ -1061,6 +1085,10 @@
     },
     {
       "name": "status-badge-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "status-dot-demo",
       "type": "registry:example"
     },
     {

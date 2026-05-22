@@ -17,7 +17,7 @@ import process from "node:process";
 const ROOT = path.resolve(import.meta.dirname, "..");
 const REPO_ROOT = path.resolve(ROOT, "..", "..");
 const DOCS_DIR = path.join(ROOT, "content", "docs");
-const SECTIONS = ["components", "foundations", "fragment-components", "patterns"];
+const SECTIONS = ["components", "foundations", "fragment-components", "patterns", "api"];
 const LANGS = ["en", "zh"];
 const LOCALIZED_FRONTMATTER_KEYS = new Set(["title", "description"]);
 const REGISTRY_OWNED_FRONTMATTER_KEYS = [
@@ -37,34 +37,59 @@ const DOCS_METADATA_ENUMS = {
   substrate: new Set(["native", "custom", "mixed"]),
 };
 
-const registryOnlyAllowlist = new Map();
+const rootNavigationContract = {
+  en: [
+    "--- Start Here ---",
+    "--- Foundations ---",
+    "--- Primitives ---",
+    "--- Product Surfaces ---",
+    "--- Operating Patterns ---",
+    "--- API Contracts ---",
+    "--- Registry ---",
+  ],
+  zh: [
+    "--- 开始 ---",
+    "--- 基础系统 ---",
+    "--- 原语 ---",
+    "--- 产品表面 ---",
+    "--- 运行模式 ---",
+    "--- API 契约 ---",
+    "--- Registry ---",
+  ],
+};
 
-const registryDocTemplateBacklog = new Map([
-  ["description", "missing registry governance frontmatter"],
-  ["edit-tool", "missing source/package/layer governance frontmatter"],
-  ["empty-state", "missing registry governance frontmatter"],
-  ["entity", "missing registry governance frontmatter and accessibility contract"],
-  ["feature-card", "missing registry governance frontmatter and accessibility contract"],
-  ["globe", "missing registry governance frontmatter and accessibility contract"],
-  ["kpi-card", "needs preview and accessibility contract"],
-  ["magic-card", "missing registry governance frontmatter and accessibility contract"],
-  ["material", "missing registry governance frontmatter"],
-  ["metric-card", "needs preview and registry governance frontmatter"],
-  ["middle-truncate", "missing registry governance frontmatter"],
-  ["pricing-card", "missing registry governance frontmatter and accessibility contract"],
-  ["question-tool", "missing source/package/layer governance frontmatter and props table"],
-  ["text-shimmer", "missing registry governance frontmatter and accessibility contract"],
-  ["theme-toggle", "missing registry governance frontmatter"],
-]);
-
-const previewlessRegistryDocAllowlist = new Map([
-  ["animate-in", "motion wrapper documented through usage rather than a static preview"],
-  ["kpi-card", "dashboard composition queued for a real product-state preview"],
-  ["loading-dots", "micro feedback primitive covered by props and accessibility docs"],
-  ["metric-card", "fragment component queued for a product dashboard preview"],
-  ["show-more", "disclosure primitive queued for overflow-content preview"],
-  ["status-dot", "micro status primitive covered by props and accessibility docs"],
-]);
+const componentNavigationContract = {
+  en: [
+    "--- Start Here ---",
+    "--- Forms & Inputs ---",
+    "--- Actions & Commands ---",
+    "--- Navigation ---",
+    "--- Overlays & Disclosure ---",
+    "--- Feedback & Status ---",
+    "--- Data Display ---",
+    "--- Layout & Typography ---",
+    "--- AI & Agent Surfaces ---",
+    "--- Motion & Effects ---",
+    "--- Marketing & Content Blocks ---",
+    "--- Media & Mockups ---",
+    "--- Registry Fixtures ---",
+  ],
+  zh: [
+    "--- 开始 ---",
+    "--- 表单与输入 ---",
+    "--- 操作与命令 ---",
+    "--- 导航 ---",
+    "--- 弹层与展开 ---",
+    "--- 反馈与状态 ---",
+    "--- 数据展示 ---",
+    "--- 布局与排版 ---",
+    "--- AI 与 Agent 表面 ---",
+    "--- 动效与视觉效果 ---",
+    "--- 营销与内容区块 ---",
+    "--- 媒体与样机 ---",
+    "--- Registry 夹具 ---",
+  ],
+};
 
 const demoOnlyPreviewAllowlist = new Map([
   ["alert-dialog-custom-demo", "variant fixture for alert-dialog visual regression"],
@@ -141,6 +166,14 @@ function readJson(file) {
   return JSON.parse(fs.readFileSync(file, "utf8"));
 }
 
+function stripCodeBlocks(source) {
+  return source.replace(/```[\s\S]*?```/g, "");
+}
+
+function stripInlineCode(source) {
+  return source.replace(/`[^`\n]*`/g, "");
+}
+
 function parseFrontmatter(file) {
   const source = fs.readFileSync(file, "utf8");
   const match = source.match(/^---\n([\s\S]*?)\n---/);
@@ -169,6 +202,11 @@ function listedPages(metaFile) {
   return meta.pages.filter((entry) => typeof entry === "string" && !entry.startsWith("---"));
 }
 
+function listedSectionHeaders(metaFile) {
+  const meta = readJson(metaFile);
+  return meta.pages.filter((entry) => typeof entry === "string" && entry.startsWith("---"));
+}
+
 function diff(left, right) {
   const rightSet = new Set(right);
   return left.filter((item) => !rightSet.has(item));
@@ -189,6 +227,169 @@ function collectMdxFiles(dir = DOCS_DIR) {
 
 function relative(file) {
   return path.relative(ROOT, file);
+}
+
+function hasPreview(source) {
+  return /<ComponentPreview\s+[^>]*name=["'][^"']+["']/.test(source);
+}
+
+function hasHeading(source, pattern) {
+  return pattern.test(stripCodeBlocks(source));
+}
+
+function hasAnyHeading(source, patterns) {
+  return patterns.some((pattern) => hasHeading(source, pattern));
+}
+
+function assertNavigationContract(lang) {
+  const rootMetaFile = path.join(DOCS_DIR, lang, "meta.json");
+  const rootHeaders = listedSectionHeaders(rootMetaFile);
+  const missingRootHeaders = rootNavigationContract[lang].filter(
+    (header) => !rootHeaders.includes(header),
+  );
+
+  if (missingRootHeaders.length > 0) {
+    fail(`${lang}/meta.json is missing navigation groups: ${missingRootHeaders.join(", ")}`);
+  }
+
+  const componentMetaFile = path.join(DOCS_DIR, lang, "components", "meta.json");
+  const componentHeaders = listedSectionHeaders(componentMetaFile);
+  const missingComponentHeaders = componentNavigationContract[lang].filter(
+    (header) => !componentHeaders.includes(header),
+  );
+
+  if (missingComponentHeaders.length > 0) {
+    fail(
+      `${lang}/components/meta.json is missing task-oriented groups: ${missingComponentHeaders.join(", ")}`,
+    );
+  }
+
+  const fragmentMeta = readJson(path.join(DOCS_DIR, lang, "fragment-components", "meta.json"));
+  const expectedTitle = lang === "zh" ? "产品组合" : "Product Compositions";
+  if (fragmentMeta.title !== expectedTitle) {
+    fail(
+      `${lang}/fragment-components/meta.json title must be "${expectedTitle}" so fragment-components is presented as product compositions.`,
+    );
+  }
+}
+
+function resolveTemplateProfile(item, docs) {
+  const nebutraLayer = item.meta?.nebutraLayer;
+  const docsLayer = item.meta?.docs?.layer;
+
+  if (docs.section === "foundations" || docsLayer === "foundation") return "foundation";
+  if (docs.section === "patterns" || docsLayer === "pattern") return "pattern";
+  if (docs.section === "api" || docsLayer === "api") return "api";
+  if (docs.section === "fragment-components" || nebutraLayer === "dashboard") {
+    return "composition";
+  }
+  if (nebutraLayer === "animation" || nebutraLayer === "decoration") {
+    return "visual-motion";
+  }
+  if (nebutraLayer === "marketing") return "composition";
+  return "primitive";
+}
+
+function missingTemplateSections({ item, docs, source }) {
+  const profile = resolveTemplateProfile(item, docs);
+  const missing = [];
+  const previewRequired =
+    profile === "primitive" || profile === "composition" || profile === "visual-motion";
+
+  if (previewRequired && !hasPreview(source)) {
+    missing.push("ComponentPreview");
+  }
+
+  if (
+    profile === "primitive" &&
+    !hasAnyHeading(source, [/^##\s+(Usage|Installation|API|Props)\b/im])
+  ) {
+    missing.push("Usage/API");
+  }
+
+  if (profile === "primitive" && !hasAnyHeading(source, [/^##\s+Props\b/m, /^##\s+API\b/m])) {
+    missing.push("Props");
+  }
+
+  if (
+    profile === "composition" &&
+    !hasAnyHeading(source, [/^##\s+(Use Case|When To Use|Usage|Demo)\b/im])
+  ) {
+    missing.push("Use Case");
+  }
+
+  if (
+    profile === "composition" &&
+    !hasAnyHeading(source, [/^##\s+(Anatomy|Props|Examples|Integration Contract)\b/im])
+  ) {
+    missing.push("Anatomy");
+  }
+
+  if (
+    profile === "visual-motion" &&
+    !hasAnyHeading(source, [/^##\s+(When to use|When To Use|Usage|Presets)\b/im])
+  ) {
+    missing.push("When to use");
+  }
+
+  if (
+    profile === "visual-motion" &&
+    !hasAnyHeading(source, [/^##\s+(Accessibility|Motion|Reduced Motion|Design Contract)\b/im])
+  ) {
+    missing.push("Motion/reduced-motion");
+  }
+
+  if (
+    (profile === "primitive" || profile === "composition" || profile === "visual-motion") &&
+    !hasAnyHeading(source, [/^##\s+Accessibility\b/m])
+  ) {
+    missing.push("Accessibility");
+  }
+
+  if (
+    (profile === "primitive" || profile === "composition") &&
+    !hasAnyHeading(source, [
+      /^##\s+(Design Contract|Integration Contract|Best Practices|Governance)\b/im,
+    ])
+  ) {
+    missing.push("Design Contract");
+  }
+
+  if (
+    profile === "visual-motion" &&
+    !hasAnyHeading(source, [/^##\s+(Design Contract|Token Contract|Governance)\b/im])
+  ) {
+    missing.push("Token Contract");
+  }
+
+  if (
+    profile === "foundation" &&
+    !hasAnyHeading(source, [
+      /^##\s+(Token Truth|Usage|Anti-patterns|Governance|Verification|Design Contract|Best Practices)\b/im,
+    ])
+  ) {
+    missing.push("Foundation Contract");
+  }
+
+  if (
+    profile === "pattern" &&
+    !hasAnyHeading(source, [
+      /^##\s+(Decision Tree|Composition Rules|Failure Modes|Examples|Design Contract|Best Practices)\b/im,
+    ])
+  ) {
+    missing.push("Pattern Contract");
+  }
+
+  if (
+    profile === "api" &&
+    !hasAnyHeading(source, [
+      /^##\s+(Endpoint Purpose|UI States Driven By API|Errors|Loading|Empty|Endpoint)\b/im,
+    ])
+  ) {
+    missing.push("API Contract");
+  }
+
+  return { profile, missing };
 }
 
 function assertSectionMeta(lang, section) {
@@ -317,16 +518,7 @@ function assertRegistryDocs() {
 
   for (const item of registry.items) {
     if (enDocSlugs.has(item.name)) continue;
-    if (registryOnlyAllowlist.has(item.name)) continue;
-    fail(
-      `registry item "${item.name}" has no matching English docs page and is not in the registry-only allowlist`,
-    );
-  }
-
-  for (const [name, reason] of registryOnlyAllowlist) {
-    if (registry.items.some((item) => item.name === name)) {
-      warn(`registry-only allowlist: ${name} — ${reason}`);
-    }
+    fail(`registry item "${item.name}" has no matching English docs page.`);
   }
 }
 
@@ -369,7 +561,6 @@ function findDocsFile(lang, slug) {
 
 function assertRegistryDocTemplateContracts() {
   const registry = readJson(path.join(ROOT, "public", "registry.json"));
-  const registryItems = new Set(registry.items.map((item) => item.name));
   const requiredRegistryMetadataKeys = [
     "status",
     "layer",
@@ -379,7 +570,6 @@ function assertRegistryDocTemplateContracts() {
     "registry",
     "lastVerified",
   ];
-  const componentSections = new Set(["components", "fragment-components"]);
 
   for (const item of registry.items) {
     const docs = findDocsFile("en", item.name);
@@ -418,55 +608,11 @@ function assertRegistryDocTemplateContracts() {
       }
     }
 
-    if (componentSections.has(docs.section)) {
-      if (
-        !/<ComponentPreview\s+[^>]*name=["'][^"']+["']/.test(source) &&
-        !previewlessRegistryDocAllowlist.has(item.name)
-      ) {
-        missing.push("ComponentPreview");
-      }
+    const template = missingTemplateSections({ item, docs, source });
+    missing.push(...template.missing.map((section) => `${template.profile}:${section}`));
 
-      if (!/^##\s+Props\b/m.test(source)) {
-        missing.push("Props");
-      }
-
-      if (!/^##\s+Accessibility\b/m.test(source)) {
-        missing.push("Accessibility");
-      }
-
-      if (!/^##\s+(Design Contract|Best Practices|Governance)\b/im.test(source)) {
-        missing.push("Design Contract");
-      }
-    } else if (
-      docs.section === "foundations" &&
-      !/^##\s+(Design Contract|Best Practices|Governance)\b/im.test(source)
-    ) {
-      missing.push("Design Contract");
-    }
-
-    const backlogReason = registryDocTemplateBacklog.get(item.name);
-    if (missing.length > 0 && !backlogReason) {
-      fail(
-        `${relative(docs.file)} registry docs template is incomplete: ${missing.join(", ")}. Either migrate it or add it to registryDocTemplateBacklog with a specific reason.`,
-      );
-    }
-
-    if (missing.length === 0 && backlogReason) {
-      fail(
-        `${relative(docs.file)} is still listed in registryDocTemplateBacklog after satisfying the template contract.`,
-      );
-    }
-  }
-
-  for (const name of registryDocTemplateBacklog.keys()) {
-    if (!registryItems.has(name)) {
-      fail(`registryDocTemplateBacklog references missing registry item: ${name}`);
-    }
-  }
-
-  for (const name of previewlessRegistryDocAllowlist.keys()) {
-    if (!registryItems.has(name)) {
-      fail(`previewlessRegistryDocAllowlist references missing registry item: ${name}`);
+    if (missing.length > 0) {
+      fail(`${relative(docs.file)} registry docs template is incomplete: ${missing.join(", ")}.`);
     }
   }
 }
@@ -496,8 +642,134 @@ function assertBrandTokenTruth() {
   }
 }
 
+function collectStoryFiles(dir = path.join(REPO_ROOT, "packages", "design", "ui", "src")) {
+  const files = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const absolute = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...collectStoryFiles(absolute));
+    } else if (entry.isFile() && /\.stories\.(tsx|ts|mdx)$/.test(entry.name)) {
+      files.push(absolute);
+    }
+  }
+  return files;
+}
+
+function assertStorybookCoverage() {
+  const registry = readJson(path.join(ROOT, "public", "registry.json"));
+  const storyBasenames = new Set(
+    collectStoryFiles().map((file) => path.basename(file).replace(/\.stories\.(tsx|ts|mdx)$/, "")),
+  );
+
+  for (const item of registry.items) {
+    if (storyBasenames.has(item.name)) continue;
+
+    const docs = findDocsFile("en", item.name);
+    const docsFrontmatter = docs ? parseFrontmatter(docs.file) : {};
+    const storybookPath = item.meta?.docs?.storybook ?? docsFrontmatter.storybook;
+    if (storybookPath) {
+      const resolved = path.join(REPO_ROOT, storybookPath);
+      if (path.isAbsolute(storybookPath)) {
+        fail(`registry item "${item.name}" storybook metadata must be repo-relative.`);
+      } else if (!fs.existsSync(resolved)) {
+        fail(
+          `registry item "${item.name}" storybook metadata points to a missing file: ${storybookPath}`,
+        );
+      }
+      continue;
+    }
+
+    fail(
+      `registry item "${item.name}" needs same-name Storybook coverage or explicit storybook metadata.`,
+    );
+  }
+}
+
+const zhTemplateParentheticalSuffixes = [
+  ["演示 (Demo)", /(^|[|#\s])演示\s+\(Demo\)/m],
+  ["属性 (Props)", /(^|[|#\s])属性\s+\(Props\)/m],
+  ["属性 (Prop)", /(^|[|#\s])属性\s+\(Prop\)/m],
+  ["默认值 (Default)", /(^|[|#\s])默认值\s+\(Default\)/m],
+  ["描述 (Description)", /(^|[|#\s])描述\s+\(Description\)/m],
+  ["可访问性 (Accessibility)", /(^|[|#\s])可访问性\s+\(Accessibility\)/m],
+  ["无障碍支持 (Accessibility)", /(^|[|#\s])无障碍支持\s+\(Accessibility\)/m],
+  ["设计契约 (Design Contract)", /(^|[|#\s])设计契约\s+\(Design Contract\)/m],
+];
+
+function zhLocalizationIssues(source) {
+  const body = stripInlineCode(stripCodeBlocks(source));
+  const issues = [];
+  const englishHeading =
+    /^#{2,4}\s+(Demo|Overview|Installation|Usage|Props|Best Practices|Accessibility|Design Contract|Examples|States|Presets|Token Families|When To Use|When to use)\b/gm;
+  const englishPropsTable =
+    /^\|\s*Prop\s*\|\s*Type\s*\|\s*(Default|默认值)\s*\|\s*(Description|说明)\s*\|/gm;
+  const placeholderCopy = /\b(TODO|TBD|Placeholder|Lorem ipsum)\b/g;
+
+  for (const match of body.matchAll(englishHeading)) {
+    issues.push(`English template heading "${match[1]}"`);
+  }
+  for (const [label, pattern] of zhTemplateParentheticalSuffixes) {
+    if (pattern.test(body)) {
+      issues.push(`English template suffix "${label}"`);
+    }
+  }
+  if (englishPropsTable.test(body)) {
+    issues.push("English props table header");
+  }
+  if (placeholderCopy.test(body)) {
+    issues.push("placeholder copy");
+  }
+
+  return [...new Set(issues)];
+}
+
+function assertZhLocalization() {
+  const zhRoot = path.join(DOCS_DIR, "zh");
+
+  for (const file of collectMdxFiles(zhRoot)) {
+    const source = fs.readFileSync(file, "utf8");
+    const issues = zhLocalizationIssues(source);
+    if (issues.length === 0) continue;
+
+    fail(`${relative(file)} has Chinese-localization drift: ${issues.join(", ")}`);
+  }
+}
+
+function assertApiTemplateContracts() {
+  for (const lang of LANGS) {
+    const apiDir = path.join(DOCS_DIR, lang, "api");
+    for (const slug of listMdxSlugs(apiDir)) {
+      if (slug === "index") continue;
+      const file = path.join(apiDir, `${slug}.mdx`);
+      const source = fs.readFileSync(file, "utf8");
+      const hasPurpose =
+        lang === "zh"
+          ? hasHeading(source, /^##\s+接口目的/m)
+          : hasHeading(source, /^##\s+Endpoint Purpose/m);
+      const hasUiStates =
+        lang === "zh"
+          ? hasHeading(source, /^##\s+API 驱动的界面状态/m)
+          : hasHeading(source, /^##\s+UI States Driven By API/m);
+      const hasFailureStates =
+        lang === "zh"
+          ? hasHeading(source, /^##\s+错误 \/ 加载 \/ 空状态契约/m)
+          : hasHeading(source, /^##\s+Errors \/ Loading \/ Empty Contracts/m);
+      const missing = [];
+
+      if (!hasPurpose) missing.push("Endpoint purpose");
+      if (!hasUiStates) missing.push("UI states driven by API");
+      if (!hasFailureStates) missing.push("errors/loading/empty contracts");
+
+      if (missing.length > 0) {
+        fail(`${relative(file)} API template is incomplete: ${missing.join(", ")}`);
+      }
+    }
+  }
+}
+
 for (const lang of LANGS) {
   assertRootIncludesApi(lang);
+  assertNavigationContract(lang);
   for (const section of SECTIONS) {
     assertSectionMeta(lang, section);
   }
@@ -514,6 +786,9 @@ assertStructuredFrontmatterContracts();
 assertRegistryDocTemplateContracts();
 assertNoStaleSubstrateCopy();
 assertBrandTokenTruth();
+assertStorybookCoverage();
+assertZhLocalization();
+assertApiTemplateContracts();
 
 for (const message of warnings) {
   console.warn(`[design-docs:ia] WARN ${message}`);

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "show-more-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/show-more-demo.tsx",
+      "content": "\"use client\";\n\nimport { ShowMore } from \"@nebutra/ui/primitives\";\nimport { useRef, useState } from \"react\";\n\nconst items = [\n  \"Production deploy completed\",\n  \"Billing sync finished\",\n  \"Audit export queued\",\n  \"Invite accepted by Lena\",\n  \"Webhook delivery retried\",\n  \"New API key created\",\n  \"Policy rule updated\",\n  \"Usage threshold reached\",\n] as const;\n\nexport function ShowMoreDemo() {\n  const [expanded, setExpanded] = useState(false);\n  const firstRevealedRef = useRef<HTMLLIElement>(null);\n  const visibleItems = expanded ? items : items.slice(0, 5);\n\n  return (\n    <div className=\"w-full max-w-md rounded-[var(--radius-lg)] border bg-card p-4 text-card-foreground\">\n      <ul id=\"show-more-activity\" className=\"grid gap-2 text-sm\">\n        {visibleItems.map((item, index) => (\n          <li\n            key={item}\n            ref={index === 5 ? firstRevealedRef : undefined}\n            tabIndex={index === 5 ? -1 : undefined}\n            className=\"rounded-[var(--radius-md)] border bg-background px-3 py-2\"\n          >\n            {item}\n          </li>\n        ))}\n      </ul>\n      <div className=\"mt-4\">\n        <ShowMore\n          controls=\"show-more-activity\"\n          expanded={expanded}\n          focusTargetRef={firstRevealedRef}\n          hiddenCount={items.length - visibleItems.length}\n          onExpandedChange={setExpanded}\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -9,6 +9,7 @@
       "title": "Avatar",
       "description": "User, team, or organization identity primitive with numeric sizing, initials fallback, and stacked groups.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "stable",
           "layer": "primitive",
@@ -26,6 +27,7 @@
       "title": "Bento Grid",
       "description": "Responsive bento-style feature grid with hover-reveal CTAs.",
       "meta": {
+        "nebutraLayer": "marketing",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -43,6 +45,7 @@
       "title": "Pricing Card",
       "description": "Composable pricing card with glass header, plan badges, price slots.",
       "meta": {
+        "nebutraLayer": "marketing",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -60,6 +63,7 @@
       "title": "Feature Card",
       "description": "Feature card with corner bracket decorators, header, body, and dual-mode imagery.",
       "meta": {
+        "nebutraLayer": "marketing",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -77,6 +81,7 @@
       "title": "AnimateIn",
       "description": "Entrance animation primitive with emerge / flow / fade presets, lazy-loaded framer-motion.",
       "meta": {
+        "nebutraLayer": "animation",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -94,6 +99,7 @@
       "title": "Magic Card",
       "description": "Spotlight cursor-tracking card with gradient border highlight.",
       "meta": {
+        "nebutraLayer": "animation",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -111,6 +117,7 @@
       "title": "Globe (WebGL)",
       "description": "Interactive WebGL globe powered by cobe — heavy peer dependency.",
       "meta": {
+        "nebutraLayer": "dataviz",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -128,6 +135,7 @@
       "title": "Chart",
       "description": "Recharts wrapper with theme-aware color tokens and tooltip primitives.",
       "meta": {
+        "nebutraLayer": "dataviz",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -145,6 +153,7 @@
       "title": "Command Menu",
       "description": "AI command palette built on cmdk + base-ui dialog.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -162,6 +171,7 @@
       "title": "Empty State",
       "description": "Zero-content surface for blank slate, no-results, permission, and error states.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -179,6 +189,7 @@
       "title": "Feedback",
       "description": "Compact feedback widget with emotion, message, topic, and metadata payloads.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -196,6 +207,7 @@
       "title": "Show More",
       "description": "Count-aware progressive disclosure trigger for long lists and content blocks.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -213,6 +225,7 @@
       "title": "Table",
       "description": "Semantic table primitive with compound API, row states, numeric alignment, and Geist-compatible exports.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "stable",
           "layer": "primitive",
@@ -230,6 +243,7 @@
       "title": "Toast",
       "description": "Sonner-backed transient notification facade with tokenized styling and Geist-compatible useToasts API.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "stable",
           "layer": "primitive",
@@ -247,6 +261,7 @@
       "title": "Theme Toggle",
       "description": "Binary sun/moon icon-button for light and dark mode switching. Tokenized motion and reduced-motion aware.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -264,6 +279,7 @@
       "title": "KPI Card",
       "description": "Dashboard KPI card with trend chevrons and lucide iconography.",
       "meta": {
+        "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -281,6 +297,7 @@
       "title": "Metric Card",
       "description": "Linear / Vercel / Supabase inspired SaaS dashboard metric tile.",
       "meta": {
+        "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -298,6 +315,7 @@
       "title": "Text Shimmer",
       "description": "Animated text shimmer used as the streaming-header substrate for the chat tool-family.",
       "meta": {
+        "nebutraLayer": "animation",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -315,6 +333,7 @@
       "title": "Loading Dots",
       "description": "Three-dot bouncing loader; reused inside EditTool's approval footer.",
       "meta": {
+        "nebutraLayer": "animation",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -332,6 +351,7 @@
       "title": "Edit Tool",
       "description": "Inline AI tool-call rendering for file edits — Cursor / Claude Code-style diff block with optional approval footer.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -349,6 +369,7 @@
       "title": "Question Tool",
       "description": "Inline AI tool-call rendering of a multi-step questionnaire — single / multi / text question kinds.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -366,6 +387,7 @@
       "title": "MCP Tool",
       "description": "Inline AI tool-call rendering for MCP invocations — verb conjugation, priority-sorted args, expandable output panel.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -383,6 +405,7 @@
       "title": "Todo Tool",
       "description": "Flat streaming todo list for the Claude TodoWrite tool — sibling of EditTool / McpTool / SearchTool.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -400,6 +423,7 @@
       "title": "Search Tool",
       "description": "Inline AI tool-call rendering for search/retrieval results — honest-link rows, scrollable result panel.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -417,6 +441,7 @@
       "title": "Subagent Tool",
       "description": "Single-line status pill for delegated subagent invocations — lightest member of the chat tool-family.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -434,6 +459,7 @@
       "title": "File Attachment",
       "description": "Chip / thumbnail display for an attached file in a chat composer or message bubble. Keyboard-accessible removal.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -451,6 +477,7 @@
       "title": "Expandable Gallery",
       "description": "Fanned photo stack that animates into a responsive grid. Tab/Enter expands; outside-click or Back collapses.",
       "meta": {
+        "nebutraLayer": "marketing",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -468,6 +495,7 @@
       "title": "Tooltip",
       "description": "Base UI Tooltip wrapper for concise, non-interactive explanatory text.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "stable",
           "layer": "primitive",
@@ -485,6 +513,7 @@
       "title": "Accordion",
       "description": "Base UI accordion primitive with tokenized focus and disclosure motion. Used by Collapse.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "stable",
           "layer": "primitive",
@@ -502,6 +531,7 @@
       "title": "Dropdown Menu",
       "description": "Base UI menu primitive with keyboard navigation, checkbox/radio items, and submenu support.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "stable",
           "layer": "primitive",
@@ -519,6 +549,7 @@
       "title": "Context Card",
       "description": "Geist-style hover/focus card built on Base UI Popover for compact entity metadata.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -536,6 +567,7 @@
       "title": "Relative Time Card",
       "description": "Short relative-time label with hover popover showing absolute UTC + local time. Adaptive tick cadence.",
       "meta": {
+        "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -553,6 +585,7 @@
       "title": "Project Banner",
       "description": "Full-width, non-dismissible banner for project-wide states needing resolution. Four severity variants + ARIA live region.",
       "meta": {
+        "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -570,6 +603,7 @@
       "title": "Browser",
       "description": "Geist-style browser chrome around a screenshot or demo. Middle-truncating address bar, aspect-locked image viewport.",
       "meta": {
+        "nebutraLayer": "marketing",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -587,6 +621,7 @@
       "title": "Middle Truncate",
       "description": "Accessible middle truncation for long IDs, URLs, and file paths while preserving copy text.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -604,6 +639,7 @@
       "title": "Choicebox",
       "description": "Card-style selection control with radio (single) and checkbox (multi) modes. Roving tabindex + arrow-key navigation.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "beta",
           "layer": "primitive",
@@ -621,6 +657,7 @@
       "title": "Code Block",
       "description": "Syntax-highlighted code viewer with copy + diff lines. Accepts Geist single-file children API or Nebutra multi-file tabs.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -638,6 +675,7 @@
       "title": "Collapse",
       "description": "Geist-style flat Collapse/CollapseGroup API on top of our Accordion. Single, multiple-open, and standalone modes.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -655,6 +693,7 @@
       "title": "Description",
       "description": "Definition-list metadata block (<dl>/<dt>/<dd>). Title Case key + emphasized value, optional tooltip on the label.",
       "meta": {
+        "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -672,6 +711,7 @@
       "title": "Entity",
       "description": "Row of descriptive content paired with one or two controls. Compound Entity / Entity.Content / Entity.List.",
       "meta": {
+        "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -689,6 +729,7 @@
       "title": "Material",
       "description": "Surface elevation primitive — 8 Geist-style types (base, small/medium/large, tooltip, menu, modal, fullscreen). Picks chrome from the theme.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -706,6 +747,7 @@
       "title": "Menu",
       "description": "Geist-style flat MenuContainer / MenuButton / Menu / MenuItem / MenuLink / MenuItemLocked / MenuSection API on top of DropdownMenu.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -723,6 +765,7 @@
       "title": "Modal",
       "description": "Geist-style compound Modal API on top of Dialog. active/onClickOutside/sticky/initialFocusRef + Body/Header/Title/Subtitle/Inset/Actions/Action.",
       "meta": {
+        "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -740,6 +783,7 @@
       "title": "Progress",
       "description": "Determinate progress bar with max ceiling, threshold-color map, multi-stage stops with tooltips, and ~1Hz aria-valuenow throttling.",
       "meta": {
+        "nebutraLayer": "dashboard",
         "docs": {
           "status": "stable",
           "layer": "primitive",
@@ -757,6 +801,7 @@
       "title": "Skeleton",
       "description": "Loading placeholder with width/height/boxHeight + pill/rounded/squared + animated/show props. Respects prefers-reduced-motion; aria-busy + inert keep focus off the placeholder.",
       "meta": {
+        "nebutraLayer": "dashboard",
         "docs": {
           "status": "stable",
           "layer": "primitive",
@@ -774,6 +819,7 @@
       "title": "Status Dot",
       "description": "Deployment-lifecycle dot (QUEUED/BUILDING/READY/ERROR/CANCELED/DELETED). QUEUED+BUILDING pulse; terminal states static. Semantic-token colored, decorative-mode aria-hidden when paired with text.",
       "meta": {
+        "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
           "layer": "primitive",
@@ -791,6 +837,7 @@
       "title": "Nebutra Tokens",
       "description": "Drops the Nebutra design-system CSS variables (brand, neutral, status, container scale) into globals.css. No TSX.",
       "meta": {
+        "nebutraLayer": "decoration",
         "docs": {
           "status": "stable",
           "layer": "foundation",

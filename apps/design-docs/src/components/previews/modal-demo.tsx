@@ -23,9 +23,9 @@ export function ModalDemo() {
             </Modal.Subtitle>
           </Modal.Header>
           <Modal.Inset>
-            <label className="grid gap-2 text-sm">
+            <label className="grid gap-2 text-sm" htmlFor="modal-demo-project-name">
               Project name
-              <Input defaultValue="nebutra-production" />
+              <Input id="modal-demo-project-name" defaultValue="nebutra-production" />
             </label>
           </Modal.Inset>
         </Modal.Body>

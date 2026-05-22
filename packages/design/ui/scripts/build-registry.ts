@@ -1426,6 +1426,7 @@ function main(): void {
         title: c.title,
         description: c.description,
         meta: {
+          nebutraLayer: c.layer,
           docs: buildDocsMetadata(c),
         },
       })),
@@ -1435,6 +1436,7 @@ function main(): void {
         title: themeItem.title,
         description: themeItem.description,
         meta: {
+          nebutraLayer: themeItem.meta.nebutraLayer,
           docs: themeItem.meta.docs,
         },
       },

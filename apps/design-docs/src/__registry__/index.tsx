@@ -37,6 +37,9 @@ export const AlertDialogCustomDemo = dynamic(() =>
 export const AlertDialogDemo = dynamic(() =>
   import("@/components/previews/alert-dialog-demo").then((m) => ({ default: m.AlertDialogDemo })),
 );
+export const AnimateInDemo = dynamic(() =>
+  import("@/components/previews/animate-in-demo").then((m) => ({ default: m.AnimateInDemo })),
+);
 export const AnimatedBeamDemo = dynamic(() =>
   import("@/components/previews/animated-beam-demo").then((m) => ({ default: m.AnimatedBeamDemo })),
 );
@@ -684,6 +687,9 @@ export const IphoneMockupDemo = dynamic(() =>
 export const KbdDemo = dynamic(() =>
   import("@/components/previews/kbd-demo").then((m) => ({ default: m.KbdDemo })),
 );
+export const KpiCardDemo = dynamic(() =>
+  import("@/components/previews/kpi-card-demo").then((m) => ({ default: m.KpiCardDemo })),
+);
 export const Label2Demo = dynamic(() =>
   import("@/components/previews/label-2-demo").then((m) => ({ default: m.Label2Demo })),
 );
@@ -714,6 +720,9 @@ export const LineShadowTextDemo = dynamic(() =>
 );
 export const LoaderDemo = dynamic(() =>
   import("@/components/previews/loader-demo").then((m) => ({ default: m.LoaderDemo })),
+);
+export const LoadingDotsDemo = dynamic(() =>
+  import("@/components/previews/loading-dots-demo").then((m) => ({ default: m.LoadingDotsDemo })),
 );
 export const MacbookProDemo = dynamic(() =>
   import("@/components/previews/macbook-pro-demo").then((m) => ({ default: m.MacbookProDemo })),
@@ -751,6 +760,9 @@ export const MermaidDemo = dynamic(() =>
 export const MessageWithReactionsDemo = dynamic(() =>
   import("@/components/previews/message-with-reactions-demo").then((m) => ({ default: m.default })),
 );
+export const MetricCardDemo = dynamic(() =>
+  import("@/components/previews/metric-card-demo").then((m) => ({ default: m.MetricCardDemo })),
+);
 export const MiddleTruncateDemo = dynamic(() =>
   import("@/components/previews/middle-truncate-demo").then((m) => ({
     default: m.MiddleTruncateDemo,
@@ -770,6 +782,11 @@ export const MultipleSelectorDemo = dynamic(() =>
 export const NavigationMenuDemo = dynamic(() =>
   import("@/components/previews/navigation-menu-demo").then((m) => ({
     default: m.NavigationMenuDemo,
+  })),
+);
+export const NebutraTokensDemo = dynamic(() =>
+  import("@/components/previews/nebutra-tokens-demo").then((m) => ({
+    default: m.NebutraTokensDemo,
   })),
 );
 export const NoisePatternCardDemo = dynamic(() =>
@@ -981,6 +998,9 @@ export const SheetSideDemo = dynamic(() =>
 export const ShineBorderDemo = dynamic(() =>
   import("@/components/previews/shine-border-demo").then((m) => ({ default: m.ShineBorderDemo })),
 );
+export const ShowMoreDemo = dynamic(() =>
+  import("@/components/previews/show-more-demo").then((m) => ({ default: m.ShowMoreDemo })),
+);
 export const SidebarDemo = dynamic(() =>
   import("@/components/previews/sidebar-demo").then((m) => ({ default: m.SidebarDemo })),
 );
@@ -1033,6 +1053,9 @@ export const StarsCanvasDemo = dynamic(() =>
 );
 export const StatusBadgeDemo = dynamic(() =>
   import("@/components/previews/status-badge-demo").then((m) => ({ default: m.StatusBadgeDemo })),
+);
+export const StatusDotDemo = dynamic(() =>
+  import("@/components/previews/status-dot-demo").then((m) => ({ default: m.StatusDotDemo })),
 );
 export const SubagentToolDemo = dynamic(() =>
   import("@/components/previews/subagent-tool-demo").then((m) => ({ default: m.SubagentToolDemo })),
@@ -1207,6 +1230,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     component: AlertDialogCustomDemo,
   },
   "alert-dialog-demo": { name: "alert-dialog-demo", component: AlertDialogDemo },
+  "animate-in-demo": { name: "animate-in-demo", component: AnimateInDemo },
   "animated-beam-demo": { name: "animated-beam-demo", component: AnimatedBeamDemo },
   "animated-circular-progress-bar-demo": {
     name: "animated-circular-progress-bar-demo",
@@ -1432,6 +1456,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "introduction-demo": { name: "introduction-demo", component: IntroductionDemo },
   "iphone-mockup-demo": { name: "iphone-mockup-demo", component: IphoneMockupDemo },
   "kbd-demo": { name: "kbd-demo", component: KbdDemo },
+  "kpi-card-demo": { name: "kpi-card-demo", component: KpiCardDemo },
   "label-2-demo": { name: "label-2-demo", component: Label2Demo },
   "label-3-demo": { name: "label-3-demo", component: Label3Demo },
   "label-4-demo": { name: "label-4-demo", component: Label4Demo },
@@ -1441,6 +1466,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "light-rays-demo": { name: "light-rays-demo", component: LightRaysDemo },
   "line-shadow-text-demo": { name: "line-shadow-text-demo", component: LineShadowTextDemo },
   "loader-demo": { name: "loader-demo", component: LoaderDemo },
+  "loading-dots-demo": { name: "loading-dots-demo", component: LoadingDotsDemo },
   "macbook-pro-demo": { name: "macbook-pro-demo", component: MacbookProDemo },
   "magic-card-demo": { name: "magic-card-demo", component: MagicCardDemo },
   "material-demo": { name: "material-demo", component: MaterialDemo },
@@ -1456,11 +1482,13 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     name: "message-with-reactions-demo",
     component: MessageWithReactionsDemo,
   },
+  "metric-card-demo": { name: "metric-card-demo", component: MetricCardDemo },
   "middle-truncate-demo": { name: "middle-truncate-demo", component: MiddleTruncateDemo },
   "modal-demo": { name: "modal-demo", component: ModalDemo },
   "multi-select-demo": { name: "multi-select-demo", component: MultiSelectDemo },
   "multiple-selector-demo": { name: "multiple-selector-demo", component: MultipleSelectorDemo },
   "navigation-menu-demo": { name: "navigation-menu-demo", component: NavigationMenuDemo },
+  "nebutra-tokens-demo": { name: "nebutra-tokens-demo", component: NebutraTokensDemo },
   "noise-pattern-card-demo": { name: "noise-pattern-card-demo", component: NoisePatternCardDemo },
   "note-demo": { name: "note-demo", component: NoteDemo },
   "notification-message-list-demo": {
@@ -1543,6 +1571,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "sheet-mobile-demo": { name: "sheet-mobile-demo", component: SheetMobileDemo },
   "sheet-side-demo": { name: "sheet-side-demo", component: SheetSideDemo },
   "shine-border-demo": { name: "shine-border-demo", component: ShineBorderDemo },
+  "show-more-demo": { name: "show-more-demo", component: ShowMoreDemo },
   "sidebar-demo": { name: "sidebar-demo", component: SidebarDemo },
   "skeleton-2-demo": { name: "skeleton-2-demo", component: Skeleton2Demo },
   "skeleton-3-demo": { name: "skeleton-3-demo", component: Skeleton3Demo },
@@ -1563,6 +1592,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "stack-demo": { name: "stack-demo", component: StackDemo },
   "stars-canvas-demo": { name: "stars-canvas-demo", component: StarsCanvasDemo },
   "status-badge-demo": { name: "status-badge-demo", component: StatusBadgeDemo },
+  "status-dot-demo": { name: "status-dot-demo", component: StatusDotDemo },
   "subagent-tool-demo": { name: "subagent-tool-demo", component: SubagentToolDemo },
   "switch-demo": { name: "switch-demo", component: SwitchDemo },
   "table-demo": { name: "table-demo", component: TableDemo },

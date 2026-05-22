@@ -17,6 +17,7 @@ export interface RegistryIndexEntry {
   title?: string;
   description?: string;
   meta?: {
+    nebutraLayer?: string;
     docs?: RegistryDocsMetadata;
   };
 }

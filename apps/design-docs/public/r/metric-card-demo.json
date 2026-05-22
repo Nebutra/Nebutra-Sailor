@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "metric-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/icons",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/metric-card-demo.tsx",
+      "content": "\"use client\";\n\nimport { Gauge, Servers, Warning } from \"@nebutra/icons\";\nimport { MetricCardBordered, MetricGrid } from \"@nebutra/ui/primitives\";\n\nexport function MetricCardDemo() {\n  return (\n    <MetricGrid className=\"w-full max-w-3xl\" columns={3}>\n      <MetricCardBordered\n        label=\"Events ingested\"\n        value=\"2.4M\"\n        trend=\"up\"\n        trendValue=\"+12%\"\n        description=\"vs last week\"\n        icon={<Servers />}\n      />\n      <MetricCardBordered\n        label=\"Error rate\"\n        value=\"0.18%\"\n        trend=\"down\"\n        trendValue=\"-0.3%\"\n        description=\"lower is better\"\n        icon={<Warning />}\n      />\n      <MetricCardBordered\n        label=\"P95 latency\"\n        value=\"148ms\"\n        trend=\"neutral\"\n        trendValue=\"0\"\n        description=\"stable\"\n        icon={<Gauge />}\n      />\n    </MetricGrid>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}
