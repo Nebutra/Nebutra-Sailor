@@ -3,18 +3,18 @@ title: "线条阴影文本 (Line Shadow Text)"
 description: "由 Framer Motion 驱动的动态对角线阴影文本效果。滚动的斜线阴影紧随文本之后。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="line-shadow-text-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { LineShadowText } from "@nebutra/ui/primitives"
 ```
 
-## CSS 设置 (CSS Setup)
+## CSS 设置
 
 将 `animate-line-shadow` 关键帧添加到您的全局 CSS 或 Tailwind 配置中：
 
@@ -34,15 +34,15 @@ import { LineShadowText } from "@nebutra/ui/primitives"
 import { LINE_SHADOW_CSS } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础用法 (Basic)
+### 基础用法
 
 ```tsx
 <LineShadowText className="text-5xl font-bold">Magic UI</LineShadowText>
 ```
 
-### 自定义阴影颜色 (Custom Shadow Color)
+### 自定义阴影颜色
 
 ```tsx
 <LineShadowText shadowColor="var(--brand-primary)" className="text-5xl font-bold">
@@ -50,7 +50,7 @@ import { LINE_SHADOW_CSS } from "@nebutra/ui/primitives"
 </LineShadowText>
 ```
 
-### 作为标题元素渲染 (As Heading Element)
+### 作为标题元素渲染
 
 ```tsx
 <LineShadowText as="h1" className="text-6xl font-black">
@@ -58,7 +58,7 @@ import { LINE_SHADOW_CSS } from "@nebutra/ui/primitives"
 </LineShadowText>
 ```
 
-### 结合 Framer Motion 进场动画 (With Framer Motion Entry)
+### 结合 Framer Motion 进场动画
 
 ```tsx
 <LineShadowText
@@ -71,7 +71,7 @@ import { LINE_SHADOW_CSS } from "@nebutra/ui/primitives"
 </LineShadowText>
 ```
 
-## 属性 (Props)
+## 属性
 
 `LineShadowText` 同时继承了 `React.HTMLAttributes<HTMLElement>` 和 Framer Motion 的 `MotionProps`。
 
@@ -83,7 +83,7 @@ import { LINE_SHADOW_CSS } from "@nebutra/ui/primitives"
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `...motionProps` | `MotionProps` | — | 所有 Framer Motion 属性（initial, animate 等） |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - `children` 必须是纯字符串 —— 如果传入 JSX 节点，组件将报错。
 - 阴影是通过 CSS `::after` 伪元素并配合 `data-text` 属性进行渲染的。

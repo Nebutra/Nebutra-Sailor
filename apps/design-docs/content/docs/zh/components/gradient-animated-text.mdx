@@ -3,20 +3,20 @@ title: "渐变动画文本 (Gradient Animated Text)"
 description: "在渐变和纯色状态之间循环切换的文本，具有错开的时间逻辑。将 3 个变体合用可实现 建立/发布/扩展 (Build/Ship/Scale) 的文字揭示效果。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="gradient-animated-text-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { GradientAnimatedText } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 三词错开揭示效果（签名用例） (Three-Word Staggered Reveal)
+### 三词错开揭示效果（签名用例）
 
 ```tsx
 <div className="flex gap-2 text-5xl font-black">
@@ -26,7 +26,7 @@ import { GradientAnimatedText } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### AI 主题 (AI Theme)
+### AI 主题
 
 ```tsx
 <div className="flex gap-2">
@@ -36,7 +36,7 @@ import { GradientAnimatedText } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 自定义颜色 (Custom Colors)
+### 自定义颜色
 
 ```tsx
 <GradientAnimatedText
@@ -49,7 +49,7 @@ import { GradientAnimatedText } from "@nebutra/ui/primitives"
 </GradientAnimatedText>
 ```
 
-### 更慢的动画 (Slower Animation)
+### 更慢的动画
 
 ```tsx
 <GradientAnimatedText variant={1} theme="neon" duration={16}>
@@ -57,7 +57,7 @@ import { GradientAnimatedText } from "@nebutra/ui/primitives"
 </GradientAnimatedText>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -69,7 +69,7 @@ import { GradientAnimatedText } from "@nebutra/ui/primitives"
 | `duration` | `number` | `8` | 动画循环周期（秒） |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 主题颜色 (Theme Colors)
+## 主题颜色
 
 | 主题 | 变体 1 | 变体 2 | 变体 3 |
 |-------|-----------|-----------|-----------|

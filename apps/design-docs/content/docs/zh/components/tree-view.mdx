@@ -3,29 +3,29 @@ title: "树形视图 (Tree View)"
 description: "一个用于展示分层数据的层级列表组件，适用于展现文件树或组织架构等结构。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="tree-view-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { TreeView, TreeViewItem } from "@nebutra/ui";
 ```
 
-## 属性 (Props)
+## 属性
 
 ### TreeView (树形视图容器)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 | ----------- | ----------- | ------- | ------------------------------------------------ |
 | `className` | `string`    | —       | 额外的 CSS 类名。 |
 | `children`  | `ReactNode` | —       | `TreeViewItem` 子元素集合。 |
 
 ### TreeViewItem (树形项目)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 | ------------------ | ----------- | ------- | ------------------------------------------------ |
 | `label`            | `string`    | **必填** | 展示的标签文本。 |
 | `icon`             | `ReactNode` | —       | 标签前显示的图标。 |
@@ -37,9 +37,9 @@ import { TreeView, TreeViewItem } from "@nebutra/ui";
 | `disabled`         | `boolean`   | `false` | 禁用选择和展开操作。 |
 | `children`         | `ReactNode` | —       | 嵌套的子级 `TreeViewItem` 元素。 |
 
-## 示例 (Examples)
+## 示例
 
-### 受控展开 (Controlled Expansion)
+### 受控展开
 
 ```tsx
 const [expanded, setExpanded] = useState<Record<string, boolean>>({});
@@ -62,7 +62,7 @@ function ControlledTree() {
 }
 ```
 
-### 可选择项目 (Selectable Items)
+### 可选择项目
 
 ```tsx
 const [selected, setSelected] = useState<string | null>(null);
@@ -79,6 +79,6 @@ const [selected, setSelected] = useState<string | null>(null);
 </TreeView>
 ```
 
-## 无障碍支持 (Accessibility)
+## 无障碍支持
 
 实现了 WAI-ARIA 的 `tree` 和 `treeitem` 角色。支持键盘导航：`ArrowDown`/`ArrowUp` 在项目间移动，`ArrowRight` 展开，`ArrowLeft` 折叠或移动到父级，`Enter`/`Space` 进行选中。

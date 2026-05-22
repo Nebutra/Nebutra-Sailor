@@ -3,20 +3,20 @@ title: "边框轨迹 (Border Trail)"
 description: "一个沿着父元素边框持续移动的动画元素。非常适合用于加载状态、注意力指示器和高级卡片高亮。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="border-trail-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { BorderTrail } from "@nebutra/ui/primitives";
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础用法 (Basic)
+### 基础用法
 
 ```tsx
 <div className="relative rounded-md border p-6">
@@ -25,7 +25,7 @@ import { BorderTrail } from "@nebutra/ui/primitives";
 </div>
 ```
 
-### 卡片上的发光轨迹 (Glowing Trail on Card)
+### 卡片上的发光轨迹
 
 ```tsx
 <div className="relative rounded-xl border p-8">
@@ -38,7 +38,7 @@ import { BorderTrail } from "@nebutra/ui/primitives";
 </div>
 ```
 
-### 带有延迟的慢速动画 (Slower Animation with Delay)
+### 带有延迟的慢速动画
 
 ```tsx
 <div className="relative rounded-lg border p-4">
@@ -51,7 +51,7 @@ import { BorderTrail } from "@nebutra/ui/primitives";
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 | --------------------- | --------------- | --------------------------------------------------- | -------------------------------------------------- |
@@ -62,13 +62,13 @@ import { BorderTrail } from "@nebutra/ui/primitives";
 | `style`               | `CSSProperties` | — | 轨迹元素的额外行内样式 |
 | `className`           | `string`        | — | 轨迹的 CSS 类名（用于设置渐变颜色） |
 
-## 配置要求 (Setup Requirements)
+## 配置要求
 
 - 父元素必须具有 `position: relative`（或使用 `relative` 类名）。
 - 父元素必须定义 `border-radius`，以便轨迹能够正确遵循边框路径。
 - 该组件使用了 CSS `offset-path: rect(...)` —— 仅支持现代浏览器。
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 轨迹元素默认使用 `mix-blend-mode: normal`。通过 `className` 添加 `mix-blend-mode: screen` 可以在深色背景上实现发光效果。
 - 使用 `className` 自定义轨迹颜色 —— 例如 `bg-gradient-to-r from-blue-500 to-purple-500`。

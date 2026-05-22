@@ -3,27 +3,27 @@ title: "Mermaid 指导图"
 description: "将 Mermaid 图表语法直接渲染为内容中的行内 SVG 图表。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="mermaid-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Mermaid } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `chart` | `string` | — | **必需。** Mermaid 图表定义的语法字符串 |
 | `className` | `string` | — | 容器上的额外 CSS 类名 |
 
-## 示例 (Examples)
+## 示例
 
-### 时序图 (Sequence Diagram)
+### 时序图
 
 ```tsx
 const sequenceDiagram = `
@@ -41,7 +41,7 @@ const sequenceDiagram = `
 <Mermaid chart={sequenceDiagram} />
 ```
 
-### 实体关系图 (Entity Relationship)
+### 实体关系图
 
 ```tsx
 const erDiagram = `
@@ -54,7 +54,7 @@ const erDiagram = `
 <Mermaid chart={erDiagram} />
 ```
 
-### 状态图 (State Diagram)
+### 状态图
 
 ```tsx
 const stateDiagram = `
@@ -70,7 +70,7 @@ const stateDiagram = `
 <Mermaid chart={stateDiagram} />
 ```
 
-## 无障碍支持 (Accessibility)
+## 无障碍支持
 
 - 组件渲染为 SVG 元素 —— 建议添加 `aria-label` 或可见的标题以提供屏幕阅读器所需的上下文。
 - 对于复杂的图表，考虑在旁边提供一段文字描述。

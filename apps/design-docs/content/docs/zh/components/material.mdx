@@ -3,24 +3,24 @@ title: "材质 (Material)"
 description: "表面高度 (Surface Elevation) 原语。通过阴影和背景 Token 表达 UI 深度。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="material-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `Material` 是一个构建在 `Stack` 之上的表面高度原语。它将语义化的 `type` 属性映射到项目的 `@theme` 阴影和背景 Token —— 无需手动编写数值。在任何需要表达视觉深度的地方都可以使用它：卡片、下拉菜单、对话框或全屏叠加层。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { Material } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 类型 (Types)
+### 类型
 
 所有四个高度级别均使用 `packages/design/theme/themes.css` 中定义的 Token。
 
@@ -42,7 +42,7 @@ import { Material } from "@nebutra/ui/primitives";
 </Material>
 ```
 
-### 卡片 (Card)
+### 卡片
 
 用于页面内容的默认表面。应用 `shadow-sm` 和 `bg-card`。
 
@@ -55,7 +55,7 @@ import { Material } from "@nebutra/ui/primitives";
 </Material>
 ```
 
-### 菜单 (Menu)
+### 菜单
 
 下拉菜单和气泡框 (Popover) 表面。应用 `shadow-md` 和 `bg-popover`。
 
@@ -72,7 +72,7 @@ import { Material } from "@nebutra/ui/primitives";
 </Material>
 ```
 
-### 模态框 (Modal)
+### 模态框
 
 对话框和抽屉表面。应用 `shadow-lg` 和 `bg-popover`。
 
@@ -89,7 +89,7 @@ import { Material } from "@nebutra/ui/primitives";
 </Material>
 ```
 
-### 全屏 (Fullscreen)
+### 全屏
 
 全屏叠加表面。应用 `shadow-none` 和 `bg-background`。
 
@@ -99,7 +99,7 @@ import { Material } from "@nebutra/ui/primitives";
 </Material>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -110,7 +110,7 @@ import { Material } from "@nebutra/ui/primitives";
 
 还支持所有标准的 `div` HTML 属性。
 
-## Token 引用 (Token Reference)
+## Token 引用
 
 所有值均来自 `packages/design/theme/themes.css` 的 `@theme` 区块。
 
@@ -121,7 +121,7 @@ import { Material } from "@nebutra/ui/primitives";
 | `modal` | `--shadow-lg` | `--color-popover` |
 | `fullscreen` | _(无)_ | `--color-background` |
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - `Material` 渲染为一个普通的 `<div>` —— 请根据具体用途在调用处添加语义化角色（如 `role="dialog"`、`role="menu"` 等）。
 - 阴影仅作为视觉引导；不要仅依靠阴影向辅助技术传达状态或层级。

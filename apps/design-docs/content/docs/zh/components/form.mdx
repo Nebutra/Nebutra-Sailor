@@ -3,12 +3,12 @@ title: 表单 (Form)
 description: 结合 React Hook Form 与 Zod 验证，构建具备良好可访问性的表单。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="form-demo" className="min-h-[400px] flex justify-center items-center"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import {
@@ -26,7 +26,7 @@ import {
   需要依赖 `react-hook-form` 和 `@hookform/resolvers`。为了遵循项目的输入验证标准，请使用 `zod` 进行 Schema 验证。
 </Info>
 
-## 属性 (Props)
+## 属性
 
 ### FormField
 
@@ -63,9 +63,9 @@ import {
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 覆盖错误消息（默认使用表单状态中的错误） |
 
-## 示例 (Examples)
+## 示例
 
-### 多字段表单 (Multi-field Form)
+### 多字段表单
 
 ```tsx
 const form = useForm<z.infer<typeof schema>>({
@@ -94,7 +94,7 @@ const form = useForm<z.infer<typeof schema>>({
 </Form>
 ```
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - `FormLabel` 通过生成的 `id`/`htmlFor` 链接到其控件。
 - `FormControl` 会注入 `aria-describedby` （指向描述/消息），并在发生错误时注入 `aria-invalid`。

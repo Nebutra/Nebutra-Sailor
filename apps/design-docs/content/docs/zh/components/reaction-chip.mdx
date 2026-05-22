@@ -3,12 +3,12 @@ title: 表情回应 (ReactionChip)
 description: 悬停显示的表情回应选择器，包含 ReactionBadge 显示组件以及预设的 MessageWithReactions 组件。模拟 Slack/Notion 的表情回应交互体验。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="message-with-reactions-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { ReactionChip, ReactionBadge, MessageWithReactions } from "@nebutra/ui";
@@ -22,7 +22,7 @@ const [selected, setSelected] = useState<string>();
 <ReactionChip onSelect={setSelected} selected={selected} />
 ```
 
-## 示例 (Examples)
+## 示例
 
 ### MessageWithReactions (预设组件)
 
@@ -52,7 +52,7 @@ const [selected, setSelected] = useState<string>();
 </MessageWithReactions>
 ```
 
-### 独立的 ReactionChip (Standalone ReactionChip)
+### 独立的 ReactionChip
 
 ```tsx
 const [selected, setSelected] = useState<string | undefined>();
@@ -83,11 +83,11 @@ const [selected, setSelected] = useState<string | undefined>();
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### ReactionChip
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `onSelect` | `(emoji: string) => void` | — | 点击表情时的回调函数 |
 | `emojis` | `string[]` | `["👍", "❤️", "😂", "🎉"]` | 可选的表情列表 |
@@ -96,7 +96,7 @@ const [selected, setSelected] = useState<string | undefined>();
 
 ### ReactionBadge
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `emoji` | `string` | — | 要显示的表情 |
 | `count` | `number` | — | 该表情的回应次数 |
@@ -105,14 +105,14 @@ const [selected, setSelected] = useState<string | undefined>();
 
 ### MessageWithReactions
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `text` | `string` | — | 消息文本内容 |
 | `reactionOptions` | `string[]` | `["👍", "❤️", "😂", "🎉"]` | 可选的表情列表 |
 | `children` | `ReactNode` | — | 替换 `text` 的自定义内容 |
 | `className` | `string` | — | 额外的类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - `ReactionChip` 在表情点击时使用 `onMouseDown` 配合 `preventDefault` 处理，以防止在选中表情前触发元素的焦点丢失。
 - 在 `MessageWithReactions` 中添加回应时，会有持续 180ms 的“脉冲”（bump）动画效果。

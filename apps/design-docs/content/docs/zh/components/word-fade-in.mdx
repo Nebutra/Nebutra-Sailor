@@ -3,26 +3,26 @@ title: "单词淡入 (Word Fade In)"
 description: "由 Framer Motion 驱动的逐词交错淡入动画。为大标题、名言和欢迎消息提供优雅的揭示效果。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="word-fade-in-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { WordFadeIn } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础 Hero 区域标题 (Basic Hero Headline)
+### 基础 Hero 区域标题
 
 ```tsx
 <WordFadeIn words="欢迎来到我们的平台 (Welcome to our platform)" />
 ```
 
-### 渲染为段落 (As Paragraph)
+### 渲染为段落
 
 ```tsx
 <WordFadeIn
@@ -32,13 +32,13 @@ import { WordFadeIn } from "@nebutra/ui/primitives"
 />
 ```
 
-### 更慢的交错延迟 (Slower Stagger)
+### 更慢的交错延迟
 
 ```tsx
 <WordFadeIn words="慢慢来 (Take your time)" delay={0.3} />
 ```
 
-### 滚动触发 (Scroll-Triggered)
+### 滚动触发
 
 ```tsx
 <WordFadeIn
@@ -48,7 +48,7 @@ import { WordFadeIn } from "@nebutra/ui/primitives"
 />
 ```
 
-### 受控模式（初始暂停） (Controlled)
+### 受控模式（初始暂停）
 
 ```tsx
 <WordFadeIn
@@ -57,7 +57,7 @@ import { WordFadeIn } from "@nebutra/ui/primitives"
 />
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -69,7 +69,7 @@ import { WordFadeIn } from "@nebutra/ui/primitives"
 | `variants` | `Variants` | 交错淡入 | 自定义 Framer Motion 变体 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 设置 `trigger="inView"` 时，动画会在元素进入视口时播放一次 (`viewport: { once: true }`)。
 - 默认样式：`text-center text-4xl font-bold tracking-tight` —— 您可以随时通过 `className` 自行覆盖。

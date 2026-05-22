@@ -3,12 +3,12 @@ title: 浏览器 (Browser)
 description: Geist 风格的浏览器窗口框架，带有导航按钮、带点击复制功能的地址栏以及灵活的内容区域。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="browser-mockup-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `Browser` 渲染一个受 Vercel Geist 设计系统启发的装饰性浏览器框架。它包括：
 
@@ -17,7 +17,7 @@ description: Geist 风格的浏览器窗口框架，带有导航按钮、带点�
 - 带有内容复制按钮的地址栏
 - 接受任意 `children` 的灵活内容区域
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Browser } from "@nebutra/ui/primitives";
@@ -36,7 +36,7 @@ import { Browser } from "@nebutra/ui/primitives";
 <Browser address="app.example.com" />
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -48,7 +48,7 @@ import { Browser } from "@nebutra/ui/primitives";
 
 所有其他 `<div>` 属性都会转发给容器元素。
 
-## 从 BrowserMockup 迁移 (Migration from BrowserMockup)
+## 从 BrowserMockup 迁移
 
 `BrowserMockup` 仍作为已弃用的别名进行导出。迁移方法：
 
@@ -63,7 +63,7 @@ import { Browser } from "@nebutra/ui/primitives";
 + <Browser address="example.com"><MyContent /></Browser>
 ```
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 地址栏复制按钮使用 `navigator.clipboard.writeText()` —— 在剪贴板 API 不可用的上下文中会静默失败。
 - 导航按钮（后退、前进、刷新）纯粹是装饰性的 —— 它们不会触发任何操作。
@@ -71,14 +71,14 @@ import { Browser } from "@nebutra/ui/primitives";
 - 无 `next/image` 依赖 —— 为 `imageSrc` 便捷属性使用普通的 `<img>` 标签。
 - 通过 Tailwind 的 `dark:` 类名完全支持暗黑模式。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 导航图标和红绿灯按钮是装饰性浏览器 chrome。除非产品流程真的让它们可操作，否则不要放进 tab 顺序。
 - 当 `imageSrc` 展示产品状态时，必须提供有意义的 `imageAlt`；只有纯装饰占位才使用空 alt。
 - 地址复制控件必须保留可访问名称，因为地址文本被视觉上嵌在 mock frame 内。
 - 不要用 `Browser` 替代 iframe 或真实应用界面。它只是静态展示框架。
 
-## 设计契约 (Design Contract)
+## 设计契约
 
 - `Browser` 用于产品截图、文档 preview、发布页证据等“浏览器上下文有助理解”的场景。
 - 可检查的 UI demo 优先用真实 `children`，静态捕获状态使用 `imageSrc`。

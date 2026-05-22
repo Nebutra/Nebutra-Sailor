@@ -3,18 +3,18 @@ title: "纵横比 (Aspect Ratio)"
 description: "为嵌入内容和媒体保持一致的宽高比。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="aspect-ratio-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { AspectRatio } from "@nebutra/ui/primitives";
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性        | 类型        | 默认值 | 描述                                      |
 | ----------- | ----------- | ------- | ------------------------------------------------ |
@@ -22,9 +22,9 @@ import { AspectRatio } from "@nebutra/ui/primitives";
 | `className` | `string`    | —       | 额外的 CSS 类名                           |
 | `children`  | `ReactNode` | —       | 需要在该比例下约束的内容            |
 
-## 示例 (Examples)
+## 示例
 
-### 常用比例 (Common Ratios)
+### 常用比例
 
 ```tsx
 {
@@ -49,7 +49,7 @@ import { AspectRatio } from "@nebutra/ui/primitives";
 </AspectRatio>;
 ```
 
-### 配合 Iframe 嵌入 (With Iframe Embed)
+### 配合 Iframe 嵌入
 
 ```tsx
 <AspectRatio ratio={16 / 9}>
@@ -62,7 +62,7 @@ import { AspectRatio } from "@nebutra/ui/primitives";
 </AspectRatio>
 ```
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 无固有 ARIA 角色 — 请为子元素应用合适的角色。
 - 对于图片，请始终在 `<img>` 元素上包含 `alt` 文本。

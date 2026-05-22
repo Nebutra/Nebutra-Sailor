@@ -21,7 +21,7 @@ import { ComponentPreview } from "@/components/component-preview";
 <ComponentPreview name="badge-demo"  />
 
 
-## 引入 (Import)
+## 引入
 
 ```tsx
 import { Badge } from "@nebutra/ui/primitives";
@@ -29,19 +29,19 @@ import { Badge } from "@nebutra/ui/primitives";
 
 ---
 
-## 多色变体 (Color Variants)
+## 多色变体
 
 这个徽章组件包含了 22 种专属配色工具，提供渐变、填充及轮廓样式。
 
 <ComponentPreview name="badge-all-colors-demo"  />
 
 
-### 详细矩阵 (Detailed Matrix)
+### 详细矩阵
 
 <ComponentPreview name="badge-icon-colors-demo"  />
 
 
-## 尺寸 (Sizes)
+## 尺寸
 
 通过 `size` 属性控制三种尺寸：
 
@@ -54,23 +54,23 @@ import { Badge } from "@nebutra/ui/primitives";
 <ComponentPreview name="badge-sizes-demo"  />
 
 
-## 语义变体 (Semantic Variants)
+## 语义变体
 
 使用品牌语义标记的状态驱动变体。
 
 <ComponentPreview name="badge-demo"  />
 
 
-## 颜色变体 (Color Variants)
+## 颜色变体
 
 Geist 风格色板变体 — 每种色调都有实色和柔和 (边框) 版本。
 
-### 实色 (Solid)
+### 实色
 
 <ComponentPreview name="badge-variants-demo"  />
 
 
-### 柔和 (Subtle/outline)
+### 柔和
 
 带彩色边框的透明背景 — 适用于彩色表面上方。
 
@@ -87,28 +87,28 @@ Geist 风格色板变体 — 每种色调都有实色和柔和 (边框) 版本�
 
 ---
 
-## 胶囊变体 (Pill Variant)
+## 胶囊变体
 
 完全圆角的低对比度变体，通常用作可点击的导航项或突出的标签。
 
 <ComponentPreview name="badge-pill-matrix-demo"  />
 
 
-## 带图标 (With Icon)
+## 带图标
 
 将任何 ReactNode 传递给 `icon` 属性。 图标会自动调整为 12×12px。
 
 <ComponentPreview name="badge-icon-demo"  />
 
 
-## 带状态圆点 (With Status Dot)
+## 带状态圆点
 
 `dot` 属性在标签前渲染一个 6×6px 的彩色圆点。 可与语义变体协同工作。
 
 <ComponentPreview name="badge-status-dot-demo"  />
 
 
-## 链接徽标 (Link Badge - asChild)
+## 链接徽标
 
 使用 `asChild` 将徽标渲染为锚点元素，以实现可点击的徽标。
 
@@ -128,24 +128,24 @@ import Link from "next/link"
 
 ---
 
-## 上下文应用 (In Context)
+## 上下文应用
 
-### 表格状态列 (Table status column)
+### 表格状态列
 
 <ComponentPreview name="badge-table-demo"  />
 
 
-### 通知计数 (Notification count)
+### 通知计数
 
 <ComponentPreview name="badge-notification-demo"  />
 
 
-### 功能标签 (Feature tag)
+### 功能标签
 
 <ComponentPreview name="badge-feature-tag-demo"  />
 
 
-## 属性 (Props)
+## 属性
 
 | 属性        | 类型                   | 默认值     | 描述                                       |
 | ----------- | ---------------------- | ----------- | ------------------------------------------------- |
@@ -157,7 +157,7 @@ import Link from "next/link"
 | `className` | `string`               | —           | 额外的 CSS 类名                            |
 | `children`  | `ReactNode`            | —           | 徽标标签文本                                       |
 
-### 变体值 (Variant values)
+### 变体值
 
 **语义 (Semantic):** `default` `secondary` `destructive` `outline` `success` `warning` `info` `error`
 
@@ -167,7 +167,7 @@ import Link from "next/link"
 
 ---
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 默认情况下渲染为 `<div>` — 不可交互。
 - 针对可点击的徽标，可以将 `asChild` 结合原生 `<a>` 或 Next.js 的 `<Link>` 一起使用。

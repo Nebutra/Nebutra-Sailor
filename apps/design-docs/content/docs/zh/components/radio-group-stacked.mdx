@@ -3,22 +3,22 @@ title: "堆叠式单选组 (Radio Group Stacked)"
 description: "全宽堆叠样式的单选按钮组变体，旨在为每个选项提供详细的描述。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="radio-group-stacked-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { RadioGroupStacked, RadioGroupStackedItem } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 ### RadioGroupStacked (单选组)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `value` | `string` | — | 受控模式下的选中值 |
 | `defaultValue` | `string` | — | 非受控模式下的默认选中值 |
@@ -29,7 +29,7 @@ import { RadioGroupStacked, RadioGroupStackedItem } from "@nebutra/ui/primitives
 
 ### RadioGroupStackedItem (单选项目)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `value` | `string` | — | **必需。** 该选项对应的数值 |
 | `id` | `string` | — | 用于无障碍标签关联的 ID |
@@ -37,9 +37,9 @@ import { RadioGroupStacked, RadioGroupStackedItem } from "@nebutra/ui/primitives
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 选项内容 |
 
-## 示例 (Examples)
+## 示例
 
-### 通知偏好设置 (Notification Preference)
+### 通知偏好设置
 
 ```tsx
 <RadioGroupStacked defaultValue="all">
@@ -64,7 +64,7 @@ import { RadioGroupStacked, RadioGroupStackedItem } from "@nebutra/ui/primitives
 </RadioGroupStacked>
 ```
 
-## 无障碍支持 (Accessibility)
+## 无障碍支持
 
 - 根容器容器带有 `role="radiogroup"` 属性。
 - 每个选项项均带有 `role="radio"` 属性以及 `aria-checked` 状态。

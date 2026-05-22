@@ -3,12 +3,12 @@ title: 动画列表 (AnimatedList)
 description: 顺序列表动画，通过弹簧动画逐一展示子元素。条目从顶部累积，非常适合用于落地页上的通知流。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="animated-list-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { AnimatedList } from "@nebutra/ui";
@@ -24,9 +24,9 @@ import { AnimatedList } from "@nebutra/ui";
   每个子元素**必须**具有稳定的 `key` 属性 —— `AnimatedList` 在内部使用它进行 `AnimatePresence` 键值管理。
 </Callout>
 
-## 示例 (Examples)
+## 示例
 
-### 通知流 (Notification Feed)
+### 通知流
 
 ```tsx
 const notifications = [
@@ -77,7 +77,7 @@ const notifications = [
 </AnimatedList>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### AnimatedList (动画列表)
 
@@ -103,7 +103,7 @@ import { AnimatedListItem } from "@nebutra/ui";
 
 条目动画：`scale: 0, opacity: 0` → `scale: 1, opacity: 1`，使用 `spring(stiffness: 350, damping: 40)` 弹簧效果。
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 条目以**反序累积**（最新的在最上方） —— 这符合通知流的用户体验逻辑，即最新的条目最为显眼。
 - 在所有条目显示完毕后，动画会自动停止。除非动态添加条目，否则它**不会**循环播放。

@@ -3,20 +3,20 @@ title: "文本循环 (Text Loop)"
 description: "通过平滑的 Framer Motion 滑动动画循环播放数组中的文本/内容项。非常适合轮播口号、证言或 Hero 区域的辅助标题。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="text-loop-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { TextLoop } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础旋转词汇 (Basic Rotating Words)
+### 基础旋转词汇
 
 ```tsx
 <TextLoop>
@@ -26,7 +26,7 @@ import { TextLoop } from "@nebutra/ui/primitives"
 </TextLoop>
 ```
 
-### 与静态文本混排 (Inline With Static Text)
+### 与静态文本混排
 
 ```tsx
 <p className="text-2xl">
@@ -40,7 +40,7 @@ import { TextLoop } from "@nebutra/ui/primitives"
 </p>
 ```
 
-### 自定义过渡效果 (Custom Transition)
+### 自定义过渡效果
 
 ```tsx
 <TextLoop
@@ -53,15 +53,24 @@ import { TextLoop } from "@nebutra/ui/primitives"
 </TextLoop>
 ```
 
-### 带有索引回调 (With Index Callback)
+### 带有索引回调
 
 ```tsx
-<TextLoop onIndexChange={(i) => console.warn("当前索引:", i)}>
-  {items.map(item => <span key={item.id}>{item.label}</span>)}
-</TextLoop>
+const [activeIndex, setActiveIndex] = React.useState(0)
+
+return (
+  <div>
+    <TextLoop onIndexChange={setActiveIndex}>
+      {items.map(item => <span key={item.id}>{item.label}</span>)}
+    </TextLoop>
+    <p className="text-sm text-muted-foreground">
+      当前项目：{activeIndex + 1}
+    </p>
+  </div>
+)
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -72,7 +81,7 @@ import { TextLoop } from "@nebutra/ui/primitives"
 | `onIndexChange` | `(index: number) => void` | — | 当前激活索引变更时的回调函数 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 默认动画 (Default Animation)
+## 默认动画
 
 项目在进入时向上滑动，在退出时也向上滑动（类似于垂直滚轮的感觉）：
 

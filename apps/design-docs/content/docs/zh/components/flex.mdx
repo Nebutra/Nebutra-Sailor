@@ -3,12 +3,12 @@ title: 弹性布局 (Flex)
 description: 水平布局原语，用于排列子元素成行并保持一致的间距。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="flex-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Flex } from "@nebutra/ui";
@@ -19,9 +19,9 @@ import { Flex } from "@nebutra/ui";
 </Flex>
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 居中对齐的行 (Row with Centered Alignment)
+### 居中对齐的行
 
 ```tsx
 <Flex gap={4} align="center">
@@ -33,7 +33,7 @@ import { Flex } from "@nebutra/ui";
 </Flex>
 ```
 
-### 两端对齐 (Space Between)
+### 两端对齐
 
 ```tsx
 <Flex justify="between" align="center" className="w-full border-b pb-4">
@@ -48,7 +48,7 @@ import { Flex } from "@nebutra/ui";
 </Flex>
 ```
 
-### 换行网格 (Wrapping Grid)
+### 换行网格
 
 ```tsx
 <Flex gap={4} wrap className="w-full">
@@ -60,7 +60,7 @@ import { Flex } from "@nebutra/ui";
 </Flex>
 ```
 
-### 反向排列 (Reversed Direction)
+### 反向排列
 
 ```tsx
 <Flex direction="row-reverse" gap={2} align="center">
@@ -69,7 +69,7 @@ import { Flex } from "@nebutra/ui";
 </Flex>
 ```
 
-### 纵向排列 (Column Direction)
+### 纵向排列
 
 ```tsx
 <Flex direction="col" gap={2} align="start">
@@ -78,7 +78,7 @@ import { Flex } from "@nebutra/ui";
 </Flex>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -94,7 +94,7 @@ import { Flex } from "@nebutra/ui";
 
 `0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24 | 32`
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 默认 `align="center"` 非常适合包含不同高度内容的水平行。
 - 当您需要 `Stack` 组件中没有的 `justify` 选项时，可以使用 `direction="col"` 作为 `Stack` 的替代方案。

@@ -3,20 +3,20 @@ title: "闪烁网格 (Flickering Grid)"
 description: "基于 Canvas 的动态网格，方块随机在不同透明度之间闪烁。一种精致、具有科技美感的氛围背景。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="flickering-grid-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { FlickeringGrid } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### Hero 区域背景 (Hero Background)
+### Hero 区域背景
 
 ```tsx
 <div className="relative h-[500px] w-full overflow-hidden">
@@ -27,7 +27,7 @@ import { FlickeringGrid } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 蓝色网格 (Blue Grid)
+### 蓝色网格
 
 ```tsx
 <FlickeringGrid
@@ -37,7 +37,7 @@ import { FlickeringGrid } from "@nebutra/ui/primitives"
 />
 ```
 
-### 密集小方块 (Dense Small Squares)
+### 密集小方块
 
 ```tsx
 <FlickeringGrid
@@ -48,7 +48,7 @@ import { FlickeringGrid } from "@nebutra/ui/primitives"
 />
 ```
 
-### 在圆角容器中使用 (In Rounded Container)
+### 在圆角容器中使用
 
 ```tsx
 <div className="relative h-[200px] overflow-hidden rounded-2xl">
@@ -56,7 +56,7 @@ import { FlickeringGrid } from "@nebutra/ui/primitives"
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
 `FlickeringGrid` 继承了 `React.HTMLAttributes<HTMLDivElement>`。
 
@@ -71,7 +71,7 @@ import { FlickeringGrid } from "@nebutra/ui/primitives"
 | `height` | `number` | — | 固定高度 (px)，若不指定则填满容器 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 性能 (Performance)
+## 性能
 
 - 使用 `<canvas>` 进行高效渲染。
 - 内置 `IntersectionObserver`，在移出屏幕时自动暂停动画。

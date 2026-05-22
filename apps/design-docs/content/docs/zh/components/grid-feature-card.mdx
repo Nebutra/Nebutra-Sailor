@@ -3,12 +3,12 @@ title: 网格功能卡片 (GridFeatureCard)
 description: 带有装饰性 SVG 网格背景、图标、标题和描述的功能卡片。网格图案在每次组件挂载时随机生成。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="grid-feature-card-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { GridFeatureCard } from "@nebutra/ui";
@@ -21,9 +21,9 @@ import { Zap } from "lucide-react";
 />
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 功能网格 (Feature Grid)
+### 功能网格
 
 ```tsx
 <div className="grid grid-cols-1 md:grid-cols-3 divide-x divide-y border">
@@ -45,7 +45,7 @@ import { Zap } from "lucide-react";
 </div>
 ```
 
-### 自定义网格大小 (Custom Grid Size)
+### 自定义网格大小
 
 `gridSize` 属性控制背景 SVG 图案的密度：
 
@@ -58,9 +58,9 @@ import { Zap } from "lucide-react";
 />
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `icon` | `LucideIcon` | — | 功能图标（24×24，细边框样式） |
 | `title` | `string` | — | 功能标题 |
@@ -68,7 +68,7 @@ import { Zap } from "lucide-react";
 | `gridSize` | `number` | `20` | SVG 图案中网格方块的尺寸 |
 | `className` | `string` | — | 额外的 Tailwind 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - SVG 网格图案在每次组件挂载时通过 `React.useMemo` **随机生成** —— 方块被随机放置在右上角区域。
 - 该图案仅起装饰作用，并通过 `aria-hidden="true"` 对屏幕阅读器隐藏。

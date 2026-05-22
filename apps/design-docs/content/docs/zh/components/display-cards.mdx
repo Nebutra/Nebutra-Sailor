@@ -3,24 +3,24 @@ title: 展示卡片 (DisplayCards)
 description: 具有倾斜效果和悬停动画的堆叠卡片展示。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="display-cards-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `DisplayCards` 使用 CSS Grid 的 `[grid-area:stack]` 技巧将多个 `DisplayCard` 元素堆叠在一起。卡片具有 `-skew-y-[8deg]` 的倾斜角度，并在悬停时向外动画展开，展现底层内容。非常适合用于装饰性的 Hero 区域和功能展示。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { DisplayCards } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 默认堆叠卡片 (Default stacked cards)
+### 默认堆叠卡片
 
 ```tsx
 <DisplayCards />
@@ -28,7 +28,7 @@ import { DisplayCards } from "@nebutra/ui/primitives";
 
 默认渲染三张具有不同偏移量的卡片 —— 最前面的卡片完全可见，中间的卡片向右下偏移并带有灰色叠加层，最后的卡片偏移量最大。
 
-### 自定义卡片 (Custom cards)
+### 自定义卡片
 
 ```tsx
 <DisplayCards
@@ -52,7 +52,7 @@ import { DisplayCards } from "@nebutra/ui/primitives";
 />
 ```
 
-### 带有自定义图标的单张卡片 (Single card with custom icon)
+### 带有自定义图标的单张卡片
 
 ```tsx
 import { Zap } from "lucide-react";
@@ -71,7 +71,7 @@ import { Zap } from "lucide-react";
 />
 ```
 
-## 属性 (Props)
+## 属性
 
 ### DisplayCards
 
@@ -92,7 +92,7 @@ import { Zap } from "lucide-react";
 | `titleClassName` | `string` | `"text-blue-500"` | 标题的颜色类名 |
 | `className` | `string` | — | 该卡片的额外 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 卡片使用了 `select-none` 以防止在交互过程中选中文字。
 - 堆叠效果依赖于所有卡片都处于同一个 `[grid-area:stack]` 网格单元格中。

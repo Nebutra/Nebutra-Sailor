@@ -3,16 +3,16 @@ title: X 帖子卡片 (XPostCard)
 description: 使用 react-tweet 在客户端或服务器端渲染嵌入 X（原 Twitter）帖子。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="x-post-card-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `XPostCard` 和 `ClientXPostCard` 使用 `react-tweet` 库嵌入 X/Twitter 帖子。`XPostCard` 将客户端组件包裹在 Suspense 边界内，是绝大多数场景下的首选方案。在帖子加载过程中，会显示内置的 `XPostSkeleton` 骨架图。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import {
@@ -28,15 +28,15 @@ import {
 pnpm add react-tweet
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 基础用法（推荐） (Basic)
+### 基础用法（推荐）
 
 ```tsx
 <XPostCard id="1441032681968212480" />
 ```
 
-### 带有自定义加载 fallback (With custom loading fallback)
+### 带有自定义加载 fallback
 
 ```tsx
 <XPostCard
@@ -45,7 +45,7 @@ pnpm add react-tweet
 />
 ```
 
-### 纯客户端组件 (Client-only component)
+### 纯客户端组件
 
 当您需要在已经自行管理 Suspense 边界的客户端组件中嵌入时，请使用 `ClientXPostCard`：
 
@@ -59,7 +59,7 @@ export default function TweetSection() {
 }
 ```
 
-### 自定义 API URL (Custom API URL)
+### 自定义 API URL
 
 覆盖推文获取接口（例如用于缓存或代理）：
 
@@ -70,7 +70,7 @@ export default function TweetSection() {
 />
 ```
 
-### 错误处理 (Error handling)
+### 错误处理
 
 ```tsx
 <XPostCard
@@ -82,17 +82,17 @@ export default function TweetSection() {
 />
 ```
 
-### 独立骨架图 (Skeleton standalone)
+### 独立骨架图
 
 ```tsx
 <XPostSkeleton className="max-w-md" />
 ```
 
-## 属性 (Props)
+## 属性
 
 ### XPostCard / ClientXPostCard
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `id` | `string` | — | **必需。** X/Twitter 帖子 ID |
 | `className` | `string` | — | 卡片容器的额外 CSS 类名 |
@@ -104,11 +104,11 @@ export default function TweetSection() {
 
 ### XPostSkeleton
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 该卡片使用了设计系统令牌（`bg-card`、`text-card-foreground`、`border`），因此会自动匹配您的主题配色。
 - `ClientXPostCard` 是实际执行渲染的组件 —— `XPostCard` 仅负责将其包裹在 Suspense 中。

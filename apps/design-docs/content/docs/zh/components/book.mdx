@@ -3,12 +3,12 @@ title: "书籍 (Book)"
 description: "用于展示电子书、报告和文档的 3D 书籍封面组件。支持自定义颜色、插图、纸张纹理和响应式宽度。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="book-demo"  />
 
 
-## 导入 (Import)
+## 导入
 
 ```tsx
 import { Book } from "@nebutra/ui";
@@ -16,7 +16,7 @@ import { Book } from "@nebutra/ui";
 
 ---
 
-## 默认用法 (Default)
+## 默认用法
 
 具有书脊透视效果、琥珀色封面和标题的书籍。
 
@@ -26,7 +26,7 @@ import { Book } from "@nebutra/ui";
 
 ---
 
-## 变体 (Variants)
+## 变体
 
 `"default"` 渲染具有可见书脊阴影的 3D 透视书籍。
 `"simple"` 渲染一个扁平、无阴影的封面 —— 适用于网格或列表布局。
@@ -47,7 +47,7 @@ import { Book } from "@nebutra/ui";
 
 ---
 
-## 自定义颜色 (Custom Color)
+## 自定义颜色
 
 可以向 `color` 传递任何 CSS 颜色字符串。设置 `textColor` 以获取对比色。
 
@@ -73,7 +73,7 @@ import { Book } from "@nebutra/ui";
 
 ---
 
-## 自定义插图 (Custom Illustration)
+## 自定义插图
 
 `illustration` 属性接受任何 ReactNode，并填充封面约上方的 55% 区域。
 
@@ -107,7 +107,7 @@ import { Book } from "@nebutra/ui";
 
 ---
 
-## 纹理效果 (Textured)
+## 纹理效果
 
 为任何颜色添加细粒/纸张纹理。在高饱和度颜色上效果最佳。
 
@@ -128,7 +128,7 @@ import { Book } from "@nebutra/ui";
 
 ---
 
-## 响应式宽度 (Responsive Width)
+## 响应式宽度
 
 向 `width` 传递 `{ sm, md }` 对象，以便使用 CSS `clamp()` 进行响应式缩放。
 
@@ -138,7 +138,7 @@ import { Book } from "@nebutra/ui";
 
 ---
 
-## 宽度选项 (Width Options)
+## 宽度选项
 
 ```tsx
 <Book title="宽版书籍" width={300} />
@@ -148,7 +148,7 @@ import { Book } from "@nebutra/ui";
 
 ---
 
-## 带有 Logo 标记 (With Logo Mark)
+## 带有 Logo 标记
 
 `logo` 属性在封面的右下角渲染品牌标记。
 
@@ -165,9 +165,9 @@ import { LogomarkSVG } from "@nebutra/brand";
 
 ---
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 | -------------- | ------------------------ | ----------- | -------------------------------------- |
 | `title`        | `string`                 | —           | **必填。** 封面标题文本 |
 | `variant`      | `"default" \| "simple"`  | `"default"` | 3D 书脊 vs 扁平封面 |
@@ -181,7 +181,7 @@ import { LogomarkSVG } from "@nebutra/brand";
 
 ---
 
-## 设计说明 (Design Notes)
+## 设计说明
 
 - **纵横比** 固定为 `1 : 1.45`（纵向）。高度根据 `width` 自动计算。
 - **标题字体大小** 与 `width` 成比例缩放 —— 无需手动调整大小。
@@ -190,7 +190,7 @@ import { LogomarkSVG } from "@nebutra/brand";
 
 ---
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 组件渲染为一个非交互式的 `<div>`。
 - 所有装饰性叠加层（书脊渐变、光泽、纹理）都带有 `aria-hidden`。

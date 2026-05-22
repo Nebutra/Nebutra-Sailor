@@ -3,20 +3,20 @@ title: "扭曲背景 (Warp Background)"
 description: "带有 3D 透视网格的容器，流动的色彩光束从四个方向沿网格线穿梭。充满科幻未来主义美感。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="warp-background-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { WarpBackground } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础用法 (Basic)
+### 基础用法
 
 ```tsx
 <WarpBackground>
@@ -25,7 +25,7 @@ import { WarpBackground } from "@nebutra/ui/primitives"
 </WarpBackground>
 ```
 
-### 引导行动区域 (CTA Section)
+### 引导行动区域
 
 ```tsx
 <WarpBackground
@@ -41,7 +41,7 @@ import { WarpBackground } from "@nebutra/ui/primitives"
 </WarpBackground>
 ```
 
-### 戏剧化的特写效果 (Dramatic Close-up)
+### 戏剧化的特写效果
 
 ```tsx
 <WarpBackground perspective={50} beamSize={8}>
@@ -49,11 +49,11 @@ import { WarpBackground } from "@nebutra/ui/primitives"
 </WarpBackground>
 ```
 
-## 属性 (Props)
+## 属性
 
 `WarpBackground` 继承自 `React.HTMLAttributes<HTMLDivElement>`。
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `children` | `ReactNode` | — | 渲染在容器内部的内容 |
 | `perspective` | `number` | `100` | CSS 透视深度（单位 px，越低效果越强烈） |
@@ -65,7 +65,7 @@ import { WarpBackground } from "@nebutra/ui/primitives"
 | `gridColor` | `string` | `"var(--border)"` | 网格线的 CSS 颜色 |
 | `className` | `string` | — | 额外的 CSS 类名（默认包含 `p-20`） |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 网格背景使用了 CSS 容器查询 (`cqmax`, `cqh`, `cqi`) —— 需要现代浏览器支持。
 - 每道光束都具有随机生成的颜色 (HSL) 和长宽比，以增加视觉的多样性。

@@ -3,12 +3,12 @@ title: "可调节面板 (Resizable)"
 description: "用于分栏面板布局的可拖拽调节手柄，基于 react-resizable-panels 构建。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="resizable-demo" className="min-h-[350px] flex items-center justify-center p-4" />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import {
@@ -18,7 +18,7 @@ import {
 } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 ### ResizablePanelGroup (根组件)
 
@@ -48,14 +48,14 @@ import {
 | `withHandle` | `boolean` | `false` | 显示可视化的拖拽手柄指示器 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 示例 (Examples)
+## 示例
 
-### 三栏布局 (Three Panel Layout)
+### 三栏布局
 
 <ComponentPreview name="resizable-2-demo" className="min-h-[400px] flex items-center justify-center p-4" />
 
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - `ResizableHandle` 具有 `role="separator"` 属性，并带有 `aria-orientation`。
 - 键盘操作：使用 `ArrowLeft`/`ArrowRight` (或 `ArrowUp`/`ArrowDown`) 进行调节，使用 `Home`/`End` 调至最小/最大。

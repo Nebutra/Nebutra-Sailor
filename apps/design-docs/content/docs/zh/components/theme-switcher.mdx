@@ -7,7 +7,7 @@ import { ComponentPreview } from "@/components/component-preview";
 
 <ComponentPreview name="theme-switcher-demo" />
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { ThemeProvider } from "@nebutra/tokens";
@@ -26,7 +26,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
 
 当界面只需要紧凑的浅色/深色二态图标按钮时，使用 `ThemeToggle`。
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -38,7 +38,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
 | `onChange` | `(theme: ThemeSwitcherValue) => void` | — | 兼容回调。Provider 仍然是状态真相源。 |
 | `className` | `string` | — | fieldset 外层额外类名。 |
 
-## 最佳实践 (Best Practices)
+## 最佳实践
 
 ThemeSwitcher 只用于标准 Light / System / Dark 控制。每个 app 放一次，通常在 footer、账户菜单或设置页，不要每个页面重复放。
 
@@ -52,7 +52,7 @@ ThemeSwitcher 读写 `@nebutra/tokens` 的 `ThemeProvider`。该 Provider API �
 
 组件会从主题 key 组合可见标签：`system`、`light`、`dark`。不要逐实例覆写标签，避免翻译和语义漂移。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 ThemeSwitcher 渲染原生 `fieldset` 与 radio group。可见 legend 是 “Select a display theme:”，每个选项的可访问名称稳定匹配主题 key。
 

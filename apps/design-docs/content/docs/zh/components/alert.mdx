@@ -3,12 +3,12 @@ title: "警告提示 (Alert)"
 description: "提供带有多种变体、外观和尺寸的上下文反馈消息。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="alert-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import {
@@ -21,7 +21,7 @@ import {
 } from "@nebutra/ui/primitives";
 ```
 
-## 属性 (Props)
+## 属性
 
 ### Alert
 
@@ -71,9 +71,9 @@ import {
 | `children`  | `ReactNode` | —       | 操作按钮或链接 |
 | `className` | `string`    | —       | 额外的 CSS 类名  |
 
-## 示例 (Examples)
+## 示例
 
-### 实色变体 (Solid Variants)
+### 实色变体
 
 ```tsx
 <Alert variant="primary" appearance="solid">
@@ -85,7 +85,7 @@ import {
 </Alert>
 ```
 
-### 可关闭的警告提示 (Dismissible Alert)
+### 可关闭的警告提示
 
 ```tsx
 const [visible, setVisible] = useState(true);
@@ -107,7 +107,7 @@ const [visible, setVisible] = useState(true);
 }
 ```
 
-### 带有工具栏 (With Toolbar)
+### 带有工具栏
 
 ```tsx
 <Alert variant="warning" appearance="light">
@@ -126,7 +126,7 @@ const [visible, setVisible] = useState(true);
 </Alert>
 ```
 
-### 尺寸变体 (Size Variants)
+### 尺寸变体
 
 ```tsx
 <Alert variant="success" size="sm">
@@ -142,7 +142,7 @@ const [visible, setVisible] = useState(true);
 </Alert>
 ```
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 根元素使用 `role="alert"` 进行渲染 — 屏幕阅读器会立即朗读该内容。
 - 关闭按钮包含 `aria-label="Dismiss"`，以便于屏幕阅读器进行清晰理解。

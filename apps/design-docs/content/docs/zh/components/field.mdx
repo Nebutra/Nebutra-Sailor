@@ -3,18 +3,18 @@ title: "字段 (Field)"
 description: "复合表单字段包装器，集成了标签 (Label)、输入框 (Input)、描述信息 (Description) 和错误消息 (Error message)。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="field-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Field } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -26,9 +26,9 @@ import { Field } from "@nebutra/ui/primitives"
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 输入控件（Input, Select 等） |
 
-## 示例 (Examples)
+## 示例
 
-### 必填字段 (Required Field)
+### 必填字段
 
 ```tsx
 <Field label="姓名 (Full name)" htmlFor="name" required>
@@ -36,7 +36,7 @@ import { Field } from "@nebutra/ui/primitives"
 </Field>
 ```
 
-### 带有错误信息 (With Error)
+### 带有错误信息
 
 ```tsx
 <Field
@@ -48,7 +48,7 @@ import { Field } from "@nebutra/ui/primitives"
 </Field>
 ```
 
-### 与选择器配合使用 (With Select)
+### 与选择器配合使用
 
 ```tsx
 <Field label="国家 (Country)" htmlFor="country" description="选择您的账单所在国家。">
@@ -64,7 +64,7 @@ import { Field } from "@nebutra/ui/primitives"
 </Field>
 ```
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - `label` 渲染为 `<label>` 元素，通过 `htmlFor` 与输入框关联。
 - `description` 通过 `aria-describedby` 与输入框关联。

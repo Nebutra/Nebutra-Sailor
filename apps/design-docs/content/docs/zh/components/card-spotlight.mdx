@@ -3,12 +3,12 @@ title: 卡片聚光灯 (CardSpotlight)
 description: 带有随鼠标光标移动的径向聚光灯的卡片，悬停时结合了 WebGL 画布显示效果。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="card-spotlight-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { CardSpotlight } from "@nebutra/ui";
@@ -27,9 +27,9 @@ import { CardSpotlight } from "@nebutra/ui";
   悬停时的画布显示动画需要安装 `three` 和 `@react-three/fiber`。
 </Callout>
 
-## 示例 (Examples)
+## 示例
 
-### 基础卡片 (Basic Card)
+### 基础卡片
 
 ```tsx
 <CardSpotlight className="h-80 w-80">
@@ -42,7 +42,7 @@ import { CardSpotlight } from "@nebutra/ui";
 </CardSpotlight>
 ```
 
-### 自定义聚光灯颜色 (Custom Spotlight Color)
+### 自定义聚光灯颜色
 
 ```tsx
 <CardSpotlight
@@ -56,7 +56,7 @@ import { CardSpotlight } from "@nebutra/ui";
 </CardSpotlight>
 ```
 
-### 清单内容 (Checklist Content)
+### 清单内容
 
 ```tsx
 <CardSpotlight className="w-96 p-8">
@@ -72,7 +72,7 @@ import { CardSpotlight } from "@nebutra/ui";
 </CardSpotlight>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -81,7 +81,7 @@ import { CardSpotlight } from "@nebutra/ui";
 | `color` | `string` | `"#262626"` | 聚光灯背景颜色 |
 | `className` | `string` | — | 额外的 Tailwind 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 内容必须使用 `relative z-20` 以显示在聚光灯遮罩层之上。
 - 画布显示效果（蓝色/紫色点）在鼠标进入时激活。它使用 Three.js —— 如果尚未安装，请安装 `three` 和 `@react-three/fiber`。

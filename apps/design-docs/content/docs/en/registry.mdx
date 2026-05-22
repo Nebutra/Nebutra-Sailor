@@ -23,5 +23,6 @@ Use the registry page when you need the install command or raw manifest for a re
 
 - `packages/design/ui/scripts/build-registry.ts` owns public component manifests.
 - `apps/design-docs/scripts/build-registry.mjs` owns preview-demo manifests.
-- Registry docs must have a matching MDX page, a real preview when the component is visual, and Storybook coverage unless explicitly allowlisted.
+- Registry docs must have a matching MDX page, a real preview when the component is visual, and same-name Storybook coverage or explicit Storybook metadata.
+- Exceptions are not a generic allowlist path. If coverage debt is reintroduced, it must carry an owner, reason, and expiry.
 - Run `pnpm --filter @nebutra/design-docs prebuild` before publishing registry changes.

@@ -3,12 +3,12 @@ title: "侧边栏 (Sidebar)"
 description: "功能完善的应用侧边栏，支持折叠功能及键盘无障碍操作。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="sidebar-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import {
@@ -33,11 +33,11 @@ import {
 } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 ### SidebarProvider
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `defaultOpen` | `boolean` | `true` | 非受控状态下的默认开启状态 |
 | `open` | `boolean` | — | 受控模式下的开启状态 |
@@ -45,7 +45,7 @@ import {
 
 ### Sidebar
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `side` | `"left" \| "right"` | `"left"` | 侧边栏所在位置（左侧或右侧） |
 | `variant` | `"sidebar" \| "floating" \| "inset"` | `"sidebar"` | 视觉风格变体 |
@@ -54,7 +54,7 @@ import {
 
 ### SidebarMenuButton
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `isActive` | `boolean` | `false` | 高亮按钮以表示当前处于活跃路由 |
 | `asChild` | `boolean` | `false` | 将属性合并到子元素上（常用于整合 `next/link`） |
@@ -62,7 +62,7 @@ import {
 | `tooltip` | `string \| TooltipContent` | — | 在折叠图标模式下显示的浮窗提示 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 无障碍支持 (Accessibility)
+## 无障碍支持
 
 - `Sidebar` 会渲染为带有 `aria-label` 的 `<aside>` 元素。
 - `SidebarTrigger` 带有 `aria-expanded` 属性以传达侧边栏状态。

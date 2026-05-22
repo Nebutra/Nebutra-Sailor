@@ -3,16 +3,16 @@ title: 点阵地图 (DottedMap)
 description: 使用 svg-dotted-map 构建的带有圆点和自定义标记的 SVG 世界地图。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="dotted-map-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `DottedMap` 将世界地图渲染为填充了圆点的 SVG。可用其展示全球业务范围、办公室地点或用户分布。标记通过经纬度进行定位。
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { DottedMap } from "@nebutra/ui/primitives";
@@ -44,7 +44,7 @@ import { DottedMap } from "@nebutra/ui/primitives";
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -65,7 +65,7 @@ import { DottedMap } from "@nebutra/ui/primitives";
 | `lng` | `number` | 经度（–180 到 180） |
 | `size` | `number` | 标记点大小（可选，默认为 `dotRadius`） |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 圆点颜色使用 `currentColor` —— 通过 SVG 上的 Tailwind `text-*` 类进行设置。
 - 增加 `mapSamples` 可以提高陆地覆盖的细节，但可能会影响渲染性能。

@@ -3,11 +3,11 @@ title: "抽屉 (Drawer)"
 description: "用于移动端短流程的底部抽屉，基于 Vaul 构建。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="drawer-demo" className="min-h-[320px] flex justify-center items-center" />
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import {
@@ -23,14 +23,14 @@ import {
 } from "@nebutra/ui/primitives"
 ```
 
-## 设计原则 (Design Principles)
+## 设计原则
 
 - Drawer 是移动端 bottom sheet，用于短而聚焦的任务：筛选、单步表单、一个主操作加 Cancel。
 - 不用 Drawer 承载删除、吊销这类破坏性确认；这类流程使用 Modal。
 - 桌面侧向上下文使用 Sheet。侧向 Drawer 只为历史调用保持类型兼容，新流程不要继续使用。
 - 可滚动内容放进 `DrawerBody`，抽屉打开时页面背后的滚动不能泄漏。
 
-## 属性 (Props)
+## 属性
 
 ### Drawer (根组件)
 
@@ -53,17 +53,17 @@ import {
 | `verticalScroll` | `boolean` | `true` | 将滚动限制在抽屉内部 |
 | `showHandle` | `boolean` | `true` | 显示底部抽屉拖拽把手 |
 
-## 示例 (Examples)
+## 示例
 
-### 受控抽屉 (Controlled Drawer)
+### 受控抽屉
 
 <ComponentPreview name="drawer-2-demo" className="min-h-[260px] flex justify-center items-center" />
 
-### 可滚动抽屉 (Scrollable Drawer)
+### 可滚动抽屉
 
 <ComponentPreview name="drawer-3-demo" className="min-h-[320px] flex justify-center items-center" />
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 基于 Vaul 构建，提供 dialog 语义与焦点陷阱。
 - `DrawerTitle` 和 `DrawerDescription` 提供可访问名称与说明。

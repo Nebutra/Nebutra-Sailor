@@ -3,20 +3,20 @@ title: "颗粒感渐变背景 (Grain Gradient Background)"
 description: "由 WebGL 驱动的动画背景，具有有机的颗粒纹理和丝滑的渐变色过渡。由 @paper-design/shaders-react 提供动力。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="grain-gradient-background-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { GrainGradientBackground } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 全屏背景 (Full Page Background)
+### 全屏背景
 
 ```tsx
 <div className="relative min-h-screen">
@@ -25,7 +25,7 @@ import { GrainGradientBackground } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 自定义颜色 (Custom Colors)
+### 自定义颜色
 
 ```tsx
 <div className="relative h-[400px]">
@@ -38,7 +38,7 @@ import { GrainGradientBackground } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 英雄章节 (Hero Section)
+### 英雄章节
 
 ```tsx
 <section className="relative overflow-hidden">
@@ -53,13 +53,13 @@ import { GrainGradientBackground } from "@nebutra/ui/primitives"
 </section>
 ```
 
-## 属性 (Props)
+## 属性
 
 `GrainGradientBackground` 继承自 `React.HTMLAttributes<HTMLDivElement>` 并接受来自 `@paper-design/shaders-react` 的所有 `GrainGradientProps`（`style` 属性除外）。
 
 底层着色器的关键属性：
 
-| 属性 (Prop) | 类型 | 描述 |
+| 属性 | 类型 | 描述 |
 |------|------|-------------|
 | `colors` | `string[]` | 用于渐变的 CSS 颜色字符串数组 |
 | `softness` | `number` | 渐变柔和度 (0–1) |
@@ -67,13 +67,13 @@ import { GrainGradientBackground } from "@nebutra/ui/primitives"
 | `speed` | `number` | 动画速度 |
 | `className` | `string` | 额外的 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 该组件默认设为绝对定位，带有 `absolute inset-0 -z-10` 类名。
 - 需要 WebGL 支持。在没有 WebGL 的环境中会优雅降级。
 - 处于向后兼容性考虑，仍导出了已废弃的 `GrainCloudsBackground` 别名。
 
-## 已废弃别名 (Deprecated Alias)
+## 已废弃别名
 
 ```tsx
 // 已废弃 —— 请使用 GrainGradientBackground

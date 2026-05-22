@@ -9,46 +9,46 @@ import { User, Settings, LogOut, ChevronRight, Lock, Command, Plus } from "lucid
   交互式示例可在 [Storybook](https://storybook.nebutra.com/?path=/docs/primitives-menu--docs) 中查看。
 </Note>
 
-## 概述 (Overview)
+## 概述
 
 `Menu` 是一个基于 Nebutra `DropdownMenu` 构建的语义下拉组件，当前底层由 Base UI Menu 承载。它公开了一个高级 API，在每个条目上都提供了 `prefix`、`suffix`、`locked`、`disabled` 和 `href` 插槽 —— 涵盖了所有标准的 UI 菜单变体，而无需在应用侧暴露底层实现细节。
 
 当您需要原始构建块（如复选框项、单选组或子菜单）时，请直接使用 `DropdownMenu`。对于标准的导航和操作列表，请使用 `Menu`。
 
-## 默认菜单 (Default Menu)
+## 默认菜单
 
 <ComponentPreview name="menu-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
 
 
-## 权限与状态 (Permissions & States)
+## 权限与状态
 
-### 锁定条目 (Locked Items)
+### 锁定条目
 
 锁定条目受权限管控 —— 可见但不可交互，并自动渲染一个锁定图标。在语义上与 `disabled` 有所区别。
 
 <ComponentPreview name="menu-2-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
 
-### 禁用条目 (Disabled Items)
+### 禁用条目
 
 <ComponentPreview name="menu-3-demo" className="min-h-[250px] flex justify-center items-start pt-10" />
 
 
-## 链接条目 (Link Items)
+## 链接条目
 
 当提供 `href` 属性时，条目会自动渲染为 `<a>` 标签。键盘和鼠标导航通过 `DropdownMenu` 的 render-slot bridge 保留。
 
 <ComponentPreview name="menu-4-demo" className="min-h-[200px] flex justify-center items-start pt-10" />
 
 
-## 自定义触发器 (Custom Trigger)
+## 自定义触发器
 
 您可以通过覆盖类名或使用其他元素（如果使用原始的 `DropdownMenu` 原语并配合 `asChild`）来完全替换 `Menu.Trigger` 的外观。在 `<Menu.Trigger>` 中，您可以传递自定义的子元素。
 
 <ComponentPreview name="menu-5-demo" className="min-h-[200px] flex justify-center items-start pt-10" />
 
 
-## 属性 (Props)
+## 属性
 
 该 API 与 Nebutra `DropdownMenu` content props 对齐，但 `.Item` 接受自定义渲染属性。
 
@@ -82,14 +82,14 @@ import { User, Settings, LogOut, ChevronRight, Lock, Command, Plus } from "lucid
 | `onSelect` | `(e: Event) => void` | — | 条目被选中时的回调 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - `Menu` 继承 `DropdownMenu` 的菜单角色、roving focus、Escape 关闭和 typeahead 行为。
 - 权限受限但需要被发现的动作使用 `locked`；临时不可用的动作使用 `disabled`。
 - `prefix` 和 `suffix` 图标默认应为装饰性，除非它们表达了标签没有覆盖的信息。
 - 链接条目仍应读起来像动作。不要把无关导航和危险命令混在同一个菜单里。
 
-## 设计契约 (Design Contract)
+## 设计契约
 
 - `Menu` 用于短动作列表或导航列表，其中每一行拥有相同密度和交互模型。
 - 需要 checkbox、radio group、separator、级联 submenu 或自定义 item composition 时，直接使用底层 `DropdownMenu`。

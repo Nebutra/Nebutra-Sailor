@@ -3,18 +3,18 @@ title: "可扩展文本域 (Expanding Textarea)"
 description: "自动调整大小的文本域，随着用户输入内容在垂直方向上增长。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="expanding-textarea-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { ExpandingTextarea } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 继承自 `React.TextareaHTMLAttributes<HTMLTextAreaElement>`。
 
@@ -29,9 +29,9 @@ import { ExpandingTextarea } from "@nebutra/ui/primitives"
 | `disabled` | `boolean` | `false` | 禁用文本域 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 示例 (Examples)
+## 示例
 
-### 受控可扩展文本域 (Controlled Expanding Textarea)
+### 受控可扩展文本域
 
 ```tsx
 const [value, setValue] = useState("")
@@ -44,7 +44,7 @@ const [value, setValue] = useState("")
 />
 ```
 
-### 带有最小/最大行数 (With Min/Max Rows)
+### 带有最小/最大行数
 
 ```tsx
 <ExpandingTextarea
@@ -54,7 +54,7 @@ const [value, setValue] = useState("")
 />
 ```
 
-### 在表单中使用 (In a Form)
+### 在表单中使用
 
 ```tsx
 <div className="space-y-2">
@@ -68,7 +68,7 @@ const [value, setValue] = useState("")
 </div>
 ```
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 渲染原生的 `<textarea>` 元素 —— 继承完整的键盘和屏幕阅读器支持。
 - 始终与通过 `htmlFor`/`id` 关联的 `<Label>` 配对使用。

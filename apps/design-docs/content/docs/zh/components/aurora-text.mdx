@@ -3,26 +3,26 @@ title: "极光文本 (Aurora Text)"
 description: "动态的极光渐变文本。颜色持续变换和滚动 —— 非常适合用于 Hero 标题和品牌点缀。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="aurora-text-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { AuroraText } from "@nebutra/ui/primitives";
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础用法 (Basic)
+### 基础用法
 
 ```tsx
 <AuroraText>极光 (Aurora)</AuroraText>
 ```
 
-### 作为 Hero 标题 (As a Hero Heading)
+### 作为 Hero 标题
 
 ```tsx
 <h1 className="text-6xl font-bold">
@@ -30,7 +30,7 @@ import { AuroraText } from "@nebutra/ui/primitives";
 </h1>
 ```
 
-### 自定义颜色 (Custom Colors)
+### 自定义颜色
 
 ```tsx
 <AuroraText colors={["#00ff87", "#60efff", "#0061ff"]}>
@@ -38,7 +38,7 @@ import { AuroraText } from "@nebutra/ui/primitives";
 </AuroraText>
 ```
 
-### 更快速度 (Faster Speed)
+### 更快速度
 
 ```tsx
 <AuroraText speed={3} className="text-5xl font-black">
@@ -46,7 +46,7 @@ import { AuroraText } from "@nebutra/ui/primitives";
 </AuroraText>
 ```
 
-## Tailwind 配置要求 (Tailwind Config Requirement)
+## Tailwind 配置要求
 
 `animate-aurora` 动画必须在您的 Tailwind 配置中进行注册：
 
@@ -79,7 +79,7 @@ export default {
 };
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 | ----------- | ----------- | ------------------------------------------- | -------------------------------------------- |
@@ -88,7 +88,7 @@ export default {
 | `speed`     | `number`    | `1` | 动画速度倍数（数值越高速度越快） |
 | `className` | `string`    | — | 额外的 CSS 类名 |
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 包含一个使用 `.sr-only` 类名的可视化隐藏 `<span>` 标签，为屏幕阅读器提供完整文本。
 - 可见的渐变 `<span>` 标签使用了 `aria-hidden="true"`。

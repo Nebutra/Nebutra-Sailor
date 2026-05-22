@@ -3,21 +3,21 @@ title: "破坏性操作弹窗 (Destructive Action Modal)"
 description: "用于高风险破坏性操作的输入确认弹窗。"
 ---
 
-## 概览 (Overview)
+## 概览
 
 `DestructiveActionModal` 用必填的 type-to-confirm gate 确认高风险破坏性操作。适合删除、轮换、吊销、断开连接、降级或关闭安全设置。不要用于普通确认。
 
 组件只负责确认意图。`open` 由调用方控制；破坏性请求成功或失败后，调用方决定是否关闭。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { DestructiveActionModal } from "@nebutra/ui/primitives"
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 默认 (Default)
+### 默认
 
 ```tsx
 import { Button, DestructiveActionModal } from "@nebutra/ui/primitives"
@@ -63,7 +63,7 @@ export function DeleteProjectDemo() {
 }
 ```
 
-### 可恢复操作 (Reversible)
+### 可恢复操作
 
 如果操作可以重新启用、撤销或回滚，不传 `irreversibleDescription`。后果仍然严重时，保留输入确认。
 
@@ -79,7 +79,7 @@ export function DeleteProjectDemo() {
 />
 ```
 
-### 错误状态 (With error)
+### 错误状态
 
 `error` 可以传字符串或 `Error`。弹窗保持打开，让用户可以重试。
 
@@ -98,7 +98,7 @@ export function DeleteProjectDemo() {
 />
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 描述 |
 |------|------|-------------|
@@ -116,7 +116,7 @@ export function DeleteProjectDemo() {
 | `cancelLabel` | `string` | 取消按钮文案 |
 | `className` | `string` | 面板额外类名 |
 
-## 设计原则 (Design principles)
+## 设计原则
 
 - 删除实体时，优先让用户输入资源名本身，并配合 `verificationLabel`。
 - 没有实体名时，才使用小写动宾短语。
@@ -124,7 +124,7 @@ export function DeleteProjectDemo() {
 - `irreversibleDescription` 要点名操作和资源，并以 `cannot be undone.` 结尾。
 - 组件不会在 `onConfirm` 内自行关闭；API 结束后由调用方关闭。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 打开时聚焦确认输入框。
 - 输入框通过 `htmlFor` 和 `aria-labelledby` 关联完整提示。

@@ -3,11 +3,11 @@ title: "表格 (Table)"
 description: "用于可比较表格数据的语义化 HTML table primitive。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="table-demo" className="min-h-[400px] flex justify-center items-center w-full max-w-3xl" />
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Table } from "@nebutra/ui/primitives";
@@ -48,7 +48,7 @@ import {
 } from "@nebutra/ui/primitives";
 ```
 
-## 属性 (Props)
+## 属性
 
 所有部件都继承对应的原生 HTML 属性。
 
@@ -65,7 +65,7 @@ import {
 | `Table.Footer` | `<tfoot>` | 原生 footer 属性 |
 | `Table.Caption` | `<caption>` | 原生 caption 属性 |
 
-## 示例 (Examples)
+## 示例
 
 ### 分隔线与斑马纹
 
@@ -152,7 +152,7 @@ import {
 </div>
 ```
 
-## 最佳实践 (Best Practices)
+## 最佳实践
 
 - 当行结构一致，并且至少一列需要横向比较时使用 `Table`。
 - 单行描述加一个操作按钮时用 `Entity`；详情页 key/value 信息块用 `Description`。
@@ -162,7 +162,7 @@ import {
 - 数值列给 `Table.Head` 和 `Table.Cell` 加 `numeric`，让数字使用 tabular numbers 对齐。
 - 列标题使用 Title Case 名词或名词短语：Last Used、Requests (7d)、Created、Status。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 组件保留原生表格语义：`table`、`thead`、`tbody`、`th`、`td`、`tfoot`、`caption`。
 - `Table.Head` 默认 `scope="col"`。复杂表格里的行标题请显式设为 `scope="row"`。

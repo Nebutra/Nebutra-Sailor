@@ -3,12 +3,12 @@ title: 功能卡片 (FeatureCard)
 description: 带有装饰性角标的卡片容器。由 FeatureCard, FeatureCardHeader 和 FeatureCardContent 组合而成。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="feature-card-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import {
@@ -30,9 +30,9 @@ import { MapPin } from "lucide-react";
 </FeatureCard>
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 功能展示网格 (Feature Showcase Grid)
+### 功能展示网格
 
 ```tsx
 <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border">
@@ -71,7 +71,7 @@ import { MapPin } from "lucide-react";
 </div>
 ```
 
-### 配合 DualModeImage 使用 (With DualModeImage)
+### 配合 DualModeImage 使用
 
 `DualModeImage` 根据不同主题渲染不同的图像：
 
@@ -94,7 +94,7 @@ import { MapPin } from "lucide-react";
 </FeatureCard>
 ```
 
-### CircularUI 装饰 (CircularUI Decoration)
+### CircularUI 装饰
 
 ```tsx
 <FeatureCard>
@@ -116,18 +116,18 @@ import { MapPin } from "lucide-react";
 </FeatureCard>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### FeatureCard
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `children` | `ReactNode` | — | 卡片内容 |
 | `className` | `string` | — | 额外的 Tailwind 类名 |
 
 ### FeatureCardHeader
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `icon` | `LucideIcon` | — | 功能图标 |
 | `title` | `string` | — | 功能标签（小号，置灰） |
@@ -140,7 +140,7 @@ import { MapPin } from "lucide-react";
 
 ### DualModeImage
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `lightSrc` | `string` | — | 浅色模式下的图像 URL |
 | `darkSrc` | `string` | — | 深色模式下的图像 URL |
@@ -151,7 +151,7 @@ import { MapPin } from "lucide-react";
 
 ### CircularUI
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `label` | `string` | — | 圆圈下方的文本 |
 | `circles` | `CircleConfig[]` | — | 圆圈配置数组，`pattern` 可选值：`"none" \| "border" \| "primary" \| "blue"` |
@@ -171,7 +171,7 @@ import { MapPin } from "lucide-react";
 - 主题相关媒体必须通过 `DualModeImage` 表达 light/dark parity。
 - 高密度 dashboard 指标使用 `MetricCard` 或 `KpiCard`；`FeatureCard` 用于解释型产品表面。
 
-## 注意事项 (Notes)
+## 注意事项
 
 - `FeatureCard` 默认渲染为 `rounded-none`（无圆角） —— 以便在网格布局中与相邻卡片无缝衔接。建议在父级网格上添加边框，而不是在单个卡片上。
 - 角标装饰器 (`FeatureCardDecorator`) 会自动包含，并使用 `text-primary` 颜色。

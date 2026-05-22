@@ -3,7 +3,7 @@ title: "进度条 (Progress)"
 description: "任务完成进度的可视化指示器，基于 Base UI 构建。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="progress-demo" className="max-w-[400px]">
   <div className="space-y-8 w-full">
@@ -71,13 +71,13 @@ description: "任务完成进度的可视化指示器，基于 Base UI 构建。
   ```
 </ComponentPreview>
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Progress } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 基于 Base UI 进度条组件构建。
 
@@ -88,9 +88,9 @@ import { Progress } from "@nebutra/ui/primitives"
 | `getValueLabel` | `(value: number, max: number) => string` | — | 为屏幕阅读器设置的自定义标签 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 示例 (Examples)
+## 示例
 
-### 动画进度条 (Animated Progress)
+### 动画进度条
 
 <ComponentPreview name="progress-basic-demo" className="max-w-[400px]">
   <ProgressBasicDemo />
@@ -100,7 +100,7 @@ import { Progress } from "@nebutra/ui/primitives"
   ```
 </ComponentPreview>
 
-### 带有标签 (With Label)
+### 带有标签
 
 <ComponentPreview name="progress-2-demo" className="max-w-[400px]">
   <div className="space-y-1 w-full">
@@ -122,7 +122,7 @@ import { Progress } from "@nebutra/ui/primitives"
   ```
 </ComponentPreview>
 
-### 待定状态 - 加载中 (Indeterminate - Loading)
+### 待定状态 - 加载中
 
 <ComponentPreview name="progress-3-demo" className="max-w-[400px]">
   <div className="w-full">
@@ -136,7 +136,7 @@ import { Progress } from "@nebutra/ui/primitives"
   ```
 </ComponentPreview>
 
-### 语义色调 (Semantic Tone)
+### 语义色调
 
 <ComponentPreview name="progress-4-demo" className="max-w-[400px]">
   <div className="w-full">
@@ -158,7 +158,7 @@ import { Progress } from "@nebutra/ui/primitives"
   ```
 </ComponentPreview>
 
-### 环形进度条 (Circular Progress)
+### 环形进度条
 
 <ComponentPreview name="animated-circular-progress-bar-demo" className="max-w-[400px]">
   <AnimatedCircularProgressBarDemo />
@@ -168,7 +168,7 @@ import { Progress } from "@nebutra/ui/primitives"
   ```
 </ComponentPreview>
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 基于 Base UI Progress 构建 —— 具有 `role="progressbar"` 属性。
 - 根据 `value` 设置 `aria-valuemin="0"`、`aria-valuemax` (默认为 100) 和 `aria-valuenow`。

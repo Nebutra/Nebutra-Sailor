@@ -5,7 +5,7 @@ description: "用于自定义滚动条示例的旧文档兼容组件。"
 
 import React from "react"
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="scroll-area-demo" className="min-h-[350px] flex items-center justify-center" />
 
@@ -13,13 +13,13 @@ import React from "react"
 
 `ScrollArea` 仍作为文档兼容 helper 保留。面向同级项目溢出的 rail、feed、snippet 和按钮辅助滚动，请使用 `Scroller`。
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { ScrollArea, ScrollBar } from "@/components/mdx-scroll-area"
 ```
 
-## 属性 (Props)
+## 属性
 
 ### ScrollArea (根组件)
 
@@ -35,19 +35,19 @@ import { ScrollArea, ScrollBar } from "@/components/mdx-scroll-area"
 | `orientation` | `"vertical" \| "horizontal"` | `"vertical"` | 滚动条方向 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 示例 (Examples)
+## 示例
 
-### 水平滚动区域 (Horizontal Scroll Area)
+### 水平滚动区域
 
 <ComponentPreview name="scroll-area-2-demo" className="min-h-[300px] flex items-center justify-center w-full" />
 
 
-### 固定高度内容列表 (Fixed Height Content List)
+### 固定高度内容列表
 
 <ComponentPreview name="scroll-area-3-demo" className="min-h-[300px] flex items-center justify-center pt-2" />
 
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 滚动区域的内容对键盘和屏幕阅读器用户均可访问 —— 保留了原生的滚动语义。
 - 自定义滚动条带有 `aria-hidden="true"` 属性 —— 仅作为视觉参考。

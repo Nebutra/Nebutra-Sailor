@@ -3,11 +3,11 @@ title: "错误 (Error)"
 description: "用于资源、区块和路由边界加载失败的块级错误状态。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="error-message-demo" />
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Error } from "@nebutra/ui/primitives";
@@ -24,7 +24,7 @@ import { Error } from "@nebutra/ui/primitives";
 </Error>
 ```
 
-## 设计原则 (Design Principles)
+## 设计原则
 
 - 当页面、路由边界、区块、面板或 dashboard card 加载失败时使用 `Error`。
 - 短暂操作失败用 toast；字段校验错误交给对应 input/field primitive。
@@ -33,7 +33,7 @@ import { Error } from "@nebutra/ui/primitives";
 - 系统错误要带稳定标识：request ID、trace ID、deployment ID 或 run ID。
 - 恢复动作必须具体：`Try Again`、`Reconnect GitHub`、`Update Payment Method`。
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -61,14 +61,14 @@ import { Error } from "@nebutra/ui/primitives";
 | `id` | `string` | 稳定诊断标识 |
 | `code` | `string` | 机器可读错误码 |
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 异步错误默认使用 `aria-live="polite"` 播报。
 - 只有阻断输入的错误才使用 `live="assertive"`。
 - 诊断 ID 放在折叠的 `details` 内，便于复制，同时不干扰主要信息。
 - 恢复按钮可键盘访问；外部链接会使用 `rel="noopener noreferrer"`。
 
-## 旧版行内用法 (Legacy Inline Usage)
+## 旧版行内用法
 
 `ErrorMessage` 仍然导出，用于兼容既有行内校验文本；新的字段级错误应放在对应 field/input primitive 上。
 

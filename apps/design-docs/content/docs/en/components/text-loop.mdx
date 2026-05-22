@@ -55,9 +55,18 @@ import { TextLoop } from "@nebutra/ui/primitives"
 ### With Index Callback
 
 ```tsx
-<TextLoop onIndexChange={(i) => console.warn("index:", i)}>
-  {items.map(item => <span key={item.id}>{item.label}</span>)}
-</TextLoop>
+const [activeIndex, setActiveIndex] = React.useState(0)
+
+return (
+  <div>
+    <TextLoop onIndexChange={setActiveIndex}>
+      {items.map(item => <span key={item.id}>{item.label}</span>)}
+    </TextLoop>
+    <p className="text-sm text-muted-foreground">
+      Active item: {activeIndex + 1}
+    </p>
+  </div>
+)
 ```
 
 ## Props

@@ -3,12 +3,12 @@ title: 动画徒步卡片 (AnimatedHikeCard)
 description: 交互式卡片，具有在悬停时展开的堆叠图像，以及状态标签和描述。适用于活动卡片、产品展示和作品集项目。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="animated-hike-card-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { AnimatedHikeCard } from "@nebutra/ui";
@@ -26,9 +26,9 @@ import { Clock, Mountain } from "lucide-react";
 />;
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 活动卡片网格 (Activity Cards Grid)
+### 活动卡片网格
 
 ```tsx
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -58,7 +58,7 @@ import { Clock, Mountain } from "lucide-react";
 </div>
 ```
 
-### 产品展示 (Product Showcase)
+### 产品展示
 
 ```tsx
 <AnimatedHikeCard
@@ -78,7 +78,7 @@ import { Clock, Mountain } from "lucide-react";
 />
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 | ------------- | ---------- | ------- | ------------------------------------------------------ |
@@ -89,7 +89,7 @@ import { Clock, Mountain } from "lucide-react";
 | `href`        | `string`   | —       | 链接地址（渲染为 `<a>`） |
 | `className`   | `string`   | —       | 额外的 Tailwind 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 卡片渲染为 `<a>` 元素 —— `href` 是保证正确链接语义的必填项。
 - **图像展开效果**：3 张图像通过绝对定位叠加。在悬停时，图像通过 CSS `group-hover` 变换向左右展开。

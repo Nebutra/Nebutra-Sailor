@@ -3,18 +3,18 @@ title: "标签 (Label)"
 description: "基于原生 label 元素构建的可访问表单标签组件。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="label-demo" className="min-h-[250px] flex justify-center items-center" />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Label } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 基于原生 HTML `<label>` 元素配合设计系统 Tokens 构建。
 
@@ -24,24 +24,24 @@ import { Label } from "@nebutra/ui/primitives"
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 标签文本 |
 
-## 示例 (Examples)
+## 示例
 
-### 必填字段标签 (Required Field Label)
+### 必填字段标签
 
 <ComponentPreview name="label-2-demo" className="min-h-[150px] flex justify-center items-center" />
 
 
-### 带有描述的标签 (Label with Description)
+### 带有描述的标签
 
 <ComponentPreview name="label-3-demo" className="min-h-[200px] flex justify-center items-center" />
 
 
-### 禁用的标签 (Disabled Label)
+### 禁用的标签
 
 <ComponentPreview name="label-4-demo" className="min-h-[150px] flex justify-center items-center" />
 
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 基于原生 `<label>` 元素构建。
 - 点击标签会通过 `htmlFor` 将焦点转移到关联的控件上。

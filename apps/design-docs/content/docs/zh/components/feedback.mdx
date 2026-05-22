@@ -3,25 +3,25 @@ title: "反馈 (Feedback)"
 description: "收集带情绪倾向的文本反馈，并可附加分类话题与非敏感元数据。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="feedback-demo" />
 
-## 概览 (Overview)
+## 概览
 
 `Feedback` 是用于页面、文档或完成型流程末尾的轻量反馈 primitive。它不是客服表单、缺陷提交流程，也不是 NPS 采样组件。
 
 提交后组件会关闭面板并把焦点还给触发按钮。关闭本身就是确认反馈已提交，不要再替换成泛泛的感谢 toast。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { Feedback } from "@nebutra/ui/primitives"
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 默认模式 (Default)
+### 默认模式
 
 默认的 popover 模式只用于桌面宽度界面。
 
@@ -29,13 +29,13 @@ import { Feedback } from "@nebutra/ui/primitives"
 <Feedback label="Feedback" dryRun />
 ```
 
-### 行内模式 (Inline)
+### 行内模式
 
 ```tsx
 <Feedback dryRun label="Feedback" type="inline" />
 ```
 
-### 带话题分类 (With Topics)
+### 带话题分类
 
 使用 `showTopics` 启用默认分类列表，也可以通过 `topics` 传入业务自己的分类。
 
@@ -47,7 +47,7 @@ import { Feedback } from "@nebutra/ui/primitives"
 />
 ```
 
-### 带元数据 (With Metadata)
+### 带元数据
 
 只附加非敏感上下文，帮助团队复现问题。
 
@@ -64,7 +64,7 @@ import { Feedback } from "@nebutra/ui/primitives"
 />
 ```
 
-### 自定义提示语 (Custom Copy)
+### 自定义提示语
 
 ```tsx
 <Feedback
@@ -74,7 +74,7 @@ import { Feedback } from "@nebutra/ui/primitives"
 />
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|---------|-------------|
@@ -101,7 +101,7 @@ interface FeedbackPayload {
 }
 ```
 
-## 最佳实践 (Best Practices)
+## 最佳实践
 
 - 只在用户已经形成判断后放置 Feedback：页面末尾、文档页脚或完成型流程之后。
 - 只有团队确实按分类处理反馈时才使用 topics。普通开放反馈不需要分类。
@@ -110,7 +110,7 @@ interface FeedbackPayload {
 - `copy` 使用 sentence case，避免 `please` 和道歉式文案。
 - 文本域占位符固定为 `Your feedback...`。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 情绪控件以 radio group 暴露，每个选项都有可访问名称。
 - 表单打开时文本域获得焦点，并由提示文案标注。

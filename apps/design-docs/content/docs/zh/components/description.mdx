@@ -3,24 +3,24 @@ title: "描述 (Description)"
 description: "显示简短的标题和副标题，用以传达用户继续操作所需的额外信息或背景。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="description-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `Description` 是一个紧凑的“标题 + 副标题”组合块。通过可选的 `tooltip` 属性，可以在标题旁边渲染一个信息图标 —— 悬停或聚焦该图标时，会显示一个包含额外背景信息的 `ContextCard`。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { Description } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 默认用法 (Default)
+### 默认用法
 
 ```tsx
 import { Description } from "@nebutra/ui/primitives"
@@ -31,7 +31,7 @@ import { Description } from "@nebutra/ui/primitives"
 />
 ```
 
-### 带有工具提示 (With tooltip)
+### 带有工具提示
 
 ```tsx
 <Description
@@ -41,7 +41,7 @@ import { Description } from "@nebutra/ui/primitives"
 />
 ```
 
-### 富文本工具提示内容 (Rich tooltip content)
+### 富文本工具提示内容
 
 `tooltip` 属性接受任何 `ReactNode`：
 
@@ -60,7 +60,7 @@ import { Description } from "@nebutra/ui/primitives"
 />
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -77,7 +77,7 @@ import { Description } from "@nebutra/ui/primitives"
 | 带 tooltip | 增加可聚焦的信息图标，背后使用 `ContextCard`；不打开 tooltip 也能读到主值。 |
 | 富文本 tooltip | 可传结构化说明，但触发器仍然是小型解释性 affordance。 |
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 工具提示基于 `ContextCard` 构建；`ContextCard` 使用 Base UI Popover，并带有 200ms 的悬停延迟。
 - 键盘可达：通过聚焦信息图标来显示工具提示。

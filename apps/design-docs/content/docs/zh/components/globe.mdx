@@ -3,12 +3,12 @@ title: 地球仪 (Globe)
 description: 由 COBE 驱动的交互式 3D WebGL 地球仪，支持标记、自动旋转和拖拽交互。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="globe-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `Globe` 使用 [COBE](https://github.com/shuding/cobe) 库渲染 WebGL 动力 3D 地球仪。它支持：
 
@@ -20,7 +20,7 @@ description: 由 COBE 驱动的交互式 3D WebGL 地球仪，支持标记、自
 
 该组件会填满其绝对定位的容器，因此请将其包裹在一个固定尺寸的 `relative` div 中。
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Globe } from "@nebutra/ui/primitives";
@@ -46,11 +46,11 @@ import { Globe } from "@nebutra/ui/primitives";
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### `GlobeProps`
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `config` | `GlobeConfig` | 见下方 | 地球仪配置对象 |
 | `rotationSpeed` | `number` | `0.005` | 自动旋转速度（设为 `0` 以禁用） |
@@ -58,7 +58,7 @@ import { Globe } from "@nebutra/ui/primitives";
 
 ### `GlobeConfig`
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `phi` | `number` | `0` | 初始水平旋转弧度 |
 | `theta` | `number` | `0.3` | 初始垂直倾斜弧度 |
@@ -73,12 +73,12 @@ import { Globe } from "@nebutra/ui/primitives";
 
 ### `GlobeMarker`
 
-| 属性 (Prop) | 类型 | 描述 |
+| 属性 | 类型 | 描述 |
 |------|------|-------------|
 | `location` | `[lat, lng]` | 地理坐标 (纬度, 经度) |
 | `size` | `number` | 圆点尺寸 (推荐 0.03–0.1) |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 需要安装 `cobe` 包：`pnpm add cobe`
 - 容器必须设置为 `position: relative` 并具有固定的宽高比。

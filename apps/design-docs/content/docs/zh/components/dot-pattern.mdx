@@ -3,20 +3,20 @@ title: "点状图案 (Dot Pattern)"
 description: "填充其容器的 SVG 点阵网格背景。支持静态和动态（发光）模式、渐变遮罩以及自定义间距。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="dot-pattern-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { DotPattern } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 静态背景 (Static Background)
+### 静态背景
 
 ```tsx
 <div className="relative h-[400px] w-full overflow-hidden">
@@ -25,7 +25,7 @@ import { DotPattern } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 发光点 (Glowing Dots)
+### 发光点
 
 ```tsx
 <div className="relative h-[400px] w-full overflow-hidden">
@@ -33,7 +33,7 @@ import { DotPattern } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 渐变遮罩（向角落淡出） (Gradient Mask)
+### 渐变遮罩（向角落淡出）
 
 ```tsx
 <div className="relative h-[400px] w-full overflow-hidden">
@@ -43,7 +43,7 @@ import { DotPattern } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 自定义间距和尺寸 (Custom Spacing and Size)
+### 自定义间距和尺寸
 
 ```tsx
 <DotPattern
@@ -54,7 +54,7 @@ import { DotPattern } from "@nebutra/ui/primitives"
 />
 ```
 
-## 属性 (Props)
+## 属性
 
 `DotPattern` 继承自 `React.SVGProps<SVGSVGElement>`。
 
@@ -70,7 +70,7 @@ import { DotPattern } from "@nebutra/ui/primitives"
 | `glow` | `boolean` | `false` | 启用动画发光脉冲效果 |
 | `className` | `string` | — | CSS 类名（使用 `text-` 设置点颜色） |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 该组件使用绝对定位，填充其容器 (`absolute inset-0 h-full w-full`)。
 - 点的颜色通过 Tailwind 的 `text-*` 工具类控制（使用 `currentColor`）。

@@ -3,18 +3,18 @@ title: 点阵世界地图 (DottedWorldMap)
 description: 具有斜向点阵网格图案的装饰性 SVG 世界地图。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="dotted-world-map-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `DottedWorldMap` 使用 `dotted-map` 库生成的预定义斜向点阵网格渲染简化的世界地图。与 `DottedMap` 不同，它使用静态预计算的点集（`height: 55, grid: "diagonal"`）—— 无需运行时生成 —— 因此速度非常快。
 
 最适合用作落地页或仪表盘上的装饰性背景元素。
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { DottedWorldMap } from "@nebutra/ui/primitives";
@@ -38,7 +38,7 @@ import { DottedWorldMap } from "@nebutra/ui/primitives";
 />
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -47,7 +47,7 @@ import { DottedWorldMap } from "@nebutra/ui/primitives";
 | `backgroundColor` | `string` | `"var(--color-background)"` | SVG 的背景颜色 |
 | `className` | `string` | — | SVG 的 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 地图点在模块初始化时预先计算 —— 无需渲染时计算。
 - 使用 `dotted-map` 配置 `{ height: 55, grid: "diagonal" }` —— 运行时不可配置；如需支持标记的运行时生成地图，请使用 `DottedMap`。

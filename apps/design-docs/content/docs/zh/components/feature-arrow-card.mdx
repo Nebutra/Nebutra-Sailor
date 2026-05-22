@@ -3,12 +3,12 @@ title: 功能箭头卡片 (FeatureArrowCard)
 description: 带有图标、标题、副标题、描述、可选内容插槽以及旋转箭头操作按钮的功能展示卡片。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="feature-arrow-card-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { FeatureArrowCard } from "@nebutra/ui";
@@ -23,9 +23,9 @@ import { Zap } from "lucide-react";
 />
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础卡片 (Basic Card)
+### 基础卡片
 
 ```tsx
 <FeatureArrowCard
@@ -37,7 +37,7 @@ import { Zap } from "lucide-react";
 />
 ```
 
-### 带有卡片内容 (With Card Content)
+### 带有卡片内容
 
 使用 `cardContent` 在右下角固定显示一个缩略图：
 
@@ -58,7 +58,7 @@ import { Zap } from "lucide-react";
 />
 ```
 
-### 网格布局 (Grid Layout)
+### 网格布局
 
 ```tsx
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -75,9 +75,9 @@ import { Zap } from "lucide-react";
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `icon` | `LucideIcon` | — | 功能图标（以 16×16 尺寸渲染） |
 | `title` | `string` | — | 显示在副标题上方的小号辅助标签 |
@@ -87,7 +87,7 @@ import { Zap } from "lucide-react";
 | `onArrowClick` | `() => void` | — | 箭头按钮点击时的回调函数 |
 | `className` | `string` | — | 额外的 Tailwind 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 箭头按钮在悬停时会通过 `hover:-rotate-45` 旋转 `-45deg` —— 这创造了一种对角线方向的“导航”引导感。
 - `cardContent` 被放置在右下角的一个绝对定位卡片中（移动端 `h-20 w-24`，桌面端 `h-32 w-40`），并带有左上圆角。

@@ -3,18 +3,18 @@ title: Safari 浏览器模型
 description: 用于展示网站和 Web 应用的 Safari 浏览器窗口 SVG 模型。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="safari-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `Safari` 渲染一个 macOS Safari 浏览器窗口的 SVG 框架。与 `BrowserMockup` 不同，它采用细节丰富的 SVG，在 `"default"` 模式下拥有原生风格的工具栏图标（前进/后退、分享、标签页），或在 `"simple"` 模式下提供一个清爽简约的地址栏。
 
 内容（图片或视频）会被裁剪到工具栏下方的浏览器视口区域。
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Safari } from "@nebutra/ui/primitives";
@@ -50,9 +50,9 @@ import { Safari } from "@nebutra/ui/primitives";
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `url` | `string` | — | 地址栏中显示的 URL |
 | `imageSrc` | `string` | — | 截图或图片的 URL |
@@ -60,7 +60,7 @@ import { Safari } from "@nebutra/ui/primitives";
 | `mode` | `"default" \| "simple"` | `"default"` | 工具栏的细节层级 |
 | `className` | `string` | — | 容器的 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - `videoSrc` 的优先级高于 `imageSrc`。
 - 视频播放时附带 `autoPlay loop muted playsInline` 属性。

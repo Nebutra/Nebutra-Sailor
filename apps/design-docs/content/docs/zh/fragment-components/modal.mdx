@@ -3,11 +3,11 @@ title: "Modal"
 description: "用于阻塞式决策、聚焦表单和高风险确认流程的 compound dialog surface。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="modal-demo" className="min-h-[320px] w-full" />
 
-## 用法 (Usage)
+## 用法
 
 `Modal` 是构建在 Nebutra `Dialog` 之上的 compound API。它保留 Geist modal 的使用模型，同时把 focus management、title wiring、body spacing、inset panel 和 action row 收敛到统一 primitive 中。
 
@@ -53,7 +53,7 @@ export function CreateProjectModal() {
 }
 ```
 
-## 属性 (Props)
+## 属性
 
 ### `Modal.Modal`
 
@@ -66,7 +66,7 @@ export function CreateProjectModal() {
 | `className` | `string` | — | dialog content panel 的额外类名。 |
 | `children` | `ReactNode` | — | compound modal 内容。 |
 
-### 布局部件 (Layout Parts)
+### 布局部件
 
 | 部件 | 类型 | 描述 |
 |---|---|---|
@@ -86,7 +86,7 @@ export function CreateProjectModal() {
 | `fullWidth` | `boolean` | `false` | 让动作按钮横向铺满。 |
 | `prefix` | `ReactNode` | — | 可选前置图标。 |
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - Focus trap、Escape 关闭、关闭后回到触发器由底层 `Dialog` 提供。
 - `Modal.Title` 会自动通过 `aria-labelledby` 关联 dialog；不要手动重复 title id。
@@ -94,7 +94,7 @@ export function CreateProjectModal() {
 - 主动作在源码顺序中放最后，让键盘和屏幕阅读器用户先经过 review/cancel 选项。
 - 高风险删除动作使用 `DestructiveActionModal`，或在 `Modal.Inset` 内加入 typed confirmation gate。
 
-## 设计契约 (Design Contract)
+## 设计契约
 
 - 只有当页面其余区域必须被阻塞，直到用户完成决策或聚焦任务时，才使用 `Modal`。
 - 周边页面上下文仍需可读时使用 `Sheet` 或 `Drawer`；字段很多的常规创建/编辑流程应放到独立页面。

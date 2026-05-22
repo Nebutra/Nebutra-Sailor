@@ -3,24 +3,24 @@ title: "条目 (Entity)"
 description: "显示最多两列内容。左列可以包含任意内容，右列通常包含控件或操作项。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="entity-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `Entity` 是一个具有三个区域的横向行布局：`left`（头像、图标等）、内容区域 (`Entity.Content`) 和 `right`（操作项、元数据）。`Entity.List` 将多个行包裹在一个带边框的 `<ul>` 中。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { Entity } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 默认用法 (Default)
+### 默认用法
 
 ```tsx
 import { Entity } from "@nebutra/ui/primitives";
@@ -38,7 +38,7 @@ import { Avatar } from "@nebutra/ui/primitives";
 </Entity>
 ```
 
-### 实体列表 (Entity.List)
+### 实体列表
 
 使用 `Entity.List` 作为容器，并在每个 `Entity` 行上通过 `as="li"` 属性。
 
@@ -67,7 +67,7 @@ import { Avatar } from "@nebutra/ui/primitives";
 </Entity.List>
 ```
 
-### 结合 Skeleton（加载状态） (With Skeleton)
+### 结合 Skeleton（加载状态）
 
 ```tsx
 <Entity>
@@ -81,7 +81,7 @@ import { Avatar } from "@nebutra/ui/primitives";
 </Entity>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### `Entity`
 

@@ -3,22 +3,22 @@ title: 奖项 (Awards)
 description: 装饰性的奖项、徽章、证书和荣誉展示组件，具有 6 种视觉变体。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="awards-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `Awards` 是一个单一的多态组件，具有 6 种不同的视觉变体，用于展示成就、认证和认可。请根据您的 UI 环境选择最合适的样式。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { Awards } from "@nebutra/ui/primitives";
 ```
 
-## 变体 (Variants)
+## 变体
 
 ### `badge` (默认)
 
@@ -99,7 +99,7 @@ import { Awards } from "@nebutra/ui/primitives";
 />
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 | ------------- | -------------------------------------------------------------------------- | --------- | --------------------------------------------- |
@@ -114,7 +114,7 @@ import { Awards } from "@nebutra/ui/primitives";
 | `customIcon`  | `ReactNode`                                                                | — | 用于替换默认图标的自定义图标 |
 | `className`   | `string`                                                                   | — | 额外的 CSS 类名 |
 
-## 等级颜色 (Level Colors)
+## 等级颜色
 
 | 等级 | 渐变 |
 | ---------- | ----------------------- |
@@ -123,7 +123,7 @@ import { Awards } from "@nebutra/ui/primitives";
 | `gold`     | yellow-400 → yellow-600 |
 | `platinum` | slate-300 → slate-500 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - `sticker` 变体使用 `WebkitTextStroke` 和分层 `<span>` 来实现 3D 边框效果，并适配亮/暗模式。
 - `stamp` 变体通过动态计算的具有 40 个齿的 SVG 路径生成锯齿边缘。

@@ -3,12 +3,12 @@ title: 魔法卡片 (MagicCard)
 description: 带有渐变聚光灯和发光边框效果的卡片，视觉效果会追随鼠标指针。非常适合用于价格卡片和特色功能的高亮。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="magic-card-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { MagicCard } from "@nebutra/ui";
@@ -19,9 +19,9 @@ import { MagicCard } from "@nebutra/ui";
 </MagicCard>
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础卡片 (Basic Card)
+### 基础卡片
 
 ```tsx
 <MagicCard className="rounded-xl p-8 cursor-pointer">
@@ -32,7 +32,7 @@ import { MagicCard } from "@nebutra/ui";
 </MagicCard>
 ```
 
-### 自定义渐变颜色 (Custom Gradient Colors)
+### 自定义渐变颜色
 
 ```tsx
 <MagicCard
@@ -45,7 +45,7 @@ import { MagicCard } from "@nebutra/ui";
 </MagicCard>
 ```
 
-### 价格卡片 (Pricing Card)
+### 价格卡片
 
 ```tsx
 <MagicCard className="rounded-2xl p-8 cursor-pointer w-72">
@@ -67,7 +67,7 @@ import { MagicCard } from "@nebutra/ui";
 </MagicCard>
 ```
 
-### 魔法卡片网格 (Grid of Magic Cards)
+### 魔法卡片网格
 
 ```tsx
 <div className="grid grid-cols-3 gap-4">
@@ -77,9 +77,9 @@ import { MagicCard } from "@nebutra/ui";
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `children` | `ReactNode` | — | 卡片内容 |
 | `gradientSize` | `number` | `200` | 聚光灯渐变的半径（像素） |
@@ -103,7 +103,7 @@ import { MagicCard } from "@nebutra/ui";
 - spotlight 是装饰性 animation primitive。需要结构语义时，不要用它替代 `FeatureCard` 或 `PricingCard`。
 - hover/pointer work 应限制在 transform、opacity、background 这类不会改变布局的效果上。
 
-## 注意事项 (Notes)
+## 注意事项
 
 - `MagicCard` 会将子元素包裹在一个 `relative rounded-[inherit]` 的容器中 —— 应该通过 `className` 来设置圆角半径。
 - 渐变边框仅在光标位于卡片上方时可见（通过 `onPointerMove` 进行追踪）。

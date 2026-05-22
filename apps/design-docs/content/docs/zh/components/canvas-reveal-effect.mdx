@@ -3,12 +3,12 @@ title: "画布显示效果 (Canvas Reveal Effect)"
 description: "由 Three.js 驱动的 WebGL 点阵动画。着色的动态点在画布上扫过，在运动中展现出图案。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="canvas-reveal-effect-demo"  />
 
 
-## 依赖 (Dependencies)
+## 依赖
 
 需要安装 `three` 和 `@react-three/fiber`：
 
@@ -16,15 +16,15 @@ description: "由 Three.js 驱动的 WebGL 点阵动画。着色的动态点在�
 pnpm add three @react-three/fiber
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { CanvasRevealEffect } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础用法 (Basic)
+### 基础用法
 
 ```tsx
 <div className="relative h-[400px] w-full overflow-hidden rounded-xl">
@@ -32,7 +32,7 @@ import { CanvasRevealEffect } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 青色点 (Cyan Dots)
+### 青色点
 
 ```tsx
 <CanvasRevealEffect
@@ -42,7 +42,7 @@ import { CanvasRevealEffect } from "@nebutra/ui/primitives"
 />
 ```
 
-### 多色效果 (Multi-color)
+### 多色效果
 
 ```tsx
 <CanvasRevealEffect
@@ -56,7 +56,7 @@ import { CanvasRevealEffect } from "@nebutra/ui/primitives"
 />
 ```
 
-### 悬停显示卡片 (On Hover Card)
+### 悬停显示卡片
 
 ```tsx
 function RevealCard() {
@@ -74,7 +74,7 @@ function RevealCard() {
 }
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -85,7 +85,7 @@ function RevealCard() {
 | `dotSize` | `number` | — | 以像素为单位的点尺寸 |
 | `showGradient` | `boolean` | — | 覆盖径向渐变淡出效果 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 由于 `@react-three/fiber` 与 React 19 的 JSX 不兼容，类型检查已被禁用 (`@ts-nocheck`)。该组件在运行时可正常工作。
 - 请将组件包裹在具有 `overflow-hidden` 的容器中，以确保边缘整洁。

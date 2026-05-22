@@ -3,16 +3,16 @@ title: 荧光笔 (Highlighter)
 description: 使用 rough-notation 实现的手绘风格文本标注效果。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="highlighter-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `Highlighter` 将文本包裹在 `<span>` 中，并利用 `rough-notation` 库应用手绘标记笔画过渡动画。支持 7 种标注类型，可自定义颜色、笔画宽度，并支持视口触发动画。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { Highlighter } from "@nebutra/ui/primitives";
@@ -24,9 +24,9 @@ import { Highlighter } from "@nebutra/ui/primitives";
 pnpm add rough-notation
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 基础高亮 (Basic highlight)
+### 基础高亮
 
 ```tsx
 <p>
@@ -34,7 +34,7 @@ pnpm add rough-notation
 </p>
 ```
 
-### 自定义颜色的下划线 (Underline with custom color)
+### 自定义颜色的下划线
 
 ```tsx
 <Highlighter action="underline" color="#FF9800">
@@ -42,7 +42,7 @@ pnpm add rough-notation
 </Highlighter>
 ```
 
-### 圆圈标注 (Circle annotation)
+### 圆圈标注
 
 ```tsx
 <Highlighter action="circle" color="#ef4444" strokeWidth={2}>
@@ -50,7 +50,7 @@ pnpm add rough-notation
 </Highlighter>
 ```
 
-### 视口触发 (Viewport-triggered)
+### 视口触发
 
 仅当元素滚动到视口中时才播放标注动画：
 
@@ -60,7 +60,7 @@ pnpm add rough-notation
 </Highlighter>
 ```
 
-### 段落中的混合标注 (Mixed annotations in a paragraph)
+### 段落中的混合标注
 
 ```tsx
 <p className="text-xl leading-relaxed">
@@ -75,9 +75,9 @@ pnpm add rough-notation
 </p>
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `children` | `ReactNode` | — | 需要添加标注的内容 |
 | `action` | `HighlighterAction` | `"highlight"` | 标注效果类型 |
@@ -89,9 +89,9 @@ pnpm add rough-notation
 | `multiline` | `boolean` | `true` | 标注是否跨多行折行 |
 | `triggerOnView` | `boolean` | `false` | 仅在元素进入视口时才播放动画 |
 
-## 标注类型 (Annotation Types)
+## 标注类型
 
-| 取值 (Value) | 描述 |
+| 取值 | 描述 |
 |-------|-------------|
 | `highlight` | 文本背后的填充式高亮（类似记号笔） |
 | `underline` | 文本下方的单条手绘线 |
@@ -101,7 +101,7 @@ pnpm add rough-notation
 | `crossed-off` | 贯穿文本的两条交叉对角线 |
 | `bracket` | 文本旁的方括号 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 当任何属性（颜色、动作等）发生改变时，组件会重新渲染标注。
 - 使用 `ResizeObserver` 在元素或文档主体尺寸调整时重绘标注。

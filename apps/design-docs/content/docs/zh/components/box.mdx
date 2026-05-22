@@ -3,12 +3,12 @@ title: 盒子 (Box)
 description: 基础性的多态布局原语，支持基于 Token 的间距属性。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="box-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Box } from "@nebutra/ui";
@@ -18,9 +18,9 @@ import { Box } from "@nebutra/ui";
 </Box>
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础内边距 (Basic Padding)
+### 基础内边距
 
 ```tsx
 <Box p={4} className="border rounded-lg">
@@ -28,7 +28,7 @@ import { Box } from "@nebutra/ui";
 </Box>
 ```
 
-### 非对称间距 (Asymmetric Spacing)
+### 非对称间距
 
 ```tsx
 <Box px={6} py={2} className="bg-muted rounded">
@@ -36,7 +36,7 @@ import { Box } from "@nebutra/ui";
 </Box>
 ```
 
-### 作为不同的元素渲染 (As a Different Element)
+### 作为不同的元素渲染
 
 `as` 属性可以将其渲染为任何 HTML 元素，同时保持间距 Token 生效。
 
@@ -48,7 +48,7 @@ import { Box } from "@nebutra/ui";
 </Box>
 ```
 
-### 外边距控制 (Margin Control)
+### 外边距控制
 
 ```tsx
 <Box mt={8} mb={4} mx="auto" className="max-w-lg">
@@ -56,7 +56,7 @@ import { Box } from "@nebutra/ui";
 </Box>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -83,7 +83,7 @@ import { Box } from "@nebutra/ui";
 
 直接映射到 Tailwind 的间距比例（例如，`4` → `p-4` → `1rem`）。
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 间距属性是**累加的** —— 它们在同一轴线上不会互相覆盖（例如，可以同时设置 `px` 和 `pl`）。
 - 通过 `className` 传递的额外类名将在间距类之后应用，如果需要，可以使用 `!important` 修饰符进行覆盖。

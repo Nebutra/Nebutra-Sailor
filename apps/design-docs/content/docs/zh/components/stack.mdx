@@ -3,12 +3,12 @@ title: 纵向堆叠 (Stack)
 description: 纵向布局原语，用于排列子元素成列并保持一致的间距。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="stack-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Stack } from "@nebutra/ui";
@@ -20,9 +20,9 @@ import { Stack } from "@nebutra/ui";
 </Stack>
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 表单布局 (Form Layout)
+### 表单布局
 
 ```tsx
 <Stack gap={6} className="max-w-sm">
@@ -40,7 +40,7 @@ import { Stack } from "@nebutra/ui";
 </Stack>
 ```
 
-### 卡片内容 (Card Content)
+### 卡片内容
 
 ```tsx
 <div className="rounded-lg border p-6">
@@ -55,7 +55,7 @@ import { Stack } from "@nebutra/ui";
 </div>
 ```
 
-### 垂直分布内容 (Justified Content)
+### 垂直分布内容
 
 ```tsx
 <Stack justify="between" className="h-full p-4">
@@ -64,7 +64,7 @@ import { Stack } from "@nebutra/ui";
 </Stack>
 ```
 
-### 居中显示项 (Centered Items)
+### 居中显示项
 
 ```tsx
 <Stack gap={4} align="center" className="py-16">
@@ -74,7 +74,7 @@ import { Stack } from "@nebutra/ui";
 </Stack>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -88,7 +88,7 @@ import { Stack } from "@nebutra/ui";
 
 `0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24 | 32`
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 默认 `align="stretch"` 会使子元素填满容器的整个宽度 —— 非常适合表单字段和全宽卡片。
 - 对 Hero 区域或个人资料卡片等需要项居中的情况，请使用 `align="center"`。

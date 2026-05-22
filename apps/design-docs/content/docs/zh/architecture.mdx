@@ -98,6 +98,7 @@ pnpm --filter @nebutra/design-docs lint:ia
 - sidebar meta 是否列出所有已提交页面，并且没有不存在的页面；
 - 英文和中文 section 是否结构配对；
 - 每个 `ComponentPreview` 是否映射到生成的 preview entry；
-- registry index item 是否有文档或显式 allowlist；
+- 每个 registry index item 是否都有英文文档页；
+- registry 和 Storybook 覆盖例外不是常规流程；如果未来重新引入例外，必须是带 owner、reason、expiry 的结构化债务；
 - 组件源码已迁移后，文档里不能残留 “built on Radix” 这类旧底层叙述；
 - `#0033FE`、`#0033FE` 这类漂移品牌色不能重新进入 docs。

@@ -3,18 +3,18 @@ title: "骨架屏 (Skeleton)"
 description: "动画加载占位图，用于在数据获取期间模拟内容布局。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="skeleton-demo" className="min-h-[200px] flex items-center justify-center" />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Skeleton } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -33,19 +33,19 @@ import { Skeleton } from "@nebutra/ui/primitives"
   优先使用 `width` / `height` / `boxHeight` 保持稳定几何。`className` 用于布局位置，不用于临时覆盖颜色或动效。
 </Info>
 
-## 示例 (Examples)
+## 示例
 
-### 卡片骨架屏 (Card Skeleton)
+### 卡片骨架屏
 
 <ComponentPreview name="skeleton-2-demo" className="min-h-[350px] flex items-center justify-center" />
 
 
-### 列表骨架屏 (List Skeleton)
+### 列表骨架屏
 
 <ComponentPreview name="skeleton-3-demo" className="min-h-[350px] flex items-center justify-center" />
 
 
-### 条件加载 (Conditional Loading)
+### 条件加载
 
 ```tsx
 function UserCard({ userId }: { userId: string }) {
@@ -67,7 +67,7 @@ function UserCard({ userId }: { userId: string }) {
 }
 ```
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 骨架屏元素默认具有 `aria-hidden="true"` 属性 —— 它们仅作为装饰性的加载指示器。
 - 在容器上包裹 `aria-busy="true"` 以播报加载状态。

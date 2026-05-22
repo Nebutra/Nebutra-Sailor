@@ -3,12 +3,12 @@ title: "下拉菜单 (Dropdown Menu)"
 description: "通过点击按钮触发的上下文操作列表，基于 Base UI 构建。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="dropdown-menu-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import {
@@ -28,7 +28,7 @@ import {
 } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 ### DropdownMenuContent (菜单内容)
 
@@ -50,26 +50,26 @@ import {
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 菜单项标签内容 |
 
-## 示例 (Examples)
+## 示例
 
-### 带有复选框条目 (With Checkbox Items)
+### 带有复选框条目
 
 <ComponentPreview name="dropdown-menu-2-demo" className="min-h-[250px] flex justify-center items-start pt-10" />
 
 
-### 带有单选按钮组 (With Radio Group)
+### 带有单选按钮组
 
 <ComponentPreview name="dropdown-menu-3-demo" className="min-h-[250px] flex justify-center items-start pt-10" />
 
 
-### 带有级联子菜单 (With Submenus)
+### 带有级联子菜单
 
 您可以在 `DropdownMenuContent` 中嵌套 `DropdownMenuSub` 来创建级联式菜单。
 
 <ComponentPreview name="dropdown-menu-4-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 基于 Base UI Menu 构建 — 遵循 WAI-ARIA [菜单按钮模式 (Menu Button pattern)](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)。
 - `DropdownMenuContent` 具有 `role="menu"` 属性，并带有指向触发器的 `aria-labelledby`。

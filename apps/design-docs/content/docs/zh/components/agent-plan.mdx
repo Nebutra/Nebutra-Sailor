@@ -3,12 +3,12 @@ title: 智能体计划 (AgentPlan)
 description: 为 AI 智能体设计的层级化任务规划 UI，具有可展开任务、子任务、状态指示器和 MCP 工具标签。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="agent-plan-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { AgentPlan } from "@nebutra/ui";
@@ -46,9 +46,9 @@ const tasks: AgentTask[] = [
 />;
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 多阶段 AI 工作流 (Multi-phase AI Workflow)
+### 多阶段 AI 工作流
 
 ```tsx
 const workflowTasks: AgentTask[] = [
@@ -107,7 +107,7 @@ const workflowTasks: AgentTask[] = [
 />;
 ```
 
-### 只读状态展示 (Read-only Status Display)
+### 只读状态展示
 
 ```tsx
 <AgentPlan
@@ -117,15 +117,15 @@ const workflowTasks: AgentTask[] = [
 />
 ```
 
-### 自定义工具标签 (Custom Tools Label)
+### 自定义工具标签
 
 ```tsx
 <AgentPlan tasks={tasks} toolsLabel="使用的工具 (Tools used):" />
 ```
 
-## 状态类型 (Status Types)
+## 状态类型
 
-| 状态 (Status) | 图标 (Icon) | 描述 (Description) |
+| 状态 | 图标 | 描述 |
 | ------------- | ---------------------- | ------------------------------- |
 | `pending`     | 圆圈 (置灰) | 任务尚未开始 |
 | `in-progress` | 虚线圆点 (蓝色) | 正在执行中 |
@@ -133,11 +133,11 @@ const workflowTasks: AgentTask[] = [
 | `need-help`   | 警告圆圈 (黄色) | 已阻塞或需要人工介入 |
 | `failed`      | 叉号圆圈 (红色) | 执行失败 |
 
-## 属性 (Props)
+## 属性
 
 ### AgentPlan
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 | ----------------------- | -------------------------------------------------------------------- | ---------------- | -------------------------------------------------------- |
 | `tasks`                 | `AgentTask[]`                                                        | —                | 要显示的任务数组 |
 | `onTaskStatusChange`    | `(taskId: string, newStatus: TaskStatus) => void`                    | —                | 任务状态循环切换时的回调 |
@@ -149,7 +149,7 @@ const workflowTasks: AgentTask[] = [
 
 ### AgentTask
 
-| 字段 (Field) | 类型 | 描述 |
+| 字段 | 类型 | 描述 |
 | -------------- | ----------------------------- | ---------------------------------------------- |
 | `id`           | `string`                      | 唯一标识符 |
 | `title`        | `string`                      | 任务行中显示的标题 |
@@ -162,7 +162,7 @@ const workflowTasks: AgentTask[] = [
 
 ### AgentSubtask
 
-| 字段 (Field) | 类型 | 描述 |
+| 字段 | 类型 | 描述 |
 | ------------- | ----------------------------- | --------------------------------------------- |
 | `id`          | `string`                      | 唯一标识符 |
 | `title`       | `string`                      | 子任务标题 |
@@ -171,7 +171,7 @@ const workflowTasks: AgentTask[] = [
 | `priority`    | `"low" \| "medium" \| "high"` | 可选的优先级 |
 | `tools`       | `string[]`                    | MCP 服务或工具名称 —— 以标签形式显示 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - **状态循环**: 当 `allowStatusToggle` 为 true 时，点击状态图标的切换顺序为：pending → in-progress → completed → need-help → failed → pending。
 - **子任务完成**: 当子任务切换为已完成时，如果所有子任务都已完成，父任务会自动标记为已完成。

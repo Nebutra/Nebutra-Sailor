@@ -3,12 +3,12 @@ title: 五彩纸屑 (Confetti)
 description: 画布五彩纸屑动画，支持自动播放、命令式 ref 控制以及便捷按钮组件。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="confetti-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `Confetti` 将 `canvas-confetti` 库封装在 React 组件中，支持：
 
@@ -20,7 +20,7 @@ description: 画布五彩纸屑动画，支持自动播放、命令式 ref 控�
 
 典型使用场景：购买成功、解锁成就、表单提交、里程碑庆祝。
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Confetti, ConfettiButton, type ConfettiRef } from "@nebutra/ui/primitives";
@@ -51,7 +51,7 @@ confettiRef.current?.fire({
 });
 ```
 
-## Confetti 属性 (Props)
+## Confetti 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -63,7 +63,7 @@ confettiRef.current?.fire({
 
 所有其他 `<canvas>` 属性都会被转发。
 
-## ConfettiButton 属性 (Props)
+## ConfettiButton 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -81,7 +81,7 @@ type ConfettiRef = {
 
 配合 `useRef<ConfettiRef>(null)` 使用，并将其传递给 `<Confetti ref={confettiRef} manualstart />`。
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 画布默认应用了 `pointer-events-none`，以避免阻塞点击操作。
 - `ConfettiButton` 通过按钮的 `getBoundingClientRect()` 计算发射起点 `origin` —— 无需额外配置。

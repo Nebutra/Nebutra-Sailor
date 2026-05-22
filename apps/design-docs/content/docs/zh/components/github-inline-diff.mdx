@@ -3,12 +3,12 @@ title: GitHub 行内差异 (GithubInlineDiff)
 description: 模仿 GitHub 风格的行内代码差异查看器，支持行内评论线程。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="github-inline-diff-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `GithubInlineDiff` 渲染一个与 GitHub PR 评审界面完全一致的统一差异视图。特性包括：
 
@@ -20,7 +20,7 @@ description: 模仿 GitHub 风格的行内代码差异查看器，支持行内�
 - 线程解决/取消解决切换
 - 带缩写的当前用户头像
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { GithubInlineDiff, type DiffLine } from "@nebutra/ui/primitives";
@@ -43,9 +43,9 @@ const diff: DiffLine[] = [
 />
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `diff` | `readonly DiffLine[]` | — | **必填。** 差异行数组 |
 | `fileName` | `string` | — | **必填。** 头部显示的文件名 |
@@ -56,7 +56,7 @@ const diff: DiffLine[] = [
 | `currentUser` | `{ name: string; initials: string }` | — | 表示当前发表回复的用户头像/姓名 |
 | `className` | `string` | — | 容器 CSS 类名 |
 
-## 类型定义 (Types)
+## 类型定义
 
 ### `DiffLine` (差异行)
 
@@ -80,7 +80,7 @@ interface DiffComment {
 }
 ```
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 悬停在某一行上会显示 `+` 评论按钮（出现在 `context`, `add`, 和 `del` 类型的行左侧）。
 - 评论线程存储在组件内部状态中；请使用 `onAddComment` 将其持久化到您的后端。

@@ -3,25 +3,25 @@ title: "空状态 (Empty State)"
 description: "当尚未添加内容，或由于功能状态而暂时为空时，用于填充对应空间。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="empty-state-demo" />
 
-## 概览 (Overview)
+## 概览
 
 `EmptyState` 用于避免用户在空视图里困惑。它可以表达首次使用的 blank slate、筛选无结果、任务已清空、权限或套餐限制，以及加载失败。
 
 组件刻意保持克制：一个标题、一段说明、一个主 CTA，最多再加一个次 CTA。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { EmptyState } from "@nebutra/ui/primitives"
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 初始空白 (Blank Slate)
+### 初始空白
 
 ```tsx
 import { ChartBarPeak } from "@nebutra/icons"
@@ -34,7 +34,7 @@ import { EmptyState } from "@nebutra/ui/primitives"
 />
 ```
 
-### 信息类 (Informational)
+### 信息类
 
 ```tsx
 <EmptyState.Root
@@ -50,7 +50,7 @@ import { EmptyState } from "@nebutra/ui/primitives"
 </EmptyState.Root>
 ```
 
-### 无结果 (No Results)
+### 无结果
 
 异步筛选后出现空结果时使用 `live`，让辅助技术播报状态变化。
 
@@ -66,7 +66,7 @@ import { EmptyState } from "@nebutra/ui/primitives"
 </EmptyState.Root>
 ```
 
-### 错误状态 (Error)
+### 错误状态
 
 ```tsx
 <EmptyState.Root
@@ -79,7 +79,7 @@ import { EmptyState } from "@nebutra/ui/primitives"
 </EmptyState.Root>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### EmptyState.Root
 
@@ -103,7 +103,7 @@ import { EmptyState } from "@nebutra/ui/primitives"
 | `icon` | `ReactNode` | — | 图标元素，通常 32px |
 | `className` | `string` | — | 图标容器额外类名 |
 
-## 变体 (Variants)
+## 变体
 
 | 变体 | 使用场景 |
 |---------|----------|
@@ -116,7 +116,7 @@ import { EmptyState } from "@nebutra/ui/primitives"
 | `permission` | 角色或套餐限制访问 |
 | `error` | 加载失败，并且可以重试 |
 
-## 文案 (Content)
+## 文案
 
 - `title` 使用 Title Case，例如 `No Logs Match Your Filter`。
 - `description` 使用 sentence case，并补充标题没有说出的信息。
@@ -124,7 +124,7 @@ import { EmptyState } from "@nebutra/ui/primitives"
 - CTA 文案使用 Title Case Verb + Noun。避免 `Get Started`、`Continue`、`OK`。
 - 最多一个主 CTA；只有确实存在两条合理路径时，才加一个次 CTA。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - CTA 必须是真实 `Button` 或 `Link`，这样才能进入 tab order。
 - 异步筛选后的 no-results 状态使用 `live`。

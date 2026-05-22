@@ -3,12 +3,12 @@ title: 抖动着色器 (DitheringShader)
 description: 无依赖的 WebGL2 动画抖动着色器，具有多种形状图案和 Bayer 矩阵类型。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="dithering-shader-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `DitheringShader` 直接在 `<canvas>` 元素上使用 WebGL2 渲染动画抖动效果。它不需要外部库 —— 所有 GLSL 着色器都已捆绑在组件中。
 
@@ -21,7 +21,7 @@ description: 无依赖的 WebGL2 动画抖动着色器，具有多种形状图�
 
 如果您需要一个具有颗粒感/暗角/发光叠加层的全屏主题感知背景，请改用 `DitheringBackground`。
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { DitheringShader } from "@nebutra/ui/primitives";
@@ -52,7 +52,7 @@ import { DitheringShader } from "@nebutra/ui/primitives";
 <DitheringShader shape="wave" speed={0} />
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -67,7 +67,7 @@ import { DitheringShader } from "@nebutra/ui/primitives";
 | `className` | `string` | — | 包装层 `<div>` 的额外 CSS 类名 |
 | `style` | `CSSProperties` | — | 包装层 `<div>` 的额外行内样式 |
 
-## 形状图案 (Shape Patterns)
+## 形状图案
 
 | 取值 | 描述 |
 |-------|-------------|
@@ -79,7 +79,7 @@ import { DitheringShader } from "@nebutra/ui/primitives";
 | `"swirl"` | 对数螺旋旋涡 |
 | `"sphere"` | 带有移动点光源的 3D 球体 |
 
-## 抖动类型 (Dithering Types)
+## 抖动类型
 
 | 取值 | 描述 |
 |-------|-------------|
@@ -88,7 +88,7 @@ import { DitheringShader } from "@nebutra/ui/primitives";
 | `"4x4"` | 4×4 有序 Bayer 矩阵 |
 | `"8x8"` | 8×8 有序 Bayer 矩阵（细节最丰富） |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 颜色必须是十六进制字符串 (`#rrggbb`)。不支持 CSS 变量和 `hsl()`。
 - 该组件将画布包裹在一个尺寸固定为 `width × height` 像素的 `<div>` 中 —— 它**不会**根据容器自动缩放。

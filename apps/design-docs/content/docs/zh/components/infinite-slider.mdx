@@ -3,24 +3,24 @@ title: 无限滚动条 (InfiniteSlider)
 description: 用于展示 Logo、证言和图片轮播的连续自动滚动内容容器。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="infinite-slider-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `InfiniteSlider` 通过内部复制子元素并持续对其进行平移运动，从而创建一个无缝的循环滚动效果。支持水平和垂直方向、可配置的滚动速度，并提供悬停减速的可选功能。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { InfiniteSlider } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### Logo 展示条 (Logo strip)
+### Logo 展示条
 
 ```tsx
 <InfiniteSlider gap={24} speed={50}>
@@ -31,7 +31,7 @@ import { InfiniteSlider } from "@nebutra/ui/primitives";
 </InfiniteSlider>
 ```
 
-### 悬停减速 (Slow on hover)
+### 悬停减速
 
 ```tsx
 <InfiniteSlider gap={32} duration={20} durationOnHover={60}>
@@ -39,7 +39,7 @@ import { InfiniteSlider } from "@nebutra/ui/primitives";
 </InfiniteSlider>
 ```
 
-### 反向滚动 (Reverse direction)
+### 反向滚动
 
 ```tsx
 <InfiniteSlider gap={16} reverse>
@@ -47,7 +47,7 @@ import { InfiniteSlider } from "@nebutra/ui/primitives";
 </InfiniteSlider>
 ```
 
-### 垂直滚动 (Vertical scroll)
+### 垂直滚动
 
 ```tsx
 <InfiniteSlider direction="vertical" gap={16} className="h-64">
@@ -55,7 +55,7 @@ import { InfiniteSlider } from "@nebutra/ui/primitives";
 </InfiniteSlider>
 ```
 
-### 以 px/s 为单位设置速度 (Speed in px/s)
+### 以 px/s 为单位设置速度
 
 ```tsx
 <InfiniteSlider speed={80} speedOnHover={20} gap={24}>
@@ -63,9 +63,9 @@ import { InfiniteSlider } from "@nebutra/ui/primitives";
 </InfiniteSlider>
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `children` | `ReactNode` | — | **必需。** 需要滚动的内容（内部会自动复制） |
 | `gap` | `number` | `16` | 项目之间的间距（像素） |
@@ -77,7 +77,7 @@ import { InfiniteSlider } from "@nebutra/ui/primitives";
 | `reverse` | `boolean` | `false` | 是否反向滚动 |
 | `className` | `string` | — | 额外的 CSS 类名，应用于溢出包装容器 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 子元素在内部会被复制一次以实现无缝循环效果 —— 请避免依赖于固定数量的子元素。
 - 当设置了 `durationOnHover` 或 `speedOnHover` 时，动画会在鼠标移入/移出时平滑地过渡到新的速度。

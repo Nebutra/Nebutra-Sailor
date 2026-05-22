@@ -3,11 +3,11 @@ title: "仪表盘 (Gauge)"
 description: "用于表达固定最大值下 0–100 比率的圆形视觉组件。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="gauge-demo" />
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Gauge } from "@nebutra/ui/primitives";
@@ -20,7 +20,7 @@ import { Gauge } from "@nebutra/ui/primitives";
 </div>
 ```
 
-## 设计原则 (Design Principles)
+## 设计原则
 
 - Gauge 用于固定最大值下的 0–100 比率：配额使用量、缓存命中率、可用率、账期消耗。
 - 上传进度、多步流程进度这类确定性任务使用 Progress。
@@ -29,7 +29,7 @@ import { Gauge } from "@nebutra/ui/primitives";
 - 不要只靠颜色表达阈值；warning/error 色调旁边要有冗余文案。
 - 默认阈值遵循用量语义：`>=80%` warning，`>=95%` error。健康分这类高分更好的场景应显式传入 `colors`。
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -64,7 +64,7 @@ type GaugeColorMap = Record<string, string> & {
 />
 ```
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - Gauge 设置 `role="progressbar"`，并带有 `aria-valuemin`、`aria-valuemax`、`aria-valuenow`。
 - 使用 `aria-labelledby` 关联相邻标签，例如 “Build Cache Hit Rate, 92 percent”。

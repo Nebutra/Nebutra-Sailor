@@ -3,18 +3,18 @@ title: "开关按钮组 (Toggle Group)"
 description: "一组开关按钮，可以同时按下一个或多个。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="toggle-group-demo" className="min-h-[150px] flex justify-center items-center" />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { ToggleGroup, ToggleGroupItem } from "@nebutra/ui";
 ```
 
-## 属性 (Props)
+## 属性
 
 ### ToggleGroup (根组件)
 
@@ -36,18 +36,18 @@ import { ToggleGroup, ToggleGroupItem } from "@nebutra/ui";
 | `disabled` | `boolean` | `false` | 禁用此特定条目。 |
 | `asChild` | `boolean` | `false` | 作为子元素渲染。 |
 
-## 示例 (Examples)
+## 示例
 
-### 多选模式 (Multiple Selection)
+### 多选模式
 
 <ComponentPreview name="toggle-group-2-demo" className="min-h-[150px] flex justify-center items-center" />
 
 
-### 受控单选 (Controlled Single Selection)
+### 受控单选
 
 <ComponentPreview name="toggle-group-3-demo" className="min-h-[150px] flex justify-center items-center" />
 
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 实现了 WAI-ARIA 工具栏 (toolbar) 模式。使用方向键在条目间导航。每个条目都具有 `aria-pressed` 属性。对于仅含图标的条目，请提供 `aria-label`。

@@ -3,24 +3,24 @@ title: "选择框 (Choicebox)"
 description: "卡片样式的选择控件，支持单选 (radio) 和多选 (checkbox) 模式。具有更大的点击热区，包含标题、描述和可选的自定义内容。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="choicebox-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `ChoiceboxGroup` 是一个提供卡片样式选择项的复合组件。每个条目都有标题、描述以及在选中时显示的可选自定义内容。支持单选（radio）和多选（checkbox）模式。
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { ChoiceboxGroup } from "@nebutra/ui/primitives";
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 单选模式 (Radio Mode - Single Select)
+### 单选模式
 
 ```tsx
 const [value, setValue] = useState("trial");
@@ -45,7 +45,7 @@ const [value, setValue] = useState("trial");
 </ChoiceboxGroup>
 ```
 
-### 多选模式 (Checkbox Mode - Multi Select)
+### 多选模式
 
 ```tsx
 const [value, setValue] = useState<string[]>([]);
@@ -62,7 +62,7 @@ const [value, setValue] = useState<string[]>([]);
 </ChoiceboxGroup>
 ```
 
-### 禁用状态 (Disabled)
+### 禁用状态
 
 ```tsx
 {/* 组级禁用 */}
@@ -77,7 +77,7 @@ const [value, setValue] = useState<string[]>([]);
 </ChoiceboxGroup>
 ```
 
-### 自定义内容 (Custom Content)
+### 自定义内容
 
 当条目被选中时，自定义内容会渲染在标题/描述下方。
 
@@ -89,7 +89,7 @@ const [value, setValue] = useState<string[]>([]);
 </ChoiceboxGroup.Item>
 ```
 
-### 纵向布局 (Column Layout)
+### 纵向布局
 
 ```tsx
 <ChoiceboxGroup direction="column" type="radio" label="选择等级 (Choose a tier)" ...>
@@ -98,7 +98,7 @@ const [value, setValue] = useState<string[]>([]);
 </ChoiceboxGroup>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### ChoiceboxGroup
 
@@ -125,7 +125,7 @@ const [value, setValue] = useState<string[]>([]);
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 选中时显示的自定义内容 |
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 单选模式：组上带有 `role="radiogroup"`，条目上带有 `role="radio"`。
 - 多选模式：组上带有 `role="group"`，条目上带有 `role="checkbox"`。
@@ -140,7 +140,7 @@ const [value, setValue] = useState<string[]>([]);
 - 一个 group 只表达一种决策模型：radio 表示互斥，checkbox 表示可叠加。
 - 禁用选项必须用相邻文案或 Tooltip 解释原因；静默禁用的卡片会被理解为坏掉。
 
-## 另请参阅 (See Also)
+## 另请参阅
 
 - [Checkbox](/zh/docs/components/checkbox) — 标准复选框控件
 - [CheckboxGroup](/zh/docs/components/checkbox-group) — 多选复选框组

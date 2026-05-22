@@ -3,12 +3,12 @@ title: 滚动速度驱动走马灯 (ScrollVelocity)
 description: 由滚动速度驱动的水平走马灯，随滚动加快而加速。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="scroll-velocity-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `ScrollVelocityContainer` 与 `ScrollVelocityRow` 共同构建出一组走马灯风格的水平内容条，其滚动速度会根据您的页面滚动速度动态增减。
 
@@ -18,7 +18,7 @@ description: 由滚动速度驱动的水平走马灯，随滚动加快而加速�
 - 尊重用户的“减弱动画” (`prefers-reduced-motion`) 偏好设置
 - 通过 `ResizeObserver` 测量实现无缝循环滚动，无需手动复制内容
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@nebutra/ui/primitives";
@@ -44,11 +44,11 @@ import { ScrollVelocityContainer, ScrollVelocityRow } from "@nebutra/ui/primitiv
 </ScrollVelocityRow>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### `ScrollVelocityContainer` (容器)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `children` | `ReactNode` | — | `ScrollVelocityRow` 类型的子组件 |
 | `className` | `string` | — | 额外的 CSS 类名 |
@@ -57,14 +57,14 @@ import { ScrollVelocityContainer, ScrollVelocityRow } from "@nebutra/ui/primitiv
 
 ### `ScrollVelocityRow` (走马灯行)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `children` | `ReactNode` | — | 走马灯中需要循环展示的内容 |
 | `baseVelocity` | `number` | `5` | 基础速度（每秒移动内容宽度的百分比） |
 | `direction` | `1 \| -1` | `1` | 滚动方向：`1` 为由左向右，`-1` 为由右向左 |
 | `className` | `string` | — | 行容器的 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 内容会在内部自动复制以填满容器 —— 您无需手动重复输入子元素。
 - 建议使用 `ScrollVelocityContainer` 包裹，以获得“滚动加速”效果；虽然独立行也有本地滚动追踪，但通常需要父级滚动环境支持。

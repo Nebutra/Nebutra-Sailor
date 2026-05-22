@@ -3,12 +3,12 @@ title: 视频播放器 (VideoPlayer)
 description: 自定义视频播放器，带有动态控制层、进度条、音量调节和播放倍速设置。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="video-player-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `VideoPlayer` 是一个基于 HTML5 `<video>` 和 Framer Motion 动画构建的功能完备视频播放器：
 
@@ -18,7 +18,7 @@ description: 自定义视频播放器，带有动态控制层、进度条、音�
 - **播放倍速** —— 可配置的倍速选项（默认：0.5×, 1×, 1.5×, 2×）。
 - **自动隐藏控制栏** —— 控制层在悬停时淡入，鼠标离开时淡出。
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { VideoPlayer } from "@nebutra/ui/primitives";
@@ -38,9 +38,9 @@ import { VideoPlayer } from "@nebutra/ui/primitives";
 <VideoPlayer src="/background.mp4" autoPlay loop />
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `src` | `string` | — | **必需。** 视频源文件 URL |
 | `poster` | `string` | — | 播放前显示的封面图 URL |
@@ -51,7 +51,7 @@ import { VideoPlayer } from "@nebutra/ui/primitives";
 | `showControlsOnMount` | `boolean` | `false` | 挂载后立即显示控制栏 |
 | `className` | `string` | — | 容器的 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 控制层浮窗定位在视频底部的中心位置。
 - `autoPlay` 会自动将视频设为静音（这是现代浏览器的硬性要求）。

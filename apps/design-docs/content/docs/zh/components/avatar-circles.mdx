@@ -3,12 +3,12 @@ title: 头像圈 (AvatarCircles)
 description: 重叠的圆形头像堆栈，带有可选的超出数量指示器。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="avatar-circles-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `AvatarCircles` 渲染一行重叠的圆形头像图像，采用 `-space-x-4` 的负间距。在最后一个头像后会显示一个可选的超出计数器（例如 `+99`），该计数器可以链接至 `overflowUrl`。
 
@@ -19,7 +19,7 @@ description: 重叠的圆形头像堆栈，带有可选的超出数量指示器�
 - 社会认同展示（“加入 1,200+ 用户”）
 - 评论区参与者展示
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { AvatarCircles } from "@nebutra/ui/primitives";
@@ -46,7 +46,7 @@ const avatars = [
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 | ------------- | -------------------- | ------- | -------------------------------------------- |
@@ -64,7 +64,7 @@ const avatars = [
 | `profileUrl` | `string` | 点击头像时的链接地址 |
 | `alt`        | `string` | 替代文本（默认为 "Avatar &#123;index&#125;"） |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 头像在新标签页中打开 (`target="_blank" rel="noopener noreferrer"`)。
 - 悬停效果：使用 `scale-110` 和 `z-10` 使头像放大并置于最前。

@@ -7,7 +7,7 @@ import { ComponentPreview } from "@/components/component-preview";
 
 <ComponentPreview name="tabs-demo" className="mt-4" />
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Tabs } from "@nebutra/ui/primitives";
@@ -28,7 +28,7 @@ const [selected, setSelected] = useState("apple");
 />;
 ```
 
-## 属性 (Props)
+## 属性
 
 ### Tabs
 
@@ -60,7 +60,7 @@ Tabs 基于 Base UI 构建。简单同域视图切换优先使用 `tabs` 数组 
 | `tooltip` | `ReactNode` | — | disabled tab 的约束说明。 |
 | `content` | `ReactNode` | — | 可选内容面板，通过 `TabsContent` 渲染。 |
 
-### 复合 API (Compound API)
+### 复合 API
 
 ```tsx
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
@@ -72,21 +72,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@nebutra/ui/primitives
 | `TabsTrigger` | `value` | 支持 `icon`、`badge` 和原生 button 属性。 |
 | `TabsContent` | `value` | 支持 `keepMounted`；`forceMount` 作为兼容别名保留。 |
 
-## 示例 (Examples)
+## 示例
 
-### 线条变体 (Line Variant)
+### 线条变体
 
 <ComponentPreview name="tabs-line-demo" className="mt-4" />
 
-### 按钮变体 (Button Variant)
+### 按钮变体
 
 <ComponentPreview name="tabs-button-demo" className="mt-4" />
 
-### 胶囊形态 (Pill Shape)
+### 胶囊形态
 
 <ComponentPreview name="tabs-pill-demo" className="mt-4" />
 
-## 最佳实践 (Best Practices)
+## 最佳实践
 
 Tabs 用于同一页面内同域兄弟视图切换，例如 Overview、Logs、Settings。无关页面之间的导航应使用子菜单或侧边导航。
 
@@ -98,7 +98,7 @@ Tabs 用于同一页面内同域兄弟视图切换，例如 Overview、Logs、Se
 
 Tab 标题使用 Title Case 名词，一到两个词。不要把数量拼进标题；使用 `badge` 插槽，数量为 0 时移除。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 Tabs 通过 Base UI 渲染 WAI-ARIA tablist/tab/tabpanel 语义。
 

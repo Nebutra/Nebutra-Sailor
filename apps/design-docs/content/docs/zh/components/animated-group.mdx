@@ -3,12 +3,12 @@ title: 动画组 (AnimatedGroup)
 description: 交错动画容器，将每个子元素包裹在一个 motion 容器中，内置 10 种动画预设或支持完全自定义变体。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="animated-group-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { AnimatedGroup } from "@nebutra/ui";
@@ -20,7 +20,7 @@ import { AnimatedGroup } from "@nebutra/ui";
 </AnimatedGroup>;
 ```
 
-## 预设 (Presets)
+## 预设
 
 | 预设 | 效果 |
 | ------------ | ------------------------------------------------ |
@@ -35,9 +35,9 @@ import { AnimatedGroup } from "@nebutra/ui";
 | `rotate`     | 透明度 + 旋转 -180° → 0° (弹簧动画) |
 | `swing`      | 透明度 + 旋转 -10° → 0° (弹簧动画，低阻尼) |
 
-## 示例 (Examples)
+## 示例
 
-### 模糊滑动 - 用于 Hero 板块 (Blur Slide - Hero Sections)
+### 模糊滑动 - 用于 Hero 板块
 
 ```tsx
 <AnimatedGroup preset="blur-slide" className="flex flex-col gap-6 text-center">
@@ -52,7 +52,7 @@ import { AnimatedGroup } from "@nebutra/ui";
 </AnimatedGroup>
 ```
 
-### 滑动卡片 - 用于功能网格 (Slide Cards - Feature Grid)
+### 滑动卡片 - 用于功能网格
 
 ```tsx
 <AnimatedGroup preset="slide" className="grid grid-cols-3 gap-4">
@@ -62,7 +62,7 @@ import { AnimatedGroup } from "@nebutra/ui";
 </AnimatedGroup>
 ```
 
-### 自定义变体 (Custom Variants)
+### 自定义变体
 
 ```tsx
 <AnimatedGroup
@@ -83,7 +83,7 @@ import { AnimatedGroup } from "@nebutra/ui";
 </AnimatedGroup>
 ```
 
-### 无预设 - 默认淡入 (No Preset - Default Fade)
+### 无预设 - 默认淡入
 
 ```tsx
 <AnimatedGroup className="space-y-2">
@@ -93,7 +93,7 @@ import { AnimatedGroup } from "@nebutra/ui";
 </AnimatedGroup>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 | ----------- | ------------------------------------------- | ------- | ---------------------------------------------------------- |
@@ -102,7 +102,7 @@ import { AnimatedGroup } from "@nebutra/ui";
 | `variants`  | `{ container?: Variants; item?: Variants }` | —       | 自定义 Framer Motion 变体 |
 | `className` | `string`                                    | —       | 外部 `motion.div` 容器的类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 子元素默认以 `staggerChildren: 0.1` 的频率交错显示 —— 即每个子元素比前一个晚 100ms 开始动画。
 - 自定义 `variants` 会覆盖预设。如果同时指定了 `preset` 和 `variants.item`，则 `variants.item` 优先级更高。

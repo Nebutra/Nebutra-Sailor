@@ -3,20 +3,20 @@ title: "光束效果 (Light Rays)"
 description: "从容器上方倾泻而下的柔和动画光束。为 Hero 区域和特色卡片营造出极具戏剧感和电影感的光影效果。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="light-rays-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { LightRays } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础用法 (Basic)
+### 基础用法
 
 ```tsx
 <div className="relative h-[400px] w-full overflow-hidden rounded-xl border">
@@ -25,7 +25,7 @@ import { LightRays } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 金色光束 (Golden Rays)
+### 金色光束
 
 ```tsx
 <div className="relative h-[400px] overflow-hidden rounded-xl bg-black">
@@ -39,7 +39,7 @@ import { LightRays } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 柔和蓝色环境光 (Subtle Blue Ambient)
+### 柔和蓝色环境光
 
 ```tsx
 <div className="relative overflow-hidden rounded-xl">
@@ -52,11 +52,11 @@ import { LightRays } from "@nebutra/ui/primitives"
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
 `LightRays` 继承自 `React.HTMLAttributes<HTMLDivElement>`。
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `count` | `number` | `7` | 动画光束的数量 |
 | `color` | `string` | `"rgba(160,210,255,0.2)"` | 光束渐变的基础颜色 |
@@ -66,7 +66,7 @@ import { LightRays } from "@nebutra/ui/primitives"
 | `ref` | `Ref<HTMLDivElement>` | — | 容器的转发 Ref |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 组件设置了 `pointer-events-none` 且会绝对定位充满父容器。
 - 每道光束的初始位置、角度、宽度、摇摆幅度和时序均为随机产生，以呈现自然的视觉多样性。

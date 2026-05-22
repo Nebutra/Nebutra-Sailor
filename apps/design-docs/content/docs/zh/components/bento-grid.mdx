@@ -3,12 +3,12 @@ title: Bento 网格 (BentoGrid)
 description: 响应式 Bento 风格网格容器，带有具有背景插槽、图标和悬停显示 CTA 的 BentoCard 条目。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="bento-grid-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { BentoGrid, BentoCard } from "@nebutra/ui";
@@ -25,9 +25,9 @@ import { Sparkles } from "lucide-react";
 </BentoGrid>;
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础网格 (Basic Grid)
+### 基础网格
 
 ```tsx
 import { Sparkles, Zap, Lock } from "lucide-react";
@@ -58,7 +58,7 @@ import { Sparkles, Zap, Lock } from "lucide-react";
 </BentoGrid>;
 ```
 
-### 带有背景插槽 (With Background Slot)
+### 带有背景插槽
 
 `background` 属性接受任何 ReactNode —— 可以使用渐变、图像或动画组件：
 
@@ -76,7 +76,7 @@ import { Sparkles, Zap, Lock } from "lucide-react";
 />
 ```
 
-### 自定义行/列跨度 (Custom Row/Column Span)
+### 自定义行/列跨度
 
 使用 `className` 控制网格布局：
 
@@ -99,7 +99,7 @@ import { Sparkles, Zap, Lock } from "lucide-react";
 </BentoGrid>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### BentoGrid (网格容器)
 
@@ -122,21 +122,21 @@ import { Sparkles, Zap, Lock } from "lucide-react";
 | `cta`         | `string`            | `"了解更多"` | CTA 按钮文本 |
 | `className`   | `string`            | — | 网格跨度类名 (`lg:col-span-2` 等) |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 在**桌面端** (lg)，CTA 按钮初始状态下是隐藏的，通过向上滑动悬停显示。
 - 在**移动端**，CTA 始终显示在描述下方。
 - 背景插槽渲染在卡片顶部的 `div` 容器中 —— 在背景内部使用 `absolute inset-0` 定位以实现全覆盖。
 - 悬停时图标会缩小至 75% (`group-hover:scale-75`)，且内容会向上滑动 (`group-hover:-translate-y-10`)。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 提供 `href` 时，`BentoCard` 只渲染一个链接目标。不要在 `background` 插槽里嵌套额外链接或按钮。
 - `name` 要足够短，让它能成为卡片动作的有效可访问名称。
 - 装饰性背景应对辅助技术隐藏。关键信息必须放在 `name` 和 `description`，不要烘焙在图片里。
 - 保留卡片链接的可见焦点；hover 才出现的 CTA 不能让键盘用户失去导航线索。
 
-## 设计契约 (Design Contract)
+## 设计契约
 
 - `BentoGrid` 用于强调节奏和横向比较的编辑型功能组，不用于高密度数据扫描。
 - 每张卡片只保留一个主动作。如果需要多个动作，应升级为普通 surface 并放置显式控件。

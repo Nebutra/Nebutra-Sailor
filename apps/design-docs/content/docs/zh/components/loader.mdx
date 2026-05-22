@@ -3,12 +3,12 @@ title: 加载器 (Loader)
 description: 通用的加载指示器，包含 12 种视觉变体 —— 从旋转的圆形到 AI 打字效果。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="loader-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Loader } from "@nebutra/ui";
@@ -18,7 +18,7 @@ import { Loader } from "@nebutra/ui";
 <Loader variant="loading-dots" text="处理中 (Processing)" />
 ```
 
-## 变体 (Variants)
+## 变体
 
 ### 圆形 (Circular) (默认)
 
@@ -28,7 +28,7 @@ import { Loader } from "@nebutra/ui";
 <Loader variant="circular" />
 ```
 
-### 经典 (Classic)
+### 经典
 
 iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组成。
 
@@ -36,7 +36,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="classic" />
 ```
 
-### 脉冲 (Pulse)
+### 脉冲
 
 居中的脉冲式环形动画 —— 简约且含蓄。
 
@@ -44,7 +44,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="pulse" />
 ```
 
-### 脉冲点 (Pulse Dot)
+### 脉冲点
 
 单个脉冲式的圆点 —— 非常适合内联或紧凑的上下文。
 
@@ -52,7 +52,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="pulse-dot" />
 ```
 
-### 动画点 (Dots)
+### 动画点
 
 三个上下弹跳的圆点 —— 经典的聊天和内容加载指示器。
 
@@ -60,7 +60,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="dots" />
 ```
 
-### 打字中 (Typing)
+### 打字中
 
 聊天打字指示器 —— 三个按顺序循环改变透明度的圆点。
 
@@ -68,7 +68,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="typing" />
 ```
 
-### 波纹 (Wave)
+### 波纹
 
 五个带音频波纹动画的垂直长条 —— 媒体播放器的理想选择。
 
@@ -76,7 +76,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="wave" />
 ```
 
-### 长条 (Bars)
+### 长条
 
 三个缩放的长条 —— 适用于代码编辑器或仪表盘场景。
 
@@ -84,7 +84,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="bars" />
 ```
 
-### 终端 (Terminal)
+### 终端
 
 带有 `>` 提示符的终端光标闪烁效果 —— 用于 AI 和 CLI 上下文。
 
@@ -92,7 +92,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="terminal" />
 ```
 
-### 文字闪烁 (Text Blink)
+### 文字闪烁
 
 在前景色和柔和色之间交替闪烁的文字 —— 表示 AI 正在思考。
 
@@ -100,7 +100,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="text-blink" text="思考中 (Thinking)" />
 ```
 
-### 文字流光 (Text Shimmer)
+### 文字流光
 
 在文字上扫过的流光渐变效果 —— 高级感的加载状态。
 
@@ -108,7 +108,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="text-shimmer" text="正在生成 (Generating)" />
 ```
 
-### 加载点 (Loading Dots)
+### 加载点
 
 文字后带有动画效果的尾随点 —— 传统的“思考中...”模式。
 
@@ -116,7 +116,7 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader variant="loading-dots" text="处理中 (Processing)" />
 ```
 
-## 尺寸 (Sizes)
+## 尺寸
 
 所有变体均支持 `sm`、`md`（默认）和 `lg`。
 
@@ -126,16 +126,16 @@ iOS 风格的加载旋转器，由 12 条从中心向外辐射的渐隐长条组
 <Loader size="lg" />
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `variant` | `"circular" \| "classic" \| "pulse" \| "pulse-dot" \| "dots" \| "typing" \| "wave" \| "bars" \| "terminal" \| "text-blink" \| "text-shimmer" \| "loading-dots"` | `"circular"` | 加载器的视觉样式 |
 | `size` | `"sm" \| "md" \| "lg"` | `"md"` | 加载器的尺寸 |
 | `text` | `string` | `"Thinking"` | 文本标签（仅用于文本类变体：`text-blink`, `text-shimmer`, `loading-dots`） |
 | `className` | `string` | — | 额外的 Tailwind 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 所有变体都包含 `<span className="sr-only">正在加载 (Loading)</span>`，以满足屏幕阅读器的无障碍需求。
 - `text` 属性仅对 `text-blink`、`text-shimmer` 和 `loading-dots` 变体有效；图形类变体将忽略此属性。

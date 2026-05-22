@@ -3,12 +3,12 @@ title: 功能图标条目 (FeatureIconItem)
 description: 原语级的功能项，采用紧凑的“图标+文字”行内布局，包含图标、标题和可选描述。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="feature-icon-item-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { FeatureIconItem } from "@nebutra/ui";
@@ -21,9 +21,9 @@ import { Zap } from "lucide-react";
 />
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 功能网格 (Feature Grid)
+### 功能网格
 
 ```tsx
 <div className="grid grid-cols-2 gap-6">
@@ -34,7 +34,7 @@ import { Zap } from "lucide-react";
 </div>
 ```
 
-### 紧凑列表（无描述） (Compact List)
+### 紧凑列表（无描述）
 
 ```tsx
 <div className="space-y-3">
@@ -44,7 +44,7 @@ import { Zap } from "lucide-react";
 </div>
 ```
 
-### 自定义图标颜色 (Custom Icon Color)
+### 自定义图标颜色
 
 ```tsx
 <FeatureIconItem
@@ -55,9 +55,9 @@ import { Zap } from "lucide-react";
 />
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `icon` | `LucideIcon` | — | 与标题行内显示的图标 |
 | `title` | `string` | — | 功能名称 |
@@ -65,6 +65,6 @@ import { Zap } from "lucide-react";
 | `iconClassName` | `string` | — | 覆盖图标的颜色/尺寸 |
 | `className` | `string` | — | 额外的容器类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - **FeatureIconItem vs FeatureCheckItem**: `FeatureIconItem` 要求必须传入 `icon` 属性（无默认值） —— 非常适合使用不同图标的功能网格。`FeatureCheckItem` 默认使用 `Check` 图标 —— 非常适合所有项目共享相同“勾选”视觉效果的任务列表。

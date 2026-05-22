@@ -3,12 +3,12 @@ title: "警告对话框 (Alert Dialog)"
 description: "中断用户操作并要求显式确认的模态对话框。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="alert-dialog-demo" className="min-h-[200px] flex justify-center items-center"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import {
@@ -24,7 +24,7 @@ import {
 } from "@nebutra/ui/primitives";
 ```
 
-## 属性 (Props)
+## 属性
 
 ### AlertDialog (根组件)
 
@@ -56,14 +56,14 @@ import {
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 取消按钮标签 |
 
-## 示例 (Examples)
+## 示例
 
-### 自定义操作处理程序 (Custom Action Handler)
+### 自定义操作处理程序
 
 <ComponentPreview name="alert-dialog-demo" className="min-h-[200px] flex justify-center items-center" />
 
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 基于 Base UI AlertDialog 构建 — 遵循 WAI-ARIA [警告和消息对话框模式 (Alert and Message Dialogs pattern)](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/)。
 - 渲染时带有 `role="alertdialog"` 和 `aria-modal="true"`。

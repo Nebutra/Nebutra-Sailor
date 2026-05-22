@@ -3,26 +3,26 @@ title: "文本微光 (Text Shimmer)"
 description: "平滑的微光/闪烁效果持续扫过文本。非常适合 AI 加载状态、高级标签以及强调操作调用 (Call-to-action)。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="text-shimmer-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { TextShimmer } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 加载状态 (Loading State)
+### 加载状态
 
 ```tsx
 <TextShimmer duration={1}>正在生成代码... (Generating code...)</TextShimmer>
 ```
 
-### AI 输入指示器 (AI Typing Indicator)
+### AI 输入指示器
 
 ```tsx
 <TextShimmer duration={1.5} className="text-sm text-muted-foreground">
@@ -30,7 +30,7 @@ import { TextShimmer } from "@nebutra/ui/primitives"
 </TextShimmer>
 ```
 
-### 通过 CSS 变量自定义颜色 (Custom Colors via CSS Variables)
+### 通过 CSS 变量自定义颜色
 
 ```tsx
 <TextShimmer
@@ -41,7 +41,7 @@ import { TextShimmer } from "@nebutra/ui/primitives"
 </TextShimmer>
 ```
 
-### 作为标题渲染 (As Heading)
+### 作为标题渲染
 
 ```tsx
 <TextShimmer as="h1" className="text-4xl font-bold" duration={3}>
@@ -49,13 +49,13 @@ import { TextShimmer } from "@nebutra/ui/primitives"
 </TextShimmer>
 ```
 
-### 暂停状态（静态显示） (Paused)
+### 暂停状态（静态显示）
 
 ```tsx
 <TextShimmer paused>静态文本 (Static Text)</TextShimmer>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -66,7 +66,7 @@ import { TextShimmer } from "@nebutra/ui/primitives"
 | `paused` | `boolean` | `false` | 是否暂停动画 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## CSS 变量 (CSS Variables)
+## CSS 变量
 
 可以通过覆盖 CSS 变量来自定义微光颜色：
 

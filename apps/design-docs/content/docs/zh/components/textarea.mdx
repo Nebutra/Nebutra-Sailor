@@ -3,11 +3,11 @@ title: "多行文本框 (Textarea)"
 description: "用于备注、描述和较长自由文本的 token 化多行输入原语。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="textarea-demo" className="max-w-[400px]" />
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Textarea } from "@nebutra/ui/primitives";
@@ -23,7 +23,7 @@ import { Textarea } from "@nebutra/ui/primitives";
 />
 ```
 
-## 属性 (Props)
+## 属性
 
 支持原生 `<textarea>` 的所有属性，此外还包括：
 
@@ -36,13 +36,13 @@ import { Textarea } from "@nebutra/ui/primitives";
 | `onValueChange` | `(value: string) => void` | — | 除原生 `onChange` 外的 value-first 回调。 |
 | `fieldClassName` | `string` | — | label、辅助说明、错误消息外层容器的类名。 |
 
-## 示例 (Examples)
+## 示例
 
-### 带字符计数 (With Character Count)
+### 带字符计数
 
 <ComponentPreview name="textarea-with-limit-demo" className="max-w-[400px]" />
 
-### 错误状态 (Error)
+### 错误状态
 
 ```tsx
 <Textarea
@@ -54,18 +54,18 @@ import { Textarea } from "@nebutra/ui/primitives";
 />
 ```
 
-### 禁用状态 (Disabled)
+### 禁用状态
 
 <ComponentPreview name="textarea-disabled-demo" className="max-w-[400px]" />
 
-## 设计原则 (Design Principles)
+## 设计原则
 
 - Textarea 只用于天然会换行的内容：发布说明、描述、评论和事故摘要。
 - 视觉保持克制：语义 border、background、text、muted placeholder 和 token 化焦点环，不叠额外阴影。
 - 鼠标和键盘聚焦都由组件的 `:focus` 接管，避免浏览器原生方形 outline 从圆角控件外漏。
 - 只有界面有足够纵向空间时才使用 `ExpandingTextarea`；密集表单和 footer 里固定 rows 更稳。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 `label`、`description` 和字符串 `error` 会自动关联到 `id`、`aria-describedby`、`aria-invalid`。错误文本使用 `role="alert"`。
 

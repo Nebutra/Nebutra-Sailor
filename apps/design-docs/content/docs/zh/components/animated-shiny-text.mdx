@@ -3,26 +3,26 @@ title: "动画闪烁文本 (Animated Shiny Text)"
 description: "具有动画光晕效果的文本，光晕会横向扫过。非常适合用于徽章、公告和发布标题。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="animated-shiny-text-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { AnimatedShinyText } from "@nebutra/ui/primitives";
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础用法 (Basic)
+### 基础用法
 
 ```tsx
 <AnimatedShinyText>✨ 介绍我们的新功能 (Introducing our new feature)</AnimatedShinyText>
 ```
 
-### 在公告徽章中 (In an Announcement Badge)
+### 在公告徽章中
 
 ```tsx
 <div className="rounded-full border px-4 py-1.5 text-sm">
@@ -30,7 +30,7 @@ import { AnimatedShinyText } from "@nebutra/ui/primitives";
 </div>
 ```
 
-### 自定义闪烁宽度 (Custom Shimmer Width)
+### 自定义闪烁宽度
 
 ```tsx
 <AnimatedShinyText shimmerWidth={200} className="text-xl font-bold">
@@ -38,7 +38,7 @@ import { AnimatedShinyText } from "@nebutra/ui/primitives";
 </AnimatedShinyText>
 ```
 
-### 更快的动画速度 (Faster Animation)
+### 更快的动画速度
 
 ```tsx
 <AnimatedShinyText duration={4} className="text-lg">
@@ -46,7 +46,7 @@ import { AnimatedShinyText } from "@nebutra/ui/primitives";
 </AnimatedShinyText>
 ```
 
-## 属性 (Props)
+## 属性
 
 `AnimatedShinyText` 继承自 `React.ComponentPropsWithoutRef<"span">`。
 
@@ -57,7 +57,7 @@ import { AnimatedShinyText } from "@nebutra/ui/primitives";
 | `className`    | `string`    | —       | 额外的 CSS 类名 |
 | `children`     | `ReactNode` | —       | 文本内容 |
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 渲染为 `<span>` —— 在语义上保持中立。
 - 闪烁效果纯粹是视觉上的；屏幕阅读器读取的文本内容保持不变。

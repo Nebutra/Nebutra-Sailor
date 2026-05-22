@@ -3,12 +3,12 @@ title: "面包屑 (Breadcrumb)"
 description: "显示用户当前位置的分层导航路径。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="breadcrumb-demo" className="min-h-[150px] flex justify-center items-center" />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import {
@@ -22,7 +22,7 @@ import {
 } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 ### Breadcrumb
 
@@ -54,14 +54,14 @@ import {
 | `children` | `ReactNode` | `ChevronRight` | 自定义分隔图标 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 示例 (Examples)
+## 示例
 
-### 带有折叠的中间项 (With Collapsed Middle Items)
+### 带有折叠的中间项
 
 <ComponentPreview name="breadcrumb-custom-separator-demo" className="min-h-[100px] flex justify-center items-center" />
 
 
-### 配合 Next.js Link (With Next.js Link)
+### 配合 Next.js Link
 
 ```tsx
 import Link from "next/link"
@@ -71,7 +71,7 @@ import Link from "next/link"
 </BreadcrumbLink>
 ```
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 根级 `<nav>` 元素具有 `aria-label="breadcrumb"` 属性。
 - `BreadcrumbPage` （当前页面项）具有 `aria-current="page"` 属性。

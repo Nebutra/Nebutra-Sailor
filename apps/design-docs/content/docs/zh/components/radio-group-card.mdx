@@ -3,22 +3,22 @@ title: "卡片式单选组 (Radio Group Card)"
 description: "卡片样式的单选按钮组变体，用于提供视觉表现力更丰富的选项选择。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="radio-group-card-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { RadioGroupCard, RadioGroupCardItem } from "@nebutra/ui/primitives"
 ```
 
-## 属性 (Props)
+## 属性
 
 ### RadioGroupCard (单选组)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `value` | `string` | — | 受控模式下的选中值 |
 | `defaultValue` | `string` | — | 非受控模式下的默认选中值 |
@@ -29,7 +29,7 @@ import { RadioGroupCard, RadioGroupCardItem } from "@nebutra/ui/primitives"
 
 ### RadioGroupCardItem (单选卡片项)
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `value` | `string` | — | **必需。** 该选项对应的数值 |
 | `id` | `string` | — | 用于无障碍标签关联的 ID |
@@ -37,9 +37,9 @@ import { RadioGroupCard, RadioGroupCardItem } from "@nebutra/ui/primitives"
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 卡片内容（通常为图标 + 标签 + 描述） |
 
-## 示例 (Examples)
+## 示例
 
-### 价格方案选择器 (Pricing Plan Selector)
+### 价格方案选择器
 
 ```tsx
 <RadioGroupCard defaultValue="pro" className="grid grid-cols-3 gap-4">
@@ -61,7 +61,7 @@ import { RadioGroupCard, RadioGroupCardItem } from "@nebutra/ui/primitives"
 </RadioGroupCard>
 ```
 
-## 无障碍支持 (Accessibility)
+## 无障碍支持
 
 - 选中项具有明显的选中指示符及边框高亮。
 - 每个卡片项均带有 `role="radio"` 属性以及 `aria-checked` 状态。

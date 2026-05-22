@@ -3,24 +3,24 @@ title: 价格卡片 (PricingCard)
 description: 可组合的价格卡片组件，具有毛玻璃质感的页头、徽章、价格展示和功能列表插槽。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="pricing-card-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `PricingCard` 提供了一个带有可组合子组件的命名空间，用于构建价格卡片。它包含毛玻璃效果的页头、方案名称、可选徽章、支持划线价的价格展示，以及带有关联分隔符的功能列表。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { PricingCard } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 基础价格卡片 (Basic pricing card)
+### 基础价格卡片
 
 ```tsx
 import { Check } from "lucide-react";
@@ -53,7 +53,7 @@ import { PricingCard } from "@nebutra/ui/primitives";
 </PricingCard.Card>
 ```
 
-### 带有原始价格（划线价） (With original price)
+### 带有原始价格（划线价）
 
 ```tsx
 <PricingCard.Price>
@@ -63,7 +63,7 @@ import { PricingCard } from "@nebutra/ui/primitives";
 </PricingCard.Price>
 ```
 
-### 带有分隔符（锁定功能） (With separator)
+### 带有分隔符（锁定功能）
 
 ```tsx
 <PricingCard.Body>
@@ -83,7 +83,7 @@ import { PricingCard } from "@nebutra/ui/primitives";
 </PricingCard.Body>
 ```
 
-### 计划名称中带有图标 (With icon in plan name)
+### 计划名称中带有图标
 
 ```tsx
 import { Zap } from "lucide-react";
@@ -94,7 +94,7 @@ import { Zap } from "lucide-react";
 </PricingCard.PlanName>
 ```
 
-## 组件列表 (Components)
+## 组件列表
 
 | 子组件 | 对应 HTML 元素 | 描述 |
 |--------------|-------------|-------------|
@@ -113,19 +113,19 @@ import { Zap } from "lucide-react";
 | `PricingCard.ListItem` | `<li>` | 单个功能项（图标 + 文字） |
 | `PricingCard.Separator` | `<div>` | 带有居中标签文字的分隔线 |
 
-## 属性 (Props)
+## 属性
 
 所有子组件均继承其底层 HTML 元素的属性。
 
 ### PricingCard.Header 特有属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `glassEffect` | `boolean` | `true` | 是否应用渐变毛玻璃遮盖效果 |
 
 ### PricingCard.Separator 特有属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `children` | `string` | `"Upgrade to access"` | 分隔线上的标签文字 |
 
@@ -143,7 +143,7 @@ import { Zap } from "lucide-react";
 - docs 和产品代码优先使用 namespace API，让 anatomy 可读。individual exports 用于高级组合，不是第二套默认 API。
 - locked-feature separator 只描述 access boundary，不能暗示组件本身能执行授权。
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 为了提供更大的灵活性，各组件也支持不带命名空间模式的导出（如 `PricingCardRoot`, `PricingCardHeader` 等）。
 - `PlanName` 组件会自动将图标大小设为 `size-4`，除非图标自带显式的尺寸类名。

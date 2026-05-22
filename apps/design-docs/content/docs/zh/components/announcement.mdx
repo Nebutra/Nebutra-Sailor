@@ -3,12 +3,12 @@ title: 公告 (Announcement)
 description: 胶囊形状的公告徽章复合组件，具有可选的标签 (tag) 和标题 (title) 区域。基于 Badge 组件构建。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="announcement-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Announcement, AnnouncementTag, AnnouncementTitle } from "@nebutra/ui";
@@ -22,9 +22,9 @@ import { Announcement, AnnouncementTag, AnnouncementTitle } from "@nebutra/ui";
 </Announcement>;
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础公告 (Basic Announcement)
+### 基础公告
 
 带有类别标签和标题的标准模式：
 
@@ -35,7 +35,7 @@ import { Announcement, AnnouncementTag, AnnouncementTitle } from "@nebutra/ui";
 </Announcement>
 ```
 
-### 带有箭头图标 (With Arrow Icon)
+### 带有箭头图标
 
 ```tsx
 import { ArrowUpRight } from "lucide-react";
@@ -49,7 +49,7 @@ import { ArrowUpRight } from "lucide-react";
 </Announcement>;
 ```
 
-### 作为链接使用 (As a Link)
+### 作为链接使用
 
 使用锚点标签 (`<a>`) 包裹，使整个徽章可点击：
 
@@ -65,7 +65,7 @@ import { ArrowUpRight } from "lucide-react";
 </a>
 ```
 
-### 主题化变体 (Themed Variants)
+### 主题化变体
 
 将 `themed` 属性与带有颜色的 `className` 结合使用，用于状态样式的公告：
 
@@ -95,7 +95,7 @@ import { ArrowUpRight } from "lucide-react";
 </Announcement>;
 ```
 
-### 仅显示标题 - 无标签 (Title Only - No Tag)
+### 仅显示标题 - 无标签
 
 ```tsx
 <Announcement>
@@ -105,7 +105,7 @@ import { ArrowUpRight } from "lucide-react";
 </Announcement>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### Announcement (根组件)
 
@@ -129,7 +129,7 @@ import { ArrowUpRight } from "lucide-react";
 | `className` | `string`          | —       | 额外的 Tailwind 类名 |
 | `children`  | `React.ReactNode` | —       | 标题文本和可选图标 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - `AnnouncementTag` 和 `AnnouncementTitle` **必须**在 `Announcement` 内部使用 —— 它们通过 React Context 读取 `themed` 标志。在外部使用会抛出错误。
 - `themed` 属性会将 `AnnouncementTag` 的背景更改为 `bg-background/60`（而不是 `bg-foreground/5`），这在有色背景上效果更好。

@@ -3,7 +3,7 @@ title: "卡片 (Card)"
 description: "使用复合组件模式的内容容器。包含五种视觉变体（默认/悬浮/带边框/幽灵/渐变）和三种内边距预设。"
 ---
 
-## 使用方法 (Usage)
+## 使用方法
 
 <ComponentPreview name="card-demo" className="max-w-[400px]">
   <NebutraCard variant="bordered" padding="md">
@@ -31,9 +31,9 @@ description: "使用复合组件模式的内容容器。包含五种视觉变体
 
 Card 组件使用了 **复合组件 (Compound Component)** API — 可以通过 `Card.Header`、`Card.Body` 等方式访问子组件。
 
-## 示例 (Examples)
+## 示例
 
-### 基础用法 (Basic)
+### 基础用法
 
 <ComponentPreview name="card-2-demo" className="max-w-[400px]">
   <NebutraCard variant="default" padding="md">
@@ -65,7 +65,7 @@ Card 组件使用了 **复合组件 (Compound Component)** API — 可以通过 
   ```
 </ComponentPreview>
 
-### 所有变体 (All Variants)
+### 所有变体
 
 ```tsx
 <Card variant="default" padding="md">...</Card>
@@ -75,7 +75,7 @@ Card 组件使用了 **复合组件 (Compound Component)** API — 可以通过 
 <Card variant="gradient" padding="md">...</Card>   {/* 品牌渐变边框 */}
 ```
 
-### 内边距尺寸 (Padding Sizes)
+### 内边距尺寸
 
 ```tsx
 <Card variant="bordered" padding="sm">...</Card>  {/* 16px */}
@@ -84,7 +84,7 @@ Card 组件使用了 **复合组件 (Compound Component)** API — 可以通过 
 <Card variant="bordered" padding="none">...</Card> {/* 无内边距 */}
 ```
 
-### 统计卡片 (Stats Card)
+### 统计卡片
 
 ```tsx
 <Card variant="elevated" padding="md">
@@ -98,7 +98,7 @@ Card 组件使用了 **复合组件 (Compound Component)** API — 可以通过 
 </Card>
 ```
 
-### 带有图标的功能卡片 (Feature Card with Icon)
+### 带有图标的功能卡片
 
 ```tsx
 import { Zap } from "lucide-react"
@@ -116,7 +116,7 @@ import { Zap } from "lucide-react"
 </Card>
 ```
 
-### 渐变特色卡片 (Gradient Featured Card)
+### 渐变特色卡片
 
 <ComponentPreview name="card-pricing-demo" className="max-w-[400px]">
   <NebutraCard variant="gradient" padding="lg">
@@ -148,7 +148,7 @@ import { Zap } from "lucide-react"
   ```
 </ComponentPreview>
 
-## 属性 (Props)
+## 属性
 
 ### Card
 
@@ -159,7 +159,7 @@ import { Zap } from "lucide-react"
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 通过子组件传入卡片内容 |
 
-### 子组件 (Subcomponents)
+### 子组件
 
 | 组件 | 元素 | 描述 |
 |-----------|---------|-------------|
@@ -170,12 +170,12 @@ import { Zap } from "lucide-react"
 | `Card.Title` | `h3` | 卡片标题 — 请维护文档的标题层级 |
 | `Card.Description` | `p` | 使用 `text-muted-foreground` 样式的描述性文本 |
 
-## 设计令牌 (Design Tokens)
+## 设计令牌
 
 内边距：`cardTokens.padding` — sm=16px, md=24px, lg=32px。
 阴影等级：`cardTokens.shadow` — 映射到 `primitiveShadow.sm/md/lg`。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - `Card.Title` 渲染为 `<h3>` — 在页面中请保持正确的标题层级。
 - 对于交互式卡片（例如可点击的功能卡片），请使用 `<a>` 或 `<button>` 标签进行包裹。

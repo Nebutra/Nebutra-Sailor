@@ -3,12 +3,12 @@ title: 标题 (Heading)
 description: 语义化标题原语，渲染 h1–h6 标签，支持排版 Token 和可选的展示样式。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="heading-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Heading } from "@nebutra/ui";
@@ -16,9 +16,9 @@ import { Heading } from "@nebutra/ui";
 <Heading level={2}>章节标题 (Section Title)</Heading>
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 标题层级 (Heading Levels)
+### 标题层级
 
 ```tsx
 <Heading level={1}>标题 1 (Heading 1)</Heading>
@@ -29,7 +29,7 @@ import { Heading } from "@nebutra/ui";
 <Heading level={6}>标题 6 (Heading 6)</Heading>
 ```
 
-### 展示样式 (Display Style)
+### 展示样式
 
 对 `level={1}` 和 `level={2}` 使用 `display` 属性，以获得 Hero 级别的超大标题样式（display-1 和 display-2）。
 
@@ -54,7 +54,7 @@ import { Heading } from "@nebutra/ui";
 </Heading>
 ```
 
-### 使用颜色 Token (With Color Tokens)
+### 使用颜色 Token
 
 ```tsx
 <Heading level={2} color="muted">
@@ -66,7 +66,7 @@ import { Heading } from "@nebutra/ui";
 </Heading>
 ```
 
-### 居中对齐 (Centered Alignment)
+### 居中对齐
 
 ```tsx
 <Heading level={2} align="center" className="mb-4">
@@ -74,7 +74,7 @@ import { Heading } from "@nebutra/ui";
 </Heading>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -85,7 +85,7 @@ import { Heading } from "@nebutra/ui";
 | `align` | `"left" \| "center" \| "right"` | — | 文本对齐方式 |
 | `className` | `string` | — | 额外的 Tailwind 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 5 级和 6 级标题使用与 4 级相同的视觉样式 (`heading-4`) —— 区别仅在于语义。
 - `display` 模式仅适用于 1 级和 2 级；更高级别将始终使用标准的标题样式。

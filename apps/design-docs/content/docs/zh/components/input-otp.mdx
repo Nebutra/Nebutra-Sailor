@@ -3,17 +3,17 @@ title: "验证码输入框 (Input OTP)"
 description: "带有独立字符插槽的一次性密码输入框，基于 input-otp 构建。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="input-otp-demo" className="min-h-[200px] flex justify-center items-center" />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 <ComponentPreview name="input-otp-numeric-demo" className="min-h-[200px] flex justify-center items-center"  />
 
 
-## 属性 (Props)
+## 属性
 
 ### InputOTP (根组件)
 
@@ -33,14 +33,14 @@ description: "带有独立字符插槽的一次性密码输入框，基于 input
 | `index` | `number` | — | **必填。** 从零开始的插槽索引 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 示例 (Examples)
+## 示例
 
 ### 仅限数字 (4 位 PIN 码)
 
 <ComponentPreview name="input-otp-numeric-demo" className="min-h-[200px] flex justify-center items-center"  />
 
 
-### 受控 OTP (Controlled OTP)
+### 受控 OTP
 
 ```tsx
 const [otp, setOtp] = useState("")
@@ -56,7 +56,7 @@ const [otp, setOtp] = useState("")
 {otp.length === 6 && <p>完整的验证码： {otp}</p>}
 ```
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 渲染一个隐藏的原生 `<input>` 元素 —— 屏幕阅读器可以正常交互。
 - 每个视觉插槽都会视觉化跟踪光标位置。

@@ -3,23 +3,23 @@ title: "上下文卡片 (Context Card)"
 description: "在密集产品界面中展示实体元数据的 hover / focus 卡片。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="context-card-demo"  />
 
-## 概览 (Overview)
+## 概览
 
 `ContextCard` 用于在悬停或键盘聚焦时展示紧凑实体信息：项目、部署、用户、团队、API Key、Webhook 投递或套餐状态。它不是 `Tooltip` 的替代品。一句话解释用 `Tooltip`，2-4 行元数据用 `ContextCard`，长内容或多操作流转到 `Drawer` 或详情页。
 
 底层基于 Base UI Popover，而不是 Tooltip，因此可以承载一个可键盘访问的主操作。触发器必须保留自己的可访问名称，卡片只是补充上下文。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { ContextCard } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
 ### 实体元数据
 
@@ -80,7 +80,7 @@ import { Button, ContextCard } from "@nebutra/ui/primitives";
 </ContextCard.Trigger>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### ContextCard.Trigger
 
@@ -106,7 +106,7 @@ import { Button, ContextCard } from "@nebutra/ui/primitives";
 | `metadata` | `{ id?: string; label: ReactNode; value?: ReactNode }[]` | - | 2-4 行紧凑 `Label: value` 元数据。缺失值显示 `—` |
 | `action` | `ReactNode` | - | 可选的单个主操作 |
 
-## 最佳实践 (Best Practices)
+## 最佳实践
 
 - 用 Context Card 展示实体元数据：用户、部署、项目、Webhook、API Key 或套餐。
 - 不要承载破坏性操作。鼠标移动时卡片可能关闭。
@@ -114,7 +114,7 @@ import { Button, ContextCard } from "@nebutra/ui/primitives";
 - 不要把 Context Card 嵌套在 Tooltip 或另一个 Context Card 中。
 - 不要重复触发器已经展示的信息。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 悬停和键盘聚焦都会打开，默认入口延迟来自组件 motion token：150ms。
 - 触发器聚焦时按 `Enter` 或 `ArrowDown`，可把焦点移动到卡片内的可聚焦操作。

@@ -3,18 +3,18 @@ title: 动画渐变文本 (AnimatedGradientText)
 description: 具有持续滚动的渐变闪烁效果的文本组件。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="animated-gradient-text-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `AnimatedGradientText` 渲染一个 `<span>`，其背景为水平滚动的渐变效果，并裁剪应用于文本。渐变效果在 `colorFrom` 和 `colorTo` 之间持续循环，营造出闪烁的视觉效果。
 
 **注意：** 该组件使用了 `animate-gradient` CSS 类，必须在您的全局样式中进行定义。导出的 `ANIMATED_GRADIENT_CSS` 常量包含了所需的 CSS 代码。
 
-## 配置 (Setup)
+## 配置
 
 将以下 CSS 添加到您的全局样式表或 Tailwind 配置中：
 
@@ -37,7 +37,7 @@ import { ANIMATED_GRADIENT_CSS } from "@nebutra/ui/primitives";
 // 将 ANIMATED_GRADIENT_CSS 注入到您的全局 <style> 标签中
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { AnimatedGradientText } from "@nebutra/ui/primitives";
@@ -59,7 +59,7 @@ import { AnimatedGradientText } from "@nebutra/ui/primitives";
 </h1>
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 | ----------- | ----------- | ----------- | ------------------------------------------------------------------------------------- |
@@ -71,7 +71,7 @@ import { AnimatedGradientText } from "@nebutra/ui/primitives";
 
 所有其他的 `<span>` 属性（如 `id`、`aria-*`、事件处理程序等）都会透传。
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 渐变模式为 `colorFrom → colorTo → colorFrom`，从而产生无缝循环效果。
 - `speed=0` 会有效地停止动画（渐变依然可见但保持静态）。

@@ -3,24 +3,24 @@ title: 可展开标签 (ExpandableTabs)
 description: 动画标签栏，选中的标签会展开并显示其文字标签。
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="expandable-tabs-demo"  />
 
 
-## 概览 (Overview)
+## 概览
 
 `ExpandableTabs` 使用仅图标的按钮渲染水平标签栏，在选中时会平滑地展开以显示其标签文本。点击标签栏外部会取消选中当前活动的标签。支持在标签组之间添加可选的分隔线。
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { ExpandableTabs } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 基础用法 (Basic)
+### 基础用法
 
 ```tsx
 import { Home, Settings, Bell, User } from "lucide-react";
@@ -36,7 +36,7 @@ import { Home, Settings, Bell, User } from "lucide-react";
 />
 ```
 
-### 带有分隔线 (With separators)
+### 带有分隔线
 
 分隔线可以使用垂直线对标签进行视觉上的分组。
 
@@ -56,7 +56,7 @@ import { Home, BarChart, Bell, Settings, User } from "lucide-react";
 />
 ```
 
-### 自定义活动颜色 (Custom active color)
+### 自定义活动颜色
 
 ```tsx
 <ExpandableTabs
@@ -65,7 +65,7 @@ import { Home, BarChart, Bell, Settings, User } from "lucide-react";
 />
 ```
 
-### 受控状态 (Controlled state)
+### 受控状态
 
 ```tsx
 const [activeTab, setActiveTab] = useState<number | null>(null);
@@ -79,9 +79,9 @@ const [activeTab, setActiveTab] = useState<number | null>(null);
 />
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `tabs` | `TabItem[]` | — | **必填。** 标签或分隔线对象的数组 |
 | `activeColor` | `string` | `"text-primary"` | 活动标签的 Tailwind 文本颜色类名 |
@@ -103,7 +103,7 @@ interface Separator {
 }
 ```
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 点击标签栏外部会调用 `onChange(null)` 并折叠所有标签。
 - 展开动画使用 Framer Motion 的弹簧效果 (`bounce: 0, duration: 0.6`)。

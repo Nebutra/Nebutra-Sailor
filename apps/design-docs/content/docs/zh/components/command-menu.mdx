@@ -3,7 +3,7 @@ title: "命令菜单 (Command Menu)"
 description: "用于全局键盘优先产品操作的 Dialog 命令面板。"
 ---
 
-## 概览 (Overview)
+## 概览
 
 `CommandMenu` 是一个基于 `cmdk` 和 Dialog 的命令面板。它适合全局、键盘优先的产品操作，例如部署项目、邀请成员、切换主题或打开某个产品工具。
 
@@ -11,15 +11,15 @@ description: "用于全局键盘优先产品操作的 Dialog 命令面板。"
 
 <ComponentPreview name="command-menu-demo" className="min-h-[320px] w-full" />
 
-## 安装 (Installation)
+## 安装
 
 ```tsx
 import { CommandMenu } from "@nebutra/ui/primitives";
 ```
 
-## 使用方法 (Usage)
+## 使用方法
 
-### 默认 (Default)
+### 默认
 
 ```tsx
 import { useState } from "react"
@@ -68,7 +68,7 @@ export function CommandMenuDemo() {
 }
 ```
 
-### 使用键盘快捷键 (With keyboard shortcut)
+### 使用键盘快捷键
 
 在应用根目录或布局中挂载一次全局快捷键：macOS 使用 `Cmd+K`，其他系统使用 `Ctrl+K`。不要把同一个快捷键再绑定给页面内的过滤输入框。
 
@@ -85,7 +85,7 @@ useEffect(() => {
 }, [])
 ```
 
-### 使用快捷键提示 (With shortcuts)
+### 使用快捷键提示
 
 ```tsx
 <CommandMenu.Item onSelect={handleAction} value="deploy-project">
@@ -102,7 +102,7 @@ useEffect(() => {
 </CommandMenu.List>
 ```
 
-### 使用禁用项 (With disabled items)
+### 使用禁用项
 
 ```tsx
 <CommandMenu.Item disabled onSelect={handleAction} value="rotate-secrets">
@@ -110,7 +110,7 @@ useEffect(() => {
 </CommandMenu.Item>
 ```
 
-## 属性 (Props)
+## 属性
 
 ### CommandMenu.Root
 
@@ -143,7 +143,7 @@ useEffect(() => {
 | `label` | `string` | 无障碍快捷键说明 |
 | `children` | `ReactNode` | 单个快捷键片段的兼容写法 |
 
-### 子组件 (Sub-Components)
+### 子组件
 
 | 组件 | 描述 |
 |-----------|-------------|
@@ -164,7 +164,7 @@ useEffect(() => {
 - 快捷键放在 `CommandMenu.Shortcut` 中，让视觉用户可发现，也让辅助技术获得 label。
 - 不要手写方向键状态机。`CommandMenu` 把过滤、选中和角色语义交给 `cmdk`。
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 对话框覆盖层会锁定焦点，并在关闭时恢复焦点。
 - 按下 `Escape` 键可关闭覆盖层。

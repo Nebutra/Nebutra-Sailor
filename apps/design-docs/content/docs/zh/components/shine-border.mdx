@@ -3,18 +3,18 @@ title: "发光边框 (Shine Border)"
 description: "动态旋转的渐变发光边框。支持两种模式：覆盖模式（无子元素）用于包裹现有元素，或容器模式（有子元素）作为独立卡片展示。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="shine-border-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { ShineBorder } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
 ### 覆盖模式 (Overlay Mode - 无子元素)
 
@@ -42,7 +42,7 @@ import { ShineBorder } from "@nebutra/ui/primitives"
 </ShineBorder>
 ```
 
-### 多色渐变 (Multi-Color Gradient)
+### 多色渐变
 
 ```tsx
 <ShineBorder shineColor={["#FF6B6B", "#FFE66D", "#4ECDC4"]}>
@@ -50,7 +50,7 @@ import { ShineBorder } from "@nebutra/ui/primitives"
 </ShineBorder>
 ```
 
-### 更快的动画速度 (Faster Animation)
+### 更快的动画速度
 
 ```tsx
 <ShineBorder shineColor="#0033FE" duration={6}>
@@ -58,9 +58,9 @@ import { ShineBorder } from "@nebutra/ui/primitives"
 </ShineBorder>
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `shineColor` | `string \| string[]` | — | 发光渐变的颜色（单个或数组） |
 | `color` | `string \| string[]` | `"#000000"` | `shineColor` 的已弃用别名 |
@@ -70,14 +70,14 @@ import { ShineBorder } from "@nebutra/ui/primitives"
 | `children` | `ReactNode` | — | 包含子元素时将切换至容器模式 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 模式说明 (Modes)
+## 模式说明
 
 | 模式 | 触发条件 | 定位方式 |
 |------|----------|-------------|
 | **覆盖 (Overlay)** | 无 `children` | `absolute inset-0`，继承父级的 `border-radius` |
 | **容器 (Container)** | 带有 `children` | 独立的 `div` 容器，包裹内部内容 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 需要在 Tailwind 配置或全局 CSS 中定义 `animate-shine` 关键帧动画。
 - 自动应用 `motion-safe:` 前缀 —— 当系统开启“减弱动画”偏好设置时，动画将自动禁用。

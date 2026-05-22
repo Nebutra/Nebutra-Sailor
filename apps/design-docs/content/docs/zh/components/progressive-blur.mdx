@@ -3,20 +3,20 @@ title: "渐进式模糊 (Progressive Blur)"
 description: "多层背景模糊效果，实现从清晰到磨砂质感的平滑过渡。常用于指示可滚动内容以及创建优雅的溢出淡出效果。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="progressive-blur-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { ProgressiveBlur } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 底部滚动淡出 (Bottom Scroll Fade)
+### 底部滚动淡出
 
 ```tsx
 <div className="relative h-[400px] overflow-auto">
@@ -27,7 +27,7 @@ import { ProgressiveBlur } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 顶部与底部 (Top and Bottom)
+### 顶部与底部
 
 ```tsx
 <div className="relative h-[300px] overflow-auto">
@@ -36,7 +36,7 @@ import { ProgressiveBlur } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 柔和淡出（较少的模糊层级） (Subtle Fade)
+### 柔和淡出（较少的模糊层级）
 
 ```tsx
 <ProgressiveBlur
@@ -59,9 +59,9 @@ import { ProgressiveBlur } from "@nebutra/ui/primitives"
 </div>
 ```
 
-## 属性 (Props)
+## 属性
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `position` | `"top" \| "bottom" \| "both"` | `"bottom"` | 应用模糊效果的位置 |
 | `height` | `string` | `"30%"` | 模糊区域的高度（CSS 长度单位） |
@@ -69,7 +69,7 @@ import { ProgressiveBlur } from "@nebutra/ui/primitives"
 | `children` | `ReactNode` | — | 模糊区域内的可选内容（例如操作按钮） |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 该组件默认设置了 `pointer-events-none`（穿透点击）。其中的子项是可交互的。
 - 利用 `backdrop-filter` 配合渐变遮罩（gradient masks）来实现渐进式模糊效果。

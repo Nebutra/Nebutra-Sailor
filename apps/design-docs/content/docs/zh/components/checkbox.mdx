@@ -14,19 +14,19 @@ import { ComponentPreview } from "@/components/component-preview";
   ```
 </ComponentPreview>
 
-## 概述 (Overview)
+## 概述
 
 `Checkbox` 是基于 Geist 设计系统的实现，通过 [21st.dev](https://21st.dev) 提供。它提供了一个完全可访问的切换控件，支持选中、未选中和中间状态。通过 `--ds-gray-*` CSS 变量支持深色模式。
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { Checkbox } from "@nebutra/ui/primitives";
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础用法 (Default)
+### 基础用法
 
 ```tsx
 const [checked, setChecked] = useState(false);
@@ -36,7 +36,7 @@ const [checked, setChecked] = useState(false);
 </Checkbox>
 ```
 
-### 禁用/中间状态 (Disabled/Indeterminate)
+### 禁用/中间状态
 
 ```tsx
 <div className="flex items-center gap-2">
@@ -59,7 +59,7 @@ const [checked, setChecked] = useState(false);
 
 
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
@@ -70,7 +70,7 @@ const [checked, setChecked] = useState(false);
 | `children` | `ReactNode` | — | 标签文本 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 可访问性 (Accessibility)
+## 可访问性
 
 - 使用带有 `aria-label` 的隐藏原生 `<input type="checkbox">`。
 - 键盘交互：父级 `<div>` 可点击（点击即切换）。

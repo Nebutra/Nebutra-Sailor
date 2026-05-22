@@ -3,20 +3,20 @@ title: "抖动背景 (Dithering Background)"
 description: "支持亮/暗主题的 WebGL 抖动着色器背景。通过有机纹理图案营造出复古数字美学。由 @paper-design/shaders-react 提供驱动。"
 ---
 
-## 演示 (Demo)
+## 演示
 
 <ComponentPreview name="dithering-background-demo"  />
 
 
-## 使用方法 (Usage)
+## 使用方法
 
 ```tsx
 import { DitheringBackground } from "@nebutra/ui/primitives"
 ```
 
-## 示例 (Examples)
+## 示例
 
-### 基础用法 (Basic)
+### 基础用法
 
 ```tsx
 <div className="relative min-h-screen">
@@ -25,7 +25,7 @@ import { DitheringBackground } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 强制暗黑模式 (Dark Mode Override)
+### 强制暗黑模式
 
 ```tsx
 <div className="relative h-[400px]">
@@ -33,7 +33,7 @@ import { DitheringBackground } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 强制亮色模式 (Light Mode Override)
+### 强制亮色模式
 
 ```tsx
 <div className="relative h-[200px]">
@@ -41,20 +41,20 @@ import { DitheringBackground } from "@nebutra/ui/primitives"
 </div>
 ```
 
-### 系统自动切换 (System)
+### 系统自动切换
 
 ```tsx
 <DitheringBackground mode="system" />
 ```
 
-## 属性 (Props)
+## 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `mode` | `"light" \| "dark" \| "system"` | `"system"` | 主题模式 —— `system` 将遵循 `prefers-color-scheme` |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
-## 注意事项 (Notes)
+## 注意事项
 
 - 由 `@paper-design/shaders-react` 的 `Dithering` 组件提供驱动。
 - 需要 WebGL 支持。
